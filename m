@@ -1,343 +1,195 @@
-Received: from mail-ej2-f12.google.com (mail-ej2-f12.google.com [74.125.228.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from send124.i.mail.ru (send124.i.mail.ru [89.221.237.219])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F38A3C1D49
-	for <git@vger.kernel.org>; Wed,  9 Sep 2026 19:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15BD3CF670
+	for <git@vger.kernel.org>; Wed,  9 Sep 2026 19:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.221.237.219
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788983864; cv=none; b=LRx/SbQroJg0YX3ZXUOoPlVDYAhSvFFJsddl+dk1f5uAlOODAcIT64tjR659Bwy/dCd8IO1Hye4yz7K4FBbZn/4eENuJa4owJolt6rmKCi0WIkQ8zbxUmZXD6IM+D1OaPkXpn+LZSUJ7ractg7UC122KvVCr2DwG0vSqVsfSncs=
+	t=1788983904; cv=none; b=XQdZfd3uK99FBibk6NRxNHruMbGEgn0O9OwlH2D4/Y6k3xB0aQApWUzlDUt7WAcf4KhyyxhSVUVbCFbVQXrWusAHafyHH8hiz0b0AzPt9B3JZ8DQIUtKl9kQZU2pVsycqGkrIx/1AI6CsE1CZSmjW34F055XUzJIiAZF3YISbG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788983864; c=relaxed/simple;
-	bh=Tugnx9xoel++cHEOL/gXWtQcBmkATpT4Lm3wZC2Hbgk=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oQKNg344xZ6wXMJH9sdiIBmnF/MnLL7PJa5510wdMPz1hNZ7opkfNVHLbkhhDtN7rRUbNgS5xUKmuqEoUPYWtXa0wgvGuThFy9OFsUDVQUqgCkF5uNhfYjegK61+iu+kFBdX4CyE7GyQ9zzsBNyge2O0TvZOfUBw25wWm0SjgiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5YFiI7x; arc=none smtp.client-ip=74.125.228.140
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1788983904; c=relaxed/simple;
+	bh=mJVn/8tKRTv+U5UIA1m3sxn4W/Yp4Q/khJ9L/mQtJVU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sxUUJBn5vDvk1zyy+Wlwxb8x7QCzcofm6GyqDQSyxGkoBCVroaaMqCybPVnwGE/cLzuf41ukeHZx3/1370SCG2yQx+2Er0VnryDxaQI3dtdd/yMiTraGBDEUkH0IHy38Ze+YsaALnCjYXoe41SFe3ZZ5p1bdtRKE3CM7qcPcgeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=QaeFy7zd; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=YPJCYr4E; arc=none smtp.client-ip=89.221.237.219
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5YFiI7x"
-Received: by mail-ej2-f12.google.com with SMTP id a640c23a62f3a-c254f9f0b20so257893866b.3
-        for <git@vger.kernel.org>; Wed, 09 Sep 2026 12:57:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1788983860; x=1789588660; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=JMr613Agyjq0LZBdKBcBqn4LmghJXQpX7mmfNGn0btk=;
-        b=C5YFiI7xCdAtqry1FeLfZSICRR1K5mS48vyIIrixQGVFJGf1BuE60bJRiklINqFLpI
-         Qz+o6DiEf2O/1TGFeV8VNsjTIJdeLosoL5H8lwZXf9LYIPM+nmSObArzB8UVEf2qBa+V
-         TvfmXvndLD8n7vObPPi6Gd+M9JH4TDF3EF9cjB/aPdK53mk0rRpFVVafVa38fWStawJ3
-         CF8S9jjNtNylYWMPbPm56fCcKnURShBRtRd63/U4SwsEtF2IYEtXCibTw3xoojAFszFw
-         8Wa/naGlGlxiccRepnjpS9W3BJsIT0BYJdH193yFNjh1r5yeqP1NnvgfggfxuVLNKqyf
-         RL4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1788983860; x=1789588660;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :content-type:mime-version:references:message-id:subject:to:from
-         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to:content-type;
-        bh=JMr613Agyjq0LZBdKBcBqn4LmghJXQpX7mmfNGn0btk=;
-        b=rjLcorG87SuSusHAbAwSXkAx3ZTipMXeqWm6IJNGaT3AG2V9f4HvMnesruMhqgMZlh
-         yKbkTMsxeNPCkxLqqc866uqBXkMJaBfJCItcPq1KyThSsGhBbC7N1BNEa60Icw6S1exh
-         PeTrBljaAfBPLfUdKnkeO+7A6oZGt4CDyHMyUw8LgFCyUtW8PIEtRcnunp+jVL1stpny
-         ULu+SPdyBPBFcq53XaMnwF5KvoqA0tSyxDztCp6+ShbXD3RAakDtjmz7gRjHu6ATUVLX
-         zIM4JPZpsXXS/T/3JPauGQJTT2esK+vezaTZMYJ8LyoLOwZNa8Jrq63VjlvzPIMo04Ad
-         8E6w==
-X-Gm-Message-State: AFuF++mTqSM8wpa8IpiKVNsCfBvvKaFzjYZm65EzB11zStQqYfUpJHvZ
-	chO13x30Hl4kNMnEAgVHM5iWTLLfOotNEVdxkIspTNDWGjgWDe2Mr2mJcX2B/g==
-X-Gm-Gg: AYBFou3CI6fMJ6e2SzIJ5SrC13ZANRZN2q0KLfNoD2FL9Bh6m5+zjvsaf1q8r4HJGvC
-	FH5hcITmUX0Jlk2HulpL0wCo48XYXfj4UAdQ5RdNx8oaMXVgVcJHhez97IFR39spe/mfLW+c+Wj
-	WcphUS9k3PxlUbN5P9IqCwv/ptWjO6RvkC/lT9Wg5r2ysaM0gPbnVqDh1uaO60Wt4NT36E2uvrv
-	zKGjwLMVgBaV/RKHfDiry6vX1X3o/gug4xqKLOor+14ddtGIY2IcVuTNdBiQXVPfxpfI5Rcqjfe
-	FGz9Q+0j86Rk/lHo6UT8Syh056lD+La2+zOkGAL+IIDm3tonO2nstpXhmLwleywatnIv94JNT90
-	GQIayWUiNhbH94F29ArVC0lnY/SHfI75K/76x6oEyZZKygOApcAr+fQmggZAyjf4qGRjBWZft3x
-	7hekseON17ulMDh363UrC/QY0ZmzAIX3Gp/PpAqhOTT0E+2lbX583q2rp/5AlphA3Rn06QsQBzR
-	TrVQC9tHukRSZb8722mS+310Pw1
-X-Received: by 2002:a17:907:9620:b0:c29:462b:f917 with SMTP id a640c23a62f3a-c29462c1f75mr93747966b.14.1788983859797;
-        Wed, 09 Sep 2026 12:57:39 -0700 (PDT)
-Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-c293b6246c4sm112405566b.20.2026.09.09.12.57.38
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Sep 2026 12:57:38 -0700 (PDT)
-Date: Wed, 9 Sep 2026 21:57:37 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="QaeFy7zd";
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="YPJCYr4E"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+	To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=oJuElj8l6lsrbaWPVCLLOQznJklK+ta7vWdaMs80Ib0=; t=1788983899; x=1789073899; 
+	b=QaeFy7zdspJFLs4Iegzil/9emf74oDfSHeEzbb8yw5+qU3+tLQJ20UWhrGnbk0Fm4TMG0C519dk
+	ii5FcaIN13uPV9cbPTYoVOpm9OCsECNJhf5t/xVXxanngtgtKtnotCzdyJDgVl2QZWIMXDFJ4M5/5
+	gLsgG+Orb1+nlp0TY9T6LthRxOfl4ssKsiwqi1Aiv/TtzJ+3SyUvSFTv7w9s7oncRMkGKkAikN86P
+	PLNYsnBIwM7BwdbR9IlaEN4PGsKZ8ThKcRyBt9s417qxUaNiPCz9nVrcq1m3mNs+CIa0gFMhDE0el
+	TPUUFTbvHUx3fw019tmzkLRfNuyMRGTJLlVQ==;
+Received: from [10.113.12.93] (port=35500 helo=send37.i.mail.ru)
+	by exim-fallback-679568fb9b-xvm9c with esmtp (envelope-from <ub4nal@mail.ru>)
+	id 1x4OBA-000000002kG-0oJH; Wed, 09 Sep 2026 22:41:56 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
+	s=mail4; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:Cc:
+	To:From:From:Sender:Reply-To:To:Cc:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=oJuElj8l6lsrbaWPVCLLOQznJklK+ta7vWdaMs80Ib0=; t=1788982916; x=1789072916; 
+	b=YPJCYr4EUgY67pTZRNaONZO8bCJVagspxG+t1AiT2BsfleY0mGdi+CEkofOvPvRZfpdKaLUZ52W
+	0YUDjztubrsJc6HvKW1rWys5iyJVYIsJxeERLfmA+pAvTgX3jrzxVDI4xbUmp9YPRWbfboDznRRrt
+	byFuLU/qt71+1xOy9SPIlhz6KMolJgPSo8E75cOZLL6UY4KK5ct0yOgf5KcH2vcBl70TS+g/IDt7j
+	yv/n6jjPH2kNVspRK/ixvJAbunu32BZnnWy3eSKRbSBFIdmM0BRDqT+eNOMIbyy4stHRAKhceXY/g
+	2FduR96tbV19WSXYCjtKHHxIRgH5d3z1xDDg==;
+Received: by exim-smtp-569b45c49c-nkwlt with esmtpa (envelope-from <ub4nal@mail.ru>)
+	id 1x4O9r-00000000AqO-1424; Wed, 09 Sep 2026 22:40:35 +0300
+Received: from vatem (localhost.localdomain [127.0.0.1])
+	by vatem.localdomain (Postfix) with ESMTP id 1A98B9F60D;
+	Sun, 29 Aug 2027 03:50:12 +0300 (MSK)
+From: Vsevolod Myalitsin <ub4nal@mail.ru>
 To: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] Makefile: precompile "git-compat-util.h"
-Message-ID: <aqG6MRWKCcG/ft/s@szeder.dev>
-References: <20260909195006.2179119-1-szeder.dev@gmail.com>
- <20260909195006.2179119-5-szeder.dev@gmail.com>
+Cc: gitster@pobox.me,
+	peff@peff.net,
+	ben.knoble@gmail.org,
+	Vsevolod Myalitsin <ub4nal@mail.ru>
+Subject: [PATCH v3] advice: use global config for default branch name
+Date: Sun, 29 Aug 2027 03:49:58 +0300
+Message-ID: <20270829004959.90983-1-ub4nal@mail.ru>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260909195006.2179119-5-szeder.dev@gmail.com>
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD95F11291660A1073B7AF24265EE4178F06C30090CCB8B5916182A05F538085040A5A50C0DF6894B3E3DE06ABAFEAF6705FB9251AA2C4FEB35888D1C7389238799C9EA2F84C7A7946D
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE74162CA13069782AFEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637AC83A81C8FD4AD23D82A6BABE6F325AC2E85FA5F3EDFCBAA7353EFBB55337566A08549CA5D96476170319D84CE2F8D05246E03843717285D807A54CF4E104E728EEF46B7454FC60B9742502CCDD46D0D17119E5299B287EEF6B57BC7E64490618DEB871D839B73339E8FC8737B5C2249E5E764EB5D94DBD4CC7F00164DA146DAFE8445B8C89999729449624AB7ADAF37F6B57BC7E64490611E7FA7ABCAF51C92176DF2183F8FC7C0B27420F9988F54058941B15DA834481F9449624AB7ADAF37BA3038C0950A5D3613377AFFFEAFD269176DF2183F8FC7C0044B9F2C9FBC7C0D7B076A6E789B0E97A8DF7F3B2552694AD5FFEEA1DED7F25D49FD398EE364050FB28585415E75ADA9B341D7040ADD27A2B3661434B16C20ACC84D3B47A649675FE827F84554CEF5019E625A9149C048EE9ECD01F8117BC8BEE2021AF6380DFAD18AA50765F790063735872C767BF85DA227C277FBC8AE2E8BA6406A2B830B443475ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-C1DE0DAB: 0D63561A33F958A55DCDA160B90AAA5A5002B1117B3ED69652955CE2A914CE11E41E333F9D1358D5823CB91A9FED034534781492E4B8EEAD3B90412627F530F9A71A35648BE338CE9510FB958DCE06DB58C12E6D310A6D53A16EC4B4EECACEB3
+X-C8649E89: 1C3962B70DF3F0AD73CAD6646DEDE191716CD42B3DD1D34C77DD89D51EBB774225B6776AC983F447FC0B9F89525902EE6F57B2FD27647F25E66C117BDB76D65919D82E49830F7FECC72D428EB2F9ACE9F53B69AE25BEF83509B5EE181C4BF70257415EBCCB08A9A6B8341EE9D5BE9A0A1F783264D2E74DAF3021115D26BAC9179C63C3E71EA499E9C7CEAA0681F5848F4C41F94D744909CEFACD6B4B6D928230F8CCC96A59B602D5CC2E138FFB4ACBED
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+ObcCpyrx6l7KImUglyhkEat/+ysWwi0gdhEs0JGjl6ggRWTy1haxBpVdbIX1nthFXOcIETfglQORZ0zpDET4ZrlAo0bq3TDyw6dS7By1zzJxM3ejrN8iyKs=
+X-Mailru-Sender: 288943BA7BCC8BBA065C24D5D0D78BBDED65FD724B436ECD3DE06ABAFEAF6705FB9251AA2C4FEB35A165F1893FAC5C75730F10A35ECD6C905A92E71CC7C3152D8DFEC3831B33C4D004BC3E28E37B34A4E9BE5789416A142FC25A2993B28EC86D9FF92CA8FAC60DF8EAB4BC95F72C04283CDA0F3B3F5B9367
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4B9BFAEC4A56250D1B872770CF5EF485635D435BD64EBA55E049FFFDB7839CE9E0464E60879317AFE4B503EDA59F73504B761E6C9E562721CF9C76D8178499CDDE6CBB6816E7A0911
+X-7FA49CB5: 0D63561A33F958A5EF4DDCE8F949D9745002B1117B3ED69609BB42F150D1B1DBAD864E5BE48A9E5E02ED4CEA229C1FA827C277FBC8AE2E8B2175EB29DFC26EF8
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu53w8ahmwBjZKM/YPHZyZHvz5uv+WouB9+OYcBso8Zm+oliTz8oZwnDrFsY77LZRcHyw5ht0smWrfSeTW5FiI8avd9v29gUBslpLaIlvAR6h4id02YH9mgeCTAyYoNlVO8a5rszphlXEJ8m72ZXg2e5u4=
+X-Mailru-MI: 20000000020000000000000800
+X-Mras: Ok
 
-On Wed, Sep 09, 2026 at 09:50:06PM +0200, SZEDER Gábor wrote:
->   - List the object files that are built using the precompiled header
->     in the PRECOMPILED_HEADER_USERS variable:
-> 
->     - The precompiled header should not change what actually gets
->       compiled.  Therefore, use the precompiled header only when
->       compiling source files that start with including
->       "git-compat-util.h" (directly or indirectly, e.g. via
->       "builtin.h"), or its inclusion is only preceeded by #define
->       directives that don't influence "git-compat-util.h" between its
->       include guards [2] (currently DISABLE_SIGN_COMPARE_WARNINGS,
->       USE_THE_REPOSITORY_VARIABLE or GIT_TEST_PROGRESS_ONLY). [3]
-> 
->       Several (but not all) object or source files listed in the
->       COMPAT_OBJS, REFTABLE_OBJS and THIRD_PARTY_SOURCES variables
->       don't include "git-compat-util.h", therefore, for the sake of
->       simplicity, none of the files listed in these variables are
->       built with the precompiled header. [4]
+Some advice messages suggest disabling the advice with
+"git config set advice.<name> false", even when the
+corresponding configuration should be set at a different scope.
 
->     - In short, PRECOMPILED_HEADER_USERS contains all object files
->       listed in OBJECTS, except those that are listed in COMPAT_OBJS,
->       REFTABLE_OBJS or THIRD_PARTY_SOURCES as well.
+Add a scope hint to advice settings so that the suggested
+command uses the appropriate config scope.
 
-> [4] "make"'s flexibility would allow us to separately list those
->     object files that don't include "git-compat-util.h", but then on
->     my (I assume fairly typical) Linux box the number of object files
->     built using the precompiled header increases only by 9 (from 536
->     to 545), which reduces the build time by about 1% (0.2s).
->     Therefore, I don't think it's worth the churn.
+Pass the advice setting itself to vadvise() instead of passing
+its fields separately. Use NULL for advise() calls that are not
+associated with an advice setting.
 
-For reference, a change to do that would look like that patch below,
-but, as mentioned above, the benefit is rather small:
+Signed-off-by: Vsevolod Myalitsin <ub4nal@mail.ru>
+---
+ advice.c | 43 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
-  Benchmark 1: make -j12 (rev = precompile)
-    Time (mean ± σ):     21.747 s ±  0.048 s    [User: 186.120 s, System: 35.032 s]
-    Range (min … max):   21.650 s … 21.802 s    10 runs
-
-  Benchmark 2: make -j12 (rev = precompile-all)
-    Time (mean ± σ):     21.556 s ±  0.062 s    [User: 184.584 s, System: 35.016 s]
-    Range (min … max):   21.477 s … 21.675 s    10 runs
-
-  Summary
-    'make -j12 (rev = precompile-all)' ran
-      1.01 ± 0.00 times faster than 'make -j12 (rev = precompile)'
-
-  --- >8 ---
-
-diff --git a/Makefile b/Makefile
-index 7d9dac83c4..b5d75dc75f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -698,6 +698,7 @@ BUILTIN_OBJS =
- BUILT_INS =
- COMPAT_CFLAGS =
- COMPAT_OBJS =
-+COMPAT_NOPCH_OBJS =
- GENERATED_H =
- EXTRA_CPPFLAGS =
- FUZZ_OBJS =
-@@ -711,6 +712,7 @@ OTHER_PROGRAMS =
- PROGRAM_OBJS =
- PROGRAMS =
- REFTABLE_OBJS =
-+REFTABLE_NOPCH_OBJS =
- RUST_SOURCES =
- EXCLUDED_PROGRAMS =
- SCRIPT_PERL =
-@@ -721,6 +723,7 @@ TEST_BUILTINS_OBJS =
- TEST_OBJS =
- TEST_PROGRAMS_NEED_X =
- THIRD_PARTY_SOURCES =
-+THIRD_PARTY_NOPCH_SOURCES =
- UNIT_TEST_PROGRAMS =
- UNIT_TEST_DIR = t/unit-tests
- UNIT_TEST_BIN = $(UNIT_TEST_DIR)/bin
-@@ -1376,20 +1379,22 @@ LIB_OBJS += xdiff/xpatience.o
- LIB_OBJS += xdiff/xprepare.o
- LIB_OBJS += xdiff/xutils.o
+diff --git a/advice.c b/advice.c
+index 63bf8b0c5f..80cc388215 100644
+--- a/advice.c
++++ b/advice.c
+@@ -40,10 +40,19 @@ enum advice_level {
+ 	ADVICE_LEVEL_ENABLED,
+ };
  
--REFTABLE_OBJS += reftable/basics.o
--REFTABLE_OBJS += reftable/block.o
--REFTABLE_OBJS += reftable/blocksource.o
--REFTABLE_OBJS += reftable/error.o
--REFTABLE_OBJS += reftable/fsck.o
--REFTABLE_OBJS += reftable/iter.o
--REFTABLE_OBJS += reftable/merged.o
--REFTABLE_OBJS += reftable/pq.o
--REFTABLE_OBJS += reftable/record.o
--REFTABLE_OBJS += reftable/stack.o
- REFTABLE_OBJS += reftable/system.o
--REFTABLE_OBJS += reftable/table.o
--REFTABLE_OBJS += reftable/tree.o
--REFTABLE_OBJS += reftable/writer.o
-+REFTABLE_NOPCH_OBJS += reftable/basics.o
-+REFTABLE_NOPCH_OBJS += reftable/block.o
-+REFTABLE_NOPCH_OBJS += reftable/blocksource.o
-+REFTABLE_NOPCH_OBJS += reftable/error.o
-+REFTABLE_NOPCH_OBJS += reftable/fsck.o
-+REFTABLE_NOPCH_OBJS += reftable/iter.o
-+REFTABLE_NOPCH_OBJS += reftable/merged.o
-+REFTABLE_NOPCH_OBJS += reftable/pq.o
-+REFTABLE_NOPCH_OBJS += reftable/record.o
-+REFTABLE_NOPCH_OBJS += reftable/stack.o
-+REFTABLE_NOPCH_OBJS += reftable/table.o
-+REFTABLE_NOPCH_OBJS += reftable/tree.o
-+REFTABLE_NOPCH_OBJS += reftable/writer.o
+-static struct {
++enum advice_scope {
++	ADVICE_SCOPE_LOCAL = 0,
++	ADVICE_SCOPE_GLOBAL,
++	ADVICE_SCOPE_SYSTEM,
++};
 +
-+REFTABLE_OBJS += $(REFTABLE_NOPCH_OBJS)
- 
- LIB_OBJS += $(REFTABLE_OBJS)
- 
-@@ -1535,11 +1540,13 @@ THIRD_PARTY_SOURCES += compat/inet_ntop.c
- THIRD_PARTY_SOURCES += compat/inet_pton.c
- THIRD_PARTY_SOURCES += compat/obstack.%
- THIRD_PARTY_SOURCES += compat/poll/%
--THIRD_PARTY_SOURCES += compat/regex/%
--THIRD_PARTY_SOURCES += sha1collisiondetection/%
--THIRD_PARTY_SOURCES += sha1dc/%
--THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
--THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
-+THIRD_PARTY_NOPCH_SOURCES += compat/regex/%
-+THIRD_PARTY_NOPCH_SOURCES += sha1collisiondetection/%
-+THIRD_PARTY_NOPCH_SOURCES += sha1dc/%
-+THIRD_PARTY_NOPCH_SOURCES += $(UNIT_TEST_DIR)/clar/%
-+THIRD_PARTY_NOPCH_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
++struct advice_setting {
+ 	const char *key;
++	enum advice_scope scope_hint;
+ 	enum advice_level level;
+-} advice_setting[] = {
++};
 +
-+THIRD_PARTY_SOURCES += $(THIRD_PARTY_NOPCH_SOURCES)
++static struct advice_setting advice_setting[] = {
+ 	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo" },
+ 	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec" },
+ 	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile" },
+@@ -51,7 +60,7 @@ static struct {
+ 	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
+ 	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
+ 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
+-	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName" },
++	[ADVICE_DEFAULT_BRANCH_NAME]			= { "defaultBranchName", ADVICE_SCOPE_GLOBAL },
+ 	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
+ 	[ADVICE_DIVERGING]				= { "diverging" },
+ 	[ADVICE_FETCH_SET_HEAD_WARN]			= { "fetchRemoteHEADWarn" },
+@@ -96,18 +105,31 @@ static struct {
  
- CLAR_TEST_SUITES += u-ctype
- CLAR_TEST_SUITES += u-dir
-@@ -1959,7 +1966,7 @@ ifdef SNPRINTF_RETURNS_BOGUS
- endif
- ifdef FREAD_READS_DIRECTORIES
- 	COMPAT_CFLAGS += -DFREAD_READS_DIRECTORIES
--	COMPAT_OBJS += compat/fopen.o
-+	COMPAT_NOPCH_OBJS += compat/fopen.o
- endif
- ifdef OPEN_RETURNS_EINTR
- 	COMPAT_CFLAGS += -DOPEN_RETURNS_EINTR
-@@ -2063,7 +2070,7 @@ ifdef NO_TRUSTABLE_FILEMODE
- endif
- ifdef NEEDS_MODE_TRANSLATION
- 	COMPAT_CFLAGS += -DNEEDS_MODE_TRANSLATION
--	COMPAT_OBJS += compat/stat.o
-+	COMPAT_NOPCH_OBJS += compat/stat.o
- endif
- ifdef NO_IPV6
- 	BASIC_CFLAGS += -DNO_IPV6
-@@ -2229,7 +2236,7 @@ ifdef SHA1_MAX_BLOCK_SIZE
- endif
- ifdef NO_HSTRERROR
- 	COMPAT_CFLAGS += -DNO_HSTRERROR
--	COMPAT_OBJS += compat/hstrerror.o
-+	COMPAT_NOPCH_OBJS += compat/hstrerror.o
- endif
- ifdef NO_MEMMEM
- 	COMPAT_CFLAGS += -DNO_MEMMEM
-@@ -2282,7 +2289,7 @@ ifdef UNRELIABLE_FSTAT
- endif
- ifdef NO_REGEX
- 	COMPAT_CFLAGS += -Icompat/regex
--	COMPAT_OBJS += compat/regex/regex.o
-+	COMPAT_NOPCH_OBJS += compat/regex/regex.o
- else
- ifdef USE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
- 	COMPAT_CFLAGS += -DUSE_ENHANCED_BASIC_REGULAR_EXPRESSIONS
-@@ -2387,17 +2394,17 @@ endif
+ static const char turn_off_instructions[] =
+ N_("\n"
+-   "Disable this message with \"git config set advice.%s false\"");
++   "Disable this message with \"git config set%s advice.%s false\"");
  
- ifdef FILENO_IS_A_MACRO
- 	COMPAT_CFLAGS += -DFILENO_IS_A_MACRO
--	COMPAT_OBJS += compat/fileno.o
-+	COMPAT_NOPCH_OBJS += compat/fileno.o
- endif
+-static void vadvise(const char *advice, int display_instructions,
+-		    const char *key, va_list params)
++static void vadvise(const char *advice,
++	const struct advice_setting *setting, va_list params)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *cp, *np;
  
- ifdef NEED_ACCESS_ROOT_HANDLER
- 	COMPAT_CFLAGS += -DNEED_ACCESS_ROOT_HANDLER
--	COMPAT_OBJS += compat/access.o
-+	COMPAT_NOPCH_OBJS += compat/access.o
- endif
+ 	strbuf_vaddf(&buf, advice, params);
  
- ifdef FSMONITOR_DAEMON_BACKEND
- 	COMPAT_CFLAGS += -DHAVE_FSMONITOR_DAEMON_BACKEND
--	COMPAT_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
-+	COMPAT_NOPCH_OBJS += compat/fsmonitor/fsm-listen-$(FSMONITOR_DAEMON_BACKEND).o
- 	COMPAT_OBJS += compat/fsmonitor/fsm-health-$(FSMONITOR_DAEMON_BACKEND).o
- endif
+-	if (display_instructions)
+-		strbuf_addf(&buf, turn_off_instructions, key);
++	if (setting && setting->level == 0) {
++		const char *scope = "";
++		switch (setting->scope_hint) {
++			case ADVICE_SCOPE_LOCAL:
++				break;
++			case ADVICE_SCOPE_GLOBAL:
++				scope = " --global";
++				break;
++			case ADVICE_SCOPE_SYSTEM:
++				scope = " --system";
++				break;
++		}
++		strbuf_addf(&buf, turn_off_instructions,
++				scope, setting->key);
++	}
  
-@@ -2531,6 +2538,7 @@ endif
- LIBS = $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
+ 	for (cp = buf.buf; *cp; cp = np) {
+ 		np = strchrnul(cp, '\n');
+@@ -126,7 +148,7 @@ void advise(const char *advice, ...)
+ {
+ 	va_list params;
+ 	va_start(params, advice);
+-	vadvise(advice, 0, "", params);
++	vadvise(advice, NULL, params);
+ 	va_end(params);
+ }
  
- BASIC_CFLAGS += $(COMPAT_CFLAGS)
-+COMPAT_OBJS += $(COMPAT_NOPCH_OBJS)
- LIB_OBJS += $(COMPAT_OBJS)
+@@ -155,8 +177,7 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...)
+ 		return;
  
- # Quote for C
-@@ -2912,7 +2920,7 @@ PRECOMPILED_HEADER := tools/precompiled.h
- PRECOMPILED_HEADER_GCH := $(addsuffix .gch,$(PRECOMPILED_HEADER))
+ 	va_start(params, advice);
+-	vadvise(advice, !advice_setting[type].level, advice_setting[type].key,
+-		params);
++	vadvise(advice, &advice_setting[type], params);
+ 	va_end(params);
+ }
  
- ifndef NO_PRECOMPILED_HEADER
--PRECOMPILED_HEADER_USERS := $(filter-out $(COMPAT_OBJS) $(REFTABLE_OBJS) $(patsubst %.c,%.o,$(THIRD_PARTY_SOURCES)),$(OBJECTS))
-+PRECOMPILED_HEADER_USERS := $(filter-out $(COMPAT_NOPCH_OBJS) $(REFTABLE_NOPCH_OBJS) $(patsubst %.c,%.o,$(THIRD_PARTY_NOPCH_SOURCES)),$(OBJECTS))
- endif
- 
- dep_files := $(foreach f,$(OBJECTS) $(PRECOMPILED_HEADER_GCH),$(dir $f).depend/$(notdir $f).d)
-diff --git a/config.mak.uname b/config.mak.uname
-index 95ef6e64dc..c51ebadc40 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -152,7 +152,7 @@ ifeq ($(uname_S),Darwin)
- 	NO_MEMMEM = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
- 	HAVE_DEV_TTY = YesPlease
--	COMPAT_OBJS += compat/precompose_utf8.o
-+	COMPAT_NOPCH_OBJS += compat/precompose_utf8.o
- 	BASIC_CFLAGS += -DPRECOMPOSE_UNICODE
- 	BASIC_CFLAGS += -DPROTECT_HFS_DEFAULT=1
- 	HAVE_BSD_SYSCTL = YesPlease
-@@ -535,7 +535,8 @@ endif
- 	AR = compat/vcbuild/scripts/lib.pl
- 	CFLAGS =
- 	BASIC_CFLAGS = -nologo -I. -Icompat/vcbuild/include -DWIN32 -D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
--	COMPAT_OBJS = compat/msvc.o compat/winansi.o \
-+	COMPAT_NOPCH_OBJS = compat/winansi.o
-+	COMPAT_OBJS = compat/msvc.o \
- 		compat/win32/flush.o \
- 		compat/win32/path-utils.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
-@@ -735,7 +736,8 @@ ifeq ($(uname_S),MINGW)
- 	BASIC_LDFLAGS += -municode
- 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
--	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
-+	COMPAT_NOPCH_OBJS += compat/winansi.o
-+	COMPAT_OBJS += compat/mingw.o \
- 		compat/win32/trace2_win32_process_info.o \
- 		compat/win32/flush.o \
- 		compat/win32/path-utils.o \
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 462c1eb5ec..d96a4ebd84 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -101,7 +101,7 @@ project(git
- #macros for parsing the Makefile for sources and scripts
- macro(parse_makefile_for_sources list_var makefile regex)
- 	file(STRINGS ${makefile} ${list_var} REGEX "^${regex} \\+=(.*)")
--	string(REPLACE "${regex} +=" "" ${list_var} ${${list_var}})
-+	string(REGEX REPLACE "${regex} \\+=" "" ${list_var} ${${list_var}})
- 	string(REGEX REPLACE "\\$\\([^)]*_OBJS\\)" "" ${list_var} ${${list_var}}) # remove any "$(*_OBJS)" variables
- 	string(STRIP ${${list_var}} ${list_var}) #remove trailing/leading whitespaces
- 	string(REPLACE ".o" ".c;" ${list_var} ${${list_var}}) #change .o to .c, ; is for converting the string into a list
-@@ -669,7 +669,7 @@ include_directories(${CMAKE_BINARY_DIR})
- parse_makefile_for_sources(libgit_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "LIB_OBJS")
- 
- #reftable
--parse_makefile_for_sources(reftable_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "REFTABLE_OBJS")
-+parse_makefile_for_sources(reftable_SOURCES ${CMAKE_SOURCE_DIR}/Makefile "REFTABLE_(|NOPCH_)OBJS")
- list(APPEND libgit_SOURCES ${reftable_SOURCES})
- 
- list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
 -- 
-2.55.0.1193.g1b994e35de
-
+2.50.1
 
