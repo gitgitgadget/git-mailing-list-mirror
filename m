@@ -1,63 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add the utterly important 'mispel' command
-Date: Sun, 4 Oct 2009 02:52:39 -0400
-Message-ID: <20091004065239.GA7890@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0910040040180.4985@pacific.mpi-cbg.de>
+From: "Vincent Riggs" <skiing@ies.net>
+Subject: Office 2003 for 50 bucks
+Date: Sun, 16 May 2004 21:40:10 -0500
+Sender: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org
+Message-ID: <00e201c43bb8$458b6100$d742fad3@IFCEDBHAH>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 04 09:05:46 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuLA9-0007tG-IY
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 09:05:45 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752567AbZJDGxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2009 02:53:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752296AbZJDGxZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 02:53:25 -0400
-Received: from peff.net ([208.65.91.99]:33010 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751847AbZJDGxY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 02:53:24 -0400
-Received: (qmail 8994 invoked by uid 107); 4 Oct 2009 06:56:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 04 Oct 2009 02:56:13 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 04 Oct 2009 02:52:39 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0910040040180.4985@pacific.mpi-cbg.de>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129510>
+Content-Type: multipart/mixed; boundary="===============0269226237=="
+X-From: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org Mon May 17 04:55:18 2004
+Return-path: <help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org>
+Received: from monty-python.gnu.org ([199.232.76.173])
+	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
+	id 1BPYHe-0007PF-00
+	for <gnu-help-mcsim@m.gmane.org>; Mon, 17 May 2004 04:55:18 +0200
+Received: from localhost ([127.0.0.1] helo=monty-python.gnu.org)
+	by monty-python.gnu.org with esmtp (Exim 4.34)
+	id 1BPYHD-00006N-Qz
+	for gnu-help-mcsim@m.gmane.org; Sun, 16 May 2004 22:54:51 -0400
+Received: from list by monty-python.gnu.org with tmda-scanned (Exim 4.34)
+	id 1BPYH3-0008UB-SJ
+	for help-mcsim@gnu.org; Sun, 16 May 2004 22:54:42 -0400
+Received: from mail by monty-python.gnu.org with spam-scanned (Exim 4.34)
+	id 1BPYGW-0008NM-C3
+	for help-mcsim@gnu.org; Sun, 16 May 2004 22:54:39 -0400
+Received: from [211.99.103.32] (helo=211.99.103.32)
+	by monty-python.gnu.org with smtp (Exim 4.34) id 1BPY4m-0006b9-DG
+	for help-mcsim@gnu.org; Sun, 16 May 2004 22:42:02 -0400
+Received: from unknown (HELO IFCEDBHAH) (192.168.78.54)
+	by 211.99.103.32 with SMTP; Sun, 16 May 2004 21:40:39 -0500
+To: "Inez Arias" <help-mcsim@gnu.org>
+X-Priority: 3
+X-BeenThere: help-mcsim@gnu.org
+X-Mailman-Version: 2.1.4
+Precedence: list
+List-Id: Users list for the GNU MCSim modeling and simulation program
+	<help-mcsim.gnu.org>
+List-Unsubscribe: <http://mail.gnu.org/mailman/listinfo/help-mcsim>,
+	<mailto:help-mcsim-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://mail.gnu.org/pipermail/help-mcsim>
+List-Post: <mailto:help-mcsim@gnu.org>
+List-Help: <mailto:help-mcsim-request@gnu.org?subject=help>
+List-Subscribe: <http://mail.gnu.org/mailman/listinfo/help-mcsim>,
+	<mailto:help-mcsim-request@gnu.org?subject=subscribe>
+Mime-version: 1.0
+Errors-To: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org
+X-Spam-Report: 8.9 points;
+  *  4.0 RCVD_NUMERIC_HELO Received: contains a numeric HELO
+  *  1.0 RCVD_BY_IP Received by mail server with no name
+  *  0.3 HTML_FONT_BIG BODY: HTML has a big font
+  *  0.0 BAYES_50 BODY: Bayesian spam probability is 50 to 56%
+  *      [score: 0.5000]
+  *  0.1 HTML_FONTCOLOR_RED BODY: HTML font color is red
+  *  1.0 HTML_FONT_TINY BODY: HTML has a tiny font
+  *  0.1 HTML_50_60 BODY: Message is 50% to 60% HTML
+  *  0.1 HTML_MESSAGE BODY: HTML included in message
+  *  0.0 HTML_FONTCOLOR_GRAY BODY: HTML font color is gray
+  *  0.1 RCVD_IN_RFCI RBL: Sent via a relay in ipwhois.rfc-ignorant.org
+  *      [$ has inaccurate or missing WHOIS data at the]
+  [RIR]
+  *  1.0 MSGID_DOLLARS Message-Id has pattern used in spam
+  *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
+Archived-At: <http://permalink.gmane.org/gmane.comp.gnu.mcsim/175>
 
-On Sun, Oct 04, 2009 at 12:41:55AM +0200, Johannes Schindelin wrote:
+This is a multi-part message in MIME format.
 
-> --- a/builtin.h
-> +++ b/builtin.h
-> @@ -12,6 +12,7 @@ extern const char git_more_info_string[];
->  
->  extern void list_common_cmds_help(void);
->  extern const char *help_unknown_cmd(const char *cmd);
-> +const char *help_mispeld_comd(const char *cmd);
->  extern void prune_packed_objects(int);
->  extern int read_line_with_nul(char *buf, int size, FILE *file);
->  extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
+--===============0269226237==
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_00DF_01C43BBB.B2532B30"
 
-Hmph. This hunk doesn't apply to Shawn's master, and your blob sha1 is
-not in my repository for a 3-way merge. ;P
+This is a multi-part message in MIME format.
 
-Also, I think there is a bug:
+------=_NextPart_000_00DF_01C43BBB.B2532B30
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-  $ git mispel show-branc
-  error: You probably meant show-index
-
-Or is it intentional for it to throw the user off track?
-
-Let this be a lesson, kids: don't drink and code.
-
--Peff
+High birth is an accident, not a virtue.
+If they want peace, nations should avoid the pin-pric
