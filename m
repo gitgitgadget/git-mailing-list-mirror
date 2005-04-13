@@ -1,97 +1,84 @@
-From: Darren Williams <dsw@gelato.unsw.edu.au>
-Subject: Re: Git usage and resource usage
-Date: Thu, 14 Apr 2005 09:18:38 +1000
-Message-ID: <20050413231838.GB10385@cse.unsw.EDU.AU>
-References: <20050413130622.GA23982@cse.unsw.EDU.AU> <20050413152948.D2442@banaan.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] teach ls-tree how to handle names with embedded LF
+Date: Wed, 13 Apr 2005 16:43:03 -0700
+Message-ID: <7vd5sytf94.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Apr 14 01:16:01 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 01:41:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLr55-0004Zj-Dn
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 01:15:36 +0200
+	id 1DLrT1-0008HJ-RY
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 01:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261221AbVDMXSv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Apr 2005 19:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261222AbVDMXSv
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 19:18:51 -0400
-Received: from note.orchestra.cse.unsw.EDU.AU ([129.94.242.24]:8877 "EHLO
-	note.orchestra.cse.unsw.EDU.AU") by vger.kernel.org with ESMTP
-	id S261221AbVDMXSr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Apr 2005 19:18:47 -0400
-Received: From wagner With LocalMail ; Thu, 14 Apr 2005 09:18:38 +1000 
-To: Erik van Konijnenburg <ekonijn@xs4all.nl>
-Mail-Followup-To: Erik van Konijnenburg <ekonijn@xs4all.nl>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050413152948.D2442@banaan.localdomain>
-User-Agent: Mutt/1.5.6+20040523i
+	id S261230AbVDMXna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Apr 2005 19:43:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261235AbVDMXna
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 19:43:30 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:28398 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261230AbVDMXnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2005 19:43:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050413234303.HNBQ1497.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 13 Apr 2005 19:43:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Erik
+GIT dircache can represent filenames with embedded newline.
+Give ls-tree an option to terminate its output with '\0', so that
+its output can be further processed with tools like "sort -z"
+(and custom perl/python scripts).
 
-On Wed, 13 Apr 2005, Erik van Konijnenburg wrote:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-> On Wed, Apr 13, 2005 at 11:06:22PM +1000, Darren Williams wrote:
-> >   Git(pasky) requires an excessive quantity of file
-> > descriptors, more than 1024 in a simple case and
-> > more than 16384 in a high workload case.
-> 
-> Does this help?  Posted earlier today to the list,
-> but since there are no archives yet its hard to find.
-> 
-Yes that fixes it.
+---
 
-% ulimit -n
-1024 
+ ls-tree.c |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletion(-)
 
-% quilt pop -a
-% time git commit
-...
-Enter commit message, terminated by ctrl-D on a separate line:
+ls-tree.c:  3e2a6c7d183a42e41f1073dfec6794e8f8a5e75c
+--- ls-tree.c
++++ ls-tree.c	2005-04-13 16:17:29.000000000 -0700
+@@ -5,6 +5,8 @@
+  */
+ #include "cache.h"
+ 
++int line_termination = '\n';
++
+ static int list(unsigned char *sha1)
+ {
+ 	void *buffer;
+@@ -31,7 +33,8 @@
+ 		 * It seems not worth it to read each file just to get this
+ 		 * and the file size. -- pasky@ucw.cz */
+ 		type = S_ISDIR(mode) ? "tree" : "blob";
+-		printf("%03o\t%s\t%s\t%s\n", mode, type, sha1_to_hex(sha1), path);
++		printf("%03o\t%s\t%s\t%s%c", mode, type, sha1_to_hex(sha1),
++		       path, line_termination);
+ 	}
+ 	return 0;
+ }
+@@ -40,6 +43,10 @@
+ {
+ 	unsigned char sha1[20];
+ 
++	if (argc == 3 && !strcmp(argv[1], "-z")) {
++	  line_termination = 0;
++	  argc--; argv++;
++	}
+ 	if (argc != 2)
+ 		usage("ls-tree <key>");
+ 	if (get_sha1_hex(argv[1], sha1) < 0)
 
-real    0m7.762s
-user    0m7.282s
-sys     0m0.459s
+---
+head before this patch: f6803ddd4e97a8b0cc090c546d1ff085ed0a4316
+tree after  this patch: 0aa0af6254226f0811c72282c46e7e4d9438371c
+head after  this patch: 63582e5e8c40790d6255206d6bde65f4ce3820bf
 
-> Regards,
-> Erik
-> 
-> tree 70189060273990e945015845a1d97c03eac2346a
-> parent 97c9a63e76bf667c21f24a5cfa8172aff0dd1294
-> author Erik van Konijnenburg,,, <konijn@framboos> Wed Apr 13 13:32:13 2005
-> committer Erik van Konijnenburg,,, <konijn@framboos> Wed Apr 13 13:32:13 2005
-> 
-> avoid fd leak.
-> .
-> Index: read-cache.c
-> ===================================================================
-> --- 833bb44b8e49daf0424f44cf300748da17945859/read-cache.c  (mode:100644 sha1:7cdd0f82992789e64f6ea272e43ee4af8cdf7f2a)
-> +++ 70189060273990e945015845a1d97c03eac2346a/read-cache.c  (mode:100644 sha1:7957377f2ddd107aa686f3ca4da51b74e6679baf)
-> @@ -251,11 +251,15 @@
->  		if (fd < 0)
->  			return -1;
->  		map = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-> -		if (map == MAP_FAILED)
-> +		if (map == MAP_FAILED) {
-> +			close(fd);
->  			return -1;
-> +		}
->  		if (memcmp(buf, map, size))
->  			return error("SHA1 collision detected!"
->  					" This is bad, bad, BAD!\a\n");
-> +		munmap(map, size);
-> +		close(fd);
->  #endif
->  		return 0;
->  	}
---------------------------------------------------
-Darren Williams <dsw AT gelato.unsw.edu.au>
-Gelato@UNSW <www.gelato.unsw.edu.au>
---------------------------------------------------
