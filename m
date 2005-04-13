@@ -1,60 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: Index/hash order
-Date: Wed, 13 Apr 2005 13:15:57 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504131314150.4501@ppc970.osdl.org>
-References: <20050412230027.GA21759@elte.hu> <20050412230729.GA22179@elte.hu>
- <20050413111355.GB13865@elte.hu> <425D4E1D.4040108@zytor.com>
- <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com>
- <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org>
- <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org>
- <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com>
+Date: Wed, 13 Apr 2005 22:15:23 +0200
+Message-ID: <20050413201523.GC27088@elte.hu>
+References: <20050413111355.GB13865@elte.hu> <425D4E1D.4040108@zytor.com> <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com> <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org> <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org> <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 22:11:52 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 13 22:13:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLoCH-0005nV-My
-	for gcvg-git@gmane.org; Wed, 13 Apr 2005 22:10:50 +0200
+	id 1DLoDz-0005nV-7I
+	for gcvg-git@gmane.org; Wed, 13 Apr 2005 22:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261181AbVDMUOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Apr 2005 16:14:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261183AbVDMUOE
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 16:14:04 -0400
-Received: from fire.osdl.org ([65.172.181.4]:13271 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261181AbVDMUOB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 16:14:01 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3DKDws4022153
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 13 Apr 2005 13:13:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3DKDvFR015647;
-	Wed, 13 Apr 2005 13:13:57 -0700
+	id S261151AbVDMUPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Apr 2005 16:15:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261159AbVDMUPt
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 16:15:49 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:31123 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261151AbVDMUPn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 16:15:43 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id 1F8FC31975F;
+	Wed, 13 Apr 2005 22:14:40 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 203CA1FC2; Wed, 13 Apr 2005 22:15:27 +0200 (CEST)
 To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
 In-Reply-To: <425D7C0F.2050109@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+* H. Peter Anvin <hpa@zytor.com> wrote:
 
-On Wed, 13 Apr 2005, H. Peter Anvin wrote:
+> >that's what i loosely meant under 'manageability problems'.
+> >
+> >I mentioned one solution earlier: to make the repository object an 
+> >immutable file (the +i flag on the inode) - it really wants to be 
+> >immutable after all. That would solve a whole range of 'accidental 
+> >corruption' issues.
+> >
 > 
+> I think abusing the immutable bit quickly will decend into the same 
+> rathole which makes u-w often useless.  u-w will actually be preserved 
+> by more tools -- simply because they know about it -- than +i.
+
+well, the 'owned by another user' solution is valid though, and doesnt 
+have this particular problem. (We've got a secure multiuser OS, so can 
+as well use it to protect the DB against corruption.)
+
 > Either which way, it feels to me that this idea has already been ruled 
-> out, so it's probably pointless to keep debating just exactly what we're 
-> not actually going to do.
+> out, so it's probably pointless to keep debating just exactly what 
+> we're not actually going to do.
 
-Hey, isn't that how most discussions progress? ;)
+(even if it sounds stupid, i keep discussing decisions that are done for 
+reasons i cannot fully agree with (yet), even if i happen to agree with 
+the net decision. It's all technological arguments, so it's not like 
+there's anything fuzzy about any of these issues.)
 
-I don't mind alternatives per se. I'm just lazy. I came up with one
-solution to the issues I percieved, and I like that one. But dammit, if
-somebody comes up with something _clearly_ superior, I'll just bow down in
-your general direction, and promptly implement that.
-
-		Linus
+	Ingo
