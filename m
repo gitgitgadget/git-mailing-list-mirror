@@ -1,63 +1,54 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Index/hash order
-Date: Wed, 13 Apr 2005 22:21:02 +0200
-Message-ID: <20050413202102.GA27733@elte.hu>
-References: <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com> <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org> <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org> <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com> <20050413201523.GC27088@elte.hu> <20050413201836.GA27694@elte.hu>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Updated base64 patches
+Date: Wed, 13 Apr 2005 13:26:43 -0700
+Message-ID: <425D8083.70105@zytor.com>
+References: <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com> <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org> <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org> <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com> <20050413201523.GC27088@elte.hu> <20050413201836.GA27694@elte.hu> <20050413202102.GA27733@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 13 22:19:58 2005
+X-From: git-owner@vger.kernel.org Wed Apr 13 22:25:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLoJH-0007E8-U2
-	for gcvg-git@gmane.org; Wed, 13 Apr 2005 22:18:04 +0200
+	id 1DLoOp-00082T-QA
+	for gcvg-git@gmane.org; Wed, 13 Apr 2005 22:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261159AbVDMUVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Apr 2005 16:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261151AbVDMUVS
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 16:21:18 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:41439 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261159AbVDMUVP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 16:21:15 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id 39CDA31F5A4;
-	Wed, 13 Apr 2005 22:20:32 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 230C91FC2; Wed, 13 Apr 2005 22:21:05 +0200 (CEST)
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <20050413201836.GA27694@elte.hu>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S261181AbVDMU1D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Apr 2005 16:27:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261183AbVDMU1D
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 16:27:03 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:59347 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261181AbVDMU1A
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2005 16:27:00 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3DKQn7i022231
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 Apr 2005 13:26:49 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Ingo Molnar <mingo@elte.hu>
+In-Reply-To: <20050413202102.GA27733@elte.hu>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+I have uploaded two new base64 patches, one which uses the flat 
+repository and one which doesn't:
 
-* Ingo Molnar <mingo@elte.hu> wrote:
+ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/git-0.04-base64-3.diff
+ftp://ftp.kernel.org/pub/linux/kernel/people/hpa/git-0.04-base64-flat-3.diff
 
-> > > I think abusing the immutable bit quickly will decend into the same 
-> > > rathole which makes u-w often useless.  u-w will actually be preserved 
-> > > by more tools -- simply because they know about it -- than +i.
-> > 
-> > well, the 'owned by another user' solution is valid though, and doesnt 
-> > have this particular problem. (We've got a secure multiuser OS, so can 
-> > as well use it to protect the DB against corruption.)
-> 
-> but ... this variant doesnt have any 'wow' feeling to it either, and 
-> it clearly brings in a number of other limitations. I might as well 
-> shut up until i can suggest something obviously superior :)
+... both are still against the git-0.04 tarball.
 
-i think the killer argument is compression. A 2 GB compressed repository 
-will be a hard sell already, 4 GB is pretty much out of question. And 
-once we accept that we have to have _some_ form of compression, it's 
-Linus' scheme that wins.
+The only differences is changing "char" to "signed char" in places where 
+it actually matters (since plain char is unsigned on some platforms), 
+and, for the non-flat version, allowing the cache subdirectories to be 
+lazily created (if ENOENT is returned, try mkdir before giving up.)
 
-	Ingo
+	-=hpa
