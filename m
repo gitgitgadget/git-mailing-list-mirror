@@ -1,176 +1,92 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re: Re: Remove need to untrack before tracking new branch
-Date: Thu, 14 Apr 2005 00:19:37 +0200
-Message-ID: <20050413221936.GI25711@pasky.ji.cz>
-References: <20050411135758.GA3524@pasky.ji.cz> <1113310045.23299.15.camel@nosferatu.lan> <20050412130250.GG22614@pasky.ji.cz> <1113311595.23299.17.camel@nosferatu.lan> <20050412132307.GH22614@pasky.ji.cz> <1113375277.23299.25.camel@nosferatu.lan> <20050413075441.GD16489@pasky.ji.cz> <1113381672.23299.47.camel@nosferatu.lan> <20050413092656.GO16489@pasky.ji.cz> <1113394537.23299.51.camel@nosferatu.lan>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: Index/hash order
+Date: Thu, 14 Apr 2005 00:48:00 +0200
+Message-ID: <87br8ithsv.fsf@deneb.enyo.de>
+References: <425C3F12.9070606@zytor.com>
+	<Pine.LNX.4.58.0504121452330.4501@ppc970.osdl.org>
+	<20050412224027.GB20821@elte.hu>
+	<Pine.LNX.4.58.0504121554140.4501@ppc970.osdl.org>
+	<20050412230027.GA21759@elte.hu> <20050412230729.GA22179@elte.hu>
+	<20050413111355.GB13865@elte.hu> <425D4E1D.4040108@zytor.com>
+	<20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com>
+	<Pine.LNX.4.58.0504131008500.4501@ppc970.osdl.org>
+	<87aco2gxu2.fsf@deneb.enyo.de>
+	<Pine.LNX.4.58.0504131503180.4501@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 00:17:20 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@elte.hu>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 00:45:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLqA0-0003il-VU
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 00:16:37 +0200
+	id 1DLqbT-0008Qd-PD
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 00:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261214AbVDMWTq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Apr 2005 18:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261203AbVDMWTq
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 18:19:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5560 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261217AbVDMWTj (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 18:19:39 -0400
-Received: (qmail 18430 invoked by uid 2001); 13 Apr 2005 22:19:37 -0000
-To: Martin Schlemmer <azarah@nosferatu.za.org>
-Content-Disposition: inline
-In-Reply-To: <1113394537.23299.51.camel@nosferatu.lan>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261213AbVDMWsO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 13 Apr 2005 18:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261217AbVDMWsO
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 18:48:14 -0400
+Received: from mail.enyo.de ([212.9.189.167]:7358 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S261213AbVDMWsI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Apr 2005 18:48:08 -0400
+Received: from deneb.enyo.de ([212.9.189.171])
+	by albireo.enyo.de with esmtp id 1DLqeQ-0007Sf-LV; Thu, 14 Apr 2005 00:48:02 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.50)
+	id 1DLqeO-0004M7-Ah; Thu, 14 Apr 2005 00:48:00 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504131503180.4501@ppc970.osdl.org> (Linus
+	Torvalds's message of "Wed, 13 Apr 2005 15:11:57 -0700 (PDT)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I didn't weed out the replies since this was not cc'd to the mailing
-list and I believe it could contain some useful information for google
-or whatever to pick. :-)
+* Linus Torvalds:
 
-Dear diary, on Wed, Apr 13, 2005 at 02:15:37PM CEST, I got a letter
-where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> On Wed, 2005-04-13 at 11:26 +0200, Petr Baudis wrote:
-> > BTW, why aren't we cc'ing the list?
-> > 
-> 
-> Hmm, no reason really.  If you want to, will do next time.
-> 
-> > Dear diary, on Wed, Apr 13, 2005 at 10:41:12AM CEST, I got a letter
-> > where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > > On Wed, 2005-04-13 at 09:54 +0200, Petr Baudis wrote:
-> > > PS: not having looked deeper yet, why does fsck-cache always find
-> > > unreferenced blobs/commits (no matter what tree is tracked, they stay
-> > > the same) ?  And trying to remove them leads to more, which leads to an
-> > > empty .git/opjects/ =)  Also, leading to this, will adding an option to
-> > > remove disconnected commits/blobs from local commits (that was
-> > > disconnected with a pull) be a viable option to add?
-> > 
-> > fsck-cache is concerned only by the objects database, so all the HEADs
-> > are unreferenced commits too. This is a right thing, the HEAD tracking
-> > should stay purely in the scripts - if we want to make fsck-cache
-> > smarter about that, we should implement git fsck or something.
-> > 
-> > Killing unreferenced blobs should be safe, I think.
-> > 
-> > > First, about the 'git diff' thing I asked yesterday .. what I meant, was
-> > > should it actually output this:
-> > > 
-> > > ----
-> > > COPYING:  fe2a4177a760fd110e78788734f167bd633be8de 33
-> > > Makefile:  929aa49a3dbe683ad52094099797bc636a7949a6 33
-> > > README:  46c6a9ea48ddd1dda45ca585f49975a6869ffe51 33
-> > > ...
-> > > ----
-> > > 
-> > > Shouldn't it just show actual changes?
-> > 
-> > This is an actual change. It's just that it's a change to metadata
-> > (somewhat esotherically described by the "33"), not the file contents.
-> > 
-> > BTW, git diff does actually something completely different from git diff
-> > with any arguments. It diffs to the directory cache, not to any tree! It
-> > just wraps show-diff, which has also a different output format (not
-> > outputting "git diffs"). The worst thing is that it requires a different
-> > -p option to apply. Someone should purge this wart, I think.
-> > 
-> 
-> Check applied patch (also in the new output).
+> I will bet you that a git checkout is _faster_ than a kernel source t=
+ree
+> copy. The time will be dominated by the IO costs (in particular the r=
+ead
+> costs), and the IO costs are lower thanks to compression. So I think =
+that
+> the cold-cache case will beat your 40 seconds by a clear margin. It
+> generally compresses to half the size, so 20 seconds is not impossibl=
+e
+> (although seek costs would tend to stay constant, so I'd expect it to=
+ be
+> somewhere in between the two).
 
-Please send patches inline and properly signed off.
+It's indeed slightly faster (34 seconds).  The hot-cache case is about
+6 seconds.  Still okay.
 
-> > > Also on the same note .. should 'git ci' without listed files to be
-> > > committed, really add a reference to all files as it currently do in the
-> > > commit/blob/whatever info, instead of just the changed/added files (see
-> > > the git-seperate-dir.patch you have not yet commented on for reference)?
-> > 
-> > ...
-> > 
-> 
-> Patch will also resolve this.
+However, I should redo these tests with a real git.  The numbers could
+be quite different because seek overhead is a bit hard to predict.
+Which version should I try?
 
-I'm sorry - the ellipsis was there so that I'll write up a reply for
-that later but I forgot.
+> That's actually pretty encouraging. Your 1.1GB number implies to me t=
+hat a
+> compressed file setup should be about half that, which in turn says t=
+hat
+> the cost of full-file is not at all outrageous.
 
-Your patch is bad - it removes the pure metadata changes, but you
-definitively do not want to do that! If you are annoyed by meaningless
-time changes etc, do update-cache --refresh. Ignoring mode changes is a
-pure disaster.
+I usually try to avoid the typical O(f(n)) fallacy because constant
+factors do matter in practice.  But the way you put it -- maybe delta
+compression isn't worth the complexity after all.  At least I'm
+beginning to have doubts.
 
-> > > Secondly, how about style/error issues?  Basically on the style front,
-> > > currently some scripts use bash - how about pure bash for all:
-> > > 
-> > > ----
-> > > [[ -n ${tracking} ]] && \
-> > > ----
-> > > 
-> > > rather than:
-> > > 
-> > > ----
-> > > [ "$tracking" ] && \
-> > > ----
-> > > 
-> > > as you do not need the quotes, and for checking files, etc, it just do
-> > > better handling than single quotes.  I am prepared to do patches if you
-> > > like.
-> > 
-> > Well. I'm just not used to it and not quite sure about how it behaves
-> > etc. So far I tried to make it as sh-like as possible, using bash
-> > features only when absolutely necessary. I'm not saying this is the best
-> > approach, but I wouldn't change it *now* (especially since it would slow
-> > me down which I really don't want now) if someone doesn't give me some
-> > really compelling arguments.
-> > 
-> 
-> No problem.
-> 
-..snip..
-> > > 2) Did not add the gitapply.sh that was new in your tree
-> > 
-> > This very bug should be fixed by introduction of gitapply.sh. ;-)
-> > 
-> > Actually I forgot to implement this. Fixed now.
-> > 
-> > > I guess I might have done things wrong (wrong way around)?  But the
-> > > actual question is this .. when I tried to switch, it failed on the
-> > > gitapply.sh hunk, but went on anyway ... how about doing a patch
-> > > --dry-run first, and showing the user what would happen if that fails,
-> > > asking for confirmation?
-> > 
-> > Just s/merge -b/diff/ on the command line and it will show precisely
-> > what it is going to apply.  When we get the automatic base detection
-> > something to just print the base could be indeed useful.
-> > 
-> > If that fails, all what will happen is that the user gets rejects. No
-> > big deal. He can anytime just back out by
-> > 
-> > 	git diff | patch -p0 -R
-> > 
-> > So, what did it "went on" with? The merge (nor the tracked pull) never
-> > commits anything. That's up to you, after you resolve the conflicts and
-> > make sure everything is right.
-> > 
-> 
-> Ah, right.
-> 
-> > > I know its in its infancy, but I am not sure on what scm you are basing
-> > > it, so not sure how things should behave.
-> > 
-> > I'm trying to base it on common sense and principle of least surprise.
-> > :-)
-> > 
-> 
-> Ok, I'll just bug you then if I am not sure on how you want something ;p
+Especially since the same Subversion repository, stored by the
+Berkeley DB backend, requires a whopping 1.3=A0GB of disk space.
 
-Or do it somehow and I'll bug you back if I don't like it. ;-)
+> Or maybe I misunderstood what you were comparing?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+My estimates only cover file data, not metadata.  Based on the
+Subversion dumps, it might be possible to get some rough estimates for
+the cost of storing directory information.  What is the average size
+of a directory blob?  Is it true that for each tree revision, you need
+to store a new directory blob for each directory which indirectly
+contains a modified file?
+
+Does your 50% estimate include wasted space due to the file system
+block size?
