@@ -1,65 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Yet another base64 patch
-Date: Thu, 14 Apr 2005 01:17:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504140114260.7211@ppc970.osdl.org>
-References: <425DEF64.60108@zytor.com>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Date handling.
+Date: Thu, 14 Apr 2005 09:16:32 +0100
+Message-ID: <1113466592.12012.192.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 10:13:04 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Apr 14 10:13:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLzSN-0003rU-L4
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 10:12:11 +0200
+	id 1DLzTQ-0003rU-Df
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 10:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261453AbVDNIP2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 04:15:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261455AbVDNIP2
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 04:15:28 -0400
-Received: from fire.osdl.org ([65.172.181.4]:22232 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261453AbVDNIPW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 04:15:22 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3E8FLs4011197
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Apr 2005 01:15:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3E8FKlv015832;
-	Thu, 14 Apr 2005 01:15:20 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <425DEF64.60108@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261455AbVDNIQg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 04:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261459AbVDNIQg
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 04:16:36 -0400
+Received: from baythorne.infradead.org ([81.187.226.107]:1935 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S261455AbVDNIQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 04:16:34 -0400
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DLzWb-0007yE-OZ
+	for git@vger.kernel.org; Thu, 14 Apr 2005 09:16:33 +0100
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+The date handling is somewhat unreliable. We render dates into textual
+representation using the committer's locale (day names, etc), then later
+attempt to interpret that in some other locale. And we were just using
+localtime without even specifying the timezone so the timestamp was
+fairly randomised anyway. In fact, an $AUTHOR_DATE environment variable
+was making its way into the database entirely unchecked. 
+
+I see two possible solutions:
+	1. Just store seconds-since-GMT-epoch and if we really want, the
+	   timezone as auxiliary information.
+	2. Store dates in RFC2822 form.
+
+Unless someone convincingly expresses a preference before I get to work
+and start playing with it, I'll implement the latter.
+
+-- 
+dwmw2
 
 
-On Wed, 13 Apr 2005, H. Peter Anvin wrote:
-> 
-> Checking out the total kernel tree (time checkout-cache -a into an empty 
-> directory):
-> 
-> 		Cache cold	Cache hot
-> stock		3:46.95		19.95
-> base64	5:56.20		23.74
-> flat		2:44.13		15.68
-
-So why is "base64" worse than the stock one?
-
-As mentioned, the "flat" version may be faster, but it really isn't an
-option. 32000 objects is peanuts. Any respectable source tree may hit that
-in a short time, and will break in horrible ways on many Linux
-filesystems.
-
-So you need at least a single level of subdirectory. 
-
-What I don't get is why the stock hex version would be better than base64.
-
-I like the result, I just don't _understand_ it.
-
-		Linus
