@@ -1,45 +1,66 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re: Merge with git-pasky II.
-Date: Fri, 15 Apr 2005 01:31:59 +0200
-Message-ID: <20050414233159.GX22699@pasky.ji.cz>
+From: Christopher Li <git@chrisli.org>
+Subject: Re: Merge with git-pasky II.
+Date: Thu, 14 Apr 2005 16:24:21 -0400
+Message-ID: <20050414202421.GC25468@64m.dyndns.org>
 References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org> <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz> <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 01:29:42 2005
+Cc: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 01:31:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMDm4-0006z2-Sb
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:29:29 +0200
+	id 1DMDo6-0007Ce-BZ
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:31:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261650AbVDNXcs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 19:32:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261651AbVDNXcs
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:32:48 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5326 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261650AbVDNXcB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 19:32:01 -0400
-Received: (qmail 21592 invoked by uid 2001); 14 Apr 2005 23:31:59 -0000
+	id S261652AbVDNXe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 19:34:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261653AbVDNXet
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:34:49 -0400
+Received: from sccrmhc11.comcast.net ([204.127.202.55]:14525 "EHLO
+	sccrmhc11.comcast.net") by vger.kernel.org with ESMTP
+	id S261652AbVDNXeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 19:34:22 -0400
+Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
+          by comcast.net (sccrmhc11) with ESMTP
+          id <200504142334220110029oi5e>; Thu, 14 Apr 2005 23:34:22 +0000
+Received: by localhost.localdomain (Postfix, from userid 1027)
+	id 409CF3F1EF; Thu, 14 Apr 2005 16:24:21 -0400 (EDT)
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
 In-Reply-To: <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 15, 2005 at 01:12:34AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
+Hi Junio,
+
+I think if the merge tree belong to plumbing, you can do
+even less in the merge.perl. You can just print out the
+instruction for the upper level SCM what to to without
+actually doing it yourself.
+
+So you don't have to do touch anything in the tree.
+That is the way I use in my previous python script.
+You just print out some easy to modify  
+
+e.g. in my python script it prints: (BTW, poor choice of print out name)
+
+check out tree 253290af8b9ebc8565dd8de4cda24d0432a92b57
+modify pre-process.c 7684c115a87e41a9226ce79478101c746cf22c34
+3way-merge check.c dcb970cc1c5a83284dc5986abf07b6da76a8758c f77bfe119c19d928879091e0e3ee6debe3f1e1bf d315b43b025350d0107568a4d42cc2494d38621d
+
+Your merge tree can do the smae.
+
+Then the supper level SCM can easily follow instruction.
+Save your effort and make no assumption what SCM module is.
+
+Chris
+
+On Thu, Apr 14, 2005 at 04:12:34PM -0700, Junio C Hamano wrote:
 > >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
-> 
-> PB> What I would like your script to do is therefore just do the
-> PB> merge in a given already prepared (including built index)
-> PB> directory, with a passed base. The base should be determined
-> PB> by a separate tool (I already saw some patches); most future
-> PB> "science" will probably go to a clever selection of this
-> PB> base, anyway.
 > 
 > I think you are contradicting yourself for saying the above
 > after agreeing with me that the script should just work on trees
@@ -47,31 +68,17 @@ where Junio C Hamano <junkio@cox.net> told me that...
 > merge two related trees relative to another ancestor tree,
 > nothing more.  Especially, it should not care what is in the
 > working directory---that is SCM person's business.
-
-Yes. Isn't this exactly what I'm saying?
-
-I'm arguing for doing less in my paragraph, you are arguing for doing
-less in your paragraph, and we even seem to agree on the direction in
-which we should do less.
-
+> 
 > I am just trying to follow my understanding of what Linus
 > wanted.  One of the guiding principle is to do as much things as
 > in dircache without ever checking things out or touching working
 > files unnecessarily.
-
-I'm just arguing that instead of directly touching the directory cache,
-you should just list what would you do there - and you already do this,
-I think. So I'd be happy with a switch which would just do that and not
-touch the directory cache. I'll parse your output and do the right thing
-for me.
-
+> 
 > PB> This will give the tool maximal flexibility.
 > 
 > I suspect it would force me to have a working directory
 > populated with files, just to do a merge.
-
-Why would that be so?
-
+> 
 > PB> I'm all for an -o, and I don't mind ,, - I just don't want it uselessly
 > PB> long. I hope "git~merge~$$" was a joke... :-)
 > 
@@ -79,10 +86,7 @@ Why would that be so?
 > git~merge do, perhaps?  It probably would not matter to you
 > because as an SCM you would always give an explicit --output
 > parameter to the script anyway.
-
-Yes. I'll just override it with ,,merge, I think. So, do whatever you
-want. ;-))
-
+> 
 > PB> By the way, what about indentation with tabs? If you have a
 > PB> strong opinion about this, I don't insist - but if you
 > PB> really don't mind/care either way, it'd be great to use tabs
@@ -93,12 +97,7 @@ want. ;-))
 > gives me.  I write code other than git, so changing Perl-mode
 > indentation setting globally for all .pl files is not an option
 > for me.  I'll see what I can do when I have time.
-
-Doesn't Emacs have something equivalent to ./.vimrc? I've also seen
-those funny -*- strings.
-
-Well, if it would mean a lot of trouble for you, just forget about it.
-
+> 
 > PB> Is there a fundamental reason why the directory cache
 > PB> contains the ancestor instead of the destination branch?
 > 
@@ -107,14 +106,18 @@ Well, if it would mean a lot of trouble for you, just forget about it.
 > There is no "destination branch" nor "source branch" in what I
 > am doing.  It is a merge of two equals derived from the same
 > ancestor.
-
-That's a valid point of view too.
-
-Actually, when you would have a mode in which you would not write to the
-directory cache, do you need to read from it? You could do just direct
-cat-files like for the other trees, and it would be even faster. Then,
-you could do without a directory cache altogether in this mode.
-
+> 
+> PB> I think the script actually does not fundamentally depend on it. My main
+> PB> motivation is that the user can then trivially see what is he actually
+> PB> going to commit to his destination branch, which would be bought for
+> PB> free by that.
+> 
+> And again the user is *not* commiting to his "destination
+> branch".  At the level I am working at, the merge result should
+> be commited with two -p parameters to commit-tree --- tree-A and
+> tree-B, both being equal parents from the POV of git object
+> storage.
+> 
 > PB> And this is another thing I dislike a lot. I'd like merge-tree.pl to
 > PB> leave my directory cache alone, thank you very much. You know, I see
 > PB> what goes to the directory cache as actually part of the policy part.
@@ -122,11 +125,7 @@ you could do without a directory cache altogether in this mode.
 > Remember I am not touching *your* dircache.  It is a dircache in
 > the temporary merge area, specifically set up to help you review
 > the merge.  
-
-Yes, but I want to have a control over its dircache too. :-) That is
-because I want the user to be able to use the regular git commands like
-"git diff" there.
-
+> 
 > Can't the SCM driver do things along this line, perhaps?
 > 
 >  - You have your working files and your dircache.  They may not
@@ -168,19 +167,4 @@ because I want the user to be able to use the regular git commands like
 > 
 > I think the above would result in what SCM person would call
 > "merge upstream/sidestream changes into my working directory".
-
-And that's exactly what I'm doing now with git merge. ;-) In fact,
-ideally the whole change in my scripts when your script is finished
-would be replacing
-
-	checkout-cache `diff-tree` # symbolic
-	git diff $base $merged | git apply
-
-with
-
-	merge-tree.pl -b $base $(tree-id) $merged | parse-your-output
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+> 
