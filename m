@@ -1,25 +1,26 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: [ANNOUNCE] git-pasky-0.4
-Date: Thu, 14 Apr 2005 02:19:38 +0200
-Message-ID: <20050414001938.GR25711@pasky.ji.cz>
+Subject: Merge with git-pasky II.
+Date: Thu, 14 Apr 2005 02:29:02 +0200
+Message-ID: <20050414002902.GU25711@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 14 02:20:35 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 02:26:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLs5q-0004tr-4a
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 02:20:26 +0200
+	id 1DLsBN-0005OT-Hu
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 02:26:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261364AbVDNAXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Apr 2005 20:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261245AbVDNAUa
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 20:20:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:9914 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261248AbVDNATn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 20:19:43 -0400
-Received: (qmail 1917 invoked by uid 2001); 14 Apr 2005 00:19:38 -0000
-To: git@vger.kernel.org
+	id S261255AbVDNA3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Apr 2005 20:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261257AbVDNA3W
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Apr 2005 20:29:22 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:25018 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261255AbVDNA3G (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Apr 2005 20:29:06 -0400
+Received: (qmail 3444 invoked by uid 2001); 14 Apr 2005 00:29:02 -0000
+To: torvalds@osdl.org
 Content-Disposition: inline
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
@@ -27,27 +28,34 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  Hello,
+  Hello Linus,
 
-  I'm happy to announce git-pasky-0.4, my set of scripts upon Linus
-Torvald's git, which aims to provide a humanly usable interface, to a
-degree similar to a SCM tool. You can get it at
+  I think my tree should be ready for merging with you. It is the final
+tree and I've already switched my main branch for it, so it's what
+people doing git pull are getting for some time already.
 
-	http://pasky.or.cz/~pasky/dev/git/
+  Its main contents are all of my shell scripts. Apart of that, some
+tiny fixes scattered all around can be found there, as well as some
+patches which went through the mailing list. My last merge with you
+concerned your commit 39021759c903a943a33a28cfbd5070d36d851581.
 
-  See the READMEs etc for some introduction.
+  It's again
 
-  It is difficult to sum up the changes, since so much has changed,
-including almost the complete tree history, which was cleaned up and
-sanitized. Things should be faster, better, less buggy and generally
-smoother.
+	rsync://pasky.or.cz/git/
 
-  My immediate plans are to support several working trees connected to a
-single object database. The scenes are set, prepared, and it should be
-easy. Then, supporting merges in a separate temporary tree will be a
-breeze. ;-)
+this time my HEAD is fba83970090ef54c6eb86dcc2c2d5087af5ac637.
 
-  Have fun,
+  Note that my rsync tree still contains even my old branch; I thought
+I'd leave it around in the public objects database for some time, shall
+anyone want to have a look at the history of some of the scripts. But if
+you want it gone, tell me and I will prune it (and perhaps offer it in
+/git-old/ or whatever). I'm using the following:
+
+	fsck-cache --unreachable $(commit-id) | grep unreachable \
+		| cut -d ' ' -f 2 | sed 's/^\(..\)/.git\/objects\/\1\//' \
+		| xargs rm
+
+  Thanks,
 
 -- 
 				Petr "Pasky" Baudis
