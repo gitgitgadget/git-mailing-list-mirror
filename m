@@ -1,50 +1,55 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: RE: Date handling.
-Date: Thu, 14 Apr 2005 21:54:38 +0100
-Message-ID: <1113512078.12012.227.camel@baythorne.infradead.org>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Naming the SCM (was Re: Handling renames.)
+Date: Thu, 14 Apr 2005 13:58:52 -0700
+Message-ID: <425ED98C.9020101@zytor.com>
+References: <002701c54129$da2ffdd0$9b11a8c0@allianceoneinc.com> <200504141442.17235.elenstev@mesatop.com> <20050414205329.GF22699@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 22:51:39 2005
+Cc: Steven Cole <elenstev@mesatop.com>,
+	Andrew Timberlake-Newell 
+	<Andrew.Timberlake-Newell@AllianceOneInc.com>, git@vger.kernel.org,
+	"'Zach Welch'" <zw@superlucidity.net>,
+	"'Linus Torvalds'" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 22:57:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMBJ2-0004AY-7M
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 22:51:21 +0200
+	id 1DMBO3-0004yi-H1
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 22:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261588AbVDNUyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 16:54:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261590AbVDNUyn
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 16:54:43 -0400
-Received: from baythorne.infradead.org ([81.187.226.107]:47759 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S261588AbVDNUym (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 16:54:42 -0400
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DMBMF-0000p8-57; Thu, 14 Apr 2005 21:54:39 +0100
-To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261596AbVDNU7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 16:59:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261595AbVDNU7r
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 16:59:47 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:44692 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261596AbVDNU73
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 16:59:29 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3EKwvEW012610
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 14 Apr 2005 13:58:57 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050414205329.GF22699@pasky.ji.cz>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-14 at 12:42 -0700, Luck, Tony wrote:
-> This is a very good point ... but this still has problems with the
-> "git is a filesystem, not a SCM" mantra.  Timezone comments don't
-> belong in the git inode.
+Petr Baudis wrote:
 
-Yeah, but really I'd want to see other serious users of it before I'd
-accept that the timezone information _really_ needs to be stored
-separately. After all, the committer and author information really
-wouldn't be considered part of the _filesystem_ either.
+>>Cogito.  "Git inside" can be the first slogan.
+> 
+> What about tig?
 
--- 
-dwmw2
+I like "Cogito"; it's a real name, plus it'd be a good use for the 
+otherwise-pretty-useless two-letter combination "cg".
 
+	-hpa
 
