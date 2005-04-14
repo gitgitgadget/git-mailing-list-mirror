@@ -1,80 +1,56 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Handling renames.
-Date: Thu, 14 Apr 2005 20:58:41 +0200
-Message-ID: <20050414185841.GA16865@elte.hu>
-References: <1113501260.27227.26.camel@hades.cambridge.redhat.com> <20050414181224.GA16126@elte.hu> <Pine.LNX.4.58.0504141124220.7211@ppc970.osdl.org>
+From: Ehud Shabtai <eshabtai.lkml@gmail.com>
+Subject: trying to figure out this git thing - some questions
+Date: Thu, 14 Apr 2005 22:02:21 +0300
+Message-ID: <68b6a2bc05041412025f1cb7c9@mail.gmail.com>
+Reply-To: Ehud Shabtai <eshabtai.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
-	James Bottomley <James.Bottomley@SteelEye.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 20:56:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:59:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM9V0-0003Fk-5Z
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 20:55:34 +0200
+	id 1DM9YO-0003mT-8M
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 20:59:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261445AbVDNS64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 14:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261446AbVDNS64
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 14:58:56 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:20928 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261445AbVDNS6y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 14:58:54 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id 091D931FD06;
-	Thu, 14 Apr 2005 20:58:09 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 1D4741FC2; Thu, 14 Apr 2005 20:58:45 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261526AbVDNTCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 15:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261531AbVDNTCZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 15:02:25 -0400
+Received: from zproxy.gmail.com ([64.233.162.201]:7020 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261526AbVDNTCW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 15:02:22 -0400
+Received: by zproxy.gmail.com with SMTP id 13so321804nzp
+        for <git@vger.kernel.org>; Thu, 14 Apr 2005 12:02:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=V6kjjkQdWXyGX34S8ULkKM6iJXBcul5YmeiCbomrsgDjqiYnJ3zJpE1q6F8iTPqCc5z1EvCwGAsYUHMHYnEBMqptHZljKYB3y4mpnxtZObLQ4264yOhG7skUJKBEuGOeD3Ez+XdI5rxwD7KEmXPy3Kyf5+0Oba9L1xQSBsHW1Q0=
+Received: by 10.36.61.11 with SMTP id j11mr137655nza;
+        Thu, 14 Apr 2005 12:02:21 -0700 (PDT)
+Received: by 10.36.55.3 with HTTP; Thu, 14 Apr 2005 12:02:21 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504141124220.7211@ppc970.osdl.org>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+I'm trying to understand how it works and I'll appreciate if someone could help.
 
-* Linus Torvalds <torvalds@osdl.org> wrote:
+1. git uses object abstraction for the different types and so
+everything is in one directory (objects). From what I've seen in the
+implementation, the different kind of objects are not of the same type
+(there aren't any operations which work on two different types) and
+thus in each step when an object is used its type is verified.
+What's the benefit of having them all in the same tree? An alternative
+would be to separate the different object types into different
+directories which trivially allows getting a list of all commits, or
+trees or blobs.
 
-> [...] Ie if you notice a rename, you first commit the rename (and you 
-> can _see_ it's a rename, since the object didn't change, and the sha1 
-> stayed the same, which in git-speak means that it is the same object, 
-> ie that _is_ a rename as far as git is concerned), and then you create 
-> the "this is the data that changed" as a _second_ commit.
+2. A commit can have more than one parent. Can anyone draw an example
+of such a case? When do we get a commit graph which is not linear?
 
-ok, i accept your point of not putting this into such a low level as the 
-object abstraction. Was a bad idea.
-
-but i dont think the above would be enough: there can be renames of 
-objects that have the same sha1 hash as other objects in the same tree, 
-and developers want to track individual objects, regardless of whether 
-other files share the same content. So some formal operation would be 
-needed to signal renames - e.g. to embedd it in the commit object, per 
-David's suggestion.
-
-The thing i tried to avoid was to list long filenames in the commit 
-(because of the tree hierarchy we'd need to do tree-absolute pathnames 
-or something like that, and escape things, and do lookups - duplicating 
-a VFS which is quite bad) - it would be better to identify the rename 
-source and target via its tree object hash and its offset within that 
-tree. Such information could be embedded in the commit object just fine.  
-Something like:
-
-me bb95843a5a0f397270819462812735ee29796fb4
-tree 1756b578489f93999ded68ae347bef7d6063101c
-parent 9f02d4d233223462d3f6217b5837b786e6286ba4
-author
-committer
-rename 39021759c903a943a33a28cfbd5070d36d851581 15234 9f02d4d233223462d3f6217b5837b786e6286ba4 16163
-
-?
-
-	Ingo
+3. How does git handle binary files? I guess it doesn't really care if
+it's binary or text, but how would the diff and merge scripts handle
+them?
