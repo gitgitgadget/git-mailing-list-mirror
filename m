@@ -1,292 +1,280 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: Re: Re: Re: Remove need to untrack before tracking new branch
-Date: Thu, 14 Apr 2005 11:55:57 +0200
-Message-ID: <1113472557.23299.99.camel@nosferatu.lan>
-References: <20050412132307.GH22614@pasky.ji.cz>
-	 <1113375277.23299.25.camel@nosferatu.lan>
-	 <20050413075441.GD16489@pasky.ji.cz>
-	 <1113381672.23299.47.camel@nosferatu.lan>
-	 <20050413092656.GO16489@pasky.ji.cz>
-	 <1113394537.23299.51.camel@nosferatu.lan>
-	 <20050413221936.GI25711@pasky.ji.cz>
-	 <1113461754.23299.68.camel@nosferatu.lan>
-	 <1113467335.23299.77.camel@nosferatu.lan>
-	 <1113467905.23299.81.camel@nosferatu.lan>
-	 <20050414091106.GX25711@pasky.ji.cz>
-	 <1113471609.23299.95.camel@nosferatu.lan>
-Reply-To: azarah@nosferatu.za.org
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: [ANNOUNCE] git-pasky-0.4
+Date: Thu, 14 Apr 2005 11:33:33 +0100
+Message-ID: <20050414113333.A3904@flint.arm.linux.org.uk>
+References: <20050414001938.GR25711@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-ess7+6E2SOb6MULuUZTs"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 11:49:53 2005
+X-From: git-owner@vger.kernel.org Thu Apr 14 12:30:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM0yJ-000259-Qv
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 11:49:16 +0200
+	id 1DM1cK-0008HY-BX
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 12:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261453AbVDNJwf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 05:52:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261466AbVDNJwe
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 05:52:34 -0400
-Received: from ctb-mesg7.saix.net ([196.25.240.79]:50315 "EHLO
-	ctb-mesg7.saix.net") by vger.kernel.org with ESMTP id S261453AbVDNJwS
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 05:52:18 -0400
-Received: from gateway.lan (wblv-146-222-135.telkomadsl.co.za [165.146.222.135])
-	by ctb-mesg7.saix.net (Postfix) with ESMTP id E2443B7F0;
-	Thu, 14 Apr 2005 11:52:12 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id A59543A26DB;
-	Thu, 14 Apr 2005 11:58:16 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 21353-16; Thu, 14 Apr 2005 11:58:07 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id 7BD263A26DA;
-	Thu, 14 Apr 2005 11:58:07 +0200 (SAST)
+	id S261475AbVDNKdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 06:33:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261477AbVDNKdu
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 06:33:50 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:15889 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261475AbVDNKdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 06:33:37 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DM1fC-0005Uj-8P; Thu, 14 Apr 2005 11:33:34 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DM1fB-0001Ta-80; Thu, 14 Apr 2005 11:33:33 +0100
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <1113471609.23299.95.camel@nosferatu.lan>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <20050414001938.GR25711@pasky.ji.cz>; from pasky@ucw.cz on Thu, Apr 14, 2005 at 02:19:38AM +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Apr 14, 2005 at 02:19:38AM +0200, Petr Baudis wrote:
+>   I'm happy to announce git-pasky-0.4, my set of scripts upon Linus
+> Torvald's git, which aims to provide a humanly usable interface, to a
+> degree similar to a SCM tool.
 
---=-ess7+6E2SOb6MULuUZTs
-Content-Type: multipart/mixed; boundary="=-MIv/XzASgdn/dRAZVy3T"
+Here's my updated patch, against latest git-pasky.  Now using
+hton*/ntoh* directly rather than wrapping them.  Enjoy.
 
-
---=-MIv/XzASgdn/dRAZVy3T
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, 2005-04-14 at 11:40 +0200, Martin Schlemmer wrote:
-> On Thu, 2005-04-14 at 11:11 +0200, Petr Baudis wrote:
-> > Please trim the replied mails a bit, snipping old and irrelevant parts.
-> > This is insane. :-)
-> >=20
-> > Dear diary, on Thu, Apr 14, 2005 at 10:38:25AM CEST, I got a letter
-> > where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > ..snip..
-> > > Normalize show-diff output, add --update-modes target to update-cache=
-,
-> > > and make sure we only show real changes after changing the tracked
-> > > branch, as well as update the file modes according to the cache.
-> >=20
-> > I'm lost. Why do you do --update-modes? That makes no sense to me.
-> > You introduce them to the cache out-of-order w.r.t. commits, that means
-> > in the normal git usage they are already unrevertable.
-> >=20
->=20
-> Right, afterwards I thought I did add it to the wrong place.
->=20
->=20
-> > What are you trying to do? Mode changes _are_ real changes. You _don't_
-> > want to silence them. What you want is to even show them more explicitl=
-y
-> > in show-diff.
-> >=20
->=20
-> No, you do not understand.  If you actually change the mode, it will
-> show.  What now happens, is that say I track the 'linus' branch, then
-> untrack, and then track 'pasky' again, the Patches will be applied, but
-> not the mode changes which are stored in the cache ...
->
-> So basically the modes that are stored in the cache are not applied ...
-> Although, yes, I prob should add the relevant code to checkout-cache.
->=20
-
-Ok, this should be a better one I think.
-
-----
-
-Normalize show-diff output, add --update-modes target to update-cache,
-and make sure we only show real changes after changing the tracked
-branch, as well as update the file modes according to the cache.
-
-Signed-off-by: Martin Schlemmer <azarah@nosferatu.za.org>
-
-checkout-cache.c:  f06871cdbc1b18ea93bdf4e17126aeb4cca1373e
---- f06871cdbc1b18ea93bdf4e17126aeb4cca1373e/checkout-cache.c
-+++ uncommitted/checkout-cache.c
-@@ -34,7 +34,7 @@
-  */
- #include "cache.h"
-
--static int force =3D 0, quiet =3D 0;
-+static int force =3D 0, quiet =3D 0, update_mode =3D 0;
-
- static void create_directories(const char *path)
+--- cache.h
++++ cache.h	Thu Apr 14 11:27:22 2005
+@@ -14,6 +14,8 @@
+ #include <openssl/sha.h>
+ #include <zlib.h>
+ 
++#include <netinet/in.h>
++
+ /*
+  * Basic data structures for the directory cache
+  *
+@@ -67,7 +69,7 @@
+ #define DEFAULT_DB_ENVIRONMENT ".git/objects"
+ 
+ #define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (len) + 8) & ~7)
+-#define ce_size(ce) cache_entry_size((ce)->namelen)
++#define ce_size(ce) cache_entry_size(ntohs((ce)->namelen))
+ 
+ #define alloc_nr(x) (((x)+16)*3/2)
+ 
+--- checkout-cache.c
++++ checkout-cache.c	Thu Apr 14 11:25:40 2005
+@@ -77,7 +77,7 @@
+ 		return error("checkout-cache: unable to read sha1 file of %s (%s)",
+ 			ce->name, sha1_to_hex(ce->sha1));
+ 	}
+-	fd = create_file(ce->name, ce->st_mode);
++	fd = create_file(ce->name, ntohl(ce->st_mode));
+ 	if (fd < 0) {
+ 		free(new);
+ 		return error("checkout-cache: unable to create %s (%s)",
+--- read-cache.c
++++ read-cache.c	Thu Apr 14 11:25:40 2005
+@@ -288,27 +288,34 @@
+ 	/* nsec seems unreliable - not all filesystems support it, so
+ 	 * as long as it is in the inode cache you get right nsec
+ 	 * but after it gets flushed, you get zero nsec. */
+-	if (ce->mtime.sec  != (unsigned int)st->st_mtim.tv_sec
++#if 0
++	if (ntohl(ce->mtime.sec)  != (unsigned int)st->st_mtim.tv_sec
+ #ifdef NSEC
+-	    || ce->mtime.nsec != (unsigned int)st->st_mtim.tv_nsec
++	    || ntohl(ce->mtime.nsec) != (unsigned int)st->st_mtim.tv_nsec
+ #endif
+ 	    )
+ 		changed |= MTIME_CHANGED;
+-	if (ce->ctime.sec  != (unsigned int)st->st_ctim.tv_sec
++	if (ntohl(ce->ctime.sec)  != (unsigned int)st->st_ctim.tv_sec
+ #ifdef NSEC
+-	    || ce->ctime.nsec != (unsigned int)st->st_ctim.tv_nsec
++	    || ntohl(ce->ctime.nsec) != (unsigned int)st->st_ctim.tv_nsec
+ #endif
+ 	    )
+ 		changed |= CTIME_CHANGED;
+-	if (ce->st_uid != (unsigned int)st->st_uid ||
+-	    ce->st_gid != (unsigned int)st->st_gid)
++#else
++	if (ntohl(ce->mtime.sec)  != (unsigned int)st->st_mtime)
++		changed |= MTIME_CHANGED;
++	if (ntohl(ce->ctime.sec)  != (unsigned int)st->st_ctime)
++		changed |= CTIME_CHANGED;
++#endif
++	if (ntohl(ce->st_uid) != (unsigned int)st->st_uid ||
++	    ntohl(ce->st_gid) != (unsigned int)st->st_gid)
+ 		changed |= OWNER_CHANGED;
+-	if (ce->st_mode != (unsigned int)st->st_mode)
++	if (ntohl(ce->st_mode) != (unsigned int)st->st_mode)
+ 		changed |= MODE_CHANGED;
+-	if (ce->st_dev != (unsigned int)st->st_dev ||
+-	    ce->st_ino != (unsigned int)st->st_ino)
++	if (ntohl(ce->st_dev) != (unsigned int)st->st_dev ||
++	    ntohl(ce->st_ino) != (unsigned int)st->st_ino)
+ 		changed |= INODE_CHANGED;
+-	if (ce->st_size != (unsigned int)st->st_size)
++	if (ntohl(ce->st_size) != (unsigned int)st->st_size)
+ 		changed |= DATA_CHANGED;
+ 	return changed;
+ }
+@@ -337,7 +344,7 @@
+ 	while (last > first) {
+ 		int next = (last + first) >> 1;
+ 		struct cache_entry *ce = active_cache[next];
+-		int cmp = cache_name_compare(name, namelen, ce->name, ce->namelen);
++		int cmp = cache_name_compare(name, namelen, ce->name, ntohs(ce->namelen));
+ 		if (!cmp)
+ 			return next;
+ 		if (cmp < 0) {
+@@ -364,7 +371,7 @@
  {
-@@ -99,6 +99,8 @@
-                unsigned changed =3D cache_match_stat(ce, &st);
-                if (!changed)
-                        return 0;
-+               if (update_mode && changed & MODE_CHANGED)
-+                       chmod(ce->name, ce->st_mode);
-                if (!force) {
-                        if (!quiet)
-                                fprintf(stderr, "checkout-cache: %s already=
- exists\n", ce->name);
-@@ -158,6 +160,10 @@
-                                quiet =3D 1;
-                                continue;
-                        }
-+                       if (!strcmp(arg, "-m")) {
-+                               update_mode =3D 1;
-+                               continue;
-+                       }
-                }
-                checkout_file(arg);
-        }
-gitcancel.sh:  ec58f7444a42cd3cbaae919fc68c70a3866420c0
---- ec58f7444a42cd3cbaae919fc68c70a3866420c0/gitcancel.sh
-+++ uncommitted/gitcancel.sh
-@@ -12,7 +12,8 @@
-
- # FIXME: Does not revert mode changes!
-
--show-diff | patch -p0 -R
-+show-diff | patch -p1 -R
- rm -f .git/add-queue .git/rm-queue .git/merged
-
-+checkout-cache -q -m -a
- update-cache --refresh
-gittrack.sh:  03d6db1fb3a70605ef249c632c04e542457f0808
---- 03d6db1fb3a70605ef249c632c04e542457f0808/gittrack.sh
-+++ uncommitted/gittrack.sh
-@@ -51,6 +51,8 @@
-
-        read-tree $(tree-id "$name")
-        gitdiff.sh local "$name" | gitapply.sh
-+       checkout-cache -q -m -a
-+       update-cache --refresh
-
- else
-        [ "$tracking" ] || \
-@@ -61,6 +63,8 @@
-        if [ -s ".git/HEAD.local" ]; then
-                gitdiff.sh "$tracking" local | gitapply.sh
-                read-tree $(tree-id local)
-+               checkout-cache -q -m -a
-+               update-cache --refresh
-
-                head=3D$(cat .git/HEAD)
-                branchhead=3D$(cat .git/heads/$tracking)
-show-diff.c:  a531ca4078525d1c8dcf84aae0bfa89fed6e5d96
---- a531ca4078525d1c8dcf84aae0bfa89fed6e5d96/show-diff.c
-+++ uncommitted/show-diff.c
-@@ -5,13 +5,18 @@
+ 	int pos;
+ 
+-	pos = cache_name_pos(ce->name, ce->namelen);
++	pos = cache_name_pos(ce->name, ntohs(ce->namelen));
+ 
+ 	/* existing match? Just replace it */
+ 	if (pos >= 0) {
+@@ -395,9 +402,9 @@
+ 	SHA_CTX c;
+ 	unsigned char sha1[20];
+ 
+-	if (hdr->signature != CACHE_SIGNATURE)
++	if (hdr->signature != htonl(CACHE_SIGNATURE))
+ 		return error("bad signature");
+-	if (hdr->version != 1)
++	if (hdr->version != htonl(1))
+ 		return error("bad version");
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, hdr, offsetof(struct cache_header, sha1));
+@@ -445,12 +452,12 @@
+ 	if (verify_hdr(hdr, size) < 0)
+ 		goto unmap;
+ 
+-	active_nr = hdr->entries;
++	active_nr = ntohl(hdr->entries);
+ 	active_alloc = alloc_nr(active_nr);
+ 	active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
+ 
+ 	offset = sizeof(*hdr);
+-	for (i = 0; i < hdr->entries; i++) {
++	for (i = 0; i < ntohl(hdr->entries); i++) {
+ 		struct cache_entry *ce = map + offset;
+ 		offset = offset + ce_size(ce);
+ 		active_cache[i] = ce;
+@@ -469,9 +476,9 @@
+ 	struct cache_header hdr;
+ 	int i;
+ 
+-	hdr.signature = CACHE_SIGNATURE;
+-	hdr.version = 1;
+-	hdr.entries = entries;
++	hdr.signature = htonl(CACHE_SIGNATURE);
++	hdr.version = htonl(1);
++	hdr.entries = htonl(entries);
+ 
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, &hdr, offsetof(struct cache_header, sha1));
+--- read-tree.c
++++ read-tree.c	Thu Apr 14 11:25:11 2005
+@@ -13,8 +13,8 @@
+ 
+ 	memset(ce, 0, size);
+ 
+-	ce->st_mode = mode;
+-	ce->namelen = baselen + len;
++	ce->st_mode = htonl(mode);
++	ce->namelen = htons(baselen + len);
+ 	memcpy(ce->name, base, baselen);
+ 	memcpy(ce->name + baselen, pathname, len+1);
+ 	memcpy(ce->sha1, sha1, 20);
+--- show-diff.c
++++ show-diff.c	Thu Apr 14 11:25:28 2005
+@@ -90,7 +90,7 @@
+ 		changed = cache_match_stat(ce, &st);
+ 		if (!changed)
+ 			continue;
+-		printf("%.*s:  ", ce->namelen, ce->name);
++		printf("%.*s:  ", ntohs(ce->namelen), ce->name);
+ 		for (n = 0; n < 20; n++)
+ 			printf("%02x", ce->sha1[n]);
+ 		printf("\n");
+--- update-cache.c
++++ update-cache.c	Thu Apr 14 11:30:07 2005
+@@ -68,18 +68,18 @@
   */
- #include "cache.h"
-
--static void show_differences(char *name,
-+static void show_differences(struct cache_entry *ce,
-        void *old_contents, unsigned long long old_size)
+ static void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
  {
-        static char cmd[1000];
-+       static char sha1[41];
-+       int n;
-        FILE *f;
+-	ce->ctime.sec = st->st_ctime;
++	ce->ctime.sec = htonl(st->st_ctime);
+ #ifdef NSEC
+-	ce->ctime.nsec = st->st_ctim.tv_nsec;
++	ce->ctime.nsec = htonl(st->st_ctim.tv_nsec);
+ #endif
+-	ce->mtime.sec = st->st_mtime;
++	ce->mtime.sec = htonl(st->st_mtime);
+ #ifdef NSEC
+-	ce->mtime.nsec = st->st_mtim.tv_nsec;
++	ce->mtime.nsec = htonl(st->st_mtim.tv_nsec);
+ #endif
+-	ce->st_dev = st->st_dev;
+-	ce->st_ino = st->st_ino;
+-	ce->st_uid = st->st_uid;
+-	ce->st_gid = st->st_gid;
++	ce->st_dev = htonl(st->st_dev);
++	ce->st_ino = htonl(st->st_ino);
++	ce->st_uid = htonl(st->st_uid);
++	ce->st_gid = htonl(st->st_gid);
+ }
+ 
+ static int add_file_to_cache(char *path)
+@@ -107,9 +107,9 @@
+ 	memset(ce, 0, size);
+ 	memcpy(ce->name, path, namelen);
+ 	fill_stat_cache_info(ce, &st);
+-	ce->st_mode = st.st_mode;
+-	ce->st_size = st.st_size;
+-	ce->namelen = namelen;
++	ce->st_mode = htonl(st.st_mode);
++	ce->st_size = htonl(st.st_size);
++	ce->namelen = htons(namelen);
+ 
+ 	if (index_fd(path, namelen, ce, fd, &st) < 0)
+ 		return -1;
+@@ -190,7 +190,7 @@
+ 	updated = malloc(size);
+ 	memcpy(updated, ce, size);
+ 	fill_stat_cache_info(updated, &st);
+-	updated->st_size = st.st_size;
++	updated->st_size = htonl(st.st_size);
+ 	return updated;
+ }
+ 
+--- write-tree.c
++++ write-tree.c	Thu Apr 14 11:25:40 2005
+@@ -45,7 +45,7 @@
+ 	do {
+ 		struct cache_entry *ce = cachep[nr];
+ 		const char *pathname = ce->name, *filename, *dirname;
+-		int pathlen = ce->namelen, entrylen;
++		int pathlen = ntohs(ce->namelen), entrylen;
+ 		unsigned char *sha1;
+ 		unsigned int mode;
+ 
+@@ -54,7 +54,7 @@
+ 			break;
+ 
+ 		sha1 = ce->sha1;
+-		mode = ce->st_mode;
++		mode = ntohl(ce->st_mode);
+ 
+ 		/* Do we have _further_ subdirectories? */
+ 		filename = pathname + baselen;
 
--       snprintf(cmd, sizeof(cmd), "diff -L %s -u -N  - %s", name, name);
-+       for (n =3D 0; n < 20; n++)
-+               snprintf(&(sha1[n*2]), 3, "%02x", ce->sha1[n]);
-+       snprintf(cmd, sizeof(cmd), "diff -L %s/%s -L uncommitted/%s -u -N  =
-- %s",
-+               sha1, ce->name, ce->name, ce->name);
-        f =3D popen(cmd, "w");
-        if (old_size)
-                fwrite(old_contents, old_size, 1, f);
-@@ -99,7 +104,7 @@
-                        continue;
-
-                new =3D read_sha1_file(ce->sha1, type, &size);
--               show_differences(ce->name, new, size);
-+               show_differences(ce, new, size);
-                free(new);
-        }
-        return 0;
-
-
---=20
-Martin Schlemmer
-
-
---=-MIv/XzASgdn/dRAZVy3T
-Content-Disposition: attachment; filename=git-show-diff.patch
-Content-Type: text/x-patch; name=git-show-diff.patch; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-Y2hlY2tvdXQtY2FjaGUuYzogIGYwNjg3MWNkYmMxYjE4ZWE5M2JkZjRlMTcxMjZhZWI0Y2NhMTM3
-M2UNCi0tLSBmMDY4NzFjZGJjMWIxOGVhOTNiZGY0ZTE3MTI2YWViNGNjYTEzNzNlL2NoZWNrb3V0
-LWNhY2hlLmMNCisrKyB1bmNvbW1pdHRlZC9jaGVja291dC1jYWNoZS5jDQpAQCAtMzQsNyArMzQs
-NyBAQA0KICAqLw0KICNpbmNsdWRlICJjYWNoZS5oIg0KIA0KLXN0YXRpYyBpbnQgZm9yY2UgPSAw
-LCBxdWlldCA9IDA7DQorc3RhdGljIGludCBmb3JjZSA9IDAsIHF1aWV0ID0gMCwgdXBkYXRlX21v
-ZGUgPSAwOw0KIA0KIHN0YXRpYyB2b2lkIGNyZWF0ZV9kaXJlY3Rvcmllcyhjb25zdCBjaGFyICpw
-YXRoKQ0KIHsNCkBAIC05OSw2ICs5OSw4IEBADQogCQl1bnNpZ25lZCBjaGFuZ2VkID0gY2FjaGVf
-bWF0Y2hfc3RhdChjZSwgJnN0KTsNCiAJCWlmICghY2hhbmdlZCkNCiAJCQlyZXR1cm4gMDsNCisJ
-CWlmICh1cGRhdGVfbW9kZSAmJiBjaGFuZ2VkICYgTU9ERV9DSEFOR0VEKQ0KKwkJCWNobW9kKGNl
-LT5uYW1lLCBjZS0+c3RfbW9kZSk7DQogCQlpZiAoIWZvcmNlKSB7DQogCQkJaWYgKCFxdWlldCkN
-CiAJCQkJZnByaW50ZihzdGRlcnIsICJjaGVja291dC1jYWNoZTogJXMgYWxyZWFkeSBleGlzdHNc
-biIsIGNlLT5uYW1lKTsNCkBAIC0xNTgsNiArMTYwLDEwIEBADQogCQkJCXF1aWV0ID0gMTsNCiAJ
-CQkJY29udGludWU7DQogCQkJfQ0KKwkJCWlmICghc3RyY21wKGFyZywgIi1tIikpIHsNCisJCQkJ
-dXBkYXRlX21vZGUgPSAxOw0KKwkJCQljb250aW51ZTsNCisJCQl9DQogCQl9DQogCQljaGVja291
-dF9maWxlKGFyZyk7DQogCX0NCmdpdGNhbmNlbC5zaDogIGVjNThmNzQ0NGE0MmNkM2NiYWFlOTE5
-ZmM2OGM3MGEzODY2NDIwYzANCi0tLSBlYzU4Zjc0NDRhNDJjZDNjYmFhZTkxOWZjNjhjNzBhMzg2
-NjQyMGMwL2dpdGNhbmNlbC5zaA0KKysrIHVuY29tbWl0dGVkL2dpdGNhbmNlbC5zaA0KQEAgLTEy
-LDcgKzEyLDggQEANCiANCiAjIEZJWE1FOiBEb2VzIG5vdCByZXZlcnQgbW9kZSBjaGFuZ2VzIQ0K
-IA0KLXNob3ctZGlmZiB8IHBhdGNoIC1wMCAtUg0KK3Nob3ctZGlmZiB8IHBhdGNoIC1wMSAtUg0K
-IHJtIC1mIC5naXQvYWRkLXF1ZXVlIC5naXQvcm0tcXVldWUgLmdpdC9tZXJnZWQNCiANCitjaGVj
-a291dC1jYWNoZSAtcSAtbSAtYQ0KIHVwZGF0ZS1jYWNoZSAtLXJlZnJlc2gNCmdpdHRyYWNrLnNo
-OiAgMDNkNmRiMWZiM2E3MDYwNWVmMjQ5YzYzMmMwNGU1NDI0NTdmMDgwOA0KLS0tIDAzZDZkYjFm
-YjNhNzA2MDVlZjI0OWM2MzJjMDRlNTQyNDU3ZjA4MDgvZ2l0dHJhY2suc2gNCisrKyB1bmNvbW1p
-dHRlZC9naXR0cmFjay5zaA0KQEAgLTUxLDYgKzUxLDggQEANCiANCiAJcmVhZC10cmVlICQodHJl
-ZS1pZCAiJG5hbWUiKQ0KIAlnaXRkaWZmLnNoIGxvY2FsICIkbmFtZSIgfCBnaXRhcHBseS5zaA0K
-KwljaGVja291dC1jYWNoZSAtcSAtbSAtYQ0KKwl1cGRhdGUtY2FjaGUgLS1yZWZyZXNoDQogDQog
-ZWxzZQ0KIAlbICIkdHJhY2tpbmciIF0gfHwgXA0KQEAgLTYxLDYgKzYzLDggQEANCiAJaWYgWyAt
-cyAiLmdpdC9IRUFELmxvY2FsIiBdOyB0aGVuDQogCQlnaXRkaWZmLnNoICIkdHJhY2tpbmciIGxv
-Y2FsIHwgZ2l0YXBwbHkuc2gNCiAJCXJlYWQtdHJlZSAkKHRyZWUtaWQgbG9jYWwpDQorCQljaGVj
-a291dC1jYWNoZSAtcSAtbSAtYQ0KKwkJdXBkYXRlLWNhY2hlIC0tcmVmcmVzaA0KIA0KIAkJaGVh
-ZD0kKGNhdCAuZ2l0L0hFQUQpDQogCQlicmFuY2hoZWFkPSQoY2F0IC5naXQvaGVhZHMvJHRyYWNr
-aW5nKQ0Kc2hvdy1kaWZmLmM6ICBhNTMxY2E0MDc4NTI1ZDFjOGRjZjg0YWFlMGJmYTg5ZmVkNmU1
-ZDk2DQotLS0gYTUzMWNhNDA3ODUyNWQxYzhkY2Y4NGFhZTBiZmE4OWZlZDZlNWQ5Ni9zaG93LWRp
-ZmYuYw0KKysrIHVuY29tbWl0dGVkL3Nob3ctZGlmZi5jDQpAQCAtNSwxMyArNSwxOCBAQA0KICAq
-Lw0KICNpbmNsdWRlICJjYWNoZS5oIg0KIA0KLXN0YXRpYyB2b2lkIHNob3dfZGlmZmVyZW5jZXMo
-Y2hhciAqbmFtZSwNCitzdGF0aWMgdm9pZCBzaG93X2RpZmZlcmVuY2VzKHN0cnVjdCBjYWNoZV9l
-bnRyeSAqY2UsDQogCXZvaWQgKm9sZF9jb250ZW50cywgdW5zaWduZWQgbG9uZyBsb25nIG9sZF9z
-aXplKQ0KIHsNCiAJc3RhdGljIGNoYXIgY21kWzEwMDBdOw0KKwlzdGF0aWMgY2hhciBzaGExWzQx
-XTsNCisJaW50IG47DQogCUZJTEUgKmY7DQogDQotCXNucHJpbnRmKGNtZCwgc2l6ZW9mKGNtZCks
-ICJkaWZmIC1MICVzIC11IC1OICAtICVzIiwgbmFtZSwgbmFtZSk7DQorCWZvciAobiA9IDA7IG4g
-PCAyMDsgbisrKQ0KKwkJc25wcmludGYoJihzaGExW24qMl0pLCAzLCAiJTAyeCIsIGNlLT5zaGEx
-W25dKTsNCisJc25wcmludGYoY21kLCBzaXplb2YoY21kKSwgImRpZmYgLUwgJXMvJXMgLUwgdW5j
-b21taXR0ZWQvJXMgLXUgLU4gIC0gJXMiLA0KKwkJc2hhMSwgY2UtPm5hbWUsIGNlLT5uYW1lLCBj
-ZS0+bmFtZSk7DQogCWYgPSBwb3BlbihjbWQsICJ3Iik7DQogCWlmIChvbGRfc2l6ZSkNCiAJCWZ3
-cml0ZShvbGRfY29udGVudHMsIG9sZF9zaXplLCAxLCBmKTsNCkBAIC05OSw3ICsxMDQsNyBAQA0K
-IAkJCWNvbnRpbnVlOw0KIA0KIAkJbmV3ID0gcmVhZF9zaGExX2ZpbGUoY2UtPnNoYTEsIHR5cGUs
-ICZzaXplKTsNCi0JCXNob3dfZGlmZmVyZW5jZXMoY2UtPm5hbWUsIG5ldywgc2l6ZSk7DQorCQlz
-aG93X2RpZmZlcmVuY2VzKGNlLCBuZXcsIHNpemUpOw0KIAkJZnJlZShuZXcpOw0KIAl9DQogCXJl
-dHVybiAwOw0K
-
-
---=-MIv/XzASgdn/dRAZVy3T--
-
---=-ess7+6E2SOb6MULuUZTs
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBCXj4tqburzKaJYLYRAh6kAJwKN8o83Bg8AJc/S9wzqbJ9kwMj9QCeL/Vs
-uNaffXyAH/neK3ZLT4ntMWQ=
-=56dx
------END PGP SIGNATURE-----
-
---=-ess7+6E2SOb6MULuUZTs--
+-- 
+Russell King
 
