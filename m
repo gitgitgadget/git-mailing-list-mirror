@@ -1,30 +1,30 @@
 From: Ingo Molnar <mingo@elte.hu>
-Subject: [patch] git: fix memory leaks in read-tree.c
-Date: Thu, 14 Apr 2005 13:54:22 +0200
-Message-ID: <20050414115422.GA14065@elte.hu>
+Subject: [patch] git: fix rare memory leak in rev-tree.c
+Date: Thu, 14 Apr 2005 13:58:00 +0200
+Message-ID: <20050414115800.GB14065@elte.hu>
 References: <20050414112638.GA12593@elte.hu> <20050414113527.GA13790@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Apr 14 13:52:17 2005
+X-From: git-owner@vger.kernel.org Thu Apr 14 13:55:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM2sw-0003ua-2v
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 13:51:50 +0200
+	id 1DM2vu-0004Nw-N9
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 13:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261482AbVDNLy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 07:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261453AbVDNLy7
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 07:54:59 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:31462 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261482AbVDNLy3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 07:54:29 -0400
+	id S261483AbVDNL6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 07:58:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261484AbVDNL6M
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 07:58:12 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:16359 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261483AbVDNL6G (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 07:58:06 -0400
 Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id 1CBF8320112;
-	Thu, 14 Apr 2005 13:53:50 +0200 (CEST)
+	by mx1.elte.hu (Postfix) with ESMTP id 4A96B31E922;
+	Thu, 14 Apr 2005 13:57:28 +0200 (CEST)
 Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 146E21FC2; Thu, 14 Apr 2005 13:54:25 +0200 (CEST)
+	id 43AF61FC2; Thu, 14 Apr 2005 13:58:03 +0200 (CEST)
 To: git@vger.kernel.org
 Content-Disposition: inline
 In-Reply-To: <20050414113527.GA13790@elte.hu>
@@ -41,65 +41,24 @@ Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-this patch fixes one common, and 4 rare memory leaks in read-tree.c.
+this patch fixes a rare memory leak in rev-tree.c.
 
 	Ingo
 
 Signed-off-by: Ingo Molnar <mingo@elte.hu>
 
---- read-tree.c.orig
-+++ read-tree.c
-@@ -23,23 +23,27 @@ static int read_one_entry(unsigned char 
+--- rev-tree.c.orig
++++ rev-tree.c
+@@ -73,8 +73,11 @@ static int parse_commit(unsigned char *s
  
- static int read_tree(unsigned char *sha1, const char *base, int baselen)
- {
--	void *buffer;
-+	void *buffer0, *buffer;
- 	unsigned long size;
- 	char type[20];
- 
--	buffer = read_sha1_file(sha1, type, &size);
-+	buffer0 = buffer = read_sha1_file(sha1, type, &size);
- 	if (!buffer)
- 		return -1;
--	if (strcmp(type, "tree"))
-+	if (strcmp(type, "tree")) {
-+		free(buffer);
- 		return -1;
-+	}
- 	while (size) {
- 		int len = strlen(buffer)+1;
- 		unsigned char *sha1 = buffer + len;
- 		char *path = strchr(buffer, ' ')+1;
- 		unsigned int mode;
- 
--		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1)
-+		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1) {
-+			free(buffer0);
+ 		rev->flags |= SEEN;
+ 		buffer = bufptr = read_sha1_file(sha1, type, &size);
+-		if (!buffer || strcmp(type, "commit"))
++		if (!buffer || strcmp(type, "commit")) {
++			if (buffer)
++				free(buffer);
  			return -1;
 +		}
- 
- 		buffer = sha1 + 20;
- 		size -= len + 20;
-@@ -53,13 +57,19 @@ static int read_tree(unsigned char *sha1
- 			newbase[baselen + pathlen] = '/';
- 			retval = read_tree(sha1, newbase, baselen + pathlen + 1);
- 			free(newbase);
--			if (retval)
-+			if (retval) {
-+				free(buffer0);
- 				return -1;
-+			}
- 			continue;
- 		}
--		if (read_one_entry(sha1, base, baselen, path, mode) < 0)
-+		if (read_one_entry(sha1, base, baselen, path, mode) < 0) {
-+			free(buffer0);
- 			return -1;
-+		}
- 	}
-+	free(buffer0);
-+
- 	return 0;
- }
- 
+ 		bufptr += 46; /* "tree " + "hex sha1" + "\n" */
+ 		while (!memcmp(bufptr, "parent ", 7) && !get_sha1_hex(bufptr+7, parent)) {
+ 			add_relationship(rev, parent);
