@@ -1,56 +1,72 @@
-From: tony.luck@intel.com
-Subject: Re: Date handling.
-Date: Thu, 14 Apr 2005 12:19:41 -0700
-Message-ID: <200504141919.j3EJJfG04166@unix-os.sc.intel.com>
-References: <Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org>
-	 <1113466592.12012.192.camel@baythorne.infradead.org>
-	 <Pine.LNX.4.58.0504140153230.7211@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org>
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 21:17:41 2005
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Handling renames.
+Date: Thu, 14 Apr 2005 20:20:02 +0100
+Message-ID: <1113506402.12012.218.camel@baythorne.infradead.org>
+References: <1113501260.27227.26.camel@hades.cambridge.redhat.com>
+	 <20050414181224.GA16126@elte.hu>
+	 <Pine.LNX.4.58.0504141124220.7211@ppc970.osdl.org>
+	 <20050414185841.GA16865@elte.hu>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	James Bottomley <James.Bottomley@SteelEye.com>
+X-From: git-owner@vger.kernel.org Thu Apr 14 21:18:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM9pI-0006bq-Du
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 21:16:32 +0200
+	id 1DM9pe-0006fA-6l
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 21:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261590AbVDNTTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 15:19:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261593AbVDNTTz
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 15:19:55 -0400
-Received: from fmr24.intel.com ([143.183.121.16]:34465 "EHLO
-	scsfmr004.sc.intel.com") by vger.kernel.org with ESMTP
-	id S261590AbVDNTTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 15:19:53 -0400
-Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
-	by scsfmr004.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j3EJJf9E019499;
-	Thu, 14 Apr 2005 19:19:42 GMT
-Received: from unix-os.sc.intel.com (unix-os.sc.intel.com [172.25.110.7])
-	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j3EJL2JI004539;
-	Thu, 14 Apr 2005 19:21:02 GMT
-Received: from localhost (localhost [[UNIX: localhost]])
-	by unix-os.sc.intel.com (8.11.6/8.11.2) id j3EJJfG04166;
-	Thu, 14 Apr 2005 12:19:41 -0700
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1113500316.27227.8.camel@hades.cambridge.redhat.com>
-X-Scanned-By: MIMEDefang 2.44
+	id S261595AbVDNTUN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 15:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261594AbVDNTUN
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 15:20:13 -0400
+Received: from baythorne.infradead.org ([81.187.226.107]:41359 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S261595AbVDNTUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 15:20:04 -0400
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DM9sg-0000at-OO; Thu, 14 Apr 2005 20:20:02 +0100
+To: Ingo Molnar <mingo@elte.hu>
+In-Reply-To: <20050414185841.GA16865@elte.hu>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> OK. commit-tree now eats RFC2822 dates as AUTHOR_DATE because that's
-> what you're going to want to feed it. We store seconds since UTC epoch,
-> we add the author's or committer's timezone as auxiliary data so that
-> dates can be pretty-printed in the original timezone later if anyone
-> cares.
+On Thu, 2005-04-14 at 20:58 +0200, Ingo Molnar wrote:
+> The thing i tried to avoid was to list long filenames in the commit 
+> (because of the tree hierarchy we'd need to do tree-absolute pathnames 
+> or something like that, and escape things, and do lookups - duplicating 
+> a VFS which is quite bad) - it would be better to identify the rename 
+> source and target via its tree object hash and its offset within that 
+> tree. Such information could be embedded in the commit object just fine.  
+> Something like:
 
-With a UTC date, why would anyone care in which timezone the commit was
-made?  Any pretty printing would most likely be prettiest if it is done
-relative to the timezone of the person looking at the commit record, not
-the person who created the record.
+Actually I'm not sure that's true. Let's consider the two main users of
+this information.
 
-If we do need the timezone, then I think we also need the latitude of the
-committer too, so that we know whether to interpret "July" as summer or
-winter :-)
+Firstly, because it's what I've been playing with: to list a given
+file's revision history, I currently work with its filename -- walk the
+commit objects, inspecting the tree and selecting those commits where
+the file has changed. If my filename is 'fs/jffs2/inode.c' then I can
+immediately skip over a commit where the 'fs' entry in the top-level
+tree is identical to that in the parent, or I can skip a commit where
+the 'jffs2' entry in the 'fs' subtree is identical to the parent... it's
+all done on filename, and the {parent, entry} tuple wouldn't help much
+here; I'd probably have to convert back to a filename anyway.
 
--Tony
+Secondly, there's merges. I've paid less attention to these (see mail 5
+minutes ago) but I think they'd end up operating on the rename
+information in a very similar way. To find a common ancestor for a given
+file,, we want to track its name as it changed during history; at that
+point it's all string compares.
+
+-- 
+dwmw2
+
+
