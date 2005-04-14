@@ -1,151 +1,84 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: Remove need to untrack before tracking new branch
-Date: Fri, 15 Apr 2005 01:25:56 +0200
-Message-ID: <1113521156.23299.140.camel@nosferatu.lan>
-References: <20050413092656.GO16489@pasky.ji.cz>
-	 <1113394537.23299.51.camel@nosferatu.lan>
-	 <20050413221936.GI25711@pasky.ji.cz>
-	 <1113461754.23299.68.camel@nosferatu.lan>
-	 <1113467335.23299.77.camel@nosferatu.lan>
-	 <1113467905.23299.81.camel@nosferatu.lan>
-	 <20050414091106.GX25711@pasky.ji.cz>
-	 <1113471609.23299.95.camel@nosferatu.lan>
-	 <20050414224257.GM22699@pasky.ji.cz>
-	 <1113519687.23299.126.camel@nosferatu.lan>
-	 <20050414230047.GS22699@pasky.ji.cz>
-	 <1113520175.23299.134.camel@nosferatu.lan>
-Reply-To: azarah@nosferatu.za.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Live Merging from remote repositories
+Date: Thu, 14 Apr 2005 16:22:39 -0700
+Message-ID: <7vfyxtose8.fsf@assigned-by-dhcp.cox.net>
+References: <IGEMLBGAECDFPIKMIMLCCEELCHAA.barry@disus.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-MRdUg7tGBI4ANkr2Wtru"
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 01:19:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Petr Baudis" <pasky@ucw.cz>, "Junio C Hamano" <junkio@cox.net>,
+	"Linus Torvalds" <torvalds@osdl.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 15 01:19:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMDcN-0005yi-KQ
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:19:27 +0200
+	id 1DMDcY-0005zz-O9
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261648AbVDNXWp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 19:22:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVDNXWp
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:22:45 -0400
-Received: from ctb-mesg3.saix.net ([196.25.240.75]:62388 "EHLO
-	ctb-mesg3.saix.net") by vger.kernel.org with ESMTP id S261648AbVDNXWK
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 19:22:10 -0400
-Received: from gateway.lan (wblv-146-239-208.telkomadsl.co.za [165.146.239.208])
-	by ctb-mesg3.saix.net (Postfix) with ESMTP id DFF04266E;
-	Fri, 15 Apr 2005 01:22:07 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id 532263A26DB;
-	Fri, 15 Apr 2005 01:28:13 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14157-09; Fri, 15 Apr 2005 01:28:07 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id 346F23A26DA;
-	Fri, 15 Apr 2005 01:28:07 +0200 (SAST)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <1113520175.23299.134.camel@nosferatu.lan>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	id S261647AbVDNXW7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 19:22:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVDNXW7
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:22:59 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:32454 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261647AbVDNXWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 19:22:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050414232239.DEJP22013.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 14 Apr 2005 19:22:39 -0400
+To: "Barry Silverman" <barry@disus.com>
+In-Reply-To: <IGEMLBGAECDFPIKMIMLCCEELCHAA.barry@disus.com> (Barry
+ Silverman's message of "Thu, 14 Apr 2005 16:01:32 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "BS" == Barry Silverman <barry@disus.com> writes:
 
---=-MRdUg7tGBI4ANkr2Wtru
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+I have not thought about remote issues at all, other than the
+distribution mechanism vaguely outlined in my previous mail (not
+cc'ed to git list but I would not mind if you reproduced it here
+if somebody asked), so I am not qualified to comment on that
+part of your message.
 
-On Fri, 2005-04-15 at 01:09 +0200, Martin Schlemmer wrote:
-> On Fri, 2005-04-15 at 01:00 +0200, Petr Baudis wrote:
-> > Dear diary, on Fri, Apr 15, 2005 at 01:01:27AM CEST, I got a letter
-> > where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > > On Fri, 2005-04-15 at 00:42 +0200, Petr Baudis wrote:
-> > > > Dear diary, on Thu, Apr 14, 2005 at 11:40:09AM CEST, I got a letter
-> > > > where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > > > > > > -       snprintf(cmd, sizeof(cmd), "diff -L %s -u -N  - %s", =
-name, name);
-> > > > > > > +       for (n =3D 0; n < 20; n++)
-> > > > > > > +               snprintf(&(sha1[n*2]), 3, "%02x", ce->sha1[n]=
-);
-> > > > > > > +       snprintf(cmd, sizeof(cmd), "diff -L %s/%s -L uncommit=
-ted/%s -u -N  - %s",
-> > > > > > > +               sha1, ce->name, ce->name, ce->name);
-> > > > > >=20
-> > > > > > The "directory" sha1 is the sha1 of the tree, not of the partic=
-ular
-> > > > > > file - that one is in the "attributes" list (parentheses after =
-the
-> > > > > > filename), together with mode.
-> > > > > >=20
-> > > > >=20
-> > > > > Does it really matter?  It is more just to get the patch prefix r=
-ight,
-> > > > > and I did it as it went nicely with the printed:
-> > > > >=20
-> > > > > ----
-> > > > > show-diff.c:  a531ca4078525d1c8dcf84aae0bfa89fed6e5d96
-> > > > > ----
-> > > > >=20
-> > > > > for example ...
-> > > >=20
-> > > > Yes, it matters, and I don't care how nicely it wents with what you
-> > > > print before.
-> > > >=20
-> > >=20
-> > > hah ;p
-> > >=20
-> > > > Either print there some nonsense which is clear not to be a tree ID=
-, or
-> > > > (much more preferably) print the real tree ID there. If some tool e=
-ver
-> > > > uses it (e.g. to help resolve conflicts, perhaps even actually doin=
-g a
-> > > > real merge based on the patch), you just confused it.
-> > > >=20
-> > >=20
-> > > Ok, understood.  Do you think it will be scripted?  If not I guess we
-> > > can just do labels like:
-> > >=20
-> > > --- committed/
-> > > +++ uncommitted/
-> > >=20
-> > > ?
-> >=20
-> > Heh. Well, of course this could do. But is there any technical reason
-> > why not just carry the sha1 id of the tree around and stuff it there?
-> >=20
->=20
-> Not at all. Just wanted to know if anybody saw the possible use before
-> adding possible cruft that could be done shorter - will do a patch
-> shortly.
->=20
+BS> The way Junio has done it, no intermediate trees or commits
+BS> are used...
 
-Ho hum - none of the lowlevel tools know or work with the tree-id, and I
-am not too sure if Linus will like adding something to get it ... any
-ideas?
+BS> Is this a bug or a feature?
 
+I would call that a feature in that there is no need to look at
+intermediate state.  I also might call that a misfeature in that
+it may have resulted in a better merge if it looked at
+intermediate state.
 
---=20
-Martin Schlemmer
+I just have this fuzzy feeling that, when doing this merge:
 
+                     A-1 --- A-2 --- A-3
+                    /                   \ 
+    Common Ancestor                      Merge Result
+                    \                   /
+                     B-1 --- B-2 --- B-3
 
---=-MRdUg7tGBI4ANkr2Wtru
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+looking at diff(Common Ancestor, A-1), diff(Common Ancestor,
+B-1), diff(A-1, A-2), ... might give you richer context than
+just merging 3-way using Common Ancestor, A-3, and B-3 to derive
+the Merge Result.  It might not.  I honestly do not know.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+BTW, Pasky, the above paragraph is my answer to your question in
+the other message <20050414202016.GC22699@pasky.ji.cz>:
 
-iD8DBQBCXvwEqburzKaJYLYRAmtHAJ9lfR06Bn8+7gsCMb211nN+XobTFACdGAaW
-I8hnlGvrML8iWkFf6NuSU7Q=
-=uqw4
------END PGP SIGNATURE-----
+> But one different thing to note here.
+> 
+> You say "merge these two trees" above (I take it that you mean
+> "merge these two trees, taking account of this tree as their
+> common ancestor", so actually you are dealing with three trees),
+> and I am tending to agree with the notion of merging trees not
+> commits.  However you might get richer context and more sensible
+> resulting merge if you say "merge these two commits".  Since
+> commit chaining is part of the fundamental git object model you
+> may as well use it.
 
---=-MRdUg7tGBI4ANkr2Wtru--
+Pasky> Could you be more particular on the richer context etc?
 
