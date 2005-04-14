@@ -1,170 +1,100 @@
-From: Christopher Li <git@chrisli.org>
-Subject: Re: Merge with git-pasky II.
-Date: Thu, 14 Apr 2005 16:24:21 -0400
-Message-ID: <20050414202421.GC25468@64m.dyndns.org>
-References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org> <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz> <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: Re: Re: [patch pasky] update gitcancel.sh to handle modes as well
+Date: Fri, 15 Apr 2005 01:39:06 +0200
+Message-ID: <1113521946.23299.143.camel@nosferatu.lan>
+References: <1113519445.23299.119.camel@nosferatu.lan>
+	 <1113519890.23299.129.camel@nosferatu.lan>
+	 <20050414231558.GW22699@pasky.ji.cz>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 01:31:59 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-SQmo/+ML08cuzC9TxRBa"
+Content-Transfer-Encoding: 8bit
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 15 01:33:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMDo6-0007Ce-BZ
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:31:34 +0200
+	id 1DMDpN-0007Id-6J
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 01:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261652AbVDNXe4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 19:34:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261653AbVDNXet
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:34:49 -0400
-Received: from sccrmhc11.comcast.net ([204.127.202.55]:14525 "EHLO
-	sccrmhc11.comcast.net") by vger.kernel.org with ESMTP
-	id S261652AbVDNXeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 19:34:22 -0400
-Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
-          by comcast.net (sccrmhc11) with ESMTP
-          id <200504142334220110029oi5e>; Thu, 14 Apr 2005 23:34:22 +0000
-Received: by localhost.localdomain (Postfix, from userid 1027)
-	id 409CF3F1EF; Thu, 14 Apr 2005 16:24:21 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+	id S261657AbVDNXgG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 19:36:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261654AbVDNXfc
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 19:35:32 -0400
+Received: from ctb-mesg2.saix.net ([196.25.240.74]:65416 "EHLO
+	ctb-mesg2.saix.net") by vger.kernel.org with ESMTP id S261653AbVDNXfS
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 19:35:18 -0400
+Received: from gateway.lan (wblv-146-239-208.telkomadsl.co.za [165.146.239.208])
+	by ctb-mesg2.saix.net (Postfix) with ESMTP id 49AB86A13;
+	Fri, 15 Apr 2005 01:35:17 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id AE06D3A26DB;
+	Fri, 15 Apr 2005 01:41:22 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 15384-01; Fri, 15 Apr 2005 01:41:17 +0200 (SAST)
+Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
+	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id 9E9573A26DA;
+	Fri, 15 Apr 2005 01:41:17 +0200 (SAST)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050414231558.GW22699@pasky.ji.cz>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-I think if the merge tree belong to plumbing, you can do
-even less in the merge.perl. You can just print out the
-instruction for the upper level SCM what to to without
-actually doing it yourself.
+--=-SQmo/+ML08cuzC9TxRBa
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-So you don't have to do touch anything in the tree.
-That is the way I use in my previous python script.
-You just print out some easy to modify  
+On Fri, 2005-04-15 at 01:15 +0200, Petr Baudis wrote:
+> Dear diary, on Fri, Apr 15, 2005 at 01:04:50AM CEST, I got a letter
+> where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
+> > Rather use checkout-cache to sync our tree, as should do the right thin=
+g
+> > instead of diffing (cancel imply just blow away everything).
+> >=20
+> > Signed-off-by: Martin Schlemmer <azarah@nosferatu.za.org>
+> >=20
+> > gitcancel.sh:  839b3c58f20f6eb8412f499a891e007e2e67d114
+> > --- 839b3c58f20f6eb8412f499a891e007e2e67d114/gitcancel.sh
+> > +++ uncommitted/gitcancel.sh
+> > @@ -10,9 +10,8 @@
+> >  #
+> >  # Takes no arguments. Takes the evil changes from the tree.
+> >=20
+> > -# FIXME: Does not revert mode changes!
+> >=20
+> > -show-diff | patch -p0 -R
+> >  rm -f .git/add-queue .git/rm-queue
+> > +checkout-cache -q -f -a
+> >=20
+> >  update-cache --refresh
+>=20
 
-e.g. in my python script it prints: (BTW, poor choice of print out name)
+PS, shouldn't we add a read-tree $(tree-id) before the checkout-cache?
 
-check out tree 253290af8b9ebc8565dd8de4cda24d0432a92b57
-modify pre-process.c 7684c115a87e41a9226ce79478101c746cf22c34
-3way-merge check.c dcb970cc1c5a83284dc5986abf07b6da76a8758c f77bfe119c19d928879091e0e3ee6debe3f1e1bf d315b43b025350d0107568a4d42cc2494d38621d
 
-Your merge tree can do the smae.
+--=20
+Martin Schlemmer
 
-Then the supper level SCM can easily follow instruction.
-Save your effort and make no assumption what SCM module is.
 
-Chris
+--=-SQmo/+ML08cuzC9TxRBa
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-On Thu, Apr 14, 2005 at 04:12:34PM -0700, Junio C Hamano wrote:
-> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
-> 
-> I think you are contradicting yourself for saying the above
-> after agreeing with me that the script should just work on trees
-> not commits.  My understanding is that the tools is just to
-> merge two related trees relative to another ancestor tree,
-> nothing more.  Especially, it should not care what is in the
-> working directory---that is SCM person's business.
-> 
-> I am just trying to follow my understanding of what Linus
-> wanted.  One of the guiding principle is to do as much things as
-> in dircache without ever checking things out or touching working
-> files unnecessarily.
-> 
-> PB> This will give the tool maximal flexibility.
-> 
-> I suspect it would force me to have a working directory
-> populated with files, just to do a merge.
-> 
-> PB> I'm all for an -o, and I don't mind ,, - I just don't want it uselessly
-> PB> long. I hope "git~merge~$$" was a joke... :-)
-> 
-> Which part do you object to?  PID part?  or tilde?  Would
-> git~merge do, perhaps?  It probably would not matter to you
-> because as an SCM you would always give an explicit --output
-> parameter to the script anyway.
-> 
-> PB> By the way, what about indentation with tabs? If you have a
-> PB> strong opinion about this, I don't insist - but if you
-> PB> really don't mind/care either way, it'd be great to use tabs
-> PB> as in the rest of the git code.
-> 
-> I do not have a strong opinion, but it is more trouble for me
-> only because I am lazy and am used to the indentation my Emacs
-> gives me.  I write code other than git, so changing Perl-mode
-> indentation setting globally for all .pl files is not an option
-> for me.  I'll see what I can do when I have time.
-> 
-> PB> Is there a fundamental reason why the directory cache
-> PB> contains the ancestor instead of the destination branch?
-> 
-> Because you are thinking as an SCM person where there are
-> distinction between tree-A and tree-B, two heads being merged.
-> There is no "destination branch" nor "source branch" in what I
-> am doing.  It is a merge of two equals derived from the same
-> ancestor.
-> 
-> PB> I think the script actually does not fundamentally depend on it. My main
-> PB> motivation is that the user can then trivially see what is he actually
-> PB> going to commit to his destination branch, which would be bought for
-> PB> free by that.
-> 
-> And again the user is *not* commiting to his "destination
-> branch".  At the level I am working at, the merge result should
-> be commited with two -p parameters to commit-tree --- tree-A and
-> tree-B, both being equal parents from the POV of git object
-> storage.
-> 
-> PB> And this is another thing I dislike a lot. I'd like merge-tree.pl to
-> PB> leave my directory cache alone, thank you very much. You know, I see
-> PB> what goes to the directory cache as actually part of the policy part.
-> 
-> Remember I am not touching *your* dircache.  It is a dircache in
-> the temporary merge area, specifically set up to help you review
-> the merge.  
-> 
-> Can't the SCM driver do things along this line, perhaps?
-> 
->  - You have your working files and your dircache.  They may not
->    match because you have uncommitted changes to your
->    environment.  You want to merge with Linus head.  You know
->    its SHA1 (call it COMMIT-Linus).  Your SCM knows which commit
->    you started with (call it COMMIT-Current).
-> 
->  - First you merge the tree associated with COMMIT-Current.  Use
->    it and COMMIT-Linus to find the common ancestor to use.
-> 
->  - Now use the tree SHA of COMMIT-Current, tree SHA1 of
->    COMMIT-Linus, and tree SHA1 of the common ancestor commit to
->    drive git-merge.perl (to be renamed ;-).  You will get a
->    temporary directory.  Have your user examine what is in
->    there, and fix the merge and have them tell you they are
->    happy.
-> 
->  - You go to that temporary directory, do write-tree and
->    commit-tree with -p parameter of COMMIT-Linus and
->    COMMIT-Current.  This will result in a new commit.  Call that
->    COMMIT-Merge.
-> 
->  - You, as an SCM, should know what your user have done in the
->    working directory relative to COMMIT-Current.  Especially you
->    should know the set of paths involved in that change.  Go in
->    to the temporary area, checkout-cache those files if you have
->    not done so.  Apply the changes you have there.  Optionally
->    have the user examine the changes and have him confirm.  Lift
->    those files into the user's working directory.
-> 
->  - Do your bookkeeping like "echo COMMIT-Merge >.git/Head", to
->    make the user's working files based on COMMIT-Merge, and run
->    read-tree using the COMMIT-Merge in the user's working
->    directory.  At this point, show-diff output should show what
->    the changes your user have had made if he had started working
->    based on COMMIT-Merge instead of starting from
->    COMMIT-Current.
-> 
-> I think the above would result in what SCM person would call
-> "merge upstream/sidestream changes into my working directory".
-> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBCXv8aqburzKaJYLYRAv2kAJ9TEvat6ftcsRgBozVG8Y/QZyqCjwCfZ/nB
+LxTfjZqE7sfuheBRQhD3A0Q=
+=6lZv
+-----END PGP SIGNATURE-----
+
+--=-SQmo/+ML08cuzC9TxRBa--
+
