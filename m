@@ -1,56 +1,68 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: RE: Date handling.
-Date: Thu, 14 Apr 2005 21:46:26 +0200
-Message-ID: <20050414194626.GB22699@pasky.ji.cz>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
+From: "Barry Silverman" <barry@disus.com>
+Subject: Live Merging from remote repositories
+Date: Thu, 14 Apr 2005 16:01:32 -0400
+Message-ID: <IGEMLBGAECDFPIKMIMLCCEELCHAA.barry@disus.com>
+References: <20050414193507.GA22699@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 21:46:15 2005
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@osdl.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 14 21:56:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMAHW-0002Z1-Ko
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 21:45:42 +0200
+	id 1DMAQo-0003wr-Gg
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 21:55:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261617AbVDNTsJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 15:48:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261611AbVDNTsJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 15:48:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10442 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261612AbVDNTq2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 15:46:28 -0400
-Received: (qmail 29828 invoked by uid 2001); 14 Apr 2005 19:46:26 -0000
-To: "Luck, Tony" <tony.luck@intel.com>
-Content-Disposition: inline
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261378AbVDNT6h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 15:58:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261395AbVDNT6e
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 15:58:34 -0400
+Received: from borg.disus.com ([199.243.199.210]:15121 "EHLO borg.disus.com")
+	by vger.kernel.org with ESMTP id S261378AbVDNT61 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 15:58:27 -0400
+Received: from ARNOLD (dhcpaj.secdisus.com [199.246.34.144])
+	by borg.disus.com (8.11.6/8.11.6) with SMTP id j3EIwAf13090;
+	Thu, 14 Apr 2005 14:58:10 -0400
+To: "Petr Baudis" <pasky@ucw.cz>, "Junio C Hamano" <junkio@cox.net>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook IMO, Build 9.0.2416 (9.0.2911.0)
+In-Reply-To: <20050414193507.GA22699@pasky.ji.cz>
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1478
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 14, 2005 at 09:42:28PM CEST, I got a letter
-where "Luck, Tony" <tony.luck@intel.com> told me that...
-> >I'd prefer not to lose the information. If someone has committed a
-> >change at 2am, I like to know that it was 2am for _them_. It helps me
-> >decide where to look first for the cause of problems. :)
-> 
-> I'd think the 8:00am-before-the-first-coffee checkins would be the
-> most worrying :-)
-> 
-> >It also helps disambiguate certain comments, especially those involving
-> >words or phrases such as "yesterday" or "this afternoon".
-> 
-> This is a very good point ... but this still has problems with the
-> "git is a filesystem, not a SCM" mantra.  Timezone comments don't
-> belong in the git inode.
+If you are merging from many distributed developers, than you would need to
+replicate every one of their repositories into your own. Is this necessary?
 
-So, when commit is done in a given time of day, a "*YAWN*" line should
-be automatically appended to the log message. ;-)
+I have been looking at Junio's code for merging, and it looks like it would
+be (relatively) easy change to make it run live across two remote
+repositories - assuming "future" science to develop remote common ancestor
+lookup...
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+IE, merge.pl $COMMON-BASE $LOCAL-CHANGESET remote::$REMOTE-CHANGESET
+
+To make this work, only a couple of things need to happen:
+1) be able to remotely run "remote::diff-tree $BASE $REMOTE-CHANGESET", and
+copy the results over the net to the place in the script where it is done
+locally. This is not a LOT of data, and is bounded by the number of total
+number of blobs in the resulting tree.
+
+2) When a remote blob is required (for merging, or copying), then copy it
+from the remote .git/objects to the local one. You only copy the blobs that
+will end up in the merged result (or be used for file merge).
+
+The way Junio has done it, no intermediate trees or commits are used...
+
+You don't copy remote's tree of commits between $BASE and $REMOTE-CHANGESET,
+or any of their associated trees and blobs (unless used to merge).
+
+Is this a bug or a feature?
+
+
+Barry Silverman
+
