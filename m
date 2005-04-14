@@ -1,55 +1,66 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Date handling.
-Date: Thu, 14 Apr 2005 22:48:34 +0100
-Message-ID: <1113515314.12012.235.camel@baythorne.infradead.org>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
-	 <1113512078.12012.227.camel@baythorne.infradead.org>
-	 <425EDA43.3040404@zytor.com>
+From: bert hubert <ahu@ds9a.nl>
+Subject: Re: Yet another base64 patch
+Date: Thu, 14 Apr 2005 23:47:56 +0200
+Message-ID: <20050414214756.GA31249@outpost.ds9a.nl>
+References: <425DEF64.60108@zytor.com> <20050414022413.GB18655@64m.dyndns.org> <425E0174.4080404@zytor.com> <20050414024228.GC18655@64m.dyndns.org> <425E0D62.9000401@zytor.com> <Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org> <425EA152.4090506@zytor.com> <Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org> <20050414191157.GA27696@outpost.ds9a.nl> <425EC3B4.6090908@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Luck, Tony" <tony.luck@intel.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 23:46:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Christopher Li <git@chrisli.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 23:48:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMC9t-00037q-Ge
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 23:45:57 +0200
+	id 1DMCBb-0003NW-Tm
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 23:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261392AbVDNVsy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 17:48:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261445AbVDNVsy
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 17:48:54 -0400
-Received: from baythorne.infradead.org ([81.187.226.107]:52623 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S261392AbVDNVsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 17:48:43 -0400
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DMCCR-0000w9-AX; Thu, 14 Apr 2005 22:48:35 +0100
+	id S261445AbVDNVvD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 17:51:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261446AbVDNVvC
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 17:51:02 -0400
+Received: from outpost.ds9a.nl ([213.244.168.210]:33685 "EHLO outpost.ds9a.nl")
+	by vger.kernel.org with ESMTP id S261445AbVDNVuz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 17:50:55 -0400
+Received: by outpost.ds9a.nl (Postfix, from userid 1000)
+	id AD73B40E1; Thu, 14 Apr 2005 23:47:56 +0200 (CEST)
 To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <425EDA43.3040404@zytor.com>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
+Content-Disposition: inline
+In-Reply-To: <425EC3B4.6090908@zytor.com>
+User-Agent: Mutt/1.3.28i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-14 at 14:01 -0700, H. Peter Anvin wrote:
-> Both of these are metadata; they may not be directly relevant to the 
-> filesystem, but are attributes relevant to the client thereof; 
-> effectively an xattr.
+On Thu, Apr 14, 2005 at 12:25:40PM -0700, H. Peter Anvin wrote:
+> >That may be true :-), but from the "front lines" I can report that
+> >directories with > 32000 or > 65000 entries is *asking* for trouble. There
+> >is a whole chain of systems that need to get things right for huge
+> >directories to work well, and it often is not that way.
+> >
+> 
+> Specifics, please?
 
-Right. That's perfectly acceptable -- and that's the reason why I think
-it's also fine to keep the timezone and the rename information in there
-too. If we were being _really_ anal about auxiliary information being
-separate, we'd stick it in a separate blob object and merely refer to it
-from the commit object. I don't think there's really any call to take it
-that far, though.
+We've seen even Linus assume there is a 65K limit, and it appears more
+people have been confused.
+
+The systems I've seen mess this up include backup tools (quite serious ones
+too), NetApp NFS servers, Samba shares and archivers.
+
+Some tools just fail visibly, which is good, others become so slow as to
+effectively lock up, which was the case with the backup tools. 
+
+I've quite often been able to fix broken systems by hashing directories -
+many problems just vanish. 
+
+It is too easy to get into a O(N^2) situation. Git may be able to deal with
+it but you may hurt yourself when making backups, or if you ever want to
+share your tree (possibly with yourself) over the network.
+
+But if you live in an all Linux world, and use mostly tar and rsync, it
+should work.
+
+Bert.
 
 -- 
-dwmw2
-
-
+http://www.PowerDNS.com      Open source, database driven DNS Software 
+http://netherlabs.nl              Open and Closed source services
