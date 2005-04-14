@@ -1,68 +1,80 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: Handling renames.
-Date: Thu, 14 Apr 2005 11:49:17 -0700
-Message-ID: <425EBB2D.3060508@zytor.com>
-References: <1113501260.27227.26.camel@hades.cambridge.redhat.com> <425EB4AE.4010700@zytor.com> <Pine.LNX.4.58.0504141145220.7211@ppc970.osdl.org>
+Date: Thu, 14 Apr 2005 20:58:41 +0200
+Message-ID: <20050414185841.GA16865@elte.hu>
+References: <1113501260.27227.26.camel@hades.cambridge.redhat.com> <20050414181224.GA16126@elte.hu> <Pine.LNX.4.58.0504141124220.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
 	James Bottomley <James.Bottomley@SteelEye.com>
-X-From: git-owner@vger.kernel.org Thu Apr 14 20:47:02 2005
+X-From: git-owner@vger.kernel.org Thu Apr 14 20:56:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM9MS-0001o4-AB
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 20:46:44 +0200
+	id 1DM9V0-0003Fk-5Z
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 20:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261542AbVDNSt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 14:49:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261531AbVDNSt6
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 14:49:58 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:42382 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261542AbVDNStb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 14:49:31 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3EInHq7010382
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 14 Apr 2005 11:49:18 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
+	id S261445AbVDNS64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 14:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261446AbVDNS64
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 14:58:56 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:20928 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261445AbVDNS6y (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 14:58:54 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id 091D931FD06;
+	Thu, 14 Apr 2005 20:58:09 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 1D4741FC2; Thu, 14 Apr 2005 20:58:45 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504141145220.7211@ppc970.osdl.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504141124220.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Thu, 14 Apr 2005, H. Peter Anvin wrote:
-> 
->>Although Linus is correct in that an SCM doesn't *have* to handle this, 
->>it really feels like shooting for mediocracy to me.  We might as well 
->>design it right from the beginning.
-> 
-> No. git is not an SCM. it's a filesystem designed to _host_ an SCM, and 
-> that _is_ doing it right from the beginning.
-> 
-> Keep the abstractions clean. Do _not_ get confused into thinking that git 
-> is an SCM. If you think of it that way, you'll end up with crap you can't 
-> think about.
-> 
-> And at a filesystem layer, "rename" already exists. It's moving an object 
-> to a new name in a tree. git already does that very well, thank you very 
-> much.
-> 
-> But a filesystem rename is _not_ the same thing as an SCM rename.  An SCM 
-> rename is built on top of a filesystem rename, but it has its own issues 
-> that may or may not make sense for the filesystem.
-> 
 
-I wasn't referring to git per se, I was referring to the hosted SCM.
+* Linus Torvalds <torvalds@osdl.org> wrote:
 
-	-hpa
+> [...] Ie if you notice a rename, you first commit the rename (and you 
+> can _see_ it's a rename, since the object didn't change, and the sha1 
+> stayed the same, which in git-speak means that it is the same object, 
+> ie that _is_ a rename as far as git is concerned), and then you create 
+> the "this is the data that changed" as a _second_ commit.
+
+ok, i accept your point of not putting this into such a low level as the 
+object abstraction. Was a bad idea.
+
+but i dont think the above would be enough: there can be renames of 
+objects that have the same sha1 hash as other objects in the same tree, 
+and developers want to track individual objects, regardless of whether 
+other files share the same content. So some formal operation would be 
+needed to signal renames - e.g. to embedd it in the commit object, per 
+David's suggestion.
+
+The thing i tried to avoid was to list long filenames in the commit 
+(because of the tree hierarchy we'd need to do tree-absolute pathnames 
+or something like that, and escape things, and do lookups - duplicating 
+a VFS which is quite bad) - it would be better to identify the rename 
+source and target via its tree object hash and its offset within that 
+tree. Such information could be embedded in the commit object just fine.  
+Something like:
+
+me bb95843a5a0f397270819462812735ee29796fb4
+tree 1756b578489f93999ded68ae347bef7d6063101c
+parent 9f02d4d233223462d3f6217b5837b786e6286ba4
+author
+committer
+rename 39021759c903a943a33a28cfbd5070d36d851581 15234 9f02d4d233223462d3f6217b5837b786e6286ba4 16163
+
+?
+
+	Ingo
