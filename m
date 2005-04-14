@@ -1,63 +1,79 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: [patch] git: fix memory leak #2 in read-cache.c
-Date: Thu, 14 Apr 2005 17:14:56 +0200
-Message-ID: <20050414151456.GA11385@elte.hu>
-References: <20050414112638.GA12593@elte.hu> <20050414120834.GA14290@elte.hu> <20050414123258.GA15148@elte.hu> <20050414123934.GA15420@elte.hu> <Pine.LNX.4.58.0504140804480.7211@ppc970.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Reorganize common code
+Date: Thu, 14 Apr 2005 12:33:17 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504141230310.30848-100000@iabervon.org>
+References: <Pine.LNX.4.21.0504131755550.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 17:14:51 2005
+X-From: git-owner@vger.kernel.org Thu Apr 14 18:31:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM60q-00060w-DZ
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 17:12:12 +0200
+	id 1DM7EM-0003ht-L3
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 18:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261520AbVDNPPa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 11:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261522AbVDNPPa
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 11:15:30 -0400
-Received: from mx2.elte.hu ([157.181.151.9]:59555 "EHLO mx2.elte.hu")
-	by vger.kernel.org with ESMTP id S261520AbVDNPPZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 11:15:25 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx2.elte.hu (Postfix) with ESMTP id 554313197C1;
-	Thu, 14 Apr 2005 17:14:11 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id D96481FC2; Thu, 14 Apr 2005 17:14:59 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504140804480.7211@ppc970.osdl.org>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S261537AbVDNQdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 12:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261535AbVDNQdc
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 12:33:32 -0400
+Received: from iabervon.org ([66.92.72.58]:61959 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261543AbVDNQdN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 12:33:13 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DM7HJ-0006dR-00; Thu, 14 Apr 2005 12:33:17 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <Pine.LNX.4.21.0504131755550.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+I forgot to include util.c. On my to-do list is something to make this
+more obvious.
 
-* Linus Torvalds <torvalds@osdl.org> wrote:
+Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
 
-> In other words, if the common case is that we update a couple of 
-> entries in the active cache, we actually saved 1.6MB (+ malloc 
-> overhead for the 17 _thousand_ allocations) by my approach.
-> 
-> And the leak? There's none. We never actually update an existing entry 
-> that was allocated with malloc(), unless the user does something 
-> stupid.  In other words, the only case where there is a "leak" is when 
-> the user does something like
-> 
-> 	update-cache file file file file file file .. 
-> 
-> with the same file listed several times.
+Index: util.c
+===================================================================
+--- /dev/null  (tree:e8194c62bfc68725972a6847fa2c6d529ca64137)
++++ 420a52c504bf712cd898a11746a54ea4349a9386/util.c  (mode:100644 sha1:d1d497c6709503f71138e816b2599d5105cc4915)
+@@ -0,0 +1,37 @@
++#include "util.h"
++#include <stdarg.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++void usage(const char *err)
++{
++	fprintf(stderr, "usage: %s\n", err);
++	exit(1);
++}
++
++static void report(const char *prefix, const char *err, va_list params)
++{
++	fputs(prefix, stderr);
++	vfprintf(stderr, err, params);
++	fputs("\n", stderr);
++}
++
++void die(const char *err, ...)
++{
++	va_list params;
++
++	va_start(params, err);
++	report("fatal: ", err, params);
++	va_end(params);
++	exit(1);
++}
++
++int error(const char *err, ...)
++{
++	va_list params;
++
++	va_start(params, err);
++	report("error: ", err, params);
++	va_end(params);
++	return -1;
++}
 
-fair enough - as long as this is only used in a scripted environment, 
-and not via some library and not within a repository server, web 
-backend, etc.
-
-	Ingo
