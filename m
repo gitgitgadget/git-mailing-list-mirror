@@ -1,280 +1,141 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: [ANNOUNCE] git-pasky-0.4
-Date: Thu, 14 Apr 2005 11:33:33 +0100
-Message-ID: <20050414113333.A3904@flint.arm.linux.org.uk>
-References: <20050414001938.GR25711@pasky.ji.cz>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: cache-cold repository performance
+Date: Thu, 14 Apr 2005 12:50:18 +0200
+Message-ID: <20050414105018.GA5408@elte.hu>
+References: <20050412230027.GA21759@elte.hu> <20050412230729.GA22179@elte.hu> <20050413111355.GB13865@elte.hu> <425D4E1D.4040108@zytor.com> <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com> <Pine.LNX.4.58.0504131008500.4501@ppc970.osdl.org> <87aco2gxu2.fsf@deneb.enyo.de> <Pine.LNX.4.58.0504131503180.4501@ppc970.osdl.org> <20050414070422.GA3226@elte.hu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 12:30:58 2005
+Cc: Florian Weimer <fw@deneb.enyo.de>,
+	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 14 12:48:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DM1cK-0008HY-BX
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 12:30:37 +0200
+	id 1DM1t8-0002w0-5z
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 12:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261475AbVDNKdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 06:33:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261477AbVDNKdu
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 06:33:50 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:15889 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261475AbVDNKdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 06:33:37 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DM1fC-0005Uj-8P; Thu, 14 Apr 2005 11:33:34 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DM1fB-0001Ta-80; Thu, 14 Apr 2005 11:33:33 +0100
-To: Petr Baudis <pasky@ucw.cz>
+	id S261420AbVDNKvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 06:51:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261421AbVDNKvM
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 06:51:12 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:4327 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261420AbVDNKu1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 06:50:27 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id AE45131929B;
+	Thu, 14 Apr 2005 12:49:33 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id A0A081FC2; Thu, 14 Apr 2005 12:50:21 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050414001938.GR25711@pasky.ji.cz>; from pasky@ucw.cz on Thu, Apr 14, 2005 at 02:19:38AM +0200
+In-Reply-To: <20050414070422.GA3226@elte.hu>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 14, 2005 at 02:19:38AM +0200, Petr Baudis wrote:
->   I'm happy to announce git-pasky-0.4, my set of scripts upon Linus
-> Torvald's git, which aims to provide a humanly usable interface, to a
-> degree similar to a SCM tool.
 
-Here's my updated patch, against latest git-pasky.  Now using
-hton*/ntoh* directly rather than wrapping them.  Enjoy.
+* Ingo Molnar <mingo@elte.hu> wrote:
 
---- cache.h
-+++ cache.h	Thu Apr 14 11:27:22 2005
-@@ -14,6 +14,8 @@
- #include <openssl/sha.h>
- #include <zlib.h>
- 
-+#include <netinet/in.h>
-+
- /*
-  * Basic data structures for the directory cache
-  *
-@@ -67,7 +69,7 @@
- #define DEFAULT_DB_ENVIRONMENT ".git/objects"
- 
- #define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (len) + 8) & ~7)
--#define ce_size(ce) cache_entry_size((ce)->namelen)
-+#define ce_size(ce) cache_entry_size(ntohs((ce)->namelen))
- 
- #define alloc_nr(x) (((x)+16)*3/2)
- 
---- checkout-cache.c
-+++ checkout-cache.c	Thu Apr 14 11:25:40 2005
-@@ -77,7 +77,7 @@
- 		return error("checkout-cache: unable to read sha1 file of %s (%s)",
- 			ce->name, sha1_to_hex(ce->sha1));
- 	}
--	fd = create_file(ce->name, ce->st_mode);
-+	fd = create_file(ce->name, ntohl(ce->st_mode));
- 	if (fd < 0) {
- 		free(new);
- 		return error("checkout-cache: unable to create %s (%s)",
---- read-cache.c
-+++ read-cache.c	Thu Apr 14 11:25:40 2005
-@@ -288,27 +288,34 @@
- 	/* nsec seems unreliable - not all filesystems support it, so
- 	 * as long as it is in the inode cache you get right nsec
- 	 * but after it gets flushed, you get zero nsec. */
--	if (ce->mtime.sec  != (unsigned int)st->st_mtim.tv_sec
-+#if 0
-+	if (ntohl(ce->mtime.sec)  != (unsigned int)st->st_mtim.tv_sec
- #ifdef NSEC
--	    || ce->mtime.nsec != (unsigned int)st->st_mtim.tv_nsec
-+	    || ntohl(ce->mtime.nsec) != (unsigned int)st->st_mtim.tv_nsec
- #endif
- 	    )
- 		changed |= MTIME_CHANGED;
--	if (ce->ctime.sec  != (unsigned int)st->st_ctim.tv_sec
-+	if (ntohl(ce->ctime.sec)  != (unsigned int)st->st_ctim.tv_sec
- #ifdef NSEC
--	    || ce->ctime.nsec != (unsigned int)st->st_ctim.tv_nsec
-+	    || ntohl(ce->ctime.nsec) != (unsigned int)st->st_ctim.tv_nsec
- #endif
- 	    )
- 		changed |= CTIME_CHANGED;
--	if (ce->st_uid != (unsigned int)st->st_uid ||
--	    ce->st_gid != (unsigned int)st->st_gid)
-+#else
-+	if (ntohl(ce->mtime.sec)  != (unsigned int)st->st_mtime)
-+		changed |= MTIME_CHANGED;
-+	if (ntohl(ce->ctime.sec)  != (unsigned int)st->st_ctime)
-+		changed |= CTIME_CHANGED;
-+#endif
-+	if (ntohl(ce->st_uid) != (unsigned int)st->st_uid ||
-+	    ntohl(ce->st_gid) != (unsigned int)st->st_gid)
- 		changed |= OWNER_CHANGED;
--	if (ce->st_mode != (unsigned int)st->st_mode)
-+	if (ntohl(ce->st_mode) != (unsigned int)st->st_mode)
- 		changed |= MODE_CHANGED;
--	if (ce->st_dev != (unsigned int)st->st_dev ||
--	    ce->st_ino != (unsigned int)st->st_ino)
-+	if (ntohl(ce->st_dev) != (unsigned int)st->st_dev ||
-+	    ntohl(ce->st_ino) != (unsigned int)st->st_ino)
- 		changed |= INODE_CHANGED;
--	if (ce->st_size != (unsigned int)st->st_size)
-+	if (ntohl(ce->st_size) != (unsigned int)st->st_size)
- 		changed |= DATA_CHANGED;
- 	return changed;
- }
-@@ -337,7 +344,7 @@
- 	while (last > first) {
- 		int next = (last + first) >> 1;
- 		struct cache_entry *ce = active_cache[next];
--		int cmp = cache_name_compare(name, namelen, ce->name, ce->namelen);
-+		int cmp = cache_name_compare(name, namelen, ce->name, ntohs(ce->namelen));
- 		if (!cmp)
- 			return next;
- 		if (cmp < 0) {
-@@ -364,7 +371,7 @@
- {
- 	int pos;
- 
--	pos = cache_name_pos(ce->name, ce->namelen);
-+	pos = cache_name_pos(ce->name, ntohs(ce->namelen));
- 
- 	/* existing match? Just replace it */
- 	if (pos >= 0) {
-@@ -395,9 +402,9 @@
- 	SHA_CTX c;
- 	unsigned char sha1[20];
- 
--	if (hdr->signature != CACHE_SIGNATURE)
-+	if (hdr->signature != htonl(CACHE_SIGNATURE))
- 		return error("bad signature");
--	if (hdr->version != 1)
-+	if (hdr->version != htonl(1))
- 		return error("bad version");
- 	SHA1_Init(&c);
- 	SHA1_Update(&c, hdr, offsetof(struct cache_header, sha1));
-@@ -445,12 +452,12 @@
- 	if (verify_hdr(hdr, size) < 0)
- 		goto unmap;
- 
--	active_nr = hdr->entries;
-+	active_nr = ntohl(hdr->entries);
- 	active_alloc = alloc_nr(active_nr);
- 	active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
- 
- 	offset = sizeof(*hdr);
--	for (i = 0; i < hdr->entries; i++) {
-+	for (i = 0; i < ntohl(hdr->entries); i++) {
- 		struct cache_entry *ce = map + offset;
- 		offset = offset + ce_size(ce);
- 		active_cache[i] = ce;
-@@ -469,9 +476,9 @@
- 	struct cache_header hdr;
- 	int i;
- 
--	hdr.signature = CACHE_SIGNATURE;
--	hdr.version = 1;
--	hdr.entries = entries;
-+	hdr.signature = htonl(CACHE_SIGNATURE);
-+	hdr.version = htonl(1);
-+	hdr.entries = htonl(entries);
- 
- 	SHA1_Init(&c);
- 	SHA1_Update(&c, &hdr, offsetof(struct cache_header, sha1));
---- read-tree.c
-+++ read-tree.c	Thu Apr 14 11:25:11 2005
-@@ -13,8 +13,8 @@
- 
- 	memset(ce, 0, size);
- 
--	ce->st_mode = mode;
--	ce->namelen = baselen + len;
-+	ce->st_mode = htonl(mode);
-+	ce->namelen = htons(baselen + len);
- 	memcpy(ce->name, base, baselen);
- 	memcpy(ce->name + baselen, pathname, len+1);
- 	memcpy(ce->sha1, sha1, 20);
---- show-diff.c
-+++ show-diff.c	Thu Apr 14 11:25:28 2005
-@@ -90,7 +90,7 @@
- 		changed = cache_match_stat(ce, &st);
- 		if (!changed)
- 			continue;
--		printf("%.*s:  ", ce->namelen, ce->name);
-+		printf("%.*s:  ", ntohs(ce->namelen), ce->name);
- 		for (n = 0; n < 20; n++)
- 			printf("%02x", ce->sha1[n]);
- 		printf("\n");
---- update-cache.c
-+++ update-cache.c	Thu Apr 14 11:30:07 2005
-@@ -68,18 +68,18 @@
-  */
- static void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
- {
--	ce->ctime.sec = st->st_ctime;
-+	ce->ctime.sec = htonl(st->st_ctime);
- #ifdef NSEC
--	ce->ctime.nsec = st->st_ctim.tv_nsec;
-+	ce->ctime.nsec = htonl(st->st_ctim.tv_nsec);
- #endif
--	ce->mtime.sec = st->st_mtime;
-+	ce->mtime.sec = htonl(st->st_mtime);
- #ifdef NSEC
--	ce->mtime.nsec = st->st_mtim.tv_nsec;
-+	ce->mtime.nsec = htonl(st->st_mtim.tv_nsec);
- #endif
--	ce->st_dev = st->st_dev;
--	ce->st_ino = st->st_ino;
--	ce->st_uid = st->st_uid;
--	ce->st_gid = st->st_gid;
-+	ce->st_dev = htonl(st->st_dev);
-+	ce->st_ino = htonl(st->st_ino);
-+	ce->st_uid = htonl(st->st_uid);
-+	ce->st_gid = htonl(st->st_gid);
- }
- 
- static int add_file_to_cache(char *path)
-@@ -107,9 +107,9 @@
- 	memset(ce, 0, size);
- 	memcpy(ce->name, path, namelen);
- 	fill_stat_cache_info(ce, &st);
--	ce->st_mode = st.st_mode;
--	ce->st_size = st.st_size;
--	ce->namelen = namelen;
-+	ce->st_mode = htonl(st.st_mode);
-+	ce->st_size = htonl(st.st_size);
-+	ce->namelen = htons(namelen);
- 
- 	if (index_fd(path, namelen, ce, fd, &st) < 0)
- 		return -1;
-@@ -190,7 +190,7 @@
- 	updated = malloc(size);
- 	memcpy(updated, ce, size);
- 	fill_stat_cache_info(updated, &st);
--	updated->st_size = st.st_size;
-+	updated->st_size = htonl(st.st_size);
- 	return updated;
- }
- 
---- write-tree.c
-+++ write-tree.c	Thu Apr 14 11:25:40 2005
-@@ -45,7 +45,7 @@
- 	do {
- 		struct cache_entry *ce = cachep[nr];
- 		const char *pathname = ce->name, *filename, *dirname;
--		int pathlen = ce->namelen, entrylen;
-+		int pathlen = ntohs(ce->namelen), entrylen;
- 		unsigned char *sha1;
- 		unsigned int mode;
- 
-@@ -54,7 +54,7 @@
- 			break;
- 
- 		sha1 = ce->sha1;
--		mode = ce->st_mode;
-+		mode = ntohl(ce->st_mode);
- 
- 		/* Do we have _further_ subdirectories? */
- 		filename = pathname + baselen;
+> i'd be surprised if it was twice as fast - cache-cold linear checkouts 
+> are _seek_ limited, and it doesnt matter whether after a 1-2 msec 
+> track-to-track disk seek the DMA engine spends another 30 microseconds 
+> DMA-ing 60K uncompressed data instead of 30K compressed... (there are 
+> other factors, but this is the main thing.)
 
--- 
-Russell King
+i've benchmarked cache-cold compressed vs. uncompressed performance, to 
+shed some more light on the performance differences between flat and 
+compressed repositories.
+
+i did alot of testing, and i primarily concentrated on being able to 
+_trust_ the benchmark results, not to generate some quick numbers. The 
+major problem was that the timing of the reads associated with 'checking 
+out a large tree' is very unstable, even on a completely isolated 
+testsystem with very common (and predictable) IO hardware.
+
+the content i tested was a vanilla 2.6.10 kernel tree, with 19042 files 
+in it, taking 246 MB uncompressed, and 110 MB compressed (via gzip -9).  
+Average file size is 13.2 KB uncompressed, 5.9 KB compressed.
+
+Firstly, the timings are very sensitive to the way the tree was created.  
+To have a 'fair' on-disk layout the trees have to be created in an 
+identical fashion: e.g. it is not valid to copy the uncompressed tree 
+and run gzip over it - that will create a 'sparse' on-disk layout 
+penalizing the compressed layout and making it 30% slower than the 
+uncompressed layout! I first created the two trees, then i "cp -a"-ed 
+them over into a new directory one after each other, so that they get on 
+similar on-disk positions as well. I also created 2 more pairs of such 
+trees to make sure disk layout is fair.
+
+all timings were taken fresh after reboot, on a UP 1 GB RAM Athlon64 
+3200+, using a large, top of the line IDE disk. The kernel was 
+2.6.12-rc2, the filesystem was ext3 with enough free space to not be 
+fragmented, both noatime and nodiratime was specified so that no write 
+activities whatever occur during the 'checkout'.
+
+the operation timed was a simple:
+
+        time find . -type f | xargs cat > /dev/null
+
+done in the root of the given tree. This generates the very same 
+readonly IO pattern for each test. I've run the tests 10 times (i.e.  
+have done 10 fresh reboots), but after every reboot i permutated the 
+order of trees tested - to make sure there is no interaction between 
+trees. (there was no interaction)
+
+here are the raw numbers, elapsed real time in seconds:
+
+ flat-1:  29.7 29.5 29.4 29.4 29.5 29.5 29.7 29.6 29.4 29.6 29.5 29.4:  29.5
+ gzip-1:  41.2 40.9 40.7 40.7 40.5 41.7 41.0 40.3 40.6 40.8 40.8 40.9:  40.8
+
+ flat-2:  28.0 28.2 27.7 27.9 27.8 27.9 27.7 27.9 27.9 28.1 27.9 28.0:  27.9
+ gzip-2:  27.2 27.4 27.4 27.2 27.2 27.2 27.2 27.2 27.1 27.3 27.2 27.4:  27.2
+ flat-3:  27.0 27.8 27.6 27.7 27.8 27.8 27.8 27.7 27.8 27.6 27.8 27.8:  27.6
+ gzip-3:  25.8 26.8 26.6 26.5 26.5 26.5 26.6 26.4 26.5 26.7 26.6 26.7:  26.5
+
+The final column is the average. (Standard deviation is below 0.1 sec, 
+less than 0.3%.)
+
+flat-1 is the original tree, created via tar. gzip-1 is a cp -a copy of 
+it, per-file compressed afterwards. flat-2 is a cp -a copy of flat-1, 
+gzip-2 is a cp -a copy of gzip-1. flat-3/gzip-3 are cp -a copies of 
+flat-2/gzip-2.
+
+note that gzip-1 is ~40% slower due to the 'sparse layout', so its 
+results approximate a repository with 'bad' file layout. I'd not expect 
+GIT repositories to have such a layout normally, so we can disregard it.
+
+flat-2/3 and gzip-2/3 can be directly compared. Firstly, the results 
+show that the on-disk layout cannot be constructed reliably - there's a 
+1% systematic difference between flat-2 and flat-3, and a 3% systematic 
+difference between gzip-2 and gzip-3 - both systematic errors are larger 
+than the 0.5% standard deviation, so they are not measurement errors but 
+real layout properties of these trees.
+
+the most interesting result is that gzip-2 is 2.5% faster than flat-2, 
+and gzip-3 is 4% faster than flat-3. These differences are close to the 
+layout-related systematic error, but slightly above it, so i'd conclude 
+that a compressed repository is 3% faster on this hardware.
+
+(since these results were in line with my expectations i double-checked 
+everything again and did another 10 reboot tests - same results.)
+
+conclusion [*]: there's a negligible cache-cold performance hit from 
+using an uncompressed repository, because cache-cold performance is 
+dominated by number of seeks, which is almost identical in the two 
+cases.
+
+	Ingo
+
+[*] lots of conditionals apply: these werent flat/compressed GIT 
+repositories (although they were quite similar to it), nor was the GIT 
+workload measured (although the one measured should be quite close to 
+it).
 
