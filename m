@@ -1,63 +1,62 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Handling renames.
-Date: Thu, 14 Apr 2005 18:23:26 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504141758310.30848-100000@iabervon.org>
-References: <1113501260.27227.26.camel@hades.cambridge.redhat.com>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: another perspective on renames.
+Date: Thu, 14 Apr 2005 18:22:46 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504141759440.7261@cag.csail.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, James Bottomley <James.Bottomley@SteelEye.com>
-X-From: git-owner@vger.kernel.org Fri Apr 15 00:20:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-From: git-owner@vger.kernel.org Fri Apr 15 00:20:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMCgn-0007In-4r
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 00:19:57 +0200
+	id 1DMCgS-0007GF-Jw
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 00:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261582AbVDNWXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 18:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261583AbVDNWXQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 18:23:16 -0400
-Received: from iabervon.org ([66.92.72.58]:21764 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261582AbVDNWXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 18:23:12 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DMCkA-000289-00; Thu, 14 Apr 2005 18:23:26 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1113501260.27227.26.camel@hades.cambridge.redhat.com>
+	id S261573AbVDNWW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 18:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261582AbVDNWW5
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 18:22:57 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:42442 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261573AbVDNWWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 18:22:55 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DMCjf-0006oT-00
+	for <git@vger.kernel.org>; Thu, 14 Apr 2005 18:22:55 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 14 Apr 2005, David Woodhouse wrote:
+Perhaps our thinking is being clouded by 'how other SCMs do things' ---
+do we *really* need extra rename metadata?  As Linus pointed out, as long 
+as a commit is done immediately after a rename (ie before the renamed file 
+is changed) the tree object contains all the information one needs: you 
+can notice that a given object's content-hash is named 'foo' in the first 
+version and 'bar' in the second version.
 
-> Opinions? Dissent? We'd probably need to escape the filenames in some
-> way -- handwave over that for now.
+Ingo thought that this was insufficient because two *different* objects 
+(ie having different revision histories) might be mutated to a point where 
+they had a *same* contents (and then would be condensed into a single 
+blob).  But isn't that a feature of the git-fs history generally (ie not a 
+renaming-specific issue)?
 
-I personally think renames are a minor thing that doesn't happen
-much. What actually happens, in my opinion, is that some chunk of a file
-is moved to a different, possibly new, file. If this is supported (as
-something that the SCM notices), then a rename is just a special case
-where the moved chunk is a whole file.
+One solution would be to invent a new 'file-revision-history' annotation 
+on top of git-fs in order to keep these derivation paths seperate...
 
-I think that it should be possible to identify and tag "big
-enough" deletions and insertions, and compare them to find moves, where a
-further change may be applied in the middle if two chunks are "very
-similar" but not the same.
+...but perhaps we might think of this as a 'feature' of our SCM instead?
+The 'history' of a file may have join points where a single 'content' may 
+have been derived by two or more completely different paths.  Explicit 
+guidance to the front-end tools is required to 'unmerge' these files after 
+this occurs (ie updating the directory cache for one, but not the others). 
+This makes sense for include/arch/{foo,bar}/baz.h, but maybe not so much 
+for (say) the empty file.
 
-On the other hand, I think that the SCM will need to cache its
-understanding of what a commit did in order to give reasonable
-performance for operations like "annotate", and it may be advantegous to
-distribute things from this cache, since the committer might want to tell
-the system something that it didn't guess.
+Anyway, maybe it's worth thinking a little about an SCM in which this is a 
+feature, instead of (or in addition to) automatically assuming this is a 
+bug we need to add infrastructure to work around.
+  --scott
 
-At some point, I'm going to argue for core support for "back pointers",
-where a file can be created which is "about" some other file(s), and
-someone looking for files "about" a particular file can find them without
-searching the entire database. I think this will turn out to be important
-for a variety of cases where some later participant wants to say something
-about an existing file without changing the content of the file.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+PBFORTUNE Soviet  cryptographic D5 SLBM MI5 CIA postcard WASHTUB [Hello to all my fans in domestic surveillance] 
+explosion Sigint Bush ODEARL FJHOPEFUL assassination Uzi Hussein Nader
+                          ( http://cscott.net/ )
