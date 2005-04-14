@@ -1,76 +1,120 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Misc fixes for git-pasky
-Date: Fri, 15 Apr 2005 00:49:34 +0200
-Message-ID: <20050414224934.GO22699@pasky.ji.cz>
-References: <1113518277.8609.8.camel@dv>
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: [patch pasky] refresh cache after changing tracked tree
+Date: Fri, 15 Apr 2005 00:54:11 +0200
+Message-ID: <1113519251.23299.115.camel@nosferatu.lan>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 00:46:48 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-CTJQXhhij/npvpooM16Y"
+Content-Transfer-Encoding: 8bit
+Cc: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Apr 15 00:48:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMD6T-00029C-S8
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 00:46:30 +0200
+	id 1DMD7M-0002G3-6L
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 00:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261621AbVDNWtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 18:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261620AbVDNWtv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 18:49:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:24269 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261621AbVDNWtg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 18:49:36 -0400
-Received: (qmail 16683 invoked by uid 2001); 14 Apr 2005 22:49:34 -0000
-To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <1113518277.8609.8.camel@dv>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261620AbVDNWuo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 18:50:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261622AbVDNWun
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 18:50:43 -0400
+Received: from ctb-mesg2.saix.net ([196.25.240.74]:11256 "EHLO
+	ctb-mesg2.saix.net") by vger.kernel.org with ESMTP id S261620AbVDNWu0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 18:50:26 -0400
+Received: from gateway.lan (wblv-146-239-208.telkomadsl.co.za [165.146.239.208])
+	by ctb-mesg2.saix.net (Postfix) with ESMTP id 7AD636F97;
+	Fri, 15 Apr 2005 00:50:21 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id D69E83A26DB;
+	Fri, 15 Apr 2005 00:56:26 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 22424-02; Fri, 15 Apr 2005 00:56:21 +0200 (SAST)
+Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
+	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id CCDC43A26DA;
+	Fri, 15 Apr 2005 00:56:21 +0200 (SAST)
+To: GIT Mailing Lists <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 15, 2005 at 12:37:57AM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> told me that...
-> Hi, Petr!
-> 
-> The attached patch against current git-pasky does following:
 
-Hum. It does too much at once, that means I cannot apply it easily. :-(
+--=-CTJQXhhij/npvpooM16Y
+Content-Type: multipart/mixed; boundary="=-aBrTsX5q0ZvnJRJamrvC"
 
-> * README: spell checked
 
-Good. :-)
+--=-aBrTsX5q0ZvnJRJamrvC
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-> * cache.h: Include unistd.h.  Needed for close() definition.  While
-> current zlib.h header includes unistd.h, it's not guaranteed to be so in
-> other zlib versions.
+Hi,
 
-Sounds good.
+I see the latest gitdiff-do does the right thing regarding modes, but we
+still need to refresh the cache.
 
-> * read-cache.c: Avoid C++ comments.  C comments are more readable for C
-> programmers.  Besides, we don't want git to be so unportable that "gcc
-> -pedantic" cannot compile it.
 
-I don't really care about this too much, although I personally prefer
-the old-style comments. // comments are C99 so -pedantic by itself
-should have no right to complain about it.
+Signed-off-by: Martin Schlemmer <azarah@nosferatu.za.org>
 
-> * show-diff.c: Fix handling of more than one option of the command line.
+gittrack.sh:  03d6db1fb3a70605ef249c632c04e542457f0808
+--- 03d6db1fb3a70605ef249c632c04e542457f0808/gittrack.sh
++++ uncommitted/gittrack.sh
+@@ -51,6 +51,7 @@
 
-What exactly does it fix? The current code seems fine to my sleepy
-brain.
+        read-tree $(tree-id "$name")
+        gitdiff.sh local "$name" | gitapply.sh
++       update-cache --refresh
 
-> Add new option "-c" to omit checksums for modified files.  Expand help.
+ else
+        [ "$tracking" ] || \
+@@ -61,6 +62,7 @@
+        if [ -s ".git/HEAD.local" ]; then
+                gitdiff.sh "$tracking" local | gitapply.sh
+                read-tree $(tree-id local)
++               update-cache --refresh
 
-How is the -c option useful?
+                head=3D$(cat .git/HEAD)
+                branchhead=3D$(cat .git/heads/$tracking)
 
-Could you please send your patch with the correct inline settings on the
-attachment (or just in the mail body) and signed off?
 
-Thanks,
+--=20
+Martin Schlemmer
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+
+--=-aBrTsX5q0ZvnJRJamrvC
+Content-Disposition: attachment; filename=git-track-update_cache.patch
+Content-Type: text/x-patch; name=git-track-update_cache.patch; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+Z2l0dHJhY2suc2g6ICAwM2Q2ZGIxZmIzYTcwNjA1ZWYyNDljNjMyYzA0ZTU0MjQ1N2YwODA4DQot
+LS0gMDNkNmRiMWZiM2E3MDYwNWVmMjQ5YzYzMmMwNGU1NDI0NTdmMDgwOC9naXR0cmFjay5zaA0K
+KysrIHVuY29tbWl0dGVkL2dpdHRyYWNrLnNoDQpAQCAtNTEsNiArNTEsNyBAQA0KIA0KIAlyZWFk
+LXRyZWUgJCh0cmVlLWlkICIkbmFtZSIpDQogCWdpdGRpZmYuc2ggbG9jYWwgIiRuYW1lIiB8IGdp
+dGFwcGx5LnNoDQorCXVwZGF0ZS1jYWNoZSAtLXJlZnJlc2gNCiANCiBlbHNlDQogCVsgIiR0cmFj
+a2luZyIgXSB8fCBcDQpAQCAtNjEsNiArNjIsNyBAQA0KIAlpZiBbIC1zICIuZ2l0L0hFQUQubG9j
+YWwiIF07IHRoZW4NCiAJCWdpdGRpZmYuc2ggIiR0cmFja2luZyIgbG9jYWwgfCBnaXRhcHBseS5z
+aA0KIAkJcmVhZC10cmVlICQodHJlZS1pZCBsb2NhbCkNCisJCXVwZGF0ZS1jYWNoZSAtLXJlZnJl
+c2gNCiANCiAJCWhlYWQ9JChjYXQgLmdpdC9IRUFEKQ0KIAkJYnJhbmNoaGVhZD0kKGNhdCAuZ2l0
+L2hlYWRzLyR0cmFja2luZykNCg==
+
+
+--=-aBrTsX5q0ZvnJRJamrvC--
+
+--=-CTJQXhhij/npvpooM16Y
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBCXvSTqburzKaJYLYRAgbPAJ0d6FCUgpexZUkck0sE9g5fRNSlagCeJacL
+mM8V38hC1X787atDQSHvPZ0=
+=MT/t
+-----END PGP SIGNATURE-----
+
+--=-CTJQXhhij/npvpooM16Y--
+
