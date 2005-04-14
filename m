@@ -1,95 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Merge with git-pasky II.
-Date: Thu, 14 Apr 2005 01:39:36 -0700
-Message-ID: <7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
-References: <20050414002902.GU25711@pasky.ji.cz>
-	<20050413212546.GA17236@64m.dyndns.org>
-	<20050414004504.GW25711@pasky.ji.cz>
-	<Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org>
-	<7vfyxtsurd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: Plug memory leak in update-cache.c
+Date: Thu, 14 Apr 2005 10:53:50 +0200
+Message-ID: <1113468830.23299.85.camel@nosferatu.lan>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Christopher Li <git@chrisli.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 14 10:36:56 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-PNAiL1+C2Le8jEwp2uNu"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Apr 14 10:48:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DLzpr-0007ki-45
-	for gcvg-git@gmane.org; Thu, 14 Apr 2005 10:36:27 +0200
+	id 1DM00R-0000yk-V5
+	for gcvg-git@gmane.org; Thu, 14 Apr 2005 10:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261468AbVDNIjq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 04:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261467AbVDNIjq
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 04:39:46 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:55546 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261468AbVDNIji (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 04:39:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050414083936.YYP13819.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 14 Apr 2005 04:39:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> (Linus
- Torvalds's message of "Thu, 14 Apr 2005 01:06:56 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261473AbVDNIu2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 04:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261475AbVDNIu2
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 04:50:28 -0400
+Received: from ctb-mesg1.saix.net ([196.25.240.73]:42147 "EHLO
+	ctb-mesg1.saix.net") by vger.kernel.org with ESMTP id S261473AbVDNIuM
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Apr 2005 04:50:12 -0400
+Received: from gateway.lan (wblv-146-222-135.telkomadsl.co.za [165.146.222.135])
+	by ctb-mesg1.saix.net (Postfix) with ESMTP id B86FF6893
+	for <git@vger.kernel.org>; Thu, 14 Apr 2005 10:50:03 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id D372D3A26DB
+	for <git@vger.kernel.org>; Thu, 14 Apr 2005 10:56:07 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 29971-01 for <git@vger.kernel.org>; Thu, 14 Apr 2005 10:56:00 +0200 (SAST)
+Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
+	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id C30C33A26DA
+	for <git@vger.kernel.org>; Thu, 14 Apr 2005 10:56:00 +0200 (SAST)
+To: GIT Mailing Lists <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-LT> But I'm really happy that you seem to have implemented my first 
-LT> suggestion and I seem to have been wasting my time. 
+--=-PNAiL1+C2Le8jEwp2uNu
+Content-Type: multipart/mixed; boundary="=-lRyufvPwzvyNKe9/nDSP"
 
-Thanks for the kind words.
 
->> 5. for each path involved:
->> 
->> 5.0 if neither heads change it, leave it as is;
->> 5.1 if only one head changes a path and the other does not, just
->> get the changed version;
->> 5.2 if both heads change it, check all three out and run merge.
+--=-lRyufvPwzvyNKe9/nDSP
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-LT> You missed one case: 
+Hi,
 
-LT>     5.0.1 if both heads change it to the same thing, take the new thing
+Might not be that an big an issue as it should be freed on exit, but
+might cause problems with big trees.
 
-LT> but maybe you counted that as 5.0 (it _should_ fall out automatically from
-LT> the fact that "diff-tree" between the two destination trees shows no
-LT> difference for such a file).
+----
 
-Actually I am not handling that.  It really is 5.1a---the exact
-same code path as 5.1 can be used for this case, and as you
-point out it is really a quite important optimization.
+Plug memory leak in update-cache.c.
 
-I have to handle the following cases.  I think I currently do
-wrong things to them:
+Signed-off-by: Martin Schlemmer <azarah@nosferatu.za.org>
 
-  5.1a both head modify to the same thing.
-  5.1b one head removes, the other does not do anything.
-  5.1c both head remove.
-  5.3 one head removes, the other head modifies.
+update-cache.c:  22f3ccd47db4f0888901109a8cbf883d272d1cba
+--- 22f3ccd47db4f0888901109a8cbf883d272d1cba/update-cache.c
++++ uncommitted/update-cache.c
+@@ -202,6 +202,7 @@
+                        printf("%s: needs update\n", ce->name);
+                        continue;
+                }
++               free(active_cache[i]);
+                active_cache[i] =3D new;
+        }
+ }
 
-Handling of 5.1a, 5.1b and 5.1c are obvious.
 
-  5.1a Update dircache to the same new thing.  Without -f or -o
-       flag do not touch ,,merge-temp/. directory; with -f or
-       -o, leave the new file in ,,merge-temp/.
+--=20
+Martin Schlemmer
 
-  5.1b Remove the path from dircache and do not have the file in
-       ,,merge-temp/. directory regardless of -f or -o flags.
 
-  5.1c Same as 5.1b
+--=-lRyufvPwzvyNKe9/nDSP
+Content-Disposition: attachment; filename=git-plug-leak-in-update_cache.patch
+Content-Transfer-Encoding: base64
+Content-Type: text/x-patch; name=git-plug-leak-in-update_cache.patch; charset=UTF-8
 
-I am not sure what to do with 5.3.  My knee-jerk reaction is to
-leave the modified result in ,,merge-temp/$path~ without
-touching dircache.  If the merger wants to pick it up, he can
-rename $path~ to $path temporarily, run show-diff on it (I think
-giving an option to show-diff to specify paths would be helpful
-for this workflow), to decide if he wants to keep the file or
-not.  Suggestions?
+dXBkYXRlLWNhY2hlLmM6ICAyMmYzY2NkNDdkYjRmMDg4ODkwMTEwOWE4Y2JmODgzZDI3MmQxY2Jh
+DQotLS0gMjJmM2NjZDQ3ZGI0ZjA4ODg5MDExMDlhOGNiZjg4M2QyNzJkMWNiYS91cGRhdGUtY2Fj
+aGUuYw0KKysrIHVuY29tbWl0dGVkL3VwZGF0ZS1jYWNoZS5jDQpAQCAtMjAyLDYgKzIwMiw3IEBA
+DQogCQkJcHJpbnRmKCIlczogbmVlZHMgdXBkYXRlXG4iLCBjZS0+bmFtZSk7DQogCQkJY29udGlu
+dWU7DQogCQl9DQorCQlmcmVlKGFjdGl2ZV9jYWNoZVtpXSk7DQogCQlhY3RpdmVfY2FjaGVbaV0g
+PSBuZXc7DQogCX0NCiB9DQo=
+
+
+--=-lRyufvPwzvyNKe9/nDSP--
+
+--=-PNAiL1+C2Le8jEwp2uNu
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBCXi+eqburzKaJYLYRAuR3AKCL+Rz04ut6wACkKKHaSu/vRNayGwCdH9KH
+wHlFGvaD/Qh6FRjt9pAaXEQ=
+=piXH
+-----END PGP SIGNATURE-----
+
+--=-PNAiL1+C2Le8jEwp2uNu--
 
