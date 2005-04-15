@@ -1,107 +1,153 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Merge with git-pasky II.
-Date: Fri, 15 Apr 2005 15:41:07 -0700
-Message-ID: <7vvf6nfyt8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
-	<7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
-	<7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
-	<20050414121624.GZ25711@pasky.ji.cz>
-	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
-	<20050414193507.GA22699@pasky.ji.cz>
-	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-	<20050414233159.GX22699@pasky.ji.cz>
-	<7vwtr4ibkt.fsf@assigned-by-dhcp.cox.net>
-	<20050415204033.GG7417@pasky.ji.cz>
+From: "Barry Silverman" <barry@disus.com>
+Subject: RE: Merge with git-pasky II.
+Date: Fri, 15 Apr 2005 19:00:17 -0400
+Message-ID: <000701c5420e$e89177b0$6400a8c0@gandalf>
+References: <Pine.LNX.4.58.0504151313450.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 00:38:07 2005
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 16 00:57:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMZRU-0002I7-4p
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 00:37:40 +0200
+	id 1DMZkM-0004R4-EV
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 00:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261992AbVDOWlN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 18:41:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261994AbVDOWlN
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 18:41:13 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:5059 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261992AbVDOWlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 18:41:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415224108.OHWI2123.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 15 Apr 2005 18:41:08 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050415204033.GG7417@pasky.ji.cz> (Petr Baudis's message of
- "Fri, 15 Apr 2005 22:40:33 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262132AbVDOXAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 19:00:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262135AbVDOXAk
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 19:00:40 -0400
+Received: from borg.disus.com ([199.243.199.210]:60689 "EHLO borg.disus.com")
+	by vger.kernel.org with ESMTP id S262132AbVDOXA1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 19:00:27 -0400
+Received: from gandalf (vpn2000c.secdisus.com [199.246.34.122])
+	by borg.disus.com (8.11.6/8.11.6) with ESMTP id j3FM0Lf05903;
+	Fri, 15 Apr 2005 18:00:21 -0400
+To: "'Linus Torvalds'" <torvalds@osdl.org>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.2627
+In-Reply-To: <Pine.LNX.4.58.0504151313450.7211@ppc970.osdl.org>
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+The issue I am trying to come to grips with in the current design, is
+that the git repository of a number of interrelated projects will soon
+become the logical OR of all blobs, commits, and trees in ALL the
+projects. 
 
-PB> I can't see the conflicts between what I want and what Linus wants.
-PB> After all, Linus says that I can use the directory cache in any way I
-PB> please (well, the user can, but I'm speaking for him ;-). So I'm doing
-PB> so, and with your tool I would get into problems, since it is suddenly
-PB> imposing a policy on what should be in the index.
+This will involve horrendous amounts of replication, as developers end
+interchanging objects that originated from third parties who are not
+party to the merge (and which happen to be in the repository because of
+previous merge activity).
 
-I think our misunderstanding is coming from the use of the word
-"merge tree".  I think you have been assuming that I wanted you
-to run "merge-trees -o ,,merge" --- which would certainly cause
-me to muck with your dircache there.  I totally agree with you
-that that is a *BAD* *THING*.  No question there.
+It would be really nice if the repositories for each project stay
+distinct (and maybe even living on different servers). Merges should the
+one of the few points of contact where the state be exchanged between
+the repositories.
 
-However, my assumption has been different.  I was assuming that
-you would run "merge-trees -o merge~tree" (i.e. different from
-your "merge tree"), so that you can get the merge results in a
-form parsable by you.  And then, using that information, you can
-make your changes in ,,merge.  After you are done with that
-information, you can remove "merge~trees", of course.
+>> If you don't keep track of the incremental merges, you end up with
+one 
+>> really _difficult_ merge that may not be mergable at all. Not 
+>> automatically, and perhaps not even with help.
 
-The format I chose for the "merge result in a form parsable by
-you" happens to be a dircache in "merge~tree", with minimum
-number of files checked out when merge cannot be automatically
-done safely.  In the simplest case of not having any conflicting
-merge between $C and $merged, Cogito can immediately run
-write-tree in "merge~tree" (not ,,merge) to obtain its tree-ID
-$T, so that it can feed it to diff-tree to compare it with
-whatever tree state Cogito wants to apply the merges between $C
-and $merged to.
+No argument from me.... In my example, I didn't intend A2,A3,A4 to be
+considered hash's of points where you did a merge - rather they are
+hashes of individual points where you did a commit BETWEEN the points
+where you merged. A1 and A5 are the "merge points"! 
 
-I still do not understand what you do in ,,merge directory, but
-here is one way you can update the user working directory
-in-place without having a ,,merge directory [*2*].  You can run
-your "git diff" between $C and $T [*1*].  The result is the diff
-you need to apply on top of your user's working files.  If the
-user does not like the result of running that diff, it can
-easily be reversed.
+It makes perfect sense to define some subset of commits as "merge-like"
+commits, and only have those copied over from one repository to the
+other. You could also only use merge-points in the common ancestor
+calculation, and not worry about intermediate commits. 
 
-If a manual merge were needed between $C and $merged, Cogito
-could guide the user through that manual edit in "merge~tree",
-and run update-cache on those hand merged files in "merge~tree",
-before running write-tree in "merge~tree" to obtain $T; after
-that, everything else is the same.
+Only small changes to the existing logic are necessary to do a merge by
+"distributing" out the merge algorithm to each repository. This involves
+querying each repository, and communicating the results, followed by
+copying over only those blob objects necessary for the merge. 
 
-You make interesting points in other parts of your message I
-need to regurgitate for a while, so I would not comment on them
-in this message.
+After the merge, you would create a "merge-point commit" record that has
+one of the parents pointing to a hash in the other repository!
 
-[Footnote]
+But the BIG issue with this scheme, is that you will not be replicating
+over any of the intermediate commits, trees, or blobs (not really needed
+by the merge), but currently being traversed by various plumbing
+components.
 
-*1* I really like the convenience of being able to use tree-ID
-and commit-ID interchangeably there.  Thanks.
+Hence my question....
 
-*2* I understand that this would change the user's "git-tools"
-experience a bit.  The user will not be told to "go to ,,merge
-and commit there which will reflected back to your working tree"
-anymore.  Instead the merge happens in-place.  Committing, not
-committing, or further hand-fixing the merge is up to the user.
-I suspect this change might even be for the better.
+-----Original Message-----
+From: Linus Torvalds [mailto:torvalds@osdl.org] 
+Sent: Friday, April 15, 2005 4:31 PM
+To: Barry Silverman
+Cc: git@vger.kernel.org
+Subject: RE: Merge with git-pasky II.
+
+
+[ I'm cc'ing the git list even though Barry's question wasn't cc'd. 
+  Because I think his question is interesting and astute per se, even
+  if I disagree with the proposal ]
+
+On Fri, 15 Apr 2005, Barry Silverman wrote:
+>
+> If git is totally project based, and each commit represents total
+state
+> of the project, then how important is the intermediate commit
+> information between two states. 
+
+You need it in order to do further merges.
+
+> IE, Area maintainer has A1->A2->A3->A4->A5 in a repository with 5
+> commits, and 5 comments. And I last synced with A1.
+> 
+> A few days later I sync again. Couldn't I just pull the "diff-tree A5
+> A1" and then commit to my tree just the record A1->A5. Why does MY
+> repository need trees A2,A3,A4?
+
+Because that second merge needs the first merge to work well. The first 
+merge might have had some small differences that ended up auto-merging
+(or 
+even needing some manual help from you). The second time you sync, there
+
+migth be some more automatic merging. And so on.
+
+If you don't keep track of the incremental merges, you end up with one 
+really _difficult_ merge that may not be mergable at all. Not 
+automatically, and perhaps not even with help.
+
+So in order to keep things mergable, you need to not diverge. And the 
+intermediate merges are the "anchor-points" for the next merge, keeping 
+the divergences minimal. 
+
+I'm personally convinced that one of the reasons CVS is a pain to merge
+is 
+obviously that it doesn't do a good job of finding parents, but also 
+exactly _because_ it makes merges so painful that people wait longer to
+do 
+them, so you never end up fixing the simple stuff. In contrast, if you
+have all these small merges going on all the time, the hope is that 
+there's never any really painful nasty "final merge".
+
+So you're right - the small merges do end up cluttering up the revision 
+history. But it's a small price to pay if it means that you avoid having
+
+the painful ones.
+
+> Isn't preserving the A1,A2,A3,A4,A5 a legacy of BK, which required all
+> the changesets to be loaded in order, and so is a completely "file"
+> driven concept? 
+
+Nope. In fact, to some degree git will need this even _more_, since the
+git merger is likely to be _weaker_ than BK, and thus more easily
+confused.
+
+I do believe that BK has these things for the same reason.
+
+			Linus
+
 
