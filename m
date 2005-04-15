@@ -1,367 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 4/4] Makefile change and merge-trees script itself.
-Date: Thu, 14 Apr 2005 23:06:16 -0700
-Message-ID: <7vaco0o9pj.fsf@assigned-by-dhcp.cox.net>
-References: <7vr7hco9z7.fsf@assigned-by-dhcp.cox.net>
+From: Paul Jackson <pj@engr.sgi.com>
+Subject: Re: Remove need to untrack before tracking new branch
+Date: Thu, 14 Apr 2005 23:42:31 -0700
+Organization: SGI
+Message-ID: <20050414234231.663fd7b3.pj@engr.sgi.com>
+References: <20050412132307.GH22614@pasky.ji.cz>
+	<20050413092656.GO16489@pasky.ji.cz>
+	<1113394537.23299.51.camel@nosferatu.lan>
+	<20050413221936.GI25711@pasky.ji.cz>
+	<1113461754.23299.68.camel@nosferatu.lan>
+	<1113467335.23299.77.camel@nosferatu.lan>
+	<1113467905.23299.81.camel@nosferatu.lan>
+	<20050414091106.GX25711@pasky.ji.cz>
+	<1113471609.23299.95.camel@nosferatu.lan>
+	<1113472557.23299.99.camel@nosferatu.lan>
+	<81b0412b0504141535793cc235@mail.gmail.com>
+	<1113543914.23299.151.camel@nosferatu.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 08:04:32 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: raa.lkml@gmail.com, pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 08:42:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMJw7-0005JB-6y
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 08:04:15 +0200
+	id 1DMKW5-0000ht-Os
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 08:41:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261742AbVDOGHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 02:07:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261743AbVDOGHj
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 02:07:39 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:5341 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261742AbVDOGGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 02:06:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415060616.LTKX4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 15 Apr 2005 02:06:16 -0400
-To: Petr Baudis <pasky@ucw.cz>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261748AbVDOGor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 02:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261747AbVDOGor
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 02:44:47 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:12011 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S261750AbVDOGol (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 02:44:41 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3F8MUh4018491;
+	Fri, 15 Apr 2005 01:22:40 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3F6gZlU14719713;
+	Thu, 14 Apr 2005 23:42:36 -0700 (PDT)
+To: azarah@nosferatu.za.org
+In-Reply-To: <1113543914.23299.151.camel@nosferatu.lan>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds merge-trees to the list of scripts to be installed in
-the Makefile, and also adds merge-trees script itself.
+> No, '&' have a higher priority (weight?) than '&&'.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+& has a higher precedence than &&
 
- 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/merge-trees |  302 ++++++++++++++++++
- Makefile                                             |    2 
- 2 files changed, 303 insertions(+), 1 deletion(-)
+  C Operator Precedence and Associativity
+  http://www.difranco.net/cop2220/op-prec.htm
 
-Index: Makefile
-===================================================================
---- 6767883b330882bc0e9a7c1e4fd999c0ee97ba3a/Makefile  (mode:100644 sha1:3a4683454df4ac8f16eca01fe93a787a2ce8f0f4)
-+++ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/Makefile  (mode:100644 sha1:0384a229456145a763a5316ce301e74d07454f66)
-@@ -19,7 +19,7 @@
- SCRIPT=	parent-id tree-id git gitXnormid.sh gitadd.sh gitaddremote.sh \
- 	gitcommit.sh gitdiff-do gitdiff.sh gitlog.sh gitls.sh gitlsobj.sh \
- 	gitmerge.sh gitpull.sh gitrm.sh gittag.sh gittrack.sh gitexport.sh \
--	gitapply.sh gitcancel.sh gitlntree.sh commit-id
-+	gitapply.sh gitcancel.sh gitlntree.sh commit-id merge-trees
- 
- COMMON=	read-cache.o
- 
+and many others -- google for 'c operator precedence'
 
+Where the bitops &, | and ^ bite you is that they are
+lower precedence than many other ops, including '=='.
 
-Index: merge-trees
-===================================================================
---- /dev/null  (tree:6767883b330882bc0e9a7c1e4fd999c0ee97ba3a)
-+++ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/merge-trees  (mode:100775 sha1:5da2f8a949aeffa60a400d013222fce34eb7262e)
-@@ -0,0 +1,302 @@
-+#!/usr/bin/perl -w
-+
-+use strict;
-+use Cwd;
-+use Getopt::Long;
-+
-+my $full_checkout = 0;
-+my $partial_checkout = 0;
-+my $output_directory = ',,merge~tree';
-+
-+GetOptions("full-checkout" => \$full_checkout,
-+	   "partial-checkout" => \$partial_checkout,
-+	   "output-directory=s" => \$output_directory)
-+    or die;
-+
-+
-+if (@ARGV != 3) {
-+    die "Usage: $0 -o [output-directory] [-f] [-p] ancestor A B\n";
-+}
-+
-+if ($full_checkout) {
-+    $partial_checkout = 1;
-+}
-+
-+################################################################
-+# UI helper -- although it is encouraged to give tree ID, 
-+# it is OK to give commit ID.
-+sub possibly_commit_to_tree {
-+    my ($commit_or_tree_id) = @_;
-+    my $type = read_cat_file_t($commit_or_tree_id);
-+    if ($type eq 'tree') { return $commit_or_tree_id }
-+    if ($type ne 'commit') {
-+	die "Tree ID (or commit ID) required, given $type.";
-+    }
-+
-+    my ($fhi);
-+    open $fhi, '-|', 'cat-file', 'commit', $commit_or_tree_id
-+	or die "$!: cat-file commit $commit_or_tree_id";
-+    my ($tree) = <$fhi>;
-+    close $fhi;
-+    ($tree =~ s/^tree (.*)$/$1/)
-+	or die "$tree: Linus says the first line is guaranteed to be tree.";
-+    return $tree;
-+}
-+
-+sub read_cat_file_t {
-+    my ($id) = @_;
-+    my ($fhi);
-+    open $fhi, '-|', 'cat-file', '-t', $id
-+	or die "$!: cat-file -t $id";
-+    my ($t) = <$fhi>;
-+    close $fhi;
-+    chomp($t);
-+    return $t;
-+}
-+
-+################################################################
-+# Reads diff-tree -r output and gives a hash that maps a path
-+# to 4-tuple (old-mode new-mode old-oid new-oid).
-+# When creating, old-* are undef.  When removing, new-* are undef.
-+
-+sub OLD_MODE () { 0 }
-+sub NEW_MODE () { 1 }
-+sub OLD_OID ()  { 2 }
-+sub NEW_OID ()  { 3 }
-+
-+sub read_diff_tree {
-+    my (@tree) = @_;
-+    my ($fhi);
-+
-+    # Regular expression piece for mode
-+    my $reM  = '[0-7]+';
-+
-+    # Regular expression piece for object ID.
-+    # There is a talk about base-64 so better make it easier to modify...
-+    my $reID = '[0-9a-f]{40}';
-+
-+    local ($_, $/);
-+    $/ = "\0"; 
-+    my %path;
-+    open $fhi, '-|', 'diff-tree', '-r', @tree
-+	or die "$!: diff-tree -r @tree";
-+    while (<$fhi>) {
-+	chomp;
-+	if (/^\*($reM)->($reM)\tblob\t($reID)->($reID)\t(.*)$/so) {
-+	    $path{$5} = [$1, $2, $3, $4]; # modified
-+	}
-+	elsif (/^\+($reM)\tblob\t($reID)\t(.*)$/so) {
-+	    $path{$3} = [undef, $1, undef, $2]; # added
-+	}
-+	elsif (/^\-($reM)\tblob\t($reID)\t(.*)$/so) {
-+	    $path{$3} = [$1, undef, $2, undef]; # deleted
-+	}
-+	else {
-+	    die "cannot parse diff-tree output: $_";
-+	}
-+    }
-+    close $fhi;
-+    return %path;
-+}
-+
-+################################################################
-+# Read show-files output to figure out the set of files contained
-+# in the tree.  This is used to figure out what ancestor had.
-+sub read_show_files {
-+    my ($fhi);
-+    local ($_, $/);
-+    $/ = "\0"; 
-+    open $fhi, '-|', 'show-files', '-z', '--cached'
-+	or die "$!: show-files -z --cached";
-+    my (@path) = map { chomp; $_ } <$fhi>;
-+    close $fhi;
-+    return @path;
-+}
-+
-+################################################################
-+# Given path and info (typically returned from read_diff_tree),
-+# create the file in the working directory to match the NEW tree.
-+# This does not touch dircache.
-+sub checkout_file {
-+    my ($path, $info) = @_;
-+    my (@elt) = split(/\//, $path);
-+    my $j = '';
-+    my $tail = pop @elt;
-+    my ($fhi, $fho);
-+    for (@elt) {
-+	mkdir "$j$_";
-+	$j = "$j$_/";
-+    }
-+    open $fho, '>', "$path";
-+    open $fhi, '-|', 'cat-file', 'blob', $info->[NEW_OID]
-+	or die "$!: cat-file blob $info->[NEW_OID]";
-+    while (<$fhi>) {
-+	print $fho $_;
-+    }
-+    close $fhi;
-+    close $fho;
-+    chmod oct("0$info->[NEW_MODE]"), "$path";
-+}
-+
-+################################################################
-+# Given path and info record the file in the dircache without
-+# affecting working directory.
-+sub record_file {
-+    my ($path, $info) = @_;
-+    system ('update-cache', '--add', '--cacheinfo',
-+	    $info->[NEW_MODE], $info->[NEW_OID], $path);
-+}
-+
-+################################################################
-+# Merge info from two trees and leave it in path, without
-+# affecting dircache.
-+sub merge_tree {
-+    my ($path, $infoA, $infoB) = @_;
-+    checkout_file("$path~A~", $infoA);
-+    checkout_file("$path~B~", $infoB);
-+    system 'checkout-cache', $path;
-+    rename $path, "$path~O~";
-+    my ($fhi, $fho);
-+    open $fhi, '-|', 'merge', '-p', "$path~A~", "$path~O~", "$path~B~";
-+    open $fho, '>', $path;
-+    local ($/);
-+    while (<$fhi>) { print $fho $_; }
-+    close $fhi;
-+    close $fho;
-+    # There is no reason to prefer infoA over infoB but
-+    # we need to pick one.
-+    chmod oct("0$infoA->[NEW_MODE]"), $path;
-+}
-+
-+################################################################
-+
-+# O stands for "the original".  A and B are being merged.
-+my ($treeO, $treeA, $treeB) = map { possibly_commit_to_tree $_ } @ARGV;
-+
-+# Create a temporary directory and go there.
-+system('rm', '-rf', $output_directory) == 0 &&
-+system('mkdir', '-p', "$output_directory/.git") == 0 &&
-+symlink(Cwd::getcwd . "/.git/objects", "$output_directory/.git/objects") &&
-+chdir $output_directory &&
-+system('read-tree', $treeO) == 0
-+    or die "$!: Failed to set up merge working area $output_directory";
-+
-+# Find out edits done in each branch.
-+my %treeA = read_diff_tree($treeO, $treeA);
-+my %treeB = read_diff_tree($treeO, $treeB);
-+
-+# The list of files that was in the ancestor.
-+my @ancestor_file = read_show_files();
-+my %ancestor_file = map { $_ => 1 } @ancestor_file;
-+
-+# Report output is formated as follows:
-+#
-+# The first letter shows the origin of the result.
-+#   O - original
-+#   A - treeA
-+#   B - treeB
-+#   M - both treeA and treeB
-+#   * - treeA and treeB conflicts; needs human action.
-+#
-+# The second and third letter shows what each tree did.
-+#   . - no change
-+#   A - created
-+#   M - modified
-+#   D - deleted
-+
-+for (@ancestor_file) {
-+    if (! exists $treeA{$_} && ! exists $treeB{$_}) {
-+	if ($full_checkout) {
-+	    system 'checkout-cache', $_;
-+	}
-+	print STDERR "O.. $_\n"; # keep original
-+    }
-+}
-+
-+for my $set ([\%treeA, \%treeB, 'A'], [\%treeB, \%treeA, 'B']) {
-+    my ($this, $other, $side) = @$set;
-+    my $delete_sign = ($side eq 'A') ? 'D.' : '.D';
-+    my $create_sign = ($side eq 'A') ? 'A.' : '.A';
-+    my $modify_sign = ($side eq 'A') ? 'M.' : '.M';
-+    while (my ($path, $info) = each %$this) {
-+	# In this loop we do not deal with overlaps.
-+	next if (exists $other->{$path});
-+
-+	if (! defined $info->[NEW_OID]) {
-+	    # deleted in this tree only.
-+	    unlink $path;
-+	    system 'update-cache', '--remove', $path;
-+	    print STDERR "${side}${delete_sign} $path\n";
-+	}
-+	else {
-+	    # modified or created in this tree only.
-+	    my $create_or_modify =
-+		(! defined $info->[OLD_OID]) ? $create_sign : $modify_sign;
-+	    print STDERR "${side}${create_or_modify} $path\n";
-+	    if ($partial_checkout) {
-+		checkout_file($path, $info);
-+		system 'update-cache', '--add', $path;
-+	    } else {
-+		record_file($path, $info);
-+	    }
-+	}
-+    }
-+}
-+
-+my @warning = ();
-+
-+while (my ($path, $infoA) = each %treeA) {
-+    # We need to deal only with overlaps.
-+    next if (!exists $treeB{$path});
-+
-+    my $infoB = $treeB{$path};
-+    if (! defined $infoA->[NEW_OID]) {
-+	# Deleted in tree A.
-+	if (! defined $infoB->[NEW_OID]) {
-+	    # Deleted in both trees (obvious).
-+	    print STDERR "MDD $path\n";
-+	    unlink $path;
-+	    system 'update-cache', '--remove', $path;
-+	}
-+	else {
-+	    # TreeA wants to remove but TreeB wants to modify it.
-+	    print STDERR "*DM $path\n";
-+	    checkout_file("$path~B~", $infoB);
-+	    push @warning, $path;
-+	}
-+    }
-+    else {
-+	# Modified or created in tree A
-+	if (! defined $infoB->[NEW_OID]) {
-+	    # TreeA wants to modify but treeB wants to remove it.
-+	    print STDERR "*MD $path\n";
-+	    checkout_file("$path~A~", $infoA);
-+	    push @warning, $path;
-+	}
-+	else {
-+	    # Modified both in treeA and treeB.
-+	    # Are they modifying to the same contents?
-+	    if ($infoA->[NEW_OID] eq $infoB->[NEW_OID]) {
-+		# No changes or just the mode.
-+		# we prefer TreeA over TreeB for no particular reason.
-+		print STDERR "MMM $path\n";
-+		record_file($path, $infoA);
-+	    }
-+	    else {
-+		# Modified in both.  Needs merge.
-+		print STDERR "*MM $path\n";
-+		merge_tree($path, $infoA, $infoB);
-+	    }
-+	}
-+    }
-+}
-+
-+if (@warning) {
-+    print "\nThere are some files that were deleted in one branch and\n"
-+	. "modified in another.  Please examine them carefully:\n";
-+    for (@warning) {
-+	print "$_\n";
-+    }
-+}
-+
-+# system 'show-diff', '-q';
-
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
