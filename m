@@ -1,65 +1,46 @@
 From: Paul Jackson <pj@engr.sgi.com>
-Subject: Re: Yet another base64 patch
-Date: Thu, 14 Apr 2005 20:58:31 -0700
+Subject: Re: Date handling.
+Date: Thu, 14 Apr 2005 22:02:25 -0700
 Organization: SGI
-Message-ID: <20050414205831.01039ee8.pj@engr.sgi.com>
-References: <425DEF64.60108@zytor.com>
-	<20050414022413.GB18655@64m.dyndns.org>
-	<425E0174.4080404@zytor.com>
-	<20050414024228.GC18655@64m.dyndns.org>
-	<425E0D62.9000401@zytor.com>
-	<Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org>
-	<425EA152.4090506@zytor.com>
-	<Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org>
-	<20050414191157.GA27696@outpost.ds9a.nl>
-	<425EC3B4.6090908@zytor.com>
-	<20050414214756.GA31249@outpost.ds9a.nl>
-	<Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org>
-	<425F13C9.5090109@zytor.com>
+Message-ID: <20050414220225.286e10ec.pj@engr.sgi.com>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, ahu@ds9a.nl, git@chrisli.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 05:57:19 2005
+Cc: dwmw2@infradead.org, torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 07:01:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMHxE-0000RL-Lv
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 05:57:16 +0200
+	id 1DMIxK-0007FU-9c
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 07:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261717AbVDOEA1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 00:00:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261731AbVDOEA0
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 00:00:26 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:22700 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S261717AbVDOEAV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 00:00:21 -0400
+	id S261732AbVDOFEs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 01:04:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261718AbVDOFEs
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 01:04:48 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:21187 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S261706AbVDOFEl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 01:04:41 -0400
 Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3F5caSH005989;
-	Thu, 14 Apr 2005 22:38:46 -0700
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3F6gSb7022797;
+	Thu, 14 Apr 2005 23:42:38 -0700
 Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3F3wZlU14686140;
-	Thu, 14 Apr 2005 20:58:36 -0700 (PDT)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <425F13C9.5090109@zytor.com>
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3F52TlU14682513;
+	Thu, 14 Apr 2005 22:02:33 -0700 (PDT)
+To: "Luck, Tony" <tony.luck@intel.com>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F03457AE6@scsmsx401.amr.corp.intel.com>
 X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Earlier, hpa wrote:
-> The base64 version has 2^12 subdirectories instead of 2^8 (I just used 2 
-> characters as the hash key just like the hex version.)
+> I'd think the 8:00am-before-the-first-coffee checkins would be the
+> most worrying :-)
 
-Later, hpa wrote:
-> Ultimately the question is: do we care about old (broken) filesystems?
+For me, it was the Friday evening after beer bust checkin.
 
-I'd imagine we care a little - just not alot.
-
-I'd think that going to 2^12 subdirectories, which with 2^12 entries per
-subdirectory gets us to 16 million files before the leaf directories get
-bigger than the parent, is a good tradeoff.
+But my employer can't afford those anymore, so I'm safe.
 
 -- 
                   I won't rest till it's the best ...
