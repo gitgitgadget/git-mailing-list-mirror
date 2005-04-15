@@ -1,83 +1,96 @@
-From: "C. Scott Ananian" <cscott@cscott.net>
+From: Derek Fawcus <dfawcus@cisco.com>
 Subject: Re: space compression (again)
-Date: Fri, 15 Apr 2005 14:45:55 -0400 (EDT)
-Message-ID: <Pine.LNX.4.61.0504151437100.27637@cag.csail.mit.edu>
+Date: Fri, 15 Apr 2005 19:50:38 +0100
+Message-ID: <20050415195038.E6735@mrwint.cisco.com>
 References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>
- <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 20:44:21 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Apr 15 20:48:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMVms-0007d3-Oa
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:43:31 +0200
+	id 1DMVqe-00085b-HL
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261928AbVDOSqr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 14:46:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261893AbVDOSqr
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:46:47 -0400
-Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:4278 "EHLO
-	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
-	id S261907AbVDOSqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 14:46:08 -0400
-Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
-	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
-	id 1DMVpL-0007uY-00; Fri, 15 Apr 2005 14:46:03 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org>
+	id S261893AbVDOSuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 14:50:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261907AbVDOSuw
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:50:52 -0400
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:29848 "EHLO
+	ams-iport-1.cisco.com") by vger.kernel.org with ESMTP
+	id S261893AbVDOSum (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 14:50:42 -0400
+Received: from ams-core-1.cisco.com (144.254.224.150)
+  by ams-iport-1.cisco.com with ESMTP; 15 Apr 2005 20:50:42 +0200
+Received: from cisco.com (mrwint.cisco.com [64.103.71.48])
+	by ams-core-1.cisco.com (8.12.10/8.12.6) with ESMTP id j3FIoc54001899
+	for <git@vger.kernel.org>; Fri, 15 Apr 2005 20:50:39 +0200 (MEST)
+Received: (from dfawcus@localhost)
+	by cisco.com (8.8.8-Cisco List Logging/8.8.8) id TAA18818
+	for git@vger.kernel.org; Fri, 15 Apr 2005 19:50:38 +0100 (BST)
+To: git@vger.kernel.org
+X-Mailer: Mutt 1.0.1i
+In-Reply-To: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>; from cscott@cscott.net on Fri, Apr 15, 2005 at 01:19:30PM -0400
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 15 Apr 2005, Linus Torvalds wrote:
+On Fri, Apr 15, 2005 at 01:19:30PM -0400, C. Scott Ananian wrote:
+> Why are blobs per-file?  [After all, Linus insists that files are an 
+> illusion.]  Why not just have 'chunks', and assemble *these* 
+> into blobs (read, 'files')?  A good chunk size would fit evenly into some 
+> number of disk blocks (no wasted space!).
 
-> The problem with chunking is:
-> - it complicates a lot of the routines. Things like "is this file
->   unchanged" suddenly become "is this file still the same set of chunks",
->   which is just a _lot_ more code and a lot more likely to have bugs.
+[ I've only been earwigging,  not paying a lot of attention,  however ...]
 
-The blob still has the same hash; therefore the file is still the same.
-Nothing looks inside blobs; they just want either the hash or the full 
-contents (if I understand the algorithms correctly).
-I agree it's more code, but I think it can be nicely layered.
+Funny I was just think of this having read Linus' discourse on
+"files don't matter", the obvious chunking factor would be say
+a function.
 
-> - you have to find a blocking factor. I thought of just going it fixed
->   chunks, and that just doesn't help at all.
+The problem being tending towards having very small files - I know
+I tend to prefer small functions.  Hmm - a underlying filesystem that
+efficiently stores small files - why does that ring a bell :-)
 
-rsync uses a fixed chunk size, but this chunk can start at any offset (ie, 
-not constrained to fixed boundaries).  This means that adding a single 
-line to the file works like you'd expect, even though all the chunk 
-boundaries change.  [I think this is what you're talking about.]
+However the simple answer is to have a preparser for a file / tree
+checkin which split say a .c file into it's associated chunks,  anf
+represented it in git as a signed/hashed object.  i.e. a automatically
+created extra level of indirection (as I seem to recall was added
+somewhere else?).
 
-> - we already have wasted space due to the low-level filesystem (as
->   opposed to "git") usually being block-based, which means that space
->   utilization for small objects tends to suck. So you really want to
->   prefer objects that are several kB (compressed), and a small block just
->   wastes tons of space.
+  So say fred.c:
 
-Not on (say) reiserfs, and not over the network.  I'm proposing (at the 
-moment) easy conversion from chunked to unchunked disk representation,
-so that you can leave things unchunked if (for example) you know you're 
-running ext2 with a large block size.
+  /*
+   * File boiler
+   */
+  #include <guff>
+  #include <more guff>
 
-> - there _is_ a natural blocking factor already. That's what a file
->   boundary really is within the project, and finding any other is really
->   quite hard.
+  /*
+   * Fn a boiler
+   */
+  int fn_a(args) {
+  }
 
-Well, yes, it may be nontrivial.  But 'quite hard' depends on your 
-perspective, I guess.  Given a cache of existing chunks, it's just a 
-few table lookups. =)
+  /*
+   * Fn b boiler
+   */
+  long fn_b(args) {
+  }
 
-> So I'm personally 100% sure that it's not worth it. But I'm not opposed to
-> the _concept_: it makes total sense in the "filesystem" view, and is 100%
-> equivalent to having an inode with pointers to blocks. I just don't think
-> the concept plays out well in reality.
+Would be split into 4 parts within git,  the 'file object' which simply
+points to the content objects,  and 3 contents objects,  being the stuff
+before 'Fn a boiler',  fn_a and it's boiler,  fn_b and it's boiler.
 
-So I guess I'll have to implement this and find out, won't I? =)
-  --scott
+The interesting bit is needing a preprocessor which can roughly parse
+the code - i.e. detect where to place the boiler blocks.
 
-AMLASH overthrow SDI Suharto HBDRILL SMOTH SUMAC SYNCARP kibo Blair 
-Diplomat Kojarena CIA cracking counter-intelligence CABOUNCE anthrax
-                          ( http://cscott.net/ )
+You would then do most of your tree operations upon the file objects,
+but get the space savings from the content objects being shared.
+
+I suspect that simply to prevent pathological conditions you'd have to
+arrange that the contents objects have a minimal size,  irrespective
+of the number of desired chunks (functions) they would naturally
+contain.  i.e. for compresion efficiency,  you may choose something like
+2K as the minimal pre compression content object size.
+
+DF
