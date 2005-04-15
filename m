@@ -1,140 +1,97 @@
-From: Ray Heasman <lists@mythral.org>
-Subject: Re: space compression (again)
-Date: Fri, 15 Apr 2005 12:33:03 -0700
-Message-ID: <1113593583.29624.46.camel@maze.mythral.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: Merge with git-pasky II.
+Date: Fri, 15 Apr 2005 21:54:52 +0200
+Message-ID: <20050415195451.GF7417@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz> <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz> <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Apr 15 21:30:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 21:52:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMWVj-0004pu-Va
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 21:29:52 +0200
+	id 1DMWql-0007JU-VW
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 21:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261924AbVDOTdV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 15:33:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261932AbVDOTdV
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 15:33:21 -0400
-Received: from soggy199.drizzle.com ([216.162.199.199]:59398 "EHLO mythral.org")
-	by vger.kernel.org with ESMTP id S261924AbVDOTdH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 15:33:07 -0400
-Received: (qmail 1879 invoked from network); 15 Apr 2005 12:33:05 -0700
-Received: from dsl254-013-025.sea1.dsl.speakeasy.net (HELO maze.mythral.org) (authuser@216.254.13.25)
-  by 192.168.0.8 with RC4-MD5 encrypted SMTP; 15 Apr 2005 12:33:05 -0700
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.0.2 
+	id S261945AbVDOTzD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 15:55:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261946AbVDOTzD
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 15:55:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:7648 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261945AbVDOTyx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 15:54:53 -0400
+Received: (qmail 19257 invoked by uid 2001); 15 Apr 2005 19:54:52 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-For for this email not threading properly, I have been lurking on the
-mail list archives and just had to reply to this message.
+Dear diary, on Fri, Apr 15, 2005 at 02:58:25AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+> >> I think the above would result in what SCM person would call
+> >> "merge upstream/sidestream changes into my working directory".
+> 
+> PB> And that's exactly what I'm doing now with git merge. ;-) In fact,
+> PB> ideally the whole change in my scripts when your script is finished
+> PB> would be replacing
+> 
+> PB> 	checkout-cache `diff-tree` # symbolic
+> PB> 	git diff $base $merged | git apply
+> 
+> PB> with
+> 
+> PB> 	merge-tree.pl -b $base $(tree-id) $merged | parse-your-output
+> 
+> In the above I presume by $merged you mean the tree ID (or
+> commit ID) the user's working directory is based upon?  Well,
+> merge-trees (Linus has a single directory merge-tree already)
+> looks at tree IDs (or commit IDs); it would never involve
+> working files in random state that is not recorded as part of a
+> tree (committed or not).  Given that constraints I am not sure
+> how well that would pan out.  I have to think about this a bit.
 
-I was planning to ask exactly this question, and Scott beat me to to. I
-even wanted to call them "chunks" too. :-)
+No, $(tree-id) is the "destination branhc", what the user directory is
+based upon; $merged is the branch you are merging now, relative to
+$base. When I throw away the useless "-b" argument, in practice it would
+look like
 
-It's probably worthwhile for anyone discussing this subject to read this
-link: http://www.cs.bell-labs.com/sys/doc/venti/venti.pdf . I know it's
-been posted before, but it really is worth reading. :-)
+	merge-trees abcd 1234 5678
 
-On Fri, 15 Apr 2005, Linus Torvalds wrote:
-> On Fri, 15 Apr 2005, C. Scott Ananian wrote:
-> > 
-> > Why are blobs per-file?  [After all, Linus insists that files are an 
-> > illusion.]  Why not just have 'chunks', and assemble *these* 
-> > into blobs (read, 'files')?  A good chunk size would fit evenly into some 
-> > number of disk blocks (no wasted space!).
->
-> I actually considered that. I ended up not doing it, because it's not 
-> obvious how to "block" things up (and even more so because while I like 
-> the notion, it flies in the face of the other issues I had: performance 
-> and simplicity).
+for doing
 
-I don't think it's as bad as you think.
+      /------ 1234 -+-
+abcd <             /
+      \------ 5678
 
-Let's conceptually have two types of files - Pobs (Proxy Objects, or
-Pointer Objects), and chunks. Both are stored and referenced by their
-content hash, as usual. Pobs just contain a list of hashes referencing
-the chunks in a file. When a file is initially stored, we chunk it so
-each chunk fits comfortably in a block, but otherwise we aren't too
-critical about sizes. When a file is changed (say, a single line edit),
-we update the chunk that contains that line, hash it and store it with
-its new name, and update the Pob, which we rehash and restore. If a
-chunk grows to be very large (say > 2 disk blocks), we can rechunk it
-and update the Pob to include the new chunks.
+(not that the order of 1234 and 5678 would actually really matter)
 
-> The problem with chunking is:
->  - it complicates a lot of the routines. Things like "is this file 
->    unchanged" suddenly become "is this file still the same set of chunks",
->    which is just a _lot_ more code and a lot more likely to have bugs.
+I fear I don't understand the rest of your paragraph. :-(
 
-You're half right; it will be more complex, but I don't think it's as
-bad as you think. Pobs are stored by hash just like anything else. If
-some chunks are different, the pob is different, which means it has a
-different hash. It's exactly the same as dealing with changed file now.
-Sure, when you have to fetch the data, you have to read the pob and get
-a list of chunks to concatenate and return, but your example given
-doesn't change.
+> I do like, however, the idea of separating the step of doing any
+> checkout/merge etc. and actually doing them.  So the command set
+> of parse-your-output needs to be defined.  Based on what I have
+> done so far, it would consist of the following:
+> 
+>  - Result is this object $SHA1 with mode $mode at $path (takes
+>    one of the trees); you can do update-cache --cacheinfo (if
+>    you want to muck with dircache) or cat-file blob (if you want
+>    to get the file) or both.
+> 
+>  - Result is to delete $path.
+> 
+>  - Result is a merge between object $SHA1-1 and $SHA1-2 with
+>    mode $mode-1 or $mode-2 at $path.
+> 
+> Would this be a good enough command set?
 
->  - you have to find a blocking factor. I thought of just going it fixed 
->    chunks, and that just doesn't help at all. 
+What about the conflicts? Like one tree deleting, other tree modifying?
 
-Just use the block size of the filesystem. Some filesystems do tail
-packing, so space isn't an issue, though speed can be. We don't actually
-care how big a chunk is, except to make it easy on the filesystem.
-Individual chunks can be any size.
-
->  - we already have wasted space due to the low-level filesystem (as 
->    opposed to "git") usually being block-based, which means that space 
->    utilization for small objects tends to suck. So you really want to 
->    prefer objects that are several kB (compressed), and a small block just
->    wastes tons of space.
-
-If a chunk is smaller than a disk block, this is true. However, if we
-size it right this is no worse than any other file. Small files (less
-than a block) can't be made any larger, so they waste space anyway.
-Large files end up wasting space in one block unless they are a perfect
-multiple of the block size.
-
-When we increase the size of a chunk, it will waste space, but we would
-have created an entire new file, so we win there too.
-
-Admittedly, Pobs will be wasting space too.
-
-On the other hand, I use ReiserFS, so I don't care. ;-)
-
->  - there _is_ a natural blocking factor already. That's what a file 
->    boundary really is within the project, and finding any other is really 
->    quite hard.
-
-Nah. I think I've made a good case it isn't.
-
-> So I'm personally 100% sure that it's not worth it. But I'm not opposed to
-> the _concept_: it makes total sense in the "filesystem" view, and is 100%
-> equivalent to having an inode with pointers to blocks. I just don't think 
-> the concept plays out well in reality.
-
-Well, the reason I think this would be worth it is that you really win
-when you have multiple parallel copies of a source tree, and changes are
-cheaper too. If you store all the chunks for all your git repositories
-in one place, and otherwise treat your trees of Pobs as the real
-repository, your copied trees only cost you space for the Pobs.
-Obviously this also applies for file updates within past revisions of a
-tree, but I don't know how much it would save. It fits beautifully into
-the current abstraction, and saves space without having to resort to
-rolling hashes or xdeltas.
-
-The _real_ reason why I am excited about git is that I have a vision of
-using this as the filesystem (in a FUSE wrapper or something) for my
-home directory. MP3s and AVIs aside, it will make actual work much
-easier for me. I have a dream; a dream where I save files using the same
-name, safe in the knowledge that I can get to any version I want. I will
-live in a world of autosaves, deletes without confirmation, and /etcs
-immune from the vagaries of my package management systems, not to
-mention users not asking me leading questions about backups. *sigh*
-*sniff* Excuse me, I think I have to go now.
-
--Ray
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
