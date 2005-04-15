@@ -1,47 +1,63 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: ls-tree enhancements
-Date: Fri, 15 Apr 2005 18:13:30 +0200
-Message-ID: <20050415161330.GH19078@pasky.ji.cz>
-References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org> <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> <7vzmw0ok45.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: Out-tree merges
+Date: Fri, 15 Apr 2005 18:29:58 +0200
+Message-ID: <20050415162957.GI19078@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 18:12:11 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 18:27:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMTOU-000315-CW
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 18:10:10 +0200
+	id 1DMTeQ-0005kX-MW
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 18:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261850AbVDOQNh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 12:13:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261851AbVDOQNg
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 12:13:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:11228 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261850AbVDOQNc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 12:13:32 -0400
-Received: (qmail 1658 invoked by uid 2001); 15 Apr 2005 16:13:30 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S261518AbVDOQaE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 12:30:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261860AbVDOQaD
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 12:30:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:33244 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261518AbVDOQ37 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 12:29:59 -0400
+Received: (qmail 3838 invoked by uid 2001); 15 Apr 2005 16:29:58 -0000
+To: torvalds@osdl.org
 Content-Disposition: inline
-In-Reply-To: <7vzmw0ok45.fsf_-_@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 15, 2005 at 04:21:30AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> +static void _usage(void)
-> +{
-> +	usage("ls-tree [-r] [-z] <key>");
-> +}
+  Hello,
 
-(namespace-nazi-hat
- This infriges the system namespaces. FWIW, I prefer to add the
-underscore at the end of the identifier if wanting to do stuff like
-this. Or just call it my_usage().
-)
+  I've been thinking about it, and although it seemed Just Sensible
+initially, I'm liking it less and less now that I'm actually doing
+out-tree merges (git merge already supports it). What is the motivation
+of doing things outside of your working directory?
+
+  The only one I can imagine is that it could interfere with some local
+changes in your directory. And I think that this does not make sense.
+Either you are going to keep them and you should commit them, or you
+don't and there's no reason for keeping them around. Is this really that
+common for you?
+
+  I have two counter-arguments. First, you likely can't build the thing
+in your merge tree, so you can't check if it even compiles after the
+merge went through. Second, you need to work quite differently when
+working in a merge tree. You can't grep for stuff, you cannot (without
+thinking about it and going to different directories) peek to header
+files to check if this structure member is really __u32, etc. You might
+do all of this when merging, let's say when solving weird conflicts.
+
+  Of course being better off with your working directory assumes that
+you have one. OTOH it is hardly imaginable for me that you would all of
+sudden want to say "hey, now I want to take these two trees all of
+sudden and void and merge them together". Not in any common real world
+cases.  Or am I wrong?
+
+  So, I'm thinking whether to just revert to the original behaviour of
+doing the merges in the working tree, or make it optional (which would
+make the scripts more complicated and convoluted).
 
 -- 
 				Petr "Pasky" Baudis
