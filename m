@@ -1,80 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Merge with git-pasky II.
-Date: Fri, 15 Apr 2005 13:45:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504151334350.7211@ppc970.osdl.org>
-References: <20050414002902.GU25711@pasky.ji.cz> <20050413212546.GA17236@64m.dyndns.org>
- <20050414004504.GW25711@pasky.ji.cz> <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org>
- <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
- <7vr7hbhky9.fsf@assigned-by-dhcp.cox.net>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: write-tree is pasky-0.4
+Date: Fri, 15 Apr 2005 16:58:10 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504151617170.27637@cag.csail.mit.edu>
+References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+ <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz>
+ <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz>
+ <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz>
+ <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org>
+ <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org>
+ <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org> <7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Christopher Li <git@chrisli.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 22:41:03 2005
+X-From: git-owner@vger.kernel.org Fri Apr 15 22:56:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMXcH-0004kr-1M
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 22:40:41 +0200
+	id 1DMXqC-0006So-EG
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 22:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261962AbVDOUoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 16:44:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261967AbVDOUoL
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 16:44:11 -0400
-Received: from fire.osdl.org ([65.172.181.4]:55974 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261962AbVDOUoH (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 16:44:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3FKhws4023189
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 15 Apr 2005 13:43:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3FKhvsU014303;
-	Fri, 15 Apr 2005 13:43:58 -0700
+	id S261969AbVDOU6f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 16:58:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261970AbVDOU6f
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 16:58:35 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:9664 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261969AbVDOU6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 16:58:32 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DMXtM-0000Sm-00; Fri, 15 Apr 2005 16:58:20 -0400
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr7hbhky9.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
 On Fri, 15 Apr 2005, Junio C Hamano wrote:
-> 
-> I was looking at merge-tree.c last night to add recursive
-> behaviour (my favorite these days ;-) to it [*1*].
-> 
-> But then I started thinking.
 
-Always good.
+> to yours is no problem for me.  Currently I see your HEAD is at
+> 461aef08823a18a6c69d472499ef5257f8c7f6c8, so I will generate a
+> set of patches against it.
 
-> LT> ... For each entry in the directory it says either
-> LT> 	select <mode> <sha1> path
-> LT> or
-> LT> 	merge <mode>-><mode>,<mode> <sha1>-><sha1>,<sha1> path
-> LT> depending on whether it could directly select the right object or not.
-> 
-> Given that the case you are primarily interested in is the one
-> that affects only small parts of a huge tree (i.e. common kernel
-> merge pattern I understand from your previous messages), your
-> "hacky version" [*2*], extended for recursive operation, would
-> spit out 98% select and 2% merge, and probably the origin of
-> these selects are distributed across ancestor=90%, his=4%,
-> my=4%, or something similar.  Am I misestimating grossly?
+Have you considered using an s/key-like system to make these hashes more 
+human-readable?  Using the S/Key translation (11-bit chunks map to a 1-4 
+letter word), Linus' HEAD is at:
+   WOW-SCAN-NAVE-AUK-JILL-BASH-HI-LACE-LID-RIDE-RUSE-LINE-GLEE-WICK-A
+...which is a little longer, but speaking of branch "wow-scan" (which 
+gives 22 bits of disambiguation) is probably less error-prone than 
+discussing branch '461...' (only 12 bits).
 
-No. That's _exactly_ right. You do not want a recursive merge-tree. 
+You could supercharge this algorithm by using (say) 
+/usr/dict/american-english-large (>2^17 words; 160 bits of hash = 10 
+dictionary words), or mixing upper and lower case (likely to reduce the 15 
+word s/key phrase to ~11 words) to give something like
+    RiDe-Rift-rIMe-rOSy-ScaR-sCat-ShiN-sIde-Sine-seeK-TIEd-TINT
+My personal feeling is that case is likely to be dropped in casual 
+conversation, so speaking of branch 'wow', 'wow-scan', or 'wow-scan-nave' 
+is likely to be significantly more useful than trying to pronounce 
+mixed-cased versions of these.
 
-The "diff-tree" thing is different, exactly because it prunes out all the 
-differences early on.
+This is obviously a cogito issue, rather than a git-fs thing.
+  --scott
 
-> I am thinking about:
-> 
->  - adding recursive behaviour (I am almost done with this);
+[More info is in RFCs 2289 and 1760, although all I'm really using from 
+these is the word dictionary in the appendix.]
+     http://www.faqs.org/rfcs/rfc1760.html
+     http://www.faqs.org/rfcs/rfc2289.html
 
-I think your suggestion sounds perfectly reasonable.
-
-		Linus
+SKIMMER MKOFTEN Ft. Bragg Sabana Seca ESMERALDITE NORAD HTAUTOMAT 
+radar interception Pakistan BOND Kennedy postcard corporate globalization
+                          ( http://cscott.net/ )
