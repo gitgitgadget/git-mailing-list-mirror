@@ -1,56 +1,57 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: fix various issues in gitapply.sh (basically did not handle add/del/cm at all)
-Date: Fri, 15 Apr 2005 20:15:26 +0200
-Message-ID: <20050415181526.GA7417@pasky.ji.cz>
-References: <1113557318.23299.165.camel@nosferatu.lan>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: ls-tree enhancements
+Date: Fri, 15 Apr 2005 11:25:54 -0700
+Message-ID: <7v64ynj3rh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org>
+	<7vfyxtsurd.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
+	<7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+	<7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
+	<20050414121624.GZ25711@pasky.ji.cz>
+	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org>
+	<7vzmw0ok45.fsf_-_@assigned-by-dhcp.cox.net>
+	<20050415161330.GH19078@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 15 20:24:27 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 20:26:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMVTR-0004sF-Df
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:23:25 +0200
+	id 1DMVVg-0005Cs-Ji
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261905AbVDOSTY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 14:19:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261908AbVDOSRy
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:17:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:18910 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261897AbVDOSPe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 14:15:34 -0400
-Received: (qmail 9187 invoked by uid 2001); 15 Apr 2005 18:15:26 -0000
-To: Martin Schlemmer <azarah@nosferatu.za.org>
-Content-Disposition: inline
-In-Reply-To: <1113557318.23299.165.camel@nosferatu.lan>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261910AbVDOS0v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 14:26:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261912AbVDOS0q
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:26:46 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:12163 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261910AbVDOSZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 14:25:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050415182555.WIVD19936.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 15 Apr 2005 14:25:55 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050415161330.GH19078@pasky.ji.cz> (Petr Baudis's message of
+ "Fri, 15 Apr 2005 18:13:30 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 15, 2005 at 11:28:38AM CEST, I got a letter
-where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> Hi,
-> 
-> The egrep regex should not escape the '{' and '}', and also add a check
-> for ' \t' so that we do not pickup stuff like '+----', etc.  Fix typo in
-> assignment.  Check if file exists in new tree before adding/removing
-> (might add support for this lowlevel to increase speed?).  Fix typo in
-> line removing temp files.
-> 
-> Signed-off-by: Martin Schlemmer <azarah@gentoo.org>
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-Thanks for the merge and typo fixes. I can't imagine how, but it really
-appeared to work for me that time!
+>> +static void _usage(void)
 
-I'm confused however what does the exits_in_cache() (what exits? exists?)
-gives us, apart of horribly-looking code. What bug does it fix?
+PB>  This infriges the system namespaces. FWIW, I prefer to add the
+PB> underscore at the end of the identifier if wanting to do stuff like
+PB> this. Or just call it my_usage().
 
-Thanks,
+Thanks.  My bad.  Noted.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+
