@@ -1,66 +1,61 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Re: Re: Re: Remove need to untrack before tracking new branch
-Date: Sat, 16 Apr 2005 01:49:05 +0200
-Message-ID: <81b0412b050415164958cadbe8@mail.gmail.com>
-References: <20050412132307.GH22614@pasky.ji.cz>
-	 <20050413221936.GI25711@pasky.ji.cz>
-	 <1113461754.23299.68.camel@nosferatu.lan>
-	 <1113467335.23299.77.camel@nosferatu.lan>
-	 <1113467905.23299.81.camel@nosferatu.lan>
-	 <20050414091106.GX25711@pasky.ji.cz>
-	 <1113471609.23299.95.camel@nosferatu.lan>
-	 <1113472557.23299.99.camel@nosferatu.lan>
-	 <81b0412b0504141535793cc235@mail.gmail.com>
-	 <1113543914.23299.151.camel@nosferatu.lan>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Paul Dickson <paul@permanentmail.com>
+Subject: Re: Yet another base64 patch
+Date: Fri, 15 Apr 2005 16:55:32 -0700
+Message-ID: <20050415165532.05ed5dc4.paul@permanentmail.com>
+References: <425DEF64.60108@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 01:46:18 2005
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 01:52:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMaVl-0000uq-Ic
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 01:46:10 +0200
+	id 1DMabl-0001TR-UZ
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 01:52:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262385AbVDOXtn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 19:49:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262406AbVDOXtn
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 19:49:43 -0400
-Received: from wproxy.gmail.com ([64.233.184.202]:37591 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262385AbVDOXtg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 19:49:36 -0400
-Received: by wproxy.gmail.com with SMTP id 69so850916wri
-        for <git@vger.kernel.org>; Fri, 15 Apr 2005 16:49:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tp+b/qsz4BUT5C3cPf/OcV4VVBd2fFhKU3PLY/WsyMaQzuLIAbtgSvoyv+3eOnYJjlsUnq9B2SaYKddIqpl7zs4Tivg+YZNQxGMrq6/z6rQOvv695gXXiYotb00T16+4z2TLsyd0YHeSczhJyULOR1qY8rfDCdpbkNE48qIDeVc=
-Received: by 10.54.43.72 with SMTP id q72mr347337wrq;
-        Fri, 15 Apr 2005 16:49:35 -0700 (PDT)
-Received: by 10.54.79.20 with HTTP; Fri, 15 Apr 2005 16:49:05 -0700 (PDT)
-To: azarah@nosferatu.za.org
-In-Reply-To: <1113543914.23299.151.camel@nosferatu.lan>
-Content-Disposition: inline
+	id S262412AbVDOXzw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 19:55:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262424AbVDOXzw
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 19:55:52 -0400
+Received: from orb.pobox.com ([207.8.226.5]:24716 "EHLO orb.pobox.com")
+	by vger.kernel.org with ESMTP id S262412AbVDOXzr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 19:55:47 -0400
+Received: from orb (localhost [127.0.0.1])
+	by orb.pobox.com (Postfix) with ESMTP
+	id 762577D7; Fri, 15 Apr 2005 19:55:44 -0400 (EDT)
+Received: from red.pwd.internal (ip68-230-78-84.ph.ph.cox.net [68.230.78.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by orb.sasl.smtp.pobox.com (Postfix) with ESMTP id 34AB387;
+	Fri, 15 Apr 2005 19:55:42 -0400 (EDT)
+Received: from violet.pwd.internal (violet [192.168.1.4])
+	by red.pwd.internal (8.12.8/8.12.8) with SMTP id j3FNtXT3007438;
+	Fri, 15 Apr 2005 16:55:43 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <425DEF64.60108@zytor.com>
+X-Mailer: Sylpheed version 1.9.7 (GTK+ 2.4.14; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 4/15/05, Martin Schlemmer <azarah@nosferatu.za.org> wrote:
-> > > +               if (update_mode && changed & MODE_CHANGED)
-> > > +                       chmod(ce->name, ce->st_mode);
-> >
-> > it's "if ((update_mode && changed) & MODE_CHANGED)"
-> > Did you really mean that?
+On Wed, 13 Apr 2005 21:19:48 -0700, H. Peter Anvin wrote:
+
+> Checking out the total kernel tree (time checkout-cache -a into an empty 
+> directory):
 > 
-> No, '&' have a higher priority (weight?) than '&&'.  Although, yes, it
-> might be better style to add brackets.
+>         Cache cold      Cache hot
+> stock   3:46.95         19.95
+> base64  5:56.20         23.74
+> flat    2:44.13         15.68
+> 
+> It seems that the flat format, at least on ext3 with dircache, is 
+> actually a major performance win, and that the second level loses quite 
+> a bit.
 
-I wasn't concerned about style
+Since 160-bits does not go into base64 evenly anyways, what happens if
+you use 2^10 instead of 2^12 for the subdir names?  That will be 1/4 the
+directories of the base64 given above.
 
-> But just to make you happy, let me prove it:
+	-Paul
 
-It's not to make me happy, it's just to prove you're right.
-You did it, I stand corrected.
