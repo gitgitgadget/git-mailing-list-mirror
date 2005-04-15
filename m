@@ -1,157 +1,72 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: [patch pasky 1/2] fix various issues in gitapply.sh (basically
-	did not handle add/del/cm at all)
-Date: Fri, 15 Apr 2005 11:31:38 +0200
-Message-ID: <1113557498.23299.167.camel@nosferatu.lan>
-References: <1113557318.23299.165.camel@nosferatu.lan>
-Reply-To: azarah@nosferatu.za.org
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: Merge with git-pasky II.
+Date: Fri, 15 Apr 2005 11:36:49 +0200
+Message-ID: <20050415093649.GA28077@elte.hu>
+References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org> <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> <1113556448.12012.269.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-ZqQQopft9VGT9E082q4g"
-Content-Transfer-Encoding: 8bit
-Cc: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 15 11:25:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 11:34:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMN4T-0003Dd-2Y
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 11:25:05 +0200
+	id 1DMND2-0004Rl-Ax
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 11:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261780AbVDOJ2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 05:28:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261781AbVDOJ2c
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 05:28:32 -0400
-Received: from ctb-mesg7.saix.net ([196.25.240.79]:11501 "EHLO
-	ctb-mesg7.saix.net") by vger.kernel.org with ESMTP id S261780AbVDOJ2S
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 05:28:18 -0400
-Received: from gateway.lan (wblv-146-239-208.telkomadsl.co.za [165.146.239.208])
-	by ctb-mesg7.saix.net (Postfix) with ESMTP id 7E1C316B67;
-	Fri, 15 Apr 2005 11:27:48 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id CF32C3A26DB;
-	Fri, 15 Apr 2005 11:33:54 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 02503-05; Fri, 15 Apr 2005 11:33:49 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id BC6743A26DA;
-	Fri, 15 Apr 2005 11:33:49 +0200 (SAST)
-To: GIT Mailing Lists <git@vger.kernel.org>
-In-Reply-To: <1113557318.23299.165.camel@nosferatu.lan>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	id S261781AbVDOJhD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 05:37:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261782AbVDOJhD
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 05:37:03 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:48543 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261781AbVDOJg6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 05:36:58 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id ADB6A31FE7B;
+	Fri, 15 Apr 2005 11:36:16 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id B02801FC2; Fri, 15 Apr 2005 11:36:52 +0200 (CEST)
+To: David Woodhouse <dwmw2@infradead.org>
+Content-Disposition: inline
+In-Reply-To: <1113556448.12012.269.camel@baythorne.infradead.org>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---=-ZqQQopft9VGT9E082q4g
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+* David Woodhouse <dwmw2@infradead.org> wrote:
 
-PS: forget the '1/2' in the topic, i did it slightly different which
-required changes to gettrack.sh, etc, but to got getmerge.sh, and saw my
-short sightedness.
+> Consider a simple repository which contains two files A and B. We 
+> start off with the first version of each ('A1B1'), and the owner of 
+> each file takes a branch and modifies their own file. There is 
+> cross-pulling between the two, and then each modifies the _other's_ 
+> file as well as their own...
+> 
+>    (A1B2)--(A2B2)--(A2'B3)
+>     /  \   /            \
+>    /    \ /              \
+>  (A1B1)  X               (...)
+>    \    / \              /
+>     \  /   \            /
+>    (A2B1)--(A2B2)--(A3B2')
+> 
+> Now, we're trying to merge the two branches. It appears that the most 
+> useful common ancestor to use for a three-way merge of file A is the 
+> version from tree 'A2B1', while the most useful common ancestor for 
+> merging file B is that in 'A1B2'.
 
-On Fri, 2005-04-15 at 11:28 +0200, Martin Schlemmer wrote:
-> Hi,
->=20
-> The egrep regex should not escape the '{' and '}', and also add a check
-> for ' \t' so that we do not pickup stuff like '+----', etc.  Fix typo in
-> assignment.  Check if file exists in new tree before adding/removing
-> (might add support for this lowlevel to increase speed?).  Fix typo in
-> line removing temp files.
->=20
-> Signed-off-by: Martin Schlemmer <azarah@gentoo.org>
->=20
-> gitapply.sh:  47b9346d2679b1bf34220fe4502f15c7d0737b0c
-> --- 47b9346d2679b1bf34220fe4502f15c7d0737b0c/gitapply.sh
-> +++ uncommitted/gitapply.sh
-> @@ -19,15 +19,22 @@
->  # just handle it all ourselves.
->  patch -p1 -N <$patchfifo &
->=20
-> -tee $patchfifo | egrep '^[+-]\{3\}' | {
-> +exits_in_cache() {
-> +       for x in $(ls-tree "$1"); do
-> +               [ "$x" =3D "$2" ] && return 0
-> +       done
-> +       return 1
-> +}
-> +
-> +tee $patchfifo | egrep '^[+-]{3}[ \t]' | {
->         victim=3D
->         origmode=3D
->=20
->         while read sign file attrs; do
-> -               echo $sign $file $attrs ... >&2
-> +#              echo $sign $file $attrs ... >&2
->                 case $sign in
->                 "---")
-> -                       victim=3Dfile
-> +                       victim=3D$file
->                         mode=3D$(echo $attrs | sed 's/.*mode:[0-7]*\([0-7=
-]\{3\}\).*/\1/')
->                         origmode=3D
->                         [ "$mode" !=3D "$attrs" ] && origmode=3D$mode
-> @@ -35,14 +42,19 @@
->                 "+++")
->                         if [ "$file" =3D "/dev/null" ]; then
->                                 torm=3D$(echo "$victim" | sed 's/[^\/]*\/=
-//') #-p1
-> -                               echo -ne "rm\0$torm\0"
-> +                               tree=3D$(echo $attrs | sed 's/.*tree:\([0=
--9a-f]\{40\}\).*/\1/')
-> +                               exits_in_cache "$tree" "$torm" && echo -n=
-e "rm\0$torm\0"
->                                 continue
->                         elif [ "$victim" =3D "/dev/null" ]; then
-> -                               echo -ne "add\0$file\0"
-> +                               toadd=3D$(echo "$file" | sed 's/[^\/]*\//=
-/') #-p1
-> +                               tree=3D$(echo "$file" | sed -e 's/\([^\/]=
-*\)\/.*/\1/')
-> +                               exits_in_cache "$tree" "$toadd" || echo -=
-ne "add\0$toadd\0"
->                         fi
->                         mode=3D$(echo $attrs | sed 's/.*mode:[0-7]*\([0-7=
-]\{3\}\).*/\1/')
->                         if [ "$mode" ] && [ "$mode" !=3D "$attrs" ] && [ =
-"$origmode" !=3D "$mode" ]; then
-> -                               echo -ne "cm\0$mode\0$file\0"
-> +                               tochmod=3D$(echo "$file" | sed 's/[^\/]*\=
-///') #-p1
-> +                               # need a space else numbers gets converte=
-d
-> +                               echo -ne "cm\0 $mode\0$tochmod\0"
->                         fi
->                         ;;
->                 *)
-> @@ -74,4 +86,4 @@
->  done
->  ' padding
->=20
-> -rm $pathfifo $todo $gonefile
-> +rm $patchfifo $todo $gonefile
->=20
->=20
---=20
-Martin Schlemmer
+do such cases occur frequently? In the kernel at least it's not too 
+typical. Would it be a problem to go for the simple solution of using 
+(A1B1) as the common ancestor (based on the tree graph), and then to do 
+a 3-way merge of all changes from that point on?
 
-
---=-ZqQQopft9VGT9E082q4g
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBCX4n6qburzKaJYLYRAvVWAJ4z8uhZi68q6WjvDk0w+C+kB+lsNACgndI7
-IKYONU9BvRM0fU82HFyavnU=
-=XGkr
------END PGP SIGNATURE-----
-
---=-ZqQQopft9VGT9E082q4g--
-
+	Ingo
