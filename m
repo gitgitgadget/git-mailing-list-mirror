@@ -1,96 +1,67 @@
-From: Derek Fawcus <dfawcus@cisco.com>
-Subject: Re: space compression (again)
-Date: Fri, 15 Apr 2005 19:50:38 +0100
-Message-ID: <20050415195038.E6735@mrwint.cisco.com>
-References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: write-tree is pasky-0.4
+Date: Fri, 15 Apr 2005 20:56:24 +0200
+Message-ID: <20050415185624.GB7417@pasky.ji.cz>
+References: <20050414193507.GA22699@pasky.ji.cz> <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz> <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org> <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org> <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 15 20:48:13 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 20:53:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMVqe-00085b-HL
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:47:24 +0200
+	id 1DMVwG-0000MD-MB
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261893AbVDOSuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 14:50:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261907AbVDOSuw
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:50:52 -0400
-Received: from ams-iport-1.cisco.com ([144.254.224.140]:29848 "EHLO
-	ams-iport-1.cisco.com") by vger.kernel.org with ESMTP
-	id S261893AbVDOSum (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 14:50:42 -0400
-Received: from ams-core-1.cisco.com (144.254.224.150)
-  by ams-iport-1.cisco.com with ESMTP; 15 Apr 2005 20:50:42 +0200
-Received: from cisco.com (mrwint.cisco.com [64.103.71.48])
-	by ams-core-1.cisco.com (8.12.10/8.12.6) with ESMTP id j3FIoc54001899
-	for <git@vger.kernel.org>; Fri, 15 Apr 2005 20:50:39 +0200 (MEST)
-Received: (from dfawcus@localhost)
-	by cisco.com (8.8.8-Cisco List Logging/8.8.8) id TAA18818
-	for git@vger.kernel.org; Fri, 15 Apr 2005 19:50:38 +0100 (BST)
-To: git@vger.kernel.org
-X-Mailer: Mutt 1.0.1i
-In-Reply-To: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>; from cscott@cscott.net on Fri, Apr 15, 2005 at 01:19:30PM -0400
+	id S261880AbVDOS4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 14:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261907AbVDOS4a
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:56:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:3807 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261880AbVDOS4Z (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 14:56:25 -0400
+Received: (qmail 13454 invoked by uid 2001); 15 Apr 2005 18:56:24 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 15, 2005 at 01:19:30PM -0400, C. Scott Ananian wrote:
-> Why are blobs per-file?  [After all, Linus insists that files are an 
-> illusion.]  Why not just have 'chunks', and assemble *these* 
-> into blobs (read, 'files')?  A good chunk size would fit evenly into some 
-> number of disk blocks (no wasted space!).
+Dear diary, on Fri, Apr 15, 2005 at 08:44:02PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> And I merged your "Add -z option to show-files", but you had based your 
+> other patches on Petr's tree which due to my other changes is not going to 
+> merge totally cleanly with mine, so I'm wondering if you might want to try 
+> to re-merge your mergepoint stuff against my current tree? That way I can 
+> continue to maintain a set of "core files", and Pasky can maintain the 
+> "usable interfaces" part..
 
-[ I've only been earwigging,  not paying a lot of attention,  however ...]
+Actually, I wanted to ask about this. :-)
 
-Funny I was just think of this having read Linus' discourse on
-"files don't matter", the obvious chunking factor would be say
-a function.
+So, I assume that you don't want to merge my "SCM layer" (which is
+perfectly fine by me). However, I also apply plenty of patches
+concerning the "core git" - be it portability, leak fixes, argument
+parsing fixes and so on.
 
-The problem being tending towards having very small files - I know
-I tend to prefer small functions.  Hmm - a underlying filesystem that
-efficiently stores small files - why does that ring a bell :-)
+Would it be of any benefit if I maintained two trees, one with just your
+core git but what I merge (I think I'd call this branch git-pb), and one
+with my git-pasky (to be renamed to Cogito) layer. I'd then put the
+"core git" changes to the git-pb branch and pull from it to the Cogito
+branch regularily, but it should be safe for you to pull from it too.
 
-However the simple answer is to have a preparser for a file / tree
-checkin which split say a .c file into it's associated chunks,  anf
-represented it in git as a signed/hashed object.  i.e. a automatically
-created extra level of indirection (as I seem to recall was added
-somewhere else?).
+In fact, in that case I might even end up entirely separating the Cogito
+tools from the core git and distributing them independently.
 
-  So say fred.c:
+BTW, just out of interest, are you personally planning to use Cogito for
+your kernel and sparse (and possibly even git) work, or will you stay
+with your lowlevel plumbing for that?
 
-  /*
-   * File boiler
-   */
-  #include <guff>
-  #include <more guff>
+Thanks,
 
-  /*
-   * Fn a boiler
-   */
-  int fn_a(args) {
-  }
-
-  /*
-   * Fn b boiler
-   */
-  long fn_b(args) {
-  }
-
-Would be split into 4 parts within git,  the 'file object' which simply
-points to the content objects,  and 3 contents objects,  being the stuff
-before 'Fn a boiler',  fn_a and it's boiler,  fn_b and it's boiler.
-
-The interesting bit is needing a preprocessor which can roughly parse
-the code - i.e. detect where to place the boiler blocks.
-
-You would then do most of your tree operations upon the file objects,
-but get the space savings from the content objects being shared.
-
-I suspect that simply to prevent pathological conditions you'd have to
-arrange that the contents objects have a minimal size,  irrespective
-of the number of desired chunks (functions) they would naturally
-contain.  i.e. for compresion efficiency,  you may choose something like
-2K as the minimal pre compression content object size.
-
-DF
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
