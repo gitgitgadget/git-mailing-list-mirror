@@ -1,76 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/2] merge-trees script for Linus git
-Date: Fri, 15 Apr 2005 16:33:23 -0700
-Message-ID: <7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
-	<7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
-	<20050414121624.GZ25711@pasky.ji.cz>
-	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
-	<20050414193507.GA22699@pasky.ji.cz>
-	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-	<20050414233159.GX22699@pasky.ji.cz>
-	<7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
-	<20050414223039.GB28082@64m.dyndns.org>
-	<7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
-	<20050415062807.GA29841@64m.dyndns.org>
-	<7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
-	<7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
-	<7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
-	<7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Plug memory leak in update-cache.c
+Date: Sat, 16 Apr 2005 01:48:07 +0200
+Message-ID: <20050415234807.GS7417@pasky.ji.cz>
+References: <1113468830.23299.85.camel@nosferatu.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 01:30:14 2005
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 16 01:44:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMaG1-0007q6-If
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 01:29:53 +0200
+	id 1DMaUO-0000mi-TJ
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 01:44:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262265AbVDOXd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 19:33:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262327AbVDOXd1
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 19:33:27 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:9354 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S262265AbVDOXdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 19:33:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415233324.FQAW1282.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 15 Apr 2005 19:33:24 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Fri, 15 Apr 2005 14:48:47 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262365AbVDOXsQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 19:48:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262385AbVDOXsQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 19:48:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63715 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262365AbVDOXsM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 19:48:12 -0400
+Received: (qmail 5351 invoked by uid 2001); 15 Apr 2005 23:48:07 -0000
+To: Martin Schlemmer <azarah@nosferatu.za.org>
+Content-Disposition: inline
+In-Reply-To: <1113468830.23299.85.camel@nosferatu.lan>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus,
+Dear diary, on Thu, Apr 14, 2005 at 10:53:50AM CEST, I got a letter
+where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
+> Hi,
+> 
+> Might not be that an big an issue as it should be freed on exit, but
+> might cause problems with big trees.
+> 
+> ----
+> 
+> Plug memory leak in update-cache.c.
+> 
+> Signed-off-by: Martin Schlemmer <azarah@nosferatu.za.org>
+> 
+> update-cache.c:  22f3ccd47db4f0888901109a8cbf883d272d1cba
+> --- 22f3ccd47db4f0888901109a8cbf883d272d1cba/update-cache.c
+> +++ uncommitted/update-cache.c
+> @@ -202,6 +202,7 @@
+>                         printf("%s: needs update\n", ce->name);
+>                         continue;
+>                 }
+> +               free(active_cache[i]);
+>                 active_cache[i] = new;
+>         }
+>  }
 
-    the merge-trees I sent you earlier was expecting the old
-diff-tree behaviour, and I did not realize that I need an
-explicit -z flag now.  Here is a fix.
+FYI, new could've contained active_cache[i] at that time, so you needed
+to check for that. Fixed though, thanks for pointing it out.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- merge-trees |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
---- merge-trees	2005-04-15 13:21:35.000000000 -0700
-+++ merge-trees+	2005-04-15 16:27:34.000000000 -0700
-@@ -78,8 +78,8 @@
-     local ($_, $/);
-     $/ = "\0"; 
-     my %path;
--    open $fhi, '-|', 'diff-tree', '-r', @tree
--	or die "$!: diff-tree -r @tree";
-+    open $fhi, '-|', 'diff-tree', '-r', '-z', @tree
-+	or die "$!: diff-tree -r -z @tree";
-     while (<$fhi>) {
- 	chomp;
- 	if (/^\*($reM)->($reM)\tblob\t($reID)->($reID)\t(.*)$/so) {
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
