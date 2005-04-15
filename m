@@ -1,189 +1,367 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/4] Add -r and -z options to ls-tree
-Date: Thu, 14 Apr 2005 23:05:16 -0700
-Message-ID: <7vekdco9r7.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 4/4] Makefile change and merge-trees script itself.
+Date: Thu, 14 Apr 2005 23:06:16 -0700
+Message-ID: <7vaco0o9pj.fsf@assigned-by-dhcp.cox.net>
 References: <7vr7hco9z7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 08:02:26 2005
+X-From: git-owner@vger.kernel.org Fri Apr 15 08:04:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMJuF-00052c-UF
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 08:02:20 +0200
+	id 1DMJw7-0005JB-6y
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 08:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261741AbVDOGFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 02:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261742AbVDOGFo
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 02:05:44 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:54004 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261741AbVDOGFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 02:05:19 -0400
+	id S261742AbVDOGHj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 02:07:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261743AbVDOGHj
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 02:07:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:5341 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261742AbVDOGGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 02:06:43 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415060517.FHIN7956.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 15 Apr 2005 02:05:17 -0400
+          id <20050415060616.LTKX4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 15 Apr 2005 02:06:16 -0400
 To: Petr Baudis <pasky@ucw.cz>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Recursive behaviour (-r) and NUL-terminated output (-z) are added to
-ls-tree with this patch.  They are necessary for merge-trees script to
-deal with filenames with embedded newlines.
+This adds merge-trees to the list of scripts to be installed in
+the Makefile, and also adds merge-trees script itself.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- ls-tree.c |  108 +++++++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 90 insertions(+), 18 deletions(-)
+ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/merge-trees |  302 ++++++++++++++++++
+ Makefile                                             |    2 
+ 2 files changed, 303 insertions(+), 1 deletion(-)
 
-Index: ls-tree.c
+Index: Makefile
 ===================================================================
---- 6767883b330882bc0e9a7c1e4fd999c0ee97ba3a/ls-tree.c  (mode:100644 sha1:3e2a6c7d183a42e41f1073dfec6794e8f8a5e75c)
-+++ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/ls-tree.c  (mode:100664 sha1:cf1279b2c032aeffa72013ddee9dcb8742a7b069)
-@@ -5,45 +5,117 @@
-  */
- #include "cache.h"
+--- 6767883b330882bc0e9a7c1e4fd999c0ee97ba3a/Makefile  (mode:100644 sha1:3a4683454df4ac8f16eca01fe93a787a2ce8f0f4)
++++ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/Makefile  (mode:100644 sha1:0384a229456145a763a5316ce301e74d07454f66)
+@@ -19,7 +19,7 @@
+ SCRIPT=	parent-id tree-id git gitXnormid.sh gitadd.sh gitaddremote.sh \
+ 	gitcommit.sh gitdiff-do gitdiff.sh gitlog.sh gitls.sh gitlsobj.sh \
+ 	gitmerge.sh gitpull.sh gitrm.sh gittag.sh gittrack.sh gitexport.sh \
+-	gitapply.sh gitcancel.sh gitlntree.sh commit-id
++	gitapply.sh gitcancel.sh gitlntree.sh commit-id merge-trees
  
--static int list(unsigned char *sha1)
-+int line_terminator = '\n';
-+int recursive = 0;
+ COMMON=	read-cache.o
+ 
+
+
+Index: merge-trees
+===================================================================
+--- /dev/null  (tree:6767883b330882bc0e9a7c1e4fd999c0ee97ba3a)
++++ 21e5e9f7d7dfa81c6519f0204d5a467236c7fdd5/merge-trees  (mode:100775 sha1:5da2f8a949aeffa60a400d013222fce34eb7262e)
+@@ -0,0 +1,302 @@
++#!/usr/bin/perl -w
 +
-+struct path_prefix {
-+	struct path_prefix *prev;
-+	const char *name;
-+};
++use strict;
++use Cwd;
++use Getopt::Long;
 +
-+static void print_path_prefix(struct path_prefix *prefix)
- {
--	void *buffer;
--	unsigned long size;
--	char type[20];
-+	if (prefix) {
-+		if (prefix->prev)
-+			print_path_prefix(prefix->prev);
-+		fputs(prefix->name, stdout);
-+		putchar('/');
++my $full_checkout = 0;
++my $partial_checkout = 0;
++my $output_directory = ',,merge~tree';
++
++GetOptions("full-checkout" => \$full_checkout,
++	   "partial-checkout" => \$partial_checkout,
++	   "output-directory=s" => \$output_directory)
++    or die;
++
++
++if (@ARGV != 3) {
++    die "Usage: $0 -o [output-directory] [-f] [-p] ancestor A B\n";
++}
++
++if ($full_checkout) {
++    $partial_checkout = 1;
++}
++
++################################################################
++# UI helper -- although it is encouraged to give tree ID, 
++# it is OK to give commit ID.
++sub possibly_commit_to_tree {
++    my ($commit_or_tree_id) = @_;
++    my $type = read_cat_file_t($commit_or_tree_id);
++    if ($type eq 'tree') { return $commit_or_tree_id }
++    if ($type ne 'commit') {
++	die "Tree ID (or commit ID) required, given $type.";
++    }
++
++    my ($fhi);
++    open $fhi, '-|', 'cat-file', 'commit', $commit_or_tree_id
++	or die "$!: cat-file commit $commit_or_tree_id";
++    my ($tree) = <$fhi>;
++    close $fhi;
++    ($tree =~ s/^tree (.*)$/$1/)
++	or die "$tree: Linus says the first line is guaranteed to be tree.";
++    return $tree;
++}
++
++sub read_cat_file_t {
++    my ($id) = @_;
++    my ($fhi);
++    open $fhi, '-|', 'cat-file', '-t', $id
++	or die "$!: cat-file -t $id";
++    my ($t) = <$fhi>;
++    close $fhi;
++    chomp($t);
++    return $t;
++}
++
++################################################################
++# Reads diff-tree -r output and gives a hash that maps a path
++# to 4-tuple (old-mode new-mode old-oid new-oid).
++# When creating, old-* are undef.  When removing, new-* are undef.
++
++sub OLD_MODE () { 0 }
++sub NEW_MODE () { 1 }
++sub OLD_OID ()  { 2 }
++sub NEW_OID ()  { 3 }
++
++sub read_diff_tree {
++    my (@tree) = @_;
++    my ($fhi);
++
++    # Regular expression piece for mode
++    my $reM  = '[0-7]+';
++
++    # Regular expression piece for object ID.
++    # There is a talk about base-64 so better make it easier to modify...
++    my $reID = '[0-9a-f]{40}';
++
++    local ($_, $/);
++    $/ = "\0"; 
++    my %path;
++    open $fhi, '-|', 'diff-tree', '-r', @tree
++	or die "$!: diff-tree -r @tree";
++    while (<$fhi>) {
++	chomp;
++	if (/^\*($reM)->($reM)\tblob\t($reID)->($reID)\t(.*)$/so) {
++	    $path{$5} = [$1, $2, $3, $4]; # modified
 +	}
-+}
-+
-+static void list_recursive(void *buffer,
-+			  unsigned char *type,
-+			  unsigned long size,
-+			  struct path_prefix *prefix)
-+{
-+	struct path_prefix this_prefix;
-+	this_prefix.prev = prefix;
- 
--	buffer = read_sha1_file(sha1, type, &size);
--	if (!buffer)
--		die("unable to read sha1 file");
- 	if (strcmp(type, "tree"))
- 		die("expected a 'tree' node");
-+
- 	while (size) {
--		int len = strlen(buffer)+1;
--		unsigned char *sha1 = buffer + len;
--		char *path = strchr(buffer, ' ')+1;
-+		int namelen = strlen(buffer)+1;
-+		void *eltbuf;
-+		char elttype[20];
-+		unsigned long eltsize;
-+		unsigned char *sha1 = buffer + namelen;
-+		char *path = strchr(buffer, ' ') + 1;
- 		unsigned int mode;
--		unsigned char *type;
- 
--		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1)
-+		if (size < namelen + 20 || sscanf(buffer, "%o", &mode) != 1)
- 			die("corrupt 'tree' file");
- 		buffer = sha1 + 20;
--		size -= len + 20;
-+		size -= namelen + 20;
-+
- 		/* XXX: We do some ugly mode heuristics here.
- 		 * It seems not worth it to read each file just to get this
--		 * and the file size. -- pasky@ucw.cz */
--		type = S_ISDIR(mode) ? "tree" : "blob";
--		printf("%03o\t%s\t%s\t%s\n", mode, type, sha1_to_hex(sha1), path);
-+		 * and the file size. -- pasky@ucw.cz
-+		 * ... that is, when we are not recursive -- junkio@cox.net
-+		 */
-+		eltbuf = (recursive ? read_sha1_file(sha1, elttype, &eltsize) :
-+			  NULL);
-+		if (! eltbuf) {
-+			if (recursive)
-+				error("cannot read %s", sha1_to_hex(sha1));
-+			type = S_ISDIR(mode) ? "tree" : "blob";
-+		}
-+		else
-+			type = elttype;
-+
-+		printf("%03o\t%s\t%s\t", mode, type, sha1_to_hex(sha1));
-+		print_path_prefix(prefix);
-+		fputs(path, stdout);
-+		putchar(line_terminator);
-+
-+		if (eltbuf && !strcmp(type, "tree")) {
-+			this_prefix.name = path;
-+			list_recursive(eltbuf, elttype, eltsize, &this_prefix);
-+		}
-+		free(eltbuf);
- 	}
-+}
-+
-+static int list(unsigned char *sha1)
-+{
-+	void *buffer;
-+	unsigned long size;
-+	char type[20];
-+
-+	buffer = read_sha1_file(sha1, type, &size);
-+	if (!buffer)
-+		die("unable to read sha1 file");
-+	list_recursive(buffer, type, size, NULL);
- 	return 0;
- }
- 
-+static void _usage(void)
-+{
-+	usage("ls-tree [-r] [-z] <key>");
-+}
-+
- int main(int argc, char **argv)
- {
- 	unsigned char sha1[20];
- 
-+	while (1 < argc && argv[1][0] == '-') {
-+		switch (argv[1][1]) {
-+		case 'z':
-+			line_terminator = 0;
-+			break;
-+		case 'r':
-+			recursive = 1;
-+			break;
-+		default:
-+			_usage();
-+		}
-+		argc--; argv++;
++	elsif (/^\+($reM)\tblob\t($reID)\t(.*)$/so) {
++	    $path{$3} = [undef, $1, undef, $2]; # added
 +	}
++	elsif (/^\-($reM)\tblob\t($reID)\t(.*)$/so) {
++	    $path{$3} = [$1, undef, $2, undef]; # deleted
++	}
++	else {
++	    die "cannot parse diff-tree output: $_";
++	}
++    }
++    close $fhi;
++    return %path;
++}
 +
- 	if (argc != 2)
--		usage("ls-tree <key>");
-+		_usage();
- 	if (get_sha1_hex(argv[1], sha1) < 0)
--		usage("ls-tree <key>");
-+		_usage();
- 	sha1_file_directory = getenv(DB_ENVIRONMENT);
- 	if (!sha1_file_directory)
- 		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
-
-
-
-
-
++################################################################
++# Read show-files output to figure out the set of files contained
++# in the tree.  This is used to figure out what ancestor had.
++sub read_show_files {
++    my ($fhi);
++    local ($_, $/);
++    $/ = "\0"; 
++    open $fhi, '-|', 'show-files', '-z', '--cached'
++	or die "$!: show-files -z --cached";
++    my (@path) = map { chomp; $_ } <$fhi>;
++    close $fhi;
++    return @path;
++}
++
++################################################################
++# Given path and info (typically returned from read_diff_tree),
++# create the file in the working directory to match the NEW tree.
++# This does not touch dircache.
++sub checkout_file {
++    my ($path, $info) = @_;
++    my (@elt) = split(/\//, $path);
++    my $j = '';
++    my $tail = pop @elt;
++    my ($fhi, $fho);
++    for (@elt) {
++	mkdir "$j$_";
++	$j = "$j$_/";
++    }
++    open $fho, '>', "$path";
++    open $fhi, '-|', 'cat-file', 'blob', $info->[NEW_OID]
++	or die "$!: cat-file blob $info->[NEW_OID]";
++    while (<$fhi>) {
++	print $fho $_;
++    }
++    close $fhi;
++    close $fho;
++    chmod oct("0$info->[NEW_MODE]"), "$path";
++}
++
++################################################################
++# Given path and info record the file in the dircache without
++# affecting working directory.
++sub record_file {
++    my ($path, $info) = @_;
++    system ('update-cache', '--add', '--cacheinfo',
++	    $info->[NEW_MODE], $info->[NEW_OID], $path);
++}
++
++################################################################
++# Merge info from two trees and leave it in path, without
++# affecting dircache.
++sub merge_tree {
++    my ($path, $infoA, $infoB) = @_;
++    checkout_file("$path~A~", $infoA);
++    checkout_file("$path~B~", $infoB);
++    system 'checkout-cache', $path;
++    rename $path, "$path~O~";
++    my ($fhi, $fho);
++    open $fhi, '-|', 'merge', '-p', "$path~A~", "$path~O~", "$path~B~";
++    open $fho, '>', $path;
++    local ($/);
++    while (<$fhi>) { print $fho $_; }
++    close $fhi;
++    close $fho;
++    # There is no reason to prefer infoA over infoB but
++    # we need to pick one.
++    chmod oct("0$infoA->[NEW_MODE]"), $path;
++}
++
++################################################################
++
++# O stands for "the original".  A and B are being merged.
++my ($treeO, $treeA, $treeB) = map { possibly_commit_to_tree $_ } @ARGV;
++
++# Create a temporary directory and go there.
++system('rm', '-rf', $output_directory) == 0 &&
++system('mkdir', '-p', "$output_directory/.git") == 0 &&
++symlink(Cwd::getcwd . "/.git/objects", "$output_directory/.git/objects") &&
++chdir $output_directory &&
++system('read-tree', $treeO) == 0
++    or die "$!: Failed to set up merge working area $output_directory";
++
++# Find out edits done in each branch.
++my %treeA = read_diff_tree($treeO, $treeA);
++my %treeB = read_diff_tree($treeO, $treeB);
++
++# The list of files that was in the ancestor.
++my @ancestor_file = read_show_files();
++my %ancestor_file = map { $_ => 1 } @ancestor_file;
++
++# Report output is formated as follows:
++#
++# The first letter shows the origin of the result.
++#   O - original
++#   A - treeA
++#   B - treeB
++#   M - both treeA and treeB
++#   * - treeA and treeB conflicts; needs human action.
++#
++# The second and third letter shows what each tree did.
++#   . - no change
++#   A - created
++#   M - modified
++#   D - deleted
++
++for (@ancestor_file) {
++    if (! exists $treeA{$_} && ! exists $treeB{$_}) {
++	if ($full_checkout) {
++	    system 'checkout-cache', $_;
++	}
++	print STDERR "O.. $_\n"; # keep original
++    }
++}
++
++for my $set ([\%treeA, \%treeB, 'A'], [\%treeB, \%treeA, 'B']) {
++    my ($this, $other, $side) = @$set;
++    my $delete_sign = ($side eq 'A') ? 'D.' : '.D';
++    my $create_sign = ($side eq 'A') ? 'A.' : '.A';
++    my $modify_sign = ($side eq 'A') ? 'M.' : '.M';
++    while (my ($path, $info) = each %$this) {
++	# In this loop we do not deal with overlaps.
++	next if (exists $other->{$path});
++
++	if (! defined $info->[NEW_OID]) {
++	    # deleted in this tree only.
++	    unlink $path;
++	    system 'update-cache', '--remove', $path;
++	    print STDERR "${side}${delete_sign} $path\n";
++	}
++	else {
++	    # modified or created in this tree only.
++	    my $create_or_modify =
++		(! defined $info->[OLD_OID]) ? $create_sign : $modify_sign;
++	    print STDERR "${side}${create_or_modify} $path\n";
++	    if ($partial_checkout) {
++		checkout_file($path, $info);
++		system 'update-cache', '--add', $path;
++	    } else {
++		record_file($path, $info);
++	    }
++	}
++    }
++}
++
++my @warning = ();
++
++while (my ($path, $infoA) = each %treeA) {
++    # We need to deal only with overlaps.
++    next if (!exists $treeB{$path});
++
++    my $infoB = $treeB{$path};
++    if (! defined $infoA->[NEW_OID]) {
++	# Deleted in tree A.
++	if (! defined $infoB->[NEW_OID]) {
++	    # Deleted in both trees (obvious).
++	    print STDERR "MDD $path\n";
++	    unlink $path;
++	    system 'update-cache', '--remove', $path;
++	}
++	else {
++	    # TreeA wants to remove but TreeB wants to modify it.
++	    print STDERR "*DM $path\n";
++	    checkout_file("$path~B~", $infoB);
++	    push @warning, $path;
++	}
++    }
++    else {
++	# Modified or created in tree A
++	if (! defined $infoB->[NEW_OID]) {
++	    # TreeA wants to modify but treeB wants to remove it.
++	    print STDERR "*MD $path\n";
++	    checkout_file("$path~A~", $infoA);
++	    push @warning, $path;
++	}
++	else {
++	    # Modified both in treeA and treeB.
++	    # Are they modifying to the same contents?
++	    if ($infoA->[NEW_OID] eq $infoB->[NEW_OID]) {
++		# No changes or just the mode.
++		# we prefer TreeA over TreeB for no particular reason.
++		print STDERR "MMM $path\n";
++		record_file($path, $infoA);
++	    }
++	    else {
++		# Modified in both.  Needs merge.
++		print STDERR "*MM $path\n";
++		merge_tree($path, $infoA, $infoB);
++	    }
++	}
++    }
++}
++
++if (@warning) {
++    print "\nThere are some files that were deleted in one branch and\n"
++	. "modified in another.  Please examine them carefully:\n";
++    for (@warning) {
++	print "$_\n";
++    }
++}
++
++# system 'show-diff', '-q';
 
