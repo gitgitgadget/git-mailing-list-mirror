@@ -1,205 +1,177 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [Patch] ls-tree enhancements
-Date: Thu, 14 Apr 2005 19:21:30 -0700
-Message-ID: <7vzmw0ok45.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20050414002902.GU25711@pasky.ji.cz>
-	<20050413212546.GA17236@64m.dyndns.org>
-	<20050414004504.GW25711@pasky.ji.cz>
-	<Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org>
-	<7vfyxtsurd.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
-	<7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
-	<7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
-	<20050414121624.GZ25711@pasky.ji.cz>
-	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org>
+From: "Barry Silverman" <barry@disus.com>
+Subject: RE: Merge with git-pasky II.
+Date: Thu, 14 Apr 2005 22:33:26 -0400
+Message-ID: <000001c54163$85540150$6400a8c0@gandalf>
+References: <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 04:19:01 2005
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Petr Baudis'" <pasky@ucw.cz>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 15 04:31:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMGPW-0007S8-AR
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 04:18:22 +0200
+	id 1DMGbG-00005J-6R
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 04:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261719AbVDOCVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Apr 2005 22:21:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261721AbVDOCVl
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 22:21:41 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:38130 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261719AbVDOCVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Apr 2005 22:21:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415022131.KUNE1282.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 14 Apr 2005 22:21:31 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> (Linus
- Torvalds's message of "Thu, 14 Apr 2005 11:36:52 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261724AbVDOCdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Apr 2005 22:33:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261725AbVDOCdv
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Apr 2005 22:33:51 -0400
+Received: from borg.disus.com ([199.243.199.210]:9735 "EHLO borg.disus.com")
+	by vger.kernel.org with ESMTP id S261724AbVDOCdd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Apr 2005 22:33:33 -0400
+Received: from gandalf (vpn2000h.secdisus.com [199.246.34.127])
+	by borg.disus.com (8.11.6/8.11.6) with ESMTP id j3F1XSf18556;
+	Thu, 14 Apr 2005 21:33:28 -0400
+To: "'Linus Torvalds'" <torvalds@osdl.org>,
+	"'Junio C Hamano'" <junkio@cox.net>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.2627
+In-Reply-To: <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org>
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds '-r' (recursive) option and '-z' (NUL terminated)
-option to ls-tree.  I need it so that the merge-trees (formerly
-known as git-merge.perl) script does not need to create any
-temporary dircache while merging.  It used to use show-files on
-a temporary dircache to get the list of files in the ancestor
-tree, and also used the dircache to store the result of its
-automerge.  I probably still need it for the latter reason, but
-with this patch not for the former reason anymore.
+>>In particular, if you ever find yourself wanting to graft together two
+>>different commit histories, that almost certainly is what you'd want
+to >>do. Somebody might have arrived at the exact same tree some other
+way, >>starting with a 2.6.12 tar.ball or something, and I think we
+should at >>least support the notion of saying "these two totally
+unrelated commits >>actually have the same base tree, so let's merge
+them in "space" (ie data) >>even if we can't really sanely join them in
+"time" (ie "commits").
 
-It is relative to bb95843a5a0f397270819462812735ee29796fb4
+If this is true - then the tree-id's of the two commits would be
+identical, but the commit-id's wouldn't.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Does this imply that common ancestor lookup should work by comparing the
+tree-id's (space-wise the same) rather than the commit-ids (time-wise
+the same)?
 
----
+-----Original Message-----
+From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+Behalf Of Linus Torvalds
+Sent: Thursday, April 14, 2005 8:43 PM
+To: Junio C Hamano
+Cc: Petr Baudis; git@vger.kernel.org
+Subject: Re: Merge with git-pasky II.
 
- ls-tree.c |  108 +++++++++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 files changed, 90 insertions(+), 18 deletions(-)
 
 
---- ,,Linus/ls-tree.c	2005-04-14 19:08:17.000000000 -0700
-+++ ,,Siam/ls-tree.c	2005-04-14 19:11:23.000000000 -0700
-@@ -5,45 +5,117 @@
-  */
- #include "cache.h"
- 
--static int list(unsigned char *sha1)
-+int line_termination = '\n';
-+int recursive = 0;
-+
-+struct path_prefix {
-+	struct path_prefix *prev;
-+	const char *name;
-+};
-+
-+static void print_path_prefix(struct path_prefix *prefix)
- {
--	void *buffer;
--	unsigned long size;
--	char type[20];
-+	if (prefix) {
-+		if (prefix->prev)
-+			print_path_prefix(prefix->prev);
-+		fputs(prefix->name, stdout);
-+		putchar('/');
-+	}
-+}
-+
-+static void list_recursive(void *buffer,
-+			  unsigned char *type,
-+			  unsigned long size,
-+			  struct path_prefix *prefix)
-+{
-+	struct path_prefix this_prefix;
-+	this_prefix.prev = prefix;
- 
--	buffer = read_sha1_file(sha1, type, &size);
--	if (!buffer)
--		die("unable to read sha1 file");
- 	if (strcmp(type, "tree"))
- 		die("expected a 'tree' node");
-+
- 	while (size) {
--		int len = strlen(buffer)+1;
--		unsigned char *sha1 = buffer + len;
--		char *path = strchr(buffer, ' ')+1;
-+		int namelen = strlen(buffer)+1;
-+		void *eltbuf;
-+		char elttype[20];
-+		unsigned long eltsize;
-+		unsigned char *sha1 = buffer + namelen;
-+		char *path = strchr(buffer, ' ') + 1;
- 		unsigned int mode;
--		unsigned char *type;
- 
--		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1)
-+		if (size < namelen + 20 || sscanf(buffer, "%o", &mode) != 1)
- 			die("corrupt 'tree' file");
- 		buffer = sha1 + 20;
--		size -= len + 20;
-+		size -= namelen + 20;
-+
- 		/* XXX: We do some ugly mode heuristics here.
- 		 * It seems not worth it to read each file just to get this
--		 * and the file size. -- pasky@ucw.cz */
--		type = S_ISDIR(mode) ? "tree" : "blob";
--		printf("%03o\t%s\t%s\t%s\n", mode, type, sha1_to_hex(sha1), path);
-+		 * and the file size. -- pasky@ucw.cz
-+		 * ... that is, when we are not recursive -- junkio@cox.net
-+		 */
-+		eltbuf = (recursive ? read_sha1_file(sha1, elttype, &eltsize) :
-+			  NULL);
-+		if (! eltbuf) {
-+			if (recursive)
-+				error("cannot read %s", sha1_to_hex(sha1));
-+			type = S_ISDIR(mode) ? "tree" : "blob";
-+		}
-+		else
-+			type = elttype;
-+
-+		printf("%03o\t%s\t%s\t", mode, type, sha1_to_hex(sha1));
-+		print_path_prefix(prefix);
-+		fputs(path, stdout);
-+		putchar(line_termination);
-+
-+		if (eltbuf && !strcmp(type, "tree")) {
-+			this_prefix.name = path;
-+			list_recursive(eltbuf, elttype, eltsize, &this_prefix);
-+		}
-+		free(eltbuf);
- 	}
-+}
-+
-+static int list(unsigned char *sha1)
-+{
-+	void *buffer;
-+	unsigned long size;
-+	char type[20];
-+
-+	buffer = read_sha1_file(sha1, type, &size);
-+	if (!buffer)
-+		die("unable to read sha1 file");
-+	list_recursive(buffer, type, size, NULL);
- 	return 0;
- }
- 
-+static void _usage(void)
-+{
-+	usage("ls-tree [-r] [-z] <key>");
-+}
-+
- int main(int argc, char **argv)
- {
- 	unsigned char sha1[20];
- 
-+	while (1 < argc && argv[1][0] == '-') {
-+		switch (argv[1][1]) {
-+		case 'z':
-+			line_termination = 0;
-+			break;
-+		case 'r':
-+			recursive = 1;
-+			break;
-+		default:
-+			_usage();
-+		}
-+		argc--; argv++;
-+	}
-+
- 	if (argc != 2)
--		usage("ls-tree <key>");
-+		_usage();
- 	if (get_sha1_hex(argv[1], sha1) < 0)
--		usage("ls-tree <key>");
-+		_usage();
- 	sha1_file_directory = getenv(DB_ENVIRONMENT);
- 	if (!sha1_file_directory)
- 		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
+On Thu, 14 Apr 2005, Junio C Hamano wrote:
+>
+> You say "merge these two trees" above (I take it that you mean
+> "merge these two trees, taking account of this tree as their
+> common ancestor", so actually you are dealing with three trees),
+
+Yes. We're definitely talking three trees.
+
+> and I am tending to agree with the notion of merging trees not
+> commits.  However you might get richer context and more sensible
+> resulting merge if you say "merge these two commits".  Since
+> commit chaining is part of the fundamental git object model you
+> may as well use it.
+
+Yes and no. There are real advantages to using the commit state to just 
+figure out the trees, and then at least have the _option_ to do the
+merge 
+at a pure tree object.
+
+In particular, if you ever find yourself wanting to graft together two
+different commit histories, that almost certainly is what you'd want to
+do. Somebody might have arrived at the exact same tree some other way,
+starting with a 2.6.12 tar.ball or something, and I think we should at
+least support the notion of saying "these two totally unrelated commits
+actually have the same base tree, so let's merge them in "space" (ie
+data)
+even if we can't really sanely join them in "time" (ie "commits").
+
+I dunno.
+
+And it's also a question of sanity. The fact is, we know how to make
+tree 
+merges unambiguous, by just totally ignoring the history between them.
+Ie 
+we know how to merge data. I am pretty damn sure that _nobody_ knows how
+
+to merge "data over time". Maybe BK does. I'm pretty sure it actually 
+takes the "over time" into account. But My goal is to get something that
+
+works, and something that is reliable because it is simple and it has 
+simple rules.
+
+As you say:
+
+> This however opens up another set of can of worms---it would
+> involve not just three trees but all the trees in the commit
+> chain in between.
+
+Exactly.  I seriously believe that the model is _broken_, simply because
+
+it gets too complicated. At some point it boils down to "keep it simple,
+
+stupid".
+
+>  That's when you start wondering if it would
+> be better to add renames in the git object model, which is the
+> topic of another thread.  I have not formed an opinion on that
+> one myself yet.
+
+I've not even been convinved that renames are worth it. Nobody has
+really 
+given a good reason why.
+
+There are two reasons for renames I can think of:
+
+ - space efficiency in delta-based trees. This is a total non-issue for 
+   git, and trying to explicitly track renames is going to cause _more_
+   space to be wasted rather than less.
+
+ - "annotate". Something git doesn't really handle anyway, and it has 
+   little to do with renames. You can fake an annotate, but let's face
+it, 
+   it's _always_ going to be depending on interpreting a diff. In fact, 
+   that ends up how traditional SCM's do it too - they don't really 
+   annotate lines, they just interpret the diff.
+
+   I think you might as well interpret the whole object thing. Git
+_does_ 
+   tell you how the objects changed, and I actually believe that a diff 
+   that works in between objects (ie can show "these lines moved from
+this
+   file X to tjhat file Y") is a _hell_ of a lot more powerful than
+   "rename"  is.
+
+   So I'd seriously suggest that instead of worryign about renames,
+people 
+   think about global diffs that aren't per-file. Git is good at
+limiting 
+   the changes to a set of objects, and it should be entirely possible
+to 
+   think of diffs as ways of moving lines _between_ objects and not just
+   within objects. It's quite common to move a function from one file to
+
+   another - certainly more so than renaming the whole file.
+
+   In other words, I really believe renames are just a meaningless
+special 
+   case of a much more interesting problem. Which is just one reason why
+
+   I'm not at all interested in bothering with them other than as a
+"data 
+   moved" thing, which git already handles very well indeed.
+
+So there,
+
+		Linus
+-
+To unsubscribe from this list: send the line "unsubscribe git" in
+the body of a message to majordomo@vger.kernel.org
+More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
 
