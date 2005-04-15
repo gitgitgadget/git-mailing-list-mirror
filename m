@@ -1,74 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: write-tree is pasky-0.4
-Date: Fri, 15 Apr 2005 11:44:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
- <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz>
- <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz>
- <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz>
- <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org>
- <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org>
- <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: space compression (again)
+Date: Fri, 15 Apr 2005 14:45:55 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504151437100.27637@cag.csail.mit.edu>
+References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>
+ <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 20:42:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 15 20:44:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMVlD-0007Pk-Si
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:41:48 +0200
+	id 1DMVms-0007d3-Oa
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 20:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261922AbVDOSpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 14:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261931AbVDOSos
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:44:48 -0400
-Received: from fire.osdl.org ([65.172.181.4]:56799 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261922AbVDOSmO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 14:42:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3FIg5s4010449
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 15 Apr 2005 11:42:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3FIg4Nj007890;
-	Fri, 15 Apr 2005 11:42:04 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261928AbVDOSqr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 14:46:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261893AbVDOSqr
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 14:46:47 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:4278 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261907AbVDOSqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 14:46:08 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DMVpL-0007uY-00; Fri, 15 Apr 2005 14:46:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 15 Apr 2005, Linus Torvalds wrote:
 
+> The problem with chunking is:
+> - it complicates a lot of the routines. Things like "is this file
+>   unchanged" suddenly become "is this file still the same set of chunks",
+>   which is just a _lot_ more code and a lot more likely to have bugs.
 
-On Fri, 15 Apr 2005, Junio C Hamano wrote:
-> 
-> Linus, sorry for bothering you with a false alarm.  The problem
-> turns out to be introduced in pasky-0.4 and does not exist in
-> your HEAD.
+The blob still has the same hash; therefore the file is still the same.
+Nothing looks inside blobs; they just want either the hash or the full 
+contents (if I understand the algorithms correctly).
+I agree it's more code, but I think it can be nicely layered.
 
-Hey, all the code I write is always perfect, of course ;)
+> - you have to find a blocking factor. I thought of just going it fixed
+>   chunks, and that just doesn't help at all.
 
-That said, I'm having some trouble merging with your perfect code,
-especially since I decided that Russell's "always big-endian" thing was
-definitely the right way to go (but ended up doing it slightly
-differently).
+rsync uses a fixed chunk size, but this chunk can start at any offset (ie, 
+not constrained to fixed boundaries).  This means that adding a single 
+line to the file works like you'd expect, even though all the chunk 
+boundaries change.  [I think this is what you're talking about.]
 
-I did my own version of "upcate-cache --cacheinfo", although mine is a bit 
-more anal, and if you add a new filename it wants that "--add" flag in 
-there first (why? I really like to make sure that people who add or remove 
-files from the cache say so explicitly, so that there are no surprises). 
-Otherwise it should be compatible with yours.
+> - we already have wasted space due to the low-level filesystem (as
+>   opposed to "git") usually being block-based, which means that space
+>   utilization for small objects tends to suck. So you really want to
+>   prefer objects that are several kB (compressed), and a small block just
+>   wastes tons of space.
 
-And I merged your "Add -z option to show-files", but you had based your 
-other patches on Petr's tree which due to my other changes is not going to 
-merge totally cleanly with mine, so I'm wondering if you might want to try 
-to re-merge your mergepoint stuff against my current tree? That way I can 
-continue to maintain a set of "core files", and Pasky can maintain the 
-"usable interfaces" part..
+Not on (say) reiserfs, and not over the network.  I'm proposing (at the 
+moment) easy conversion from chunked to unchunked disk representation,
+so that you can leave things unchunked if (for example) you know you're 
+running ext2 with a large block size.
 
-		Linus
+> - there _is_ a natural blocking factor already. That's what a file
+>   boundary really is within the project, and finding any other is really
+>   quite hard.
+
+Well, yes, it may be nontrivial.  But 'quite hard' depends on your 
+perspective, I guess.  Given a cache of existing chunks, it's just a 
+few table lookups. =)
+
+> So I'm personally 100% sure that it's not worth it. But I'm not opposed to
+> the _concept_: it makes total sense in the "filesystem" view, and is 100%
+> equivalent to having an inode with pointers to blocks. I just don't think
+> the concept plays out well in reality.
+
+So I guess I'll have to implement this and find out, won't I? =)
+  --scott
+
+AMLASH overthrow SDI Suharto HBDRILL SMOTH SUMAC SYNCARP kibo Blair 
+Diplomat Kojarena CIA cracking counter-intelligence CABOUNCE anthrax
+                          ( http://cscott.net/ )
