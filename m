@@ -1,94 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] merge-trees script for Linus git
-Date: Fri, 15 Apr 2005 14:54:12 -0700
-Message-ID: <7vbr8fhfjv.fsf@assigned-by-dhcp.cox.net>
-References: <7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: Re: write-tree is pasky-0.4
+Date: Sat, 16 Apr 2005 00:36:48 +0200
+Message-ID: <20050415223648.GP7417@pasky.ji.cz>
+References: <20050414233159.GX22699@pasky.ji.cz> <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org> <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org> <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org> <20050415185624.GB7417@pasky.ji.cz> <Pine.LNX.4.58.0504151212160.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 23:51:04 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 00:33:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMYiB-00051c-3s
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 23:50:51 +0200
+	id 1DMZNI-0001oT-SJ
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 00:33:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261977AbVDOVyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 17:54:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261981AbVDOVyV
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 17:54:21 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:21647 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261977AbVDOVyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Apr 2005 17:54:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050415215413.THLU22013.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 15 Apr 2005 17:54:13 -0400
+	id S261991AbVDOWgw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 18:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261992AbVDOWgw
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 18:36:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:65250 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261991AbVDOWgu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 18:36:50 -0400
+Received: (qmail 907 invoked by uid 2001); 15 Apr 2005 22:36:48 -0000
 To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504151212160.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus,
+Dear diary, on Fri, Apr 15, 2005 at 10:13:21PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> 
+> 
+> On Fri, 15 Apr 2005, Petr Baudis wrote:
+> > 
+> > So, I assume that you don't want to merge my "SCM layer" (which is
+> > perfectly fine by me). However, I also apply plenty of patches
+> > concerning the "core git" - be it portability, leak fixes, argument
+> > parsing fixes and so on.
+> 
+> I'm actually perfectly happy to merge your SCM layer too eventually, but 
+> I'm nervous at this point.  Especially while people are discussing some 
+> SCM options that I'm personally very leery of, and think that may make 
+> sense for others, but that I personally distrust.
 
-This is the '-q' option for show-diff.c to squelch complaints for
-missing files.  It is handy if you want to run it in the merge
-temporary directory after running merge-trees with its minimum
-checkout mode, which is the default, because you would not find any
-files other than the ones that needs human validation after the merge
-there.
+You mean the renames tracking and similar yet mostly theoretical
+discussions? Or do you dislike something already implemented? I'd be
+happy to hear about it in that case. (To argue about it and likely get
+persuaded... ;-)
 
-It also fixes the argument parsing bug Paul Mackerras noticed in
-<16991.42305.118284.139777@cargo.ozlabs.ibm.com> but slightly
-differently.
+But otherwise it is great news to me. Actually, in that case, is it
+worth renaming it to Cogito and using cg to invoke it? Wouldn't be that
+actually more confusing after it gets merged? IOW, should I stick to
+"git" or feel free to rename it to "cg"?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- 
- show-diff.c |   17 ++++++++++++-----
- 1 files changed, 12 insertions(+), 5 deletions(-)
-
-show-diff.c:  3f7acd2a692a03026784a18f28521b9af322b71e
---- show-diff.c
-+++ show-diff.c	2005-04-15 14:14:53.000000000 -0700
-@@ -58,15 +58,20 @@
- int main(int argc, char **argv)
- {
- 	int silent = 0;
-+	int silent_on_nonexisting_files = 0;
- 	int entries = read_cache();
- 	int i;
- 
--	while (argc-- > 1) {
--		if (!strcmp(argv[1], "-s")) {
--			silent = 1;
-+	for (i = 1; i < argc; i++) {
-+		if (!strcmp(argv[i], "-s")) {
-+			silent_on_nonexisting_files = silent = 1;
- 			continue;
- 		}
--		usage("show-diff [-s]");
-+		if (!strcmp(argv[i], "-q")) {
-+			silent_on_nonexisting_files = 1;
-+			continue;
-+		}
-+		usage("show-diff [-s] [-q]");
- 	}
- 
- 	if (entries < 0) {
-@@ -82,8 +87,10 @@
- 		void *new;
- 
- 		if (stat(ce->name, &st) < 0) {
-+			if (errno == ENOENT && silent_on_nonexisting_files)
-+				continue;
- 			printf("%s: %s\n", ce->name, strerror(errno));
--			if (errno == ENOENT && !silent)
-+			if (errno == ENOENT)
- 				show_diff_empty(ce);
- 			continue;
- 		}
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
