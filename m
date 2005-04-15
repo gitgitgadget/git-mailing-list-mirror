@@ -1,72 +1,54 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: Christopher Li <git@chrisli.org>
 Subject: Re: Merge with git-pasky II.
-Date: Fri, 15 Apr 2005 11:36:49 +0200
-Message-ID: <20050415093649.GA28077@elte.hu>
-References: <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org> <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org> <7v64ypsqev.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> <1113556448.12012.269.camel@baythorne.infradead.org>
+Date: Fri, 15 Apr 2005 02:28:07 -0400
+Message-ID: <20050415062807.GA29841@64m.dyndns.org>
+References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz> <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz> <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org> <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+Cc: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 15 11:34:20 2005
+X-From: git-owner@vger.kernel.org Fri Apr 15 11:35:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMND2-0004Rl-Ax
-	for gcvg-git@gmane.org; Fri, 15 Apr 2005 11:33:56 +0200
+	id 1DMNET-0004cf-Pm
+	for gcvg-git@gmane.org; Fri, 15 Apr 2005 11:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261781AbVDOJhD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 05:37:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261782AbVDOJhD
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 05:37:03 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:48543 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261781AbVDOJg6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 05:36:58 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id ADB6A31FE7B;
-	Fri, 15 Apr 2005 11:36:16 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id B02801FC2; Fri, 15 Apr 2005 11:36:52 +0200 (CEST)
-To: David Woodhouse <dwmw2@infradead.org>
+	id S261782AbVDOJid (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 05:38:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261783AbVDOJid
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 05:38:33 -0400
+Received: from rwcrmhc14.comcast.net ([216.148.227.89]:16288 "EHLO
+	rwcrmhc14.comcast.net") by vger.kernel.org with ESMTP
+	id S261782AbVDOJiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Apr 2005 05:38:20 -0400
+Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
+          by comcast.net (rwcrmhc14) with ESMTP
+          id <2005041509381701400hgp9pe>; Fri, 15 Apr 2005 09:38:17 +0000
+Received: by localhost.localdomain (Postfix, from userid 1027)
+	id D8CEF3F1EF; Fri, 15 Apr 2005 02:28:07 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <1113556448.12012.269.camel@baythorne.infradead.org>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+In-Reply-To: <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-* David Woodhouse <dwmw2@infradead.org> wrote:
-
-> Consider a simple repository which contains two files A and B. We 
-> start off with the first version of each ('A1B1'), and the owner of 
-> each file takes a branch and modifies their own file. There is 
-> cross-pulling between the two, and then each modifies the _other's_ 
-> file as well as their own...
+On Fri, Apr 15, 2005 at 12:43:47AM -0700, Junio C Hamano wrote:
+> >>>>> "CL" == Christopher Li <git@chrisli.org> writes:
 > 
->    (A1B2)--(A2B2)--(A2'B3)
->     /  \   /            \
->    /    \ /              \
->  (A1B1)  X               (...)
->    \    / \              /
->     \  /   \            /
->    (A2B1)--(A2B2)--(A3B2')
+> CL> Is that SHA1 for tree or the file object?
 > 
-> Now, we're trying to merge the two branches. It appears that the most 
-> useful common ancestor to use for a three-way merge of file A is the 
-> version from tree 'A2B1', while the most useful common ancestor for 
-> merging file B is that in 'A1B2'.
+> I am talking about a single file here.
+>
+Then do you emit the entry for it's parents directory?
 
-do such cases occur frequently? In the kernel at least it's not too 
-typical. Would it be a problem to go for the simple solution of using 
-(A1B1) as the common ancestor (based on the tree graph), and then to do 
-a 3-way merge of all changes from that point on?
+e.g. /foo/bar get created. foo doesn't exists. You have
+to create foo first. You don't have mode information for
+foo yet. If it give the top level tree, the SCM can check it
+out by tree. hopefully have the mode on directory correctly.
+Well, if they care about those little details.
 
-	Ingo
+Chris
+ 
