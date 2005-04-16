@@ -1,198 +1,287 @@
-From: "Brian O'Mahoney" <omb@khandalf.com>
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 23:35:39 +0200
-Message-ID: <4261852B.6090507@khandalf.com>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
-    <20050416123155.GA19908@elte.hu>
-    <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
-    <4261132A.3090907@khandalf.com>
-    <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
-Reply-To: omb@bluewin.ch
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Get commits from remote repositories by HTTP
+Date: Sat, 16 Apr 2005 18:03:51 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: omb@bluewin.ch, David Lang <david.lang@digitalinsight.com>,
-	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 23:33:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sun Apr 17 00:00:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMutw-0002y8-MU
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 23:32:28 +0200
+	id 1DMvKg-0005Bo-CL
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262744AbVDPVgA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Apr 2005 17:36:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262753AbVDPVgA
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 17:36:00 -0400
-Received: from mxout.hispeed.ch ([62.2.95.247]:55475 "EHLO smtp.hispeed.ch")
-	by vger.kernel.org with ESMTP id S262744AbVDPVfj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 17:35:39 -0400
-Received: from khandalf.com (80-218-57-125.dclient.hispeed.ch [80.218.57.125])
-	(authenticated bits=0)
-	by smtp.hispeed.ch (8.12.6/8.12.6/tornado-1.0) with ESMTP id j3GLZccb014165
-	for <git@vger.kernel.org.>; Sat, 16 Apr 2005 23:35:38 +0200
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by
-    teraflex.teraflex-research.com (8.12.10/8.12.10/SuSE Linux 0.7) with ESMTP
-    id j3GLZg2Q005891; Sat, 16 Apr 2005 23:35:44 +0200
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: "C. Scott Ananian" <cscott@cscott.net>
-In-Reply-To: <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
-X-Enigmail-Version: 0.90.2.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
-X-Md5-Body: 137631a9b136bacfa649df2da1569cdf
-X-Transmit-Date: Saturday, 16 Apr 2005 23:36:13 +0200
-X-Message-Uid: 0000b49cec9d257900000002000000004261854d00055b18000000010008ce89
-Replyto: omb@bluewin.ch
-X-Sender-Postmaster: Postmaster@80-218-57-125.dclient.hispeed.ch.
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on smtp-06.tornado.cablecom.ch
-X-Virus-Status: Clean
+	id S261153AbVDPWDo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 18:03:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVDPWDo
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:03:44 -0400
+Received: from iabervon.org ([66.92.72.58]:17926 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261153AbVDPWDb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 18:03:31 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMvOJ-0002xO-00
+	for git@vger.kernel.org; Sat, 16 Apr 2005 18:03:51 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Please see below:
+This adds a program to download a commit, the trees, and the blobs in them
+from a remote repository using HTTP. It skips anything you already have.
 
-C. Scott Ananian wrote:
-> On Sat, 16 Apr 2005, Brian O'Mahoney wrote:
->=20
->> (1) I _have_ seen real-life collisions with MD5, in the context of
->>    Document management systems containing ~10^6 ms-WORD documents.
->=20
->=20
-> Dude!  You could have been *famous*!  Why the
-> aitch-ee-double-hockey-sticks didn't you publish this when you found =
-it?
-> Seriously, man.
+There are a number of improvements possible, to be done if this catches
+on, including, significantly, checking if the response was correct (or
+even not an error).
 
-The MD5 has was fine, or at least the code (a) produced the correct
-results on the published test cases, and, (b) was properly applied to
-all bytes of the file(s). I was surprised when it happened, which is wh=
-y
-I bothered to post to this list at this time, so I make two more points
+It makes fsck-cache and rev-tree give harmless warnings, because it
+includes some code that should probably be shared with them in revision.h
 
-(1) These hashes were designed, to assist in the construction of digita=
-l
-signatures, ie so it is hard to produce a document to hash to a known
-hash value, and that with a defined document format so they are designe=
-d
-(i) hash similar documents far apart, and (ii) be hard to reverse;
+Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
 
-it says nothing about naturally ocurring collisions, ie where the
-document is not constrained to be similar,
+Index: Makefile
+===================================================================
+--- ed4f6e454b40650b904ab72048b2f93a068dccc3/Makefile  (mode:100644 sha1:b39b4ea37586693dd707d1d0750a9b580350ec50)
++++ a65375b46154c90e7499b7e76998d430cd9cd29d/Makefile  (mode:100644 sha1:d41860aed161a14ca61e7b6c7f591f65928bd61f)
+@@ -14,7 +14,7 @@
+ 
+ PROG=   update-cache show-diff init-db write-tree read-tree commit-tree \
+ 	cat-file fsck-cache checkout-cache diff-tree rev-tree show-files \
+-	check-files ls-tree merge-tree
++	check-files ls-tree merge-tree http-get
+ 
+ all: $(PROG)
+ 
+@@ -23,6 +23,9 @@
+ 
+ LIBS= -lssl -lz
+ 
++http-get:%:%.o read-cache.o
++	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
++
+ init-db: init-db.o
+ 
+ update-cache: update-cache.o read-cache.o
+Index: http-get.c
+===================================================================
+--- /dev/null  (tree:ed4f6e454b40650b904ab72048b2f93a068dccc3)
++++ a65375b46154c90e7499b7e76998d430cd9cd29d/http-get.c  (mode:100644 sha1:6a36cfa079519a7a3ad5b1618be8711c5127b531)
+@@ -0,0 +1,175 @@
++#include <sys/socket.h>
++#include <netdb.h>
++#include <netinet/in.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <string.h>
++#include <stdlib.h>
++#include "cache.h"
++#include "revision.h"
++#include <errno.h>
++
++static struct sockaddr_in sockad;
++static char *url;
++static char *base;
++
++static int target_url(char *target)
++{
++	char *name;
++	struct hostent *entry;
++	if (memcmp(target, "http://", 7))
++		return -1;
++	url = target;
++	base = strchr(target + 7, '/');
++	name = malloc(base - (target + 7) + 1);
++	memcpy(name, target + 7, base - (target + 7));
++	name[base - (target + 7)] = '\0';
++	printf("Connect to %s\n", name);
++	entry = gethostbyname(name);
++	memcpy(&sockad.sin_addr.s_addr,
++	       &((struct in_addr *)entry->h_addr)->s_addr, 4);
++	sockad.sin_port = htons(80);
++	sockad.sin_family = AF_INET;
++}
++
++static int get_connection()
++{
++	int fd = socket(AF_INET, SOCK_STREAM, 0);
++	if (connect(fd, (struct sockaddr*) &sockad,
++		    sizeof(struct sockaddr_in))) {
++		perror(url);
++	}
++	return fd;
++}
++
++static void release_connection(int fd) {
++	close(fd);
++}
++
++static int fetch(unsigned char *sha1)
++{
++	int header_end_posn = 0;
++	int local;
++	char *hex = sha1_to_hex(sha1);
++	char *filename = sha1_file_name(sha1);
++	char buffer[4096];
++	int fd;
++	struct stat st;
++
++	if (!stat(filename, &st)) {
++		return 0;
++	}
++
++	fd = get_connection();
++	if (fd < 0) {
++		return 1;
++	}
++
++	write(fd, "GET ", 4);
++	write(fd, base, strlen(base));
++	write(fd, "objects/", 8);
++	write(fd, hex, 2);
++	write(fd, "/", 1);
++	write(fd, hex + 2, 38);
++	write(fd, " HTTP/1.0\r\n", 11);
++	write(fd, "\r\n", 2);
++
++	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
++
++	do {
++		int sz = read(fd, buffer, 4096);
++		if (!sz) {
++			break;
++		}
++		if (sz < 0) {
++			perror("Reading from connection");
++			unlink(filename);
++			close(local);
++			return 1;
++		}
++		if (header_end_posn < 4) {
++			int i = 0;
++			char *flag = "\r\n\r\n";
++			while (i < sz && header_end_posn < 4) {
++				if (buffer[i] == flag[header_end_posn]) {
++					header_end_posn++;
++				} else {
++					header_end_posn = 0;
++				}
++				i++;
++			}
++			if (i < sz) {
++				write(local, buffer + i, sz - i);
++			}
++			continue;
++		}
++		write(local, buffer, sz);
++	} while (1);
++
++	close(local);
++	
++	release_connection(fd);
++	return 0;
++}
++
++static int process_tree(unsigned char *sha1)
++{
++	void *buffer;
++        unsigned long size;
++        char type[20];
++
++        buffer = read_sha1_file(sha1, type, &size);
++	if (!buffer)
++		return -1;
++	if (strcmp(type, "tree"))
++		return -1;
++	while (size) {
++		int len = strlen(buffer) + 1;
++		unsigned char *sha1 = buffer + len;
++		unsigned int mode;
++		int retval;
++
++		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1)
++			return -1;
++
++		buffer = sha1 + 20;
++		size -= len + 20;
++
++		retval = fetch(sha1);
++		if (retval)
++			return -1;
++
++		if (S_ISDIR(mode)) {
++			retval = process_tree(sha1);
++			if (retval)
++				return -1;
++		}
++	}
++	return 0;
++}
++
++static int process_commit(unsigned char *sha1)
++{
++	struct revision *rev = lookup_rev(sha1);
++	if (parse_commit_object(rev))
++		return -1;
++	
++	fetch(rev->tree);
++	process_tree(rev->tree);
++	return 0;
++}
++
++int main(int argc, char **argv)
++{
++	char *commit_id = argv[1];
++	char *url = argv[2];
++
++	unsigned char sha1[20];
++
++	get_sha1_hex(commit_id, sha1);
++
++	target_url(url);
++
++	fetch(sha1);
++	return process_commit(sha1);
++}
+Index: revision.h
+===================================================================
+--- ed4f6e454b40650b904ab72048b2f93a068dccc3/revision.h  (mode:100664 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
++++ a65375b46154c90e7499b7e76998d430cd9cd29d/revision.h  (mode:100664 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
+@@ -24,6 +24,7 @@
+ 	unsigned int flags;
+ 	unsigned char sha1[20];
+ 	unsigned long date;
++	unsigned char tree[20];
+ 	struct parent *parent;
+ };
+ 
+@@ -111,4 +112,29 @@
+ 	}
+ }
+ 
++static int parse_commit_object(struct revision *rev)
++{
++	if (!(rev->flags & SEEN)) {
++		void *buffer, *bufptr;
++		unsigned long size;
++		char type[20];
++		unsigned char parent[20];
++
++		rev->flags |= SEEN;
++		buffer = bufptr = read_sha1_file(rev->sha1, type, &size);
++		if (!buffer || strcmp(type, "commit"))
++			return -1;
++		get_sha1_hex(bufptr + 5, rev->tree);
++		bufptr += 46; /* "tree " + "hex sha1" + "\n" */
++		while (!memcmp(bufptr, "parent ", 7) && 
++		       !get_sha1_hex(bufptr+7, parent)) {
++			add_relationship(rev, parent);
++			bufptr += 48;   /* "parent " + "hex sha1" + "\n" */
++		}
++		//rev->date = parse_commit_date(bufptr);
++		free(buffer);
++	}
++	return 0;
++}
++
+ #endif /* REVISION_H */
 
->=20
-> Even given the known weaknesses in MD5, it would take much more than =
-a
-> million documents to find MD5 collisions.  I can only conclude that t=
-he
-> hash was being used incorrectly; most likely truncated (my wild-ass
-> guess would be to 32 bits; a collision is likely with > 50% probabili=
-ty
-> in a million document store for a hash of less than 40 bits).
->=20
-> I know the current state of the art here.  It's going to take more th=
-an
-> just hearsay to convince me that full 128-bit MD5 collisions are like=
-ly.
-> I believe there are only two or so known to exist so far, and those w=
-ere
-> found by a research team in China (which, yes, is fairly famous among
-> the cryptographic community now after publishing a paper consisting o=
-f
-> little apart from the two collisions themselves).
-
-(2) I am not concerned with cryptography here, merely sound engineering
-tradeoffs and the avoidance of _pain_in_the_ass_ when we do see a
-random collision, [NB the 2^69 is to 'cause a collision in SHA1' not th=
-e
-odds against such a collision] ... (below)
-
->=20
-> Please, let's talk about hash collisions responsibly.  I posted earli=
-er
-> about the *actual computed probability* of finding two files with an
-> SHA-1 collision before the sun goes supernova.  It's 10^28 to 1 again=
-st.
-> The recent cryptographic works has shown that there are certain
-> situations where a decent amount of computer work (2^69 operations) c=
-an
-> produce two sequences with the same hash, but these sequences are not
-> freely chosen; they've got very specific structure.  This attack does
-> not apply to (effectively) random files sitting in a SCM.
->   http://www.schneier.com/blog/archives/2005/02/sha1_broken.html
->=20
-> That said, Linux's widespread use means that it may not be unimaginab=
-le
-> for an attacker to devote this amount of resources to an attack, whic=
-h
-> would probably involve first committing some specially structured fil=
-e
-> to the SCM (but would Linus accept it?) and then silently corrupting
-> said file via a SHA1 collision to toggle some bits (which would
-> presumably Do Evil).  Thus hashes other than SHA1 really ought to be
-> considered...
->
-> ..but the cryptographic community has not yet come to a conclusion on
-> what the replacement ought to be.  These attacks are so new that we
-> don't really understand what it is about the structure of SHA1 which
-> makes them possible, which makes it hard to determine which other has=
-hes
-> are similarly vulnerable.  It will take time.
->=20
-> I believe Linus has already stated on this list that his plan is to
-> eventually provide a tool for bulk migration of an existing SHA1 git
-> repository to a new hash type.   Basically munging through the
-> repository in bulk, replacing all the hashes.  This seems a perfectly
-> adequate strategy at the moment.
-
-=2E.. [I say again, the problem here is NOT forgery of hashes, though S=
-CO
-like paranoia ...] ... but the hashes are a tiny part of the total
-space, even for trivial patches, so that, providing _NOW_ for a longer
-hash (and then why not use, say, SHA-256 for now as well) is prudent.
-
-We do not want to revisit the plumbing, in the next 3-10 years, for 16
-bytes per hash.
-
-=46inally I can do no more than quote Schneier:
-
-"SHA-1 has been broken. Not a reduced-round version. Not a simplified
-version. The real thing. ...
-
-It's time for us all to migrate away from SHA-1.
-
-Luckily, there are alternatives. The National Institute of Standards an=
-d
-Technology already has standards for longer -- and harder to break --
-hash functions: SHA-224, SHA-256, SHA-384, and SHA-512. They're already
-government standards, and can already be used." and there are FOSS
-implementations.
-
-Or, put more simply by Jon Callas, PGP's CTO: "It's time to walk, but
-not run, to the fire exits. You don't see smoke, but the fire alarms
-have gone off." That's basically what he said last August [2004].
-
->  --scott
->=20
-> WASHTUB Panama Minister Moscow explosives KUGOWN hack Marxist LPMEDLE=
-Y
-> genetic immediate radar SCRANTON COBRA JANE KGB Shoal Bay atomic Beji=
-ng
->                          ( http://cscott.net/ )
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->=20
->=20
->=20
-
---=20
-mit freundlichen Gr=FC=DFen, Brian.
-
-Dr. Brian O'Mahoney
-Mobile +41 (0)79 334 8035 Email: omb@bluewin.ch
-Bleicherstrasse 25, CH-8953 Dietikon, Switzerland
-PGP Key fingerprint =3D 33 41 A2 DE 35 7C CE 5D  F5 14 39 C9 6D 38 56 D=
-5
