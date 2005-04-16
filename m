@@ -1,46 +1,50 @@
-From: Martin Mares <mj@ucw.cz>
-Subject: Re: SHA1 hash safety
-Date: Sun, 17 Apr 2005 01:18:32 +0200
-Message-ID: <20050416231832.GA11444@ucw.cz>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <20050416151116.GC19099@pasky.ji.cz> <Pine.LNX.4.61.0504161114530.29343@cag.csail.mit.edu> <Pine.LNX.4.62.0504161549410.22652@qynat.qvtvafvgr.pbz> <20050416161153.534b47d5.pj@sgi.com>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: Storing permissions
+Date: Sat, 16 Apr 2005 16:19:35 -0700
+Organization: SGI
+Message-ID: <20050416161935.0d2cf3b0.pj@sgi.com>
+References: <20050416230058.GA10983@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:15:10 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 01:16:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMwV0-0003OT-0N
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:14:50 +0200
+	id 1DMwWA-0003Wo-KX
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261190AbVDPXSc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 19:18:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVDPXSc
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:18:32 -0400
-Received: from albireo.ucw.cz ([84.242.65.67]:26764 "EHLO albireo.ucw.cz")
-	by vger.kernel.org with ESMTP id S261190AbVDPXSb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 19:18:31 -0400
-Received: by albireo.ucw.cz (Postfix, from userid 1000)
-	id 758947BD17; Sun, 17 Apr 2005 01:18:32 +0200 (CEST)
-To: Paul Jackson <pj@sgi.com>
-Content-Disposition: inline
-In-Reply-To: <20050416161153.534b47d5.pj@sgi.com>
-User-Agent: Mutt/1.3.28i
+	id S261193AbVDPXTp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 19:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261194AbVDPXTp
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:19:45 -0400
+Received: from omx3-ext.sgi.com ([192.48.171.20]:63185 "EHLO omx3.sgi.com")
+	by vger.kernel.org with ESMTP id S261193AbVDPXTo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 19:19:44 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3GNhAwA009898;
+	Sat, 16 Apr 2005 16:43:10 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3GNJdlU15237465;
+	Sat, 16 Apr 2005 16:19:39 -0700 (PDT)
+To: Martin Mares <mj@ucw.cz>
+In-Reply-To: <20050416230058.GA10983@ucw.cz>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Martin wrote:
+> Does it really make sense to store full permissions in the trees? I think
+> that remembering the x-bit should be good enough for almost all purposes
+> and the other permissions should be left to the local environment.
 
-> We've already computed the chances of a random pure hash collision
-> with SHA1 - it's something like an average of 1 collision every
-> 10 billion years if we have 10,000 coders generating 1 new file
-> version every minute, non-stop, 24 hours a day, 365 days a year.
+That matches my experience - store 1 bit of mode state - executable or not.
 
-GIT is safe even for the millions of monkeys writing Shakespeare :-)
+Let local environment determine read, write and umask permissions.
 
-				Have a nice fortnight
 -- 
-Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
-Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
-Homo homini lupus, frater fratri lupior, bohemus bohemo lupissimus.
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
