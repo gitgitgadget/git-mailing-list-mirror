@@ -1,39 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Re: Re: write-tree is pasky-0.4
-Date: Fri, 15 Apr 2005 17:22:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504151709180.7211@ppc970.osdl.org>
-References: <20050414233159.GX22699@pasky.ji.cz> <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
- <20050414223039.GB28082@64m.dyndns.org> <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
- <20050415062807.GA29841@64m.dyndns.org> <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
- <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
- <20050415185624.GB7417@pasky.ji.cz> <Pine.LNX.4.58.0504151212160.7211@ppc970.osdl.org>
- <20050415223648.GP7417@pasky.ji.cz>
+Subject: RE: Merge with git-pasky II.
+Date: Fri, 15 Apr 2005 17:32:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504151723530.7211@ppc970.osdl.org>
+References: <000701c5420e$e89177b0$6400a8c0@gandalf>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 02:17:45 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 02:27:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMb0B-0003hL-It
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 02:17:35 +0200
+	id 1DMb9S-0004RN-E1
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 02:27:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262487AbVDPAVF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 20:21:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262489AbVDPAVE
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 20:21:04 -0400
-Received: from fire.osdl.org ([65.172.181.4]:21124 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262487AbVDPAUy (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 20:20:54 -0400
+	id S262489AbVDPAa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 20:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262491AbVDPAa2
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 20:30:28 -0400
+Received: from fire.osdl.org ([65.172.181.4]:59526 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262489AbVDPAaT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 20:30:19 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3G0Kls4015675
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3G0UGs4016855
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 15 Apr 2005 17:20:48 -0700
+	Fri, 15 Apr 2005 17:30:17 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3G0KkDe024731;
-	Fri, 15 Apr 2005 17:20:47 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050415223648.GP7417@pasky.ji.cz>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3G0UFYs025049;
+	Fri, 15 Apr 2005 17:30:15 -0700
+To: Barry Silverman <barry@disus.com>
+In-Reply-To: <000701c5420e$e89177b0$6400a8c0@gandalf>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -44,46 +39,45 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Sat, 16 Apr 2005, Petr Baudis wrote:
-> 
-> But otherwise it is great news to me. Actually, in that case, is it
-> worth renaming it to Cogito and using cg to invoke it? Wouldn't be that
-> actually more confusing after it gets merged? IOW, should I stick to
-> "git" or feel free to rename it to "cg"?
+On Fri, 15 Apr 2005, Barry Silverman wrote:
+>
+> The issue I am trying to come to grips with in the current design, is
+> that the git repository of a number of interrelated projects will soon
+> become the logical OR of all blobs, commits, and trees in ALL the
+> projects. 
 
-I'm perfectly happy for it to stay as "git", and in general I don't have
-any huge preferences either way. You guys can discuss names as much as you
-like, it's the "tracking renames" and "how to merge" things that worry me.
+Nope. I'm actually against the notion of sharing object directories
+between projects. The git model _allows_ it, and I think it can be a valid 
+approach, but it's absolutely not an approach that I would personally 
+suggest be used for the kernel.
 
-I think I've explained my name tracking worries.  When it comes to "how to 
-merge", there's three issues:
+In other words, the default git behaviour - and the one I personally am a 
+proponent of - is to have one object directory per work tree, and really 
+consider all such trees independent. Then you can merge between trees if 
+you want to, and bring in objects that way, but normally you would _not_ 
+have tons of objects from other trees, and _especially_ not from other 
+unrelated projects.
 
- - we do commonly have merge clashes where both trees have applied the 
-   exact same patch. That should merge perfectly well using the 3-way
-   merge from a common parent that Junio has, but not your current "bring
-   patches forward" kind of strategy.
- - I _do_ actually sometimes merge with dirty state in my working 
-   directory, which is why I want the merge to take place in a separate 
-   (and temporary) directory, which allows for a failed merge without 
-   having any major cleanup. If the merge fails, it's not a big deal, and 
-   I can just blow the merge directory away without losing the work I had 
-   in my "real" working directory.
- - reliability. I care much less for "clever" than I care for "guaranteed 
-   to never do the wrong thing". If I have to fix up some stuff by hand, 
-   I'll happily do so. But if I can't trust the merge and have to _check_ 
-   things by hand afterwards, that will make me leery of the merges, and
-   _that_ is bad.
+The reason git supports shared object archives is that (a) it falls out 
+trivially as part of the design, so not allowing it is silly and (b) it is 
+part of a merge, where you _do_ want to get the objects of the trees you 
+merge, and in particular you need to generate a seperate tree that has all 
+those objects without having to copy them.
 
-The third point is why I'm going to the ultra-conservative "three-way 
-merge from the common parent". It's not fancy, but it's something I feel 
-comfortable with as a merge strategy. For example, arch (and in particular 
-darcs) seems to want to try to be "clever" about the merges, and I'd 
-always live in fear. 
+(Before you do the merge, you need to bring the new objects into your 
+repository of course, but that I consider to be a separate issue, not 
+part of the actual technical merge process).
 
-And, finally, there's obviously performance. I _think_ a normal merge with
-nary a conflict and just a few tens of files changed should be possible in
-a second. I realize that sounds crazy to some people, but I think it's
-entirely doable. Half of that is writing the new tree out (that is a
-relative costly op due to the compression). The other half is the "work".
+So normally, you'd probably have a totally pruned tree, with only the 
+objects you need (and you might even consider the "commit parent links" 
+less than necessary, especially if you're just a regular user and not a 
+developer who wants to merge).
+
+But the ability to have extra objects is wonderful. It makes going
+backwards in time basically free (while the equivalent "bk undo" in the BK
+world is a very expensive operation), and it makes it easy to
+incrementally keep up-to-date with trees that you know you're _eventually_
+going to merge with. But it's not an excuse to put just any random crap in 
+that object directory..
 
 		Linus
