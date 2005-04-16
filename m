@@ -1,62 +1,79 @@
-From: ross@lug.udel.edu
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 11:49:51 -0400
-Message-ID: <20050416154951.GB13373@jose.lug.udel.edu>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
+From: Simon Fowler <simon@himi.org>
+Subject: Re: Merge with git-pasky II.
+Date: Sun, 17 Apr 2005 01:55:37 +1000
+Message-ID: <20050416155536.GX4488@himi.org>
+References: <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> <7v7jj5qgdz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org> <1113559330.12012.292.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org> <20050416014442.GW4488@himi.org> <Pine.LNX.4.62.0504160518310.21837@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: omb@bluewin.ch, David Lang <david.lang@digitalinsight.com>,
-	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 17:46:34 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="41bjdpi19TcwJlr2"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 17:52:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMpUv-0006GW-SN
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 17:46:18 +0200
+	id 1DMpab-0006lm-70
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 17:52:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262689AbVDPPtz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 11:49:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262690AbVDPPtz
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 11:49:55 -0400
-Received: from jose.lug.udel.edu ([128.175.60.112]:62868 "HELO
-	mail.lug.udel.edu") by vger.kernel.org with SMTP id S262689AbVDPPtv
+	id S262691AbVDPPzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 11:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262692AbVDPPzt
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 11:55:49 -0400
+Received: from dreamcraft.goldweb.com.au ([202.55.152.19]:15246 "EHLO
+	dreamcraft.com.au") by vger.kernel.org with ESMTP id S262691AbVDPPzo
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 11:49:51 -0400
-Received: (qmail 13755 invoked by uid 1009); 16 Apr 2005 15:49:51 -0000
-To: "C. Scott Ananian" <cscott@cscott.net>
+	Sat, 16 Apr 2005 11:55:44 -0400
+Received: from private.himi.org (dsl-203-113-232-142.ACT.netspace.net.au [203.113.232.142])
+	by dreamcraft.com.au (Postfix) with ESMTP id 816FA5B986;
+	Sun, 17 Apr 2005 01:55:49 +1000 (EST)
+Received: by private.himi.org (Postfix, from userid 1000)
+	id C7569B6E1; Sun, 17 Apr 2005 01:55:37 +1000 (EST)
+To: David Lang <david.lang@digitalinsight.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
+In-Reply-To: <Pine.LNX.4.62.0504160518310.21837@qynat.qvtvafvgr.pbz>
 User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 16, 2005 at 10:58:15AM -0400, C. Scott Ananian wrote:
-> Even given the known weaknesses in MD5, it would take much more than a 
-> million documents to find MD5 collisions.  I can only conclude that the 
-> hash was being used incorrectly; most likely truncated (my wild-ass guess 
-> would be to 32 bits; a collision is likely with > 50% probability in a 
-> million document store for a hash of less than 40 bits).
 
-I've also seen non thread-safe GUID generation, using MD5m hit collisions:
-but of course that was due to the fact that the code had thread safety
-issues, not because anyone actually ever hit a MD5 collision...
+--41bjdpi19TcwJlr2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Of course there are constructed cases of MD5 collision, but those are
-pretty disinteresting.  Give me two files that have useful content and
-the same hash, and then I'll be impressed.
+On Sat, Apr 16, 2005 at 05:19:24AM -0700, David Lang wrote:
+> Simon
+>=20
+> given that you have multiple machines creating files, how do you deal wit=
+h=20
+> the idea of the same 'unique id' being assigned to different files by=20
+> different machines?
+>=20
+The id is a sha1 hash of the current time and the full path of the
+file being added - the chances of that being replicated without
+malicious intent is extremely small. There are other things that
+could be used, like the hostname, username of the person running the
+program, etc, but I don't really see them being necessary.
 
-Linus has already weighed in that he doesn't give a crap.  All the
-crypto-babble about collision whitepapers is uninteresting without a
-repo that has real collisions.  git is far too cool as is - prove I
-should be concerned.
+Simon
 
--- 
-Ross Vandegrift
-ross@lug.udel.edu
+--=20
+PGP public key Id 0x144A991C, or http://himi.org/stuff/himi.asc
+(crappy) Homepage: http://himi.org
+doe #237 (see http://www.lemuria.org/DeCSS)=20
+My DeCSS mirror: ftp://himi.org/pub/mirrors/css/=20
 
-"The good Christian should beware of mathematicians, and all those who
-make empty prophecies. The danger already exists that the mathematicians
-have made a covenant with the devil to darken the spirit and to confine
-man in the bonds of Hell."
-	--St. Augustine, De Genesi ad Litteram, Book II, xviii, 37
+--41bjdpi19TcwJlr2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCYTV4QPlfmRRKmRwRAmsBAJ9ZNSjQeNRmiF1R1ubc+D9648ndeQCgmuxL
+e3wQL5Lv4sf+ZGks08CHsX8=
+=kbht
+-----END PGP SIGNATURE-----
+
+--41bjdpi19TcwJlr2--
