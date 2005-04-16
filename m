@@ -1,91 +1,82 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re: Re: Add "clone" support to lntree
-Date: Sat, 16 Apr 2005 13:39:56 +0200
-Message-ID: <20050416113955.GB14326@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504152142360.30848-100000@iabervon.org> <20050416024755.GX7417@pasky.ji.cz> <20050416025844.GY7417@pasky.ji.cz> <Pine.LNX.4.58.0504152014330.7211@ppc970.osdl.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Merge with git-pasky II.
+Date: Sat, 16 Apr 2005 05:19:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0504160518310.21837@qynat.qvtvafvgr.pbz>
+References: <7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org> <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
+ <20050414121624.GZ25711@pasky.ji.cz> <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org> <7v7jj5qgdz.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org>
+ <1113559330.12012.292.camel@baythorne.infradead.org>
+ <Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org> <20050416014442.GW4488@himi.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 13:36:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 14:18:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMlbD-0005hl-GW
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 13:36:31 +0200
+	id 1DMmEs-0008Sf-1p
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 14:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262650AbVDPLkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 07:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262651AbVDPLkE
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 07:40:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:236 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262650AbVDPLj6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 07:39:58 -0400
-Received: (qmail 17842 invoked by uid 2001); 16 Apr 2005 11:39:56 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504152014330.7211@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261473AbVDPMUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 08:20:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261720AbVDPMUx
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 08:20:53 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:43203 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S261473AbVDPMUq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 08:20:46 -0400
+Received: from wlvims01.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Apr 2005 05:20:45 -0700
+Received: by calexc01.diginsite.com with Internet Mail Service (5.5.2657.72)
+	id <24Z9DJC9>; Sat, 16 Apr 2005 05:19:32 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id 29YX1LJF; Sat, 16 Apr 2005 05:19:24 -0700
+To: simon@himi.org
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <20050416014442.GW4488@himi.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Apr 16, 2005 at 05:16:12AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> On Sat, 16 Apr 2005, Petr Baudis wrote:
-> > 
-> > I'm wondering, whether each tree should be fixed to a certain branch.
-> 
-> I'm wondering why you talk about "branches" at all.
-> 
-> No such thing should exist. There are no branches. There are just 
-> repositories. You can track somebody elses repository, but you should 
-> track it by location, not by any "branch name".
-> 
-> And you track it by just merging it.
-> 
-> Yeah, we don't have really usable merges yet, but..
 
-First, this "level" of branches concerns multiple working directories
-tied to a single repository. It seems like a sensible thing to do; and
-you agreed with it too (IIRC). And when you do that, git-pasky just
-saves some work for you. For git-pasky, branch is really just a symbolic
-name for a commit ID, which gets updated every time you commit in some
-repository. Nothing more.
+On Fri, Apr 15, 2005 at 08:32:46AM -0700, Linus Torvalds wrote:
+> In other words, I'm right. I'm always right, but sometimes I'm more 
+right
+> than other times. And dammit, when I say "files don't matter", I'm 
+really
+> really Right(tm).
+>
+You're right, of course (All Hail Linus!), if you can make it work
+efficiently enough.
 
-So the whole point of this is to have a symbolic name for some other
-working directory. When you want to merge, you don't need to go over to
-the other directory, do commit-id, cut'n'paste, and feed that to git
-merge. You just do
+Just to put something else on the table, here's how I'd go about
+tracking renames and the like, in another world where Linus /does/
+make the odd mistake - it's basically a unique id for files in the
+repository, added when the file is first recognised and updated when
+update-cache adds a new version to the cache. Renames copy the id
+across to the new name, and add it into the cache.
 
-		git merge myotherbranch
+This gives you an O(n) way to tell what file was what across
+renames, and it might even be useful in Linus' world, or if someone
+wanted to build a traditional SCM on top of a git-a-like.
+
+Attached is a patch, and a rename-file.c to use it.
+
+Simon
+
+given that you have multiple machines creating files, how do you deal with 
+the idea of the same 'unique id' being assigned to different files by 
+different machines?
+
+David Lang
 
 
-Now, about remote repositories. When you pull a remote repository, that
-does not mean it has to be immediately merged somewhere. It is very
-useful to have another branch you do *not* want to merge, but you want
-to do diffs to it, or even check it out / export it later to some
-separate directory. Again, the "branch" is just a symbolic name for the
-head commit ID of what you pulled, and the pointer gets updated every
-time you pull again - that's the whole point of it.
-
-The last concept are "tracking" working directories. If you pull the
-tracked branch to this directory, it also automerges it. This is useful
-when you have a single canonical branch for this directory, which it
-should always mirror. That would be the case e.g. for the gazillions of
-Linux users who would like to just have the latest bleeding kernel of
-your, and they expect to use git just like a "different CVS". Basically,
-they will just do
-
-		git pull
-
-instead of
-
-		cvs update
-
-:-).
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
