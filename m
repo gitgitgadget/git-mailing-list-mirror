@@ -1,69 +1,60 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Subject: Re: [PATCH] fix mktemp (remove mktemp ;)
-Date: Sun, 17 Apr 2005 01:36:26 +0200
-Message-ID: <20050416233626.GV9461@lug-owl.de>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: fix mktemp (remove mktemp ;)
+Date: Sun, 17 Apr 2005 01:37:24 +0200
+Message-ID: <20050416233724.GP19099@pasky.ji.cz>
 References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:33:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mj@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Apr 17 01:34:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMwmP-0004pF-5G
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:32:49 +0200
+	id 1DMwnP-0004tO-Ru
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:33:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261200AbVDPXga convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Apr 2005 19:36:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261201AbVDPXga
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:36:30 -0400
-Received: from lug-owl.de ([195.71.106.12]:60868 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S261200AbVDPXg0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 19:36:26 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id 1B99819027E; Sun, 17 Apr 2005 01:36:26 +0200 (CEST)
+	id S261201AbVDPXhb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 19:37:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261202AbVDPXhb
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:37:31 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:11911 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261201AbVDPXhZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 19:37:25 -0400
+Received: (qmail 15794 invoked by uid 2001); 16 Apr 2005 23:37:24 -0000
 To: Paul Jackson <pj@sgi.com>
 Content-Disposition: inline
 In-Reply-To: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
-X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-User-Agent: Mutt/1.5.6+20040907i
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-04-16 16:27:43 -0700, Paul Jackson <pj@sgi.com>
-wrote in message <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.=
-com>:
-> Index: git-pasky-0.4/gitcommit.sh
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> --- git-pasky-0.4.orig/gitcommit.sh	2005-04-12 10:39:14.000000000 -07=
-00
-> +++ git-pasky-0.4/gitcommit.sh	2005-04-16 13:17:49.000000000 -0700
-> @@ -60,7 +60,9 @@ for file in $commitfiles; do
->  	echo $file;
->  done
->  echo "Enter commit message, terminated by ctrl-D on a separate line:=
-"
-> -LOGMSG=3D`mktemp -t gitci.XXXXXX`
-> +t=3D${TMPDIR:-/usr/tmp}/gitapply.$$
+Dear diary, on Sun, Apr 17, 2005 at 01:27:43AM CEST, I got a letter
+where Paul Jackson <pj@sgi.com> told me that...
+> Remove mktemp usage - it doesn't work on
+> some Mandrakes, nor on my SuSE 8.2 with
+> mktemp-1.5-531.
+> 
+> Replace with simple use of $$ (pid).
+> I've been using this same pattern for
+> 20 years on many production scripts;
+> it's fast, solid and simple.
 
-/usr/tmp/ ??? Hey, /usr may be mounted read-only!  Why not just use /tm=
-p ?
+And racy. And not guaranteed to come up with fresh new files.
 
-MfG, JBG
+> More robust tmp file removal, using trap,
+> so that scripts interrupted by signals
+> HUP, INT, QUIT or PIPE will cleanup.
 
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481         =
-    _ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Kri=
-eg  _ _ O
- fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im=
- Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | T=
-CPA));
+But I like this!
+
+I'm deferring those changes to the introduction of a git shell library,
+which several people volunteered to do so far, but noone sent me any
+patches for (the last one was probably Martin Mares, only few hours ago
+though).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
