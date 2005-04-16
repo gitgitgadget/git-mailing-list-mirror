@@ -1,93 +1,77 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 21:13:12 +0200
-Message-ID: <20050416191312.GT9461@lug-owl.de>
-References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+Date: Sat, 16 Apr 2005 12:15:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504161208410.7211@ppc970.osdl.org>
+References: <20050416131528.GB19908@elte.hu>  <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+  <1113679421.28612.16.camel@tglx.tec.linutronix.de> 
+ <Pine.LNX.4.58.0504161135480.7211@ppc970.osdl.org>
+ <1113681021.28612.29.camel@tglx.tec.linutronix.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="CMEQapY8OuP5ao1l"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 21:09:58 2005
+X-From: git-owner@vger.kernel.org Sat Apr 16 21:10:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMsft-00067p-RM
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 21:09:50 +0200
+	id 1DMsgC-0006B9-Rk
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 21:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261886AbVDPTNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 15:13:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262733AbVDPTNU
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 15:13:20 -0400
-Received: from lug-owl.de ([195.71.106.12]:27585 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S261886AbVDPTNN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 15:13:13 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id F205F19026D; Sat, 16 Apr 2005 21:13:12 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
-X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-User-Agent: Mutt/1.5.6+20040907i
+	id S262733AbVDPTNu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 15:13:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262734AbVDPTNu
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 15:13:50 -0400
+Received: from fire.osdl.org ([65.172.181.4]:9122 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262733AbVDPTNr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 15:13:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3GJDcs4004154
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 16 Apr 2005 12:13:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3GJDbwD024297;
+	Sat, 16 Apr 2005 12:13:38 -0700
+To: Thomas Gleixner <tglx@linutronix.de>
+In-Reply-To: <1113681021.28612.29.camel@tglx.tec.linutronix.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---CMEQapY8OuP5ao1l
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2005-04-16 10:04:31 -0700, Linus Torvalds <torvalds@osdl.org>
-wrote in message <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>:
+On Sat, 16 Apr 2005, Thomas Gleixner wrote:
+> 
+> For the export stuff its terrible slow. :(
 
-> What do people think? I'm not so much worried about the data itself: the
-> git architecture is _so_ damn simple that now that the size estimate has
-> been confirmed, that I don't think it would be a problem per se to put
-> 3.2GB into the archive. But it will bog down "rsync" horribly, so it will
-> actually hurt synchronization untill somebody writes the rev-tree-like
-> stuff to communicate changes more efficiently..
->=20
-> IOW, it smells to me like we don't have the infrastructure to really work=
-=20
-> with 3GB archives, and that if we start from scratch (2.6.12-rc2), we can=
-=20
-> build up the infrastructure in parallell with starting to really need it.
+I don't really see your point.
 
-3GB is quite some data, but I'd accept and prefer to download it from
-somewhere. I think that it's worth it.
+If you already know what the tree is like you say, you don't care about
+the tree object. And if you don't know what the tree is, what _are_ you
+doing?
 
-I accept that there are people out there which would love to get a
-smaller archive, but at least most developers that would actually use it
-for day-to-day work *do* have the bandwidth to download it. Maybe we'd
-also prepare (from time to time) bzip'ed tarballs, which I expect to be
-a tad smaller.
+In other words, show us what you're complaining about. If you're looking
+into the trees yourself, then the binary representation of the sha1 is
+already what you want. That _is_ the hash. So why do you want it in ASCII?  
+And if you're not looking into the tree directly, but using "cat-file
+tree" and you were hoping to see ASCII data, then that's certainly not
+going to be any faster than just doing "ls-tree" instead.
 
-MfG, JBG
+In other words, I don't see your point. Either you want ascii output for 
+scripting, or you don't. First you claimed that you did, and that you 
+would want the tree object to change in order to do so. Now you claim that 
+you can't use "ls-tree" because it's too slow. 
 
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
-_ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
-_ _ O
- fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im Ira=
-k!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
-);
+That just isn't making any sense. You're mixing two totally different
+levels, and complaining about performance when scripting things. Yet
+you're talking about a 20-byte data structure that is trivial to convert
+to any format you want.
 
---CMEQapY8OuP5ao1l
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+What kind of _strange_ scripting architecture is so fast that there's a
+difference between "cat-file" and "ls-tree" and can handle 17,000 files in
+60,000 revisions, yet so slow that you can't trivially convert 20 bytes of 
+data?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
-
-iD8DBQFCYWPIHb1edYOZ4bsRAsTHAJ9QWN62+Gn7FTteTpPcKr4U4Gd5GgCgh9ZT
-zLeNdIdFUtNpJUtb3IDpdNU=
-=TNp0
------END PGP SIGNATURE-----
-
---CMEQapY8OuP5ao1l--
+		Linus
