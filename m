@@ -1,117 +1,90 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 15:15:28 +0200
-Message-ID: <20050416131528.GB19908@elte.hu>
+From: David Roundy <droundy@abridgegame.org>
+Subject: using git directory cache code in darcs?
+Date: Sat, 16 Apr 2005 09:22:36 -0400
+Message-ID: <20050416132231.GJ2551@abridgegame.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 16 15:12:52 2005
+Cc: darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Sat Apr 16 15:24:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMn5u-0003sb-0k
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 15:12:18 +0200
+	id 1DMnHD-0004m8-QM
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 15:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262657AbVDPNPt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 09:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262659AbVDPNPt
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 09:15:49 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:12743 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S262657AbVDPNPg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 09:15:36 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id AFACC320374
-	for <git@vger.kernel.org>; Sat, 16 Apr 2005 15:14:53 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 7312D1FC2; Sat, 16 Apr 2005 15:15:31 +0200 (CEST)
+	id S262659AbVDPN1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 09:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262660AbVDPN1d
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 09:27:33 -0400
+Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]:5198 "EHLO
+	localhost") by vger.kernel.org with ESMTP id S262659AbVDPN10 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 09:27:26 -0400
+Received: from droundy by localhost with local (Exim 4.50)
+	id 1DMnFs-0003ZF-Eb; Sat, 16 Apr 2005 09:22:36 -0400
 To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org, darcs-devel@darcs.net
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello Linus and various git developers (ccing darcs developers),
 
-i've converted the Linux kernel CVS tree into 'flat patchset' format, 
-which gave a series of 28237 separate patches. (Each patch represents a 
-changeset, in the order they were applied. I've used the cvsps utility.)
+I've been thinking about the possibility of using the git "current
+directory cache" code in darcs.  Darcs already has an abstraction layer
+over its pristine directory cache, so this shouldn't be too hard--provided
+the git code is understandable.  The default in darcs is currently to use
+an actual directory ("_darcs/current/") as the cache, and we synchronize
+the file modification times in the cache with those of identical files in
+the working directory to speed up compares.  We (the darcs developers) have
+talked for some time about introducing a single-file directory cache, but
+noone ever got around to it, partly because there wasn't a particularly
+compelling need.
 
-the history data starts at 2.4.0 and ends at 2.6.12-rc2. I've included a 
-script that will apply all the patches in order and will create a 
-pristine 2.6.12-rc2 tree.
+It seems that the git directory cache is precisely what we want.  Also, if
+we switch to (optionally) using the git directory cache, I imagine it'll
+make interfacing with git a lot easier.  And, of course, it would
+significantly speed up a number of darcs commands, which are limited by the
+slowness of the readdir-related code.  We haven't tracked this down why
+this is, but a recursive directory compare in which we readdir only one of
+the directories (since we don't care about new files in the other one)
+takes half the time of a compare in which we readdir both directories.
 
-it needed many hours to finish, on a very fast server with tons of RAM, 
-and it also needed a fair amount of manual work to extract it and to 
-make it usable, so i guessed others might want to use the end result as 
-well, to try and generate large GIT repositories from them (or to run 
-analysis over the patches, etc.).
+So my questions are:
 
-the patches contain all the existing metadata, dates, log messages and 
-revision history. (What i think is missing is the BK tree merge 
-information, but i'm not sure we want/need to convert them to GIT.)
+1) Would this actually be a good idea? It seems good to me, but there may
+be other considerations that I haven't thought of.
 
-it's a 136 MB tarball, which can be downloaded from:
+2) Will a license be chosen soon for git? Or has one been chosen, and I
+missed it? I can't really include git code in darcs without a license.  I'd
+prefer GPLv2 or later (since that's how darcs is licensed), but as long as
+it's at least compabible with GPLv2, I'll be all right.
 
-   http://kernel.org/pub/linux/kernel/people/mingo/Linux-2.6-patchset/
+3) Is it likely that git will switch to not using global variables for
+active_cache, active_nr and active_alloc? I'd be more comfortable passing
+these things around, since it would make the haskell interface easier and
+safer.  e.g. I'd like
 
-the ./generate-2.6.12-rc2 script generates the 2.6.12-rc2 tree into 
-linux/, from scratch. (No pre-existing kernel is needed, as 2.patch 
-generates the full 2.4.0 kernel tree.) The patching takes a couple of 
-minutes to finish, on a fast box.
+struct git_cache {
+        struct cache_entry **cache;
+        unsigned int nr, alloc;
+};
 
-below i've attached a sample patch from the series.
+git_cache *read_cache(char *path_to_index);
 
-note: i kept the patches the cvsps utility generated as-is, to have a 
-verifiable base to work on. There were a very small amount of deltas 
-missed (about a dozen), probably resulting from CVS related errors, 
-these are included in the diff-CVS-to-real patch. Also, the patch format 
-cannot create the Documentation/logo.gif file, so the script does this 
-too - just to be able to generate a complete 2.6.12-rc2 tree that is 
-byte-for-byte identical to the real thing.
+or alternatively
 
-	Ingo
+int read_cache(char *path_to_index, git_cache *);
 
----------------------
-PatchSet 1234 
-Date: 2002/04/11 18:29:07
-Author: viro
-Branch: HEAD
-Tag: (none) 
-Log:
-[PATCH] crapectomy in include/linux/nfsd/syscall.h
+Would anyone on the git side be interested in making such changes? If not,
+would they be likely to be accepted if a darcs person submitted patches?
 
-Removes an atavism in declaration of sys_nfsservctl() - sorry, I should've
-remove that junk when cond_syscall() thing was done.
+4) Would there be interest in creating a libgit? I've been imagining taking
+git source files and including them directly in darcs' code, but in the
+long run it would be easier if there were a standard git API we could use.
 
-BKrev: 3cb5c7e3phTYgiz1YLsjQ_McTo9pOQ
-
-Members: 
-	ChangeSet:1.1234->1.1235 
-	include/linux/nfsd/syscall.h:1.3->1.4 
-
-Index: linux/include/linux/nfsd/syscall.h
-===================================================================
-RCS file: /home/mingo/linux-CVS/linux/include/linux/nfsd/syscall.h,v
-retrieving revision 1.3
-retrieving revision 1.4
-diff -u -r1.3 -r1.4
---- linux/include/linux/nfsd/syscall.h	15 Mar 2002 23:06:06 -0000	1.3
-+++ linux/include/linux/nfsd/syscall.h	11 Apr 2002 17:29:07 -0000	1.4
-@@ -132,11 +132,7 @@
- /*
-  * Kernel syscall implementation.
-  */
--#if defined(CONFIG_NFSD) || defined(CONFIG_NFSD_MODULE)
- extern asmlinkage long	sys_nfsservctl(int, struct nfsctl_arg *, void *);
--#else
--#define sys_nfsservctl		sys_ni_syscall
--#endif
- extern int		exp_addclient(struct nfsctl_client *ncp);
- extern int		exp_delclient(struct nfsctl_client *ncp);
- extern int		exp_export(struct nfsctl_export *nxp);
+I guess that's about all.
+-- 
+David Roundy
+http://www.darcs.net
