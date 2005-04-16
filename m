@@ -1,91 +1,79 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Add "clone" support to lntree
-Date: Sat, 16 Apr 2005 04:47:55 +0200
-Message-ID: <20050416024755.GX7417@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504152142360.30848-100000@iabervon.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Re: Re: write-tree is pasky-0.4
+Date: Fri, 15 Apr 2005 22:49:46 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504152221070.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0504151913180.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 04:44:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 04:46:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMdIO-0005lO-8S
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 04:44:32 +0200
+	id 1DMdJy-0005ql-Uq
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 04:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262578AbVDPCsC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 22:48:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262585AbVDPCsC
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 22:48:02 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49382 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262578AbVDPCr5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 22:47:57 -0400
-Received: (qmail 24821 invoked by uid 2001); 16 Apr 2005 02:47:55 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504152142360.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262583AbVDPCtp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 22:49:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262585AbVDPCtp
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 22:49:45 -0400
+Received: from iabervon.org ([66.92.72.58]:64004 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262583AbVDPCtn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 22:49:43 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMdNS-00046Y-00; Fri, 15 Apr 2005 22:49:46 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504151913180.7211@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Apr 16, 2005 at 03:56:03AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> I often want to take a base tree, which I keep tracking some remote head,
-> and make a local working tree that starts from it. This makes "git ln -c
-> <dest>" give you a tree that you can just start working in and then diff
-> against the head you'd started from and send off.
+On Fri, 15 Apr 2005, Linus Torvalds wrote:
+
+> On Fri, 15 Apr 2005, Daniel Barkalow wrote:
+> > 
+> > Is there some reason you don't commit before merging? All of the current
+> > merge theory seems to want to merge two commits, using the information git
+> > keeps about them.
 > 
-> Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+> Note that the 3-way merge would _only_ merge the committed state. The 
+> thing is, 99% of all merges end up touching files that I never touch 
+> myself (ie other architectures), so me being able to merge them even when 
+> _I_ am in the middle of something is a good thing.
+> 
+> So even when I have dirty state, the "merge" would only merge the clean
+> state. And then before the merge information is put back into my working
+> directory, I'd do a "check-files" on the result, making sure that nothing
+> that got changed by the merge isn't up-to-date.
 
-I'm sorry but you are late, I added it about a hour and half ago or so.
-:-) Check git fork. (I *want* separate command than git lntree. In fact,
-I think I should make git lntree gitXlntree.sh instead, since it is
-really internal command for git-tools and the user should probably never
-need it for anything. git lntree is too lowlevel.)
+So you want to merge someone else's tree into your committed state, and
+then merge the result with your working directory to get the working
+directory you continue with, provided that the second merge is trivial?
 
-Actually, I don't like the name at all, though. Some people may find
-pondering about names pointless, but when I'm going to type them in
-every day for the rest of my life, they better should not be stupid. ;-)
+> > How much do you care about the situation where there is no best common
+> > ancestor
+> 
+> I care. Even if the best common parent is 3 months ago, I care. I'd much 
+> rather get a big explicit conflict than a "clean merge" that ends up being 
+> debatable because people played games with per-file merging or something 
+> questionable like that.
 
-So, what are your clever ideas about git fork's proper name? Or should
-we leave it as is?
+Are you thinking that the best common ancestor is the one that ties up
+absolutely all of the chains of commits, or the closest one that the sides
+have in common? I have the feeling that the former isn't going to be
+useful, because there will be lines you're considering merging which go
+back to ancient kernels, where they keep merging in your changes, but
+they still have a lineage back to 2.6.0 or something.
 
-Summary of current related git commands (yes, they are already around
-and should be actually all working):
+For the latter, there are sometimes multiple ancestors which fit this
+criterion, and different ones of them are most helpful for different
+portions of the merge. I think this primarily happens when a branch you
+want to merge has accepted multiple patches that you've also
+accepted (and the history identifies this fact); this may or may not be a
+situation you want to allow on a regular basis.
 
-	git addremote --- registers a remote branch (name - URL pair)
-	git branch --- creates a branch from a given commit
-			(when passed empty commit, creates a branch
-			from the current commit and sets the working
-			tree to that branch)
-	git clone --- creates a local GIT repository from a remote one
-	git export --- checks out given commit to a separate directory
-			(without any GIT information)
-	git fork --- creates a new branch and working tree from
-			the current working tree, sharing the same
-			local GIT repository
-	git lntree --- creates a "treeshell" sharing the same GIT
-			repository with the current tree
+	-Daniel
+*This .sig left intentionally blank*
 
-If you think any other of those should be renamed, this is the time to
-speak up. Oh well, I think I'll regret asking about this at all... ;-)
-
-Note that there is a bug in current git update - it will allow you to
-bring several of your trees to follow the same branch, or even a remote
-branch. This is not even supposed to work, and will be fixed when I get
-some sleep. You will be able to do git pull even on local branches, and
-the proper solution for this will be just tracking the branch you want
-to follow.
-
-So, I'll fix that tomorrow, enable you to fork to an existing but unused
-branch, fix git pull of remote branch by several local branches, and
-write a lot of documentation.
-
-Kind regards,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
