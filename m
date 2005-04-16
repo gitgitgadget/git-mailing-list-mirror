@@ -1,52 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 12:44:36 -0700
-Message-ID: <7vy8bi5wwr.fsf@assigned-by-dhcp.cox.net>
-References: <20050416131528.GB19908@elte.hu>
-	<Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
-	<7vmzry7ev5.fsf@assigned-by-dhcp.cox.net>
-	<42615B00.6090106@timesys.com>
-	<7v8y3i7cn9.fsf@assigned-by-dhcp.cox.net>
-	<20050416162632.GA3309@64m.dyndns.org>
+Date: Sat, 16 Apr 2005 16:19:01 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504161546120.30848-100000@iabervon.org>
+References: <42616A9F.1030302@timesys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mike Taht <mike.taht@timesys.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 21:41:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 22:15:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMtA2-0000uR-7J
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 21:40:58 +0200
+	id 1DMthV-0003zu-6Y
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 22:15:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262745AbVDPToj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 15:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262746AbVDPToj
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 15:44:39 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:24461 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S262745AbVDPToi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 15:44:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050416194436.YLSR7956.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 15:44:36 -0400
-To: Christopher Li <git@chrisli.org>
-In-Reply-To: <20050416162632.GA3309@64m.dyndns.org> (Christopher Li's
- message of "Sat, 16 Apr 2005 12:26:32 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262750AbVDPUTG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 16:19:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262749AbVDPUTG
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 16:19:06 -0400
+Received: from iabervon.org ([66.92.72.58]:46341 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262750AbVDPUSp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 16:18:45 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMtkr-0007i4-00; Sat, 16 Apr 2005 16:19:01 -0400
+To: Mike Taht <mike.taht@timesys.com>
+In-Reply-To: <42616A9F.1030302@timesys.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "CL" == Christopher Li <git@chrisli.org> writes:
+On Sat, 16 Apr 2005, Mike Taht wrote:
 
-CL> I bet 90% of the time people sync to the repository head first
-CL> want to check out the last bits. And maybe reading some change
-CL> log to see what is changed.
+> Junio C Hamano wrote:
+> >>>>>>"MT" == Mike Taht <mike.taht@timesys.com> writes:
+> > 
+> > 
+> > MT> alternatively, "git-archive-torrent" to create a list of files for a
+> > MT> bittorrent feed....
+> > 
+> > That is certainly good for establishing the baseline, but you
+> > still need to leverage the inherent delta-compressibility
+> > between related blobs/trees by also doing something like what I
+> > described as "diff package", don't you?
+> 
+> Yes... yes you could have files and diffs generated statically...
+> 
+> although something like a bittorrent server/client/frontend, call it 
+> "gittorrent" (I hate being the first to make this pun) could walk the 
+> hashes dynamically (
+> Ihave: sha,sha,sha,sha... Sendme: shaxxxxxxxxxxxxxxxxxxx
+> Hereswhatyouneedfromgit: file,file,file,diff,diff,diff,...)
 
-CL> So having all the commit object, the user will able to see
-CL> what is change and which version he we like to check out.
+I'm actually working on a trivial HTTP client to do this. The user says
+"get <commit-id> from <url>", and it gets that object, the associated
+trees, and the associated blobs, skipping any that it already has.
 
-Makes sense.
+This should save having a non-standard public-facing server process, and
+be essentially as effective, at least once I have it using a single
+connection for everything.
+
+	-Daniel
+*This .sig left intentionally blank*
 
