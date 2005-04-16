@@ -1,68 +1,56 @@
-From: Martin Mares <mj@ucw.cz>
+From: Tony Luck <tony.luck@gmail.com>
 Subject: Re: [PATCH] Get commits from remote repositories by HTTP
-Date: Sun, 17 Apr 2005 00:17:45 +0200
-Message-ID: <20050416221745.GA10280@ucw.cz>
+Date: Sat, 16 Apr 2005 15:24:50 -0700
+Message-ID: <12c511ca050416152452a4c620@mail.gmail.com>
 References: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>
+Reply-To: Tony Luck <tony.luck@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 00:14:20 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 00:21:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMvYC-0006KW-Se
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:14:05 +0200
+	id 1DMvf6-0006pj-NP
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261158AbVDPWRq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 18:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261159AbVDPWRq
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:17:46 -0400
-Received: from albireo.ucw.cz ([84.242.65.67]:37509 "EHLO albireo.ucw.cz")
-	by vger.kernel.org with ESMTP id S261158AbVDPWRo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 18:17:44 -0400
-Received: by albireo.ucw.cz (Postfix, from userid 1000)
-	id B59F87BD17; Sun, 17 Apr 2005 00:17:45 +0200 (CEST)
+	id S261159AbVDPWYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 18:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261160AbVDPWYw
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:24:52 -0400
+Received: from zproxy.gmail.com ([64.233.162.192]:49039 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261159AbVDPWYv convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 18:24:51 -0400
+Received: by zproxy.gmail.com with SMTP id 13so647418nzp
+        for <git@vger.kernel.org>; Sat, 16 Apr 2005 15:24:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b70j6lEKKSjtRRVrqKjyBkjnyWZYUyRaqOil31uMI6/47gYX7LXS0HbXRZsVZBJFtHrGF+DkZwqRruaA2IpipwrL8tEzRjJQEd8wtZXrBIfFxpecvYbO+A8k2COT2U+Ra9/gEdVKVBUuhFBsY4GJWcwcROOLRazmywkzvjJplkc=
+Received: by 10.36.67.3 with SMTP id p3mr272983nza;
+        Sat, 16 Apr 2005 15:24:50 -0700 (PDT)
+Received: by 10.36.60.3 with HTTP; Sat, 16 Apr 2005 15:24:50 -0700 (PDT)
 To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>
-User-Agent: Mutt/1.3.28i
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+On 4/16/05, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> +        buffer = read_sha1_file(sha1, type, &size);
 
-> This adds a program to download a commit, the trees, and the blobs in them
-> from a remote repository using HTTP. It skips anything you already have.
+You never free this buffer.
 
-Is it really necessary to write your own HTTP downloader? If so, is it
-necessary to forget basic stuff like the "Host:" header? ;-)
+It would also be nice if you saved "tree" objects in some temporary file
+and did not install them until after you had fetched all the blobs and
+trees that this tree references.  Then if your connection is interrupted
+you can just restart it.
 
-If you feel that it should be optimized for speed, then at least use
-persistent connections.
+Otherwise this looks really nice.  I was going to script something
+similar using "wget" ... but that would have made zillions of seperate
+connections.  Not so kind to the server.
 
-> +	if (memcmp(target, "http://", 7))
-> +		return -1;
-
-Can crash if the string is too short.
-
-> +	entry = gethostbyname(name);
-> +	memcpy(&sockad.sin_addr.s_addr,
-> +	       &((struct in_addr *)entry->h_addr)->s_addr, 4);
-
-Can crash if the host doesn't exist or if you feed it with an URL containing
-port number.
-
-> +static int get_connection()
-
-(void)
-
-> +	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
-
-What if it fails?
-
-				Have a nice fortnight
--- 
-Martin `MJ' Mares   <mj@ucw.cz>   http://atrey.karlin.mff.cuni.cz/~mj/
-Faculty of Math and Physics, Charles University, Prague, Czech Rep., Earth
-A student who changes the course of history is probably taking an exam.
+-Tony
