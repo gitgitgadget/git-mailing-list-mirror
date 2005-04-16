@@ -1,54 +1,113 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 16:14:04 -0700
-Organization: SGI
-Message-ID: <20050416161404.718e87e5.pj@sgi.com>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
-	<20050416123155.GA19908@elte.hu>
-	<Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
-	<4261132A.3090907@khandalf.com>
-	<Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
-	<Pine.LNX.4.62.0504161543150.22652@qynat.qvtvafvgr.pbz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Optionally tell show-diff to show only named files
+Date: Sat, 16 Apr 2005 16:15:00 -0700
+Message-ID: <7vy8bi48ln.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: cscott@cscott.net, omb@bluewin.ch, mingo@elte.hu,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:10:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 01:12:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMwR6-00033c-Kj
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:10:48 +0200
+	id 1DMwSH-0003C4-Hd
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261191AbVDPXOa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 19:14:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261190AbVDPXO2
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:14:28 -0400
-Received: from omx3-ext.sgi.com ([192.48.171.20]:1744 "EHLO omx3.sgi.com")
-	by vger.kernel.org with ESMTP id S261188AbVDPXO0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 19:14:26 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3GNbgwS009219;
-	Sat, 16 Apr 2005 16:37:42 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3GNE8lU15238841;
-	Sat, 16 Apr 2005 16:14:08 -0700 (PDT)
-To: David Lang <david.lang@digitalinsight.com>
-In-Reply-To: <Pine.LNX.4.62.0504161543150.22652@qynat.qvtvafvgr.pbz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261188AbVDPXPk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 19:15:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261190AbVDPXPk
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:15:40 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:5369 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261188AbVDPXP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 19:15:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050416231501.QSK18934.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 16 Apr 2005 19:15:01 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> sysadmins realize that there are an infinante number of files that map to 
+SCMs have ways to say "I want diff only this particular file",
+or "I want diff files under this directory".  This patch teaches
+show-diff to do something similar.  Without command line
+arguments, it still examines everything in the dircache as
+before.
 
-Sysadmins know that there are an infinite ways for their
-systems to crap out, and try to cover for the ones that
-there is a snow balls chance in Hades of them seeing in
-their lifetime.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+ show-diff.c |   38 ++++++++++++++++++++++++++++++--------
+ 1 files changed, 30 insertions(+), 8 deletions(-)
+
+show-diff.c:  5f3d4699566843a5448260e5da286ed65d90e397
+--- show-diff.c
++++ show-diff.c	2005-04-16 16:07:07.000000000 -0700
+@@ -55,6 +55,23 @@
+ 	}
+ }
+ 
++static const char *show_diff_usage = "show-diff [-s] [-q] [paths...]";
++
++static int matches_pathspec(struct cache_entry *ce, char **spec, int cnt)
++{
++	int i;
++	int namelen = ce_namelen(ce);
++	for (i = 0; i < cnt; i++) {
++		int speclen = strlen(spec[i]);
++		if (! strncmp(spec[i], ce->name, speclen) &&
++		    speclen <= namelen &&
++		    (ce->name[speclen] == 0 ||
++		     ce->name[speclen] == '/'))
++			return 1;
++	}
++	return 0;
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int silent = 0;
+@@ -62,18 +79,19 @@
+ 	int entries = read_cache();
+ 	int i;
+ 
+-	for (i = 1; i < argc; i++) {
+-		if (!strcmp(argv[i], "-s")) {
++	while (1 < argc && argv[1][0] == '-') {
++		if (!strcmp(argv[1], "-s"))
+ 			silent_on_nonexisting_files = silent = 1;
+-			continue;
+-		}
+-		if (!strcmp(argv[i], "-q")) {
++		else if (!strcmp(argv[1], "-q"))
+ 			silent_on_nonexisting_files = 1;
+-			continue;
+-		}
+-		usage("show-diff [-s] [-q]");
++		else
++			usage(show_diff_usage);
++		argv++; argc--;
+ 	}
+ 
++	/* At this point, if argc == 1, then we are doing everything.
++	 * Otherwise argv[1] .. argv[argc-1] have the explicit paths.
++	 */
+ 	if (entries < 0) {
+ 		perror("read_cache");
+ 		exit(1);
+@@ -86,6 +104,10 @@
+ 		char type[20];
+ 		void *new;
+ 
++		if (1 <argc &&
++		    ! matches_pathspec(ce, argv+1, argc-1))
++			continue;
++
+ 		if (stat(ce->name, &st) < 0) {
+ 			if (errno == ENOENT && silent_on_nonexisting_files)
+ 				continue;
+
+
