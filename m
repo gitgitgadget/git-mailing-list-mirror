@@ -1,64 +1,77 @@
-From: Ingo Molnar <mingo@elte.hu>
+From: David Lang <david.lang@digitalinsight.com>
 Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 14:31:55 +0200
-Message-ID: <20050416123155.GA19908@elte.hu>
+Date: Sat, 16 Apr 2005 05:48:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
 References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
+ <20050416123155.GA19908@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 14:29:52 2005
+X-From: git-owner@vger.kernel.org Sat Apr 16 14:45:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMmQo-0000vC-Ga
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 14:29:50 +0200
+	id 1DMmfh-000236-QB
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 14:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262652AbVDPMd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 08:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262653AbVDPMd0
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 08:33:26 -0400
-Received: from mx2.elte.hu ([157.181.151.9]:10425 "EHLO mx2.elte.hu")
-	by vger.kernel.org with ESMTP id S262652AbVDPMdX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 08:33:23 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx2.elte.hu (Postfix) with ESMTP id 50268319852;
-	Sat, 16 Apr 2005 14:32:20 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 806911FC2; Sat, 16 Apr 2005 14:33:13 +0200 (CEST)
-To: David Lang <david.lang@digitalinsight.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S262653AbVDPMsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 08:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262655AbVDPMsr
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 08:48:47 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:61923 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S262653AbVDPMsp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 08:48:45 -0400
+Received: from wlvims01.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Apr 2005 05:48:44 -0700
+Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
+	id <24ZZ1X26>; Sat, 16 Apr 2005 05:48:41 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id 29YX1L01; Sat, 16 Apr 2005 05:48:32 -0700
+To: Ingo Molnar <mingo@elte.hu>
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <20050416123155.GA19908@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, 16 Apr 2005, Ingo Molnar wrote:
 
-* David Lang <david.lang@digitalinsight.com> wrote:
+> * David Lang <david.lang@digitalinsight.com> wrote:
+>
+>> this issue was raised a few days ago in the context of someone
+>> tampering with the files and it was decided that the extra checks were
+>> good enough to prevent this (at least for now), but what about
+>> accidental collisions?
+>>
+>> if I am understanding things right the objects get saved in the
+>> filesystem in filenames that are the SHA1 hash. of two legitimate
+>> files have the same hash I don't see any way for both of them to
+>> exist.
+>>
+>> yes the risk of any two files having the same has is low, but in the
+>> earlier thread someone chimed in and said that they had two files on
+>> their system that had the same hash..
+>
+> you can add -DCOLLISION_CHECK to Makefile:CFLAGS to turn on collision
+> checking (disabled currently). If there indeed exist two files that have
+> different content but the same hash, could someone send those two files?
 
-> this issue was raised a few days ago in the context of someone 
-> tampering with the files and it was decided that the extra checks were 
-> good enough to prevent this (at least for now), but what about 
-> accidental collisions?
-> 
-> if I am understanding things right the objects get saved in the 
-> filesystem in filenames that are the SHA1 hash. of two legitimate 
-> files have the same hash I don't see any way for both of them to 
-> exist.
-> 
-> yes the risk of any two files having the same has is low, but in the 
-> earlier thread someone chimed in and said that they had two files on 
-> their system that had the same hash..
+remember that the flap over SHA1 being 'broken' a couple weeks ago was not 
+from researchers finding multiple files with the same hash, but finding 
+that it was more likly then expected that files would have the same hash.
 
-you can add -DCOLLISION_CHECK to Makefile:CFLAGS to turn on collision 
-checking (disabled currently). If there indeed exist two files that have 
-different content but the same hash, could someone send those two files?
+there was qa discussion on LKML within the last year about useing MD5 
+hashes for identifying unique filesystem blocks (with the idea of being 
+able to merge identical blocks) and in that discussion it was pointed out 
+that collisions are a known real-life issue.
 
-	Ingo
+so if collision detection is turned on in git, does that make it error out 
+if it runs into a second file with the same hash, or does it do something 
+else?
+
+David Lang
+
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
