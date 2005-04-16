@@ -1,70 +1,102 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/2] merge-trees script for Linus git
-Date: Fri, 15 Apr 2005 18:02:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
- <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz>
- <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz>
- <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz>
- <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org>
- <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org>
- <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org> <7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
- <7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net> <7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Re: Re: write-tree is pasky-0.4
+Date: Fri, 15 Apr 2005 21:13:05 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504152029410.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0504151709180.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 02:57:06 2005
+Cc: Petr Baudis <pasky@ucw.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 03:09:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMbcN-0006uc-49
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 02:57:03 +0200
+	id 1DMboW-0007a5-2T
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 03:09:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262499AbVDPBAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 21:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262503AbVDPBAU
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 21:00:20 -0400
-Received: from fire.osdl.org ([65.172.181.4]:5520 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262499AbVDPBAP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 21:00:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3G109s4020511
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 15 Apr 2005 18:00:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3G108pi026119;
-	Fri, 15 Apr 2005 18:00:09 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262510AbVDPBNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 21:13:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262504AbVDPBNK
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 21:13:10 -0400
+Received: from iabervon.org ([66.92.72.58]:20996 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262510AbVDPBNC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 21:13:02 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMbrt-0000rJ-00; Fri, 15 Apr 2005 21:13:05 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504151709180.7211@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 15 Apr 2005, Linus Torvalds wrote:
 
-
-On Fri, 15 Apr 2005, Junio C Hamano wrote:
+> I think I've explained my name tracking worries.  When it comes to "how to 
+> merge", there's three issues:
 > 
->     the merge-trees I sent you earlier was expecting the old
-> diff-tree behaviour, and I did not realize that I need an
-> explicit -z flag now.
+>  - we do commonly have merge clashes where both trees have applied the 
+>    exact same patch. That should merge perfectly well using the 3-way
+>    merge from a common parent that Junio has, but not your current "bring
+>    patches forward" kind of strategy.
 
-You didn't need one - I just didn't want to merge your "ls-tree" change
-without making things be consistent. Once we started using the "-z" flag 
-for ls-tree, it just didn't make any sense not to do the same thing for 
-diff-tree.
+I think 3-way merge is probably the best starting point, but I think that
+there might be value in being able to identify the commits of each side
+involved in a conflict. I think this would help with cases where both
+sides pick up an identical patch, and then each side makes a further
+change to a different part of the changed region (you find out that the
+other guy's change was supposed to follow the patch, and don't conflict
+with it).
 
-Just a heads-up - I'd really want to do the same thing to "merge-tree.c" 
-too, but since you said that you were working on extending that to do 
-recursion etc, I decided to hold off. So if you're working on it, maybe 
-you can add the "-z" flag there too? 
+>  - I _do_ actually sometimes merge with dirty state in my working 
+>    directory, which is why I want the merge to take place in a separate 
+>    (and temporary) directory, which allows for a failed merge without 
+>    having any major cleanup. If the merge fails, it's not a big deal, and 
+>    I can just blow the merge directory away without losing the work I had 
+>    in my "real" working directory.
 
-I'm actually holding off merging the perl version exactly because you 
-seemed to be working on the C version. I don't mind perl per se, but if 
-there's a real solution coming down the line..
+Is there some reason you don't commit before merging? All of the current
+merge theory seems to want to merge two commits, using the information git
+keeps about them. It should be cheap to get a new clean working directory
+to merge in, too, particularly if we add a cache of hardlinkable expanded
+blobs.
 
-		Linus
+>  - reliability. I care much less for "clever" than I care for "guaranteed 
+>    to never do the wrong thing". If I have to fix up some stuff by hand, 
+>    I'll happily do so. But if I can't trust the merge and have to _check_ 
+>    things by hand afterwards, that will make me leery of the merges, and
+>    _that_ is bad.
+> 
+> The third point is why I'm going to the ultra-conservative "three-way 
+> merge from the common parent". It's not fancy, but it's something I feel 
+> comfortable with as a merge strategy. For example, arch (and in particular 
+> darcs) seems to want to try to be "clever" about the merges, and I'd 
+> always live in fear. 
+
+How much do you care about the situation where there is no best common
+ancestor (which can happen if you're merging two main lines, each of which
+has merged with both of a pair of minor trees)? I think that arch is even
+more conservative, in that it doesn't look for a common ancestor, and
+reports conflicts whenever changes overlap at all. Of course, reliability
+by virtue of never working without help is not a big win over living in
+fear; you always have to check over it, not because you're afraid, but
+because it needs you to.
+
+> And, finally, there's obviously performance. I _think_ a normal merge with
+> nary a conflict and just a few tens of files changed should be possible in
+> a second. I realize that sounds crazy to some people, but I think it's
+> entirely doable. Half of that is writing the new tree out (that is a
+> relative costly op due to the compression). The other half is the "work".
+
+I think that the time spent on I/O will be overwhelmed by the time spent
+issuing the command at that rate. It might matter if you start getting
+into merging lots of things at once, but that's more like a minute for a
+merge group with 600 changes rather than a second per merge; we could
+potentially save a lot of time based of having a bunch of information left
+over from the previous merge when starting merge number 2. So 15 seconds
+plus half a second per merge might be better than a second per merge in
+the case that matters.
+
+	-Daniel
+*This .sig left intentionally blank*
+
