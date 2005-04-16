@@ -1,77 +1,117 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 05:48:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
- <20050416123155.GA19908@elte.hu>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: full kernel history, in patchset format
+Date: Sat, 16 Apr 2005 15:15:28 +0200
+Message-ID: <20050416131528.GB19908@elte.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 14:45:26 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Apr 16 15:12:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMmfh-000236-QB
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 14:45:14 +0200
+	id 1DMn5u-0003sb-0k
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 15:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262653AbVDPMsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 08:48:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262655AbVDPMsr
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 08:48:47 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:61923 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S262653AbVDPMsp
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 08:48:45 -0400
-Received: from wlvims01.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Apr 2005 05:48:44 -0700
-Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <24ZZ1X26>; Sat, 16 Apr 2005 05:48:41 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id 29YX1L01; Sat, 16 Apr 2005 05:48:32 -0700
-To: Ingo Molnar <mingo@elte.hu>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <20050416123155.GA19908@elte.hu>
+	id S262657AbVDPNPt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 09:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262659AbVDPNPt
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 09:15:49 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:12743 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S262657AbVDPNPg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 09:15:36 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id AFACC320374
+	for <git@vger.kernel.org>; Sat, 16 Apr 2005 15:14:53 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 7312D1FC2; Sat, 16 Apr 2005 15:15:31 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Ingo Molnar wrote:
 
-> * David Lang <david.lang@digitalinsight.com> wrote:
->
->> this issue was raised a few days ago in the context of someone
->> tampering with the files and it was decided that the extra checks were
->> good enough to prevent this (at least for now), but what about
->> accidental collisions?
->>
->> if I am understanding things right the objects get saved in the
->> filesystem in filenames that are the SHA1 hash. of two legitimate
->> files have the same hash I don't see any way for both of them to
->> exist.
->>
->> yes the risk of any two files having the same has is low, but in the
->> earlier thread someone chimed in and said that they had two files on
->> their system that had the same hash..
->
-> you can add -DCOLLISION_CHECK to Makefile:CFLAGS to turn on collision
-> checking (disabled currently). If there indeed exist two files that have
-> different content but the same hash, could someone send those two files?
+i've converted the Linux kernel CVS tree into 'flat patchset' format, 
+which gave a series of 28237 separate patches. (Each patch represents a 
+changeset, in the order they were applied. I've used the cvsps utility.)
 
-remember that the flap over SHA1 being 'broken' a couple weeks ago was not 
-from researchers finding multiple files with the same hash, but finding 
-that it was more likly then expected that files would have the same hash.
+the history data starts at 2.4.0 and ends at 2.6.12-rc2. I've included a 
+script that will apply all the patches in order and will create a 
+pristine 2.6.12-rc2 tree.
 
-there was qa discussion on LKML within the last year about useing MD5 
-hashes for identifying unique filesystem blocks (with the idea of being 
-able to merge identical blocks) and in that discussion it was pointed out 
-that collisions are a known real-life issue.
+it needed many hours to finish, on a very fast server with tons of RAM, 
+and it also needed a fair amount of manual work to extract it and to 
+make it usable, so i guessed others might want to use the end result as 
+well, to try and generate large GIT repositories from them (or to run 
+analysis over the patches, etc.).
 
-so if collision detection is turned on in git, does that make it error out 
-if it runs into a second file with the same hash, or does it do something 
-else?
+the patches contain all the existing metadata, dates, log messages and 
+revision history. (What i think is missing is the BK tree merge 
+information, but i'm not sure we want/need to convert them to GIT.)
 
-David Lang
+it's a 136 MB tarball, which can be downloaded from:
 
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+   http://kernel.org/pub/linux/kernel/people/mingo/Linux-2.6-patchset/
+
+the ./generate-2.6.12-rc2 script generates the 2.6.12-rc2 tree into 
+linux/, from scratch. (No pre-existing kernel is needed, as 2.patch 
+generates the full 2.4.0 kernel tree.) The patching takes a couple of 
+minutes to finish, on a fast box.
+
+below i've attached a sample patch from the series.
+
+note: i kept the patches the cvsps utility generated as-is, to have a 
+verifiable base to work on. There were a very small amount of deltas 
+missed (about a dozen), probably resulting from CVS related errors, 
+these are included in the diff-CVS-to-real patch. Also, the patch format 
+cannot create the Documentation/logo.gif file, so the script does this 
+too - just to be able to generate a complete 2.6.12-rc2 tree that is 
+byte-for-byte identical to the real thing.
+
+	Ingo
+
+---------------------
+PatchSet 1234 
+Date: 2002/04/11 18:29:07
+Author: viro
+Branch: HEAD
+Tag: (none) 
+Log:
+[PATCH] crapectomy in include/linux/nfsd/syscall.h
+
+Removes an atavism in declaration of sys_nfsservctl() - sorry, I should've
+remove that junk when cond_syscall() thing was done.
+
+BKrev: 3cb5c7e3phTYgiz1YLsjQ_McTo9pOQ
+
+Members: 
+	ChangeSet:1.1234->1.1235 
+	include/linux/nfsd/syscall.h:1.3->1.4 
+
+Index: linux/include/linux/nfsd/syscall.h
+===================================================================
+RCS file: /home/mingo/linux-CVS/linux/include/linux/nfsd/syscall.h,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -u -r1.3 -r1.4
+--- linux/include/linux/nfsd/syscall.h	15 Mar 2002 23:06:06 -0000	1.3
++++ linux/include/linux/nfsd/syscall.h	11 Apr 2002 17:29:07 -0000	1.4
+@@ -132,11 +132,7 @@
+ /*
+  * Kernel syscall implementation.
+  */
+-#if defined(CONFIG_NFSD) || defined(CONFIG_NFSD_MODULE)
+ extern asmlinkage long	sys_nfsservctl(int, struct nfsctl_arg *, void *);
+-#else
+-#define sys_nfsservctl		sys_ni_syscall
+-#endif
+ extern int		exp_addclient(struct nfsctl_client *ncp);
+ extern int		exp_delclient(struct nfsctl_client *ncp);
+ extern int		exp_export(struct nfsctl_export *nxp);
