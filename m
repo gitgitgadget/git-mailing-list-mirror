@@ -1,104 +1,53 @@
-From: Martin Uecker <muecker@gmx.de>
-Subject: Re: space compression (again)
-Date: Sat, 16 Apr 2005 19:37:02 +0200
-Message-ID: <20050416173702.GA12605@macavity>
-References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu> <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org> <Pine.LNX.4.61.0504151437100.27637@cag.csail.mit.edu> <Pine.LNX.4.58.0504151210590.7211@ppc970.osdl.org> <20050416143905.GA10370@macavity> <Pine.LNX.4.61.0504161101470.29343@cag.csail.mit.edu>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: full kernel history, in patchset format
+Date: Sat, 16 Apr 2005 19:43:27 +0200
+Message-ID: <20050416174327.GG19099@pasky.ji.cz>
+References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
-X-From: git-owner@vger.kernel.org Sat Apr 16 19:35:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 19:40:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMrCE-0006rY-KU
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 19:35:06 +0200
+	id 1DMrGp-0007C7-Mm
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 19:39:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262710AbVDPRin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 13:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262709AbVDPRim
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 13:38:42 -0400
-Received: from dialin-145-254-144-203.arcor-ip.net ([145.254.144.203]:3969
-	"EHLO macavity") by vger.kernel.org with ESMTP id S262710AbVDPRiX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 13:38:23 -0400
-Received: from martin by macavity with local (Exim 4.34)
-	id 1DMrE6-0003Nc-Kf
-	for git@vger.kernel.org; Sat, 16 Apr 2005 19:37:02 +0200
-To: git@vger.kernel.org
-Mail-Followup-To: Martin Uecker <muecker@gmx.de>, git@vger.kernel.org
+	id S262709AbVDPRnb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 13:43:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262713AbVDPRnb
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 13:43:31 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:13186 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262709AbVDPRn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 13:43:29 -0400
+Received: (qmail 863 invoked by uid 2001); 16 Apr 2005 17:43:27 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.61.0504161101470.29343@cag.csail.mit.edu>
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Sat, Apr 16, 2005 at 07:04:31PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> So I'd _almost_ suggest just starting from a clean slate after all.  
+> Keeping the old history around, of course, but not necessarily putting it
+> into git now. It would just force everybody who is getting used to git in 
+> the first place to work with a 3GB archive from day one, rather than 
+> getting into it a bit more gradually.
+> 
+> Comments?
 
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+FWIW, it looks pretty reasonable to me. Perhaps we should have a
+separate GIT repository with the previous history though, and in the
+first new commit the parent could point to the last commit from the
+other repository.
 
-On Sat, Apr 16, 2005 at 11:11:00AM -0400, C. Scott Ananian wrote:
-> On Sat, 16 Apr 2005, Martin Uecker wrote:
->=20
-> >The right thing (TM) is to switch from SHA1 of compressed
-> >content for the complete monolithic file to a merkle hash tree
-> >of the uncompressed content. This would make the hash
-> >independent of the actual storage method (chunked or not).
->=20
-> It would certainly be nice to change to a hash of the uncompressed=20
-> content, rather than a hash of the compressed content, but it's not=20
-> strictly necessary, since files are fetched all at once: there's not 'rea=
-d=20
-> subrange' operation on blobs.
->=20
-> I assume 'merkle hash tree' is talking about:
->   http://www.open-content.net/specs/draft-jchapweske-thex-02.html
-> ..which is very interesting, but not quite what I was thinking.
-> The merkle hash approach seems to require fixed chunk boundaries.
+Just if it isn't too much work, though. :-)
 
-I don't know what is written there, but I don't
-consider fixed chunk boundaries part of the definition.
-
-> The rsync approach does not use fixed chunk boundaries; this is necessary=
-=20
-> to ensure good storage reuse for the expected case (ie; inserting a singl=
-e=20
-> line at the start or in the middle of the file, which changes all the=20
-> chunk boundaries).
-
-Yes. The chunk boundaries should be determined deterministically
-=66rom local properties of the data. Use a rolling checksum over
-some small window and split the file it it hits a special value (0).
-This is what the rsyncable patch to zlib does.
-
-> Further, in the absence of subrange reads on blobs, it's not entirely=20
-> clear what using a merkle hash would buy you.
-
-The whole design of git is a hash tree. If you extend
-this tree structure into files you end up with merkle
-hash trees. Everything else is just more complicated.
-
-Martin
-=20
-
---=20
-One night, when little Giana from Milano was fast asleep,
-she had a strange dream.
-
-
---7AUc2qLy4jB3hD7Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQFCYU0+YDJInvULMKYRAokvAJ4ui2II+aceTEz84ev3rEgLBBRejQCdEPOT
-BaIevBldK7QOi3CxFL0jk68=
-=EYGx
------END PGP SIGNATURE-----
-
---7AUc2qLy4jB3hD7Z--
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
