@@ -1,60 +1,52 @@
-From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH] Get commits from remote repositories by HTTP
-Date: Sun, 17 Apr 2005 00:32:06 +0200
-Message-ID: <20050416223206.GU9461@lug-owl.de>
-References: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>
+Date: Sat, 16 Apr 2005 18:33:18 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504161827480.30848-100000@iabervon.org>
+References: <12c511ca050416152452a4c620@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 00:28:42 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 00:29:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMvmA-0007QK-Vy
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:28:31 +0200
+	id 1DMvmy-0007U9-3V
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261161AbVDPWcJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Apr 2005 18:32:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261162AbVDPWcJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:32:09 -0400
-Received: from lug-owl.de ([195.71.106.12]:57283 "EHLO lug-owl.de")
-	by vger.kernel.org with ESMTP id S261161AbVDPWcH convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 18:32:07 -0400
-Received: by lug-owl.de (Postfix, from userid 1001)
-	id 52694190273; Sun, 17 Apr 2005 00:32:06 +0200 (CEST)
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>
-X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
-X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
-X-gpg-key: wwwkeys.de.pgp.net
-User-Agent: Mutt/1.5.6+20040907i
+	id S261162AbVDPWdB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 18:33:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261163AbVDPWdB
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:33:01 -0400
+Received: from iabervon.org ([66.92.72.58]:33286 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261162AbVDPWc7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 18:32:59 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMvqo-00042N-00; Sat, 16 Apr 2005 18:33:18 -0400
+To: Tony Luck <tony.luck@gmail.com>
+In-Reply-To: <12c511ca050416152452a4c620@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-04-16 18:03:51 -0400, Daniel Barkalow <barkalow@iabervon.o=
-rg>
-wrote in message <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org=
->:
-> --- /dev/null  (tree:ed4f6e454b40650b904ab72048b2f93a068dccc3)
-> +++ a65375b46154c90e7499b7e76998d430cd9cd29d/http-get.c  (mode:100644=
- sha1:6a36cfa079519a7a3ad5b1618be8711c5127b531)
+On Sat, 16 Apr 2005, Tony Luck wrote:
 
-> +	local =3D open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
+> On 4/16/05, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> > +        buffer = read_sha1_file(sha1, type, &size);
+> 
+> You never free this buffer.
 
-0666 is a bit too lazy. I'd suggest 0664 or 0644.
+Ideally, this should all be rearranged to share the code with
+read-tree, and it should be fixed in common.
 
-MfG, JBG
+> It would also be nice if you saved "tree" objects in some temporary file
+> and did not install them until after you had fetched all the blobs and
+> trees that this tree references.  Then if your connection is interrupted
+> you can just restart it.
 
---=20
-Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481         =
-    _ O _
-"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Kri=
-eg  _ _ O
- fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im=
- Irak!   O O O
-ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | T=
-CPA));
+It looks over everything relevant, even if it doesn't need to download
+anything, so it should work to continue if it stops in between.
+
+	-Daniel
+*This .sig left intentionally blank*
+
