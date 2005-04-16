@@ -1,62 +1,93 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 20:57:51 +0200
-Message-ID: <20050416185751.GJ19099@pasky.ji.cz>
-References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org> <1113679421.28612.16.camel@tglx.tec.linutronix.de> <Pine.LNX.4.58.0504161135480.7211@ppc970.osdl.org> <1113681021.28612.29.camel@tglx.tec.linutronix.de>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: full kernel history, in patchset format
+Date: Sat, 16 Apr 2005 21:13:12 +0200
+Message-ID: <20050416191312.GT9461@lug-owl.de>
+References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Ingo Molnar <mingo@elte.hu>,
-	junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 20:54:34 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CMEQapY8OuP5ao1l"
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 21:09:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMsQn-0004jq-P9
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 20:54:14 +0200
+	id 1DMsft-00067p-RM
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 21:09:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262731AbVDPS5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 14:57:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262732AbVDPS5y
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 14:57:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20355 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262731AbVDPS5w (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 14:57:52 -0400
-Received: (qmail 5262 invoked by uid 2001); 16 Apr 2005 18:57:51 -0000
-To: Thomas Gleixner <tglx@linutronix.de>
+	id S261886AbVDPTNU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 15:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262733AbVDPTNU
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 15:13:20 -0400
+Received: from lug-owl.de ([195.71.106.12]:27585 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S261886AbVDPTNN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 15:13:13 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id F205F19026D; Sat, 16 Apr 2005 21:13:12 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <1113681021.28612.29.camel@tglx.tec.linutronix.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Apr 16, 2005 at 09:50:21PM CEST, I got a letter
-where Thomas Gleixner <tglx@linutronix.de> told me that...
-> On Sat, 2005-04-16 at 11:44 -0700, Linus Torvalds wrote:
-> 
-> > That level of abstraction ("we never look directly at the objects") is 
-> > what allows us to change the object structure later. For example, we 
-> > already changed the "commit" date thing once, and the tree object has 
-> > obviously evolved a bit, and if we ever change the hash, the objects will 
-> > change too, but if you always just script them using nice helper tools, 
-> > you won't ever need to _care_. And that's how it should be.
-> 
-> For the export stuff its terrible slow. :(
 
-It seems to me that you must be doing something wrong then. I can't see
-anything which would not make ls-tree blindingly fast (except for when
-being recursive, see below).
+--CMEQapY8OuP5ao1l
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-BTW, what do you need ls-tree output for, when doing export _to_ git?
+On Sat, 2005-04-16 10:04:31 -0700, Linus Torvalds <torvalds@osdl.org>
+wrote in message <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>:
 
-P.S.: It seems that Linus applied a patch to ls-tree which will make it
-read_sha1_file() on each item when ls-tree is recursive. Junio, why did
-you do it? Is there any possible case when the item would not be marked
-as directory but it would be a tree object? I could imagine it bogging
-down ls-tree on big tree a lot.
+> What do people think? I'm not so much worried about the data itself: the
+> git architecture is _so_ damn simple that now that the size estimate has
+> been confirmed, that I don't think it would be a problem per se to put
+> 3.2GB into the archive. But it will bog down "rsync" horribly, so it will
+> actually hurt synchronization untill somebody writes the rev-tree-like
+> stuff to communicate changes more efficiently..
+>=20
+> IOW, it smells to me like we don't have the infrastructure to really work=
+=20
+> with 3GB archives, and that if we start from scratch (2.6.12-rc2), we can=
+=20
+> build up the infrastructure in parallell with starting to really need it.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+3GB is quite some data, but I'd accept and prefer to download it from
+somewhere. I think that it's worth it.
+
+I accept that there are people out there which would love to get a
+smaller archive, but at least most developers that would actually use it
+for day-to-day work *do* have the bandwidth to download it. Maybe we'd
+also prepare (from time to time) bzip'ed tarballs, which I expect to be
+a tad smaller.
+
+MfG, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im Ira=
+k!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--CMEQapY8OuP5ao1l
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCYWPIHb1edYOZ4bsRAsTHAJ9QWN62+Gn7FTteTpPcKr4U4Gd5GgCgh9ZT
+zLeNdIdFUtNpJUtb3IDpdNU=
+=TNp0
+-----END PGP SIGNATURE-----
+
+--CMEQapY8OuP5ao1l--
