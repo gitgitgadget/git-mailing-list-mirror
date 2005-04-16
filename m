@@ -1,83 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Byteorder fix for read-tree, new -m semantics version.
-Date: Sat, 16 Apr 2005 02:27:08 -0700
-Message-ID: <7vacnzcbrn.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
-	<20050414121624.GZ25711@pasky.ji.cz>
-	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
-	<20050414193507.GA22699@pasky.ji.cz>
-	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-	<20050414233159.GX22699@pasky.ji.cz>
-	<7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
-	<20050414223039.GB28082@64m.dyndns.org>
-	<7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
-	<20050415062807.GA29841@64m.dyndns.org>
-	<7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
-	<7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
-	<7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
-	<7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org>
-	<7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504152256520.7211@ppc970.osdl
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: git-pasky file mode handling
+Date: Sat, 16 Apr 2005 10:45:59 +0100
+Message-ID: <20050416104559.A12943@flint.arm.linux.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 11:24:03 2005
+X-From: git-owner@vger.kernel.org Sat Apr 16 11:42:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMjWx-0005K9-Kn
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 11:24:00 +0200
+	id 1DMjoy-0006YI-0y
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 11:42:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261516AbVDPJ10 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 05:27:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261655AbVDPJ10
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 05:27:26 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:62645 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261516AbVDPJ1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 05:27:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050416092718.FPXU19936.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 05:27:18 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vis2ncf8j.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sat, 16 Apr 2005 01:12:12 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261655AbVDPJqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 05:46:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261733AbVDPJqG
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 05:46:06 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:57871 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261655AbVDPJqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 05:46:03 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DMjsH-0007Nv-0J
+	for git@vger.kernel.org; Sat, 16 Apr 2005 10:46:01 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DMjsF-0003sk-Qj
+	for git@vger.kernel.org; Sat, 16 Apr 2005 10:45:59 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The ce_namelen field has been renamed to ce_flags and split into
-the top 2-bit unused, next 2-bit stage number and the lowest
-12-bit name-length, stored in the network byte order.  A new
-macro create_ce_flags() is defined to synthesize this value from
-length and stage, but it forgets to turn the value into the
-network byte order.  Here is a fix.
+Hi,
 
-The patch is against 9c03bd47892d11d0bb28c442184786db3c189978.
+It seems that there's something weird going on with the file mode
+handling.  Firstly, some files in the git-pasky repository have mode
+0664 while others have 0644.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Having pulled from git-pasky a number of times, with Petr's being the
+"tracked" repository, I now find that when I do an update-cache --refresh,
+it complains that the files need updating, despite show-diff showing no
+differences.  Investigating, this appears to be because the file modes
+are wrong for a number of the files.  All my files do not have group
+write.
 
- cache.h |    2 +-
- 1 files changed, 1 insertion(+), 1 deletion(-)
+I notice in the changelog what appears to be a dependence on the umask.
+If this is so, please note that git appears to track the file modes,
+and any dependence upon the umask is likely to screw with this tracking.
 
---- cache.h
-+++ cache.h	2005-04-16 02:22:05.000000000 -0700
-@@ -66,7 +66,7 @@
- #define CE_NAMEMASK  (0x0fff)
- #define CE_STAGEMASK (0x3000)
- 
--#define create_ce_flags(len, stage) ((len) | ((stage) << 12))
-+#define create_ce_flags(len, stage) htons((len) | ((stage) << 12))
- 
- const char *sha1_file_directory;
- struct cache_entry **active_cache;
-
+-- 
+Russell King
 
