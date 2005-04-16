@@ -1,101 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: using git directory cache code in darcs?
-Date: Sat, 16 Apr 2005 15:43:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504161531470.7211@ppc970.osdl.org>
-References: <20050416132231.GJ2551@abridgegame.org>
+From: "Adam Kropelin" <akropel1@rochester.rr.com>
+Subject: Re: [PATCH] Get commits from remote repositories by HTTP
+Date: Sat, 16 Apr 2005 18:42:32 -0400
+Message-ID: <011201c542d5$940bb670$03c8a8c0@kroptech.com>
+References: <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org> <12c511ca050416152452a4c620@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, darcs-devel@darcs.net
-X-From: git-owner@vger.kernel.org Sun Apr 17 00:37:55 2005
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 17 00:39:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMvv1-0008Sh-BG
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:37:39 +0200
+	id 1DMvwI-0000B8-Uq
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261169AbVDPWlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 18:41:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVDPWlT
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:41:19 -0400
-Received: from fire.osdl.org ([65.172.181.4]:4043 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261169AbVDPWlM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 18:41:12 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3GMf5s4016536
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 16 Apr 2005 15:41:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3GMf4Gt029923;
-	Sat, 16 Apr 2005 15:41:05 -0700
-To: David Roundy <droundy@abridgegame.org>
-In-Reply-To: <20050416132231.GJ2551@abridgegame.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261170AbVDPWml (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 18:42:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261171AbVDPWml
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:42:41 -0400
+Received: from ms-smtp-02.nyroc.rr.com ([24.24.2.56]:42976 "EHLO
+	ms-smtp-02.nyroc.rr.com") by vger.kernel.org with ESMTP
+	id S261170AbVDPWmk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 18:42:40 -0400
+Received: from mail.kroptech.com (cpe-24-93-20-125.rochester.res.rr.com [24.93.20.125])
+	by ms-smtp-02.nyroc.rr.com (8.12.10/8.12.10) with ESMTP id j3GMgXJj021819;
+	Sat, 16 Apr 2005 18:42:33 -0400 (EDT)
+Received: from pia (pia.kroptech.com [192.168.200.3])
+	by mail.kroptech.com (Postfix) with SMTP id E051E11376E;
+	Sat, 16 Apr 2005 18:51:15 -0400 (EDT)
+To: "Tony Luck" <tony.luck@gmail.com>,
+	"Daniel Barkalow" <barkalow@iabervon.org>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.2527
+X-MIMEOLE: Produced By Microsoft MimeOLE V6.00.2900.2527
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Tony Luck wrote:
+> Otherwise this looks really nice.  I was going to script something
+> similar using "wget" ... but that would have made zillions of seperate
+> connections.  Not so kind to the server.
 
+How about building a file list and doing a batch download via 'wget -i 
+/tmp/foo'? A quick test (on my ancient wget-1.7) indicates that it reuses 
+connectionss when successive URLs point to the same server.
 
-On Sat, 16 Apr 2005, David Roundy wrote:
-> 
-> I've been thinking about the possibility of using the git "current
-> directory cache" code in darcs.
+Writing yet another http client does seem a bit pointless, what with wget 
+and curl available. The real win lies in creating the smarts to get the 
+minimum number of files.
 
-Go wild. The license is GPLv2, with the limitation that I really do want
-to see v3 before I re-license anything at all, so if you take it into
-darcs, you'd need to add that as a per-file comment (I just doing it in
-the LICENSE file - I hate cluttering up individual files with tons of
-commentary).
+--Adam
 
-> So my questions are:
-> 
-> 1) Would this actually be a good idea? It seems good to me, but there may
-> be other considerations that I haven't thought of.
-
-I really don't know how well the git index file will work with darcs, and 
-the main issue is that the index file names the "stable copy" using the 
-sha1 hash. If darcs uses something else (and I imagine it does) you'd need 
-to do a fair amount of surgery, and I suspect merging changes won't be 
-very easy.
-
-So it might well make sense to wait a bit, until the git thing has calmed
-down some more. For example, I made some rather large changes
-(conceptually, if not in layout of the physical file) to the index file
-just yesterday, since git now uses it for merging too.
-
-In git, the index file isn't just a speedup, it's the "work" file _and_
-the merge entity. It's not just a floor wax, it's a dessert topping too!
-
-> 2) Will a license be chosen soon for git? Or has one been chosen, and I
-> missed it? I can't really include git code in darcs without a license.  I'd
-> prefer GPLv2 or later (since that's how darcs is licensed), but as long as
-> it's at least compabible with GPLv2, I'll be all right.
-
-Yup, GPL, with the same "v2 by default" that the kernel uses).
-
-> 3) Is it likely that git will switch to not using global variables for
-> active_cache, active_nr and active_alloc?
-
-I wouldn't hate it, although for the intent of git, the global approach 
-actually makes sense (dammit, I want the basic plumbing to be so small 
-that trying to abstract it out more is a waste of time). There's simply 
-not a lot of code that should even work at that level.
-
-But if you wait a while, and bide your time, and then spring a clean patch 
-on me, I don't see any reason to be difficult about it either.
-
-> 4) Would there be interest in creating a libgit? I've been imagining taking
-> git source files and including them directly in darcs' code, but in the
-> long run it would be easier if there were a standard git API we could use.
-
-I think libgit might make sense, but again, not quite yet. Maybe the new
-merge model was my last smart thought even on the subject of SCM's (I kind
-of hope so), but maybe it's not.
-
-My gut _feel_ is that the basic git low-level architecture is done, and
-you can certainly start looking around and see if it matches darcs at all. 
-
-			Linus
