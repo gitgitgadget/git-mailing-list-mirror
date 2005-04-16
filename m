@@ -1,43 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Storing permissions
-Date: Sat, 16 Apr 2005 16:42:10 -0700
-Message-ID: <7vk6n247cd.fsf@assigned-by-dhcp.cox.net>
-References: <20050416230058.GA10983@ucw.cz>
-	<20050416161935.0d2cf3b0.pj@sgi.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: optimize gitdiff-do script
+Date: Sun, 17 Apr 2005 01:43:44 +0200
+Message-ID: <20050416234344.GQ19099@pasky.ji.cz>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com> <20050416232810.23430.78712.sendpatchset@sam.engr.sgi.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Martin Mares <mj@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 01:38:51 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 01:40:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMwrx-0005Cq-45
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:38:33 +0200
+	id 1DMwtW-0005K1-5z
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 01:40:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261202AbVDPXmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 19:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261203AbVDPXmO
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:42:14 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:55503 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261202AbVDPXmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 19:42:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050416234212.LJAK19936.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 19:42:12 -0400
+	id S261204AbVDPXnt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 19:43:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261205AbVDPXnt
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 19:43:49 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:17031 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261204AbVDPXnp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 19:43:45 -0400
+Received: (qmail 16405 invoked by uid 2001); 16 Apr 2005 23:43:44 -0000
 To: Paul Jackson <pj@sgi.com>
-In-Reply-To: <20050416161935.0d2cf3b0.pj@sgi.com> (Paul Jackson's message of
- "Sat, 16 Apr 2005 16:19:35 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <20050416232810.23430.78712.sendpatchset@sam.engr.sgi.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PJ" == Paul Jackson <pj@sgi.com> writes:
+Dear diary, on Sun, Apr 17, 2005 at 01:28:04AM CEST, I got a letter
+where Paul Jackson <pj@sgi.com> told me that...
+> Reduce number of subcommands execv'd by a
+> third, by only calling 'rm' once, at end, not each
+> loop.
 
-PJ> That matches my experience - store 1 bit of mode state - executable or not.
+The idea behind that was that diffing could take a significant portion
+of disk space, especially when making large kernel diffs. Perhaps we
+could make this a switch, but I would personally prefer defaulting to
+the less space-consuming behaviour. I personally dislike applications
+which like to pop 150M of nonsense to my /tmp.
 
-Sounds like svn ;-).
+Please don't reindent the scripts. It violates the current coding style
+and the patch is unreviewable.
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
