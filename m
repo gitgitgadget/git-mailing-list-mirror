@@ -1,100 +1,50 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 15:33:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0504161531370.22652@qynat.qvtvafvgr.pbz>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz><20050416123155.GA19908@elte.hu><Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
- <4261132A.3090907@khandalf.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Get commits from remote repositories by HTTP
+Date: Sat, 16 Apr 2005 18:37:56 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504161833340.30848-100000@iabervon.org>
+References: <20050416223206.GU9461@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 00:30:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 00:34:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMvnX-0007X4-BG
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:29:55 +0200
+	id 1DMvrf-000847-Cg
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 00:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261163AbVDPWdi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 18:33:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261165AbVDPWdi
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:33:38 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:47560 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S261163AbVDPWde
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 18:33:34 -0400
-Received: from wlvims01.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Apr 2005 15:33:34 -0700
-Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <24ZZ1Z85>; Sat, 16 Apr 2005 15:33:14 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id 29YX1519; Sat, 16 Apr 2005 15:33:09 -0700
-To: omb@bluewin.ch
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <4261132A.3090907@khandalf.com>
+	id S261168AbVDPWhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 18:37:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVDPWhs
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 18:37:48 -0400
+Received: from iabervon.org ([66.92.72.58]:39430 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261168AbVDPWhm (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 18:37:42 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DMvvI-00042g-00; Sat, 16 Apr 2005 18:37:56 -0400
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+In-Reply-To: <20050416223206.GU9461@lug-owl.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Brian O'Mahoney wrote:
+On Sun, 17 Apr 2005, Jan-Benedict Glaw wrote:
 
-> Three points:
-> (1) I _have_ seen real-life collisions with MD5, in the context of
->    Document management systems containing ~10^6 ms-WORD documents.
-> (2) The HMAC (ethernet-harware-address) of any interface _should_
->    help to make a unique Id.
+> On Sat, 2005-04-16 18:03:51 -0400, Daniel Barkalow <barkalow@iabervon.org>
+> wrote in message <Pine.LNX.4.21.0504161750020.30848-100000@iabervon.org>:
+> > --- /dev/null  (tree:ed4f6e454b40650b904ab72048b2f93a068dccc3)
+> > +++ a65375b46154c90e7499b7e76998d430cd9cd29d/http-get.c  (mode:100644 sha1:6a36cfa079519a7a3ad5b1618be8711c5127b531)
+> 
+> > +	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
+> 
+> 0666 is a bit too lazy. I'd suggest 0664 or 0644.
 
-you want a unique ID that can be computed directly from the file contents.
+Actually, 0444 would make most sense, since these shouldn't get modified
+at all. But umask is applied to them anyway, so 0664 or 0644 (or 0660 or 
+0600) is up to the local system policy. This just matches
+write_sha1_buffer().
 
-what file integrety programa (ala tripwire) do is to use multiple 
-identification routines (aide uses MD4+MD5+filesize IIRC)
+	-Daniel
+*This .sig left intentionally blank*
 
->
-> David Lang wrote:
->> On Sat, 16 Apr 2005, Ingo Molnar wrote:
->>
->>> * David Lang <david.lang@digitalinsight.com> wrote:
->>>
->>>> this issue was raised a few days ago in the context of someone
->>>> tampering with the files and it was decided that the extra checks were
->>>> good enough to prevent this (at least for now), but what about
->>>> accidental collisions?
->>>>
->>>> if I am understanding things right the objects get saved in the
->>>> filesystem in filenames that are the SHA1 hash. of two legitimate
->>>> files have the same hash I don't see any way for both of them to
->>>> exist.
->>>>
->>>> yes the risk of any two files having the same has is low, but in the
->>>> earlier thread someone chimed in and said that they had two files on
->>>> their system that had the same hash..
->>>
->>>
->>> you can add -DCOLLISION_CHECK to Makefile:CFLAGS to turn on collision
->>> checking (disabled currently). If there indeed exist two files that have
->>> different content but the same hash, could someone send those two files?
->>
->>
->> remember that the flap over SHA1 being 'broken' a couple weeks ago was
->> not from researchers finding multiple files with the same hash, but
->> finding that it was more likly then expected that files would have the
->> same hash.
->>
->> there was qa discussion on LKML within the last year about useing MD5
->> hashes for identifying unique filesystem blocks (with the idea of being
->> able to merge identical blocks) and in that discussion it was pointed
->> out that collisions are a known real-life issue.
->>
->> so if collision detection is turned on in git, does that make it error
->> out if it runs into a second file with the same hash, or does it do
->> something else?
->>
->> David Lang
->>
->
-> -- 
-> Brian
->
-
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
