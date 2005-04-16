@@ -1,92 +1,62 @@
-From: Christopher Li <git@chrisli.org>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Re: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 11:44:41 -0400
-Message-ID: <20050416154441.GA30392@64m.dyndns.org>
-References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org> <20050416174327.GG19099@pasky.ji.cz>
+Date: Sat, 16 Apr 2005 20:57:51 +0200
+Message-ID: <20050416185751.GJ19099@pasky.ji.cz>
+References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org> <1113679421.28612.16.camel@tglx.tec.linutronix.de> <Pine.LNX.4.58.0504161135480.7211@ppc970.osdl.org> <1113681021.28612.29.camel@tglx.tec.linutronix.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 20:52:08 2005
+	junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 20:54:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMsOI-0004Ro-3f
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 20:51:38 +0200
+	id 1DMsQn-0004jq-P9
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 20:54:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262727AbVDPSzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 14:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262730AbVDPSzP
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 14:55:15 -0400
-Received: from sccrmhc13.comcast.net ([204.127.202.64]:41909 "EHLO
-	sccrmhc13.comcast.net") by vger.kernel.org with ESMTP
-	id S262727AbVDPSzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 14:55:05 -0400
-Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
-          by comcast.net (sccrmhc13) with ESMTP
-          id <2005041618550401600hrfj5e>; Sat, 16 Apr 2005 18:55:04 +0000
-Received: by localhost.localdomain (Postfix, from userid 1027)
-	id 10CBC3F1EF; Sat, 16 Apr 2005 11:44:42 -0400 (EDT)
-To: Petr Baudis <pasky@ucw.cz>
+	id S262731AbVDPS5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 14:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262732AbVDPS5y
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 14:57:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20355 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262731AbVDPS5w (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 14:57:52 -0400
+Received: (qmail 5262 invoked by uid 2001); 16 Apr 2005 18:57:51 -0000
+To: Thomas Gleixner <tglx@linutronix.de>
 Content-Disposition: inline
-In-Reply-To: <20050416174327.GG19099@pasky.ji.cz>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <1113681021.28612.29.camel@tglx.tec.linutronix.de>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 16, 2005 at 07:43:27PM +0200, Petr Baudis wrote:
-> Dear diary, on Sat, Apr 16, 2005 at 07:04:31PM CEST, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> told me that...
-> > So I'd _almost_ suggest just starting from a clean slate after all.  
-> > Keeping the old history around, of course, but not necessarily putting it
-> > into git now. It would just force everybody who is getting used to git in 
-> > the first place to work with a 3GB archive from day one, rather than 
-> > getting into it a bit more gradually.
-> > 
-> > Comments?
+Dear diary, on Sat, Apr 16, 2005 at 09:50:21PM CEST, I got a letter
+where Thomas Gleixner <tglx@linutronix.de> told me that...
+> On Sat, 2005-04-16 at 11:44 -0700, Linus Torvalds wrote:
 > 
-> FWIW, it looks pretty reasonable to me. Perhaps we should have a
-> separate GIT repository with the previous history though, and in the
-> first new commit the parent could point to the last commit from the
-> other repository.
+> > That level of abstraction ("we never look directly at the objects") is 
+> > what allows us to change the object structure later. For example, we 
+> > already changed the "commit" date thing once, and the tree object has 
+> > obviously evolved a bit, and if we ever change the hash, the objects will 
+> > change too, but if you always just script them using nice helper tools, 
+> > you won't ever need to _care_. And that's how it should be.
 > 
-> Just if it isn't too much work, though. :-)
+> For the export stuff its terrible slow. :(
 
-I think we can make the git using stackable repository. When it fail
-to find an object, it will try it's to read from parent repository.
-It is useful to slice the history.
+It seems to me that you must be doing something wrong then. I can't see
+anything which would not make ls-tree blindingly fast (except for when
+being recursive, see below).
 
-I can have local repository that all the new object create by me will
-store in my tree instead of the official one. Clean up the object in the
-my local tree will be much easier it only need to work on a much smaller
-repository. If all my change is merge to official tree, I just simply
-empty my local repository.
+BTW, what do you need ls-tree output for, when doing export _to_ git?
 
-About the kernel git repository. I think it is much easier just put
-them in one tree.  So I don't need to worry about "if I need to see
-pre 2.6.12, I need to do this". And the full repository  need to
-store in the server some where any way.
+P.S.: It seems that Linus applied a patch to ls-tree which will make it
+read_sha1_file() on each item when ls-tree is recursive. Junio, why did
+you do it? Is there any possible case when the item would not be marked
+as directory but it would be a tree object? I could imagine it bogging
+down ls-tree on big tree a lot.
 
-However I totally agree that people should not deal with unnecessary the history
-when they start using the git tools. We should just make the tools
-by default don't download all the histories. Only get it when user specific 
-ask for it.
-
-Why 2.6.12-rc2? When kernel grows to 2.6.15, a new user might not even need
-pre 2.6.13 most of the time. If we make it very easier for people to get
-history if they need, it will make them less motivate to store unnecessary
-history locally (just in case I need it).
-
-I think we should not advise using rsync to sync the whole git tree as
-way to get update. We need to get use to only have a slice of the history
-and get more if we needed.
-The server should should provide some small metadata file like the
-the rev-tool cache, so the SCM tools can download it to figure out what file
-is needed to download to get to certain revision. Instead of download the
-whole repository to figure out what is new.
-
-We can even slice that metadata information to smaller pieces base on major release point.
-
-Chris
- 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
