@@ -1,91 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: full kernel history, in patchset format
-Date: Sat, 16 Apr 2005 10:04:31 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
-References: <20050416131528.GB19908@elte.hu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/2] merge-trees script for Linus git
+Date: Sat, 16 Apr 2005 10:14:29 -0700
+Message-ID: <7v64ym8wzu.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+	<20050414193507.GA22699@pasky.ji.cz>
+	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
+	<20050414233159.GX22699@pasky.ji.cz>
+	<7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
+	<20050414223039.GB28082@64m.dyndns.org>
+	<7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
+	<20050415062807.GA29841@64m.dyndns.org>
+	<7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
+	<7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
+	<7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
+	<7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org>
+	<7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504152256520.7211@ppc970.osdl.org>
+	<7vis2ncf8j.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504160820320.72
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 18:59:40 2005
+X-From: git-owner@vger.kernel.org Sat Apr 16 19:12:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMqdO-0003hC-2l
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 18:59:06 +0200
+	id 1DMqpm-0004ur-RJ
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 19:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262701AbVDPRCn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 13:02:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262702AbVDPRCn
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 13:02:43 -0400
-Received: from fire.osdl.org ([65.172.181.4]:19586 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262701AbVDPRCj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 13:02:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3GH2Ys4028007
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 16 Apr 2005 10:02:35 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3GH2XuE020570;
-	Sat, 16 Apr 2005 10:02:34 -0700
-To: Ingo Molnar <mingo@elte.hu>
-In-Reply-To: <20050416131528.GB19908@elte.hu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262707AbVDPRO7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 13:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262705AbVDPRO6
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 13:14:58 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:35999 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262708AbVDPROd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 13:14:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050416171430.FEWB15592.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 16 Apr 2005 13:14:30 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504160928250.7211@ppc970.osdl.org> (Linus
+ Torvalds's message of "Sat, 16 Apr 2005 09:36:25 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+
+LT> Anyway, with the modified read-tree, as far as I can tell it will now 
+LT> merge all the cases where one side has done something to a file, and the 
+LT> other side has left it alone (or where both sides have done the exact same 
+LT> modification). That should _really_ cut down the cases to just a few files 
+LT> for most of the kernel merges I can think of. 
+
+LT> Does it do the right thing for your tests?
+
+Yes.
 
 
-On Sat, 16 Apr 2005, Ingo Molnar wrote:
-> 
-> i've converted the Linux kernel CVS tree into 'flat patchset' format, 
-> which gave a series of 28237 separate patches. (Each patch represents a 
-> changeset, in the order they were applied. I've used the cvsps utility.)
-> 
-> the history data starts at 2.4.0 and ends at 2.6.12-rc2. I've included a 
-> script that will apply all the patches in order and will create a 
-> pristine 2.6.12-rc2 tree.
-
-Hey, that's great. I got the CVS repo too, and I was looking at it, but 
-the more I looked at it, the more I felt that the main reason I want to 
-import it into git ends up being to validate that my size estimates are at 
-all realistic.
-
-I see that Thomas Gleixner seems to have done that already, and come to a 
-figure of 3.2GB for the last three years, which I'm very happy with, 
-mainly because it seems to match my estimates to a tee. Which means that I 
-just feel that much more confident about git actually being able to handle 
-the kernel long-term, and not just as a stop-gap measure.
-
-But I wonder if we actually want to actually populate the whole history.. 
-Now that my size estimates have been verified, I have little actual real 
-reason to put the history into git. There are no visualization tools done 
-for git yet, and no helpers to actually find problems, and by the time 
-there will be, we'll have new history.
-
-So I'd _almost_ suggest just starting from a clean slate after all.  
-Keeping the old history around, of course, but not necessarily putting it
-into git now. It would just force everybody who is getting used to git in 
-the first place to work with a 3GB archive from day one, rather than 
-getting into it a bit more gradually.
-
-What do people think? I'm not so much worried about the data itself: the
-git architecture is _so_ damn simple that now that the size estimate has
-been confirmed, that I don't think it would be a problem per se to put
-3.2GB into the archive. But it will bog down "rsync" horribly, so it will
-actually hurt synchronization untill somebody writes the rev-tree-like
-stuff to communicate changes more efficiently..
-
-IOW, it smells to me like we don't have the infrastructure to really work 
-with 3GB archives, and that if we start from scratch (2.6.12-rc2), we can 
-build up the infrastructure in parallell with starting to really need it.
-
-But it's _great_ to have the history in this format, especially since 
-looking at CVS just reminded me how much I hated it.
-
-Comments?
-
-		Linus
