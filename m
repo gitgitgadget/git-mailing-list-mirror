@@ -1,147 +1,91 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: git-pasky: gitXnormid.sh overhaul
-Date: Sat, 16 Apr 2005 18:51:29 +0200
-Message-ID: <20050416165129.GA13152@lsrfire.ath.cx>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: full kernel history, in patchset format
+Date: Sat, 16 Apr 2005 10:04:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+References: <20050416131528.GB19908@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 18:49:05 2005
+X-From: git-owner@vger.kernel.org Sat Apr 16 18:59:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMqTW-0002o3-1b
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 18:48:54 +0200
+	id 1DMqdO-0003hC-2l
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 18:59:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262706AbVDPQwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 12:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262702AbVDPQwa
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 12:52:30 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:42924 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S262701AbVDPQvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 12:51:35 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 94EDD222; Sat, 16 Apr 2005 18:51:29 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S262701AbVDPRCn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 13:02:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262702AbVDPRCn
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 13:02:43 -0400
+Received: from fire.osdl.org ([65.172.181.4]:19586 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262701AbVDPRCj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 13:02:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3GH2Ys4028007
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 16 Apr 2005 10:02:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3GH2XuE020570;
+	Sat, 16 Apr 2005 10:02:34 -0700
+To: Ingo Molnar <mingo@elte.hu>
+In-Reply-To: <20050416131528.GB19908@elte.hu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
-I just couldn't stand all the calls to grep and other external tools in
-gitXnormid.sh and started rewriting it in a knee-jerk reaction.
-
-You said in a private conversation that you don't like to include things
-like ${var#stuff} to stay "sh compatible", while OTOH you favour $(cmd)
-over `cmd`.  Both are POSIX extensions of the classical Bourne Shell
-syntax (see e.g. http://docs.hp.com/en/B2355-90046/ch15s03.html for a
-feature comparision between POSIX shell, Bourne Shell and Korn Shells on
-HP-UX).  For reference, The Open Group publishes its IEEE Std 1003.1
-standard (vulgo: POSIX) on this website:
-http://www.opengroup.org/onlinepubs/009695399/toc.htm.  So which shell
-do you want to target with your git scripts?
-
-This time I tested the script. :]  It copes with invalid IDs,
-non-existing valid IDs, abbreviated IDs, an omitted ID, valid IDs, with
-tags and branch names.  I also made sure the script runs with bash, ash,
-pdksh, zsh and bash --posix (all on SuSE 9.2).
-
-I changed the way an ID is verified.  The script now tries to find tags
-and branches first by looking for .git/tags/<id> and .git/HEAD.<id> and
-after that looking inside .git/objects for a match.  That's faster and
-now I can safely give a branch a name consisting of 40 hex digits. :-)
-
-The script follows in plain text format, not as a patch.  Your and my
-version share only very few lines, so this way it's easier to review.
-I'll send you a patch if and when you're ready to apply it, ok?
-
-Thanks,
-Rene
 
 
---- 8< ---
-#!/bin/sh
-#
-# Internal: Normalize the given ID to a tree ID.
-# Copyright (c) Petr Baudis, 2005
-#
-# Takes an arbitrary ID as a parameter. -c tells it to give
-# a commit id rather than tree id.
+On Sat, 16 Apr 2005, Ingo Molnar wrote:
+> 
+> i've converted the Linux kernel CVS tree into 'flat patchset' format, 
+> which gave a series of 28237 separate patches. (Each patch represents a 
+> changeset, in the order they were applied. I've used the cvsps utility.)
+> 
+> the history data starts at 2.4.0 and ends at 2.6.12-rc2. I've included a 
+> script that will apply all the patches in order and will create a 
+> pristine 2.6.12-rc2 tree.
 
-usage() {
-	echo "Usage: $0 [-c] [tree-id | commit-id | tag | branch]"
-	exit 2
-}
+Hey, that's great. I got the CVS repo too, and I was looking at it, but 
+the more I looked at it, the more I felt that the main reason I want to 
+import it into git ends up being to validate that my size estimates are at 
+all realistic.
 
-get_first_word() {
-	if read one two; then
-		echo "$one"
-		return 0
-	fi
-	return 1
-}
+I see that Thomas Gleixner seems to have done that already, and come to a 
+figure of 3.2GB for the last three years, which I'm very happy with, 
+mainly because it seems to match my estimates to a tee. Which means that I 
+just feel that much more confident about git actually being able to handle 
+the kernel long-term, and not just as a stop-gap measure.
 
-expand_hash() {
-	hashdir=${SHA1_FILE_DIRECTORY:-.git/objects}
-	filename=${1#??}
-	dirname=${1%${filename}}
-	first=true
-	for file in "${hashdir}/${dirname}/${filename}"*; do
-		[ -f "$file" ] || return 1
-		if $first; then
-			hash=${dirname}${file##*/}
-			first=false
-		else
-			return 1
-		fi
-	done
-	$first && return 1
-	echo "$hash"
-}
+But I wonder if we actually want to actually populate the whole history.. 
+Now that my size estimates have been verified, I have little actual real 
+reason to put the history into git. There are no visualization tools done 
+for git yet, and no helpers to actually find problems, and by the time 
+there will be, we'll have new history.
 
-get_tree_id() {
-	cat-file commit "$1" | while read tag hash; do
-		if [ "$tag" = "tree" ]; then
-			echo "$hash"
-			return
-		fi
-	done
-}
+So I'd _almost_ suggest just starting from a clean slate after all.  
+Keeping the old history around, of course, but not necessarily putting it
+into git now. It would just force everybody who is getting used to git in 
+the first place to work with a 3GB archive from day one, rather than 
+getting into it a bit more gradually.
 
-type=tree
-case "$1" in
--c) type=commit; shift;;
--*) usage;;
-esac
+What do people think? I'm not so much worried about the data itself: the
+git architecture is _so_ damn simple that now that the size estimate has
+been confirmed, that I don't think it would be a problem per se to put
+3.2GB into the archive. But it will bog down "rsync" horribly, so it will
+actually hurt synchronization untill somebody writes the rev-tree-like
+stuff to communicate changes more efficiently..
 
-if [ ! "$1" ]; then
-	if [ ! -f ".git/HEAD" ]; then
-		echo "$0: file .git/HEAD not found"
-		usage
-	fi
-	id=$(get_first_word <".git/HEAD")
-elif [ -f ".git/tags/$1" ]; then
-	id=$(get_first_word <".git/tags/$1")
-elif [ -f ".git/HEAD.$1" ]; then
-	id=$(get_first_word <".git/HEAD.$1")
-else
-	id=$(expand_hash "$1")
-fi
-if [ $? != 0 ]; then
-	echo "$0: invalid ID: $1" >&2
-	exit 1
-fi
+IOW, it smells to me like we don't have the infrastructure to really work 
+with 3GB archives, and that if we start from scratch (2.6.12-rc2), we can 
+build up the infrastructure in parallell with starting to really need it.
 
-if [ "$type" = "tree" ]; then
-	tree_id=$(get_tree_id "$id" 2>/dev/null)
-	[ "$tree_id" ] && id=$tree_id
-fi
+But it's _great_ to have the history in this format, especially since 
+looking at CVS just reminded me how much I hated it.
 
-if [ $(cat-file -t "$id") != "$type" ]; then
-	echo "$0: invalid ID: $id" >&2
-	exit 1
-fi
-echo "$id"
+Comments?
+
+		Linus
