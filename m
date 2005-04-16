@@ -1,84 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/2] merge-trees script for Linus git
-Date: Sat, 16 Apr 2005 09:36:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504160928250.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
- <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz>
- <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz>
- <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org>
- <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org>
- <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org> <7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
- <7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net> <7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org> <7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
- <Pine.LNX.4.58.0504152256520.7211@ppc970.osdl.org> <7vis2ncf8j.fsf@assigned-by-dhcp.cox.net
+From: "Zed A. Shaw" <zedshaw@zedshaw.com>
+Subject: Introductions
+Date: Sat, 16 Apr 2005 12:50:15 -0400
+Organization: ZedShaw.com
+Message-ID: <1113670215.6025.36.camel@thamachine>
+Reply-To: zedshaw@zedshaw.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 18:32:30 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Apr 16 18:48:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMqDJ-0001JM-RT
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 18:32:10 +0200
+	id 1DMqT0-0002l9-CM
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 18:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262698AbVDPQfP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 12:35:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262700AbVDPQfO
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 12:35:14 -0400
-Received: from fire.osdl.org ([65.172.181.4]:30699 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262698AbVDPQed (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 12:34:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3GGYSs4026088
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 16 Apr 2005 09:34:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3GGYRck019726;
-	Sat, 16 Apr 2005 09:34:28 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0504160820320.7211@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262703AbVDPQvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 12:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262702AbVDPQvt
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 12:51:49 -0400
+Received: from smtp04.mrf.mail.rcn.net ([207.172.4.63]:11930 "EHLO
+	smtp04.mrf.mail.rcn.net") by vger.kernel.org with ESMTP
+	id S262703AbVDPQvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 12:51:16 -0400
+Received: from 207-237-211-198.c3-0.80w-ubr3.nyr-80w.ny.cable.rcn.com (HELO mythtv) (207.237.211.198)
+  by smtp04.mrf.mail.rcn.net with ESMTP; 16 Apr 2005 12:51:16 -0400
+X-IronPort-AV: i="3.92,106,1112587200"; 
+   d="scan'208"; a="23176828:sNHT20447004"
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+Just a short message to introduce myself and give a shameless plug.  I'm
+Zed A. Shaw and I'm the author of a little unknown SCM called FastCST
+(http://www.zedshaw.com/projects/fastcst ).  While I doubt that Linus
+would ever adopt fastcst as his tool (and I probably wouldn't want him
+too since it's not quite ready for prime time) I did find many of the
+discussions on the list so far very interesting.
 
-On Sat, 16 Apr 2005, Linus Torvalds wrote:
-> 
-> Having slept on it, I think I'll merge all the trivial cases that don't 
-> involve a file going away or being added. Ie if the file is in all three 
-> trees, but it's the same in two of them, we know what to do.
+Some sent me Linus' message about wanting to do a diff on the whole
+source tree, and just thought I'd mention that I already tried this in
+FastCST.  FastCST uses a suffix array to construct a delta (not a diff),
+so I thought it might be possible to simply apply the delta algorithm to
+the entire source tree and get very small changesets.
 
-Junio, I pushed this out, along with the two patches from you. It's still
-more anal than my original "tree-diff" algorithm, in that it refuses to
-touch anything where the name isn't the same in all three versions
-(original, new1 and new2), but now it does the "if two of them match, just
-select the result directly" trivial merges.
+It worked on small source trees, but when it came to the Linux 2.6 tree
+it choked hard.  Even with an efficient suffix array implementation,
+you're talking about performing a diff/delta on 225M of source.  Added
+to the problem is that you have to track file locations within the
+massive blob.  In the end, it also wasn't much more efficient from a
+size/space/time perspective so I dropped it.
 
-I really cannot see any sane case where user policy might dictate doing
-anything else, but if somebody can come up with an argument for a merge
-algorithm that wouldn't do what that trivial merge does, we can make a
-flag for "don't merge at all".
+My current solution to Linus' problem is to use an inverted index to
+process all the sources and revisions on the fly as they are created.
+Using the inverted index, I'm able to VERY quickly find any chunk of
+source in files or revisions.  This lets me track things like how
+functions move through the files, where chunks of code moved to, etc.
+In the end this turns out to be much more efficient (7 seconds on my
+computer to find all references to "sprintf" in the Linux 2.6 source) as
+I can use the super small deltas for distributing changes, and give
+developers a means tracking content changes across "the world" in a
+simple search format.
 
-The reason I do want to merge at all in "read-tree" is that I want to
-avoid having to write out a huge index-file (it's 1.6MB on the kernel, so
-if you don't do _any_ trivial merges, it would be 4.8MB after reading
-three trees) and then having people read it and parse it just to do stuff
-that is obvious. Touching 5MB of data isn't cheap, even if you don't do a 
-whole lot to it.
+Anyway, just thought I'd throw in my experiences attempting what Linus
+is talking about.  I actually agree with him that rename tracking isn't
+that great, but I've come to the conclusion that tracking renames is
+actually a specific case of just a general search problem.  Different
+strokes for different folks I guess.
 
-Anyway, with the modified read-tree, as far as I can tell it will now 
-merge all the cases where one side has done something to a file, and the 
-other side has left it alone (or where both sides have done the exact same 
-modification). That should _really_ cut down the cases to just a few files 
-for most of the kernel merges I can think of. 
+Other than that, I'm mostly interested in reading the messages and
+probably won't write anything unless people ask me directly for
+something.  Thanks!
 
-Does it do the right thing for your tests?
+Zed A. Shaw
 
-		Linus
