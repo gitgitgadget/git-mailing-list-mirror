@@ -1,133 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Issues with higher-order stages in dircache
-Date: Sat, 16 Apr 2005 07:03:34 -0700
-Message-ID: <7vll7i95u1.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
-	<20050414121624.GZ25711@pasky.ji.cz>
-	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
-	<20050414193507.GA22699@pasky.ji.cz>
-	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
-	<20050414233159.GX22699@pasky.ji.cz>
-	<7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
-	<20050414223039.GB28082@64m.dyndns.org>
-	<7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
-	<20050415062807.GA29841@64m.dyndns.org>
-	<7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
-	<7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
-	<7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
-	<7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org>
-	<7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504152256520.7211@ppc970.osdl
+Subject: Re: using git directory cache code in darcs?
+Date: Sat, 16 Apr 2005 07:28:00 -0700
+Message-ID: <7vacny94pb.fsf@assigned-by-dhcp.cox.net>
+References: <20050416132231.GJ2551@abridgegame.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 16:00:17 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: git@vger.kernel.org, darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Sat Apr 16 16:25:19 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMnq9-0007LU-O7
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 16:00:06 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262662AbVDPODl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 10:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262666AbVDPODl
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 10:03:41 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:14826 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S262662AbVDPODg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 10:03:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050416140335.WXYA2123.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 10:03:35 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vis2ncf8j.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sat, 16 Apr 2005 01:12:12 -0700")
+	id 1DMoEK-0000er-3g
+	for gcvdd-darcs-devel@m.gmane.org; Sat, 16 Apr 2005 16:25:04 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DMoHn-0004lk-Pw; Sat, 16 Apr 2005 10:28:39 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28])
+	by abridgegame.org with esmtp (Exim 4.50) id 1DMoHk-0004kj-JF
+	for darcs-devel@darcs.net; Sat, 16 Apr 2005 10:28:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172]) by fed1rmmtao11.cox.net
+	(InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP id
+	<20050416142801.BUZ22013.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+	Sat, 16 Apr 2005 10:28:01 -0400
+To: David Roundy <droundy@abridgegame.org>,
+In-Reply-To: <20050416132231.GJ2551@abridgegame.org> (David Roundy's message
+	of "Sat, 16 Apr 2005 09:22:36 -0400")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
->>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
+>>>>> "DR" == David Roundy <droundy@abridgegame.org> writes:
 
-JCH> So what's next?
+DR> 1) Would this actually be a good idea?
 
-Here is my current thinking on the impact your higher-order
-stage dircache entries would have to the rest of the system and
-how to deal with them.
+I think it is sensible, especially if you are doing a lot of
+comparison between the working area and the pristine.
 
- * read-tree
+DR> 3) Is it likely that git will switch to not using global
+DR> variables for active_cache, active_nr and active_alloc?
 
-   - When merging two trees, i.e. "read-tree -m A B", shouldn't
-     we collapse identical stage-1/2 into stage-0?
+DR> 4) Would there be interest in creating a libgit?
 
- * update-cache
+These are related.  I have seen some people interested in
+libifying it, and encapsulating those globals would naturally
+fall out of it.  My impression from the list however is that a
+lot more people are interested in the upper SCM layer than the
+git layer right now.  And git layer, although solid enough to
+host itself, is still slushy.  A couple of days ago dircache
+format was changed from host to network endian.  Last night
+Linus made another change to dircache format, which fortunately
+is upward compatible if you stay within pathnames shorter than
+2^12 bytes ;-).  Another problem I see for somebody to pick up
+and start libifying things right now is that, although there is
+one central person on the SCM side (Petr Baudis), git layer is
+still fractured between Linus and Petr.
 
-   - An explicit "update-cache [--add] [--remove] path" should
-     be taken as a signal from the user (or Cogito) to tell the
-     dircache layer "the merge is done and here is the result".
-     So just delete higher-order stages for the path and record
-     the specified path at stage 0 (or remove it altogether).
-
-   - "update-cache --refresh" should just ignore a path that has
-     not been merged,  Maybe say "needs merge", just like "needs
-     update" [*1*].
-
-   - "update-cache --cacheinfo" should get an extra "stage"
-     argument.  Unmerged state is typically produced by running
-     "read-tree -m", but the user or Cogito can do it by hand
-     with this if he wanted to.
-
-   - I do not think we need a separate "remove the entry for
-     this path at this stage" thing.  That is only necessary if
-     the user or Cogito is doing things by hand (as opposed to
-     "read-tree -m"), which should be a very rare case.  He can
-     always do "update-cache --remove" followed by "update-cache
-     --cacheinfo" to obtain the desired result if he really
-     wanted to.  For that, "update-cache --force-remove" may
-     come in handy.
-
- * show-diff
-
-   - What should we do about unmerged paths?  Showing diffs
-     between the combinations (1->2), (1->3), and (2->3) that
-     exist may not be a bad idea.  It would not be confusing
-     because by definition dircache with higher-order stages is
-     a merge temporary directory and the user should not have a
-     working file there to begin with.
-
-     I think the current implementation does a very bad thing:
-     repeating the same diff as many times as it has
-     higher-order stages for the same path.
-
- * checkout-cache
-
-   - When checkout-cache is run with explicit paths that are
-     unmerged, what should we do?  What does that mean in the
-     first place?  One use scenario I can think of is that the
-     user or Cogito wants the contents at all three stages, in
-     order to run a merge tool on them.  From this point of
-     view, checking out all the available stages for the path
-     makes sense.
-
-     My "cunning plan" is to drop ".1-$file", ".2-$file", and
-     ".3-$file" in the working directory.  How does that sound?
-
-   - When checkout-cache -a is run, presumably the user wants to
-     check out everything to verify (e.g. build-test) the
-     result.  In this case, we should skip unmerged paths, give
-     a warning, and check out only the merged ones.
-
-
-[Footnotes]
-
-*1* Unrelated note.  Who is the intended consumer of this "needs
-    update" message?  Should we make it machine readable with
-    '-z' flag as well?  Otherwise, shouldn't it go to stderr?
-    Currently it goes to stdout.
-
+Petr syncs with Linus often and he seems to be doing a good job
+at keeping track of public patches, but the git layer Linus
+works on does not have some patches Petr collected or wrote
+himself.  In time, a better coordination would emerge, of
+course, but the project is still young at this moment.  Stay
+tuned ;-).
