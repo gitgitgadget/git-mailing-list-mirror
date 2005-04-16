@@ -1,151 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Cache of hardlinked blobs
-Date: Sat, 16 Apr 2005 00:43:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504160019240.30848-100000@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/2] merge-trees script for Linus git
+Date: Fri, 15 Apr 2005 22:02:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+ <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net> <20050414121624.GZ25711@pasky.ji.cz>
+ <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net> <20050414193507.GA22699@pasky.ji.cz>
+ <7vmzs1osv1.fsf@assigned-by-dhcp.cox.net> <20050414233159.GX22699@pasky.ji.cz>
+ <7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net> <20050414223039.GB28082@64m.dyndns.org>
+ <7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net> <20050415062807.GA29841@64m.dyndns.org>
+ <7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net> <7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org> <7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
+ <7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net> <7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org> <7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat Apr 16 06:39:20 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 06:57:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMf5Q-0004sr-8i
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 06:39:16 +0200
+	id 1DMfN3-0005hD-IV
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 06:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262634AbVDPEmr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 00:42:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262635AbVDPEmr
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 00:42:47 -0400
-Received: from iabervon.org ([66.92.72.58]:53765 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262634AbVDPEml (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 00:42:41 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DMf92-0008QV-00; Sat, 16 Apr 2005 00:43:00 -0400
-To: Ingo Molnar <mingo@elte.hu>
+	id S261697AbVDPFAt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 01:00:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262635AbVDPFAt
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 01:00:49 -0400
+Received: from fire.osdl.org ([65.172.181.4]:56260 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261697AbVDPFAo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 01:00:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3G50ds4012450
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 15 Apr 2005 22:00:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3G50cCQ001650;
+	Fri, 15 Apr 2005 22:00:38 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I wrote a quick and dirty patch to check out blobs into .git/blobs, and
-hardlink them into the working directory; if you symlink .git/blobs
-together for a number of trees, this should save a lot of space if you
-have a lot of working directories. It also seems to speed up and save
-space in "git fork" (or whatever it ends up being called) if the symlink
-is added to the list of symlinks. It seems effective from trying it with a
-git tree. Ingo: do you want to try it with a kernel tree? I think you said
-you wanted good performance for that sort of thing.
 
-Patch follows:
 
-Make a cache of expanded blobs, and hardlink against them instead of
-creating more files. This is useful if the cache is shared between
-different working directories and your editor breaks hard links
-appropriately.
+On Fri, 15 Apr 2005, Junio C Hamano wrote:
+> 
+> I'd take the hint, but I would say the current Perl version
+> would be far more usable than the C version I would come up with
+> by the end of this weekend because:
 
-Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+Actually, it turns out that I have a cunning plan.
 
-Index: checkout-cache.c
-===================================================================
---- e4d994ccc556a50f89297c6dbcf22e484a344cf8/checkout-cache.c  (mode:100664 sha1:431b7032576f40d93a08be801e26f76c168ed57b)
-+++ 2ee21d9b73c81d51f6c0e8ff35a92a4f11105fc4/checkout-cache.c  (mode:100664 sha1:9624b3c783c482c9f6da8bf8b2cf45b316107776)
-@@ -34,6 +34,8 @@
-  */
- #include "cache.h"
- 
-+#define HARDLINK_CACHE ".git/blobs"
-+
- static int force = 0, quiet = 0;
- 
- static void create_directories(const char *path)
-@@ -64,6 +66,80 @@
- 	return fd;
- }
- 
-+#ifdef HARDLINK_CACHE
-+
-+/*
-+ * NOTE! This returns a statically allocated buffer, so you have to be
-+ * careful about using it. Do a "strdup()" if you need to save the
-+ * filename.
-+ */
-+char *sha1_blob_cache_file_name(const unsigned char *sha1)
-+{
-+	int i;
-+	static char *name, *base;
-+
-+	if (!base) {
-+		char *sha1_file_directory = HARDLINK_CACHE;
-+		int len = strlen(sha1_file_directory);
-+		base = malloc(len + 60);
-+		memcpy(base, sha1_file_directory, len);
-+		memset(base+len, 0, 60);
-+		base[len] = '/';
-+		base[len+3] = '/';
-+		name = base + len + 1;
-+	}
-+	for (i = 0; i < 20; i++) {
-+		static char hex[] = "0123456789abcdef";
-+		unsigned int val = sha1[i];
-+		char *pos = name + i*2 + (i > 0);
-+		*pos++ = hex[val >> 4];
-+		*pos = hex[val & 0xf];
-+	}
-+	return base;
-+}
-+
-+static int write_entry(struct cache_entry *ce)
-+{
-+	int fd;
-+	void *new;
-+	unsigned long size;
-+	long wrote;
-+	char type[20];
-+	char *cache_name;
-+	struct stat st;
-+
-+	cache_name = sha1_blob_cache_file_name(ce->sha1);
-+
-+	if (stat(cache_name, &st)) {
-+		new = read_sha1_file(ce->sha1, type, &size);
-+		if (!new || strcmp(type, "blob")) {
-+			return error("checkout-cache: unable to read sha1 file of %s (%s)",
-+				     ce->name, sha1_to_hex(ce->sha1));
-+		}
-+		fd = create_file(cache_name, ntohl(ce->ce_mode));
-+		if (fd < 0) {
-+			free(new);
-+			return error("checkout-cache: unable to create %s (%s)",
-+				     ce->name, strerror(errno));
-+		}
-+		wrote = write(fd, new, size);
-+		close(fd);
-+		free(new);
-+		if (wrote != size)
-+			return error("checkout-cache: unable to write %s", 
-+				     ce->name);
-+	}
-+	if (link(cache_name, ce->name)) {
-+		if (errno == ENOENT) {
-+			create_directories(ce->name);
-+			link(cache_name, ce->name);
-+		}
-+	}
-+	return 0;
-+}
-+
-+#else
-+
- static int write_entry(struct cache_entry *ce)
- {
- 	int fd;
-@@ -91,6 +167,8 @@
- 	return 0;
- }
- 
-+#endif
-+
- static int checkout_entry(struct cache_entry *ce)
- {
- 	struct stat st;
+I'm full of cunning plans, in fact. It turns out that I can do merges even
+more simply, if I just allow the notion of "state" into an index entry,
+and allow multiple index entries with the same name as long as they differ
+in "state".
 
+And that means that I can do all the merging in the regular index tree, 
+using very simple rules.
+
+Let's see how that works out. I'm writing the code now.
+
+		Linus
