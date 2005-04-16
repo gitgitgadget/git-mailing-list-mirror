@@ -1,75 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: using git directory cache code in darcs?
-Date: Sat, 16 Apr 2005 07:28:00 -0700
-Message-ID: <7vacny94pb.fsf@assigned-by-dhcp.cox.net>
-References: <20050416132231.GJ2551@abridgegame.org>
+From: Martin Uecker <muecker@gmx.de>
+Subject: Re: space compression (again)
+Date: Sat, 16 Apr 2005 16:39:05 +0200
+Message-ID: <20050416143905.GA10370@macavity>
+References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu> <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org> <Pine.LNX.4.61.0504151437100.27637@cag.csail.mit.edu> <Pine.LNX.4.58.0504151210590.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, darcs-devel@darcs.net
-X-From: darcs-devel-bounces@darcs.net Sat Apr 16 16:25:19 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cNdxnHkX5QqsyA0e"
+X-From: git-owner@vger.kernel.org Sat Apr 16 16:37:17 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMoEK-0000er-3g
-	for gcvdd-darcs-devel@m.gmane.org; Sat, 16 Apr 2005 16:25:04 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DMoHn-0004lk-Pw; Sat, 16 Apr 2005 10:28:39 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28])
-	by abridgegame.org with esmtp (Exim 4.50) id 1DMoHk-0004kj-JF
-	for darcs-devel@darcs.net; Sat, 16 Apr 2005 10:28:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172]) by fed1rmmtao11.cox.net
-	(InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP id
-	<20050416142801.BUZ22013.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-	Sat, 16 Apr 2005 10:28:01 -0400
-To: David Roundy <droundy@abridgegame.org>,
-In-Reply-To: <20050416132231.GJ2551@abridgegame.org> (David Roundy's message
-	of "Sat, 16 Apr 2005 09:22:36 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+	id 1DMoQ3-0001hX-8c
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 16:37:11 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S262669AbVDPOke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 10:40:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262673AbVDPOkd
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 10:40:33 -0400
+Received: from dialin-145-254-144-243.arcor-ip.net ([145.254.144.243]:29056
+	"EHLO macavity") by vger.kernel.org with ESMTP id S262669AbVDPOkZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 10:40:25 -0400
+Received: from martin by macavity with local (Exim 4.34)
+	id 1DMoRt-0002kD-Ge
+	for git@vger.kernel.org; Sat, 16 Apr 2005 16:39:05 +0200
+To: git@vger.kernel.org
+Mail-Followup-To: Martin Uecker <muecker@gmx.de>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504151210590.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.5.6+20040907i
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
->>>>> "DR" == David Roundy <droundy@abridgegame.org> writes:
 
-DR> 1) Would this actually be a good idea?
+--cNdxnHkX5QqsyA0e
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think it is sensible, especially if you are doing a lot of
-comparison between the working area and the pristine.
+On Fri, Apr 15, 2005 at 12:11:43PM -0700, Linus Torvalds wrote:
 
-DR> 3) Is it likely that git will switch to not using global
-DR> variables for active_cache, active_nr and active_alloc?
 
-DR> 4) Would there be interest in creating a libgit?
+> On Fri, 15 Apr 2005, C. Scott Ananian wrote:
+> >=20
+> > So I guess I'll have to implement this and find out, won't I? =3D)
+>=20
+> The best way to shup somebody up is always to just do it, and say "hey, I=
+=20
+> told you so". It's hard to argue with numbers.
 
-These are related.  I have seen some people interested in
-libifying it, and encapsulating those globals would naturally
-fall out of it.  My impression from the list however is that a
-lot more people are interested in the upper SCM layer than the
-git layer right now.  And git layer, although solid enough to
-host itself, is still slushy.  A couple of days ago dircache
-format was changed from host to network endian.  Last night
-Linus made another change to dircache format, which fortunately
-is upward compatible if you stay within pathnames shorter than
-2^12 bytes ;-).  Another problem I see for somebody to pick up
-and start libifying things right now is that, although there is
-one central person on the SCM side (Petr Baudis), git layer is
-still fractured between Linus and Petr.
+The right thing (TM) is to switch from SHA1 of compressed
+content for the complete monolithic file to a merkle hash tree
+of the uncompressed content. This would make the hash
+independent of the actual storage method (chunked or not).=20
 
-Petr syncs with Linus often and he seems to be doing a good job
-at keeping track of public patches, but the git layer Linus
-works on does not have some patches Petr collected or wrote
-himself.  In time, a better coordination would emerge, of
-course, but the project is still young at this moment.  Stay
-tuned ;-).
+
+Martin
+
+--=20
+One night, when little Giana from Milano was fast asleep,
+she had a strange dream.
+
+
+--cNdxnHkX5QqsyA0e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQFCYSOJYDJInvULMKYRAnOGAJkB/1R7xMCYiSlEbHo0Bit8HHKmugCeIMe8
+ajUErAASZFdNrz3BK+Y7j1Q=
+=aj+9
+-----END PGP SIGNATURE-----
+
+--cNdxnHkX5QqsyA0e--
