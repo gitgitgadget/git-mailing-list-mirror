@@ -1,63 +1,63 @@
-From: "C. Scott Ananian" <cscott@cscott.net>
-Subject: Re: space compression (again)
-Date: Sat, 16 Apr 2005 11:11:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.61.0504161101470.29343@cag.csail.mit.edu>
-References: <Pine.LNX.4.61.0504151232160.27637@cag.csail.mit.edu>
- <Pine.LNX.4.58.0504151117360.7211@ppc970.osdl.org>
- <Pine.LNX.4.61.0504151437100.27637@cag.csail.mit.edu>
- <Pine.LNX.4.58.0504151210590.7211@ppc970.osdl.org> <20050416143905.GA10370@macavity>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: SHA1 hash safety
+Date: Sat, 16 Apr 2005 17:11:17 +0200
+Message-ID: <20050416151116.GC19099@pasky.ji.cz>
+References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 17:07:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: omb@bluewin.ch, David Lang <david.lang@digitalinsight.com>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 17:07:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMotS-0003do-R4
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 17:07:35 +0200
+	id 1DMotZ-0003eJ-Cn
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 17:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262679AbVDPPLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 11:11:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262680AbVDPPLO
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 11:11:14 -0400
-Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:40600 "EHLO
-	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
-	id S262679AbVDPPLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 11:11:12 -0400
-Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
-	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
-	id 1DMowv-0007pf-00; Sat, 16 Apr 2005 11:11:09 -0400
-To: Martin Uecker <muecker@gmx.de>
-In-Reply-To: <20050416143905.GA10370@macavity>
+	id S262680AbVDPPLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 11:11:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262681AbVDPPLV
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 11:11:21 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14830 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262680AbVDPPLS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 11:11:18 -0400
+Received: (qmail 25863 invoked by uid 2001); 16 Apr 2005 15:11:17 -0000
+To: "C. Scott Ananian" <cscott@cscott.net>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Martin Uecker wrote:
+Dear diary, on Sat, Apr 16, 2005 at 04:58:15PM CEST, I got a letter
+where "C. Scott Ananian" <cscott@cscott.net> told me that...
+> On Sat, 16 Apr 2005, Brian O'Mahoney wrote:
+> 
+> >(1) I _have_ seen real-life collisions with MD5, in the context of
+> >   Document management systems containing ~10^6 ms-WORD documents.
+> 
+> Dude!  You could have been *famous*!  Why the 
+> aitch-ee-double-hockey-sticks didn't you publish this when you found it?
+> Seriously, man.
+> 
+> Even given the known weaknesses in MD5, it would take much more than a 
+> million documents to find MD5 collisions.  I can only conclude that the 
+> hash was being used incorrectly; most likely truncated (my wild-ass guess 
+> would be to 32 bits; a collision is likely with > 50% probability in a 
+> million document store for a hash of less than 40 bits).
+> 
+> I know the current state of the art here.  It's going to take more than 
+> just hearsay to convince me that full 128-bit MD5 collisions are likely. 
+> I believe there are only two or so known to exist so far, and those were 
+> found by a research team in China (which, yes, is fairly famous among the 
+> cryptographic community now after publishing a paper consisting of little 
+> apart from the two collisions themselves).
 
-> The right thing (TM) is to switch from SHA1 of compressed
-> content for the complete monolithic file to a merkle hash tree
-> of the uncompressed content. This would make the hash
-> independent of the actual storage method (chunked or not).
+http://cryptography.hyperlink.cz/MD5_collisions.html
 
-It would certainly be nice to change to a hash of the uncompressed 
-content, rather than a hash of the compressed content, but it's not 
-strictly necessary, since files are fetched all at once: there's not 'read 
-subrange' operation on blobs.
-
-I assume 'merkle hash tree' is talking about:
-   http://www.open-content.net/specs/draft-jchapweske-thex-02.html
-..which is very interesting, but not quite what I was thinking.
-The merkle hash approach seems to require fixed chunk boundaries.
-The rsync approach does not use fixed chunk boundaries; this is necessary 
-to ensure good storage reuse for the expected case (ie; inserting a single 
-line at the start or in the middle of the file, which changes all the 
-chunk boundaries).
-
-Further, in the absence of subrange reads on blobs, it's not entirely 
-clear what using a merkle hash would buy you.
-  --scott
-
-WASHTUB supercomputer security Mk 48 justice ODUNIT radar COBRA JANE 
-SSBN 731 BATF KUJUMP SECANT operation class struggle SYNCARP KGB ODACID
-                          ( http://cscott.net/ )
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
