@@ -1,69 +1,108 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Re: Add "clone" support to lntree
-Date: Fri, 15 Apr 2005 23:17:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504152307050.30848-100000@iabervon.org>
-References: <20050416025844.GY7417@pasky.ji.cz>
+Subject: Re: Re: Re: write-tree is pasky-0.4
+Date: Fri, 15 Apr 2005 23:56:42 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504152318230.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0504152000570.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 16 05:13:07 2005
+Cc: Petr Baudis <pasky@ucw.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 16 05:53:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMdk2-0007UJ-W5
-	for gcvg-git@gmane.org; Sat, 16 Apr 2005 05:13:07 +0200
+	id 1DMeMf-0002ly-TH
+	for gcvg-git@gmane.org; Sat, 16 Apr 2005 05:53:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262605AbVDPDQm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Apr 2005 23:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262606AbVDPDQm
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 23:16:42 -0400
-Received: from iabervon.org ([66.92.72.58]:20997 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262605AbVDPDQj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 23:16:39 -0400
+	id S262617AbVDPD4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Apr 2005 23:56:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262625AbVDPD4f
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Apr 2005 23:56:35 -0400
+Received: from iabervon.org ([66.92.72.58]:38917 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262617AbVDPD42 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Apr 2005 23:56:28 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DMdno-0005Bz-00; Fri, 15 Apr 2005 23:17:00 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050416025844.GY7417@pasky.ji.cz>
+	id 1DMeQE-0006o5-00; Fri, 15 Apr 2005 23:56:42 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504152000570.7211@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Petr Baudis wrote:
+On Fri, 15 Apr 2005, Linus Torvalds wrote:
 
-> Dear diary, on Sat, Apr 16, 2005 at 04:47:55AM CEST, I got a letter
-> where Petr Baudis <pasky@ucw.cz> told me that...
-> > 	git branch --- creates a branch from a given commit
-> > 			(when passed empty commit, creates a branch
-> > 			from the current commit and sets the working
-> > 			tree to that branch)
-> > Note that there is a bug in current git update - it will allow you to
-> > bring several of your trees to follow the same branch, or even a remote
-> > branch. This is not even supposed to work, and will be fixed when I get
-> > some sleep. You will be able to do git pull even on local branches, and
-> > the proper solution for this will be just tracking the branch you want
-> > to follow.
+> On Fri, 15 Apr 2005, Daniel Barkalow wrote:
+> > 
+> > So you want to merge someone else's tree into your committed state, and
+> > then merge the result with your working directory to get the working
+> > directory you continue with, provided that the second merge is trivial?
 > 
-> I must admit that I'm not entirely decided yet, so I'd love to hear your
-> opinion.
+> No, you don't even "merge" the working directory.
 > 
-> I'm wondering, whether each tree should be fixed to a certain branch.
-> That is, you decide a name when you do git fork, and then the tree
-> always follows that branch. (It always has to follow [be bound to]
-> *some* branch, and each branch can be followed by only a single tree at
-> a time.)
+> The low-level tools should entirely ignore the working directory. To a
+> low-level merge, the working directory doesn't even exist. It just gets
+> three commits (or trees) and merges two of them with the third as a
+> parent, and does all of it in it's own temporary "merge working
+> directory".
 
-I don't think I'm following the use of branches. Currently, what I do is
-have a git-pasky and a git-linus, and fork off a working directory from
-one of these for each thing I want to work on. I do some work, commit as I
-make progress, and then do a diff against the remote head to get a patch
-to send off. If I want to do a series of patches which depend on each
-other, I fork my next directory off of my previous one rather than off of
-a remote base. I haven't done much rebasing, so I haven't worked out how I
-would do that most effectively.
+It seems like users won't expect there to be a new working directory for
+the merge in which they are supposed to resolve te conflicts, but where
+they don't see their uncommited changes. In any case, the low-level tools
+have to care about *some* working directory, even if it isn't the parent
+of .git, and the parent of .git seems like where other similar things
+happen. If we're being conservative about merging, we're likely to report
+a lot of conflicts, at least until we work out better techniques than a
+simple 3-way merge.
 
-I think I can make this space efficient by hardlinking unmodified blobs to
-a directory of cached expanded blobs.
+> > For the latter, there are sometimes multiple ancestors which fit this
+> > criterion
+> 
+> Yes. Let's just pick one at random (or more likely, the latest one by 
+> date - let's not actually be _random_ random) at first. 
+
+Okay; I've currently got the one where the number of generations it is
+away from the further head is the smallest, and of equal ones, an
+arbitrary choice. If people are generally similar in the amount they
+diverge before commiting, this should be the most similar ancestor.
+
+> There are other heuristics we can try, ie if it turns out that it's common
+> to have a couple of alternatives (but no more than some small number, say
+> five or so), we can literally just -try- to do a tree-only merge, and see
+> how many lines out common output you get from "diff-tree".
+> 
+> Because that "how mnay files do we need to merge" is the number you want
+> to minimize, and doing a couple of extra "diff-tree" + "join"  operations
+> should be so fast that nobody will notice that we actually tried five
+> different merges to see which one looked the best.
+> 
+> But hey, especially if the merge fails with real clashes (ie there are
+> changes in common and running "merge" leaves conflicts), and there were
+> other alternate parents to choose, there's nothing wrong with just
+> printing them out and saying "you might try to specify one of these
+> manually".
+
+I think we should be able to get good results out of doing the 5 merges
+and reporting a conflict only if there's a conflict in all of them; it
+shouldn't be possible for two to succeed but give different results (if it
+did, clearly our current algorithm is unsafe, since it would give some
+undesired output if it happened to use the wrong ancestor).
+
+I'm thinking of not actually calling "merge(1)" for this at all; it just
+calls diff3, and diff3 is only 1745 lines including option parsing. We can
+probably arrange to look around for better ancestors in case of conflicts
+we'd otherwise have to report, and get this all tidy and more efficient
+than having diff3 re-read files. And if we only go to other ancestors in
+case of conflicts, we're going to be a lot faster total than getting a
+reaction from the user, almost no matter what we do.
+
+> I really don't think we should worry too much about this until we've 
+> actually used the system for a while and seen what it does. So just start 
+> with "nearest common parent with most recent date". Which I think you 
+> already implemented, no?
+
+I've got something like that (see above); did you want it in some form
+other than the patch I sent you?
 
 	-Daniel
 *This .sig left intentionally blank*
