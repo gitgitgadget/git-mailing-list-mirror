@@ -1,100 +1,56 @@
-From: Steven Cole <elenstev@mesatop.com>
-Subject: Re: Add lsremote command.
-Date: Sun, 17 Apr 2005 16:42:56 -0600
-Message-ID: <200504171642.56686.elenstev@mesatop.com>
-References: <200504162336.51937.elenstev@mesatop.com> <20050417140309.GF1487@pasky.ji.cz>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 23:51:36 +0100
+Message-ID: <20050417235136.B30656@flint.arm.linux.org.uk>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 00:43:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 00:47:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNITo-0002s8-MV
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:43:04 +0200
+	id 1DNIYR-0003BQ-FN
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261535AbVDQWqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 18:46:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261536AbVDQWqy
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:46:54 -0400
-Received: from nacho.zianet.com ([216.234.192.105]:45834 "HELO
-	nacho.zianet.com") by vger.kernel.org with SMTP id S261535AbVDQWqu
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 18:46:50 -0400
-Received: (qmail 23901 invoked from network); 17 Apr 2005 22:46:48 -0000
-Received: from 216-31-65-214.zianet.com (216.31.65.214)
-  by 0 with SMTP; 17 Apr 2005 22:46:48 -0000
-To: Petr Baudis <pasky@ucw.cz>
-User-Agent: KMail/1.6.1
-In-Reply-To: <20050417140309.GF1487@pasky.ji.cz>
+	id S261536AbVDQWvm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 18:51:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261537AbVDQWvm
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:51:42 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:51729 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261536AbVDQWvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 18:51:41 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DNIc5-00007O-Us; Sun, 17 Apr 2005 23:51:38 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DNIc4-0000Gr-G0; Sun, 17 Apr 2005 23:51:36 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <20050417231959.A30656@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Sun, Apr 17, 2005 at 11:19:59PM +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sunday 17 April 2005 08:03 am, Petr Baudis wrote:
-> Dear diary, on Sun, Apr 17, 2005 at 07:36:51AM CEST, I got a letter
-> where Steven Cole <elenstev@mesatop.com> told me that...
-> > This is a fairly trivial addition, but if users are adding remote repositories
-> > with git addremote, then those users should be able to list out the remote
-> > list without having to know the details of where the remotes file is kept.
+On Sun, Apr 17, 2005 at 11:19:59PM +0100, Russell King wrote:
+> On Sun, Apr 17, 2005 at 03:17:50PM -0700, Linus Torvalds wrote:
+> > Can people usefully track my current kernel git repository, or do you have
+> > to be crazy to do so? That's really the question. You be the judge. Me,
+> > I'm just giddy from a merge that was clearly done using interfaces that
+> > aren't actually really usable for anybody but me, and barely me at that ;)
 > 
-> Could you please send your patches inline? (Either in the body or with
-> correct content-disposition header.)
-> 
-> You got the return values other way around and you are missing a
-> copyright notice at the top; you should also mention that you take no
-> parameters.
-> 
-> Please use -s instead of -e, since it is more appropriate in this case.
-> Also, you should report the "no remotes" message to stderr. And always
-> exit when you found that .git/remotes exists, not only if cat succeeds.
-> 
-> Kind regards,
-> 
-Thanks for the fixes.  Here's a better version.
-Steven
+> I guess I'll have the pleasure to find that out when I update my tree
+> with your latest changes... which I think is a project for tomorrow.
 
- This is a fairly trivial addition, but if users are adding remote repositories
- with git addremote, then those users should be able to list out the remote
- list without having to know the details of where the remotes file is kept.
+I pulled it tonight into a pristine tree (which of course worked.)
 
-Signed-off-by: Steven Cole <elenstev@mesatop.com>
+In doing so, I noticed that I'd messed up one of the commits - there's
+a missing new file.  Grr.  I'll put that down to being a newbie git.
 
-diff -urN git-pasky.orig/git git-pasky/git
---- git-pasky.orig/git	2005-04-17 15:02:37.000000000 -0600
-+++ git-pasky/git	2005-04-17 15:04:23.000000000 -0600
-@@ -41,6 +41,7 @@
- 	log
- 	ls		[TREE_ID]
- 	lsobj		[OBJTYPE]
-+	lsremote
- 	merge		-b BASE_ID FROM_ID
- 	pull		[RNAME]
- 	rm		FILE...
-@@ -105,6 +106,7 @@
- "log")        gitlog.sh "$@";;
- "ls")         gitls.sh "$@";;
- "lsobj")      gitlsobj.sh "$@";;
-+"lsremote")   gitlsremote.sh "$@";;
- "merge")      gitmerge.sh "$@";;
- "pull")       gitpull.sh "$@";;
- "rm")         gitrm.sh "$@";;
-diff -urN git-pasky.orig/gitlsremote.sh git-pasky/gitlsremote.sh
---- git-pasky.orig/gitlsremote.sh	1969-12-31 17:00:00.000000000 -0700
-+++ git-pasky/gitlsremote.sh	2005-04-17 16:20:48.000000000 -0600
-@@ -0,0 +1,11 @@
-+#!/bin/sh
-+#
-+# Lists remote GIT repositories
-+# Copyright (c) Steven Cole 2005
-+#
-+# Takes no parameters
-+#
-+[ -s .git/remotes ] && cat .git/remotes
-+[ -s .git/remotes ] && exit
-+
-+echo "List of remotes is empty. See git addremote." >&2
-
+-- 
+Russell "newbie git" King
