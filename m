@@ -1,73 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Rename confusing variable in show-diff
-Date: Sat, 16 Apr 2005 18:10:29 -0700
-Message-ID: <7vzmvy2ooq.fsf@assigned-by-dhcp.cox.net>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: fix mktemp (remove mktemp ;)
+Date: Sat, 16 Apr 2005 18:15:30 -0700
+Organization: SGI
+Message-ID: <20050416181530.6ccd569b.pj@sgi.com>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
+	<20050416233724.GP19099@pasky.ji.cz>
+	<20050416170221.38b3e66c.pj@sgi.com>
+	<20050417003325.GA15608@redhat.com>
+	<20050416174409.59f94c26.pj@sgi.com>
+	<20050417005757.GB15608@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 03:07:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: pasky@ucw.cz, git@vger.kernel.org, mj@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Apr 17 03:12:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMyFb-00025T-3G
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 03:07:03 +0200
+	id 1DMyKe-0002OX-SQ
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 03:12:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261231AbVDQBKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 21:10:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261232AbVDQBKj
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 21:10:39 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:1244 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261231AbVDQBKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 21:10:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050417011029.YFMV15592.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 21:10:29 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261232AbVDQBP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 21:15:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261233AbVDQBP4
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 21:15:56 -0400
+Received: from omx3-ext.sgi.com ([192.48.171.20]:4244 "EHLO omx3.sgi.com")
+	by vger.kernel.org with ESMTP id S261232AbVDQBPt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 21:15:49 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H1dALU029286;
+	Sat, 16 Apr 2005 18:39:10 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H1FZlU15243101;
+	Sat, 16 Apr 2005 18:15:38 -0700 (PDT)
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050417005757.GB15608@redhat.com>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The show-diff command uses a variable "new" but it is always
-used to point at the original data recorded in the dircache
-before the user started editing in the working file.  Rename it
-to "old" to avoid confusion.
+Dave wrote:
+> http://www.linuxsecurity.com/content/view/115462/151/
 
-To be applied on top of my previous patches:
+Nice - thanks.
 
-    [PATCH] Optionally tell show-diff to show only named files.
-    [PATCH] show-diff -z option for machine readable output.
-    [PATCH] show-diff shell safety.
+Pasky - would you be interested in a patch that used a more robust tmp
+file creation, along the lines of replacing
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+	t=${TMPDIR:-/usr/tmp}/gitdiff.$$
+	trap 'set +f; rm -fr $t.?; trap 0; exit 0' 0 1 2 3 15
 
- show-diff.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+with:
 
-show-diff.c: e52eee21c2f682bef2dba06445699cca8e34c63a
---- show-diff.c
-+++ show-diff.c	2005-04-16 18:05:55.000000000 -0700
-@@ -162,7 +162,7 @@
- 		int changed;
- 		unsigned long size;
- 		char type[20];
--		void *new;
-+		void *old;
- 
- 		if (1 <argc &&
- 		    ! matches_pathspec(ce, argv+1, argc-1))
-@@ -193,8 +193,8 @@
- 		if (silent)
- 			continue;
- 
--		new = read_sha1_file(ce->sha1, type, &size);
--		show_differences(ce->name, new, size);
-+		old = read_sha1_file(ce->sha1, type, &size);
-+		show_differences(ce->name, old, size);
- 		free(new);
- 	}
- 	return 0;
+	tmp=${TMPDIR-/tmp}
+	tmp=$tmp/gitdiff-do.$RANDOM.$RANDOM.$RANDOM.$$
+	(umask 077 && mkdir $tmp) || {
+		echo "Could not create temporary directory! Exiting." 1>&2 
+		exit 1
+	}
+	t=$tmp/tmp
+	trap 'rm -fr $tmp; trap 0; exit 0' 0 1 2 3 15
 
+If interested, would you want it instead of my previous mktemp removal
+patch, or on top of it?
+
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
