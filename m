@@ -1,163 +1,64 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [2/5] Add merge-base
-Date: Sun, 17 Apr 2005 11:27:13 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171124340.30848-100000@iabervon.org>
-References: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: Re: Merge with git-pasky II.
+Date: Sun, 17 Apr 2005 17:28:41 +0200
+Message-ID: <20050417152841.GA6157@elte.hu>
+References: <7v7jj5qgdz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org> <1113559330.12012.292.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org> <20050416014442.GW4488@himi.org> <Pine.LNX.4.62.0504160518310.21837@qynat.qvtvafvgr.pbz> <20050416155536.GX4488@himi.org> <20050416160333.GF19099@pasky.ji.cz> <Pine.LNX.4.58.0504160913180.7211@ppc970.osdl.org> <20050417145232.GA5289@elte.hu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 17:23:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, Simon Fowler <simon@himi.org>,
+	David Lang <david.lang@digitalinsight.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 17:25:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNBcD-0003OP-9e
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:23:17 +0200
+	id 1DNBdv-0003Xn-QJ
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261331AbVDQP1E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 11:27:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261332AbVDQP1E
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:27:04 -0400
-Received: from iabervon.org ([66.92.72.58]:63751 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261331AbVDQP0z (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:26:55 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNBg1-0006b5-00; Sun, 17 Apr 2005 11:27:13 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org>
+	id S261333AbVDQP2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 11:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261334AbVDQP2x
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:28:53 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:16565 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261333AbVDQP2v (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:28:51 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id 482AC31EBB6;
+	Sun, 17 Apr 2005 17:28:04 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id CF7771FC2; Sun, 17 Apr 2005 17:28:43 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <20050417145232.GA5289@elte.hu>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-merge-base finds one of the best common ancestors of a pair of commits. In
-particular, it finds one of the ones which is fewest commits away from the
-further of the heads.
 
-Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
-Index: Makefile
-===================================================================
---- 37a0b01b85c2999243674d48bfc71cdba0e5518e/Makefile  (mode:100644 sha1:346e3850de026485802e41e16a1180be2df85e4a)
-+++ d662b707e11391f6cfe597fd4d0bf9c41d34d01a/Makefile  (mode:100644 sha1:b2ce7c5b63fffca59653b980d98379909f893d44)
-@@ -14,7 +14,7 @@
- 
- PROG=   update-cache show-diff init-db write-tree read-tree commit-tree \
- 	cat-file fsck-cache checkout-cache diff-tree rev-tree show-files \
--	check-files ls-tree
-+	check-files ls-tree merge-base
- 
- SCRIPT=	parent-id tree-id git gitXnormid.sh gitadd.sh gitaddremote.sh \
- 	gitcommit.sh gitdiff-do gitdiff.sh gitlog.sh gitls.sh gitlsobj.sh \
-Index: merge-base.c
-===================================================================
---- /dev/null  (tree:37a0b01b85c2999243674d48bfc71cdba0e5518e)
-+++ d662b707e11391f6cfe597fd4d0bf9c41d34d01a/merge-base.c  (mode:100644 sha1:0f85e7d9e9a896d1142a54170ddf1159f11f9cdd)
-@@ -0,0 +1,108 @@
-+#include <stdlib.h>
-+#include "cache.h"
-+#include "revision.h"
-+
-+struct revision *common_ancestor(struct revision *rev1, struct revision *rev2)
-+{
-+	struct parent *parent;
-+
-+	struct parent *rev1list = malloc(sizeof(struct parent));
-+	struct parent *rev2list = malloc(sizeof(struct parent));
-+        
-+	struct parent *posn, *temp;
-+
-+	rev1list->parent = rev1;
-+	rev1list->next = NULL;
-+
-+	rev2list->parent = rev2;
-+	rev2list->next = NULL;
-+
-+	while (rev1list || rev2list) {
-+		posn = rev1list;
-+		rev1list = NULL;
-+		while (posn) {
-+			parse_commit_object(posn->parent);
-+			if (posn->parent->flags & 0x0001) {
-+				/*
-+				printf("1 already seen %s %x\n",
-+				       sha1_to_hex(posn->parent->sha1),
-+				       posn->parent->flags);
-+				*/
-+                                // do nothing
-+			} else if (posn->parent->flags & 0x0002) {
-+                                // XXXX free lists
-+				return posn->parent;
-+			} else {
-+				/*
-+				printf("1 based on %s\n",
-+				       sha1_to_hex(posn->parent->sha1));
-+				*/
-+				posn->parent->flags |= 0x0001;
-+
-+				parent = posn->parent->parent;
-+				while (parent) {
-+					temp = malloc(sizeof(struct parent));
-+					temp->next = rev1list;
-+					temp->parent = parent->parent;
-+					rev1list = temp;
-+					parent = parent->next;
-+				}
-+			}
-+			posn = posn->next;
-+		}
-+		posn = rev2list;
-+		rev2list = NULL;
-+		while (posn) {
-+			parse_commit_object(posn->parent);
-+			if (posn->parent->flags & 0x0002) {
-+				/*
-+				printf("2 already seen %s\n",
-+				       sha1_to_hex(posn->parent->sha1));
-+				*/
-+                                // do nothing
-+			} else if (posn->parent->flags & 0x0001) {
-+                                // XXXX free lists
-+				return posn->parent;
-+			} else {
-+				/*
-+				printf("2 based on %s\n",
-+				       sha1_to_hex(posn->parent->sha1));
-+				*/
-+				posn->parent->flags |= 0x0002;
-+
-+				parent = posn->parent->parent;
-+				while (parent) {
-+					temp = malloc(sizeof(struct parent));
-+					temp->next = rev2list;
-+					temp->parent = parent->parent;
-+					rev2list = temp;
-+					parent = parent->next;
-+				}
-+			}
-+			posn = posn->next;
-+		}
-+	}
-+	return NULL;
-+}
-+
-+int main(int argc, char **argv)
-+{
-+	struct revision *rev1, *rev2, *ret;
-+	unsigned char rev1key[20], rev2key[20];
-+	if (argc != 3 ||
-+	    get_sha1_hex(argv[1], rev1key) ||
-+	    get_sha1_hex(argv[2], rev2key)) {
-+		usage("mergebase <commit-id> <commit-id>");
-+	}
-+	rev1 = lookup_rev(rev1key);
-+	rev2 = lookup_rev(rev2key);
-+	ret = common_ancestor(rev1, rev2);
-+	if (ret) {
-+		printf("%s\n", sha1_to_hex(ret->sha1));
-+		return 0;
-+	} else {
-+		printf("Sorry.\n");
-+		return 1;
-+	}
-+	
-+}
+* Ingo Molnar <mingo@elte.hu> wrote:
 
+> The compromise relies on you having reviewed something harmless, while 
+> in reality what happened within the DB was far less harmless. And the 
+> DB remains self-consistent: neither fsck, nor others importing your 
+> tree will be able to detect the compromise. This attack can only be 
+> detected when you apply the patch, after that point all the 
+> information (except Malice's message in your inbox) is gone.
+
+in fact, this attack cannot even be proven to be malicious, purely via 
+the email from Malice: it could be incredible bad luck that caused that 
+good-looking patch to be mistakenly matching a dangerous object.
+
+In fact this could happen even today, _accidentally_. (but i'm willing 
+to bet that hell will be freezing over first, and i'll have some really 
+good odds ;) There's probably a much higher likelyhood of Linus' tree 
+getting corrupted in some old fashioned way and introducing a security 
+hole by accident)
+
+	Ingo
