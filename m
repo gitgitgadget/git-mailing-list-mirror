@@ -1,201 +1,119 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Add merge-base
-Date: Sun, 17 Apr 2005 18:01:06 +0200
-Message-ID: <20050417160106.GI1487@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org> <Pine.LNX.4.21.0504171124340.30848-100000@iabervon.org>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 17:05:40 +0100
+Message-ID: <20050417170539.B13233@flint.arm.linux.org.uk>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 17:58:02 2005
+Cc: Git Mailing List <git@vger.kernel.org>, Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:02:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNC9U-0006ee-8z
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:57:40 +0200
+	id 1DNCDu-0007Eb-KG
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:02:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261338AbVDQQB1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:01:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261342AbVDQQB1
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:01:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31890 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261338AbVDQQBJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:01:09 -0400
-Received: (qmail 26912 invoked by uid 2001); 17 Apr 2005 16:01:06 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S261345AbVDQQF7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:05:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261344AbVDQQF7
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:05:59 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:34056 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261345AbVDQQFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 12:05:46 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DNCHH-0008EW-PL; Sun, 17 Apr 2005 17:05:44 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DNCHE-0004VM-Pe; Sun, 17 Apr 2005 17:05:41 +0100
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504171124340.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>; from torvalds@osdl.org on Sat, Apr 16, 2005 at 04:01:45PM -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 05:27:13PM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> merge-base finds one of the best common ancestors of a pair of commits. In
-> particular, it finds one of the ones which is fewest commits away from the
-> further of the heads.
+On Sat, Apr 16, 2005 at 04:01:45PM -0700, Linus Torvalds wrote:
+> So I re-created the dang thing (hey, it takes just a few minutes), and
+> pushed it out, and there's now an archive on kernel.org in my public
+> "personal" directory called "linux-2.6.git". I'll continue the tradition
+> of naming git-archive directories as "*.git", since that really ends up
+> being the ".git" directory for the checked-out thing.
 
-What does it return when I have
+BTW, there appears to be "errors" in the history committed thus far.
+I'm not sure where this came from though.  Some of them could be
+UTF8 vs ASCII issues, but there's a number which seem to have extra
+random crap in them ("^M)" and lots of blank lines).
 
-  A -- C
-    \/   \
-    /\   /
-  B -- D
+One thing which definitely needs to be considered is - what character
+encoding are the comments to be stored as?  Currently, it's whatever
+the committers character encoding is, which will be completely random.
+For instance, dwmw2 will definitely be using UTF, whereas I'll definitely
+be using ISO-8859-1  (UTF is far too much of a pain in the ass to use,
+unless _all_ your systems are running UTF, which mine don't yet.)
 
-? >:)
+ID: 75f86bac962b7609b0f3c21d25e10647ff8ed280
+[PATCH] intel8x0: AC'97 audio patch for Intel ESB2
+         
+        This patch adds the Intel ESB2 DID's to the intel8x0.c file for AC'97 audio
+        support.
+         
+        Signed-off-by: <A0>Jason Gaston <Jason.d.gaston@intel.com>
+        Signed-off-by: Andrew Morton <akpm@osdl.org>
+        Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-I assume just either A or B, randomly?
+ID: baab5c52135dfa2a02c5dcc8422fc5d048acc682
+[PATCH] ppc32: fix compilation error in arch/ppc/kernel/time.c
+         
+        make defconfig give the following error on ppc (gcc-4):
+         
+        arch/ppc/kernel/time.c:92: error: static declaration of <E2><80><98>time_offset<E2><80><99>
+        follows non-static declaration
+        include/linux/timex.h:236: error: previous declaration of <E2><80><98>time_offset<E2><80><99>
+        was here
+         
+        The following patch solves it (time_offset is declared in timer.c).
+         
+        Signed-Off-By: Benoit Boissinot <benoit.boissinot@ens-lyon.org>
+        Signed-off-by: Andrew Morton <akpm@osdl.org>
+        Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-I think it would be best if it could list all the "first-class" matches
-(both A and B in this case), each on a separate line; this way the
-overlay tools could choose an algorithm to evaluate those further as
-they see fit - e.g. sort them by time (you might aid that by listing the
-commit time in front of them), then take the first n and try to diff
-them all and take the one with least changes (as suggested by Linus).
+ID: fa357627062fa6f4727638bc4f302b23f5a3acb8
+[PATCH] vmscan: pageout(): remove unneeded test
+         
+        ^M)
+         
+         
+         
+        We only call pageout() for dirty pages, so this test is redundant.
+         
+        Signed-off-by: Andrew Morton <akpm@osdl.org>
+        Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-And if someone doesn't care, he just does | head -n 1 | cut -f 2.
+ID: e5fc9026c6a372a67e652c6ba1648e5f8e543600
+[PATCH] arm: fix SIGBUS handling
+         
+        ^M)
+         
+         
+        From: Russell King <rmk+lkml@arm.linux.org.uk>
+         
+        ARM wasn't raising a SIGBUS with a siginfo structure.  Fix
+        __do_user_fault() to allow us to use it for SIGBUS conditions, and arrange
+        for the sigbus path to use this.
+         
+        We need to prevent the siginfo code being called if we do not have a user
+        space context to call it, so consolidate the "user_mode()" tests.
+         
+        Thanks to Ian Campbell who spotted this oversight.
+         
+        Signed-off-by: Russell King <rmk@arm.linux.org.uk>
+        Signed-off-by: Andrew Morton <akpm@osdl.org>
+        Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 
-> Index: merge-base.c
-> ===================================================================
-> --- /dev/null  (tree:37a0b01b85c2999243674d48bfc71cdba0e5518e)
-> +++ d662b707e11391f6cfe597fd4d0bf9c41d34d01a/merge-base.c  (mode:100644 sha1:0f85e7d9e9a896d1142a54170ddf1159f11f9cdd)
-> @@ -0,0 +1,108 @@
-> +#include <stdlib.h>
-> +#include "cache.h"
-> +#include "revision.h"
-> +
-> +struct revision *common_ancestor(struct revision *rev1, struct revision *rev2)
-> +{
-> +	struct parent *parent;
-> +
-> +	struct parent *rev1list = malloc(sizeof(struct parent));
-> +	struct parent *rev2list = malloc(sizeof(struct parent));
-
-Did I overlook anything or you could have just a single revlist?
-
-> +        
-
-I smell trailing whitespaces!
-
-> +	struct parent *posn, *temp;
-> +
-> +	rev1list->parent = rev1;
-> +	rev1list->next = NULL;
-> +
-> +	rev2list->parent = rev2;
-> +	rev2list->next = NULL;
-> +
-> +	while (rev1list || rev2list) {
-> +		posn = rev1list;
-> +		rev1list = NULL;
-> +		while (posn) {
-> +			parse_commit_object(posn->parent);
-> +			if (posn->parent->flags & 0x0001) {
-> +				/*
-> +				printf("1 already seen %s %x\n",
-> +				       sha1_to_hex(posn->parent->sha1),
-> +				       posn->parent->flags);
-> +				*/
-> +                                // do nothing
-
-Mostly for consistency, I'd prefer you to use /* */ comments in general.
-
-I think a terrified squeak at stderr in this situation (possibly
-suggesting fsck-cache) might be appropriate.
-
-> +			} else if (posn->parent->flags & 0x0002) {
-> +                                // XXXX free lists
-
-Hmm, so, why not free the lists?
-
-> +				return posn->parent;
-> +			} else {
-> +				/*
-> +				printf("1 based on %s\n",
-> +				       sha1_to_hex(posn->parent->sha1));
-> +				*/
-> +				posn->parent->flags |= 0x0001;
-> +
-> +				parent = posn->parent->parent;
-> +				while (parent) {
-> +					temp = malloc(sizeof(struct parent));
-> +					temp->next = rev1list;
-> +					temp->parent = parent->parent;
-> +					rev1list = temp;
-> +					parent = parent->next;
-> +				}
-> +			}
-> +			posn = posn->next;
-> +		}
-> +		posn = rev2list;
-> +		rev2list = NULL;
-> +		while (posn) {
-> +			parse_commit_object(posn->parent);
-> +			if (posn->parent->flags & 0x0002) {
-> +				/*
-> +				printf("2 already seen %s\n",
-> +				       sha1_to_hex(posn->parent->sha1));
-> +				*/
-> +                                // do nothing
-> +			} else if (posn->parent->flags & 0x0001) {
-> +                                // XXXX free lists
-> +				return posn->parent;
-> +			} else {
-> +				/*
-> +				printf("2 based on %s\n",
-> +				       sha1_to_hex(posn->parent->sha1));
-> +				*/
-> +				posn->parent->flags |= 0x0002;
-> +
-> +				parent = posn->parent->parent;
-> +				while (parent) {
-> +					temp = malloc(sizeof(struct parent));
-> +					temp->next = rev2list;
-> +					temp->parent = parent->parent;
-> +					rev2list = temp;
-> +					parent = parent->next;
-> +				}
-> +			}
-> +			posn = posn->next;
-> +		}
-
-Symmetrical notes apply to this half. Actually, they are too similar.
-What about factoring them to a common function?
-
-> +	}
-> +	return NULL;
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +	struct revision *rev1, *rev2, *ret;
-> +	unsigned char rev1key[20], rev2key[20];
-
-A newline here please.
-
-> +	if (argc != 3 ||
-> +	    get_sha1_hex(argv[1], rev1key) ||
-> +	    get_sha1_hex(argv[2], rev2key)) {
-> +		usage("mergebase <commit-id> <commit-id>");
-> +	}
-> +	rev1 = lookup_rev(rev1key);
-> +	rev2 = lookup_rev(rev2key);
-> +	ret = common_ancestor(rev1, rev2);
-> +	if (ret) {
-> +		printf("%s\n", sha1_to_hex(ret->sha1));
-> +		return 0;
-> +	} else {
-> +		printf("Sorry.\n");
-> +		return 1;
-
-Please stay silent if you don't have anything useful to say.
-
-> +	}
-> +	
-> +}
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Russell King
+
