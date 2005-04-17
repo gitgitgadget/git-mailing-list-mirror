@@ -1,61 +1,58 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [3/5] Add http-pull
-Date: Sun, 17 Apr 2005 21:59:00 +0200
-Message-ID: <20050417195900.GH1461@pasky.ji.cz>
-References: <20050417190824.GF1461@pasky.ji.cz> <Pine.LNX.4.21.0504171510120.30848-100000@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 13:08:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504171306360.7211@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
+ <20050417162448.A13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170926410.7211@ppc970.osdl.org>
+ <20050417195742.D13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171226530.7211@ppc970.osdl.org>
+ <20050417205149.E13233@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:58:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 17 22:08:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNFuR-000679-4u
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:58:23 +0200
+	id 1DNG3U-0006tC-6W
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 22:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261462AbVDQUB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 16:01:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVDQUA1
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 16:00:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:25238 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261456AbVDQT7C (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:59:02 -0400
-Received: (qmail 12917 invoked by uid 2001); 17 Apr 2005 19:59:00 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504171510120.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261484AbVDQUKl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 16:10:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261477AbVDQUI6
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 16:08:58 -0400
+Received: from fire.osdl.org ([65.172.181.4]:55180 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261474AbVDQUG7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 16:06:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HK6ss4014692
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 17 Apr 2005 13:06:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HK6rLE001554;
+	Sun, 17 Apr 2005 13:06:53 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050417205149.E13233@flint.arm.linux.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 09:24:27PM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> On Sun, 17 Apr 2005, Petr Baudis wrote:
+
+
+On Sun, 17 Apr 2005, Russell King wrote:
 > 
-> > Dear diary, on Sun, Apr 17, 2005 at 08:49:11PM CEST, I got a letter
-> > where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > > There's some trickiness for the history of commits thing for stopping at
-> > > the point where you have everything, but also behaving appropriately if
-> > > you try once, fail partway through, and then try again. It's on my queue
-> > > of things to think about.
-> > 
-> > Can't you just stop the recursion when you hit a commit you already
-> > have?
-> 
-> The problem is that, if you've fetched the final commit already, and then
-> the server dies, and you try again later, you already have the last one,
-> and so you think you've got everything.
+> This will (and does) do exactly what I want.  I'll also read into the
+> above a request that you want it in forward date order. 8)
 
-Hmm, some kind of journaling? ;-)
+No, I actually don't _think_ I care. In many ways I'm more used to
+"reverse date order", because that's usually how you view a changelog
+(with a pager, and most recent changes at the top).
 
-> At this point, I also want to put off doing much further with recursion
-> and commits until revision.h and such are sorted out.
+Which one makes sense when asking me to merge? I don't know, and I don't
+think it really even matters, but maybe we can add a "for now" to whatever 
+decision you end up coming to?
 
-Agreed.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+		Linus
