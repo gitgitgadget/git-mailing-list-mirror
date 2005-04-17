@@ -1,80 +1,77 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: Storing permissions
-Date: Sun, 17 Apr 2005 12:21:47 -0400
-Message-ID: <42628D1B.3000207@dwheeler.com>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
-Reply-To: dwheeler@dwheeler.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: using git directory cache code in darcs?
+Date: Sun, 17 Apr 2005 09:24:20 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504170916080.7211@ppc970.osdl.org>
+References: <20050416132231.GJ2551@abridgegame.org>
+ <Pine.LNX.4.58.0504161531470.7211@ppc970.osdl.org> <20050417121712.GA22772@abridgegame.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Jackson <pj@sgi.com>, Morten Welinder <mwelinder@gmail.com>,
-	mj@ucw.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:16:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:18:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCRX-0008Uq-Oc
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:16:20 +0200
+	id 1DNCTq-0000G4-S5
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261348AbVDQQUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:20:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261349AbVDQQUA
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:20:00 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:63377 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261348AbVDQQT6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:19:58 -0400
-Received: from [10.9.9.1] (helo=bolivar.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DNCUy-0000Wv-H1; Sun, 17 Apr 2005 18:19:52 +0200
-Received: from [70.17.101.238] (helo=[192.168.2.73])
-	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DNCUy-000125-7o; Sun, 17 Apr 2005 18:19:52 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
-X-Sender: 258406@vger.kernel.org
+	id S261349AbVDQQWb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:22:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261350AbVDQQWb
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:22:31 -0400
+Received: from fire.osdl.org ([65.172.181.4]:1216 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261349AbVDQQW0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:22:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HGMMs4032502
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 17 Apr 2005 09:22:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HGMLnl025224;
+	Sun, 17 Apr 2005 09:22:22 -0700
+To: David Roundy <droundy@abridgegame.org>
+In-Reply-To: <20050417121712.GA22772@abridgegame.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+
+
+On Sun, 17 Apr 2005, David Roundy wrote:
 > 
-> On Sun, 17 Apr 2005, David A. Wheeler wrote:
-> 
->>There's a minor reason to write out ALL the perm bit data, but
->>only care about a few bits coming back in: Some people use
->>SCM systems as a generalized backup system
-> 
-> Yes. I was actually thinking about having system config files in a git 
-> repository when I started it, since I noticed how nicely it would do 
-> exactly that.
-> 
-> However, since the mode bits also end up being part of the name of the 
-> tree object (ie they are most certainly part of the hash), it's really 
-> basically impossible to only care about one bit but writing out many bits: 
-> it's the same issue of having multiple "identical" blocks with different 
-> names.
-...
-> One solution is to tell git with a command line flag and/or config file 
-> entry that "for this repo, I want you to honor all bits". That should be 
-> easy enough to add at some point, and then you really get what you want.
+> That's all right.  Darcs would only access the cached data through a
+> git-caching layer, and we've already got an abstraction layer over the
+> pristine cache.  As long as the git layer can quickly retrieve the contents
+> of a given file, we should be fine.
 
-Yes, I thought of that too.  And I agree, that should do the job.
+Yes.
 
-My real concern is I'm looking at the early design of the
-storage format so that it's POSSIBLE to extend git in obvious ways.
-As long as it's possible later, then that's a great thing.
+In fact, one of my hopes was that other SCM's could just use the git
+plumbing. But then I'd really suggest that you use "git" itself, not any
+"libgit". Ie you take _all_ the plumbing as real programs, and instead of
+trying to link against individual routines, you'd _script_ it.
 
-...
-> Also, I made a design decision that git only cares about non-dotfiles. Git 
-> literally never sees or looks at _anything_ that starts with a ".". I 
-> think that's absolutely the right thing to do for an SCM (if you hide your 
-> files, I really don't think you should expect the SCM to see it), but it's 
-> obviously not the right thing for a backup thing.
+In other words, "git" would be an independent cache of the real SCM,
+and/or the "old history" (ie an SCM that uses git could decide that the
+git stuff is fine for archival, and really use git as the base: and then
+the SCM could entirely concentrate on _only_ the "interesting" parts, ie
+the actual merging etc).
 
-Again, a command line flag or config file entry could change that
-in the future, if desired.  So this is a decision that could be
-changed later... the best kind of decision :-).
+That was really what I always personally saw "git" as, just the plumbing
+beneath the surface. For example, something like arch, which is based on
+"patches and tar-balls" (I think darcs is similar in that respect), could
+use git as a _hell_ of a better "history of tar-balls".
 
---- David A. Wheeler
+The thing is, unless you take the git object database approach, using 
+_just_ the index part doesn't really mean all that much. Sure, you could 
+just keep the "current objects" in the object database, but quite 
+frankly, there would probably not be a whole lot of point to that. You'd 
+waste so much time pruning and synchronizing with your "real" database 
+that I suspect you'd be better off not using it.
+
+(Or you could prune nightly or something, I guess).
+
+		Linus
