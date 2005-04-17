@@ -1,56 +1,88 @@
-From: "Randy.Dunlap" <rddunlap@osdl.org>
-Subject: Re: [PATCH] libgit
-Date: Sat, 16 Apr 2005 20:46:02 -0700
-Organization: OSDL
-Message-ID: <20050416204602.18a124dc.rddunlap@osdl.org>
-References: <4261D438.9080705@timesys.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Yet another base64 patch
+Date: Sat, 16 Apr 2005 23:53:32 -0400
+Message-ID: <4261DDBC.3050706@dwheeler.com>
+References: <425DEF64.60108@zytor.com>	<20050414022413.GB18655@64m.dyndns.org>	<425E0174.4080404@zytor.com>	<20050414024228.GC18655@64m.dyndns.org>	<425E0D62.9000401@zytor.com>	<Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org>	<425EA152.4090506@zytor.com>	<Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org>	<20050414191157.GA27696@outpost.ds9a.nl>	<425EC3B4.6090908@zytor.com>	<20050414214756.GA31249@outpost.ds9a.nl>	<Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org>	<425F13C9.5090109@zytor.com> <20050414205831.01039ee8.pj@engr.sgi.com>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 05:42:41 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 05:48:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN0g8-0002Sq-AC
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 05:42:36 +0200
+	id 1DN0lJ-0002ev-M2
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 05:47:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261245AbVDQDqO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 23:46:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261246AbVDQDqO
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 23:46:14 -0400
-Received: from fire.osdl.org ([65.172.181.4]:2706 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261245AbVDQDqL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 23:46:11 -0400
-Received: from midway.verizon.net (wbar2.sea1-4-5-049-023.sea1.dsl-verizon.net [4.5.49.23])
-	(authenticated bits=0)
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3H3k7s3003700
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 16 Apr 2005 20:46:09 -0700
-To: Mike Taht <mike.taht@timesys.com>
-In-Reply-To: <4261D438.9080705@timesys.com>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i686-pc-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261248AbVDQDvm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 23:51:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261249AbVDQDvm
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 23:51:42 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:39384 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261248AbVDQDvj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 23:51:39 -0400
+Received: from [10.9.9.1] (helo=bolivar.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DN0os-0007UE-93
+	for git@vger.kernel.org; Sun, 17 Apr 2005 05:51:38 +0200
+Received: from [70.17.101.238] (helo=[192.168.2.73])
+	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DN0or-0002Nl-Ie
+	for git@vger.kernel.org; Sun, 17 Apr 2005 05:51:38 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <20050414205831.01039ee8.pj@engr.sgi.com>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005 20:12:56 -0700 Mike Taht wrote:
+Paul Jackson wrote:
+> Earlier, hpa wrote:
+> 
+>>The base64 version has 2^12 subdirectories instead of 2^8 (I just used 2 
+>>characters as the hash key just like the hex version.)
+> 
+> Later, hpa wrote:
+> 
+>>Ultimately the question is: do we care about old (broken) filesystems?
+> 
+> 
+> I'd imagine we care a little - just not alot.
 
-| commit b0550573055abcf8ad19dcb8a036c32dd00a3be4
-| tree b77882b170769c07732381b9f19ff2dd5c9f1520
-| parent 866b4aea9313513612f2b0d66814a2f526d17f21
-| author Mike Taht <m@picketwyre.com> 1113704772 -0700
-| committer Mike Taht <m@ipbx.taht.net> 1113704772 -0700
-| 
-| looks my 1878 line patch to convert git to libgit got eaten by vger..
-| I put it up at http://pbx.picketwyre.com/~mtaht/libgit.patch if anyone 
-| wants to comment. from my log:
+Some people (e.g., me) would really like for "git"
+to be more forgiving of nasty filesystems,
+so that git can be used very widely.
+I.E., be forgiving about case insensitivity,
+poor performance or problems with a large # of files
+in a directory, etc.  You're already working to make
+sure git handles filenames with spaces & i18n filenames,
+a common failing of many other SCM systems.
 
-Connection refused.
+If "git" is used for Linux kernel development & nothing else,
+it's still a success.  But it'd be even better from
+my point of view if "git" was a useful tool for MANY
+other projects.  I think there are advantages, even if you
+only plan to use git for the kernel, to making "git" easier
+to use for other projects.  By making git less
+sensitive to the filesystem, you'll attract more (non-kernel-dev)
+users, some of whom will become new git developers who
+add cool new functionality.
 
----
-~Randy
+As noted in my SCM survey (http://www.dwheeler.com/essays/scm.html),
+I think SCM Windows support is really important to a lot of
+OSS projects.  Many OSS projects, even if they start
+Unix/Linux only, spin off a Windows port, and it's
+painful if their SCM can't run on Windows then.
+Problems running on NFS filesystems have caused problems
+with GNU Arch users (there are workarounds, but now you
+need to learn about workarounds instead of things
+"just working").  If nothing else, look at the history
+of other SCM projects: all too many have undergone radical and
+painful surgeries so that they can be more portable to
+various filesystems.
+
+It's a trade-off, I know.
+
+--- David A. Wheeler
