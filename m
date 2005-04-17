@@ -1,73 +1,87 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: Re-done kernel archive - real one?
-Date: Sun, 17 Apr 2005 19:20:00 +0100
-Message-ID: <20050417192000.C13233@flint.arm.linux.org.uk>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <20050417170539.B13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org> <4262A767.4040300@dwheeler.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [1/5] Parsing code in revision.h
+Date: Sun, 17 Apr 2005 20:30:02 +0200
+Message-ID: <20050417183002.GE1461@pasky.ji.cz>
+References: <Pine.LNX.4.21.0504171120400.30848-100000@iabervon.org> <Pine.LNX.4.58.0504171114020.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Peter Anvin <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Apr 17 20:19:17 2005
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 20:26:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNEMM-0004N2-Kq
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:19:06 +0200
+	id 1DNETb-0005CI-BR
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261396AbVDQSWi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 14:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261398AbVDQSUf
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:20:35 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:31757 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261396AbVDQSUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 14:20:06 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DNENG-0008LK-7A; Sun, 17 Apr 2005 19:20:02 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DNENE-0005nN-I6; Sun, 17 Apr 2005 19:20:00 +0100
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
+	id S261288AbVDQSaO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 14:30:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261398AbVDQSaO
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:30:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63892 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261288AbVDQSaE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 14:30:04 -0400
+Received: (qmail 6186 invoked by uid 2001); 17 Apr 2005 18:30:02 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <4262A767.4040300@dwheeler.com>; from dwheeler@dwheeler.com on Sun, Apr 17, 2005 at 02:13:59PM -0400
+In-Reply-To: <Pine.LNX.4.58.0504171114020.7211@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 17, 2005 at 02:13:59PM -0400, David A. Wheeler wrote:
-> On Sun, 17 Apr 2005, Russell King wrote:
-> >>BTW, there appears to be "errors" in the history committed thus far.
-> >>I'm not sure where this came from though.  Some of them could be
-> >>UTF8 vs ASCII issues, ....> 
-> ...
-> >>One thing which definitely needs to be considered is - what character
-> >>encoding are the comments to be stored as?
+Dear diary, on Sun, Apr 17, 2005 at 08:18:47PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
 > 
-> Linus Torvalds replied:
-> > To git, it's just a byte stream, and you can have binary comments if you
-> > want to. I personally would prefer to move towards UTF eventually, but I
-> > really don't think it matters a whole lot as long as 99.9% of everything
-> > we'd see there is still 7-bit ascii.
 > 
-> I would _heartily_ recommend moving towards UTF-8 as the
-> internal charset for all comments.  Alternatives are possible
-> (e.g., recording the charset in the header), but they're
-> incredibly messy.  Even if you don't normally work in UTF-8,
-> it's pretty easy to set most editors up to read & write UTF-8.
-> Having the data stored as a constant charset eliminates
-> a raft of error-prone code.
+> On Sun, 17 Apr 2005, Daniel Barkalow wrote:
+> >
+> > --- 45f926575d2c44072bfcf2317dbf3f0fbb513a4e/revision.h  (mode:100644 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
+> > +++ 37a0b01b85c2999243674d48bfc71cdba0e5518e/revision.h  (mode:100644 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
+> > @@ -24,6 +24,7 @@
+> >  	unsigned int flags;
+> >  	unsigned char sha1[20];
+> >  	unsigned long date;
+> > +	unsigned char tree[20];
+> >  	struct parent *parent;
+> >  };
+> >  
+> 
+> I think this is really wrong.
+> 
+> The whole point of "revision.h" is that it's a generic framework for 
+> keeping track of relationships between different objects. And those 
+> objects are in no way just "commit" objects.
 
-Except, I believe, MicroEMACS, which both Linus and myself use.  As
-far as I know, there aren't any patches to make it UTF-8 compliant.
+Someone started the avalanche by adding date to the structure. Of
+course, date is smaller, but it leads people (including me) out of the
+way.
 
-The alternative is, I suppose, iconv.  However, iconv in _my_ glibc
-seems buggy (segfaults) and my efforts for building glibc 2.3.2 for
-ARM have failed.  Effectively that means iconv is inaccessible to
-me.
+Perhaps struct commit which will have struct revision (ugh - what about
+rather struct object?) as a member?
+
+> For example, fsck uses this "struct revision" to create a full free of 
+> _all_ the object dependencies, which means that a "struct revision" can be 
+> any object at all - it's not in any way limited to commit objects, and 
+> there is no "tree" object that is associated with these things at all.
+
+That's some really bad naming then.
+
+> Besides, why do you want the tree? There's really nothing you can do with 
+> the tree to a first approximation - you need to _first_ do the 
+> reachability analysis entirely on the commit dependencies, and then when 
+> you've selected a set of commits, you can just output those.
+> 
+> Later phases will indeed look up what the tree is, but that's only after
+> you've decided on the commit object. There's no point in looking up (or
+> even trying to just remember) _all_ the tree objects.
+
+The goal was to have a commit record parser which would spit out this
+structure containing all the relevant info, but I can agree that wasting
+memory with it makes no sense. Perhaps it could take a possibly-NULL
+buffer pointer where it would drop the tree ID, Daniel?
 
 -- 
-Russell King
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
