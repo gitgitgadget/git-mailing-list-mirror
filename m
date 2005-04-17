@@ -1,68 +1,72 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re-done kernel archive - real one?
-Date: Mon, 18 Apr 2005 00:30:06 +0200
-Message-ID: <20050417223006.GN1461@pasky.ji.cz>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <4262DA30.2030500@roemling.net> <20050417150921.58d6db68.rddunlap@osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Merge with git-pasky II.
+Date: Sun, 17 Apr 2005 15:35:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504171530150.7211@ppc970.osdl.org>
+References: <E1DNI0G-0000bo-00@gondolin.me.apana.org.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jochen Roemling <jochen@roemling.net>, torvalds@osdl.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 00:26:36 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: mingo@elte.hu, pasky@ucw.cz, simon@himi.org,
+	david.lang@digitalinsight.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 00:30:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNIDk-0001cJ-4L
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:26:28 +0200
+	id 1DNIHX-0001w2-Ny
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261527AbVDQWaP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 18:30:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261528AbVDQWaP
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:30:15 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51608 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261527AbVDQWaI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 18:30:08 -0400
-Received: (qmail 23962 invoked by uid 2001); 17 Apr 2005 22:30:06 -0000
-To: "Randy.Dunlap" <rddunlap@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050417150921.58d6db68.rddunlap@osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261528AbVDQWeN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 18:34:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261531AbVDQWeN
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:34:13 -0400
+Received: from fire.osdl.org ([65.172.181.4]:6826 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261528AbVDQWeI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 18:34:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HMXKs4024459
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 17 Apr 2005 15:33:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HMXIxk011345;
+	Sun, 17 Apr 2005 15:33:19 -0700
+To: Herbert Xu <herbert@gondor.apana.org.au>
+In-Reply-To: <E1DNI0G-0000bo-00@gondolin.me.apana.org.au>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, Apr 18, 2005 at 12:09:21AM CEST, I got a letter
-where "Randy.Dunlap" <rddunlap@osdl.org> told me that...
-> On Sun, 17 Apr 2005 23:50:40 +0200 Jochen Roemling wrote:
+
+
+On Mon, 18 Apr 2005, Herbert Xu wrote:
 > 
-> | Linus Torvalds wrote:
-> | 
-> | >Ie we have two phases to the merge: first get the objects, with something
-> | >like
-> | >
-> | >	repo=kernel.org:/pub/kernel/people/torvalds/linux-2.6.git
-> | >	rsync --ignore-existing -acv $(repo)/ .git/
-> | >  
-> | >
-> | Could you place a tarball there for people like me who are no "real" 
-> | kernel hackers and don't have a kernel.org account? Or is there an 
-> | "anonymous" account that I'm just to ignorant to know of?
-> 
-> You don't need a kernel.org account to rsync it... this works too:
-> 
-> rsync -avz -e ssh --progress --ignore-existing  rsync://rsync.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git/ .git/
+> Sorry, it has already been shown that combining two difference hashes
+> doesn't necessarily provide the security that you would hope.
 
-Or
+Sorry, that's not true.
 
-	mkdir linux-2.6.git
-	cd linux-2.6.git
-	RSYNC_FLAGS="--progress --stats" git init rsync://rsync.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git/
+Quite the reverse. Again, you bring up totally theoretical arguments. In 
+_practice_ it has indeed been shown that using two hashes _does_ catch 
+hash colissions.
 
-which also does the initial checkout for you. ;-) (Requires latest
-git-pasky, though.) Then you can bring the latest and greatest to your
-tree by a mere git pull.
+The trivial example is using md5 sums with a length. The "length" is a 
+rally bad "hash" of the file contents too. And the fact is, that simple 
+combination of hashes has proven to be more resistant to attack than the 
+hash itself. It clearly _does_ make a difference in practice.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+So _please_, can we drop the obviously bogus "in theory" arguments. They 
+do not matter. What matters is practice.
+
+And the fact is, in _theory_ we don't know if somebody may be trivially
+able to break any particular hash. But in practice we do know that it's
+less likely that you can break a combination of two totally unrelated
+hashes than you break one particular one.
+
+NOTE! I'm not actually arguing that we should do that. I'm actually
+arguing totally the reverse: I'm arguing that there is a fine line between
+being "very very careful" and being "crazy to the point of being
+incompetent".
+
+		Linus
