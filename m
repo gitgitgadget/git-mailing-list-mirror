@@ -1,80 +1,133 @@
-From: Dave Jones <davej@redhat.com>
-Subject: Re: fix mktemp (remove mktemp ;)
-Date: Sat, 16 Apr 2005 20:33:25 -0400
-Message-ID: <20050417003325.GA15608@redhat.com>
-References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com> <20050416233724.GP19099@pasky.ji.cz> <20050416170221.38b3e66c.pj@sgi.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] show-diff shell safety
+Date: Sat, 16 Apr 2005 17:36:22 -0700
+Message-ID: <7vbr8e44u1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org, mj@ucw.cz
-X-From: git-owner@vger.kernel.org Sun Apr 17 02:30:01 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 02:33:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMxfZ-0008KV-PA
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:29:50 +0200
+	id 1DMxip-0008WB-L8
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:33:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261218AbVDQAdc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 20:33:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261219AbVDQAdc
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:33:32 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:39337 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S261218AbVDQAd2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 20:33:28 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3H0XPvY016184;
-	Sat, 16 Apr 2005 20:33:25 -0400
-Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3H0XPO06901;
-	Sat, 16 Apr 2005 20:33:25 -0400
-Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
-	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3H0XPSo020020;
-	Sat, 16 Apr 2005 20:33:25 -0400
-Received: (from davej@localhost)
-	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3H0XPHv020018;
-	Sat, 16 Apr 2005 20:33:25 -0400
-X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
-To: Paul Jackson <pj@sgi.com>
-Content-Disposition: inline
-In-Reply-To: <20050416170221.38b3e66c.pj@sgi.com>
-User-Agent: Mutt/1.4.1i
+	id S261219AbVDQAgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 20:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261220AbVDQAgz
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:36:55 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38631 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261219AbVDQAgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 20:36:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050417003622.YMQI4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 16 Apr 2005 20:36:22 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 16, 2005 at 05:02:21PM -0700, Paul Jackson wrote:
- > > And racy. And not guaranteed to come up with fresh new files.
- > 
- > In theory perhaps.  In practice no.
- > 
- > Even mktemp(1) can collide, in theory, since there is no practical way
- > in shell scripts to hold open and locked the file from the instant of it
- > is determined to be a unique name.
+The command line for running "diff" command is built without
+taking shell metacharacters into account.  A malicious dircache
+entry "foo 2>bar" (yes, a filename with space) would result in
+creating a file called "bar" with the error message "diff: foo:
+No such file or directory" in it.
 
-Using the pid as a 'random' number is a bad idea. all an attacker
-has to do is create 65535 symlinks in /usr/tmp, and he can now
-overwrite any file you own.
+This is not just a user screwing over himself.  Such a dircache
+can be created as a result of a merge with tree from others.
 
-mktemp is being used here to provide randomness in the filename,
-not just a uniqueness.
+Here is a fix.
 
- > The window of vulnerability for shell script tmp files is the lifetime
- > of the script - while the file sits there unlocked.  Anyone else with
- > permissions can mess with it.
+To be applied on top of my previous patches:
 
-Attacker doesnt need to touch the script. Just take advantage of
-flaws in it, and wait for someone to run it.
+    [PATCH] Optionally tell show-diff to show only named files.
+    [PATCH] show-diff -z option for machine readable output.
 
- > More people will fail, and are already failing, using mktemp than I have
- > ever seen using $$ (I've never seen a documented case, and since such
- > files are not writable to other user accounts, such a collision would
- > typically not go hidden.)
- > 
- > Fast, simple portable solutions that work win over solutions with some
- > theoretical advantage that don't matter in practice, but also that are
- > less portable or less efficient.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-I'd suggest fixing your distributions mktemp over going with an
-inferior solution.
+ show-diff.c |   64 +++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 60 insertions(+), 4 deletions(-)
 
-		Dave
+show-diff.c: cb1b7eaa9758e94a179e73a80b4b52ee7c34ca5d
+--- show-diff.c
++++ show-diff.c	2005-04-16 17:25:22.000000000 -0700
+@@ -4,14 +4,70 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #include "cache.h"
++#include <ctype.h>
+ 
+-static void show_differences(char *name,
+-	void *old_contents, unsigned long long old_size)
++static char *diff_cmd = "diff -L '%s' -u -N  - '%s'";
++
++/* Help to copy the thing properly quoted for the shell safety.
++ * any single quote is replaced with '\'', and the caller is
++ * expected to enclose the result within a single quote pair.
++ *
++ * E.g.
++ *  original     sq_expand     result
++ *  name     ==> name      ==> 'name'
++ *  a b      ==> a b       ==> 'a b'
++ *  a'b      ==> a'\''b    ==> 'a'\''b'
++ *
++ * NOTE! The returned memory belongs to this function so
++ * do not free it.
++ */
++static char *sq_expand(char *src)
++{
++	static char *buf = NULL;
++	static int buf_size = -1;
++	int cnt, c;
++	char *cp;
++
++	/* count single quote characters */ 
++	for (cnt = 0, cp = src; *cp; cnt++, cp++)
++		if (*cp == '\'')
++			cnt += 3;
++
++	if (buf_size < cnt) {
++		free(buf);
++		buf_size = cnt;
++		buf = malloc(cnt);
++	}
++
++	cp = buf;
++	while ((c = *src++)) {
++		if (c != '\'')
++			*cp++ = c;
++		else {
++			cp = strcpy(cp, "'\\''");
++			cp += 4;
++		}
++	}
++	*cp = 0;
++	return buf;
++}
++
++static void show_differences(char *name, void *old_contents,
++			     unsigned long long old_size)
+ {
+-	static char cmd[1000];
+ 	FILE *f;
++	static char *cmd = NULL;
++	static int cmd_size = -1;
++
++	char *name_sq = sq_expand(name);
++	int cmd_required_length = strlen(name_sq) * 2 + strlen(diff_cmd);
+ 
+-	snprintf(cmd, sizeof(cmd), "diff -L %s -u -N  - %s", name, name);
++	if (cmd_size < cmd_required_length) {
++		free(cmd);
++		cmd_size = cmd_required_length;
++		cmd = malloc(cmd_required_length);
++	}
++	snprintf(cmd, cmd_size, diff_cmd, name_sq, name_sq);
+ 	f = popen(cmd, "w");
+ 	if (old_size)
+ 		fwrite(old_contents, old_size, 1, f);
 
