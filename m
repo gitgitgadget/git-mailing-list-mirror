@@ -1,60 +1,53 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [1/5] Parsing code in revision.h
-Date: Sun, 17 Apr 2005 15:45:34 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171531180.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0504171221130.7211@ppc970.osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: git-viz tool for visualising commit trees
+Date: Sun, 17 Apr 2005 21:48:18 +0200
+Message-ID: <20050417194818.GG1461@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:41:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: oliv__a@users.sourceforge.net
+X-From: git-owner@vger.kernel.org Sun Apr 17 21:45:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNFeQ-0004Mb-D8
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:41:50 +0200
+	id 1DNFhB-0004gE-2G
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261441AbVDQTpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 15:45:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261439AbVDQTpe
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:45:34 -0400
-Received: from iabervon.org ([66.92.72.58]:35846 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261438AbVDQTpT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:45:19 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNFi2-0007Ka-00; Sun, 17 Apr 2005 15:45:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504171221130.7211@ppc970.osdl.org>
+	id S261439AbVDQTsZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 15:48:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261442AbVDQTsZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:48:25 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:13974 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261439AbVDQTsT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:48:19 -0400
+Received: (qmail 12397 invoked by uid 2001); 17 Apr 2005 19:48:18 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 17 Apr 2005, Linus Torvalds wrote:
+  Hi,
 
-> On Sun, 17 Apr 2005, Petr Baudis wrote:
-> > 
-> > Someone started the avalanche by adding date to the structure. Of
-> > course, date is smaller, but it leads people (including me) out of the
-> > way.
-> 
-> Yeah, the naming and the structure comes from "rev-tree.c", so there's a 
-> bit of historical baggage already. 
-> 
-> Anyway, I don't think you should need it. I cleaned up things a bit, and 
-> wrote a really simple "merge-base" thing that does base the "best" hit on 
-> date, which ends up probably doing the right thing in practice.
+  just FYI, Olivier Andrieu was kind enough to port his monotone-viz
+tool to git (http://oandrieu.nerim.net/monotone-viz/ - use the one from
+the monotone repository). The tool visualizes the history flow nicely;
+see
 
-Yours reads the whole commit history; I intentionally wrote mine to
-only read as far back as turns out to be necessary. I think that looking
-at the whole history is going to be impractical when you're trying to
-merge in a bunch of patches against the latest release, even if you pull
-the history out of a cache. When it's one step on one side and a dozen on
-the other, it matters a whole lot if there's a year of history behind the
-common ancestor(s).
+	http://rover.dkm.cz/~pasky/gitviz1.png
+	http://rover.dkm.cz/~pasky/gitviz2.png
+	http://rover.dkm.cz/~pasky/gitviz3.png
+	http://rover.dkm.cz/~pasky/gitviz4.png
+	http://rover.dkm.cz/~pasky/gitviz5.png
+	http://rover.dkm.cz/~pasky/gitviz6.png
+	http://rover.dkm.cz/~pasky/gitviz7.png
 
-So I still think it's best to have a non-recursive commit parser, and do
-the recursion only as needed for the operation under consideration.
+for some screenshots.
 
-	-Daniel
-*This .sig left intentionally blank*
+  Kind regards,
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
