@@ -1,55 +1,62 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Add lsremote command.
-Date: Sun, 17 Apr 2005 16:03:09 +0200
-Message-ID: <20050417140309.GF1487@pasky.ji.cz>
-References: <200504162336.51937.elenstev@mesatop.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Yet another base64 patch
+Date: Sun, 17 Apr 2005 10:30:37 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171018410.30848-100000@iabervon.org>
+References: <20050416210513.1ba26967.pj@sgi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 16:00:05 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: dwheeler@dwheeler.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 16:27:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNAJE-0004vZ-Nj
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 15:59:37 +0200
+	id 1DNAjh-00077t-UX
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 16:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261318AbVDQODP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 10:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261320AbVDQODP
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 10:03:15 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56976 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261318AbVDQODM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 10:03:12 -0400
-Received: (qmail 13542 invoked by uid 2001); 17 Apr 2005 14:03:10 -0000
-To: Steven Cole <elenstev@mesatop.com>
-Content-Disposition: inline
-In-Reply-To: <200504162336.51937.elenstev@mesatop.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261320AbVDQOa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 10:30:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261321AbVDQOa3
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 10:30:29 -0400
+Received: from iabervon.org ([66.92.72.58]:32263 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261320AbVDQOaX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 10:30:23 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNAnG-0004RD-00; Sun, 17 Apr 2005 10:30:38 -0400
+To: Paul Jackson <pj@sgi.com>
+In-Reply-To: <20050416210513.1ba26967.pj@sgi.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 07:36:51AM CEST, I got a letter
-where Steven Cole <elenstev@mesatop.com> told me that...
-> This is a fairly trivial addition, but if users are adding remote repositories
-> with git addremote, then those users should be able to list out the remote
-> list without having to know the details of where the remotes file is kept.
+On Sat, 16 Apr 2005, Paul Jackson wrote:
 
-Could you please send your patches inline? (Either in the body or with
-correct content-disposition header.)
+> David wrote:
+> > It's a trade-off, I know.
+> 
+> So where do you recommend we make that trade-off?
 
-You got the return values other way around and you are missing a
-copyright notice at the top; you should also mention that you take no
-parameters.
+So why do we have to be consistant? It seems like we need a standard
+format for these reasons:
 
-Please use -s instead of -e, since it is more appropriate in this case.
-Also, you should report the "no remotes" message to stderr. And always
-exit when you found that .git/remotes exists, not only if cat succeeds.
+ - We use rsync to interact with remote repositories, and rsync won't
+   understand if they aren't organized the same way. But I'm working on
+   having everything go through git-specific code, which could understand
+   different layouts.
 
-Kind regards,
+ - Everything that shares a local repository needs to understand the
+   format of that repository. But the filesystem constraints on the local
+   repository will be the same regardless of who is looking, so they'd all
+   expect the same format anyway.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+So my idea is, once we're using git-smart transfer code (which can verify
+objects, etc.), add support for different implementations of 
+sha1_file_name suitable for different filesystems, and vary based either
+on a compile-time option or on a setting stored in the objects
+directory. The only thing that matters is that repositories on
+non-special web servers have a standard format, because they'll be serving
+objects by URL, not by sha1.
+
+	-Daniel
+*This .sig left intentionally blank*
+
