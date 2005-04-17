@@ -1,58 +1,51 @@
-From: Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: Merge with git-pasky II.
-Date: Mon, 18 Apr 2005 08:12:32 +1000
-Organization: Core
-Message-ID: <E1DNI0G-0000bo-00@gondolin.me.apana.org.au>
-References: <Pine.LNX.4.58.0504171014430.7211@ppc970.osdl.org>
-Cc: mingo@elte.hu, pasky@ucw.cz, simon@himi.org,
-	david.lang@digitalinsight.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 00:10:57 2005
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Symlinks [was Re: Storing permissions]
+Date: Sun, 17 Apr 2005 18:15:51 -0400
+Message-ID: <118833cc05041715157ea40ceb@mail.gmail.com>
+References: <20050416230058.GA10983@ucw.cz>
+	 <118833cc05041618017fb32a2@mail.gmail.com>
+	 <20050416183023.0b27b3a4.pj@sgi.com>
+	 <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
+	 <42620092.9040402@dwheeler.com>
+	 <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
+	 <42628D1B.3000207@dwheeler.com>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Apr 18 00:12:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNHyh-0000Rk-Fh
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:10:55 +0200
+	id 1DNHzy-0000W9-0D
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261504AbVDQWOm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 18:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261514AbVDQWOm
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:14:42 -0400
-Received: from arnor.apana.org.au ([203.14.152.115]:58122 "EHLO
-	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261504AbVDQWOk
+	id S261514AbVDQWPz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 18:15:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261517AbVDQWPz
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:15:55 -0400
+Received: from rproxy.gmail.com ([64.233.170.202]:53026 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261514AbVDQWPw convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 18:14:40 -0400
-Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
-	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
-	id 1DNI1W-0006xv-00; Mon, 18 Apr 2005 08:13:50 +1000
-Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
-	id 1DNI0G-0000bo-00; Mon, 18 Apr 2005 08:12:32 +1000
-To: torvalds@osdl.org (Linus Torvalds)
-In-Reply-To: <Pine.LNX.4.58.0504171014430.7211@ppc970.osdl.org>
-X-Newsgroups: apana.lists.os.linux.git
-User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
+	Sun, 17 Apr 2005 18:15:52 -0400
+Received: by rproxy.gmail.com with SMTP id a41so953268rng
+        for <git@vger.kernel.org>; Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Tuj2fA1TMJnU2w/ogHzfSD7+vq5G6zonQU5OSyAFI0o7SoM+ny9aXDsC7AiFY9JOiIrtI7ZrmOUa95TUdNE0zIBZlUpFs7jHm25JGWdqvThXd5Oa5R9AOAbnLVH+DnOuUcXILqUi5fypxeCbhU8akfnOyfumxj8qgq8yGlXwAGA=
+Received: by 10.38.86.53 with SMTP id j53mr5202294rnb;
+        Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <42628D1B.3000207@dwheeler.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> If we want to have any kind of confidence that the hash is reall
-> yunbreakable, we should make it not just longer than 160 bits, we should
-> make sure that it's two or more hashes, and that they are based on totally
-> different principles.
+There's one more mode bit we might actually care about: the symlink bit.
+(One would store the target as the blob, presumably, but chmod isn't going
+to create symlinks out of regular files.)
 
-Sorry, it has already been shown that combining two difference hashes
-doesn't necessarily provide the security that you would hope.
-
-I think what hasn't been discussed here is the cost of actually doing
-the comparisons.  In other words, what is the minimum number of
-comparisons we can get away and still deal with hash collisions
-successfully?
-
-Once we know what the cost is then we can decide whether it's worthwhile
-considering the odds involved.
--- 
-Visit Openswan at http://www.openswan.org/
-Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Morten
