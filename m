@@ -1,100 +1,73 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: fix mktemp (remove mktemp ;)
-Date: Sat, 16 Apr 2005 18:03:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0504161801030.22652@qynat.qvtvafvgr.pbz>
-References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
- <20050416233724.GP19099@pasky.ji.cz> <20050416170221.38b3e66c.pj@sgi.com>
- <20050417003325.GA15608@redhat.com> <20050416174409.59f94c26.pj@sgi.com>
- <20050417005757.GB15608@redhat.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Rename confusing variable in show-diff
+Date: Sat, 16 Apr 2005 18:10:29 -0700
+Message-ID: <7vzmvy2ooq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Paul Jackson <pj@sgi.com>, pasky@ucw.cz, git@vger.kernel.org,
-	mj@ucw.cz
-X-From: git-owner@vger.kernel.org Sun Apr 17 03:01:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 03:07:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMy9Z-0001ic-TQ
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 03:00:50 +0200
+	id 1DMyFb-00025T-3G
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 03:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261230AbVDQBE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 21:04:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261231AbVDQBE3
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 21:04:29 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:28409 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S261230AbVDQBES
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 21:04:18 -0400
-Received: from wlvims01.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Apr 2005 18:04:18 -0700
-Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <24ZZ15RZ>; Sat, 16 Apr 2005 18:04:02 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id 29YX18B3; Sat, 16 Apr 2005 18:03:59 -0700
-To: Dave Jones <davej@redhat.com>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <20050417005757.GB15608@redhat.com>
+	id S261231AbVDQBKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 21:10:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261232AbVDQBKj
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 21:10:39 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:1244 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261231AbVDQBKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Apr 2005 21:10:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050417011029.YFMV15592.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 16 Apr 2005 21:10:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-set your umask to make things only writeable by the same user.
-then create a new directory (it will fail with an error if the directory 
-already exists)
+The show-diff command uses a variable "new" but it is always
+used to point at the original data recorded in the dircache
+before the user started editing in the working file.  Rename it
+to "old" to avoid confusion.
 
-now you can create files in this directory without having to worry about 
-other users makeing trouble for you (they can't create symlinks in this 
-directory)
+To be applied on top of my previous patches:
 
-David Lang
+    [PATCH] Optionally tell show-diff to show only named files.
+    [PATCH] show-diff -z option for machine readable output.
+    [PATCH] show-diff shell safety.
 
-On Sat, 16 Apr 2005, Dave Jones wrote:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-> Date: Sat, 16 Apr 2005 20:57:57 -0400
-> From: Dave Jones <davej@redhat.com>
-> To: Paul Jackson <pj@sgi.com>
-> Cc: pasky@ucw.cz, git@vger.kernel.org, mj@ucw.cz
-> Subject: Re: fix mktemp (remove mktemp ;)
-> 
-> On Sat, Apr 16, 2005 at 05:44:09PM -0700, Paul Jackson wrote:
-> > Dave wrote:
-> > > mktemp is being used here to provide randomness in the filename,
-> > > not just a uniqueness.
-> >
-> > Ok - useful point.
-> >
-> > How about:
-> >
-> > 	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
->
-> pid is still predictable by watching ps output, $RANDOM is one of 32768
-> numbers, so it's still feasable to predict the result.
-> $RANDOM$RANDOM is better, and gets a little closer to mktemp strength randomness.
->
-> > > all an attacker has to do is create 65535 symlinks in /usr/tmp
-> > And how about if I removed the tmp files at the top:
-> >
-> > 	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
-> > 	trap 'rm -fr $t.?; trap 0; exit 0' 0 1 2 3 15
-> > 	rm -fr $t.?
-> >
-> > 	... rest of script ...
->
-> Racy, though the chance of creating x thousand symlinks in such a small
-> window probably makes it a non-issue.
->
-> Actually.. http://www.linuxsecurity.com/content/view/115462/151/
-> has some interesting bits on temp dir creation without mktemp.
-> See section 3.4 onwards.
->
-> 		Dave
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+ show-diff.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+show-diff.c: e52eee21c2f682bef2dba06445699cca8e34c63a
+--- show-diff.c
++++ show-diff.c	2005-04-16 18:05:55.000000000 -0700
+@@ -162,7 +162,7 @@
+ 		int changed;
+ 		unsigned long size;
+ 		char type[20];
+-		void *new;
++		void *old;
+ 
+ 		if (1 <argc &&
+ 		    ! matches_pathspec(ce, argv+1, argc-1))
+@@ -193,8 +193,8 @@
+ 		if (silent)
+ 			continue;
+ 
+-		new = read_sha1_file(ce->sha1, type, &size);
+-		show_differences(ce->name, new, size);
++		old = read_sha1_file(ce->sha1, type, &size);
++		show_differences(ce->name, old, size);
+ 		free(new);
+ 	}
+ 	return 0;
+
