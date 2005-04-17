@@ -1,97 +1,108 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Re-done kernel archive - real one?
-Date: Sun, 17 Apr 2005 09:44:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
- <20050417170539.B13233@flint.arm.linux.org.uk>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Parsing code in revision.h
+Date: Sun, 17 Apr 2005 12:44:38 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171237200.30848-100000@iabervon.org>
+References: <20050417160929.GJ1487@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Peter Anvin <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:39:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:41:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCnH-0002FI-6W
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:38:47 +0200
+	id 1DNCpE-0002SH-I0
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:40:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261357AbVDQQmd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:42:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261356AbVDQQmd
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:42:33 -0400
-Received: from fire.osdl.org ([65.172.181.4]:49603 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261357AbVDQQm0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:42:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HGgHs4001077
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 17 Apr 2005 09:42:18 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HGgGJV025777;
-	Sun, 17 Apr 2005 09:42:17 -0700
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050417170539.B13233@flint.arm.linux.org.uk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261363AbVDQQob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261361AbVDQQoa
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:44:30 -0400
+Received: from iabervon.org ([66.92.72.58]:51204 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261356AbVDQQoU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:44:20 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNCsw-0000nk-00; Sun, 17 Apr 2005 12:44:38 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050417160929.GJ1487@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, 17 Apr 2005, Petr Baudis wrote:
 
-
-On Sun, 17 Apr 2005, Russell King wrote:
+> Dear diary, on Sun, Apr 17, 2005 at 05:24:20PM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > This adds support to revision.h for parsing commit records (but not going
+> > any further than parsing a single record). Something like this is needed
+> > by anything that uses revision.h, but older programs open-code it.
+> > 
+> > Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
 > 
-> BTW, there appears to be "errors" in the history committed thus far.
-> I'm not sure where this came from though.  Some of them could be
-> UTF8 vs ASCII issues, but there's a number which seem to have extra
-> random crap in them ("^M)" and lots of blank lines).
+> Could you please convert the current users (rev-tree.c and fsck-cache.c)
+> to use this in the same patch?
 
-Ah, yes. That is actually from the original emails from Andrew. I do not 
-know why, but I see them there. It's his script that does something 
-strange.
+They do things somewhat differently, so it would be more intrusive. Could
+I send an extra patch to convert them instead of doing them here?
 
-(Andrew: in case you care, the first one is
+> > Index: revision.h
+> > ===================================================================
+> > --- 45f926575d2c44072bfcf2317dbf3f0fbb513a4e/revision.h  (mode:100644 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
+> > +++ 37a0b01b85c2999243674d48bfc71cdba0e5518e/revision.h  (mode:100644 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
+> > @@ -24,6 +24,7 @@
+> >  	unsigned int flags;
+> >  	unsigned char sha1[20];
+> >  	unsigned long date;
+> > +	unsigned char tree[20];
+> >  	struct parent *parent;
+> >  };
+> >  
+> > @@ -111,4 +112,29 @@
+> >  	}
+> >  }
+> >  
+> > +static int parse_commit_object(struct revision *rev)
+> > +{
+> > +	if (!(rev->flags & SEEN)) {
+> > +		void *buffer, *bufptr;
+> > +		unsigned long size;
+> > +		char type[20];
+> > +		unsigned char parent[20];
+> > +
+> > +		rev->flags |= SEEN;
+> > +		buffer = bufptr = read_sha1_file(rev->sha1, type, &size);
+> > +		if (!buffer || strcmp(type, "commit"))
+> > +			return -1;
+> > +		get_sha1_hex(bufptr + 5, rev->tree);
+> > +		bufptr += 46; /* "tree " + "hex sha1" + "\n" */
+> > +		while (!memcmp(bufptr, "parent ", 7) && 
+> > +		       !get_sha1_hex(bufptr+7, parent)) {
+> > +			add_relationship(rev, parent);
+> > +			bufptr += 48;   /* "parent " + "hex sha1" + "\n" */
+> > +		}
+> > +		//rev->date = parse_commit_date(bufptr);
+> 
+> I don't like this.
 
-	[patch 003/198] arm: fix SIGBUS handling
+Yeah, that's left over from the not-quite the same parsing code in the
+other programs.
 
-which has the email looking like
+> > +		free(buffer);
+> > +	}
+> > +	return 0;
+> > +}
+> > +
+> >  #endif /* REVISION_H */
+> 
+> BTW, I think that in longer term having this stuffed in revision.h is a
+> bad idea, we should have revision.c. I will accept patches putting the
+> stuff to revision.h for now, though (unless it gets outrageous).
 
-	...
-	From: akpm@osdl.org
-	Date: Tue, 12 Apr 2005 03:30:35 -0700
-	Status: 
-	X-Status: 
-	X-Keywords:                   
-	
-	^M)
-	
-	
-	From: Russell King <rmk+lkml@arm.linux.org.uk>
-	
-	ARM wasn't raising a SIGBUS with a siginfo structure.  Fix
-	__do_user_fault() to allow us to use it for SIGBUS conditions, and arrange
-	for the sigbus path to use this.
-	...
+I'd actually like to make them commit.{c,h}, since the system calls the
+things they actually deal in commits, not revisions. But this is getting
+into stuff that's likely to cause painful divergance from Linus's repo,
+which is why I'm a bit leary of actually doing it now.
 
-> One thing which definitely needs to be considered is - what character
-> encoding are the comments to be stored as?
+	-Daniel
+*This .sig left intentionally blank*
 
-To git, it's just a byte stream, and you can have binary comments if you
-want to. I personally would prefer to move towards UTF eventually, but I
-really don't think it matters a whole lot as long as 99.9% of everything
-we'd see there is still 7-bit ascii.
-
-> ID: 75f86bac962b7609b0f3c21d25e10647ff8ed280
-> [PATCH] intel8x0: AC'97 audio patch for Intel ESB2
->          
->         This patch adds the Intel ESB2 DID's to the intel8x0.c file for AC'97 audio
->         support.
->          
->         Signed-off-by: <A0>Jason Gaston <Jason.d.gaston@intel.com>
-
-That <A0> is also there in Andrew's original email. It's "space with the
-high bit set", and I have no idea why.
-
-		Linus
