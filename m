@@ -1,52 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [1/5] Parsing code in revision.h
-Date: Sun, 17 Apr 2005 12:54:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504171253030.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0504171531180.30848-100000@iabervon.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [3/5] Add http-pull
+Date: Sun, 17 Apr 2005 21:59:00 +0200
+Message-ID: <20050417195900.GH1461@pasky.ji.cz>
+References: <20050417190824.GF1461@pasky.ji.cz> <Pine.LNX.4.21.0504171510120.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:49:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 21:58:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNFl4-00058i-C4
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:48:43 +0200
+	id 1DNFuR-000679-4u
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261444AbVDQTwd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 15:52:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261449AbVDQTwd
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:52:33 -0400
-Received: from fire.osdl.org ([65.172.181.4]:51847 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261444AbVDQTwc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:52:32 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HJqOs4013425
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 17 Apr 2005 12:52:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HJqNgb032640;
-	Sun, 17 Apr 2005 12:52:24 -0700
+	id S261462AbVDQUB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 16:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVDQUA1
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 16:00:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:25238 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261456AbVDQT7C (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:59:02 -0400
+Received: (qmail 12917 invoked by uid 2001); 17 Apr 2005 19:59:00 -0000
 To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504171531180.30848-100000@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0504171510120.30848-100000@iabervon.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sun, 17 Apr 2005, Daniel Barkalow wrote:
+Dear diary, on Sun, Apr 17, 2005 at 09:24:27PM CEST, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> On Sun, 17 Apr 2005, Petr Baudis wrote:
 > 
-> Yours reads the whole commit history; I intentionally wrote mine to
-> only read as far back as turns out to be necessary.
+> > Dear diary, on Sun, Apr 17, 2005 at 08:49:11PM CEST, I got a letter
+> > where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > > There's some trickiness for the history of commits thing for stopping at
+> > > the point where you have everything, but also behaving appropriately if
+> > > you try once, fail partway through, and then try again. It's on my queue
+> > > of things to think about.
+> > 
+> > Can't you just stop the recursion when you hit a commit you already
+> > have?
+> 
+> The problem is that, if you've fetched the final commit already, and then
+> the server dies, and you try again later, you already have the last one,
+> and so you think you've got everything.
 
-Yes. I'm not opposed to yours, I was just opposed to some of the things 
-around it you did, so I wrote mine as a kind of place-holder. I'll happily 
-take patches to turn it from a rally simple and stupid one into a more 
-polished version.
+Hmm, some kind of journaling? ;-)
 
-		Linus
+> At this point, I also want to put off doing much further with recursion
+> and commits until revision.h and such are sorted out.
+
+Agreed.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
