@@ -1,61 +1,62 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Yet another base64 patch
-Date: Sun, 17 Apr 2005 10:30:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171018410.30848-100000@iabervon.org>
-References: <20050416210513.1ba26967.pj@sgi.com>
+Subject: Re: Storing permissions
+Date: Sun, 17 Apr 2005 10:51:49 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171045150.30848-100000@iabervon.org>
+References: <42620092.9040402@dwheeler.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: dwheeler@dwheeler.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 16:27:08 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, Paul Jackson <pj@sgi.com>,
+	Morten Welinder <mwelinder@gmail.com>, mj@ucw.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 16:48:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNAjh-00077t-UX
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 16:26:58 +0200
+	id 1DNB42-0000QR-Dg
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 16:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261320AbVDQOa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 10:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261321AbVDQOa3
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 10:30:29 -0400
-Received: from iabervon.org ([66.92.72.58]:32263 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261320AbVDQOaX (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 10:30:23 -0400
+	id S261321AbVDQOvk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 10:51:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261322AbVDQOvk
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 10:51:40 -0400
+Received: from iabervon.org ([66.92.72.58]:42759 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261321AbVDQOvi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 10:51:38 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNAnG-0004RD-00; Sun, 17 Apr 2005 10:30:38 -0400
-To: Paul Jackson <pj@sgi.com>
-In-Reply-To: <20050416210513.1ba26967.pj@sgi.com>
+	id 1DNB7l-0004yb-00; Sun, 17 Apr 2005 10:51:49 -0400
+To: "David A. Wheeler" <dwheeler@dwheeler.com>
+In-Reply-To: <42620092.9040402@dwheeler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Paul Jackson wrote:
+On Sun, 17 Apr 2005, David A. Wheeler wrote:
 
-> David wrote:
-> > It's a trade-off, I know.
+> There's a minor reason to write out ALL the perm bit data, but
+> only care about a few bits coming back in: Some people use
+> SCM systems as a generalized backup system, so you can back up
+> your system to an arbitrary known state in the past
+> (e.g., "Change my /etc files to the state I was at
+> just before I installed that &*#@ program!").
+> For more on this, see:
+>   http://www.onlamp.com/pub/a/onlamp/2005/01/06/svn_homedir.html
 > 
-> So where do you recommend we make that trade-off?
+> If you store all the bits, then you CAN restore things
+> more exactly the way they were.  This is imperfect, since
+> it doesn't cover more exotic permission
+> values from SELinux, xattrs, whatever.  For some, that's enough.
 
-So why do we have to be consistant? It seems like we need a standard
-format for these reasons:
+I think this should be possible with a different tag than "tree". All the
+bits aren't sufficient, anyway; the unincluded values include the user and
+group, which are likely to matter for some things in /etc. But there's no
+reason that the core can't support both a system-local complete
+representation of the dentry and a user-relative representation of a
+source distribution with different tags.
 
- - We use rsync to interact with remote repositories, and rsync won't
-   understand if they aren't organized the same way. But I'm working on
-   having everything go through git-specific code, which could understand
-   different layouts.
-
- - Everything that shares a local repository needs to understand the
-   format of that repository. But the filesystem constraints on the local
-   repository will be the same regardless of who is looking, so they'd all
-   expect the same format anyway.
-
-So my idea is, once we're using git-smart transfer code (which can verify
-objects, etc.), add support for different implementations of 
-sha1_file_name suitable for different filesystems, and vary based either
-on a compile-time option or on a setting stored in the objects
-directory. The only thing that matters is that repositories on
-non-special web servers have a standard format, because they'll be serving
-objects by URL, not by sha1.
+For that matter, it could accept "dir" objects in commits as well, and use
+version-control-type logic on history while refusing to do non-sensical
+things with them.
 
 	-Daniel
 *This .sig left intentionally blank*
