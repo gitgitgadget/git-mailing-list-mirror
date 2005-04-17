@@ -1,65 +1,63 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: Parseable commit header
-Date: Sun, 17 Apr 2005 12:49:24 -0400
-Message-ID: <42629394.1090804@dwheeler.com>
-References: <20050417062236.GA3261@scotty.home>
-Reply-To: dwheeler@dwheeler.com
+From: Mike Taht <mike.taht@timesys.com>
+Subject: Re: using git directory cache code in darcs?
+Date: Sun, 17 Apr 2005 09:49:18 -0700
+Message-ID: <4262938E.8010107@timesys.com>
+References: <20050416132231.GJ2551@abridgegame.org> <Pine.LNX.4.58.0504161531470.7211@ppc970.osdl.org> <20050417121712.GA22772@abridgegame.org> <Pine.LNX.4.58.0504170916080.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:44:02 2005
+Cc: David Roundy <droundy@abridgegame.org>, git@vger.kernel.org,
+	darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:45:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCs2-0002jJ-6I
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:43:42 +0200
+	id 1DNCtt-0002ta-Gf
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261356AbVDQQrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:47:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261358AbVDQQrb
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:47:31 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:17822 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261356AbVDQQr3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:47:29 -0400
-Received: from [10.9.9.16] (helo=lassie.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DNCvh-0002il-5p; Sun, 17 Apr 2005 18:47:29 +0200
-Received: from [70.17.101.238] (helo=[192.168.2.73])
-	by lassie.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DNCvg-0005Vs-4W; Sun, 17 Apr 2005 18:47:29 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+	id S261358AbVDQQtZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261359AbVDQQtZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:49:25 -0400
+Received: from mail.timesys.com ([65.117.135.102]:25097 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261358AbVDQQtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 12:49:21 -0400
+Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 17 Apr 2005 12:44:42 -0400
 X-Accept-Language: en-us, en
-To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
-In-Reply-To: <20050417062236.GA3261@scotty.home>
-X-Sender: 258406@vger.kernel.org
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504170916080.7211@ppc970.osdl.org>
+X-OriginalArrivalTime: 17 Apr 2005 16:44:42.0687 (UTC) FILETIME=[C1340CF0:01C5436C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Stefan-W. Hahn wrote:
-> Hi,
+Linus Torvalds wrote:
 > 
-> after playing a while with git-pasky it is a crap to interpret the date of
-> commit logs. Though it was a good idea to put the date in a parseable format
-> (seconds since), but the format of the commit itself is not good parseable.
+> On Sun, 17 Apr 2005, David Roundy wrote:
+> 
+>>That's all right.  Darcs would only access the cached data through a
+>>git-caching layer, and we've already got an abstraction layer over the
+>>pristine cache.  As long as the git layer can quickly retrieve the contents
+>>of a given file, we should be fine.
+> 
+> 
+> Yes.
+> 
+> In fact, one of my hopes was that other SCM's could just use the git
+> plumbing. But then I'd really suggest that you use "git" itself, not any
+> "libgit". Ie you take _all_ the plumbing as real programs, and instead of
+> trying to link against individual routines, you'd _script_ it.
 
-> Should be:
-...
-> Committer-Dater: 1113684324 +0200
+If you don't want it, I won't do it. Still makes sense to separate the 
+plumbing from the porcelain, though.
 
-I'm probably coming in late to the game, but exactly
-why is seconds-since-epoch format used instead of a format
-more easily understood by humans?  Yes, I know tools
-can easily convert that, but you're already using an ASCII format;
-why not just record it in a format that's easily eyeballed like ISO's
-yyyymmddThhmmss [timezone]? E.G.:
-  20050417T171520 +0200
-or some such?  I'm SURE that people will mention things
-like "the patch I posted on April 17, 2005", and having the
-patch format record times that way, directly, would be convenient
-to the poor slobs^H^H^H^H^H developers who come later.
-Yes, a tool can handle the conversion, but choosing formats
-so a tool is unneeded for simple stuff is often better....!
+-- 
 
---- David A. Wheeler
+Mike Taht
+
+
+   "You can tell how far we have to go, when FORTRAN is the language of
+supercomputers.
+	-- Steven Feiner"
