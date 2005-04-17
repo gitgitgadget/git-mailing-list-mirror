@@ -1,64 +1,76 @@
-From: Erik van Konijnenburg <ekonijn@xs4all.nl>
+From: Dave Jones <davej@redhat.com>
 Subject: Re: fix mktemp (remove mktemp ;)
-Date: Sun, 17 Apr 2005 02:51:08 +0200
-Message-ID: <20050417025108.G2442@banaan.localdomain>
-References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com> <20050416233724.GP19099@pasky.ji.cz> <20050416170221.38b3e66c.pj@sgi.com> <20050417003325.GA15608@redhat.com>
+Date: Sat, 16 Apr 2005 20:57:57 -0400
+Message-ID: <20050417005757.GB15608@redhat.com>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com> <20050416233724.GP19099@pasky.ji.cz> <20050416170221.38b3e66c.pj@sgi.com> <20050417003325.GA15608@redhat.com> <20050416174409.59f94c26.pj@sgi.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Jackson <pj@sgi.com>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org, mj@ucw.cz
-X-From: git-owner@vger.kernel.org Sun Apr 17 02:47:50 2005
+Cc: pasky@ucw.cz, git@vger.kernel.org, mj@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Apr 17 02:55:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMxwo-0000lT-Rw
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:47:39 +0200
+	id 1DMy3Y-00015g-Jb
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:54:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261225AbVDQAvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 20:51:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261226AbVDQAvU
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:51:20 -0400
-Received: from smtp-vbr2.xs4all.nl ([194.109.24.22]:18193 "EHLO
-	smtp-vbr2.xs4all.nl") by vger.kernel.org with ESMTP id S261225AbVDQAvQ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 20:51:16 -0400
-Received: from banaan.xs4all.nl (banaan.xs4all.nl [80.126.2.237])
-	by smtp-vbr2.xs4all.nl (8.12.11/8.12.11) with ESMTP id j3H0p8cj048201;
-	Sun, 17 Apr 2005 02:51:08 +0200 (CEST)
-	(envelope-from konijn@banaan.xs4all.nl)
-Received: (from konijn@localhost)
-	by banaan.xs4all.nl (8.11.6/8.11.6) id j3H0p8306142;
-	Sun, 17 Apr 2005 02:51:08 +0200
-To: Dave Jones <davej@redhat.com>
+	id S261226AbVDQA6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 20:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261227AbVDQA6J
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:58:09 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:28591 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S261226AbVDQA6F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 20:58:05 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3H0vvMO019491;
+	Sat, 16 Apr 2005 20:57:57 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3H0vvO08986;
+	Sat, 16 Apr 2005 20:57:57 -0400
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3H0vvDI023469;
+	Sat, 16 Apr 2005 20:57:57 -0400
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3H0vvIU023467;
+	Sat, 16 Apr 2005 20:57:57 -0400
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
+To: Paul Jackson <pj@sgi.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050417003325.GA15608@redhat.com>; from davej@redhat.com on Sat, Apr 16, 2005 at 08:33:25PM -0400
-X-Virus-Scanned: by XS4ALL Virus Scanner
+In-Reply-To: <20050416174409.59f94c26.pj@sgi.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 16, 2005 at 08:33:25PM -0400, Dave Jones wrote:
-> On Sat, Apr 16, 2005 at 05:02:21PM -0700, Paul Jackson wrote:
->  > > And racy. And not guaranteed to come up with fresh new files.
->  > 
->  > In theory perhaps.  In practice no.
->  > 
->  > Even mktemp(1) can collide, in theory, since there is no practical way
->  > in shell scripts to hold open and locked the file from the instant of it
->  > is determined to be a unique name.
-> 
-> Using the pid as a 'random' number is a bad idea. all an attacker
-> has to do is create 65535 symlinks in /usr/tmp, and he can now
-> overwrite any file you own.
-> 
-> mktemp is being used here to provide randomness in the filename,
-> not just a uniqueness.
+On Sat, Apr 16, 2005 at 05:44:09PM -0700, Paul Jackson wrote:
+ > Dave wrote:
+ > > mktemp is being used here to provide randomness in the filename,
+ > > not just a uniqueness.
+ > 
+ > Ok - useful point.
+ > 
+ > How about:
+ > 
+ > 	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
 
-How about putting using .git/tmp.$$ or similar as tempfile?
+pid is still predictable by watching ps output, $RANDOM is one of 32768
+numbers, so it's still feasable to predict the result.
+$RANDOM$RANDOM is better, and gets a little closer to mktemp strength randomness.
 
-This should satisfy both the portability and security requirements,
-since the warnings against using $$ only apply to public directories.
+ > > all an attacker has to do is create 65535 symlinks in /usr/tmp
+ > And how about if I removed the tmp files at the top:
+ > 
+ > 	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
+ > 	trap 'rm -fr $t.?; trap 0; exit 0' 0 1 2 3 15
+ > 	rm -fr $t.?
+ > 
+ > 	... rest of script ...
 
-Regards,
-Erik
+Racy, though the chance of creating x thousand symlinks in such a small
+window probably makes it a non-issue.
+
+Actually.. http://www.linuxsecurity.com/content/view/115462/151/
+has some interesting bits on temp dir creation without mktemp.
+See section 3.4 onwards.
+
+		Dave
+
