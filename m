@@ -1,97 +1,80 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Parsing code in revision.h
-Date: Sun, 17 Apr 2005 18:09:29 +0200
-Message-ID: <20050417160929.GJ1487@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org> <Pine.LNX.4.21.0504171120400.30848-100000@iabervon.org>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Storing permissions
+Date: Sun, 17 Apr 2005 12:21:47 -0400
+Message-ID: <42628D1B.3000207@dwheeler.com>
+References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org> <42620092.9040402@dwheeler.com> <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:06:21 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Paul Jackson <pj@sgi.com>, Morten Welinder <mwelinder@gmail.com>,
+	mj@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:16:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCHN-0007aM-3z
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:05:49 +0200
+	id 1DNCRX-0008Uq-Oc
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:16:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261346AbVDQQJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:09:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261351AbVDQQJi
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:09:38 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:39826 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261346AbVDQQJa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:09:30 -0400
-Received: (qmail 27754 invoked by uid 2001); 17 Apr 2005 16:09:29 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504171120400.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261348AbVDQQUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:20:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261349AbVDQQUA
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:20:00 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:63377 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261348AbVDQQT6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:19:58 -0400
+Received: from [10.9.9.1] (helo=bolivar.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DNCUy-0000Wv-H1; Sun, 17 Apr 2005 18:19:52 +0200
+Received: from [70.17.101.238] (helo=[192.168.2.73])
+	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DNCUy-000125-7o; Sun, 17 Apr 2005 18:19:52 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 05:24:20PM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> This adds support to revision.h for parsing commit records (but not going
-> any further than parsing a single record). Something like this is needed
-> by anything that uses revision.h, but older programs open-code it.
+Linus Torvalds wrote:
 > 
-> Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+> On Sun, 17 Apr 2005, David A. Wheeler wrote:
+> 
+>>There's a minor reason to write out ALL the perm bit data, but
+>>only care about a few bits coming back in: Some people use
+>>SCM systems as a generalized backup system
+> 
+> Yes. I was actually thinking about having system config files in a git 
+> repository when I started it, since I noticed how nicely it would do 
+> exactly that.
+> 
+> However, since the mode bits also end up being part of the name of the 
+> tree object (ie they are most certainly part of the hash), it's really 
+> basically impossible to only care about one bit but writing out many bits: 
+> it's the same issue of having multiple "identical" blocks with different 
+> names.
+...
+> One solution is to tell git with a command line flag and/or config file 
+> entry that "for this repo, I want you to honor all bits". That should be 
+> easy enough to add at some point, and then you really get what you want.
 
-Could you please convert the current users (rev-tree.c and fsck-cache.c)
-to use this in the same patch?
+Yes, I thought of that too.  And I agree, that should do the job.
 
-> Index: revision.h
-> ===================================================================
-> --- 45f926575d2c44072bfcf2317dbf3f0fbb513a4e/revision.h  (mode:100644 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
-> +++ 37a0b01b85c2999243674d48bfc71cdba0e5518e/revision.h  (mode:100644 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
-> @@ -24,6 +24,7 @@
->  	unsigned int flags;
->  	unsigned char sha1[20];
->  	unsigned long date;
-> +	unsigned char tree[20];
->  	struct parent *parent;
->  };
->  
-> @@ -111,4 +112,29 @@
->  	}
->  }
->  
-> +static int parse_commit_object(struct revision *rev)
-> +{
-> +	if (!(rev->flags & SEEN)) {
-> +		void *buffer, *bufptr;
-> +		unsigned long size;
-> +		char type[20];
-> +		unsigned char parent[20];
-> +
-> +		rev->flags |= SEEN;
-> +		buffer = bufptr = read_sha1_file(rev->sha1, type, &size);
-> +		if (!buffer || strcmp(type, "commit"))
-> +			return -1;
-> +		get_sha1_hex(bufptr + 5, rev->tree);
-> +		bufptr += 46; /* "tree " + "hex sha1" + "\n" */
-> +		while (!memcmp(bufptr, "parent ", 7) && 
-> +		       !get_sha1_hex(bufptr+7, parent)) {
-> +			add_relationship(rev, parent);
-> +			bufptr += 48;   /* "parent " + "hex sha1" + "\n" */
-> +		}
-> +		//rev->date = parse_commit_date(bufptr);
+My real concern is I'm looking at the early design of the
+storage format so that it's POSSIBLE to extend git in obvious ways.
+As long as it's possible later, then that's a great thing.
 
-I don't like this.
+...
+> Also, I made a design decision that git only cares about non-dotfiles. Git 
+> literally never sees or looks at _anything_ that starts with a ".". I 
+> think that's absolutely the right thing to do for an SCM (if you hide your 
+> files, I really don't think you should expect the SCM to see it), but it's 
+> obviously not the right thing for a backup thing.
 
-> +		free(buffer);
-> +	}
-> +	return 0;
-> +}
-> +
->  #endif /* REVISION_H */
+Again, a command line flag or config file entry could change that
+in the future, if desired.  So this is a decision that could be
+changed later... the best kind of decision :-).
 
-BTW, I think that in longer term having this stuffed in revision.h is a
-bad idea, we should have revision.c. I will accept patches putting the
-stuff to revision.h for now, though (unless it gets outrageous).
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+--- David A. Wheeler
