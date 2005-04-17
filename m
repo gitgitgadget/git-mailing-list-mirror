@@ -1,80 +1,119 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Do not run useless show-diff on unmerged paths repeatedly.
-Date: Sat, 16 Apr 2005 19:18:02 -0700
-Message-ID: <7vis2m2lk5.fsf@assigned-by-dhcp.cox.net>
+From: "Brian O'Mahoney" <omb@khandalf.com>
+Subject: Re: fix mktemp (remove mktemp ;)
+Date: Sun, 17 Apr 2005 04:38:45 +0200
+Message-ID: <4261CC35.4070108@khandalf.com>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
+    <20050416233724.GP19099@pasky.ji.cz>	<20050416170221.38b3e66c.pj@sgi.com>
+    <20050417003325.GA15608@redhat.com> <20050416174409.59f94c26.pj@sgi.com>
+Reply-To: omb@bluewin.ch
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 04:14:37 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dave Jones <davej@redhat.com>, pasky@ucw.cz, git@vger.kernel.org,
+	mj@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Apr 17 04:35:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMzIu-00062p-OJ
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 04:14:33 +0200
+	id 1DMzcp-0007MW-3d
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 04:35:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261234AbVDQCSO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 22:18:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261237AbVDQCSO
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 22:18:14 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32956 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261234AbVDQCSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Apr 2005 22:18:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050417021803.NVMN9923.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Apr 2005 22:18:03 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261237AbVDQCir convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 16 Apr 2005 22:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261239AbVDQCir
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 22:38:47 -0400
+Received: from mxout.hispeed.ch ([62.2.95.247]:51142 "EHLO smtp.hispeed.ch")
+	by vger.kernel.org with ESMTP id S261237AbVDQCin (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 22:38:43 -0400
+Received: from khandalf.com (80-218-57-125.dclient.hispeed.ch [80.218.57.125])
+	(authenticated bits=0)
+	by smtp.hispeed.ch (8.12.6/8.12.6/tornado-1.0) with ESMTP id j3H2cgoK000630
+	for <git@vger.kernel.org.>; Sun, 17 Apr 2005 04:38:42 +0200
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+    teraflex.teraflex-research.com (8.12.10/8.12.10/SuSE Linux 0.7) with ESMTP
+    id j3H2cmfV011411; Sun, 17 Apr 2005 04:38:50 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Paul Jackson <pj@sgi.com>
+In-Reply-To: <20050416174409.59f94c26.pj@sgi.com>
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Md5-Body: cbf498374707e8458d92e0a1852d0393
+X-Transmit-Date: Sunday, 17 Apr 2005 4:39:17 +0200
+X-Message-Uid: 0000b49cec9dc56a00000002000000004261cc5500073c58000000010008cedf
+Replyto: omb@bluewin.ch
+X-Sender-Postmaster: Postmaster@80-218-57-125.dclient.hispeed.ch.
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on smtp-07.tornado.cablecom.ch
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When run on unmerged dircache, show-diff compares the working
-file with each non-empty stage for that path.  Two out of three
-times, this is not very helpful.  This patch makes it report the
-unmergedness only once per each path and avoids running the
-actual diff.
+No, you have to:
+(a) create a unique, pid specific file name /var/tmp/myapp.$$.xyzzy
+(b) create it in O_EXCL mode, so you wont smash another's held lock
 
-Upper layer SCMs like Cogito are expected to find out mode/SHA1
-for each stage by using "show-files --stage" and run the diff
-itself.  This would result in more sensible diffs.
+(b-1) It worked, OK
 
-To be applied on top of my previous patches:
+(b-2) open failed, try ...xyzzz
 
-    [PATCH] Optionally tell show-diff to show only named files.
-    [PATCH] show-diff -z option for machine readable output.
-    [PATCH] show-diff shell safety.
-    [PATCH] (take 2) Rename confusing variable in show-diff.
-    [PATCH] show-diff style fix.
+repeat until (b-1)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+There are thousands of examples of how to do this with bash.
 
- ++show-diff.c |   13 +++++++++++++
- 1 files changed, 13 insertions(+)
+Paul Jackson wrote:
+> Dave wrote:
+>=20
+>>mktemp is being used here to provide randomness in the filename,
+>>not just a uniqueness.
+>=20
+>=20
+> Ok - useful point.
+>=20
+> How about:
+>=20
+> 	t=3D${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
+>=20
+>=20
+>>all an attacker has to do is create 65535 symlinks in /usr/tmp
 
---- ./show-diff.c	2005-04-16 19:01:28.000000000 -0700
-+++ ./++show-diff.c	2005-04-16 18:57:55.000000000 -0700
-@@ -167,6 +167,19 @@
- 		    ! matches_pathspec(ce, argv+1, argc-1))
- 			continue;
- 
-+		if (ce_stage(ce)) {
-+			if (machine_readable)
-+				printf("U %s%c", ce->name, 0);
-+			else
-+				printf("%s: Unmerged\n",
-+				       ce->name);
-+			while (i < entries &&
-+			       !strcmp(ce->name, active_cache[i]->name))
-+				i++;
-+			i--; /* compensate for loop control increments */
-+			continue;
-+		}
-+ 
- 		if (stat(ce->name, &st) < 0) {
- 			if (errno == ENOENT && silent_on_nonexisting_files)
- 				continue;
+the point of the xyzzy seed is to make creating all possible files
+in-feasable.
 
+>=20
+>=20
+> And how about if I removed the tmp files at the top:
+>=20
+> 	t=3D${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
+> 	trap 'rm -fr $t.?; trap 0; exit 0' 0 1 2 3 15
+> 	rm -fr $t.?
+>=20
+> 	... rest of script ...
+>=20
+> How close does that come to providing the same level of safety, while
+> remaining portable over a wider range of systems, and not requiring t=
+hat
+> a separate command be forked?
+>=20
+>=20
+>>I'd suggest fixing your distributions ...
+>=20
+>=20
+> It's not just my distro; it's the distros of all git users.
+>=20
+> If apps can avoid depending on inessential details of their
+> environment, that's friendlier to all concerned.
+>=20
+> And actually my distro is fine - it's just that I am running an old
+> version of it on one of my systems.  Newer versions of the mktemp -t
+> option.
+>=20
+
+--=20
+mit freundlichen Gr=FC=DFen, Brian.
+
+Dr. Brian O'Mahoney
+Mobile +41 (0)79 334 8035 Email: omb@bluewin.ch
+Bleicherstrasse 25, CH-8953 Dietikon, Switzerland
+PGP Key fingerprint =3D 33 41 A2 DE 35 7C CE 5D  F5 14 39 C9 6D 38 56 D=
+5
