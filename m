@@ -1,84 +1,102 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: Storing permissions
-Date: Sun, 17 Apr 2005 02:22:10 -0400
-Message-ID: <42620092.9040402@dwheeler.com>
-References: <20050416230058.GA10983@ucw.cz> <118833cc05041618017fb32a2@mail.gmail.com> <20050416183023.0b27b3a4.pj@sgi.com> <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
-Reply-To: dwheeler@dwheeler.com
+From: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+Subject: Parseable commit header
+Date: Sun, 17 Apr 2005 08:22:36 +0200
+Organization: -no organization-
+Message-ID: <20050417062236.GA3261@scotty.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Jackson <pj@sgi.com>, Morten Welinder <mwelinder@gmail.com>,
-	mj@ucw.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 08:17:18 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Apr 17 08:19:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN35f-0001t2-CH
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 08:17:07 +0200
+	id 1DN37T-0001wg-9S
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 08:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261270AbVDQGUf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 02:20:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVDQGUf
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 02:20:35 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:28801 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261270AbVDQGU1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 02:20:27 -0400
-Received: from [10.9.9.1] (helo=bolivar.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DN38m-0002Nb-Pu; Sun, 17 Apr 2005 08:20:20 +0200
-Received: from [70.17.101.238] (helo=[192.168.2.73])
-	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DN38i-0000uc-S0; Sun, 17 Apr 2005 08:20:20 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
-X-Sender: 258406@vger.kernel.org
+	id S261272AbVDQGWo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 02:22:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261273AbVDQGWo
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 02:22:44 -0400
+Received: from moutng.kundenserver.de ([212.227.126.173]:56543 "EHLO
+	moutng.kundenserver.de") by vger.kernel.org with ESMTP
+	id S261272AbVDQGWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 02:22:40 -0400
+Received: from [212.227.126.208] (helo=mrelayng.kundenserver.de)
+	by moutng.kundenserver.de with esmtp (Exim 3.35 #1)
+	id 1DN3B1-0005lZ-00
+	for git@vger.kernel.org; Sun, 17 Apr 2005 08:22:39 +0200
+Received: from [84.134.24.93] (helo=scotty.home)
+	by mrelayng.kundenserver.de with asmtp (TLSv1:EDH-RSA-DES-CBC3-SHA:168)
+	(Exim 3.35 #1)
+	id 1DN3B1-0002Ye-00
+	for git@vger.kernel.org; Sun, 17 Apr 2005 08:22:39 +0200
+Received: from scotty.home (localhost [127.0.0.1])
+	by scotty.home (8.13.4/8.13.4/Debian-1) with ESMTP id j3H6MboE004092
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 17 Apr 2005 08:22:37 +0200
+Received: (from hs@localhost)
+	by scotty.home (8.13.4/8.13.4/Submit) id j3H6Mbfj004090
+	for git@vger.kernel.org; Sun, 17 Apr 2005 08:22:37 +0200
+X-Authentication-Warning: scotty.home: hs set sender to stefan.hahn@s-hahn.de using -f
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-Mailer: Mutt http://www.mutt.org/
+X-Editor: GNU Emacs 21.2.1 http://www.gnu.org/
+X-Accept-Language: de en
+X-Location: Europe, Germany, Wolfenbuettel
+User-Agent: Mutt/1.5.6+20040907i
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on scotty.home
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on scotty.home
+X-Virus-Status: Clean
+X-Provags-ID: kundenserver.de abuse@kundenserver.de auth:77aa76da759ebc9bab1cc524fc813130
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Sat, 16 Apr 2005, Paul Jackson wrote:
-> 
->>Morten wrote:
->>
->>>It makes some sense in principle, but without storing what they mean
->>>(i.e., group==?) it certainly makes no sense. 
->>
->>There's no "they" there.
->>
->>I think Martin's proposal, to which I agreed, was to store a _single_
->>bit.  If any of the execute permissions of the incoming file are set,
->>then the bit is stored ON, else it is stored OFF.  On 'checkout', if the
->>bit is ON, then the file permission is set mode 0777 (modulo umask),
->>else it is set mode 0666 (modulo umask).
-> 
-> 
-> I think I agree.
-> 
-> Anybody willing to send me a patch? One issue is that if done the obvious
-> way it's an incompatible change, and old tree objects won't be valid any
-> more. It might be ok to just change the "compare cache" check to only care
-> about a few bits, though: S_IXUSR and S_IFDIR.
+Hi,
 
-There's a minor reason to write out ALL the perm bit data, but
-only care about a few bits coming back in: Some people use
-SCM systems as a generalized backup system, so you can back up
-your system to an arbitrary known state in the past
-(e.g., "Change my /etc files to the state I was at
-just before I installed that &*#@ program!").
-For more on this, see:
-  http://www.onlamp.com/pub/a/onlamp/2005/01/06/svn_homedir.html
+after playing a while with git-pasky it is a crap to interpret the date of
+commit logs. Though it was a good idea to put the date in a parseable format
+(seconds since), but the format of the commit itself is not good parseable.
 
-If you store all the bits, then you CAN restore things
-more exactly the way they were.  This is imperfect, since
-it doesn't cover more exotic permission
-values from SELinux, xattrs, whatever.  For some, that's enough.
+For easy converting the commit log header in readable format it should be in
+another format, perhaps like mail header: 
+- Every field should start al column zero wih filedname end up with a colon.
+- Every fieldname starts with an upcase letter.
+- The dates of author and committer should be fields of it own.
+- The commit message itself is seperated by a blank line.
 
-Yeah, I know, not the main purpose of git.  But what the heck,
-I _like_ flexible infrastructures.
 
---- David A. Wheeler
+Example current log entry:
+
+commit fe077e9d16819b72c275ea40b254f22b4d236f8b
+tree 98b57b0310e0e2309fe4a6c24a6abea31a4d6c6d
+parent f0adb6cf1bf603537afff5cf26b90e81321db225
+author Petr Baudis <pasky@ucw.cz> 1113684324 +0200
+committer Petr Baudis <xpasky@machine> 1113684324 +0200
+
+s/me/commit/ in git log output.
+
+
+Should be:
+
+Commit: fe077e9d16819b72c275ea40b254f22b4d236f8b
+Tree: 98b57b0310e0e2309fe4a6c24a6abea31a4d6c6d
+Parent: f0adb6cf1bf603537afff5cf26b90e81321db225
+Author: Petr Baudis <pasky@ucw.cz> 
+Author-Date: 1113684324 +0200
+Committer: Petr Baudis <xpasky@machine> 
+Committer-Dater: 1113684324 +0200
+
+s/me/commit/ in git log output.
+
+
+This date entries are now easy parseable and convertable.
+
+- Stefan
+
+-- 
+Stefan-W. Hahn                          It is easy to make things.
+/ mailto:stefan.hahn@s-hahn.de /        It is hard to make things simple.			
 
