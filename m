@@ -1,88 +1,77 @@
-From: Brad Roberts <braddr@puremagic.com>
-Subject: Re: fork optional branch point normazilation
-Date: Sun, 17 Apr 2005 05:40:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.44.0504170530080.2625-100000@bellevue.puremagic.com>
-References: <20050417122534.GD1487@pasky.ji.cz>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Merge with git-pasky II.
+Date: Sun, 17 Apr 2005 14:14:11 +0100
+Message-ID: <1113743652.3884.2.camel@localhost.localdomain>
+References: <20050414002902.GU25711@pasky.ji.cz>
+	 <20050413212546.GA17236@64m.dyndns.org>
+	 <20050414004504.GW25711@pasky.ji.cz>
+	 <Pine.LNX.4.58.0504132020550.7211@ppc970.osdl.org>
+	 <7vfyxtsurd.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0504140051550.7211@ppc970.osdl.org>
+	 <7v64ypsqev.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+	 <7vvf6pr4oq.fsf@assigned-by-dhcp.cox.net>
+	 <20050414121624.GZ25711@pasky.ji.cz>
+	 <7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0504141133260.7211@ppc970.osdl.org>
+	 <7v7jj5qgdz.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0504141728590.7211@ppc970.osdl.org>
+	 <1113559330.12012.292.camel@baythorne.infradead.org>
+	 <Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org>
+	 <1113580881.27227.73.camel@hades.cambridge.redhat.com>
+	 <Pine.LNX.4.58.0504161733110.31775@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 14:38:09 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 15:10:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN920-0007oG-RM
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 14:37:45 +0200
+	id 1DN9Y0-0001by-TR
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 15:10:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261314AbVDQMlQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 08:41:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261315AbVDQMlQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 08:41:16 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:57324 "EHLO
-	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261314AbVDQMlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 08:41:03 -0400
-Received: from bellevue.puremagic.com (localhost [127.0.0.1])
-	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3HCexUr005130
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 17 Apr 2005 05:41:00 -0700
-Received: from localhost (braddr@localhost)
-	by bellevue.puremagic.com (8.13.3/8.13.3/Submit) with ESMTP id j3HCexah005126;
-	Sun, 17 Apr 2005 05:40:59 -0700
-X-Authentication-Warning: bellevue.puremagic.com: braddr owned process doing -bs
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050417122534.GD1487@pasky.ji.cz>
-X-Virus-Scanned: by amavisd-new
+	id S261315AbVDQNOe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 09:14:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261316AbVDQNOe
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 09:14:34 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:65216 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261315AbVDQNOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 09:14:32 -0400
+Received: from [203.53.50.91] (helo=[172.18.240.72])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DN9bR-0001jf-35; Sun, 17 Apr 2005 14:14:22 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.58.0504161733110.31775@wgmdd8.biozentrum.uni-wuerzburg.de>
+X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> >
-> > Index: gitfork.sh
-> > ===================================================================
-> > --- 51b1bddbbc05e50d5bbf1f9662e503c2e85d5e96/gitfork.sh  (mode:100755 sha1:e5692ea9bdbc39b028fe1e1205381da632541bab)
-> > +++ c291316b28eff4042c80850cd93445345a606835/gitfork.sh  (mode:100755 sha1:386148ae9a99739d06a09742ff4157d0f7e4e223)
-> > @@ -37,6 +37,7 @@
-> >  [ -e "$destdir" ] && die "$destdir already exists"
-> >
-> >  [ "$head" ] || head=$(commit-id)
-> > +head=$(gitXnormid.sh -c $head)
-> >
-> >  git lntree "$destdir"
-> >  echo $head >.git/heads/$name
->
-> commit-id always returns the normalized commit ID.
->
-> --
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
->
+On Sat, 2005-04-16 at 17:33 +0200, Johannes Schindelin wrote:
+> > But if it can be done cheaply enough at a later date even though we end
+> > up repeating ourselves, and if it can be done _well_ enough that we
+> > shouldn't have just asked the user in the first place, then yes, OK I
+> > agree.
+> 
+> The repetition could be helped by using a cache.
 
-This feels better to me.  Diffed against my previus commit.  The problem
-was that commit-id wasn't called if a branch point was specified nor was
-that value checked for validity.
+Perhaps. Since neither such a cache nor even the commit comments are
+strictly part of the git data, they probably shouldn't be included in
+the sha1 hash of the commit object. However, I don't see a fundamental
+reason why we couldn't store them in the same file but omit them from
+the hash calculations. That also allows us to retrospectively edit
+commit comments without completely changing the entire subsequent
+history.
 
-Index: gitfork.sh
-===================================================================
---- c9ccaa172ccab8e56f2fe621ee24896bfddacf26/gitfork.sh  (mode:100755 sha1:386148ae9a99739d06a09742ff4157d0f7e4e223)
-+++ f9e06a309f63ac6858d019b51f2172283378d2ef/gitfork.sh  (mode:100755 sha1:dbb508b8431368fc95cc9516eada52f5bf0f8bc1)
-@@ -16,7 +16,7 @@
+Or is that a little too heretical a suggestion?
 
- name=$1
- destdir=$2
--head=$3
-+head=$(gitXnormid.sh -c $3)
-
- die () {
-        echo gitfork.sh: $@ >&2
-@@ -36,9 +36,6 @@
-
- [ -e "$destdir" ] && die "$destdir already exists"
-
--[ "$head" ] || head=$(commit-id)
--head=$(gitXnormid.sh -c $head)
--
- git lntree "$destdir"
- echo $head >.git/heads/$name
- ln -s heads/$name "$destdir/.git/HEAD"
+-- 
+dwmw2
 
