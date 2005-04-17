@@ -1,82 +1,73 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: Yet another base64 patch
-Date: Sun, 17 Apr 2005 12:29:49 -0400
-Message-ID: <42628EFD.3030509@dwheeler.com>
-References: <Pine.LNX.4.21.0504171018410.30848-100000@iabervon.org>
-Reply-To: dwheeler@dwheeler.com
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 18:28:29 +0200
+Message-ID: <20050417162829.GK1487@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <20050417162448.A13233@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Jackson <pj@sgi.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:24:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:25:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCZH-0000ly-VO
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:24:20 +0200
+	id 1DNCaL-0000sj-Qv
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261353AbVDQQ2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:28:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261352AbVDQQ2F
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:28:05 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:22677 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261353AbVDQQ15 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:27:57 -0400
-Received: from [10.9.9.1] (helo=bolivar.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DNCcj-00034d-Iy; Sun, 17 Apr 2005 18:27:53 +0200
-Received: from [70.17.101.238] (helo=[192.168.2.73])
-	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DNCcj-0004Zu-51; Sun, 17 Apr 2005 18:27:53 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504171018410.30848-100000@iabervon.org>
-X-Sender: 258406@vger.kernel.org
+	id S261352AbVDQQ2w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:28:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261355AbVDQQ2w
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:28:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:62354 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261352AbVDQQ2d (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:28:33 -0400
+Received: (qmail 29086 invoked by uid 2001); 17 Apr 2005 16:28:29 -0000
+To: Russell King <rmk@arm.linux.org.uk>
+Content-Disposition: inline
+In-Reply-To: <20050417162448.A13233@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I wrote:
->>>It's a trade-off, I know.
-
-Paul Jackson replied:
->>So where do you recommend we make that trade-off?
-
-Daniel Barkalow wrote:
-> So why do we have to be consistant? It seems like we need a standard
-> format for these reasons:
+Dear diary, on Sun, Apr 17, 2005 at 05:24:48PM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> However, I've made a start to generate the necessary emails.  How about
+> this format?
 > 
->  - We use rsync to interact with remote repositories, and rsync won't
->    understand if they aren't organized the same way. But I'm working on
->    having everything go through git-specific code, which could understand
->    different layouts.
-> 
->  - Everything that shares a local repository needs to understand the
->    format of that repository. But the filesystem constraints on the local
->    repository will be the same regardless of who is looking, so they'd all
->    expect the same format anyway.
-> 
-> So my idea is, once we're using git-smart transfer code (which can verify
-> objects, etc.), add support for different implementations of 
-> sha1_file_name suitable for different filesystems, and vary based either
-> on a compile-time option or on a setting stored in the objects
-> directory.
+> I'm not keen on the tree, parent, author and committer objects appearing
+> in this - they appear to clutter it up.  What're your thoughts?
 
-I think that's the perfect answer: make it a setting stored
-in the objects directory (presumably set during
-initialization of the directory), and handled automagically
-by the tools.  I recommend handling them NOT be a compile-time option,
-so that the same set of tools works everywhere automatically
-(who wants to recompile tools just to work on a different file layout?).
+I think it would look nicer if you used git log format. Actually...
 
+ 
+> #!/bin/sh
+> prev=$(cat .git/heads/origin)
+> to=$(cat .git/HEAD)
 
-> The only thing that matters is that repositories on
-> non-special web servers have a standard format, because they'll be serving
-> objects by URL, not by sha1.
+It is preferred to use the commit-id command instead; when git decides
+to totally dig over its metametadata storage, you won't need to care.
 
-If the "layout info" is stored in a standard location for a
-given repository, then the rest doesn't matter. The library would just
-download that, then know how to find the rest.
+> this=$to
+> while [ "$this" != "$prev" ]; do
+>   cat-file commit $this | sed 's,.*,\t&,'
+>   this=$(cat-file commit $this | grep ^parent | cut -d ' ' -f 2)
+> done
 
---- David A. Wheeler
+What about adding support to git log for not caring about side branches
+(if there are multiple parents, go only over the first one; you might
+add that as a switch to rev-tree, which would turn it to rev-line ;-)?
+
+Then, you could also easily implement support for passing additional
+commit ID to git log, and it would then print out the range between
+these two.
+
+That would do exactly what you want, and would be probably quite usable
+for other uses too.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
