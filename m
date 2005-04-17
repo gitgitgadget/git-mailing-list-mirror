@@ -1,87 +1,76 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [1/5] Parsing code in revision.h
-Date: Sun, 17 Apr 2005 20:30:02 +0200
-Message-ID: <20050417183002.GE1461@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504171120400.30848-100000@iabervon.org> <Pine.LNX.4.58.0504171114020.7211@ppc970.osdl.org>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 14:44:18 -0400
+Message-ID: <4262AE82.1070702@dwheeler.com>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <20050417170539.B13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org> <4262A767.4040300@dwheeler.com> <20050417192000.C13233@flint.arm.linux.org.uk>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 20:26:38 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 17 20:38:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNETb-0005CI-BR
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:26:35 +0200
+	id 1DNEfQ-0006Py-7O
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261288AbVDQSaO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 14:30:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261398AbVDQSaO
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:30:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63892 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261288AbVDQSaE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 14:30:04 -0400
-Received: (qmail 6186 invoked by uid 2001); 17 Apr 2005 18:30:02 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504171114020.7211@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261403AbVDQSma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 14:42:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVDQSma
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:42:30 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:62672 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261403AbVDQSmZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 14:42:25 -0400
+Received: from [10.9.9.11] (helo=fifi.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DNEis-0000Qv-4K; Sun, 17 Apr 2005 20:42:22 +0200
+Received: from [70.17.101.238] (helo=[192.168.2.73])
+	by fifi.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DNEir-0002Gq-Lh; Sun, 17 Apr 2005 20:42:22 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050417192000.C13233@flint.arm.linux.org.uk>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 08:18:47PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> 
-> 
-> On Sun, 17 Apr 2005, Daniel Barkalow wrote:
-> >
-> > --- 45f926575d2c44072bfcf2317dbf3f0fbb513a4e/revision.h  (mode:100644 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
-> > +++ 37a0b01b85c2999243674d48bfc71cdba0e5518e/revision.h  (mode:100644 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
-> > @@ -24,6 +24,7 @@
-> >  	unsigned int flags;
-> >  	unsigned char sha1[20];
-> >  	unsigned long date;
-> > +	unsigned char tree[20];
-> >  	struct parent *parent;
-> >  };
-> >  
-> 
-> I think this is really wrong.
-> 
-> The whole point of "revision.h" is that it's a generic framework for 
-> keeping track of relationships between different objects. And those 
-> objects are in no way just "commit" objects.
+>>On Sun, 17 Apr 2005, Russell King wrote:
+>>>>One thing which definitely needs to be considered is - what character
+>>>>encoding are the comments to be stored as?
+...
 
-Someone started the avalanche by adding date to the structure. Of
-course, date is smaller, but it leads people (including me) out of the
-way.
+I replied:
+>>I would _heartily_ recommend moving towards UTF-8 as the
+>>internal charset for all comments.
 
-Perhaps struct commit which will have struct revision (ugh - what about
-rather struct object?) as a member?
+Petr said:
+ >Not that the plumbing should actually _care_ at all; anyone who uses it
+ >should take the care, so this is more of a "social" thing.
 
-> For example, fsck uses this "struct revision" to create a full free of 
-> _all_ the object dependencies, which means that a "struct revision" can be 
-> any object at all - it's not in any way limited to commit objects, and 
-> there is no "tree" object that is associated with these things at all.
+The _plumbing_ shouldn't care, but the stuff above needs to know
+how to interpret the stuff that the plumbing produces.
 
-That's some really bad naming then.
+Russell King said:
+> Except, I believe, MicroEMACS, which both Linus and myself use.  As
+> far as I know, there aren't any patches to make it UTF-8 compliant.
 
-> Besides, why do you want the tree? There's really nothing you can do with 
-> the tree to a first approximation - you need to _first_ do the 
-> reachability analysis entirely on the commit dependencies, and then when 
-> you've selected a set of commits, you can just output those.
-> 
-> Later phases will indeed look up what the tree is, but that's only after
-> you've decided on the commit object. There's no point in looking up (or
-> even trying to just remember) _all_ the tree objects.
+Since plain ASCII is a subset of UTF-8,
+as long as MicroEMACS users only create ASCII comments,
+then the comments you create in MicroEMACS will still be UTF-8.
+No big deal.
 
-The goal was to have a commit record parser which would spit out this
-structure containing all the relevant info, but I can agree that wasting
-memory with it makes no sense. Perhaps it could take a possibly-NULL
-buffer pointer where it would drop the tree ID, Daniel?
+For reading comments, if the text is almost entirely
+plain ASCII, you could just ignore the problem and have the
+occasional character scramble.  If you need more, you'll
+need a tool that's more internationalized or a working iconv,
+but if that's important you'd be motivated.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Again, I'm looking for more generalized solutions, where
+non-English comments are more common than in Linux kernel code.
+
+--- David A. Wheeler
