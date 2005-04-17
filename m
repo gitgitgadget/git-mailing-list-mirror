@@ -1,78 +1,58 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: Storing permissions
-Date: Sun, 17 Apr 2005 01:13:01 -0700
-Organization: SGI
-Message-ID: <20050417011301.0b341d5d.pj@sgi.com>
-References: <20050416230058.GA10983@ucw.cz>
-	<118833cc05041618017fb32a2@mail.gmail.com>
-	<20050416183023.0b27b3a4.pj@sgi.com>
-	<Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
-	<42620092.9040402@dwheeler.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Really honor umask when creating files
+Date: Sun, 17 Apr 2005 01:15:48 -0700
+Message-ID: <7v7jj124zv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, mwelinder@gmail.com, mj@ucw.cz,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 10:10:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 10:12:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN4r0-0000LG-Ja
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 10:10:06 +0200
+	id 1DN4tO-0000VI-0E
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 10:12:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261280AbVDQINw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 04:13:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261281AbVDQINw
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 04:13:52 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:44957 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S261280AbVDQINu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 04:13:50 -0400
-Received: from omx3.sgi.com (omx3-ext.sgi.com [192.48.171.20])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j3H8DksS002262
-	for <git@vger.kernel.org>; Sun, 17 Apr 2005 01:13:47 -0700
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H8aiPO009821;
-	Sun, 17 Apr 2005 01:36:47 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H8D5lU15333004;
-	Sun, 17 Apr 2005 01:13:06 -0700 (PDT)
-To: dwheeler@dwheeler.com
-In-Reply-To: <42620092.9040402@dwheeler.com>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261281AbVDQIQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 04:16:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261282AbVDQIQS
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 04:16:18 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29325 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261281AbVDQIQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 04:16:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050417081548.DUCK18934.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Apr 2005 04:15:48 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David wrote:
-> There's a minor reason to write out ALL the perm bit data, but
+The stated plan was to create new files with either 0666 or 0777
+and let the system take care of applying umask().  Running
+fchmod afterwards defeats this plan, so drop it.
 
-There's always the 'configurable option' approach.
+You still need to spell your octals with prefix in addition to
+this patch.
 
-Someone, I doubt Linus will have any interest in it, could volunteer to
-make the masks of st_mode, used when storing and recovering file
-permissions, be configurable by some environment variable settings,
-which default to whatever Linus provided.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-But, in general, if you want a generalized backup system, git is not it.
+ checkout-cache.c |    2 --
+ 1 files changed, 2 deletions(-)
 
-Git skips all files whose name begins with the dot '.' character, and
-anything that is not a regular file or directory.  Git makes no
-concessions to working adequately on file systems lacking normal inode
-numbers (such as smb, fat, vfat).  Git obscures the archive format a
-modest amount, for pure speed and to encourage use only via appropriate
-wrappers.  Git is tuned for blazing speed at the operations that Linus
-needs, not for trivial recovery, using the most basic tools, under harsh
-circumstances.
+checkout-cache.c: a87022a97c4604ef42ae6c31d641dc749a076ca3
+--- checkout-cache.c
++++ checkout-cache.c	2005-04-17 01:11:17.000000000 -0700
+@@ -62,8 +62,6 @@
+ 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
+ 		}
+ 	}
+-	if (fd >= 0)
+-		fchmod(fd, mode);
+ 	return fd;
+ }
+ 
 
-The basic idea of using such an 'object database' (though I dislike that
-term -- too high falutin vague) of files stored by their hash is a
-good one.  But a different core implementation is needed for backups.
-
-I have one that I use for my own backups, but it is written in Python,
-and uses MD5, one or the other of which likely disqualifies it from
-further consideration by half the readers of this list.
-
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
