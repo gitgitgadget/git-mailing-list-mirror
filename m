@@ -1,50 +1,79 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Use libcurl to use HTTP to get repositories
-Date: Sat, 16 Apr 2005 20:42:13 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504162033060.30848-100000@iabervon.org>
-References: <20050416172952.3bf34bab.pj@sgi.com>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: fix mktemp (remove mktemp ;)
+Date: Sat, 16 Apr 2005 17:44:09 -0700
+Organization: SGI
+Message-ID: <20050416174409.59f94c26.pj@sgi.com>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
+	<20050416233724.GP19099@pasky.ji.cz>
+	<20050416170221.38b3e66c.pj@sgi.com>
+	<20050417003325.GA15608@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 17 02:38:43 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: pasky@ucw.cz, git@vger.kernel.org, mj@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Apr 17 02:42:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DMxo4-0000LC-KY
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:38:36 +0200
+	id 1DMxrJ-0000Va-24
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 02:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261222AbVDQAmK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Apr 2005 20:42:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261224AbVDQAmK
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:42:10 -0400
-Received: from iabervon.org ([66.92.72.58]:22788 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261222AbVDQAl5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 20:41:57 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DMxrZ-0000Qr-00; Sat, 16 Apr 2005 20:42:13 -0400
-To: Paul Jackson <pj@sgi.com>
-In-Reply-To: <20050416172952.3bf34bab.pj@sgi.com>
+	id S261224AbVDQApg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Apr 2005 20:45:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261223AbVDQApf
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Apr 2005 20:45:35 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:49122 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S261224AbVDQAp2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Apr 2005 20:45:28 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H2ONxf018343;
+	Sat, 16 Apr 2005 19:24:33 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H0iDlU15254075;
+	Sat, 16 Apr 2005 17:44:16 -0700 (PDT)
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050417003325.GA15608@redhat.com>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 16 Apr 2005, Paul Jackson wrote:
+Dave wrote:
+> mktemp is being used here to provide randomness in the filename,
+> not just a uniqueness.
 
-> > Needs libcurl post 7.7 or so.
-> 
-> That could be mentioned in the README, which has a list of 'Software
-> requirements.'  Actually, zlib-devel and openssl should be on this list
-> as well.  My laziness got in the way of my sending in a patch for that.
+Ok - useful point.
 
-I'm working off of Linus's tree when not working on scripts, and it
-doesn't have that section at all. Should I submit patches to the pasky
-tree? (I'm actually tempted to have my own public tree, now that I
-wouldn't have to set up anonymous rsync access, aside from the
-bootstrapping issue; then I could let people pull and merge instead of
-applying patches.)
+How about:
 
-	-Daniel
-*This .sig left intentionally blank*
+	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
 
+> all an attacker has to do is create 65535 symlinks in /usr/tmp
+
+And how about if I removed the tmp files at the top:
+
+	t=${TMPDIR:-/usr/tmp}/gitdiff.$$.$RANDOM
+	trap 'rm -fr $t.?; trap 0; exit 0' 0 1 2 3 15
+	rm -fr $t.?
+
+	... rest of script ...
+
+How close does that come to providing the same level of safety, while
+remaining portable over a wider range of systems, and not requiring that
+a separate command be forked?
+
+> I'd suggest fixing your distributions ...
+
+It's not just my distro; it's the distros of all git users.
+
+If apps can avoid depending on inessential details of their
+environment, that's friendlier to all concerned.
+
+And actually my distro is fine - it's just that I am running an old
+version of it on one of my systems.  Newer versions of the mktemp -t
+option.
+
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
