@@ -1,67 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [3/5] Add http-pull
-Date: Sun, 17 Apr 2005 15:24:27 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171510120.30848-100000@iabervon.org>
-References: <20050417190824.GF1461@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 12:33:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504171226530.7211@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
+ <20050417162448.A13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170926410.7211@ppc970.osdl.org>
+ <20050417195742.D13233@flint.arm.linux.org.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:24:11 2005
+Cc: Git Mailing List <git@vger.kernel.org>, Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Sun Apr 17 21:29:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNFMr-0002bm-JP
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:23:41 +0200
+	id 1DNFRe-00033d-HQ
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:28:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261428AbVDQT1B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 15:27:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261425AbVDQTYl
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:24:41 -0400
-Received: from iabervon.org ([66.92.72.58]:20998 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261428AbVDQTYL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:24:11 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNFNb-0006FD-00; Sun, 17 Apr 2005 15:24:27 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050417190824.GF1461@pasky.ji.cz>
+	id S261431AbVDQTb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 15:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261421AbVDQTb6
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:31:58 -0400
+Received: from fire.osdl.org ([65.172.181.4]:60547 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261434AbVDQTbc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:31:32 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HJVOs4012060
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 17 Apr 2005 12:31:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HJVNBg031459;
+	Sun, 17 Apr 2005 12:31:24 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050417195742.D13233@flint.arm.linux.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 17 Apr 2005, Petr Baudis wrote:
 
-> Dear diary, on Sun, Apr 17, 2005 at 08:49:11PM CEST, I got a letter
-> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+
+On Sun, 17 Apr 2005, Russell King wrote:
 > 
-> I'm not too kind at this. Either make it totally separate commands, or
-> make a required switch specifying what to do. Otherwise it implies the
-> switches would just modify what it does, but they make it do something
-> completely different.
+> I still need to work out how to make my noddy script follow different
+> branches which may be present though.  However, for my common work
+> flow, it fits what I require.
 
-That's a good point. I'll require a -t for now, and add more later.
+The way to handle that is that you need to 
 
-> -a would be fine too - basically a combination of -c and -t. I'd imagine
-> that is what Linus would want to use, e.g.
+ - remember (or re-fetch) what the latest HEAD was that you merged with in 
+   my tree.
 
-Well, -c -t would give you the current tree and the whole commit log, but
-not old trees. -a would additionally give you old trees.
+   if you didn't remember, you can just get all my objects and do a
 
-> > There's some trickiness for the history of commits thing for stopping at
-> > the point where you have everything, but also behaving appropriately if
-> > you try once, fail partway through, and then try again. It's on my queue
-> > of things to think about.
-> 
-> Can't you just stop the recursion when you hit a commit you already
-> have?
+	merge-head $(cat .git/HEAD) $linus-current-head
 
-The problem is that, if you've fetched the final commit already, and then
-the server dies, and you try again later, you already have the last one,
-and so you think you've got everything.
+   or something (using the current git archive that has a "merge-head" 
+   program. That gives you the most recent common head.
 
-At this point, I also want to put off doing much further with recursion
-and commits until revision.h and such are sorted out.
+ - use "rev-tree" to show reachability
 
-	-Daniel
-*This .sig left intentionally blank*
+	rev-tree $my-current-head $last-merge-head
+		| sort -n		# sort by date rather than sha1
+		| cut -d' ' -f2		# get the sha1 + "flags" mask
+		| grep :1		# show the ones that are only
+					# reachable from $my-current-head
 
+and you now have a nice list of sha1's ordered by date.
+
+Or something. I didn't test the above. Testing is for users.
+
+		Linus
