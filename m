@@ -1,51 +1,69 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Symlinks [was Re: Storing permissions]
-Date: Sun, 17 Apr 2005 18:15:51 -0400
-Message-ID: <118833cc05041715157ea40ceb@mail.gmail.com>
-References: <20050416230058.GA10983@ucw.cz>
-	 <118833cc05041618017fb32a2@mail.gmail.com>
-	 <20050416183023.0b27b3a4.pj@sgi.com>
-	 <Pine.LNX.4.58.0504162138020.7211@ppc970.osdl.org>
-	 <42620092.9040402@dwheeler.com>
-	 <Pine.LNX.4.58.0504170857580.7211@ppc970.osdl.org>
-	 <42628D1B.3000207@dwheeler.com>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 15:17:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
+ <1113774736.3884.4.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Apr 18 00:12:19 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>, Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Apr 18 00:12:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNHzy-0000W9-0D
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:12:14 +0200
+	id 1DNI03-0000WY-Vh
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 00:12:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261514AbVDQWPz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 18:15:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261517AbVDQWPz
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:15:55 -0400
-Received: from rproxy.gmail.com ([64.233.170.202]:53026 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261514AbVDQWPw convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 18:15:52 -0400
-Received: by rproxy.gmail.com with SMTP id a41so953268rng
-        for <git@vger.kernel.org>; Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Tuj2fA1TMJnU2w/ogHzfSD7+vq5G6zonQU5OSyAFI0o7SoM+ny9aXDsC7AiFY9JOiIrtI7ZrmOUa95TUdNE0zIBZlUpFs7jHm25JGWdqvThXd5Oa5R9AOAbnLVH+DnOuUcXILqUi5fypxeCbhU8akfnOyfumxj8qgq8yGlXwAGA=
-Received: by 10.38.86.53 with SMTP id j53mr5202294rnb;
-        Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Sun, 17 Apr 2005 15:15:51 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <42628D1B.3000207@dwheeler.com>
-Content-Disposition: inline
+	id S261517AbVDQWQL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 18:16:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261519AbVDQWQL
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 18:16:11 -0400
+Received: from fire.osdl.org ([65.172.181.4]:52391 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261517AbVDQWP7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 18:15:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HMFrs4023398
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 17 Apr 2005 15:15:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HMFqME010749;
+	Sun, 17 Apr 2005 15:15:52 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1113774736.3884.4.camel@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-There's one more mode bit we might actually care about: the symlink bit.
-(One would store the target as the blob, presumably, but chmod isn't going
-to create symlinks out of regular files.)
 
-Morten
+
+On Mon, 18 Apr 2005, David Woodhouse wrote:
+> 
+> Do you want the commits list running for it yet? Do you want the
+> changesets which are already in it re-mailed without a 'TESTING' tag?
+
+I really don't know. I'm actually very happy where this thing is right
+now, and completing that first merge successfully was a big milestone to
+me personally. That said, actually _using_ this thing is not for the
+faint-of-heart, and while I think "git" already is showing itself to be
+useful, I'm very very biased.
+
+In other words, I really wonder what an outsider that doesn't have the
+same kind of mental bias thinks of the current git tree. Is it useful, or
+is it still just a toy for Linus to test out his crazy SCM-wannabe.
+
+Can people usefully track my current kernel git repository, or do you have
+to be crazy to do so? That's really the question. You be the judge. Me,
+I'm just giddy from a merge that was clearly done using interfaces that
+aren't actually really usable for anybody but me, and barely me at that ;)
+
+		Linus
+
+Btw, I also do want this to show up in the BK trees for people who use 
+BitKeeper - the same way we always supported tar-ball + patch users 
+before. So I'll have to try to come up with some sane way to do that too. 
+Any ideas? The first series of 198 patches is obvious enough and can be 
+just done that way direcly, but the merge..
