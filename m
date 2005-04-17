@@ -1,52 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [patch] fork optional branch point normazilation
-Date: Sun, 17 Apr 2005 18:07:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504171806230.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.44.0504171614150.2625-100000@bellevue.puremagic.com>
- <Pine.LNX.4.58.0504171636590.7211@ppc970.osdl.org> <20050418002326.GC1461@pasky.ji.cz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Brad Roberts <braddr@puremagic.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 03:02:06 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: SHA1 hash safety
+Date: Sun, 17 Apr 2005 02:35:00 -0400
+Message-ID: <200504170635.j3H6Z0Ga005661@laptop11.inf.utfsm.cl>
+References: <20050416154951.GB13373@jose.lug.udel.edu>
+Cc: "C. Scott Ananian" <cscott@cscott.net>, omb@bluewin.ch,
+	David Lang <david.lang@digitalinsight.com>,
+	Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 03:10:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNKeA-0003e4-Tj
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:01:55 +0200
+	id 1DNKlv-0004Bd-Uw
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261394AbVDRBFd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 21:05:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261406AbVDRBFd
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 21:05:33 -0400
-Received: from fire.osdl.org ([65.172.181.4]:37834 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261394AbVDRBF3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 21:05:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3I15Ls4001969
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 17 Apr 2005 18:05:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3I15KGh016036;
-	Sun, 17 Apr 2005 18:05:20 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050418002326.GC1461@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261437AbVDRBNa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 21:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261454AbVDRBN3
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 21:13:29 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:57792 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S261437AbVDRBNT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 21:13:19 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j3H6Z3sA005664;
+	Sun, 17 Apr 2005 02:35:03 -0400
+Received: from laptop11.inf.utfsm.cl (vonbrand@localhost)
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.4/Submit) with ESMTP id j3H6Z0Ga005661;
+	Sun, 17 Apr 2005 02:35:01 -0400
+To: ross@jose.lug.udel.edu
+In-Reply-To: Message from ross@jose.lug.udel.edu 
+   of "Sat, 16 Apr 2005 11:49:51 -0400." <20050416154951.GB13373@jose.lug.udel.edu> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+ross@jose.lug.udel.edu said:
 
+[...]
 
-On Mon, 18 Apr 2005, Petr Baudis wrote:
-> 
-> Am I just slow or does the first dst-- make it miss the last trailing
-> /[,;.]/?
+> Linus has already weighed in that he doesn't give a crap.  All the
+> crypto-babble about collision whitepapers is uninteresting without a
+> repo that has real collisions.  git is far too cool as is - prove I
+> should be concerned.
 
-Hopefully not. It _should_ make it miss the last '\0', but hey, it got my
-usual amount of testing (ie none). I'm sure Brad can tell us whether it
-makes any difference..
-
-		Linus
+Just copy over a file (might be the first step in splitting it, or a
+header file that is duplicated for convenience, ...)
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
