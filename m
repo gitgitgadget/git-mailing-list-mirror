@@ -1,74 +1,58 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Re: Merge with git-pasky II.
-Date: Sun, 17 Apr 2005 17:18:58 +0200
-Message-ID: <20050417151858.GA5745@elte.hu>
-References: <20050417145232.GA5289@elte.hu> <Pine.LNX.4.44.0504170804130.2625-100000@bellevue.puremagic.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [0/5] Patch set for various things
+Date: Sun, 17 Apr 2005 11:20:26 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org>
+References: <20050417144947.GG1487@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
-	Simon Fowler <simon@himi.org>,
-	David Lang <david.lang@digitalinsight.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 17:16:20 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 17:16:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNBVF-0002ol-HY
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:16:05 +0200
+	id 1DNBVc-0002q1-Gj
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261326AbVDQPTy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 11:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261329AbVDQPTy
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:19:54 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:43700 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261326AbVDQPTv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:19:51 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id 4ED5931D8B0;
-	Sun, 17 Apr 2005 17:18:22 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id D39DF1FC2; Sun, 17 Apr 2005 17:19:01 +0200 (CEST)
-To: Brad Roberts <braddr@puremagic.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0504170804130.2625-100000@bellevue.puremagic.com>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S261328AbVDQPUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 11:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261329AbVDQPUO
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:20:14 -0400
+Received: from iabervon.org ([66.92.72.58]:54535 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261328AbVDQPUI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:20:08 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNBZT-00063Z-00; Sun, 17 Apr 2005 11:20:27 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050417144947.GG1487@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Here are a bunch of patches which I made first against linus, that I've
+rebased against pasky because they're mostly more version-control-like.
 
-* Brad Roberts <braddr@puremagic.com> wrote:
+ 1: Add a parsing function to revision.h
+ 2: Add merge-base
+ 3: Add http-pull
+ 4: Add option to make a hardlinkable cache of extracted options
+ 5: Add commit id to version info
 
-> While I agree that a hash collision is bad and certainly worth 
-> preventing during new object creation, for it to actually implant a 
-> trojan in a build successfully it'd have to meet even more criteria 
-> than you've layed out. It'd have to...
+This also served as a test of cleaning up a patch series with git; I took
+my current working directory, diffed it against its common ancestor with
+pasky (no longer current), split the patch into logical pieces, and 
+applied them in sequence against the current pasky, committing after each
+one. This gives a history as if I'd actually written the code just like I
+would have had I known what I was doing in advance and done it very
+quickly this morning. I think this should work in the future as a way to
+avoid having the global revision control keeping developers' local 
+mistakes while keeping history the way the mainline saw the development.
 
->   - provide all the public symbols the shadowed object provided so that it
->     would still build and link successfully
+A thought for future work: it would be nice if I could identify commits
+that were used in creating a commit, but which should not be tracked down
+unless you were unfortunate enough to have been exposed to them (in which
+case you'd like know to deal with them).
 
-that's not a problem. Most modules dont provide public symbols.  
-Especially not drivers. Generally it's the modules that _dont_ have any 
-global impact that get reviewed less stringently - an attacker would 
-thus choose them for psychological reasons anyway.
+	-Daniel
+*This .sig left intentionally blank*
 
->   - be shadowing an object that's part of an active tree
->
-> Shadowing an object that's not part of the working tree means 
-> something on another branch or obsoleted some time in the past is 
-> still db corruption, but not nearly as big an issue from a trojan 
-> standpoint.
-
-it's not DB corruption, it's a feature of GIT: it's a content _cache_, 
-new and old alike. Nothing in GIT says that old objects in the 
-repository (which are still very much part of history) cannot be revived 
-in newer trees. (in fact it regularly happens - e.g. if a fix is undone 
-manually.)
-
-	Ingo
