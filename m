@@ -1,191 +1,159 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [3/5] Add http-pull
-Date: Sun, 17 Apr 2005 11:31:16 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171127160.30848-100000@iabervon.org>
+Subject: [4/5] Add option for hardlinkable cache of extracted blobs
+Date: Sun, 17 Apr 2005 11:35:19 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171131230.30848-100000@iabervon.org>
 References: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 17:28:38 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 17:32:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNBgQ-0003nS-CL
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:27:38 +0200
+	id 1DNBkG-0004AJ-TL
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 17:31:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261271AbVDQPbZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 11:31:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261332AbVDQPbZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:31:25 -0400
-Received: from iabervon.org ([66.92.72.58]:4356 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261271AbVDQPbA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:31:00 -0400
+	id S261332AbVDQPfW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 11:35:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261334AbVDQPfW
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 11:35:22 -0400
+Received: from iabervon.org ([66.92.72.58]:11012 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261332AbVDQPfB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 11:35:01 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNBjw-0006bO-00; Sun, 17 Apr 2005 11:31:16 -0400
+	id 1DNBnr-0006bj-00; Sun, 17 Apr 2005 11:35:19 -0400
 To: Petr Baudis <pasky@ucw.cz>
 In-Reply-To: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-http-pull is a program that downloads from a (normal) HTTP server a commit
-and all of the tree and blob objects it refers to (but not other commits,
-etc.). Options could be used to make it download a larger or different
-selection of objects. It depends on libcurl, which I forgot to mention in
-the README again.
+This adds an option (compile time, defined in the Makefile) to have a
+cache of extracted blobs so that different working directories can
+hardlink against them instead of creating new files for every
+checkout. You should only use this if you're sure the programs you use
+break links on modification and you care about storing many large working
+directories with few changes at the same time.
 
 Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
 Index: Makefile
 ===================================================================
---- d662b707e11391f6cfe597fd4d0bf9c41d34d01a/Makefile  (mode:100644 sha1:b2ce7c5b63fffca59653b980d98379909f893d44)
-+++ 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/Makefile  (mode:100644 sha1:940ef8578cf469354002cd8feaec25d907015267)
-@@ -14,7 +14,7 @@
- 
- PROG=   update-cache show-diff init-db write-tree read-tree commit-tree \
- 	cat-file fsck-cache checkout-cache diff-tree rev-tree show-files \
--	check-files ls-tree merge-base
-+	check-files ls-tree http-pull merge-base
- 
- SCRIPT=	parent-id tree-id git gitXnormid.sh gitadd.sh gitaddremote.sh \
- 	gitcommit.sh gitdiff-do gitdiff.sh gitlog.sh gitls.sh gitlsobj.sh \
-@@ -35,6 +35,7 @@
- 
- LIBS= -lssl -lz
- 
-+http-pull: LIBS += -lcurl
- 
- $(PROG):%: %.o $(COMMON)
- 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
-Index: http-pull.c
+--- 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/Makefile  (mode:100644 sha1:940ef8578cf469354002cd8feaec25d907015267)
++++ 08f7700831e056ad710af69f91e3a8a705b6b2b1/Makefile  (mode:100644 sha1:a60fa46404c0487158d232bd021e4798bc8df8de)
+@@ -2,6 +2,9 @@
+ # 1461501637330902918203684832716283019655932542976 hashes do not give you
+ # enough guarantees about no collisions between objects ever hapenning.
+ #
++# -DUSE_HARDLINK_CACHE if you want a cache of files to be hardlinked
++# to for unmodified checked out files.
++#
+ # -DNSEC if you want git to care about sub-second file mtimes and ctimes.
+ # Note that you need some new glibc (at least >2.2.4) for this, and it will
+ # BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely randomly
+Index: checkout-cache.c
 ===================================================================
---- /dev/null  (tree:d662b707e11391f6cfe597fd4d0bf9c41d34d01a)
-+++ 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/http-pull.c  (mode:100644 sha1:106ca31239e6afe6784e7c592234406f5c149e44)
-@@ -0,0 +1,126 @@
-+#include <fcntl.h>
-+#include <unistd.h>
-+#include <string.h>
-+#include <stdlib.h>
-+#include "cache.h"
-+#include "revision.h"
-+#include <errno.h>
-+#include <stdio.h>
+--- 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/checkout-cache.c  (mode:100644 sha1:5d3028df0a45329e45fff2006719c9267adeb946)
++++ 08f7700831e056ad710af69f91e3a8a705b6b2b1/checkout-cache.c  (mode:100644 sha1:338588259e17dd235fdc7db759d770004a760e15)
+@@ -34,6 +34,10 @@
+  */
+ #include "cache.h"
+ 
++#ifdef USE_HARDLINK_CACHE
++#define HARDLINK_CACHE ".git/blobs"
++#endif /* USE_HARDLINK_CACHE */
 +
-+#include <curl/curl.h>
-+#include <curl/easy.h>
+ static int force = 0, quiet = 0;
+ 
+ static void create_directories(const char *path)
+@@ -67,6 +71,80 @@
+ 	return fd;
+ }
+ 
++#ifdef HARDLINK_CACHE
 +
-+static CURL *curl;
-+
-+static char *base;
-+
-+static int fetch(unsigned char *sha1)
++/*
++ * NOTE! This returns a statically allocated buffer, so you have to be
++ * careful about using it. Do a "strdup()" if you need to save the
++ * filename.
++ */
++char *sha1_blob_cache_file_name(const unsigned char *sha1)
 +{
-+	char *hex = sha1_to_hex(sha1);
-+	char *filename = sha1_file_name(sha1);
++	int i;
++	static char *name, *base;
 +
-+	char *url;
-+	char *posn;
-+	FILE *local;
-+	struct stat st;
-+
-+	if (!stat(filename, &st)) {
-+		return 0;
++	if (!base) {
++		char *sha1_file_directory = HARDLINK_CACHE;
++		int len = strlen(sha1_file_directory);
++		base = malloc(len + 60);
++		memcpy(base, sha1_file_directory, len);
++		memset(base+len, 0, 60);
++		base[len] = '/';
++		base[len+3] = '/';
++		name = base + len + 1;
 +	}
-+
-+	local = fopen(filename, "w");
-+
-+	if (!local) {
-+		fprintf(stderr, "Couldn't open %s\n", filename);
-+		return -1;
++	for (i = 0; i < 20; i++) {
++		static char hex[] = "0123456789abcdef";
++		unsigned int val = sha1[i];
++		char *pos = name + i*2 + (i > 0);
++		*pos++ = hex[val >> 4];
++		*pos = hex[val & 0xf];
 +	}
-+
-+	curl_easy_setopt(curl, CURLOPT_FILE, local);
-+
-+	url = malloc(strlen(base) + 50);
-+	strcpy(url, base);
-+	posn = url + strlen(base);
-+	strcpy(posn, "objects/");
-+	posn += 8;
-+	memcpy(posn, hex, 2);
-+	posn += 2;
-+	*(posn++) = '/';
-+	strcpy(posn, hex + 2);
-+
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+
-+	curl_easy_perform(curl);
-+
-+	fclose(local);
-+	
-+	return 0;
++	return base;
 +}
 +
-+static int process_tree(unsigned char *sha1)
++static int write_entry(struct cache_entry *ce)
 +{
-+	void *buffer;
-+        unsigned long size;
-+        char type[20];
++	int fd;
++	void *new;
++	unsigned long size;
++	long wrote;
++	char type[20];
++	char *cache_name;
++	struct stat st;
 +
-+        buffer = read_sha1_file(sha1, type, &size);
-+	if (!buffer)
-+		return -1;
-+	if (strcmp(type, "tree"))
-+		return -1;
-+	while (size) {
-+		int len = strlen(buffer) + 1;
-+		unsigned char *sha1 = buffer + len;
-+		unsigned int mode;
-+		int retval;
++	cache_name = sha1_blob_cache_file_name(ce->sha1);
 +
-+		if (size < len + 20 || sscanf(buffer, "%o", &mode) != 1)
-+			return -1;
-+
-+		buffer = sha1 + 20;
-+		size -= len + 20;
-+
-+		retval = fetch(sha1);
-+		if (retval)
-+			return -1;
-+
-+		if (S_ISDIR(mode)) {
-+			retval = process_tree(sha1);
-+			if (retval)
-+				return -1;
++	if (stat(cache_name, &st)) {
++		new = read_sha1_file(ce->sha1, type, &size);
++		if (!new || strcmp(type, "blob")) {
++			return error("checkout-cache: unable to read sha1 file of %s (%s)",
++				     ce->name, sha1_to_hex(ce->sha1));
++		}
++		fd = create_file(cache_name, ntohl(ce->ce_mode));
++		if (fd < 0) {
++			free(new);
++			return error("checkout-cache: unable to create %s (%s)",
++				     ce->name, strerror(errno));
++		}
++		wrote = write(fd, new, size);
++		close(fd);
++		free(new);
++		if (wrote != size)
++			return error("checkout-cache: unable to write %s", 
++				     ce->name);
++	}
++	if (link(cache_name, ce->name)) {
++		if (errno == ENOENT) {
++			create_directories(ce->name);
++			link(cache_name, ce->name);
 +		}
 +	}
 +	return 0;
 +}
 +
-+static int process_commit(unsigned char *sha1)
-+{
-+	struct revision *rev = lookup_rev(sha1);
-+	if (parse_commit_object(rev))
-+		return -1;
-+	
-+	fetch(rev->tree);
-+	process_tree(rev->tree);
-+	return 0;
-+}
++#else
 +
-+int main(int argc, char **argv)
-+{
-+	char *commit_id = argv[1];
-+	char *url = argv[2];
+ static int write_entry(struct cache_entry *ce)
+ {
+ 	int fd;
+@@ -94,6 +172,8 @@
+ 	return 0;
+ }
+ 
++#endif
 +
-+	unsigned char sha1[20];
-+
-+	get_sha1_hex(commit_id, sha1);
-+
-+	curl_global_init(CURL_GLOBAL_ALL);
-+
-+	curl = curl_easy_init();
-+
-+	base = url;
-+
-+	fetch(sha1);
-+	process_commit(sha1);
-+
-+	curl_global_cleanup();
-+	return 0;
-+}
+ static int checkout_entry(struct cache_entry *ce)
+ {
+ 	struct stat st;
 
