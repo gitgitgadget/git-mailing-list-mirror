@@ -1,60 +1,62 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: Yet another base64 patch
-Date: Sat, 16 Apr 2005 21:05:13 -0700
-Organization: SGI
-Message-ID: <20050416210513.1ba26967.pj@sgi.com>
-References: <425DEF64.60108@zytor.com>
-	<20050414022413.GB18655@64m.dyndns.org>
-	<425E0174.4080404@zytor.com>
-	<20050414024228.GC18655@64m.dyndns.org>
-	<425E0D62.9000401@zytor.com>
-	<Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org>
-	<425EA152.4090506@zytor.com>
-	<Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org>
-	<20050414191157.GA27696@outpost.ds9a.nl>
-	<425EC3B4.6090908@zytor.com>
-	<20050414214756.GA31249@outpost.ds9a.nl>
-	<Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org>
-	<425F13C9.5090109@zytor.com>
-	<20050414205831.01039ee8.pj@engr.sgi.com>
-	<4261DDBC.3050706@dwheeler.com>
+From: Mike Taht <mike.taht@timesys.com>
+Subject: Re: [PATCH] libgit
+Date: Sat, 16 Apr 2005 21:08:35 -0700
+Message-ID: <4261E143.3020500@timesys.com>
+References: <4261D438.9080705@timesys.com> <20050416204602.18a124dc.rddunlap@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 06:02:46 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 06:05:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN0zV-0003Ju-CK
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 06:02:37 +0200
+	id 1DN11j-0003OT-3T
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 06:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261243AbVDQEGL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 00:06:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261249AbVDQEGL
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 00:06:11 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:55472 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S261243AbVDQEGJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 00:06:09 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H5jRQn032602;
-	Sat, 16 Apr 2005 22:45:37 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H45IlU15294193;
-	Sat, 16 Apr 2005 21:05:18 -0700 (PDT)
-To: dwheeler@dwheeler.com
-In-Reply-To: <4261DDBC.3050706@dwheeler.com>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261249AbVDQEIj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 00:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261250AbVDQEIj
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 00:08:39 -0400
+Received: from mail.timesys.com ([65.117.135.102]:22813 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261249AbVDQEIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 00:08:38 -0400
+Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sun, 17 Apr 2005 00:04:00 -0400
+X-Accept-Language: en-us, en
+To: "Randy.Dunlap" <rddunlap@osdl.org>
+In-Reply-To: <20050416204602.18a124dc.rddunlap@osdl.org>
+X-OriginalArrivalTime: 17 Apr 2005 04:04:01.0156 (UTC) FILETIME=[7CBB1C40:01C54302]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David wrote:
-> It's a trade-off, I know.
+Fixed.
 
-So where do you recommend we make that trade-off?
+Randy.Dunlap wrote:
+> On Sat, 16 Apr 2005 20:12:56 -0700 Mike Taht wrote:
+> 
+> | commit b0550573055abcf8ad19dcb8a036c32dd00a3be4
+> | tree b77882b170769c07732381b9f19ff2dd5c9f1520
+> | parent 866b4aea9313513612f2b0d66814a2f526d17f21
+> | author Mike Taht <m@picketwyre.com> 1113704772 -0700
+> | committer Mike Taht <m@ipbx.taht.net> 1113704772 -0700
+> | 
+> | looks my 1878 line patch to convert git to libgit got eaten by vger..
+> | I put it up at http://pbx.picketwyre.com/~mtaht/libgit.patch if anyone 
+> | wants to comment. from my log:
+> 
+> Connection refused.
+> 
+> ---
+> ~Randy
+
 
 -- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+
+Mike Taht
+
+
+   "FLASH!  Intelligence of mankind decreasing.  Details at ... uh, when
+the little hand is on the ...."
