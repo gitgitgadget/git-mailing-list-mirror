@@ -1,58 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Really honor umask when creating files
-Date: Sun, 17 Apr 2005 01:15:48 -0700
-Message-ID: <7v7jj124zv.fsf@assigned-by-dhcp.cox.net>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: Yet another base64 patch
+Date: Sun, 17 Apr 2005 01:16:15 -0700
+Organization: SGI
+Message-ID: <20050417011615.3e7dfb29.pj@sgi.com>
+References: <425DEF64.60108@zytor.com>
+	<20050414022413.GB18655@64m.dyndns.org>
+	<425E0174.4080404@zytor.com>
+	<20050414024228.GC18655@64m.dyndns.org>
+	<425E0D62.9000401@zytor.com>
+	<Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org>
+	<425EA152.4090506@zytor.com>
+	<Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org>
+	<20050414191157.GA27696@outpost.ds9a.nl>
+	<425EC3B4.6090908@zytor.com>
+	<20050414214756.GA31249@outpost.ds9a.nl>
+	<Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org>
+	<425F13C9.5090109@zytor.com>
+	<20050414205831.01039ee8.pj@engr.sgi.com>
+	<4261DDBC.3050706@dwheeler.com>
+	<20050416210513.1ba26967.pj@sgi.com>
+	<42620452.4080809@dwheeler.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 10:12:35 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 10:13:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN4tO-0000VI-0E
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 10:12:34 +0200
+	id 1DN4uL-0000bA-BK
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 10:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261281AbVDQIQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 04:16:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261282AbVDQIQS
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 04:16:18 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29325 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261281AbVDQIQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 04:16:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050417081548.DUCK18934.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 17 Apr 2005 04:15:48 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261282AbVDQIRR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 04:17:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261283AbVDQIRR
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 04:17:17 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:12269 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S261282AbVDQIRO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 04:17:14 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H9uUB4013930;
+	Sun, 17 Apr 2005 02:56:43 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H8GJlU15336013;
+	Sun, 17 Apr 2005 01:16:19 -0700 (PDT)
+To: dwheeler@dwheeler.com
+In-Reply-To: <42620452.4080809@dwheeler.com>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The stated plan was to create new files with either 0666 or 0777
-and let the system take care of applying umask().  Running
-fchmod afterwards defeats this plan, so drop it.
+David wrote:
+> My list would be:
+> ext2, ext3, NFS, and Windows' NTFS (stupid short filenames,
+> case-insensitive/case-preserving).
 
-You still need to spell your octals with prefix in addition to
-this patch.
+I'm no mind reader, but I'd bet a pretty penny that what you have in
+mind and what Linus has in mind have no overlaps in their solution sets.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Happy coding ...
 
- checkout-cache.c |    2 --
- 1 files changed, 2 deletions(-)
-
-checkout-cache.c: a87022a97c4604ef42ae6c31d641dc749a076ca3
---- checkout-cache.c
-+++ checkout-cache.c	2005-04-17 01:11:17.000000000 -0700
-@@ -62,8 +62,6 @@
- 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 		}
- 	}
--	if (fd >= 0)
--		fchmod(fd, mode);
- 	return fd;
- }
- 
-
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
