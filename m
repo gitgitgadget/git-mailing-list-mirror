@@ -1,60 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Re-done kernel archive - real one?
-Date: Sun, 17 Apr 2005 12:45:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504171242060.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
- <20050417162448.A13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170926410.7211@ppc970.osdl.org>
- <20050417195742.D13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171226530.7211@ppc970.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [1/5] Parsing code in revision.h
+Date: Sun, 17 Apr 2005 15:45:34 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504171531180.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0504171221130.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, Peter Anvin <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Apr 17 21:40:01 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 21:41:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNFcb-00048o-3Q
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:39:57 +0200
+	id 1DNFeQ-0004Mb-D8
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 21:41:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261434AbVDQTnb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 15:43:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVDQTnb
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:43:31 -0400
-Received: from fire.osdl.org ([65.172.181.4]:42885 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261434AbVDQTn0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:43:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3HJhIs4012793
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 17 Apr 2005 12:43:18 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3HJhHcb031813;
-	Sun, 17 Apr 2005 12:43:17 -0700
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <Pine.LNX.4.58.0504171226530.7211@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261441AbVDQTpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 15:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261439AbVDQTpe
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 15:45:34 -0400
+Received: from iabervon.org ([66.92.72.58]:35846 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261438AbVDQTpT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 15:45:19 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNFi2-0007Ka-00; Sun, 17 Apr 2005 15:45:34 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504171221130.7211@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
 On Sun, 17 Apr 2005, Linus Torvalds wrote:
+
+> On Sun, 17 Apr 2005, Petr Baudis wrote:
+> > 
+> > Someone started the avalanche by adding date to the structure. Of
+> > course, date is smaller, but it leads people (including me) out of the
+> > way.
 > 
->  - use "rev-tree" to show reachability
+> Yeah, the naming and the structure comes from "rev-tree.c", so there's a 
+> bit of historical baggage already. 
+> 
+> Anyway, I don't think you should need it. I cleaned up things a bit, and 
+> wrote a really simple "merge-base" thing that does base the "best" hit on 
+> date, which ends up probably doing the right thing in practice.
 
-Btw, you don't even have to really remember the head you merged with. If 
-you have all my objects, you can just use the current head from whatever 
-my repository is, and the "rev-tree" will show all your commit objects 
-that aren't in my tree.
+Yours reads the whole commit history; I intentionally wrote mine to
+only read as far back as turns out to be necessary. I think that looking
+at the whole history is going to be impractical when you're trying to
+merge in a bunch of patches against the latest release, even if you pull
+the history out of a cache. When it's one step on one side and a dozen on
+the other, it matters a whole lot if there's a year of history behind the
+common ancestor(s).
 
-The only reason I said "remember the last head you merged" is that that 
-way you don't even have to download the objects from my tree, and you can 
-make the decision totally locally without looking at what I've done since.
+So I still think it's best to have a non-recursive commit parser, and do
+the recursion only as needed for the operation under consideration.
 
-Of course, at some point you want to get my updated objects _anyway_, 
-but..
+	-Daniel
+*This .sig left intentionally blank*
 
-			Linus
