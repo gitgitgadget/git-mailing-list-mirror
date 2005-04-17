@@ -1,51 +1,94 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: SHA1 hash safety
-Date: Sat, 16 Apr 2005 22:09:31 -0700
-Organization: SGI
-Message-ID: <20050416220931.1eec8f1e.pj@sgi.com>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
-	<20050416123155.GA19908@elte.hu>
-	<Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
-	<4261132A.3090907@khandalf.com>
-	<ghdi684sm.fsf@brand.scrye.com>
-	<20050416210934.11a27387.pj@sgi.com>
-	<gacny8135.fsf@brand.scrye.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Issues with higher-order stages in dircache
+Date: Sat, 16 Apr 2005 22:11:01 -0700
+Message-ID: <7v64ym2dju.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0504140201130.7211@ppc970.osdl.org>
+	<7vll7lqlbg.fsf@assigned-by-dhcp.cox.net>
+	<20050414193507.GA22699@pasky.ji.cz>
+	<7vmzs1osv1.fsf@assigned-by-dhcp.cox.net>
+	<20050414233159.GX22699@pasky.ji.cz>
+	<7v7jj4q2j2.fsf@assigned-by-dhcp.cox.net>
+	<20050414223039.GB28082@64m.dyndns.org>
+	<7vfyxsmqmk.fsf@assigned-by-dhcp.cox.net>
+	<20050415062807.GA29841@64m.dyndns.org>
+	<7vfyxsi9bq.fsf@assigned-by-dhcp.cox.net>
+	<7vaco0i3t9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504151138490.7211@ppc970.osdl.org>
+	<7vmzrzhkd3.fsf@assigned-by-dhcp.cox.net>
+	<7vfyxrhfsw.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vmzrzfwe4.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504151755590.7211@ppc970.osdl.org>
+	<7v7jj3fjky.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504152152580.7211@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504152256520.7211@ppc970.osdl.org>
+	<7vis2ncf8j.fsf@assigned-by-dhc
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: omb@bluewin.ch, david.lang@digitalinsight.com, mingo@elte.hu,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 07:06:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 17 07:08:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DN1zZ-0006Q3-Ig
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 07:06:45 +0200
+	id 1DN20j-0006VD-6q
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 07:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261258AbVDQFKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 01:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261259AbVDQFKJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 01:10:09 -0400
-Received: from omx3-ext.sgi.com ([192.48.171.20]:43667 "EHLO omx3.sgi.com")
-	by vger.kernel.org with ESMTP id S261258AbVDQFKF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 01:10:05 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3H5XAJP011261;
-	Sat, 16 Apr 2005 22:33:16 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3H59ZlU15309095;
-	Sat, 16 Apr 2005 22:09:36 -0700 (PDT)
-To: Tkil <tkil@scrye.com>, "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <gacny8135.fsf@brand.scrye.com>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261259AbVDQFLj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 01:11:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261261AbVDQFLj
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 01:11:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:46271 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261259AbVDQFL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 01:11:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050417051102.FIZL4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Apr 2005 01:11:02 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vll7i95u1.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sat, 16 Apr 2005 07:03:34 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I have nothing further to contribute to this subtopic.
-Good luck with it.
+Linus,
 
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+    earlier I wrote [*R1*]:
+
+   - An explicit "update-cache [--add] [--remove] path" should
+     be taken as a signal from the user (or Cogito) to tell the
+     dircache layer "the merge is done and here is the result".
+     So just delete higher-order stages for the path and record
+     the specified path at stage 0 (or remove it altogether).
+
+and I think this commit of yours implements the adding half.
+
+    commit be7b1f05cea8e5213ffef8f74ebdefed2aacb6fc:1
+    author Linus Torvalds <torvalds@ppc970.osdl.org> 1113678345 -0700
+    committer Linus Torvalds <torvalds@ppc970.osdl.org> 1113678345 -0700
+
+    When inserting a index entry of stage 0, remove all old unmerged entries.
+
+I am wondering if you have a particular reason not to do the
+same for the removing half.  Without it, currently I do not see
+a way for the user or Cogito to tell dircache layer that the
+merge should result in removal.  That is, other than first
+adding a phony entry there (which brings the entry down to stage
+0) and then immediately doing a regular update-cache --remove.
+That is two instead of one reading of 1.6MB index file for the
+kernel case.
+
+Also do you have any comments on this one from the same message?
+
+ * read-tree
+
+   - When merging two trees, i.e. "read-tree -m A B", shouldn't
+     we collapse identical stage-1/2 into stage-0?
+
+
+[References]
+
+*R1* http://marc.theaimsgroup.com/?l=git&m=111366023126466&w=2
+
