@@ -1,129 +1,64 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [3/5] Add http-pull
-Date: Sun, 17 Apr 2005 20:10:54 +0200
-Message-ID: <20050417181054.GB1461@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504171108060.30848-100000@iabervon.org> <Pine.LNX.4.21.0504171127160.30848-100000@iabervon.org>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Re-done kernel archive - real one?
+Date: Sun, 17 Apr 2005 14:13:59 -0400
+Message-ID: <4262A767.4040300@dwheeler.com>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <20050417170539.B13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 20:08:21 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Russell King <rmk@arm.linux.org.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 17 20:08:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNEAs-0002zy-8D
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:07:15 +0200
+	id 1DNEC1-0003CH-O8
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 20:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261386AbVDQSLB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 14:11:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261387AbVDQSLB
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:11:01 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:39060 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261386AbVDQSKz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 14:10:55 -0400
-Received: (qmail 4217 invoked by uid 2001); 17 Apr 2005 18:10:54 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504171127160.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261387AbVDQSMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 14:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261388AbVDQSMO
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 14:12:14 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:52931 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261387AbVDQSMK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 14:12:10 -0400
+Received: from [10.9.9.1] (helo=bolivar.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DNEFX-0000jK-Nf; Sun, 17 Apr 2005 20:12:03 +0200
+Received: from [70.17.101.238] (helo=[192.168.2.73])
+	by bolivar.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DNEFX-0006No-9e; Sun, 17 Apr 2005 20:12:03 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Apr 17, 2005 at 05:31:16PM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> http-pull is a program that downloads from a (normal) HTTP server a commit
-> and all of the tree and blob objects it refers to (but not other commits,
-> etc.). Options could be used to make it download a larger or different
-> selection of objects. It depends on libcurl, which I forgot to mention in
-> the README again.
-> 
-> Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+On Sun, 17 Apr 2005, Russell King wrote:
+>>BTW, there appears to be "errors" in the history committed thus far.
+>>I'm not sure where this came from though.  Some of them could be
+>>UTF8 vs ASCII issues, ....> 
+...
+>>One thing which definitely needs to be considered is - what character
+>>encoding are the comments to be stored as?
 
-So, while you will be resending the patch, please update the README.
+Linus Torvalds replied:
+> To git, it's just a byte stream, and you can have binary comments if you
+> want to. I personally would prefer to move towards UTF eventually, but I
+> really don't think it matters a whole lot as long as 99.9% of everything
+> we'd see there is still 7-bit ascii.
 
-> Index: Makefile
-> ===================================================================
-> --- d662b707e11391f6cfe597fd4d0bf9c41d34d01a/Makefile  (mode:100644 sha1:b2ce7c5b63fffca59653b980d98379909f893d44)
-> +++ 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/Makefile  (mode:100644 sha1:940ef8578cf469354002cd8feaec25d907015267)
-> @@ -35,6 +35,7 @@
->  
->  LIBS= -lssl -lz
->  
-> +http-pull: LIBS += -lcurl
->  
->  $(PROG):%: %.o $(COMMON)
->  	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+I would _heartily_ recommend moving towards UTF-8 as the
+internal charset for all comments.  Alternatives are possible
+(e.g., recording the charset in the header), but they're
+incredibly messy.  Even if you don't normally work in UTF-8,
+it's pretty easy to set most editors up to read & write UTF-8.
+Having the data stored as a constant charset eliminates
+a raft of error-prone code.
 
-Whew. Looks like an awful trick, you say this works?! :-)
-
-At times, I wouldn't want to be a GNU make parser.
-
-> Index: http-pull.c
-> ===================================================================
-> --- /dev/null  (tree:d662b707e11391f6cfe597fd4d0bf9c41d34d01a)
-> +++ 157b46ce1d82b3579e2e1258927b0d9bdbc033ab/http-pull.c  (mode:100644 sha1:106ca31239e6afe6784e7c592234406f5c149e44)
-> @@ -0,0 +1,126 @@
-> +	if (!stat(filename, &st)) {
-> +		return 0;
-> +	}
-
-access()
-
-> +	url = malloc(strlen(base) + 50);
-
-Off-by-one. What about the trailing NUL?
-
-> +	strcpy(url, base);
-> +	posn = url + strlen(base);
-> +	strcpy(posn, "objects/");
-> +	posn += 8;
-> +	memcpy(posn, hex, 2);
-> +	posn += 2;
-> +	*(posn++) = '/';
-> +	strcpy(posn, hex + 2);
-
-
-> +static int process_tree(unsigned char *sha1)
-> +{
-> +	void *buffer;
-> +        unsigned long size;
-> +        char type[20];
-> +
-> +        buffer = read_sha1_file(sha1, type, &size);
-
-Something with your whitespaces is wrong here. ;-)
-
-> +	fetch(rev->tree);
-> +	process_tree(rev->tree);
-
-> +	fetch(sha1);
-> +	process_commit(sha1);
-
-You are ignoring return codes of own routines everywhere.
-You should use error() instead of plain -1, BTW.
-
-
-I think you should have at least two disjunct modes - either you are
-downloading everything related to the given commit, or you are
-downloading all commit records for commit predecessors.
-
-Even if you might not want all the intermediate trees, you definitively
-want the intermediate commits, to keep the history graph contignuous.
-
-So in git pull, I'd imagine to do
-
-	http-pull -c $new_head
-	http-pull -t $(tree-id $new_head)
-
-So, -c would fetch a given commit and all its predecessors until it hits
-what you already have on your side. -t would fetch a given tree with all
-files and subtrees and everything. http-pull shouldn't default on
-either, since they are mutually exclusive.
-
-What do you think?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+--- David A. Wheeler
