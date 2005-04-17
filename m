@@ -1,108 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Parsing code in revision.h
-Date: Sun, 17 Apr 2005 12:44:38 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504171237200.30848-100000@iabervon.org>
-References: <20050417160929.GJ1487@pasky.ji.cz>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Parseable commit header
+Date: Sun, 17 Apr 2005 12:49:24 -0400
+Message-ID: <42629394.1090804@dwheeler.com>
+References: <20050417062236.GA3261@scotty.home>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 17 18:41:05 2005
+X-From: git-owner@vger.kernel.org Sun Apr 17 18:44:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNCpE-0002SH-I0
-	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:40:48 +0200
+	id 1DNCs2-0002jJ-6I
+	for gcvg-git@gmane.org; Sun, 17 Apr 2005 18:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261363AbVDQQob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 12:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261361AbVDQQoa
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:44:30 -0400
-Received: from iabervon.org ([66.92.72.58]:51204 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261356AbVDQQoU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:44:20 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNCsw-0000nk-00; Sun, 17 Apr 2005 12:44:38 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050417160929.GJ1487@pasky.ji.cz>
+	id S261356AbVDQQrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 12:47:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261358AbVDQQrb
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 12:47:31 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:17822 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261356AbVDQQr3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 12:47:29 -0400
+Received: from [10.9.9.16] (helo=lassie.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DNCvh-0002il-5p; Sun, 17 Apr 2005 18:47:29 +0200
+Received: from [70.17.101.238] (helo=[192.168.2.73])
+	by lassie.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DNCvg-0005Vs-4W; Sun, 17 Apr 2005 18:47:29 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: "Stefan-W. Hahn" <stefan.hahn@s-hahn.de>
+In-Reply-To: <20050417062236.GA3261@scotty.home>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 17 Apr 2005, Petr Baudis wrote:
-
-> Dear diary, on Sun, Apr 17, 2005 at 05:24:20PM CEST, I got a letter
-> where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > This adds support to revision.h for parsing commit records (but not going
-> > any further than parsing a single record). Something like this is needed
-> > by anything that uses revision.h, but older programs open-code it.
-> > 
-> > Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+Stefan-W. Hahn wrote:
+> Hi,
 > 
-> Could you please convert the current users (rev-tree.c and fsck-cache.c)
-> to use this in the same patch?
+> after playing a while with git-pasky it is a crap to interpret the date of
+> commit logs. Though it was a good idea to put the date in a parseable format
+> (seconds since), but the format of the commit itself is not good parseable.
 
-They do things somewhat differently, so it would be more intrusive. Could
-I send an extra patch to convert them instead of doing them here?
+> Should be:
+...
+> Committer-Dater: 1113684324 +0200
 
-> > Index: revision.h
-> > ===================================================================
-> > --- 45f926575d2c44072bfcf2317dbf3f0fbb513a4e/revision.h  (mode:100644 sha1:28d0de3261a61f68e4e0948a25a416a515cd2e83)
-> > +++ 37a0b01b85c2999243674d48bfc71cdba0e5518e/revision.h  (mode:100644 sha1:523bde6e14e18bb0ecbded8f83ad4df93fc467ab)
-> > @@ -24,6 +24,7 @@
-> >  	unsigned int flags;
-> >  	unsigned char sha1[20];
-> >  	unsigned long date;
-> > +	unsigned char tree[20];
-> >  	struct parent *parent;
-> >  };
-> >  
-> > @@ -111,4 +112,29 @@
-> >  	}
-> >  }
-> >  
-> > +static int parse_commit_object(struct revision *rev)
-> > +{
-> > +	if (!(rev->flags & SEEN)) {
-> > +		void *buffer, *bufptr;
-> > +		unsigned long size;
-> > +		char type[20];
-> > +		unsigned char parent[20];
-> > +
-> > +		rev->flags |= SEEN;
-> > +		buffer = bufptr = read_sha1_file(rev->sha1, type, &size);
-> > +		if (!buffer || strcmp(type, "commit"))
-> > +			return -1;
-> > +		get_sha1_hex(bufptr + 5, rev->tree);
-> > +		bufptr += 46; /* "tree " + "hex sha1" + "\n" */
-> > +		while (!memcmp(bufptr, "parent ", 7) && 
-> > +		       !get_sha1_hex(bufptr+7, parent)) {
-> > +			add_relationship(rev, parent);
-> > +			bufptr += 48;   /* "parent " + "hex sha1" + "\n" */
-> > +		}
-> > +		//rev->date = parse_commit_date(bufptr);
-> 
-> I don't like this.
+I'm probably coming in late to the game, but exactly
+why is seconds-since-epoch format used instead of a format
+more easily understood by humans?  Yes, I know tools
+can easily convert that, but you're already using an ASCII format;
+why not just record it in a format that's easily eyeballed like ISO's
+yyyymmddThhmmss [timezone]? E.G.:
+  20050417T171520 +0200
+or some such?  I'm SURE that people will mention things
+like "the patch I posted on April 17, 2005", and having the
+patch format record times that way, directly, would be convenient
+to the poor slobs^H^H^H^H^H developers who come later.
+Yes, a tool can handle the conversion, but choosing formats
+so a tool is unneeded for simple stuff is often better....!
 
-Yeah, that's left over from the not-quite the same parsing code in the
-other programs.
-
-> > +		free(buffer);
-> > +	}
-> > +	return 0;
-> > +}
-> > +
-> >  #endif /* REVISION_H */
-> 
-> BTW, I think that in longer term having this stuffed in revision.h is a
-> bad idea, we should have revision.c. I will accept patches putting the
-> stuff to revision.h for now, though (unless it gets outrageous).
-
-I'd actually like to make them commit.{c,h}, since the system calls the
-things they actually deal in commits, not revisions. But this is getting
-into stuff that's likely to cause painful divergance from Linus's repo,
-which is why I'm a bit leary of actually doing it now.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+--- David A. Wheeler
