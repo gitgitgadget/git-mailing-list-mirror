@@ -1,50 +1,65 @@
-From: Ray Lee <ray-lk@madrabbit.org>
-Subject: Re: [PATCH] Pretty-print date in 'git log'
-Date: Mon, 18 Apr 2005 12:02:02 -0700
-Organization: http://madrabbit.org/
-Message-ID: <1113850922.23938.54.camel@orca.madrabbit.org>
-References: <1113803220.11910.81.camel@localhost.localdomain>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: optimize gitdiff-do script
+Date: Mon, 18 Apr 2005 12:17:56 -0700
+Organization: SGI
+Message-ID: <20050418121756.2a4b6e2e.pj@sgi.com>
+References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
+	<20050416232810.23430.78712.sendpatchset@sam.engr.sgi.com>
+	<20050416234344.GQ19099@pasky.ji.cz>
+	<20050416171009.0bedbab4.pj@sgi.com>
+	<20050418082334.25359013.pj@sgi.com>
+	<20050418183038.GB5554@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Apr 18 21:01:28 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 21:15:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNbUB-0006X2-JI
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 21:00:43 +0200
+	id 1DNbhw-0000HY-MT
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 21:14:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262164AbVDRTDq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 15:03:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262170AbVDRTDU
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 15:03:20 -0400
-Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]:46052 "EHLO
-	madrabbit.org") by vger.kernel.org with ESMTP id S262164AbVDRTCD
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 15:02:03 -0400
-Received: from orca.madrabbit.org (orca.madrabbit.org [192.168.1.51])
-	by madrabbit.org (Postfix) with ESMTP
-	id 7C0CB4C1442; Mon, 18 Apr 2005 12:02:02 -0700 (PDT)
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1113803220.11910.81.camel@localhost.localdomain>
-X-Mailer: Evolution 2.2.1.1 
+	id S262169AbVDRTS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 15:18:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262170AbVDRTS4
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 15:18:56 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:32726 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S262169AbVDRTSy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 15:18:54 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3IKwQCF015431;
+	Mon, 18 Apr 2005 13:58:36 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3IJI0lU15758911;
+	Mon, 18 Apr 2005 12:18:03 -0700 (PDT)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050418183038.GB5554@pasky.ji.cz>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2005-04-18 at 15:46 +1000, David Woodhouse wrote:
-> Add tool to render git's "<utcseconds> <zone>" into an RFC2822-compliant
-> string, because I don't think date(1) can do it.
+Pasky wrote:
+> But what I said still holds - this can go
+> in only after we have a shell library sharing the common functions
 
-I admit it's not obvious, but date(1) includes gnu's full date parser,
-so you can pull stunts like:
+Ah - thanks for repeating that - it didn't sink in the first time.
 
-ray:~/work/home$ date -ud 'jan 1, 1970 + 1111111111 seconds'
-Fri Mar 18 01:58:31 UTC 2005
-ray:~/work/home$ date -ud 'jan 1, 1970 + 1111111111 seconds + 0800'
-Fri Mar 18 09:58:31 UTC 2005
+Good idea.
 
-Ray
+> Yes, sorry about that; I had a lot of mail traffic lately ...
 
+No problem.  I hope you're having fun at the center of this cyclone.
 
+> I cannot guarantee I will look at it immediately, though.
+
+Good.  You priorities sound fine to me.
+
+I'll rework the patches and send them along again in a few days,
+when I get a chance.
+
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
