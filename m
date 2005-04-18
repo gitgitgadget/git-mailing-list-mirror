@@ -1,101 +1,112 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: Re: Merge with git-pasky II.
-Date: Mon, 18 Apr 2005 09:42:32 +0200
-Message-ID: <20050418074232.GA20119@elte.hu>
-References: <1113559330.12012.292.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org> <20050416014442.GW4488@himi.org> <Pine.LNX.4.62.0504160518310.21837@qynat.qvtvafvgr.pbz> <20050416155536.GX4488@himi.org> <20050416160333.GF19099@pasky.ji.cz> <Pine.LNX.4.58.0504160913180.7211@ppc970.osdl.org> <20050417145232.GA5289@elte.hu> <20050417152841.GA6157@elte.hu> <Pine.LNX.4.58.0504171014430.7211@ppc970.osdl.org>
+From: Andy Isaacson <adi@hexapodia.org>
+Subject: Re: SHA1 hash safety
+Date: Mon, 18 Apr 2005 00:43:23 -0700
+Message-ID: <20050418074323.GA29765@hexapodia.org>
+References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <4261852B.6090507@khandalf.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Simon Fowler <simon@himi.org>,
-	David Lang <david.lang@digitalinsight.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 09:39:13 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 09:40:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNQqQ-0006ei-Qx
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 09:38:59 +0200
+	id 1DNQr5-0006lW-Mv
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 09:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261887AbVDRHmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 03:42:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261889AbVDRHmx
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 03:42:53 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:20107 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261887AbVDRHmu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 03:42:50 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id 05A15320478;
-	Mon, 18 Apr 2005 09:41:55 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 248CB1FC2; Mon, 18 Apr 2005 09:42:36 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261889AbVDRHnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 03:43:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261896AbVDRHnd
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 03:43:33 -0400
+Received: from pirx.hexapodia.org ([199.199.212.25]:62605 "EHLO
+	pirx.hexapodia.org") by vger.kernel.org with ESMTP id S261889AbVDRHnY
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 03:43:24 -0400
+Received: by pirx.hexapodia.org (Postfix, from userid 22448)
+	id 5D27541C; Mon, 18 Apr 2005 00:43:23 -0700 (PDT)
+To: omb@bluewin.ch
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504171014430.7211@ppc970.osdl.org>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+In-Reply-To: <4261852B.6090507@khandalf.com>
+User-Agent: Mutt/1.4.1i
+X-PGP-Fingerprint: 48 01 21 E2 D4 E4 68 D1  B8 DF 39 B2 AF A3 16 B9
+X-PGP-Key-URL: http://web.hexapodia.org/~adi/pgp.txt
+X-Domestic-Surveillance: money launder bomb tax evasion
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+[trimmed cc list, nobody wants to read this noise]
 
-* Linus Torvalds <torvalds@osdl.org> wrote:
-
-> On Sun, 17 Apr 2005, Ingo Molnar wrote:
+On Sat, Apr 16, 2005 at 11:35:39PM +0200, Brian O'Mahoney wrote:
+> >> (1) I _have_ seen real-life collisions with MD5, in the context of
+> >>    Document management systems containing ~10^6 ms-WORD documents.
 > > 
-> > in fact, this attack cannot even be proven to be malicious, purely via 
-> > the email from Malice: it could be incredible bad luck that caused that 
-> > good-looking patch to be mistakenly matching a dangerous object.
+> > Dude!  You could have been *famous*!  Why the
+> > aitch-ee-double-hockey-sticks didn't you publish this when you found it?
+> > Seriously, man.
 > 
-> I really hate theoretical discussions.
+> The MD5 has was fine, or at least the code (a) produced the correct
+> results on the published test cases, and, (b) was properly applied to
+> all bytes of the file(s). I was surprised when it happened, which is why
+> I bothered to post to this list at this time, so I make two more points
 
-i was only replying to your earlier point:
+OK, I guess it's time for some remedial math.
 
-> > > Almost all attacks on sha1 will depend on _replacing_ a file with 
-> > > a bogus new one. So guys, instead of using sha256 or going 
-> > > overboard, just make sure that when you synchronize, you NEVER 
-> > > import a file you already have.
+There are 2^128 = 340282366920938463463374607431768211456 different MD5
+hashes.
 
-which point i still believe is subtly wrong. You were suggesting to 
-concentrate on file replacement to counter most of the practical 
-attacks, while i pointed out an attack _using the same basic mechanism 
-that your point above supposed_.
+You are suggesting that you found a collision using ~1e6 = ~1,000,000
+plaintexts.
 
-[ if you can replace a file with a known hash, with a bogus new one, and 
-  you still have enough control over the contents of your bogus new file 
-  that it is 1) a valid file that builds 2) compromises the kernel, then 
-  you likely have the same amount of control my 'theoretical' attack
-  requires. ]
+Let's suppose there were actually 100,000,000 = 1e8 plaintexts, just in
+case you underestimated the number.
 
-> And the thing is, _if_ somebody finds a way to make sha1 act as just a 
-> complex parity bit, and comes up with generating a clashing object 
-> that actually makes sense, then going to sha256 is likely pointless 
-> too [...]
+Applying the birthday paradox, we have a 50% probability that you'd find
+one collision if there were ~7,213,475,309,916,173 possible hash values.
+If you extend the birthday argument ("what is the probability of a
+collision if you take N samples from a set of size M?") you get the
+following results, with N = 1e8:
 
-yes, that's why i suggested to not actually trust the hash to be 
-cryptographically secure, but to just assume it's a good generic hash we 
-can design a DB around, and to turn -DCOLLISION_CHECK on and enforce 
-consistency rules on boundaries.
+50% (1 in 2) probability of collision in           7,213,475,309,916,173.
+1% (1 in 100) probability of collision in        497,496,027,172,833,194.
+.05% (1 in 1845) probability of collision in   9,223,372,036,854,775,806.
 
-[ it's not bad to keep sha1 because even my suggested enhancement still
-  leaves 'content-less trust-pointers to untrusted content via email'
-  vectors open against attack (maintainer sends you an email that commit
-  X in Malice's repository Y is fine to pull, and you pull it blindly,
-  while the attacker has replaced his content with the compromised one
-  meanwhile), but it at least validates the bulk traffic that goes into
-  the DB: patches via emails and trusted repositories. ]
+That's where my quick-and-dirty solver craps out, but we're still a
+really long ways from
 
-so all i was suggesting was to extend your suggested 'overwrite 
-collision check' to a stricter 'content we throw away and use the sha1 
-shortcut for needs to be checked against the in-DB content as well'.
+                     340,282,366,920,938,463,463,374,607,431,768,211,456.
 
-in other words, your suggested 'rename check' is checking for 'positive 
-duplicate content', while my addition would also check for 'negative 
-duplicate content' as well.
+A simple linear extrapolation (certainly wrong, but not by more than a
+few dozen orders of magnitude) says that the odds would be
+1 in 68,056,473,384,187,692,692 for the full MD5 hash (I'm not even
+going to dignify that with a percentage).
 
-but as usual, i could be wrong, so dont take this too serious :-)
+I'm not going to do the sums, but I would hazard a guess that it's more
+likely your PC suffered a cosmic-ray-induced memory fault - EACH OF THE
+FOUR TIMES YOU TESTED IT - causing it to report the same MD5, than that
+you actually discovered a collision with a measly million (or even
+hundred million) plaintexts.
 
-	Ingo
+(Of course, I don't know how many tests of the hash you actually did.
+But the point stands.)
+
+Hell, if you're *that* lucky, what are you doing in IT?  You could be
+making a killing at the roulette table.
+
+Or, even more likely, there was some other factor in the system (most
+likely that it was only using a few bits, probably 32, of the hash
+when looking for collisions) that resulted in a false alarm.
+
+If you had actual evidence of a collision, I'd love to see it - even if
+it's just the equivalent of
+% md5 foo
+d3b07384d113edec49eaa6238ad5ff00 foo
+% md5 bar
+d3b07384d113edec49eaa6238ad5ff00 bar
+% cmp foo bar
+foo bar differ: byte 25, line 1
+%
+
+But in the absence of actual evidence, we have to assume (just based on
+the probabilities) that there was some error in your testing.
+
+-andy
