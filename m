@@ -1,156 +1,66 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: [patch] fixup GECOS handling
-Date: Mon, 18 Apr 2005 14:58:20 +0200
-Message-ID: <1113829100.16288.26.camel@nosferatu.lan>
-References: <1113820589.16288.5.camel@nosferatu.lan>
-	 <1113827713.5286.13.camel@localhost.localdomain>
-Reply-To: azarah@nosferatu.za.org
+From: Kevin Smith <yarcs@qualitycode.com>
+Subject: Re: Yet another base64 patch
+Date: Mon, 18 Apr 2005 08:59:45 -0400
+Message-ID: <4263AF41.1070806@qualitycode.com>
+References: <Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org> <20050414191157.GA27696@outpost.ds9a.nl> <425EC3B4.6090908@zytor.com> <20050414214756.GA31249@outpost.ds9a.nl> <Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org> <425F13C9.5090109@zytor.com> <20050414205831.01039ee8.pj@engr.sgi.com> <4261DDBC.3050706@dwheeler.com> <20050416210513.1ba26967.pj@sgi.com> <42620452.4080809@dwheeler.com> <20050417181935.GD1461@pasky.ji.cz> <426341FC.7090600@dwheeler.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-cma7g+74tyWPiX0wOR3k"
-Content-Transfer-Encoding: 8bit
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 14:54:28 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 15:01:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNVl0-0002u3-BA
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 14:53:43 +0200
+	id 1DNVrC-0003mQ-6d
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 15:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262065AbVDRM5W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 08:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261327AbVDRMzk
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 08:55:40 -0400
-Received: from ctb-mesg7.saix.net ([196.25.240.79]:57240 "EHLO
-	ctb-mesg7.saix.net") by vger.kernel.org with ESMTP id S262065AbVDRMyn
+	id S261327AbVDRNDZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 09:03:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262085AbVDRNBj
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 09:01:39 -0400
+Received: from deuterium.rootr.net ([203.194.209.160]:42855 "EHLO
+	vulcan.rootr.net") by vger.kernel.org with ESMTP id S261327AbVDRM7x
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 08:54:43 -0400
-Received: from gateway.lan (wblv-146-244-27.telkomadsl.co.za [165.146.244.27])
-	by ctb-mesg7.saix.net (Postfix) with ESMTP id 44BAC5DB6;
-	Mon, 18 Apr 2005 14:54:35 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id D63173A2544;
-	Mon, 18 Apr 2005 15:00:47 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 21614-01; Mon, 18 Apr 2005 15:00:36 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	Mon, 18 Apr 2005 08:59:53 -0400
+Received: from [10.10.10.20] (147-49.35-65.tampabay.res.rr.com [65.35.49.147])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id B11CB3A24B9;
-	Mon, 18 Apr 2005 15:00:35 +0200 (SAST)
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1113827713.5286.13.camel@localhost.localdomain>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	by vulcan.rootr.net (Postfix) with ESMTP id AB0AF3C0A
+	for <git@vger.kernel.org>; Mon, 18 Apr 2005 12:59:47 +0000 (UTC)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050325)
+X-Accept-Language: en-us, en
+In-Reply-To: <426341FC.7090600@dwheeler.com>
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+David A. Wheeler wrote:
+> Does anyone know of any other issues in how git data is stored that
+> might cause problems for some situations?  Windows' case-insensitive/
+> case-preserving model for NTFS and vfat32 seems to be enough
+> (since the case is preserved) so that the format should work,
 
---=-cma7g+74tyWPiX0wOR3k
-Content-Type: multipart/mixed; boundary="=-QdiSK6MagzB+0cDnm7Aq"
+If git is retaining hex naming, and not moving to base64, then I don't
+think what I am about to say is relevant. However, if base64 file naming
+is still being considered, then vfat32 compatibility may be a concern
+(I'm not sure about NTFS). Although it is case-preserving, it actually
+considers both cases as being the same name. So AaA would overwrite aAa.
 
+If I'm doing the math right, we would effectively be ignoring roughly
+one out of 6 base64 bits. This would reduce the collision avoidance
+capability of SHA-1 (on vfat32) from 160 bits to about 133 bits. Still
+strong, and probably acceptable, but worth noting.
 
---=-QdiSK6MagzB+0cDnm7Aq
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+I'll take this opportunity to support David's position that it would be
+fantastic if git could end up being valuable for a wide range of
+projects, rather than just the kernel. I also fully understand that the
+kernel is the primary target, but when there are opportunities to make
+the data structures more generally useful without causing problems for
+the kernel project, I hope they are taken.
 
-On Mon, 2005-04-18 at 22:35 +1000, David Woodhouse wrote:
-> On Mon, 2005-04-18 at 12:36 +0200, Martin Schlemmer wrote:
-> > realgecos[strchr(realgecos, ',') - realgecos] =3D '\0';
->=20
-> Er, *strchr(realgecos, ',') =3D 0; surely? Even if the compiler is clever
-> enough to optimise out the gratuitous addition and subtraction, that's
-> no real excuse for it.
->=20
+Thanks,
 
-Err, right.  Updated patch.
-
-The gecos is delimited by ',' or ';', so we should only use whatever
-before the first ',' or ';' for the full name, and not just strip those.
-
-Signed-off-by: Martin Schlemmer <azarah@gentoo.org>
-
-commit-tree.c: ec53a4565ec0033aaf6df2a48d233ccf4823e8b0
---- 1/commit-tree.c
-+++ 2/commit-tree.c     2005-04-18 12:22:18.000000000 +0200
-@@ -96,21 +96,6 @@
-                if (!c)
-                        break;
-        }
--
--       /*
--        * Go back, and remove crud from the end: some people
--        * have commas etc in their gecos field
--        */
--       dst--;
--       while (--dst >=3D p) {
--               unsigned char c =3D *dst;
--               switch (c) {
--               case ',': case ';': case '.':
--                       *dst =3D 0;
--                       continue;
--               }
--               break;
--       }
- }
-
- static const char *month_names[] =3D {
-@@ -313,6 +298,11 @@
-        if (!pw)
-                die("You don't exist. Go away!");
-        realgecos =3D pw->pw_gecos;
-+       /* The name is seperated from the room no., tel no, etc via [,;] */
-+       if (strchr(realgecos, ','))
-+               *strchr(realgecos, ',') =3D 0;
-+       else if (strchr(realgecos, ';'))
-+               *strchr(realgecos, ';') =3D 0;
-        len =3D strlen(pw->pw_name);
-        memcpy(realemail, pw->pw_name, len);
-        realemail[len] =3D '@';
-
-
---=20
-Martin Schlemmer
-
-
---=-QdiSK6MagzB+0cDnm7Aq
-Content-Disposition: attachment; filename=git-gecos.patch
-Content-Type: text/x-patch; name=git-gecos.patch; charset=UTF-8
-Content-Transfer-Encoding: base64
-
-Y29tbWl0LXRyZWUuYzogZWM1M2E0NTY1ZWMwMDMzYWFmNmRmMmE0OGQyMzNjY2Y0ODIzZThiMA0K
-LS0tIDEvY29tbWl0LXRyZWUuYw0KKysrIDIvY29tbWl0LXRyZWUuYwkyMDA1LTA0LTE4IDEyOjIy
-OjE4LjAwMDAwMDAwMCArMDIwMA0KQEAgLTk2LDIxICs5Niw2IEBADQogCQlpZiAoIWMpDQogCQkJ
-YnJlYWs7DQogCX0NCi0NCi0JLyoNCi0JICogR28gYmFjaywgYW5kIHJlbW92ZSBjcnVkIGZyb20g
-dGhlIGVuZDogc29tZSBwZW9wbGUNCi0JICogaGF2ZSBjb21tYXMgZXRjIGluIHRoZWlyIGdlY29z
-IGZpZWxkDQotCSAqLw0KLQlkc3QtLTsNCi0Jd2hpbGUgKC0tZHN0ID49IHApIHsNCi0JCXVuc2ln
-bmVkIGNoYXIgYyA9ICpkc3Q7DQotCQlzd2l0Y2ggKGMpIHsNCi0JCWNhc2UgJywnOiBjYXNlICc7
-JzogY2FzZSAnLic6DQotCQkJKmRzdCA9IDA7DQotCQkJY29udGludWU7DQotCQl9DQotCQlicmVh
-azsNCi0JfQ0KIH0NCiANCiBzdGF0aWMgY29uc3QgY2hhciAqbW9udGhfbmFtZXNbXSA9IHsNCkBA
-IC0zMTMsNiArMjk4LDExIEBADQogCWlmICghcHcpDQogCQlkaWUoIllvdSBkb24ndCBleGlzdC4g
-R28gYXdheSEiKTsNCiAJcmVhbGdlY29zID0gcHctPnB3X2dlY29zOw0KKwkvKiBUaGUgbmFtZSBp
-cyBzZXBlcmF0ZWQgZnJvbSB0aGUgcm9vbSBuby4sIHRlbCBubywgZXRjIHZpYSAnLCcgb3IgJzsn
-ICovDQorCWlmIChzdHJjaHIocmVhbGdlY29zLCAnLCcpKQ0KKwkJKnN0cmNocihyZWFsZ2Vjb3Ms
-ICcsJykgPSAwOw0KKwllbHNlIGlmIChzdHJjaHIocmVhbGdlY29zLCAnOycpKQ0KKwkJKnN0cmNo
-cihyZWFsZ2Vjb3MsICc7JykgPSAwOw0KIAlsZW4gPSBzdHJsZW4ocHctPnB3X25hbWUpOw0KIAlt
-ZW1jcHkocmVhbGVtYWlsLCBwdy0+cHdfbmFtZSwgbGVuKTsNCiAJcmVhbGVtYWlsW2xlbl0gPSAn
-QCc7DQo=
-
-
---=-QdiSK6MagzB+0cDnm7Aq--
-
---=-cma7g+74tyWPiX0wOR3k
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBCY67sqburzKaJYLYRAvg6AJ9aVeQTzPCNyVczEz4HY+XOI1SL4gCfQzIz
-Wlntmq38c/E5y3FZrbjme70=
-=Cz17
------END PGP SIGNATURE-----
-
---=-cma7g+74tyWPiX0wOR3k--
-
+Kevin
