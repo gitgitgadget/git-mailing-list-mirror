@@ -1,68 +1,49 @@
-From: David Greaves <david@dgreaves.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Add + Status patches
-Date: Mon, 18 Apr 2005 23:18:12 +0100
-Message-ID: <42643224.60407@dgreaves.com>
-References: <42641AE4.9050700@dgreaves.com> <7v64yju7er.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 18 Apr 2005 15:25:28 -0700
+Message-ID: <7v1x97u3hj.fsf@assigned-by-dhcp.cox.net>
+References: <42641AE4.9050700@dgreaves.com>
+	<7v64yju7er.fsf@assigned-by-dhcp.cox.net>
+	<42643224.60407@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 00:15:30 2005
+X-From: git-owner@vger.kernel.org Tue Apr 19 00:21:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNeVp-0007zv-7D
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 00:14:39 +0200
+	id 1DNece-0000L9-Rz
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 00:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261193AbVDRWSg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 18:18:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261194AbVDRWSg
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 18:18:36 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:32412 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261193AbVDRWSO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 18:18:14 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id C1D1FE6D81; Mon, 18 Apr 2005 23:16:39 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 08274-11; Mon, 18 Apr 2005 23:16:39 +0100 (BST)
-Received: from oak.dgreaves.com (modem-3514.leopard.dialup.pol.co.uk [217.135.157.186])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 2ED96E6D7A; Mon, 18 Apr 2005 23:16:39 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DNeZI-0005KP-Jh; Mon, 18 Apr 2005 23:18:12 +0100
-User-Agent: Debian Thunderbird 1.0 (X11/20050116)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64yju7er.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.90.0.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
+	id S261152AbVDRWZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 18:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261158AbVDRWZg
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 18:25:36 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:59893 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261152AbVDRWZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 18:25:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050418222527.YYZC1497.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 18 Apr 2005 18:25:27 -0400
+To: David Greaves <david@dgreaves.com>
+In-Reply-To: <42643224.60407@dgreaves.com> (David Greaves's message of "Mon,
+ 18 Apr 2005 23:18:12 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+>>>>> "DG" == David Greaves <david@dgreaves.com> writes:
 
->DG> It allows:
->DG>  find src -type f | git add -
->
->I am slow today, but have you considered using xargs?
->
->  
->
-yep thanks :)
-I know you _could_ do it with xargs - but you _could_ use the raw git 
-commands too. This is a "be nice to the user" layer and I was 
-'surprised' that neither
-git add .
-nor
-git add -r .
-worked.
+DG> ... neither
+DG> git add .
+DG> nor
+DG> git add -r .
+DG> worked.
 
-That meant that I had to fix it so I started with the ability to handle 
-a list and, since I got a friendly response, I can hopefully move on to 
-help make git nicer to use for mere mortals.
+These would be much much much nicer than pipe the list of
+filenames from stdin which reminds me of cpio ;-).
 
-David
