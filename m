@@ -1,82 +1,97 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: A couple of questions
-Date: Mon, 18 Apr 2005 08:31:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504180825280.7211@ppc970.osdl.org>
-References: <42639F24.90007@ime.usp.br>
+Subject: Re: Darcs and git: plan of action
+Date: Mon, 18 Apr 2005 08:38:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504180832330.7211@ppc970.osdl.org>
+References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr>
+	<20050418122011.GA13769@abridgegame.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 17:26:29 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Mon Apr 18 17:34:06 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNY86-0002co-8j
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 17:25:42 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262103AbVDRP3i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 11:29:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262105AbVDRP3i
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 11:29:38 -0400
-Received: from fire.osdl.org ([65.172.181.4]:5355 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262103AbVDRP3b (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 11:29:31 -0400
+	id 1DNYFA-0003pp-Oz
+	for gcvdd-darcs-devel@m.gmane.org; Mon, 18 Apr 2005 17:33:01 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DNYIy-0006hY-Id; Mon, 18 Apr 2005 11:36:56 -0400
+Received: from fire.osdl.org ([65.172.181.4] helo=smtp.osdl.org)
+	by abridgegame.org with esmtp (Exim 4.50) id 1DNYIu-0006gj-07
+	for darcs-devel@darcs.net; Mon, 18 Apr 2005 11:36:52 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3IFTRs4000406
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3IFaSs4000959
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 18 Apr 2005 08:29:27 -0700
+	Mon, 18 Apr 2005 08:36:28 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3IFTQ6t017749;
-	Mon, 18 Apr 2005 08:29:26 -0700
-To: Imre Simon <is@ime.usp.br>
-In-Reply-To: <42639F24.90007@ime.usp.br>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3IFaR54018114;
+	Mon, 18 Apr 2005 08:36:27 -0700
+To: David Roundy <droundy@abridgegame.org>
+In-Reply-To: <20050418122011.GA13769@abridgegame.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
 X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
 
 
-On Mon, 18 Apr 2005, Imre Simon wrote:
->
-> How will git handle a corrupted (git) file system?
+On Mon, 18 Apr 2005, David Roundy wrote:
 > 
-> For instance, what can be done if objects/xy/z{38} does not pass the
-> simple consistency test, i.e. if the file's sha1 hash is not xyz{38}?
-> This might be a serious problem because, in general, one cannot
-> reconstruct the contents of file objects/xy/z{38} from its name
-> xyz{38}.
+> I'm cc'ing you on this email, since Juliusz had some interesting ideas as
+> to how darcs could interact with git, which then gave me an idea concerning
+> which I'd like feedback from you.  In particular, it would make life (that
+> is, life interacting back and forth with git) easier if we were to embed
+> darcs patches in their entirety in the git comment block.
 
-Nothing beats backups and distribution. The distributed nature of git 
-means that you can replicate your objects abitrarily.
+Hell no.
 
-> Another problem might come up if the file does pass the simple
-> consistency test but the file's contents is not a valid git file,
+The commit _does_ specify the patch uniquely and exactly, so I really 
+don't see the point. You can always get the patch by just doing a
 
-Run "fsck-cache". It not only tests SHA1 and general object sanity, but it
-does full tracking of the resulting reachability and everything else. It
-prints out any corruption it finds (missing or bad objects), and if you
-use the "--unreachable" flag it will also print out objects that exist but 
-that aren't readable from any of the HEAD nodes (which you need to 
-specify).
+	git diff $parent_tree $thistree
 
-So for example
+so putting the patch in the comment is not an option.
 
-	fsck-cache --unreachable $(cat .git/HEAD)
+Then you can use the patch to index to whatever extra "darcs index" 
+information you want to.
 
-will do quite a _lot_ of verification on the tree. There are a few extra 
-validity tests I'm going to add (make sure that tree objects are sorted 
-properly etc), but on the whole if "fsck-cache" is happy, you do have a 
-valid tree.
+> As I say, it's a bit ugly, and before we explore the idea further, it would
+> be nice to know if this would cause Linus to vomit in disgust and/or refuse
+> patches from darcs users.
 
-Any corrupt objects you will have to find in backups or other archives (ie
-you can just remove them and do an "rsync" with some other site in the
-hopes that somebody else has the object you have corrupted).
+That's definitely the case. I will _not_ be taking random files etc just 
+to keep other peoples stuff straightened up.
 
-Of course, "valid tree" doesn't mean that it wasn't generated by some evil 
-person, and the end result might be crap. Git is a revision tracking 
-system, not a quality assurance system ;)
+If you want to add a "log ID", you can certainly do that, but the data the 
+ID refers to is _you_ data, and will not go into the git archive. So:
 
-		Linus
+> Another slightly less noxious possibility would
+> be to store the darcs patch as a "hidden" file, if git were given the
+> concept of commit-specific files.
+
+No, git will not track commit-specific files. There's the comment section,
+and that _is_ the commit-specific file. But I will refuse to take any
+comments that aren't just human-readable explanations, together with maybe 
+one extra line of
+
+	# Darcs ID: 780c057447d4feef015a905aaf6c87db894ff58c
+
+(others will want to track _their_ PR numbers etc) and that's it. The 
+actual darcs data that that ID refers to can obviously be maintained in 
+_another_ git archive, but it's not one I'm going to carry about.
+
+			Linus
