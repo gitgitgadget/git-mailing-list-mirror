@@ -1,59 +1,55 @@
-From: Petr Baudis <pasky@ucw.cz>
+From: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: full kernel history, in patchset format
-Date: Mon, 18 Apr 2005 02:50:32 +0200
-Message-ID: <20050418005032.GE1461@pasky.ji.cz>
-References: <20050416131528.GB19908@elte.hu> <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org> <1113780698.11910.8.camel@localhost.localdomain> <20050417233936.GV1461@pasky.ji.cz> <1113782805.11910.36.camel@localhost.localdomain> <20050418003526.GD1461@pasky.ji.cz> <1113785123.11910.43.camel@localhost.localdomain>
+Date: Mon, 18 Apr 2005 10:51:59 +1000
+Message-ID: <1113785521.11910.45.camel@localhost.localdomain>
+References: <20050416131528.GB19908@elte.hu>
+	 <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+	 <1113780698.11910.8.camel@localhost.localdomain>
+	 <20050417233936.GV1461@pasky.ji.cz>
+	 <1113782805.11910.36.camel@localhost.localdomain>
+	 <20050418003526.GD1461@pasky.ji.cz>
+	 <1113785123.11910.43.camel@localhost.localdomain>
+	 <20050418005032.GE1461@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@osdl.org>, Ingo Molnar <mingo@elte.hu>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 02:47:01 2005
+X-From: git-owner@vger.kernel.org Mon Apr 18 02:48:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNKPg-0002V8-U8
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 02:46:57 +0200
+	id 1DNKRE-0002ce-Js
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 02:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261359AbVDRAup (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 20:50:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261364AbVDRAup
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 20:50:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10395 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261359AbVDRAud (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 20:50:33 -0400
-Received: (qmail 3267 invoked by uid 2001); 18 Apr 2005 00:50:32 -0000
-To: David Woodhouse <dwmw2@infradead.org>
-Content-Disposition: inline
-In-Reply-To: <1113785123.11910.43.camel@localhost.localdomain>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261364AbVDRAwX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 20:52:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261374AbVDRAwX
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 20:52:23 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:52169 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261364AbVDRAwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 20:52:21 -0400
+Received: from [150.203.247.9] (helo=[172.24.3.18])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DNKUr-0003Vu-80; Mon, 18 Apr 2005 01:52:19 +0100
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050418005032.GE1461@pasky.ji.cz>
+X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, Apr 18, 2005 at 02:45:22AM CEST, I got a letter
-where David Woodhouse <dwmw2@infradead.org> told me that...
-> On Mon, 2005-04-18 at 02:35 +0200, Petr Baudis wrote:
-> > > For the special case of removing history before 2.6.12-rc2 from the
-> > > trees, I certainly think we can do it by leaving out all the commits,
-> > > not just the trees. We can do that easily, but there's no way we can
-> > > _add_ that history retrospectively if we omit it in the first place.
-> > 
-> > I'm confused by this paragraph, but that might be my English skills
-> > failing somehow.
-> 
-> "For the general case of people pruning their own trees, _maybe_ you're
-> right that it would be good to keep the commits even if we delete the
-> actual trees. But for history older than 2.6.12-rc2, that's a special
-> case -- I think we can happily delete the commits too.
+On Mon, 2005-04-18 at 02:50 +0200, Petr Baudis wrote:
+> I think I will make git-pasky's default behaviour (when we get
+> http-pull, that is) to keep the complete commit history but only trees
+> you need/want; togglable to both sides.
 
-Ah _so_. Thanks for explanation.
-
-I think I will make git-pasky's default behaviour (when we get
-http-pull, that is) to keep the complete commit history but only trees
-you need/want; togglable to both sides.
+I think the default behaviour should probably be to fetch everything.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+dwmw2
+
