@@ -1,116 +1,100 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Re-done kernel archive - real one?
 Date: Mon, 18 Apr 2005 13:15:25 +0200
-Message-ID: <1113822925.16288.22.camel@nosferatu.lan>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
-	 <20050417170539.B13233@flint.arm.linux.org.uk>
-	 <Pine.LNX.4.58.0504170937020.7211@ppc970.osdl.org>
-	 <4262A767.4040300@dwheeler.com>
-	 <20050417192000.C13233@flint.arm.linux.org.uk>
-Reply-To: azarah@nosferatu.za.org
+Message-ID: <20050418111525.GN1461@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-B2p416qaOvOs8IsHKIPF"
-Content-Transfer-Encoding: 8bit
-Cc: "David A. Wheeler" <dwheeler@dwheeler.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Peter Anvin <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 13:09:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 18 13:12:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNU7A-0006GO-GI
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 13:08:28 +0200
+	id 1DNUAW-0006ic-HL
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 13:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262036AbVDRLMW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 07:12:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262034AbVDRLMW
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 07:12:22 -0400
-Received: from ctb-mesg5.saix.net ([196.25.240.77]:47064 "EHLO
-	ctb-mesg5.saix.net") by vger.kernel.org with ESMTP id S262036AbVDRLLp
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 07:11:45 -0400
-Received: from gateway.lan (wblv-146-244-27.telkomadsl.co.za [165.146.244.27])
-	by ctb-mesg5.saix.net (Postfix) with ESMTP id DDFF86B39;
-	Mon, 18 Apr 2005 13:11:35 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id 69AEF3A26DC;
-	Mon, 18 Apr 2005 13:17:48 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 19808-08; Mon, 18 Apr 2005 13:17:43 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id E58AC3A26DA;
-	Mon, 18 Apr 2005 13:17:42 +0200 (SAST)
+	id S262032AbVDRLPr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 07:15:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262037AbVDRLPr
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 07:15:47 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:3748 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262032AbVDRLP3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 07:15:29 -0400
+Received: (qmail 2288 invoked by uid 2001); 18 Apr 2005 11:15:25 -0000
 To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050417192000.C13233@flint.arm.linux.org.uk>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+Content-Disposition: inline
+In-Reply-To: <20050418102332.A21081@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Mon, Apr 18, 2005 at 11:23:32AM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> Ok, I just tried pulling your tree into the tree you pulled from, and
+> got this:
+> 
+> Tree change: e7905b2f22eb5d5308c9122b9c06c2d02473dd4f ee423ea56280512778a5961ee58a785a73acb7d1
+> ...
+> *100644->100644 blob    46f0a3caae02b4bb8f903d7ac86456aa0c37954b->ba4afd7956173b6f89eb6b0b9ad23b392d5c0aee      arch/arm/kernel/process.c
+> *100644->100644 blob    4a36fa7192e11df36f5e0928b064239dabe1e305->ec0bc8f315ab5d78a4220e176e7aee76d52d1c74      arch/arm/kernel/traps.c
+> *100644->100644 blob    311d19ee00208faf02359f9e7c5394577a40f253->bf923a953703c6ca0c88eac3b2850cf07b838996      arch/arm/lib/changebit.S
+> *100644->100644 blob    c07afa31695654e6489ec59c3f837183b325e9da->41f89b3a393d5af939f04f63c5bf4991b2bf6599      arch/arm/lib/clearbit.S
+> ...
+> Tracked branch, applying changes...
+> Merging e7905b2f22eb5d5308c9122b9c06c2d02473dd4f -> ee423ea56280512778a5961ee58a785a73acb7d1
+>         to df4449813c900973841d0fa5a9e9bc7186956e1e...
+> COPYING: needs update
+> CREDITS: needs update
+> Documentation/00-INDEX: needs update
+> Documentation/BK-usage/00-INDEX: needs update
+> ...
+> patching file arch/arm/kernel/process.c
+> Reversed (or previously applied) patch detected!  Skipping patch.
+> 2 out of 2 hunks ignored -- saving rejects to file arch/arm/kernel/process.c.rejpatching file arch/arm/kernel/traps.c
+> Reversed (or previously applied) patch detected!  Skipping patch.
+> 3 out of 3 hunks ignored -- saving rejects to file arch/arm/kernel/traps.c.rej
+> patching file arch/arm/lib/changebit.S
+> Reversed (or previously applied) patch detected!  Skipping patch.
+> 2 out of 2 hunks ignored -- saving rejects to file arch/arm/lib/changebit.S.rej
+> patching file arch/arm/lib/clearbit.S
+> Reversed (or previously applied) patch detected!  Skipping patch.
+> 2 out of 2 hunks ignored -- saving rejects to file arch/arm/lib/clearbit.S.rej
+> 
+> so obviously git pull isn't able to indentify what's already in the
+> local repository.
 
---=-B2p416qaOvOs8IsHKIPF
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+For unknown reason, patch sucks at this, even if I pass it
 
-On Sun, 2005-04-17 at 19:20 +0100, Russell King wrote:
-> On Sun, Apr 17, 2005 at 02:13:59PM -0400, David A. Wheeler wrote:
-> > On Sun, 17 Apr 2005, Russell King wrote:
-> > >>BTW, there appears to be "errors" in the history committed thus far.
-> > >>I'm not sure where this came from though.  Some of them could be
-> > >>UTF8 vs ASCII issues, ....>=20
-> > ...
-> > >>One thing which definitely needs to be considered is - what character
-> > >>encoding are the comments to be stored as?
-> >=20
-> > Linus Torvalds replied:
-> > > To git, it's just a byte stream, and you can have binary comments if =
-you
-> > > want to. I personally would prefer to move towards UTF eventually, bu=
-t I
-> > > really don't think it matters a whole lot as long as 99.9% of everyth=
-ing
-> > > we'd see there is still 7-bit ascii.
-> >=20
-> > I would _heartily_ recommend moving towards UTF-8 as the
-> > internal charset for all comments.  Alternatives are possible
-> > (e.g., recording the charset in the header), but they're
-> > incredibly messy.  Even if you don't normally work in UTF-8,
-> > it's pretty easy to set most editors up to read & write UTF-8.
-> > Having the data stored as a constant charset eliminates
-> > a raft of error-prone code.
->=20
-> Except, I believe, MicroEMACS, which both Linus and myself use.  As
-> far as I know, there aren't any patches to make it UTF-8 compliant.
->=20
-> The alternative is, I suppose, iconv.  However, iconv in _my_ glibc
-> seems buggy (segfaults) and my efforts for building glibc 2.3.2 for
-> ARM have failed.  Effectively that means iconv is inaccessible to
-> me.
->=20
+-N  or  --forward
+  Ignore patches that seem to be reversed or already applied.  See also -R.
 
-OT, and probably not much help, but glibc-2.3.5 is out ...
+:-(
 
+git merge does not use the in-GIT merging capabilities yet.
 
---=20
-Martin Schlemmer
+Could you do
 
+	merge-base $(tree-id ee423ea56280512778a5961ee58a785a73acb7d1) \
+		$(tree-id df4449813c900973841d0fa5a9e9bc7186956e1e)
 
---=-B2p416qaOvOs8IsHKIPF
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+and check if it returns e7905b2f22eb5d5308c9122b9c06c2d02473dd4f, please?
+I guess it won't. So you could try to wipe the -b "$orig_head" from
+gitmerge.sh invocation in gitpull.sh.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+> Interestingly, the files listed above as having rejects are excluded
+> from the list of "needs update".  And I don't know why git is staying
+> that these files need updating, because they haven't changed since
+> they were initially checked out.
 
-iD8DBQBCY5bNqburzKaJYLYRAuINAJ9BTszz4MHsawD0w+zZqUnMoEFKEwCfeM1f
-1qCEz9u4Wk/lwnM38xAfxQg=
-=+hGH
------END PGP SIGNATURE-----
+Because it is checking out only the files which changed (pass -a to git
+merge to check out everything; I will probably make git pull take a -m
+argument which will take merge arguments ;). And then it does
+update-cache --refresh which complains about missing files. :/
 
---=-B2p416qaOvOs8IsHKIPF--
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
