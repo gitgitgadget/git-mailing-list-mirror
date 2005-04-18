@@ -1,66 +1,62 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: full kernel history, in patchset format
-Date: Mon, 18 Apr 2005 11:36:48 +1000
-Message-ID: <1113788210.11910.52.camel@localhost.localdomain>
-References: <20050416131528.GB19908@elte.hu>
-	 <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
-	 <1113780698.11910.8.camel@localhost.localdomain>
-	 <20050417233936.GV1461@pasky.ji.cz>
-	 <1113782805.11910.36.camel@localhost.localdomain>
-	 <20050418003526.GD1461@pasky.ji.cz>
-	 <Pine.LNX.4.58.0504171816040.7211@ppc970.osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [4/5] Add option for hardlinkable cache of extracted blobs
+Date: Mon, 18 Apr 2005 03:48:58 +0200
+Message-ID: <20050418014858.GI1461@pasky.ji.cz>
+References: <20050417195935.GI1461@pasky.ji.cz> <Pine.LNX.4.21.0504171600310.30848-100000@iabervon.org> <20050417201856.GJ1461@pasky.ji.cz> <20050417183508.15beb1fd.pj@sgi.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, Ingo Molnar <mingo@elte.hu>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 03:33:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: barkalow@iabervon.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 03:45:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNL8h-0005cr-Jz
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:33:27 +0200
+	id 1DNLK3-0006bw-HY
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261583AbVDRBhO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 21:37:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261585AbVDRBhO
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 21:37:14 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:19914 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S261583AbVDRBhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 21:37:07 -0400
-Received: from [150.203.247.9] (helo=[172.24.3.18])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DNLCC-0003cJ-Lo; Mon, 18 Apr 2005 02:37:06 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504171816040.7211@ppc970.osdl.org>
-X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261586AbVDRBtC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 21:49:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261587AbVDRBtC
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 21:49:02 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:16284 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261586AbVDRBs7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 21:48:59 -0400
+Received: (qmail 8627 invoked by uid 2001); 18 Apr 2005 01:48:58 -0000
+To: Paul Jackson <pj@sgi.com>
+Content-Disposition: inline
+In-Reply-To: <20050417183508.15beb1fd.pj@sgi.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-04-17 at 18:16 -0700, Linus Torvalds wrote:
-> Alternatively, you can have just the rev-tree cache of them. That's what
-> it was designed for (along with avoiding to have to read 60,000 commits).
+Dear diary, on Mon, Apr 18, 2005 at 03:35:08AM CEST, I got a letter
+where Paul Jackson <pj@sgi.com> told me that...
+> Petr wrote:
+> > The documentation I've got says:
+> > 
+> > "R_OK,  W_OK  and  X_OK request checking whether the file exists and has
+> >  read, write and execute permissions, respectively.  F_OK just requests
+> >  checking for the existence of the file."
+> 
+> You don't exactly say it, but I'm guessing that you think that this
+> documentation is stating that F_OK checks for the existance of the file
+> _regardless_ of path access permissions.
+> 
+> No so.  Write your own little test program, and/or read the kernel source.
+> 
+> Even if the file exists, if its directory entry is not accessible to the
+> _real_ uid/gid, access F_OK will fail.  If the problem is a lack of
+> seach permissions on some directory in the path, the errno will be
+> EACCES.
 
-Purely from a conceptual POV I'd be a little happier with the history
-just ending with a parent pointer to a commit object which is absent,
-rather than having commit objects which point to _trees_ which are
-absent. But I suppose I can't really justify that, and I'm not overly
-bothered about it either.
+Ok, I stand corrected; and when giving the access(2) manual page a
+second look, it could imply that too. It has some room for more
+crystal-clearness, though. ;-)
 
-The important thing to get right at this point is that the tree we all
-work with should refer to the history, regardless of how we choose to
-prune it. The current linux-2.6.git tree has a parentless commit for the
-2.6.12-rc2 import, which is bad. We should start with Thomas' git tree
-representing the real history, and work from that. You don't even need
-to see his tree; you only need the final sha1 hash of the commit in his
-tree which matches 2.6.12-rc2, so you can use that as the 'parent' of
-the first change you import yourself.
+Thanks,
 
 -- 
-dwmw2
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
