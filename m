@@ -1,76 +1,73 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: SHA1 hash safety
-Date: Sun, 17 Apr 2005 20:09:48 -0400
-Message-ID: <20050418000946.GA7172@thunk.org>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <20050416151116.GC19099@pasky.ji.cz> <Pine.LNX.4.61.0504161114530.29343@cag.csail.mit.edu> <Pine.LNX.4.62.0504161549410.22652@qynat.qvtvafvgr.pbz> <20050416161153.534b47d5.pj@sgi.com> <4261E84D.6040208@dwheeler.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] "checkout-cache -m" writes unmerged contents for each
+ stage.
+Date: Sun, 17 Apr 2005 19:44:04 -0700
+Message-ID: <7vfyxovm6j.fsf@assigned-by-dhcp.cox.net>
+References: <7v1x99vwdg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504171833450.7211@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Jackson <pj@sgi.com>, David Lang <dlang@digitalinsight.com>,
-	cscott@cscott.net, pasky@ucw.cz, omb@bluewin.ch, mingo@elte.hu,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 04:38:55 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 04:40:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNM9y-00027b-NY
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 04:38:50 +0200
+	id 1DNMBU-0002FA-CG
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 04:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261614AbVDRCmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 22:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261615AbVDRCmo
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 22:42:44 -0400
-Received: from THUNK.ORG ([69.25.196.29]:42719 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S261614AbVDRCmi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 22:42:38 -0400
-Received: from root (helo=thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 3.35 #1 (Debian))
-	id 1DNMDE-0000qV-00; Sun, 17 Apr 2005 22:42:13 -0400
-Received: from tytso by thunk.org with local (Exim 4.50)
-	id 1DNJpk-0001u3-SY; Sun, 17 Apr 2005 20:09:48 -0400
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-Content-Disposition: inline
-In-Reply-To: <4261E84D.6040208@dwheeler.com>
-User-Agent: Mutt/1.5.8i
+	id S261615AbVDRCoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 22:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261619AbVDRCoP
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 22:44:15 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:39390 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261615AbVDRCoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 22:44:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050418024403.UMAD9923.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Apr 2005 22:44:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504171833450.7211@ppc970.osdl.org> (Linus
+ Torvalds's message of "Sun, 17 Apr 2005 19:05:53 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 17, 2005 at 12:38:37AM -0400, David A. Wheeler wrote:
-> The probability of an accidental overlap for SHA-1 for two
-> different files is absurdly remote; it's just not worth worrying about.
-> 
-> However, the possibility of an INTENTIONAL overlap is a completely
-> different matter.  I think the hash algorithm should change in the
-> future; I have a proposal below.
-> 
-> Someone has ALREADY broken into a server to modify the Linux kernel
-> code already, so the idea of an attack on kernel code
-> is not an idle fantasy. MD5 is dead, and SHA-1's work factor has
-> already been sufficiently broken that people have already been told
-> "walk to the exits" (i.e., DO NOT USE SHA-1 for new programs like git).
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-We're very clearly going to need a FAQ for git.
+LT> I'm actually thinking that maybe the _right_ interface is to do something 
+LT> like this:
 
-SHA-1's work factor has been decreased to 2**69 from 2**80 for
-generating two messages that have the same hash value, WHERE THE HASH
-VALUE AND THE MESSAGES ARE NOT UNDER THE ATTACKER'S CONTROL.  This is
-not the same as a pre-image attack, where given a message M1 which
-hashes to value H, the attacker can find another message M2 which also
-hashes to value H.  In even if the attacker can do this, the result
-has to have valid git metadata format, and also be valid C code.
+LT> 	merge-cache <program> <filename>
 
-So the the recent result which has weakened (but not broken) SHA-1's
-use in digital signatures, and which has resulted in the advice to
-"walk not run" for the exits, do not apply to git.
+LT> and what that does is to look up the <filename> in the cache, and if it 
+LT> has any merge entries, unpack all of them (which may be just one file, of 
+LT> course) into up to three separate files (mkstemp()), and then execve the 
+LT> supplied program name with those three files as arguments 1,2,3 (empty 
+LT> argument if no file), and "filename" as argument 4.
 
-Can we guarantee that there won't be further innovations that may
-break SHA-1?  Of course not.  But an attacker who wants to introduced
-a trojan into the Linux kernel would have a much easier time doing a
-"black bag job" --- i.e., breaking into Linus's house in Portland, and
-then inserting a buggered patch into his master source tree.
+LT> What do you think? I can whip up a "merge-cache" program like that in five 
+LT> minutes, and it _seems_ like the right interface..
 
-If you're going to be a professional paranoid, it's best to worry
-about the realistic attacks before stressing out over the unrealistic
-ones.
+One small detail.  What about the "-x" bit?
 
-						- Ted
+In case 2 and 3 in your sample merge script, the "merge script"
+needs to know what the preferred mode bits are before running
+"update-cache --add".
+
+Yes, it can figure that out by running "show-files --unmerged"
+and grepping for "$4" by itself, but then it can figure out the
+information in "$1" through "$3" by itself as well, so that
+makes having merge-cache wrapper less useful to begin with.
+
+I do not think it is realistic for these three related trees to
+have files that differ in -x bit, so it would not be that useful
+to give the "merge script" the flexibility to pick -x bit value
+among three parents --- it would be fine for the merge-cache
+wrapper to dictate the value of the -x bit for the resulting
+file.  So I'd suggest to add an extra parameter to the "merge
+script" when merge-cache wrapper calls it.
+
