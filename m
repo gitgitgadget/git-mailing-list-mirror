@@ -1,82 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: SCSI trees, merges and git status
-Date: Mon, 18 Apr 2005 16:23:24 -0700
-Message-ID: <7vmzrvsm8j.fsf@assigned-by-dhcp.cox.net>
-References: <1113856118.4998.70.camel@mulgrave>
-	<Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: Re-done kernel archive - real one?
+Date: Mon, 18 Apr 2005 16:26:08 -0700
+Message-ID: <20050418232607.GA20907@kroah.com>
+References: <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418150456.GC12750@kroah.com> <Pine.LNX.4.58.0504180840370.7211@ppc970.osdl.org> <20050418220541.GB19744@kroah.com> <20050418221407.GA20290@kroah.com> <Pine.LNX.4.58.0504181613490.15725@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Apr 19 01:19:57 2005
+Cc: Russell King <rmk@arm.linux.org.uk>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 01:23:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNfWz-0006Xb-3I
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:19:53 +0200
+	id 1DNfaC-0006rE-7i
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:23:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261190AbVDRXXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 19:23:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261192AbVDRXXy
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:23:54 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:28891 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261190AbVDRXXv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 19:23:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050418232324.PFTU4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 18 Apr 2005 19:23:24 -0400
+	id S261197AbVDRX0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 19:26:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVDRX0x
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:26:53 -0400
+Received: from mail.kroah.org ([69.55.234.183]:40625 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261197AbVDRX0k (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 19:26:40 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3INQTi03499;
+	Mon, 18 Apr 2005 16:26:29 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DNfd2-5Sp-00; Mon, 18 Apr 2005 16:26:08 -0700
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org> (Linus
- Torvalds's message of "Mon, 18 Apr 2005 14:39:09 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504181613490.15725@ppc970.osdl.org>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+On Mon, Apr 18, 2005 at 04:16:45PM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Mon, 18 Apr 2005, Greg KH wrote:
+> > 
+> > Anyway, I try it this way and get:
+> 
+> You should update to the newest version anyway..
+> 
+> > $ dotest ~/linux/patches/usb/usb-visor-tapwave_zodiac.patch             
+> > 
+> > Applying USB: visor Tapwave Zodiac support patch
+> > 
+> > fatal: preparing to update file 'drivers/usb/serial/visor.c' not uptodate in cache
+> > 
+> > What did I forget to do?
+> 
+> The most common reason is that the scripts _really_ want the index to 
+> match your current tree exactly. Run "update-cache --refresh". And if you 
+> have any uncommitted information, make sure to commit it first.
 
-LT> Merged. Here's the command line history:
+Ah, that was the step I was missing, thanks, it's working now.
 
-LT> 	~/git/git-pull-script \
-LT>        rsync://www.parisc-linux.org/~jejb/scsi-rc-fixes-2.6.git
-
-Maybe it is just me, but I have this setup:
-
-    $ /bin/ls -lF .git
-    total 20
-    -rw-rw-r--  1 junio src     41 Apr 18 16:03 HEAD
-    -rw-rw-r--  1 junio junio   41 Apr 18 15:07 MERGE_HEAD
-    -rw-------  1 junio src   2720 Apr 18 16:03 index
-    lrwxrwxrwx  1 junio src     18 Apr 18 15:55 objects -> ../../.git/objects/
-
-My point being that .git/objects is a symbolic link and shares
-object database with somewhere else.
-
-However the "Getting object database" part trashed this symlink
-when I tried to pull from my other repo locally.  I am wondering
-it the following might be a better alternative.  A possible
-downside in this approach is that you would not pull .git/heads
-and .git/tags (i.e. Pesky stuff) from the remote anymore.  Is it
-a problem (I am also CC'ing Petr to hear his opinion on this).
-
-If not, please apply.
-
-[PATCH] Do not let rsync obliterate .git/object symbolic link.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-git-pull-script: e27215d3978635558c63859495d97f8114b4ece3
---- a/git-pull-script
-+++ b/git-pull-script
-@@ -6,7 +6,7 @@
- merge_repo=$1
- 
- echo "Getting object database"
--rsync -avz --ignore-existing $merge_repo/ .git/
-+rsync -avz --ignore-existing $merge_repo/objects/. .git/objects/.
- 
- echo "Getting remote head"
- rsync -avz $merge_repo/HEAD .git/MERGE_HEAD
-
+greg k-h
