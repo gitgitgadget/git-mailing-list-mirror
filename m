@@ -1,70 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Re-done kernel archive - real one?
-Date: Mon, 18 Apr 2005 08:42:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504180840370.7211@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
- <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org>
- <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418150456.GC12750@kroah.com>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: A couple of questions
+Date: Mon, 18 Apr 2005 09:23:52 -0700
+Organization: SGI
+Message-ID: <20050418092352.140e7241.pj@sgi.com>
+References: <42639F24.90007@ime.usp.br>
+	<Pine.LNX.4.58.0504180825280.7211@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Russell King <rmk@arm.linux.org.uk>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Peter Anvin <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Mon Apr 18 17:37:36 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: is@ime.usp.br, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 18:23:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNYJ0-0004ZS-FN
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 17:36:58 +0200
+	id 1DNZ0y-0004Fr-C8
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 18:22:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262117AbVDRPkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 11:40:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262119AbVDRPkw
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 11:40:52 -0400
-Received: from fire.osdl.org ([65.172.181.4]:8577 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262117AbVDRPkf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 11:40:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3IFeHs4001391
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 18 Apr 2005 08:40:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3IFeFBN018357;
-	Mon, 18 Apr 2005 08:40:16 -0700
-To: Greg KH <greg@kroah.com>
-In-Reply-To: <20050418150456.GC12750@kroah.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262126AbVDRQZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 12:25:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262131AbVDRQZn
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 12:25:43 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:21414 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S262126AbVDRQZI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 12:25:08 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3II4Kov010235;
+	Mon, 18 Apr 2005 11:04:30 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3IGNvlU15732857;
+	Mon, 18 Apr 2005 09:23:57 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504180825280.7211@ppc970.osdl.org>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus wrote:
+> Nothing beats backups and distribution.
 
+Famous quote from the past:
 
-On Mon, 18 Apr 2005, Greg KH wrote:
->
-> On Sun, Apr 17, 2005 at 04:24:24PM -0700, Linus Torvalds wrote:
-> > 
-> > Tools absolutely matter. And it will take time for us to build up that 
-> > kind of helper infrastructure. So being newbie might be part of it, but 
-> > it's the smaller part, I say. Rough interfaces is a big issue.
-> 
-> Speaking of tools, you had a "dotest" program to apply patches in email
-> form to a bk tree.  And from what I can gather, you've changed that to
-> handle git archives, right?
+"Only wimps use tape backup: real men just upload their important stuff on ftp,
+ and let the rest of the world mirror it ;)" Linus Torvalds
 
-Yup.
-
-It's a git archive at 
-
-	kernel.org:/pub/linux/kernel/people/torvalds/git-tools.git
-
-and it seems to work. It's what I've used for all the kernel patches 
-(except for the merge), and it's what I use for the git stuff that shows 
-up as authored by others.
-
-		Linus
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
