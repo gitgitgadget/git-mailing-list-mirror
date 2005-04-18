@@ -1,72 +1,51 @@
-From: "C. Scott Ananian" <cscott@cscott.net>
-Subject: Re: SHA1 hash safety
-Date: Mon, 18 Apr 2005 13:04:44 -0400 (EDT)
-Message-ID: <Pine.LNX.4.61.0504181252590.1039@cag.csail.mit.edu>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
- <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
- <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
- <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re-done kernel archive - real one?
+Date: Mon, 18 Apr 2005 20:07:37 +0200
+Message-ID: <20050418180737.GA5554@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504180802060.7211@ppc970.osdl.org> <Pine.LNX.4.58.0504181003030.15725@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: omb@bluewin.ch, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 19:02:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 18 20:08:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNZcm-0002u3-EX
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 19:01:29 +0200
+	id 1DNaed-0006Cs-Ui
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 20:07:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262137AbVDRRFY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 13:05:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262138AbVDRRFY
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 13:05:24 -0400
-Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:59029 "EHLO
-	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
-	id S262137AbVDRRFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 13:05:17 -0400
-Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
-	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
-	id 1DNZg6-0004Iy-00; Mon, 18 Apr 2005 13:04:54 -0400
-To: Andy Isaacson <adi@hexapodia.org>
-In-Reply-To: <20050418074323.GA29765@hexapodia.org>
+	id S262168AbVDRSKN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 14:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262158AbVDRSKM
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 14:10:12 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:4011 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262157AbVDRSHo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 14:07:44 -0400
+Received: (qmail 5979 invoked by uid 2001); 18 Apr 2005 18:07:37 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504181003030.15725@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 18 Apr 2005, Andy Isaacson wrote:
+Dear diary, on Mon, Apr 18, 2005 at 07:05:19PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> 
+> 
+> On Mon, 18 Apr 2005, Linus Torvalds wrote:
+> > 
+> > No, that can't work. The pesky tools are helpful [...]
+> > I'm afraid that until Pasky's tools script this properly, [... ]
+> > If Pesky wants to take the above script, test it, [...]
+> 
+> Ok, one out of three isn't too bad, is it? Pesky/Pasky, so close yet so 
+> far. Sorry,
 
-> If you had actual evidence of a collision, I'd love to see it - even if
-> it's just the equivalent of
-> % md5 foo
-> d3b07384d113edec49eaa6238ad5ff00 foo
-> % md5 bar
-> d3b07384d113edec49eaa6238ad5ff00 bar
-> % cmp foo bar
-> foo bar differ: byte 25, line 1
-> %
->
-> But in the absence of actual evidence, we have to assume (just based on
-> the probabilities) that there was some error in your testing.
+No problem. :-) Or you can just call me Petr if you want. ;-)
 
-I've already had a long correspondence with this poster.  He claims that 
-"this happened 7 years ago", involved a "commercial contract covered by 
-Swiss Banking Law" (with caps!) and that, of course, he "certainly doesn't 
-retain [his] client's documents", and even if he *did*, he wouldn't show 
-them to *me*.
-
-And then he was unable to comprehend that I couldn't accept his word alone 
-as prima facie evidence that the laws of probability did not apply to him or 
-his clients.
-
-I've been a coder far too long to attribute to "The Mysterious Hand Of 
-God" what can adequately be described by subtle programmer error.
-
-The most reasonable explanation, given the (lack of) evidence, is that 
-the programmer involved quickly took refuge in a (wildly improbable, but 
-his clients'll never know) "MD5 collision" instead of buckling down and 
-finding the bug in his code.
-  --scott
-
-ODOATH Ortega FBI SGUAT AEBARMAN India Peking ODACID operation RYBAT 
-[Hello to all my fans in domestic surveillance] for Dummies KUCLUB
-                          ( http://cscott.net/ )
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
