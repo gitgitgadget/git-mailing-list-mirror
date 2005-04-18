@@ -1,66 +1,93 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [patch] git: fix 1-byte overflow in show-files.c
-Date: Mon, 18 Apr 2005 01:59:20 +0200
-Message-ID: <20050417235920.GY1461@pasky.ji.cz>
-References: <20050414112638.GA12593@elte.hu> <20050414120834.GA14290@elte.hu> <20050414121819.GA14380@elte.hu> <20050414125354.GB15420@elte.hu>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: full kernel history, in patchset format
+Date: Mon, 18 Apr 2005 10:06:43 +1000
+Message-ID: <1113782805.11910.36.camel@localhost.localdomain>
+References: <20050416131528.GB19908@elte.hu>
+	 <Pine.LNX.4.58.0504160953310.7211@ppc970.osdl.org>
+	 <1113780698.11910.8.camel@localhost.localdomain>
+	 <20050417233936.GV1461@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 01:55:36 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, Ingo Molnar <mingo@elte.hu>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 02:03:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNJbv-0007kB-J0
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 01:55:31 +0200
+	id 1DNJji-0008Nm-EF
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 02:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261572AbVDQX7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 19:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261576AbVDQX7X
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 19:59:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20378 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261572AbVDQX7V (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 19:59:21 -0400
-Received: (qmail 30953 invoked by uid 2001); 17 Apr 2005 23:59:20 -0000
-To: Ingo Molnar <mingo@elte.hu>
-Content-Disposition: inline
-In-Reply-To: <20050414125354.GB15420@elte.hu>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261576AbVDRAHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 20:07:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDRAHL
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 20:07:11 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:12489 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261576AbVDRAHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Apr 2005 20:07:01 -0400
+Received: from [150.203.247.9] (helo=[172.24.3.18])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DNJmz-0003Ph-W3; Mon, 18 Apr 2005 01:06:59 +0100
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050417233936.GV1461@pasky.ji.cz>
+X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 14, 2005 at 02:53:54PM CEST, I got a letter
-where Ingo Molnar <mingo@elte.hu> told me that...
-> 
-> this patch fixes a 1-byte overflow in show-files.c (looks narrow is is 
-> probably not exploitable). A specially crafted db object (tree) might 
-> trigger this overflow.
-> 
-> 'fullname' is an array of 4096+1 bytes, and we do readdir(), which 
-> produces entries that have strings with a length of 0-255 bytes. With a 
-> long enough 'base', it's possible to construct a tree with a name in it 
-> that has directory whose name ends precisely at offset 4095. At that 
-> point this code:
-> 
->                         case DT_DIR:
->                                 memcpy(fullname + baselen + len, "/", 2);
-> 
-> will attempt to append a "/" string to the directory name - resulting in 
-> a 1-byte overflow (a zero byte is written to offset 4097, which is 
-> outside the array).
+On Mon, 2005-04-18 at 01:39 +0200, Petr Baudis wrote:
+> I think this is bad, bad, bad. If you don't keep around all the
+> _commits_, you get into all sorts of troubles - when merging, when doing
+> git log, etc. And the commits themselves are probably actually pretty
+> small portion of the thing. I didn't do any actual measurement but I
+> would be pretty surprised if it would be much more than few megabytes of
+> data for the kernel history.
 
-The name ends precisely at offset 4095 with its NUL character:
+I'm not sure it's that bad -- and everyone already seems perfectly happy
+not to have history going back before 2.6.12-rc2. We're not talking
+about doing this by _default_ -- we're talking about allowing people to
+keep trees pruned if they _want_ to. So I might want to drop history
+before 2.6.0 on my laptop, for example.
 
-     {PATH_MAX}
-     Maximum number of bytes in a pathname, including the terminating
-null character.
-[ http://www.opengroup.org/onlinepubs/009695399/basedefs/limits.h.html ]
+> Of course an entirely different thing are _trees_ associated with those
+> commits. As long as you stay with a simple three-way merge, you
+> basically never want to look at trees which aren't heads and which you
+> don't specifically request to look at. And the trees and what they carry
+> inside is the main bulk of data.
 
-So, if I'm not mistaken, '/' will be written at offset 4095 instead of
-the NUL and the NUL will be written at 4096. Everything's fine, right?
+If the trees are absent and you're trying to merge, what do you gain
+from having the commit objects? And for the case of 'git log', I
+certainly think it's acceptable that you lose out on those parts of
+prehistory which you've explicitly removed from your local tree --
+that's a feature, not a bug. 
+
+For the special case of removing history before 2.6.12-rc2 from the
+trees, I certainly think we can do it by leaving out all the commits,
+not just the trees. We can do that easily, but there's no way we can
+_add_ that history retrospectively if we omit it in the first place.
+
+For history older than 2.6.12-rc2 I'd suggest that it would be available
+in a different place, and absent from the 'main' working tree that
+everyone uses by default. The only difference we'd see in the working
+tree is that the 2.6.12-rc2 commit -- the oldest commit in that tree --
+would actually have an absentee parent instead of appearing to be an
+import. And all the sha1 hashes of all subsequent commits would be
+different, of course.
+
+To allow pruning of older objects in the general case would be a little
+bit harder than that, because as things stand you'd be re-fetching them
+every time you rsync from elsewhere -- but that wouldn't really be hard
+to fix if we care.
+
+Either way, I think it can probably be done by omitting the commit
+objects as well as the trees -- but the important point is that we
+_should_ include a 'parent' pointer in the oldest commit of the tree
+we're working with, pointing back to the imported history.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+dwmw2
+
