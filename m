@@ -1,48 +1,62 @@
-From: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
-Subject: Re: [PATCH] Pretty-print date in 'git log'
-Date: Mon, 18 Apr 2005 20:57:11 +0100
-Message-ID: <E1DNcMp-0006sk-00@skye.ra.phy.cam.ac.uk>
-References: <1113850922.23938.54.camel@orca.madrabbit.org>
-Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Apr 18 21:54:22 2005
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [0/5] Parsers for git objects, porting some programs
+Date: Mon, 18 Apr 2005 16:12:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504181558180.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0504181126480.15725@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 22:09:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNcJR-0005xO-UY
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 21:53:42 +0200
+	id 1DNcXn-0008EP-V3
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 22:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262189AbVDRT5a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 15:57:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262190AbVDRT5a
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 15:57:30 -0400
-Received: from mraos.ra.phy.cam.ac.uk ([131.111.48.8]:32925 "EHLO
-	mraos.ra.phy.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S262189AbVDRT5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 15:57:20 -0400
-Received: from skye.ra.phy.cam.ac.uk ([131.111.48.158] ident=mail)
-	by mraos.ra.phy.cam.ac.uk with esmtp (Exim 4.43)
-	id 1DNcMq-0006CQ-0p; Mon, 18 Apr 2005 20:57:12 +0100
-Received: from sanjoy by skye.ra.phy.cam.ac.uk with local (Exim 3.35 #1)
-	id 1DNcMp-0006sk-00; Mon, 18 Apr 2005 20:57:11 +0100
-To: Ray Lee <ray-lk@madrabbit.org>
-In-Reply-To: Your message of "Mon, 18 Apr 2005 12:02:02 PDT."
-             <1113850922.23938.54.camel@orca.madrabbit.org> 
+	id S262198AbVDRUMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 16:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262202AbVDRUMU
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 16:12:20 -0400
+Received: from iabervon.org ([66.92.72.58]:18694 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262198AbVDRUMC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 16:12:02 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNcbB-0000tT-00; Mon, 18 Apr 2005 16:12:01 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504181126480.15725@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> ray:~/work/home$ date -ud 'jan 1, 1970 + 1111111111 seconds'
-> Fri Mar 18 01:58:31 UTC 2005
-> ray:~/work/home$ date -ud 'jan 1, 1970 + 1111111111 seconds + 0800'
-> Fri Mar 18 09:58:31 UTC 2005
+On Mon, 18 Apr 2005, Linus Torvalds wrote:
 
-I sent David a short script to do almost that, except that mine needed
-to negate the timezone whereas yours elegantly changes +0800 to + 0800
+> On Sun, 17 Apr 2005, Daniel Barkalow wrote:
+> >
+> > This series introduces common parsers for objects, and ports the programs
+> > that currently use revision.h to them.
+> > 
+> >  1: the header files
+> >  2: the implementations
+> >  3: port rev-tree
+> >  4: port fsck-cache
+> >  5: port merge-base
+> 
+> Ok, having now looked at the code, I don't have any objections at all. 
+> Could you clarify the "fsck" issue about reading the same object twice? 
+> When does that happen?
 
-In your 2nd example, you'll need 'sed' to replace UTC (or +0000 if
-using -R) in the output by +0800, because the 1111111111 is the UTC
-seconds, so the actual time is Fri Mar 18 01:58:31 UTC 2005 (as given
-by your first example).
+Currently, the fsck-cache code is unpacking the objects to find out what
+type they are, and the old code would pass the unpacked objects to the
+parsing code. The new code doesn't take the unpacked objects, so it
+unpacks them again. (I.e., fsck-cache will look at each object exactly
+twice). The right solution is to have the internals reorganized slightly
+such that a "parse_object" method, which does what fsck-cache wants (i.e.,
+parse this object regardless of what type it is, and tell me the type),
+could be fit in efficiently. But it doesn't affect the header file
+interface, and it's only relevant to fsck-cache, which wants to look at
+random junk that it doesn't have a reference to.
 
--Sanjoy
+	-Daniel
+*This .sig left intentionally blank*
+
