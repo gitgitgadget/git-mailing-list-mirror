@@ -1,93 +1,77 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: Re-done kernel archive - real one?
-Date: Mon, 18 Apr 2005 22:33:59 +0100
-Message-ID: <20050418223359.A16789@flint.arm.linux.org.uk>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: SCSI trees, merges and git status
+Date: Mon, 18 Apr 2005 14:39:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+References: <1113856118.4998.70.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 23:31:43 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 18 23:34:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNdoy-0002U4-KK
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 23:30:20 +0200
+	id 1DNdsK-0002x1-Ew
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 23:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261182AbVDRVeL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 17:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261187AbVDRVeL
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 17:34:11 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:42764 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261182AbVDRVeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 17:34:04 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DNdsX-00014v-Ed; Mon, 18 Apr 2005 22:34:01 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DNdsV-0005Je-Vd; Mon, 18 Apr 2005 22:34:00 +0100
-To: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050418102332.A21081@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Mon, Apr 18, 2005 at 10:23:32AM +0100
+	id S261152AbVDRVhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 17:37:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261158AbVDRVhm
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 17:37:42 -0400
+Received: from fire.osdl.org ([65.172.181.4]:61591 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261152AbVDRVhU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 17:37:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3ILbCs4032577
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 18 Apr 2005 14:37:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3ILbAFo005607;
+	Mon, 18 Apr 2005 14:37:11 -0700
+To: James Bottomley <James.Bottomley@SteelEye.com>
+In-Reply-To: <1113856118.4998.70.camel@mulgrave>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 18, 2005 at 10:23:32AM +0100, Russell King wrote:
-> On Sun, Apr 17, 2005 at 04:24:24PM -0700, Linus Torvalds wrote:
-> > On Sun, 17 Apr 2005, Russell King wrote:
-> > > I pulled it tonight into a pristine tree (which of course worked.)
-> > 
-> > Goodie.
+
+
+On Mon, 18 Apr 2005, James Bottomley wrote:
+>
+> As of today, I have two SCSI git trees operational:
 > 
-> Note the "pristine".  Now comes the real test...
-> 
-> > > In doing so, I noticed that I'd messed up one of the commits - there's
-> > > a missing new file.  Grr.  I'll put that down to being a newbie git.
-> > 
-> > Actually, you should put that down to horribly bad interface tools.  With
-> > BK, we had these nice tools that pointed out that there were files that
-> > you might want to commit (ie "bk citool"), and made this very obvious.
-> > 
-> > Tools absolutely matter. And it will take time for us to build up that 
-> > kind of helper infrastructure. So being newbie might be part of it, but 
-> > it's the smaller part, I say. Rough interfaces is a big issue.
-> 
-> Ok, I just tried pulling your tree into the tree you pulled from, and
-> got this:
->...
+> rsync://www.parisc-linux.org/~jejb/scsi-rc-fixes-2.6.git
 
-Since this happened, I've been working out what state my tree is in,
-and I restored it back to a state where I had one dangling commit head,
-which was _my_ head.
+Merged. Here's the command line history:
 
-I then checked whether my objects matched the objects which I uploaded
-to master.kernel.org, and discovered I'd removed some extra ones.  With
-them restored, I have an additional dangling commit.
+	~/git/git-pull-script rsync://www.parisc-linux.org/~jejb/scsi-rc-fixes-2.6.git
+	merge-cache ~/git/git-merge-one-file-script -a
+	write-tree 
+	commit-tree 2c8de70faf92af971667a26a6a397052fc572add -p $(cat .git/HEAD) -p $(cat .git/MERGE_HEAD)
 
-Now, I'm pretty sure that I had an up to date tree when I did the
-original commits, so I'm a little confused.
+ie the "git-pull-script" failed due to the content merge (I didn't trust 
+the merge-cache stuff enough to put that into it), but then doing the 
+automated merge was successful without any editing, so I just wrote the 
+tree and committed it.
 
-What I'm seeing is:
+Again, if anybody wants to reproduce this, you'll need to then do the
 
-b4a9a5114b3c6da131a832a8e2cd1941161eb348
-+- e7905b2f22eb5d5308c9122b9c06c2d02473dd4f
-   +- dc90c0db0dd5214aca5304fd17ccd741031e5493 <-- extra dangling head
-   +- 488faba31f59c5960aabbb2a5877a0f2923937a3
-      +- 5d9a545981893629c8f95e2b8b50d15d18c6ddbc
-         +- d5922e9c35d21f0b6b82d1fd8b1444cfce57ca34
-            +- ff219d69be01af1fd04ada305b5fe7cd4c563cc6
-               +- df4449813c900973841d0fa5a9e9bc7186956e1e <-- my head
+	checkout-cache -f -a
+	update-cace --refresh
 
-It's very much like I somehow committed against the _parent_ of the
-head, rather than the head itself.
+afterwards to make your working area match the merged tree.
 
-However, I've lost the state that this tree was in when I did the initial
-commit, so who knows why this happened...  I think it's something to
-keep an eye out for though.
+> Linus, the rc-fixes repo is ready for applying ... it's the same one I
+> announced on linux-scsi and lkml a while ago just with the git date
+> information updated to be correct (the misc one should wait until after
+> 2.6.12 is final).
 
--- 
-Russell King
+Ok. Can you verify? I did a "git diff" between your old head and my new
+head, and it did not show any SCSI files (only the expected arm etc stuff
+that you didn't have in your), so it all _looks_ good. But hey, just to
+make sure that I didn't do anything stupid..
 
+		Linus
