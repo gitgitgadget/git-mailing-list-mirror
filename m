@@ -1,115 +1,136 @@
-From: Russell King <rmk@arm.linux.org.uk>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Re-done kernel archive - real one?
-Date: Mon, 18 Apr 2005 22:53:57 +0100
-Message-ID: <20050418225356.B16789@flint.arm.linux.org.uk>
-References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504180802060.7211@ppc970.osdl.org>
+Date: Mon, 18 Apr 2005 14:56:47 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504181440020.15725@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org>
+ <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org>
+ <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk>
+ <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk>
+ <20050418223359.A16789@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 18 23:52:01 2005
+X-From: git-owner@vger.kernel.org Mon Apr 18 23:53:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNe8B-00052o-KT
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 23:50:11 +0200
+	id 1DNe9I-0005Bs-6S
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 23:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261169AbVDRVyK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 17:54:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVDRVyK
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 17:54:10 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:63243 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261169AbVDRVyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 17:54:01 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DNeBq-00015Z-FZ; Mon, 18 Apr 2005 22:53:59 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DNeBp-0005Um-7g; Mon, 18 Apr 2005 22:53:57 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <Pine.LNX.4.58.0504180802060.7211@ppc970.osdl.org>; from torvalds@osdl.org on Mon, Apr 18, 2005 at 08:23:16AM -0700
+	id S261170AbVDRVzS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 17:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261171AbVDRVzS
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 17:55:18 -0400
+Received: from fire.osdl.org ([65.172.181.4]:58779 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261170AbVDRVzC (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 17:55:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3ILsns4001396
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 18 Apr 2005 14:54:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3ILsmZ8006425;
+	Mon, 18 Apr 2005 14:54:49 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050418223359.A16789@flint.arm.linux.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 18, 2005 at 08:23:16AM -0700, Linus Torvalds wrote:
-> NOTE NOTE NOTE! This is untested! I'm writing this within the email 
-> editor, so do _not_ do this on a tree that you care about.
 
-It did the right thing for me at least!
 
-> 	#!/bin/sh
-> 	#
-> 	# use "$1" or something in a real script, this 
-> 	# just hard-codes it.
-> 	#
-> 	merge_repo=master.kernel.org:/pub/linux/kernel/people/torvalds/linux-2.6.git
+On Mon, 18 Apr 2005, Russell King wrote:
 > 
-> 	echo "Getting object database"
-> 	rsync -avz --ignore-existing $merge_repo/ .git/
-> 
-> 	echo "Getting remote head"
-> 	rsync -avz $merge_repo/HEAD .git/MERGE_HEAD
-> 
-> 	head=$(cat .git/HEAD)
-> 	merge_head=$(cat .git/MERGE-HEAD)
-> 	common=$(merge-base $head $merge_head)
-> 	if [ -z "$common" ]; then
-> 		echo "Unable to find common commit between" $merge_head $head
-> 		exit 1
-> 	fi
-> 
-> 	# Get the trees associated with those commits
-> 	common_tree=tree=$(cat-file commit $common | sed 's/tree //;q')
-> 	head_tree=tree=$(cat-file commit $head | sed 's/tree //;q')
-> 	merge_tree=tree=$(cat-file commit $merge | sed 's/tree //;q')
+> Since this happened, I've been working out what state my tree is in,
+> and I restored it back to a state where I had one dangling commit head,
+> which was _my_ head.
 
-This wants to be:
+For the future, if your tree gets messed up to the point where you say 
+"screw it" and just want to go back in time, you can do this (it's 
+equivalent to "undo" in BK speak):
 
-	common_tree=$(cat-file commit $common | sed 's/tree //;q')
-	head_tree=$(cat-file commit $head | sed 's/tree //;q')
-	merge_tree=$(cat-file commit $merge_head | sed 's/tree //;q')
+	git log | less -S
 
-> 	if [ "$common" == "$merge_head" ]; then
-> 		echo "Already up-to-date. Yeeah!"
-> 		exit 0
-> 	fi
-> 	if [ "$common" == "$head" ]; then
-> 		echo "Updating from $head to $merge_head."
-> 		echo "Destroying all noncommitted data!"
-> 		echo "Kill me within 3 seconds.."
-> 		sleep 3
-> 		read-tree $merge_tree && checkout-cache -f -a
+	.. find which HEAD it was that you trusted..
 
-Don't we want to do an update-cache --refresh here?
+In this case your HEAD before I merged with it was this one:
 
-> 		echo $merge_head > .git/HEAD
-> 		exit 0
-> 	fi
-> 	echo "Trying to merge $merge_head into $head"
-> 	read-tree -m $common_tree $head_tree $merge_tree
-> 	result_tree=$(write-tree) || exit 1
-> 	result_commit=$(echo "Merge $merge_repo" | commit-tree $result_tree -p $head -p $merge_head)
-> 	echo "Committed merge $result_commit"
-> 	echo $result_commit > .git/HEAD
-> 	read-tree $result_tree && checkout-cache -f -a
-> 
-> The above looks like it might work, but I also warn you: it's not only
-> untested, but it's pretty fragile in that if something breaks, you are
-> probably left with a mess. I _tried_ to do the right thing, but... So it
-> obviously will need testing, tweaking and just general tender loving care.
+	df4449813c900973841d0fa5a9e9bc7186956e1e
 
-Maybe Petr can improve the error handling, and incorporate it (or at
-least some of it) into git-pasky
+So to get back to that one, you can do
 
-> You shouldn't hit the "merge" case at all right now, you should hit the 
-> "Updating from $head to $merge_head" thing.
+	echo df4449813c900973841d0fa5a9e9bc7186956e1e > .git/HEAD
 
-Exactly what happened.  Thanks.
+and now
 
--- 
-Russell King
+	cat-file commit $(cat .git/HEAD) | head -1
 
+gives you
+
+	tree a43c4447b2edc9fb01a6369f10c1165de4494c88
+
+so you can restore your checked-out state with
+
+	read-tree a43c4447b2edc9fb01a6369f10c1165de4494c88
+	checkout-cache -f -a
+	update-cache --refresh
+
+and your tree should be valid again.
+
+Now, to remove any bogus objects, you can then run my "git-prune-script"
+(look at it carefully first to make sure you realize what you are doing).
+
+NOTE NOTE NOTE! This will _revert_ everything you had done after the 
+"trusted" point. So you may not actually want to do this. Instead:
+
+> It's very much like I somehow committed against the _parent_ of the
+> head, rather than the head itself.
+
+That's very common if you just forget to update your new ".git/HEAD" when 
+you do a commit.
+
+Again, it's the tools that make it a bit too easy to mess up. The 
+"commit-tree" thing is supposed to really only be used from scripts (which 
+would do something like
+
+	result=$(commit-tree ...) && echo $result > .git/HEAD
+
+but when doing things by hand, if you forget to update your HEAD, your 
+next commit will be done against the wrong head, and you get dangling 
+commits.
+
+The good news is that this is not that hard to fix up. The _trees_ are all
+correct, and the objects are all correct, so what you can do is just
+generate a few new (proper) commit objects, with the right parents. Then
+you can do the "git-prune-script" thing that will throw away the old
+broken commits, since they won't be reachable from your new commits (even
+though their _trees_ will be there and be the same).
+
+So in this case:
+
+	b4a9a5114b3c6da131a832a8e2cd1941161eb348
+	+- e7905b2f22eb5d5308c9122b9c06c2d02473dd4f
+	   +- dc90c0db0dd5214aca5304fd17ccd741031e5493 <-- extra dangling head
+	   +- 488faba31f59c5960aabbb2a5877a0f2923937a3
+
+you can do
+
+	cat-file commit dc90c0db0dd5214aca5304fd17ccd741031e5493
+
+to remind you what your old tree and commit message was, and then just 
+re-commit that tree with the same message but with the proper parent:
+
+	commit-tree xxxx -p 488faba31f59c5960aabbb2a5877a0f2923937a3
+
+and then you need to do the same thing for the other commits (which will 
+now need to be re-based to have the new commit-chain as their parents).
+
+Then, when you fixed up the final one, remember to update .git/HEAD with 
+its commit ID, and now the prune-thing will get rid of the old dangling 
+commits that you just created new duplicates of.
+
+		Linus
