@@ -1,92 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] remove_special() tentative fix.
-Date: Sun, 17 Apr 2005 18:51:34 -0700
-Message-ID: <7voeccvom1.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.44.0504171614150.2625-100000@bellevue.puremagic.com>
-	<Pine.LNX.4.58.0504171636590.7211@ppc970.osdl.org>
-	<20050418002326.GC1461@pasky.ji.cz>
-	<Pine.LNX.4.58.0504171806230.7211@ppc970.osdl.org>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: using git directory cache code in darcs?
+Date: Sun, 17 Apr 2005 19:00:01 -0700
+Organization: SGI
+Message-ID: <20050417190001.7e1ae3ac.pj@sgi.com>
+References: <20050416132231.GJ2551@abridgegame.org>
+	<Pine.LNX.4.58.0504161531470.7211@ppc970.osdl.org>
+	<20050417121712.GA22772@abridgegame.org>
+	<Pine.LNX.4.58.0504170916080.7211@ppc970.osdl.org>
+	<4262E50C.2070006@lazy.shacknet.nu>
+	<7vvf6lugw7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Brad Roberts <braddr@puremagic.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 03:48:11 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: lkml@lazy.shacknet.nu, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 03:57:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNLMY-0006nw-SW
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:47:47 +0200
+	id 1DNLVh-0007s9-7d
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 03:57:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261587AbVDRBvk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Apr 2005 21:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261588AbVDRBvk
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 21:51:40 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61886 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261587AbVDRBvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Apr 2005 21:51:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050418015134.QZIT2123.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 17 Apr 2005 21:51:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504171806230.7211@ppc970.osdl.org> (Linus
- Torvalds's message of "Sun, 17 Apr 2005 18:07:18 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261594AbVDRCAp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Apr 2005 22:00:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261597AbVDRCAp
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Apr 2005 22:00:45 -0400
+Received: from omx3-ext.sgi.com ([192.48.171.20]:41118 "EHLO omx3.sgi.com")
+	by vger.kernel.org with ESMTP id S261594AbVDRCAc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Apr 2005 22:00:32 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3I2NpZI016342;
+	Sun, 17 Apr 2005 19:23:56 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3I206lU15535652;
+	Sun, 17 Apr 2005 19:00:08 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf6lugw7.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Junio wrote:
+> What Linus is saying is that he wants you to talk with git
+> plumbing by invoking the executables he have, via system(3),
+> popen(3), etc.
 
-LT> On Mon, 18 Apr 2005, Petr Baudis wrote:
->> 
->> Am I just slow or does the first dst-- make it miss the last trailing
->> /[,;.]/?
+Hopefully, Linus didn't specify system(3) or popen(3) for production
+software.
 
-LT> Hopefully not. It _should_ make it miss the last '\0', but hey, it got my
-LT> usual amount of testing (ie none). I'm sure Brad can tell us whether it
-LT> makes any difference..
+They are a rich source of security holes.  Inefficient, too, since they
+invoke a shell process to interpret the command.
 
-No, you are both slow ;-)  At that point p is not the beginning
-of the input anymore.  This is a *tentative* fix to implement
-your intended solution.
+Use execve(2), or exevl(3), execle(3), execv(3).
 
-I have a suspicion that your intended solution would not work on
-systems that really use these GECOS subfields, though.  These
-commas are there to separate subfields and your intended
-solution would keep the office numbers etc. as part of commiter
-name.  Honestly, I think your COMMITTER_* environment variable
-idea is far better than playing games like this, although at the
-same time I sympathize your not wanting to encourage people to
-lie about the committer identity.
+Or if you really enjoy the path search, use execlp or execvp, but with
+your own $PATH, not trusting the one passed in via the environment any
+further than you can throw it.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net> 
----
+However, on further consideration, I think Linus is wrong to recommend
+that the git executables, not a libgit library, be the 'basic user level
+on which all else is based."
 
-cd /opt/packrat/playpen/public/in-place/git/git/
-show-diff commit-tree.c
-commit-tree.c: ec53a4565ec0033aaf6df2a48d233ccf4823e8b0
---- commit-tree.c
-+++ commit-tree.c	2005-04-17 18:43:39.000000000 -0700
-@@ -83,6 +83,7 @@ static void finish_buffer(char *tag, cha
- static void remove_special(char *p)
- {
- 	char c;
-+	char *begin = p;
- 	char *dst = p;
- 
- 	for (;;) {
-@@ -102,7 +103,7 @@ static void remove_special(char *p)
- 	 * have commas etc in their gecos field
- 	 */
- 	dst--;
--	while (--dst >= p) {
-+	while (--dst >= begin) {
- 		unsigned char c = *dst;
- 		switch (c) {
- 		case ',': case ';': case '.':
+I will reply to a Linus post, expounding on that thought further.
 
-Compilation finished at Sun Apr 17 18:44:55
-
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
