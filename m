@@ -1,54 +1,45 @@
-From: linux@horizon.com
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: 18 Apr 2005 21:04:36 -0000
-Message-ID: <20050418210436.23935.qmail@science.horizon.com>
-Cc: darcs-devel@darcs.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 01:42:46 2005
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Re-done kernel archive - real one?
+Date: Tue, 19 Apr 2005 01:53:27 +0200
+Message-ID: <20050418235327.GQ5554@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504161543590.7211@ppc970.osdl.org> <20050417162448.A13233@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504170926410.7211@ppc970.osdl.org> <20050417195742.D13233@flint.arm.linux.org.uk> <20050418231652.C16789@flint.arm.linux.org.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Apr 19 01:49:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNft2-0008UQ-AF
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:42:40 +0200
+	id 1DNfzf-0000ae-PM
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261178AbVDRXq0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 19:46:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261186AbVDRXq0
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:46:26 -0400
-Received: from science.horizon.com ([192.35.100.1]:59963 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S261178AbVDRXqN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 19:46:13 -0400
-Received: (qmail 23936 invoked by uid 1000); 18 Apr 2005 21:04:36 -0000
-To: torvalds@osdl.org
+	id S261186AbVDRXxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 19:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261188AbVDRXxa
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:53:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34737 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261186AbVDRXx2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 19:53:28 -0400
+Received: (qmail 21851 invoked by uid 2001); 18 Apr 2005 23:53:27 -0000
+To: Russell King <rmk@arm.linux.org.uk>
+Content-Disposition: inline
+In-Reply-To: <20050418231652.C16789@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Hell no.
-> 
-> The commit _does_ specify the patch uniquely and exactly, so I really 
-> don't see the point. You can always get the patch by just doing a
->
-> 	git diff $parent_tree $thistree
->
-> so putting the patch in the comment is not an option.
+Dear diary, on Tue, Apr 19, 2005 at 12:16:52AM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> However, it seems that git diff can't handle new files appearing
+> yet.
 
-Er... no.
+Fixed. :-)
 
-One of darcs' big points is that it has at least two fundamentally
-different *kinds* of patches.  One is the classic diff(1) style.
-
-The other is "replace very instace of identifier `foo` with identifier`bar`".
-
-Note that merging such a patch with another that adds a new instance
-of "foo" has a quite different effect from a similar diff-style patch.
-Even though both have identical effects on the tree to which they were
-initially merged.
-
-And darcs is specifically intended to support additional kinds of patches.
-Again, all in order that the patch can work better when applied to
-trees *other* that the one it was originally developed against.
-
-
-Anyway, the point is that, in the darcs world, it is NOT possible to
-reconstruct a patch from the before and after trees.
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
