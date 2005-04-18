@@ -1,88 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix confusing behaviour of update-cache --refresh on
- unmerged paths.
-Date: Sun, 17 Apr 2005 23:09:34 -0700
-Message-ID: <7v3btovco1.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Yet another base64 patch
+Date: Mon, 18 Apr 2005 16:23:18 +1000
+Message-ID: <42635256.7020701@zytor.com>
+References: <425DEF64.60108@zytor.com> <20050414022413.GB18655@64m.dyndns.org> <425E0174.4080404@zytor.com> <20050414024228.GC18655@64m.dyndns.org> <425E0D62.9000401@zytor.com> <Pine.LNX.4.58.0504140038450.7211@ppc970.osdl.org> <425EA152.4090506@zytor.com> <Pine.LNX.4.58.0504141042450.7211@ppc970.osdl.org> <20050414191157.GA27696@outpost.ds9a.nl> <425EC3B4.6090908@zytor.com> <20050414214756.GA31249@outpost.ds9a.nl> <Pine.LNX.4.58.0504141743360.7211@ppc970.osdl.org> <425F1394.5020709@zytor.com> <Pine.LNX.4.62.0504162107040.22904@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 18 08:06:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, bert hubert <ahu@ds9a.nl>,
+	Christopher Li <git@chrisli.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 08:19:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNPOf-0006oi-Eu
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 08:06:13 +0200
+	id 1DNPbr-0007mz-N8
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 08:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261687AbVDRGJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 02:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261690AbVDRGJq
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 02:09:46 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:53442 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261687AbVDRGJg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 02:09:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050418060934.TPLT13819.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 18 Apr 2005 02:09:34 -0400
-To: torvalds@osdl.org
+	id S261757AbVDRGXq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 02:23:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261758AbVDRGXq
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 02:23:46 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:24717 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261757AbVDRGXp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 02:23:45 -0400
+Received: from [192.168.1.102] ([150.203.164.151])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3I6NPmp007955
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 17 Apr 2005 23:23:28 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: David Lang <dlang@digitalinsight.com>
+In-Reply-To: <Pine.LNX.4.62.0504162107040.22904@qynat.qvtvafvgr.pbz>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The "update-cache --refresh" command attempts refresh_entry() 
-on unmerged path, which results in as many "needs update" messages
-as there are unmerged stages for that path.  This does not do
-any harm to the working directory, but it is confusing.
+David Lang wrote:
+> 
+> note that default configs of ext2 and ext3 don't qualify as sane 
+> filesystems by this definition.
 
-    $ ls -al
-    total 16
-    drwxrwsr-x   3 junio src 4096 Apr 17 23:00 ./
-    drwxrwsr-x  10 junio src 4096 Apr 17 22:58 ../
-    drwxr-sr-x   3 junio src 4096 Apr 17 22:59 .git/
-    -rw-rw-r--   1 junio src  363 Apr 17 23:00 TT
-    $ show-files --stage
-    100644 e14bafaadce6c34768ba2ff8b3c6419e8839e7d2 1 TT
-    100644 99ef1b30fc6d6ea186d6eac62619e1afd65ad64e 2 TT
-    100644 033b9385f7a29882a6b4b34f67b20e2304d3489d 3 TT
-    $ ../++linus/update-cache --refresh
-    TT: needs update
-    TT: needs update
-    TT: needs update
-    $ ../update-cache --refresh
-    TT: needs merge
+Not using dir_index *IS* insane.
 
-Here is a fix.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
- update-cache.c |   13 +++++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
-
-update-cache.c: 5742c6ca084a7761ad728651d85509736e2ebc7c
---- update-cache.c
-+++ update-cache.c	2005-04-17 22:58:06.000000000 -0700
-@@ -196,9 +196,18 @@ static void refresh_cache(void)
- 	int i;
- 
- 	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
--		struct cache_entry *new = refresh_entry(ce);
-+		struct cache_entry *ce, *new;
-+		ce = active_cache[i];
-+		if (ce_stage(ce)) {
-+			printf("%s: needs merge\n", ce->name);
-+			while ((i < active_nr) &&
-+			       ! strcmp(active_cache[i]->name, ce->name))
-+				i++;
-+			i--;
-+			continue;
-+		}
- 
-+		new = refresh_entry(ce);
- 		if (!new) {
- 			printf("%s: needs update\n", ce->name);
- 			continue;
-
+	-hpa
