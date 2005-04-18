@@ -1,48 +1,70 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: fix mktemp (remove mktemp ;)
-Date: Mon, 18 Apr 2005 14:12:40 +0200
-Message-ID: <87u0m4cmh3.fsf@deneb.enyo.de>
-References: <E1DNMVX-00013d-00@gondolin.me.apana.org.au>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH] Pretty-print date in 'git log'
+Date: Mon, 18 Apr 2005 22:24:39 +1000
+Message-ID: <1113827080.5286.10.camel@localhost.localdomain>
+References: <E1DNPz9-0003lm-00@skye.ra.phy.cam.ac.uk>
+	 <1113808105.5286.1.camel@localhost.localdomain>
+	 <20050418102744.GK1461@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pj@sgi.com (Paul Jackson), pasky@ucw.cz, git@vger.kernel.org,
-	mj@ucw.cz
-X-From: git-owner@vger.kernel.org Mon Apr 18 14:09:42 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 18 14:22:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNV42-0005Pe-9M
-	for gcvg-git@gmane.org; Mon, 18 Apr 2005 14:09:19 +0200
+	id 1DNVFi-00070E-3b
+	for gcvg-git@gmane.org; Mon, 18 Apr 2005 14:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262050AbVDRMNB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 08:13:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262051AbVDRMNB
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 08:13:01 -0400
-Received: from mail.enyo.de ([212.9.189.167]:64932 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S262048AbVDRMMy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 08:12:54 -0400
-Received: from deneb.enyo.de ([212.9.189.171])
-	by albireo.enyo.de with esmtp id 1DNV7J-0007bh-Ao; Mon, 18 Apr 2005 14:12:41 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.50)
-	id 1DNV7I-0003ns-I5; Mon, 18 Apr 2005 14:12:40 +0200
-To: Herbert Xu <herbert@gondor.apana.org.au>
-In-Reply-To: <E1DNMVX-00013d-00@gondolin.me.apana.org.au> (Herbert Xu's
-	message of "Mon, 18 Apr 2005 13:01:07 +1000")
+	id S262055AbVDRMZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 08:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262054AbVDRMZL
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 08:25:11 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:18643 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S262055AbVDRMZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 08:25:01 -0400
+Received: from [203.53.50.91] (helo=[172.18.240.72])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DNVJC-00062F-JN; Mon, 18 Apr 2005 13:25:00 +0100
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050418102744.GK1461@pasky.ji.cz>
+X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* Herbert Xu:
+On Mon, 2005-04-18 at 12:27 +0200, Petr Baudis wrote:
+> Yes. As far as I'm concerned, I'd put such stuff to git log, and extend
+> it usage so that it is possible to print individual log entries with it
+> - just make it accept a _range_ of commits, and then do
+> 
+>         git log $commit $commit
 
-> Paul Jackson <pj@sgi.com> wrote:
->> 
->> Even mktemp(1) can collide, in theory, since there is no practical way
->> in shell scripts to hold open and locked the file from the instant of it
->> is determined to be a unique name.
->
-> mktemp(1) creates the file before exiting.  Other instances of mktemp(1)
-> cannot successfully create the same file (they all use O_EXCL).
-> Therefore this race does not exist, even in theory :)
+That's fairly trivial. In the current (and misguided) version with
+chronological output, rev-tree will do it all for you, in fact:
 
-/tmp cleaners exist, but the risks are minimal for programs which
-aren't SUID/SGID.
+	rev-tree $1 ^$2
+
+In the older and more useful version, it was only slightly more complex:
+
+ base=$(gitXnormid.sh -c $1) || exit 1
+ 
++if [ -n "$2" ]; then
++    endpoint=$(gitXnormid.sh -c $2) || exit 1
++    if rev-tree $base $endpoint | grep -q $base:3; then
++        base=
++    else
++        rev-tree --edges $base $endpoint | sed 's/[a-z0-9]*:1//g' > $TMPCL
++    fi
++fi
+ changelog $base
+ rm $TMPCL $TMPCM
+
+
+-- 
+dwmw2
+
