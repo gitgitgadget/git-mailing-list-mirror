@@ -1,72 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Re-done kernel archive - real one?
-Date: Tue, 19 Apr 2005 01:09:42 +0200
-Message-ID: <20050418230941.GN5554@pasky.ji.cz>
-References: <1113774736.3884.4.camel@localhost.localdomain> <Pine.LNX.4.58.0504171511210.7211@ppc970.osdl.org> <20050417231959.A30656@flint.arm.linux.org.uk> <20050417235136.B30656@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504171621330.7211@ppc970.osdl.org> <20050418102332.A21081@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504180802060.7211@ppc970.osdl.org> <20050418225356.B16789@flint.arm.linux.org.uk> <20050418224852.GM5554@pasky.ji.cz> <20050418235951.D16789@flint.arm.linux.org.uk>
+From: James Bottomley <James.Bottomley@SteelEye.com>
+Subject: Re: SCSI trees, merges and git status
+Date: Mon, 18 Apr 2005 18:14:51 -0500
+Message-ID: <1113866092.4998.92.camel@mulgrave>
+References: <1113856118.4998.70.camel@mulgrave>
+	 <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 01:06:18 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 01:11:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNfJT-00059M-85
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:05:55 +0200
+	id 1DNfOk-0005if-12
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 01:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261169AbVDRXJ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 19:09:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVDRXJ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:09:56 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48304 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261169AbVDRXJy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 19:09:54 -0400
-Received: (qmail 18723 invoked by uid 2001); 18 Apr 2005 23:09:42 -0000
-To: Russell King <rmk@arm.linux.org.uk>
-Content-Disposition: inline
-In-Reply-To: <20050418235951.D16789@flint.arm.linux.org.uk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261188AbVDRXPN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 19:15:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261186AbVDRXPN
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 19:15:13 -0400
+Received: from stat16.steeleye.com ([209.192.50.48]:37504 "EHLO
+	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
+	id S261170AbVDRXPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 19:15:04 -0400
+Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
+	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3INEqA20608;
+	Mon, 18 Apr 2005 19:14:52 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4 (2.0.4-2) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 12:59:52AM CEST, I got a letter
-where Russell King <rmk@arm.linux.org.uk> told me that...
-> In the case I highlighted, we don't want to end up having to require
-> user intervention.  This is a common case here, and was one which was
-> entirely scripted with BK.
-
-Well, you can script that
-
-	cd ,,merge && echo 'Merge with Linus' | git ci && cd ..
-
-too. ;-)
-
-But it seems like a good idea to just proceed with commit in case of no
-conflicts (and possibly have a switch which will tell git merge to just
-merge, not commit).
-
-> Essentially, with BK, at 7am localtime each morning, I'd:
+On Mon, 2005-04-18 at 14:39 -0700, Linus Torvalds wrote:
+> > Linus, the rc-fixes repo is ready for applying ... it's the same one I
+> > announced on linux-scsi and lkml a while ago just with the git date
+> > information updated to be correct (the misc one should wait until after
+> > 2.6.12 is final).
 > 
-> - update my baseline linux 2.6 tree
-> - for each working tree which may be pulled from
->   - if the baseline is a superset
->     - update working tree from baseline
-> 
-> The net result is that my workflow consisted entirely of:
-> 
-> 1. commit whatever into working tree
-> 2. test
-> 3. send linus a pull request
-> 4. repeat next day
-> 
-> The tree resynchronisation happened completely and entirely in the
-> background with no user intervention required at all.
+> Ok. Can you verify? I did a "git diff" between your old head and my new
+> head, and it did not show any SCSI files (only the expected arm etc stuff
+> that you didn't have in your), so it all _looks_ good. But hey, just to
+> make sure that I didn't do anything stupid..
 
-And in the case of conflicts...?
+Actually, the verify fails, according to bitkeeper.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+It looks like the merge tree has contamination from the scsi-misc-2.6
+tree ... possibly because the hosting system got the merged objects when
+I pushed.
+
+Could you strip it back and I'll check out the repos on www.parisc-
+linux.org?
+
+Thanks,
+
+James
+
+
