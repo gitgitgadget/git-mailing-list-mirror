@@ -1,60 +1,59 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: [PATCH] provide better committer information to commit-tree.c
-Date: Tue, 19 Apr 2005 09:18:33 +0100
-Message-ID: <20050419091833.C13488@flint.arm.linux.org.uk>
-References: <20050419001126.GB21170@kroah.com> <Pine.LNX.4.58.0504181730130.15725@ppc970.osdl.org> <20050419004548.GA21623@kroah.com>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 10:22:21 +0200
+Message-ID: <7i7jizyy4i.fsf@lanthane.pps.jussieu.fr>
+References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr>
+	<20050418122011.GA13769@abridgegame.org>
+	<7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr>
+	<1113874991.23938.113.camel@orca.madrabbit.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 10:15:36 2005
+Cc: darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 10:19:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNnsR-0007Gj-UO
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 10:14:36 +0200
+	id 1DNnwE-0007mI-3m
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 10:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVDSISk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 04:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261400AbVDSISk
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 04:18:40 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:23564 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261399AbVDSISi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 04:18:38 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DNnwJ-0001ck-BZ; Tue, 19 Apr 2005 09:18:35 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DNnwI-0003xE-1S; Tue, 19 Apr 2005 09:18:34 +0100
-To: Greg KH <greg@kroah.com>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050419004548.GA21623@kroah.com>; from greg@kroah.com on Mon, Apr 18, 2005 at 05:45:48PM -0700
+	id S261405AbVDSIWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 04:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261410AbVDSIWb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 04:22:31 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129]:22247 "EHLO shiva.jussieu.fr")
+	by vger.kernel.org with ESMTP id S261405AbVDSIW1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 04:22:27 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
+          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3J8MN1A093053
+          ; Tue, 19 Apr 2005 10:22:23 +0200 (CEST)
+X-Ids: 166
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
+          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3J8MLY2010162
+          ; Tue, 19 Apr 2005 10:22:21 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DNnzx-0001ju-HO; Tue, 19 Apr 2005 10:22:21 +0200
+To: Ray Lee <ray@madrabbit.org>
+In-Reply-To: <1113874991.23938.113.camel@orca.madrabbit.org> (Ray Lee's
+ message of "Mon, 18 Apr 2005 18:43:11 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.166]); Tue, 19 Apr 2005 10:22:23 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 4264BFBF.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 18, 2005 at 05:45:48PM -0700, Greg KH wrote:
-> On Mon, Apr 18, 2005 at 05:31:16PM -0700, Linus Torvalds wrote:
-> > 
-> > 
-> > On Mon, 18 Apr 2005, Greg KH wrote:
-> > >
-> > > Here's a small patch to commit-tree.c that does two things:
-> > 
-> > Gaah, I really was hoping that people wouldn't feel like they have to lie 
-> > about their committer information.
-> > 
-> > I guess we don't have much choice, but I'm not happy about it.
-> 
-> Well Russell has stated that he has to for EU Privacy reasons.
+> > Aye, that will require some metadata on the git side (the hack,
+> > suggested by Linus, of using git hashes to notice moves won't work).
 
-That's author information, not committer information.  For my committing
-purposes, I'm going to be the one doing the commit, and I'm unlikely to
-issue a suit on myself for spreading my own personal information.
+> So, why won't it work?
 
--- 
-Russell King
+Because two files can legitimately have identical contents without
+being ``the same'' file from the VC system's point of view.
+
+In other words, two files may happen to have the same contents but
+have distinct histories.
+
+                                        Juliusz
+
 
