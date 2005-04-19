@@ -1,96 +1,68 @@
-From: Lars Fenneberg <lf@elemental.net>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Wed, 20 Apr 2005 00:52:32 +0200
-Message-ID: <20050419225232.GA8026@gimli.elemental.net>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com> <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org> <20050419214009.GA25681@kroah.com> <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: [script] ge: export commits as patches
+Date: Tue, 19 Apr 2005 18:56:23 -0400
+Message-ID: <42658C97.5090409@dwheeler.com>
+References: <20050419134843.GA19146@elte.hu> <20050419170320.GG12757@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Greg KH <greg@kroah.com>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:48:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ingo Molnar <mingo@elte.hu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:52:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1WG-0007xT-Rz
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:48:37 +0200
+	id 1DO1Zn-0008Mm-8S
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:52:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261722AbVDSWwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261723AbVDSWwp
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:52:45 -0400
-Received: from ns.mcs-hh.de ([194.77.146.129]:35281 "EHLO
-	mail.hamburg.cityline.net") by vger.kernel.org with ESMTP
-	id S261722AbVDSWwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 18:52:35 -0400
-Received: from [194.221.20.30] (helo=legolas.elemental.net)
-	by mail.hamburg.cityline.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
-	(Exim 4.43)
-	id 1DO1a6-0002Ke-JW; Wed, 20 Apr 2005 00:52:34 +0200
-Received: from gimli.elemental.net (gimli.elemental.net [194.221.20.130])
-	by legolas.elemental.net (8.13.1/8.13.1) with ESMTP id j3JMqXus023281;
-	Wed, 20 Apr 2005 00:52:33 +0200
-Received: from gimli.elemental.net (localhost.localdomain [127.0.0.1])
-	by gimli.elemental.net (8.13.1/8.13.1) with ESMTP id j3JMqX7f009129;
-	Wed, 20 Apr 2005 00:52:33 +0200
-Received: (from lf@localhost)
-	by gimli.elemental.net (8.13.1/8.13.1/Submit) id j3JMqWv2009128;
-	Wed, 20 Apr 2005 00:52:32 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org>
-User-Agent: Mutt/1.4.1i
-X-NCC-RegID: de.cityline
-X-PGP-Fingerprint-PGP2: 1024R/1A3A7A4D   D1 28 F1 FF 3C 6B C0 27  CC 9C 6C 09 34 0A 55 18
-X-PGP-Fingerprint-OpenGPG: 1024D/A11CA902 9B75 F658 368C 366C 7BB3  5AB1 2479 9764 A11C A902
+	id S261723AbVDSW40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:56:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261724AbVDSW40
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:56:26 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:47010 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261723AbVDSW4Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:56:24 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DO1dn-0006d3-17; Wed, 20 Apr 2005 00:56:23 +0200
+Received: from [129.246.254.178] (helo=[129.246.80.140])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DO1dm-0001wL-OR; Wed, 20 Apr 2005 00:56:22 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050419170320.GG12757@pasky.ji.cz>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi all!
+Petr Baudis wrote:
 
-Quoting Linus Torvalds (torvalds@osdl.org):
+>Dear diary, on Tue, Apr 19, 2005 at 03:48:43PM CEST, I got a letter
+>where Ingo Molnar <mingo@elte.hu> told me that...
+>  
+>
+>>is there any 'export commit as patch' support in git-pasky?
+>>    
+>>
+>
+>Nice idea. I will add it, probably as 'git patch'.
+>
+>  
+>
+Eek!
 
-> And even the ones that use domainname tend to not have a fully qualified 
-> DNS domain there. You need to use dnsdomainname to get that, and I don't 
-> even know how to do it with standard libc.
+It's a nice idea, and it'd be great as a subcommand.  But PLEASE
+don't name it "patch".  I already know what "patch" does, "patch"
+ACCEPTS a patch... it doesn't create one ;-).
 
-I don't think getdomainname should be used at all in this case as it is the
-domain name used by NIS and it might be different from the DNS domain name
-in the FQDN associated with a given host. I just looked into the domainname
-manual page and it agrees with me:
+How about naming it "aspatch" or "asdiff" instead?  Or something else
+(good names, anyone?).
 
- domainname,  nisdomainname,  ypdomainname  will  print the name of the
- system as returned by the getdomainname(2) function.  This is also known as
- the YP/NIS domain name of the system.
+<soapbox_to_choir>Good externally-viewed names are critical... good
+command names that are similar to what people "already know"
+can really help make the tool a joy to use.</soapbox_to_choir>
 
-That's why it is set to "(none)" (i.e. its not setup at all) on most hosts
-because if they're not running NIS it's not really needed.
+--- David A. Wheeler
 
-To get the FQDN which is what we want you'd have to use something like
-this:
 
-#include <netdb.h>
-#include <unistd.h>
-
-char *getfqdn(void)
-{
-        static char hostname[HOST_NAME_MAX + 1];
-        struct hostent *hp;
-
-        if (gethostname(hostname, sizeof(hostname)) < 0)
-        {
-                /* error handling */
-        }
-
-        if (!(hp = gethostbyname(hostname)))
-        {
-                /* just return the possibly unqualified hostname */
-		return hostname;
-        }
-
-        return  hp->h_name;
-}
-
-Cheers,
-Lars.
--- 
-Lars Fenneberg, lf@elemental.net (private), lf@mcs.de (work)
