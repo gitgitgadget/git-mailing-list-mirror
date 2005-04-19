@@ -1,58 +1,77 @@
-From: James Bottomley <James.Bottomley@SteelEye.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: SCSI trees, merges and git status
-Date: Mon, 18 Apr 2005 19:16:57 -0500
-Message-ID: <1113869817.4998.106.camel@mulgrave>
-References: <1113856118.4998.70.camel@mulgrave>
-	 <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
-	 <1113866092.4998.92.camel@mulgrave>
-	 <Pine.LNX.4.58.0504181651241.15725@ppc970.osdl.org>
-	 <1113869456.3579.12.camel@localhost.localdomain>
+Date: Mon, 18 Apr 2005 17:29:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504181724170.15725@ppc970.osdl.org>
+References: <1113856118.4998.70.camel@mulgrave>  <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+  <1113866092.4998.92.camel@mulgrave>  <Pine.LNX.4.58.0504181651241.15725@ppc970.osdl.org>
+ <1113869594.4998.103.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 02:13:20 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
+X-From: linux-scsi-owner@vger.kernel.org Tue Apr 19 02:24:07 2005
+Return-path: <linux-scsi-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNgMb-0002VU-1r
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 02:13:13 +0200
+	id 1DNgWw-0003Oo-6Y
+	for lnx-linux-scsi@gmane.org; Tue, 19 Apr 2005 02:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261205AbVDSARM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 20:17:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261207AbVDSARM
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 20:17:12 -0400
-Received: from stat16.steeleye.com ([209.192.50.48]:21377 "EHLO
-	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
-	id S261205AbVDSARJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 20:17:09 -0400
-Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
-	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3J0GvA23415;
-	Mon, 18 Apr 2005 20:16:58 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1113869456.3579.12.camel@localhost.localdomain>
-X-Mailer: Evolution 2.0.4 (2.0.4-2) 
-Sender: git-owner@vger.kernel.org
+	id S261218AbVDSA1z (ORCPT <rfc822;lnx-linux-scsi@m.gmane.org>);
+	Mon, 18 Apr 2005 20:27:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261210AbVDSA1z
+	(ORCPT <rfc822;linux-scsi-outgoing>);
+	Mon, 18 Apr 2005 20:27:55 -0400
+Received: from fire.osdl.org ([65.172.181.4]:63695 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261209AbVDSA1d (ORCPT
+	<rfc822;linux-scsi@vger.kernel.org>);
+	Mon, 18 Apr 2005 20:27:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3J0RRs4014670
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 18 Apr 2005 17:27:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3J0RQUN014021;
+	Mon, 18 Apr 2005 17:27:26 -0700
+To: James Bottomley <James.Bottomley@SteelEye.com>
+In-Reply-To: <1113869594.4998.103.camel@mulgrave>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-scsi-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Mailing-List: linux-scsi@vger.kernel.org
 
-On Tue, 2005-04-19 at 10:10 +1000, David Woodhouse wrote:
-> On Mon, 2005-04-18 at 17:03 -0700, Linus Torvalds wrote:
-> > Git does work like BK in the way that you cannot remove history when you
-> > have distributed it. Once it's there, it's there.
+
+
+On Mon, 18 Apr 2005, James Bottomley wrote:
 > 
-> But older history can be pruned, and there's really no reason why an
-> http-based 'git pull' couldn't simply refrain from fetching commits
-> older than a certain threshold.
+> Then the git-pull... script actually does the merge and the resulting
+> tree checks out against BK
 
-Yes, that's what I did to get back to the commit just before the merge:
+So?
 
-fsck-cache --unreachable 54ff646c589dcc35182d01c5b557806759301aa3|awk
-'/^unreachable /{print $2}'|sed 's:^\(..\):.git/objects/\1/:'|xargs rm
+What do you intend to do with all the other stuff I've already put on top?
 
-removes all the objects from the tree prior to the bogus commit---it's
-based on your (Linus') git-prune-script.
+Yes, I can undo my tree, but my tree has had more stuff in it since I 
+pulled from you, so not only will that confuse everybody who already got 
+the up-to-date tree, it will also undo stuff that was correct.
 
-James
+In other words, HISTORY CANNOT BE UNDONE.
 
+That's the rule, and it's a damn good one. It was the rule when we used
+BK, and it's the rule now. The fact that you can undo your history in
+_your_ tree doesn't change anything at all.
 
+So I can merge with your new tree, but that won't actually help any: I'll 
+just get a superset, the way you did things. 
+
+The way to remove patches is to explicitly revert them (effectively
+applying a reverse diff), but I'm wondering if it's worth it in this case. 
+I looked at the patches I did get, and they didn't look horribly bad per 
+se. Are they dangerous?
+
+2.6.12 is some time away, if for no other reason than the fact that this 
+SCM thing has obviously eaten two weeks of my time. So I'd be inclined to 
+chalk this up as a "learning experience" with git, and just go forward.
+
+		Linus
