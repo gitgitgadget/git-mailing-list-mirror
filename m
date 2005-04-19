@@ -1,79 +1,117 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Tue, 19 Apr 2005 16:38:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191627420.2274@ppc970.osdl.org>
-References: <20050419043938.GA23724@kroah.com> <426583D5.2020308@mesatop.com>
- <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org> <200504191704.48976.elenstev@mesatop.com>
+From: Tupshin Harper <tupshin@tupshin.com>
+Subject: Re: Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 16:38:32 -0700
+Message-ID: <42659678.9090605@tupshin.com>
+References: <20050418210436.23935.qmail@science.horizon.com>	
+	<1113869248.23938.94.camel@orca.madrabbit.org>	
+	<42645969.2090609@qualitycode.com>	
+	<1113874931.23938.111.camel@orca.madrabbit.org>	
+	<4264677A.9090003@qualitycode.com>	
+	<1113950442.29444.31.camel@orca.madrabbit.org>	
+	<42658D95.7020404@tupshin.com>
+	<1113952916.29444.60.camel@orca.madrabbit.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Greg KH <greg@kroah.com>, Greg KH <gregkh@suse.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:33:03 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
+	darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Wed Apr 20 01:35:12 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO2Ci-0004DK-4q
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:32:28 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261270AbVDSXgf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:36:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261689AbVDSXgf
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:36:35 -0400
-Received: from fire.osdl.org ([65.172.181.4]:21714 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261270AbVDSXg2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:36:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JNaKs4029914
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 16:36:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JNaJVa007212;
-	Tue, 19 Apr 2005 16:36:19 -0700
-To: Steven Cole <elenstev@mesatop.com>
-In-Reply-To: <200504191704.48976.elenstev@mesatop.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DO2FC-0004Tl-A9
+	for gcvdd-darcs-devel@m.gmane.org; Wed, 20 Apr 2005 01:35:02 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DO2Im-0005Ge-5u; Tue, 19 Apr 2005 19:38:44 -0400
+Received: from adsl-69-233-54-142.dsl.pltn13.pacbell.net ([69.233.54.142]
+	helo=bastard.smallmerchant.com)
+	by abridgegame.org with esmtp (Exim 4.50) id 1DO2Ij-0005GY-8L
+	for darcs-devel@darcs.net; Tue, 19 Apr 2005 19:38:41 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id C87C53A016C;
+	Tue, 19 Apr 2005 16:44:00 -0700 (PDT)
+Received: from bastard.smallmerchant.com ([127.0.0.1])
+	by localhost (mail.smallmerchant.com [127.0.0.1]) (amavisd-new,
+	port 10024)
+	with LMTP id 26408-01-2; Tue, 19 Apr 2005 16:43:51 -0700 (PDT)
+Received: from [172.16.1.197] (unknown [172.16.1.197])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id 9C5E73A0161;
+	Tue, 19 Apr 2005 16:43:51 -0700 (PDT)
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Ray Lee <ray-lk@madrabbit.org>
+In-Reply-To: <1113952916.29444.60.camel@orca.madrabbit.org>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at smallmerchant.com
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
+Ray Lee wrote:
 
+>it allows regular expressions for the match and replace, which means
+>multiple unique tokens could change atomically. (Does anyone actually
+>*use* regexes? Sounds like a cannon that'd be hard to aim.)
+>  
+>
+Yes, and replace patches need to be used very carefully.
 
-On Tue, 19 Apr 2005, Steven Cole wrote:
-> 
-> I wasn't complaining about the 4 minutes, just the lack of feedback
-> during the majority of that time.  And most of it was after the last
-> patching file message.
+>Regardless, I only care about code, not free text. If it's in a language
+>that doesn't do some use-'em-as-you-need-'em duck typing spiel
+>(<cough>python</cough), then the context of your patch (namely, the
+>file) already has those tokens somewhere in them. And I bet that if
+>*you* looked at that file, you could tell if it was a replace or a mere
+>textual diff. Am I wrong?
+>  
+>
+Yes. See my hello world example from my last email.
 
-That should be exactly the thing that the new "read-tree -m" fixes.
+>
+>Unless I'm missing something, the darcs replace patch can already do the
+>wrong thing. 
+>
+Yes, depending on how you define wrong. Darcs replace is fully 
+predictable, and poorly chosen replaces can lead to incorrect results 
+after future patches are applied.
 
-Before, when you read in a new tree (which is what you do when you update
-to somebody elses version), git would throw all the cached information
-away, and so you'd end up doing a "checkout-cache -f -a" that re-wrote
-every single checked-out file, followed by "update-cache --refresh" that
-then re-created the cache for every single file.
+>If I do a replace patch on a variable introduced in a local
+>tree, then do a darcs replace on it before committing it to a shared
+>repository, and coder B introduces a variable of the same original name
+>in my copy, then there's a chance that the replace patch will
+>incorrectly apply upon his newly introduced variable. No?
+>  
+>
+Absolutely correct, and the exact reason why replace patches need to be 
+used *very* selectively.
 
-With the new read-tree, the same sequence (assuming you have the "-m"  
-flag to tell read-tree to merge the cache information) will now only write
-out and re-check the files that actually changed due to the update or
-merge.
+>  
+>
+>>It's provable that you can not.
+>>    
+>>
+>
+>I'm still not seeing the problem, at least when it comes to ANSI C.
+>
+>Ray
+>  
+>
+See hello world example in my other email. You can argue that it is an 
+existing problem in darcs, but really, it just points out the fact that 
+a computer is *incapable* of knowing whether it is safe to use a replace 
+patch based on a diff because replace patches are dangerous if not used 
+intelligently.
 
-So that last phase should go from minutes to seconds - instead of checking
-17,000+ files, you'd end up checking maybe a few hundred for most "normal"
-updates.
-
-For example, updating all the way from the git root (ie plain 2.6.12-rc2)  
-to the current head, only 577 files have changed, and the rest (16,740)
-should never be touched at all.
-
-You can see why doing just the 577 instead of the full 17,317 might speed
-things up a bit ;)
-
-		Linus
-
-PS. Of course, right now it probably does make sense to waste some time
-occasionally, and run "fsck-cache $(cat .git/HEAD)" every once in a while.
-Just in case..
+-Tupshin
