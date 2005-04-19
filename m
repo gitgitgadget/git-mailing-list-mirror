@@ -1,59 +1,58 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Tue, 19 Apr 2005 10:22:21 +0200
-Message-ID: <7i7jizyy4i.fsf@lanthane.pps.jussieu.fr>
-References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr>
-	<20050418122011.GA13769@abridgegame.org>
-	<7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr>
-	<1113874991.23938.113.camel@orca.madrabbit.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: More git pull problems
+Date: Tue, 19 Apr 2005 10:23:41 +0200
+Message-ID: <20050419082341.GC2393@pasky.ji.cz>
+References: <E1DNlmx-00029W-L2@flint.arm.linux.org.uk> <20050419080251.A11988@flint.arm.linux.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 10:19:23 2005
+Cc: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 10:20:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNnwE-0007mI-3m
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 10:18:30 +0200
+	id 1DNnxW-0007xn-F8
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 10:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261405AbVDSIWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 04:22:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261410AbVDSIWb
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 04:22:31 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:22247 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261405AbVDSIW1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 04:22:27 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3J8MN1A093053
-          ; Tue, 19 Apr 2005 10:22:23 +0200 (CEST)
-X-Ids: 166
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3J8MLY2010162
-          ; Tue, 19 Apr 2005 10:22:21 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DNnzx-0001ju-HO; Tue, 19 Apr 2005 10:22:21 +0200
-To: Ray Lee <ray@madrabbit.org>
-In-Reply-To: <1113874991.23938.113.camel@orca.madrabbit.org> (Ray Lee's
- message of "Mon, 18 Apr 2005 18:43:11 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.166]); Tue, 19 Apr 2005 10:22:23 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 4264BFBF.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261407AbVDSIXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 04:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261410AbVDSIXv
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 04:23:51 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52921 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261407AbVDSIXp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 04:23:45 -0400
+Received: (qmail 4072 invoked by uid 2001); 19 Apr 2005 08:23:41 -0000
+To: Russell King <rmk@arm.linux.org.uk>
+Content-Disposition: inline
+In-Reply-To: <20050419080251.A11988@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> > Aye, that will require some metadata on the git side (the hack,
-> > suggested by Linus, of using git hashes to notice moves won't work).
+Dear diary, on Tue, Apr 19, 2005 at 09:02:51AM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> My automatic pull this morning produced the following messages, which
+> seem to indicate that something's up with git pull now.
+> 
+> git-pasky-0.4 (7bef49b5d53218ed3fa8bac291b5515c6479810c)
+> 
+> > New branch: 945a2562ee9e632bc6b3399fd49e028c39d19023
+> > Tracked branch, applying changes...
+> > Fast-forwarding 945a2562ee9e632bc6b3399fd49e028c39d19023 -> 945a2562ee9e632bc6b3399fd49e028c39d19023
+> > 	on top of 945a2562ee9e632bc6b3399fd49e028c39d19023...
+> > gitdiff.sh: trying to diff 67607f05a66e36b2f038c77cfb61350d2110f7e8 against itself
 
-> So, why won't it work?
+This means nothing more than you pulled your tracked branch for the
+first time, but before you already had the latest copy; this wouldn't
+have happened with subsequent pulls, and it was fixed some time ago - it
+would be really nice if you could try the new pull and merge.
 
-Because two files can legitimately have identical contents without
-being ``the same'' file from the VC system's point of view.
+It is harmless anyway. It got confused and tried to do "zero-length fast
+forward", which git diff complained about, but it couldn't do any harm
+(I hope).
 
-In other words, two files may happen to have the same contents but
-have distinct histories.
-
-                                        Juliusz
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
