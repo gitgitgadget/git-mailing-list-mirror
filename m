@@ -1,80 +1,89 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 14:11:59 -0400
-Message-ID: <200504191412.00227.mason@suse.com>
-References: <200504191250.10286.mason@suse.com> <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: naive question
+Date: Tue, 19 Apr 2005 11:27:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504191117570.19286@ppc970.osdl.org>
+References: <16997.222.917219.386956@cargo.ozlabs.ibm.com>
+ <20050419171534.GH12757@pasky.ji.cz> <Pine.LNX.4.58.0504191036560.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:09:35 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:23:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNx8q-0002ca-Am
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:08:08 +0200
+	id 1DNxM8-0004fP-7Z
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261247AbVDSSMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 14:12:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261473AbVDSSMK
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:12:10 -0400
-Received: from ns1.suse.de ([195.135.220.2]:56036 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S261247AbVDSSMF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:12:05 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id C1F351609C1F;
-	Tue, 19 Apr 2005 20:12:03 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
-Content-Disposition: inline
+	id S261516AbVDSSZy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 14:25:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261540AbVDSSZy
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:25:54 -0400
+Received: from fire.osdl.org ([65.172.181.4]:32472 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261516AbVDSSZl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:25:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JIPbs4002621
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 19 Apr 2005 11:25:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JIPaFU023290;
+	Tue, 19 Apr 2005 11:25:37 -0700
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <Pine.LNX.4.58.0504191036560.19286@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 19 April 2005 13:36, Linus Torvalds wrote:
-> On Tue, 19 Apr 2005, Chris Mason wrote:
-> > I did a quick experiment with applying/commit 100 patches from the suse
-> > kernel into a kernel git tree, which quilt can do in 2 seconds.  git
-> > needs 1m5s.
->
-> Note that I don't think you want to replace quilt with git. The approaches
-> are totally different, and git does _not_ obviate the need for the quilt
-> kind of "patch testing".
->
-> In fact, git has all the same issues that BK had, and for the same
-> fundamental reason: if you do distributed work, you have to always
-> "append" stuff, and that means that you can never re-order anything after
-> the fact.
 
-Very true, you can't replace quilt with git without ruining both of them.  But 
-it would be nice to take a quilt tree and turn it into a git tree for merging 
-purposes, or to make use of whatever visualization tools might exist someday.  
 
-> What I _would_ like is the ability to re-use an old tree, though. What you
-> really want to do is not pass in a set of directory names and just trust
-> that they are correct, but just pass in a directory to compare with, and
-> if the contents match, you don't need to write out a new one.
->
-> I'll try to whip up something that does what you want done, but doesn't
-> need (or take) any untrusted information from the user in the form "trust
-> me, it hasn't changed".
+On Tue, 19 Apr 2005, Linus Torvalds wrote:
+> 
+> The real expense right now of a merge is that we always forget all the
+> stat information when we do a merge (since it does a read-tree). I have a
+> cunning way to fix that, though, which is to make "read-tree -m" read in
+> the old index state like it used to, and then at the end just throw it
+> away except for the stat information.
 
-We already have a "trust me, it hasn't changed" via update-cache.  If it gets 
-called wrong the tree won't reflect reality.  The patch doesn't change the 
-write-tree default, but does enable you to give write-tree better information 
-about the parts of the tree you want written back to git.
+Ok, done. That was really the plan all along, it just got dropped in the 
+excitement of trying to get the dang thing to _work_ in the first place ;)
 
-With that said, I hate the patch too.  I didn't see how to compare against the 
-old tree without reading each tree object from the old tree, and that should 
-be slower then what write-tree does now.  So I wimped out and made the quick 
-patch that demonstrates the cause of the performance hit.
+The current version only does
 
-The "move .git/index to a tmpfs file" change should be easier though, and has 
-a real benefit.  How do you feel about s|.git/index|.git/index_dir/index| in 
-the sources?  This gives us the flexibility to link it wherever is needed.
+	read-tree -m <orig> <branch1> <branch2>
 
--chris
+which now reads the old stat cache information, and then applies that to 
+the end result of any trivial merges in case the merge result matches the 
+old file stats. It really boils down to this littel gem;
+
+            /*
+             * See if we can re-use the old CE directly?
+             * That way we get the uptodate stat info.
+             */
+            if (path_matches(result, old) && same(result, old))
+                    *result = *old;
+
+
+and it seems to work fine.
+
+HOWEVER, I'll also make it do the same for a "single-tree merge":
+
+	read-tree -m <newtree>
+
+so that you can basically say "read a new tree, and merge the stat 
+information from the current cache".  That means that if you do a
+"read-tree -m <newtree>" followed by a "checkout-cache -f -a", the 
+checkout-cache only checks out the stuff that really changed.
+
+You'll still need to do an "update-cache --refresh" for the actual new
+stuff. We could make "checkout-cache" update the cache too, but I really
+do prefer a "checkout-cache only reads the index, never changes it"  
+world-view. It's nice to be able to have a read-only git tree.
+
+Final note: just doing a plain "read-tree <newtree>" will still throw all
+the stat info away, and you'll have to refresh it all...
+
+		Linus
