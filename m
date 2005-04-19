@@ -1,72 +1,59 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Makefile uses installed commit-id
-Date: Tue, 19 Apr 2005 13:28:38 -0400
-Message-ID: <1113931718.3793.8.camel@dv>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [RFC] Another way to provide help details. (was Re: [PATCH] Add help details to git help command.)
+Date: Tue, 19 Apr 2005 19:32:38 +0200
+Message-ID: <20050419173238.GJ12757@pasky.ji.cz>
+References: <200504172242.26326.elenstev@mesatop.com> <20050418102412.GJ1461@pasky.ji.cz> <4263E782.6040608@mesatop.com> <200504181940.54453.elenstev@mesatop.com> <20050419015124.GW5554@pasky.ji.cz> <4265189E.6090801@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:25:32 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Cole <elenstev@mesatop.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 19:29:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNwSs-0004I9-Ov
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:24:47 +0200
+	id 1DNwWW-0004yf-Qp
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:28:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261360AbVDSR2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 13:28:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261353AbVDSR2x
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:28:53 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:14535 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S261360AbVDSR2p
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 13:28:45 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1DNwWZ-0003hF-Pj
-	for git@vger.kernel.org; Tue, 19 Apr 2005 13:28:37 -0400
-Received: from proski by dv.roinet.com with local (Exim 3.36 #1 (Debian))
-	id 1DNwWd-0007Nv-00
-	for <git@vger.kernel.org>; Tue, 19 Apr 2005 13:28:39 -0400
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.1.1 
+	id S261353AbVDSRcl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 13:32:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261366AbVDSRcl
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:32:41 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58562 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261353AbVDSRcj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:32:39 -0400
+Received: (qmail 2740 invoked by uid 2001); 19 Apr 2005 17:32:38 -0000
+To: David Greaves <david@dgreaves.com>
+Content-Disposition: inline
+In-Reply-To: <4265189E.6090801@dgreaves.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+Dear diary, on Tue, Apr 19, 2005 at 04:41:34PM CEST, I got a letter
+where David Greaves <david@dgreaves.com> told me that...
+> If Petr wants the top comment to be extracted by help then maybe a 
+> bottom comment block could contain the more complete text?
+> I *really* think that the user docs should live in the source for now 
+> (hence I think that git man is better than going straight to man/docbook).
 
-Current git-pasky cannot be compiled properly unless it's already
-installed.  The rule for creating gitversion.sh requires commit-id in
-the PATH, which won't be there until "make install" is run.
+I'd stay with the top comment for now, and go for perldoc in the Perl
+scripts. It's cool, nice, and you can export it to anything and it still
+looks mostly cute.
 
-Also, commit-id runs gitXnormid.sh, which in turn runs cat-file.  All of
-them should be from the current directory to avoid the requirement that
-git is installed before gitversion.sh is generated.
+> I wasn't sure whether to perlise the code or do a shell-lib - but 
+> looking at the algorithms needed in things like git status I reckon the 
+> shell will end up becoming a hackish mess of awk/sed/tr/sort/uniq/pipe 
+> (ie perl) anyway.
 
-This patch adds "." to PATH when running commit-id.  The patch is
-against current git-pasky.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
---- a/Makefile
-+++ b/Makefile
-@@ -46,11 +46,11 @@ $(LIB_FILE): $(LIB_OBJS)
- 
- %.o: $(LIB_H)
- 
--gitversion.sh: $(VERSION)
-+gitversion.sh: $(VERSION) commit-id
- 	@echo Generating gitversion.sh...
- 	@rm -f $@
- 	@echo "#!/bin/sh" > $@
--	@echo "echo \"$(shell cat $(VERSION)) ($(shell commit-id))\"" >> $@
-+	@echo "echo \"$(shell cat $(VERSION)) ($(shell PATH=.:$$PATH ./commit-id))\"" >> $@
- 	@chmod +x $@
- 
- install: $(PROG) $(GEN_SCRIPT)
-
+I'm all for slow migration from sh to Perl so that we can add more cream
+on the stuff. Shell was great for the first phase of rapid development
+(where basically the most important thing was to be able to call the
+core git easily, and just wrap it around) but now if you want to do the
+fancier stuff (like git status, or even git log), it's getting more of a
+nuisance.
 
 -- 
-Regards,
-Pavel Roskin
-
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
