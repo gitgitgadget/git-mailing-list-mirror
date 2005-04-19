@@ -1,65 +1,110 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Tue, 19 Apr 2005 19:20:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504191908290.30848-100000@iabervon.org>
-References: <42658888.60007@dwheeler.com>
+From: Tupshin Harper <tupshin@tupshin.com>
+Subject: Re: Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 16:32:09 -0700
+Message-ID: <426594F9.4090002@tupshin.com>
+References: <20050418210436.23935.qmail@science.horizon.com>	
+	<1113869248.23938.94.camel@orca.madrabbit.org>	
+	<42645969.2090609@qualitycode.com>	
+	<1113874931.23938.111.camel@orca.madrabbit.org>	
+	<4264677A.9090003@qualitycode.com>	
+	<1113950442.29444.31.camel@orca.madrabbit.org>	
+	<42658E38.1020406@qualitycode.com>
+	<1113951972.29444.42.camel@orca.madrabbit.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>,
-	Martin Schlemmer <azarah@nosferatu.za.org>,
-	David Greaves <david@dgreaves.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:24:30 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kevin Smith <yarcs@qualitycode.com>,
+	darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Wed Apr 20 01:28:53 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO24p-0003Q5-2p
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:24:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261760AbVDSX0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:26:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261689AbVDSXYN
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:24:13 -0400
-Received: from iabervon.org ([66.92.72.58]:57349 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261739AbVDSXUf (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:20:35 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DO21J-0000bQ-00; Tue, 19 Apr 2005 19:20:41 -0400
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <42658888.60007@dwheeler.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DO29E-0003pY-3W
+	for gcvdd-darcs-devel@m.gmane.org; Wed, 20 Apr 2005 01:28:52 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DO2Co-0002xx-L5; Tue, 19 Apr 2005 19:32:34 -0400
+Received: from adsl-69-233-54-142.dsl.pltn13.pacbell.net ([69.233.54.142]
+	helo=bastard.smallmerchant.com)
+	by abridgegame.org with esmtp (Exim 4.50) id 1DO2Cl-0002xm-Sa
+	for darcs-devel@darcs.net; Tue, 19 Apr 2005 19:32:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id 15A023A016C;
+	Tue, 19 Apr 2005 16:37:42 -0700 (PDT)
+Received: from bastard.smallmerchant.com ([127.0.0.1])
+	by localhost (mail.smallmerchant.com [127.0.0.1]) (amavisd-new,
+	port 10024)
+	with LMTP id 26268-03-5; Tue, 19 Apr 2005 16:37:28 -0700 (PDT)
+Received: from [172.16.1.197] (unknown [172.16.1.197])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id 7B29D3A0161;
+	Tue, 19 Apr 2005 16:37:28 -0700 (PDT)
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Ray Lee <ray-lk@madrabbit.org>
+In-Reply-To: <1113951972.29444.42.camel@orca.madrabbit.org>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at smallmerchant.com
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-On Tue, 19 Apr 2005, David A. Wheeler wrote:
+Ray Lee wrote:
 
-> In a _logical_ sense that's true; I'd only want to pull data if I intended
-> to (possibly) do something with it.  But as a _practical_ matter,
-> I can see lots of reasons for doing a pull as a separate operation.
-> One is disconnected operation; (...)
+> I'm still not communicating well.
+>
+>Give me a case where assuming it's a replace will do the wrong thing,
+>for C code, where it's a variable or function name.
+>
+>Ray
+>
+>-
+>
+I think you are communicating fine, but not fully understanding darcs.
 
-That's true. I think I actually like "git pull" as the operation for "make
-sure I have everything I need, so I can lose net".
+try this:
+initial patch creates hello.c
+#include <stdio.h>
 
-> What command would you suggest for the common case
-> of "update with current track?"  I've proposed "git update [NAME]".
-> "git merge" with update-from-current-track as default seems unclear, and
-> I worry that I might accidentally press RETURN too soon & merge with
-> the wrong thing.  And I like the idea of "git update" doing the same thing
-> (essentially) as "cvs update" and "svn update"; LOTS of people "know"
-> what update does, so using the same command name for one of the most
-> common operations smooths transition (GNU Arch's "tla update"
-> is almost, though not exactly, the same too.)
+int main(int argc, char *argv[])
+{
+  printf("Hello world!\n");
+  return 0;
+}
 
-I think that having "git update" update a tracked branch is best, if only as
-an aid to discoverability. And "git merge" should require you to say what
-you want to merge with, because it's too easy to pick a wrong default, and
-the user had better know.
+second patch:
+replace ./hello.c [A-Za-z_0-9] world universe
 
-It seems to me like this makes "update" identical to "merge <tracked>", so
-"update [NAME]" and "merge" don't make sense, since they'd do the other
-command, but less intuitively.
+third patch, for conceptual clarity, created in another repository that 
+had seen the first patch, but not the second (adds function wide_world):
+hunk ./hello.c 3
++void wide_world()
++{
++  printf("Hello wide world\n");
++}
++
+hunk ./hello.c 11
++  wide_world();
+}
 
-	-Daniel
-*This .sig left intentionally blank*
+If patch2 was a replace patch, then the result of running the combined 3 
+patch version would be:
+Hello universe!
+Hello wide universe
 
+but if patch2 was a non-replace patch, then the result would be:
+Hello universe!
+Hello wide world
+
+-Tupshin
