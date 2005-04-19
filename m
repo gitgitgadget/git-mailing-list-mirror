@@ -1,90 +1,96 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 20:51:25 +0200
-Message-ID: <20050419185124.GB86697@dspnet.fr.eu.org>
-References: <200504191250.10286.mason@suse.com> <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [script] ge: export commits as patches
+Date: Tue, 19 Apr 2005 20:56:07 +0200
+Message-ID: <20050419185607.GA26756@elte.hu>
+References: <20050419134843.GA19146@elte.hu> <20050419170320.GG12757@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:48:25 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:53:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNxks-0008Uy-Fp
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:47:26 +0200
+	id 1DNxps-0000kD-Bk
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261570AbVDSSvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 14:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261573AbVDSSvf
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:51:35 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:58896 "EHLO dspnet.fr.eu.org")
-	by vger.kernel.org with ESMTP id S261570AbVDSSvb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:51:31 -0400
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id 73D8834D26; Tue, 19 Apr 2005 20:51:25 +0200 (CEST)
-To: git@vger.kernel.org
+	id S261573AbVDSS4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 14:56:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261591AbVDSS4n
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:56:43 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:16082 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261573AbVDSS4k (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:56:40 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id BA44231FF47;
+	Tue, 19 Apr 2005 20:55:28 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 3AA441FC2; Tue, 19 Apr 2005 20:56:11 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
+In-Reply-To: <20050419170320.GG12757@pasky.ji.cz>
 User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2005 at 10:36:06AM -0700, Linus Torvalds wrote:
-> In fact, git has all the same issues that BK had, and for the same 
-> fundamental reason: if you do distributed work, you have to always 
-> "append" stuff, and that means that you can never re-order anything after 
-> the fact.
 
-You can, moving a patch around is just a chain of merges.
+* Petr Baudis <pasky@ucw.cz> wrote:
 
-[Warning, ascii "art" ahead]
+> Dear diary, on Tue, Apr 19, 2005 at 03:48:43PM CEST, I got a letter
+> where Ingo Molnar <mingo@elte.hu> told me that...
+> > is there any 'export commit as patch' support in git-pasky? I didnt find 
+> > any such command (maybe it got added meanwhile), so i'm using the 'ge' 
+> > hack below.
+> > 
+> > e.g. i typically look at commits via 'git log', and then when i see 
+> > something interesting, i look at the commit via the 'ge' script. E.g.  
+> > "ge 834f6209b22af2941a8640f1e32b0f123c833061" done in the kernel tree 
+> > will output a particular commit's header and the patch.
+> 
+> Nice idea. I will add it, probably as 'git patch'.
+> 
+> > TREE1=$(cat-file commit 2>/dev/null $1 | head -4 | grep ^tree | cut -d' ' -f2)
+> > if [ "$TREE1" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
+> > PARENT=$(cat-file commit 2>/dev/null $1 | head -4 | grep ^parent | cut -d' ' -f2)
+> > if [ "$PARENT" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
+> > TREE2=$(cat-file commit 2>/dev/null $PARENT | head -4 | grep ^tree | cut -d' ' -f2)
+> > if [ "$TREE2" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
+> 
+> commit-id and parent-id tools might be useful. ;-)
 
-A merge is traditionally seen as:
+find a cleaned up 'ge' script below.
 
-1- Start with (A, B, C... are nodes/trees..., Pn are patches/changesets):
+and please fix gitXnormid.sh to simply echo nothing and return with a -1 
+exit value when a nonsensical ID is passed to it. Right now the output 
+is quite ugly if you do 'ge blah'.
 
-     /--P1->B
-    /
-   A
-    \
-     \--P2->C
+	Ingo
 
-2- End with:
+#!/bin/bash
 
-     /--P1->B
-    /
-   A----(P1+P2)->D
-    \
-     \--P2->C
+usage ()
+{
+ echo 'usage: ge <commit-ID>'
+ exit -1
+}
 
-   where D is the merge between B and C with A as common ancestor.
+if [ $# != 1 ]; then
+ usage
+fi
 
-But you can also see the result as:
+ME=    $(commit-id $1);      [ "$ME"     = "" ] && usage
+PARENT=$(parent-id $ME);     [ "$PARENT" = "" ] && usage
+TREE1= $(tree-id   $ME);     [ "$TREE1"  = "" ] && usage
+TREE2= $(tree-id   $PARENT); [ "$TREE2"  = "" ] && usage
 
-     /--P1->B--P2--\
-    /               \
-   A                 D
-    \               /
-     \--P2->C--P1--/
-
-i.e. you have two patch chains, one being A-P1->B-P2->D and the other
-A-P2->C-P1->D.  I.e. you have the two patches P1 and P2 in two
-possible patching orders.  But you can do even more amusing.  Start
-with a patch chain:
-
-   E--P3-->F--P4-->G
-
-and merge E and G with F as common ancestor.  You'll then get H where
-E--P4-->H--P3-->G.  I.e. you inverted two patches in your patch chain.
-Or, if you keep H instead of G as your head, you removed P3 from your
-patch chain.
-
-Of course you can permute blocs of patches that way by having E, F and
-G further away from each other.  You just increase the merge conflict
-probability.
-
-That is, I think, the way to do quilt/arch patch handling with safe
-distribution and safe backtracing procedures.
-
-  OG.
+cat-file commit $ME
+echo
+git diff -r $TREE2:$TREE1
 
