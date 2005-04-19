@@ -1,76 +1,66 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Tue, 19 Apr 2005 23:54:43 +1000
-Message-ID: <2cfc4032050419065472ef3db0@mail.gmail.com>
-References: <20050416233305.GO19099@pasky.ji.cz>
-	 <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org>
-	 <20050419011206.GT5554@pasky.ji.cz> <42646967.9030903@dwheeler.com>
-	 <4264CCFF.30400@dgreaves.com> <20050419092812.GE2393@pasky.ji.cz>
-	 <1113905110.1262.1.camel@nosferatu.lan>
-	 <20050419105008.GB12757@pasky.ji.cz>
-Reply-To: jon@zeta.org.au
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: missing: git api, reference, user manual and mission statement
+Date: Tue, 19 Apr 2005 15:58:10 +0200
+Message-ID: <20050419135810.GA19393@elte.hu>
+References: <20050419123631.GD3739@xdt04.mpe-garching.mpg.de> <42650CFC.1010400@qualitycode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
-	David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 15:53:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Klaus Robert Suetterlin <robert@mpe.mpg.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 15:58:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNt7f-0004eF-9U
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 15:50:39 +0200
+	id 1DNtC3-0005XG-1o
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 15:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261527AbVDSNyq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 09:54:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261528AbVDSNyq
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 09:54:46 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:33383 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261527AbVDSNyo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 09:54:44 -0400
-Received: by rproxy.gmail.com with SMTP id j1so1208209rnf
-        for <git@vger.kernel.org>; Tue, 19 Apr 2005 06:54:44 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WM5uBheDzB+yhyBS/nEVzlVqFoUgkFaZ/1KPpfGs+DJ//KPbguk3VE9RHgsNQSEL+TomAhtFVdtRO9DbJySNQUcMdkOYfyL7MhK215VQ+DwSgY7ufzLGH7pg+cpLTqKPjmXW7ea11DX4CqVmc0QcM9XA4h3vBVZ0Gr7G2Pg9CpI=
-Received: by 10.38.66.58 with SMTP id o58mr766681rna;
-        Tue, 19 Apr 2005 06:54:43 -0700 (PDT)
-Received: by 10.38.104.32 with HTTP; Tue, 19 Apr 2005 06:54:43 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419105008.GB12757@pasky.ji.cz>
+	id S261530AbVDSN7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 09:59:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261531AbVDSN7P
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 09:59:15 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:35206 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261530AbVDSN7M (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 09:59:12 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id 0E8C0319D2B;
+	Tue, 19 Apr 2005 15:57:14 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id B8D171FC2; Tue, 19 Apr 2005 15:58:13 +0200 (CEST)
+To: Kevin Smith <yarcs@qualitycode.com>
 Content-Disposition: inline
+In-Reply-To: <42650CFC.1010400@qualitycode.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> I disagree. This already forces you to have two branches (one to pull
-> from to get the data, mirroring the remote branch, one for your real
-> work) uselessly and needlessly.
+
+* Kevin Smith <yarcs@qualitycode.com> wrote:
+
+> Klaus Robert Suetterlin wrote:
+> > 1) There is no clear (e.g. by name) distinction between ``git as done
+> > by Linus'', which is a kind of content addressable database with added
+> > semantics, and ``git as done by the rest of You'', which is a kind of
+> > SCM on top of Linuses stuff.
 > 
-> ...
-> These naming issues may appear silly but I think they matter big time
-> for usability, intuitiveness, and learning curve (I don't want git-pasky
-> become another GNU arch).
+> I also see this as one of the biggest obstacles right now. It would be 
+> very helpful if we could achieve the clear separation between git and 
+> non-git that has been part of the design since the beginning.
 > 
+> Git is very immature, and currently should only be used by brave 
+> pioneers. About the only way for a mortal to even try git is to stick 
+> to git-pasky releases, and not try to track all the patches flying 
+> around.
 
+hey, it's a 2 weeks old project, but it's certainly one of the 
+fastest-growing projects i've ever seen: it has so much steam that it's 
+scary :) It seems that a true emergency focused a massive, spontaneous 
+concentration of OSS development power.
 
-Not that it is worth that much, but my $0.02 is that Petr is right on
-this one. I want something that allows me to get the objects into my
-local repository without funking with my working directory.
-
-As a long time CVS user, "git update" would do what I expect it to. I
-don't have any pre-conceptions about what "pull" does, so it doesn't
-phase me if pull is used for this purpose. However, perhaps pull means
-something in some other SCM that would cause confusion for others?
-
-Some alternatives to "pull" are offered: hoard, gather, make-local, download.
-
-Regards,
-
-jon.
--- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+	Ingo
