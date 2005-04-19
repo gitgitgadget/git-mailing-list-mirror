@@ -1,102 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Tue, 19 Apr 2005 15:38:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com>
- <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <426583D5.2020308@mesatop.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
+Date: Tue, 19 Apr 2005 18:39:04 -0400
+Message-ID: <42658888.60007@dwheeler.com>
+References: <Pine.LNX.4.21.0504191245160.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Greg KH <greg@kroah.com>, Greg KH <gregkh@suse.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:33:35 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@ucw.cz>,
+	Martin Schlemmer <azarah@nosferatu.za.org>,
+	David Greaves <david@dgreaves.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:36:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1HJ-0006OH-II
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:33:09 +0200
+	id 1DO1Jv-0006bI-4G
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:35:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261710AbVDSWgs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:36:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261708AbVDSWgs
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:36:48 -0400
-Received: from fire.osdl.org ([65.172.181.4]:52671 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261707AbVDSWgh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:36:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JMaQs4024256
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 15:36:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JMaJc7003912;
-	Tue, 19 Apr 2005 15:36:22 -0700
-To: Steven Cole <elenstev@mesatop.com>
-In-Reply-To: <426583D5.2020308@mesatop.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261711AbVDSWjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:39:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261709AbVDSWjf
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:39:35 -0400
+Received: from cujo.runbox.com ([193.71.199.138]:56988 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261708AbVDSWjT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:39:19 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DO1N9-0001wk-OG; Wed, 20 Apr 2005 00:39:11 +0200
+Received: from [129.246.254.178] (helo=[129.246.80.140])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DO1N9-0003uj-Gu; Wed, 20 Apr 2005 00:39:11 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0504191245160.30848-100000@iabervon.org>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Daniel Barkalow wrote:
+ >See, I don't think you ever want to just pull. You want to
+ >pull-and-do-something, but the something could be any operation...
 
+In a _logical_ sense that's true; I'd only want to pull data if I intended
+to (possibly) do something with it.  But as a _practical_ matter,
+I can see lots of reasons for doing a pull as a separate operation.
+One is disconnected operation; I may want to pull the data now, to
+prepare for disconnectino, and then work later while disconnected.
+Another is using lots of data compared to the pipesize; if I have a
+dial-in modem, or I want the history of the linux kernel since 0.0.1,
+I might want to "pull" & go away/go to sleep for the night. I might
+use cron/at to automatically "pull" at 3am from some interesting branches.
+The next day, I could then "pull" again to update just what changed,
+and/or do the operation I intended to do if the operation auto-pulls the
+missing data.
 
-On Tue, 19 Apr 2005, Steven Cole wrote:
+>I'm actually getting suspicious that the right thing is to hide "pull" in the id scheme. That is, instead of saying "linus" to refer to the
+>"linus" head that you currently have, you say "+linus" to refer to the
+>head Linus has on his server currently, and this will cause you to
+>download anything necessary to perform the operation with the resulting value.
+>  
 >
-> But perhaps a progress bar right about here might be
-> a good thing for the terminally impatient.
-> 
-> real    3m54.909s
-> user    0m14.835s
-> sys     0m10.587s
-> 
-> 4 minutes might be long enough to cause some folks to lose hope.
+That's an interesting idea.  I'll have to think about that.
 
-Well, the real operations took only 15 seconds. What kind of horribe 
-person are you, that you don't have all of the kernel in your disk cache 
-already? Shame on you.
+What command would you suggest for the common case
+of "update with current track?"  I've proposed "git update [NAME]".
+"git merge" with update-from-current-track as default seems unclear, and
+I worry that I might accidentally press RETURN too soon & merge with
+the wrong thing.  And I like the idea of "git update" doing the same thing
+(essentially) as "cvs update" and "svn update"; LOTS of people "know"
+what update does, so using the same command name for one of the most
+common operations smooths transition (GNU Arch's "tla update"
+is almost, though not exactly, the same too.)
 
-Or was the 4 minutes for downloading all the objest too?
+I still think it's important to have a very simple command that updates
+your current branch with a tracked branch (because it's common to stay
+in sync with a master branch), and a way to just download the data without
+doing things with it YET (because you want to do things in stages).
+The commands "update" and "pull" come to mind when thinking that way,
+though as long as the commands are simple & clear that's a good thing
+(I think it's a GOOD idea to use the same commands as CVS and
+Subversion when the results are essentially the same, just because so many
+people are already familiar with them, but only where it makes sense.)
 
-Anyway, it looks like you are using pasky's scripts, and the old 
-"patch-based" upgrade at that. You certainly will _not_ see the
+--- David A. Wheeler
 
-	[many files patched]
-	patching file mm/mmap.c
-	..
-
-if you use a real git merge. That's probable be the real problem here.
-
-Real merges have no patches taking place _anywhere_. And they take about 
-half a second. Doing an "update" of your tree should _literally_ boil down 
-to
-
-	#
-	# "repo" needs to point to the repo we update from
-	#
-	rsync -avz --ignore-existing $repo/objects/. .git/objects/.
-	rsync -L $repo/HEAD .git/NEW_HEAD || exit 1
-	read-tree -m $(cat .git/NEW_HEAD) || exit 1
-	checkout-cache -f -a
-	update-cache --refresh
-	mv .git/NEW_HEAD .git/HEAD
-
-and if it does anything else, it's literally broken. Btw, the above does
-need my "read-tree -m" thing which I committed today.
-
-(CAREFUL: the above is not a good script, because it _will_ just overwrite 
-all your old contents with the stuff you updated to. You should thus not 
-actually use something like this, but a "git update" should literally end 
-up doing the above operations in the end, and just add proper checking).
-
-And if that takes 4 minutes, you've got problems.
-
-Just say no to patches. 
-
-		Linus
-
-PS: If you want a clean tree without any old files or anything else, for
-that matter, you can then do a "show-files -z --others | xargs -0 rm", but
-be careful: that will blow away _anything_ that wasn't revision controlled
-with git. So don't blame me if your pr0n collection is gone afterwards.
