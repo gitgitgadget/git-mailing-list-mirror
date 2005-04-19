@@ -1,83 +1,102 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 16:00:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0504191557410.26365@qynat.qvtvafvgr.pbz>
-References: <200504191250.10286.mason@suse.com><Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org><200504191412.00227.mason@suse.com><Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org><Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
- <Pine.LNX.4.58.0504191514550.2274@ppc970.osdl.org>
+From: Tupshin Harper <tupshin@tupshin.com>
+Subject: Re: Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 16:00:37 -0700
+Message-ID: <42658D95.7020404@tupshin.com>
+References: <20050418210436.23935.qmail@science.horizon.com>	
+	<1113869248.23938.94.camel@orca.madrabbit.org>	
+	<42645969.2090609@qualitycode.com>	
+	<1113874931.23938.111.camel@orca.madrabbit.org>	
+	<4264677A.9090003@qualitycode.com>
+	<1113950442.29444.31.camel@orca.madrabbit.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:57:31 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kevin Smith <yarcs@qualitycode.com>,
+	darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Wed Apr 20 00:57:41 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1eg-0000QC-6H
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:57:18 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261729AbVDSXBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261724AbVDSXBE
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:01:04 -0400
-Received: from warden3-p.diginsite.com ([208.147.64.186]:6390 "HELO
-	warden3.diginsite.com") by vger.kernel.org with SMTP
-	id S261729AbVDSXAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 19:00:21 -0400
-Received: from sacims01.digitalinsight.com by warden3.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Tue, 19 Apr 2005 16:00:19 -0700
-Received: by sacexc01.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <JDH1CN15>; Tue, 19 Apr 2005 16:00:06 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id JDHHA6JZ; Tue, 19 Apr 2005 16:00:04 -0700
-To: Linus Torvalds <torvalds@osdl.org>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <Pine.LNX.4.58.0504191514550.2274@ppc970.osdl.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DO1eu-0000SP-M3
+	for gcvdd-darcs-devel@m.gmane.org; Wed, 20 Apr 2005 00:57:33 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DO1iZ-0007pG-ET; Tue, 19 Apr 2005 19:01:19 -0400
+Received: from adsl-69-233-54-142.dsl.pltn13.pacbell.net ([69.233.54.142]
+	helo=bastard.smallmerchant.com)
+	by abridgegame.org with esmtp (Exim 4.50) id 1DO1iU-0007bB-TH
+	for darcs-devel@darcs.net; Tue, 19 Apr 2005 19:01:15 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id 6546C3A016C;
+	Tue, 19 Apr 2005 16:06:14 -0700 (PDT)
+Received: from bastard.smallmerchant.com ([127.0.0.1])
+	by localhost (mail.smallmerchant.com [127.0.0.1]) (amavisd-new,
+	port 10024)
+	with LMTP id 26077-02-2; Tue, 19 Apr 2005 16:05:56 -0700 (PDT)
+Received: from [172.16.1.197] (unknown [172.16.1.197])
+	by bastard.smallmerchant.com (Postfix) with ESMTP id F40653A0161;
+	Tue, 19 Apr 2005 16:05:55 -0700 (PDT)
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Ray Lee <ray-lk@madrabbit.org>
+In-Reply-To: <1113950442.29444.31.camel@orca.madrabbit.org>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at smallmerchant.com
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-On Tue, 19 Apr 2005, Linus Torvalds wrote:
+Ray Lee wrote:
 
-> On Tue, 19 Apr 2005, David Lang wrote:
->>
->> what if you turned the forest of quilt patches into a forest of git trees?
->> (essentially applying each patch against the baseline seperatly) would
->> this make sense or be useful?
+>Here's where we disagree. If you checkpoint your tree before the
+>replace, and immediately after, the only differences in the
+>source-controlled files would be due to the replace.
 >
-> It has a certain charm, but the fact is, it gets really messy to sort out
-> later.
->
-> The thing is, there's a huge benefit to a straight-line tree: you can do
-> binary searching etc of patches that cause problems, and in general it's
-> just a lot _easier_ to work with a linear set of patches for pretty much
-> everybody.
->
-> So yes, it's "cool" to show the fact that patches are independent and show
-> them as each applying to the baseline (and then you can have the "mother
-> of all merges" that ties them all together), but that's just a _nightmare_
-> when you actually try to debug things and sort things out.
->
-> So while I'm a huge proponent of parallell development, and having lots of
-> branches, I actually think that _linearizing_ stuff is a good thing.
->
-> So let's put it this way: parallel development and merging is wonderful as
-> a tool to handle true distributed development, and it's the thing that GIT
-> really tries to do. But once you have "local" development (like in a set
-> of quilt patches), the _last_ thing you want to do is try to make it look
-> parallel. You're much better off picking a good order, and sticking with
-> it. Because otherwise, 2 months down the line, you'll just look at that
-> tree, and what you'll want to do is to visualize them linearly anyway.
+This is assuming that you only have one replace and no other operations 
+recorded in the patch. If you have multiple replaces or a replace and a 
+traditional diff  recorded in the same patch, then this is not true.
 
-if you are useing quilt for locally developed patches I fully agree with 
-you, but I was thinking of the case where Andrew is receiving independant 
-patches from lots of people and storing them in quilt for testing, and 
-then sending them on to you. In this case the patches really are 
-independant and it may be useful to continue to treat them this way 
-instead of collapsing them into one 'update from Andrew' feed.
+> And since the
+>language of the file is known (and thereby the tokenization -- it *is*
+>well-defined), then a tokenizer that compares the before and after trees
+>(for just the files that changed, obviously), can discover what you did,
+>and promote the mere ASCII diff into a token-replace diff. (The same
+>sort of idea could be done for reindention, I'd hope.)
+>  
+>
+See above for one set of limitations on this. A more fundamental problem 
+comes back to intent. If I have a file "foo" before:
+a1
+a2
+and after:
+b1
+b2
+is that a "replace [_a-zA-Z0-9] a b foo" patch, or is that a
+-a1
+-a2
++b1
++b2
+patch? Note that this comes down to heuristics, and no matter what you 
+use, you will be wrong sometimes,  *and* the choice that is made can 
+substantively affect the contents of the repository after additional 
+patches are applied.
 
-I don't know if this sort of thing happens enough to matter or not.
+>We agree on everything except that it's provable that one can discover a
+>replace operation, given a before and after tree.
+>  
+>
+It's provable that you can not.
 
-David Lang
-
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+-Tupshin
