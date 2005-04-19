@@ -1,77 +1,71 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: More git pull problems
-Date: Tue, 19 Apr 2005 10:35:52 +0200
-Message-ID: <20050419083551.GD2393@pasky.ji.cz>
-References: <E1DNlmx-00029W-L2@flint.arm.linux.org.uk> <20050419080251.A11988@flint.arm.linux.org.uk> <20050419082341.GC2393@pasky.ji.cz> <20050419093113.D13488@flint.arm.linux.org.uk>
+From: Zach Welch <zw@superlucidity.net>
+Subject: [PATCH 0/8] init-db.c cleanup, add INDEX_FILE_DIRECTORY support
+Date: Tue, 19 Apr 2005 02:09:39 -0700
+Message-ID: <mailbox-23311-1113901779-711084@spoon>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 10:32:40 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Apr 19 11:06:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNo9K-00011S-0s
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 10:32:02 +0200
+	id 1DNog8-0005V9-Tz
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 11:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261170AbVDSIgD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 04:36:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261188AbVDSIgD
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 04:36:03 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:65209 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261170AbVDSIfx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 04:35:53 -0400
-Received: (qmail 5332 invoked by uid 2001); 19 Apr 2005 08:35:52 -0000
-To: Russell King <rmk@arm.linux.org.uk>
-Content-Disposition: inline
-In-Reply-To: <20050419093113.D13488@flint.arm.linux.org.uk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261254AbVDSJJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 05:09:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261320AbVDSJJr
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 05:09:47 -0400
+Received: from guft.superlucidity.net ([63.224.205.130]:49550 "EHLO
+	mail.guft.org") by vger.kernel.org with ESMTP id S261254AbVDSJJm
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 05:09:42 -0400
+Received: (qmail 23321 invoked by uid 5006); 19 Apr 2005 02:09:39 -0700
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 10:31:13AM CEST, I got a letter
-where Russell King <rmk@arm.linux.org.uk> told me that...
-> On Tue, Apr 19, 2005 at 10:23:41AM +0200, Petr Baudis wrote:
-> > Dear diary, on Tue, Apr 19, 2005 at 09:02:51AM CEST, I got a letter
-> > where Russell King <rmk@arm.linux.org.uk> told me that...
-> > > My automatic pull this morning produced the following messages, which
-> > > seem to indicate that something's up with git pull now.
-> > > 
-> > > git-pasky-0.4 (7bef49b5d53218ed3fa8bac291b5515c6479810c)
-> > > 
-> > > > New branch: 945a2562ee9e632bc6b3399fd49e028c39d19023
-> > > > Tracked branch, applying changes...
-> > > > Fast-forwarding 945a2562ee9e632bc6b3399fd49e028c39d19023 -> 945a2562ee9e632bc6b3399fd49e028c39d19023
-> > > > 	on top of 945a2562ee9e632bc6b3399fd49e028c39d19023...
-> > > > gitdiff.sh: trying to diff 67607f05a66e36b2f038c77cfb61350d2110f7e8 against itself
-> > 
-> > This means nothing more than you pulled your tracked branch for the
-> > first time, but before you already had the latest copy; this wouldn't
-> > have happened with subsequent pulls, and it was fixed some time ago - it
-> > would be really nice if you could try the new pull and merge.
-> 
-> That's not the case.  This tree has been sitting around for about 6 days
-> now, and every day at 7am it gets a git pull.  One thing which did change
-> was the version of git installed, which now has this "fast forwarding"
-> feature in.
+Hi all,
 
-Yes, the way to store this information changed. But by now, it [the
-$orig_head which caused the havoc] is completely informational anyway
-and git pull is completely rewritten not to need it for the merging
-itself; just for the fancy stuff like showing diff-tree.
+I'm working on an OO perl alternative to Petr's git scripts, which I'm
+currently calling "yogi" (your other git interface).  While I'm not
+ready to release that just yet, I wanted to start floating some patches to
+the core plumbing to support the respective packages' potentially
+divergent demands.  For those die-hard perl hackers, I can float you a copy
+of the package off-list if you're interested; I'm hoping to finish a public
+0.0.1 release by the end of the week.
 
-If I go for the pull/update change (or even if I don't), I might drop
-this information anyway; I basically needed it only before merge-base
-was around anyway, so that I would know what tree to use as the merge
-base.
+The first two patches in the series are already in the pasky.git repository,
+but Linus hasn't merged them yet.  The are included only because the next 
+few patches expect them to be in place.
 
-> Maybe gitmerge.sh should check whether it needs to do anything before
-> attempting to do something?
+The third patch in the series prepares for the forth patch by factoring 
+the object directory detection and creation functionality.  The fifth patch
+makes one final pass at cleaning up init-db.  The 3rd and 5th patches aren't 
+particularly valuable unless the remaining patches are also applied, but 
+they do make the code a bit prettier.  To me, at least.
 
-That's the case with the latest git-pasky night version.
+The remaining patches (4,6,7,8) add the ability for the '.git' index directory 
+to be overridden in the same manner as the object directory.  This allows
+me to create my own independent '.yogi' trees, the very notion of which
+may cause this whole series to be henceforth flamed into oblivion.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Here's to hoping otherwise....
+
+Cheers,
+
+Zach Welch
+Superlucidity Services
+
+These patches are based off commit 5b53d3a08d64198d26d4f2323f235790c04aeaab.
+
+There are 8 patches in this series:
+        [PATCH 1/8] init-db.c: [RESEND] remove redundant getenv call
+        [PATCH 2/8] init-db.c: [RESEND] make init-db work with common objects
+        [PATCH 3/8] init-db.c: refactor directory creation
+        [PATCH 4/8] init-db.c: add INDEX_FILE_DIRECTORY support
+        [PATCH 5/8] init-db.c: refactor mkdir logic
+        [PATCH 6/8] read-cache.c: add INDEX_FILE_DIRECTORY support
+        [PATCH 7/8] read-tree.c: add INDEX_FILE_DIRECTORY support
+        [PATCH 8/8] update-cache.c: add INDEX_FILE_DIRECTORY support
