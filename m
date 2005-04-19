@@ -1,59 +1,80 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Add help details to git help command. (This time with Perl)
-Date: Tue, 19 Apr 2005 19:50:51 +0200
-Message-ID: <20050419175051.GK12757@pasky.ji.cz>
-References: <200504172242.26326.elenstev@mesatop.com> <20050418102412.GJ1461@pasky.ji.cz> <42654153.8080307@mesatop.com>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Tue, 19 Apr 2005 14:11:59 -0400
+Message-ID: <200504191412.00227.mason@suse.com>
+References: <200504191250.10286.mason@suse.com> <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Greaves <david@dgreaves.com>
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:48:22 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:09:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNwog-0007sl-C5
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:47:18 +0200
+	id 1DNx8q-0002ca-Am
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261498AbVDSRvH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 13:51:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261497AbVDSRvH
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:51:07 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10691 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261473AbVDSRux (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:50:53 -0400
-Received: (qmail 4594 invoked by uid 2001); 19 Apr 2005 17:50:51 -0000
-To: Steven Cole <elenstev@mesatop.com>
+	id S261247AbVDSSMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 14:12:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261473AbVDSSMK
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:12:10 -0400
+Received: from ns1.suse.de ([195.135.220.2]:56036 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261247AbVDSSMF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:12:05 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id C1F351609C1F;
+	Tue, 19 Apr 2005 20:12:03 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <42654153.8080307@mesatop.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 07:35:15PM CEST, I got a letter
-where Steven Cole <elenstev@mesatop.com> told me that...
-> Example:
-..snip a perfect-looking example..
-> ---------
-> Speaking of 'git diff', I ran that before applying the following patch,
-> and got a diff starting thusly:
-> 
->  --- /dev/null
->  +++ b/gitmerge-file.sh
-> 
-> I had earlier done a 'git pull pasky', which was 'Up to date'.
+On Tuesday 19 April 2005 13:36, Linus Torvalds wrote:
+> On Tue, 19 Apr 2005, Chris Mason wrote:
+> > I did a quick experiment with applying/commit 100 patches from the suse
+> > kernel into a kernel git tree, which quilt can do in 2 seconds.  git
+> > needs 1m5s.
+>
+> Note that I don't think you want to replace quilt with git. The approaches
+> are totally different, and git does _not_ obviate the need for the quilt
+> kind of "patch testing".
+>
+> In fact, git has all the same issues that BK had, and for the same
+> fundamental reason: if you do distributed work, you have to always
+> "append" stuff, and that means that you can never re-order anything after
+> the fact.
 
-Check/prune your add/rm-queue.
+Very true, you can't replace quilt with git without ruining both of them.  But 
+it would be nice to take a quilt tree and turn it into a git tree for merging 
+purposes, or to make use of whatever visualization tools might exist someday.  
 
-> So, the following patch is a conventional diff.
-> 
-> If the Perl filename or code  is too hideous, you're more than
-> welcome to change it.
+> What I _would_ like is the ability to re-use an old tree, though. What you
+> really want to do is not pass in a set of directory names and just trust
+> that they are correct, but just pass in a directory to compare with, and
+> if the contents match, you don't need to write out a new one.
+>
+> I'll try to whip up something that does what you want done, but doesn't
+> need (or take) any untrusted information from the user in the form "trust
+> me, it hasn't changed".
 
-I'd actually prefer to just throw the whole help command handling
-to githelp.pl. I dislike helper scripts if I can avoid them. ;-)
+We already have a "trust me, it hasn't changed" via update-cache.  If it gets 
+called wrong the tree won't reflect reality.  The patch doesn't change the 
+write-tree default, but does enable you to give write-tree better information 
+about the parts of the tree you want written back to git.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+With that said, I hate the patch too.  I didn't see how to compare against the 
+old tree without reading each tree object from the old tree, and that should 
+be slower then what write-tree does now.  So I wimped out and made the quick 
+patch that demonstrates the cause of the performance hit.
+
+The "move .git/index to a tmpfs file" change should be easier though, and has 
+a real benefit.  How do you feel about s|.git/index|.git/index_dir/index| in 
+the sources?  This gives us the flexibility to link it wherever is needed.
+
+-chris
