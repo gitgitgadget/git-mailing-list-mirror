@@ -1,49 +1,96 @@
-From: "C. Scott Ananian" <cscott@cscott.net>
-Subject: Re: SHA1 hash safety
-Date: Tue, 19 Apr 2005 18:48:57 -0400 (EDT)
-Message-ID: <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
- <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
- <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
- <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org>
- <20050419223027.GA26100@localhost>
+From: Lars Fenneberg <lf@elemental.net>
+Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Wed, 20 Apr 2005 00:52:32 +0200
+Message-ID: <20050419225232.GA8026@gimli.elemental.net>
+References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com> <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org> <20050419214009.GA25681@kroah.com> <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Andy Isaacson <adi@hexapodia.org>, omb@bluewin.ch,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:45:50 2005
+Content-Type: text/plain; charset=utf-8
+Cc: Greg KH <greg@kroah.com>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:48:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1TT-0007d4-L9
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:45:43 +0200
+	id 1DO1WG-0007xT-Rz
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:48:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261721AbVDSWtZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:49:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261719AbVDSWtY
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:49:24 -0400
-Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:26546 "EHLO
-	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
-	id S261721AbVDSWtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 18:49:17 -0400
-Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
-	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
-	id 1DO1Wl-0001KA-00; Tue, 19 Apr 2005 18:49:07 -0400
-To: David Meybohm <dmeybohmlkml@bellsouth.net>
-In-Reply-To: <20050419223027.GA26100@localhost>
+	id S261722AbVDSWwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:52:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261723AbVDSWwp
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:52:45 -0400
+Received: from ns.mcs-hh.de ([194.77.146.129]:35281 "EHLO
+	mail.hamburg.cityline.net") by vger.kernel.org with ESMTP
+	id S261722AbVDSWwf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 18:52:35 -0400
+Received: from [194.221.20.30] (helo=legolas.elemental.net)
+	by mail.hamburg.cityline.net with esmtps (TLSv1:DHE-RSA-AES256-SHA:256)
+	(Exim 4.43)
+	id 1DO1a6-0002Ke-JW; Wed, 20 Apr 2005 00:52:34 +0200
+Received: from gimli.elemental.net (gimli.elemental.net [194.221.20.130])
+	by legolas.elemental.net (8.13.1/8.13.1) with ESMTP id j3JMqXus023281;
+	Wed, 20 Apr 2005 00:52:33 +0200
+Received: from gimli.elemental.net (localhost.localdomain [127.0.0.1])
+	by gimli.elemental.net (8.13.1/8.13.1) with ESMTP id j3JMqX7f009129;
+	Wed, 20 Apr 2005 00:52:33 +0200
+Received: (from lf@localhost)
+	by gimli.elemental.net (8.13.1/8.13.1/Submit) id j3JMqWv2009128;
+	Wed, 20 Apr 2005 00:52:32 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org>
+User-Agent: Mutt/1.4.1i
+X-NCC-RegID: de.cityline
+X-PGP-Fingerprint-PGP2: 1024R/1A3A7A4D   D1 28 F1 FF 3C 6B C0 27  CC 9C 6C 09 34 0A 55 18
+X-PGP-Fingerprint-OpenGPG: 1024D/A11CA902 9B75 F658 368C 366C 7BB3  5AB1 2479 9764 A11C A902
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 19 Apr 2005, David Meybohm wrote:
+Hi all!
 
-> But doesn't this require assuming the distribution of MD5 is uniform,
-> and don't the papers finding collisions in less show it's not? So, your
-> birthday-argument for calculating the probability wouldn't apply, because
-> it rests on the assumption MD5 is uniform, and it isn't.
+Quoting Linus Torvalds (torvalds@osdl.org):
 
-No, the collision papers don't show this at all.
-  --scott
-atomic strategic HBDRILL SARANAC COBRA JUDY Ft. Meade assassination politics 
-Mossad HOPEFUL ZPSEMANTIC DTFROGS HTKEEPER LITEMPO LIONIZER operation
-                          ( http://cscott.net/ )
+> And even the ones that use domainname tend to not have a fully qualified 
+> DNS domain there. You need to use dnsdomainname to get that, and I don't 
+> even know how to do it with standard libc.
+
+I don't think getdomainname should be used at all in this case as it is the
+domain name used by NIS and it might be different from the DNS domain name
+in the FQDN associated with a given host. I just looked into the domainname
+manual page and it agrees with me:
+
+ domainname,  nisdomainname,  ypdomainname  will  print the name of the
+ system as returned by the getdomainname(2) function.  This is also known as
+ the YP/NIS domain name of the system.
+
+That's why it is set to "(none)" (i.e. its not setup at all) on most hosts
+because if they're not running NIS it's not really needed.
+
+To get the FQDN which is what we want you'd have to use something like
+this:
+
+#include <netdb.h>
+#include <unistd.h>
+
+char *getfqdn(void)
+{
+        static char hostname[HOST_NAME_MAX + 1];
+        struct hostent *hp;
+
+        if (gethostname(hostname, sizeof(hostname)) < 0)
+        {
+                /* error handling */
+        }
+
+        if (!(hp = gethostbyname(hostname)))
+        {
+                /* just return the possibly unqualified hostname */
+		return hostname;
+        }
+
+        return  hp->h_name;
+}
+
+Cheers,
+Lars.
+-- 
+Lars Fenneberg, lf@elemental.net (private), lf@mcs.de (work)
