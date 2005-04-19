@@ -1,56 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Tue, 19 Apr 2005 15:49:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191548500.2274@ppc970.osdl.org>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com>
- <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com>
- <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org> <20050419223945.GG9305@pasky.ji.cz>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: SHA1 hash safety
+Date: Tue, 19 Apr 2005 18:48:57 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
+References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz>
+ <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz>
+ <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu>
+ <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org>
+ <20050419223027.GA26100@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Greg KH <greg@kroah.com>, Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:44:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Andy Isaacson <adi@hexapodia.org>, omb@bluewin.ch,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:45:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1Ru-0007QT-UU
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:44:07 +0200
+	id 1DO1TT-0007d4-L9
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261718AbVDSWsL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:48:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261721AbVDSWsL
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:48:11 -0400
-Received: from fire.osdl.org ([65.172.181.4]:7874 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261719AbVDSWsE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:48:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JMlls4025171
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 15:47:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JMljN6004503;
-	Tue, 19 Apr 2005 15:47:46 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419223945.GG9305@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261721AbVDSWtZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261719AbVDSWtY
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:49:24 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:26546 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261721AbVDSWtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 18:49:17 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DO1Wl-0001KA-00; Tue, 19 Apr 2005 18:49:07 -0400
+To: David Meybohm <dmeybohmlkml@bellsouth.net>
+In-Reply-To: <20050419223027.GA26100@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 19 Apr 2005, David Meybohm wrote:
 
+> But doesn't this require assuming the distribution of MD5 is uniform,
+> and don't the papers finding collisions in less show it's not? So, your
+> birthday-argument for calculating the probability wouldn't apply, because
+> it rests on the assumption MD5 is uniform, and it isn't.
 
-On Wed, 20 Apr 2005, Petr Baudis wrote:
-> 
-> I will probably not buy git-export, though. (That is, it is merged, but
-> I won't make git frontend for it.) My "git export" already does
-> something different, but more importantly, "git patch" of mine already
-> does effectively the same thing as you do, just for a single patch; so I
-> will probably just extend it to do it for an (a,b] range of patches.
-
-That's fine. It was a quick hack, just to show that if somebody wants to, 
-the data is trivially exportable.
-
-		Linus
+No, the collision papers don't show this at all.
+  --scott
+atomic strategic HBDRILL SARANAC COBRA JUDY Ft. Meade assassination politics 
+Mossad HOPEFUL ZPSEMANTIC DTFROGS HTKEEPER LITEMPO LIONIZER operation
+                          ( http://cscott.net/ )
