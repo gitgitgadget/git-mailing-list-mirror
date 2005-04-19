@@ -1,50 +1,169 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Wed, 20 Apr 2005 00:39:45 +0200
-Message-ID: <20050419223945.GG9305@pasky.ji.cz>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com> <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org>
+From: Ray Lee <ray-lk@madrabbit.org>
+Subject: Re: Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 15:40:42 -0700
+Organization: http://madrabbit.org/
+Message-ID: <1113950442.29444.31.camel@orca.madrabbit.org>
+References: <20050418210436.23935.qmail@science.horizon.com>
+	<1113869248.23938.94.camel@orca.madrabbit.org>
+	<42645969.2090609@qualitycode.com>
+	<1113874931.23938.111.camel@orca.madrabbit.org>
+	<4264677A.9090003@qualitycode.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Greg KH <greg@kroah.com>, Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:37:08 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Wed Apr 20 00:37:20 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1KP-0006fs-62
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:36:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261708AbVDSWj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261712AbVDSWj6
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:39:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:13256 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261708AbVDSWjs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:39:48 -0400
-Received: (qmail 1127 invoked by uid 2001); 19 Apr 2005 22:39:45 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DO1LC-0006lA-F3
+	for gcvdd-darcs-devel@m.gmane.org; Wed, 20 Apr 2005 00:37:10 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DO1Oi-0005v9-1s; Tue, 19 Apr 2005 18:40:48 -0400
+Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]
+	helo=madrabbit.org) by abridgegame.org with esmtp (Exim 4.50)
+	id 1DO1Od-0005ue-VV
+	for darcs-devel@darcs.net; Tue, 19 Apr 2005 18:40:44 -0400
+Received: from orca.madrabbit.org (orca.madrabbit.org [192.168.1.51])
+	by madrabbit.org (Postfix) with ESMTP
+	id 9696E4C0AE4; Tue, 19 Apr 2005 15:40:43 -0700 (PDT)
+To: Kevin Smith <yarcs@qualitycode.com>
+In-Reply-To: <4264677A.9090003@qualitycode.com>
+X-Mailer: Evolution 2.2.1.1 
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-Dear diary, on Tue, Apr 19, 2005 at 10:20:47PM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> Pasky? Can you check my latest git stuff, notably read-tree.c and the 
-> changes to git-pull-script?
+(Sorry for the delayed reply -- I'm living on tape delay for a bit.)
 
-I've made git merge to use read-tree -m, HTH.
+On Mon, 2005-04-18 at 22:05 -0400, Kevin Smith wrote:
+> >>>>The other is "replace very instace of identifier `foo` with identifier`bar`".
+> >>>
+> >>>That could be derived, however, by a particularly smart parser [1].
+> >>
+> >>No, it can't. Seriously. A darcs replace patch is encoded as rules, not
+> >>effects, and it is impossible to derive the rules just by looking at the
+> >>results. Not difficult. Impossible.
+> >  
+> > If I do a token replace in an editor (say one of those fancy new-fangled
+> > refactoring thangs, or good ol' vi), a token-level comparator can
+> > discover what I did. That link I sent is an example of one such beast.
+> 
+> The big feature of a darcs replace patch is that it works forward and
+> backward in time.
 
-I will probably not buy git-export, though. (That is, it is merged, but
-I won't make git frontend for it.) My "git export" already does
-something different, but more importantly, "git patch" of mine already
-does effectively the same thing as you do, just for a single patch; so I
-will probably just extend it to do it for an (a,b] range of patches.
+That's *not* a feature of the token replace patch, however. That's a
+feature of the darcs commutation machinery, correct? (With the obvious
+caveat that darcs can only *do* the commutation if it has correctly
+nuanced darcs-style token replace patches, rather than mere ASCII
+textual diffs.)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+> Let me try to come up with an example that can help
+> explain it. Hopefully I'll get it right. Let's start with a file like
+> this that exists in a project for which both you and I have darcs repos:
+> 
+> cat
+> dog
+> fish
+> 
+> Now, you change it to:
+> 
+> cat dog
+> dog
+> fish
+> 
+> while I simultaneously do a replace of "dog" with "plant", resulting in:
+> 
+> cat
+> plant
+> fish
+> 
+> We merge. The final result in both of our trees is:
+> 
+> cat plant
+> plant
+> fish
+
+Okay, that all makes sense.
+
+> Notice that just by looking at my diffs, you can't tell that I used a
+> replace operation.
+
+Here's where we disagree. If you checkpoint your tree before the
+replace, and immediately after, the only differences in the
+source-controlled files would be due to the replace. And since the
+language of the file is known (and thereby the tokenization -- it *is*
+well-defined), then a tokenizer that compares the before and after trees
+(for just the files that changed, obviously), can discover what you did,
+and promote the mere ASCII diff into a token-replace diff. (The same
+sort of idea could be done for reindention, I'd hope.)
+
+> I didn't just replace the instances of "dog" that
+> were in my file at that moment. I conceptually replaced all instances,
+> including ones that aren't there yet.
+
+Well yes, that's exactly what we want. And the key point of all of this
+is that there's no magic here. The darcs machinery does all the
+commutations such that the patches can wiggle together without
+conflicts. To do it's job, of course, it needs nuanced patches, rather
+than the quite literal ones generated by diff.
+
+We agree on everything except that it's provable that one can discover a
+replace operation, given a before and after tree.
+
+> Now, I should mention here that I personally dislike the replace
+> operation, and I think it is more dangerous than helpful. However, other
+> darcs users are quite happy with it, and it certainly is a creative and
+> powerful feature.
+
+It's creative alright, though I had the same misgivings. In my common
+code workflow, I almost never have global tokens -- all my replaces
+would be per function, so I never saw an opportunity to use it when I
+was screwing around with darcs.
+
+> Other creative patch types have also been dreamed of. For example, a
+> powerful language-specific refactoring operation has been discussed as a
+> far-future possibility. That would be safe, and cool.
+
+<subliminal> indention patch type, indention patch type... </subliminal>
+
+> > > Automated refactoring tools, for example, perform the
+> > > rename+modify as an atomic operation.
+> > [...]
+> Although there are no such nifty refactoring tools available today, they
+> will exist at some point.
+
+Yeah, I spent some time drooling over the refactoring editors before
+slapping myself and deciding I'd wait for others to live on that
+bleeding edge for a while. I've had to clean up too much code from other
+people.
+
+> Even without tools, many shops have policies against checking in code
+> that won't compile. If you rename a java class, you must simultaneously
+> perform the rename and modify the class name inside. If you commit
+> between those steps, it's broken.
+
+I'm trying hard to find a nice way to say that's silly. I'm failing. My
+suggestion in that case would be that the local coder commit many
+patches to a local repository, one of which is the rename. Then upon
+completion of the refactoring, the set of patches is committed to the
+group repository. Tags before and after preserve the repository's
+precondition that it always compiles.
+
+> [I do realize that the kernel doesn't have java code, by the way.]
+
+Don't worry, I didn't think that you did :-).
+
+Ray
