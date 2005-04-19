@@ -1,56 +1,65 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [script] ge: export commits as patches
-Date: Tue, 19 Apr 2005 19:03:20 +0200
-Message-ID: <20050419170320.GG12757@pasky.ji.cz>
-References: <20050419134843.GA19146@elte.hu>
+Subject: Re: naive question
+Date: Tue, 19 Apr 2005 19:15:34 +0200
+Message-ID: <20050419171534.GH12757@pasky.ji.cz>
+References: <16997.222.917219.386956@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:00:17 2005
+X-From: git-owner@vger.kernel.org Tue Apr 19 19:12:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNw4F-0008SR-JA
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 18:59:20 +0200
+	id 1DNwGM-00021p-7T
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:11:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261627AbVDSRDZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 13:03:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261628AbVDSRDZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:03:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:26818 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261627AbVDSRDW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:03:22 -0400
-Received: (qmail 32669 invoked by uid 2001); 19 Apr 2005 17:03:20 -0000
-To: Ingo Molnar <mingo@elte.hu>
+	id S261207AbVDSRPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 13:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261240AbVDSRPm
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:15:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38850 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261207AbVDSRPf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:15:35 -0400
+Received: (qmail 1493 invoked by uid 2001); 19 Apr 2005 17:15:34 -0000
+To: torvalds@osdl.org, Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
-In-Reply-To: <20050419134843.GA19146@elte.hu>
+In-Reply-To: <16997.222.917219.386956@cargo.ozlabs.ibm.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 03:48:43PM CEST, I got a letter
-where Ingo Molnar <mingo@elte.hu> told me that...
-> is there any 'export commit as patch' support in git-pasky? I didnt find 
-> any such command (maybe it got added meanwhile), so i'm using the 'ge' 
-> hack below.
-> 
-> e.g. i typically look at commits via 'git log', and then when i see 
-> something interesting, i look at the commit via the 'ge' script. E.g.  
-> "ge 834f6209b22af2941a8640f1e32b0f123c833061" done in the kernel tree 
-> will output a particular commit's header and the patch.
+Dear diary, on Tue, Apr 19, 2005 at 03:00:14PM CEST, I got a letter
+where Paul Mackerras <paulus@samba.org> told me that...
+> Is there a way to check out a tree without changing the mtime of any
+> files that you have already checked out and which are the same as the
+> version you are checking out?  It seems that checkout-cache -a doesn't
+> overwrite any existing files, and checkout-cache -f -a overwrites all
+> files and gives them the current mtime.  This is a pain if you are
+> using make and your tree is large (like, for instance, the linux
+> kernel :), because it means that after a checkout-cache -f -a you get
+> to recompile everything.
 
-Nice idea. I will add it, probably as 'git patch'.
+Actually, to then get sensible show-diff output, you need to also
+update-cache --refresh to compensate for the changes. I personally
+really hate update-cache --refresh; sure, 0.1s with hot cache, but
+easily eats 5 minutes (!) with cold cache.
 
-> TREE1=$(cat-file commit 2>/dev/null $1 | head -4 | grep ^tree | cut -d' ' -f2)
-> if [ "$TREE1" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
-> PARENT=$(cat-file commit 2>/dev/null $1 | head -4 | grep ^parent | cut -d' ' -f2)
-> if [ "$PARENT" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
-> TREE2=$(cat-file commit 2>/dev/null $PARENT | head -4 | grep ^tree | cut -d' ' -f2)
-> if [ "$TREE2" = "" ]; then echo 'ge <commit-ID>'; exit -1; fi
+I'd actually prefer, if:
 
-commit-id and parent-id tools might be useful. ;-)
+(i) checkout-cache simply wouldn't touch files whose stat matches with
+what is in the cache; it updates the cache with the stat informations
+of touched files
+
+(ii) read-tree would take over the stat information from the matching
+files in previous cache.
+
+This way, doing update-cache --refresh would become a rather rare event.
+Stuff would become swifter, faster, less I/O bound and you would get rid
+of problems as the one described above.
+
+What do you think?
 
 -- 
 				Petr "Pasky" Baudis
