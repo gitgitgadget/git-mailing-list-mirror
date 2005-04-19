@@ -1,69 +1,92 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [2/4] Sorting commits by date
-Date: Tue, 19 Apr 2005 04:13:38 +0200
-Message-ID: <20050419021338.GX5554@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504182139250.30848-100000@iabervon.org> <Pine.LNX.4.21.0504182152000.30848-100000@iabervon.org>
+From: James Bottomley <James.Bottomley@SteelEye.com>
+Subject: Re: SCSI trees, merges and git status
+Date: Mon, 18 Apr 2005 21:17:51 -0500
+Message-ID: <1113877071.4998.111.camel@mulgrave>
+References: <1113856118.4998.70.camel@mulgrave>
+	 <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+	 <1113866092.4998.92.camel@mulgrave>
+	 <Pine.LNX.4.58.0504181651241.15725@ppc970.osdl.org>
+	 <1113869594.4998.103.camel@mulgrave>
+	 <Pine.LNX.4.58.0504181724170.15725@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 04:09:49 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
+X-From: linux-scsi-owner@vger.kernel.org Tue Apr 19 04:15:01 2005
+Return-path: <linux-scsi-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNiBM-000444-5E
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:09:44 +0200
+	id 1DNiG7-0004QA-5T
+	for lnx-linux-scsi@gmane.org; Tue, 19 Apr 2005 04:14:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261270AbVDSCNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 22:13:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVDSCNq
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 22:13:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:17332 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261270AbVDSCNo (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 22:13:44 -0400
-Received: (qmail 6815 invoked by uid 2001); 19 Apr 2005 02:13:38 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504182152000.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-Sender: git-owner@vger.kernel.org
+	id S261276AbVDSCSd (ORCPT <rfc822;lnx-linux-scsi@m.gmane.org>);
+	Mon, 18 Apr 2005 22:18:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261278AbVDSCSd
+	(ORCPT <rfc822;linux-scsi-outgoing>);
+	Mon, 18 Apr 2005 22:18:33 -0400
+Received: from stat16.steeleye.com ([209.192.50.48]:39810 "EHLO
+	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
+	id S261279AbVDSCSD (ORCPT <rfc822;linux-scsi@vger.kernel.org>);
+	Mon, 18 Apr 2005 22:18:03 -0400
+Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
+	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3J2HqA28682;
+	Mon, 18 Apr 2005 22:17:52 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504181724170.15725@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4 (2.0.4-2) 
+Sender: linux-scsi-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Mailing-List: linux-scsi@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 03:54:56AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> Index: commit.c
-> ===================================================================
-> --- b3cf8daf9b619ae9f06a28f42a4ae01b69729206/commit.c  (mode:100644 sha1:0099baa63971d86ee30ef2a7da25057f0f45a964)
-> +++ 7e5a0d93117ecadfb15de3a6bebdb1aa94234fde/commit.c  (mode:100644 sha1:ef9af397471817837e1799d72f6707e0ccc949b9)
-> @@ -83,3 +83,47 @@
->  		free(temp);
->  	}
->  }
-> +
-> +static void insert_by_date(struct commit_list **list, struct commit *item)
-> +{
-> +	struct commit_list **pp = list;
-> +	struct commit_list *p;
-> +	while ((p = *pp) != NULL) {
-> +		if (p->item->date < item->date) {
-> +			break;
-> +		}
-> +		pp = &p->next;
-> +	}
-> +	struct commit_list *insert = malloc(sizeof(struct commit_list));
-> +	insert->next = *pp;
-> +	*pp = insert;
-> +	insert->item = item;
-> +}
+On Mon, 2005-04-18 at 17:29 -0700, Linus Torvalds wrote:
+> 2.6.12 is some time away, if for no other reason than the fact that this 
+> SCM thing has obviously eaten two weeks of my time. So I'd be inclined to 
+> chalk this up as a "learning experience" with git, and just go forward.
 
-Note that you are breaking gcc-2.95 compatibility when using declarator
-in the middle of a block. Not that it might be a necessarily bad thing
-;-) (although I still use gcc-2.95 a lot), just to ring a bell so that
-it doesn't slip through unnoticed and we can decide on a policy
-regarding this.
+Fair enough.  If you pull from
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+rsync://www.parisc-linux.org/~jejb/scsi-misc-2.6.git
+
+That will pull in the rest of my scsi-misc-2.6 tree (which includes all
+of the rc fixes).  I've done a test pull and merge and checked the
+resulting against BK, so hopefully there should be no more screw ups.
+
+Doing this exposed two bugs in your merge script:
+
+1) It doesn't like a completely new directory (the misc tree contains a
+new drivers/scsi/lpfc)
+2) the merge testing logic is wrong.  You only want to exit 1 if the
+merge fails.
+
+James
+
+git-merge-one-file-script: bec009e2c37bacc9e6f9cad1cfa5fd56752c7bf1
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -13,6 +13,11 @@
+ # do any merges that migth change the tree layout
+ #
+ 
++# if the directory is newly added in a branch, it might not exist
++# in the current tree
++dir=$(dirname "$4")
++mkdir -p "$dir"
++
+ case "${1:-.}${2:-.}${3:-.}" in
+ #
+ # deleted in both, or deleted in one and unchanged in the other
+@@ -40,7 +45,11 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	orig=$(unpack-file $1)
+ 	src1=$(unpack-file $2)
+ 	src2=$(unpack-file $3)
+-	merge "$src2" "$orig" "$src1" || echo Leaving conflict merge in $src2 && exit 1
++	merge "$src2" "$orig" "$src1"
++	if [ $? -ne 0 ]; then
++		echo Leaving conflict merge in $src2
++		exit 1
++	fi
+ 	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
+ 	;;
+ 
+
+
