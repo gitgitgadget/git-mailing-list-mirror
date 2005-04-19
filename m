@@ -1,82 +1,102 @@
-From: Greg KH <greg@kroah.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Tue, 19 Apr 2005 15:33:03 -0700
-Message-ID: <20050419223303.GB25966@kroah.com>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com> <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org> <20050419214009.GA25681@kroah.com> <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org> <20050419222738.GA14566@nevyn.them.org>
+Date: Tue, 19 Apr 2005 15:38:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com>
+ <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <426583D5.2020308@mesatop.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:29:56 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Greg KH <greg@kroah.com>, Greg KH <gregkh@suse.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:33:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1De-00061C-UB
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:29:23 +0200
+	id 1DO1HJ-0006OH-II
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:33:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261703AbVDSWdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:33:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261705AbVDSWdd
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:33:33 -0400
-Received: from mail.kroah.org ([69.55.234.183]:26316 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S261703AbVDSWda (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:33:30 -0400
-Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3JMXPi31570;
-	Tue, 19 Apr 2005 15:33:25 -0700
-Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
- id 1DO1HE-5bq-00; Tue, 19 Apr 2005 15:33:04 -0700
-To: Daniel Jacobowitz <dan@debian.org>
-Content-Disposition: inline
-In-Reply-To: <20050419222738.GA14566@nevyn.them.org>
-User-Agent: Mutt/1.5.8i
+	id S261710AbVDSWgs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:36:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261708AbVDSWgs
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:36:48 -0400
+Received: from fire.osdl.org ([65.172.181.4]:52671 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261707AbVDSWgh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:36:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JMaQs4024256
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 19 Apr 2005 15:36:27 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JMaJc7003912;
+	Tue, 19 Apr 2005 15:36:22 -0700
+To: Steven Cole <elenstev@mesatop.com>
+In-Reply-To: <426583D5.2020308@mesatop.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2005 at 06:27:38PM -0400, Daniel Jacobowitz wrote:
-> On Tue, Apr 19, 2005 at 03:00:04PM -0700, Linus Torvalds wrote:
-> > 
-> > 
-> > On Tue, 19 Apr 2005, Greg KH wrote:
-> > > 
-> > > It looks like your domain name isn't set up properly for your box (which
-> > > is why it worked for you, but not me before, causing that patch).
-> > 
-> > No, I think it's a bug in your domainname changes. I don't think you
-> > should do the domainname at all if the hostname has a dot in it.
-> > 
-> > Most machines I have access to (and that includes machines that are
-> > professionally maintained, not just my own cruddy setup) says "(none)" to
-> > domainname and have the full hostname in hostname.
-> > 
-> > And even the ones that use domainname tend to not have a fully qualified 
-> > DNS domain there. You need to use dnsdomainname to get that, and I don't 
-> > even know how to do it with standard libc.
-> > 
-> > So how about something like this?
-> > 
-> > (Somebody who actually knows how these things should be done - please feel 
-> > free to pipe up).
+
+
+On Tue, 19 Apr 2005, Steven Cole wrote:
+>
+> But perhaps a progress bar right about here might be
+> a good thing for the terminally impatient.
 > 
-> The glibc documentation blows for this, but what getdomainname comes
-> from uname(2), not from any DNS-related configuration.  Debian only
-> ever sets this if you're using NIS.
-
-Well, somehow Gentoo sets this up properly, and I'm not using NIS.  Hm,
-my SuSE boxes on the other hand...
-
-> There's no real great way to get the current hostname; a lot of
-> applications do a reverse DNS lookup on the primary network interface,
-> with appropriate handwaving to define primary.
+> real    3m54.909s
+> user    0m14.835s
+> sys     0m10.587s
 > 
-> Easiest might be to punt to hostname --fqdn, or an equivalent to its
-> algorithm - which appears to be fetch the hostname from uname, do a DNS
-> lookup on that, and a reverse DNS lookup on the result.
+> 4 minutes might be long enough to cause some folks to lose hope.
 
-Ick.  Let's stick with Linus's patch for now...
+Well, the real operations took only 15 seconds. What kind of horribe 
+person are you, that you don't have all of the kernel in your disk cache 
+already? Shame on you.
 
-thanks,
+Or was the 4 minutes for downloading all the objest too?
 
-greg k-h
+Anyway, it looks like you are using pasky's scripts, and the old 
+"patch-based" upgrade at that. You certainly will _not_ see the
+
+	[many files patched]
+	patching file mm/mmap.c
+	..
+
+if you use a real git merge. That's probable be the real problem here.
+
+Real merges have no patches taking place _anywhere_. And they take about 
+half a second. Doing an "update" of your tree should _literally_ boil down 
+to
+
+	#
+	# "repo" needs to point to the repo we update from
+	#
+	rsync -avz --ignore-existing $repo/objects/. .git/objects/.
+	rsync -L $repo/HEAD .git/NEW_HEAD || exit 1
+	read-tree -m $(cat .git/NEW_HEAD) || exit 1
+	checkout-cache -f -a
+	update-cache --refresh
+	mv .git/NEW_HEAD .git/HEAD
+
+and if it does anything else, it's literally broken. Btw, the above does
+need my "read-tree -m" thing which I committed today.
+
+(CAREFUL: the above is not a good script, because it _will_ just overwrite 
+all your old contents with the stuff you updated to. You should thus not 
+actually use something like this, but a "git update" should literally end 
+up doing the above operations in the end, and just add proper checking).
+
+And if that takes 4 minutes, you've got problems.
+
+Just say no to patches. 
+
+		Linus
+
+PS: If you want a clean tree without any old files or anything else, for
+that matter, you can then do a "show-files -z --others | xargs -0 rm", but
+be careful: that will blow away _anything_ that wasn't revision controlled
+with git. So don't blame me if your pr0n collection is gone afterwards.
