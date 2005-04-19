@@ -1,75 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 15:21:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191514550.2274@ppc970.osdl.org>
-References: <200504191250.10286.mason@suse.com>
- <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org><200504191412.00227.mason@suse.com>
- <Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org>
- <Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Tue, 19 Apr 2005 16:19:01 -0600
+Message-ID: <426583D5.2020308@mesatop.com>
+References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:16:05 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Greg KH <greg@kroah.com>, Greg KH <gregkh@suse.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:16:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO10I-0004Zh-Sj
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:15:35 +0200
+	id 1DO108-0004Xv-6G
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261695AbVDSWTk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:19:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261692AbVDSWTk
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:19:40 -0400
-Received: from fire.osdl.org ([65.172.181.4]:35003 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261698AbVDSWTT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:19:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JMJ8s4022906
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 15:19:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JMJ3WI002996;
-	Tue, 19 Apr 2005 15:19:05 -0700
-To: David Lang <david.lang@digitalinsight.com>
-In-Reply-To: <Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261697AbVDSWT0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:19:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261695AbVDSWT0
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:19:26 -0400
+Received: from mailwasher.lanl.gov ([192.65.95.54]:4044 "EHLO
+	mailwasher-b.lanl.gov") by vger.kernel.org with ESMTP
+	id S261697AbVDSWTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 18:19:09 -0400
+Received: from w-mail.lanl.gov (w-mail.lanl.gov [128.165.4.47])
+	by mailwasher-b.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3JMJ6Kc008209;
+	Tue, 19 Apr 2005 16:19:06 -0600
+Received: from [128.165.67.197] (spc7.esa.lanl.gov [128.165.67.197])
+	by w-mail.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3JMJ1xs023766;
+	Tue, 19 Apr 2005 16:19:01 -0600
+User-Agent: Thunderbird 1.0 (Multics)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org>
+X-PMX-Version: 4.7.0.111621
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 19 Apr 2005, David Lang wrote:
+Linus Torvalds wrote:
 > 
-> what if you turned the forest of quilt patches into a forest of git trees? 
-> (essentially applying each patch against the baseline seperatly) would 
-> this make sense or be useful?
+> On Tue, 19 Apr 2005, Greg KH wrote:
+> 
+>>Nice, it looks like the merge of this tree, and my usb tree worked just
+>>fine.
+> 
+> 
+> Yup, it all seems to work out.
 
-It has a certain charm, but the fact is, it gets really messy to sort out 
-later.
+[many files patched]
+patching file mm/mmap.c
+patching file net/bridge/br_sysfs_if.c
+patching file scripts/ver_linux
+----------------------^^^^^^^^^
+Hey, that's my patch!  Last...and least.
+But perhaps a progress bar right about here might be
+a good thing for the terminally impatient.
 
-The thing is, there's a huge benefit to a straight-line tree: you can do 
-binary searching etc of patches that cause problems, and in general it's 
-just a lot _easier_ to work with a linear set of patches for pretty much 
-everybody.
+real    3m54.909s
+user    0m14.835s
+sys     0m10.587s
 
-So yes, it's "cool" to show the fact that patches are independent and show 
-them as each applying to the baseline (and then you can have the "mother 
-of all merges" that ties them all together), but that's just a _nightmare_ 
-when you actually try to debug things and sort things out.
+4 minutes might be long enough to cause some folks to lose hope.
 
-So while I'm a huge proponent of parallell development, and having lots of
-branches, I actually think that _linearizing_ stuff is a good thing. 
+Steven
 
-So let's put it this way: parallel development and merging is wonderful as
-a tool to handle true distributed development, and it's the thing that GIT
-really tries to do. But once you have "local" development (like in a set
-of quilt patches), the _last_ thing you want to do is try to make it look
-parallel. You're much better off picking a good order, and sticking with
-it. Because otherwise, 2 months down the line, you'll just look at that
-tree, and what you'll want to do is to visualize them linearly anyway.
-
-		Linus
