@@ -1,60 +1,82 @@
-From: David Meybohm <dmeybohmlkml@bellsouth.net>
-Subject: Re: SHA1 hash safety
-Date: Tue, 19 Apr 2005 18:30:27 -0400
-Message-ID: <20050419223027.GA26100@localhost>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Tue, 19 Apr 2005 15:33:03 -0700
+Message-ID: <20050419223303.GB25966@kroah.com>
+References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <20050419194728.GA24367@kroah.com> <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org> <20050419214009.GA25681@kroah.com> <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org> <20050419222738.GA14566@nevyn.them.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: omb@bluewin.ch, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:27:09 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:29:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1Al-0005kW-AP
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:26:24 +0200
+	id 1DO1De-00061C-UB
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261702AbVDSWaa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:30:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261703AbVDSWa3
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:30:29 -0400
-Received: from imf25aec.mail.bellsouth.net ([205.152.59.73]:34998 "EHLO
-	imf25aec.mail.bellsouth.net") by vger.kernel.org with ESMTP
-	id S261702AbVDSWaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 18:30:25 -0400
-Received: from ibm71aec.bellsouth.net ([65.10.203.194])
-          by imf25aec.mail.bellsouth.net
-          (InterMail vM.5.01.06.11 201-253-122-130-111-20040605) with ESMTP
-          id <20050419223024.GBNO22125.imf25aec.mail.bellsouth.net@ibm71aec.bellsouth.net>;
-          Tue, 19 Apr 2005 18:30:24 -0400
-Received: from localhost ([65.10.203.194]) by ibm71aec.bellsouth.net
-          (InterMail vG.1.02.00.01 201-2136-104-101-20040929) with ESMTP
-          id <20050419223024.TWXP1909.ibm71aec.bellsouth.net@localhost>;
-          Tue, 19 Apr 2005 18:30:24 -0400
-To: Andy Isaacson <adi@hexapodia.org>
+	id S261703AbVDSWdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261705AbVDSWdd
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:33:33 -0400
+Received: from mail.kroah.org ([69.55.234.183]:26316 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261703AbVDSWda (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:33:30 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3JMXPi31570;
+	Tue, 19 Apr 2005 15:33:25 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DO1HE-5bq-00; Tue, 19 Apr 2005 15:33:04 -0700
+To: Daniel Jacobowitz <dan@debian.org>
 Content-Disposition: inline
-In-Reply-To: <20050418074323.GA29765@hexapodia.org>
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.5) Gecko/20030927
+In-Reply-To: <20050419222738.GA14566@nevyn.them.org>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 18, 2005 at 12:43:23AM -0700, Andy Isaacson wrote:
+On Tue, Apr 19, 2005 at 06:27:38PM -0400, Daniel Jacobowitz wrote:
+> On Tue, Apr 19, 2005 at 03:00:04PM -0700, Linus Torvalds wrote:
+> > 
+> > 
+> > On Tue, 19 Apr 2005, Greg KH wrote:
+> > > 
+> > > It looks like your domain name isn't set up properly for your box (which
+> > > is why it worked for you, but not me before, causing that patch).
+> > 
+> > No, I think it's a bug in your domainname changes. I don't think you
+> > should do the domainname at all if the hostname has a dot in it.
+> > 
+> > Most machines I have access to (and that includes machines that are
+> > professionally maintained, not just my own cruddy setup) says "(none)" to
+> > domainname and have the full hostname in hostname.
+> > 
+> > And even the ones that use domainname tend to not have a fully qualified 
+> > DNS domain there. You need to use dnsdomainname to get that, and I don't 
+> > even know how to do it with standard libc.
+> > 
+> > So how about something like this?
+> > 
+> > (Somebody who actually knows how these things should be done - please feel 
+> > free to pipe up).
 > 
-> I'm not going to do the sums, but I would hazard a guess that it's more
-> likely your PC suffered a cosmic-ray-induced memory fault - EACH OF THE
-> FOUR TIMES YOU TESTED IT - causing it to report the same MD5, than that
-> you actually discovered a collision with a measly million (or even
-> hundred million) plaintexts.
+> The glibc documentation blows for this, but what getdomainname comes
+> from uname(2), not from any DNS-related configuration.  Debian only
+> ever sets this if you're using NIS.
 
-But doesn't this require assuming the distribution of MD5 is uniform,
-and don't the papers finding collisions in less show it's not? So, your
-birthday-argument for calculating the probability wouldn't apply, because
-it rests on the assumption MD5 is uniform, and it isn't.
+Well, somehow Gentoo sets this up properly, and I'm not using NIS.  Hm,
+my SuSE boxes on the other hand...
 
-For example, say most people are married in June, get pregnant, and
-there are more births around March, 9 months later, than in other
-months. Then if you are born in March you have a higher chance of seeing
-a collision of your birthday with someone else's. The same is true for
-someone else born in March too, and this makes the chances of seeing a
-collision for the whole function higher.
+> There's no real great way to get the current hostname; a lot of
+> applications do a reverse DNS lookup on the primary network interface,
+> with appropriate handwaving to define primary.
+> 
+> Easiest might be to punt to hostname --fqdn, or an equivalent to its
+> algorithm - which appears to be fetch the hostname from uname, do a DNS
+> lookup on that, and a reverse DNS lookup on the result.
 
+Ick.  Let's stick with Linus's patch for now...
+
+thanks,
+
+greg k-h
