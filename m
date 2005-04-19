@@ -1,61 +1,109 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 16:09:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191608230.2274@ppc970.osdl.org>
-References: <200504191250.10286.mason@suse.com><Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org><200504191412.00227.mason@suse.com><Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org><Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
- <Pine.LNX.4.58.0504191514550.2274@ppc970.osdl.org>
- <Pine.LNX.4.62.0504191557410.26365@qynat.qvtvafvgr.pbz>
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Wed, 20 Apr 2005 01:11:57 +0200
+Message-ID: <1113952317.2129.17.camel@nosferatu.lan>
+References: <20050419043938.GA23724@kroah.com>
+	 <20050419185807.GA1191@kroah.com>
+	 <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org>
+	 <20050419194728.GA24367@kroah.com>
+	 <Pine.LNX.4.58.0504191316180.19286@ppc970.osdl.org>
+	 <20050419214009.GA25681@kroah.com>
+	 <Pine.LNX.4.58.0504191449270.2274@ppc970.osdl.org>
+	 <1113949783.2129.4.camel@nosferatu.lan>
+	 <Pine.LNX.4.58.0504191539000.2274@ppc970.osdl.org>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:04:16 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-T10SikV9iHyofFtu70la"
+Content-Transfer-Encoding: 8bit
+Cc: Greg KH <greg@kroah.com>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:04:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1kg-00019q-Uh
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:03:31 +0200
+	id 1DO1lI-0001FB-J4
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261735AbVDSXHh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:07:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVDSXHh
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:07:37 -0400
-Received: from fire.osdl.org ([65.172.181.4]:9416 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261735AbVDSXHe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:07:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JN7Ts4026906
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 16:07:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JN7SGl005601;
-	Tue, 19 Apr 2005 16:07:29 -0700
-To: David Lang <david.lang@digitalinsight.com>
-In-Reply-To: <Pine.LNX.4.62.0504191557410.26365@qynat.qvtvafvgr.pbz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261736AbVDSXIR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 19:08:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261737AbVDSXIR
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:08:17 -0400
+Received: from ctb-mesg5.saix.net ([196.25.240.77]:49347 "EHLO
+	ctb-mesg5.saix.net") by vger.kernel.org with ESMTP id S261736AbVDSXIH
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 19:08:07 -0400
+Received: from gateway.lan (wblv-146-254-56.telkomadsl.co.za [165.146.254.56])
+	by ctb-mesg5.saix.net (Postfix) with ESMTP id 1573E3838;
+	Wed, 20 Apr 2005 01:08:00 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id C4CBA3A2430;
+	Wed, 20 Apr 2005 01:14:15 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23217-03; Wed, 20 Apr 2005 01:14:12 +0200 (SAST)
+Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
+	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id 20CAA3A241A;
+	Wed, 20 Apr 2005 01:14:12 +0200 (SAST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504191539000.2274@ppc970.osdl.org>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--=-T10SikV9iHyofFtu70la
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 19 Apr 2005, David Lang wrote:
-> 
-> if you are useing quilt for locally developed patches I fully agree with 
-> you, but I was thinking of the case where Andrew is receiving independant 
-> patches from lots of people and storing them in quilt for testing, and 
-> then sending them on to you. In this case the patches really are 
-> independant and it may be useful to continue to treat them this way 
-> instead of collapsing them into one 'update from Andrew' feed.
+On Tue, 2005-04-19 at 15:43 -0700, Linus Torvalds wrote:
+>=20
+> On Wed, 20 Apr 2005, Martin Schlemmer wrote:
+> >=20
+> > Correct me if I am wrong, but the right way to do this is to set the
+> > hostname to just that - the hostname, and add 'domain foo.com'
+> > to /etc/resolv.conf.=20
+>=20
+> I'll correct you.
+>=20
+> The fact is, that's not what people do. Not me, not kernel.org, not _any_
+> of the machines I've got access to. They put the fully qualified name in=20
+> the hostname, and just do "search foo.com" in /etc/resolv.conf.
+>=20
+> So clearly, expecting that people work the way you claim is being
+> extremely optimistic. I'm sure some people do that too, but I suspect I'm
+> in the majority. Both Fedora Core and YellowDog act the way I described,=20
+> not the way you do..
+>=20
 
-If so, he should set up one repository per quilt patch. 
+The interesting bit you snipped was the part where you said you do not
+know how to get dnsdomainname to work properly, and that I answered.
+Why this other crap about how 90% of the world does it?
 
-That would be crazy, but yes, it would allow me to cherry-pick which
-one(s) I want to merge with.
+PS: If you have later tools, setting hostname to the FQDN and then still
+adding 'domain' to resolv.conf seems to do the right thing, although it
+did not some time back (and was why I said the bit about hostname only
+containing the hostname, else you got something like 'hostname -f'
+returning 'www1.foo.com.foo.com) ...
 
-But the fact is, that cherry-picking should happen at quilt-time not at
-git time.
 
-		Linus
+--=20
+Martin Schlemmer
+
+
+--=-T10SikV9iHyofFtu70la
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBCZZA9qburzKaJYLYRAuq7AJ9yC5liNEGb1fT+tM5dPNWTMXIAfgCgjAzy
+b4ER7noa9gBk7o8NX6WqpGU=
+=UsrD
+-----END PGP SIGNATURE-----
+
+--=-T10SikV9iHyofFtu70la--
+
