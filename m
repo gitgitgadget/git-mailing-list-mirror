@@ -1,103 +1,64 @@
-From: Patrick McFarland <pmcfarland@downeast.net>
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Tue, 19 Apr 2005 18:08:20 -0400
-Message-ID: <200504191808.26559.pmcfarland@downeast.net>
-References: <20050418210436.23935.qmail@science.horizon.com> <1113874931.23938.111.camel@orca.madrabbit.org> <4264677A.9090003@qualitycode.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Tue, 19 Apr 2005 15:09:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
+References: <200504191250.10286.mason@suse.com>
+ <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org><200504191412.00227.mason@suse.com>
+ <Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart33761097.nbFnd1nHun";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Kevin Smith <yarcs@qualitycode.com>,
-	Ray Lee <ray-lk@madrabbit.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:05:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:14:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO0qH-0003Xx-RI
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:05:14 +0200
+	id 1DO0sQ-0003pA-4R
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261682AbVDSWJN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 18:09:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261683AbVDSWJN
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:09:13 -0400
-Received: from downeast.net ([204.176.212.2]:40173 "EHLO downeast.net")
-	by vger.kernel.org with ESMTP id S261682AbVDSWJG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 18:09:06 -0400
-Received: from absolute (diablo-d3@[65.99.190.188])
-	by downeast.net (8.11.6/8.10.1) with ESMTP id j3JKnaA13313;
-	Tue, 19 Apr 2005 16:49:38 -0400 (EDT)
-Received: from infinity ([192.168.0.2])
-	by absolute with esmtp (Exim 4.50)
-	id 1DO0tR-00022E-KM; Tue, 19 Apr 2005 18:08:29 -0400
-To: darcs-devel@darcs.net
-User-Agent: KMail/1.8
-In-Reply-To: <4264677A.9090003@qualitycode.com>
+	id S261683AbVDSWLb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 18:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261687AbVDSWLb
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 18:11:31 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:30092 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S261683AbVDSWLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 18:11:25 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Tue, 19 Apr 2005 15:06:18 -0700
+Received: by atlexc02.diginsite.com with Internet Mail Service (5.5.2653.19)
+	id <JC0C6VXX>; Tue, 19 Apr 2005 18:09:47 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id JDHHAZWT; Tue, 19 Apr 2005 15:09:26 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---nextPart33761097.nbFnd1nHun
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+On Tue, 19 Apr 2005, Linus Torvalds wrote:
 
-On Monday 18 April 2005 10:05 pm, Kevin Smith wrote:
-> The big feature of a darcs replace patch is that it works forward and
-> backward in time. Let me try to come up with an example that can help
-> explain it. Hopefully I'll get it right. Let's start with a file like
-> this that exists in a project for which both you and I have darcs repos:
+> On Tue, 19 Apr 2005, Chris Mason wrote:
+>>
+>> Very true, you can't replace quilt with git without ruining both of them.  But
+>> it would be nice to take a quilt tree and turn it into a git tree for merging
+>> purposes, or to make use of whatever visualization tools might exist someday.
 >
-> cat
-> dog
-> fish
+> Fair enough. The thing is, going from quilt->git really is a pretty "big
+> decision", since it's the decision that says "I will now really commit all
+> this quilt changes forever and ever".
 >
-> Now, you change it to:
->
-> cat dog
-> dog
-> fish
->
-> while I simultaneously do a replace of "dog" with "plant", resulting in:
->
-> cat
-> plant
-> fish
->
-> We merge. The final result in both of our trees is:
->
-> cat plant
-> plant
-> fish
->
-> Notice that just by looking at my diffs, you can't tell that I used a
-> replace operation. I didn't just replace the instances of "dog" that
-> were in my file at that moment. I conceptually replaced all instances,
-> including ones that aren't there yet.
+> Which is also why I think it's actually ok to take a minute to do 100
+> quilt patches. This is not something you do on a whim. It's something
+> you'd better think about. It's turning a very fluid environment into a
+> unchangable, final thing.
 
-I think that's the best explanation of how it works. And that is partially =
-why=20
-darcs is so powerful.
+what if you turned the forest of quilt patches into a forest of git trees? 
+(essentially applying each patch against the baseline seperatly) would 
+this make sense or be useful?
 
-=2D-=20
-Patrick "Diablo-D3" McFarland || pmcfarland@downeast.net
-"Computer games don't affect kids; I mean if Pac-Man affected us as kids, w=
-e'd=20
-all be running around in darkened rooms, munching magic pills and listening=
- to
-repetitive electronic music." -- Kristian Wilson, Nintendo, Inc, 1989
+David Lang
 
---nextPart33761097.nbFnd1nHun
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
-
-iD8DBQBCZYFa8Gvouk7G1cURAu9RAJ90H3DrZTmkHc81pSBUVXgNW7uWnwCdHRdc
-+BJn5loO5apMrsLd7OY2/Zo=
-=E9Ks
------END PGP SIGNATURE-----
-
---nextPart33761097.nbFnd1nHun--
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
