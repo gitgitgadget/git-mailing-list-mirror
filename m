@@ -1,68 +1,69 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Mon, 18 Apr 2005 22:13:59 -0400
-Message-ID: <42646967.9030903@dwheeler.com>
-References: <20050416233305.GO19099@pasky.ji.cz> <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org> <20050419011206.GT5554@pasky.ji.cz>
-Reply-To: dwheeler@dwheeler.com
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [2/4] Sorting commits by date
+Date: Tue, 19 Apr 2005 04:13:38 +0200
+Message-ID: <20050419021338.GX5554@pasky.ji.cz>
+References: <Pine.LNX.4.21.0504182139250.30848-100000@iabervon.org> <Pine.LNX.4.21.0504182152000.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 04:08:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 04:09:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNiA1-0003xe-TT
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:08:22 +0200
+	id 1DNiBM-000444-5E
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:09:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261186AbVDSCMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 22:12:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261270AbVDSCMQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 22:12:16 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:48037 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261186AbVDSCMM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 22:12:12 -0400
-Received: from [10.9.9.16] (helo=lassie.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DNiDj-0001ED-B6; Tue, 19 Apr 2005 04:12:11 +0200
-Received: from [70.17.101.238] (helo=[192.168.2.73])
-	by lassie.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DNiDi-0001bB-Q4; Tue, 19 Apr 2005 04:12:11 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419011206.GT5554@pasky.ji.cz>
-X-Sender: 258406@vger.kernel.org
+	id S261270AbVDSCNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 22:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVDSCNq
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 22:13:46 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:17332 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261270AbVDSCNo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 22:13:44 -0400
+Received: (qmail 6815 invoked by uid 2001); 19 Apr 2005 02:13:38 -0000
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0504182152000.30848-100000@iabervon.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a minor UI thing, but what the heck. I propose
-changing "pull" to ONLY download, and "update" to pull AND merge.
-Whenever you want to update, just say "git update", end of story.
+Dear diary, on Tue, Apr 19, 2005 at 03:54:56AM CEST, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> Index: commit.c
+> ===================================================================
+> --- b3cf8daf9b619ae9f06a28f42a4ae01b69729206/commit.c  (mode:100644 sha1:0099baa63971d86ee30ef2a7da25057f0f45a964)
+> +++ 7e5a0d93117ecadfb15de3a6bebdb1aa94234fde/commit.c  (mode:100644 sha1:ef9af397471817837e1799d72f6707e0ccc949b9)
+> @@ -83,3 +83,47 @@
+>  		free(temp);
+>  	}
+>  }
+> +
+> +static void insert_by_date(struct commit_list **list, struct commit *item)
+> +{
+> +	struct commit_list **pp = list;
+> +	struct commit_list *p;
+> +	while ((p = *pp) != NULL) {
+> +		if (p->item->date < item->date) {
+> +			break;
+> +		}
+> +		pp = &p->next;
+> +	}
+> +	struct commit_list *insert = malloc(sizeof(struct commit_list));
+> +	insert->next = *pp;
+> +	*pp = insert;
+> +	insert->item = item;
+> +}
 
-Why? It seems oddly inconsistent that "pull" sometimes merges
-in changes, but at other times it doesn't.  If I normally
-track someone, but temporarily don't want to (I'm in the middle
-of lots of changes but I _do_ want to see what's going on),
-I have to "untrack", pull, and then "retrack" again (remembering who
-I once tracked, which may be more of a trick over time).
-Maybe more important, that is more annoying when you're
-trying to "just pull data" from a script; I need to
-do the untrack, pull, & retrack shuffle just to download data.
+Note that you are breaking gcc-2.95 compatibility when using declarator
+in the middle of a block. Not that it might be a necessarily bad thing
+;-) (although I still use gcc-2.95 a lot), just to ring a bell so that
+it doesn't slip through unnoticed and we can decide on a policy
+regarding this.
 
-I propose that there be two subcommands, "pull" and "update"
-(now that "update" isn't a reserved word again).
-A "git pull" ONLY downloads; a "git update" pulls AND merges.
-That means each command does exactly one thing, very simple &
-clean to explain.  Also, some tools (such as subversion) already
-use "update" as meaning this (auto download & merge from the
-given repository), so the terminology would make sense for some.
-
-I'd be happy to send in a patch to do that.  The coding is trivial,
-but it means a UI change in one of the most common commands
-(use "update" instead of "pull" in the typical case).
-I could add a "reminder" message after pulling, to let people
-adjust to the new commands for a little while.
-
---- David A. Wheeler
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
