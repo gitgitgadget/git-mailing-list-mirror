@@ -1,58 +1,61 @@
-From: Ray Lee <ray-lk@madrabbit.org>
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Tue, 19 Apr 2005 16:06:11 -0700
-Organization: http://madrabbit.org/
-Message-ID: <1113951972.29444.42.camel@orca.madrabbit.org>
-References: <20050418210436.23935.qmail@science.horizon.com>
-	 <1113869248.23938.94.camel@orca.madrabbit.org>
-	 <42645969.2090609@qualitycode.com>
-	 <1113874931.23938.111.camel@orca.madrabbit.org>
-	 <4264677A.9090003@qualitycode.com>
-	 <1113950442.29444.31.camel@orca.madrabbit.org>
-	 <42658E38.1020406@qualitycode.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Bug in merge-base
+Date: Tue, 19 Apr 2005 19:07:22 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504191853310.30848-100000@iabervon.org>
+References: <20050419223420.GF9305@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, darcs-devel@darcs.net
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:02:14 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:03:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1jQ-00010n-AD
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:02:12 +0200
+	id 1DO1kL-00017Q-8J
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261734AbVDSXGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:06:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261735AbVDSXGS
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:06:18 -0400
-Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]:4071 "EHLO
-	madrabbit.org") by vger.kernel.org with ESMTP id S261734AbVDSXGN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 19:06:13 -0400
-Received: from orca.madrabbit.org (orca.madrabbit.org [192.168.1.51])
-	by madrabbit.org (Postfix) with ESMTP
-	id 63BD84C0A1A; Tue, 19 Apr 2005 16:06:12 -0700 (PDT)
-To: Kevin Smith <yarcs@qualitycode.com>
-In-Reply-To: <42658E38.1020406@qualitycode.com>
-X-Mailer: Evolution 2.2.1.1 
+	id S261742AbVDSXHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 19:07:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVDSXHP
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:07:15 -0400
+Received: from iabervon.org ([66.92.72.58]:40709 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261735AbVDSXHJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:07:09 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DO1oQ-00003N-00; Tue, 19 Apr 2005 19:07:22 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050419223420.GF9305@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2005-04-19 at 19:03 -0400, Kevin Smith wrote:
-> Pop quiz:
-> Here is revision 1 of my file:
->     abcde
+On Wed, 20 Apr 2005, Petr Baudis wrote:
+
+> Dear diary, on Wed, Apr 20, 2005 at 12:17:12AM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
 > 
-> Here is revision 2:
->     wow
+> > I can think of. Are you sure there isn't another path to 5b53d3?
+> 
+> I'm not. Actually there well might be.
+> 
+> I think merge-base should never take a path which is effectively
+> "upside-down" when a straight "upside" one is available.
+> 
+> Hmm. So what I depended on for merge-base was that when doing it on A
+> and B and A is predecessor of B, then it will always just return A.  I
+> will perhaps need to abuse rev-tree somehow for this then, it looks.
 
-> Now, did I do that with a darcs replace, or just by typing?
+It is currently optimizing for the shortest longer path, but I guess it
+should optimize for the shortest shorter path (i.e., the 0-length path
+from A to itself always wins).
 
-I'm still not communicating well.
+On the other hand, the date-based comparison (which you'd get with the
+version I sent yesterday with [2/4] and [4/4]) would give you the most
+recent common ancestor, which would necessarily avoid this situation.
 
-Give me a case where assuming it's a replace will do the wrong thing,
-for C code, where it's a variable or function name.
+Do you want to go with the date-based approach, or should I work out a 
+shortest shorter path algorithm?
 
-Ray
+	-Daniel
+*This .sig left intentionally blank*
 
