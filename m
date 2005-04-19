@@ -1,70 +1,73 @@
-From: =?utf-8?b?U3TDqXBoYW5l?= Fillod <fillods@gmail.com>
-Subject: Re: GIT Web Interface
-Date: Tue, 19 Apr 2005 17:19:05 +0000 (UTC)
-Message-ID: <loom.20050419T185910-762@post.gmane.org>
-References: <20050419004415.GA10628@vrfy.org> <20050419005244.GR5554@pasky.ji.cz> <1113926385.29953.7.camel@localhost.localdomain> <20050419165247.GB32259@kroah.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: naive question
+Date: Tue, 19 Apr 2005 10:41:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504191036560.19286@ppc970.osdl.org>
+References: <16997.222.917219.386956@cargo.ozlabs.ibm.com>
+ <20050419171534.GH12757@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:33:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 19:36:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNwZf-0005S6-Ls
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:31:47 +0200
+	id 1DNwdH-00061f-RT
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261396AbVDSRfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 13:35:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261433AbVDSRfw
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:35:52 -0400
-Received: from main.gmane.org ([80.91.229.2]:28557 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261396AbVDSRfm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:35:42 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DNwYE-0005F7-Op
-	for git@vger.kernel.org; Tue, 19 Apr 2005 19:30:21 +0200
-Received: from 81.255.233.236 ([81.255.233.236])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Apr 2005 19:30:18 +0200
-Received: from fillods by 81.255.233.236 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 19 Apr 2005 19:30:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 81.255.233.236 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0))
+	id S261433AbVDSRjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 13:39:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261451AbVDSRjg
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:39:36 -0400
+Received: from fire.osdl.org ([65.172.181.4]:30924 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261433AbVDSRj3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:39:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JHdNs4031279
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 19 Apr 2005 10:39:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JHdLao021025;
+	Tue, 19 Apr 2005 10:39:22 -0700
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050419171534.GH12757@pasky.ji.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Greg KH <greg <at> kroah.com> writes:
-[...]
-> Looks good, care to post the updated version?
-
-  http://ehlo.org/~kay/
-
-What about a git repo of gitweb?
-
-gitweb2.pl is nice with the browse function. BTW, but there's a '1' artefact
-right after the browse link in action=show_tree :-)
-
-Kay, your script is really nice, good job!
-
-Here are some random ideas:
-* make *any* hash clickable instead of the (show xx) links.
-  Applicable in show_log, show_diff
-* in show_diff, keep a back link to cset
-* provide a download link in show_file (as well as show_cset/show_diff ?)
-* obfuscate against spam the mail adresses in show_log?
-* use of colors in show_log (commiter, author, ..)
-* perhaps borrow some ideas from other SCM web interfaces besides BK
-* kindly ask kernel.org to host your script one day?
 
 
-All the best,
--- 
-Stephane
+On Tue, 19 Apr 2005, Petr Baudis wrote:
+> 
+> I'd actually prefer, if:
+> 
+> (i) checkout-cache simply wouldn't touch files whose stat matches with
+> what is in the cache; it updates the cache with the stat informations
+> of touched files
 
+Run "update-cache --refresh" _before_ doing the "checkout-cache", and that 
+is exactly what will happen.
+
+But yes, if you want to make checkout-cache update the stat info (Ingo 
+wanted to do that too), it should be possible. The end result is a 
+combination of "update-cache" and "checkout-cache", though: you'll 
+effectively need to both (just in one pass).
+
+With the current setup, you have to do
+
+	update-cache --refresh
+	checkout-cache -f -a
+	update-cache --refresh
+
+which is admittedly fairly inefficient.
+
+The real expense right now of a merge is that we always forget all the
+stat information when we do a merge (since it does a read-tree). I have a
+cunning way to fix that, though, which is to make "read-tree -m" read in
+the old index state like it used to, and then at the end just throw it
+away except for the stat information.
+
+		Linus
