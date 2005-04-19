@@ -1,49 +1,68 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Wed, 20 Apr 2005 01:02:33 +0200
-Message-ID: <20050419230233.GI9305@pasky.ji.cz>
-References: <20050419043938.GA23724@kroah.com> <20050419185807.GA1191@kroah.com> <Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org> <426583D5.2020308@mesatop.com> <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+From: Kevin Smith <yarcs@qualitycode.com>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 19:03:20 -0400
+Message-ID: <42658E38.1020406@qualitycode.com>
+References: <20050418210436.23935.qmail@science.horizon.com>	 <1113869248.23938.94.camel@orca.madrabbit.org>	 <42645969.2090609@qualitycode.com>	 <1113874931.23938.111.camel@orca.madrabbit.org>	 <4264677A.9090003@qualitycode.com> <1113950442.29444.31.camel@orca.madrabbit.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Cole <elenstev@mesatop.com>, Greg KH <greg@kroah.com>,
-	Greg KH <gregkh@suse.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 00:58:59 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Wed Apr 20 00:59:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1g2-0000aO-Df
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:58:42 +0200
+	id 1DO1gs-0000fV-QC
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 00:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261730AbVDSXCq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:02:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261731AbVDSXCq
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:02:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43720 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261732AbVDSXCg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:02:36 -0400
-Received: (qmail 3263 invoked by uid 2001); 19 Apr 2005 23:02:33 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261731AbVDSXDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 19:03:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261732AbVDSXDi
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:03:38 -0400
+Received: from deuterium.rootr.net ([203.194.209.160]:15978 "EHLO
+	vulcan.rootr.net") by vger.kernel.org with ESMTP id S261731AbVDSXD3
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 19:03:29 -0400
+Received: from [10.10.10.20] (147-49.35-65.tampabay.res.rr.com [65.35.49.147])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vulcan.rootr.net (Postfix) with ESMTP id 640513C0A;
+	Tue, 19 Apr 2005 23:03:21 +0000 (UTC)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050325)
+X-Accept-Language: en-us, en
+To: Ray Lee <ray-lk@madrabbit.org>
+In-Reply-To: <1113950442.29444.31.camel@orca.madrabbit.org>
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 20, 2005 at 12:38:17AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> Just say no to patches. 
+Ray Lee wrote:
+> On Mon, 2005-04-18 at 22:05 -0400, Kevin Smith wrote:
+> 
+>>Notice that just by looking at my diffs, you can't tell that I used a
+>>replace operation.
+> 
+> 
+> Here's where we disagree. If you checkpoint your tree before the
+> replace, and immediately after, the only differences in the
+> source-controlled files would be due to the replace. 
 
-FYI, I've - per Junio's suggestion - made git merge's fast-forward to
-apply show-diff output as a patch instead. This is roughly equal to
-doing the sanity check against local changes, except that it handles
-them, while at it. (Tree merge refuses to work when there are local
-changes.)
+But I might have manually changed those tokens, or I might have done it
+with a replace operation. Just looking at the diffs, those two cases
+would look identical and be indistinguishable. The only way to know
+whether or not a darcs replace was done was to look at the patch metadata.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Pop quiz:
+
+Here is revision 1 of my file:
+
+    abcde
+
+Here is revision 2:
+
+    wow
+
+Now, did I do that with a darcs replace, or just by typing?
+
+Kevin
