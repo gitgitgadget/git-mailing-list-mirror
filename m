@@ -1,122 +1,53 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: "True" git merge in git-pasky
-Date: Tue, 19 Apr 2005 05:51:07 +0200
-Message-ID: <20050419035107.GB5554@pasky.ji.cz>
+From: Greg KH <gregkh@suse.de>
+Subject: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Mon, 18 Apr 2005 21:39:38 -0700
+Message-ID: <20050419043938.GA23724@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Apr 19 05:47:27 2005
+Cc: Git Mailing List <git@vger.kernel.org>,
+	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
+X-From: git-owner@vger.kernel.org Tue Apr 19 06:36:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNjhr-0005mJ-DN
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 05:47:23 +0200
+	id 1DNkT6-0001GB-DC
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 06:36:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261217AbVDSDvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 23:51:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261314AbVDSDvT
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 23:51:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:47285 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261217AbVDSDvJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 23:51:09 -0400
-Received: (qmail 21940 invoked by uid 2001); 19 Apr 2005 03:51:07 -0000
-To: git@vger.kernel.org
+	id S261319AbVDSEkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 00:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261322AbVDSEkI
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 00:40:08 -0400
+Received: from mail.kroah.org ([69.55.234.183]:8920 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261319AbVDSEkC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 00:40:02 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3J4dxi24428;
+	Mon, 18 Apr 2005 21:39:59 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DNkWQ-6BU-00; Mon, 18 Apr 2005 21:39:38 -0700
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  Hello,
+Alright, let's try some small i2c and w1 patches...
 
-  so I've implemented "true" git merge in git-pasky, using core git's
-merging capabilities. It seems to even work. :-)
+Could you merge with:
+	kernel.org/pub/scm/linux/kernel/git/gregkh/i2c-2.6.git/
 
-  I tested it briefly, and even did one non-conflicting and one
-conflicting merge with Linus with this, but I'd like to hear your
-comments and possibly more testing before releasing it.
+It contains 4 small patches, 2 i2c and 2 w1 bugfixes, diffstat is
+below, I'll figure out how to send the individual patches later.
 
-  To get the lastest git-pasky, get the tarball at
+thanks,
 
-	http://pasky.or.cz/~pasky/dev/git
+greg k-h
 
-unpack, build, install, do
-
-	git pull
-
-rebuild and reinstall.
-
-
-  The semantics is trivial (and it might get changed so that you would
-do git update instead of git pull at most of places). If you don't have
-a given GIT repository ready yet, do
-
-	git init rsync://example.com/repo
-
-in a new directory. It is by default tracking, therefore if you do
-
-	git pull
-
-anytime later, git merge will be automatically invoked. If you want to
-prevent this, do
-
-	git track
-
-which will untrack your tree; the remote branch you were tracking is
-called "origin", shall you want to pull/merge it later. You might want
-to also merge with someone else. Do
-
-	git addremote elsewhere rsync://example.org/another
-	git pull elsewhere
-	git merge elsewhere
-
-(Note that merge won't pull automatically; you must do that on your own
-if you want to pull.)
-
-
-If the merge didn't succeed and you have conflicts, don't panic. The
-merge told you about the conflicts, you can also do
-
-	git diff
-
-to see the changes, you'll probably spot the conflict markers. Resolve
-the conflicts and then simply do
-
-	git commit
-
-to commit the pending merge.
-
-
-Now you decided to do a little bit of parallel development and stick
-your patches not ready for 2.6.12 to a separate tree. That's fine, do
-
-	git fork experimental ~/linux-2.6.experimental
-
-and get some coffee. (It takes about 8 minutes here, but I think git
-isn't at fault - it is probably all spent in
-
-	read-tree $(tree-id)
-	checkout-cache -a
-	update-cache --refresh
-
-and you pretty much need to call that.)
-
-Then, do some work there, syncing with your main tree periodically:
-
-	git merge master
-
-(that's how your first init'd branch is called). You decide to make it
-more fun for Linus and push your experimental stuff into your master
-tree. Fine, cd there and do
-
-	git merge experimental
-
-and there you go!
-
-
-Have fun,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+ drivers/i2c/chips/it87.c    |    2 +-
+ drivers/i2c/chips/via686a.c |    7 ++-----
+ drivers/w1/w1.c             |    9 +++++----
+ drivers/w1/w1_smem.c        |    4 ++--
+ 4 files changed, 10 insertions(+), 12 deletions(-)
+     
