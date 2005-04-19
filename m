@@ -1,66 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [0/5] Parsers for git objects, porting some programs
-Date: Mon, 18 Apr 2005 18:15:40 -0700
-Message-ID: <7v7jizsh1f.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.21.0504181558180.30848-100000@iabervon.org>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: [PATCH] provide better committer information to commit-tree.c
+Date: Tue, 19 Apr 2005 11:20:32 +1000
+Message-ID: <1113873634.3579.32.camel@localhost.localdomain>
+References: <20050419001126.GB21170@kroah.com>
+	 <Pine.LNX.4.58.0504181730130.15725@ppc970.osdl.org>
+	 <20050419004548.GA21623@kroah.com>
+	 <1113871951.3579.25.camel@localhost.localdomain>
+	 <20050419011236.GA22091@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 03:12:42 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 03:17:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNhHl-0007RI-Rx
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 03:12:18 +0200
+	id 1DNhMN-0007nU-Vu
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 03:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261251AbVDSBQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 21:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261252AbVDSBQR
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 21:16:17 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:999 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261251AbVDSBQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Apr 2005 21:16:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050419011540.AHA18934.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 18 Apr 2005 21:15:40 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504181558180.30848-100000@iabervon.org> (Daniel
- Barkalow's message of "Mon, 18 Apr 2005 16:12:00 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261252AbVDSBVF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 21:21:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261253AbVDSBVF
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 21:21:05 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:28385 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261252AbVDSBVB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 21:21:01 -0400
+Received: from [150.203.247.9] (helo=[172.24.3.18])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DNhQ9-0000xk-0h; Tue, 19 Apr 2005 02:20:59 +0100
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20050419011236.GA22091@kroah.com>
+X-Mailer: Evolution 2.2.1.1 (2.2.1.1-2) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+On Mon, 2005-04-18 at 18:12 -0700, Greg KH wrote:
+> Ok, then why display it as one? 
 
-DB> On Mon, 18 Apr 2005, Linus Torvalds wrote:
->> On Sun, 17 Apr 2005, Daniel Barkalow wrote:
->> >
->> > This series introduces common parsers for objects, and ports the programs
->> > that currently use revision.h to them.
->> > 
->> >  1: the header files
->> >  2: the implementations
->> >  3: port rev-tree
->> >  4: port fsck-cache
->> >  5: port merge-base
->> 
->> Ok, having now looked at the code, I don't have any objections at all. 
+Nobody ever displays it as one as far as I'm aware. That would be
+something like "mailto:$COMMITTER"
 
-I was looking at the tree part and am thinking that it would
-make it much nicer if your tree object records path for each
-entry.  Currently it just borrows from object.refs to represent
-its children, which is good enough for the applications listed
-above (none of them would care where in the tree the object
-belongs to), but I was thinking about an incremental dumper I
-talked about in another thread and noticed that I cannot use the
-current struct tree as is to compare two trees to find related
-sha1 files (then I would inflate both, run diff and record the
-output as a recipe to create one sha1 object from the other).
+> But I'll wait for Russell to wake up and start quoting the proper EU
+> privacy laws that he feels causes him to be forced to obfuscate his
+> email addresses in the changelog commits (as he did for the bk ones.)
 
-Or am I misreading the code that parses tree objects?
+He's talking about his own interpretation of the UK's Data Protection
+Act, which requires you to be registered and fulfil certain other
+requirements if you keep personal information about people in a
+database. Email addresses have been ruled to be 'personal information'
+in this context, but this _isn't_ an email address -- and there are
+other get-out clauses for noncommercial situations such as this anyway,
+I believe. 
+
+Besides, he can still obscure the author information as he unfortunately
+insists on doing; it's the _committer_ information which we're
+discussing here -- and that's always going to be himself in this case.
+
+-- 
+dwmw2
 
