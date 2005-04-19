@@ -1,66 +1,84 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: missing: git api, reference, user manual and mission statement
-Date: Tue, 19 Apr 2005 15:58:10 +0200
-Message-ID: <20050419135810.GA19393@elte.hu>
-References: <20050419123631.GD3739@xdt04.mpe-garching.mpg.de> <42650CFC.1010400@qualitycode.com>
+From: Christian Meder <chris@absolutegiganten.org>
+Subject: wit - a git web interface
+Date: Tue, 19 Apr 2005 16:04:03 +0200
+Message-ID: <1113919443.3192.25.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Klaus Robert Suetterlin <robert@mpe.mpg.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 15:58:38 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Apr 19 16:05:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNtC3-0005XG-1o
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 15:55:11 +0200
+	id 1DNtGs-0006Y5-Az
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 16:00:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261530AbVDSN7P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 09:59:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261531AbVDSN7P
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 09:59:15 -0400
-Received: from mx2.elte.hu ([157.181.151.9]:35206 "EHLO mx2.elte.hu")
-	by vger.kernel.org with ESMTP id S261530AbVDSN7M (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 09:59:12 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx2.elte.hu (Postfix) with ESMTP id 0E8C0319D2B;
-	Tue, 19 Apr 2005 15:57:14 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id B8D171FC2; Tue, 19 Apr 2005 15:58:13 +0200 (CEST)
-To: Kevin Smith <yarcs@qualitycode.com>
-Content-Disposition: inline
-In-Reply-To: <42650CFC.1010400@qualitycode.com>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S261531AbVDSOEP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 10:04:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261533AbVDSOEP
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 10:04:15 -0400
+Received: from shadow.prohost.de ([216.71.84.228]:5470 "EHLO shadow.prohost.de")
+	by vger.kernel.org with ESMTP id S261531AbVDSOEJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 10:04:09 -0400
+Received: from blue.office.onestepahead.de (h-62.96.100.62.host.de.colt.net [62.96.100.62] (may be forged))
+	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3JE48618560
+	for <git@vger.kernel.org>; Tue, 19 Apr 2005 16:04:08 +0200
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.0.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-* Kevin Smith <yarcs@qualitycode.com> wrote:
+I uploaded a first draft of wit to
+http://www.absolutegiganten.org/wit
 
-> Klaus Robert Suetterlin wrote:
-> > 1) There is no clear (e.g. by name) distinction between ``git as done
-> > by Linus'', which is a kind of content addressable database with added
-> > semantics, and ``git as done by the rest of You'', which is a kind of
-> > SCM on top of Linuses stuff.
-> 
-> I also see this as one of the biggest obstacles right now. It would be 
-> very helpful if we could achieve the clear separation between git and 
-> non-git that has been part of the design since the beginning.
-> 
-> Git is very immature, and currently should only be used by brave 
-> pioneers. About the only way for a mortal to even try git is to stick 
-> to git-pasky releases, and not try to track all the patches flying 
-> around.
+Right now it's a minimal web interface on top of git. Unpack it, make
+sure you've got at least Python 2.3, optionally install c2html, adjust
+config.py and start from the root with
+$ PYTHONPATH=. python git/web/wit.py
+Point your browser to http://localhost:8090
 
-hey, it's a 2 weeks old project, but it's certainly one of the 
-fastest-growing projects i've ever seen: it has so much steam that it's 
-scary :) It seems that a true emergency focused a massive, spontaneous 
-concentration of OSS development power.
+I append my random notes about this thing:
 
-	Ingo
+* wit was built with git 075930771b68528ae13630375df2fe634e9ac610 which
+is 2-3 days old, it's untested with newer gits, it's functional for me
+
+* philosophy: provide a git repository browser and show the basic types
+of git under appropriate URIs like
+/commit/head, /commit/<sha1>, /tree/head, /tree/<sha1>, /blob/<sha1>
+and encode operations in URIs like /tree/<sha1>/tarball
+
+* the html is probably invalid and looks like crap
+
+* it's just sitting on top of git because that's the least moving part
+of git right now (hah), no usage of git-pasky yet
+
+* it's done with quixote 2.0 which is included
+
+* don't use it on a kernel tree or you will experience slowness beyond
+your wildest dreams
+
+* it doesn't use revision.h or other lighning fast C goodies until the
+dust settles down
+
+* it'll probably eat your dog and falls apart when blowing at it
+
+* I happen to think that it's a nice start
+
+Any and all feedback is greatly appreciated.
+
+Greetings,
+
+
+
+				Christian
+
+-- 
+Christian Meder, email: chris@absolutegiganten.org
+
+The Way-Seeking Mind of a tenzo is actualized 
+by rolling up your sleeves.
+
+                (Eihei Dogen Zenji)
+
