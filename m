@@ -1,117 +1,52 @@
-From: Steven Cole <elenstev@mesatop.com>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
-Date: Tue, 19 Apr 2005 17:04:48 -0600
-Message-ID: <200504191704.48976.elenstev@mesatop.com>
-References: <20050419043938.GA23724@kroah.com> <426583D5.2020308@mesatop.com> <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+Date: Wed, 20 Apr 2005 01:16:28 +0200
+Message-ID: <20050419231628.GJ9305@pasky.ji.cz>
+References: <20050419043938.GA23724@kroah.com> <426583D5.2020308@mesatop.com>
+	<Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+	<200504191704.48976.elenstev@mesatop.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Greg KH <greg@kroah.com>, Greg KH <gregkh@suse.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org, sensors@stimpy.netroedge.com
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:05:05 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Greg KH <greg@kroah.com>,
+        Greg KH <gregkh@suse.de>, Git Mailing List <git@vger.kernel.org>,
+        linux-kernel@vger.kernel.org, sensors@Stimpy.netroedge.com
+X-From: lm78@Stimpy.netroedge.com Wed Apr 20 01:13:14 2005
+Return-path: <lm78@Stimpy.netroedge.com>
+Received: from stimpy.netroedge.com ([206.228.191.3])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1m0-0001Km-AA
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:04:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261737AbVDSXI6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261739AbVDSXI6
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:08:58 -0400
-Received: from nacho.zianet.com ([216.234.192.105]:2319 "HELO nacho.zianet.com")
-	by vger.kernel.org with SMTP id S261737AbVDSXIt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:08:49 -0400
-Received: (qmail 15258 invoked from network); 19 Apr 2005 23:08:47 -0000
-Received: from 216-31-65-7.zianet.com (216.31.65.7)
-  by 0 with SMTP; 19 Apr 2005 23:08:47 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.6.1
-In-Reply-To: <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+	id 1DO1ty-0002DZ-1z
+	for gls-sensors@gmane.org; Wed, 20 Apr 2005 01:13:06 +0200
+Received: from Stimpy.netroedge.com (IDENT:lm78@localhost [127.0.0.1])
+	by Stimpy.netroedge.com (8.12.10/8.12.10) with ESMTP id j3JNIWpv002619;
+	Tue, 19 Apr 2005 16:18:32 -0700
+Received: (from lm78@localhost)
+	by Stimpy.netroedge.com (8.12.10/8.12.8/Submit) id j3JNIVZm002618;
+	Tue, 19 Apr 2005 16:18:31 -0700
+Received: from machine.sinus.cz (qmailr@w241.dkm.cz [62.24.88.241])
+	by Stimpy.netroedge.com (8.12.10/8.12.10) with SMTP id j3JNISpv002605
+	for <sensors@stimpy.netroedge.com>; Tue, 19 Apr 2005 16:18:28 -0700
+Received: (qmail 5317 invoked by uid 2001); 19 Apr 2005 23:16:28 -0000
+To: Steven Cole <elenstev@mesatop.com>
 Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+In-Reply-To: <200504191704.48976.elenstev@mesatop.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+X-sensors-spam: ham; 0.13
 
-On Tuesday 19 April 2005 04:38 pm, Linus Torvalds wrote:
+Dear diary, on Wed, Apr 20, 2005 at 01:04:48AM CEST, I got a letter
+where Steven Cole <elenstev@mesatop.com> told me that...
+> Then, the flurry of patching file blah messages, followed by a rather 
+> pregnant pause after the last patching message.
 > 
-> On Tue, 19 Apr 2005, Steven Cole wrote:
-> >
-> > But perhaps a progress bar right about here might be
-> > a good thing for the terminally impatient.
-> > 
-> > real    3m54.909s
-> > user    0m14.835s
-> > sys     0m10.587s
-> > 
-> > 4 minutes might be long enough to cause some folks to lose hope.
-> 
-> Well, the real operations took only 15 seconds. What kind of horribe 
-> person are you, that you don't have all of the kernel in your disk cache 
-> already? Shame on you.
-> 
-> Or was the 4 minutes for downloading all the objest too?
+> I wasn't complaining about the 4 minutes, just the lack of feedback
+> during the majority of that time.  And most of it was after the last
+> patching file message.
 
-Yes, I was using a very recent version of the pasky tools,
-I had created the repo this morning with git init YOUR_RSYC_URL_FOR_LINUX-2.6.
-I did time git pull origin and watched the fur fly.
+That must've been the update-cache.
 
-Then, the flurry of patching file blah messages, followed by a rather 
-pregnant pause after the last patching message.
+Well, you can listen to your strained disk crepitating direly.
 
-I wasn't complaining about the 4 minutes, just the lack of feedback
-during the majority of that time.  And most of it was after the last
-patching file message.
-
-> 
-> Anyway, it looks like you are using pasky's scripts, and the old 
-> "patch-based" upgrade at that. You certainly will _not_ see the
-> 
-> 	[many files patched]
-> 	patching file mm/mmap.c
-> 	..
-> 
-> if you use a real git merge. That's probable be the real problem here.
-> 
-> Real merges have no patches taking place _anywhere_. And they take about 
-> half a second. Doing an "update" of your tree should _literally_ boil down 
-> to
-> 
-> 	#
-> 	# "repo" needs to point to the repo we update from
-> 	#
-> 	rsync -avz --ignore-existing $repo/objects/. .git/objects/.
-> 	rsync -L $repo/HEAD .git/NEW_HEAD || exit 1
-> 	read-tree -m $(cat .git/NEW_HEAD) || exit 1
-> 	checkout-cache -f -a
-> 	update-cache --refresh
-> 	mv .git/NEW_HEAD .git/HEAD
-> 
-> and if it does anything else, it's literally broken. Btw, the above does
-> need my "read-tree -m" thing which I committed today.
-> 
-> (CAREFUL: the above is not a good script, because it _will_ just overwrite 
-> all your old contents with the stuff you updated to. You should thus not 
-> actually use something like this, but a "git update" should literally end 
-> up doing the above operations in the end, and just add proper checking).
-> 
-> And if that takes 4 minutes, you've got problems.
-> 
-> Just say no to patches. 
-> 
-> 		Linus
-> 
-> PS: If you want a clean tree without any old files or anything else, for
-> that matter, you can then do a "show-files -z --others | xargs -0 rm", but
-> be careful: that will blow away _anything_ that wasn't revision controlled
-> with git. So don't blame me if your pr0n collection is gone afterwards.
-> 
-
-OK.  I may try some of this tomorrow from work, where I have a fat pipe.
-
-I'm on dialup from home, and I suspect not very many folks want to hear
-the sad tale of how long it takes to get the kernel over 56k dialup.
-
-Steven
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
