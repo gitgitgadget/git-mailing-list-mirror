@@ -1,61 +1,61 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Bug in merge-base
-Date: Tue, 19 Apr 2005 19:07:22 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504191853310.30848-100000@iabervon.org>
-References: <20050419223420.GF9305@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Tue, 19 Apr 2005 16:09:27 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504191608230.2274@ppc970.osdl.org>
+References: <200504191250.10286.mason@suse.com><Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org><200504191412.00227.mason@suse.com><Pine.LNX.4.58.0504191143220.19286@ppc970.osdl.org><Pine.LNX.4.62.0504191508060.26365@qynat.qvtvafvgr.pbz>
+ <Pine.LNX.4.58.0504191514550.2274@ppc970.osdl.org>
+ <Pine.LNX.4.62.0504191557410.26365@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 01:03:52 2005
+Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 01:04:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO1kL-00017Q-8J
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:03:10 +0200
+	id 1DO1kg-00019q-Uh
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 01:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261742AbVDSXHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 19:07:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVDSXHP
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:07:15 -0400
-Received: from iabervon.org ([66.92.72.58]:40709 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261735AbVDSXHJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:07:09 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DO1oQ-00003N-00; Tue, 19 Apr 2005 19:07:22 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419223420.GF9305@pasky.ji.cz>
+	id S261735AbVDSXHh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 19:07:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVDSXHh
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 19:07:37 -0400
+Received: from fire.osdl.org ([65.172.181.4]:9416 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261735AbVDSXHe (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 19:07:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JN7Ts4026906
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 19 Apr 2005 16:07:29 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JN7SGl005601;
+	Tue, 19 Apr 2005 16:07:29 -0700
+To: David Lang <david.lang@digitalinsight.com>
+In-Reply-To: <Pine.LNX.4.62.0504191557410.26365@qynat.qvtvafvgr.pbz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Apr 2005, Petr Baudis wrote:
 
-> Dear diary, on Wed, Apr 20, 2005 at 12:17:12AM CEST, I got a letter
-> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+
+On Tue, 19 Apr 2005, David Lang wrote:
 > 
-> > I can think of. Are you sure there isn't another path to 5b53d3?
-> 
-> I'm not. Actually there well might be.
-> 
-> I think merge-base should never take a path which is effectively
-> "upside-down" when a straight "upside" one is available.
-> 
-> Hmm. So what I depended on for merge-base was that when doing it on A
-> and B and A is predecessor of B, then it will always just return A.  I
-> will perhaps need to abuse rev-tree somehow for this then, it looks.
+> if you are useing quilt for locally developed patches I fully agree with 
+> you, but I was thinking of the case where Andrew is receiving independant 
+> patches from lots of people and storing them in quilt for testing, and 
+> then sending them on to you. In this case the patches really are 
+> independant and it may be useful to continue to treat them this way 
+> instead of collapsing them into one 'update from Andrew' feed.
 
-It is currently optimizing for the shortest longer path, but I guess it
-should optimize for the shortest shorter path (i.e., the 0-length path
-from A to itself always wins).
+If so, he should set up one repository per quilt patch. 
 
-On the other hand, the date-based comparison (which you'd get with the
-version I sent yesterday with [2/4] and [4/4]) would give you the most
-recent common ancestor, which would necessarily avoid this situation.
+That would be crazy, but yes, it would allow me to cherry-pick which
+one(s) I want to merge with.
 
-Do you want to go with the date-based approach, or should I work out a 
-shortest shorter path algorithm?
+But the fact is, that cherry-picking should happen at quilt-time not at
+git time.
 
-	-Daniel
-*This .sig left intentionally blank*
-
+		Linus
