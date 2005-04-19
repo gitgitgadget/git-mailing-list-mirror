@@ -1,73 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: naive question
-Date: Tue, 19 Apr 2005 10:41:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191036560.19286@ppc970.osdl.org>
-References: <16997.222.917219.386956@cargo.ozlabs.ibm.com>
- <20050419171534.GH12757@pasky.ji.cz>
+From: Greg KH <greg@kroah.com>
+Subject: Re: GIT Web Interface
+Date: Tue, 19 Apr 2005 10:41:19 -0700
+Message-ID: <20050419174119.GA22145@kroah.com>
+References: <20050419004415.GA10628@vrfy.org> <20050419005244.GR5554@pasky.ji.cz> <1113926385.29953.7.camel@localhost.localdomain> <20050419165247.GB32259@kroah.com> <20050419173242.GA32478@vrfy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 19:36:32 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 19:38:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNwdH-00061f-RT
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:35:32 +0200
+	id 1DNwfi-0006Mj-Lj
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 19:38:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261433AbVDSRjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 13:39:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261451AbVDSRjg
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:39:36 -0400
-Received: from fire.osdl.org ([65.172.181.4]:30924 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261433AbVDSRj3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:39:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3JHdNs4031279
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 10:39:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3JHdLao021025;
-	Tue, 19 Apr 2005 10:39:22 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419171534.GH12757@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261471AbVDSRmF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 13:42:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261468AbVDSRmF
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 13:42:05 -0400
+Received: from mail.kroah.org ([69.55.234.183]:29895 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261469AbVDSRlp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 13:41:45 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3JHffi18634;
+	Tue, 19 Apr 2005 10:41:41 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DNwit-6BG-00; Tue, 19 Apr 2005 10:41:19 -0700
+To: Kay Sievers <kay.sievers@vrfy.org>
+Content-Disposition: inline
+In-Reply-To: <20050419173242.GA32478@vrfy.org>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 19 Apr 2005, Petr Baudis wrote:
+On Tue, Apr 19, 2005 at 07:32:42PM +0200, Kay Sievers wrote:
+> On Tue, Apr 19, 2005 at 09:52:48AM -0700, Greg KH wrote:
+> > On Tue, Apr 19, 2005 at 05:59:45PM +0200, Kay Sievers wrote:
+> > > On Tue, 2005-04-19 at 02:52 +0200, Petr Baudis wrote:
+> > > > Dear diary, on Tue, Apr 19, 2005 at 02:44:15AM CEST, I got a letter
+> > > > where Kay Sievers <kay.sievers@vrfy.org> told me that...
+> > > > > I'm hacking on a simple web interface, cause I missed the bkweb too much.
+> > > > > It can't do much more than browse through the source tree and show the
+> > > > > log now, but that should change... :)
+> > > > >   http://ehlo.org/~kay/gitweb.pl?project=linux-2.6
+> > > > 
+> > > > Hmm, looks nice for a start. (But you have obsolete git-pasky tree there! ;-)
+> > > 
+> > > Yeah, it's fresh now. :)
+> > > 
+> > > > > How can I get the files touched with a changeset and the corresponding
+> > > > > diffs belonging to it?
+> > > > 
+> > > > diff-tree to get the list of files, you can do the corresponding diffs
+> > > > e.g. by doing git diff -r tree1:tree2. Preferably make a patch for it
+> > > > first to make it possible to diff individual files this way.
+> > > 
+> > > Ah, nice! Got it working.
+> > 
+> > Looks good, care to post the updated version?
 > 
-> I'd actually prefer, if:
-> 
-> (i) checkout-cache simply wouldn't touch files whose stat matches with
-> what is in the cache; it updates the cache with the stat informations
-> of touched files
+> Sure, but expect it to change dramatically tonight. :)
 
-Run "update-cache --refresh" _before_ doing the "checkout-cache", and that 
-is exactly what will happen.
+Ok, how about putting a link to it somewhere then, so you don't have to
+be bothered with people like me asking for the latest copy? :)
 
-But yes, if you want to make checkout-cache update the stat info (Ingo 
-wanted to do that too), it should be possible. The end result is a 
-combination of "update-cache" and "checkout-cache", though: you'll 
-effectively need to both (just in one pass).
+thanks,
 
-With the current setup, you have to do
-
-	update-cache --refresh
-	checkout-cache -f -a
-	update-cache --refresh
-
-which is admittedly fairly inefficient.
-
-The real expense right now of a merge is that we always forget all the
-stat information when we do a merge (since it does a read-tree). I have a
-cunning way to fix that, though, which is to make "read-tree -m" read in
-the old index state like it used to, and then at the end just throw it
-away except for the stat information.
-
-		Linus
+greg k-h
