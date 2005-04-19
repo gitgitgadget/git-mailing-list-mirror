@@ -1,74 +1,90 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Tue, 19 Apr 2005 14:28:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504191245160.30848-100000@iabervon.org>
-References: <20050419105008.GB12757@pasky.ji.cz>
+From: Olivier Galibert <galibert@pobox.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Tue, 19 Apr 2005 20:51:25 +0200
+Message-ID: <20050419185124.GB86697@dspnet.fr.eu.org>
+References: <200504191250.10286.mason@suse.com> <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
-	David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 20:24:01 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Apr 19 20:48:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNxO7-0004wq-QX
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:23:56 +0200
+	id 1DNxks-0008Uy-Fp
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 20:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261501AbVDSS2C (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 14:28:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261540AbVDSS2C
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:28:02 -0400
-Received: from iabervon.org ([66.92.72.58]:1542 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261501AbVDSS1z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:27:55 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DNxS4-0007Cz-00; Tue, 19 Apr 2005 14:28:00 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419105008.GB12757@pasky.ji.cz>
+	id S261570AbVDSSvf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 14:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261573AbVDSSvf
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 14:51:35 -0400
+Received: from dspnet.fr.eu.org ([213.186.44.138]:58896 "EHLO dspnet.fr.eu.org")
+	by vger.kernel.org with ESMTP id S261570AbVDSSvb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 14:51:31 -0400
+Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
+	id 73D8834D26; Tue, 19 Apr 2005 20:51:25 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504191017300.19286@ppc970.osdl.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 19 Apr 2005, Petr Baudis wrote:
+On Tue, Apr 19, 2005 at 10:36:06AM -0700, Linus Torvalds wrote:
+> In fact, git has all the same issues that BK had, and for the same 
+> fundamental reason: if you do distributed work, you have to always 
+> "append" stuff, and that means that you can never re-order anything after 
+> the fact.
 
-> I disagree. This already forces you to have two branches (one to pull
-> from to get the data, mirroring the remote branch, one for your real
-> work) uselessly and needlessly.
+You can, moving a patch around is just a chain of merges.
 
-If you pull in a non-tracked tree, it certainly won't apply the
-changes, so you can just have your local tree and pull other people's
-trees as desired.
+[Warning, ascii "art" ahead]
 
-> I think there is just no good name for what pull is doing now, and
-> update seems like a great name for what pull-and-merge really is. Pull
-> really is pull - it _pulls_ the data, while update also updates the
-> given tree. No surprises.
+A merge is traditionally seen as:
 
-I'm actually getting suspicious that the right thing is to hide "pull" in
-the id scheme. That is, instead of saying "linus" to refer to the
-"linus" head that you currently have, you say "+linus" to refer to the
-head Linus has on his server currently, and this will cause you to
-download anything necessary to perform the operation with the resulting
-value.
+1- Start with (A, B, C... are nodes/trees..., Pn are patches/changesets):
 
-See, I don't think you ever want to just pull. You want to
-pull-and-do-something, but the something could be any operation that uses
-a commit, not necessarily update. So you could do "git diff -r +linus" to
-compare your head against current linus. You'd want "git update" to take a
-working directory from "linus" to "+linus" (just because you know Linus's
-more recent head doesn't mean you're automatically using it). You could
-just "git merge +linus" in your working directory to sync with Linus. Even
-"git log +linus" to see his recent changes.
+     /--P1->B
+    /
+   A
+    \
+     \--P2->C
 
-I think the only reason not to just make any reference to a head pull it
-is performance on looking up the head; you don't really want to hammer the
-server getting these 40-byte files constantly or wait for a connection
-every time (not to mention the possibility of not being able to
-connect). But there's no reason to want to not have the latest data, since
-the older data doesn't go away.
+2- End with:
 
-	-Daniel
-*This .sig left intentionally blank*
+     /--P1->B
+    /
+   A----(P1+P2)->D
+    \
+     \--P2->C
+
+   where D is the merge between B and C with A as common ancestor.
+
+But you can also see the result as:
+
+     /--P1->B--P2--\
+    /               \
+   A                 D
+    \               /
+     \--P2->C--P1--/
+
+i.e. you have two patch chains, one being A-P1->B-P2->D and the other
+A-P2->C-P1->D.  I.e. you have the two patches P1 and P2 in two
+possible patching orders.  But you can do even more amusing.  Start
+with a patch chain:
+
+   E--P3-->F--P4-->G
+
+and merge E and G with F as common ancestor.  You'll then get H where
+E--P4-->H--P3-->G.  I.e. you inverted two patches in your patch chain.
+Or, if you keep H instead of G as your head, you removed P3 from your
+patch chain.
+
+Of course you can permute blocs of patches that way by having E, F and
+G further away from each other.  You just increase the merge conflict
+probability.
+
+That is, I think, the way to do quilt/arch patch handling with safe
+distribution and safe backtracing procedures.
+
+  OG.
 
