@@ -1,54 +1,75 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: [PATCH] Automerge fix
-Date: Tue, 19 Apr 2005 03:02:43 +0200
-Message-ID: <20050419010242.GS5554@pasky.ji.cz>
+From: Kevin Smith <yarcs@qualitycode.com>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Mon, 18 Apr 2005 21:05:45 -0400
+Message-ID: <42645969.2090609@qualitycode.com>
+References: <20050418210436.23935.qmail@science.horizon.com> <1113869248.23938.94.camel@orca.madrabbit.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 02:59:42 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Tue Apr 19 03:03:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNh58-0006Kb-JX
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 02:59:15 +0200
+	id 1DNh8A-0006cI-0p
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 03:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261154AbVDSBDE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 21:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261242AbVDSBDE
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 21:03:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:7347 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261154AbVDSBCr (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 21:02:47 -0400
-Received: (qmail 29142 invoked by uid 2001); 19 Apr 2005 01:02:43 -0000
-To: torvalds@osdl.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261242AbVDSBGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 21:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261240AbVDSBGO
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 21:06:14 -0400
+Received: from deuterium.rootr.net ([203.194.209.160]:25937 "EHLO
+	vulcan.rootr.net") by vger.kernel.org with ESMTP id S261242AbVDSBF4
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Apr 2005 21:05:56 -0400
+Received: from [10.10.10.20] (147-49.35-65.tampabay.res.rr.com [65.35.49.147])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by vulcan.rootr.net (Postfix) with ESMTP id 431C03C0A;
+	Tue, 19 Apr 2005 01:05:46 +0000 (UTC)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050325)
+X-Accept-Language: en-us, en
+To: Ray Lee <ray-lk@madrabbit.org>
+In-Reply-To: <1113869248.23938.94.camel@orca.madrabbit.org>
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Ray Lee wrote:
+> On Mon, 2005-04-18 at 21:04 +0000, linux@horizon.com wrote:
+> 
+>>The other is "replace very instace of identifier `foo` with identifier`bar`".
+> 
+> 
+> That could be derived, however, by a particularly smart parser [1].
 
-this patch fixes git-merge-one-file-script's automerge.
+No, it can't. Seriously. A darcs replace patch is encoded as rules, not
+effects, and it is impossible to derive the rules just by looking at the
+results. Not difficult. Impossible. You could guess, but that's not good
+enough for darcs to be able to reliably commute the patches later.
 
-Signed-off-by: Petr Baudis <pasky@ucw.cz>
+I am curious whether Linus's suggestion about including the
+corresponding darcs patch id in the git commit comments would be good
+enough.
 
-git-merge-one-file-script: 7ebf5dac4c69043cd2ff89bf7ee552152802f8d1
---- a/git-merge-one-file-script
-+++ b/git-merge-one-file-script
-@@ -43,7 +43,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	orig=$(unpack-file $1)
- 	src1=$(unpack-file $2)
- 	src2=$(unpack-file $3)
--	merge "$src2" "$orig" "$src1" || echo Leaving conflict merge in $src2 && exit 1
-+	merge "$src2" "$orig" "$src1" || (echo Leaving conflict merge in $src2 && exit 1)
- 	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
- 	;;
- 
+> As for "darcs mv", that can be derived from the before/after pictures of
+> the trees.
 
+Perhaps. If a file is moved and edited within the same commit, I'm not
+sure that you can be certain whether it was done with d 'darcs mv' or
+not. Requiring separate checkins for the rename and the subsequent
+modify would make things easier on SCM's, but is impractical in real
+life. Automated refactoring tools, for example, perform the
+rename+modify as an atomic operation.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Now, git might not need to deal with any of this, because it only needs
+to work with the kernel project. But darcs does have to deal with this
+wide range of uses, as does just about any other SCM.
+
+I'm *not* advocating cluttering up git with features that are not
+directly needed for kernel development. I'm just trying to clarify the
+facts so everyone can understand what darcs is trying to do.
+
+Kevin
