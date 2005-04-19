@@ -1,79 +1,62 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Automerge fix
-Date: Tue, 19 Apr 2005 04:57:26 +0200
-Message-ID: <20050419025726.GA5554@pasky.ji.cz>
-References: <20050419010242.GS5554@pasky.ji.cz> <Pine.LNX.4.58.0504181945400.15725@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: SCSI trees, merges and git status
+Date: Mon, 18 Apr 2005 20:04:56 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504182003480.15725@ppc970.osdl.org>
+References: <1113856118.4998.70.camel@mulgrave>  <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
+  <1113866092.4998.92.camel@mulgrave>  <Pine.LNX.4.58.0504181651241.15725@ppc970.osdl.org>
+  <1113869594.4998.103.camel@mulgrave>  <Pine.LNX.4.58.0504181724170.15725@ppc970.osdl.org>
+ <1113877071.4998.111.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 04:53:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 04:59:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNirh-0007yr-L9
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:53:30 +0200
+	id 1DNixC-0008VC-NM
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261290AbVDSC5c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 22:57:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261295AbVDSC5c
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 22:57:32 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64436 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261290AbVDSC52 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 22:57:28 -0400
-Received: (qmail 13094 invoked by uid 2001); 19 Apr 2005 02:57:26 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504181945400.15725@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261299AbVDSDDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 23:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVDSDDI
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 23:03:08 -0400
+Received: from fire.osdl.org ([65.172.181.4]:5264 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261299AbVDSDDD (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 23:03:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3J32xs4026830
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 18 Apr 2005 20:02:59 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3J32vma020576;
+	Mon, 18 Apr 2005 20:02:58 -0700
+To: James Bottomley <James.Bottomley@SteelEye.com>
+In-Reply-To: <1113877071.4998.111.camel@mulgrave>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 04:48:09AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> > git-merge-one-file-script: 7ebf5dac4c69043cd2ff89bf7ee552152802f8d1
-> > --- a/git-merge-one-file-script
-> > +++ b/git-merge-one-file-script
-> > @@ -43,7 +43,7 @@ case "${1:-.}${2:-.}${3:-.}" in
-> >  	orig=$(unpack-file $1)
-> >  	src1=$(unpack-file $2)
-> >  	src2=$(unpack-file $3)
-> > -	merge "$src2" "$orig" "$src1" || echo Leaving conflict merge in $src2 && exit 1
-> > +	merge "$src2" "$orig" "$src1" || (echo Leaving conflict merge in $src2 && exit 1)
-> >  	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
+
+
+On Mon, 18 Apr 2005, James Bottomley wrote:
 > 
-> What's the right way?
+> Fair enough.  If you pull from
 > 
-> Maybe
+> rsync://www.parisc-linux.org/~jejb/scsi-misc-2.6.git
+
+Thanks. Pulled and pushed out.
+
+> Doing this exposed two bugs in your merge script:
 > 
-> 	if merge "$src2" "$orig" "$src1"
-> 	then 
-> 		cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
-> 	fi
-> 	echo Leaving conflict merge in $src2
-> 	exit 1
-> 
-> would work?
+> 1) It doesn't like a completely new directory (the misc tree contains a
+> new drivers/scsi/lpfc)
+> 2) the merge testing logic is wrong.  You only want to exit 1 if the
+> merge fails.
 
-Possibly. Or changing () to {} as suggested by Edgar Toernig.
+Applied.
 
-FWIW, my fragment of this code now looks like:
-
-        ret=0
-        if ! merge "$src2" "$orig" "$src1"; then
-                echo Conflicting merge!
-                cat "$src2" >"$4"
-                ret=1
-
-        elif ! cat "$src2" >"$4" && update-cache --add -- "$4"; then
-                echo "Choosing $src2 -> $4 failed"
-                ret=1
-        fi
-        rm "$orig" "$src1" "$src2"
-        exit $ret
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+		Linus
