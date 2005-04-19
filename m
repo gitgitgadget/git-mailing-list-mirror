@@ -1,70 +1,122 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Tue, 19 Apr 2005 12:50:08 +0200
-Message-ID: <20050419105008.GB12757@pasky.ji.cz>
-References: <20050416233305.GO19099@pasky.ji.cz> <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org> <20050419011206.GT5554@pasky.ji.cz> <42646967.9030903@dwheeler.com> <4264CCFF.30400@dgreaves.com> <20050419092812.GE2393@pasky.ji.cz> <1113905110.1262.1.camel@nosferatu.lan>
+From: David Roundy <droundy@abridgegame.org>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 07:04:12 -0400
+Message-ID: <20050419110407.GB28269@abridgegame.org>
+References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr> <20050418122011.GA13769@abridgegame.org> <7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 19 12:47:06 2005
+Cc: darcs-devel@darcs.net, Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 19 13:06:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNqFG-0000cm-Op
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 12:46:19 +0200
+	id 1DNqXu-0003Bx-WF
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 13:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261376AbVDSKuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 06:50:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261389AbVDSKuT
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 06:50:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:3516 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261376AbVDSKuJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 06:50:09 -0400
-Received: (qmail 14550 invoked by uid 2001); 19 Apr 2005 10:50:08 -0000
-To: Martin Schlemmer <azarah@nosferatu.za.org>
+	id S261230AbVDSLJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 07:09:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261419AbVDSLJj
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 07:09:39 -0400
+Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]:37695 "EHLO
+	localhost") by vger.kernel.org with ESMTP id S261230AbVDSLJa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 07:09:30 -0400
+Received: from droundy by localhost with local (Exim 4.50)
+	id 1DNqWa-0007OQ-Ol; Tue, 19 Apr 2005 07:04:12 -0400
+To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Mail-Followup-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
+	darcs-devel@darcs.net, Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <1113905110.1262.1.camel@nosferatu.lan>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 19, 2005 at 12:05:10PM CEST, I got a letter
-where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> On Tue, 2005-04-19 at 11:28 +0200, Petr Baudis wrote:
-> > Dear diary, on Tue, Apr 19, 2005 at 11:18:55AM CEST, I got a letter
-> > where David Greaves <david@dgreaves.com> told me that...
-> >
-> > Dunno. I do it personally all the time, with git at least.
-> > 
-> > What do others think? :-)
-> > 
+On Tue, Apr 19, 2005 at 02:55:05AM +0200, Juliusz Chroboczek wrote:
+> [Using git as a backend for Darcs.]
+...
+> >>  1. remove the assumption that patch IDs have a fixed format.  Patch
+> >>  IDs should be opaque blobs of binary data that Darcs only compares
+> >>  for equality.
 > 
-> I think pull is pull.  If you are doing lots of local stuff and do not
-> want it overwritten, it should have been in a forked branch.
+> > I'm not really comfortable with this,
+> 
+> Why?
 
-I disagree. This already forces you to have two branches (one to pull
-from to get the data, mirroring the remote branch, one for your real
-work) uselessly and needlessly.
+I'm not clear why it would be necesary, and it takes the only immutable
+piece of information regarding a patch, and makes it variable.  Just seems
+dangerous and complicated, and I'm not sure why we'd need to do it.
 
-I think there is just no good name for what pull is doing now, and
-update seems like a great name for what pull-and-merge really is. Pull
-really is pull - it _pulls_ the data, while update also updates the
-given tree. No surprises.
+> Suppose I record a patch in Darcs; it gets a Darcs id.  I push it into
+> git, at which point it gets a git id, whether we want it to or not.
+> What do we do when we pull that patch back into darcs?
+> 
+> Either we arbitrarily discard one of the ids (which one?), or we keep
+> both.  If there's more pulling/pushing going on on the git side, we
+> definitely need to keep both.
 
-(We should obviously have also update-without-pull but that is probably
-not going to be so common so a parameter for update (like -n) should be
-fine for that.)
+Or alternatively, we could have a one-to-one mapping between git IDs and
+darcs IDs, which is what I'd do.
 
-These naming issues may appear silly but I think they matter big time
-for usability, intuitiveness, and learning curve (I don't want git-pasky
-become another GNU arch).
+> > I think when dealing with git (and probably also with *any* other SCM
+> > (arch being a possible exception), we need to consider the exchange
+> > medium to be not a patch, but a tag.
+> 
+> We're thinking in opposite directions -- you're thinking of the alien
+> versions as integrals of Darcs patches, I'm thinking of Darcs patches
+> as derivatives of alien versions.
+> 
+>   You:  alien version = Darcs tag
+> 
+>   Me:   Darcs patch = pair of successive alien versions
+> 
+> My gut instinct is that the second model can be made to work almost
+> seamlessly, unlike the first one.  But that's just a guess.
 
-Kind regards,
+The problem is that there is no sequence of alien versions that one can
+differentiate.  Git has a branched history, with each version that follows
+a merge having multiple parents.  How do you define that change?  It's easy
+enough to do if we tag each git version in darcs, since we know what the
+two parents are, and we know what the final state is, but there *is* no
+translation from a single git ID either to a single patch(1) patch, or to a
+single darcs patch--unless you treat its parents as tags.
+
+The key is that we can't make git work like darcs, so we'll have to make
+darcs work like git.  If we do it right (automatically tagging like crazy
+people), darcs users between themselves can cherry-pick all they like,
+without introducing inconsistencies or losing interoperability with git.
+
+To summarize how I'd see the mapping between git information and darcs, a
+git commit would be composed of one darcs patch and one darcs tag.  With
+this mapping, I don't believe we lose any information, and I believe we'll
+be able to (except that patches would have to be uniquely determined by a
+pair of trees) simply translate the darcs system right back again, since
+it's a one-to-one correspondence of information.
+
+My proposed mapping:
+
+tree 6ff0e9f3d131bd110d32829f0b14f07da8313c45
+# This is a darcs tag ID
+parent abd62b9caee377595a9bf75f363328c82a38f86e
+# This is the context of both a patch and tag.
+author James Bottomley <James.Bottomley@SteelEye.com> 1113879319 -0700
+# This is the author and date of the patch
+committer Linus Torvalds <torvalds@ppc970.osdl.org.(none)> 1113879319 -0700
+# This is the author and date of the tag
+# Everything below would be the name and long comment of the patch
+
+[PATCH] SCSI trees, merges and git status
+
+Doing the latest SCSI merge exposed two bugs in your merge script:
+
+1) It doesn't like a completely new directory (the misc tree contains a
+   new drivers/scsi/lpfc)
+2) the merge testing logic is wrong.  You only want to exit 1 if the
+   merge fails. 
+
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+David Roundy
+http://www.darcs.net
