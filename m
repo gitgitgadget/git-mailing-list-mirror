@@ -1,62 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: SCSI trees, merges and git status
-Date: Mon, 18 Apr 2005 20:04:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504182003480.15725@ppc970.osdl.org>
-References: <1113856118.4998.70.camel@mulgrave>  <Pine.LNX.4.58.0504181429570.15725@ppc970.osdl.org>
-  <1113866092.4998.92.camel@mulgrave>  <Pine.LNX.4.58.0504181651241.15725@ppc970.osdl.org>
-  <1113869594.4998.103.camel@mulgrave>  <Pine.LNX.4.58.0504181724170.15725@ppc970.osdl.org>
- <1113877071.4998.111.camel@mulgrave>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [2/4] Sorting commits by date
+Date: Mon, 18 Apr 2005 23:06:33 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504182256490.30848-100000@iabervon.org>
+References: <20050419025340.GZ5554@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, SCSI Mailing List <linux-scsi@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 19 04:59:17 2005
+Cc: "David A. Wheeler" <dwheeler@dwheeler.com>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 19 05:02:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DNixC-0008VC-NM
-	for gcvg-git@gmane.org; Tue, 19 Apr 2005 04:59:11 +0200
+	id 1DNj0J-0000Ov-Df
+	for gcvg-git@gmane.org; Tue, 19 Apr 2005 05:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261299AbVDSDDI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Apr 2005 23:03:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVDSDDI
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 23:03:08 -0400
-Received: from fire.osdl.org ([65.172.181.4]:5264 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261299AbVDSDDD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 23:03:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3J32xs4026830
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 18 Apr 2005 20:02:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3J32vma020576;
-	Mon, 18 Apr 2005 20:02:58 -0700
-To: James Bottomley <James.Bottomley@SteelEye.com>
-In-Reply-To: <1113877071.4998.111.camel@mulgrave>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261303AbVDSDGX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Apr 2005 23:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVDSDGX
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Apr 2005 23:06:23 -0400
+Received: from iabervon.org ([66.92.72.58]:27143 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261303AbVDSDGV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Apr 2005 23:06:21 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DNj4L-00078Y-00; Mon, 18 Apr 2005 23:06:33 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050419025340.GZ5554@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 19 Apr 2005, Petr Baudis wrote:
 
-
-On Mon, 18 Apr 2005, James Bottomley wrote:
+> Dear diary, on Tue, Apr 19, 2005 at 04:52:26AM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > because I can't find a way to make recent GCC reject C99 features but not
+> > old GNU extensions.
 > 
-> Fair enough.  If you pull from
-> 
-> rsync://www.parisc-linux.org/~jejb/scsi-misc-2.6.git
+> Do we use any?
 
-Thanks. Pulled and pushed out.
+Quite a few: "?:", arithmetic on void pointers, C++/99-style comments in
+places (if we aren't being C99), zero-size arrays. They're the usual
+things that building Linux requires, so I think they are common extensions
+beyond gcc.
 
-> Doing this exposed two bugs in your merge script:
-> 
-> 1) It doesn't like a completely new directory (the misc tree contains a
-> new drivers/scsi/lpfc)
-> 2) the merge testing logic is wrong.  You only want to exit 1 if the
-> merge fails.
+	-Daniel
+*This .sig left intentionally blank*
 
-Applied.
-
-		Linus
