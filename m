@@ -1,67 +1,67 @@
-From: Olivier Andrieu <oandrieu@nerim.net>
-Subject: Re: git-viz tool for visualising commit trees
-Date: Wed, 20 Apr 2005 22:00:44 +0200 (CEST)
-Message-ID: <20050420.220044.74738862.oandrieu@nerim.net>
-References: <20050417194818.GG1461@pasky.ji.cz>
-	<20050420100824.GB25477@elte.hu>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
+Date: Wed, 20 Apr 2005 22:05:04 +0200
+Message-ID: <20050420200504.GB19112@pasky.ji.cz>
+References: <20050416233305.GO19099@pasky.ji.cz> <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org> <20050419011206.GT5554@pasky.ji.cz> <42646967.9030903@dwheeler.com> <4264CCFF.30400@dgreaves.com> <20050419092812.GE2393@pasky.ji.cz> <1113905110.1262.1.camel@nosferatu.lan> <20050419105008.GB12757@pasky.ji.cz> <20050420070157.GA12584@elte.hu>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: pasky@ucw.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 21:57:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
+	David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 22:01:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOLJQ-0002Om-Pj
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 21:56:41 +0200
+	id 1DOLNe-00030m-QH
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 22:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261773AbVDTUAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 16:00:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261796AbVDTUAy
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 16:00:54 -0400
-Received: from smtp-103-wednesday.nerim.net ([62.4.16.103]:51205 "EHLO
-	kraid.nerim.net") by vger.kernel.org with ESMTP id S261773AbVDTUAr
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 16:00:47 -0400
-Received: from localhost (karryall.dnsalias.org [62.4.18.180])
-	by kraid.nerim.net (Postfix) with ESMTP
-	id AB2FD41CF3; Wed, 20 Apr 2005 22:00:44 +0200 (CEST)
-To: mingo@elte.hu
-In-Reply-To: <20050420100824.GB25477@elte.hu>
-X-Mailer: Mew version 4.1 on Emacs 21.3 / Mule 5.0 (SAKAKI)
+	id S261773AbVDTUFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 16:05:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261799AbVDTUFR
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 16:05:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:41692 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261773AbVDTUFK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 16:05:10 -0400
+Received: (qmail 27275 invoked by uid 2001); 20 Apr 2005 20:05:04 -0000
+To: Ingo Molnar <mingo@elte.hu>
+Content-Disposition: inline
+In-Reply-To: <20050420070157.GA12584@elte.hu>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
- > Ingo Molnar <mingo@elte.hu> [Wed, 20 Apr 2005]:
- > 
- > * Petr Baudis <pasky@ucw.cz> wrote:
- > 
- > >   Hi,
- > > 
- > >   just FYI, Olivier Andrieu was kind enough to port his monotone-viz 
- > > tool to git (http://oandrieu.nerim.net/monotone-viz/ - use the one 
- > > from the monotone repository). The tool visualizes the history flow 
- > > nicely; see
- > > 
- > > 	http://rover.dkm.cz/~pasky/gitviz1.png
- > > 	http://rover.dkm.cz/~pasky/gitviz2.png
- > > 	http://rover.dkm.cz/~pasky/gitviz3.png
- > > 	http://rover.dkm.cz/~pasky/gitviz4.png
- > > 	http://rover.dkm.cz/~pasky/gitviz5.png
- > > 	http://rover.dkm.cz/~pasky/gitviz6.png
- > > 	http://rover.dkm.cz/~pasky/gitviz7.png
- > > 
- > > for some screenshots.
- > 
- > really nice stuff! Any plans to include it in git-pasky, via 'git gui' 
- > option or so? Also, which particular version has this included - the 
- > freshest tarball on the monotone-viz download site doesnt seem to 
- > include it.
+Dear diary, on Wed, Apr 20, 2005 at 09:01:57AM CEST, I got a letter
+where Ingo Molnar <mingo@elte.hu> told me that...
+>  [...]
+>  fatal: unable to execute 'gitmerge-file.sh'
+>  fatal: merge program failed
 
-I'll post a tarball soon. You can also get it from the monotone
-repository, but I wouldn't recommend it unless you want to try
-monotone as well : that involves a rather large download.
+Pure stupidity of mine, I forgot to add gitmerge-file.sh to the list of
+scripts which get installed.
+
+> another thing: it's confusing that during 'git pull', the rsync output 
+> is not visible. Especially during large rsyncs, it would be nice to see 
+> some progress. So i usually use a raw rsync not 'git pull', due to this.
+
+Fixed. For further reference, you can also set RSYNC_FLAGS and put
+whatever pleases you there.
+
+> yet another thing: what is the canonical 'pasky way' of simply nuking 
+> the current files and checking out the latest tree (according to 
+> .git/HEAD). Right now i'm using a script to:
+> 
+>   read-tree $(tree-id $(cat .git/HEAD))
+>   checkout-cache -a
+> 
+> (i first do an 'rm -f *' in the working directory)
+> 
+> i guess there's an existing command for this already?
+
+git cancel
 
 -- 
-   Olivier
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
