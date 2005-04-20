@@ -1,208 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] Possible strategy cleanup for git add/remove/diff etc.
-Date: Tue, 19 Apr 2005 17:32:02 -0700
-Message-ID: <7vacnumgot.fsf@assigned-by-dhcp.cox.net>
-References: <20050419035107.GB5554@pasky.ji.cz>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Tue, 19 Apr 2005 20:49:21 -0400
+Message-ID: <200504192049.21947.mason@suse.com>
+References: <200504191250.10286.mason@suse.com> <200504191708.23536.mason@suse.com> <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 02:28:29 2005
+X-From: git-owner@vger.kernel.org Wed Apr 20 02:46:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO34f-0000s0-Dk
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 02:28:13 +0200
+	id 1DO3Lx-0002Yy-Sn
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 02:46:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261179AbVDTAcW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 20:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261207AbVDTAcW
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 20:32:22 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7893 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261179AbVDTAcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 20:32:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050420003203.FHQW22013.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 19 Apr 2005 20:32:03 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050419035107.GB5554@pasky.ji.cz> (Petr Baudis's message of
- "Tue, 19 Apr 2005 05:51:07 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261179AbVDTAtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 20:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261207AbVDTAtv
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 20:49:51 -0400
+Received: from mx1.suse.de ([195.135.220.2]:10404 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261179AbVDTAt2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 20:49:28 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id E06F316093C8;
+	Wed, 20 Apr 2005 02:49:25 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I was reading this comment in gitcommit.sh and started
-thinking...
+On Tuesday 19 April 2005 17:23, Linus Torvalds wrote:
+> On Tue, 19 Apr 2005, Chris Mason wrote:
+> > Regardless, putting it into the index somehow should be fastest, I'll see
+> > what I can do.
+>
+> Start by putting it in at "read-tree" time, and adding the code to
+> invalidate all parent directory indexes when somebody changes a file in
+> the index (ie "update-cache" for anything but a "--refresh").
+>
+> That would be needed anyway, since those two are the ones that already
+> change the index file.
+>
+> Once you're sure that you can correctly invalidate the entries (so that
+> you could never use a stale tree entry by mistake), the second stage would
+> be to update it at "write-tree" time.
 
-    # We bother with added/removed files here instead of updating
-    # the cache at the time of git(add|rm).sh, since we want to
-    # have the cache in a consistent state representing the tree
-    # as it was the last time we committed. Otherwise, e.g. partial
-    # conflicts would be a PITA since added/removed files would
-    # be committed along automagically as well.
+This was much easier then I expected, and it seems to be working here.  It 
+does slow down the write-tree slightly because we have to write out the index 
+file, but I can get around that with the index file on tmpfs change.
 
-Let's for a moment forget what git-pasky currently does, which
-is not to touch .git/index until the user says "Ok, let's
-commit".  I am wondering if that is the root cause of all the
-trouble git-pasky needs to go through.  Specifically I think
-having to deal with add/remove queue seems to affect not just
-commit you have that comment above but also with diffs.
+The original write-tree needs .54 seconds to run
 
-I'd like to start from a different premise and see what happens:
+write-tree with the index speedup gets that down to .024s (same as my first 
+patch) when nothing has changed.  When it has to rewrite the index file 
+because something changed, it's .167s.
 
- - What .git/index records is *not* the state as the last
-   commit.  It is just an cache Cogito uses to speed up access
-   to the user's working tree.  From the user's point of view,
-   it does not even exist.
+I'll finish off the patch once you ok the basics below.  My current code works 
+like this:
 
- - The way this hypothetical Cogito uses .git/index is to always
-   reflect add and remove but modification may be out of sync.
-   It is updated lazily when .git/index must match the working
-   tree.  Again, this is invisible to the user.  From the user's
-   point of view, there are only two things: the last commit
-   represented as .git/HEAD and his own working tree.
+1) read-tree will insert index entries for directories.  There is no index 
+entry for the root.
 
-I call this hypothetical implementation of Cogito "jit-*" in the
-following description.  Also this is just to convey the idea, so
-all the error checking (e.g. "what the user gave jit-merge is
-not a valid commit id") and sugarcoating (e.g. tags, symbolic
-foreign repository names instead of rsync URL etc) are omitted.
+2) update-cache removes index entries for all parents of the file you're 
+updating.  So, if you update-cache fs/ext3/inode.c, I remove the index of fs 
+and fs/ext3
 
+3) If write-tree finds a directory in the index, it uses the sha1 in the cache 
+entry and skips all files/dirs under that directory.
 
-* jit-checkout $commit_id
+4) If write-tree detects a subdir with no directory in the index, it calls 
+write_tree the same way it used to.  It then inserts a new cache object with 
+the calculated sha1.
 
-  This is like "cvs co".  Same as what you are doing I suppose.
+5) right before exiting, write-tree updates the index if it made any changes.
 
-    committed_tree=$(cat-file commit $commit_id | sed -e 's/^tree //;q')
-    read-tree $committed_tree
-    checkout-cache -f -a
-    echo $commit_id >.git/HEAD
+The downside to this setup is that I've got to change other index users to 
+deal with directory entries that are there sometimes and missing other times.  
+The nice part is that I don't have to "invalidate" the directory entry, if it 
+is present, it is valid.
 
-* jit-add files... | jit-remove files...
-
-  Like "cvs add".  Here, .git/index is treated as just a cache
-  of the working tree, not the mirror of previous commit.  So
-  unlike git-pasky, jit-* touches .git/index here.
-
-    update-cache --add "$@"
-
-    ---
-
-    rm -f "$@" ;# this is debatable...
-    update-cache --remove "$@"
-
-* jit-diff [files...]
-
-  Like "cvs diff".  The user wants to see what's different
-  between his working tree and the last commit.
-
-    case "$#" in 0) set x $(show-files --cached); shift ;; esac
-    update-cache --add --remove "$@" --refresh
-    current_tree=$(write-tree)
-
-    committed_tree=$(cat-file commit $commit_id | sed -e 's/^tree //;q')
-    diff-tree -r -z $committed_tree $current_tree |
-      filter-output-to-limit-to-given-filelist "$@" |
-      parse-diff-tree-output-and-show-real-file-diffs
-
-  Unlike git-pasky, jit-* does not keep the state from the last
-  commit in .git/index.  Instead, .git/index is meant to cache
-  the state of the working tree.  So the first three lines in
-  the above updates .git/index lazily from what is in the
-  working tree for the part that needs to be diffed.  Then it
-  uses helper scripts to filter and parse diff-tree output and
-  generates per-file diffs.  Since add and remove are already
-  recorded in .git/index, it does not have to special case
-  "uncommitted add" and such.
-
-* jit-commit
-
-  Like "cvs commit".
-
-    set x $(show-files --cached); shift
-    update-cache --add --remove "$@"
-
-    current_tree=$(write-tree)
-    next_commit=$(commmit-tree $current_tree -p $(cat .git/HEAD))
-    echo $next_commit >.git/HEAD
-
-  Unlike git-pasky, .git/index already has adds and removes but
-  it does not know about local modifications.  So it runs
-  update-cache to make it match the working tree first, and then
-  does the usual commit thing.  
-
-  The above only allows the whole tree commit.  But allowing
-  single file commit is not that hard:
-
-    (
-        set x $(show-files --cached); shift
-        update-cache --add --remove "$@"
-    ) ;# we use subshell to preserve "$@" here...
-    current_tree=$(write-tree)
-
-    committed_tree=$(cat-file commit $commit_id | sed -e 's/^tree //;q')
-    read-tree $(committed_tree)
-    update-cache --add --remove "$@"
-    next_commit=$(commmit-tree $current_tree -p $(cat .git/HEAD))
-    echo $next_commit >.git/HEAD
-
-    read-tree $current_tree
-
-  The first four lines are to preserve the current tree state.
-  Then we rewind the dircache to the last committed state,
-  update only the named files to bring it to the state the user
-  wanted to commit, and commit.  Once done, we re-read the state
-  to match the user's original intention (e.g. adds recorded in
-  .git/index previously but not committed in this run is
-  preserved).
-
-
-* jit-merge $commit_id
-
-  LIke "cvs up -j".  I have working tree which is based on some
-  commit, and I want to merge somebody else's head $commit_id.
-  Stated more exactly: I want to have the result of my changes
-  in my working tree, if I started out from the merge between
-  the commit I am actually based on and $commit_id.
-
-    # First get my changes and stash away in a safe place.
-    jit-diff >,,working-tree-changes-as-patch
-
-    # After the above, we know .git/index matches the working tree, so...
-    current_tree=$(write-tree)
-
-    # Usual 3-way Linus merge.
-    merge_base=$(merge-base $(cat .git/HEAD) $commit_id)
-
-    base_tree=$(cat-file commit $merge_base | sed -e 's/^tree //;q')
-    committed_tree=$(cat-file commit $(cat .git/HEAD) | sed -e 's/^tree //;q')
-    his_tree=$(cat-file commit $commit_id | sed -e 's/^tree //;q')
-
-    read-tree -m $base_tree $committed_tree $his_tree
-    merge-cache three-way-merge-script -a
-
-    # Now our .git/index has the merge result.  Match working
-    # tree to it.
-    checkout-cache -f -a
-
-    # Apply our precious changes.
-    patch <,,working-tree-changes-as-patch
-
-    # Here we need to detect adds and removes and issue
-    # appropriate update-cache --add --remove.
-
-* jit-pull $foreign_repository
-
-  I do not think we need this.  Just rsync but not merge.
-
-
-It looks quite simple.  I am asking your opinion because I am
-sure you have thought about issues involved through, and the
-above outline looks simple only because it is missing something
-important that you already had to deal with and solved---and the
-solution looks convoluted to me only because I am not aware of
-the problem you had to solve.
-
+-chris
