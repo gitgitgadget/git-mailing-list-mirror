@@ -1,58 +1,138 @@
-From: Zlatko Calusic <zlatko.calusic@iskon.hr>
-Subject: Re: [script] ge: export commits as patches
-Date: Wed, 20 Apr 2005 19:21:43 +0200
-Message-ID: <dn7jix8iu0.fsf@magla.zg.iskon.hr>
-References: <20050419134843.GA19146@elte.hu>
-Reply-To: zlatko.calusic@iskon.hr
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Wed, 20 Apr 2005 13:23:04 -0400
+Message-ID: <200504201323.05447.mason@suse.com>
+References: <200504191250.10286.mason@suse.com> <200504201237.38374.mason@suse.com> <Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 19:23:47 2005
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_5/oZCLJefJQcKIS"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 19:27:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOIuZ-0004Sx-Cb
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:22:51 +0200
+	id 1DOIxr-00053Y-Of
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261742AbVDTRZa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 13:25:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261749AbVDTRWx
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:22:53 -0400
-Received: from mxout2.iskon.hr ([213.191.128.16]:33707 "HELO mxout2.iskon.hr")
-	by vger.kernel.org with SMTP id S261762AbVDTRVu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:21:50 -0400
-Received: (qmail 18107 invoked from network); 20 Apr 2005 19:21:44 +0200
-X-Remote-IP: 213.191.142.124
-Received: from unknown (HELO mx.iskon.hr) (213.191.142.124)
-  by mxout2.iskon.hr with SMTP; 20 Apr 2005 19:21:44 +0200
-Received: (qmail 7320 invoked from network); 20 Apr 2005 19:21:44 +0200
-X-Remote-IP: 213.191.128.21
-Received: from oganj.iskon.hr (HELO magla.zg.iskon.hr) (213.191.128.21)
-  by mx.iskon.hr with SMTP; 20 Apr 2005 19:21:43 +0200
-Received: (qmail 5501 invoked by uid 804); 20 Apr 2005 19:21:43 +0200
-To: Ingo Molnar <mingo@elte.hu>
-X-Face: s71Vs\G4I3mB$X2=P4h[aszUL\%"`1!YRYl[JGlC57kU-`kxADX}T/Bq)Q9.$fGh7lFNb.s
- i&L3xVb:q_Pr}>Eo(@kU,c:3:64cR]m@27>1tGl1):#(bs*Ip0c}N{:JGcgOXd9H'Nwm:}jLr\FZtZ
- pri/C@\,4lW<|jrq^<):Nk%Hp@G&F"r+n1@BoH
-In-Reply-To: <20050419134843.GA19146@elte.hu> (Ingo Molnar's message of
- "Tue, 19 Apr 2005 15:48:43 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
+	id S261754AbVDTR3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 13:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261735AbVDTR1O
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:27:14 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:61830 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261762AbVDTRXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:23:10 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id E26E79177;
+	Wed, 20 Apr 2005 19:23:07 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id 6CF0F14CD96; Wed, 20 Apr 2005 19:23:07 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ingo Molnar <mingo@elte.hu> writes:
+--Boundary-00=_5/oZCLJefJQcKIS
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> TREE1=$(cat-file commit 2>/dev/null $1 | head -4 | grep ^tree | cut -d' ' -f2)
-                                         --------------------------------------
+On Wednesday 20 April 2005 13:06, Linus Torvalds wrote:
+> On Wed, 20 Apr 2005, Chris Mason wrote:
+> > At any rate, the time for a single write-tree is pretty consistent. 
+> > Before it was around .5 seconds, and with this change it goes down to
+> > .128s.
+>
+> Oh, wow.
+>
+> I bet your SHA1 implementation is done with hand-optimized and scheduled
+> x86 MMX code or something, while my poor G5 is probably using some slow
+> generic routine. As a result, it only improved by 33% for me since the
+> compression was just part of the picture, but with your cheap SHA1 the
+> compression costs really dominated, and so it's almost four times faster
+> for you.
 
-And to make it easier on your eyes, you can always rewrite stuff like
-that (mentioned everywhere these days :)) like:
+Aha, I was wondering why your write-tree speeds sounded so bad...this athlon 
+machine is ~2years old now.
 
-TREE1=$(cat-file commit 2>/dev/null $1 | awk '/^tree/ {print $2}'
-                                         ------------------------
+Your comments about costs for writing the index file got me thinking, so I 
+benchmarked how long the update-cache takes if we don't do the sha1 of the 
+index file.  There was almost no difference at all.  update-cache currently 
+takes about .152 seconds
 
-No, I'm definitely not trying to save some CPU cycles, CPU cycles are
-cheap, eyes are expensive! :)
--- 
-Zlatko
+The code to write the cache calls write() for every cache entry, writing just 
+a few bytes at a time.  I changed it to collect these into a 16k buffer, 
+which brings me down to .044s.  This might not help as much on ext23, since 
+they are faster than reiser for tiny writes.
+
+The patch below with your current tree brings my 100 patch test down to 22 
+seconds again.
+
+-chris
+
+--Boundary-00=_5/oZCLJefJQcKIS
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="read-cache-fast.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="read-cache-fast.diff"
+
+--- linus.back/read-cache.c	2005-04-20 10:14:23.268310000 -0400
++++ linus/read-cache.c	2005-04-20 13:05:13.200083672 -0400
+@@ -232,11 +232,12 @@
+ 	SHA_CTX c;
+ 	struct cache_header hdr;
+ 	int i;
++	char *buf;
++	int len = 0;
+ 
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+ 	hdr.hdr_version = htonl(1);
+ 	hdr.hdr_entries = htonl(entries);
+-
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, &hdr, offsetof(struct cache_header, sha1));
+ 	for (i = 0; i < entries; i++) {
+@@ -246,13 +247,31 @@
+ 	}
+ 	SHA1_Final(hdr.sha1, &c);
+ 
++	buf = malloc(16384);
++	if (!buf) {
++		return -1;
++	}
+ 	if (write(newfd, &hdr, sizeof(hdr)) != sizeof(hdr))
+ 		return -1;
+ 
+ 	for (i = 0; i < entries; i++) {
+ 		struct cache_entry *ce = cache[i];
+ 		int size = ce_size(ce);
+-		if (write(newfd, ce, size) != size)
++		if (size > 16384) {
++			if (write(newfd, ce, size) != size)
++				return -1;
++			continue;
++		}
++		if (len + size > 16384) {
++			if (write(newfd, buf, len) != len)
++				return -1;
++			len = 0;
++		}
++		memcpy(buf + len, ce, size);
++		len += size;
++	}
++	if (len) {
++		if (write(newfd, buf, len) != len)
+ 			return -1;
+ 	}
+ 	return 0;
+
+--Boundary-00=_5/oZCLJefJQcKIS--
