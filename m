@@ -1,50 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 17:38:48 +1000
-Message-ID: <42660708.60109@zytor.com>
-References: <200504191250.10286.mason@suse.com> <200504191708.23536.mason@suse.com> <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org> <200504192049.21947.mason@suse.com> <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: enforcing DB immutability
+Date: Wed, 20 Apr 2005 09:40:53 +0200
+Message-ID: <20050420074053.GA22436@elte.hu>
+References: <20050413165310.GA22428@elte.hu> <425D4FB1.9040207@zytor.com> <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org> <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org> <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com> <20050413201523.GC27088@elte.hu> <Pine.LNX.4.58.0504131404380.4501@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:36:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:37:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO9kY-0007AM-CB
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 09:35:54 +0200
+	id 1DO9lf-0007Io-CK
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 09:37:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261270AbVDTHkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 03:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261322AbVDTHkF
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 03:40:05 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:46814 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261270AbVDTHkB
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 03:40:01 -0400
-Received: from [172.24.2.78] ([150.203.247.9])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3K7cp8n031169
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 20 Apr 2005 00:38:56 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
+	id S261303AbVDTHlN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 03:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261322AbVDTHlN
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 03:41:13 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:62593 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261303AbVDTHlE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 03:41:04 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id 0E1E8319D3F;
+	Wed, 20 Apr 2005 09:39:56 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 109AB1FC2; Wed, 20 Apr 2005 09:40:57 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504131404380.4501@ppc970.osdl.org>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> So I'll see if I can turn the current fsck into a "convert into
-> uncompressed format", and do a nice clean format conversion. 
-> 
 
-Just let me know what you want to do, and I can trivially change the 
-conversion scripts I've already written to do what you want.
+* Linus Torvalds <torvalds@osdl.org> wrote:
 
-	-hpa
+> On Wed, 13 Apr 2005, Ingo Molnar wrote:
+> > 
+> > well, the 'owned by another user' solution is valid though, and doesnt 
+> > have this particular problem. (We've got a secure multiuser OS, so can 
+> > as well use it to protect the DB against corruption.)
+> 
+> So now you need root to set up new repositories? No thanks.
+
+yeah, it's a bit awkward to protect uncompressed repositories - but it 
+will need some sort of kernel enforcement. (if userspace finds out the 
+DB contains uncompressed blobs, it _will_ try to use them.)
+
+(perhaps having an in-kernel GIT-alike versioned filesystem will help - 
+but that brings up the same 'I have to be root' issues. The FS will 
+enforce the true immutability of objects.)
+
+perhaps having a new 'immutable hardlink' feature in the Linux VFS would 
+help? I.e. a hardlink that can only be readonly followed, and can be 
+removed, but cannot be chmod-ed to a writeable hardlink. That i think 
+would be a large enough barrier for editors/build-tools not to play the 
+tricks they already do that makes 'readonly' files virtually 
+meaningless.
+
+	Ingo
