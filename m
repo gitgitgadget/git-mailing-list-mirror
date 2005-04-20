@@ -1,62 +1,82 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Wed, 20 Apr 2005 09:55:28 +0200
-Message-ID: <7iy8bdswzz.fsf@lanthane.pps.jussieu.fr>
-References: <20050419235832.56117.qmail@web51003.mail.yahoo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:52:04 2005
+From: linux@horizon.com
+Subject: Re: enforcing DB immutability
+Date: 20 Apr 2005 08:41:15 -0000
+Message-ID: <20050420084115.2699.qmail@science.horizon.com>
+Cc: mingo@elte.hu
+X-From: git-owner@vger.kernel.org Wed Apr 20 10:40:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO9za-0000e3-9r
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 09:51:26 +0200
+	id 1DOAlL-00070d-3p
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 10:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261431AbVDTHzg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 03:55:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVDTHzg
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 03:55:36 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:38109 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261431AbVDTHzb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 03:55:31 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3K7tT9c010932
-          ; Wed, 20 Apr 2005 09:55:29 +0200 (CEST)
-X-Ids: 166
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3K7tSps024061
-          ; Wed, 20 Apr 2005 09:55:28 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DOA3U-00021M-24; Wed, 20 Apr 2005 09:55:28 +0200
-To: darcs-devel@abridgegame.org, git@vger.kernel.org
-In-Reply-To: <20050419235832.56117.qmail@web51003.mail.yahoo.com> (Kannan
- Goundan's message of "Tue, 19 Apr 2005 16:58:32 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.166]); Wed, 20 Apr 2005 09:55:29 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 42660AF1.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261366AbVDTIoU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 04:44:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261481AbVDTInS
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 04:43:18 -0400
+Received: from science.horizon.com ([192.35.100.1]:32075 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S261366AbVDTIlQ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 04:41:16 -0400
+Received: (qmail 2700 invoked by uid 1000); 20 Apr 2005 08:41:15 -0000
+To: git@vger.kernel.org, linux-kernel@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> We're talking about interoperating with a Git repository here,
-> right?  Even if we got the metadata in there, doesn't Git have to
-> understand a replace patch for things to work out?
+[A discussion on the git list about how to provide a hardlinked file
+that *cannot* me modified by an editor, but must be replaced by
+a new copy.]
 
-> 0. All three are in sync to begin with.
+mingo@elte.hu wrote all of:
+>>> perhaps having a new 'immutable hardlink' feature in the Linux VFS 
+>>> would help? I.e. a hardlink that can only be readonly followed, and 
+>>> can be removed, but cannot be chmod-ed to a writeable hardlink. That i 
+>>> think would be a large enough barrier for editors/build-tools not to 
+>>> play the tricks they already do that makes 'readonly' files virtually 
+>>> meaningless.
+>> 
+>> immutable hardlinks have the following advantage: a hardlink by design 
+>> hides the information where the link comes from. So even if an editor 
+>> wanted to play stupid games and override the immutability - it doesnt 
+>> know where the DB object is. (sure, it could find it if it wants to, 
+>> but that needs real messing around - editors wont do _that_)
+>
+> so the only sensible thing the editor/tool can do when it wants to 
+> change the file is precisely what we want: it will copy the hardlinked 
+> files's contents to a new file, and will replace the old file with the 
+> new file - a copy on write. No accidental corruption of the DB's 
+> contents.
 
-> 1. CC creates a token-replace patch, sends the changes in normal hunk
-> format to AA.
+This is not a horrible idea, but it touches on another sore point I've
+worried about for a while.
 
-> 2. BB makes changes, sends a normal hunk patch to AA and CC.  AA will
-> apply the hunk normally.  For CC the token replace might apply here
-> and so the result could be different.
+The obvious way to do the above *without* changing anything is just to
+remove all write permission to the file.  But because I'm the owner, some
+piece of software running with my permissions can just deicde to change
+the permissions back and modify the file anyway.  Good old 7th edition
+let you give files away, which could have addressed that (chmod a-w; chown
+phantom_user), but BSD took that ability away to make accounting work.
 
-3. when AA and CC try to sync, they will get spurious merge conflicts.
+The upshot is that, while separate users keeps malware from harming the
+*system*, if I run a piece of malware, it can blow away every file I
+own and make me unhappy.  When (notice I'm not saying "if") commercial
+spyware for Linux becomes common, it can also read every file I own.
 
-> Isn't this a potential problem?
+Unless I have root access, Linux is no safer *for me* than Redmondware!
 
-It is.  In a heterogeneous environment they will get spurious merge
-conflicts.
+Since I *do* have root access, I often set up sandbox users and try
+commercial binaries in that environment, but it's a pain and laziness
+often wins.  I want a feature that I can wrap in a script, so that I
+can run a commercial binary in a nicely restricted enviromment.
 
-                                        Juliusz
+Or maybe I even want to set up a "personal root" level, and run
+my normal interactive shells in a slightly restricted enviroment
+(within which I could make a more-restricted world to run untrusted
+binaries).  Then I could solve the immutable DB issue by having a
+"setuid" binary that would make checked-in files unwriteable at my
+normal permission level.
+
+Obviously, a fundamental change to the Unix permissions model won't
+be available to solve short-term problems, but I thought I'd raise
+the issue to get people thinking about longer-term solutions.
