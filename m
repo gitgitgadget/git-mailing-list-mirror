@@ -1,78 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "C. Scott Ananian" <cscott@cscott.net>
 Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 08:46:19 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504200840240.6467@ppc970.osdl.org>
+Date: Wed, 20 Apr 2005 11:52:02 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504201147280.2630@cag.csail.mit.edu>
 References: <200504191250.10286.mason@suse.com> <200504192049.21947.mason@suse.com>
  <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org> <200504201122.35448.mason@suse.com>
  <Pine.LNX.4.61.0504201128550.2630@cag.csail.mit.edu>
+ <Pine.LNX.4.58.0504200840240.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 17:42:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 17:49:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOHJS-0002z0-0O
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 17:40:26 +0200
+	id 1DOHQt-0004Sj-6Z
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 17:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261697AbVDTPoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 11:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261695AbVDTPod
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 11:44:33 -0400
-Received: from fire.osdl.org ([65.172.181.4]:24225 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261693AbVDTPo0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 11:44:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KFiLs4005037
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 08:44:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KFiKCJ009856;
-	Wed, 20 Apr 2005 08:44:20 -0700
-To: "C. Scott Ananian" <cscott@cscott.net>
-In-Reply-To: <Pine.LNX.4.61.0504201128550.2630@cag.csail.mit.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261701AbVDTPwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 11:52:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261700AbVDTPwV
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 11:52:21 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:42896 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261701AbVDTPwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 11:52:17 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DOHUt-0000Z5-00; Wed, 20 Apr 2005 11:52:15 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504200840240.6467@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 20 Apr 2005, Linus Torvalds wrote:
 
+>> I was considering using a chunked representation for *all* files (not just
+>> blobs), which would avoid the original 'trees must reference other trees
+>> or they become too large' issue -- and maybe the performance issue you're
+>> referring to, as well?
+> No. The most common index file operation is reading, and that's the one
+> that has to be _fast_. And it is - it's a single "mmap" and some parsing.
 
-On Wed, 20 Apr 2005, C. Scott Ananian wrote:
-> 
-> Hmm.  Are our index files too large, or is there some other factor?
+OK, sure.  But how 'bout chunking trees?  Are you grown happy with the new 
+trees-reference-other-trees paradigm, or is there a deep longing in your 
+heart for the simplicity of 'trees-reference-blobs-period'?  I'm fairly
+certain that chunking could get you the space-savings you need without 
+multi-level trees, if the simplicity of that is still appealing.
 
-They _are_ pretty large, but they have to be,
+Not necessarily for rev.1 of the chunking code, but I'm curious as to 
+whether it's still of interest at all.  I don't know exactly how far
+ingrained multilevel trees have become since they were adopted.
+  --scott
 
-For the kernel, the index file is about 1.6MB. That's 
-
- - 17,000+ files and filenames
- - stat information for all of them
- - the sha1 for them all
-
-ie for the kernel it averages to 93.5 bytes per file. Which is actually 
-pretty dense (just the sha1 and stat information is about half of it, and 
-those are required).
-
-> I was considering using a chunked representation for *all* files (not just 
-> blobs), which would avoid the original 'trees must reference other trees 
-> or they become too large' issue -- and maybe the performance issue you're 
-> referring to, as well?
-
-No. The most common index file operation is reading, and that's the one 
-that has to be _fast_. And it is - it's a single "mmap" and some parsing.
-
-In fact, writing it is pretty fast too, exactly because the index file is 
-totally linear and isn't compressed or anything fancy like that. It's a 
-_lot_ faster than the "tree objects", exactly because it doesn't need to 
-be as careful.
-
-The main cost of the index file is probably the fact that I add a sha1 
-signature of the file into itself to verify that it's ok. The advantage is 
-that the signature means that the file is ok, and the parsing of it can be 
-much more relaxed. You win some, you lose some.
-
-		Linus
+Japan explosion BLUEBIRD Honduras jihad D5 SLBM Diplomat overthrow 
+JMTIDE CABOUNCE AMTHUG ESODIC Kennedy AVBRANDY CLOWER mail drop PHOENIX
+                          ( http://cscott.net/ )
