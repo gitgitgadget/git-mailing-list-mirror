@@ -1,62 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Git hangs while executing commit-tree
-Date: Wed, 20 Apr 2005 14:48:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504201446510.6467@ppc970.osdl.org>
-References: <200504202228.35652.rhys@rhyshardwick.co.uk>
+From: Mike Taht <mike.taht@timesys.com>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Wed, 20 Apr 2005 14:51:14 -0700
+Message-ID: <4266CED2.60806@timesys.com>
+References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:43:28 2005
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:48:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOMy0-0002bM-3N
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 23:42:40 +0200
+	id 1DON2d-0003GY-OZ
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 23:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261821AbVDTVqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 17:46:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261823AbVDTVqz
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 17:46:55 -0400
-Received: from fire.osdl.org ([65.172.181.4]:37050 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261821AbVDTVqx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 17:46:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KLkJs4008109
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 14:46:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KLkIgD030309;
-	Wed, 20 Apr 2005 14:46:18 -0700
-To: Rhys Hardwick <rhys@rhyshardwick.co.uk>
-In-Reply-To: <200504202228.35652.rhys@rhyshardwick.co.uk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261823AbVDTVvn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 17:51:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261825AbVDTVvn
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 17:51:43 -0400
+Received: from mail.timesys.com ([65.117.135.102]:23221 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261823AbVDTVv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 17:51:29 -0400
+Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 20 Apr 2005 17:46:41 -0400
+X-Accept-Language: en-us, en
+In-Reply-To: <20050420211919.GA20129@kroah.com>
+X-OriginalArrivalTime: 20 Apr 2005 21:46:41.0578 (UTC) FILETIME=[7024A8A0:01C545F2]
+To: unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+I keep thinking perversely that we need something as obtuse as possible
+in the unix tradition, but easy to type... git requires that the fingers
+move off the home row...
 
-On Wed, 20 Apr 2005, Rhys Hardwick wrote:
->
-> rhys@metatron:~/repo/tmp.repo$ commit-tree  c80156fafbac377ab35beb076090c8320f874f91
-> Committing initial tree c80156fafbac377ab35beb076090c8320f874f91
->  
-> At this point, the command seems to be just waiting.
+how about "asdf" or "jkl"?  :)
 
-That's _exactly_ what it's doing. It's waiting for you to write a commit 
-message.
+cg is singularly uncomfortable to type. I think that's why it isn't 
+commonly used.....
 
-Something like
+Greg KH wrote:
+> On Wed, Apr 20, 2005 at 10:56:33PM +0200, Petr Baudis wrote:
+> 
+>>  The short command version will change from 'git' to 'cg', which should
+>>be shorter to type and free the 'git' command for possible eventual
+>>entry gate for the git commands (so that they are more
+>>namespace-friendly, and it might make most sense anyway if we get fully
+>>libgitized; but this is more of long-term ideas).
+> 
+> 
+> Hm, but there already is a 'cg' program out there:
+> 	http://uzix.org/cgvg.html
+> I use it every day :(
+> 
+> How about 'cog' instead?
+> 
+> Or I can just rename my local copy of cg and try to retrain my
+> fingers...
+> 
+> thanks,
+> 
+> greg k-h
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-	This is my initial commit of Hello World!
-	^D
 
-will make it happy.
+-- 
 
-Alternatively, you can certainly just write your message beforehand with 
-an editor and just pipe it into commit-tree.
+Mike Taht
 
-			Linus
+
+   "New systems generate new problems."
