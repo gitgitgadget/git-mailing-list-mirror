@@ -1,66 +1,71 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: enforcing DB immutability
-Date: Wed, 20 Apr 2005 09:49:48 +0200
-Message-ID: <20050420074948.GA22620@elte.hu>
-References: <425D4FB1.9040207@zytor.com> <20050413171052.GA22711@elte.hu> <Pine.LNX.4.58.0504131027210.4501@ppc970.osdl.org> <20050413182909.GA25221@elte.hu> <Pine.LNX.4.58.0504131144160.4501@ppc970.osdl.org> <20050413200237.GA26635@elte.hu> <425D7C0F.2050109@zytor.com> <20050413201523.GC27088@elte.hu> <Pine.LNX.4.58.0504131404380.4501@ppc970.osdl.org> <20050420074053.GA22436@elte.hu>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Wed, 20 Apr 2005 09:52:21 +0200
+Message-ID: <7i3btlubpm.fsf@lanthane.pps.jussieu.fr>
+References: <20050418210436.23935.qmail@science.horizon.com>
+	<1113869248.23938.94.camel@orca.madrabbit.org>
+	<42645969.2090609@qualitycode.com>
+	<1113874931.23938.111.camel@orca.madrabbit.org>
+	<4264677A.9090003@qualitycode.com>
+	<1113950442.29444.31.camel@orca.madrabbit.org>
+	<42658E38.1020406@qualitycode.com>
+	<1113951972.29444.42.camel@orca.madrabbit.org>
+	<426594F9.4090002@tupshin.com>
+	<1113959503.29444.91.camel@orca.madrabbit.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 09:46:41 2005
+X-From: git-owner@vger.kernel.org Wed Apr 20 09:48:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO9uO-0008Ln-0t
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 09:46:04 +0200
+	id 1DO9wi-0000Dn-BP
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 09:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261338AbVDTHuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 03:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261416AbVDTHuO
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 03:50:14 -0400
-Received: from mx2.elte.hu ([157.181.151.9]:23683 "EHLO mx2.elte.hu")
-	by vger.kernel.org with ESMTP id S261338AbVDTHuI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 03:50:08 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx2.elte.hu (Postfix) with ESMTP id CD54E319722;
-	Wed, 20 Apr 2005 09:48:50 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 8C2461FC2; Wed, 20 Apr 2005 09:49:51 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050420074053.GA22436@elte.hu>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+	id S261428AbVDTHwi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 03:52:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261431AbVDTHwi
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 03:52:38 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129]:38348 "EHLO shiva.jussieu.fr")
+	by vger.kernel.org with ESMTP id S261428AbVDTHw0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 03:52:26 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
+          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3K7qNXk070132
+          ; Wed, 20 Apr 2005 09:52:23 +0200 (CEST)
+X-Ids: 164
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
+          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3K7qL6E024014
+          ; Wed, 20 Apr 2005 09:52:22 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DOA0T-000219-Gy; Wed, 20 Apr 2005 09:52:21 +0200
+To: git@vger.kernel.org, darcs-devel@darcs.net
+In-Reply-To: <1113959503.29444.91.camel@orca.madrabbit.org> (Ray Lee's
+ message of "Tue, 19 Apr 2005 18:11:43 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.164]); Wed, 20 Apr 2005 09:52:23 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 42660A37.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+> However, I'm claiming a token is defined by the file's language, and
+> that a replace patch on anything but a token as per those language
+> standards is a silly thing.
 
-* Ingo Molnar <mingo@elte.hu> wrote:
+Please recall the context of this discussion: getting Darcs to grok
+git repositories.
 
-> perhaps having a new 'immutable hardlink' feature in the Linux VFS 
-> would help? I.e. a hardlink that can only be readonly followed, and 
-> can be removed, but cannot be chmod-ed to a writeable hardlink. That i 
-> think would be a large enough barrier for editors/build-tools not to 
-> play the tricks they already do that makes 'readonly' files virtually 
-> meaningless.
+You are arguing that it should be possible to design a set of
+heuristics that Do The Right Thing often enough.  And you are probably
+right.
 
-immutable hardlinks have the following advantage: a hardlink by design 
-hides the information where the link comes from. So even if an editor 
-wanted to play stupid games and override the immutability - it doesnt 
-know where the DB object is. (sure, it could find it if it wants to, but 
-that needs real messing around - editors wont do _that_)
+But the point is immaterial as nobody has stepped up to implement in
+Darcs the sort of heuristics you have in mind.  Partly because nobody
+has time, but mostly because we don't like heuristics, we prefer Darcs
+to remain deterministic.
 
-i think this might work.
+So while yes, it might be possible to get about using heuristics, it
+seems rather unlikely that that's what we'll do.
 
-(the current chattr +i flag isnt quite what we need though because it 
-works on the inode, and it's also a root-only feature so it puts us back 
-to square one. What would be needed is an immutability flag on 
-hardlinks, settable by unprivileged users.)
+                                        Juliusz
 
-	Ingo
