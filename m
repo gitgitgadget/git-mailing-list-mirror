@@ -1,63 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Tue, 19 Apr 2005 18:09:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504191804180.6467@ppc970.osdl.org>
-References: <200504191250.10286.mason@suse.com> <200504191708.23536.mason@suse.com>
- <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org> <200504192049.21947.mason@suse.com>
+From: Ray Lee <ray-lk@madrabbit.org>
+Subject: Re: [darcs-devel] Darcs and git: plan of action
+Date: Tue, 19 Apr 2005 18:11:43 -0700
+Organization: http://madrabbit.org/
+Message-ID: <1113959503.29444.91.camel@orca.madrabbit.org>
+References: <20050418210436.23935.qmail@science.horizon.com>
+	 <1113869248.23938.94.camel@orca.madrabbit.org>
+	 <42645969.2090609@qualitycode.com>
+	 <1113874931.23938.111.camel@orca.madrabbit.org>
+	 <4264677A.9090003@qualitycode.com>
+	 <1113950442.29444.31.camel@orca.madrabbit.org>
+	 <42658E38.1020406@qualitycode.com>
+	 <1113951972.29444.42.camel@orca.madrabbit.org>
+	 <426594F9.4090002@tupshin.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 03:03:27 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
+	darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Wed Apr 20 03:07:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO3cS-0004Fq-Ie
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 03:03:09 +0200
+	id 1DO3gm-0004f1-NO
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 03:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261207AbVDTBHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 21:07:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261217AbVDTBHQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 21:07:16 -0400
-Received: from fire.osdl.org ([65.172.181.4]:1258 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261207AbVDTBHK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Apr 2005 21:07:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3K176s4004496
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 19 Apr 2005 18:07:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3K175wY010813;
-	Tue, 19 Apr 2005 18:07:05 -0700
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504192049.21947.mason@suse.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261179AbVDTBLs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 21:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261202AbVDTBLs
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 21:11:48 -0400
+Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]:16871 "EHLO
+	madrabbit.org") by vger.kernel.org with ESMTP id S261179AbVDTBLp
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Apr 2005 21:11:45 -0400
+Received: from orca.madrabbit.org (orca.madrabbit.org [192.168.1.51])
+	by madrabbit.org (Postfix) with ESMTP
+	id 48B294C0AC5; Tue, 19 Apr 2005 18:11:44 -0700 (PDT)
+To: Tupshin Harper <tupshin@tupshin.com>
+In-Reply-To: <426594F9.4090002@tupshin.com>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for your patience.
 
+On Tue, 2005-04-19 at 16:32 -0700, Tupshin Harper wrote:
+> >Give me a case where assuming it's a replace will do the wrong thing,
+> >for C code, where it's a variable or function name.
 
-On Tue, 19 Apr 2005, Chris Mason wrote:
+> try this:
+> initial patch creates hello.c
+> #include <stdio.h>
 > 
-> 5) right before exiting, write-tree updates the index if it made any changes.
+> int main(int argc, char *argv[])
+> {
+>   printf("Hello world!\n");
+>   return 0;
+> }
+> 
+> second patch:
+> replace ./hello.c [A-Za-z_0-9] world universe
 
-This part won't work. It needs to do the proper locking, which means that 
-it needs to create "index.lock" _before_ it reads the index file, and 
-write everything to that one and then do a rename.
+Aha! Okay, I now see at least part of issue: we're using different
+definitions of 'token.' Yours is quite sensible, in that it matches the
+darcs syntax. However, I'm claiming a token is defined by the file's
+language, and that a replace patch on anything but a token as per those
+language standards is a silly thing.
 
-If it doesn't need to do the write, it can just remove index.lock without 
-writing to it, obviously.
+In your example, I'd claim you did an inter-token edit, as the natural
+token there was "Hello world!\n".
 
-> The downside to this setup is that I've got to change other index users to 
-> deal with directory entries that are there sometimes and missing other times.  
-> The nice part is that I don't have to "invalidate" the directory entry, if it 
-> is present, it is valid.
+With that, let me restate what I think is possible.
 
-To me, the biggest downside is actually the complexity part, and worrying
-about the directory index ever getting stale. How big do the changes end
-up being?
+One should be able to discover renames (replaces) of user identifiers in
+C code programmatically. Is that everything darcs replace does?
+Obviously not. Is that what users would usually *want*? If I were using
+it, that's what I'd want (especially including the limited scope of
+replacement -- user identifiers such as variable or function names,
+etc.). But then I'm not a lurker on the darcs user list, so I don't know
+how usage of darcs replace plays out in actual practice.
 
-		Linus
+So, it's a subset. Is it a useful subset? Yes, as it addresses what
+happens during refactoring, which is when I'd usually see this getting
+used. (Syntactically ignorant search and replace is so, y'know,
+*1970s*.)
+
+Any clearer?
+
+Ray
+
