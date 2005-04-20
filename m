@@ -1,53 +1,52 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 11:07:20 -0700
-Message-ID: <20050420110720.0ff887b4.davem@davemloft.net>
-References: <200504191250.10286.mason@suse.com>
-	<200504201122.35448.mason@suse.com>
-	<Pine.LNX.4.58.0504200833580.6467@ppc970.osdl.org>
-	<200504201237.38374.mason@suse.com>
-	<Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
+From: David Meybohm <dmeybohmlkml@bellsouth.net>
+Subject: Re: SHA1 hash safety
+Date: Wed, 20 Apr 2005 14:56:53 -0400
+Message-ID: <20050420185653.GA3076@localhost>
+References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org> <20050419223027.GA26100@localhost> <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: mason@suse.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:10:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Isaacson <adi@hexapodia.org>, omb@bluewin.ch,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:53:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOJdw-0003gY-K5
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 20:09:45 +0200
+	id 1DOKJc-0001d3-N5
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 20:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261709AbVDTSOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 14:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261777AbVDTSOA
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 14:14:00 -0400
-Received: from dsl027-180-174.sfo1.dsl.speakeasy.net ([216.27.180.174]:30367
-	"EHLO cheetah.davemloft.net") by vger.kernel.org with ESMTP
-	id S261709AbVDTSN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 14:13:59 -0400
-Received: from localhost
-	([127.0.0.1] helo=cheetah.davemloft.net ident=davem)
-	by cheetah.davemloft.net with smtp (Exim 3.36 #1 (Debian))
-	id 1DOJbc-0000SD-00; Wed, 20 Apr 2005 11:07:20 -0700
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; sparc-unknown-linux-gnu)
-X-Face: "_;p5u5aPsO,_Vsx"^v-pEq09'CU4&Dc1$fQExov$62l60cgCc%FnIwD=.UF^a>?5'9Kn[;433QFVV9M..2eN.@4ZWPGbdi<=?[:T>y?SD(R*-3It"Vj:)"dP
+	id S261471AbVDTS5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 14:57:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261683AbVDTS5B
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 14:57:01 -0400
+Received: from imf17aec.mail.bellsouth.net ([205.152.59.65]:29570 "EHLO
+	imf17aec.mail.bellsouth.net") by vger.kernel.org with ESMTP
+	id S261471AbVDTS44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 14:56:56 -0400
+Received: from localhost ([65.10.203.194]) by imf17aec.mail.bellsouth.net
+          (InterMail vM.5.01.06.11 201-253-122-130-111-20040605) with ESMTP
+          id <20050420185656.LEUH2434.imf17aec.mail.bellsouth.net@localhost>;
+          Wed, 20 Apr 2005 14:56:56 -0400
+To: "C. Scott Ananian" <cscott@cscott.net>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.5) Gecko/20030927
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Apr 2005 10:06:15 -0700 (PDT)
-Linus Torvalds <torvalds@osdl.org> wrote:
+On Tue, Apr 19, 2005 at 06:48:57PM -0400, C. Scott Ananian wrote:
+> On Tue, 19 Apr 2005, David Meybohm wrote:
+> 
+> >But doesn't this require assuming the distribution of MD5 is uniform,
+> >and don't the papers finding collisions in less show it's not? So, your
+> >birthday-argument for calculating the probability wouldn't apply, because
+> >it rests on the assumption MD5 is uniform, and it isn't.
+> 
+> No, the collision papers don't show this at all.
 
-> I bet your SHA1 implementation is done with hand-optimized and scheduled
-> x86 MMX code or something, while my poor G5 is probably using some slow
-> generic routine. As a result, it only improved by 33% for me since the
-> compression was just part of the picture, but with your cheap SHA1 the
-> compression costs really dominated, and so it's almost four times faster
-> for you.
+I didn't mean they showed it directly. I meant by finding collisions in
+MD5 quickly, MD5 would have to have some non-uniformity. But that's
+nevertheless wrong because uniformness and collision finding ability
+aren't related. Sorry to have wasted everyone's time.
 
-The openssl tree has a i586 optimized SHA1 implementation.
-A quick scan of the 0.9.7e tree I happen to have lying around
-shows there aren't optimized for other cpus in there, just i586.
+Dave
