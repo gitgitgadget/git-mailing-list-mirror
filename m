@@ -1,67 +1,53 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: distributed merge prototype
-Date: Wed, 20 Apr 2005 10:50:42 -0700
-Message-ID: <20050420175042.GH21897@waste.org>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Wed, 20 Apr 2005 11:07:20 -0700
+Message-ID: <20050420110720.0ff887b4.davem@davemloft.net>
+References: <200504191250.10286.mason@suse.com>
+	<200504201122.35448.mason@suse.com>
+	<Pine.LNX.4.58.0504200833580.6467@ppc970.osdl.org>
+	<200504201237.38374.mason@suse.com>
+	<Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 20 19:47:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: mason@suse.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 20:10:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOJHf-0008PV-Jz
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:46:43 +0200
+	id 1DOJdw-0003gY-K5
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 20:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261773AbVDTRu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 13:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261769AbVDTRu4
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:50:56 -0400
-Received: from waste.org ([216.27.176.166]:55982 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261773AbVDTRup (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:50:45 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3KHogtV014060
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 20 Apr 2005 12:50:42 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j3KHogPp014057
-	for git@vger.kernel.org; Wed, 20 Apr 2005 12:50:42 -0500
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+	id S261709AbVDTSOA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 14:14:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261777AbVDTSOA
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 14:14:00 -0400
+Received: from dsl027-180-174.sfo1.dsl.speakeasy.net ([216.27.180.174]:30367
+	"EHLO cheetah.davemloft.net") by vger.kernel.org with ESMTP
+	id S261709AbVDTSN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 14:13:59 -0400
+Received: from localhost
+	([127.0.0.1] helo=cheetah.davemloft.net ident=davem)
+	by cheetah.davemloft.net with smtp (Exim 3.36 #1 (Debian))
+	id 1DOJbc-0000SD-00; Wed, 20 Apr 2005 11:07:20 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org>
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; sparc-unknown-linux-gnu)
+X-Face: "_;p5u5aPsO,_Vsx"^v-pEq09'CU4&Dc1$fQExov$62l60cgCc%FnIwD=.UF^a>?5'9Kn[;433QFVV9M..2eN.@4ZWPGbdi<=?[:T>y?SD(R*-3It"Vj:)"dP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I've hacked together a prototype SCM that I think you folks might be
-interested in. The announcement is here:
+On Wed, 20 Apr 2005 10:06:15 -0700 (PDT)
+Linus Torvalds <torvalds@osdl.org> wrote:
 
- http://selenic.com/mercurial/announce.txt
+> I bet your SHA1 implementation is done with hand-optimized and scheduled
+> x86 MMX code or something, while my poor G5 is probably using some slow
+> generic routine. As a result, it only improved by 33% for me since the
+> compression was just part of the picture, but with your cheap SHA1 the
+> compression costs really dominated, and so it's almost four times faster
+> for you.
 
-It's at a very early stage right now and is likely to break if you
-look at it wrong, but I have sucessfully managed to check in kernel
-trees, do a local clone/branch, make changes in both trees, and then
-do a pull/sync which called up tkdiff where appropriate.
-
-I mention it here because I've got a fairly simple implementation of
-distributed merge ala Monotone or BK with the necessary graph smarts.
-It also should perform decently - I've paid a lot of attention to the
-scalability of the core algorithms. The core of the merge code is less
-than 100 lines so even people who aren't familiar with Python may be
-able to wrap their head around it and leverage it for git.
-
-I'd also like to encourage more attention to back-end storage.
-Mercurial can check in all 495 versions of linux/Makefile from bkcvs
-to compressed delta store in about 5 seconds on my laptop and the
-result is about 80K (bkcvs takes 254K). Adding and retrieving
-revisions is O(1).
-
-The same directory individually compressed by gzip (ie what git does)
-takes a comparable amount of time and 5.1M of disk space. This is
-admittedly a worst case for git as most of the deltas are small, but I
-needed a test file with lots of revisions.
-
-Now back to our regularly scheduled programming..
-
--- 
-Mathematics is the supreme nostalgia of our time.
+The openssl tree has a i586 optimized SHA1 implementation.
+A quick scan of the 0.9.7e tree I happen to have lying around
+shows there aren't optimized for other cpus in there, just i586.
