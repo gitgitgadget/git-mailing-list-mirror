@@ -1,54 +1,50 @@
-From: Petr Baudis <pasky@ucw.cz>
+From: Paul Jackson <pj@sgi.com>
 Subject: Re: [PATCH] gittrack.sh accepts invalid branch names
-Date: Thu, 21 Apr 2005 01:21:10 +0200
-Message-ID: <20050420232110.GA12962@pasky.ji.cz>
+Date: Wed, 20 Apr 2005 16:22:34 -0700
+Organization: SGI
+Message-ID: <20050420162234.3ccbf23e.pj@sgi.com>
 References: <1114026510.15186.15.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 01:17:11 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Thu Apr 21 01:19:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOORI-0005of-Dn
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 01:17:00 +0200
+	id 1DOOTz-000637-Tk
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 01:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261834AbVDTXVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 19:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261837AbVDTXVS
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 19:21:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:51680 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261834AbVDTXVP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 19:21:15 -0400
-Received: (qmail 13283 invoked by uid 2001); 20 Apr 2005 23:21:10 -0000
+	id S261837AbVDTXYF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 19:24:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261838AbVDTXYF
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 19:24:05 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:20935 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S261837AbVDTXYD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 19:24:03 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3L13Oe1013315;
+	Wed, 20 Apr 2005 18:03:34 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3KNMdlU16475364;
+	Wed, 20 Apr 2005 16:22:40 -0700 (PDT)
 To: Pavel Roskin <proski@gnu.org>
-Content-Disposition: inline
 In-Reply-To: <1114026510.15186.15.camel@dv>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 20, 2005 at 09:48:30PM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> told me that...
-> --- a/gittrack.sh
-> +++ b/gittrack.sh
-> @@ -35,7 +35,7 @@ die () {
->  mkdir -p .git/heads
->  
->  if [ "$name" ]; then
-> -	grep -q $(echo -e "^$name\t" | sed 's/\./\\./g') .git/remotes || \
-> +	sed -ne "/^$name\t/p" .git/remotes | grep -q . || \
->  		[ -s ".git/heads/$name" ] || \
->  		die "unknown branch \"$name\""
+Pavel wrote:
+> 	sed -ne "/^$name\t/p" .git/remotes | grep -q .
 
-This fixes the acceptance, but not the choice.
+Consider using the following to look for a match of $name with
+the first tab separated field of the remotes file (and to avoid
+using 'grep -q', which is not in all grep's, so far as I know):
 
-What does the grep -q . exactly do? Just sets error code based on
-whether the sed output is non-empty? What about [] instead?
+	cut -f1 .git/remotes | grep -Fx "$name" >/dev/null
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
