@@ -1,107 +1,116 @@
-From: Andre Noll <maan@systemlinux.org>
-Subject: simplify Makefile
-Date: Wed, 20 Apr 2005 14:19:03 +0200
-Message-ID: <20050420121903.GA8664@skl-net.de>
+From: Martin Uecker <muecker@gmx.de>
+Subject: Re: WARNING! Object DB conversion (was Re: [PATCH] write-tree performance problems)
+Date: Wed, 20 Apr 2005 15:24:47 +0200
+Message-ID: <20050420132446.GA10126@macavity>
+References: <200504191250.10286.mason@suse.com> <200504191708.23536.mason@suse.com> <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org> <200504192049.21947.mason@suse.com> <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org> <42660708.60109@zytor.com> <Pine.LNX.4.58.0504200144260.6467@ppc970.osdl.org> <2cfc403205042005116484231c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 20 14:23:22 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+X-From: git-owner@vger.kernel.org Wed Apr 20 15:23:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOEE5-00019o-05
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 14:22:43 +0200
+	id 1DOF9m-0002Ek-3j
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 15:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVDTM0w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 08:26:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261516AbVDTM0w
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 08:26:52 -0400
-Received: from m18s25.vlinux.de ([83.151.29.59]:64677 "EHLO m18s25.vlinux.de")
-	by vger.kernel.org with ESMTP id S261399AbVDTM0s (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 08:26:48 -0400
-Received: from maan by m18s25.vlinux.de with local (Exim 3.35 #1 (Debian))
-	id 1DOEAZ-0003Ti-00
-	for <git@vger.kernel.org>; Wed, 20 Apr 2005 14:19:03 +0200
-To: git@vger.kernel.org
+	id S261619AbVDTN0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 09:26:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261621AbVDTN0Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 09:26:24 -0400
+Received: from dialin-145-254-146-086.arcor-ip.net ([145.254.146.86]:50304
+	"EHLO macavity") by vger.kernel.org with ESMTP id S261619AbVDTN0P
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 09:26:15 -0400
+Received: from martin by macavity with local (Exim 4.34)
+	id 1DOFCB-0002mM-1M
+	for git@vger.kernel.org; Wed, 20 Apr 2005 15:24:47 +0200
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Martin Uecker <muecker@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.3.28i
+In-Reply-To: <2cfc403205042005116484231c@mail.gmail.com>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Use a generic rule for executables that depend only on the corresponding
-.o and on $(LIB_FILE).
 
-Signed-Off-By: Andre Noll <maan@systemlinux.org>
----
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Makefile |   49 ++-----------------------------------------------
- 1 files changed, 2 insertions(+), 47 deletions(-)
+On Wed, Apr 20, 2005 at 10:11:10PM +1000, Jon Seymour wrote:
+> On 4/20/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> >=20
+> >=20
+> > I converted my git archives (kernel and git itself) to do the SHA1 hash
+> > _before_ the compression phase.
+> >=20
+>=20
+> Linus,
+> =20
+>  Am I correct to understand that with this change, all the objects in
+> the database are still being compressed (so no net performance benefit
+> now), but by doing the SHA1 calculations before compression you are
+> keeping open the possibility that at some point in the future you may
+> use a different compression technique (including none at all) for some
+> or all of the objects?
 
-Makefile: cd299f850679b2456e360d3aa6a2d529855ba7a5
---- a/Makefile
-+++ b/Makefile
-@@ -34,62 +34,17 @@ LIBS= $(LIB_FILE) -lssl -lz
- 
- init-db: init-db.o
- 
--update-cache: update-cache.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o update-cache update-cache.o $(LIBS)
--
--show-diff: show-diff.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o show-diff show-diff.o $(LIBS)
--
--write-tree: write-tree.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o write-tree write-tree.o $(LIBS)
--
--read-tree: read-tree.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o read-tree read-tree.o $(LIBS)
--
--commit-tree: commit-tree.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o commit-tree commit-tree.o $(LIBS)
--
--cat-file: cat-file.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o cat-file cat-file.o $(LIBS)
--
- fsck-cache: fsck-cache.o $(LIB_FILE) object.o commit.o tree.o blob.o
- 	$(CC) $(CFLAGS) -o fsck-cache fsck-cache.o $(LIBS)
- 
--checkout-cache: checkout-cache.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o checkout-cache checkout-cache.o $(LIBS)
--
--diff-tree: diff-tree.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o diff-tree diff-tree.o $(LIBS)
--
- rev-tree: rev-tree.o $(LIB_FILE) object.o commit.o tree.o blob.o
- 	$(CC) $(CFLAGS) -o rev-tree rev-tree.o $(LIBS)
- 
--show-files: show-files.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o show-files show-files.o $(LIBS)
--
--check-files: check-files.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o check-files check-files.o $(LIBS)
--
--ls-tree: ls-tree.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o ls-tree ls-tree.o $(LIBS)
--
- merge-base: merge-base.o $(LIB_FILE) object.o commit.o tree.o blob.o
- 	$(CC) $(CFLAGS) -o merge-base merge-base.o $(LIBS)
- 
--merge-cache: merge-cache.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o merge-cache merge-cache.o $(LIBS)
--
--unpack-file: unpack-file.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o unpack-file unpack-file.o $(LIBS)
--
--git-export: git-export.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o git-export git-export.o $(LIBS)
--
--diff-cache: diff-cache.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o diff-cache diff-cache.o $(LIBS)
--
--convert-cache: convert-cache.o $(LIB_FILE)
--	$(CC) $(CFLAGS) -o convert-cache convert-cache.o $(LIBS)
-+%: %.o $(LIB_FILE)
-+	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
- 
- blob.o: $(LIB_H)
- cat-file.o: $(LIB_H)
+The main point is not about trying different compression
+techniques but that you don't need to compress at all just
+to calculate the hash of some data. (to know if it is
+unchanged for example)
+
+There are still some other design decisions I am worried
+about:
+
+The storage method of the database of a collection of
+files in the underlying file system. Because of the
+random nature of the hashes this leads to a horrible
+amount of seeking for all operations which walk the
+logical structure of some tree stored in the database.
+
+Why not store all objects linearized in one or more
+flat file?
+
+
+The other thing I don't like is the use of a sha1
+for a complete file. Switching to some kind of hash
+tree would allow to introduce chunks later. This has
+two advantages:
+
+It would allow git to scale to repositories of large
+binary files. And it would allow to build a very cool
+content transport algorithm for those repositories.
+This algorithm could combine all the advantages of
+bittorrent and rsync (without the cpu load).
+
+
+And it would allow trivial merging of patches which
+apply to different chunks of a file in exact the same
+way as merging changesets which apply to different
+files in a tree.
+
+
+Martin
+
+--=20
+One night, when little Giana from Milano was fast asleep,
+she had a strange dream.
+
+
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQFCZlgeYDJInvULMKYRAi4wAJ9IIP4OTkb1XlBGvc9mt/fGxLFRWQCfTyaT
+KHOoR0sMLc79myGyELHiIXM=
+=ZjMt
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
