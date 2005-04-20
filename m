@@ -1,92 +1,68 @@
-From: duchier@ps.uni-sb.de
-Subject: Re: [ANNOUNCEMENT] /Arch/ embraces `git'
-Date: Wed, 20 Apr 2005 19:15:55 +0200
-Message-ID: <877jixfjxw.fsf@star.lifl.fr>
-References: <200504201000.DAA04988@emf.net>
+From: "Andrew Timberlake-Newell" 
+	<Andrew.Timberlake-Newell@AllianceOneInc.com>
+Subject: RE: missing: git api, reference, user manual and mission statement
+Date: Wed, 20 Apr 2005 13:15:46 -0400
+Message-ID: <004e01c545cc$97d9b780$9b11a8c0@allianceoneinc.com>
+References: <20050419165809.GE12757@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gnu-arch-users@gnu.org, gnu-arch-dev@lists.seyza.com, talli@museatech.net,
-	git@vger.kernel.org, torvalds@osdi.org
-X-From: gnu-arch-dev-bounces@lists.seyza.com Wed Apr 20 19:13:41 2005
-Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
-Received: from [207.166.200.220] (helo=hera.museatech.net)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1DOIlE-0002rC-E6
-	for gcvad-gnu-arch-dev@gmane.org; Wed, 20 Apr 2005 19:13:12 +0200
-Received: (qmail 13637 invoked by uid 110); 20 Apr 2005 17:17:27 -0000
-Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
- (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
- Processed in 0.071934 secs); 20 Apr 2005 17:17:27 -0000
-Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
-  by hera.museatech.net with SMTP; 20 Apr 2005 17:17:26 -0000
-Delivered-To: list-gnu-arch-dev@lists.seyza.com
-Received: (qmail 13593 invoked by uid 110); 20 Apr 2005 17:17:22 -0000
-Received: from duchier@ps.uni-sb.de by hera by uid 102 with qmail-scanner-1.20
-	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
-	Processed in 0.086183 secs); 20 Apr 2005 17:17:22 -0000
-Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
-	by hera.museatech.net with SMTP; 20 Apr 2005 17:17:21 -0000
-Received: (qmail 28297 invoked from network); 20 Apr 2005 18:31:32 -0000
-Received: from reserv5.univ-lille1.fr (193.49.225.19)
-	by a1.mx.alal.us with SMTP; 20 Apr 2005 18:31:30 -0000
-Received: from malonne.lifl.fr (malonne.lifl.fr [134.206.10.29])
-	by reserv5.univ-lille1.fr (8.13.3/jtpda-5.3.1) with ESMTP id
-	j3KHFsDH005861 ; Wed, 20 Apr 2005 19:15:55 +0200
-Received: from star.lifl.fr (star.lifl.fr [134.206.10.23])
-	by malonne.lifl.fr  with ESMTP id j3KHFt628989
-	; Wed, 20 Apr 2005 19:15:56 +0200 (MEST)
-To: Tom Lord <lord@emf.net>
-In-Reply-To: <200504201000.DAA04988@emf.net> (Tom Lord's message of "Wed, 20
-	Apr 2005 03:00:36 -0700 (PDT)")
-User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.4 (gnu/linux)
-X-USTL-MailScanner-Information: Please contact the ISP for more information
-X-USTL-MailScanner: Found to be clean
-X-MailScanner-From: duchier@ps.uni-sb.de
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.3 required=9.0 tests=BAYES_00,NO_REAL_NAME 
-	autolearn=no version=3.0.2
-X-BeenThere: gnu-arch-dev@lists.seyza.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
-List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
-List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
-List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
-List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
-List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
-Sender: gnu-arch-dev-bounces@lists.seyza.com
-Errors-To: gnu-arch-dev-bounces@lists.seyza.com
-X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "'Petr Baudis'" <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Apr 20 19:15:05 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1DOIlv-0002yn-Me
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:13:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261739AbVDTRRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 13:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261749AbVDTRRi
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:17:38 -0400
+Received: from mail.allianceoneinc.com ([65.213.221.36]:61445 "EHLO
+	mail.allianceoneinc.com") by vger.kernel.org with ESMTP
+	id S261739AbVDTRQl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:16:41 -0400
+Received: from epa20012 [192.168.17.155] by mail.allianceoneinc.com with ESMTP
+  (SMTPD32-8.14) id AE424C300B4; Wed, 20 Apr 2005 13:15:46 -0400
+To: <git@vger.kernel.org>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <20050419165809.GE12757@pasky.ji.cz>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+Importance: Normal
+X-IMAIL-SPAM-VALFROM: (8e4204c300b4b26c)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-Hi Tom,
+Petr Baudis graced us with:
+> Dear diary, on Tue, Apr 19, 2005 at 02:36:32PM CEST, I got a letter
+> where Klaus Robert Suetterlin <robert@mpe.mpg.de> told me that...
+> > 1) There is no clear (e.g. by name) distinction between ``git as done
+> > by Linus'', which is a kind of content addressable database with added
+> > semantics, and ``git as done by the rest of You'', which is a kind of
+> > SCM on top of Linuses stuff.
+> 
+> There is git and git-pasky (git-pasky is superset; therefore various
+> patches floating around either get to git-pasky or to both). I'm not
+> sure what else do you mean.
 
-just as a datapoint, here is an experiment I carried out.  I wanted to evaluate
-how much overhead is incurred by using several levels of directories to
-implement a discrimating index.  I used the key format you specified:
+This goes back to the question of whether to rename git-pasky to cogito.  
 
-	SHA1,SIZE
+Perhaps the crucial question is:  will the git plumbing be used for anything
+other than SCM?
 
-As data, I used my /usr/src/linux which uses 301M and contains 20753 files and
-1389 directories.  To compute the key for a directory, I considered that its
-contents were a mapping from names to keys.
+If so, then it could be useful to differentiate by program name, so that we
+would know whether another project was utilizing git-plumbing or git-SCM.
 
-When constructing the indexed archive, I actually stored empty files instead of
-blobs because I am only interested in overhead.
+If not, then there is effectively only one tool and the plumbing is a
+[crucial] portion thereof:  a git (SCM and the file system around which it
+was built).
 
-Using your suggested indexing method that uses [0:4] as the 1st level key and
-[4:8] as the 2nd level key, I obtain an indexed archive that occupies 159M,
-where the top level contains 18665 1st level keys, the largest first level dir
-contains 5 entries, and all 2nd level dirs contain exactly 1 entry.
+So what's the answer to the question?  Anyone planning to use git (the file
+system) outside of the SCM?
 
-Using Linus suggested 1 level [0:2] indexing, I obtain an indexed archive that
-occupies 1.8M, where the top level contains 256 1st level keys, and where the
-largest 1st level dir contains 110 entries.
 
-This experiment was performed on an ext3 file system.
-
-Cheers,
-
---Denys
