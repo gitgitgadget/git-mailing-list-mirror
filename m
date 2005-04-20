@@ -1,109 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 10:52:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504201040400.6467@ppc970.osdl.org>
-References: <200504191250.10286.mason@suse.com> <200504201237.38374.mason@suse.com>
- <Pine.LNX.4.58.0504200957030.6467@ppc970.osdl.org> <200504201323.05447.mason@suse.com>
+From: Matt Mackall <mpm@selenic.com>
+Subject: distributed merge prototype
+Date: Wed, 20 Apr 2005 10:50:42 -0700
+Message-ID: <20050420175042.GH21897@waste.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 19:47:08 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Apr 20 19:47:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOJHP-0008MC-Q6
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:46:28 +0200
+	id 1DOJHf-0008PV-Jz
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 19:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261702AbVDTRuj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 13:50:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261773AbVDTRuj
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:50:39 -0400
-Received: from fire.osdl.org ([65.172.181.4]:34002 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261702AbVDTRuY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:50:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KHoKs4017092
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 10:50:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KHoJBo017696;
-	Wed, 20 Apr 2005 10:50:19 -0700
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504201323.05447.mason@suse.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261773AbVDTRu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 13:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261769AbVDTRu4
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 13:50:56 -0400
+Received: from waste.org ([216.27.176.166]:55982 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S261773AbVDTRup (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 13:50:45 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3KHogtV014060
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 20 Apr 2005 12:50:42 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j3KHogPp014057
+	for git@vger.kernel.org; Wed, 20 Apr 2005 12:50:42 -0500
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+I've hacked together a prototype SCM that I think you folks might be
+interested in. The announcement is here:
 
+ http://selenic.com/mercurial/announce.txt
 
-On Wed, 20 Apr 2005, Chris Mason wrote:
-> 
-> The patch below with your current tree brings my 100 patch test down to 22 
-> seconds again.
+It's at a very early stage right now and is likely to break if you
+look at it wrong, but I have sucessfully managed to check in kernel
+trees, do a local clone/branch, make changes in both trees, and then
+do a pull/sync which called up tkdiff where appropriate.
 
-If you ever have a cache_entry bigger than 16384, your code will write 
-things out in the wrong order (write the new cache without flushing the 
-old buffer).
+I mention it here because I've got a fairly simple implementation of
+distributed merge ala Monotone or BK with the necessary graph smarts.
+It also should perform decently - I've paid a lot of attention to the
+scalability of the core algorithms. The core of the merge code is less
+than 100 lines so even people who aren't familiar with Python may be
+able to wrap their head around it and leverage it for git.
 
-You also don't free the buffer.
+I'd also like to encourage more attention to back-end storage.
+Mercurial can check in all 495 versions of linux/Makefile from bkcvs
+to compressed delta store in about 5 seconds on my laptop and the
+result is about 80K (bkcvs takes 254K). Adding and retrieving
+revisions is O(1).
 
-Finally, if you really want to go fast, you should really try to make your
-writes powers-of-two, ie fill up the buffer entirely rather than saying
-"if I were to overflow, flush it now". It doesn't matter that much for
-some filesystems (especially local and append-only like the patterns are
-here), but it can definitely matter for the stupid ones.
+The same directory individually compressed by gzip (ie what git does)
+takes a comparable amount of time and 5.1M of disk space. This is
+admittedly a worst case for git as most of the deltas are small, but I
+needed a test file with lots of revisions.
 
-But yeah, we could obviously chunk things out properly. You might want to 
-just use stdio and "fwrite()", though, which does all of that for you, and 
-hopefully does it right.
+Now back to our regularly scheduled programming..
 
-(I'm not a big fan of stdio for something like this, so if you want to 
-create a little helper function that just does the chunking, go wild. 
-Something like
-
-	#define BUFSIZ 8192
-	static char buffer[BUFSIZ];
-	static unsigned long buflen;
-
-	int ce_write(int fd, void *data, unsigned int len)
-	{
-		while (len) {
-			unsigned int buffered = buflen;
-			unsigned int partial = BUFSIZ - buflen;
-			if (partial > len)
-				partial = len;
-			memcpy(buffer + buflen, data, partial);
-			buffered += partial;
-			if (buffered == BUFSIZ) {
-				if (write(fd, buffer, BUFSIZ) != BUFSIZ)
-					die("unable to write");
-				buffered = 0;
-			}
-			buflen = buffered;
-			len -= partial;
-			data += partial;
-		}
-	}
-
-	int ce_flush(int fd)
-	{
-		unsigned int left = buflen;
-		if (left) {
-			buflen = 0;
-			if (write(fd, buffer, left) != left)
-				die("unable to write");
-		}
-	}
-
-which should be ok, and cheesily avoids the allocation overhread issues by
-just having a nice static buffer.
-
-"If you want to go fast, do it right".
-
-Untested, as usual.
-
-		Linus
+-- 
+Mathematics is the supreme nostalgia of our time.
