@@ -1,93 +1,75 @@
 From: David Roundy <droundy@abridgegame.org>
 Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Wed, 20 Apr 2005 07:29:43 -0400
-Message-ID: <20050420112942.GG29945@abridgegame.org>
-References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr> <20050418122011.GA13769@abridgegame.org> <7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr> <20050419110407.GB28269@abridgegame.org> <7i4qe3x8ig.fsf@lanthane.pps.jussieu.fr>
+Date: Wed, 20 Apr 2005 07:55:52 -0400
+Message-ID: <20050420115547.GI29945@abridgegame.org>
+References: <20050418210436.23935.qmail@science.horizon.com> <1113869248.23938.94.camel@orca.madrabbit.org> <42645969.2090609@qualitycode.com> <1113874931.23938.111.camel@orca.madrabbit.org> <4264677A.9090003@qualitycode.com> <1113950442.29444.31.camel@orca.madrabbit.org> <42658E38.1020406@qualitycode.com> <1113951972.29444.42.camel@orca.madrabbit.org> <426594F9.4090002@tupshin.com> <1113959503.29444.91.camel@orca.madrabbit.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 20 13:31:05 2005
+Cc: Tupshin Harper <tupshin@tupshin.com>,
+	Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
+	darcs-devel@darcs.net
+X-From: git-owner@vger.kernel.org Wed Apr 20 13:58:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DODPZ-00029J-Dp
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 13:30:29 +0200
+	id 1DODpk-0005rA-Nt
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 13:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVDTLen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 07:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261431AbVDTLen
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 07:34:43 -0400
-Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]:61760 "EHLO
-	localhost") by vger.kernel.org with ESMTP id S261399AbVDTLej (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 07:34:39 -0400
+	id S261516AbVDTMB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 08:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261536AbVDTMB2
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 08:01:28 -0400
+Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]:63296 "EHLO
+	localhost") by vger.kernel.org with ESMTP id S261516AbVDTMA4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 08:00:56 -0400
 Received: from droundy by localhost with local (Exim 4.50)
-	id 1DODOp-0000a5-83; Wed, 20 Apr 2005 07:29:43 -0400
-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Mail-Followup-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
+	id 1DODo8-0000aQ-RP; Wed, 20 Apr 2005 07:55:52 -0400
+To: Ray Lee <ray-lk@madrabbit.org>
+Mail-Followup-To: Ray Lee <ray-lk@madrabbit.org>,
+	Tupshin Harper <tupshin@tupshin.com>,
+	Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
+	darcs-devel@darcs.net
 Content-Disposition: inline
-In-Reply-To: <7i4qe3x8ig.fsf@lanthane.pps.jussieu.fr>
+In-Reply-To: <1113959503.29444.91.camel@orca.madrabbit.org>
 User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2005 at 02:20:55PM +0200, Juliusz Chroboczek wrote:
-> [Removing Linus from CC, keeping the Git list -- or should we remove it?]
-
-I think leaving much of this on git would be appropriate, since there are
-issues of how to relate to git that should be relevant.
-
-> > If we do it right (automatically tagging like crazy people), darcs
-> > users between themselves can cherry-pick all they like, without
-> > introducing inconsistencies or losing interoperability with git.
+On Tue, Apr 19, 2005 at 06:11:43PM -0700, Ray Lee wrote:
+> > second patch:
+> > replace ./hello.c [A-Za-z_0-9] world universe
 > 
-> You've lost me here.  How can you cherry-pick if every tag depends on
-> the preceding patches?  Or are you thinking of pulling just the patch
-> and not the tag -- in that case, what happens when you push to git a
-> Darcs patch that depends on a patch that originated with git?
+> Aha! Okay, I now see at least part of issue: we're using different
+> definitions of 'token.' Yours is quite sensible, in that it matches the
+> darcs syntax. However, I'm claiming a token is defined by the file's
+> language, and that a replace patch on anything but a token as per those
+> language standards is a silly thing.
 
-Yes, I'm thinking of pulling patches from one darcs repo to another.  If we
-cherry-pick in this way, we need to create a "git-tag" for each patch that
-we pull without its associated tag.  To git, this would look like two
-separate changes that have the same commit log, except that they have
-different parents and different commiters and commit dates.
+The trouble is that a token based on language standards is also wrong,
+unless your file at all times is syntactically correct.  It also means (for
+C in particular) that the result of the token replace isn't uniquely
+determined by the combination of the token replace patch and the file it
+applies to, since you need parse any header files in order to tokenize the
+C file.  In the case of header files, it may not be possible to tokenize
+them uniquely, since they may tokenize differently depending on what other
+header files are included before them.  And of course, none of this may be
+possible if you haven't run autoconf and configure, since you may not
+actually *have* the header files in the first place...
 
-I don't think this will be a problem for git, and since darcs will
-recognize the two patches as the identical darcs patch (we'll need to put
-somewhere in the git commit log a magic word indicating that this patch
-originated in darcs), there won't be a problem for darcs either.
+In a (reasonably) general-purpose tool like darcs, I think it's better to
+stick with a simpler definition of token that doesn't require a complete
+integrated development environment.
 
-In case I haven't been clear (which seems likely), the scenario is that
-darcs user 1 makes the following changes to his darcs version of a
-git-based repository:
+It's also true that often you want to modify headers and string contents
+simultaneously with the change of the code itself.  When I replace
+get_pseudowavefunction with get_atomic_orbital, I also want to modify
 
-changes in 1: A -> B
-tags in 1:    A1   B1
+// We call get_pseudowavefunction to get the atomic orbital...
 
-Darcs user 2 wants B, but not A, and didn't do any development:
+and
 
-changes in 2: B
-tags in 2:    B2
-
-User 2 pushes to git, and now git has (where P is the parent of both of the
-above):
-
-git:
-P -> B/B2  (where B/B2 is the commit log with B2 as "committer info" and B
-            as the "author info and long comment)
-
-User 1 pushes (everything) to git and merges the two (patch M, which has
-two parents, B1 and B2:
-
-git:
-
-   ->B/B2---------
-  /               \
-P--> A/A1 -> B/B1---> M
-
-It's a little lame, and if user 2 doesn't do any real work, the git-using
-person might be annoyed, but I think it's doable.
+printf("Error in get_pseudowavefunction!\n");
 -- 
 David Roundy
 http://www.darcs.net
