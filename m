@@ -1,67 +1,65 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Wed, 20 Apr 2005 22:05:04 +0200
-Message-ID: <20050420200504.GB19112@pasky.ji.cz>
-References: <20050416233305.GO19099@pasky.ji.cz> <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org> <20050419011206.GT5554@pasky.ji.cz> <42646967.9030903@dwheeler.com> <4264CCFF.30400@dgreaves.com> <20050419092812.GE2393@pasky.ji.cz> <1113905110.1262.1.camel@nosferatu.lan> <20050419105008.GB12757@pasky.ji.cz> <20050420070157.GA12584@elte.hu>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Some documentation...
+Date: Wed, 20 Apr 2005 13:15:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504201311300.6467@ppc970.osdl.org>
+References: <42668C8D.3000209@dgreaves.com> <Pine.LNX.4.61.0504201321380.2630@cag.csail.mit.edu>
+ <426692D1.20304@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
-	David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 22:01:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "C. Scott Ananian" <cscott@cscott.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 22:10:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOLNe-00030m-QH
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 22:01:03 +0200
+	id 1DOLVd-0004Hy-0W
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 22:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261773AbVDTUFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 16:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261799AbVDTUFR
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 16:05:17 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41692 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261773AbVDTUFK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 16:05:10 -0400
-Received: (qmail 27275 invoked by uid 2001); 20 Apr 2005 20:05:04 -0000
-To: Ingo Molnar <mingo@elte.hu>
-Content-Disposition: inline
-In-Reply-To: <20050420070157.GA12584@elte.hu>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261798AbVDTUNa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 16:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261799AbVDTUNa
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 16:13:30 -0400
+Received: from fire.osdl.org ([65.172.181.4]:43670 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261798AbVDTUN0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 16:13:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KKDLs4029816
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Apr 2005 13:13:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KKDKBn025648;
+	Wed, 20 Apr 2005 13:13:21 -0700
+To: David Greaves <david@dgreaves.com>
+In-Reply-To: <426692D1.20304@dgreaves.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 20, 2005 at 09:01:57AM CEST, I got a letter
-where Ingo Molnar <mingo@elte.hu> told me that...
->  [...]
->  fatal: unable to execute 'gitmerge-file.sh'
->  fatal: merge program failed
 
-Pure stupidity of mine, I forgot to add gitmerge-file.sh to the list of
-scripts which get installed.
 
-> another thing: it's confusing that during 'git pull', the rsync output 
-> is not visible. Especially during large rsyncs, it would be nice to see 
-> some progress. So i usually use a raw rsync not 'git pull', due to this.
-
-Fixed. For further reference, you can also set RSYNC_FLAGS and put
-whatever pleases you there.
-
-> yet another thing: what is the canonical 'pasky way' of simply nuking 
-> the current files and checking out the latest tree (according to 
-> .git/HEAD). Right now i'm using a script to:
+On Wed, 20 Apr 2005, David Greaves wrote:
 > 
->   read-tree $(tree-id $(cat .git/HEAD))
->   checkout-cache -a
-> 
-> (i first do an 'rm -f *' in the working directory)
-> 
-> i guess there's an existing command for this already?
+> So maybe it's left as documented behaviour and higher level tools must 
+> manage the data they feed to it...
 
-git cancel
+That was the plan.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+I agree that "find . -type f | xargs update-cache --add --" in _theory_ is
+a nice thing to do. But in practice, you want to make sure that find 
+doesn't incldue the ".git" directory and that we always use the canonical 
+names for all files etc etc.
+
+I could do it in the low-level tools (ie do pathname cleanup there), and
+indeed I did exactly that in the original code sequence. However, it very
+quickly became obvious that the low-level code really doesn't want to
+care, and that it's a lot easier to just do it at a higher level when 
+necessary.
+
+For example, if you have to add a sed-script or something that just 
+removes '^./' and "^.git/", then that's trivial to do, and it leaves the 
+core tools with a very clear agenda in life.
+
+		Linus
