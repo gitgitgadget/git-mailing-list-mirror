@@ -1,75 +1,66 @@
-From: David Roundy <droundy@abridgegame.org>
-Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Wed, 20 Apr 2005 07:55:52 -0400
-Message-ID: <20050420115547.GI29945@abridgegame.org>
-References: <20050418210436.23935.qmail@science.horizon.com> <1113869248.23938.94.camel@orca.madrabbit.org> <42645969.2090609@qualitycode.com> <1113874931.23938.111.camel@orca.madrabbit.org> <4264677A.9090003@qualitycode.com> <1113950442.29444.31.camel@orca.madrabbit.org> <42658E38.1020406@qualitycode.com> <1113951972.29444.42.camel@orca.madrabbit.org> <426594F9.4090002@tupshin.com> <1113959503.29444.91.camel@orca.madrabbit.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: WARNING! Object DB conversion (was Re: [PATCH] write-tree performance problems)
+Date: Wed, 20 Apr 2005 22:11:10 +1000
+Message-ID: <2cfc403205042005116484231c@mail.gmail.com>
+References: <200504191250.10286.mason@suse.com>
+	 <200504191708.23536.mason@suse.com>
+	 <Pine.LNX.4.58.0504191420060.19286@ppc970.osdl.org>
+	 <200504192049.21947.mason@suse.com>
+	 <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org>
+	 <42660708.60109@zytor.com>
+	 <Pine.LNX.4.58.0504200144260.6467@ppc970.osdl.org>
+Reply-To: jon@zeta.org.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tupshin Harper <tupshin@tupshin.com>,
-	Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
-	darcs-devel@darcs.net
-X-From: git-owner@vger.kernel.org Wed Apr 20 13:58:16 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Apr 20 14:15:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DODpk-0005rA-Nt
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 13:57:33 +0200
+	id 1DOE6T-0008VL-Q7
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 14:14:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261516AbVDTMB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 08:01:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261536AbVDTMB2
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 08:01:28 -0400
-Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]:63296 "EHLO
-	localhost") by vger.kernel.org with ESMTP id S261516AbVDTMA4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 08:00:56 -0400
-Received: from droundy by localhost with local (Exim 4.50)
-	id 1DODo8-0000aQ-RP; Wed, 20 Apr 2005 07:55:52 -0400
-To: Ray Lee <ray-lk@madrabbit.org>
-Mail-Followup-To: Ray Lee <ray-lk@madrabbit.org>,
-	Tupshin Harper <tupshin@tupshin.com>,
-	Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
-	darcs-devel@darcs.net
+	id S261573AbVDTMSm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 08:18:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261546AbVDTMPF
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 08:15:05 -0400
+Received: from rproxy.gmail.com ([64.233.170.203]:7119 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261573AbVDTMLP convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 08:11:15 -0400
+Received: by rproxy.gmail.com with SMTP id z35so119366rne
+        for <git@vger.kernel.org>; Wed, 20 Apr 2005 05:11:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HtahUshJn5acfQ8gl1v8tWzgUwnsSc0Xhsk88iq0y1Fyjuxbcaa1CJ0MYyJ3P5aMkkiiqPaxZJaarAX62YAOZ8r6oanXbsVWNlMj3b2RCILaSxvG1yCKhoWp4eTuFavVi6yennWFsNe0KN6GqUfTe6EkFSSchP+NAjGtA8BdIp0=
+Received: by 10.38.75.59 with SMTP id x59mr787449rna;
+        Wed, 20 Apr 2005 05:11:10 -0700 (PDT)
+Received: by 10.38.104.32 with HTTP; Wed, 20 Apr 2005 05:11:10 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.58.0504200144260.6467@ppc970.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <1113959503.29444.91.camel@orca.madrabbit.org>
-User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2005 at 06:11:43PM -0700, Ray Lee wrote:
-> > second patch:
-> > replace ./hello.c [A-Za-z_0-9] world universe
+On 4/20/05, Linus Torvalds <torvalds@osdl.org> wrote:
 > 
-> Aha! Okay, I now see at least part of issue: we're using different
-> definitions of 'token.' Yours is quite sensible, in that it matches the
-> darcs syntax. However, I'm claiming a token is defined by the file's
-> language, and that a replace patch on anything but a token as per those
-> language standards is a silly thing.
+> 
+> I converted my git archives (kernel and git itself) to do the SHA1 hash
+> _before_ the compression phase.
+> 
 
-The trouble is that a token based on language standards is also wrong,
-unless your file at all times is syntactically correct.  It also means (for
-C in particular) that the result of the token replace isn't uniquely
-determined by the combination of the token replace patch and the file it
-applies to, since you need parse any header files in order to tokenize the
-C file.  In the case of header files, it may not be possible to tokenize
-them uniquely, since they may tokenize differently depending on what other
-header files are included before them.  And of course, none of this may be
-possible if you haven't run autoconf and configure, since you may not
-actually *have* the header files in the first place...
+Linus,
+ 
+ Am I correct to understand that with this change, all the objects in
+the database are still being compressed (so no net performance benefit
+now), but by doing the SHA1 calculations before compression you are
+keeping open the possibility that at some point in the future you may
+use a different compression technique (including none at all) for some
+or all of the objects?
 
-In a (reasonably) general-purpose tool like darcs, I think it's better to
-stick with a simpler definition of token that doesn't require a complete
-integrated development environment.
+jon.
 
-It's also true that often you want to modify headers and string contents
-simultaneously with the change of the code itself.  When I replace
-get_pseudowavefunction with get_atomic_orbital, I also want to modify
-
-// We call get_pseudowavefunction to get the atomic orbital...
-
-and
-
-printf("Error in get_pseudowavefunction!\n");
--- 
-David Roundy
-http://www.darcs.net
+[ reposted to list, because list post was bounced because of rich text
+formatting ]
