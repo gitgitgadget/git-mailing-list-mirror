@@ -1,88 +1,123 @@
-From: Martin Uecker <muecker@gmx.de>
-Subject: Re: WARNING! Object DB conversion (was Re: [PATCH] write-tree performance problems)
-Date: Wed, 20 Apr 2005 18:33:42 +0200
-Message-ID: <20050420163342.GA14434@macavity>
-References: <200504192049.21947.mason@suse.com> <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org> <42660708.60109@zytor.com> <Pine.LNX.4.58.0504200144260.6467@ppc970.osdl.org> <2cfc403205042005116484231c@mail.gmail.com> <20050420132446.GA10126@macavity> <Pine.LNX.4.61.0504201025030.2630@cag.csail.mit.edu> <20050420151902.GA13175@macavity> <Pine.LNX.4.61.0504201121490.2630@cag.csail.mit.edu> <20050420155734.GA13575@macavity>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Wed, 20 Apr 2005 12:37:37 -0400
+Message-ID: <200504201237.38374.mason@suse.com>
+References: <200504191250.10286.mason@suse.com> <200504201122.35448.mason@suse.com> <Pine.LNX.4.58.0504200833580.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="GvXjxJ+pjyke8COw"
-Cc: Martin Uecker <muecker@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 20 18:33:11 2005
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_SVoZC/UDV5K3uhy"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 18:34:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOI76-0004CR-3x
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 18:31:44 +0200
+	id 1DOI97-0004eD-Ed
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 18:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261716AbVDTQfy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 12:35:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261718AbVDTQfy
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 12:35:54 -0400
-Received: from dialin-145-254-143-183.arcor-ip.net ([145.254.143.183]:4225
-	"EHLO macavity") by vger.kernel.org with ESMTP id S261716AbVDTQfm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 12:35:42 -0400
-Received: from martin by macavity with local (Exim 4.34)
-	id 1DOI9A-0003n8-Op; Wed, 20 Apr 2005 18:33:52 +0200
-To: Git Mailing List <git@vger.kernel.org>
-Mail-Followup-To: Martin Uecker <muecker@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050420155734.GA13575@macavity>
-User-Agent: Mutt/1.5.6+20040907i
+	id S261718AbVDTQiC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 12:38:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261723AbVDTQiC
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 12:38:02 -0400
+Received: from ns.suse.de ([195.135.220.2]:33206 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261718AbVDTQhm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 12:37:42 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 43E2B1609676;
+	Wed, 20 Apr 2005 18:37:41 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504200833580.6467@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
---GvXjxJ+pjyke8COw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Apr 20, 2005 at 05:57:34PM +0200, Martin Uecker wrote:
-> On Wed, Apr 20, 2005 at 11:28:20AM -0400, C. Scott Ananian wrote:
->=20
-> > Yes, I guess this is the detail I was going to abandon. =3D)
-> >=20
-> > I viewed the fact that the top-level hash was dependent on the exact ch=
-unk=20
-> > makeup a 'misfeature', because it doesn't allow easy interoperability w=
-ith=20
-> > existing non-chunked repos.
->=20
-> I thought this as a misfeature too before I realized how
-> many advantages this has.
-
-To make it more clear: Ofcourse it is a bug if the
-hash depends on unimportant implementation details.
-
-But a hash which is calculated recusively from
-subhashes is a lot more usefull than a hash
-which can only be calculated from the entire data
-at once. And if this hash can be recalculated
-cheaply from subhashes even if some data was
-inserted somewhere this is an even more usefull
-thing.
-
-Martin
-
---=20
-One night, when little Giana from Milano was fast asleep,
-she had a strange dream.
-
-
---GvXjxJ+pjyke8COw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+--Boundary-00=_SVoZC/UDV5K3uhy
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
+On Wednesday 20 April 2005 11:40, Linus Torvalds wrote:
+> On Wed, 20 Apr 2005, Chris Mason wrote:
+> > Thanks for looking at this.  Your new tree is faster, it gets the commit
+> > 100 patches time down from 1m5s to 50s.
+>
+> It really _shouldn't_ be faster. It still does the compression, and throws
+> the end result away.
 
-iD8DBQFCZoRmYDJInvULMKYRAtSXAKCJ9lN4He0ubuH9v9bKjdXtvNbAGQCfZRNk
-SQfXfpyV9j7XOLfQT3QNlv4=
-=EgID
------END PGP SIGNATURE-----
+Well, that's a little odd.  I had thought about making sure you did this 
+change and forgotten.  1 minute benchmarks are a horrible idea since they run 
+into noise with cache writebacks.  I should know better...
 
---GvXjxJ+pjyke8COw--
+At any rate, the time for a single write-tree is pretty consistent.  Before it 
+was around .5 seconds, and with this change it goes down to .128s.  My patch 
+was .024.
+
+The 100 patch time is down to 32s (3 run average).  This is close enough that 
+I don't think my patch is worth it if no other part of git can benefit from 
+having trees in the index.
+
+>
+> To actually go faster, it _should_ need this patch. Untested. See if it
+> works..
+
+Thanks. This one missed the filling in the returnsha1.  New patch attached.
+
+-chris
+
+--Boundary-00=_SVoZC/UDV5K3uhy
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="file-check.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="file-check.diff"
+
+diff -u linus.back/sha1_file.c linus/sha1_file.c
+--- linus.back/sha1_file.c	2005-04-20 12:31:00.240181016 -0400
++++ linus/sha1_file.c	2005-04-20 12:13:56.339837528 -0400
+@@ -173,12 +173,27 @@
+ 	z_stream stream;
+ 	unsigned char sha1[20];
+ 	SHA_CTX c;
++	char *filename;
++	int fd;
+ 
+ 	/* Sha1.. */
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, buf, len);
+ 	SHA1_Final(sha1, &c);
+ 
++	filename = sha1_file_name(sha1);
++	fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
++	if (fd < 0) {
++		if (errno != EEXIST)
++			return -1;
++
++		/*
++		 * We might do collision checking here, but we'd need to
++		 * uncompress the old file and check it. Later.
++		 */
++		goto out;
++	}
++
+ 	/* Set it up */
+ 	memset(&stream, 0, sizeof(stream));
+ 	deflateInit(&stream, Z_BEST_COMPRESSION);
+@@ -195,8 +210,10 @@
+ 	deflateEnd(&stream);
+ 	size = stream.total_out;
+ 
+-	if (write_sha1_buffer(sha1, compressed, size) < 0)
+-		return -1;
++	if (write(fd, compressed, size) != size)
++		die("unable to write file");
++	close(fd);
++out:		
+ 	if (returnsha1)
+ 		memcpy(returnsha1, sha1, 20);
+ 	return 0;
+
+--Boundary-00=_SVoZC/UDV5K3uhy--
