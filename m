@@ -1,58 +1,49 @@
-From: "C. Scott Ananian" <cscott@cscott.net>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 11:52:02 -0400 (EDT)
-Message-ID: <Pine.LNX.4.61.0504201147280.2630@cag.csail.mit.edu>
-References: <200504191250.10286.mason@suse.com> <200504192049.21947.mason@suse.com>
- <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org> <200504201122.35448.mason@suse.com>
- <Pine.LNX.4.61.0504201128550.2630@cag.csail.mit.edu>
- <Pine.LNX.4.58.0504200840240.6467@ppc970.osdl.org>
+From: Erik Mouw <erik@harddisk-recovery.com>
+Subject: Re: enforcing DB immutability
+Date: Wed, 20 Apr 2005 17:57:23 +0200
+Organization: Harddisk-recovery.com
+Message-ID: <20050420155723.GC27307@harddisk-recovery.com>
+References: <20050420084115.2699.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 17:49:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, mingo@elte.hu
+X-From: git-owner@vger.kernel.org Wed Apr 20 17:54:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOHQt-0004Sj-6Z
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 17:48:07 +0200
+	id 1DOHVp-0005Ol-IU
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 17:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261701AbVDTPwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 11:52:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261700AbVDTPwV
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 11:52:21 -0400
-Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:42896 "EHLO
-	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
-	id S261701AbVDTPwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 11:52:17 -0400
-Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
-	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
-	id 1DOHUt-0000Z5-00; Wed, 20 Apr 2005 11:52:15 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504200840240.6467@ppc970.osdl.org>
+	id S261702AbVDTP51 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 11:57:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261709AbVDTP51
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 11:57:27 -0400
+Received: from dtp.xs4all.nl ([80.126.206.180]:59703 "HELO bitwizard.nl")
+	by vger.kernel.org with SMTP id S261703AbVDTP5Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 11:57:24 -0400
+Received: (qmail 4715 invoked by uid 501); 20 Apr 2005 15:57:23 -0000
+To: linux@horizon.com
+Content-Disposition: inline
+In-Reply-To: <20050420084115.2699.qmail@science.horizon.com>
+User-Agent: Mutt/1.3.28i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Apr 2005, Linus Torvalds wrote:
+On Wed, Apr 20, 2005 at 08:41:15AM -0000, linux@horizon.com wrote:
+> [A discussion on the git list about how to provide a hardlinked file
+> that *cannot* me modified by an editor, but must be replaced by
+> a new copy.]
 
->> I was considering using a chunked representation for *all* files (not just
->> blobs), which would avoid the original 'trees must reference other trees
->> or they become too large' issue -- and maybe the performance issue you're
->> referring to, as well?
-> No. The most common index file operation is reading, and that's the one
-> that has to be _fast_. And it is - it's a single "mmap" and some parsing.
+Some time ago there was somebody working on copy-on-write links: once
+you modify a cow-linked file, the file contents are copied, the file is
+unlinked and you can safely work on the new file. It has some horrible
+semantics in that the inode number of the opened file changes, I don't
+know if applications are or should be aware of that.
 
-OK, sure.  But how 'bout chunking trees?  Are you grown happy with the new 
-trees-reference-other-trees paradigm, or is there a deep longing in your 
-heart for the simplicity of 'trees-reference-blobs-period'?  I'm fairly
-certain that chunking could get you the space-savings you need without 
-multi-level trees, if the simplicity of that is still appealing.
 
-Not necessarily for rev.1 of the chunking code, but I'm curious as to 
-whether it's still of interest at all.  I don't know exactly how far
-ingrained multilevel trees have become since they were adopted.
-  --scott
+Erik
 
-Japan explosion BLUEBIRD Honduras jihad D5 SLBM Diplomat overthrow 
-JMTIDE CABOUNCE AMTHUG ESODIC Kennedy AVBRANDY CLOWER mail drop PHOENIX
-                          ( http://cscott.net/ )
+-- 
++-- Erik Mouw -- www.harddisk-recovery.com -- +31 70 370 12 90 --
+| Lab address: Delftechpark 26, 2628 XH, Delft, The Netherlands
