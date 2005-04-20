@@ -1,57 +1,52 @@
-From: "Joshua T. Corbin" <jcorbin@wunjo.org>
-Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
-Date: Wed, 20 Apr 2005 17:58:18 -0400
-Message-ID: <200504201758.18456.jcorbin@wunjo.org>
-References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <4266CED2.60806@timesys.com>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: [ANNOUNCEMENT] /Arch/ embraces `git'
+Date: Wed, 20 Apr 2005 17:55:59 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504201754450.2630@cag.csail.mit.edu>
+References: <200504201000.DAA04988@emf.net> <20050420213114.GF19112@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Apr 20 23:55:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Tom Lord <lord@emf.net>, gnu-arch-users@gnu.org,
+	gnu-arch-dev@lists.seyza.com, git@vger.kernel.org,
+	talli@museatech.net, torvalds@osdi.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 23:58:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DON9g-0004LE-O2
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 23:54:45 +0200
+	id 1DONCd-0004k7-Hq
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 23:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261827AbVDTV6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 17:58:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261831AbVDTV6k
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 17:58:40 -0400
-Received: from node1.wunjo.org ([64.62.190.230]:55977 "EHLO node1.wunjo.org")
-	by vger.kernel.org with ESMTP id S261827AbVDTV62 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 17:58:28 -0400
-Received: by node1.wunjo.org (Postfix, from userid 65534)
-	id 7239742EDD; Wed, 20 Apr 2005 17:58:25 -0400 (EDT)
-Received: from [192.168.1.114] (ctt186167.ceinetworks.com [216.169.186.167])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by node1.wunjo.org (Postfix) with ESMTP id 8635842BA0
-	for <git@vger.kernel.org>; Wed, 20 Apr 2005 17:58:21 -0400 (EDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
-In-Reply-To: <4266CED2.60806@timesys.com>
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=ham 
-	version=3.0.2
+	id S261609AbVDTWCD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 18:02:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261830AbVDTWCD
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 18:02:03 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:33459 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261609AbVDTWB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 18:01:59 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DONB4-0003Pc-00; Wed, 20 Apr 2005 17:56:10 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050420213114.GF19112@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 20 April 2005 17:51, Mike Taht wrote:
-> I keep thinking perversely that we need something as obtuse as possible
-> in the unix tradition, but easy to type... git requires that the fingers
-> move off the home row...
->
-> how about "asdf" or "jkl"?  :)
->
-> cg is singularly uncomfortable to type. I think that's why it isn't
-> commonly used.....
-Hmm...got to disagree, cg is perfectly comfortable to type here on my dvorak, 
-whilst asdf ad jkl are uncomfortable deviations accross the board ;-)
+On Wed, 20 Apr 2005, Petr Baudis wrote:
 
--- 
-Regards,
-Joshua T. Corbin <jcorbin@wunjo.org>
+> I think one thing git's objects database is not very well suited for are
+> network transports. You want to have something smart doing the
+> transports, comparing trees so that it can do some delta compression;
+> that could probably reduce the amount of data needed to be sent
+> significantly.
+
+I'm hoping my 'chunking' patches will fix this.  This ought to reduce the 
+size of the object store by (in effect) doing delta compression; rsync
+will then Do The Right Thing and only transfer the needed deltas.
+Running some benchmarks right now to see how well it lives up to this 
+promise...
+  --scott
+
+terrorist AEROPLANE munitions PAPERCLIP MI5 Morwenstow WSHOOFS CABOUNCE 
+colonel Yakima AES MI6 nuclear NSA Cocaine Columbia plastique LICOZY
+                          ( http://cscott.net/ )
