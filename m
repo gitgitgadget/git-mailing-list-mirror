@@ -1,57 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] write-tree performance problems
-Date: Wed, 20 Apr 2005 09:41:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504200939290.6467@ppc970.osdl.org>
-References: <200504191250.10286.mason@suse.com> <200504192049.21947.mason@suse.com>
- <Pine.LNX.4.58.0504192337120.6467@ppc970.osdl.org> <200504201122.35448.mason@suse.com>
- <Pine.LNX.4.58.0504200833580.6467@ppc970.osdl.org>
- <Pine.LNX.4.58.0504200931020.6467@ppc970.osdl.org>
+From: Zlatko Calusic <zlatko.calusic@iskon.hr>
+Subject: Re: [GIT PATCH] I2C and W1 bugfixes for 2.6.12-rc2
+Date: Wed, 20 Apr 2005 18:56:11 +0200
+Message-ID: <dnbr898k0k.fsf@magla.zg.iskon.hr>
+References: <20050419043938.GA23724@kroah.com>
+	<20050419185807.GA1191@kroah.com>
+	<Pine.LNX.4.58.0504191204480.19286@ppc970.osdl.org>
+	<426583D5.2020308@mesatop.com>
+	<Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org>
+Reply-To: zlatko.calusic@iskon.hr
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 18:36:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 20 18:53:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOIAf-0004uG-Rz
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 18:35:26 +0200
+	id 1DOIQt-0007nc-2e
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 18:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261729AbVDTQjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 12:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261722AbVDTQj0
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 12:39:26 -0400
-Received: from fire.osdl.org ([65.172.181.4]:35506 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261721AbVDTQjX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 12:39:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KGdJs4009929
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 09:39:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KGdHB6012967;
-	Wed, 20 Apr 2005 09:39:18 -0700
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <Pine.LNX.4.58.0504200931020.6467@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261737AbVDTQ4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 12:56:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVDTQ4Y
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 12:56:24 -0400
+Received: from mxout2.iskon.hr ([213.191.128.16]:39587 "HELO mxout2.iskon.hr")
+	by vger.kernel.org with SMTP id S261737AbVDTQ4R (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 12:56:17 -0400
+Received: (qmail 12896 invoked from network); 20 Apr 2005 18:56:14 +0200
+X-Remote-IP: 213.191.142.122
+Received: from unknown (HELO mx.iskon.hr) (213.191.142.122)
+  by mxout2.iskon.hr with SMTP; 20 Apr 2005 18:56:14 +0200
+Received: (qmail 2347 invoked from network); 20 Apr 2005 18:56:13 +0200
+X-Remote-IP: 213.191.128.21
+Received: from oganj.iskon.hr (HELO magla.zg.iskon.hr) (213.191.128.21)
+  by mx.iskon.hr with SMTP; 20 Apr 2005 18:56:13 +0200
+Received: (qmail 4838 invoked by uid 804); 20 Apr 2005 18:56:13 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+X-Face: s71Vs\G4I3mB$X2=P4h[aszUL\%"`1!YRYl[JGlC57kU-`kxADX}T/Bq)Q9.$fGh7lFNb.s
+ i&L3xVb:q_Pr}>Eo(@kU,c:3:64cR]m@27>1tGl1):#(bs*Ip0c}N{:JGcgOXd9H'Nwm:}jLr\FZtZ
+ pri/C@\,4lW<|jrq^<):Nk%Hp@G&F"r+n1@BoH
+In-Reply-To: <Pine.LNX.4.58.0504191525290.2274@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 19 Apr 2005 15:38:17 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> Real merges have no patches taking place _anywhere_. And they take about 
+> half a second. Doing an "update" of your tree should _literally_ boil down 
+> to
+>
+> 	#
+> 	# "repo" needs to point to the repo we update from
+> 	#
+> 	rsync -avz --ignore-existing $repo/objects/. .git/objects/.
 
-On Wed, 20 Apr 2005, Linus Torvalds wrote:
-> 
-> NO! Don't see if this works. For the "sha1 file already exists" file, it 
-> forgot to return the SHA1 value in "returnsha1", and would thus corrupt 
-> the trees it wrote.
+I see this -avz incantation mentioned everytime when rsync is
+involved. But, is the -z part (compression) really necessary knowing
+that we're dealing with an already compressed tree? Doesn't it put
+additional strain on the rsync server without any benefit in this
+case?
 
-Proper version with fixes checked in. For me, it brings down the time to
-write a kernel tree from 0.34s to 0.24s, so a third of the time was just
-compressing objects that we ended up already having.
+Or I might be too ignorant and not understand some internals well, but
+then... I would like to know the reason. :)
 
-Two thirds to go ;)
-
-		Linus
+Regards,
+-- 
+Zlatko
