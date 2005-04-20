@@ -1,71 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: on when to checksum
-Date: Wed, 20 Apr 2005 16:07:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504201601130.6467@ppc970.osdl.org>
-References: <200504202252.PAA16837@emf.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 01:01:28 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOOBw-00047W-Tq
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 01:01:09 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261830AbVDTXFW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 19:05:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261835AbVDTXFW
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 19:05:22 -0400
-Received: from fire.osdl.org ([65.172.181.4]:36564 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261830AbVDTXFP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 19:05:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KN5Ds4014344
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 16:05:13 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KN5CkY001832;
-	Wed, 20 Apr 2005 16:05:13 -0700
-To: Tom Lord <lord@emf.net>
-In-Reply-To: <200504202252.PAA16837@emf.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+From: Tom Lord <lord@emf.net>
+Subject: Re: [ANNOUNCEMENT] /Arch/ embraces `git'
+Date: Wed, 20 Apr 2005 16:04:00 -0700 (PDT)
+Message-ID: <200504202304.QAA17069@emf.net>
+References: <877jixfjxw.fsf@star.lifl.fr>
+Cc: gnu-arch-users@gnu.org, gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
+X-From: gnu-arch-dev-bounces@lists.seyza.com Thu Apr 21 01:01:46 2005
+Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
+Received: from [207.166.200.220] (helo=hera.museatech.net)
+	by ciao.gmane.org with smtp (Exim 4.43)
+	id 1DOOC8-00049p-28
+	for gcvad-gnu-arch-dev@gmane.org; Thu, 21 Apr 2005 01:01:20 +0200
+Received: (qmail 11137 invoked by uid 110); 20 Apr 2005 23:05:38 -0000
+Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
+ (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
+ Processed in 3.356656 secs); 20 Apr 2005 23:05:38 -0000
+Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
+  by hera.museatech.net with SMTP; 20 Apr 2005 23:05:34 -0000
+Delivered-To: list-gnu-arch-dev@lists.seyza.com
+Received: (qmail 11086 invoked by uid 110); 20 Apr 2005 23:05:26 -0000
+Received: from lord@emf.net by hera by uid 102 with qmail-scanner-1.20 
+	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
+	Processed in 3.540126 secs); 20 Apr 2005 23:05:26 -0000
+Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
+	by hera.museatech.net with SMTP; 20 Apr 2005 23:05:22 -0000
+Received: (qmail 28310 invoked from network); 21 Apr 2005 00:19:34 -0000
+Received: from emf.emf.net (HELO emf.net) (205.149.0.19)
+	by a1.mx.alal.us with SMTP; 21 Apr 2005 00:19:32 -0000
+Received: (from lord@localhost) by emf.net (K/K) id QAA17069;
+	Wed, 20 Apr 2005 16:04:00 -0700 (PDT)
+To: duchier@ps.uni-sb.de
+In-reply-to: <877jixfjxw.fsf@star.lifl.fr> (duchier@ps.uni-sb.de)
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.6 required=9.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.2
+X-BeenThere: gnu-arch-dev@lists.seyza.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
+List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
+	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
+List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
+List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
+List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
+List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
+	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
+Sender: gnu-arch-dev-bounces@lists.seyza.com
+Errors-To: gnu-arch-dev-bounces@lists.seyza.com
+X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
 
 
 
-On Wed, 20 Apr 2005, Tom Lord wrote:
-> 
-> How many times per day do you invoke `write-tree' and why?
 
-Every single commit does a write-tree, so when I merge with Andrew, it's 
-usually a series of 100-250 of them in a row.
+   From: duchier@ps.uni-sb.de
 
-(Actually, _usualyl_ it's smaller series, but it's the big series that can
-be painful enough to matter).
+Thank you for your experiment.  I'm not surprised by the 
+result but it is very nice to know that my expectations
+are right.
 
-> It takes a large multiple of `0.3s' to get me to take you seriously
-> on this point.
+I think that to a large extent you are seeing artifacts
+of the questionable trade-offs that (reports tell me) the
+ext* filesystems make.   With a different filesystem, the 
+results would be very different.
 
-The thing is, I don't "trickle" things in. That would be horribly 
-inefficient for me. So I go over the patches, make a mbox, and do them all 
-in one go. And then they need to happen _fast_. If it takes 20 minutes, I 
-go away for coffee or something, and then if something didn't apply 
-half-way through, I will have lost my "context".
+I'm imagining a blob database containing may revisions of the linux
+kernel.  It will contain millions of blobs.
 
-That's why I want things instant. Not because I have huge daily throughput 
-issues, but I have huge _latency_ issues. 
+It's fine that some filesystems and some blob operations work fine
+on a directory with millions of files but what about other operations
+on the database?   I pity the poor program that has to `readdir' through
+millions of files.
 
-I considered doing a "two-level" thing, where I first did the stuff in a
-light-weigth patch manager, and then batched things up in the background
-for the real thing. But the fact is, I don't think it's needed. Not the
-way git performs now. If I can apply a hundred patches in a minute or two,
-I have not "lost the context" if it turns out that there is some silly
-glitch with one of them.
+That said: I may add an optional flat-directory format to my library,
+just to avoid issues such as those you raise over the next couple 
+years.
 
-		Linus
+-t
