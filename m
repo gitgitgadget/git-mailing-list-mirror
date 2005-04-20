@@ -1,52 +1,134 @@
-From: David Meybohm <dmeybohmlkml@bellsouth.net>
-Subject: Re: SHA1 hash safety
-Date: Wed, 20 Apr 2005 14:56:53 -0400
-Message-ID: <20050420185653.GA3076@localhost>
-References: <Pine.LNX.4.62.0504160519330.21837@qynat.qvtvafvgr.pbz> <20050416123155.GA19908@elte.hu> <Pine.LNX.4.62.0504160542190.21837@qynat.qvtvafvgr.pbz> <4261132A.3090907@khandalf.com> <Pine.LNX.4.61.0504161040310.29343@cag.csail.mit.edu> <4261852B.6090507@khandalf.com> <20050418074323.GA29765@hexapodia.org> <20050419223027.GA26100@localhost> <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] write-tree performance problems
+Date: Wed, 20 Apr 2005 15:04:58 -0400
+Message-ID: <200504201504.59541.mason@suse.com>
+References: <200504191250.10286.mason@suse.com> <200504201323.05447.mason@suse.com> <Pine.LNX.4.58.0504201040400.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Isaacson <adi@hexapodia.org>, omb@bluewin.ch,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 20 20:53:27 2005
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_bfqZCE4E/ZEDLge"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 20 21:02:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOKJc-0001d3-N5
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 20:52:49 +0200
+	id 1DOKRr-0002ve-25
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 21:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261471AbVDTS5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 14:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261683AbVDTS5B
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 14:57:01 -0400
-Received: from imf17aec.mail.bellsouth.net ([205.152.59.65]:29570 "EHLO
-	imf17aec.mail.bellsouth.net") by vger.kernel.org with ESMTP
-	id S261471AbVDTS44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 14:56:56 -0400
-Received: from localhost ([65.10.203.194]) by imf17aec.mail.bellsouth.net
-          (InterMail vM.5.01.06.11 201-253-122-130-111-20040605) with ESMTP
-          id <20050420185656.LEUH2434.imf17aec.mail.bellsouth.net@localhost>;
-          Wed, 20 Apr 2005 14:56:56 -0400
-To: "C. Scott Ananian" <cscott@cscott.net>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.61.0504191848300.29929@cag.csail.mit.edu>
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.5) Gecko/20030927
+	id S261530AbVDTTFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 15:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261687AbVDTTFX
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 15:05:23 -0400
+Received: from mail.suse.de ([195.135.220.2]:43659 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261530AbVDTTFH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 15:05:07 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 25C49160A3B1;
+	Wed, 20 Apr 2005 21:05:06 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504201040400.6467@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 19, 2005 at 06:48:57PM -0400, C. Scott Ananian wrote:
-> On Tue, 19 Apr 2005, David Meybohm wrote:
-> 
-> >But doesn't this require assuming the distribution of MD5 is uniform,
-> >and don't the papers finding collisions in less show it's not? So, your
-> >birthday-argument for calculating the probability wouldn't apply, because
-> >it rests on the assumption MD5 is uniform, and it isn't.
-> 
-> No, the collision papers don't show this at all.
+--Boundary-00=_bfqZCE4E/ZEDLge
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-I didn't mean they showed it directly. I meant by finding collisions in
-MD5 quickly, MD5 would have to have some non-uniformity. But that's
-nevertheless wrong because uniformness and collision finding ability
-aren't related. Sorry to have wasted everyone's time.
+On Wednesday 20 April 2005 13:52, Linus Torvalds wrote:
+> On Wed, 20 Apr 2005, Chris Mason wrote:
+> > The patch below with your current tree brings my 100 patch test down to
+> > 22 seconds again.
+>
+> If you ever have a cache_entry bigger than 16384, your code will write
+> things out in the wrong order (write the new cache without flushing the
+> old buffer).
 
-Dave
+Whoops
+
+> Finally, if you really want to go fast, you should really try to make your
+> writes powers-of-two, ie fill up the buffer entirely rather than saying
+> "if I were to overflow, flush it now". It doesn't matter that much for
+> some filesystems (especially local and append-only like the patterns are
+> here), but it can definitely matter for the stupid ones.
+
+Well, the difference there should be pretty hard to see with any benchmark.
+But I was being lazy...new patch attached.  This one gets the same perf 
+numbers, if this is still wrong then I really need some more coffee.
+
+-chris
+
+
+--Boundary-00=_bfqZCE4E/ZEDLge
+Content-Type: text/x-diff;
+  charset="iso-8859-1";
+  name="read-cache-fast.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="read-cache-fast.diff"
+
+--- linus.back/read-cache.c	2005-04-20 10:14:23.268310000 -0400
++++ linus/read-cache.c	2005-04-20 14:54:28.554518320 -0400
+@@ -232,11 +232,13 @@
+ 	SHA_CTX c;
+ 	struct cache_header hdr;
+ 	int i;
++	#define BUFLEN 16384
++	static char buf[BUFLEN];
++	int len = 0;
+ 
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+ 	hdr.hdr_version = htonl(1);
+ 	hdr.hdr_entries = htonl(entries);
+-
+ 	SHA1_Init(&c);
+ 	SHA1_Update(&c, &hdr, offsetof(struct cache_header, sha1));
+ 	for (i = 0; i < entries; i++) {
+@@ -246,13 +248,37 @@
+ 	}
+ 	SHA1_Final(hdr.sha1, &c);
+ 
+-	if (write(newfd, &hdr, sizeof(hdr)) != sizeof(hdr))
+-		return -1;
+-
++	/* hdr is small right now, but just
++	 * in case someone changes that...
++	 */
++	if (sizeof(hdr) < BUFLEN) {
++		memcpy(buf, &hdr, sizeof(hdr));
++		len += sizeof(hdr);
++	} else {
++		if (write(newfd, &hdr, sizeof(hdr)) != sizeof(hdr))
++			return -1;
++	}
+ 	for (i = 0; i < entries; i++) {
+ 		struct cache_entry *ce = cache[i];
+ 		int size = ce_size(ce);
+-		if (write(newfd, ce, size) != size)
++		char *p = (char *)ce;
++		while(size > 0) {
++			int count = size;
++			if (count > BUFLEN - len)
++				count = BUFLEN - len;
++			memcpy(buf + len, p, count);
++			size -= count;
++			len += count;
++			p += count;
++			if (len == BUFLEN) {
++				if (write(newfd, buf, len) != len)
++					return -1;
++				len = 0;
++			}
++		}
++	}
++	if (len) {
++		if (write(newfd, buf, len) != len)
+ 			return -1;
+ 	}
+ 	return 0;
+
+--Boundary-00=_bfqZCE4E/ZEDLge--
