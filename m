@@ -1,72 +1,72 @@
-From: Tom Lord <lord@emf.net>
-Subject: on when to checksum
-Date: Wed, 20 Apr 2005 15:25:07 -0700 (PDT)
-Message-ID: <200504202225.PAA15992@emf.net>
-Cc: torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 00:22:33 2005
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: chunking (Re: [ANNOUNCEMENT] /Arch/ embraces `git')
+Date: Wed, 20 Apr 2005 15:22:12 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504201510520.6467@ppc970.osdl.org>
+References: <200504201000.DAA04988@emf.net> <20050420213114.GF19112@pasky.ji.cz>
+ <Pine.LNX.4.61.0504201754450.2630@cag.csail.mit.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Tom Lord <lord@emf.net>,
+	gnu-arch-users@gnu.org, gnu-arch-dev@lists.seyza.com,
+	Git Mailing List <git@vger.kernel.org>, talli@museatech.net
+X-From: git-owner@vger.kernel.org Thu Apr 21 00:23:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DONZf-00087q-Jt
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 00:21:35 +0200
+	id 1DONaH-0008Ct-NC
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 00:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261834AbVDTWZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 18:25:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261835AbVDTWZS
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 18:25:18 -0400
-Received: from emf.emf.net ([205.149.0.19]:38670 "EHLO emf.net")
-	by vger.kernel.org with ESMTP id S261834AbVDTWZJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 18:25:09 -0400
-Received: (from lord@localhost) by emf.net (K/K) id PAA15992; Wed, 20 Apr 2005 15:25:07 -0700 (PDT)
-To: git@vger.kernel.org
+	id S261835AbVDTW0V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 18:26:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261836AbVDTW0V
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 18:26:21 -0400
+Received: from fire.osdl.org ([65.172.181.4]:8388 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261835AbVDTW0E (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 18:26:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3KMKEs4010755
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Apr 2005 15:20:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3KMKDow032000;
+	Wed, 20 Apr 2005 15:20:13 -0700
+To: "C. Scott Ananian" <cscott@cscott.net>
+In-Reply-To: <Pine.LNX.4.61.0504201754450.2630@cag.csail.mit.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
 
-Linus, 
+On Wed, 20 Apr 2005, C. Scott Ananian wrote:
+> 
+> I'm hoping my 'chunking' patches will fix this.  This ought to reduce the 
+> size of the object store by (in effect) doing delta compression; rsync
+> will then Do The Right Thing and only transfer the needed deltas.
+> Running some benchmarks right now to see how well it lives up to this 
+> promise...
 
-I think you have made a mistake by moving the sha1 checksum from the
-zipped form to the inflated form.  Here is why:
+What's the disk usage results? I'm on ext3, for example, which means that
+even small files invariably take up 4.125kB on disk (with the inode).
 
-What you have set in motion with `git' is an ad-hoc p2p network for
-sharing filesystem trees -- a global distributed filesystem.  I
-believe your starter here has a good chance of taking off to be much,
-much larger than just a tool for the kernel.
+Even uncompressed, most source files tend to be small. Compressed, I'm 
+seeing the median blob size being ~1.6kB in my trivial checks. That's 
+blobs only, btw.
 
-A subset of your work: blobs and blob databaes, has much wider application
-than just sharing trees:  Those parts of `git' can form a very solid 
-foundation for many other applications as well.   To the extent `git'
-succeeds in the context of the kernel, it will be invested in and
-extended and generalized --- and the kernel project will benefit.
-So don't ignore those wider applications even though they are not your
-focus today: they will generate investment that feeds back to your project.
+My point being that about 75% of all blobs already take up less than the
+minimal amount of space that most filesystems can sanely allocate. And I'm
+_not_ going to say "you have to use reiserfs" with git.
 
-Your `git' is silent on transports and mirroring of blob databases --
-tasks for scripting, sure -- but those elements won't be far behind.
+So the disk fragmentation really does matter. It doesn't help to make a 
+file smaller than 4kB, it hurts - while that can be offset by sharing 
+chunks, it might not be.
 
-Eventually, slinging around blobs as atomic elements
-of payloads will become very common.
+Also, while network performance is important, so is the handshaking on
+which objects to get. Lots of small objects potentially need lots of
+handshaking to figure out _which_ of the objects to do.
 
-The blob handle (aka "address")/payload model of a blob db is very
-clean and simple.   In a network of nodes speaking to one and other
-by exchanging blobs, I forsee a prominent need for intermediate
-nodes that process blobs "blindly" and as quickly as possible.
-
-Blob compression is mostly goofy if regarded just as a way to 
-save on (diminishingly cheap) disk space but it is mostly 
-sane if regarded as a way to cut the cost of network bandwidth
-roughly in half.
-
-Must intermediate nodes inflate the payloads passing through them
-or which they cache just to validate them?   That's not a desirable otucome
-for many obvious reasonhs.
-
-There *are* concerns about checksumming zips: it is necessary to nail
-down the zip process and make sure it is absolutely and permanently
-deterministic for this application.   But *that* is the problem to 
-solve, not avoid by moving what the checksum refers to.
-
-Thanks,
--t
+		Linus
