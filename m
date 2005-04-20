@@ -1,91 +1,72 @@
-From: Ray Lee <ray-lk@madrabbit.org>
+From: Ray Lee <ray@madrabbit.org>
 Subject: Re: [darcs-devel] Darcs and git: plan of action
-Date: Tue, 19 Apr 2005 18:11:43 -0700
+Date: Tue, 19 Apr 2005 18:22:45 -0700
 Organization: http://madrabbit.org/
-Message-ID: <1113959503.29444.91.camel@orca.madrabbit.org>
-References: <20050418210436.23935.qmail@science.horizon.com>
-	 <1113869248.23938.94.camel@orca.madrabbit.org>
-	 <42645969.2090609@qualitycode.com>
-	 <1113874931.23938.111.camel@orca.madrabbit.org>
-	 <4264677A.9090003@qualitycode.com>
-	 <1113950442.29444.31.camel@orca.madrabbit.org>
-	 <42658E38.1020406@qualitycode.com>
-	 <1113951972.29444.42.camel@orca.madrabbit.org>
-	 <426594F9.4090002@tupshin.com>
+Message-ID: <1113960166.29444.102.camel@orca.madrabbit.org>
+References: <7ivf6lm594.fsf@lanthane.pps.jussieu.fr>
+	 <20050418122011.GA13769@abridgegame.org>
+	 <7iy8bf7fh2.fsf@lanthane.pps.jussieu.fr>
+	 <1113874991.23938.113.camel@orca.madrabbit.org>
+	 <7i7jizyy4i.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Kevin Smith <yarcs@qualitycode.com>, git@vger.kernel.org,
-	darcs-devel@darcs.net
-X-From: git-owner@vger.kernel.org Wed Apr 20 03:07:57 2005
+Cc: darcs-devel@darcs.net, git@vger.kernel.org,
+	Kevin Smith <yarcs@qualitycode.com>
+X-From: git-owner@vger.kernel.org Wed Apr 20 03:19:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DO3gm-0004f1-NO
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 03:07:38 +0200
+	id 1DO3rV-0005jF-EC
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 03:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261179AbVDTBLs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Apr 2005 21:11:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261202AbVDTBLs
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 21:11:48 -0400
-Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]:16871 "EHLO
-	madrabbit.org") by vger.kernel.org with ESMTP id S261179AbVDTBLp
+	id S261179AbVDTBWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Apr 2005 21:22:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261202AbVDTBWu
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Apr 2005 21:22:50 -0400
+Received: from sb0-cf9a48a7.dsl.impulse.net ([207.154.72.167]:18407 "EHLO
+	madrabbit.org") by vger.kernel.org with ESMTP id S261179AbVDTBWs
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Apr 2005 21:11:45 -0400
+	Tue, 19 Apr 2005 21:22:48 -0400
 Received: from orca.madrabbit.org (orca.madrabbit.org [192.168.1.51])
 	by madrabbit.org (Postfix) with ESMTP
-	id 48B294C0AC5; Tue, 19 Apr 2005 18:11:44 -0700 (PDT)
-To: Tupshin Harper <tupshin@tupshin.com>
-In-Reply-To: <426594F9.4090002@tupshin.com>
+	id 1C4594C0844; Tue, 19 Apr 2005 18:22:47 -0700 (PDT)
+To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+In-Reply-To: <7i7jizyy4i.fsf@lanthane.pps.jussieu.fr>
 X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your patience.
-
-On Tue, 2005-04-19 at 16:32 -0700, Tupshin Harper wrote:
-> >Give me a case where assuming it's a replace will do the wrong thing,
-> >for C code, where it's a variable or function name.
-
-> try this:
-> initial patch creates hello.c
-> #include <stdio.h>
+On Tue, 2005-04-19 at 10:22 +0200, Juliusz Chroboczek wrote:
+> > > Aye, that will require some metadata on the git side (the hack,
+> > > suggested by Linus, of using git hashes to notice moves won't work).
 > 
-> int main(int argc, char *argv[])
-> {
->   printf("Hello world!\n");
->   return 0;
-> }
+> > So, why won't it work?
 > 
-> second patch:
-> replace ./hello.c [A-Za-z_0-9] world universe
+> Because two files can legitimately have identical contents without
+> being ``the same'' file from the VC system's point of view.
+> 
+> In other words, two files may happen to have the same contents but
+> have distinct histories.
 
-Aha! Okay, I now see at least part of issue: we're using different
-definitions of 'token.' Yours is quite sensible, in that it matches the
-darcs syntax. However, I'm claiming a token is defined by the file's
-language, and that a replace patch on anything but a token as per those
-language standards is a silly thing.
+Eh, let's not talk using integral/summation view across all the patches
+that ever could have come in against the file. We're hamstringing
+ourselves if we do that, and it's not what darcs does. darcs looks at a
+differential view of the changes, and for a mv, it looks at it when it
+happens.
 
-In your example, I'd claim you did an inter-token edit, as the natural
-token there was "Hello world!\n".
+darcs does a "darcs mv" to commit a "file move patch" to whatever
+logging or patch repository it keeps below the surface.
 
-With that, let me restate what I think is possible.
+The equivalent in git would be to have a given tree, move a file via
+bash's mv, and then checkpoint a new tree. (I'm sure there's details in
+there, but that's plumbing, and what we have Petr for.)
 
-One should be able to discover renames (replaces) of user identifiers in
-C code programmatically. Is that everything darcs replace does?
-Obviously not. Is that what users would usually *want*? If I were using
-it, that's what I'd want (especially including the limited scope of
-replacement -- user identifiers such as variable or function names,
-etc.). But then I'm not a lurker on the darcs user list, so I don't know
-how usage of darcs replace plays out in actual practice.
+A differential comparison of the two trees shows no content changed, but
+a file label was modified. Ergo, a rename occurred.
 
-So, it's a subset. Is it a useful subset? Yes, as it addresses what
-happens during refactoring, which is when I'd usually see this getting
-used. (Syntactically ignorant search and replace is so, y'know,
-*1970s*.)
+QED.
 
-Any clearer?
-
-Ray
+~r.
 
