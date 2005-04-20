@@ -1,58 +1,71 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: git-viz tool for visualising commit trees
-Date: Wed, 20 Apr 2005 21:45:17 +0200
-Message-ID: <20050420194517.GA19112@pasky.ji.cz>
-References: <20050417194818.GG1461@pasky.ji.cz> <20050420100824.GB25477@elte.hu>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] gittrack.sh accepts invalid branch names
+Date: Wed, 20 Apr 2005 15:48:30 -0400
+Message-ID: <1114026510.15186.15.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, oliv__a@users.sourceforge.net
-X-From: git-owner@vger.kernel.org Wed Apr 20 21:42:22 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Apr 20 21:44:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOL4p-0000Fd-0v
-	for gcvg-git@gmane.org; Wed, 20 Apr 2005 21:41:35 +0200
+	id 1DOL7Q-0000bl-CU
+	for gcvg-git@gmane.org; Wed, 20 Apr 2005 21:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261739AbVDTTpi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 15:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261702AbVDTTph
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 15:45:37 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:8412 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261753AbVDTTpV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 15:45:21 -0400
-Received: (qmail 9436 invoked by uid 2001); 20 Apr 2005 19:45:17 -0000
-To: Ingo Molnar <mingo@elte.hu>
-Content-Disposition: inline
-In-Reply-To: <20050420100824.GB25477@elte.hu>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261743AbVDTTsf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 15:48:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261754AbVDTTsf
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 15:48:35 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:27308
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261743AbVDTTsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 15:48:32 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 3C242EFF27; Wed, 20 Apr 2005 15:48:30 -0400 (EDT)
+To: git <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 20, 2005 at 12:08:24PM CEST, I got a letter
-where Ingo Molnar <mingo@elte.hu> told me that...
-> * Petr Baudis <pasky@ucw.cz> wrote:
-> >   just FYI, Olivier Andrieu was kind enough to port his monotone-viz 
-> > tool to git (http://oandrieu.nerim.net/monotone-viz/ - use the one 
-> > from the monotone repository). The tool visualizes the history flow 
-> > nicely; see
-> > for some screenshots.
-> 
-> really nice stuff! Any plans to include it in git-pasky, via 'git gui' 
-> option or so? Also, which particular version has this included - the 
-> freshest tarball on the monotone-viz download site doesnt seem to 
-> include it.
+Hello, Petr and everybody!
 
-AFAIK you need Monotone and grab it from the monotone repository.
+gittrack.sh allows abbreviated branch names, e.g. it's possible to run
+"git track lin" when there is a branch called "linus".
 
-git gui sounds interesting, but perhaps in longer horizon, and perhaps
-not as an integral part of git-pasky. I don't know ocaml and it's rather
-large thing.
+I believe it's a bug, not a feature.  Please look at this line from
+gittrack.sh:
 
-Point'n'drag merges, anyone? ;-))
+grep -q $(echo -e "^$name\t" | sed 's/\./\\./g') .git/remotes
+
+The result of command expansion is subjected to word splitting, which
+means the trailing tab is removed as a space.  So grep doesn't see the
+tab.
+
+The way to avoid word splitting would be to quote "$()", but it would
+make the shell code too hairy.  I'm not even sure all shells would
+interpret "$("$name")" correctly.
+
+So I decided to use tab directly in the sed expression.  I cannot think
+of any portable way to avoid grep completely ("q" is a GNU sed
+extension, and we want to support BSD, I think), so it's still there,
+looking for any output from sed.
+
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+--- a/gittrack.sh
++++ b/gittrack.sh
+@@ -35,7 +35,7 @@ die () {
+ mkdir -p .git/heads
+ 
+ if [ "$name" ]; then
+-	grep -q $(echo -e "^$name\t" | sed 's/\./\\./g') .git/remotes || \
++	sed -ne "/^$name\t/p" .git/remotes | grep -q . || \
+ 		[ -s ".git/heads/$name" ] || \
+ 		die "unknown branch \"$name\""
+ 
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Regards,
+Pavel Roskin
+
