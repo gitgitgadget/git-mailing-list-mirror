@@ -1,84 +1,108 @@
-From: "Randy.Dunlap" <rddunlap@osdl.org>
-Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
-Date: Wed, 20 Apr 2005 22:14:51 -0700
-Organization: OSDL
-Message-ID: <20050420221451.36c98f62.rddunlap@osdl.org>
-References: <20050420205633.GC19112@pasky.ji.cz>
-	<20050420211919.GA20129@kroah.com>
-	<20050420215117.GJ19112@pasky.ji.cz>
-	<Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
-	<20050420222815.GM19112@pasky.ji.cz>
-	<Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org>
-	<20050421033526.GA9404@nevyn.them.org>
-	<Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
+From: Mike Taht <mike.taht@timesys.com>
+Subject: Re: Performance of various compressors
+Date: Wed, 20 Apr 2005 22:14:23 -0700
+Message-ID: <426736AF.7000900@timesys.com>
+References: <426734DE.3040606@timesys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: dan@debian.org, pasky@ucw.cz, greg@kroah.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 07:11:05 2005
+X-From: git-owner@vger.kernel.org Thu Apr 21 07:12:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOTxw-0002Tr-HO
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 07:11:04 +0200
+	id 1DOTyy-0002Ys-92
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 07:12:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261220AbVDUFPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 01:15:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVDUFPK
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 01:15:10 -0400
-Received: from fire.osdl.org ([65.172.181.4]:16851 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261220AbVDUFPB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 01:15:01 -0400
-Received: from midway.verizon.net (wbar2.sea1-4-5-049-023.sea1.dsl-verizon.net [4.5.49.23])
-	(authenticated bits=0)
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3L5Eus3010574
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 20 Apr 2005 22:14:57 -0700
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
-X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i686-pc-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261221AbVDUFQ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 01:16:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261222AbVDUFQ0
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 01:16:26 -0400
+Received: from mail.timesys.com ([65.117.135.102]:46218 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261221AbVDUFQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 01:16:09 -0400
+Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Thu, 21 Apr 2005 01:09:54 -0400
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+In-Reply-To: <426734DE.3040606@timesys.com>
+X-OriginalArrivalTime: 21 Apr 2005 05:09:54.0687 (UTC) FILETIME=[5ADF10F0:01C54630]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 20 Apr 2005 21:00:44 -0700 (PDT) Linus Torvalds wrote:
+Just to clarify this was a git add of the linux-2.6.11.7 sources (sorry, 
+untimed) , and timing the git commit.
 
-| 
-| 
-| On Wed, 20 Apr 2005, Daniel Jacobowitz wrote:
-| > 
-| > My logic: it's a lot more intuitive to say "cg-log | less" to get
-| > paginated output than it is to say "cg-log | cat" to get unpaginated
-| > output.
-| 
-| I disagree.
-| 
-| There is _never_ any valid situation where you do "cg-log" with 
-| unpaginated output to a tty.
-| 
-| In _any_ real system you'll be getting thousands of lines of output. 
-| Possibly millions. unpaginated? What the hell are you talking about?
+Mo betta data latah.
 
-Who in the world would look at thousands or millions of lines on a
-tty using a pager?
+Mike Taht wrote:
+> I started rolling a tool to measure various aspects of git performance. 
+> I will start looking at merge next, and at workloads different from the 
+> kernel (gcc4 anyone?) ...
+> 
+> The only data points worth sharing a this point are:
+> 
+> That doing the compression at a level of 3, rather than the max of 9, 
+> cuts the cpu time required for a big git commit by over half, and that 
+> that actually translates into a win on the I/O to disk. (these tests 
+> were performed on a dual opteron 842)
+> 
+> The benefits of compression aren't very much for git right now.
+> 
+> And: A big git commit is I/O bound. But we knew that. Maybe it's 
+> possible to make it less I/O bound.
+> 
+> Git branch: 7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
+> Tree: 2.6.11.7 source tree
+> Branch: N/a
+> Merge File: N/a
+> HW: dual opteron 242
+> Mem: 1GB
+> Disk: seagate barracuda
+> Filesystem: Reiser3
+> Git add: N/a
+> Cache: Hot
+> Git Commit: 44.97user 5.94system 1:45.24elapsed 48%CPU
+> Git Merge:
+> Options:
+> Feature: Test of compression=9 (std git)
+> 
+> du -s .git/objects  110106  # du is probably not the right thing
+> du -s --apparent-size .git/objects 58979
+> 
+> Git branch: 9e272677621c91784cf2533123a41745178f0701
+> Tree: 2.6.11.7 source tree
+> Branch: N/a
+> Merge File: N/a
+> HW: dual opteron 242
+> Mem: 1GB
+> Disk: seagate barracuda
+> Disk mode: udma5
+> Filesystem: Reiser3
+> Git add: N/a
+> Cache: Hot
+> Git Commit: 16.79user 6.15system 1:21.92elapsed 28%CPU
+> Git Merge:
+> Options:
+> Feature: Test of compression=3 (std git)
+> 
+> du -s .git/objects  115218
+> du -s --apparent-size .git/objects 64274
+> 
+> There's some variety in the best/worst case timings for I/O for the 
+> compressor=3 case...
+> 
+> 16.79user 6.15system 1:21.92elapsed 28%CPU
+> 16.68user 5.71system 1:13.19elapsed 30%CPU
 
-| And as I pointed out, if the output is not a tty, then both less and more
-| automatically turn into cat, so there's no difference. This change _only_
-| triggers for a tty, and I dare you to show a single relevant project where 
-| it's ok to scroll thousands of lines.
-| 
-| Even git-pasky, which is just a two-week-old project right now outputs 
-| 4338 lines of output to "git log". 
-| 
-| Unpaginated? You must be kidding.
-| 
-| (But if you are _that_ fast a reader, then hey, use "PAGER=cat", and 
-| you'll find yourself happy).
 
----
-~Randy
+-- 
+
+Mike Taht
+
+
+   "The chief contribution of Protestantism to human thought is its 
+massive proof
+that God is a bore.
+	-- H.L. Mencken, "The Aesthetic Recoil," American Mercury, July, 1931."
