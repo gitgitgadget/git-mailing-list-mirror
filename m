@@ -1,90 +1,71 @@
 From: Brad Roberts <braddr@gameboy2.puremagic.com>
-Subject: [PATCH 02/19] Add new api's to front the active_cache and active_nr cache internals
-Date: Thu, 21 Apr 2005 11:34:57 -0700
-Message-ID: <200504211834.j3LIYvBM027396@gameboy2.puremagic.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:31:52 2005
+Subject: [PATCH 03/19] convert show-diff.c to use new cache hiding api's
+Date: Thu, 21 Apr 2005 11:35:12 -0700
+Message-ID: <200504211835.j3LIZCSZ027430@gameboy2.puremagic.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:32:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOgSA-0007mQ-H4
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:06 +0200
+	id 1DOgSN-0007oU-FB
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261622AbVDUSf1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 14:35:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261644AbVDUSf1
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:35:27 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:1416 "EHLO
+	id S261634AbVDUSfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 14:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVDUSfj
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:35:39 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:4232 "EHLO
 	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261622AbVDUSe7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 14:34:59 -0400
+	id S261634AbVDUSfO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 14:35:14 -0400
 Received: from gameboy2.puremagic.com (root@gameboy2.puremagic.com [209.189.198.109])
-	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIYtAR027762
+	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIZAEd027794
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:34:55 -0700
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:10 -0700
 Received: from gameboy2.puremagic.com (braddr@localhost [127.0.0.1])
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIYvjk027398
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:34:57 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIZCw9027432
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:12 -0700
 Received: (from braddr@localhost)
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIYvBM027396
-	for git@vger.kernel.org; Thu, 21 Apr 2005 11:34:57 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIZCSZ027430
+	for git@vger.kernel.org; Thu, 21 Apr 2005 11:35:12 -0700
 To: git@vger.kernel.org
 X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-tree ebbf2c037e68116c4ff934f140ca12cdbe13311d
-parent 77de9e0b7a81ddc22526c9415f0273171f631d3f
-author Brad Roberts <braddr@puremagic.com> 1114073146 -0700
-committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114073146 -0700
+tree bbc50100a5cfd22264c2b0731ef8678656a399d8
+parent 27fc41dcd4aecafdaf583f3962697a2fa3fb6480
+author Brad Roberts <braddr@puremagic.com> 1114073516 -0700
+committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114073516 -0700
 
-[PATCH] Add new api's to front the active_cache and active_nr cache internals
+[PATCH] convert show-diff.c to use new cache hiding api's
 
 Signed-off-by: Brad Roberts <braddr@puremagic.com>
 ---
 
- cache.h      |    3 +++
- read-cache.c |   15 +++++++++++++++
- 2 files changed, 18 insertions(+)
+ show-diff.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Index: cache.h
+Index: show-diff.c
 ===================================================================
---- 77de9e0b7a81ddc22526c9415f0273171f631d3f:1/cache.h  (mode:100644 sha1:a101870e4a002a2548d88544a77bedad21668203)
-+++ 27fc41dcd4aecafdaf583f3962697a2fa3fb6480:1/cache.h  (mode:100644 sha1:9ad6e805eafcb213c6bb4b1f8ff4d4e053fa6067)
-@@ -93,6 +93,9 @@
- extern int add_cache_entry(struct cache_entry *ce, int ok_to_add);
- extern int remove_file_from_cache(char *path);
- extern int cache_match_stat(struct cache_entry *ce, struct stat *st);
-+extern int get_num_cache_entries();
-+extern struct cache_entry * get_cache_entry(int pos);
-+extern void set_cache_entry(struct cache_entry *ce, int pos);
- 
- #define MTIME_CHANGED	0x0001
- #define CTIME_CHANGED	0x0002
-Index: read-cache.c
-===================================================================
---- 77de9e0b7a81ddc22526c9415f0273171f631d3f:1/read-cache.c  (mode:100644 sha1:349ebd1f8a0a95bf462bb1dfd3d9dfb50628829c)
-+++ 27fc41dcd4aecafdaf583f3962697a2fa3fb6480:1/read-cache.c  (mode:100644 sha1:6689df59d5a93e0503d7c80c114efbd16de826f3)
-@@ -110,6 +110,21 @@
- 	return ce_namelen(b) == len && !memcmp(a->name, b->name, len);
- }
- 
-+int get_num_cache_entries()
-+{
-+	return active_nr;
-+}
-+
-+struct cache_entry * get_cache_entry(int pos)
-+{
-+	return active_cache[pos];
-+}
-+
-+void set_cache_entry(struct cache_entry *ce, int pos)
-+{
-+	active_cache[pos] = ce;
-+}
-+
- int add_cache_entry(struct cache_entry *ce, int ok_to_add)
- {
- 	int pos;
+--- 27fc41dcd4aecafdaf583f3962697a2fa3fb6480:1/show-diff.c  (mode:100644 sha1:da364e26e28823f951a6be1b686a458575f28ea1)
++++ d70686e08f453199e5451b27fc7d0b36b73a5c7f:1/show-diff.c  (mode:100644 sha1:e2642b65805b3e52a16c6309b44a92c2a2bd13c3)
+@@ -154,7 +154,7 @@
+ 	prepare_diff_cmd();
+ 	for (i = 0; i < entries; i++) {
+ 		struct stat st;
+-		struct cache_entry *ce = active_cache[i];
++		struct cache_entry *ce = get_cache_entry(i);
+ 		int changed;
+ 		unsigned long size;
+ 		char type[20];
+@@ -172,7 +172,7 @@
+ 				printf("%s: Unmerged\n",
+ 				       ce->name);
+ 			while (i < entries &&
+-			       !strcmp(ce->name, active_cache[i]->name))
++			       !strcmp(ce->name, get_cache_entry(i)->name))
+ 				i++;
+ 			i--; /* compensate for loop control increments */
+ 			continue;
 
