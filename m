@@ -1,85 +1,61 @@
-From: Tomas Mraz <t8m@centrum.cz>
-Subject: Re: [Gnu-arch-users] Re: [ANNOUNCEMENT] /Arch/
-	embraces `git'
-Date: Thu, 21 Apr 2005 09:49:18 +0200
-Message-ID: <1114069758.5886.9.camel@perun.redhat.usu>
-References: <200504202304.QAA17069@emf.net>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Thu, 21 Apr 2005 09:49:08 +0200
+Message-ID: <20050421074908.GA1376@elte.hu>
+References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: gnu-arch-users@gnu.org, gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
-X-From: gnu-arch-dev-bounces@lists.seyza.com Thu Apr 21 09:46:08 2005
-Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
-Received: from [207.166.200.220] (helo=hera.museatech.net)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1DOWN3-0000ek-BL
-	for gcvad-gnu-arch-dev@gmane.org; Thu, 21 Apr 2005 09:45:09 +0200
-Received: (qmail 24416 invoked by uid 110); 21 Apr 2005 07:49:32 -0000
-Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
- (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
- Processed in 0.115338 secs); 21 Apr 2005 07:49:32 -0000
-Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
-  by hera.museatech.net with SMTP; 21 Apr 2005 07:49:31 -0000
-Delivered-To: list-gnu-arch-dev@lists.seyza.com
-Received: (qmail 24386 invoked by uid 110); 21 Apr 2005 07:49:27 -0000
-Received: from t8m@centrum.cz by hera by uid 102 with qmail-scanner-1.20 
-	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
-	Processed in 0.085337 secs); 21 Apr 2005 07:49:27 -0000
-Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
-	by hera.museatech.net with SMTP; 21 Apr 2005 07:49:27 -0000
-Received: (qmail 22839 invoked from network); 21 Apr 2005 09:03:37 -0000
-Received: from admin.kkcable.cz (213.29.14.23)
-	by a1.mx.alal.us with SMTP; 21 Apr 2005 09:03:34 -0000
-Received: by admin.kkcable.cz (Postfix, from userid 1007)
-	id 930EE61282; Thu, 21 Apr 2005 09:49:20 +0200 (CEST)
-Received: from admin.kkcable.cz (admin.kkcable.cz [213.29.14.23])
-	by admin.kkcable.cz (Postfix) with SMTP id BF68C61273;
-	Thu, 21 Apr 2005 09:49:19 +0200 (CEST)
-To: Tom Lord <lord@emf.net>
-In-Reply-To: <200504202304.QAA17069@emf.net>
-X-Mailer: Evolution 2.0.4 (2.0.4-2) 
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.7 required=9.0 tests=BAYES_00 autolearn=ham 
-	version=3.0.2
-X-BeenThere: gnu-arch-dev@lists.seyza.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
-List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
-List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
-List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
-List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
-List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
-Sender: gnu-arch-dev-bounces@lists.seyza.com
-Errors-To: gnu-arch-dev-bounces@lists.seyza.com
-X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, Greg KH <greg@kroah.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 09:51:11 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1DOWS8-0001IB-Fr
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 09:50:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261488AbVDUHyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 03:54:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261482AbVDUHy0
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 03:54:26 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:24708 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261488AbVDUHtP (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 03:49:15 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id 4987931F5CC;
+	Thu, 21 Apr 2005 09:48:26 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id BA2461FC2; Thu, 21 Apr 2005 09:49:11 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-04-20 at 16:04 -0700, Tom Lord wrote:
 
-> I think that to a large extent you are seeing artifacts
-> of the questionable trade-offs that (reports tell me) the
-> ext* filesystems make.   With a different filesystem, the 
-> results would be very different.
-Tom, please stop this ext* filesystem bashing ;-) Even with filesystem
-which compresses the tails of files into one filesystem block it
-wouldn't make a difference that there are potentially (and very probably
-even with blob numbers in order of 100000) 65536 directories on the
-first level. This doesn't help much in fast reading the first level.
+* Linus Torvalds <torvalds@osdl.org> wrote:
 
-> I'm imagining a blob database containing may revisions of the linux
-> kernel.  It will contain millions of blobs.
-> 
-> It's fine that some filesystems and some blob operations work fine
-> on a directory with millions of files but what about other operations
-> on the database?   I pity the poor program that has to `readdir' through
-> millions of files.
+> Yeah, yeah, it looks different from "cvs update", but dammit, wouldn't 
+> it be cool to just write "cg-<tab><tab>" and see the command choices?  
+> Or "cg-up<tab>" and get cg-update done for you..
 
-Even with milions of files this key structure doesn't make much sense -
-the keys on the first and second levels are too long. However you're
-right that the original structure proposed by Linus is too flat.
+add this line to your ~/.bashrc:
 
--- 
-Tomas Mraz <t8m@centrum.cz>
+ complete -W "add addremote apply cancel ci commit diff export fork help init log ls lsobj lsremote merge pull rm seek status tag track version" git
+
+and you'll get all the argument completions, after "git " (it works on 
+arguments, after the space). (you can even customize it to list only the 
+ones you typically use, to make the completion faster) This first showed 
+up in zsh but now bash knows it too. (see 'Programmable Completions' in 
+man bash)
+
+	Ingo
