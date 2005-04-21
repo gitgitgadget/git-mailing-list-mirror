@@ -1,91 +1,153 @@
 From: Brad Roberts <braddr@gameboy2.puremagic.com>
-Subject: [PATCH 07/19] migrate merge-cache.c over to the new cache api's
-Date: Thu, 21 Apr 2005 11:36:14 -0700
-Message-ID: <200504211836.j3LIaEUV027527@gameboy2.puremagic.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:33:35 2005
+Subject: [PATCH 12/19] fix up diff-cache.c to use new cache api's
+Date: Thu, 21 Apr 2005 11:37:34 -0700
+Message-ID: <200504211837.j3LIbYRQ027685@gameboy2.puremagic.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:34:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOgTJ-0007wi-CT
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:32:17 +0200
+	id 1DOgUy-0008Bf-SY
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261661AbVDUSgk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 14:36:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261670AbVDUSgk
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:36:40 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:23176 "EHLO
+	id S261675AbVDUSiV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 14:38:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261680AbVDUSiV
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:38:21 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:51336 "EHLO
 	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261661AbVDUSgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 14:36:15 -0400
+	id S261675AbVDUShh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 14:37:37 -0400
 Received: from gameboy2.puremagic.com (root@gameboy2.puremagic.com [209.189.198.109])
-	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIaCp5027896
+	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIbWD9028057
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:36:12 -0700
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:37:32 -0700
 Received: from gameboy2.puremagic.com (braddr@localhost [127.0.0.1])
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIaEm3027529
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:36:14 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIbYEn027687
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:37:34 -0700
 Received: (from braddr@localhost)
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIaEUV027527
-	for git@vger.kernel.org; Thu, 21 Apr 2005 11:36:14 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIbYRQ027685
+	for git@vger.kernel.org; Thu, 21 Apr 2005 11:37:34 -0700
 To: git@vger.kernel.org
 X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-tree 8140acee0f9c57bfd87f40d1f99242c772afcdf2
-parent 32efd81a3292a923ce5b5ae2e39ffefd0b08664d
-author Brad Roberts <braddr@puremagic.com> 1114074631 -0700
-committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114074631 -0700
+tree 44f1ef88a5d0effdf2337f4c72b88b2bdcd9a54b
+parent 8a4556bdf5bc847117c840a8fd7fa42f6efb16e1
+author Brad Roberts <braddr@puremagic.com> 1114082996 -0700
+committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114082996 -0700
 
-[PATCH] migrate merge-cache.c over to the new cache api's
+[PATCH] fix up diff-cache.c to use new cache api's
+
+Along the way, rewrite to use a position index rather than pointer math.
 
 Signed-off-by: Brad Roberts <braddr@puremagic.com>
 ---
 
- merge-cache.c |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+ diff-cache.c |   32 +++++++++++++-------------------
+ 1 files changed, 13 insertions(+), 19 deletions(-)
 
-Index: merge-cache.c
+Index: diff-cache.c
 ===================================================================
---- 32efd81a3292a923ce5b5ae2e39ffefd0b08664d:1/merge-cache.c  (mode:100644 sha1:35a0d588178aa5371399458b1a15519cffd645b8)
-+++ e2acfff5e544a8c6769a9e665927092b3edd7579:1/merge-cache.c  (mode:100644 sha1:c2f96e7652a2aea9417c3790bfe9ab14ffcdb12f)
-@@ -30,7 +30,7 @@
- {
- 	int found;
- 	
--	if (pos >= active_nr)
-+	if (pos >= get_num_cache_entries())
- 		die("merge-cache: %s not in the cache", path);
- 	arguments[0] = pgm;
- 	arguments[1] = "";
-@@ -40,7 +40,7 @@
- 	found = 0;
- 	do {
- 		static char hexbuf[4][60];
--		struct cache_entry *ce = active_cache[pos];
-+		struct cache_entry *ce = get_cache_entry(pos);
- 		int stage = ce_stage(ce);
+--- 8a4556bdf5bc847117c840a8fd7fa42f6efb16e1:1/diff-cache.c  (mode:100644 sha1:fcbc4900d32f4ca24f67bb8f0fe344c6c5642ac9)
++++ cc414a188c0e8fefa7bea4f969cc7adfe4265d6f:1/diff-cache.c  (mode:100644 sha1:548211944fc00594bfc06b9ab90f0cb476688285)
+@@ -4,7 +4,7 @@
+ static int recursive = 0;
+ static int line_termination = '\n';
  
- 		if (strcmp(ce->name, path))
-@@ -48,7 +48,7 @@
- 		found++;
- 		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
- 		arguments[stage] = hexbuf[stage];
--	} while (++pos < active_nr);
-+	} while (++pos < get_num_cache_entries());
- 	if (!found)
- 		die("merge-cache: %s not in the cache", path);
- 	run_program();
-@@ -70,8 +70,8 @@
- static void merge_all(void)
+-static int diff_cache(void *tree, unsigned long size, struct cache_entry **ac, int entries, const char *base);
++static int diff_cache(void *tree, unsigned long size, int pos, const char *base);
+ 
+ static void update_tree_entry(void **bufp, unsigned long *sizep)
  {
- 	int i;
--	for (i = 0; i < active_nr; i++) {
--		struct cache_entry *ce = active_cache[i];
-+	for (i = 0; i < get_num_cache_entries(); i++) {
-+		struct cache_entry *ce = get_cache_entry(i);
- 		if (!ce_stage(ce))
+@@ -82,10 +82,10 @@
+ }
+ 
+ static int compare_tree_entry(const char *path1, unsigned int mode1, const unsigned char *sha1,
+-			      struct cache_entry **ac, int *entries, const char *base)
++			      int *pos, const char *base)
+ {
+ 	int baselen = strlen(base);
+-	struct cache_entry *ce = *ac;
++	struct cache_entry *ce = get_cache_entry(*pos);
+ 	const char *path2 = ce->name + baselen;
+ 	unsigned int mode2 = ntohl(ce->ce_mode);
+ 	const unsigned char *sha2 = ce->sha1;
+@@ -107,7 +107,7 @@
+ 			memcpy(newbase + baselen + pathlen1, "/", 2);
+ 			if (!tree || strcmp(type, "tree"))
+ 				die("unable to read tree object %s", sha1_to_hex(sha1));
+-			*entries = diff_cache(tree, size, ac, *entries, newbase);
++			*pos = diff_cache(tree, size, *pos, newbase);
+ 			free(newbase);
+ 			free(tree);
+ 			return -1;
+@@ -158,7 +158,7 @@
+ 	return 0;
+ }
+ 
+-static int diff_cache(void *tree, unsigned long size, struct cache_entry **ac, int entries, const char *base)
++static int diff_cache(void *tree, unsigned long size, int pos, const char *base)
+ {
+ 	int baselen = strlen(base);
+ 
+@@ -167,15 +167,16 @@
+ 		unsigned int mode;
+ 		const char *path;
+ 		const unsigned char *sha1;
+-		int left;
+ 
+ 		/*
+ 		 * No entries in the cache (with this base)?
+ 		 * Output the tree contents.
+ 		 */
+-		if (!entries || ce_namelen(ce = *ac) < baselen || memcmp(ce->name, base, baselen)) {
++		if ((pos == get_num_cache_entries()) ||
++		    ce_namelen(ce = get_cache_entry(pos)) < baselen ||
++		    memcmp(ce->name, base, baselen)) {
+ 			if (!size)
+-				return entries;
++				return pos;
+ 			sha1 = extract(tree, size, &path, &mode);
+ 			show_file("-", path, mode, sha1, base);
+ 			update_tree_entry(&tree, &size);
+@@ -187,27 +188,20 @@
+ 		 */
+ 		if (!size) {
+ 			show_file("+", ce->name, ntohl(ce->ce_mode), ce->sha1, "");
+-			ac++;
+-			entries--;
++			pos++;
  			continue;
- 		i += merge_entry(i, ce->name)-1;
+ 		}
+ 
+ 		sha1 = extract(tree, size, &path, &mode);
+-		left = entries;
+-		switch (compare_tree_entry(path, mode, sha1, ac, &left, base)) {
++		switch (compare_tree_entry(path, mode, sha1, &pos, base)) {
+ 		case -1:
+ 			update_tree_entry(&tree, &size);
+-			if (left < entries) {
+-				ac += (entries - left);
+-				entries = left;
+-			}
+ 			continue;
+ 		case 0:
+ 			update_tree_entry(&tree, &size);
+ 			/* Fallthrough */
+ 		case 1:
+-			ac++;
+-			entries--;
++			pos++;
+ 			continue;
+ 		}
+ 		die("diff-cache: internal error");
+@@ -263,5 +257,5 @@
+ 	if (strcmp(type, "tree"))
+ 		die("bad tree object %s (%s)", sha1_to_hex(tree_sha1), type);
+ 
+-	return diff_cache(tree, size, active_cache, active_nr, "");
++	return diff_cache(tree, size, 0, "");
+ }
 
