@@ -1,73 +1,75 @@
-From: Denys Duchier <duchier@ps.uni-sb.de>
-Subject: Re: [Gnu-arch-users] Re: [GNU-arch-dev] [ANNOUNCEMENT] /Arch/ embraces `git'
-Date: Thu, 21 Apr 2005 11:09:58 +0200
-Message-ID: <86d5soa42h.fsf@speedy.lifl.fr>
-References: <200504201000.DAA04988@emf.net> <877jixfjxw.fsf@star.lifl.fr>
-	<1114036849.5880.61.camel@perun.redhat.usu>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-viz tool for visualising commit trees
+Date: Thu, 21 Apr 2005 11:21:20 +0200
+Message-ID: <20050421092120.GA20626@elte.hu>
+References: <20050417194818.GG1461@pasky.ji.cz> <20050420100824.GB25477@elte.hu> <20050421.034227.104037433.oandrieu@nerim.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: duchier@ps.uni-sb.de, gnu-arch-dev@lists.seyza.com,
-	talli@museatech.net, git@vger.kernel.org, torvalds@osdi.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 11:06:52 2005
+Cc: pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 11:18:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOXdU-0003sE-66
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 11:06:12 +0200
+	id 1DOXoR-0005bE-DD
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 11:17:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261220AbVDUJKW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 05:10:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261223AbVDUJKW
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 05:10:22 -0400
-Received: from justus.rz.uni-saarland.de ([134.96.7.31]:7661 "EHLO
-	justus.rz.uni-saarland.de") by vger.kernel.org with ESMTP
-	id S261220AbVDUJKM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 05:10:12 -0400
-Received: from cs.uni-sb.de (cs.uni-sb.de [134.96.254.254])
-	by justus.rz.uni-saarland.de (8.12.10/8.12.10) with ESMTP id j3L9A8Hs009755;
-	Thu, 21 Apr 2005 11:10:09 +0200 (CEST)
-Received: from mail.cs.uni-sb.de (mail.cs.uni-sb.de [134.96.254.200])
-	by cs.uni-sb.de (8.13.4/2005033000) with ESMTP id j3L9A7P9010938;
-	Thu, 21 Apr 2005 11:10:08 +0200 (CEST)
-Received: from ps.uni-sb.de (grizzly.ps.uni-sb.de [134.96.186.68])
-	by mail.cs.uni-sb.de (8.13.4/2005033000) with ESMTP id j3L9A5lL023269;
-	Thu, 21 Apr 2005 11:10:05 +0200 (CEST)
-X-Authentication-Warning: mail.cs.uni-sb.de: Host grizzly.ps.uni-sb.de [134.96.186.68] claimed to be ps.uni-sb.de
-Received: from ps.uni-sb.de (localhost [127.0.0.1])
-	by ps.uni-sb.de (8.12.10/8.12.10) with ESMTP id j3L9A2Ud015312;
-	Thu, 21 Apr 2005 11:10:02 +0200
-Received: from localhost (localhost [[UNIX: localhost]])
-	by ps.uni-sb.de (8.12.10/8.12.10/Submit) id j3L9A2e6015310;
-	Thu, 21 Apr 2005 11:10:02 +0200
-To: Tomas Mraz <t8m@centrum.cz>
-In-Reply-To: <1114036849.5880.61.camel@perun.redhat.usu> (Tomas Mraz's message
-	of "Thu, 21 Apr 2005 00:40:48 +0200")
-User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.5.1 (justus.rz.uni-saarland.de [134.96.7.31]); Thu, 21 Apr 2005 11:10:09 +0200 (CEST)
-X-AntiVirus: checked by AntiVir Milter 1.0.6; AVE 6.30.0.7; VDF 6.30.0.122
+	id S261223AbVDUJVt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 05:21:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261224AbVDUJVt
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 05:21:49 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:21909 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261223AbVDUJVp (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 05:21:45 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id A51E431F3F3;
+	Thu, 21 Apr 2005 11:20:39 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 836D81FC2; Thu, 21 Apr 2005 11:21:24 +0200 (CEST)
+To: Olivier Andrieu <oandrieu@nerim.net>
+Content-Disposition: inline
+In-Reply-To: <20050421.034227.104037433.oandrieu@nerim.net>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Tomas Mraz <t8m@centrum.cz> writes:
 
-> If we suppose the maximum number of stored blobs in the order of milions
-> probably the optimal indexing would be 1 level [0:2] indexing or 2
-> levels [0:1] [2:3]. However it would be necessary to do some
-> benchmarking first before setting this to stone.
+* Olivier Andrieu <oandrieu@nerim.net> wrote:
 
-As I have suggested in a previous message, it is trivial to implement adaptive
-indexing: there is no need to hardwire a specific indexing scheme.  Furthermore,
-I suspect that the optimal size of subkeys may well depend on the filesystem.
-My experiments seem to indicate that subkeys of length 2 achieve an excellent
-compromise between discriminatory power and disk footprint on ext2.
+> There, here's a tarball :
+>   http://oandrieu.nerim.net/monotone-viz/git-viz-0.1.tar.gz
 
-Btw, if, as you indicate above, you do believe that a 1 level indexing should
-use [0:2], then it doesn't make much sense to me to also suggest that a 2 level
-indexing should use [0:1] as primary subkey :-)
+i'm trying to build it under Fedora Core 4 (devel), and there are two 
+problems:
 
-Cheers,
+ - the build scripts seem to assume that "." is in PATH (or that the 
+   needed viz_style.ml/etc. scripts are in the PATH).
 
--- 
-Dr. Denys Duchier - IRI & LIFL - CNRS, Lille, France
-AIM: duchierdenys
+adding "." to the PATH worked around this issue, a number of files built 
+fine, but then it hit the next problem:
+
+ ocamlopt.opt  -I /usr/lib/ocaml/lablgtk2 -I glib -I crypto -pp  -c viz_style.ml
+ sh: - : invalid option
+ Usage:  sh [GNU long option] [option] ...
+         sh [GNU long option] [option] script-file ...
+ GNU long options:
+ [...]
+ Preprocessor error
+ make: *** [viz_style.cmx] Error 2
+
+i've straced the build, and the bug comes from ocamlopt.opt executing:
+
+  sh -c "-c 'viz_style.ml'"
+
+which confuses the shell.
+
+i've got ocaml-3.08.3-1, lablgtk-2.4.0-2 installed.
+
+	Ingo
