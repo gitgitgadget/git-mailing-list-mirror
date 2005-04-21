@@ -1,71 +1,73 @@
-From: "Sean" <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
-Date: Wed, 20 Apr 2005 22:45:20 -0400 (EDT)
-Message-ID: <2577.10.10.10.24.1114051520.squirrel@linux1>
-References: <20050420205633.GC19112@pasky.ji.cz>   
-    <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz>
-       <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>   
-    <20050420222815.GM19112@pasky.ji.cz>   
-    <Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org>   
-    <Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org>   
-    <20050421033526.GA9404@nevyn.them.org>
+Date: Wed, 20 Apr 2005 21:00:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
+References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com>
+ <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
+ <20050420222815.GM19112@pasky.ji.cz> <Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org> <20050421033526.GA9404@nevyn.them.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>, "Petr Baudis" <pasky@ucw.cz>,
-	"Greg KH" <greg@kroah.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 05:40:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Greg KH <greg@kroah.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 05:54:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOSY9-00043K-Eq
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 05:40:21 +0200
+	id 1DOSlt-00056M-KV
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 05:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261200AbVDUDom (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 23:44:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261204AbVDUDom
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 23:44:42 -0400
-Received: from simmts6.bellnexxia.net ([206.47.199.164]:30449 "EHLO
-	simmts6-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261200AbVDUDoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 23:44:39 -0400
-Received: from linux1 ([67.71.124.169]) by simmts6-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050421034438.WTSL1597.simmts6-srv.bellnexxia.net@linux1>;
-          Wed, 20 Apr 2005 23:44:38 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j3L2jI79018841;
-	Wed, 20 Apr 2005 22:45:18 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Wed, 20 Apr 2005 22:45:20 -0400 (EDT)
-To: "Daniel Jacobowitz" <dan@debian.org>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S261196AbVDUD6w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 23:58:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261204AbVDUD6w
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 23:58:52 -0400
+Received: from fire.osdl.org ([65.172.181.4]:41151 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261196AbVDUD6u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 23:58:50 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3L3wjs4005306
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 20 Apr 2005 20:58:46 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3L3wiqT013563;
+	Wed, 20 Apr 2005 20:58:45 -0700
+To: Daniel Jacobowitz <dan@debian.org>
 In-Reply-To: <20050421033526.GA9404@nevyn.them.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, April 20, 2005 11:35 pm, Daniel Jacobowitz said:
 
+
+On Wed, 20 Apr 2005, Daniel Jacobowitz wrote:
+> 
 > My logic: it's a lot more intuitive to say "cg-log | less" to get
-paginated output than it is to say "cg-log | cat" to get unpaginated
-output.
->
+> paginated output than it is to say "cg-log | cat" to get unpaginated
+> output.
 
-Daniel,
+I disagree.
 
-All you'd have to do is:
+There is _never_ any valid situation where you do "cg-log" with 
+unpaginated output to a tty.
 
-$ export PAGER=cat
+In _any_ real system you'll be getting thousands of lines of output. 
+Possibly millions. unpaginated? What the hell are you talking about?
 
-to get the behavior you want.
+And as I pointed out, if the output is not a tty, then both less and more
+automatically turn into cat, so there's no difference. This change _only_
+triggers for a tty, and I dare you to show a single relevant project where 
+it's ok to scroll thousands of lines.
 
-Sean
+Even git-pasky, which is just a two-week-old project right now outputs 
+4338 lines of output to "git log". 
 
+Unpaginated? You must be kidding.
 
+(But if you are _that_ fast a reader, then hey, use "PAGER=cat", and 
+you'll find yourself happy).
 
-
+		Linus
