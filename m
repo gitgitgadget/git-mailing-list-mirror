@@ -1,61 +1,56 @@
-From: Daniel Jacobowitz <dan@debian.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
 Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
-Date: Thu, 21 Apr 2005 00:28:34 -0400
-Message-ID: <20050421042833.GA10934@nevyn.them.org>
-References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org> <20050420222815.GM19112@pasky.ji.cz> <Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org> <Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org> <20050421033526.GA9404@nevyn.them.org> <Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
+Date: Thu, 21 Apr 2005 12:48:19 +1000
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.04.21.02.48.19.802122@smurf.noris.de>
+References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Greg KH <greg@kroah.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 06:24:43 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Apr 21 06:51:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOTEs-00079D-Jq
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 06:24:30 +0200
+	id 1DOTeZ-0000o1-UK
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 06:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261212AbVDUE2w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 00:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261213AbVDUE2w
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 00:28:52 -0400
-Received: from nevyn.them.org ([66.93.172.17]:56036 "EHLO nevyn.them.org")
-	by vger.kernel.org with ESMTP id S261212AbVDUE2u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 00:28:50 -0400
-Received: from drow by nevyn.them.org with local (Exim 4.50 #1 (Debian))
-	id 1DOTIo-0002rq-N4; Thu, 21 Apr 2005 00:28:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
-User-Agent: Mutt/1.5.8i
+	id S261212AbVDUEzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 00:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261216AbVDUEzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 00:55:08 -0400
+Received: from main.gmane.org ([80.91.229.2]:4313 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261212AbVDUEzE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 00:55:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DOTe8-0000ln-IY
+	for git@vger.kernel.org; Thu, 21 Apr 2005 06:50:36 +0200
+Received: from 150.203.247.9 ([150.203.247.9])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 06:50:36 +0200
+Received: from smurf by 150.203.247.9 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 06:50:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 150.203.247.9
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table (Debian GNU/Linux))
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 20, 2005 at 09:00:44PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Wed, 20 Apr 2005, Daniel Jacobowitz wrote:
-> > 
-> > My logic: it's a lot more intuitive to say "cg-log | less" to get
-> > paginated output than it is to say "cg-log | cat" to get unpaginated
-> > output.
-> 
-> I disagree.
-> 
-> There is _never_ any valid situation where you do "cg-log" with 
-> unpaginated output to a tty.
-> 
-> In _any_ real system you'll be getting thousands of lines of output. 
-> Possibly millions. unpaginated? What the hell are you talking about?
+Linus Torvalds wrote:
 
-OK, so I'm crazy.  I must have hallucinated doing this sort of thing on
-a regular basis... :-) Examples: terminals with good scrollback,
-screen, script.  Small repositories.  Irritation at less's habit of
-using the alternate xterm buffer, whatever the technical term for that
-is.
+> I realize that there is probably a law that there has to be a space, but I 
+> actually personally use tab-completion all the time
 
-But hey, you'll use it more often than I will by far.
+You can actually teach bash3 to do that (yes, with space).
+
+In general, though, I tend to agree -- dashes work with more shells and
+avoid namespace collisions.
 
 -- 
-Daniel Jacobowitz
-CodeSourcery, LLC
+Matthias Urlichs
+
