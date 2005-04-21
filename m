@@ -1,64 +1,71 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: [PATCH] Docs update
-Date: Fri, 22 Apr 2005 00:10:23 +0100
-Message-ID: <426832DF.4090909@dgreaves.com>
-References: <42680FCC.6030901@dgreaves.com> <7vy8bbd9n4.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] README spellcheck again
+Date: Thu, 21 Apr 2005 19:20:33 -0400
+Message-ID: <1114125633.17161.3.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 01:07:06 2005
+X-From: git-owner@vger.kernel.org Fri Apr 22 01:16:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOkks-0003kr-Nz
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 01:06:43 +0200
+	id 1DOkuD-0004dN-43
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 01:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261771AbVDUXK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 19:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261770AbVDUXK4
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 19:10:56 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:56238 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261706AbVDUXK3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 19:10:29 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id A2B80E6D5C; Fri, 22 Apr 2005 00:08:32 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 13624-09; Fri, 22 Apr 2005 00:08:32 +0100 (BST)
-Received: from oak.dgreaves.com (modem-2040.lynx.dialup.pol.co.uk [217.135.199.248])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 0B2C1E6A86; Fri, 22 Apr 2005 00:08:32 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DOkoR-0002qF-T4; Fri, 22 Apr 2005 00:10:23 +0100
-User-Agent: Debian Thunderbird 1.0 (X11/20050116)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junio@siamese.dyndns.org>
-In-Reply-To: <7vy8bbd9n4.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.90.0.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
+	id S261664AbVDUXUp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 19:20:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261723AbVDUXUp
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 19:20:45 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:16283
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261664AbVDUXUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 19:20:35 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 017C4EFF81; Thu, 21 Apr 2005 19:20:33 -0400 (EDT)
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
->>>>>>"DG" == David Greaves <david@dgreaves.com> writes:
-> Looks nice.  I agree with Petr's comment that separating core part
-> and Cogito part would be good
-OK
+Hello!
+
+Patch against current git, applies cleanly to both linus and pasky
+branches.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+--- a/README
++++ b/README
+@@ -95,7 +95,7 @@ The object types in some more detail:
+ 	In particular, since the blob is entirely defined by its data,
+ 	if two files in a directory tree (or in multiple different
+ 	versions of the repository) have the same contents, they will
+-	share the same blob object. The object is toally independent
++	share the same blob object. The object is totally independent
+ 	of it's location in the directory tree, and renaming a file does
+ 	not change the object that file is associated with in any way.
+ 
+@@ -150,7 +150,7 @@ CHANGESET: The "changeset" object is an 
+ 	actually have any relationship with the result, for example. 
+ 
+ 	Note on changesets: unlike real SCM's, changesets do not contain
+-	rename information or file mode chane information.  All of that
++	rename information or file mode change information.  All of that
+ 	is implicit in the trees involved (the result tree, and the
+ 	result trees of the parents), and describing that makes no sense
+ 	in this idiotic file manager. 
+@@ -322,7 +322,7 @@ main combinations: 
+ 	changes in your working directory (ie "update-cache").
+ 
+ 	However, if you decide to jump to a new version, or check out
+-	somebody elses version, or just restore a previous tree, you'd
++	somebody else's version, or just restore a previous tree, you'd
+ 	populate your index file with read-tree, and then you need to
+ 	check out the result with
+ 
 
 
-> And the option to use working tree is not having the --cached
-> flag you describe later.  Please also update the usage at the
-> top as well:
-<snip>
-> This command can take commit ID in place of tree ID.
+-- 
+Regards,
+Pavel Roskin
 
-Yep, the intention is to do all the core docs, get consistent use of 
-<sha1> or <tree> or <id> etc etc and then patch all the usage()s at once.
-
-Thanks for the comments - will edit in the am.
-
-David
