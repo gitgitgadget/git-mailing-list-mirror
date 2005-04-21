@@ -1,44 +1,61 @@
 From: Tom Lord <lord@emf.net>
-Subject: Re: [Gnu-arch-users] Re: [GNU-arch-dev] [ANNOUNCEMENT] /Arch/
+Subject: Re: [Gnu-arch-users] Re: [ANNOUNCEMENT] /Arch/
 	embraces `git'
-Date: Thu, 21 Apr 2005 13:35:27 -0700 (PDT)
-Message-ID: <200504212035.NAA06342@emf.net>
-References: <1114037509.5880.62.camel@perun.redhat.usu>
-Cc: duchier@ps.uni-sb.de, gnu-arch-dev@lists.seyza.com,
-	talli@museatech.net, git@vger.kernel.org, torvalds@osdi.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 22:31:59 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
-	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOiKO-0008Hj-DE
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 22:31:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261862AbVDUUfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 16:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261863AbVDUUfg
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:35:36 -0400
-Received: from emf.emf.net ([205.149.0.19]:16132 "EHLO emf.net")
-	by vger.kernel.org with ESMTP id S261862AbVDUUfc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 16:35:32 -0400
-Received: (from lord@localhost) by emf.net (K/K) id NAA06342; Thu, 21 Apr 2005 13:35:27 -0700 (PDT)
-To: t8m@centrum.cz
-In-reply-to: <1114037509.5880.62.camel@perun.redhat.usu> (message from Tomas Mraz on Thu, 21 Apr 2005 00:51:49 +0200)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+Date: Thu, 21 Apr 2005 13:39:02 -0700 (PDT)
+Message-ID: <200504212039.NAA06407@emf.net>
+References: <867jixata5.fsf@speedy.lifl.fr>
+Cc: gnu-arch-users@gnu.org, gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
+X-From: gnu-arch-dev-bounces@lists.seyza.com Thu Apr 21 22:36:53 2005
+Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
+Received: from [207.166.200.220] (helo=hera.museatech.net)
+	by ciao.gmane.org with smtp (Exim 4.43)
+	id 1DOiPD-0000Zs-KP
+	for gcvad-gnu-arch-dev@gmane.org; Thu, 21 Apr 2005 22:36:11 +0200
+Received: (qmail 22417 invoked by uid 110); 21 Apr 2005 20:40:38 -0000
+Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
+ (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
+ Processed in 4.818309 secs); 21 Apr 2005 20:40:38 -0000
+Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
+  by hera.museatech.net with SMTP; 21 Apr 2005 20:40:32 -0000
+Delivered-To: list-gnu-arch-dev@lists.seyza.com
+Received: (qmail 22374 invoked by uid 110); 21 Apr 2005 20:40:24 -0000
+Received: from lord@emf.net by hera by uid 102 with qmail-scanner-1.20 
+	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
+	Processed in 3.030525 secs); 21 Apr 2005 20:40:24 -0000
+Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
+	by hera.museatech.net with SMTP; 21 Apr 2005 20:40:20 -0000
+Received: (qmail 14478 invoked from network); 21 Apr 2005 21:54:34 -0000
+Received: from emf.emf.net (HELO emf.net) (205.149.0.19)
+	by a1.mx.alal.us with SMTP; 21 Apr 2005 21:54:32 -0000
+Received: (from lord@localhost) by emf.net (K/K) id NAA06407;
+	Thu, 21 Apr 2005 13:39:02 -0700 (PDT)
+To: duchier@ps.uni-sb.de
+In-reply-to: <867jixata5.fsf@speedy.lifl.fr> (message from Denys Duchier on
+	Thu, 21 Apr 2005 02:05:22 +0200)
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.6 required=9.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.0.2
+X-BeenThere: gnu-arch-dev@lists.seyza.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
+List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
+	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
+List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
+List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
+List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
+List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
+	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
+Sender: gnu-arch-dev-bounces@lists.seyza.com
+Errors-To: gnu-arch-dev-bounces@lists.seyza.com
+X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
 
 
+   > [your 0:3/4:7 directory hierarchy is horked]
 
-   > Yes, it really doesn't make much sense to have so big keys on the
-   > directories.
-
-It's official... i'm blushing wildly.... thank you for the various
-replies that pointed out my thinko.
-
-That part of my spec hasn't been coded yet --- i just wrote text.  It
-really was the silly late-night error of sort: "hmm...let's see, 4 hex
-digits plus 4 hex digits .... that's 16 bits.... sounds about right."
-
-Really, I'll fix it.
+Absolutely.  Made a dumb mistake the night I wrote that spec
+and embarassed that I initially defended it.   I had an arithmetic
+error.   Thanks, this time, for your persistence in pointing it out.
 
 -t
