@@ -1,68 +1,81 @@
-From: Tom Lord <lord@emf.net>
-Subject: Re: [Gnu-arch-users] Re: [ANNOUNCEMENT] /Arch/
-	embraces `git'
-Date: Thu, 21 Apr 2005 12:04:08 -0700 (PDT)
-Message-ID: <200504211904.MAA04791@emf.net>
-References: <1114037509.5880.62.camel@perun.redhat.usu>
-Cc: gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
-X-From: gnu-arch-dev-bounces@lists.seyza.com Thu Apr 21 21:00:24 2005
-Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
-Received: from [207.166.200.220] (helo=hera.museatech.net)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1DOguH-0003l8-2d
-	for gcvad-gnu-arch-dev@gmane.org; Thu, 21 Apr 2005 21:00:10 +0200
-Received: (qmail 14558 invoked by uid 110); 21 Apr 2005 19:04:34 -0000
-Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
- (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
- Processed in 3.049208 secs); 21 Apr 2005 19:04:34 -0000
-Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
-  by hera.museatech.net with SMTP; 21 Apr 2005 19:04:30 -0000
-Delivered-To: list-gnu-arch-dev@lists.seyza.com
-Received: (qmail 14518 invoked by uid 110); 21 Apr 2005 19:04:22 -0000
-Received: from lord@emf.net by hera by uid 102 with qmail-scanner-1.20 
-	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
-	Processed in 4.253263 secs); 21 Apr 2005 19:04:22 -0000
-Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
-	by hera.museatech.net with SMTP; 21 Apr 2005 19:04:17 -0000
-Received: (qmail 8220 invoked from network); 21 Apr 2005 20:18:30 -0000
-Received: from emf.emf.net (HELO emf.net) (205.149.0.19)
-	by a1.mx.alal.us with SMTP; 21 Apr 2005 20:18:28 -0000
-Received: (from lord@localhost) by emf.net (K/K) id MAA04791;
-	Thu, 21 Apr 2005 12:04:08 -0700 (PDT)
-To: t8m@centrum.cz
-In-reply-to: <1114037509.5880.62.camel@perun.redhat.usu> (message from Tomas
-	Mraz on Thu, 21 Apr 2005 00:51:49 +0200)
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=9.0 tests=AWL,BAYES_00 autolearn=ham 
-	version=3.0.2
-X-BeenThere: gnu-arch-dev@lists.seyza.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
-List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
-List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
-List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
-List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
-List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
-Sender: gnu-arch-dev-bounces@lists.seyza.com
-Errors-To: gnu-arch-dev-bounces@lists.seyza.com
-X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Linux 2.6.12-rc3
+Date: Thu, 21 Apr 2005 21:09:56 +0200
+Message-ID: <20050421190956.GA7443@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504201728110.2344@ppc970.osdl.org> <20050421112022.GB2160@elf.ucw.cz> <20050421120327.GA13834@elf.ucw.cz> <20050421162220.GD30991@pasky.ji.cz> <20050421190009.GC475@openzaurus.ucw.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	kernel list <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:06:01 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1DOgzw-0004f0-6J
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 21:06:00 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261795AbVDUTKU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 15:10:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261806AbVDUTKU
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 15:10:20 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:60549 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261795AbVDUTKI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 15:10:08 -0400
+Received: (qmail 11204 invoked by uid 2001); 21 Apr 2005 19:09:56 -0000
+To: Pavel Machek <pavel@ucw.cz>
+Content-Disposition: inline
+In-Reply-To: <20050421190009.GC475@openzaurus.ucw.cz>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Thu, Apr 21, 2005 at 09:00:09PM CEST, I got a letter
+where Pavel Machek <pavel@ucw.cz> told me that...
+> Hi!
 
-  > Using your suggested indexing method that uses [0:4] as the 1st level key and
-                                                 [0:3]
-  > [4:8] as the 2nd level key, I obtain an indexed archive that occupies 159M,
-  > where the top level contains 18665 1st level keys, the largest first level dir
-  > contains 5 entries, and all 2nd level dirs contain exactly 1 entry.
+Hi,
 
+> > > Well, not sure.
+> > > 
+> > > I did 
+> > > 
+> > > git track linus
+> > > git cancel
+> > > 
+> > > but Makefile still contains -rc2. (Is "git cancel" right way to check
+> > > out the tree?)
+> > 
+> > No. git cancel does what it says - cancels your local changes to the
+> > working tree. git track will only set that next time you pull from
+> > linus, the changes will be automatically merged. (Note that this will
+> > change with the big UI change.)
+> 
+> Is there way to say "forget those changes in my repository, I want
+> just plain vanilla" without rm -rf?
 
-That's just a mistake in the spec.  The format should probably be
-multi-level but, yes, the fanout I suggested is currently quite bogus.
-When I write that part of that code (today or tomorrow) I'll fix it.
+git cancel will give you "plain last commit". If you need plain vanilla,
+the "hard way" now is to just do
 
-A few people pointed that out.  Thanks.
+	commit-id >.git/HEAD
 
--t
+but your current HEAD will be lost forever. Or do
+
+	git fork vanilla ~/vanilla linus
+
+and you will have the vanilla tree tracking linus in ~/vanilla.
+
+I'm not yet sure if we should have some Cogito interface for doing this
+and what its semantics should be.
+
+> I see quite a lot of problems with fsck-tree. Is that normal?
+> (I ran out of disk space few times during different operations...)
+
+Actually, in case your tree is older than about two days, I hope you did
+the convert-cache magic or fetched a fresh tree?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
