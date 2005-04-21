@@ -1,203 +1,76 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Mailing list feed.
-Date: Thu, 21 Apr 2005 16:25:36 +1000
-Message-ID: <1114064737.29135.3.camel@localhost.localdomain>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Thu, 21 Apr 2005 08:49:31 +0200
+Message-ID: <20050421064931.GA31910@pasky.ji.cz>
+References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org> <20050420222815.GM19112@pasky.ji.cz> <Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org> <Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org> <20050421033526.GA9404@nevyn.them.org> <Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org> <20050421042833.GA10934@nevyn.them.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-n37qGdk3lUgGxSxDtmca"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 08:23:08 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Greg KH <greg@kroah.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 08:46:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOV5V-0008QM-JL
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 08:22:57 +0200
+	id 1DOVRo-0002BV-6u
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 08:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261228AbVDUG1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 02:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261235AbVDUG1L
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 02:27:11 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:4264 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S261228AbVDUG0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 02:26:18 -0400
-Received: from [150.203.247.9] (helo=[172.24.3.18])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DOV8f-00043y-CO; Thu, 21 Apr 2005 07:26:16 +0100
-To: Petr Baudis <pasky@ucw.cz>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261250AbVDUGuB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 02:50:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261242AbVDUGuA
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 02:50:00 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:55527 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261238AbVDUGtd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 02:49:33 -0400
+Received: (qmail 3285 invoked by uid 2001); 21 Apr 2005 06:49:32 -0000
+To: Daniel Jacobowitz <dan@debian.org>
+Content-Disposition: inline
+In-Reply-To: <20050421042833.GA10934@nevyn.them.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Thu, Apr 21, 2005 at 06:28:34AM CEST, I got a letter
+where Daniel Jacobowitz <dan@debian.org> told me that...
+> On Wed, Apr 20, 2005 at 09:00:44PM -0700, Linus Torvalds wrote:
+> > 
+> > 
+> > On Wed, 20 Apr 2005, Daniel Jacobowitz wrote:
+> > > 
+> > > My logic: it's a lot more intuitive to say "cg-log | less" to get
+> > > paginated output than it is to say "cg-log | cat" to get unpaginated
+> > > output.
+> > 
+> > I disagree.
+> > 
+> > There is _never_ any valid situation where you do "cg-log" with 
+> > unpaginated output to a tty.
+> > 
+> > In _any_ real system you'll be getting thousands of lines of output. 
+> > Possibly millions. unpaginated? What the hell are you talking about?
+> 
+> OK, so I'm crazy.  I must have hallucinated doing this sort of thing on
+> a regular basis... :-) Examples: terminals with good scrollback,
+> screen, script.  Small repositories.  Irritation at less's habit of
+> using the alternate xterm buffer, whatever the technical term for that
+> is.
 
---=-n37qGdk3lUgGxSxDtmca
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+... Plan9. But I guess you won't even have a pager there. ;-)
 
-If we just strip out the setting of $FROM and $MLIST, the script I use
-to feed bk-commits-head@vger.kernel.org is perfectly generic. Petr, can
-you include it in the tree so it gets updated as things change please?
+A little off-topic, anyone knows how to turn off that damn alternate
+screen thing on the xterm level? (Or any other level which makes _all_
+programs not to use it.)
+
+More seriously, I think Linus' patch is fine; the usage in scripts is
+not affected, and alternatives were suggested. When we have cg-admin, I
+might even let you set per-repository git-specific PAGER (which you
+could set to be even some fancy script which would parse the stuff, open
+a cute window and display stuff graphically, or whatever).
+
+Linus, ahem, could you please sign off your patch? :-)
 
 -- 
-dwmw2
-
---=-n37qGdk3lUgGxSxDtmca
-Content-Disposition: inline; filename=gitfeedmaillist.sh
-Content-Type: application/x-shellscript; name=gitfeedmaillist.sh
-Content-Transfer-Encoding: 7bit
-
-#!/bin/bash
-#
-# Generate a mail feed for a commits list.
-#
-# Based on 'gitlog.sh' originally written by (c) Ross Vandegrift.
-# Adapted to his scripts set by (c) Petr Baudis, 2005.
-# Major optimizations by (c) Phillip Lougher.
-#
-# Takes an id resolving to a commit to start from (HEAD by default).
-
-# regex for parent declarations
-PARENTS="^parent [A-Za-z0-9]{40}$"
-
-TMPCL=$(mktemp -t gitmail.XXXXXX)
-TMPCM=$(mktemp -t gitmail.XXXXXX)
-TMPML=$(mktemp -t gitmail.XXXXXX)
-TMPMD=$(mktemp -td gitmail.XXXXXX)
-
-FROM=`whoami`@`hostname`
-#SENDMAIL=/usr/lib/sendmail
-#MLIST=`whoami`@`hostname`
-# Unless configured otherwise, just cat it instead of mailing.
-SENDMAIL=tee --append
-MLIST=git-commits-mail.out
-
-# takes an object and generates the object's parent(s)
-createmails () {
-	local parents new_parent
-	declare -a new_parent
-
-	new_parent=("$@")
-	parents=$#
-
-	while [ $parents -gt 0 ]; do
-		parent=${new_parent[$(($parents-1))]}
-
-		echo $parent >> $TMPCL
-
-		parents=0
-		ignoredparents=0
-		lastparent=
-		SUBJECT=
-
-		cat-file commit $parent > $TMPCM
-
-		while read key rest; do
-		    case "$key" in
-			"")
-			    read SUBJECT
-			    echo ""
-			    echo "$SUBJECT"
-			    cat
-			    break;
-			    ;;
-
-			"parent")
-			    echo "parent $rest"
-			    if grep -q $rest $TMPCL; then
-				ignoredparents=$(($ignoredparents+1))
-				lastparent=$rest
-			    else
-				new_parent[$parents]=$rest
-				parents=$(($parents+1))
-			    fi
-			    ;;
-
-			"author"|"committer")
-			    date=(${rest#*> })
-			    sec=${date[0]}; tz=${date[1]}
-			    dtz=${tz/+/+ }; dtz=${dtz/-/- }
-			    pdate="$(date -Rud "1970-01-01 UTC + $sec sec $dtz" 2>/dev/null)"
-			    if [ "$pdate" ]; then
-				echo $key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/"
-			    else
-				echo "$key $rest"
-			    fi
-			    ;;
-
-			*)
-			    echo "$key $rest"
-			    ;;
-		    esac
-		done > $TMPML < $TMPCM
-
-		if [ $(($parents+$ignoredparents)) -eq 1 ]; then
-		    [ -z "$lastparent" ] && lastparent=${new_parent[0]}
-		    # Only one parent; not a merge. Mail this cset
-		    ( cat <<EOF 
-From: $FROM
-To: $MLIST
-Subject: $SUBJECT
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Git-Commit: $parent
-X-Git-Parent: $lastparent
-
-EOF
-		    cat $TMPML
-		    echo
-		    git diff -r $lastparent -r $parent > $TMPCM
-		    diffstat -p1 $TMPCM 2>/dev/null
-		    echo 
-		    cat $TMPCM
-			) > $TMPMD/$parent
-		    echo Mail: $SUBJECT
-		fi
-
-		i=0
-		while [ $i -lt $(($parents-1)) ]; do
-			createmails ${new_parent[$i]}
-			i=$(($i+1))
-		done
-	done
-}
-
-base=$(gitXnormid.sh -c $1)
-
-if [ -z $2 ]; then
-    lastmail=`cat .git/tags/MailDone`
-else
-    lastmail=$(gitXnormid.sh -c $2)
-fi
-
-#if [ -z $3 ]; then
-#    tagname=`ls -rt .git/tags | grep -v MailDone | tail -1`
-#    release=`cat .git/tags/$tagname`
-#else
-#    release=$(gitXnormid.sh -c $3)
-#fi    
-
-base=$(gitXnormid.sh -c $1) || exit 1
-
-
-if [ "$base" != "$lastmail" ]; then
-    # List the commits at which we should stop following the tree, because
-    # we've come back to commits which were already in $lastmail.
-    rev-tree --edges $base $lastmail | cut -f2- -d\  |  sed 's/[a-z0-9]*:1//g' >> $TMPCL
-
-    createmails $base
-    # No 'git tag -F' -- cheat.
-    echo $base > .git/tags/MailDone
-    tac $TMPCL | while read commit; do
-	if [ -r "$TMPMD/$commit" ]; then
-	    $SENDMAIL $MLIST < $TMPMD/$commit
-	fi
-    done
-fi
-rm $TMPCL $TMPCM $TMPML
-rm -rf $TMPMD
-
---=-n37qGdk3lUgGxSxDtmca--
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
