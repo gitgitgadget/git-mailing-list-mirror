@@ -1,60 +1,76 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Switching between branches
-Date: Wed, 20 Apr 2005 21:42:39 -0400
-Message-ID: <1114047759.20044.22.camel@dv>
+From: Olivier Andrieu <oandrieu@nerim.net>
+Subject: Re: git-viz tool for visualising commit trees
+Date: Thu, 21 Apr 2005 03:42:27 +0200 (CEST)
+Message-ID: <20050421.034227.104037433.oandrieu@nerim.net>
+References: <20050417194818.GG1461@pasky.ji.cz>
+	<20050420100824.GB25477@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Apr 21 03:38:51 2005
+Cc: pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 03:38:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOQeC-0001wu-7K
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 03:38:28 +0200
+	id 1DOQe1-0001vp-He
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 03:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261174AbVDUBmr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 21:42:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261173AbVDUBmr
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 21:42:47 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:39114
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261176AbVDUBmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 21:42:42 -0400
-Received: by localhost.localdomain (Postfix, from userid 500)
-	id E40B9EFF27; Wed, 20 Apr 2005 21:42:39 -0400 (EDT)
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.1.1 
+	id S261175AbVDUBmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 21:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261176AbVDUBmg
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 21:42:36 -0400
+Received: from smtp-104-thursday.nerim.net ([62.4.16.104]:36370 "EHLO
+	kraid.nerim.net") by vger.kernel.org with ESMTP id S261175AbVDUBma
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 21:42:30 -0400
+Received: from localhost (karryall.dnsalias.org [62.4.18.180])
+	by kraid.nerim.net (Postfix) with ESMTP
+	id 7688D42F2B; Thu, 21 Apr 2005 03:42:26 +0200 (CEST)
+To: mingo@elte.hu
+In-Reply-To: <20050420100824.GB25477@elte.hu>
+X-Mailer: Mew version 4.1 on Emacs 21.3 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+ > Ingo Molnar <mingo@elte.hu> [Wed, 20 Apr 2005]:
+ > 
+ > * Petr Baudis <pasky@ucw.cz> wrote:
+ > 
+ > >   Hi,
+ > > 
+ > >   just FYI, Olivier Andrieu was kind enough to port his monotone-viz 
+ > > tool to git (http://oandrieu.nerim.net/monotone-viz/ - use the one 
+ > > from the monotone repository). The tool visualizes the history flow 
+ > > nicely; see
+ > > 
+ > > 	http://rover.dkm.cz/~pasky/gitviz1.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz2.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz3.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz4.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz5.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz6.png
+ > > 	http://rover.dkm.cz/~pasky/gitviz7.png
+ > > 
+ > > for some screenshots.
+ > 
+ > really nice stuff! Any plans to include it in git-pasky, via 'git gui' 
+ > option or so? Also, which particular version has this included - the 
+ > freshest tarball on the monotone-viz download site doesnt seem to 
+ > include it.
 
-Perhaps it's a naive question, but how do I switch between branches?  I
-mean an equivalent of "svn switch" or "cvs update -r branch" that would
-reuse the existing working directory.
+There, here's a tarball :
+  http://oandrieu.nerim.net/monotone-viz/git-viz-0.1.tar.gz
 
-I tried to switch a git-pasky working directory to the linus branch.
+and a binary, compiled on Fedora Core 3 :
+  http://oandrieu.nerim.net/monotone-viz/git-viz.exe
+  http://oandrieu.nerim.net/monotone-viz/README.git-viz
 
-Here's what I tried:
-
-git track linus
-git cancel
-git pull
-git cancel
-git merge linus
-git cancel
-
-After all that I found that README is still from the pasky branch.
-
-Then I tried "git merge -b pasky linus" - this actually changed the
-files to the linus branch, but it didn't remove files specific to
-git-pasky.  Also, I'm surprised that I had to specify "-b pasky", as if
-the currently checked out branch is unknown.
-
-I'm using git-pasky 0.6.2.
+Please, bear in mind that this is really a hack. Since monotone and
+git has very similar concepts, I merely replaced the code that was
+accessing monotone's database (sqlite) by some code using git
+tools. But the UI still has references to monotone all over the place,
+a couple of things won't work, etc.
 
 -- 
-Regards,
-Pavel Roskin
-
+   Olivier
