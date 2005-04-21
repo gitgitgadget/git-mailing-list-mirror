@@ -1,85 +1,88 @@
-From: Klaus Robert Suetterlin <robert@mpe.mpg.de>
-Subject: HOWTO: PATCH: don't hardcode path-to-bash, use sys/limits.h
-Date: Thu, 21 Apr 2005 12:23:26 +0200
-Message-ID: <20050421102326.GA22541@xdt04.mpe-garching.mpg.de>
-References: <426734DE.3040606@timesys.com> <426736AF.7000900@timesys.com> <4267387A.6040602@timesys.com>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: Possible problem with git-pasky-0.6.2 (patch: **** Only garbage was found in the patch input.)I
+Date: Thu, 21 Apr 2005 04:23:45 -0600
+Message-ID: <200504210423.47369.elenstev@mesatop.com>
+References: <200504201706.09656.elenstev@mesatop.com> <200504201820.27497.elenstev@mesatop.com> <20050421071104.GC31910@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 12:20:04 2005
+X-From: git-owner@vger.kernel.org Thu Apr 21 12:24:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOYmF-0005TY-GQ
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 12:19:19 +0200
+	id 1DOYqj-0005zu-LV
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 12:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261250AbVDUKXk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 06:23:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261277AbVDUKXk
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 06:23:40 -0400
-Received: from mpehp1.mpe-garching.mpg.de ([130.183.70.10]:40198 "EHLO
-	mpehp1.mpe-garching.mpg.de") by vger.kernel.org with ESMTP
-	id S261250AbVDUKXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 06:23:32 -0400
-Received: from xdt04.mpe-garching.mpg.de (xdt04.mpe-garching.mpg.de [130.183.136.164])
-	by mpehp1.mpe-garching.mpg.de (8.9.3 (PHNE_25183+JAGae58098)/8.9.3) with ESMTP id MAA22438;
-	Thu, 21 Apr 2005 12:23:28 +0200 (METDST)
-Received: (from krs@localhost)
-	by xdt04.mpe-garching.mpg.de (8.13.3/8.13.1/Submit) id j3LANQ3V039668;
-	Thu, 21 Apr 2005 12:23:26 +0200 (CEST)
-	(envelope-from krs)
-To: Mike Taht <mike.taht@timesys.com>
+	id S261265AbVDUK2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 06:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVDUK2Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 06:28:16 -0400
+Received: from taco.zianet.com ([216.234.192.159]:32521 "HELO taco.zianet.com")
+	by vger.kernel.org with SMTP id S261265AbVDUK1y (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 06:27:54 -0400
+Received: (qmail 97549 invoked from network); 21 Apr 2005 10:27:51 -0000
+Received: from 216-31-65-221.zianet.com (216.31.65.221)
+  by 0 with SMTP; 21 Apr 2005 10:27:51 -0000
+To: Petr Baudis <pasky@ucw.cz>
+User-Agent: KMail/1.6.1
+In-Reply-To: <20050421071104.GC31910@pasky.ji.cz>
 Content-Disposition: inline
-In-Reply-To: <4267387A.6040602@timesys.com>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thursday 21 April 2005 01:11 am, Petr Baudis wrote:
+> Dear diary, on Thu, Apr 21, 2005 at 02:20:27AM CEST, I got a letter
+> where Steven Cole <elenstev@mesatop.com> told me that...
+> > Actually, I meant "patch -p1 <stuff_from_above".
+> 
+> So, how did it end up?
 
-I supply a patch that dehardcodes the path to bash (which is not /bin on all computers) and adds sys/limits.h to provide ULONG_MAX.
+The file listed in the diff was already patched, so applying that
+output does the expected:
+[steven@spc git-pasky-0.6.2-damaged]$ patch -p1 <xyzzy.diff
+patching file gitcancel.sh
+Reversed (or previously applied) patch detected!  Assume -R? [n] n
+Apply anyway? [n] n
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file gitcancel.sh.rej
 
-If this is not the right way to supply patches, or if this email misses some crucial point please tell me so, and supply explanation.
+> 
+> Actually, never mind. I forgot that I bring the local changes forward as
+> patches instead. So this is Harmless (tm). It means the patch containing
+> your local changes has just that kind of git diff output containing
+> filename: hash. I will probably just chain grep -v '^[^+-@ ]' in front
+> of patch. (Someone starting his filename with a space _deserves_ the
+> trouble. ;-)
+> 
+> > But before doing that, I did a fsck-cache as follows, with these results.
+> > This seems damaged.
+> > 
+> > [steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/HEAD)
+> 
+> You can't do just this. In Cogito repository, you may have multiple
+> branches, each with different HEAD of course. So you need to
+> 
+> 	fsck-cache --unreachable $(cat .git/heads/*)
+> 
 
--- 
-Robert Suetterlin (robert@mpe.mpg.de)
-phone: (+49)89 / 30000-3546   fax: (+49)89 / 30000-3950
+[steven@spc git-pasky-0.6.2]$ fsck-cache  $(cat .git/heads/*)
+root 1bf00e46973f7f1c40bc898f1346a1273f0a347f
+dangling commit 2c1a8048d56cfbe0ff8a3d04c12d06f3832e7edc
+dangling commit a387546d148df5718a9c53bbe0cbea441e793d98
+dangling blob d6ff9de73fc920cf1f27afac82571c4c58526b80
 
-commit 5f6caff82b1f3b5931d92aaff99be6d8dbad10ca
-tree d7ea8aeefbbc2ab63cb5acd41b647b1b5f11fb83
-parent cd1c034369b73da7503da365fa556aab27004814
-author Klaus Robert Suetterlin <krs@xdt04.mpe-garching.mpg.de> 1114078431 +0200
-committer Klaus Robert Suetterlin <krs@xdt04.mpe-garching.mpg.de> 1114078431 +0200
+[steven@spc git-pasky-0.6.2]$ ./git-prune-script
 
-Don't hardcode the path-to-bash please.
+Ah, yes. Prune juice.
 
-Index: commit.c
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/commit.c  (mode:100644 sha1:eda45d7e15358ed6f2cd0502de2a08987307fc98)
-+++ d7ea8aeefbbc2ab63cb5acd41b647b1b5f11fb83/commit.c  (mode:100644 sha1:cfe9a8ddf6ee2702e3923cb22240f9f9ed1bd04c)
-@@ -1,3 +1,4 @@
-+#include <sys/limits.h>
- #include "commit.h"
- #include "cache.h"
- #include <string.h>
-Index: gitdiff-do
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/gitdiff-do  (mode:100755 sha1:afed4e40b259a61b0f12979ba7326f26743bc553)
-+++ d7ea8aeefbbc2ab63cb5acd41b647b1b5f11fb83/gitdiff-do  (mode:100755 sha1:218dfabeb4a5dcbd2cf58bd6f672f385690ec397)
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/usr/bin/env bash
- #
- # Make a diff between two GIT trees.
- # Copyright (c) Petr Baudis, 2005
-Index: gitlog.sh
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/gitlog.sh  (mode:100755 sha1:a496a864f9586e47a4d7bd3ae0af0b3e07b7deb8)
-+++ d7ea8aeefbbc2ab63cb5acd41b647b1b5f11fb83/gitlog.sh  (mode:100755 sha1:7b3aa8a89bc64273c648920ccd1686859754803e)
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/usr/bin/env bash
- #
- # Make a log of changes in a GIT branch.
- #
+[steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/heads/*)
+root 1bf00e46973f7f1c40bc898f1346a1273f0a347f
+
+Now, all is well.  Sorry for the noise.
+
+Steven
+
+
