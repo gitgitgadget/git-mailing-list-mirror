@@ -1,90 +1,70 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Allow "git cancel" to change branches
-Date: Thu, 21 Apr 2005 16:00:09 -0400
-Message-ID: <1114113609.29603.24.camel@dv>
-References: <E1DObsr-0006Au-MA@server.smurf.noris.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] multi item packed files
+Date: Thu, 21 Apr 2005 13:07:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504211301240.2344@ppc970.osdl.org>
+References: <200504211113.13630.mason@suse.com> <Pine.LNX.4.58.0504210832490.2344@ppc970.osdl.org>
+ <m3u0m0q69a.fsf@defiant.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 21:57:03 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 22:02:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOhmN-0003Cx-HY
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 21:56:03 +0200
+	id 1DOhrT-0003xU-BI
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 22:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261831AbVDUUAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 16:00:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVDUUAY
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:00:24 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:58000
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261831AbVDUUAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 16:00:12 -0400
-Received: by localhost.localdomain (Postfix, from userid 500)
-	id 427C8EFF72; Thu, 21 Apr 2005 16:00:09 -0400 (EDT)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <E1DObsr-0006Au-MA@server.smurf.noris.de>
-X-Mailer: Evolution 2.2.1.1 
+	id S261842AbVDUUFm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 16:05:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261851AbVDUUFm
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:05:42 -0400
+Received: from fire.osdl.org ([65.172.181.4]:17321 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261842AbVDUUFe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 16:05:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3LK5Qs4022657
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 21 Apr 2005 13:05:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3LK5PuM021154;
+	Thu, 21 Apr 2005 13:05:25 -0700
+To: Krzysztof Halasa <khc@pm.waw.pl>
+In-Reply-To: <m3u0m0q69a.fsf@defiant.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Matthias!
 
-On Thu, 2005-04-21 at 23:31 +1000, Matthias Urlichs wrote:
-> "git cancel" may not be named correctly for this job, but it does almost
-> everything you'd need for switching between one branch and another
-> within a repository, so...
 
-This functionality is badly needed, but "git cancel" should probably
-remain what it is.
+On Thu, 21 Apr 2005, Krzysztof Halasa wrote:
+> 
+> If someone needs better on-disk ratio, (s)he can go with 1 KB filesystem
+> or something like that, without all the added complexity of packing.
 
-> +if [ "$1" ] ; then
-> +	test -f .git/heads/$1 || cp .git/HEAD .git/heads/$1
-> +	ln -sf "heads/$1" .git/HEAD
-> +fi
+I really think the argument that "you can use filesystem feature XYZ" is 
+bogus.
 
-Considering that the patch is essentially just this block of code, it
-could be (in the first approximation) a separate command, e.g. "git
-switch", that would call "git cancel" if needed.
+I know that I'm not willing to switch filesystems on a whim. I suspect 
+nobody else is either. I'm not going to create a loopback filesystem just 
+for git, it's just too much pain.
 
-But let's consider the fact that "git cancel" removes all local changes.
-That's quite a serious side effect.  I don't always want to remove local
-changes when I switch between branches in CVS.  Many users would prefer
-git to do a merge.
+And dammit, if I'm the original author and likely biggest power-user, and 
+_I_ can't be bothered to use special filesystems, then who can? Nobody.
 
-I think that "git track" needs to be redesigned.  There are at least
-three properties of the working directory (related to branch tracking)
-that users may want to change:
+This is why I absolutely do not believe in arguments like "if your
+filesystem doesn't do tail packing, you shouldn't use it" or "if your
+don't have name hashing enabled in your filesystem it's broken".
 
-1) Where new revisions are pulled from.  It could be more than one
-branch (ideal implementation - with several copies of rsync run
-simultaneously).
+I'm perfectly willing to optimize for the common case, but that's as far 
+as it goes. I do not want to make fundamental design decisions that depend 
+on the target filesystem having some particular feature. 
 
-2) What branch is "checked out" to the working directory, i.e. what
-branch would "git cancel" restore.
+(I'll happily make decisions that say that the target _OS_ has to have a 
+particular feature, though. I'll require a sane base-level for 
+functionality, but not something like filesystem details).
 
-3) Whether new changes are merged automatically.
-
-I suggest following syntax:
-
-git track -b WORKING-BRANCH [--cancel] [--active|--passive]
-[TRACK-BRANCH...|--notrack]
-
---cancel would cancel changes rather than merge when the current branch
-changes.
-
---active enables automerge, --passive disables it
-
-Empty list of branches to track should not disable tracking.  Only
---notrack should do it.
-
-Then your "git cancel BRANCH" would become:
-git track -b BRANCH --cancel
-
--- 
-Regards,
-Pavel Roskin
-
+			Linus
