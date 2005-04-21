@@ -1,51 +1,53 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Docs update
-Date: Thu, 21 Apr 2005 23:26:02 +0200
-Message-ID: <20050421212602.GL7443@pasky.ji.cz>
-References: <42680FCC.6030901@dgreaves.com> <20050421204348.GJ7443@pasky.ji.cz> <4268181B.6050906@dgreaves.com>
+Subject: Re: Pasky problem with 'git init URL'
+Date: Thu, 21 Apr 2005 23:26:49 +0200
+Message-ID: <20050421212648.GM7443@pasky.ji.cz>
+References: <1114100518.17551.31.camel@nosferatu.lan> <20050421202928.GH7443@pasky.ji.cz> <17000.6154.748117.967898@smtp.charter.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 23:23:47 2005
+Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
+	GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 23:24:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOj7I-0007MN-A7
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 23:21:44 +0200
+	id 1DOj7v-0007Rp-BZ
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 23:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261886AbVDUV0H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 17:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261887AbVDUV0G
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 17:26:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50312 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261886AbVDUV0D (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 17:26:03 -0400
-Received: (qmail 23908 invoked by uid 2001); 21 Apr 2005 21:26:02 -0000
-To: David Greaves <david@dgreaves.com>
+	id S261887AbVDUV0w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 17:26:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261889AbVDUV0w
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 17:26:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51080 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261887AbVDUV0u (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 17:26:50 -0400
+Received: (qmail 24022 invoked by uid 2001); 21 Apr 2005 21:26:49 -0000
+To: John Stoffel <john@stoffel.org>
 Content-Disposition: inline
-In-Reply-To: <4268181B.6050906@dgreaves.com>
+In-Reply-To: <17000.6154.748117.967898@smtp.charter.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 21, 2005 at 11:16:11PM CEST, I got a letter
-where David Greaves <david@dgreaves.com> told me that...
-> Petr Baudis wrote:
-> >
-> >Make a choice - either you are describing git or Cogito. The frmer has
-> >no RSYNC_FLAGS and does not care about any heads or anything at all (you
-> >might mention it as a recommended convention, though).
+Dear diary, on Thu, Apr 21, 2005 at 11:15:54PM CEST, I got a letter
+where John Stoffel <john@stoffel.org> told me that...
+> >>>>> "Petr" == Petr Baudis <pasky@ucw.cz> writes:
 > 
-> I was going to do both - surely that's OK?
+> Petr> Perhaps it would be useful to have some "command classes" (with at least
+> Petr> cg-*-(add|ls|rm)), like:
+> 
+> Petr> 	cg-branch-ls
+> Petr> 	cg-remote-rm
+> Petr> 	cg-tag-add
+> 
+> Does a standard like:
+> 
+>   git <objecttype> <command> <args> [<obj> ...]
 
-I thought the original goal for README.reference was to be git-specific,
-and I planned to therefore push it to the core git at some point.
-
-I actually probably don't mind as long as you keep the two separated
-cleanly inside of the file, so if we shall want to include it in git,
-the trimming of the docs to only relevant parts is simple enough.
+Isn't this basically what I was proposing? (Modulo the UI changes
+related to git-pasky -> Cogito.)
 
 -- 
 				Petr "Pasky" Baudis
