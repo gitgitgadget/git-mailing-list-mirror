@@ -1,126 +1,69 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: [PATCH] Add "git push"
-Date: Thu, 21 Apr 2005 22:43:33 +1000 (EST)
-Message-ID: <20050421124333.AB2CE7F887@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Thu Apr 21 14:50:47 2005
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-viz tool for visualising commit trees
+Date: Thu, 21 Apr 2005 15:02:42 +0200
+Message-ID: <20050421130242.GA5817@elte.hu>
+References: <20050420100824.GB25477@elte.hu> <20050421.034227.104037433.oandrieu@nerim.net> <20050421092120.GA20626@elte.hu> <20050421.133136.78712855.oandrieu@nerim.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 14:59:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOb7f-0002G3-OV
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 14:49:36 +0200
+	id 1DObGS-0003Vf-DE
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 14:58:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261343AbVDUMx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 08:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261342AbVDUMx5
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 08:53:57 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:7647 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261343AbVDUMxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 08:53:39 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DObB9-0004vZ-HS
-	for git@vger.kernel.org; Thu, 21 Apr 2005 14:53:21 +0200
-Received: (nullmailer pid 1131 invoked by uid 501);
-	Thu, 21 Apr 2005 12:53:11 -0000
-Received: from [150.203.247.5] (helo=smurf.noris.de)
-	by server.smurf.noris.de with esmtp (Exim 4.50)
-	id 1DOb6J-0004lz-1L
-	for smurf@smurf.noris.de; Thu, 21 Apr 2005 14:48:24 +0200
-Received: by smurf.noris.de (Postfix, from userid 501)
-	id AB2CE7F887; Thu, 21 Apr 2005 22:43:33 +1000 (EST)
-To: git@vger.kernel.org
-X-Smurf-Spam-Score: -1.3 (-)
-X-Smurf-Spam-Score: -1.6 (-)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S261335AbVDUNC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 09:02:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261342AbVDUNC6
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 09:02:58 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:191 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261335AbVDUNC4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 09:02:56 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id 5A1EC30CD93;
+	Thu, 21 Apr 2005 15:02:02 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 53EA41FC2; Thu, 21 Apr 2005 15:02:47 +0200 (CEST)
+To: Olivier Andrieu <oandrieu@nerim.net>
+Content-Disposition: inline
+In-Reply-To: <20050421.133136.78712855.oandrieu@nerim.net>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch adds the ability to "git push", as the obvious converse of
-"git pull".
 
-Signed-Off-By: Matthias Urlichs <smurf@smurf.noris.de>
+* Olivier Andrieu <oandrieu@nerim.net> wrote:
 
-Index: git
-===================================================================
---- 42a073eb6b5bb397a3e8768a032463a7fa02e6b9/git  (mode:100755 sha1:557122dfb05580e4af2c55767f3d6f92b9110edd)
-+++ 265515f9c4f089b1b61e9d2312c4b3babe189618/git  (mode:100644 sha1:c32ee037c4dd68f8fa6723cb115644d46810bc89)
-@@ -42,6 +42,7 @@
- 	merge		[-c] [-b BASE_ID] FROM_ID
- 	patch		[COMMIT_ID]
- 	pull		[RNAME]
-+	push		[RNAME]
- 	rm		FILE...
- 	seek		[COMMIT_ID]
- 	status
-@@ -86,6 +87,7 @@
- "lsremote")   gitlsremote.sh "$@";;
- "merge")      gitmerge.sh "$@";;
- "pull")       gitpull.sh "$@";;
-+"push")       gitpush.sh "$@";;
- "patch")      gitpatch.sh "$@";;
- "rm")         gitrm.sh "$@";;
- "seek")       gitseek.sh "$@";;
---- /dev/null  (tree:42a073eb6b5bb397a3e8768a032463a7fa02e6b9)
-+++ 265515f9c4f089b1b61e9d2312c4b3babe189618/gitpush.sh  (mode:100644 sha1:0a658141991c602ca327edb9ab982d7660d7c665)
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+#
-+# Pushes changes from the local GIT repository to "remote".
-+# Copyright (c) Matthias Urlichs, 2005
-+#
-+# Takes the remote's name.
-+
-+name=$1
-+
-+die () {
-+	echo gitpush.sh: $@ >&2
-+	exit 1
-+}
-+
-+
-+[ "$name" ] || name=$(cat .git/tracking 2>/dev/null)
-+[ "$name" ] || die "where to push to?"
-+uri=$(grep $(echo -e "^$name\t" | sed 's/\./\\./g') .git/remotes | cut -f 2)
-+[ "$uri" ] || die "unknown remote"
-+
-+
-+tracking=
-+[ -s .git/tracking ] && tracking=$(cat .git/tracking)
-+
-+orig_head=
-+if [ "$tracking" = "$name" ]; then
-+	[ -s .git/HEAD.tracked ] && orig_head=$(cat .git/HEAD.tracked)
-+else
-+	[ -s ".git/heads/$name" ] && orig_head=$(cat ".git/heads/$name")
-+fi
-+
-+rsync $RSYNC_FLAGS -Lr "$uri/HEAD" ".git/HEAD_$name"
-+$id=$(cat ".git/HEAD_$name")
-+rm .git/HEAD_$name
-+
-+if [ -z "$id" ] ; then
-+	echo "The remote system doesn't have a HEAD file: Doing an initial upload." >&2
-+	echo "." >&2
-+elif [ "$(cat-file -t "$id")" != "commit" ]; then
-+	echo "The remote system has stuff we don't have: pull first!" >&2
-+	echo "	Commit ID: $id" >&2
-+	exit 1
-+fi
-+
-+# We already saw the MOTD, thank you very much.
-+rsync $RSYNC_FLAGS --ignore-existing --whole-file \
-+	-v -r ".git/objects" "$uri" | grep -v '^MOTD:'
-+
-+# FIXME: Warn about conflicting tag names?
-+rsync $RSYNC_FLAGS --ignore-existing \
-+	-v -r ".git/tags" "$uri" 2>/dev/null | grep -v '^MOTD:'
-+
-+# Finally, update the remote HEAD
-+rsync $RSYNC_FLAGS -Lr ".git/HEAD" "$uri/HEAD" \
-+	2>/dev/null | grep -v '^MOTD:'
-+
-+echo "Now up to date."
-+exit
-+
+>  >  Preprocessor error
+>  >  make: *** [viz_style.cmx] Error 2
+> 
+> That's probably because the configure script didn't find camlp4. 
+> Camlp4 is a preprocessor for ocaml, it's needed for compiling this 
+> file (viz_style.ml). Camlp4 is built with the ocaml compilers but some 
+> package it separately. Try to find and install some ocaml-camlp4 (or 
+> camlp4) package and then re-run configure.
+
+ah, ok. I installed camlp4-3.08.3-1, and this also solved the other 
+build problem as well that looked like to be a PATH problem.
+
+when i run git-viz in a git-controlled directory, it seems to start up 
+fine, but i get an error message: "Could not execute dot". Closing that 
+window gives me the ability to do an 'Open', but git-viz does not seem 
+to recognize any of my GIT repositories as such. (perhaps there's some 
+GIT version dependency? I've got Linus' latest & greatest installed.)
+ 
+> The configure script should signal an error when it doesn't find 
+> camlp4, I'll change that.
+
+fyi, it also didnt check for ocaml and lablgtk.
+
+	Ingo
