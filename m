@@ -1,67 +1,73 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: wit 0.0.4 uploaded
-Date: Thu, 21 Apr 2005 05:05:29 +0200
-Message-ID: <1114052729.4108.9.camel@localhost>
+From: Brad Roberts <braddr@puremagic.com>
+Subject: Re: [3/5] Add http-pull
+Date: Wed, 20 Apr 2005 20:27:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.44.0504202026180.2625-100000@bellevue.puremagic.com>
+References: <20050417195900.GH1461@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Apr 21 05:02:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 05:23:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DORxF-0001CJ-Kz
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 05:02:13 +0200
+	id 1DOSHk-0002ic-B2
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 05:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261198AbVDUDGB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 23:06:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261199AbVDUDGB
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 23:06:01 -0400
-Received: from shadow.prohost.de ([216.71.84.228]:43667 "EHLO
-	shadow.prohost.de") by vger.kernel.org with ESMTP id S261198AbVDUDFm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 23:05:42 -0400
-Received: from blue (p54A24C29.dip.t-dialin.net [84.162.76.41])
-	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3L35XN29785
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 05:05:33 +0200
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.0.4 
+	id S261196AbVDUD1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 23:27:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261198AbVDUD1d
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 23:27:33 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:45760 "EHLO
+	bellevue.puremagic.com") by vger.kernel.org with ESMTP
+	id S261196AbVDUD1b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 23:27:31 -0400
+Received: from bellevue.puremagic.com (localhost [127.0.0.1])
+	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3L3RIEi017069
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 20 Apr 2005 20:27:18 -0700
+Received: from localhost (braddr@localhost)
+	by bellevue.puremagic.com (8.13.3/8.13.3/Submit) with ESMTP id j3L3RHYl017065;
+	Wed, 20 Apr 2005 20:27:17 -0700
+X-Authentication-Warning: bellevue.puremagic.com: braddr owned process doing -bs
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050417195900.GH1461@pasky.ji.cz>
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, 17 Apr 2005, Petr Baudis wrote:
 
-I uploaded a new snapshot to http://www.absolutegiganten.org/wit
+> Date: Sun, 17 Apr 2005 21:59:00 +0200
+> From: Petr Baudis <pasky@ucw.cz>
+> To: Daniel Barkalow <barkalow@iabervon.org>
+> Cc: git@vger.kernel.org
+> Subject: Re: [3/5] Add http-pull
+>
+> Dear diary, on Sun, Apr 17, 2005 at 09:24:27PM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > On Sun, 17 Apr 2005, Petr Baudis wrote:
+> >
+> > > Dear diary, on Sun, Apr 17, 2005 at 08:49:11PM CEST, I got a letter
+> > > where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > > > There's some trickiness for the history of commits thing for stopping at
+> > > > the point where you have everything, but also behaving appropriately if
+> > > > you try once, fail partway through, and then try again. It's on my queue
+> > > > of things to think about.
+> > >
+> > > Can't you just stop the recursion when you hit a commit you already
+> > > have?
+> >
+> > The problem is that, if you've fetched the final commit already, and then
+> > the server dies, and you try again later, you already have the last one,
+> > and so you think you've got everything.
+>
+> Hmm, some kind of journaling? ;-)
 
-The changes are
+How about fetching in the inverse order.  Ie, deepest parents up towards
+current.  With that method the repository is always self consistent, even
+if not yet current.
 
-0.0.4:
-* c2html usage is configurable now
-* add flexible /changelog/<number of entries>, <number of days> and all
-* improve display of dates
-* implement all the nice ideas from Kay Sievers gitweb.pl
-* try to validate most of the dynamic URIs
-* sanitize logging and move host and port configuration to config.py
-* add copyright headers to source files
-* add a simple start script
-* change default web serving mode of wit to multithreading
-
-If I weren't so tired I'd write something cool and nifty for sure
-
-The demo site is at
-
-http://grmso.net:8090
-
-Greetings,
-
-
-			Christian
-
--- 
-Christian Meder, email: chris@absolutegiganten.org
-
-The Way-Seeking Mind of a tenzo is actualized 
-by rolling up your sleeves.
-
-                (Eihei Dogen Zenji)
+Later,
+Brad
 
