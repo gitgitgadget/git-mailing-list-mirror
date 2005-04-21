@@ -1,80 +1,250 @@
-From: David Mansfield <david@cobite.com>
-Subject: Re: Change "pull" to _only_ download, and "git update"=pull+merge?
-Date: Wed, 20 Apr 2005 19:58:58 -0400
-Message-ID: <4266ECC2.6060202@cobite.com>
-References: <Pine.LNX.4.21.0504161951160.30848-100000@iabervon.org> <20050419011206.GT5554@pasky.ji.cz> <42646967.9030903@dwheeler.com> <4264CCFF.30400@dgreaves.com> <20050419092812.GE2393@pasky.ji.cz> <1113905110.1262.1.camel@nosferatu.lan> <20050419105008.GB12757@pasky.ji.cz> <20050420070157.GA12584@elte.hu> <20050420200504.GB19112@pasky.ji.cz> <20050420203235.GA13270@elte.hu> <20050420211505.GE19112@pasky.ji.cz>
+From: Denys Duchier <duchier@ps.uni-sb.de>
+Subject: Re: [Gnu-arch-users] Re: [GNU-arch-dev] [ANNOUNCEMENT] /Arch/ embraces `git'
+Date: Thu, 21 Apr 2005 02:05:22 +0200
+Message-ID: <867jixata5.fsf@speedy.lifl.fr>
+References: <200504202304.QAA17069@emf.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ingo Molnar <mingo@elte.hu>,
-	Martin Schlemmer <azarah@nosferatu.za.org>,
-	David Greaves <david@dgreaves.com>, dwheeler@dwheeler.com,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 01:55:48 2005
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 02:02:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOP2f-0000wQ-Ih
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 01:55:37 +0200
+	id 1DOP8l-0001VT-NF
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 02:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261842AbVDTX7w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 19:59:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVDTX7w
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 19:59:52 -0400
-Received: from ms-smtp-02-smtplb.rdc-nyc.rr.com ([24.29.109.6]:6032 "EHLO
-	ms-smtp-02.rdc-nyc.rr.com") by vger.kernel.org with ESMTP
-	id S261842AbVDTX7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 19:59:49 -0400
-Received: from [192.168.0.103] (cpe-66-65-159-236.nyc.res.rr.com [66.65.159.236])
-	by ms-smtp-02.rdc-nyc.rr.com (8.12.10/8.12.7) with ESMTP id j3KNxXId021200;
-	Wed, 20 Apr 2005 19:59:33 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050420211505.GE19112@pasky.ji.cz>
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S261845AbVDUAGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 20:06:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261846AbVDUAGM
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 20:06:12 -0400
+Received: from uni-sb.de ([134.96.252.33]:62448 "EHLO uni-sb.de")
+	by vger.kernel.org with ESMTP id S261845AbVDUAF4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 20:05:56 -0400
+Received: from cs.uni-sb.de (cs.uni-sb.de [134.96.252.31])
+	by uni-sb.de (8.13.4/2005033000) with ESMTP id j3L05Uc8013559;
+	Thu, 21 Apr 2005 02:05:30 +0200 (CEST)
+Received: from mail.cs.uni-sb.de (mail.cs.uni-sb.de [134.96.254.200])
+	by cs.uni-sb.de (8.13.4/2005033000) with ESMTP id j3L05Tdo001005;
+	Thu, 21 Apr 2005 02:05:30 +0200 (CEST)
+Received: from ps.uni-sb.de (grizzly.ps.uni-sb.de [134.96.186.68])
+	by mail.cs.uni-sb.de (8.13.4/2005033000) with ESMTP id j3L05SPF021278;
+	Thu, 21 Apr 2005 02:05:28 +0200 (CEST)
+X-Authentication-Warning: mail.cs.uni-sb.de: Host grizzly.ps.uni-sb.de [134.96.186.68] claimed to be ps.uni-sb.de
+Received: from ps.uni-sb.de (localhost [127.0.0.1])
+	by ps.uni-sb.de (8.12.10/8.12.10) with ESMTP id j3L05SUd027810;
+	Thu, 21 Apr 2005 02:05:28 +0200
+Received: from localhost (localhost [[UNIX: localhost]])
+	by ps.uni-sb.de (8.12.10/8.12.10/Submit) id j3L05QQm027808;
+	Thu, 21 Apr 2005 02:05:26 +0200
+To: gnu-arch-users@gnu.org
+In-Reply-To: <200504202304.QAA17069@emf.net> (Tom Lord's message of "Wed, 20
+	Apr 2005 16:04:00 -0700 (PDT)")
+User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
-> Dear diary, on Wed, Apr 20, 2005 at 10:32:35PM CEST, I got a letter
-> where Ingo Molnar <mingo@elte.hu> told me that...
-> 
->>* Petr Baudis <pasky@ucw.cz> wrote:
->>
->>
->>>>yet another thing: what is the canonical 'pasky way' of simply nuking 
->>>>the current files and checking out the latest tree (according to 
->>>>.git/HEAD). Right now i'm using a script to:
->>>>
->>>>  read-tree $(tree-id $(cat .git/HEAD))
->>>>  checkout-cache -a
->>>>
->>>>(i first do an 'rm -f *' in the working directory)
->>>>
->>>>i guess there's an existing command for this already?
->>>
->>>git cancel
->>
->>hm, that's a pretty unintuitive name though. How about making it 'git 
->>checkout' and providing a 'git checkout -f' option to force the 
->>checkout? (or something like this)
-> 
-> 
-> Since it does not really checkout. Ok, it does, but that's only small
-> part of it. It just cancels whatever local changes are you doing in the
-> tree and bring it to consistent state. When you have a merge in progress
-> and after you see the sheer number of conflicts you decide to get your
-> hands off, you type just git cancel. Doing basically anything with your
-> tree (not only local changes checkout would fix, but also various git
-> operations, including git add/rm and git seek) can be easily fixed by
-> git cancel.
+--=-=-=
+
+Tom Lord <lord@emf.net> writes:
+
+> Thank you for your experiment.
+
+you are welcome.
+
+> I think that to a large extent you are seeing artifacts
+> of the questionable trade-offs that (reports tell me) the
+> ext* filesystems make.   With a different filesystem, the 
+> results would be very different.
+
+No, this is not the only thing that we observe.  For example, here are the
+reports for the following two experiments:
+
+Indexing method = [2]
+
+Max keys at level  0:     256
+Max keys at level  1:     108
+Total number of dirs:     257
+Total number of keys:   21662
+Disk footprint      :    1.8M
+
+Indexing method = [4 4]
+
+Max keys at level  0:   18474
+Max keys at level  1:       5
+Max keys at level  2:       1
+Total number of dirs:   40137
+Total number of keys:   21662
+Disk footprint      :    157M
+
+Notice the huge number of directories in the second experiment and they don't
+help at all in performing discrimination.
+
+> I'm imagining a blob database containing may revisions of the linux
+> kernel.  It will contain millions of blobs.
+
+It is very easy to write code that uses an adaptive discrimination method
+(i.e. when a directory becomes too full, introduce an additional level of
+discrimination and rehash).  In fact I have code that does that (rehashing if
+the size of a leaf directory exceed 256), but the [2] method above doesn't even
+need it even though it has 21662 keys.
+
+Just in case there is some interest, I attach below the python scripts which I
+used for my experiments:
+
+To create an indexed archive:
+
+	python build.py SRC DST N1 ... Nk
+
+where SRC is the root directory of the tree to be indexed, and DST names the
+root directory of the indexed archive to be created.  N1 through Nk are integers
+that each indicate how many chars to chop off the key to create the next level
+indexing key.
+
+	python info.py DST
+
+collects and then prints out statistics about an indexed archive.
+
+For example, the invocation that relates to your original proposal would be:
+
+	python build.py /usr/src/linux store 4 4
+        python info.py store
 
 
-How about 'git revert'?
+--=-=-=
+Content-Disposition: attachment; filename=build.py
+Content-Description: script to build an indexed archive
 
-Most editors and word processors use that idiom for revert to saved 
-copy, with the obvious parallel here.
+import os,os.path,stat,sha
 
-David
+tree      = None
+archive   = None
+slices    = []
+lastslice = (0,-1)
+
+def recurse(path):
+    s = os.stat(path)
+    if stat.S_ISDIR(s.st_mode):
+        print path
+        contents = []
+        for n in os.listdir(path):
+            uid = recurse(os.path.join(path,n))
+            contents.append('\t'.join((n,uid)))
+        contents = '\n'.join(contents)
+        buf = sha.new(contents)
+        uid = buf.hexdigest()
+        uid = ','.join((uid,str(len(contents))))
+        store(uid)
+        return uid
+    else:
+        fd = file(path,"rb")
+        contents = fd.read()
+        fd.close()
+        buf = sha.new(contents)
+        uid = ','.join((buf.hexdigest(),str(s.st_size)))
+        store(uid)
+        return uid
+
+def store(uid):
+    p = archive
+    if not os.path.exists(p):
+        os.mkdir(p)
+    for s in slices:
+        p = os.path.join(p,uid[s[0]:s[1]])
+        if not os.path.exists(p):
+            os.mkdir(p)
+    p = os.path.join(p,uid[lastslice[0]:lastslice[1]])
+    fd = file(p,"wb")
+    fd.close()
+
+if __name__ == '__main__':
+    import sys
+    from optparse import OptionParser
+    from types import IntType
+    parser = OptionParser(usage="usage: %prog TREE ARCHIVE N1 ... Nk")
+    (options, args) = parser.parse_args()
+    if len(args) < 3:
+        print sys.stderr, "expected at least 3 positional arguments"
+        sys.exit(1)
+    tree    = args[0]
+    archive = args[1]
+    prev    = 0
+    for a in args[2:]:
+        try:
+            next = prev+int(a)
+            slices.append((prev,next))
+            prev = next
+        except:
+            print >>sys.stderr, "positional argument is not an integer:",a
+            sys.exit(1)
+    lastslice = (next,-1)
+    recurse(tree)
+    sys.exit(0)
+
+--=-=-=
+Content-Disposition: attachment; filename=info.py
+Content-Description: script to print statistics about an indexed archive
+
+import os,os.path,stat
+
+info = []
+archive = None
+total_keys = 0
+total_dirs = 0
+
+def collect_info(path,i):
+    global total_dirs,total_keys
+    s = os.stat(path)
+    if stat.S_ISDIR(s.st_mode):
+        total_dirs += 1
+        l = os.listdir(path)
+        n = len(l)
+        if i==len(info):
+            info.append(n)
+        elif n>info[i]:
+            info[i] = n
+        i += 1
+        for f in l:
+            collect_info(os.path.join(path,f),i)
+    else:
+        total_keys += 1
+
+def print_info():
+    i = 0
+    for n in info:
+        print "Max keys at level %2s: %7s" % (i,n)
+        i += 1
+    print "Total number of dirs: %7s" % total_dirs
+    print "Total number of keys: %7s" % total_keys
+    fd = os.popen("du -csh %s" % archive,"r")
+    s = fd.read()
+    fd.close()
+    s = s.split()[0]
+    print "Disk footprint      : %7s"  % s
+
+if __name__ == '__main__':
+    import sys
+    from optparse import OptionParser
+    parser = OptionParser(usage="usage: %prog ARCHIVE")
+    (options, args) = parser.parse_args()
+    if len(args) != 1:
+        print sys.stderr, "expected exactly 1 positional argument"
+        sys.exit(1)
+    archive = args[0]
+    collect_info(archive,0)
+    print_info()
+    sys.exit(0)
+
+--=-=-=
+
+
+Cheers,
+
+PS: I should mention again, that my indexed archives only contain empty files
+because I am only interested in measuring overhead.
+
+-- 
+Dr. Denys Duchier - IRI & LIFL - CNRS, Lille, France
+AIM: duchierdenys
+
+--=-=-=--
