@@ -1,121 +1,84 @@
-From: Alecs King <alecsk@gmail.com>
-Subject: Re: HOWTO: PATCH: don't hardcode path-to-bash, use sys/limits.h
-Date: Thu, 21 Apr 2005 22:31:02 +0800
-Message-ID: <20050421143102.GA830@alc.bsd.st>
-References: <426734DE.3040606@timesys.com> <426736AF.7000900@timesys.com> <4267387A.6040602@timesys.com> <20050421102326.GA22541@xdt04.mpe-garching.mpg.de>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: git-viz tool for visualising commit trees
+Date: Thu, 21 Apr 2005 16:38:40 +0200
+Message-ID: <20050421143840.GA14059@elte.hu>
+References: <20050421092120.GA20626@elte.hu> <20050421.133136.78712855.oandrieu@nerim.net> <20050421130242.GA5817@elte.hu> <20050421.155519.112619323.oandrieu@nerim.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 21 16:20:04 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 16:35:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOcX6-0000Ii-Po
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 16:19:57 +0200
+	id 1DOclC-0002vj-8r
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 16:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261372AbVDUOYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 10:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261391AbVDUOYR
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 10:24:17 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:31818 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261372AbVDUOYG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 10:24:06 -0400
-Received: by rproxy.gmail.com with SMTP id a41so322621rng
-        for <git@vger.kernel.org>; Thu, 21 Apr 2005 07:24:04 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=MBXfFhwF4b+lfhlQml7t01VgpLpjYzwlpBjaU6u/WGZlBV+pVgRyW36RkJi54xa50FeFlgf4W61tfwrRniIJFWXLNkpWfciEQggRZIytHJt+9Aus3mSdox9dSr5pBAKKTo/IKg5HwIPWp6gwjmJIcoCgGuaDwdFsu3ZzZxmQdDI=
-Received: by 10.38.13.29 with SMTP id 29mr2360678rnm;
-        Thu, 21 Apr 2005 07:24:04 -0700 (PDT)
-Received: from localhost ([210.77.3.122])
-        by mx.gmail.com with ESMTP id 79sm349051rnc.2005.04.21.07.24.02;
-        Thu, 21 Apr 2005 07:24:04 -0700 (PDT)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S261395AbVDUOiy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 10:38:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261397AbVDUOiy
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 10:38:54 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:30353 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261395AbVDUOiv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 10:38:51 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id 15A8A318B29;
+	Thu, 21 Apr 2005 16:37:39 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 555981FC2; Thu, 21 Apr 2005 16:38:43 +0200 (CEST)
+To: Olivier Andrieu <oandrieu@nerim.net>
 Content-Disposition: inline
-In-Reply-To: <20050421102326.GA22541@xdt04.mpe-garching.mpg.de>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20050421.155519.112619323.oandrieu@nerim.net>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 21, 2005 at 12:23:26PM +0200, Klaus Robert Suetterlin wrote:
-> Hi,
-> 
-> I supply a patch that dehardcodes the path to bash (which is not /bin
-> on all computers) and adds sys/limits.h to provide ULONG_MAX.
 
-Hi, i did a similar patch a while back ago. As for ULONG_MAX, not every
-sytem has <sys/limits.h>, i think <limits.h> is the rite place to go.
+* Olivier Andrieu <oandrieu@nerim.net> wrote:
 
-The patch below tested on both debian and fbsd.
+> Yes, git-viz uses the `dot' program from the graphviz package (it's in 
+> Fedora Extra too I believe).
 
+ah - that resolved all issues and i'm now running git-viz without any 
+problems.
 
-commit 2deea74db72fb57a8b80e7945f23814112b22723
-tree 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd
-parent cd1c034369b73da7503da365fa556aab27004814
-author Alecs King <alecsk ! gmail d@t com> 1114075114 +0800
-committer Alecs King <alecsk ! gmail d@t com> 1114075114 +0800
+I just checked how the kernel repository looks like with it, and i'm 
+impressed! The GUI is top-notch, and the whole graph output and 
+navigation is very mature visually. Kudos!
 
-trivial fix for making it more portable
+a couple of suggestions that are in the 'taste' category:
 
-Index: commit-tree.c
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/commit-tree.c  (mode:100644 sha1:043c7aa371101a1ea8cfc467279abf6c8acc7fd1)
-+++ 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd/commit-tree.c  (mode:100644 sha1:8a1f12dca07041d203ce22442b8470d42d322ef5)
-@@ -252,7 +252,7 @@
- 
- 	then -= offset;
- 
--	snprintf(result, maxlen, "%lu %5.5s", then, p);
-+	snprintf(result, maxlen, "%lu %5.5s", (unsigned long) then, p);
- }
- 
- static void check_valid(unsigned char *sha1, const char *expect)
-Index: commit.c
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/commit.c  (mode:100644 sha1:eda45d7e15358ed6f2cd0502de2a08987307fc98)
-+++ 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd/commit.c  (mode:100644 sha1:9f0668eb68cec56a738a58fe930ae0ae2960e2b2)
-@@ -1,6 +1,7 @@
- #include "commit.h"
- #include "cache.h"
- #include <string.h>
-+#include <limits.h>
- 
- const char *commit_type = "commit";
- 
-Index: gitdiff-do
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/gitdiff-do  (mode:100755 sha1:afed4e40b259a61b0f12979ba7326f26743bc553)
-+++ 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd/gitdiff-do  (mode:100755 sha1:218dfabeb4a5dcbd2cf58bd6f672f385690ec397)
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/usr/bin/env bash
- #
- # Make a diff between two GIT trees.
- # Copyright (c) Petr Baudis, 2005
-Index: gitlog.sh
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/gitlog.sh  (mode:100755 sha1:a496a864f9586e47a4d7bd3ae0af0b3e07b7deb8)
-+++ 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd/gitlog.sh  (mode:100755 sha1:7b3aa8a89bc64273c648920ccd1686859754803e)
-@@ -1,4 +1,4 @@
--#!/bin/bash
-+#!/usr/bin/env bash
- #
- # Make a log of changes in a GIT branch.
- #
-Index: revision.h
-===================================================================
---- c0260bfb82da04aeff4e598ced5295d6ae2e262d/revision.h  (mode:100644 sha1:46cc10440be781cea4993aca37ee35e251495084)
-+++ 0c92ac3af53457b6b9651cf82d98ce3a7b166dcd/revision.h  (mode:100644 sha1:f0754f5d8ea3da52503b8ea8c16b34566e4ae6e0)
-@@ -10,6 +10,7 @@
-  * definition for this rev, and not just seen it as
-  * a parent target.
-  */
-+#include <limits.h>
- #define marked(rev)	((rev)->flags & 0xffff)
- #define SEEN 0x10000
- #define USED 0x20000
+- isnt left-to-right layout the more natural thing instead of top-down 
+  (as it aligns with the reading direction)? It's selectable in the 
+  preferences, but you might want to make it default. OTOH, top-down
+  creates a more compressed view of the graph.
 
--- 
-Alecs King
+- there doesnt seem to be any performance difference between non-colored 
+  and colored rendering - so you might as well want to make 'color by 
+  author' (or color by branch) the default coloring, instead of 
+  uncolored?
+
+- naming the boxes by key is quite meaningless. It would be more 
+  informative to see the author's email shortcuts in the boxes. Also, it 
+  would be nice to see some simple graphical feedback about the size and 
+  scope of a changeset, without having to zoom on it.
+
+i guess you know it, and i'm definitely not complaining about prototype 
+code, but rendering is quite slow: drawing the 340 changesets in the 
+current kernel repository takes 15 seconds on a 2 GHz P4. Drawing the 
+full kernel history (63,000 changesets) would take more than 45 minutes 
+on this box.
+
+the current rate of kernel development is ~2000 changesets per month, so 
+drawing the kernel history will get 3 seconds slower every day - it will 
+exceed 1 minute in 20 days, so this will become a pressing issue quite 
+soon i suspect.
+
+	Ingo
