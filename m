@@ -1,112 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: (rework) [PATCH 5/5] Accept commit in some places when tree is
- needed.
-Date: Wed, 20 Apr 2005 17:24:24 -0700
-Message-ID: <7vr7h5geo7.fsf@assigned-by-dhcp.cox.net>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: Possible problem with git-pasky-0.6.2 (patch: **** Only garbage was found in the patch input.)I
+Date: Wed, 20 Apr 2005 18:20:27 -0600
+Message-ID: <200504201820.27497.elenstev@mesatop.com>
+References: <200504201706.09656.elenstev@mesatop.com> <20050420231212.GN19112@pasky.ji.cz> <200504201715.00058.elenstev@mesatop.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 02:21:11 2005
+X-From: git-owner@vger.kernel.org Thu Apr 21 02:21:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOPQr-0003Eg-E7
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 02:20:37 +0200
+	id 1DOPQc-0003Cn-4i
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 02:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261861AbVDUAY5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 20:24:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261862AbVDUAY5
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 20:24:57 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:32453 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261861AbVDUAYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 20:24:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050421002424.XBTE4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 20 Apr 2005 20:24:24 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261858AbVDUAYm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 20:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261861AbVDUAYm
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 20:24:42 -0400
+Received: from nacho.zianet.com ([216.234.192.105]:16652 "HELO
+	nacho.zianet.com") by vger.kernel.org with SMTP id S261858AbVDUAYh
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Apr 2005 20:24:37 -0400
+Received: (qmail 42738 invoked from network); 21 Apr 2005 00:24:33 -0000
+Received: from 216-31-65-218.zianet.com (216.31.65.218)
+  by 0 with SMTP; 21 Apr 2005 00:24:33 -0000
+To: Petr Baudis <pasky@ucw.cz>
+User-Agent: KMail/1.6.1
+In-Reply-To: <200504201715.00058.elenstev@mesatop.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Updates read-tree to use read_tree_with_tree_or_commit_sha1()
-function.  The command can take either tree or commit IDs with
-this patch.
+On Wednesday 20 April 2005 05:15 pm, Steven Cole wrote:
+> On Wednesday 20 April 2005 05:12 pm, Petr Baudis wrote:
+> > Dear diary, on Thu, Apr 21, 2005 at 01:06:09AM CEST, I got a letter
+> > where Steven Cole <elenstev@mesatop.com> told me that...
+> > > After getting the latest tarball, and make, make install:
+> > > 
+> > > Tree change: 55f9d5042603fff4ddfaf4e5f004d2995286d6d3:a46844fcb6afef1f7a2d93f391c82f08ea322221
+> > > *100755->100755 blob    a78cf8ccab98861ef7aecb4cb5a79e47d3a84b67->74b4083d67eda87d88a6f92c6c66877bba8bda8a     gitcancel.sh
+> > > Tracked branch, applying changes...
+> > > Fast-forwarding 55f9d5042603fff4ddfaf4e5f004d2995286d6d3 -> a46844fcb6afef1f7a2d93f391c82f08ea322221
+> > >         on top of 55f9d5042603fff4ddfaf4e5f004d2995286d6d3...
+> > > patch: **** Only garbage was found in the patch input.
+> > > 
+> > > This may be a harmless message, but I thought I'd bring it to your attention.
+> > 
+> > This _is_ weird. What does
+> > 
+> > 	$ git diff -r 55f9d5042603fff4ddfaf4e5f004d2995286d6d3:a46844fcb6afef1f7a2d93f391c82f08ea32222
+> > 
+> > tell you? 
+> 
+> [steven@spc git-pasky-0.6.2]$ git diff -r 55f9d5042603fff4ddfaf4e5f004d2995286d6d3:a46844fcb6afef1f7a2d93f391c82f08ea32222
+> Index: gitcancel.sh
+[ output snipped, see previous message for output]
+> 
+> > What if you feed it to patch -p1? 
+> I haven't done that yet, awaiting response to above.
+> 
+> > What if you feed it to git  
+> > apply?
+> > 
+> > Thanks,
+> > 
+> Your're welcome.  I'll do the "git patch -p1 <stuff_from_above" if that's what's needed,
+> same with git apply.  Corrrections to syntax apprceciated.
+> Steven
 
-The change involves a slight modification of how it recurses down
-the tree.  Earlier the caller only supplied SHA1 and the recurser
-read the object using it, but now it is the caller's responsibility
-to read the object and give it to the recurser.  This matches the
-way recursive behaviour is done in other tree- related commands.
+Actually, I meant "patch -p1 <stuff_from_above".
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+But before doing that, I did a fsck-cache as follows, with these results.
+This seems damaged.
 
- read-tree.c |   34 ++++++++++++++++++++++++----------
- 1 files changed, 24 insertions(+), 10 deletions(-)
+[steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/HEAD)
+root 1bf00e46973f7f1c40bc898f1346a1273f0a347f
+unreachable commit 0128396de7ca8a7dc74f6fbff59a68bb781bb9b2
+unreachable blob 012c82312c99606f914bda5c501b616237a3b7e9
+unreachable tree 02a1b5337f78b807d4404f473e55c44f4273d2f8
 
-read-tree.c: 46747b5e99b102ed547e87f55a8ee734c9ddb074
---- a/read-tree.c
-+++ b/read-tree.c
-@@ -23,16 +23,11 @@ static int read_one_entry(unsigned char 
- 	return add_cache_entry(ce, 1);
- }
- 
--static int read_tree(unsigned char *sha1, const char *base, int baselen)
-+static int read_tree_recursive(void *buffer, const char *type,
-+			       unsigned long size,
-+			       const char *base, int baselen)
- {
--	void *buffer;
--	unsigned long size;
--	char type[20];
--
--	buffer = read_sha1_file(sha1, type, &size);
--	if (!buffer)
--		return -1;
--	if (strcmp(type, "tree"))
-+	if (!buffer || strcmp(type, "tree"))
- 		return -1;
- 	while (size) {
- 		int len = strlen(buffer)+1;
-@@ -50,10 +45,20 @@ static int read_tree(unsigned char *sha1
- 			int retval;
- 			int pathlen = strlen(path);
- 			char *newbase = malloc(baselen + 1 + pathlen);
-+			void *eltbuf;
-+			char elttype[20];
-+			unsigned long eltsize;
-+
-+			eltbuf = read_sha1_file(sha1, elttype, &eltsize);
-+			if (!eltbuf)
-+				return -1;
- 			memcpy(newbase, base, baselen);
- 			memcpy(newbase + baselen, path, pathlen);
- 			newbase[baselen + pathlen] = '/';
--			retval = read_tree(sha1, newbase, baselen + pathlen + 1);
-+			retval = read_tree_recursive(eltbuf, elttype, eltsize,
-+						     newbase,
-+						     baselen + pathlen + 1);
-+			free(eltbuf);
- 			free(newbase);
- 			if (retval)
- 				return -1;
-@@ -65,6 +70,15 @@ static int read_tree(unsigned char *sha1
- 	return 0;
- }
- 
-+static int read_tree(unsigned char *sha1, const char *base, int baselen)
-+{
-+	void *buffer;
-+	unsigned long size;
-+
-+	buffer = read_tree_with_tree_or_commit_sha1(sha1, &size, 0);
-+	return read_tree_recursive(buffer, "tree", size, base, baselen);
-+}
-+
- static int remove_lock = 0;
- 
- static void remove_lock_file(void)
+[ lots of snippage...]
+
+unreachable blob fee26cc5b378819ff48ef8cb54c35744c0f1c17f
+unreachable tree fff7294434014ea68153770da3965ed315806499
+
+[steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/HEAD) | wc -l
+467
+
+I renamed the repo to git-pasky-0.6.2-damaged, and repeated untarring the 0.6.2 tarball,
+make, (didn't do make install this time), and repeated "git pull pasky" with
+similar results as before.
+
+[steven@spc git-pasky-0.6.2-damaged]$ cat .git/HEAD
+a46844fcb6afef1f7a2d93f391c82f08ea322221
+[steven@spc git-pasky-0.6.2-damaged]$ cd ../git-pasky-0.6.2
+[steven@spc git-pasky-0.6.2]$ cat .git/HEAD
+7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
+
+Hope this helps,
+Steven
 
