@@ -1,88 +1,75 @@
-From: Steven Cole <elenstev@mesatop.com>
-Subject: Re: Possible problem with git-pasky-0.6.2 (patch: **** Only garbage was found in the patch input.)I
-Date: Thu, 21 Apr 2005 04:23:45 -0600
-Message-ID: <200504210423.47369.elenstev@mesatop.com>
-References: <200504201706.09656.elenstev@mesatop.com> <200504201820.27497.elenstev@mesatop.com> <20050421071104.GC31910@pasky.ji.cz>
+From: Remi Vanicat <remi.vanicat@laposte.net>
+Subject: Re: git-viz tool for visualising commit trees
+Date: Thu, 21 Apr 2005 12:47:42 +0200
+Message-ID: <8764ygo181.dlv@vanicat.homelinux.org>
+References: <20050417194818.GG1461@pasky.ji.cz> <20050420100824.GB25477@elte.hu>
+ <20050421.034227.104037433.oandrieu@nerim.net>
+ <20050421092120.GA20626@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 12:24:20 2005
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Apr 21 13:11:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOYqj-0005zu-LV
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 12:23:57 +0200
+	id 1DOZaV-0004OG-24
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 13:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261265AbVDUK2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 06:28:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVDUK2Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 06:28:16 -0400
-Received: from taco.zianet.com ([216.234.192.159]:32521 "HELO taco.zianet.com")
-	by vger.kernel.org with SMTP id S261265AbVDUK1y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 06:27:54 -0400
-Received: (qmail 97549 invoked from network); 21 Apr 2005 10:27:51 -0000
-Received: from 216-31-65-221.zianet.com (216.31.65.221)
-  by 0 with SMTP; 21 Apr 2005 10:27:51 -0000
-To: Petr Baudis <pasky@ucw.cz>
-User-Agent: KMail/1.6.1
-In-Reply-To: <20050421071104.GC31910@pasky.ji.cz>
-Content-Disposition: inline
+	id S261284AbVDULPe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 21 Apr 2005 07:15:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261286AbVDULPe
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 07:15:34 -0400
+Received: from main.gmane.org ([80.91.229.2]:29326 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261284AbVDULP2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 07:15:28 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DOZZs-0004Jj-ON
+	for git@vger.kernel.org; Thu, 21 Apr 2005 13:10:36 +0200
+Received: from 252.58.97-84.rev.gaoland.net ([84.97.58.252])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 13:10:36 +0200
+Received: from remi.vanicat by 252.58.97-84.rev.gaoland.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 13:10:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 252.58.97-84.rev.gaoland.net
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:RltQxT3pDCQYNs7X6WZ6NcvgFqk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 21 April 2005 01:11 am, Petr Baudis wrote:
-> Dear diary, on Thu, Apr 21, 2005 at 02:20:27AM CEST, I got a letter
-> where Steven Cole <elenstev@mesatop.com> told me that...
-> > Actually, I meant "patch -p1 <stuff_from_above".
-> 
-> So, how did it end up?
+Ingo Molnar <mingo@elte.hu> writes:
 
-The file listed in the diff was already patched, so applying that
-output does the expected:
-[steven@spc git-pasky-0.6.2-damaged]$ patch -p1 <xyzzy.diff
-patching file gitcancel.sh
-Reversed (or previously applied) patch detected!  Assume -R? [n] n
-Apply anyway? [n] n
-Skipping patch.
-1 out of 1 hunk ignored -- saving rejects to file gitcancel.sh.rej
+> * Olivier Andrieu <oandrieu@nerim.net> wrote:
+>
+>> There, here's a tarball :
+>>   http://oandrieu.nerim.net/monotone-viz/git-viz-0.1.tar.gz
+>
+> i'm trying to build it under Fedora Core 4 (devel), and there are two=
+=20
+> problems:
+>
+>  - the build scripts seem to assume that "." is in PATH (or that the=20
+>    needed viz_style.ml/etc. scripts are in the PATH).
+>
+> adding "." to the PATH worked around this issue, a number of files bu=
+ilt=20
+> fine, but then it hit the next problem:
+>
+>  ocamlopt.opt  -I /usr/lib/ocaml/lablgtk2 -I glib -I crypto -pp  -c  =
+viz_style.ml
 
-> 
-> Actually, never mind. I forgot that I bring the local changes forward as
-> patches instead. So this is Harmless (tm). It means the patch containing
-> your local changes has just that kind of git diff output containing
-> filename: hash. I will probably just chain grep -v '^[^+-@ ]' in front
-> of patch. (Someone starting his filename with a space _deserves_ the
-> trouble. ;-)
-> 
-> > But before doing that, I did a fsck-cache as follows, with these results.
-> > This seems damaged.
-> > 
-> > [steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/HEAD)
-> 
-> You can't do just this. In Cogito repository, you may have multiple
-> branches, each with different HEAD of course. So you need to
-> 
-> 	fsck-cache --unreachable $(cat .git/heads/*)
-> 
+There should be the command name of the preprocessor after the -pp
+option. ocamlopt assume that it should use a preprocessor whose name
+is -c, and fail. The problem must be in the configure script or the
+makefile. A kick hack may be to launch make with the option
+CAMLP4O=3Dcamlp4o (well, as it work here, I'm not sure of the exact
+problem).=20
 
-[steven@spc git-pasky-0.6.2]$ fsck-cache  $(cat .git/heads/*)
-root 1bf00e46973f7f1c40bc898f1346a1273f0a347f
-dangling commit 2c1a8048d56cfbe0ff8a3d04c12d06f3832e7edc
-dangling commit a387546d148df5718a9c53bbe0cbea441e793d98
-dangling blob d6ff9de73fc920cf1f27afac82571c4c58526b80
-
-[steven@spc git-pasky-0.6.2]$ ./git-prune-script
-
-Ah, yes. Prune juice.
-
-[steven@spc git-pasky-0.6.2]$ fsck-cache --unreachable $(cat .git/heads/*)
-root 1bf00e46973f7f1c40bc898f1346a1273f0a347f
-
-Now, all is well.  Sorry for the noise.
-
-Steven
-
+--=20
+R=E9mi Vanicat
 
