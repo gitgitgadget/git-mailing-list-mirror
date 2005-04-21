@@ -1,111 +1,63 @@
-From: Mike Taht <mike.taht@timesys.com>
-Subject: Performance of various compressors
-Date: Wed, 20 Apr 2005 22:06:38 -0700
-Message-ID: <426734DE.3040606@timesys.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Wed, 20 Apr 2005 22:08:28 -0700
+Message-ID: <7vll7cg1ir.fsf@assigned-by-dhcp.cox.net>
+References: <20050420205633.GC19112@pasky.ji.cz>
+	<20050420211919.GA20129@kroah.com>
+	<20050420215117.GJ19112@pasky.ji.cz>
+	<Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
+	<20050420222815.GM19112@pasky.ji.cz>
+	<Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org>
+	<20050421033526.GA9404@nevyn.them.org>
+	<Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
+	<20050421042248.GA16002@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Apr 21 07:03:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Daniel Jacobowitz <dan@debian.org>, Petr Baudis <pasky@ucw.cz>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 07:04:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOTqJ-0001qB-9v
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 07:03:11 +0200
+	id 1DOTrg-0001xc-SZ
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 07:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261213AbVDUFHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 01:07:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261216AbVDUFHP
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 01:07:15 -0400
-Received: from mail.timesys.com ([65.117.135.102]:4743 "EHLO
-	exchange.timesys.com") by vger.kernel.org with ESMTP
-	id S261213AbVDUFHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 01:07:02 -0400
-Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Thu, 21 Apr 2005 01:02:13 -0400
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-OriginalArrivalTime: 21 Apr 2005 05:02:13.0781 (UTC) FILETIME=[48266450:01C5462F]
+	id S261216AbVDUFI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 01:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261219AbVDUFI5
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 01:08:57 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53501 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261216AbVDUFI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 01:08:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050421050829.BDBH4787.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 21 Apr 2005 01:08:29 -0400
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050421042248.GA16002@redhat.com> (Dave Jones's message of
+ "Thu, 21 Apr 2005 00:22:48 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I started rolling a tool to measure various aspects of git performance. 
-I will start looking at merge next, and at workloads different from the 
-kernel (gcc4 anyone?) ...
+>>>>> "DJ" == Dave Jones <davej@redhat.com> writes:
 
-The only data points worth sharing a this point are:
+DJ> I used to do 'bk changes | grep \[AGPGART\] -C3 | head' on a
+DJ> regular basis, just to be able to answer 'hey, did cset x
+DJ> get into tree y?' questions from users.  which is the
+DJ> probably the closest I came to non-paginated usage.
 
-That doing the compression at a level of 3, rather than the max of 9, 
-cuts the cpu time required for a big git commit by over half, and that 
-that actually translates into a win on the I/O to disk. (these tests 
-were performed on a dual opteron 842)
+I am bk untainted so I may be misunderstanding what your example
+is, but I take that "bk changes" in your example corresponds to
+"git log", correct?
 
-The benefits of compression aren't very much for git right now.
-
-And: A big git commit is I/O bound. But we knew that. Maybe it's 
-possible to make it less I/O bound.
-
-Git branch: 7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
-Tree: 2.6.11.7 source tree
-Branch: N/a
-Merge File: N/a
-HW: dual opteron 242
-Mem: 1GB
-Disk: seagate barracuda
-Filesystem: Reiser3
-Git add: N/a
-Cache: Hot
-Git Commit: 44.97user 5.94system 1:45.24elapsed 48%CPU
-Git Merge:
-Options:
-Feature: Test of compression=9 (std git)
-
-du -s .git/objects  110106  # du is probably not the right thing
-du -s --apparent-size .git/objects 58979
-
-Git branch: 9e272677621c91784cf2533123a41745178f0701
-Tree: 2.6.11.7 source tree
-Branch: N/a
-Merge File: N/a
-HW: dual opteron 242
-Mem: 1GB
-Disk: seagate barracuda
-Disk mode: udma5
-Filesystem: Reiser3
-Git add: N/a
-Cache: Hot
-Git Commit: 16.79user 6.15system 1:21.92elapsed 28%CPU
-Git Merge:
-Options:
-Feature: Test of compression=3 (std git)
-
-du -s .git/objects  115218
-du -s --apparent-size .git/objects 64274
-
-There's some variety in the best/worst case timings for I/O for the 
-compressor=3 case...
-
-16.79user 6.15system 1:21.92elapsed 28%CPU
-16.68user 5.71system 1:13.19elapsed 30%CPU
--- 
-
-Mike Taht
-
-
-lastly -
-
-Timings of git commit with tmpfs (note, these were done with an ancient, 
-5 hour old version of git and the script)
-
-Hot cache, tmpfs .git compression=9
-44.97user 2.76system 0:47.72elapsed 100%CPU
-
-Hot cache, tmpfs .git, compression=6
-Wed Apr 20 20:18:11 PDT 2005
-23.55user 2.83system 0:26.36elapsed 100%CPU (0avgtext+0avgdata 
-0maxresident)k
-0inputs+0outputs (0major+568680minor)pagefaults 0swaps
-109620  .git/objects
-58618   .git/objects
-
+Then please read what Linus wrote again.  Your example is
+exactly the point Linus is making.  The output from that command
+is not going to a tty---it is going to a _pipe_ and more or less
+will do exactly (not more or less ;-) the right thing.
 
