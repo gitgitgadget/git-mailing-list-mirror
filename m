@@ -1,111 +1,90 @@
-From: Imre Simon <is@ime.usp.br>
-Subject: [RFC] A suggestion for more versatile naming conventios in the object
- database
-Date: Thu, 21 Apr 2005 16:51:31 -0300
-Message-ID: <42680443.3050604@ime.usp.br>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Allow "git cancel" to change branches
+Date: Thu, 21 Apr 2005 16:00:09 -0400
+Message-ID: <1114113609.29603.24.camel@dv>
+References: <E1DObsr-0006Au-MA@server.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 21 21:46:24 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 21 21:57:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOhcY-0001ne-Lt
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 21:45:54 +0200
+	id 1DOhmN-0003Cx-HY
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 21:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261822AbVDUTuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 15:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261825AbVDUTuQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 15:50:16 -0400
-Received: from smtpout2.uol.com.br ([200.221.4.193]:8610 "EHLO smtp.uol.com.br")
-	by vger.kernel.org with ESMTP id S261822AbVDUTuC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 15:50:02 -0400
-Received: from [192.168.0.7] (201-1-98-36.dsl.telesp.net.br [201.1.98.36])
-	by scorpion2.uol.com.br (Postfix) with ESMTP id 04A897D4B;
-	Thu, 21 Apr 2005 16:49:59 -0300 (BRT)
-User-Agent: Mozilla Thunderbird 1.0RC1 (Macintosh/20041201)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261831AbVDUUAY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 16:00:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVDUUAY
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:00:24 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:58000
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261831AbVDUUAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 16:00:12 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 427C8EFF72; Thu, 21 Apr 2005 16:00:09 -0400 (EDT)
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <E1DObsr-0006Au-MA@server.smurf.noris.de>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-In the transition from git-0.04 to git-0.5 (Linus' track) the naming 
-convention of files in the object database has been changed: a file's 
-name passed from the sha1 of its contents to the sha1 of its contents 
-*before* compression.
+Hi, Matthias!
 
-This change was preceded by a long discussion hence both conventions
-have arguments for and against.
+On Thu, 2005-04-21 at 23:31 +1000, Matthias Urlichs wrote:
+> "git cancel" may not be named correctly for this job, but it does almost
+> everything you'd need for switching between one branch and another
+> within a repository, so...
 
-I would like to suggest to adopt a more versatile solution:
+This functionality is badly needed, but "git cancel" should probably
+remain what it is.
 
-   preserve the pure sha1 based names for the sha1 sum of the file's
-   contents. I mean,
+> +if [ "$1" ] ; then
+> +	test -f .git/heads/$1 || cp .git/HEAD .git/heads/$1
+> +	ln -sf "heads/$1" .git/HEAD
+> +fi
 
-       (*)  for files with name xy/z{38} their sha1 sum is xyz{38}
+Considering that the patch is essentially just this block of code, it
+could be (in the first approximation) a separate command, e.g. "git
+switch", that would call "git cancel" if needed.
 
-   allow other files (or links) with names of the form
+But let's consider the fact that "git cancel" removes all local changes.
+That's quite a serious side effect.  I don't always want to remove local
+changes when I switch between branches in CVS.  Many users would prefer
+git to do a merge.
 
-       xy/z{38}.EXTENSION
+I think that "git track" needs to be redesigned.  There are at least
+three properties of the working directory (related to branch tracking)
+that users may want to change:
 
-   where for every EXTENSION the file's content would be the EXTENSION
-   representation of the file xy/z{38} . For every representation type
-   EXTENSION there should be procedures to derive the file xy/z{38}
-   from the name xy/z{38}.EXTENSION and vice-versa (assuming that the
-   representation type EXTENSION cares about the contents of file
-   xy/z{38}).
+1) Where new revisions are pulled from.  It could be more than one
+branch (ideal implementation - with several copies of rsync run
+simultaneously).
 
-Let me give two examples:
+2) What branch is "checked out" to the working directory, i.e. what
+branch would "git cancel" restore.
 
-    all the files in the object database of git-0.04 are just fine, they
-    satisfy axiom (*)
+3) Whether new changes are merged automatically.
 
-    the name of every file xy/z{38}  in the git-0.5 data base should be
-    changed to xy/z{38}.g assuming that we will use EXTENSION g as the
-    git representation type. The conversion algorithms would be:
+I suggest following syntax:
 
-        cat-file `cat-file -t xyz{38}` xyz{38}  to obtain the contents
-        represented by xy/z{38}.g whose sha1 is xyz{38}
+git track -b WORKING-BRANCH [--cancel] [--active|--passive]
+[TRACK-BRANCH...|--notrack]
 
-        and a utility program has to be written to check whether a given
-        file F, is a valid contents as far as git is concerned and in
-        case it is compute its sha1 sum xyz{38} and also comute the file
-        the file xy/z{38}.g .
+--cancel would cancel changes rather than merge when the current branch
+changes.
 
-So, what are the advantages of this further complication? I see these ones:
+--active enables automerge, --passive disables it
 
-   git is separated from the idea of sha1 addressable contents, which
-   indeed is an idea larger than git itself. This same or similar
-   addressing schemes can (and most probably will) be applied to other
-   contents besides SCMs. An example would be a digital library of
-   scientific papers in pdf together with its OAI compliant meta data
-   (don't bother if you are not familiar with these terms, it is just
-   an example and I am sure you are able to come up with many other
-   examples where a sha1 addressable data base would be interesting)
+Empty list of branches to track should not disable tracking.  Only
+--notrack should do it.
 
-   all these uses could share common backup schemes where axiom (*)
-   would be enforced. One could think of a shared p2p database of
-   repositories of sha1 addressed contents of all kinds. This might be
-   important because, in general, the contents of xyz{38} cannot be
-   reconstructed from its name. The way to defend against file system
-   corruption is replication. Why not share these backup databases?
+Then your "git cancel BRANCH" would become:
+git track -b BRANCH --cancel
 
-   it would be easier to experiment with other compression schemes or
-   other proposals for meta data in git itself.
-
-   it would be easier to experiment with the factorization of common
-   chunks of contents, an idea very close to the secret of rsync's
-   amazing efficiency.
-
-Well, that's the proposal. I would be happy to hear comments!
-
-Cheers,
-
-Imre Simon
-
-PS: the way it is, the git-0.5 README file is inconsistent. The naming
-change is not reflected in the README file which in many places states
-that the sha1 sum of file xy/z{38} is xyz{38}.
+-- 
+Regards,
+Pavel Roskin
 
