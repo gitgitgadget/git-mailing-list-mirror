@@ -1,71 +1,68 @@
-From: Brad Roberts <braddr@gameboy2.puremagic.com>
-Subject: [PATCH 03/19] convert show-diff.c to use new cache hiding api's
-Date: Thu, 21 Apr 2005 11:35:12 -0700
-Message-ID: <200504211835.j3LIZCSZ027430@gameboy2.puremagic.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:32:01 2005
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: "GIT_INDEX_FILE" environment variable
+Date: Thu, 21 Apr 2005 11:37:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504211130480.2344@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:32:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOgSN-0007oU-FB
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:19 +0200
+	id 1DOgSz-0007tC-7O
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261634AbVDUSfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 14:35:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVDUSfj
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:35:39 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:4232 "EHLO
-	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261634AbVDUSfO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 14:35:14 -0400
-Received: from gameboy2.puremagic.com (root@gameboy2.puremagic.com [209.189.198.109])
-	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIZAEd027794
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:10 -0700
-Received: from gameboy2.puremagic.com (braddr@localhost [127.0.0.1])
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIZCw9027432
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:12 -0700
-Received: (from braddr@localhost)
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIZCSZ027430
-	for git@vger.kernel.org; Thu, 21 Apr 2005 11:35:12 -0700
-To: git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new
+	id S261654AbVDUSgU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 14:36:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261669AbVDUSgU
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:36:20 -0400
+Received: from fire.osdl.org ([65.172.181.4]:4226 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261654AbVDUSfx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 14:35:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3LIZns4015369
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:49 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3LIZmUC016820
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:49 -0700
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-tree bbc50100a5cfd22264c2b0731ef8678656a399d8
-parent 27fc41dcd4aecafdaf583f3962697a2fa3fb6480
-author Brad Roberts <braddr@puremagic.com> 1114073516 -0700
-committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114073516 -0700
 
-[PATCH] convert show-diff.c to use new cache hiding api's
 
-Signed-off-by: Brad Roberts <braddr@puremagic.com>
----
+On Thu, 21 Apr 2005, Linus Torvalds wrote:
+> 
+> You can also use it to test merges without screwing up your old index file 
+> in case something goes wrong.
 
- show-diff.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Btw, if it wasn't obvious, for the merge thing to work you need to first
+copy the old index file _or_ generate a new temporary index file first, so
+that doing the three-way merge has a previous index file to work with. Ie
+it would look something like
 
-Index: show-diff.c
-===================================================================
---- 27fc41dcd4aecafdaf583f3962697a2fa3fb6480:1/show-diff.c  (mode:100644 sha1:da364e26e28823f951a6be1b686a458575f28ea1)
-+++ d70686e08f453199e5451b27fc7d0b36b73a5c7f:1/show-diff.c  (mode:100644 sha1:e2642b65805b3e52a16c6309b44a92c2a2bd13c3)
-@@ -154,7 +154,7 @@
- 	prepare_diff_cmd();
- 	for (i = 0; i < entries; i++) {
- 		struct stat st;
--		struct cache_entry *ce = active_cache[i];
-+		struct cache_entry *ce = get_cache_entry(i);
- 		int changed;
- 		unsigned long size;
- 		char type[20];
-@@ -172,7 +172,7 @@
- 				printf("%s: Unmerged\n",
- 				       ce->name);
- 			while (i < entries &&
--			       !strcmp(ce->name, active_cache[i]->name))
-+			       !strcmp(ce->name, get_cache_entry(i)->name))
- 				i++;
- 			i--; /* compensate for loop control increments */
- 			continue;
+	cp .git/index .tmp-index
+	GIT_INDEX_FILE=.tmp-index read-tree -m $orig $branch1 $branch2
 
+but this same approach can also be used to merge things _without_ actually
+having any specific version checked out, in which case it would just be
+
+	GIT_INDEX_FILE=.tmp-index read-tree $orig
+	GIT_INDEX_FILE=.tmp-index read-tree -m $orig $branch1 $branch2
+
+which allows you to create a merged index file that is totally independent 
+on whatever (if anything) you happen to be working on right now.
+
+Together with a SHA1_FILE_DIRECTORY, it allows you to do merges entirely
+outside any real git tree, and without any other setup. That's quite nice
+for the case where your actual working tree may be dirty, and you don't
+want to mess around in it.
+
+			Linus
