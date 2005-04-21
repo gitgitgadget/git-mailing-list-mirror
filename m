@@ -1,79 +1,112 @@
 From: Brad Roberts <braddr@gameboy2.puremagic.com>
-Subject: [PATCH 19/19] the end goal of the last dozen or so commits, there's no longer a global cache variable
-Date: Thu, 21 Apr 2005 11:39:22 -0700
-Message-ID: <200504211839.j3LIdMKB027881@gameboy2.puremagic.com>
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:44:37 2005
+Subject: [PATCH 01-19/19] All of the above combined
+Date: Thu, 21 Apr 2005 11:39:37 -0700
+Message-ID: <200504211839.j3LIdbV2027938@gameboy2.puremagic.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:48:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOgeM-0001Fe-Pa
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:43:43 +0200
+	id 1DOgia-0001tU-06
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:48:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261778AbVDUSrP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 14:47:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261733AbVDUSph
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:45:37 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:25993 "EHLO
+	id S261696AbVDUSwZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 14:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261716AbVDUSwZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:52:25 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:27785 "EHLO
 	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261691AbVDUSjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 14:39:39 -0400
+	id S261696AbVDUSjv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 14:39:51 -0400
 Received: from gameboy2.puremagic.com (root@gameboy2.puremagic.com [209.189.198.109])
-	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIdJJr028273
+	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIdZK4028298
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:39:20 -0700
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:39:35 -0700
 Received: from gameboy2.puremagic.com (braddr@localhost [127.0.0.1])
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIdMiY027884
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:39:22 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIdbwP027940
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:39:37 -0700
 Received: (from braddr@localhost)
-	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIdMKB027881
-	for git@vger.kernel.org; Thu, 21 Apr 2005 11:39:22 -0700
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIdbV2027938
+	for git@vger.kernel.org; Thu, 21 Apr 2005 11:39:37 -0700
 To: git@vger.kernel.org
 X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-tree 38adb888a4c1adfe083f24d4ec51018e0b5a8335
-parent 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac
-author Brad Roberts <braddr@puremagic.com> 1114093024 -0700
-committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114093024 -0700
-
-[PATCH] the end goal of the last dozen or so commits, there's no longer a global cache variable
+Make the cache management code behave more like a library.  There are no
+longer any global variables in read-cache.c.  Nothing ever uses more than
+one cache yet, but I can see how it might simplify some of the merge code.
 
 Signed-off-by: Brad Roberts <braddr@puremagic.com>
 ---
-
- cache.h          |   21 +++++++-------
- check-files.c    |   10 +++---
- checkout-cache.c |   20 ++++++-------
- diff-cache.c     |   20 ++++++-------
- merge-cache.c    |   29 ++++++++++---------
- read-cache.c     |   82 ++++++++++++++++++++++++++++---------------------------
- read-tree.c      |   51 ++++++++++++++++++----------------
- show-diff.c      |    8 ++---
- show-files.c     |   27 +++++++++---------
- update-cache.c   |   35 ++++++++++++-----------
- write-tree.c     |   20 ++++++-------
- 11 files changed, 167 insertions(+), 156 deletions(-)
+ 
+ cache.h          |   36 +++------
+ check-files.c    |   12 +--
+ checkout-cache.c |   22 +++---
+ diff-cache.c     |   36 ++++-----
+ merge-cache.c    |   29 ++++---
+ read-cache.c     |  200 ++++++++++++++++++++++++++++++++++++-------------------
+ read-tree.c      |   71 +++++++++++--------
+ show-diff.c      |   19 +++--
+ show-files.c     |   27 +++----
+ update-cache.c   |   39 +++++-----
+ write-tree.c     |   24 +++---
+11 files changed, 292 insertions(+), 223 deletions(-)
 
 Index: cache.h
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/cache.h  (mode:100644 sha1:c64969602d80a0e9d7137b2716fb808c912b075c)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/cache.h  (mode:100644 sha1:d8ade9f4b9bd9b6045f97b4df5bef8356c767d46)
-@@ -72,16 +72,17 @@
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/cache.h  (mode:100644 sha1:828d660ab82bb35a1ca632a2ba4620dc483889bd)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/cache.h  (mode:100644 sha1:d8ade9f4b9bd9b6045f97b4df5bef8356c767d46)
+@@ -17,21 +17,6 @@
+ #include <zlib.h>
+ 
+ /*
+- * Basic data structures for the directory cache
+- *
+- * NOTE NOTE NOTE! This is all in the native CPU byte format. It's
+- * not even trying to be portable. It's trying to be efficient. It's
+- * just a cache, after all.
+- */
+-
+-#define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
+-struct cache_header {
+-	unsigned int hdr_signature;
+-	unsigned int hdr_version;
+-	unsigned int hdr_entries;
+-};
+-
+-/*
+  * The "cache_time" is just the low 32 bits of the
+  * time. It doesn't matter if it overflows - we only
+  * check it for equality in the 32 bits we save.
+@@ -67,6 +52,8 @@
+ #define CE_STAGEMASK (0x3000)
+ #define CE_STAGESHIFT 12
+ 
++extern int ce_match_stat(struct cache_entry *ce, struct stat *st);
++
+ #define create_ce_flags(len, stage) htons((len) | ((stage) << CE_STAGESHIFT))
+ #define ce_namelen(ce) (CE_NAMEMASK & ntohs((ce)->ce_flags))
+ #define ce_size(ce) cache_entry_size(ce_namelen(ce))
+@@ -78,8 +65,6 @@
+ #define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (len) + 8) & ~7)
+ 
+ const char *sha1_file_directory;
+-struct cache_entry **active_cache;
+-unsigned int active_nr, active_alloc;
+ 
+ #define DB_ENVIRONMENT "SHA1_FILE_DIRECTORY"
+ #define DEFAULT_DB_ENVIRONMENT ".git/objects"
+@@ -87,12 +72,17 @@
  #define alloc_nr(x) (((x)+16)*3/2)
  
  /* Initialize and use the cache information */
 -extern int read_cache(void);
--extern int write_cache(int newfd);
--extern void free_cache();
+-extern int write_cache(int newfd, struct cache_entry **cache, int entries);
 -extern int cache_name_pos(const char *name, int namelen);
 -extern int add_cache_entry(struct cache_entry *ce, int ok_to_add);
 -extern int remove_file_from_cache(char *path);
--extern int get_num_cache_entries();
--extern struct cache_entry * get_cache_entry(int pos);
--extern void set_cache_entry(struct cache_entry *ce, int pos);
--extern int remove_cache_entry_at(int pos);
+-extern int cache_match_stat(struct cache_entry *ce, struct stat *st);
 +extern struct cache *new_cache(void);
 +extern struct cache *read_cache(void);
 +extern int write_cache(struct cache *cache, int newfd);
@@ -90,8 +123,8 @@ Index: cache.h
  #define CTIME_CHANGED	0x0002
 Index: check-files.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/check-files.c  (mode:100644 sha1:0973e81fbbc0f9f98031fb249254bd89d8088889)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/check-files.c  (mode:100644 sha1:4de6d39e4997d29f13261c21eeb378f74b3f8a8f)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/check-files.c  (mode:100644 sha1:7d16691aa9d51b5b4670d5837b3527ee7c7da79c)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/check-files.c  (mode:100644 sha1:4de6d39e4997d29f13261c21eeb378f74b3f8a8f)
 @@ -8,7 +8,7 @@
   */
  #include "cache.h"
@@ -101,7 +134,7 @@ Index: check-files.c
  {
  	int fd = open(path, O_RDONLY);
  	struct cache_entry *ce;
-@@ -23,10 +23,10 @@
+@@ -23,15 +23,15 @@
  	}
  
  	/* Exists but is not in the cache is not fine */
@@ -109,11 +142,17 @@ Index: check-files.c
 +	pos = cache_name_pos(cache, path, strlen(path));
  	if (pos < 0)
  		die("preparing to update existing file '%s' not in cache", path);
--	ce = get_cache_entry(pos);
+-	ce = active_cache[pos];
 +	ce = get_cache_entry(cache, pos);
  
  	if (fstat(fd, &st) < 0)
  		die("fstat(%s): %s", path, strerror(errno));
+ 
+-	changed = cache_match_stat(ce, &st);
++	changed = ce_match_stat(ce, &st);
+ 	if (changed)
+ 		die("preparing to update file '%s' not uptodate in cache", path);
+ }
 @@ -39,9 +39,9 @@
  int main(int argc, char **argv)
  {
@@ -128,8 +167,17 @@ Index: check-files.c
  }
 Index: checkout-cache.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/checkout-cache.c  (mode:100644 sha1:27b559d5bcc5831eda441bcd1fd88d687f2567b8)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/checkout-cache.c  (mode:100644 sha1:2e8c61323a72f6052d8c9ef76a4eef05aa5ac0f9)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/checkout-cache.c  (mode:100644 sha1:8bf86016b5d5fd88a52ce694fc59bb9ecb550d22)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/checkout-cache.c  (mode:100644 sha1:2e8c61323a72f6052d8c9ef76a4eef05aa5ac0f9)
+@@ -100,7 +100,7 @@
+ 	struct stat st;
+ 
+ 	if (!stat(ce->name, &st)) {
+-		unsigned changed = cache_match_stat(ce, &st);
++		unsigned changed = ce_match_stat(ce, &st);
+ 		if (!changed)
+ 			return 0;
+ 		if (!force) {
 @@ -120,23 +120,23 @@
  	return write_entry(ce);
  }
@@ -144,7 +192,7 @@ Index: checkout-cache.c
  			fprintf(stderr, "checkout-cache: %s is not in the cache\n", name);
  		return -1;
  	}
--	return checkout_entry(get_cache_entry(pos));
+-	return checkout_entry(active_cache[pos]);
 +	return checkout_entry(get_cache_entry(cache, pos));
  }
  
@@ -153,8 +201,8 @@ Index: checkout-cache.c
  {
  	int i;
  
--	for (i = 0; i < get_num_cache_entries() ; i++) {
--		struct cache_entry *ce = get_cache_entry(i);
+-	for (i = 0; i < active_nr ; i++) {
+-		struct cache_entry *ce = active_cache[i];
 +	for (i = 0; i < get_num_cache_entries(cache) ; i++) {
 +		struct cache_entry *ce = get_cache_entry(cache, i);
  		if (ce_stage(ce))
@@ -190,13 +238,13 @@ Index: checkout-cache.c
  }
 Index: diff-cache.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/diff-cache.c  (mode:100644 sha1:5ae6d5de5ed5ad34f72267904ff8eb6288855fc5)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/diff-cache.c  (mode:100644 sha1:1d39ca1f79d841e363a4be57871a5c1282d441e1)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/diff-cache.c  (mode:100644 sha1:fcbc4900d32f4ca24f67bb8f0fe344c6c5642ac9)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/diff-cache.c  (mode:100644 sha1:1d39ca1f79d841e363a4be57871a5c1282d441e1)
 @@ -4,7 +4,7 @@
  static int recursive = 0;
  static int line_termination = '\n';
  
--static int diff_cache(void *tree, unsigned long size, int pos, const char *base);
+-static int diff_cache(void *tree, unsigned long size, struct cache_entry **ac, int entries, const char *base);
 +static int diff_cache(void *tree, unsigned long size, struct cache *cache, int pos, const char *base);
  
  static void update_tree_entry(void **bufp, unsigned long *sizep)
@@ -205,11 +253,11 @@ Index: diff-cache.c
  }
  
  static int compare_tree_entry(const char *path1, unsigned int mode1, const unsigned char *sha1,
--			      int *pos, const char *base)
+-			      struct cache_entry **ac, int *entries, const char *base)
 +			      struct cache *cache, int *pos, const char *base)
  {
  	int baselen = strlen(base);
--	struct cache_entry *ce = get_cache_entry(*pos);
+-	struct cache_entry *ce = *ac;
 +	struct cache_entry *ce = get_cache_entry(cache, *pos);
  	const char *path2 = ce->name + baselen;
  	unsigned int mode2 = ntohl(ce->ce_mode);
@@ -218,41 +266,81 @@ Index: diff-cache.c
  			memcpy(newbase + baselen + pathlen1, "/", 2);
  			if (!tree || strcmp(type, "tree"))
  				die("unable to read tree object %s", sha1_to_hex(sha1));
--			*pos = diff_cache(tree, size, *pos, newbase);
+-			*entries = diff_cache(tree, size, ac, *entries, newbase);
 +			*pos = diff_cache(tree, size, cache, *pos, newbase);
  			free(newbase);
  			free(tree);
  			return -1;
+@@ -125,7 +125,7 @@
+ 			show_file("-", path1, mode1, sha1, base);
+ 			return -1;
+ 		}
+-		changed = cache_match_stat(ce, &st);
++		changed = ce_match_stat(ce, &st);
+ 		close(fd);
+ 		if (changed) {
+ 			mode2 = st.st_mode;
 @@ -158,7 +158,7 @@
  	return 0;
  }
  
--static int diff_cache(void *tree, unsigned long size, int pos, const char *base)
+-static int diff_cache(void *tree, unsigned long size, struct cache_entry **ac, int entries, const char *base)
 +static int diff_cache(void *tree, unsigned long size, struct cache *cache, int pos, const char *base)
  {
  	int baselen = strlen(base);
  
-@@ -172,8 +172,8 @@
+@@ -167,15 +167,16 @@
+ 		unsigned int mode;
+ 		const char *path;
+ 		const unsigned char *sha1;
+-		int left;
+ 
+ 		/*
  		 * No entries in the cache (with this base)?
  		 * Output the tree contents.
  		 */
--		if ((pos == get_num_cache_entries()) ||
--		    ce_namelen(ce = get_cache_entry(pos)) < baselen ||
+-		if (!entries || ce_namelen(ce = *ac) < baselen || memcmp(ce->name, base, baselen)) {
 +		if ((pos == get_num_cache_entries(cache)) ||
 +		    ce_namelen(ce = get_cache_entry(cache, pos)) < baselen ||
- 		    memcmp(ce->name, base, baselen)) {
++		    memcmp(ce->name, base, baselen)) {
  			if (!size)
- 				return pos;
-@@ -193,7 +193,7 @@
+-				return entries;
++				return pos;
+ 			sha1 = extract(tree, size, &path, &mode);
+ 			show_file("-", path, mode, sha1, base);
+ 			update_tree_entry(&tree, &size);
+@@ -187,27 +188,20 @@
+ 		 */
+ 		if (!size) {
+ 			show_file("+", ce->name, ntohl(ce->ce_mode), ce->sha1, "");
+-			ac++;
+-			entries--;
++			pos++;
+ 			continue;
  		}
  
  		sha1 = extract(tree, size, &path, &mode);
--		switch (compare_tree_entry(path, mode, sha1, &pos, base)) {
+-		left = entries;
+-		switch (compare_tree_entry(path, mode, sha1, ac, &left, base)) {
 +		switch (compare_tree_entry(path, mode, sha1, cache, &pos, base)) {
  		case -1:
  			update_tree_entry(&tree, &size);
+-			if (left < entries) {
+-				ac += (entries - left);
+-				entries = left;
+-			}
  			continue;
-@@ -215,8 +215,8 @@
+ 		case 0:
+ 			update_tree_entry(&tree, &size);
+ 			/* Fallthrough */
+ 		case 1:
+-			ac++;
+-			entries--;
++			pos++;
+ 			continue;
+ 		}
+ 		die("diff-cache: internal error");
+@@ -221,8 +215,8 @@
  	void *tree;
  	unsigned long size;
  	char type[20];
@@ -262,17 +350,17 @@ Index: diff-cache.c
  	while (argc > 2) {
  		char *arg = argv[1];
  		argv++;
-@@ -257,5 +257,5 @@
+@@ -263,5 +257,5 @@
  	if (strcmp(type, "tree"))
  		die("bad tree object %s (%s)", sha1_to_hex(tree_sha1), type);
  
--	return diff_cache(tree, size, 0, "");
+-	return diff_cache(tree, size, active_cache, active_nr, "");
 +	return diff_cache(tree, size, cache, 0, "");
  }
 Index: merge-cache.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/merge-cache.c  (mode:100644 sha1:c2f96e7652a2aea9417c3790bfe9ab14ffcdb12f)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/merge-cache.c  (mode:100644 sha1:440d4d6e98d1387c5055ba5539b829e7557d9d4a)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/merge-cache.c  (mode:100644 sha1:35a0d588178aa5371399458b1a15519cffd645b8)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/merge-cache.c  (mode:100644 sha1:440d4d6e98d1387c5055ba5539b829e7557d9d4a)
 @@ -26,11 +26,11 @@
  		err = 1;
  }
@@ -282,7 +370,7 @@ Index: merge-cache.c
  {
  	int found;
  	
--	if (pos >= get_num_cache_entries())
+-	if (pos >= active_nr)
 +	if (pos >= get_num_cache_entries(cache))
  		die("merge-cache: %s not in the cache", path);
  	arguments[0] = pgm;
@@ -291,7 +379,7 @@ Index: merge-cache.c
  	found = 0;
  	do {
  		static char hexbuf[4][60];
--		struct cache_entry *ce = get_cache_entry(pos);
+-		struct cache_entry *ce = active_cache[pos];
 +		struct cache_entry *ce = get_cache_entry(cache, pos);
  		int stage = ce_stage(ce);
  
@@ -300,7 +388,7 @@ Index: merge-cache.c
  		found++;
  		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
  		arguments[stage] = hexbuf[stage];
--	} while (++pos < get_num_cache_entries());
+-	} while (++pos < active_nr);
 +	} while (++pos < get_num_cache_entries(cache));
  	if (!found)
  		die("merge-cache: %s not in the cache", path);
@@ -327,8 +415,8 @@ Index: merge-cache.c
 +static void merge_all(struct cache *cache)
  {
  	int i;
--	for (i = 0; i < get_num_cache_entries(); i++) {
--		struct cache_entry *ce = get_cache_entry(i);
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
 +	for (i = 0; i < get_num_cache_entries(cache); i++) {
 +		struct cache_entry *ce = get_cache_entry(cache, i);
  		if (!ce_stage(ce))
@@ -368,29 +456,55 @@ Index: merge-cache.c
  		die("merge program failed");
 Index: read-cache.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/read-cache.c  (mode:100644 sha1:8837d27ab683bf07d38aee33c62a90f5a7221588)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/read-cache.c  (mode:100644 sha1:7084fcdf771ddc5bfac38b8778a5904d779de3a4)
-@@ -30,18 +30,15 @@
- 	unsigned int allocated_entries;
- };
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/read-cache.c  (mode:100644 sha1:2f6a4aa18d48865db80459a3459ac4384b0b16c8)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/read-cache.c  (mode:100644 sha1:7084fcdf771ddc5bfac38b8778a5904d779de3a4)
+@@ -6,10 +6,42 @@
+ #include <stdarg.h>
+ #include "cache.h"
  
--static struct cache * cache = NULL;
--
- struct cache * new_cache()
- {
- 	return (struct cache*)calloc(1, sizeof(struct cache));
- }
+-struct cache_entry **active_cache = NULL;
+-unsigned int active_nr = 0, active_alloc = 0;
++/*
++ * Basic data structures for the directory cache
++ */
  
--void free_cache()
+-int cache_match_stat(struct cache_entry *ce, struct stat *st)
++#define CACHE_SIGNATURE 0x44495243	/* "DIRC" */
++struct cache_header {
++	unsigned int hdr_signature;
++	unsigned int hdr_version;
++	unsigned int hdr_entries;
++};
++
++struct mmap_holder {
++	void * ptr;
++	size_t size;
++};
++
++struct cache {
++	struct mmap_holder   map;
++	struct cache_header *header;
++	struct cache_entry **entries;
++	unsigned int num_entries;
++	unsigned int allocated_entries;
++};
++
++struct cache * new_cache()
++{
++	return (struct cache*)calloc(1, sizeof(struct cache));
++}
++
 +void free_cache(struct cache *cache)
++{
++	munmap(cache->map.ptr, cache->map.size);
++	free(cache);
++}
++
++int ce_match_stat(struct cache_entry *ce, struct stat *st)
  {
- 	munmap(cache->map.ptr, cache->map.size);
- 	free(cache);
--	cache = NULL;
- }
+ 	unsigned int changed = 0;
  
- int ce_match_stat(struct cache_entry *ce, struct stat *st)
-@@ -100,7 +97,7 @@
+@@ -65,15 +97,15 @@
  	return 0;
  }
  
@@ -399,16 +513,30 @@ Index: read-cache.c
  {
  	int first, last;
  
-@@ -122,7 +119,7 @@
+ 	first = 0;
+-	last = active_nr;
++	last = cache->num_entries;
+ 	while (last > first) {
+ 		int next = (last + first) >> 1;
+-		struct cache_entry *ce = active_cache[next];
++		struct cache_entry *ce = cache->entries[next];
+ 		int cmp = cache_name_compare(name, namelen, ce->name, htons(ce->ce_flags));
+ 		if (!cmp)
+ 			return next;
+@@ -87,20 +119,20 @@
  }
  
  /* Remove entry, return true if there are more entries to go.. */
--int remove_cache_entry_at(int pos)
+-static int remove_entry_at(int pos)
 +int remove_cache_entry_at(struct cache *cache, int pos)
  {
- 	cache->num_entries--;
- 	if (pos >= cache->num_entries)
-@@ -131,11 +128,11 @@
+-	active_nr--;
+-	if (pos >= active_nr)
++	cache->num_entries--;
++	if (pos >= cache->num_entries)
+ 		return 0;
+-	memmove(active_cache + pos, active_cache + pos + 1, (active_nr - pos) * sizeof(struct cache_entry *));
++	memmove(cache->entries + pos, cache->entries + pos + 1, (cache->num_entries - pos) * sizeof(struct cache_entry *));
  	return 1;
  }
  
@@ -418,61 +546,87 @@ Index: read-cache.c
 -	int pos = cache_name_pos(path, strlen(path));
 +	int pos = cache_name_pos(cache, path, strlen(path));
  	if (pos >= 0)
--		remove_cache_entry_at(pos);
+-		remove_entry_at(pos);
 +		remove_cache_entry_at(cache, pos);
  	return 0;
  }
  
-@@ -145,17 +142,17 @@
+@@ -110,15 +142,33 @@
  	return ce_namelen(b) == len && !memcmp(a->name, b->name, len);
  }
  
--int get_num_cache_entries()
-+int get_num_cache_entries(struct cache *cache)
- {
- 	return cache->num_entries;
- }
- 
--struct cache_entry * get_cache_entry(int pos)
-+struct cache_entry * get_cache_entry(struct cache *cache, int pos)
- {
- 	return cache->entries[pos];
- }
- 
--void set_cache_entry(struct cache_entry *ce, int pos)
-+void set_cache_entry(struct cache *cache, struct cache_entry *ce, int pos)
- {
- 	/* You can NOT just free cache->entries[i] here, since it
- 	 * might not be necessarily malloc()ed but can also come
-@@ -163,16 +160,11 @@
- 	cache->entries[pos] = ce;
- }
- 
 -int add_cache_entry(struct cache_entry *ce, int ok_to_add)
++int get_num_cache_entries(struct cache *cache)
++{
++	return cache->num_entries;
++}
++
++struct cache_entry * get_cache_entry(struct cache *cache, int pos)
++{
++	return cache->entries[pos];
++}
++
++void set_cache_entry(struct cache *cache, struct cache_entry *ce, int pos)
++{
++	/* You can NOT just free cache->entries[i] here, since it
++	 * might not be necessarily malloc()ed but can also come
++	 * from mmap(). */
++	cache->entries[pos] = ce;
++}
++
 +int add_cache_entry(struct cache *cache, struct cache_entry *ce, int ok_to_add)
  {
  	int pos;
  
--	/* temporary, read-tree.c expects the cache to always exist, even
--	 * without a read_cache being called */
--	if (!cache)
--		cache = new_cache();
--
 -	pos = cache_name_pos(ce->name, htons(ce->ce_flags));
 +	pos = cache_name_pos(cache, ce->name, htons(ce->ce_flags));
  
  	/* existing match? Just replace it */
  	if (pos >= 0) {
-@@ -188,7 +180,7 @@
- 	if (pos < cache->num_entries && ce_stage(ce) == 0) {
- 		while (same_name(cache->entries[pos], ce)) {
+-		active_cache[pos] = ce;
++		cache->entries[pos] = ce;
+ 		return 0;
+ 	}
+ 	pos = -pos-1;
+@@ -127,10 +177,10 @@
+ 	 * Inserting a merged entry ("stage 0") into the index
+ 	 * will always replace all non-merged entries..
+ 	 */
+-	if (pos < active_nr && ce_stage(ce) == 0) {
+-		while (same_name(active_cache[pos], ce)) {
++	if (pos < cache->num_entries && ce_stage(ce) == 0) {
++		while (same_name(cache->entries[pos], ce)) {
  			ok_to_add = 1;
--			if (!remove_cache_entry_at(pos))
+-			if (!remove_entry_at(pos))
 +			if (!remove_cache_entry_at(cache, pos))
  				break;
  		}
  	}
-@@ -227,29 +219,40 @@
+@@ -139,16 +189,16 @@
+ 		return -1;
+ 
+ 	/* Make sure the array is big enough .. */
+-	if (active_nr == active_alloc) {
+-		active_alloc = alloc_nr(active_alloc);
+-		active_cache = realloc(active_cache, active_alloc * sizeof(struct cache_entry *));
++	if (cache->num_entries == cache->allocated_entries) {
++		cache->allocated_entries = alloc_nr(cache->allocated_entries);
++		cache->entries = realloc(cache->entries, cache->allocated_entries * sizeof(struct cache_entry *));
+ 	}
+ 
+ 	/* Add it in.. */
+-	active_nr++;
+-	if (active_nr > pos)
+-		memmove(active_cache + pos + 1, active_cache + pos, (active_nr - pos - 1) * sizeof(ce));
+-	active_cache[pos] = ce;
++	cache->num_entries++;
++	if (cache->num_entries > pos)
++		memmove(cache->entries + pos + 1, cache->entries + pos, (cache->num_entries - pos - 1) * sizeof(ce));
++	cache->entries[pos] = ce;
+ 	return 0;
+ }
+ 
+@@ -169,59 +219,75 @@
  	return 0;
  }
  
@@ -481,7 +635,14 @@ Index: read-cache.c
  {
  	int fd, i;
  	struct stat st;
- 	unsigned long offset;
+-	unsigned long size, offset;
+-	void *map;
+-	struct cache_header *hdr;
+-
+-	errno = EBUSY;
+-	if (active_cache)
+-		return error("more than one cachefile");
++	unsigned long offset;
 +	struct cache *cache;
 +
 +	cache = new_cache();
@@ -490,10 +651,7 @@ Index: read-cache.c
 +		error("unable to allocate cache");
 +		return NULL;
 +	}
- 
--	errno = EBUSY;
--	if (cache)
--		return error("more than one cachefile");
++
  	errno = ENOENT;
  	sha1_file_directory = getenv(DB_ENVIRONMENT);
  	if (!sha1_file_directory)
@@ -508,11 +666,6 @@ Index: read-cache.c
  	fd = open(".git/index", O_RDONLY);
 -	if (fd < 0)
 -		return (errno == ENOENT) ? 0 : error("open failed");
--
--	errno = ENOMEM;
--	cache = new_cache();
--	if (!cache)
--		return error("unable to allocate cache");
 +	if (fd < 0) {
 +		/* TODO: Why special case this?  If we can't get to the data, what's the point? */
 +		if (errno == ENOENT)
@@ -524,52 +677,99 @@ Index: read-cache.c
 +		}
 +	}
  
- 	cache->map.size = 0; /* avoid gcc warning */
- 	cache->map.ptr = (void *)-1;
-@@ -261,16 +264,17 @@
+-	size = 0; /* avoid gcc warning */
+-	map = (void *)-1;
++	cache->map.size = 0; /* avoid gcc warning */
++	cache->map.ptr = (void *)-1;
+ 	if (!fstat(fd, &st)) {
+-		size = st.st_size;
++		cache->map.size = st.st_size;
+ 		errno = EINVAL;
+-		if (size >= sizeof(struct cache_header) + 20)
+-			map = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
++		if (cache->map.size >= sizeof(struct cache_header) + 20)
++			cache->map.ptr = mmap(NULL, cache->map.size, PROT_READ, MAP_PRIVATE, fd, 0);
  	}
  	close(fd);
- 	if (-1 == (int)(long)cache->map.ptr) {
-+		error("mmap failed");
- 		free(cache);
--		cache = NULL;
+-	if (-1 == (int)(long)map)
 -		return error("mmap failed");
++	if (-1 == (int)(long)cache->map.ptr) {
++		error("mmap failed");
++		free(cache);
 +		return NULL;
- 	}
++	}
  
- 	cache->header = cache->map.ptr;
- 	if (verify_hdr(cache->header, cache->map.size) < 0) {
--		free_cache();
+-	hdr = map;
+-	if (verify_hdr(hdr, size) < 0)
+-		goto unmap;
+-
+-	active_nr = ntohl(hdr->hdr_entries);
+-	active_alloc = alloc_nr(active_nr);
+-	active_cache = calloc(active_alloc, sizeof(struct cache_entry *));
+-
+-	offset = sizeof(*hdr);
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = map + offset;
+-		offset = offset + ce_size(ce);
+-		active_cache[i] = ce;
++	cache->header = cache->map.ptr;
++	if (verify_hdr(cache->header, cache->map.size) < 0) {
 +		free_cache(cache);
- 		errno = EINVAL;
--		return error("verify header failed");
++		errno = EINVAL;
 +		error("verify header failed");
 +		return NULL;
  	}
+-	return active_nr;
  
- 	cache->num_entries = ntohl(cache->header->hdr_entries);
-@@ -283,7 +287,7 @@
- 		offset = offset + ce_size(ce);
- 		cache->entries[i] = ce;
- 	}
--	return cache->num_entries;
+-unmap:
+-	munmap(map, size);
+-	errno = EINVAL;
+-	return error("verify header failed");
++	cache->num_entries = ntohl(cache->header->hdr_entries);
++	cache->allocated_entries = alloc_nr(cache->num_entries);
++	cache->entries = calloc(cache->allocated_entries, sizeof(struct cache_entry *));
++
++	offset = sizeof(*cache->header);
++	for (i = 0; i < cache->num_entries; i++) {
++		struct cache_entry *ce = cache->map.ptr + offset;
++		offset = offset + ce_size(ce);
++		cache->entries[i] = ce;
++	}
 +	return cache;
  }
  
  #define WRITE_BUFFER_SIZE 8192
-@@ -329,7 +333,7 @@
+@@ -267,7 +333,7 @@
  	return 0;
  }
  
--int write_cache(int newfd)
+-int write_cache(int newfd, struct cache_entry **cache, int entries)
 +int write_cache(struct cache *cache, int newfd)
  {
  	SHA_CTX c;
  	struct cache_header hdr;
+@@ -275,14 +341,14 @@
+ 
+ 	hdr.hdr_signature = htonl(CACHE_SIGNATURE);
+ 	hdr.hdr_version = htonl(2);
+-	hdr.hdr_entries = htonl(entries);
++	hdr.hdr_entries = htonl(cache->num_entries);
+ 
+ 	SHA1_Init(&c);
+ 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
+ 		return -1;
+ 
+-	for (i = 0; i < entries; i++) {
+-		struct cache_entry *ce = cache[i];
++	for (i = 0; i < cache->num_entries; i++) {
++		struct cache_entry *ce = cache->entries[i];
+ 		if (ce_write(&c, newfd, ce, ce_size(ce)) < 0)
+ 			return -1;
+ 	}
 Index: read-tree.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/read-tree.c  (mode:100644 sha1:ad9128f26613a82361475516dd0f2b470f4ce4b3)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/read-tree.c  (mode:100644 sha1:a683b7f60e58514d36218a7b2c2ace2d3ec9f984)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/read-tree.c  (mode:100644 sha1:620f3f74eb56366fca8be4d28d7b04875c0fa90c)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/read-tree.c  (mode:100644 sha1:a683b7f60e58514d36218a7b2c2ace2d3ec9f984)
 @@ -7,7 +7,7 @@
  
  static int stage = 0;
@@ -610,88 +810,102 @@ Index: read-tree.c
  			free(buffer);
  			return -1;
  		}
-@@ -149,16 +149,16 @@
- /* rather than doing the 'right' thing of deleting entries as we merge,
-  * walk dst through the cache, overwriting entries as we go and at the
-  * end truncate the size of the cache */
--static void trivially_merge_cache()
+@@ -146,26 +146,30 @@
+ 	return NULL;
+ }
+ 
+-static void trivially_merge_cache(struct cache_entry **src, int nr)
++/* rather than doing the 'right' thing of deleting entries as we merge,
++ * walk dst through the cache, overwriting entries as we go and at the
++ * end truncate the size of the cache */
 +static void trivially_merge_cache(struct cache *cache)
  {
  	static struct cache_entry null_entry;
+-	struct cache_entry **dst = src;
  	struct cache_entry *old = &null_entry;
--	int src = 0, dst = 0, nr = get_num_cache_entries();
 +	int src = 0, dst = 0, nr = get_num_cache_entries(cache);
  
- 	while (src < nr) {
+-	while (nr) {
++	while (src < nr) {
  		struct cache_entry *ce, *result;
  
--		ce = get_cache_entry(src);
+-		ce = src[0];
 +		ce = get_cache_entry(cache, src);
  
  		/* We throw away original cache entries except for the stat information */
  		if (!ce_stage(ce)) {
-@@ -168,8 +168,8 @@
+ 			old = ce;
+ 			src++;
+-			nr--;
+-			active_nr--;
+ 			continue;
  		}
- 		if ((src < (nr - 2)) &&
- 		    (result = merge_entries(ce,
--					    get_cache_entry(src + 1),
--					    get_cache_entry(src + 2))) != NULL) {
+-		if (nr > 2 && (result = merge_entries(ce, src[1], src[2])) != NULL) {
++		if ((src < (nr - 2)) &&
++		    (result = merge_entries(ce,
 +					    get_cache_entry(cache, src + 1),
 +					    get_cache_entry(cache, src + 2))) != NULL) {
  			/*
  			 * See if we can re-use the old CE directly?
  			 * That way we get the uptodate stat info.
-@@ -180,27 +180,27 @@
+@@ -175,40 +179,46 @@
+ 			ce = result;
  			ce->ce_flags &= ~htons(CE_STAGEMASK);
  			src += 2;
+-			nr -= 2;
+-			active_nr -= 2;
  		}
--		set_cache_entry(ce, dst);
+-		*dst++ = ce;
 +		set_cache_entry(cache, ce, dst);
- 		dst++;
++		dst++;
  		src++;
- 	}
- 	/* this could be replaced by a truncate api */
- 	while (nr > dst) {
++	}
++	/* this could be replaced by a truncate api */
++	while (nr > dst) {
  		nr--;
--		remove_cache_entry_at(nr);
 +		remove_cache_entry_at(cache, nr);
  	}
  }
  
--static void merge_stat_info()
+-static void merge_stat_info(struct cache_entry **src, int nr)
 +static void merge_stat_info(struct cache *cache)
  {
  	static struct cache_entry null_entry;
+-	struct cache_entry **dst = src;
  	struct cache_entry *old = &null_entry;
--	int src = 0, dst = 0, nr = get_num_cache_entries();
 +	int src = 0, dst = 0, nr = get_num_cache_entries(cache);
  
- 	while (src < nr) {
+-	while (nr) {
++	while (src < nr) {
  		struct cache_entry *ce;
  
--		ce = get_cache_entry(src);
+-		ce = src[0];
 +		ce = get_cache_entry(cache, src);
  
  		/* We throw away original cache entries except for the stat information */
  		if (!ce_stage(ce)) {
-@@ -211,14 +211,14 @@
+ 			old = ce;
+ 			src++;
+-			nr--;
+-			active_nr--;
+ 			continue;
+ 		}
  		if (path_matches(ce, old) && same(ce, old))
  			*ce = *old;
  		ce->ce_flags &= ~htons(CE_STAGEMASK);
--		set_cache_entry(ce, dst);
+-		*dst++ = ce;
 +		set_cache_entry(cache, ce, dst);
- 		dst++;
++		dst++;
  		src++;
- 	}
- 	/* this could be replaced by a truncate api */
- 	while (nr > dst) {
++	}
++	/* this could be replaced by a truncate api */
++	while (nr > dst) {
  		nr--;
--		remove_cache_entry_at(nr);
 +		remove_cache_entry_at(cache, nr);
  	}
  }
  
-@@ -226,6 +226,7 @@
+@@ -216,6 +226,7 @@
  {
  	int i, newfd, merge;
  	unsigned char sha1[20];
@@ -699,20 +913,20 @@ Index: read-tree.c
  
  	newfd = open(".git/index.lock", O_RDWR | O_CREAT | O_EXCL, 0600);
  	if (newfd < 0)
-@@ -242,9 +243,9 @@
+@@ -232,9 +243,9 @@
  			int i;
  			if (stage)
  				usage("-m needs to come first");
 -			read_cache();
--			for (i = 0; i < get_num_cache_entries(); i++) {
--				if (ce_stage(get_cache_entry(i)))
+-			for (i = 0; i < active_nr; i++) {
+-				if (ce_stage(active_cache[i]))
 +			cache = read_cache();
 +			for (i = 0; i < get_num_cache_entries(cache); i++) {
 +				if (ce_stage(get_cache_entry(cache, i)))
  					usage("you need to resolve your current index first");
  			}
  			stage = 1;
-@@ -255,23 +256,25 @@
+@@ -245,23 +256,25 @@
  			usage("read-tree [-m] <sha1>");
  		if (stage > 3)
  			usage("can't merge more than two trees");
@@ -726,60 +940,82 @@ Index: read-tree.c
  	if (merge) {
  		switch (stage) {
  		case 4:	/* Three-way merge */
--			trivially_merge_cache();
+-			trivially_merge_cache(active_cache, active_nr);
 +			trivially_merge_cache(cache);
  			break;
  		case 2:	/* Just read a tree, merge with old cache contents */
--			merge_stat_info();
+-			merge_stat_info(active_cache, active_nr);
 +			merge_stat_info(cache);
  			break;
  		default:
  			die("just how do you expect me to merge %d trees?", stage-1);
  		}
  	}
--	if (write_cache(newfd) ||
+-	if (write_cache(newfd, active_cache, active_nr) ||
 +	if (write_cache(cache, newfd) ||
  	    rename(".git/index.lock", ".git/index"))
  		die("unable to write new index file");
  	remove_lock = 0;
 Index: show-diff.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/show-diff.c  (mode:100644 sha1:4a0902f50b3120b7791a4d4627a9a4f729afdcf7)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/show-diff.c  (mode:100644 sha1:d61bf6dea8106599c25ac5071743b351f6e000ce)
-@@ -129,9 +129,9 @@
- 	int entries;
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/show-diff.c  (mode:100644 sha1:da364e26e28823f951a6be1b686a458575f28ea1)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/show-diff.c  (mode:100644 sha1:d61bf6dea8106599c25ac5071743b351f6e000ce)
+@@ -126,9 +126,16 @@
+ 	int silent_on_nonexisting_files = 0;
+ 	int machine_readable = 0;
+ 	int reverse = 0;
+-	int entries = read_cache();
++	int entries;
  	int matched = 0;
  	int i;
 +	struct cache *cache = read_cache();
- 
--	read_cache();
--	entries = get_num_cache_entries();
++
 +	entries = get_num_cache_entries(cache);
- 	if (entries < 0) {
- 		perror("read_cache");
- 		exit(1);
-@@ -157,7 +157,7 @@
++	if (entries < 0) {
++		perror("read_cache");
++		exit(1);
++	}
+ 
+ 	while (1 < argc && argv[1][0] == '-') {
+ 		if  (!strcmp(argv[1], "-R"))
+@@ -147,14 +154,10 @@
+ 	/* At this point, if argc == 1, then we are doing everything.
+ 	 * Otherwise argv[1] .. argv[argc-1] have the explicit paths.
+ 	 */
+-	if (entries < 0) {
+-		perror("read_cache");
+-		exit(1);
+-	}
  	prepare_diff_cmd();
  	for (i = 0; i < entries; i++) {
  		struct stat st;
--		struct cache_entry *ce = get_cache_entry(i);
+-		struct cache_entry *ce = active_cache[i];
 +		struct cache_entry *ce = get_cache_entry(cache, i);
  		int changed;
  		unsigned long size;
  		char type[20];
-@@ -175,7 +175,7 @@
+@@ -172,7 +175,7 @@
  				printf("%s: Unmerged\n",
  				       ce->name);
  			while (i < entries &&
--			       !strcmp(ce->name, get_cache_entry(i)->name))
+-			       !strcmp(ce->name, active_cache[i]->name))
 +			       !strcmp(ce->name, get_cache_entry(cache, i)->name))
  				i++;
  			i--; /* compensate for loop control increments */
  			continue;
+@@ -190,7 +193,7 @@
+ 			}
+ 			continue;
+ 		}
+-		changed = cache_match_stat(ce, &st);
++		changed = ce_match_stat(ce, &st);
+ 		if (!changed)
+ 			continue;
+ 		if (!machine_readable)
 Index: show-files.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/show-files.c  (mode:100644 sha1:11fbbccef2df50d528105ceb48b15275f2a5693e)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/show-files.c  (mode:100644 sha1:c8dc21d0dd3f5db3f7016323859c58449968d800)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/show-files.c  (mode:100644 sha1:0b49ca051de413e7182445dd8fb9144125716974)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/show-files.c  (mode:100644 sha1:c8dc21d0dd3f5db3f7016323859c58449968d800)
 @@ -27,11 +27,11 @@
  static int nr_dir;
  static int dir_alloc;
@@ -838,8 +1074,8 @@ Index: show-files.c
  			printf("%s%s%c", tag_other, dir[i], line_terminator);
  	}
  	if (show_cached | show_stage) {
--		for (i = 0; i < get_num_cache_entries(); i++) {
--			struct cache_entry *ce = get_cache_entry(i);
+-		for (i = 0; i < active_nr; i++) {
+-			struct cache_entry *ce = active_cache[i];
 +		for (i = 0; i < get_num_cache_entries(cache); i++) {
 +			struct cache_entry *ce = get_cache_entry(cache, i);
  			if (show_unmerged && !ce_stage(ce))
@@ -849,8 +1085,8 @@ Index: show-files.c
  		}
  	}
  	if (show_deleted) {
--		for (i = 0; i < get_num_cache_entries(); i++) {
--			struct cache_entry *ce = get_cache_entry(i);
+-		for (i = 0; i < active_nr; i++) {
+-			struct cache_entry *ce = active_cache[i];
 +		for (i = 0; i < get_num_cache_entries(cache); i++) {
 +			struct cache_entry *ce = get_cache_entry(cache, i);
  			struct stat st;
@@ -876,8 +1112,8 @@ Index: show-files.c
  }
 Index: update-cache.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/update-cache.c  (mode:100644 sha1:3f251552283667c42797835088a4922ef865fe4a)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/update-cache.c  (mode:100644 sha1:565638acd2380023ea69e82316a7ab77d95d8ee7)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/update-cache.c  (mode:100644 sha1:a09883541c745c76413c62109a80f40df4b7a7fb)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/update-cache.c  (mode:100644 sha1:565638acd2380023ea69e82316a7ab77d95d8ee7)
 @@ -85,7 +85,7 @@
  	ce->ce_size = htonl(st->st_size);
  }
@@ -905,6 +1141,15 @@ Index: update-cache.c
  		free(ce);
  		return -1;
  	}
+@@ -179,7 +179,7 @@
+ 	if (stat(ce->name, &st) < 0)
+ 		return NULL;
+ 
+-	changed = cache_match_stat(ce, &st);
++	changed = ce_match_stat(ce, &st);
+ 	if (!changed)
+ 		return ce;
+ 
 @@ -200,17 +200,17 @@
  	return updated;
  }
@@ -914,30 +1159,33 @@ Index: update-cache.c
  {
  	int i;
  
--	for (i = 0; i < get_num_cache_entries(); i++) {
+-	for (i = 0; i < active_nr; i++) {
 +	for (i = 0; i < get_num_cache_entries(cache); i++) {
  		struct cache_entry *ce, *new;
--		ce = get_cache_entry(i);
+-		ce = active_cache[i];
 +		ce = get_cache_entry(cache, i);
  		if (ce_stage(ce)) {
  			printf("%s: needs merge\n", ce->name);
--			while ((i < get_num_cache_entries()) &&
--			       ! strcmp(get_cache_entry(i)->name, ce->name))
+-			while ((i < active_nr) &&
+-			       ! strcmp(active_cache[i]->name, ce->name))
 +			while ((i < get_num_cache_entries(cache)) &&
 +			       ! strcmp(get_cache_entry(cache, i)->name, ce->name))
  				i++;
  			i--;
  			continue;
-@@ -221,7 +221,7 @@
+@@ -221,10 +221,7 @@
  			printf("%s: needs update\n", ce->name);
  			continue;
  		}
--		set_cache_entry(new, i);
+-		/* You can NOT just free active_cache[i] here, since it
+-		 * might not be necessarily malloc()ed but can also come
+-		 * from mmap(). */
+-		active_cache[i] = new;
 +		set_cache_entry(cache, new, i);
  	}
  }
  
-@@ -253,7 +253,7 @@
+@@ -256,7 +253,7 @@
  	}
  }
  
@@ -946,7 +1194,7 @@ Index: update-cache.c
  {
  	int size, len;
  	unsigned int mode;
-@@ -276,7 +276,7 @@
+@@ -279,7 +276,7 @@
  	memcpy(ce->name, arg3, len);
  	ce->ce_flags = htons(len);
  	ce->ce_mode = create_ce_mode(mode);
@@ -955,7 +1203,7 @@ Index: update-cache.c
  }
  
  static int remove_lock = 0;
-@@ -291,6 +291,7 @@
+@@ -294,6 +291,7 @@
  {
  	int i, newfd, entries;
  	int allow_options = 1;
@@ -963,18 +1211,17 @@ Index: update-cache.c
  
  	newfd = open(".git/index.lock", O_RDWR | O_CREAT | O_EXCL, 0600);
  	if (newfd < 0)
-@@ -299,8 +300,8 @@
+@@ -302,7 +300,8 @@
  	atexit(remove_lock_file);
  	remove_lock = 1;
  
--	read_cache();
--	entries = get_num_cache_entries();
+-	entries = read_cache();
 +	cache = read_cache();
 +	entries = get_num_cache_entries(cache);
  	if (entries < 0)
  		die("cache corrupted");
  
-@@ -321,11 +322,11 @@
+@@ -323,11 +322,11 @@
  				continue;
  			}
  			if (!strcmp(path, "--refresh")) {
@@ -988,7 +1235,7 @@ Index: update-cache.c
  					die("update-cache: --cacheinfo <mode> <sha1> <path>");
  				i += 3;
  				continue;
-@@ -336,10 +337,10 @@
+@@ -338,10 +337,10 @@
  			fprintf(stderr, "Ignoring path %s\n", argv[i]);
  			continue;
  		}
@@ -996,20 +1243,20 @@ Index: update-cache.c
 +		if (add_file_to_cache(cache, path))
  			die("Unable to add %s to database", path);
  	}
--	if (write_cache(newfd) ||
+-	if (write_cache(newfd, active_cache, active_nr) ||
 +	if (write_cache(cache, newfd) ||
  	    rename(".git/index.lock", ".git/index"))
  		die("Unable to write new cachefile");
  
 Index: write-tree.c
 ===================================================================
---- 0a556dc01b8e48f684ce6e0c26f8c00b5e39c4ac:1/write-tree.c  (mode:100644 sha1:92e707fd4780805da160ce6fa282e75111ea67b9)
-+++ 7e396358c12c0129bcb4945e3e35a4fa76890a0c:1/write-tree.c  (mode:100644 sha1:ad148b422ffa85d7ecf515e55538c1afa13f17d6)
+--- c0260bfb82da04aeff4e598ced5295d6ae2e262d/write-tree.c  (mode:100644 sha1:827809dbddbff6dd8cf842641f6db5ad2f3ae07a)
++++ 38adb888a4c1adfe083f24d4ec51018e0b5a8335/write-tree.c  (mode:100644 sha1:ad148b422ffa85d7ecf515e55538c1afa13f17d6)
 @@ -29,7 +29,7 @@
  
  #define ORIG_OFFSET (40)	/* Enough space to add the header of "tree <size>\0" */
  
--static int write_tree(int start_pos, const char *base, int baselen, unsigned char *returnsha1)
+-static int write_tree(struct cache_entry **cachep, int maxentries, const char *base, int baselen, unsigned char *returnsha1)
 +static int write_tree(struct cache *cache, int start_pos, const char *base, int baselen, unsigned char *returnsha1)
  {
  	unsigned char subdir_sha1[20];
@@ -1018,40 +1265,57 @@ Index: write-tree.c
  
  	nr = 0;
  	do {
--		struct cache_entry *ce = get_cache_entry(start_pos + nr);
+-		struct cache_entry *ce = cachep[nr];
 +		struct cache_entry *ce = get_cache_entry(cache, start_pos + nr);
  		const char *pathname = ce->name, *filename, *dirname;
  		int pathlen = ce_namelen(ce), entrylen;
  		unsigned char *sha1;
-@@ -59,7 +59,7 @@
+@@ -53,16 +53,13 @@
+ 		if (baselen >= pathlen || memcmp(base, pathname, baselen))
+ 			break;
+ 
+-		sha1 = ce->sha1;
+-		mode = ntohl(ce->ce_mode);
+-
+ 		/* Do we have _further_ subdirectories? */
+ 		filename = pathname + baselen;
+ 		dirname = strchr(filename, '/');
  		if (dirname) {
  			int subdir_written;
  
--			subdir_written = write_tree(start_pos + nr, pathname, dirname-pathname+1, subdir_sha1);
+-			subdir_written = write_tree(cachep + nr, maxentries - nr, pathname, dirname-pathname+1, subdir_sha1);
 +			subdir_written = write_tree(cache, start_pos + nr, pathname, dirname-pathname+1, subdir_sha1);
  			nr += subdir_written;
  
  			/* Now we need to write out the directory entry into this tree.. */
+@@ -72,6 +69,9 @@
+ 			/* ..but the directory entry doesn't count towards the total count */
+ 			nr--;
+ 			sha1 = subdir_sha1;
++		} else {
++			sha1 = ce->sha1;
++			mode = ntohl(ce->ce_mode);
+ 		}
+ 
+ 		if (check_valid_sha1(sha1) < 0)
 @@ -87,7 +87,7 @@
  		memcpy(buffer + offset, sha1, 20);
  		offset += 20;
  		nr++;
--	} while ((start_pos + nr) < get_num_cache_entries());
+-	} while (nr < maxentries);
 +	} while ((start_pos + nr) < get_num_cache_entries(cache));
  
  	i = prepend_integer(buffer, offset - ORIG_OFFSET, ORIG_OFFSET);
  	i -= 5;
-@@ -101,18 +101,18 @@
+@@ -101,16 +101,18 @@
  int main(int argc, char **argv)
  {
  	int i, unmerged;
--	int entries;
+-	int entries = read_cache();
  	unsigned char sha1[20];
 +	struct cache *cache = read_cache();
 +	int entries;
  
--	read_cache();
--	entries = get_num_cache_entries();
 -	if (entries <= 0)
 +	if (!cache)
  		die("write-tree: no cache contents to write");
@@ -1060,18 +1324,17 @@ Index: write-tree.c
  	/* Verify that the tree is merged */
  	unmerged = 0;
  	for (i = 0; i < entries; i++) {
--		struct cache_entry *ce = get_cache_entry(i);
+-		struct cache_entry *ce = active_cache[i];
 +		struct cache_entry *ce = get_cache_entry(cache, i);
  		if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
  			if (++unmerged > 10) {
  				fprintf(stderr, "...\n");
-@@ -125,7 +125,7 @@
+@@ -123,7 +125,7 @@
  		die("write-tree: not able to write tree");
  
  	/* Ok, write it out */
--	if (write_tree(0, "", 0, sha1) != entries)
+-	if (write_tree(active_cache, entries, "", 0, sha1) != entries)
 +	if (write_tree(cache, 0, "", 0, sha1) != entries)
  		die("write-tree: internal error");
  	printf("%s\n", sha1_to_hex(sha1));
  	return 0;
-
