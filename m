@@ -1,76 +1,113 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: [PATCH] multi item packed files
-Date: Thu, 21 Apr 2005 16:22:46 -0400
-Message-ID: <200504211622.48065.mason@suse.com>
-References: <200504211113.13630.mason@suse.com> <Pine.LNX.4.58.0504210832490.2344@ppc970.osdl.org> <m3u0m0q69a.fsf@defiant.localdomain>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Pasky problem with 'git init URL'
+Date: Thu, 21 Apr 2005 22:29:28 +0200
+Message-ID: <20050421202928.GH7443@pasky.ji.cz>
+References: <1114100518.17551.31.camel@nosferatu.lan>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 22:19:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 21 22:26:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOi85-0006Pz-VI
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 22:18:30 +0200
+	id 1DOiEb-0007QM-7T
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 22:25:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261855AbVDUUWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 16:22:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261857AbVDUUWz
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:22:55 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:30863 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S261855AbVDUUWw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 16:22:52 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 077A991AD;
-	Thu, 21 Apr 2005 22:22:52 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id AF7E614BDE0; Thu, 21 Apr 2005 22:22:51 +0200 (CEST)
-To: Krzysztof Halasa <khc@pm.waw.pl>
-User-Agent: KMail/1.8
-In-Reply-To: <m3u0m0q69a.fsf@defiant.localdomain>
+	id S261858AbVDUU3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 16:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261859AbVDUU3l
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 16:29:41 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31367 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261858AbVDUU3g (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 16:29:36 -0400
+Received: (qmail 19018 invoked by uid 2001); 21 Apr 2005 20:29:28 -0000
+To: Martin Schlemmer <azarah@nosferatu.za.org>
 Content-Disposition: inline
+In-Reply-To: <1114100518.17551.31.camel@nosferatu.lan>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 21 April 2005 15:28, Krzysztof Halasa wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> > Wrong. You most definitely _can_ lose: you end up having to optimize for
-> > one particular filesystem blocking size, and you'll lose on any other
-> > filesystem. And you'll lose on the special filesystem of "network
-> > traffic", which is byte-granular.
->
-> If someone needs better on-disk ratio, (s)he can go with 1 KB filesystem
-> or something like that, without all the added complexity of packing.
->
-> If we want to optimize that further, I would try doing it at the
-> underlying filesystem level. For example, loop-mounted one.
+Dear diary, on Thu, Apr 21, 2005 at 06:21:58PM CEST, I got a letter
+where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
+> Hi,
 
-Shrug, we shouldn't need help from the kernel for something like this.  git as 
-a database hits worst case scenarios for almost every FS.
+Hi,
 
-We've got:
+> Just pulled linux-2.6.git, and got this:
+> 
+> ----
+> New branch: 3a6fd752a50af92765853879f4a11cc0cfcd0320
+> Tracked branch, applying changes...
+> Merging 4d78b6c78ae6d87e4c1c8072f42efa716f04afb9 -> 3a6fd752a50af92765853879f4a11cc0cfcd0320
+>         to a2755a80f40e5794ddc20e00f781af9d6320fafb...
+> 
+> Enter commit message, terminated by ctrl-D on a separate line:
+> Merge with 3a6fd752a50af92765853879f4a11cc0cfcd0320
+> ----
+> 
+> Weird thing was that I made no changes.
 
-1) subdirectories with lots of files
-2) wasted space for tiny files
-3) files that are likely to be accessed together spread across the whole disk
+did you compensate for the renamed hashes? Didn't you before update from
+some very old git-pasky version?
 
-One compromise for SCM use would be one packed file per commit, with an index 
-that lets us quickly figure out which commit has a particular version of a 
-given file.  My hack gets something close to that (broken into 32k chunks for 
-no good reason), and the index to find a given file is just the git directory 
-tree.
+Actually, did you do that git init _after_ the unsuccessful pull, or
+before?
 
-But my code does hide the fact that we're packing things from most of the git 
-interfaces.  So I can almost keep a straight face while claiming to be true 
-to the original git design...almost.  The whole setup is far from perfect, 
-but it is one option for addressing points 2 & 3 above.
+> Digging a bit deeper, I saw that .git/HEAD was a symlink
+> to .git/heads/master, and the tracked branch was 'origin'.  Due to the
+> fact that Linus only have a .git/heads/master on his rsync, and this
+> thus updated to the new sha1, but the 'origin' (and tracked) head is
+> still pointing to an older sha1 caused this confusion.
 
--chris
+Duh. The remote branch always grabs the HEAD over there; you don't need
+to care about the various branches over there, and you really do not
+*want* to care. Actually I might add some ^branchname to the rsync URL,
+to be able to refer to particular branches inside of the repository.
+
+> I replicated the linux tree via:
+> 
+> ----
+> git init URL
+> ----
+> 
+> So I had a look at gitinit.sh, which first creates the .git/heads/master
+> and symlinks HEAD to it, then on seeing a URL was supplied, creates
+> a .git/heads/origin, track it, but do *not* change the .git/HEAD
+> symlink ... Is this intended?  I see also that gittrack.sh do not update
+> the HEAD symlink ...  Is this also intended?
+
+Yes.
+
+You never work directly on the remote branch. Ever. That's what this
+tracking stuff is for; you set up a local branch which follows the
+remote one.
+
+Otherwise, you fork to two trees, one is remote branch, second is local
+branch, and you do git pull remotebranch in the second. You are in
+trouble now. Also, if you do some local commit on the remote branch,
+what would happen? This kind of stuff is why I decided that you just
+cannot work on remote branches directly.
+
+> The last option however brings a problem or two.  First, how do you do
+> the multi-head thing?  Maybe add a command 'git lsheads' (and while at
+> it, also add 'git lstags'?)?  Secondly, if there was more than one head,
+
+Perhaps it would be useful to have some "command classes" (with at least
+cg-*-(add|ls|rm)), like:
+
+	cg-branch-ls
+	cg-remote-rm
+	cg-tag-add
+
+> the local copy needs to be checked out ... don't know if 'git cancel' is
+> the logical thing the user will think to do ('git clone' perhaps?) ...
+
+I don't know what do you mean here.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
