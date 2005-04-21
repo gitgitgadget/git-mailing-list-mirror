@@ -1,68 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "GIT_INDEX_FILE" environment variable
-Date: Thu, 21 Apr 2005 11:37:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504211130480.2344@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Apr 21 20:32:10 2005
+From: Brad Roberts <braddr@gameboy2.puremagic.com>
+Subject: [PATCH 05/19] migrate checkout-cache.c to the new cache api's
+Date: Thu, 21 Apr 2005 11:35:43 -0700
+Message-ID: <200504211835.j3LIZhlA027471@gameboy2.puremagic.com>
+X-From: git-owner@vger.kernel.org Thu Apr 21 20:32:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOgSz-0007tC-7O
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:57 +0200
+	id 1DOgSq-0007sB-1C
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 20:31:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261654AbVDUSgU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 14:36:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261669AbVDUSgU
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:36:20 -0400
-Received: from fire.osdl.org ([65.172.181.4]:4226 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261654AbVDUSfx (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 14:35:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3LIZns4015369
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:49 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3LIZmUC016820
-	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:49 -0700
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261649AbVDUSgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 14:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261661AbVDUSgJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 14:36:09 -0400
+Received: from bellevue.puremagic.com ([209.189.198.108]:10888 "EHLO
+	bellevue.puremagic.com") by vger.kernel.org with ESMTP
+	id S261649AbVDUSfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 14:35:45 -0400
+Received: from gameboy2.puremagic.com (root@gameboy2.puremagic.com [209.189.198.109])
+	by bellevue.puremagic.com (8.13.3/8.13.3/Debian-6) with ESMTP id j3LIZfVQ027820
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:41 -0700
+Received: from gameboy2.puremagic.com (braddr@localhost [127.0.0.1])
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Debian-3) with ESMTP id j3LIZhl6027473
+	for <git@vger.kernel.org>; Thu, 21 Apr 2005 11:35:43 -0700
+Received: (from braddr@localhost)
+	by gameboy2.puremagic.com (8.13.3/8.13.3/Submit) id j3LIZhlA027471
+	for git@vger.kernel.org; Thu, 21 Apr 2005 11:35:43 -0700
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+tree b95df78e4cc90db8c4c8d0ad870bef74b7fd29e2
+parent 40bf732f5bcb986943070a2ed6c09a16543d81be
+author Brad Roberts <braddr@puremagic.com> 1114074234 -0700
+committer Brad Roberts <braddr@gameboy2.puremagic.com> 1114074234 -0700
 
+[PATCH] migrate checkout-cache.c to the new cache api's
 
-On Thu, 21 Apr 2005, Linus Torvalds wrote:
-> 
-> You can also use it to test merges without screwing up your old index file 
-> in case something goes wrong.
+Signed-off-by: Brad Roberts <braddr@puremagic.com>
+---
 
-Btw, if it wasn't obvious, for the merge thing to work you need to first
-copy the old index file _or_ generate a new temporary index file first, so
-that doing the three-way merge has a previous index file to work with. Ie
-it would look something like
+ checkout-cache.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-	cp .git/index .tmp-index
-	GIT_INDEX_FILE=.tmp-index read-tree -m $orig $branch1 $branch2
+Index: checkout-cache.c
+===================================================================
+--- 40bf732f5bcb986943070a2ed6c09a16543d81be:1/checkout-cache.c  (mode:100644 sha1:8bf86016b5d5fd88a52ce694fc59bb9ecb550d22)
++++ f908b2542a9a3ea321633a31cf0e7ca2c8b669d4:1/checkout-cache.c  (mode:100644 sha1:bf9cd0572c883219d37f2788ec5f5553a136df2b)
+@@ -128,15 +128,15 @@
+ 			fprintf(stderr, "checkout-cache: %s is not in the cache\n", name);
+ 		return -1;
+ 	}
+-	return checkout_entry(active_cache[pos]);
++	return checkout_entry(get_cache_entry(pos));
+ }
+ 
+ static int checkout_all(void)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < active_nr ; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < get_num_cache_entries() ; i++) {
++		struct cache_entry *ce = get_cache_entry(i);
+ 		if (ce_stage(ce))
+ 			continue;
+ 		if (checkout_entry(ce) < 0)
 
-but this same approach can also be used to merge things _without_ actually
-having any specific version checked out, in which case it would just be
-
-	GIT_INDEX_FILE=.tmp-index read-tree $orig
-	GIT_INDEX_FILE=.tmp-index read-tree -m $orig $branch1 $branch2
-
-which allows you to create a merged index file that is totally independent 
-on whatever (if anything) you happen to be working on right now.
-
-Together with a SHA1_FILE_DIRECTORY, it allows you to do merges entirely
-outside any real git tree, and without any other setup. That's quite nice
-for the case where your actual working tree may be dirty, and you don't
-want to mess around in it.
-
-			Linus
