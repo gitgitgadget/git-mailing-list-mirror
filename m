@@ -1,56 +1,111 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
-Date: Thu, 21 Apr 2005 12:48:19 +1000
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.04.21.02.48.19.802122@smurf.noris.de>
-References: <20050420205633.GC19112@pasky.ji.cz> <20050420211919.GA20129@kroah.com> <20050420215117.GJ19112@pasky.ji.cz> <Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
+From: Mike Taht <mike.taht@timesys.com>
+Subject: Performance of various compressors
+Date: Wed, 20 Apr 2005 22:06:38 -0700
+Message-ID: <426734DE.3040606@timesys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Apr 21 06:51:06 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Apr 21 07:03:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOTeZ-0000o1-UK
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 06:51:04 +0200
+	id 1DOTqJ-0001qB-9v
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 07:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261212AbVDUEzI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 00:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261216AbVDUEzI
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 00:55:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:4313 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261212AbVDUEzE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 00:55:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DOTe8-0000ln-IY
-	for git@vger.kernel.org; Thu, 21 Apr 2005 06:50:36 +0200
-Received: from 150.203.247.9 ([150.203.247.9])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Apr 2005 06:50:36 +0200
-Received: from smurf by 150.203.247.9 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Apr 2005 06:50:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S261213AbVDUFHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 01:07:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261216AbVDUFHP
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 01:07:15 -0400
+Received: from mail.timesys.com ([65.117.135.102]:4743 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261213AbVDUFHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 01:07:02 -0400
+Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Thu, 21 Apr 2005 01:02:13 -0400
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 150.203.247.9
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table (Debian GNU/Linux))
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+X-OriginalArrivalTime: 21 Apr 2005 05:02:13.0781 (UTC) FILETIME=[48266450:01C5462F]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+I started rolling a tool to measure various aspects of git performance. 
+I will start looking at merge next, and at workloads different from the 
+kernel (gcc4 anyone?) ...
 
-> I realize that there is probably a law that there has to be a space, but I 
-> actually personally use tab-completion all the time
+The only data points worth sharing a this point are:
 
-You can actually teach bash3 to do that (yes, with space).
+That doing the compression at a level of 3, rather than the max of 9, 
+cuts the cpu time required for a big git commit by over half, and that 
+that actually translates into a win on the I/O to disk. (these tests 
+were performed on a dual opteron 842)
 
-In general, though, I tend to agree -- dashes work with more shells and
-avoid namespace collisions.
+The benefits of compression aren't very much for git right now.
 
+And: A big git commit is I/O bound. But we knew that. Maybe it's 
+possible to make it less I/O bound.
+
+Git branch: 7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
+Tree: 2.6.11.7 source tree
+Branch: N/a
+Merge File: N/a
+HW: dual opteron 242
+Mem: 1GB
+Disk: seagate barracuda
+Filesystem: Reiser3
+Git add: N/a
+Cache: Hot
+Git Commit: 44.97user 5.94system 1:45.24elapsed 48%CPU
+Git Merge:
+Options:
+Feature: Test of compression=9 (std git)
+
+du -s .git/objects  110106  # du is probably not the right thing
+du -s --apparent-size .git/objects 58979
+
+Git branch: 9e272677621c91784cf2533123a41745178f0701
+Tree: 2.6.11.7 source tree
+Branch: N/a
+Merge File: N/a
+HW: dual opteron 242
+Mem: 1GB
+Disk: seagate barracuda
+Disk mode: udma5
+Filesystem: Reiser3
+Git add: N/a
+Cache: Hot
+Git Commit: 16.79user 6.15system 1:21.92elapsed 28%CPU
+Git Merge:
+Options:
+Feature: Test of compression=3 (std git)
+
+du -s .git/objects  115218
+du -s --apparent-size .git/objects 64274
+
+There's some variety in the best/worst case timings for I/O for the 
+compressor=3 case...
+
+16.79user 6.15system 1:21.92elapsed 28%CPU
+16.68user 5.71system 1:13.19elapsed 30%CPU
 -- 
-Matthias Urlichs
+
+Mike Taht
+
+
+lastly -
+
+Timings of git commit with tmpfs (note, these were done with an ancient, 
+5 hour old version of git and the script)
+
+Hot cache, tmpfs .git compression=9
+44.97user 2.76system 0:47.72elapsed 100%CPU
+
+Hot cache, tmpfs .git, compression=6
+Wed Apr 20 20:18:11 PDT 2005
+23.55user 2.83system 0:26.36elapsed 100%CPU (0avgtext+0avgdata 
+0maxresident)k
+0inputs+0outputs (0major+568680minor)pagefaults 0swaps
+109620  .git/objects
+58618   .git/objects
+
 
