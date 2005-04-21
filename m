@@ -1,56 +1,66 @@
-From: Edgar Toernig <froese@gmx.de>
-Subject: Re: Mozilla SHA1 implementation
-Date: Fri, 22 Apr 2005 00:59:28 +0200
-Message-ID: <20050422005928.218a753a.froese@gmx.de>
-References: <87hdi5oet6.dancerj@netfort.gr.jp>
-	<Pine.LNX.4.58.0504171039460.7211@ppc970.osdl.org>
-	<20050418055824.42d621b8.froese@gmx.de>
-	<Pine.LNX.4.58.0504211238150.2344@ppc970.osdl.org>
+From: Junio C Hamano <junio@siamese.dyndns.org>
+Subject: Re: [PATCH] Add DEST Makefile variable
+Date: Thu, 21 Apr 2005 15:59:45 -0700
+Message-ID: <7vr7h3d9cu.fsf@assigned-by-dhcp.cox.net>
+References: <20050421123904.9F2EB7F8AD@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 00:56:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 00:56:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOkZz-0002ZP-K2
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 00:55:27 +0200
+	id 1DOka9-0002aB-Ap
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 00:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261568AbVDUW7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 18:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261628AbVDUW7t
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 18:59:49 -0400
-Received: from mail.gmx.de ([213.165.64.20]:21177 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S261568AbVDUW7b (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 18:59:31 -0400
-Received: (qmail invoked by alias); 21 Apr 2005 22:59:30 -0000
-Received: from p50907452.dip.t-dialin.net (EHLO dialup) [80.144.116.82]
-  by mail.gmx.net (mp004) with SMTP; 22 Apr 2005 00:59:30 +0200
-X-Authenticated: #271361
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504211238150.2344@ppc970.osdl.org>
-X-Y-GMX-Trusted: 0
+	id S261573AbVDUW76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 18:59:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261628AbVDUW76
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 18:59:58 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:32734 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261573AbVDUW7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 18:59:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050421225944.RGWU7956.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 21 Apr 2005 18:59:44 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20050421123904.9F2EB7F8AD@smurf.noris.de> (Matthias Urlichs's
+ message of "Thu, 21 Apr 2005 22:39:04 +1000 (EST)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
->
-> I've just integrated the Mozilla SHA1 library implementation into the
-> standard git archive
+>>>>> "MU" == Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-Thanks.
+MU>  # (my ext3 doesn't).
+MU>  CFLAGS=-g -O3 -Wall
+MU> +DEST=$(HOME)/bin
+ 
+MU>  install: $(PROG) $(GEN_SCRIPT)
+MU> -	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(HOME)/bin/
+MU> +	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DEST)/
+ 
+I sent essentially the same some time ago and got a comment to
+follow established naming convention.
 
-In the mood for another compatibility hack?  My zlib doesn't have
-deflateBound and browsing through the git-ml archive it seems I'm
-not the only one.  How about putting this snippet into some header
-file?
+Many people seem to call What you are calling DEST above BINDIR
+and DEST or DESTDIR usually means something completely
+different.  It goes like this:
 
-#if ZLIB_VERNUM < 0x1200
-#define deflateBound(c,s) ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
-#endif
+    # DESTDIR=
+    BINDIR=$(HOME)/bin
 
-The formula is the conservative upper bound from zlib-1.2.2.
+    install:
+            install foobar $(DESTDIR)$(BINDIR)/
 
-Ciao, ET.
+  $ su ;# personal machine install by local root
+  # make BINDIR=/usr/local/bin install
+
+  # binary package creation
+  $ make BINDIR=/usr/bin DESTDIR=/var/tmp/tmp-inst install
+  $ tar Ccf /var/tmp/tmp-inst tarball.tar.gz .
+
