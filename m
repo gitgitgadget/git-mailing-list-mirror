@@ -1,184 +1,98 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Usage-string fixes.
-Date: Wed, 20 Apr 2005 19:38:33 -0700
-Message-ID: <7v1x94hn12.fsf@assigned-by-dhcp.cox.net>
+From: Bryan Donlan <bdonlan@bd.beginyourfear.com>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Wed, 20 Apr 2005 22:53:33 -0400
+Message-ID: <u6hjj2-jl9.ln1@bd-home-comp.no-ip.org>
+References: <20050420205633.GC19112@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 21 04:34:33 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Apr 21 05:00:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DORWI-0007OH-KU
-	for gcvg-git@gmane.org; Thu, 21 Apr 2005 04:34:22 +0200
+	id 1DORvb-000145-4v
+	for gcvg-git@gmane.org; Thu, 21 Apr 2005 05:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261188AbVDUCin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Apr 2005 22:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261182AbVDUCin
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 22:38:43 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:20620 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261188AbVDUCif (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Apr 2005 22:38:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050421023832.LRJ2123.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 20 Apr 2005 22:38:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261196AbVDUDEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Apr 2005 23:04:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261198AbVDUDEt
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Apr 2005 23:04:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:193 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261196AbVDUDEn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Apr 2005 23:04:43 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DORvD-00012s-3k
+	for git@vger.kernel.org; Thu, 21 Apr 2005 05:00:07 +0200
+Received: from cpe-24-198-10-141.maine.res.rr.com ([24.198.10.141])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 05:00:07 +0200
+Received: from bdonlan by cpe-24-198-10-141.maine.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 21 Apr 2005 05:00:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cpe-24-198-10-141.maine.res.rr.com
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+In-Reply-To: <20050420205633.GC19112@pasky.ji.cz>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Usage string fixes to make maintenance easier (only one instance
-of a string to update not multiple copies).  I've spotted and
-corrected inconsistent usage text in diff-tree while doing this.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
 
-Also diff-cache and read-tree usage text have been corrected to
-match their up-to-date features.  Earlier, neither "--cached"
-form of diff-cache nor "-m single-merge" form of read-tree were
-described. 
+Petr Baudis wrote:
+|   Hello,
+|
+|   so I've "released" git-pasky-0.6.2 (my SCMish layer on top of Linus
+| Torvalds' git tree history storage system), find it at the usual
+|
+| 	http://pasky.or.cz/~pasky/dev/git/
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+When I run `git pull', I get:
 
- commit-tree.c |   14 ++++++--------
- diff-cache.c  |    6 ++++--
- diff-tree.c   |    6 ++++--
- read-tree.c   |   10 ++++++----
- 4 files changed, 20 insertions(+), 16 deletions(-)
+Tree change:
+55f9d5042603fff4ddfaf4e5f004d2995286d6d3:7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
++100644	blob	8186a561108d3c62625614272bd5e2f7d5826b4b	README.reference
+*100755->100755	blob
+5f23301eb97a0fadd505a6e9cc851e98741a512a->bf277135908ee7c6b7d6ad330d1ce183b9bb411f
+git
+*100755->100755	blob
+a78cf8ccab98861ef7aecb4cb5a79e47d3a84b67->74b4083d67eda87d88a6f92c6c66877bba8bda8a
+gitcancel.sh
+Tracked branch, applying changes...
+Fast-forwarding 55f9d5042603fff4ddfaf4e5f004d2995286d6d3 ->
+7a4c67965de68ae7bc7aa1fde33f8eb9d8114697
+	on top of 55f9d5042603fff4ddfaf4e5f004d2995286d6d3...
+patch: **** Only garbage was found in the patch input.
 
+I'm on debian testing, patch 2.5.9. It seems to apply the changes
+despite this error.
 
---- ../git.linus/commit-tree.c	2005-04-20 19:00:38.000000000 -0700
-+++ ../git.junio/commit-tree.c	2005-04-20 11:41:45.000000000 -0700
-@@ -268,15 +268,13 @@
- }
- 
- /*
-- * Having more than two parents may be strange, but hey, there's
-- * no conceptual reason why the file format couldn't accept multi-way
-- * merges. It might be the "union" of several packages, for example.
-- *
-- * I don't really expect that to happen, but this is here to make
-- * it clear that _conceptually_ it's ok..
-+ * Having more than two parents is not strange at all, and this is
-+ * how multi-way merges are represented.
-  */
- #define MAXPARENT (16)
- 
-+static char *commit_tree_usage = "commit-tree <sha1> [-p <sha1>]* < changelog";
-+
- int main(int argc, char **argv)
- {
- 	int i, len;
-@@ -296,14 +294,14 @@
- 	unsigned int size;
- 
- 	if (argc < 2 || get_sha1_hex(argv[1], tree_sha1) < 0)
--		usage("commit-tree <sha1> [-p <sha1>]* < changelog");
-+		usage(commit_tree_usage);
- 
- 	check_valid(tree_sha1, "tree");
- 	for (i = 2; i < argc; i += 2) {
- 		char *a, *b;
- 		a = argv[i]; b = argv[i+1];
- 		if (!b || strcmp(a, "-p") || get_sha1_hex(b, parent_sha1[parents]))
--			usage("commit-tree <sha1> [-p <sha1>]* < changelog");
-+			usage(commit_tree_usage);
- 		check_valid(parent_sha1[parents], "commit");
- 		parents++;
- 	}
+Thanks,
 
+Bryan Donlan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
---- ../git.linus/diff-cache.c	2005-04-20 19:00:38.000000000 -0700
-+++ ../git.junio/diff-cache.c	2005-04-20 19:14:25.000000000 -0700
-@@ -215,6 +215,8 @@
- 	return 0;
- }
- 
-+static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
-+
- int main(int argc, char **argv)
- {
- 	unsigned char tree_sha1[20];
-@@ -238,11 +240,11 @@
- 			cached_only = 1;
- 			continue;
- 		}
--		usage("diff-cache [-r] [-z] <tree sha1>");
-+		usage(diff_cache_usage);
- 	}
- 
- 	if (argc != 2 || get_sha1_hex(argv[1], tree_sha1))
--		usage("diff-cache [-r] [-z] <tree sha1>");
-+		usage(diff_cache_usage);
- 
- 	tree = read_tree_with_tree_or_commit_sha1(tree_sha1, &size, 0);
- 	if (!tree)
-
-
---- ../git.linus/diff-tree.c	2005-04-20 19:00:38.000000000 -0700
-+++ ../git.junio/diff-tree.c	2005-04-20 19:14:55.000000000 -0700
-@@ -178,6 +178,8 @@
- 	return retval;
- }
- 
-+static char *diff_tree_usage = "diff-tree [-r] [-z] <tree sha1> <tree sha1>";
-+
- int main(int argc, char **argv)
- {
- 	unsigned char old[20], new[20];
-@@ -194,10 +196,10 @@
- 			line_termination = '\0';
- 			continue;
- 		}
--		usage("diff-tree [-r] [-z] <tree sha1> <tree sha1>");
-+		usage(diff_tree_usage);
- 	}
- 
- 	if (argc != 3 || get_sha1_hex(argv[1], old) || get_sha1_hex(argv[2], new))
--		usage("diff-tree <tree sha1> <tree sha1>");
-+		usage(diff_tree_usage);
- 	return diff_tree_sha1(old, new, "");
- }
-
-
-
---- ../git.linus/read-tree.c	2005-04-20 19:00:38.000000000 -0700
-+++ ../git.junio/read-tree.c	2005-04-20 19:15:33.000000000 -0700
-@@ -217,6 +217,8 @@
- 	}
- }
- 
-+static char *read_tree_usage = "read-tree (<sha> | -m <sha1> [<sha2> <sha3>])";
-+
- int main(int argc, char **argv)
- {
- 	int i, newfd, merge;
-@@ -236,20 +238,20 @@
- 		if (!strcmp(arg, "-m")) {
- 			int i;
- 			if (stage)
--				usage("-m needs to come first");
-+				die("-m needs to come first");
- 			read_cache();
- 			for (i = 0; i < active_nr; i++) {
- 				if (ce_stage(active_cache[i]))
--					usage("you need to resolve your current index first");
-+					die("you need to resolve your current index first");
- 			}
- 			stage = 1;
- 			merge = 1;
- 			continue;
- 		}
- 		if (get_sha1_hex(arg, sha1) < 0)
--			usage("read-tree [-m] <sha1>");
-+			usage(read_tree_usage);
- 		if (stage > 3)
--			usage("can't merge more than two trees");
-+			usage(read_tree_usage);
- 		if (read_tree(sha1, "", 0) < 0)
- 			die("failed to unpack tree object %s", arg);
- 		stage++;
- 
+iQIVAwUBQmcVqXhF4rlE0/81AQPNdA//fmL+O3amch3WUfYLZroSNarto/jcQ8WE
+NAwthoT+nPkvUcrgoPVPvuJKmKlemBLGqJhz5raOgL8Cu09ttnHh9zi9fz/XD2uR
+FFJ603xJDBqHGAG3FVS9EHaTdIFq7kSgVKn90BGdR/gxYR5oCt9DHbOzpI9S0DC5
+o580CvtMHRfN1mUwhmxt8oU1E5obRvHlwQ2R4kVl90DBmPNRNXMiWziKjaVyKVng
+IXR2ERfCb1HurZfoOlcmhw0Aod7sJpjubf/tm9CDdRIkMdKkeuKBqWbanzHJTlJG
+2GOH2Q0CNp1HscFO+DKsCPBMa8zLAPuN0AF//o8URzXElwFiAfQNMjK8hOFVBI2y
+6OR/WUvwlXUs47+9QJX7mLTjTJIgcHsxZF9amX37jXKiL5iZyDUJD9wxcFL6A1ut
+eVntC36Fp6yx8zROAex0hNx68LHTILUh5bDi3N9gTnpplWpCn02GNkQi18GQLk4Z
+Y34WipxwGImbJooGveHh8nH6v/6V4fOy1SaxaV5q4EL563wGrRlIZ9/POgWeJoas
+D5S7aJgXCw0GLTJFZCEDORUTCv73HgxR7zSlyqup2qR0Tjqv/JWTCfqCSRLJ8Ktc
+PVKf2Alx6ycVFbh9XhQUKWT4tLm1KywpTUvZe+K0DMfw28dbRREnRyFVqbId8JmX
+LJgbHTVxRCs=
+=Fx+f
+-----END PGP SIGNATURE-----
 
