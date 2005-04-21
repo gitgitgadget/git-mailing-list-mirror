@@ -1,85 +1,108 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Porting to old zlib (deflateBound) & old mktemp (e.g., Red Hat Linux
- 9)
-Date: Thu, 21 Apr 2005 19:27:57 -0400
-Message-ID: <426836FD.8070708@dwheeler.com>
-References: <4267E0A4.40506@austin.ibm.com> <20050421102552.544c70fd.rddunlap@osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Add DEST Makefile variable
+Date: Thu, 21 Apr 2005 19:37:04 -0400
+Message-ID: <1114126624.17161.19.camel@dv>
+References: <20050421123904.9F2EB7F8AD@smurf.noris.de>
+	 <7vr7h3d9cu.fsf@assigned-by-dhcp.cox.net>
+	 <20050421230732.GA13311@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: jschopp@austin.ibm.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 01:23:47 2005
+Cc: Junio C Hamano <junio@siamese.dyndns.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 01:33:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOl1J-0005GO-It
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 01:23:41 +0200
+	id 1DOlAE-000639-Q0
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 01:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261682AbVDUX2H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 19:28:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261723AbVDUX2H
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 19:28:07 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:9112 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S261682AbVDUX2B (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 19:28:01 -0400
-Received: from [10.9.9.110] (helo=snoopy.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DOl5Q-0000go-4N; Fri, 22 Apr 2005 01:27:56 +0200
-Received: from [129.246.254.211] (helo=[129.246.80.140])
-	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DOl5P-00068S-Pr; Fri, 22 Apr 2005 01:27:56 +0200
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
-X-Accept-Language: en-us, en
-To: "Randy.Dunlap" <rddunlap@osdl.org>
-In-Reply-To: <20050421102552.544c70fd.rddunlap@osdl.org>
-X-Sender: 258406@vger.kernel.org
+	id S261528AbVDUXhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 19:37:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261548AbVDUXhS
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 19:37:18 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:6299 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261528AbVDUXhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 19:37:05 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 6D5A0EFF81; Thu, 21 Apr 2005 19:37:04 -0400 (EDT)
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20050421230732.GA13311@kiste.smurf.noris.de>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 21 Apr 2005 12:19:32 -0500 Joel Schopp wrote:
+Hello!
 
->| I downloaded git-pasky 0.6.2.  I cannot compile it because my zlib 
->| version is 1.1.4 and git-pasky relies on function deflateBound() which 
->| wasn't introduced until zlib version 1.2.x  Is there a patch out there 
->| to work around this and maybe conditionally compile based on the zlib 
->| version?
->  
->
-Here's a quick (read: nasty, dreadful) hack to port git
-to older systems like Red Hat Linux 9 which have old versions
-of zlib & mktemp. Someone who actually spent two seconds
-on this can no doubt give you a better solution, but it "worked for me".
+On Fri, 2005-04-22 at 01:07 +0200, Matthias Urlichs wrote:
+> Hi,
+> 
+> Junio C Hamano:
+> > I sent essentially the same some time ago and got a comment to
+> > follow established naming convention.
+> > 
+> Well, for a Makefile which installs in basically one directory, that
+> seems to be overkill.
+> 
+> >     # DESTDIR=
+> >     BINDIR=$(HOME)/bin
+> >             install foobar $(DESTDIR)$(BINDIR)/
+> > 
+> That doesn't make sense; if you set DESTDIR, you are not going to
+> install in $HOME.
 
-Edit sha1_file.c, and change the line:
- size = deflateBound(&stream, len);
-to
- size = len + 1024; /* 1024=emergency extra space */
-The "deflateBound" call just finds out the maximum amount of allocation 
-space.
-The documentation says that "deflateBound() may return a
-conservative value that may be larger than /sourceLen/" in certain cases,
-which worried me. So to be safe I just added a big pile of excess space 
-to "len";
-I suspect that "size = len" is sufficient but I didn't investigate it.
+It makes sense to stick with conventions.  DESTDIR is almost always set
+by a script for making a package, and that script will likely set prefix
+to /usr.
 
-If you're trying to get this to work on Red Hat Linux 9, you'll
-have another problem too: old versions of "mktemp"
-don't support the "-t" option. Other old distributions will
-have the same problem.  To find these cases, do:
- grep "mktemp.*-t" *
-and edit all the files to remove the "-t" option from mktemp.
-That's the bare minimum to make it work; a much
-cleaner solution would to specify the tempdir, e.g.,:
- mktemp ${TMPDIR:-/tmp/}gitci.XXXXX
-or even more portably, write the shell code to set TMPDIR to "/tmp"
-locally if it's not set, then use $TMPDIR everywhere.
+prefix is set to $HOME temporarily.  It should be changed to /usr/local
+some day.  It's not uncommon for $HOME to be shared between systems with
+different architectures, so ideally no binaries should be installed
+there.  I guess $HOME is used to save typing "su" or redefining prefix
+in a project that changes every 10 minutes or so.  But once git
+stabilizes, there will be no excuse.
 
-Not a good final solution, but enough to get started in the interim.
-In long term, this should be made more portable, but it's
-only ~2 weeks old after all.  Some people are trying to fly this plane
-to transport a buffalo herd, while others are working to attach the 
-wings :-).
+By the way, we need to change prefix and bindir to be lowercase for
+compatibility with GNU standards.  Also, ifdef is not needed - command
+line trumps even unconditional variable assignments.  Another thing to
+fix - DESTDIR is not used when bindir is created.
 
---- David A. Wheeler
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+--- a/Makefile
++++ b/Makefile
+@@ -14,12 +14,10 @@
+ # (my ext3 doesn't).
+ CFLAGS=-g -O2 -Wall
+ 
+-ifndef PREFIX
+-PREFIX=$(HOME)
+-endif
+-ifndef BINDIR
+-BINDIR=$(PREFIX)/bin
+-endif
++# Should be changed to /usr/local
++prefix=$(HOME)
++
++bindir=$(prefix)/bin
+ 
+ CC=gcc
+ AR=ar
+@@ -81,8 +79,8 @@ gitversion.sh: $(VERSION)
+ 
+ 
+ install: $(PROG) $(GEN_SCRIPT)
+-	install -m755 -d $(BINDIR)
+-	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(BINDIR)
++	install -m755 -d $(DESTDIR)$(bindir)
++	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(bindir)
+ 
+ clean:
+ 	rm -f *.o mozilla-sha1/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE)
+
+
+-- 
+Regards,
+Pavel Roskin
 
