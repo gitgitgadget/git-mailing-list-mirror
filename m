@@ -1,115 +1,110 @@
-From: Bill Davidsen <davidsen@tmr.com>
-Subject: Re: enforcing DB immutability
-Date: Fri, 22 Apr 2005 12:10:41 -0400
-Message-ID: <42692201.2000300@tmr.com>
-References: <20050420084115.2699.qmail@science.horizon.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [Gnu-arch-users] Re: [GNU-arch-dev] [ANNOUNCEMENT] /Arch/ embraces
+ `git'
+Date: Fri, 22 Apr 2005 09:13:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504220844390.2344@ppc970.osdl.org>
+References: <200504202304.QAA17069@emf.net> <1114069758.5886.9.camel@perun.redhat.usu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, mingo@elte.hu
-X-From: git-owner@vger.kernel.org Fri Apr 22 18:01:46 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tom Lord <lord@emf.net>, gnu-arch-users@gnu.org,
+	gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 18:09:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP0Zs-0000GD-6w
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 18:00:24 +0200
+	id 1DP0hM-0001W6-Nh
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 18:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262047AbVDVQEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 12:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262052AbVDVQEJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:04:09 -0400
-Received: from prgy-npn1.prodigy.com ([207.115.54.37]:58242 "EHLO
-	oddball.prodigy.com") by vger.kernel.org with ESMTP id S262047AbVDVQDZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 12:03:25 -0400
-Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
-	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j3MGAhV14841;
-	Fri, 22 Apr 2005 12:10:52 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
-X-Accept-Language: en-us, en
-Newsgroups: mail.linux-kernel
-To: linux@horizon.com
-In-Reply-To: <20050420084115.2699.qmail@science.horizon.com>
+	id S262048AbVDVQMj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 12:12:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262053AbVDVQMj
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:12:39 -0400
+Received: from fire.osdl.org ([65.172.181.4]:24521 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262048AbVDVQM2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 12:12:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MGBss4014200
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 09:11:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MGBoEn031806;
+	Fri, 22 Apr 2005 09:11:51 -0700
+To: Tomas Mraz <t8m@centrum.cz>
+In-Reply-To: <1114069758.5886.9.camel@perun.redhat.usu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-linux@horizon.com wrote:
-> [A discussion on the git list about how to provide a hardlinked file
-> that *cannot* me modified by an editor, but must be replaced by
-> a new copy.]
-> 
-> mingo@elte.hu wrote all of:
-> 
->>>>perhaps having a new 'immutable hardlink' feature in the Linux VFS 
->>>>would help? I.e. a hardlink that can only be readonly followed, and 
->>>>can be removed, but cannot be chmod-ed to a writeable hardlink. That i 
->>>>think would be a large enough barrier for editors/build-tools not to 
->>>>play the tricks they already do that makes 'readonly' files virtually 
->>>>meaningless.
->>>
->>>immutable hardlinks have the following advantage: a hardlink by design 
->>>hides the information where the link comes from. So even if an editor 
->>>wanted to play stupid games and override the immutability - it doesnt 
->>>know where the DB object is. (sure, it could find it if it wants to, 
->>>but that needs real messing around - editors wont do _that_)
->>
->>so the only sensible thing the editor/tool can do when it wants to 
->>change the file is precisely what we want: it will copy the hardlinked 
->>files's contents to a new file, and will replace the old file with the 
->>new file - a copy on write. No accidental corruption of the DB's 
->>contents.
-> 
-> 
-> This is not a horrible idea, but it touches on another sore point I've
-> worried about for a while.
-> 
-> The obvious way to do the above *without* changing anything is just to
-> remove all write permission to the file.  But because I'm the owner, some
-> piece of software running with my permissions can just deicde to change
-> the permissions back and modify the file anyway.  Good old 7th edition
-> let you give files away, which could have addressed that (chmod a-w; chown
-> phantom_user), but BSD took that ability away to make accounting work.
-> 
-> The upshot is that, while separate users keeps malware from harming the
-> *system*, if I run a piece of malware, it can blow away every file I
-> own and make me unhappy.  When (notice I'm not saying "if") commercial
-> spyware for Linux becomes common, it can also read every file I own.
-> 
-> Unless I have root access, Linux is no safer *for me* than Redmondware!
-> 
-> Since I *do* have root access, I often set up sandbox users and try
-> commercial binaries in that environment, but it's a pain and laziness
-> often wins.  I want a feature that I can wrap in a script, so that I
-> can run a commercial binary in a nicely restricted enviromment.
-> 
-> Or maybe I even want to set up a "personal root" level, and run
-> my normal interactive shells in a slightly restricted enviroment
-> (within which I could make a more-restricted world to run untrusted
-> binaries).  Then I could solve the immutable DB issue by having a
-> "setuid" binary that would make checked-in files unwriteable at my
-> normal permission level.
-> 
-> Obviously, a fundamental change to the Unix permissions model won't
-> be available to solve short-term problems, but I thought I'd raise
-> the issue to get people thinking about longer-term solutions.
 
-chattr +i file
 
-But the real problem is that you expect your editor to be smart enough 
-to diddle permissions (some aren't) or create a new file (some aren't 
-that either).
+On Thu, 21 Apr 2005, Tomas Mraz wrote:
+> 
+> However you're right that the original structure proposed by Linus is
+> too flat.
 
-It sounds as if you're kind of using the wrong tool here, frankly.
+You're wrong. 
 
-You also don't understand hard links, they don't hide anything, the 
-inode number is there, which is exactly as much information as is in the 
-original link. And they are lots safer, since you can't wind up with 
-them pointing to a non-existent file, get them in circular loops, etc. 
-Okay, YOU probably wouldn't, but believe me semi-competent users 
-regularly these things.
+The thing is, having 256 sybdirectories already eats one _megabyte_ of 
+diskspace on common filessystems. If you expand that to be either deeper 
+(ie subdirectories within subdirectories), or use more than 8 bits for the 
+first level, you'll be using much more.
 
--- 
-    -bill davidsen (davidsen@tmr.com)
-"The secret to procrastination is to put things off until the
-  last possible moment - but no longer"  -me
+A megabyte of diskspace is peanuts for a project like Linux, but I think
+it matters for small projects. I want git to work reasonably even for
+really trivial stuff. 
+
+For example, if you just expand the fan-out to use 12 bits instead of 8, 
+you're now using 16MB of diskspace just for the directory structure, even 
+for a trivially small project. I just think that sucks.
+
+Secondly, any sane OS (and filesystem) will look up flat directories 
+_faster_ than deep directories. Peter Anvid did the testing: a _totally_ 
+flat directory is actually the best-performing one. 
+
+I just don't want to go there, because while it's ok to have tens of
+thousands of files in one subdirectory, I don't think it's ok to have
+hundreds of thousands of files. The 8-bit initial fan-out is very much a
+middle ground: we waste some space (and some time) doing it, but it does
+make the really horrible case largely go away.
+
+Trust me, the design of git didn't just come out of my *ss. Unlike pretty
+much apparently any other SCM engineer in the history of mankind (judging
+by the performance crap that is out there), I actually know what performs
+well, and I can calculate how much space we waste, and I actually _did_ do
+so, and chose a reasonably intelligent middle ground.
+
+You can bicker about the details (should it be 9 bits? should we pack the
+names more densely? should we use another algorithm for compression? why
+does it bother to use ASCII headers?), but please realize that those are
+_details_. And even then, they are details where I bet that I have
+selected pretty reasonable initial values.
+
+So my choices may not be optimal, but they are "reasonable across a wide
+variety of different parameters". And that includes project size,
+filesystem implementation, disk wastage etc etc.
+
+The only "extreme" choice I actually made was to go with the highest
+compression level of zlib. I think I made the right choice there too: it
+wastes CPU-time, but it's still pretty cheap(*) and keeps getting cheaper.  
+And we have a much higher read-to-write ratio that most other systems
+have.
+
+(*) I'll also argue that one reason even "-9" is cheap is actually that
+most of the files we compress are small. All the metadata files are really
+quite small, and most source-files tend to be just a few kB in size too -
+I personally believe that _big_ files tend to be things that really change
+quite seldom (things with big tables like firmware files etc). And for a
+small file, it doesn't actually matter that much, the compression window
+just can't grow too much.
+
+So people say that "gzip -9" is expensive, but it's really expensive only
+for large files. Try it out, it's just a personal pet theory of mine. But
+realize that I _do_ generally think things through. I don't just cobble
+together random things. There's a real _reason_ why git runs like a bat
+out of hell. It was _designed_.
+
+			Linus
