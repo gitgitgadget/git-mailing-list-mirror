@@ -1,88 +1,65 @@
-From: Dan Weber <dan@mirrorlynx.com>
-Subject: git remote repositories
-Date: Fri, 22 Apr 2005 19:38:43 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0504221929480.20133@mirrorlynx.com>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] multi item packed files
+Date: Fri, 22 Apr 2005 19:55:14 -0400
+Message-ID: <200504221955.15422.mason@suse.com>
+References: <200504211113.13630.mason@suse.com> <Pine.LNX.4.58.0504221230020.2344@ppc970.osdl.org> <200504221632.26278.mason@suse.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-X-From: git-owner@vger.kernel.org Sat Apr 23 01:33:20 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Krzysztof Halasa <khc@pm.waw.pl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 01:51:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP7e2-0006c9-IE
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 01:33:11 +0200
+	id 1DP7vb-0008BC-0Z
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 01:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261322AbVDVXho (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 19:37:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261329AbVDVXho
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 19:37:44 -0400
-Received: from outbound.mailhop.org ([63.208.196.171]:21521 "EHLO
-	outbound.mailhop.org") by vger.kernel.org with ESMTP
-	id S261322AbVDVXhg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 19:37:36 -0400
-Received: from pool-68-238-240-238.phlapa.fios.verizon.net ([68.238.240.238] helo=mirrorlynx.com)
-	by outbound.mailhop.org with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.44)
-	id 1DP7iJ-0007I2-Oo
-	for git@vger.kernel.org; Fri, 22 Apr 2005 19:37:35 -0400
-Received: from dan (helo=localhost)
-	by mirrorlynx.com with local-esmtp (Exim 4.34)
-	id 1DP7jP-0005RJ-Nr
-	for git@vger.kernel.org; Fri, 22 Apr 2005 19:38:44 -0400
-To: Git Mailing List <git@vger.kernel.org>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: dan@mirrorlynx.com
-X-Spam-Checker-Version: SpamAssassin 3.0.0 (2004-09-13) on mirrorlynx.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=unavailable version=3.0.0
-X-SA-Exim-Version: 4.1 (built Tue, 17 Aug 2004 11:06:07 +0200)
-X-SA-Exim-Scanned: Yes (on mirrorlynx.com)
-X-Mail-Handler: MailHop Outbound by DynDNS.org
-X-Originating-IP: 68.238.240.238
-X-Report-Abuse-To: abuse@dyndns.org (see http://www.mailhop.org/outbound/abuse.html for abuse reporting information)
-X-MHO-User: DanWeber1
+	id S261366AbVDVXzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 19:55:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261357AbVDVXzp
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 19:55:45 -0400
+Received: from ns.suse.de ([195.135.220.2]:46229 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261353AbVDVXzX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 19:55:23 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id CD0CB160AEEF;
+	Sat, 23 Apr 2005 01:55:19 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <200504221632.26278.mason@suse.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Friday 22 April 2005 16:32, Chris Mason wrote:
 
-Hi,
+> If I pack every 64k (uncompressed), the checkout-tree time goes down to
+> 3m14s. That's a very big difference considering how stupid my code is  .git
+> was only 20% smaller with 64k chunks.  I should be able to do better...I'll
+> do one more run.
+>
 
-It wasn't that long ago that the pasky git tree was relocated.  This 
-required a modification to the .git directory in a local pull.  A dns 
-system could be built to ensure the following:
+This run also packed tree files together (everything produced by write-tree 
+went into a packed file), but not the commits.  I estimate I could save about 
+another 168m by packing the tree files and commits into the same file with 
+the blobs, but this wouldn't make any of the times below faster.
 
-A) quick easy lookup of archive locations
-B) handle changes of repository location
-C) add mirror support
+git - original (28k commits)	                packed
+FS size                2,675,408k			1,723,820k
+read-tree            24.45s				18.9s
+checkout-cache   4m30s				3m5s
+patch time	   2h30m				1h55m
 
-So heres the plan...
-I do a lot of work in sip/voip field, and our approach to handling backup 
-proxies and routers is to use a dns srv record.
+The format for the packed files could be smarter, such that it didn't require 
+decompressing the whole packed file to read one item.  I would guess I could 
+get another 20% checkout-cache performance out of it via more tuning, and 
+probably another 10% of space savings.
 
-Here's how it works for voip/sip.
+Of course, none of this is likely to convince you ;)  If you decide later on 
+it's worthwhile, I don't think it would be difficult to add then.
 
-_{protocol}._{transport}.{name}.hostname.org
-
-A sample lookup:
-
-dig SRV _sip._udp.proxy-dca.broadvoice.com
-
-
-;; QUESTION SECTION:
-;_sip._udp.proxy-dca.broadvoice.com. IN SRV
-
-;; ANSWER SECTION:
-_sip._udp.proxy-dca.broadvoice.com. 86400 IN SRV 1 0 5060 
-proxy.mia.broadvoice.com.
-_sip._udp.proxy-dca.broadvoice.com. 86400 IN SRV 0 0 5060 
-proxy.dca.broadvoice.com.
-
-
-Now of course we could null out some of those fields and swap sip for git 
-and udp for rsync, then replace proxy.foo to rsync://host/path/to/git. 
-Since we're using rsync, mirroring is simplified by just rsyncing the 
-trees.
-
-Dan
+-chris
