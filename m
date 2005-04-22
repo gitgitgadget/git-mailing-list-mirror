@@ -1,76 +1,60 @@
-From: Martin Uecker <muecker@gmx.de>
-Subject: Re: [PATCH] multi item packed files
-Date: Fri, 22 Apr 2005 20:12:28 +0200
-Message-ID: <20050422181228.GA4656@macavity>
-References: <200504211113.13630.mason@suse.com> <Pine.LNX.4.58.0504210832490.2344@ppc970.osdl.org> <m3u0m0q69a.fsf@defiant.localdomain> <Pine.LNX.4.58.0504211301240.2344@ppc970.osdl.org> <m3vf6frvxu.fsf@defiant.localdomain>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [git pasky] tarball question
+Date: Fri, 22 Apr 2005 11:23:53 -0700
+Message-ID: <20050422182353.GA599@kroah.com>
+References: <1114180303.29271.25.camel@nosferatu.lan>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
-X-From: git-owner@vger.kernel.org Fri Apr 22 20:10:11 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing Lists <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Fri Apr 22 20:20:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP2ao-00039b-Fo
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 20:09:30 +0200
+	id 1DP2kz-0004uQ-5Q
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 20:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261381AbVDVSOB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 14:14:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262102AbVDVSOB
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 14:14:01 -0400
-Received: from dialin-145-254-147-111.arcor-ip.net ([145.254.147.111]:2688
-	"EHLO macavity") by vger.kernel.org with ESMTP id S261381AbVDVSN4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 14:13:56 -0400
-Received: from martin by macavity with local (Exim 4.34)
-	id 1DP2dg-0001Fn-M2
-	for git@vger.kernel.org; Fri, 22 Apr 2005 20:12:28 +0200
-To: git@vger.kernel.org
-Mail-Followup-To: Martin Uecker <muecker@gmx.de>, git@vger.kernel.org
+	id S262103AbVDVSYS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 14:24:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262104AbVDVSYS
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 14:24:18 -0400
+Received: from mail.kroah.org ([69.55.234.183]:12699 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S262103AbVDVSYP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 14:24:15 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3MIO8i01039;
+	Fri, 22 Apr 2005 11:24:08 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DP2oj-09t-00; Fri, 22 Apr 2005 11:23:53 -0700
+To: Martin Schlemmer <azarah@nosferatu.za.org>
 Content-Disposition: inline
-In-Reply-To: <m3vf6frvxu.fsf@defiant.localdomain>
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <1114180303.29271.25.camel@nosferatu.lan>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Apr 22, 2005 at 04:31:43PM +0200, Martin Schlemmer wrote:
+> Hi,
+> 
+> I understand why you have the git-pasky-0.6.x.tar.bz2 tarballs with
+> the .git database included as well (btw, great stuff renaming it to
+> something more distributable), but its going to be a pita for users of
+> source based distro's like us (Gentoo), as well as our mirrors if it
+> gets much bigger. (Already asked r3pek to add it to portage).
 
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah good, I was already makeing a ebuild for it, I'll let others do it
+then :)
 
-On Fri, Apr 22, 2005 at 11:40:29AM +0200, Krzysztof Halasa wrote:
+> How about ripping the .git directory from the next release, and just
+> have a un-numbered tarball (like you used to) that have the latest
+> snapshot of the .git directory for those that want to do git-pasky
+> development?  Should even make things easier your side, as you could
+> just do a cron to update it one a day/whatever.
 
-=20
-> > This is why I absolutely do not believe in arguments like "if your
-> > filesystem doesn't do tail packing, you shouldn't use it" or "if your
-> > don't have name hashing enabled in your filesystem it's broken".
->=20
-> Of course. But one may consider using a filesystem with, say, different
-> settings. Or a special filesystem for this task, such as CNFS used by
-> news servers (it seems news servers do quite the same what git does,
-> except they also purge old contents, i.e., container files don't grow up).
+Why?  The .git directory doesn't hurt anything that gentoo would do, we
+would just update the ebuild for the major releases.
 
-and nttp would give a nice transfer method for git objects...
+thanks,
 
-Martin
-
---=20
-One night, when little Giana from Milano was fast asleep,
-she had a strange dream.
-
-
---7AUc2qLy4jB3hD7Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQFCaT6MYDJInvULMKYRAiUlAJ0RM+JHlVx1pkesGgBUz4KhLTCQEQCeO0v8
-5IEX094eywQWdgsj7MTiI7Q=
-=TO0I
------END PGP SIGNATURE-----
-
---7AUc2qLy4jB3hD7Z--
+greg k-h
