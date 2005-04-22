@@ -1,67 +1,115 @@
-From: Klaus Robert Suetterlin <robert@mpe.mpg.de>
-Subject: (anal) Q: Are there any coding styles or development guidelines?
-Date: Fri, 22 Apr 2005 17:58:45 +0200
-Message-ID: <20050422155845.GC52771@xdt04.mpe-garching.mpg.de>
-References: <87hdi5oet6.dancerj@netfort.gr.jp> <Pine.LNX.4.58.0504171039460.7211@ppc970.osdl.org> <20050418055824.42d621b8.froese@gmx.de> <Pine.LNX.4.58.0504211238150.2344@ppc970.osdl.org> <17000.43340.760901.175004@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0504220824480.2344@ppc970.osdl.org> <Pine.LNX.4.58.0504220838340.2344@ppc970.osdl.org>
+From: Bill Davidsen <davidsen@tmr.com>
+Subject: Re: enforcing DB immutability
+Date: Fri, 22 Apr 2005 12:10:41 -0400
+Message-ID: <42692201.2000300@tmr.com>
+References: <20050420084115.2699.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 17:58:22 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org, mingo@elte.hu
+X-From: git-owner@vger.kernel.org Fri Apr 22 18:01:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP0X6-0008DI-MP
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 17:57:32 +0200
+	id 1DP0Zs-0000GD-6w
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 18:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262042AbVDVQB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 12:01:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262043AbVDVQAo
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:00:44 -0400
-Received: from mpehp1.mpe-garching.mpg.de ([130.183.70.10]:37642 "EHLO
-	mpehp1.mpe-garching.mpg.de") by vger.kernel.org with ESMTP
-	id S262042AbVDVP6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 11:58:48 -0400
-Received: from xdt04.mpe-garching.mpg.de (xdt04.mpe-garching.mpg.de [130.183.136.164])
-	by mpehp1.mpe-garching.mpg.de (8.9.3 (PHNE_25183+JAGae58098)/8.9.3) with ESMTP id RAA20045;
-	Fri, 22 Apr 2005 17:58:46 +0200 (METDST)
-Received: (from krs@localhost)
-	by xdt04.mpe-garching.mpg.de (8.13.3/8.13.1/Submit) id j3MFwjPK059805;
-	Fri, 22 Apr 2005 17:58:45 +0200 (CEST)
-	(envelope-from krs)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504220838340.2344@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+	id S262047AbVDVQEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 12:04:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262052AbVDVQEJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:04:09 -0400
+Received: from prgy-npn1.prodigy.com ([207.115.54.37]:58242 "EHLO
+	oddball.prodigy.com") by vger.kernel.org with ESMTP id S262047AbVDVQDZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2005 12:03:25 -0400
+Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
+	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j3MGAhV14841;
+	Fri, 22 Apr 2005 12:10:52 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
+X-Accept-Language: en-us, en
+Newsgroups: mail.linux-kernel
+To: linux@horizon.com
+In-Reply-To: <20050420084115.2699.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'm currently doing a source audit of the git core components.
-Mainly I want to check if I can spot some left over memory leaks.
+linux@horizon.com wrote:
+> [A discussion on the git list about how to provide a hardlinked file
+> that *cannot* me modified by an editor, but must be replaced by
+> a new copy.]
+> 
+> mingo@elte.hu wrote all of:
+> 
+>>>>perhaps having a new 'immutable hardlink' feature in the Linux VFS 
+>>>>would help? I.e. a hardlink that can only be readonly followed, and 
+>>>>can be removed, but cannot be chmod-ed to a writeable hardlink. That i 
+>>>>think would be a large enough barrier for editors/build-tools not to 
+>>>>play the tricks they already do that makes 'readonly' files virtually 
+>>>>meaningless.
+>>>
+>>>immutable hardlinks have the following advantage: a hardlink by design 
+>>>hides the information where the link comes from. So even if an editor 
+>>>wanted to play stupid games and override the immutability - it doesnt 
+>>>know where the DB object is. (sure, it could find it if it wants to, 
+>>>but that needs real messing around - editors wont do _that_)
+>>
+>>so the only sensible thing the editor/tool can do when it wants to 
+>>change the file is precisely what we want: it will copy the hardlinked 
+>>files's contents to a new file, and will replace the old file with the 
+>>new file - a copy on write. No accidental corruption of the DB's 
+>>contents.
+> 
+> 
+> This is not a horrible idea, but it touches on another sore point I've
+> worried about for a while.
+> 
+> The obvious way to do the above *without* changing anything is just to
+> remove all write permission to the file.  But because I'm the owner, some
+> piece of software running with my permissions can just deicde to change
+> the permissions back and modify the file anyway.  Good old 7th edition
+> let you give files away, which could have addressed that (chmod a-w; chown
+> phantom_user), but BSD took that ability away to make accounting work.
+> 
+> The upshot is that, while separate users keeps malware from harming the
+> *system*, if I run a piece of malware, it can blow away every file I
+> own and make me unhappy.  When (notice I'm not saying "if") commercial
+> spyware for Linux becomes common, it can also read every file I own.
+> 
+> Unless I have root access, Linux is no safer *for me* than Redmondware!
+> 
+> Since I *do* have root access, I often set up sandbox users and try
+> commercial binaries in that environment, but it's a pain and laziness
+> often wins.  I want a feature that I can wrap in a script, so that I
+> can run a commercial binary in a nicely restricted enviromment.
+> 
+> Or maybe I even want to set up a "personal root" level, and run
+> my normal interactive shells in a slightly restricted enviroment
+> (within which I could make a more-restricted world to run untrusted
+> binaries).  Then I could solve the immutable DB issue by having a
+> "setuid" binary that would make checked-in files unwriteable at my
+> normal permission level.
+> 
+> Obviously, a fundamental change to the Unix permissions model won't
+> be available to solve short-term problems, but I thought I'd raise
+> the issue to get people thinking about longer-term solutions.
 
-Unfortunately ;) I didn't find any so far (after reading five files).
+chattr +i file
 
-Still I did find quite a lot of stuff that lint would most likely
-complain about.  Like not checking return values.  Should this be
-fixed now or isn't it time to do the cleanup, yet?
+But the real problem is that you expect your editor to be smart enough 
+to diddle permissions (some aren't) or create a new file (some aren't 
+that either).
 
-I also found several literal copies of the same function including
-function name, parameter list, etc.  Wouldn't it be better do clean
-those up and put them in a utility.{c,h} file?  A similar problem
-is the continous reimplementation of linked lists, dynamic memory,
-smart strings / vectors, etc.  And then there are some stale files
-(i.e. revision.*) that the Changelog already mentions as removed,
-but which are still active in HEAD.
+It sounds as if you're kind of using the wrong tool here, frankly.
 
-I am a little reluctant to do the work, as the code still changes
-so fast I do not really know if code I fix will still be there
-tomorrow.
+You also don't understand hard links, they don't hide anything, the 
+inode number is there, which is exactly as much information as is in the 
+original link. And they are lots safer, since you can't wind up with 
+them pointing to a non-existent file, get them in circular loops, etc. 
+Okay, YOU probably wouldn't, but believe me semi-competent users 
+regularly these things.
 
-Also I do not know if there is any notion of coding style published
-somewhere.  I only noticed, that the code does not look like anything
-I'd have written and seems to follow some general principle.
-
-Kind regards,
-
---Robert Suetterlin (robert@mpe.mpg.de)
-phone: (+49)89 / 30000-3546   fax: (+49)89 / 30000-3950
+-- 
+    -bill davidsen (davidsen@tmr.com)
+"The secret to procrastination is to put things off until the
+  last possible moment - but no longer"  -me
