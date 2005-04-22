@@ -1,68 +1,134 @@
-From: Fabian Franz <FabianFranz@gmx.de>
-Subject: [OT] git logo or mascot (was: Re: wit 0.0.3 - a web interface for git available)
-Date: Fri, 22 Apr 2005 23:22:29 +0200
-Message-ID: <200504222322.33934.FabianFranz@gmx.de>
-References: <1113956951.3309.22.camel@localhost> <1114202122.3207.4.camel@localhost> <20050422210905.GB1829@kroah.com>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [PATCH] More docs
+Date: Fri, 22 Apr 2005 22:44:42 +0100
+Message-ID: <4269704A.9090503@dgreaves.com>
+References: <4269557C.1050606@dgreaves.com> <7vwtqu5ymu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 23:22:42 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 23:40:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP5bJ-0001TX-Lr
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:22:13 +0200
+	id 1DP5sk-0003sO-Lk
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262135AbVDVV0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 17:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262139AbVDVV0i
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:26:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:22955 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S262135AbVDVV0Q convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 17:26:16 -0400
-Received: (qmail invoked by alias); 22 Apr 2005 21:26:13 -0000
-Received: from p54A3EE36.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.238.54]
-  by mail.gmx.net (mp005) with SMTP; 22 Apr 2005 23:26:13 +0200
-X-Authenticated: #590723
-To: Greg KH <greg@kroah.com>,
-	Christian Meder <chris@absolutegiganten.org>
-User-Agent: KMail/1.5.4
-In-Reply-To: <20050422210905.GB1829@kroah.com>
-Content-Description: clearsigned data
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S261170AbVDVVov (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 17:44:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261189AbVDVVov
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:44:51 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:55460 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261170AbVDVVoq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 17:44:46 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id CF3FFE6D68; Fri, 22 Apr 2005 22:42:46 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 26323-06; Fri, 22 Apr 2005 22:42:46 +0100 (BST)
+Received: from oak.dgreaves.com (modem-2249.leopard.dialup.pol.co.uk [217.135.152.201])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 89B20E6A86; Fri, 22 Apr 2005 22:42:45 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DP5x5-0004bU-Ah; Fri, 22 Apr 2005 22:44:43 +0100
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtqu5ymu.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Am Freitag, 22. April 2005 23:09 schrieb Greg KH:
-> On Fri, Apr 22, 2005 at 10:35:22PM +0200, Christian Meder wrote:
-> > On Thu, 2005-04-21 at 00:33 -0700, Greg KH wrote:
-> > > Very nice, this looks great.  And hey, we have a git logo now :)
-> >
-> > BTW is this logo already officially blessed ?
->
-> "blessed" how?
+Junio C Hamano wrote:
 
-Well if it should be official for git, Linus has to "bless" it imho.
+Thanks for the comments Junio
 
-> Have an alternative one?
+>>>>>>"DG" == David Greaves <david@dgreaves.com> writes:
+> 
+> This is Cogito invention, not in the core.  Neither is tree-id.
+OK - hard to tell sometimes...
 
-Well, yes. I would like something, which has something to do with the original 
-linux mascot.
+> DG> +	/0 line termination on output
+> 
+> Write this either '\0' (for C literate) or NUL (ASCII character
+> name), please.  The same for other commands with -z.
+hmm, this...
 
-Like a fish (though that is already used by some other projects) - penguins 
-like fish! (Tux too? Or more Linus' fingers ;)? )
+> DG> +--cached
+> DG> +	Cached only (private?)
+> 
+> What?  The beauty of diff-tree is it does not care about
+> dircache at all.  Maybe this is a Pasky addition, but I wonder
+> what the semantics of this option and why it is here...
+...and this, are pre-final-polish
+I must have committed the wrong one - <sigh>
 
-Or perhaps even a wife for Tux, which helps him organizing and managing?
+> DG> +NOTE NOTE NOTE! although read-tree coule do some of these nontrivial
+> DG> +merges, only the "matches in all three states" thing collapses by
+> DG> +default.
+> 
+> The above "NOTE" is taken from the initial message from Linus
+> but it is no longer true.  These days, it merges when:
+OK - will edit
 
-... Tux & Git having nice holidays on an island? ...
+how does this sound:
 
-Hm, but what is cogito then ...
+Merging
+If -m is specified, read-tree performs 2 kinds of merge, a subservient
+tree-read if only 1 tree is given or a 3-way merge if 3 trees are
+provided.
 
-cu
+Subservient Tree Read
+If only 1 tree is specified, read-tree operates as if the user did not
+specify "-m", except that if the original cache has an entry for a
+given pathname; and the contents of the path matches with the tree
+being read, the stat info from the cache is used. (In other words, the
+cache's stat()s take precedence over the subservient tree's)
 
-Fabian
+This is used to avoid unnecessary false hits when show-diff is
+run after read-tree.
 
+3-Way Merge
+Each "index" entry has two bits worth of "stage" state. stage 0 is the
+normal one, and is the only one you'd see in any kind of normal use.
+
+However, when you do "read-tree" with multiple trees, the "stage"
+starts out at 0, but increments for each tree you read. And in
+particular, the "-m" flag means "start at stage 1" instead.
+
+This means that you can do
+
+	read-tree -m <tree1> <tree2> <tree3>
+
+and you will end up with an index with all of the <tree1> entries in
+"stage1", all of the <tree2> entries in "stage2" and all of the
+<tree3> entries in "stage3".
+
+Furthermore, "read-tree" has special-case logic that says: if you see
+a file that matches in all respects in the following states, it
+"collapses" back to "stage0":
+     - stage 2 and 3 are the same
+     - stage 1 and stage 2 are the same and stage 3 is different
+     - stage 1 and stage 3 are the same and stage 2 is different
+
+NOTE NOTE NOTE para removed.
+
+> DG>  ################################################################
+> DG> @@ -151,8 +603,145 @@
+> DG>  show-files
+> DG>  	show-files [-z] [-t] (--[cached|deleted|others|ignored|stage])*
+>  
+> Although I like it, I do not think -t is in core.  It is Pasky.
+Well, it says Copyright (C) Linus Torvalds, 2005 - and Linus describes 
+it in his discussion so...
+
+> Also you missed "show-files --unmerged".
+I did - that's me using the usage() string!!
+
+David
+
+-- 
