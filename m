@@ -1,119 +1,81 @@
-From: Rhys Hardwick <rhys@rhyshardwick.co.uk>
-Subject: Re: Pulling linux-2.6.git with gitinit.sh and gitpull.sh fails
-Date: Fri, 22 Apr 2005 16:24:27 +0100
-Message-ID: <200504221624.27769.rhys@rhyshardwick.co.uk>
-References: <200504221442.29488.rhys@rhyshardwick.co.uk> <200504221554.04749.rhys@rhyshardwick.co.uk> <1114183357.29271.31.camel@nosferatu.lan>
-Reply-To: rhys@rhyshardwick.co.uk
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mozilla SHA1 implementation
+Date: Fri, 22 Apr 2005 08:31:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504220824480.2344@ppc970.osdl.org>
+References: <87hdi5oet6.dancerj@netfort.gr.jp> <Pine.LNX.4.58.0504171039460.7211@ppc970.osdl.org>
+ <20050418055824.42d621b8.froese@gmx.de> <Pine.LNX.4.58.0504211238150.2344@ppc970.osdl.org>
+ <17000.43340.760901.175004@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Apr 22 17:23:09 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Edgar Toernig <froese@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 22 17:33:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOzyy-0001dA-Cw
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 17:22:16 +0200
+	id 1DP07p-0003II-OA
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 17:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262049AbVDVP0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 11:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261968AbVDVPZ1
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 11:25:27 -0400
-Received: from smtp001.mail.ukl.yahoo.com ([217.12.11.32]:48005 "HELO
-	smtp001.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S262049AbVDVPYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 11:24:32 -0400
-Received: from unknown (HELO mail.rhyshardwick.co.uk) (rhys?hardwick@81.103.65.153 with plain)
-  by smtp001.mail.ukl.yahoo.com with SMTP; 22 Apr 2005 15:24:28 -0000
-Received: from [192.168.1.40] (helo=metatron.rhyshardwick.co.uk)
-	by mail.rhyshardwick.co.uk with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)
-	(Exim 4.50)
-	id 1DP016-0003vb-A9
-	for git@vger.kernel.org; Fri, 22 Apr 2005 16:24:28 +0100
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <1114183357.29271.31.camel@nosferatu.lan>
-Content-Disposition: inline
+	id S262037AbVDVPfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 11:35:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261972AbVDVPfc
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 11:35:32 -0400
+Received: from fire.osdl.org ([65.172.181.4]:28600 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262041AbVDVPa0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 11:30:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MFTxs4010552
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 08:30:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MFTtnH029148;
+	Fri, 22 Apr 2005 08:29:56 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17000.43340.760901.175004@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Friday 22 Apr 2005 16:22, Martin Schlemmer wrote:
-> On Fri, 2005-04-22 at 15:54 +0100, Rhys Hardwick wrote:
-> > On Friday 22 Apr 2005 15:43, Rhys Hardwick wrote:
-> > > On Friday 22 Apr 2005 15:44, Martin Schlemmer wrote:
-> > > > On Fri, 2005-04-22 at 15:30 +0100, Rhys Hardwick wrote:
-> > > > > On Friday 22 Apr 2005 15:00, Martin Schlemmer wrote:
-> > > > > > On Fri, 2005-04-22 at 14:50 +0100, Rhys Hardwick wrote:
-> > > > > > > On Friday 22 Apr 2005 14:52, Martin Schlemmer wrote:
-> > > > > > > > On Fri, 2005-04-22 at 14:42 +0100, Rhys Hardwick wrote:
-> > > > > > > > > Hey there,
-> > > > > > > > >
-> > > > > > > > > I am trying to pull the latest repository of the linux-2.6
-> > > > > > > > > git from Linus' rsync mirror.
-> > > > > > > > >
-> > > > > > > > > Here is the shell:
-> > > > > > > > >
-> > > > > > > > > ===========
-> > > > > > > > >
-> > > > > > > > > rhys@metatron:~/repo/linux-2.6.repo$ gitinit.sh
-> > > > > > > > > rsync://www.kernel.org/pub/linux/kernel/people/torvalds/lin
-> > > > > > > > >ux-2 .6 .git defaulting to local storage area
-> > > > > > > > > gitpull.sh: unknown remote
-> > > > > > > > > gitinit.sh: pull failed
-> > > > > > > > > rhys@metatron:~/repo/linux-2.6.repo$ rm -r .git
-> > > > > > > > > rhys@metatron:~/repo/linux-2.6.repo$ gitinit.sh
-> > > > > > > > > www.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.g
-> > > > > > > > >it defaulting to local storage area
-> > > > > > > > > gitpull.sh: unknown remote
-> > > > > > > > > gitinit.sh: pull failed
-> > > > > > > > > rhys@metatron:~/repo/linux-2.6.repo$
-> > > > > > > > >
-> > > > > > > > > =============
-> > > > > > > > >
-> > > > > > > > > Any idea why this is not working?
-> > > > > > > >
-> > > > > > > > Try:
-> > > > > > > >
-> > > > > > > >  $ git init
-> > > > > > > > rsync://www.kernel.org/pub/linux/kernel/people/torvalds/linux
-> > > > > > > >-2.6 .g it
-> > > > > > >
-> > > > > > > Exactly the same, sorry.....
-> > > > > >
-> > > > > > With latest git-pasky, after blowing the .git directory?  I am
-> > > > > > not sure (and have not checked) that git will do the right thing
-> > > > > > if you retry without clearing.
-> > > > >
-> > > > > Yes to all the above.  I pulled the latest today, and make && make
-> > > > > install. Also, I have tried it with a .git in place, deleted, in
-> > > > > the unpacked 2.6.11-r3 source, all of the above!
-> > > > >
-> > > > > >From what I can gather, it must happen in an empty directory, and
-> > > > > > that is what
-> > > > >
-> > > > > the top two examples are.
-> > > >
-> > > > Really weird.  I tested it my side before doing my last reply.  Maybe
-> > > > Petr will know.
-> > >
-> > > Hopefully!
-> > >
-> > > Thanks for the help anywho.....
-> >
-> > I think I have some more information.  If you remove the -e from the
-> > origins file, and put the name at the start of the line, it suddenly
-> > works!!!
-> >
-> > Cool,
-> >
-> > Not sure what was going on there, but hey, Petr will work it out!
->
-> Seems your /bin/sh do not support 'echo -e' ... Know what provides
-> your /bin/sh (I think ash at least do support it)?
->
-> Petr, I think you should really start to consider going full bash?
-
-I use dash...
 
 
+On Fri, 22 Apr 2005, Paul Mackerras wrote:
+> Linus Torvalds writes:
+> 
+> > Interestingly, the Mozilla SHA1 code is about twice as fast as the openssl
+> > code on my G5, and judging by the disassembly, it's because it's much
+> > simpler. I think the openssl people have unrolled all the loops totally,
+> > which tends to be a disaster on any half-way modern CPU. But hey, it could
+> > be something as simple as optimization flags too.
+> 
+> Which gcc version are you using?
+
+gcc-3.3.3.
+
+But it's more likely the precompiled libssl. I'm not compiling the openssl
+thing myself, but just using the standard 0.9.7a version that comes with
+YDL. Which, btw, causes all of 
+
+	/lib/libcrypto.so.4
+	/usr/lib/libgssapi_krb5.so.2
+	/usr/lib/libkrb5.so.3
+	/lib/libcom_err.so.2
+	/usr/lib/libk5crypto.so.3
+	/lib/libresolv.so.2
+	/lib/libdl.so.2
+
+to also be included. Oh, well.
+
+> I get the opposite result on my 2GHz G5: the Mozilla version does
+> 45MB/s, the openssl version does 135MB/s, and my version does 218MB/s.
+> The time for a fsck-cache on a linux-2.6 tree (cache hot) is 8.0
+> seconds for the Mozilla version, 5.2 seconds for the openssl version,
+> and 4.4 seconds for my version.
+
+I get 16 seconds for the openssl one, and 8 for the Mozilla one. I'll try 
+your version.
+
+		Linus
