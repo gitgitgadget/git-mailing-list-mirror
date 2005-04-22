@@ -1,75 +1,66 @@
-From: Steven Cole <elenstev@mesatop.com>
-Subject: Re: [PATCH] Colorized git log
-Date: Thu, 21 Apr 2005 19:04:18 -0600
-Message-ID: <200504211904.18283.elenstev@mesatop.com>
-References: <3536.10.10.10.24.1114117965.squirrel@linux1> <f0796bb7050421174647943f0c@mail.gmail.com> <20050422005452.GZ7443@pasky.ji.cz>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Colored log on any ANSI capable terminal
+Date: Thu, 21 Apr 2005 21:42:17 -0400
+Message-ID: <1114134137.12771.7.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Daniel Serpell <daniel.serpell@gmail.com>,
-	GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 03:04:32 2005
+X-From: git-owner@vger.kernel.org Fri Apr 22 03:38:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOmaU-0005b7-6Y
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 03:04:06 +0200
+	id 1DOn7J-0000Fr-5U
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 03:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261899AbVDVBIc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 21:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261905AbVDVBIc
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 21:08:32 -0400
-Received: from nacho.zianet.com ([216.234.192.105]:63502 "HELO
-	nacho.zianet.com") by vger.kernel.org with SMTP id S261899AbVDVBI1
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 21:08:27 -0400
-Received: (qmail 5627 invoked from network); 22 Apr 2005 01:08:22 -0000
-Received: from 216-31-65-209.zianet.com (216.31.65.209)
-  by 0 with SMTP; 22 Apr 2005 01:08:22 -0000
-To: Petr Baudis <pasky@ucw.cz>
-User-Agent: KMail/1.6.1
-In-Reply-To: <20050422005452.GZ7443@pasky.ji.cz>
-Content-Disposition: inline
+	id S261912AbVDVBmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 21:42:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261913AbVDVBmY
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 21:42:24 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:53638
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261912AbVDVBmT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Apr 2005 21:42:19 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 3FF73EFF85; Thu, 21 Apr 2005 21:42:17 -0400 (EDT)
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 21 April 2005 06:54 pm, Petr Baudis wrote:
+Hello!
 
-> Duh. And they say "Where possible terminfo is consulted to find the
-> string to use." in their manual page. :/
-> 
-> > gitlog.sh: 6d24d857fb6c2f7e810954adaca1990599906f07
-> > --- a/gitlog.sh
-> > +++ b/gitlog.sh
-> > @@ -11,11 +11,11 @@
-> >  
-> >  if [ "$1" = "-c" ]; then
-> >  	shift
-> > -	colheader=$(setterm -foreground green)
-> > -	colauthor=$(setterm -foreground cyan)
-> > -	colcommitter=$(setterm -foreground magenta)
-> > -	colsignoff=$(setterm -foreground yellow)
-> > -	coldefault=$(setterm -foreground default)
-> > +	colheader="$(tput setaf 2)"
-> > +	colauthor="$(tput setaf 6)"
-> > +	colcommitter="$(tput setaf 5)"
-> > +	colsignoff="$(tput setaf 3)"
-> > +	coldefault="$(tput op)"
-> >  else
-> >  	colheader=
-> >  	colauthor=
-> 
-> Please at least stick the colors in comments after the assignment.
-> Not everyone knows ANSI color codes off-hand (the last thing I've
-> memorized were BIOS color codes in the distant DOS days).
-> 
+setterm only works on Linux terminal.  It should be safe to use raw ANSI
+sequences -they work on most terminals, including xterm.  Nobody forces
+you to use the "-c" option to "git log" on those stone-age terminals
+that neither support nor ignore ANSI color codes.
 
-I like the color idea, but since many people have their own idea
-of what colors are appropriate, etc (I use a dark background, and
-the magenta is painful), perhaps we could have a LOG_COLORS
-file, similar in concept (but more readable) to the /etc/DIR_COLORS
-file.  Great work !
+I'm aware of $'...' but it may not work in bash 1.x.
 
-Steven
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+--- a/gitlog.sh
++++ b/gitlog.sh
+@@ -12,11 +12,11 @@
+ 
+ if [ "$1" = "-c" ]; then
+ 	shift
+-	colheader=$(setterm -foreground green)
+-	colauthor=$(setterm -foreground cyan)
+-	colcommitter=$(setterm -foreground magenta)
+-	colsignoff=$(setterm -foreground yellow)
+-	coldefault=$(setterm -foreground default)
++	colheader=$(echo -ne '\e[32m')
++	colauthor=$(echo -ne '\e[36m')
++	colcommitter=$(echo -ne '\e[35m')
++	colsignoff=$(echo -ne '\e[33m')
++	coldefault=$(echo -ne '\e[39m')
+ else
+ 	colheader=
+ 	colauthor=
+
+
+-- 
+Regards,
+Pavel Roskin
+
