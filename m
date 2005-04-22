@@ -1,72 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] multi item packed files
-Date: Fri, 22 Apr 2005 09:22:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504220916060.2344@ppc970.osdl.org>
-References: <200504211113.13630.mason@suse.com> <200504211622.48065.mason@suse.com>
- <Pine.LNX.4.58.0504211530370.2344@ppc970.osdl.org> <200504212016.16729.mason@suse.com>
+From: Fabian Franz <FabianFranz@gmx.de>
+Subject: [PATCH] git-pasky: Add .gitrc directory to allow command defaults like with .cvsrc
+Date: Fri, 22 Apr 2005 18:28:48 +0200
+Message-ID: <200504221828.51752.FabianFranz@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Krzysztof Halasa <khc@pm.waw.pl>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 18:16:07 2005
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Fri Apr 22 18:29:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP0oy-0002pb-DS
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 18:16:00 +0200
+	id 1DP119-0004oM-9m
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 18:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262056AbVDVQUb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 12:20:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262059AbVDVQUb
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:20:31 -0400
-Received: from fire.osdl.org ([65.172.181.4]:61900 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262056AbVDVQUZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 12:20:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MGKFs4014747
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 22 Apr 2005 09:20:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MGKEv5032241;
-	Fri, 22 Apr 2005 09:20:15 -0700
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504212016.16729.mason@suse.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262059AbVDVQcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 12:32:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262060AbVDVQcu
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 12:32:50 -0400
+Received: from imap.gmx.net ([213.165.64.20]:64705 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S262059AbVDVQcr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2005 12:32:47 -0400
+Received: (qmail invoked by alias); 22 Apr 2005 16:32:45 -0000
+Received: from p54A3EE36.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.238.54]
+  by mail.gmx.net (mp010) with SMTP; 22 Apr 2005 18:32:45 +0200
+X-Authenticated: #590723
+To: git@vger.kernel.org
+User-Agent: KMail/1.5.4
+Content-Description: clearsigned data
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+Hi,
 
-On Thu, 21 Apr 2005, Chris Mason wrote:
-> 
-> We can sort by the files before reading them in, but even if we order things 
-> perfectly, we're spreading the io out too much across the drive.
+one thing I liked about CVS was its way to configure default parameters for 
+commands.
 
-No we don't.
+And as I really like the colored log output, I wanted it as default.
 
-It's easy to just copy the repository in a way where this just isn't true:  
-you sort the objects by how far they are from the current HEAD, and you
-just copy the repository in that order ("furthest" objects first - commits
-last).
+While .cvsrc parsing would be quite expensive, using a directory + files 
+should be fairly cheap and result just in one additional stat-call.
 
-That's what I meant by defragmentation - you can actually do this on your 
-own, even if your filesystem doesn't support it.
+So I added "-c" to ~/.gitrc/log and some code to parse this.
 
-Do it twice a year, and I pretty much guarantee that your performance will
-stay pretty constant over time. The one exception is fsck, which doesn't
-seek in "history order".
+Index: git
+===================================================================
+- --- 0a9ee5a4d947b998a7ce489242800b39f98eeee5/git  (mode:100755 
+sha1:39969debd59ed51c57973c819cdcc3ca8a7da819)
++++ uncommitted/git  (mode:100755)
+@@ -67,6 +67,7 @@
+        exit 1
+ fi
 
-And this works exactly because: 
- - we don't do no steenking delta's, and don't have deep "chains" of data 
-   to follow. The longest chain we ever have is just a few deep, and it's 
-   trivial to just encourage the filesystem to have recent things together.
- - we have an append-only mentality.
++[ -e "$HOME/.gitrc/$cmd" ] && set -- $(cat "$HOME/.gitrc/$cmd") "$@"
 
-In fact, it works for exactly the same reason that makes us able to drop 
-old history if we want to. We essentially "drop" the history to another 
-part of the disk.
+ case "$cmd" in
+ "add")        gitadd.sh "$@";;
 
-		Linus
+cu
+
+Fabian
+
+PS: Should the commandline parsing be cleaned up or do you want to do that 
+after first release of cogito? And if yes, do you want to use "getopts" or 
+would this be not supported on some systems?
+
+PPS: I'm fairly new to git, how do I create a diff with the signed-by fields 
+and with what do I need to sign it?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFCaSZDI0lSH7CXz7MRAoq8AJwM2lxPfl0ej32WU7q6bh6WIq5+EACgghGn
+mvJzbvg6/bxWLFKfsP1ZEeI=
+=03wm
+-----END PGP SIGNATURE-----
+
