@@ -1,61 +1,106 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: First web interface and service API draft
-Date: Fri, 22 Apr 2005 23:47:10 +1000
-Message-ID: <2cfc4032050422064728470606@mail.gmail.com>
-References: <1114166517.3233.4.camel@localhost>
-	 <4268F027.6030304@eldiablo.co.uk> <1114177468.3233.55.camel@localhost>
-Reply-To: jon@zeta.org.au
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: Re: Pulling linux-2.6.git with gitinit.sh and gitpull.sh fails
+Date: Fri, 22 Apr 2005 15:52:20 +0200
+Message-ID: <1114177940.29271.9.camel@nosferatu.lan>
+References: <200504221442.29488.rhys@rhyshardwick.co.uk>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Apr 22 15:43:38 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-LbCrkCybr3BSLZGEIf9U"
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 15:45:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOyQc-0008ET-Kd
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 15:42:43 +0200
+	id 1DOyRr-0008Ql-Bc
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 15:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261789AbVDVNrO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 09:47:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261863AbVDVNrO
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 09:47:14 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:13958 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261733AbVDVNrL convert rfc822-to-8bit
+	id S261733AbVDVNse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 09:48:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261863AbVDVNse
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 09:48:34 -0400
+Received: from ctb-mesg2.saix.net ([196.25.240.74]:34524 "EHLO
+	ctb-mesg2.saix.net") by vger.kernel.org with ESMTP id S261733AbVDVNsa
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 09:47:11 -0400
-Received: by rproxy.gmail.com with SMTP id i8so648453rne
-        for <git@vger.kernel.org>; Fri, 22 Apr 2005 06:47:11 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=X8evQRB0NVYYyTJnLawJO/aLPTGJ8o2T1RLqNTnbAo+QKBmXWWUPag8XiSGMy/ntzQ0+h7jqAV5RnxKBsR8xFps4Kkc1T8NdFxLMjPkK7iGMkJDbt2o5HXVa6QnEPFwsgf9z/P/5SXrmMPNG7xQM15swu8H5qmzwttai822/i9E=
-Received: by 10.38.11.1 with SMTP id 1mr3440218rnk;
-        Fri, 22 Apr 2005 06:47:10 -0700 (PDT)
-Received: by 10.38.104.32 with HTTP; Fri, 22 Apr 2005 06:47:10 -0700 (PDT)
-To: El Draper <el@eldiablo.co.uk>, git@vger.kernel.org
-In-Reply-To: <1114177468.3233.55.camel@localhost>
-Content-Disposition: inline
+	Fri, 22 Apr 2005 09:48:30 -0400
+Received: from gateway.lan (wblv-146-254-56.telkomadsl.co.za [165.146.254.56])
+	by ctb-mesg2.saix.net (Postfix) with ESMTP id 5F81ADC5C;
+	Fri, 22 Apr 2005 15:48:24 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id 382813A2430;
+	Fri, 22 Apr 2005 15:54:44 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 17486-19; Fri, 22 Apr 2005 15:54:38 +0200 (SAST)
+Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
+	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id C83E23A241A;
+	Fri, 22 Apr 2005 15:54:38 +0200 (SAST)
+To: rhys@rhyshardwick.co.uk
+In-Reply-To: <200504221442.29488.rhys@rhyshardwick.co.uk>
+X-Mailer: Evolution 2.2.1.1 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> >
-> > >From the point of view of a specification, though, I think it would be
-> > useful to focus on an XML content model rather than the details of one
-> > particular HTML model - get the XML model right and you can do
-> > whatever you like with the HTML model at any time after that.
->
-> Actually I think the order is get the C content model right (done), get
-> the Python object model right (in flux), produce an appropriate XML
-> model.
 
-Mmm.. I am not sure that a Python model is logically a pre-requisite
-to the XML model nor that the ideal C API model is complete - we still
-don't have a libgit, for example.  For an XML model we can get by
-pretty well with the data model as it is - and an XML model really
-shouldn't be dependent on any particular API or programming language.
+--=-LbCrkCybr3BSLZGEIf9U
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Certainly, though, an XML model isn't a pre-requisite to a Python
-model. Though it might be a pre-req to a SOAP model :-).
+On Fri, 2005-04-22 at 14:42 +0100, Rhys Hardwick wrote:
+> Hey there,
+>=20
+> I am trying to pull the latest repository of the linux-2.6 git from Linus=
+'=20
+> rsync mirror.
+>=20
+> Here is the shell:
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> rhys@metatron:~/repo/linux-2.6.repo$ gitinit.sh=20
+> rsync://www.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git
+> defaulting to local storage area
+> gitpull.sh: unknown remote
+> gitinit.sh: pull failed
+> rhys@metatron:~/repo/linux-2.6.repo$ rm -r .git
+> rhys@metatron:~/repo/linux-2.6.repo$ gitinit.sh=20
+> www.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git
+> defaulting to local storage area
+> gitpull.sh: unknown remote
+> gitinit.sh: pull failed
+> rhys@metatron:~/repo/linux-2.6.repo$  =20
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Any idea why this is not working?
+>=20
 
-jon.
+Try:
+
+ $ git init rsync://www.kernel.org/pub/linux/kernel/people/torvalds/linux-2=
+.6.git
+
+
+
+--=20
+Martin Schlemmer
+
+
+--=-LbCrkCybr3BSLZGEIf9U
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBCaQGUqburzKaJYLYRArbZAJ9ydP0f8sjyLOdF7okZOCgbHpGnGACdFS8A
+Omcgx+W6zH71rVsDzWhqfQo=
+=OCDP
+-----END PGP SIGNATURE-----
+
+--=-LbCrkCybr3BSLZGEIf9U--
+
