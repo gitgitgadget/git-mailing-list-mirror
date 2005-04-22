@@ -1,62 +1,65 @@
-From: Kyle Hayes <kyle@marchex.com>
-Subject: Re: [patch] fixup GECOS handling
-Date: Fri, 22 Apr 2005 10:58:22 -0700
-Organization: Marchex Inc.
-Message-ID: <1114192702.31076.428.camel@axer.marchex.com>
-References: <1113820589.16288.5.camel@nosferatu.lan>
-	 <1113827713.5286.13.camel@localhost.localdomain>
-	 <1114179795.29271.18.camel@nosferatu.lan>
-	 <1114186599.31076.409.camel@axer.marchex.com>
-	 <1114189105.29271.36.camel@nosferatu.lan>
-	 <20050422171818.GE7173@pasky.ji.cz>
-Reply-To: kyle@marchex.com
+From: "Joshua T. Corbin" <jcorbin@wunjo.org>
+Subject: Re: [PATCH] git-pasky debian dir
+Date: Fri, 22 Apr 2005 14:00:11 -0400
+Message-ID: <200504221400.11507.jcorbin@wunjo.org>
+References: <200504220918.06977.jcorbin@wunjo.org> <20050422161635.GA5324@shell0.pdx.osdl.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Martin Schlemmer <azarah@nosferatu.za.org>,
-	GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 19:55:22 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 19:56:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP2M1-0000TW-8C
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 19:54:13 +0200
+	id 1DP2Nj-0000iY-6a
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 19:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262089AbVDVR6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 13:58:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262091AbVDVR6k
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 13:58:40 -0400
-Received: from peer.sef.marchex.com ([66.150.8.204]:19730 "HELO
-	nosecone.marchex.com") by vger.kernel.org with SMTP id S262089AbVDVR60
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 13:58:26 -0400
-Received: (qmail 7416 invoked from network); 22 Apr 2005 17:58:23 -0000
-Received: from unknown (HELO axer.marchex.com) (10.101.11.64)
-  by nosecone.marchex.com with SMTP; 22 Apr 2005 17:58:23 -0000
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050422171818.GE7173@pasky.ji.cz>
-X-Mailer: Evolution 2.0.3 
+	id S262096AbVDVSA1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 14:00:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262098AbVDVSA1
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 14:00:27 -0400
+Received: from smtp1.losch.net ([66.212.32.3]:19168 "HELO smtp1.losch.net")
+	by vger.kernel.org with SMTP id S262096AbVDVSAR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 14:00:17 -0400
+Received: (qmail 19104 invoked by uid 102); 22 Apr 2005 18:00:17 -0000
+Received: from 66.212.35.47 by smtp1 (envelope-from <jcorbin@wunjo.org>, uid 71) with qmail-scanner-1.24 
+ (clamdscan: 0.80/848.  
+ Clear:RC:1(66.212.35.47):. 
+ Processed in 0.023391 secs); 22 Apr 2005 18:00:17 -0000
+Received: from office.losch.net (66.212.35.47)
+  by smtp1.losch.net with SMTP; 22 Apr 2005 18:00:17 -0000
+To: Chris Wright <chrisw@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <20050422161635.GA5324@shell0.pdx.osdl.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-04-22 at 19:18 +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Apr 22, 2005 at 06:58:25PM CEST, I got a letter
-> where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > Meaning, if they use a ',' in one of the fields (and it is a linux
-> > system with the chfn most probably from the shadow package), then they
-> > are looking for trouble.  The only reason I added the ';' was because
-> > somebody said whatever OS used it instead of a ','.
-> 
-> What about just swapping the two tests so that ; is cut off and , only
-> when no ; is around?
+On 22 April 2005 12:16, Chris Wright <chrisw@osdl.org> wrote:
+> This whole bit should be formalized.
+Agreed, hence why I did it as a package-build-time patch instead of changing 
+directly in my repository.
 
-Even nicer.  I like it.  Very clean!
+> Ideally, I'd like to do /usr/bin/git frontend, with all scripts
+> in /usr/libexec/git/.
+How standard is this '/usr/libexec'? I have no such directory on my Debian 
+boxes. If /usr/share rubs you the wroung way, what of 
+simply /usr/lib/git-pasky?
 
-Best,
-Kyle
+> However, this requires something more than hardcoding paths.
+Definately, and it may not play well with the simpler method of installing to 
+$HOME/bin. This was just a quick hack as not to pollute /usr/bin with files 
+that aren't directly executed by the user.
+
+> You get the idea ;-)  I certainly see how it makes sense for a first
+> run to get it going. But this will need fixing upstream.
+This will all be moot when cogito goes the way of cg-* ;-)
+
+Cheers,
+Josh
 
 -- 
-Kyle Hayes <kyle@marchex.com>
-Marchex Inc.
-
+Regards,
+Joshua T. Corbin <jcorbin@wunjo.org>
