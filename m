@@ -1,105 +1,71 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: [3/5] Add http-pull
-Date: Sat, 23 Apr 2005 01:24:42 +0200
-Message-ID: <1114212282.27940.11.camel@nosferatu.lan>
-References: <Pine.LNX.4.21.0504221911340.30848-100000@iabervon.org>
-Reply-To: azarah@nosferatu.za.org
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.3 && request for testing
+Date: Fri, 22 Apr 2005 16:27:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504221621280.2344@ppc970.osdl.org>
+References: <20050422030931.GA14565@pasky.ji.cz> <20050422064936.GA10854@kroah.com>
+ <20050422230551.GI21204@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-s3PklWagnjNAxYWaPYp/"
-Content-Transfer-Encoding: 8bit
-Cc: Petr Baudis <pasky@ucw.cz>, tony.luck@intel.com,
-	Brad Roberts <braddr@puremagic.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 23 01:17:04 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Greg KH <greg@kroah.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 01:20:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP7OE-0005Jg-52
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 01:16:50 +0200
+	id 1DP7S1-0005b4-9K
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 01:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261303AbVDVXVR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 19:21:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261319AbVDVXVR
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 19:21:17 -0400
-Received: from ctb-mesg1.saix.net ([196.25.240.73]:3254 "EHLO
-	ctb-mesg1.saix.net") by vger.kernel.org with ESMTP id S261303AbVDVXUz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 19:20:55 -0400
-Received: from gateway.lan (wblv-146-254-56.telkomadsl.co.za [165.146.254.56])
-	by ctb-mesg1.saix.net (Postfix) with ESMTP id 0925F52C5;
-	Sat, 23 Apr 2005 01:20:47 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id D70EE3A2430;
-	Sat, 23 Apr 2005 01:27:09 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 02751-13; Sat, 23 Apr 2005 01:27:04 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id C919D3A241A;
-	Sat, 23 Apr 2005 01:27:04 +0200 (SAST)
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504221911340.30848-100000@iabervon.org>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	id S261301AbVDVXZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 19:25:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261304AbVDVXZT
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 19:25:19 -0400
+Received: from fire.osdl.org ([65.172.181.4]:4583 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261301AbVDVXZM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 19:25:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MNP9s4015778
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 16:25:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MNP8Bd018699;
+	Fri, 22 Apr 2005 16:25:08 -0700
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050422230551.GI21204@pasky.ji.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---=-s3PklWagnjNAxYWaPYp/
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2005-04-22 at 19:12 -0400, Daniel Barkalow wrote:
-> On Sat, 23 Apr 2005, Petr Baudis wrote:
->=20
-> > Dear diary, on Sat, Apr 23, 2005 at 01:00:33AM CEST, I got a letter
-> > where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > > On Sat, 23 Apr 2005, Petr Baudis wrote:
-> > >=20
-> > > > Dear diary, on Fri, Apr 22, 2005 at 09:46:35PM CEST, I got a letter
-> > > > where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > > >=20
-> > > > Huh. Why? You just go back to history until you find a commit you
-> > > > already have. If you did it the way as Tony described, if you have =
-that
-> > > > commit, you can be sure that you have everything it depends on too.
-> > >=20
-> > > But if you download 1000 files of the 1010 you need, and then your ne=
-twork
-> > > goes down, you will need to download those 1000 again when it comes b=
-ack,
-> > > because you can't save them unless you have the full history.=20
-> >=20
-> > Why can't I? I think I can do that perfectly fine. The worst thing that
-> > can happen is that fsck-cache will complain a bit.
->=20
-> Not if you're using the fact that you don't have them to tell you that yo=
-u
-> still need the other 10, which is what tony's scheme would do.
->=20
+On Sat, 23 Apr 2005, Petr Baudis wrote:
+> 
+> Just FYI, this is bug in core git's diff-cache;
 
-Any way (like maybe extending one of the web interfaces already around)
-to first get a list of all the sha1's you need, and then starting from
-the bottom like Tony/Petr wants you to do?
+Nice find. 
 
+Yes, I told you guys I hadn't tested it well ;)
 
---=20
-Martin Schlemmer
+"diff-cache" does the same "diff trees in lockstep" thing that "diff-tree" 
+does, but it's actually more complex, since the _tree_ part always needs 
+to be recursively followed, while the _cache_ part is this linear list 
+that is already expanded.
 
+Which just made the whole algorithm very messy.
 
---=-s3PklWagnjNAxYWaPYp/
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+Once I found out how nasty it was to do that compare, I was actually
+planning to re-write the thing using the same approach that "read-tree -m
+<tree>" does - ie move the tree information _into_ the in-memory cache, at
+which point it should be absolutely trivial to compare the two. But since 
+the horrid algorithm seemed to end up working, I never did.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+I'm not even going to debug this bug. I'm just going to rewrite diff-cache 
+to do what I should have done originally, ie use the power of the 
+in-memory cache. That's also automatically going to properly warn about 
+unmerged files.
 
-iD8DBQBCaYe6qburzKaJYLYRAtbkAJ41ej+lzTtJ3RKkxkJRgi1VgBu68ACffEBq
-rvPd+6KZszsg16mg5/3Iqq0=
-=Jyl5
------END PGP SIGNATURE-----
+Give me five minutes ;)
 
---=-s3PklWagnjNAxYWaPYp/--
-
+		Linus
