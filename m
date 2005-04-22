@@ -1,85 +1,68 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: Re: wit 0.0.3 - a web interface for git available
-Date: Fri, 22 Apr 2005 23:16:40 +0200
-Message-ID: <1114204601.3207.28.camel@localhost>
-References: <1113956951.3309.22.camel@localhost>
-	 <20050420041828.GA15391@kroah.com> <20050420094253.GB29910@infradead.org>
-	 <20050421012827.GA13795@vrfy.org> <20050421073326.GA21772@kroah.com>
-	 <1114202122.3207.4.camel@localhost>  <20050422210905.GB1829@kroah.com>
+From: Fabian Franz <FabianFranz@gmx.de>
+Subject: [OT] git logo or mascot (was: Re: wit 0.0.3 - a web interface for git available)
+Date: Fri, 22 Apr 2005 23:22:29 +0200
+Message-ID: <200504222322.33934.FabianFranz@gmx.de>
+References: <1113956951.3309.22.camel@localhost> <1114202122.3207.4.camel@localhost> <20050422210905.GB1829@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: Text/Plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 23:21:34 2005
+X-From: git-owner@vger.kernel.org Fri Apr 22 23:22:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP5ZN-0001Bc-1v
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:20:13 +0200
+	id 1DP5bJ-0001TX-Lr
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262150AbVDVVTk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 17:19:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262138AbVDVVTY
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:19:24 -0400
-Received: from shadow.prohost.de ([216.71.84.228]:15192 "EHLO
-	shadow.prohost.de") by vger.kernel.org with ESMTP id S262135AbVDVVQs
+	id S262135AbVDVV0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 17:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262139AbVDVV0i
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:26:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:22955 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S262135AbVDVV0Q convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 17:16:48 -0400
-Received: from blue (p54A23F84.dip.t-dialin.net [84.162.63.132])
-	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3MLGga07588;
-	Fri, 22 Apr 2005 23:16:42 +0200
-To: Greg KH <greg@kroah.com>
+	Fri, 22 Apr 2005 17:26:16 -0400
+Received: (qmail invoked by alias); 22 Apr 2005 21:26:13 -0000
+Received: from p54A3EE36.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.238.54]
+  by mail.gmx.net (mp005) with SMTP; 22 Apr 2005 23:26:13 +0200
+X-Authenticated: #590723
+To: Greg KH <greg@kroah.com>,
+	Christian Meder <chris@absolutegiganten.org>
+User-Agent: KMail/1.5.4
 In-Reply-To: <20050422210905.GB1829@kroah.com>
-X-Mailer: Evolution 2.0.4 
+Content-Description: clearsigned data
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-04-22 at 14:09 -0700, Greg KH wrote:
+Am Freitag, 22. April 2005 23:09 schrieb Greg KH:
 > On Fri, Apr 22, 2005 at 10:35:22PM +0200, Christian Meder wrote:
 > > On Thu, 2005-04-21 at 00:33 -0700, Greg KH wrote:
-> > > On Thu, Apr 21, 2005 at 03:28:27AM +0200, Kay Sievers wrote:
-> > > > On Wed, Apr 20, 2005 at 10:42:53AM +0100, Christoph Hellwig wrote:
-> > > > > On Tue, Apr 19, 2005 at 09:18:29PM -0700, Greg KH wrote:
-> > > > > > On Wed, Apr 20, 2005 at 02:29:11AM +0200, Christian Meder wrote:
-> > > > > > > Hi,
-> > > > > > > 
-> > > > > > > ok it's starting to look like spam ;-)
-> > > > > > > 
-> > > > > > > I uploaded a new version of wit to http://www.absolutegiganten.org/wit
-> > > > > > 
-> > > > > > Why not work together with Kay's tool:
-> > > > > > 	http://ehlo.org/~kay/gitweb.pl?project=linux-2.6&action=show_log
-> > > > > 
-> > > > > That one looks really nice.  One major feature I'd love to see would
-> > > > > be a show all diffs link for a changeset.
-> > > > 
-> > > > It's working now:
-> > > >   http://ehlo.org/~kay/gitweb.pl
-> > > > 
-> > > > Many thanks to Christian Gierke for all the interface work, the nice
-> > > > layout and the git logo. Thanks for the colored diff to Ken Brush.
-> > > 
 > > > Very nice, this looks great.  And hey, we have a git logo now :)
-> > 
+> >
 > > BTW is this logo already officially blessed ?
-> 
+>
 > "blessed" how?
 
-Linus likes it ;-)
+Well if it should be official for git, Linus has to "bless" it imho.
 
 > Have an alternative one?
 
-Nope. I actually like the one on gitweb.
+Well, yes. I would like something, which has something to do with the original 
+linux mascot.
 
+Like a fish (though that is already used by some other projects) - penguins 
+like fish! (Tux too? Or more Linus' fingers ;)? )
 
-			Christian
+Or perhaps even a wife for Tux, which helps him organizing and managing?
 
--- 
-Christian Meder, email: chris@absolutegiganten.org
+... Tux & Git having nice holidays on an island? ...
 
-The Way-Seeking Mind of a tenzo is actualized 
-by rolling up your sleeves.
+Hm, but what is cogito then ...
 
-                (Eihei Dogen Zenji)
+cu
+
+Fabian
 
