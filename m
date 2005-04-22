@@ -1,60 +1,65 @@
 From: Krzysztof Halasa <khc@pm.waw.pl>
 Subject: Re: [PATCH] multi item packed files
-Date: Fri, 22 Apr 2005 11:40:29 +0200
-Message-ID: <m3vf6frvxu.fsf@defiant.localdomain>
+Date: Fri, 22 Apr 2005 11:48:48 +0200
+Message-ID: <m3r7h3rvjz.fsf@defiant.localdomain>
 References: <200504211113.13630.mason@suse.com>
 	<Pine.LNX.4.58.0504210832490.2344@ppc970.osdl.org>
 	<m3u0m0q69a.fsf@defiant.localdomain>
-	<Pine.LNX.4.58.0504211301240.2344@ppc970.osdl.org>
+	<200504211622.48065.mason@suse.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 11:37:07 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 11:45:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOuaG-0005Eb-9A
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 11:36:24 +0200
+	id 1DOuhz-0006GZ-LC
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 11:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261981AbVDVJki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 05:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262016AbVDVJki
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 05:40:38 -0400
-Received: from khc.piap.pl ([195.187.100.11]:16900 "EHLO khc.piap.pl")
-	by vger.kernel.org with ESMTP id S261981AbVDVJkc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 05:40:32 -0400
+	id S262016AbVDVJsw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 05:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262017AbVDVJsw
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 05:48:52 -0400
+Received: from khc.piap.pl ([195.187.100.11]:17668 "EHLO khc.piap.pl")
+	by vger.kernel.org with ESMTP id S262016AbVDVJsu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 05:48:50 -0400
 Received: by khc.piap.pl (Postfix, from userid 500)
-	id DDE591082A; Fri, 22 Apr 2005 11:40:29 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504211301240.2344@ppc970.osdl.org> (Linus
- Torvalds's message of "Thu, 21 Apr 2005 13:07:25 -0700 (PDT)")
+	id 0C43A1082A; Fri, 22 Apr 2005 11:48:49 +0200 (CEST)
+To: Chris Mason <mason@suse.com>
+In-Reply-To: <200504211622.48065.mason@suse.com> (Chris Mason's message of
+ "Thu, 21 Apr 2005 16:22:46 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Chris Mason <mason@suse.com> writes:
 
-> And dammit, if I'm the original author and likely biggest power-user, and 
-> _I_ can't be bothered to use special filesystems, then who can? Nobody.
+> Shrug, we shouldn't need help from the kernel for something like this.
+>  git as 
+> a database hits worst case scenarios for almost every FS.
 
-If someone is motivated enough, and if the task is quite trivial (as it
-seems to be) someone may try it. I can see nothing wrong with it as long
-as it doesn't affect other people.
+Not sure.
 
-> This is why I absolutely do not believe in arguments like "if your
-> filesystem doesn't do tail packing, you shouldn't use it" or "if your
-> don't have name hashing enabled in your filesystem it's broken".
+> 1) subdirectories with lots of files
 
-Of course. But one may consider using a filesystem with, say, different
-settings. Or a special filesystem for this task, such as CNFS used by
-news servers (it seems news servers do quite the same what git does,
-except they also purge old contents, i.e., container files don't grow up).
+Correct. But git doesn't search dirs so it's not that bad.
 
-> I'm perfectly willing to optimize for the common case, but that's as far 
-> as it goes. I do not want to make fundamental design decisions that depend 
-> on the target filesystem having some particular feature.
+> 2) wasted space for tiny files
 
-The optimization would be (in) the underlying filesystem (i.e., the OS
-thing, or possibly a shared preloaded library?), not git itself.
+... depends on block size. With 2 KB:
+
+defiant:~$ du -s /pub/mirror/linux-2.6.git
+88366   /pub/mirror/linux-2.6.git
+defiant:~$ du -s --apparent-size /pub/mirror/linux-2.6.git
+63400   /pub/mirror/linux-2.6.git
+
+Not bad, is it?
+
+> 3) files that are likely to be accessed together spread across the whole disk
+
+... across the whole filesystem.
+
+Well, probably it isn't best to have git and .iso archives on the same
+filesystem.
 -- 
 Krzysztof Halasa
