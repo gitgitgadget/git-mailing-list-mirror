@@ -1,96 +1,97 @@
-From: Kyle Hayes <kyle@marchex.com>
-Subject: Re: [patch] fixup GECOS handling
-Date: Fri, 22 Apr 2005 10:43:50 -0700
-Organization: Marchex Inc.
-Message-ID: <1114191830.31076.426.camel@axer.marchex.com>
-References: <1113820589.16288.5.camel@nosferatu.lan>
-	 <1113827713.5286.13.camel@localhost.localdomain>
-	 <1114179795.29271.18.camel@nosferatu.lan>
-	 <1114186599.31076.409.camel@axer.marchex.com>
-	 <1114189105.29271.36.camel@nosferatu.lan>
-Reply-To: kyle@marchex.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: (anal) Q: Are there any coding styles or development guidelines?
+Date: Fri, 22 Apr 2005 10:50:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504221044400.2344@ppc970.osdl.org>
+References: <87hdi5oet6.dancerj@netfort.gr.jp> <Pine.LNX.4.58.0504171039460.7211@ppc970.osdl.org>
+ <20050418055824.42d621b8.froese@gmx.de> <Pine.LNX.4.58.0504211238150.2344@ppc970.osdl.org>
+ <17000.43340.760901.175004@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0504220824480.2344@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504220838340.2344@ppc970.osdl.org>
+ <20050422155845.GC52771@xdt04.mpe-garching.mpg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 19:41:46 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 22 19:45:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP28g-0006x9-6w
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 19:40:26 +0200
+	id 1DP2CY-0007Wc-Ie
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 19:44:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262082AbVDVRoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 13:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262083AbVDVRoV
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 13:44:21 -0400
-Received: from peer.sef.marchex.com ([66.150.8.204]:55813 "HELO
-	nosecone.marchex.com") by vger.kernel.org with SMTP id S262082AbVDVRnz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 13:43:55 -0400
-Received: (qmail 1334 invoked from network); 22 Apr 2005 17:43:50 -0000
-Received: from unknown (HELO axer.marchex.com) (10.101.11.64)
-  by nosecone.marchex.com with SMTP; 22 Apr 2005 17:43:50 -0000
-To: azarah@nosferatu.za.org
-In-Reply-To: <1114189105.29271.36.camel@nosferatu.lan>
-X-Mailer: Evolution 2.0.3 
+	id S262084AbVDVRtA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 13:49:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262087AbVDVRtA
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 13:49:00 -0400
+Received: from fire.osdl.org ([65.172.181.4]:51332 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262084AbVDVRsz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 13:48:55 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MHmms4022937
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 10:48:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MHmk8P004185;
+	Fri, 22 Apr 2005 10:48:47 -0700
+To: Klaus Robert Suetterlin <robert@mpe.mpg.de>
+In-Reply-To: <20050422155845.GC52771@xdt04.mpe-garching.mpg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-04-22 at 18:58 +0200, Martin Schlemmer wrote:
-> On Fri, 2005-04-22 at 09:16 -0700, Kyle Hayes wrote:
-> > Suppose that the GECOS field is:
-> > 
-> > Hayes, Kyle; Room 42; 424-424-4242; foo bar baz...
-> > 
-> > You'll search for the first comma, find it, truncate my name to "Hayes",
-> > and continue.
-> > 
-> > I have seen this kind of GECOS in larger environments where the
-> > individual users are not the ones that administrate their machines.
-> > Using the LastName, FirstName style of name is not rare. 
-> > 
+
+
+On Fri, 22 Apr 2005, Klaus Robert Suetterlin wrote:
+>
+> I'm currently doing a source audit of the git core components.
+> Mainly I want to check if I can spot some left over memory leaks.
 > 
-> What OS?  With Linux at least, this is what chfn's manpage say:
-
-Can't remember, it's been a while (years).  We had AIX, Solaris, Linux
-and BSD machines at the time.  Might have been AIX, I think.  The memory
-of which OS is vague, but not the annoyance of finding the problem :-(
-
-> ----
->        The only restriction placed on the contents of the fields is that no control characters may  be  present,
->        nor  any  of  comma, colon, or equal sign. The other field does not have this restriction, and is used to
->        store accounting information used by other applications.
-> ----
+> Unfortunately ;) I didn't find any so far (after reading five files).
 > 
-> Meaning, if they use a ',' in one of the fields (and it is a linux
-> system with the chfn most probably from the shadow package), then they
-> are looking for trouble.  The only reason I added the ';' was because
-> somebody said whatever OS used it instead of a ','.
+> Still I did find quite a lot of stuff that lint would most likely
+> complain about.  Like not checking return values.  Should this be
+> fixed now or isn't it time to do the cleanup, yet?
 
->From the AIX version of chfn:
+I personally don't think we're quite there yet. You'll note that a lot of 
+routines just call "die()" when they don't find the data they want etc. 
+All things that we probably will need to clean up eventually, but is fine 
+for now.
 
-----
-You can use any printable characters in the gecos information string
-except a : (colon), which is an attribute delimiter.
-----
+> I also found several literal copies of the same function including
+> function name, parameter list, etc.  Wouldn't it be better do clean
+> those up and put them in a utility.{c,h} file?
 
-The AIX examples show use of semicolon as a separator.
+Yes, we can start doing things like that, especially if they really _do_ 
+end up making sense in a bigger picture.
 
-So, at least on AIX, it is appears valid to use the style I showed
-above.  I don't have access to Solaris machines right now.  The BSD
-(FreeBSD 4.11) version of man 5 passwd:
+Some of that is because I didn't clean up the Makefile until fairly
+recently, so it used to be harder than it is now to have a shared object
+file. In contrast, now you just add it to the list of library objects, and
+off you go.
 
-----
-The gecos field normally contains comma (`,') separated subfields as
-follows:...
-----
+> A similar problem
+> is the continous reimplementation of linked lists, dynamic memory,
+> smart strings / vectors, etc.
 
-Best,
-Kyle
+Sometimes specific duplication is just _easier_ than trying to be clever 
+and having some generic shared version. For example, there's a few 
+data-specific versions of "insert into sorted array" there, and the fact 
+is, they are so simple that it's likely less work to keep them that way 
+than it would be to create some "generic" thing that did it and was passed 
+in some descriptor of the data. 
 
--- 
-Kyle Hayes <kyle@marchex.com>
-Marchex Inc.
+Generic routines aren't always good. Sometimes the abstraction ends up 
+adding more of a mental burden than just doing the thing in a simple way 
+in the first place. 
 
+> And then there are some stale files (i.e. revision.*) that the Changelog
+> already mentions as removed, but which are still active in HEAD.
+
+They definitely are _not_ active in HEAD, at least not in my version.
+
+You may have stale copies in your directory, but they should show up as
+being stale when you do "show-files --others".
+
+		Linus
