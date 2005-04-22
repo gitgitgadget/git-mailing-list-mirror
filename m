@@ -1,63 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: First web interface and service API draft
-Date: Sat, 23 Apr 2005 00:45:54 +0200
-Message-ID: <20050422224554.GG21204@pasky.ji.cz>
-References: <1114166517.3233.4.camel@localhost> <20050422142342.GG30915@delft.aura.cs.cmu.edu>
+From: David Greaves <david@dgreaves.com>
+Subject: wit suggestion
+Date: Fri, 22 Apr 2005 23:46:20 +0100
+Message-ID: <42697EBC.2080201@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 23 00:41:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 23 00:42:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP6pw-0002Bb-Fr
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 00:41:24 +0200
+	id 1DP6qJ-0002Dj-PL
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 00:41:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261261AbVDVWqB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 18:46:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261262AbVDVWqB
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 18:46:01 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:62625 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261261AbVDVWpz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 18:45:55 -0400
-Received: (qmail 25562 invoked by uid 2001); 22 Apr 2005 22:45:54 -0000
-To: Christian Meder <chris@absolutegiganten.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050422142342.GG30915@delft.aura.cs.cmu.edu>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261262AbVDVWqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 18:46:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261263AbVDVWqY
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 18:46:24 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:27055 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261262AbVDVWqW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 18:46:22 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 21E15E6D90; Fri, 22 Apr 2005 23:44:23 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 29874-04; Fri, 22 Apr 2005 23:44:23 +0100 (BST)
+Received: from oak.dgreaves.com (modem-3676.llama.dialup.pol.co.uk [217.135.190.92])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 8D93EE6D65; Fri, 22 Apr 2005 23:44:22 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DP6ui-0004if-FK; Fri, 22 Apr 2005 23:46:20 +0100
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Christian Meder <chris@absolutegiganten.org>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 22, 2005 at 04:23:42PM CEST, I got a letter
-where Jan Harkes <jaharkes@cs.cmu.edu> told me that...
-> On Fri, Apr 22, 2005 at 12:41:56PM +0200, Christian Meder wrote:
-> > -------
-> > /<project>/blob/<blob-sha1>
-> > /<project>/commit/<commit-sha1>
-> 
-> It is trivial to find an object when given a sha, but to know the object
-> type you'd have to decompress it and check inside. Also the way git
-> stores these things you can't have both a blob and a commit with the
-> same sha anyways.
-> 
-> So why not use,
->     /<project/<hexadecimal sha1 representation>
-> 	will give you the raw object.
-> 
->     /<project/<hexadecimal sha1 representation>.html (.xml/.txt)
-> 	will give you a parsed version for user presentation
+Hi Christian
 
-Because this gives you more type control, and type control is good where
-it makes sense (i.e. the types are completely orthogonal). It makes
-sense here - either you _know_ your sha1 is of given type, or you don't
-know at all what are you doing.
+Can I suggest a 'summary diff' option
 
-Also, when looking at an URI, you can immediately say what type of
-object does it point at. I actually consider that a pretty important
-property.
+It's basically a diff between the tree of the commit and the tree of the 
+parent commit
+
+It would show what files have changed rather than the diff of the files 
+that have changed. (kinda like diffstat without the ++++++++ for now)
+
+(or maybe just do a diffstat if it's easier)
+
+Of course you could click through to a per-file diff eventually...
+
+David
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
