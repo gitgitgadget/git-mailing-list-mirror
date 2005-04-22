@@ -1,108 +1,70 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Add DEST Makefile variable
-Date: Thu, 21 Apr 2005 19:37:04 -0400
-Message-ID: <1114126624.17161.19.camel@dv>
-References: <20050421123904.9F2EB7F8AD@smurf.noris.de>
-	 <7vr7h3d9cu.fsf@assigned-by-dhcp.cox.net>
-	 <20050421230732.GA13311@kiste.smurf.noris.de>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] multi item packed files
+Date: Thu, 21 Apr 2005 20:16:16 -0400
+Message-ID: <200504212016.16729.mason@suse.com>
+References: <200504211113.13630.mason@suse.com> <200504211622.48065.mason@suse.com> <Pine.LNX.4.58.0504211530370.2344@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junio@siamese.dyndns.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 01:33:12 2005
+Cc: Krzysztof Halasa <khc@pm.waw.pl>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 02:14:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOlAE-000639-Q0
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 01:32:55 +0200
+	id 1DOloT-0001Bl-BV
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 02:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261528AbVDUXhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Apr 2005 19:37:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261548AbVDUXhS
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 19:37:18 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:6299 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261528AbVDUXhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Apr 2005 19:37:05 -0400
-Received: by localhost.localdomain (Postfix, from userid 500)
-	id 6D5A0EFF81; Thu, 21 Apr 2005 19:37:04 -0400 (EDT)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <20050421230732.GA13311@kiste.smurf.noris.de>
-X-Mailer: Evolution 2.2.1.1 
+	id S261820AbVDVASl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Apr 2005 20:18:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261749AbVDVARZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Apr 2005 20:17:25 -0400
+Received: from mx2.suse.de ([195.135.220.15]:22755 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261790AbVDVAQU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Apr 2005 20:16:20 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 0D617880F;
+	Fri, 22 Apr 2005 02:16:20 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id 92E6F1162D9; Fri, 22 Apr 2005 02:16:19 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504211530370.2344@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+On Thursday 21 April 2005 18:47, Linus Torvalds wrote:
+> On Thu, 21 Apr 2005, Chris Mason wrote:
+> > Shrug, we shouldn't need help from the kernel for something like this. 
+> > git as a database hits worst case scenarios for almost every FS.
 
-On Fri, 2005-04-22 at 01:07 +0200, Matthias Urlichs wrote:
-> Hi,
-> 
-> Junio C Hamano:
-> > I sent essentially the same some time ago and got a comment to
-> > follow established naming convention.
-> > 
-> Well, for a Makefile which installs in basically one directory, that
-> seems to be overkill.
-> 
-> >     # DESTDIR=
-> >     BINDIR=$(HOME)/bin
-> >             install foobar $(DESTDIR)$(BINDIR)/
-> > 
-> That doesn't make sense; if you set DESTDIR, you are not going to
-> install in $HOME.
+[ ... ]
 
-It makes sense to stick with conventions.  DESTDIR is almost always set
-by a script for making a package, and that script will likely set prefix
-to /usr.
+We somewhat agree on most of this, I snipped out the parts that aren't worth 
+nitpicking over.  git is really fast right now, and I'm all for throwing 
+drive space at things to solve problems.  I just don't think we have to throw 
+as much space at it as we are.
 
-prefix is set to $HOME temporarily.  It should be changed to /usr/local
-some day.  It's not uncommon for $HOME to be shared between systems with
-different architectures, so ideally no binaries should be installed
-there.  I guess $HOME is used to save typing "su" or redefining prefix
-in a project that changes every 10 minutes or so.  But once git
-stabilizes, there will be no excuse.
+> The _seek_ issue is real, but git actually has a very nice architecture
+> even there: not only dos it cache really really well (and you can do a
+> simple "ls-tree $(cat .git/HEAD)" and populate the case from the results),
+> but the low level of indirection in a git archive means that it's almost
+> totally prefetchable with near-perfect access patterns.
 
-By the way, we need to change prefix and bindir to be lowercase for
-compatibility with GNU standards.  Also, ifdef is not needed - command
-line trumps even unconditional variable assignments.  Another thing to
-fix - DESTDIR is not used when bindir is created.
+We can sort by the files before reading them in, but even if we order things 
+perfectly, we're spreading the io out too much across the drive. It works 
+right now because the git archive is relatively dense.  At a few hundred MB 
+when we order things properly the drive head isn't moving that much.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+At 3-6 GB this hurts more.  The data gets farther apart as things age, and 
+drive performance rots away.  I'll never convince you without numbers, which 
+means I'll have to wait for the full load of old history and try it out ;)
 
---- a/Makefile
-+++ b/Makefile
-@@ -14,12 +14,10 @@
- # (my ext3 doesn't).
- CFLAGS=-g -O2 -Wall
- 
--ifndef PREFIX
--PREFIX=$(HOME)
--endif
--ifndef BINDIR
--BINDIR=$(PREFIX)/bin
--endif
-+# Should be changed to /usr/local
-+prefix=$(HOME)
-+
-+bindir=$(prefix)/bin
- 
- CC=gcc
- AR=ar
-@@ -81,8 +79,8 @@ gitversion.sh: $(VERSION)
- 
- 
- install: $(PROG) $(GEN_SCRIPT)
--	install -m755 -d $(BINDIR)
--	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(BINDIR)
-+	install -m755 -d $(DESTDIR)$(bindir)
-+	install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(bindir)
- 
- clean:
- 	rm -f *.o mozilla-sha1/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE)
-
-
--- 
-Regards,
-Pavel Roskin
-
+-chris
