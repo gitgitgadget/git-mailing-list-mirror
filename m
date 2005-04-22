@@ -1,83 +1,61 @@
-From: Christian Meder <chris@absolutegiganten.org>
+From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: First web interface and service API draft
-Date: Fri, 22 Apr 2005 15:44:28 +0200
-Message-ID: <1114177468.3233.55.camel@localhost>
+Date: Fri, 22 Apr 2005 23:47:10 +1000
+Message-ID: <2cfc4032050422064728470606@mail.gmail.com>
 References: <1114166517.3233.4.camel@localhost>
-	 <4268F027.6030304@eldiablo.co.uk>
+	 <4268F027.6030304@eldiablo.co.uk> <1114177468.3233.55.camel@localhost>
+Reply-To: jon@zeta.org.au
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 15:41:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Apr 22 15:43:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DOyOG-0007nD-0A
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 15:40:18 +0200
+	id 1DOyQc-0008ET-Kd
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 15:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261723AbVDVNou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 09:44:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261733AbVDVNou
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 09:44:50 -0400
-Received: from shadow.prohost.de ([216.71.84.228]:19593 "EHLO
-	shadow.prohost.de") by vger.kernel.org with ESMTP id S261723AbVDVNor
+	id S261789AbVDVNrO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 09:47:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261863AbVDVNrO
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 09:47:14 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:13958 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261733AbVDVNrL convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 09:44:47 -0400
-Received: from blue.office.onestepahead.de (h-62.96.100.62.host.de.colt.net [62.96.100.62] (may be forged))
-	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3MDiUr19158;
-	Fri, 22 Apr 2005 15:44:30 +0200
-To: El Draper <el@eldiablo.co.uk>
-In-Reply-To: <4268F027.6030304@eldiablo.co.uk>
-X-Mailer: Evolution 2.0.4 
+	Fri, 22 Apr 2005 09:47:11 -0400
+Received: by rproxy.gmail.com with SMTP id i8so648453rne
+        for <git@vger.kernel.org>; Fri, 22 Apr 2005 06:47:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=X8evQRB0NVYYyTJnLawJO/aLPTGJ8o2T1RLqNTnbAo+QKBmXWWUPag8XiSGMy/ntzQ0+h7jqAV5RnxKBsR8xFps4Kkc1T8NdFxLMjPkK7iGMkJDbt2o5HXVa6QnEPFwsgf9z/P/5SXrmMPNG7xQM15swu8H5qmzwttai822/i9E=
+Received: by 10.38.11.1 with SMTP id 1mr3440218rnk;
+        Fri, 22 Apr 2005 06:47:10 -0700 (PDT)
+Received: by 10.38.104.32 with HTTP; Fri, 22 Apr 2005 06:47:10 -0700 (PDT)
+To: El Draper <el@eldiablo.co.uk>, git@vger.kernel.org
+In-Reply-To: <1114177468.3233.55.camel@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-04-22 at 13:37 +0100, El Draper wrote:
-> Christian Meder wrote:
-> 
-> >Comments ? Ideas ? Other feedback ?
 > >
-> >  
-> >
-> 
-> Hi guys,
-> 
-> New around these parts, so be gentle :-)
-> 
-> I would like to suggest the idea of a SOAP interface. If we are talking 
-> about a true service orientated API, then a way of calling a uri and 
-> having it return a nice SOAP packet with the return data in it would be 
-> great. If we ensured compliance with web service standards, then it 
-> would then mean anyone could write themselves a client desktop based 
-> program, a web interface, or any utility command line tools (in Java, 
-> .net, whatever they want, and for whatever platform), that could 
-> communicate with the web service and retrieve relevant data. You'd then 
-> have a true service interface into a Git repository. Seeing as how the 
-> idea of returning XML has already come up, I don't think it would be a 
-> stretch to extend the web interface to returning web service compliant 
-> SOAP packets in order to return data.
+> > >From the point of view of a specification, though, I think it would be
+> > useful to focus on an XML content model rather than the details of one
+> > particular HTML model - get the XML model right and you can do
+> > whatever you like with the HTML model at any time after that.
+>
+> Actually I think the order is get the C content model right (done), get
+> the Python object model right (in flux), produce an appropriate XML
+> model.
 
-Ok, I should've known we get into this being a Web Java guy by
-profession ;-)
+Mmm.. I am not sure that a Python model is logically a pre-requisite
+to the XML model nor that the ideal C API model is complete - we still
+don't have a libgit, for example.  For an XML model we can get by
+pretty well with the data model as it is - and an XML model really
+shouldn't be dependent on any particular API or programming language.
 
-Right now I'd like to concentrate more on a RESTful approach
-http://www.xfront.com/REST-Web-Services.html
+Certainly, though, an XML model isn't a pre-requisite to a Python
+model. Though it might be a pre-req to a SOAP model :-).
 
-I'm concentrating on getting a clean and simple API for mere mortals and
-developers alike. SOAP is likely further down on my list. But I
-certainly will take patches ;-)
-
-
-
-			Christian
-
-
--- 
-Christian Meder, email: chris@absolutegiganten.org
-
-The Way-Seeking Mind of a tenzo is actualized 
-by rolling up your sleeves.
-
-                (Eihei Dogen Zenji)
-
+jon.
