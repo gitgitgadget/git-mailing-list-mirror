@@ -1,60 +1,81 @@
-From: Greg KH <greg@kroah.com>
-Subject: Re: [git pasky] tarball question
-Date: Fri, 22 Apr 2005 11:23:53 -0700
-Message-ID: <20050422182353.GA599@kroah.com>
-References: <1114180303.29271.25.camel@nosferatu.lan>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [PATCH] git-pasky debian dir
+Date: Fri, 22 Apr 2005 11:45:51 -0700
+Message-ID: <20050422184551.GB5324@shell0.pdx.osdl.net>
+References: <200504220918.06977.jcorbin@wunjo.org> <20050422161635.GA5324@shell0.pdx.osdl.net> <200504221400.11507.jcorbin@wunjo.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing Lists <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Apr 22 20:20:26 2005
+Cc: Chris Wright <chrisw@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 20:43:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP2kz-0004uQ-5Q
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 20:20:01 +0200
+	id 1DP35n-0000BA-AS
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 20:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262103AbVDVSYS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 14:24:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262104AbVDVSYS
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 14:24:18 -0400
-Received: from mail.kroah.org ([69.55.234.183]:12699 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S262103AbVDVSYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 14:24:15 -0400
-Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3MIO8i01039;
-	Fri, 22 Apr 2005 11:24:08 -0700
-Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
- id 1DP2oj-09t-00; Fri, 22 Apr 2005 11:23:53 -0700
-To: Martin Schlemmer <azarah@nosferatu.za.org>
+	id S262105AbVDVSqA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 14:46:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262106AbVDVSqA
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 14:46:00 -0400
+Received: from fire.osdl.org ([65.172.181.4]:30102 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262105AbVDVSpx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 14:45:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MIjps4027354
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 11:45:51 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MIjpcY007185;
+	Fri, 22 Apr 2005 11:45:51 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j3MIjpUY007184;
+	Fri, 22 Apr 2005 11:45:51 -0700
+To: "Joshua T. Corbin" <jcorbin@wunjo.org>
 Content-Disposition: inline
-In-Reply-To: <1114180303.29271.25.camel@nosferatu.lan>
-User-Agent: Mutt/1.5.8i
+In-Reply-To: <200504221400.11507.jcorbin@wunjo.org>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 22, 2005 at 04:31:43PM +0200, Martin Schlemmer wrote:
-> Hi,
+* Joshua T. Corbin (jcorbin@wunjo.org) wrote:
+> On 22 April 2005 12:16, Chris Wright <chrisw@osdl.org> wrote:
+> > This whole bit should be formalized.
+> Agreed, hence why I did it as a package-build-time patch instead of changing 
+> directly in my repository.
 > 
-> I understand why you have the git-pasky-0.6.x.tar.bz2 tarballs with
-> the .git database included as well (btw, great stuff renaming it to
-> something more distributable), but its going to be a pita for users of
-> source based distro's like us (Gentoo), as well as our mirrors if it
-> gets much bigger. (Already asked r3pek to add it to portage).
+> > Ideally, I'd like to do /usr/bin/git frontend, with all scripts
+> > in /usr/libexec/git/.
+> How standard is this '/usr/libexec'? I have no such directory on my Debian 
+> boxes. If /usr/share rubs you the wroung way, what of 
+> simply /usr/lib/git-pasky?
 
-Ah good, I was already makeing a ebuild for it, I'll let others do it
-then :)
+Hrm, it's not in FHS, but it's certainly in use on my install:
 
-> How about ripping the .git directory from the next release, and just
-> have a un-numbered tarball (like you used to) that have the latest
-> snapshot of the .git directory for those that want to do git-pasky
-> development?  Should even make things easier your side, as you could
-> just do a cron to update it one a day/whatever.
+$ find /usr/libexec | wc -l
+122
 
-Why?  The .git directory doesn't hurt anything that gentoo would do, we
-would just update the ebuild for the major releases.
+I don't care too much, I imagine distros wind up customizing this
+anyway.
+
+> > However, this requires something more than hardcoding paths.
+> Definately, and it may not play well with the simpler method of installing to 
+> $HOME/bin. This was just a quick hack as not to pollute /usr/bin with files 
+> that aren't directly executed by the user.
+
+Yup, that's why I dropped 'em in /usr/local/bin for now.
+
+> > You get the idea ;-)  I certainly see how it makes sense for a first
+> > run to get it going. But this will need fixing upstream.
+> This will all be moot when cogito goes the way of cg-* ;-)
+
+Hrm...good point.
 
 thanks,
-
-greg k-h
+-chris
+-- 
+Linux Security Modules     http://lsm.immunix.org     http://lsm.bkbits.net
