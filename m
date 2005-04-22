@@ -1,149 +1,89 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: [patch] fixup GECOS handling
-Date: Fri, 22 Apr 2005 21:06:43 +0200
-Message-ID: <1114196803.29271.52.camel@nosferatu.lan>
-References: <1113820589.16288.5.camel@nosferatu.lan>
-	 <1113827713.5286.13.camel@localhost.localdomain>
-	 <1114179795.29271.18.camel@nosferatu.lan>
-	 <1114186599.31076.409.camel@axer.marchex.com>
-	 <1114189105.29271.36.camel@nosferatu.lan>
-	 <20050422171818.GE7173@pasky.ji.cz>
-	 <1114192702.31076.428.camel@axer.marchex.com>
-Reply-To: azarah@nosferatu.za.org
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: "GIT_INDEX_FILE" environment variable
+Date: Fri, 22 Apr 2005 12:24:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504221147050.2344@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
+ <7vis2fbr0p.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504212200400.2344@ppc970.osdl.org>
+ <7vzmvr72j6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-45YQxiRPnuDIennVkaFA"
-Content-Transfer-Encoding: 8bit
-Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 22 20:59:14 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 22 21:19:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP3M1-0003GT-Ou
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 20:58:18 +0200
+	id 1DP3fn-0006ZX-Vh
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 21:18:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262109AbVDVTCy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 15:02:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262110AbVDVTCy
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 15:02:54 -0400
-Received: from ctb-mesg4.saix.net ([196.25.240.76]:11396 "EHLO
-	ctb-mesg4.saix.net") by vger.kernel.org with ESMTP id S262109AbVDVTCt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 15:02:49 -0400
-Received: from gateway.lan (wblv-146-254-56.telkomadsl.co.za [165.146.254.56])
-	by ctb-mesg4.saix.net (Postfix) with ESMTP id 0945CAA79;
-	Fri, 22 Apr 2005 21:02:45 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id 5A6A93A241A;
-	Fri, 22 Apr 2005 21:09:07 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 14873-18; Fri, 22 Apr 2005 21:09:01 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id 9BA0E3A246F;
-	Fri, 22 Apr 2005 21:09:01 +0200 (SAST)
-To: kyle@marchex.com
-In-Reply-To: <1114192702.31076.428.camel@axer.marchex.com>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	id S262114AbVDVTXK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 15:23:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262116AbVDVTXK
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 15:23:10 -0400
+Received: from fire.osdl.org ([65.172.181.4]:29342 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262114AbVDVTXE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 15:23:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MJMxs4030075
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 22 Apr 2005 12:23:00 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MJMwF7008776;
+	Fri, 22 Apr 2005 12:22:59 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmvr72j6.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---=-45YQxiRPnuDIennVkaFA
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2005-04-22 at 10:58 -0700, Kyle Hayes wrote:
-> On Fri, 2005-04-22 at 19:18 +0200, Petr Baudis wrote:
-> > Dear diary, on Fri, Apr 22, 2005 at 06:58:25PM CEST, I got a letter
-> > where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > > Meaning, if they use a ',' in one of the fields (and it is a linux
-> > > system with the chfn most probably from the shadow package), then the=
-y
-> > > are looking for trouble.  The only reason I added the ';' was because
-> > > somebody said whatever OS used it instead of a ','.
-> >=20
-> > What about just swapping the two tests so that ; is cut off and , only
-> > when no ; is around?
->=20
-> Even nicer.  I like it.  Very clean!
->=20
+On Thu, 21 Apr 2005, Junio C Hamano wrote:
+> 
+> The commands I would want to take paths relative to the user cwd
+> are quite limited; note that I just want these available to the
+> user and I do not care which one, the core or Cogito, groks the
+> cwd relative paths:
 
-Right, but ';' is not cutoff on linux for one, and from what you said
-freebsd as well.  How about this rather (note that I assumed that the
-use of ';' as delimiter will be in the minority, but we can switch
-things around if it turns out the other way):
+I've thought about this, and looked at the sources, and it wouldn't be 
+horrible.
 
-----
-(not signed off, etc, as just for comments)
+HOWEVER, the more I thought about it, the less sense it made. The fact is, 
+you can do _exactly_ what you are talking about by just wrapping the calls 
+in
 
-Index: commit-tree.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- 5f61aecb06c2f2579bbb5951b1b53e0dedc434eb/commit-tree.c  (mode:100644 sh=
-a1:c0b07f89286c3f6cceae8122b4c3142c8efaf8e1)
-+++ uncommitted/commit-tree.c  (mode:100644)
-@@ -96,21 +96,6 @@
-                if (!c)
-                        break;
-        }
--
--       /*
--        * Go back, and remove crud from the end: some people
--        * have commas etc in their gecos field
--        */
--       dst--;
--       while (--dst >=3D p) {
--               unsigned char c =3D *dst;
--               switch (c) {
--               case ',': case ';': case '.':
--                       *dst =3D 0;
--                       continue;
--               }
--               break;
--       }
- }
+	( cd $WORKING_DIR && git-cmd )
 
- static const char *month_names[] =3D {
-@@ -311,6 +296,17 @@
-        if (!pw)
-                die("You don't exist. Go away!");
-        realgecos =3D pw->pw_gecos;
-+       /*
-+        * The GECOS fields are seperated via ',' on Linux, FreeBSD, etc,
-+        * and ';' on AIX.
-+        */
-+#if defined(__aix__)
-+       if (strchr(realgecos, ';'))
-+               *strchr(realgecos, ';') =3D 0;
-+#else
-+       if (strchr(realgecos, ','))
-+               *strchr(realgecos, ',') =3D 0;
-+#endif
-        len =3D strlen(pw->pw_name);
-        memcpy(realemail, pw->pw_name, len);
-        realemail[len] =3D '@';
+which simply doesn't have any downsides that I can see. It always does the 
+right thing, and it means that the tools will never have to care about 
+what the base is. Keeping the core tools is important, because if they 
+mess up, you're in serious trouble. In contrast, if higher levels mess up, 
+you're not likely to have caused anything irrevocable.
 
+In fact, I probably shouldn't even have done the "--prefix=" stuff for
+check-out, since the common "check out in a new directory" case (not the
+"prefix file" case can be pretty easily emulated with a fairly trivial 
+script, something like
 
---=20
-Martin Schlemmer
+	#!/bin/sh
+	CURRENT_DIR=$(pwd)
+	GIT_INDEX_FILE=${GIT_INDEX_FILE:-$CURRENT_DIR/.git/index}
+	SHA1_FILE_DIRECTORY=${SHA1_FILE_DIRECTORY:-$CURRENT_DIR/.git/objects}
+	TARGET=$1
+	shift 1
+	mkdir $TARGET && cd $TARGET && checkout-cache "$@"
 
+but since it was (a) very easy to add to that particular program, and (b) 
+exporting a while directory is pretty fundamental, I'll just leave that 
+strange special case around.
 
---=-45YQxiRPnuDIennVkaFA
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+So to the core tools, there really _are_ just two special things: the 
+index file, and the place where to find the sha1 objects.  The working 
+directory is really nothing but "pwd", which can be trivially changed 
+before invocation, ie the addition of a new environment variable really 
+doesn't _buy_ anything except for complexity.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBCaUtDqburzKaJYLYRAsypAJ90iEEJj8DDwy9owsAKnr+DaZl8WQCeLJqh
-oxASmTn7zr/slbjbaNgRqlo=
-=Eljg
------END PGP SIGNATURE-----
-
---=-45YQxiRPnuDIennVkaFA--
-
+		Linus
