@@ -1,72 +1,80 @@
 From: Christian Meder <chris@absolutegiganten.org>
-Subject: Re: First web interface and service API draft
-Date: Fri, 22 Apr 2005 22:57:03 +0200
-Message-ID: <1114203423.3207.24.camel@localhost>
-References: <1114166517.3233.4.camel@localhost>
-	 <20050422142342.GG30915@delft.aura.cs.cmu.edu>
+Subject: Re: wit 0.0.3 - a web interface for git available
+Date: Fri, 22 Apr 2005 23:16:40 +0200
+Message-ID: <1114204601.3207.28.camel@localhost>
+References: <1113956951.3309.22.camel@localhost>
+	 <20050420041828.GA15391@kroah.com> <20050420094253.GB29910@infradead.org>
+	 <20050421012827.GA13795@vrfy.org> <20050421073326.GA21772@kroah.com>
+	 <1114202122.3207.4.camel@localhost>  <20050422210905.GB1829@kroah.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 22 23:11:43 2005
+Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 22 23:21:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP5Q4-0007yT-M2
-	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:10:36 +0200
+	id 1DP5ZN-0001Bc-1v
+	for gcvg-git@gmane.org; Fri, 22 Apr 2005 23:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262141AbVDVVOv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 17:14:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262135AbVDVVOX
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:14:23 -0400
-Received: from shadow.prohost.de ([216.71.84.228]:34391 "EHLO
-	shadow.prohost.de") by vger.kernel.org with ESMTP id S262136AbVDVVNs
+	id S262150AbVDVVTk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 17:19:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262138AbVDVVTY
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 17:19:24 -0400
+Received: from shadow.prohost.de ([216.71.84.228]:15192 "EHLO
+	shadow.prohost.de") by vger.kernel.org with ESMTP id S262135AbVDVVQs
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Apr 2005 17:13:48 -0400
+	Fri, 22 Apr 2005 17:16:48 -0400
 Received: from blue (p54A23F84.dip.t-dialin.net [84.162.63.132])
-	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3MLDah03714;
-	Fri, 22 Apr 2005 23:13:36 +0200
-To: Jan Harkes <jaharkes@cs.cmu.edu>
-In-Reply-To: <20050422142342.GG30915@delft.aura.cs.cmu.edu>
+	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3MLGga07588;
+	Fri, 22 Apr 2005 23:16:42 +0200
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20050422210905.GB1829@kroah.com>
 X-Mailer: Evolution 2.0.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-04-22 at 10:23 -0400, Jan Harkes wrote:
-> On Fri, Apr 22, 2005 at 12:41:56PM +0200, Christian Meder wrote:
-> > -------
-> > /<project>/blob/<blob-sha1>
-> > /<project>/commit/<commit-sha1>
+On Fri, 2005-04-22 at 14:09 -0700, Greg KH wrote:
+> On Fri, Apr 22, 2005 at 10:35:22PM +0200, Christian Meder wrote:
+> > On Thu, 2005-04-21 at 00:33 -0700, Greg KH wrote:
+> > > On Thu, Apr 21, 2005 at 03:28:27AM +0200, Kay Sievers wrote:
+> > > > On Wed, Apr 20, 2005 at 10:42:53AM +0100, Christoph Hellwig wrote:
+> > > > > On Tue, Apr 19, 2005 at 09:18:29PM -0700, Greg KH wrote:
+> > > > > > On Wed, Apr 20, 2005 at 02:29:11AM +0200, Christian Meder wrote:
+> > > > > > > Hi,
+> > > > > > > 
+> > > > > > > ok it's starting to look like spam ;-)
+> > > > > > > 
+> > > > > > > I uploaded a new version of wit to http://www.absolutegiganten.org/wit
+> > > > > > 
+> > > > > > Why not work together with Kay's tool:
+> > > > > > 	http://ehlo.org/~kay/gitweb.pl?project=linux-2.6&action=show_log
+> > > > > 
+> > > > > That one looks really nice.  One major feature I'd love to see would
+> > > > > be a show all diffs link for a changeset.
+> > > > 
+> > > > It's working now:
+> > > >   http://ehlo.org/~kay/gitweb.pl
+> > > > 
+> > > > Many thanks to Christian Gierke for all the interface work, the nice
+> > > > layout and the git logo. Thanks for the colored diff to Ken Brush.
+> > > 
+> > > Very nice, this looks great.  And hey, we have a git logo now :)
+> > 
+> > BTW is this logo already officially blessed ?
 > 
-> It is trivial to find an object when given a sha, but to know the object
-> type you'd have to decompress it and check inside. Also the way git
-> stores these things you can't have both a blob and a commit with the
-> same sha anyways.
-> 
-> So why not use,
->     /<project/<hexadecimal sha1 representation>
-> 	will give you the raw object.
-> 
->     /<project/<hexadecimal sha1 representation>.html (.xml/.txt)
-> 	will give you a parsed version for user presentation
-> 
-> And since hexadecimal numbers only have [0-9a-f] as valid characters,
-> you can still have additional directories that can be guaranteed unique
-> as long as the first two characters are not a valid hexadecimal value.
-> So things like /branch/linus, or /changelog/, /log/, /diff/. Yeah, you
-> can't use /delta/ without looking at more than the first two characters,
-> but that's where dictionaries can come in handy.
+> "blessed" how?
 
-Hmm. I'm not sure about throwing away the <objecttype> information in
-the url. I think I'd prefer to retain the blob, tree and commit
-namespaces because I think they help API users to explicitly state what
-kind of object they expect. I can't think of a scenario where I'd want a
-<sha1> of unknown type. Do you have a specific use case in mind ?
+Linus likes it ;-)
+
+> Have an alternative one?
+
+Nope. I actually like the one on gitweb.
 
 
+			Christian
 
-				Christian     
 -- 
 Christian Meder, email: chris@absolutegiganten.org
 
