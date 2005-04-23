@@ -1,74 +1,154 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: Git-commits mailing list feed.
-Date: Sat, 23 Apr 2005 14:34:07 -0400
-Message-ID: <20050423183406.GD20410@delft.aura.cs.cmu.edu>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net> <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net> <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
+From: James Bottomley <James.Bottomley@SteelEye.com>
+Subject: git-changes-script to show inter tree changes
+Date: Sat, 23 Apr 2005 14:43:12 -0400
+Message-ID: <1114281792.5068.10.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 23 20:30:09 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 20:39:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPPOD-00031S-3n
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 20:30:01 +0200
+	id 1DPPWk-0003mv-0N
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 20:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261685AbVDWSeg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 14:34:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261673AbVDWSeb
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:34:31 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:35234 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S261663AbVDWSeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 14:34:20 -0400
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1DPPSB-0003KV-00; Sat, 23 Apr 2005 14:34:07 -0400
+	id S261674AbVDWSne (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 14:43:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261668AbVDWSne
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:43:34 -0400
+Received: from stat16.steeleye.com ([209.192.50.48]:24025 "EHLO
+	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
+	id S261674AbVDWSnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 14:43:20 -0400
+Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
+	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3NIhDA04385;
+	Sat, 23 Apr 2005 14:43:13 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+X-Mailer: Evolution 2.0.4 (2.0.4-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 23, 2005 at 10:31:28AM -0700, Linus Torvalds wrote:
-> In other words, I actually want to create "tag objects", the same way we 
-> have "commit objects". A tag object points to a commit object, but in 
-> addition it contains the tag name _and_ the digital signature of whoever 
-> created the tag.
+One of the features I found most useful about bk changes was the ability
+to see changes in my tree that weren't in the other tree (I use this to
+keep track of what patches I actually have).
 
-I see how we can use such a tag object to find a specific commit object
-in the tree. But if you put the tag objects in the tree as well we now
-have to figure out a way to find the tag objects.
+I've modified the gitlog script to take the -L and -R options (local
+directories only; won't work on remotes like bk changes would) to add
+this functionality.
 
-Why not keep the tags object outside of the tree in the tags/ directory.
-That way it is easy to find them, and simple to validate all tags or
-update the signatures if you lost your key.
+James
 
-> properly. Oh, and make sure the above sounds sane (ie if somebody has a 
-> better idea for how to more easily identify how to find the public key to 
-> check against, please speak up).
+#!/bin/bash
+#
+# Make a log of changes in a GIT branch.
+#
+# This script was originally written by (c) Ross Vandegrift.
+# Adapted to his scripts set by (c) Petr Baudis, 2005.
+# Major optimizations by (c) Phillip Lougher.
+# Rendered trivial by Linus Torvalds.
+# Added -L|-R option by James Bottomley
+#
+# options:
+# script [-L <dir> | -R <dir> |-r <from_sha1> [ -r <to_sha1] ] [<sha1>]
+#
+# With no options shows all the revisions from HEAD to the root
+# -L shows all the changes in the local tree compared to the tree at <dir>
+# -R shows all the changes in the remote tree at <dir> compared to the local
+# -r shows all the changes in one commit or between two
 
-Others already mentioned the gpg clearsign and verify options, to find a
-public key that you haven't seen before it is probably easiest to use a
-keyserver. If verify complains that it doesn't know a key it will print
-a key-id that identifies it. That id can then be looked up as follows,
+tmpfile=/tmp/git_changes.$$
+r1=
+r2=
 
-    gpg --keyserver wwwkeys.pgp.net --search-keys 0xA86B35C5
-    gpg: searching for "0xA86B35C5" from hkp server wwwkeys.pgp.net
-    (1)     Linus Torvalds <Linus.Torvalds@Helsinki.FI>
-		1024 bit RSA key A86B35C5, created: 1996-06-08
-    Keys 1-1 of 1 for "0xA86B35C5".  Enter number(s), N)ext, or Q)uit > q
+showcommit() {
+	commit="$1"
+	echo commit ${commit%:*};
+	cat-file commit $commit | \
+		while read key rest; do
+			case "$key" in
+			"author"|"committer")
+				date=(${rest#*> })
+				sec=${date[0]};
+				pdate="$(date -Rd "1970-01-01 UTC + $sec sec" 2>/dev/null)"
+				if [ "$pdate" ]; then
+					echo $key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/"
+				else
+					echo $key $rest
+				fi
+				;;
+			"")
+				echo; cat
+				;;
+			*)
+				echo $key $rest
+				;;
+			esac
 
-Ofcourse trusting a key obtained this way is another thing altogether,
-and would probably depend on who signed it and such.
+		done
+}
 
-Jan
+while true; do
+	case "$1" in
+		-R)	shift;
+			diffsearch=+
+			remote="$1"
+			shift;;
+		-L)	shift;
+			diffsearch=-
+			remote="$1"
+			shift;;
+		-r)	shift;
+			if [ -z "$r1" ]; then
+				r1="$1"
+			else
+				r2="$1"
+			fi
+			shift;;
+		*)	base="$1"
+			break;;
+	esac
+done
+
+if [ -n "$r1" ]; then
+	if [ -z "$r2" ]; then
+		showcommit $r1
+		exit 0
+	fi
+	diffsearch=+
+	remote=`pwd`;
+	tobase="$r2";
+	base="$r1"
+fi
+	
+if [ -z "$base" ]; then
+	base=$(cat .git/HEAD) || exit 1
+fi
+
+rev-tree $base | sort -rn  > ${tmpfile}.base
+if [ -n "$remote" ]; then
+	[ -d $remote/.git ] || exit 1
+	if [ -z "$tobase" ]; then
+		tobase=$(cat $remote/.git/HEAD) || exit 1
+	fi
+	pushd $remote > /dev/null
+	rev-tree $tobase | sort -rn > ${tmpfile}.remote
+	diff -u ${tmpfile}.base ${tmpfile}.remote | grep "^${diffsearch}[^${diffsearch}]" | cut -c 1- > ${tmpfile}.diff
+	rm -f ${tmpfile}.base ${tmpfile}.remote
+	mv ${tmpfile}.diff ${tmpfile}.base
+	if [ $diffsearch = "-" ]; then
+		popd > /dev/null
+	fi
+fi
+
+[ -s "${tmpfile}.base" ] || exit 0
+
+cat ${tmpfile}.base | while read time commit parents; do
+	showcommit $commit
+	echo -e "\n--------------------------"
+
+done
+rm -f ${tmpfile}.base
+
+
