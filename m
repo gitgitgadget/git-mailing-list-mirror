@@ -1,81 +1,60 @@
-From: Ray Heasman <lists@mythral.org>
-Subject: Re: Hash collision count
-Date: Sat, 23 Apr 2005 16:00:31 -0700
-Message-ID: <1114297231.10264.12.camel@maze.mythral.org>
-References: <426AAFC3.800@pobox.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] make file merging respect permissions
+Date: Sun, 24 Apr 2005 01:02:38 +0200
+Message-ID: <20050423230238.GD13222@pasky.ji.cz>
+References: <1114280570.5068.5.camel@mulgrave> <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org> <1114292680.4799.4.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 00:56:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 00:58:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPTXm-0001aL-C6
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 00:56:10 +0200
+	id 1DPTZd-0001lg-Pc
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 00:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262163AbVDWXAr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:00:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262160AbVDWXAr
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:00:47 -0400
-Received: from soggy199.drizzle.com ([216.162.199.199]:20232 "EHLO mythral.org")
-	by vger.kernel.org with ESMTP id S262163AbVDWXAg (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:00:36 -0400
-Received: (qmail 1584 invoked from network); 23 Apr 2005 16:00:34 -0700
-Received: from dsl254-013-025.sea1.dsl.speakeasy.net (HELO maze.mythral.org) (authuser@216.254.13.25)
-  by 192.168.0.8 with RC4-MD5 encrypted SMTP; 23 Apr 2005 16:00:34 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <426AAFC3.800@pobox.com>
-X-Mailer: Evolution 2.0.2 
+	id S262165AbVDWXCu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 19:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262160AbVDWXCu
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:02:50 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51639 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262167AbVDWXCl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:02:41 -0400
+Received: (qmail 28535 invoked by uid 2001); 23 Apr 2005 23:02:38 -0000
+To: James Bottomley <James.Bottomley@SteelEye.com>
+Content-Disposition: inline
+In-Reply-To: <1114292680.4799.4.camel@mulgrave>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-04-23 at 16:27 -0400, Jeff Garzik wrote:
-> Ideally a hash + collision-count pair would make the best key, rather 
-> than just hash alone.
+Dear diary, on Sat, Apr 23, 2005 at 11:44:40PM CEST, I got a letter
+where James Bottomley <James.Bottomley@SteelEye.com> told me that...
+> On Sat, 2005-04-23 at 13:17 -0700, Linus Torvalds wrote:
+> > Yeah, yeah, you obviously meant "$?", but the fact 
+> > is, your patch is bogus, and I don't trust it. Can you re-send a valid
+> > one 
+> > (and sign off on it).]
 > 
-> A collision -will- occur eventually, and it is trivial to avoid this 
-> problem:
+> OK, here it is  .. I have an excuse, honest ... and a note from my mum.
 > 
-> 	$n = 0
-> 	attempt to store as $hash-$n
-> 	if $hash-$n exists (unlikely)
-> 		$n++
-> 		goto restart
-> 	key = $hash-$n
-> 
+> +	ret=$?
+> +	if [ "$6" != "$7" ]; then
+> +		echo "ERROR: Permissions $5->$6->$7 don't match merging $src2"
+> +		if [ $ret -ne 0 ]; then
+> +			echo "ERROR: Leaving conflict merge in $src2"
+> +		fi
+> +		exit 1
+> +	fi
+> +	chmod -- "$6" "$src2"
+> +	if [ $ -ne 0 ]; then
 
-Great. So what have you done here? Suppose you have 32 bits of counter
-for n. Whoopee, you just added 32 bits to your hash, using a two stage
-algorithm. So, you have a 192 bit hash assuming you started with the 160
-bit SHA. And, one day your 32 bit counter won't be enough. Then what?
+*cough*
 
-> Tangent-as-the-reason-I-bring-this-up:
-> 
-> One of my long-term projects is an archive service, somewhat like 
-> Plan9's venti:  a multi-server key-value database, with sha1 hash as the 
-> key.
-> 
-> However, as the database grows into the terabyte (possibly petabyte) 
-> range, the likelihood of a collision transitions rapidly from unlikely 
-> -> possible -> likely.
-> 
-> Since it is -so- simple to guarantee that you avoid collisions, I'm 
-> hoping git will do so before the key structure is too ingrained.
-
-You aren't solving anything. You're just putting it off, and doing it in
-a way that breaks all the wonderful semantics possible by just assuming
-that the hash is unique. All of a sudden we are doing checks of data
-that we never did before, and we have to do the check trillions of times
-before the CPU time spent pays off.
-
-If you want to use a bigger hash then use a bigger hash, but don't fool
-yourself into thinking that isn't what you are doing.
-
-Ciao,
-Ray
-
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
