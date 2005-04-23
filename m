@@ -1,52 +1,55 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: git pull issues...
-Date: Sat, 23 Apr 2005 17:25:32 -0400
-Message-ID: <118833cc050423142573729ce2@mail.gmail.com>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Catching up: git-pasky-0.6.2 broken?
+Date: Sat, 23 Apr 2005 23:25:05 +0200
+Message-ID: <20050423212505.GB13222@pasky.ji.cz>
+References: <20050423124758.B32116@flint.arm.linux.org.uk> <20050423151238.C32116@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Apr 23 23:21:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 23:21:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPS4L-0002Hh-Nd
+	id 1DPS4M-0002Hh-5p
 	for gcvg-git@gmane.org; Sat, 23 Apr 2005 23:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261960AbVDWVZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 17:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261958AbVDWVZ4
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 17:25:56 -0400
-Received: from rproxy.gmail.com ([64.233.170.199]:27552 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261960AbVDWVZg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 17:25:36 -0400
-Received: by rproxy.gmail.com with SMTP id a41so716419rng
-        for <git@vger.kernel.org>; Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=r/Z7iO1uQ9YuiZ3/72JMjgAmDxkEmILLtqR46rOP10NEF5G/s0nn5IidMCX4OOrvqOfCcnv/hNlpDWYQWlEquc5oLvccjo4yplpGHliv2B3rRNYAvbDYuqHwqKeHzPJPNGyz4BDNocbidL4pnibvBbmBrMITcb/y1L7ZTEnaQh4=
-Received: by 10.38.6.75 with SMTP id 75mr4341282rnf;
-        Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
-To: GIT Mailing List <git@vger.kernel.org>
+	id S261880AbVDWVZ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 17:25:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261958AbVDWVZ1
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 17:25:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:20662 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261880AbVDWVZL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 17:25:11 -0400
+Received: (qmail 18953 invoked by uid 2001); 23 Apr 2005 21:25:05 -0000
+To: Russell King <rmk@arm.linux.org.uk>
 Content-Disposition: inline
+In-Reply-To: <20050423151238.C32116@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Minor issues with "git pull":
+Dear diary, on Sat, Apr 23, 2005 at 04:12:39PM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> Could the problem be related to some random garbage left in .git/add-queue
+> and .git/rm-queue?
 
-1. Multiple rsync call might connect to different servers (with
-round-robin DNS).  The effect
-   will be interesting.  One call, if possible, would be better.
+Quite likely.
 
-2. If any rsync fails, the process should be aborted.
+> If so, how did these files get generated in the first place, and why
+> weren't they removed when they were finished with?
 
-As long as we do have multiple calls:
+That was a bug in git apply, fixed for quite some time already.
 
-3. The "grep -v '^MOTD:'" should be changed to kill blank lines after
-MOTDs also.
+> IMHO updating a repository from an external source should _NOT_ be
+> affected by the presence (or absense) of these two files, which
+> contain only _local_ state information.
 
-Morten
+Note that the latest git-pasky (post-0.6.3) is already completely
+queues-free.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
