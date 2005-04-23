@@ -1,101 +1,181 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: Hash collision count
-Date: Sat, 23 Apr 2005 19:20:21 -0400
-Message-ID: <426AD835.5070404@pobox.com>
-References: <426AAFC3.800@pobox.com> <1114297231.10264.12.camel@maze.mythral.org>
+From: James Bottomley <James.Bottomley@SteelEye.com>
+Subject: Re: [PATCH] make file merging respect permissions
+Date: Sat, 23 Apr 2005 19:21:30 -0400
+Message-ID: <1114298490.5264.10.camel@mulgrave>
+References: <1114280570.5068.5.camel@mulgrave>
+	 <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
+	 <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 01:16:58 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 01:17:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPTrp-0003MJ-IO
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:16:53 +0200
+	id 1DPTsX-0003OV-AP
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262170AbVDWXVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262171AbVDWXVH
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:21:07 -0400
-Received: from 216-237-124-58.infortech.net ([216.237.124.58]:31129 "EHLO
-	mail.dvmed.net") by vger.kernel.org with ESMTP id S262170AbVDWXU0
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 19:20:26 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
-	id 1DPTvE-0002cv-F8; Sat, 23 Apr 2005 23:20:25 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Ray Heasman <lists@mythral.org>
-In-Reply-To: <1114297231.10264.12.camel@maze.mythral.org>
-X-Spam-Score: 0.0 (/)
+	id S262171AbVDWXWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 19:22:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262172AbVDWXWT
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:22:19 -0400
+Received: from stat16.steeleye.com ([209.192.50.48]:31964 "EHLO
+	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
+	id S262171AbVDWXVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 19:21:47 -0400
+Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
+	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3NNLVA17336;
+	Sat, 23 Apr 2005 19:21:32 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050423230238.GD13222@pasky.ji.cz>
+X-Mailer: Evolution 2.0.4 (2.0.4-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ray Heasman wrote:
-> On Sat, 2005-04-23 at 16:27 -0400, Jeff Garzik wrote:
-> 
->>Ideally a hash + collision-count pair would make the best key, rather 
->>than just hash alone.
->>
->>A collision -will- occur eventually, and it is trivial to avoid this 
->>problem:
->>
->>	$n = 0
->>	attempt to store as $hash-$n
->>	if $hash-$n exists (unlikely)
->>		$n++
->>		goto restart
->>	key = $hash-$n
->>
-> 
-> 
-> Great. So what have you done here? Suppose you have 32 bits of counter
-> for n. Whoopee, you just added 32 bits to your hash, using a two stage
-> algorithm. So, you have a 192 bit hash assuming you started with the 160
-> bit SHA. And, one day your 32 bit counter won't be enough. Then what?
+On Sun, 2005-04-24 at 01:02 +0200, Petr Baudis wrote:
+> *cough*
 
-First, there is no 32-bit limit.  git stores keys (aka hashes) as 
-strings.  As it should.
+OK, dirty file in the local tree, sorry.
 
-Second, in your scenario, it's highly unlikely you would get 4 billion 
-sha1 hash collisions, even if you had the disk space to store such a git 
-database.
+This is the actual diff
 
+---
 
->>Tangent-as-the-reason-I-bring-this-up:
->>
->>One of my long-term projects is an archive service, somewhat like 
->>Plan9's venti:  a multi-server key-value database, with sha1 hash as the 
->>key.
->>
->>However, as the database grows into the terabyte (possibly petabyte) 
->>range, the likelihood of a collision transitions rapidly from unlikely 
->>-> possible -> likely.
->>
->>Since it is -so- simple to guarantee that you avoid collisions, I'm 
->>hoping git will do so before the key structure is too ingrained.
-> 
-> 
-> You aren't solving anything. You're just putting it off, and doing it in
-> a way that breaks all the wonderful semantics possible by just assuming
-> that the hash is unique. All of a sudden we are doing checks of data
-> that we never did before, and we have to do the check trillions of times
-> before the CPU time spent pays off.
+1) permissions aren't respected in the merge script (primarily because
+they're never passed in to it in the first place).  Fix that and also
+check for permission conflicts in the merge
 
-First, the hash is NOT unique.
+2) the delete of a file in both branches may indeed be just that, but it
+could also be the indicator of a rename conflict (file moved to
+different locations in both branches), so error out and ask the
+committer for guidance.
 
-Second, you lose data if you pretend it is unique.  I don't like losing 
-data.
+Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
 
-Third, a data check only occurs in the highly unlikely case that a hash 
-already exists -- a collision.  Rather than "trillions of times", more 
-like "one in a trillion chance."
-
-	Jeff
-
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -20,23 +20,45 @@ mkdir -p "$dir"
+ 
+ case "${1:-.}${2:-.}${3:-.}" in
+ #
+-# deleted in both, or deleted in one and unchanged in the other
++# deleted in both
++#
++"$1..")
++	echo "ERROR: $4 is removed in both branches"
++	echo "ERROR: This is a potential rename conflict"
++	exit 1;;
++#
++# deleted in one and unchanged in the other
+ #
+ "$1.." | "$1.$1" | "$1$1.")
+ 	rm -f -- "$4"
++	echo "Removing $4"
+ 	update-cache --remove -- "$4"
+ 	exit 0
+ 	;;
+ 
+ #
+-# added in one, or added identically in both
++# added in one
+ #
+-".$2." | "..$3" | ".$2$2")
+-	mv $(unpack-file "${2:-$3}") $4
++".$2." | "..$3" )
++	echo "Adding $4 with perm $6$7"
++	mv $(unpack-file "$2$3") $4
++	chmod "$6$7" $4
+ 	update-cache --add -- $4
+ 	exit 0
+ 	;;
+-
++#
++# Added in both (check for same permissions)
++#
++".$2$2")
++	if [ "$6" != "$7" ]; then
++		echo "ERROR: File $4 added in both branches, permissions conflict $6->$7"
++		exit 1
++	fi
++	echo "Adding $4 with perm $6"
++	mv $(unpack-file "$2") $4
++	chmod "$6" $4
++	update-cache --add -- $4
++	exit 0;;
+ #
+ # Modified in both, but differently ;(
+ #
+@@ -46,12 +68,21 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	src1=$(unpack-file $2)
+ 	src2=$(unpack-file $3)
+ 	merge "$src2" "$orig" "$src1"
+-	if [ $? -ne 0 ]; then
+-		echo Leaving conflict merge in $src2
++	ret=$?
++	if [ "$6" != "$7" ]; then
++		echo "ERROR: Permissions $5->$6->$7 don't match merging $src2"
++		if [ $ret -ne 0 ]; then
++			echo "ERROR: Leaving conflict merge in $src2"
++		fi
++		exit 1
++	fi
++	chmod -- "$6" "$src2"
++	if [ $ret -ne 0 ]; then
++		echo "ERROR: Leaving conflict merge in $src2"
+ 		exit 1
+ 	fi
+-	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
++	cp -- "$src2" "$4" && chmod -- "$6" "$4" &&  update-cache --add -- "$4" && exit 0
+ 	;;
+ 
+ *)
+--- a/merge-cache.c
++++ b/merge-cache.c
+@@ -4,7 +4,7 @@
+ #include "cache.h"
+ 
+ static const char *pgm = NULL;
+-static const char *arguments[5];
++static const char *arguments[8];
+ 
+ static void run_program(void)
+ {
+@@ -18,6 +18,9 @@ static void run_program(void)
+ 			    arguments[2],
+ 			    arguments[3],
+ 			    arguments[4],
++			    arguments[5],
++			    arguments[6],
++			    arguments[7],
+ 			    NULL);
+ 		die("unable to execute '%s'", pgm);
+ 	}
+@@ -36,9 +39,13 @@ static int merge_entry(int pos, const ch
+ 	arguments[2] = "";
+ 	arguments[3] = "";
+ 	arguments[4] = path;
++	arguments[5] = "";
++	arguments[6] = "";
++	arguments[7] = "";
+ 	found = 0;
+ 	do {
+ 		static char hexbuf[4][60];
++		static char ownbuf[4][60];
+ 		struct cache_entry *ce = active_cache[pos];
+ 		int stage = ce_stage(ce);
+ 
+@@ -46,7 +53,9 @@ static int merge_entry(int pos, const ch
+ 			break;
+ 		found++;
+ 		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
++		sprintf(ownbuf[stage], "%o", ntohl(ce->ce_mode) & (~S_IFMT));
+ 		arguments[stage] = hexbuf[stage];
++		arguments[stage + 4] = ownbuf[stage];
+ 	} while (++pos < active_nr);
+ 	if (!found)
+ 		die("merge-cache: %s not in the cache", path);
 
 
