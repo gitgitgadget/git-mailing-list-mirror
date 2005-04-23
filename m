@@ -1,66 +1,172 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: Git-commits mailing list feed.
-Date: Sat, 23 Apr 2005 19:54:22 +0200
-Message-ID: <20050423175422.GA7100@cip.informatik.uni-erlangen.de>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net> <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net> <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
+From: James Bottomley <James.Bottomley@SteelEye.com>
+Subject: [PATCH] make file merging respect permissions
+Date: Sat, 23 Apr 2005 14:22:50 -0400
+Message-ID: <1114280570.5068.5.camel@mulgrave>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 23 19:58:03 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 20:19:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPOt5-0000I3-7W
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 19:57:51 +0200
+	id 1DPPE0-00028Z-Mb
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 20:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261643AbVDWSCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 14:02:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261642AbVDWSCa
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:02:30 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:14030 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261640AbVDWSCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 14:02:25 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j3NHsMS8016621
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 23 Apr 2005 17:54:22 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j3NHsM8a016620;
-	Sat, 23 Apr 2005 19:54:22 +0200 (CEST)
+	id S261657AbVDWSXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 14:23:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261658AbVDWSXh
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:23:37 -0400
+Received: from stat16.steeleye.com ([209.192.50.48]:10713 "EHLO
+	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
+	id S261657AbVDWSW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 14:22:59 -0400
+Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
+	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3NIMpA03509;
+	Sat, 23 Apr 2005 14:22:51 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+X-Mailer: Evolution 2.0.4 (2.0.4-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+I noticed when playing about with merging that executable scripts lose
+their permissions after a merge.  This was because unpack-file just
+unpacks to whatever the current umask is.
 
-there is no need to tell the verifier against what key to verify because
-the signature already contains this information.
+I also noticed that the merge-one-file-script thinks that if the file
+has been removed in both branches, then it should simply be removed.
+This isn't correct.  The file could have been renamed to something
+different in both branches, in which case we have an unflagged rename
+conflict.
 
-> If somebody writes a script to generate the above kind of thing (and
-> tells me how to validate it), I'll do the rest, and start tagging
-> things properly. Oh, and make sure the above sounds sane (ie if
-> somebody has a better idea for how to more easily identify how to find
-> the public key to check against, please speak up).
+The attached fixes both issues
 
-# This creates the signature.
-gpg --clearsign < sign_this > signature
+James
 
-# And this verifies it. 
-gpg --verify < signature && echo valid
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -20,23 +20,47 @@ mkdir -p "$dir"
+ 
+ case "${1:-.}${2:-.}${3:-.}" in
+ #
+-# deleted in both, or deleted in one and unchanged in the other
++# deleted in both
++#
++"$1..")
++	echo "ERROR: $4 is removed in both branches"
++	echo "ERROR: This is a potential rename conflict"
++	exit 1;;
++#
++# deleted in one and unchanged in the other
+ #
+ "$1.." | "$1.$1" | "$1$1.")
+ 	rm -f -- "$4"
++	echo "Removing $4"
+ 	update-cache --remove -- "$4"
+ 	exit 0
+ 	;;
+ 
+ #
+-# added in one, or added identically in both
++# added in one
+ #
+-".$2." | "..$3" | ".$2$2")
+-	mv $(unpack-file "${2:-$3}") $4
++".$2." | "..$3" )
++	echo "Adding $4 with perm $6$7"
++	mv $(unpack-file "$2$3") $4
++	chmod "$6$7" $4
+ 	update-cache --add -- $4
+ 	exit 0
+ 	;;
+-
++#
++# Added in both (check for same permissions)
++#
++".$2$2")
++	if [ "$6" != "$7" ]; then
++		echo "ERROR:"
++		echo "ERROR: File $4 added in both branches, permissions conflict $6->$7"
++		echo "ERROR:"
++		exit 1
++	fi
++	echo "Adding $4 with perm $6"
++	mv $(unpack-file "$2") $4
++	chmod "$6" $4
++	update-cache --add -- $4
++	exit 0;;
+ #
+ # Modified in both, but differently ;(
+ #
+@@ -46,12 +70,21 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	src1=$(unpack-file $2)
+ 	src2=$(unpack-file $3)
+ 	merge "$src2" "$orig" "$src1"
+-	if [ $? -ne 0 ]; then
+-		echo Leaving conflict merge in $src2
++	ret=$?
++	if [ "$6" != "$7" ]; then
++		echo "ERROR: Permissions $5->$6->$7" don't match merging $src2"
++		if [ $ret -ne 0 ]; then
++			echo "ERROR: Leaving conflict merge in $src2"
++		fi
++		exit 1
++	fi
++	chmod -- "$6" "$src2"
++	if [ $ -ne 0 ]; then
++		echo "ERROR: Leaving conflict merge in $src2"
+ 		exit 1
+ 	fi
+-	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
++	cp -- "$src2" "$4" && chmod -- "$6" "$4" &&  update-cache --add -- "$4" && exit 0
+ 	;;
+ 
+ *)
+--- a/merge-cache.c
++++ b/merge-cache.c
+@@ -4,7 +4,7 @@
+ #include "cache.h"
+ 
+ static const char *pgm = NULL;
+-static const char *arguments[5];
++static const char *arguments[8];
+ 
+ static void run_program(void)
+ {
+@@ -18,6 +18,9 @@ static void run_program(void)
+ 			    arguments[2],
+ 			    arguments[3],
+ 			    arguments[4],
++			    arguments[5],
++			    arguments[6],
++			    arguments[7],
+ 			    NULL);
+ 		die("unable to execute '%s'", pgm);
+ 	}
+@@ -36,9 +39,13 @@ static int merge_entry(int pos, const ch
+ 	arguments[2] = "";
+ 	arguments[3] = "";
+ 	arguments[4] = path;
++	arguments[5] = "";
++	arguments[6] = "";
++	arguments[7] = "";
+ 	found = 0;
+ 	do {
+ 		static char hexbuf[4][60];
++		static char ownbuf[4][60];
+ 		struct cache_entry *ce = active_cache[pos];
+ 		int stage = ce_stage(ce);
+ 
+@@ -46,7 +53,9 @@ static int merge_entry(int pos, const ch
+ 			break;
+ 		found++;
+ 		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
++		sprintf(ownbuf[stage], "%o", ntohl(ce->ce_mode) & (~S_IFMT));
+ 		arguments[stage] = hexbuf[stage];
++		arguments[stage + 4] = ownbuf[stage];
+ 	} while (++pos < active_nr);
+ 	if (!found)
+ 		die("merge-cache: %s not in the cache", path);
 
-	Thomas
+
