@@ -1,82 +1,97 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "GIT_INDEX_FILE" environment variable
-Date: Fri, 22 Apr 2005 15:14:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504221503270.2344@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504211100330.2344@ppc970.osdl.org>
- <7vis2fbr0p.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504212200400.2344@ppc970.osdl.org>
- <7vzmvr72j6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504221147050.2344@ppc970.osdl.org>
- <7vbr867ecy.fsf@assigned-by-dhcp.cox.net>
+From: "Timothy R. Chavez" <tinytim@us.ibm.com>
+Subject: Re: [OT] git logo or mascot (was: Re: wit 0.0.3 - a web interface for git available)
+Date: Sat, 23 Apr 2005 07:19:30 +0000
+Organization: IBM
+Message-ID: <200504230719.31657.tinytim@us.ibm.com>
+References: <1113956951.3309.22.camel@localhost> <20050422210905.GB1829@kroah.com> <200504222322.33934.FabianFranz@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 23 00:09:18 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 23 00:09:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DP6KN-0006rQ-IG
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 00:08:47 +0200
+	id 1DP6KU-0006s4-0R
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 00:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261197AbVDVWMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Apr 2005 18:12:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261190AbVDVWMs
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 18:12:48 -0400
-Received: from fire.osdl.org ([65.172.181.4]:13263 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261197AbVDVWM1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Apr 2005 18:12:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3MMCIs4009746
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 22 Apr 2005 15:12:18 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3MMCGN6015786;
-	Fri, 22 Apr 2005 15:12:17 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr867ecy.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261202AbVDVWNW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Apr 2005 18:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261190AbVDVWNW
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Apr 2005 18:13:22 -0400
+Received: from e31.co.us.ibm.com ([32.97.110.129]:60404 "EHLO
+	e31.co.us.ibm.com") by vger.kernel.org with ESMTP id S261207AbVDVWM5
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Apr 2005 18:12:57 -0400
+Received: from westrelay02.boulder.ibm.com (westrelay02.boulder.ibm.com [9.17.195.11])
+	by e31.co.us.ibm.com (8.12.10/8.12.9) with ESMTP id j3MMCsua515082
+	for <git@vger.kernel.org>; Fri, 22 Apr 2005 18:12:54 -0400
+Received: from d03av04.boulder.ibm.com (d03av04.boulder.ibm.com [9.17.195.170])
+	by westrelay02.boulder.ibm.com (8.12.10/NCO/VER6.6) with ESMTP id j3MMCsVA335960
+	for <git@vger.kernel.org>; Fri, 22 Apr 2005 16:12:54 -0600
+Received: from d03av04.boulder.ibm.com (loopback [127.0.0.1])
+	by d03av04.boulder.ibm.com (8.12.11/8.13.3) with ESMTP id j3MMCr7t027384
+	for <git@vger.kernel.org>; Fri, 22 Apr 2005 16:12:54 -0600
+Received: from dyn94194179.austin.ibm.com (dyn94194179.austin.ibm.com [9.41.94.179])
+	by d03av04.boulder.ibm.com (8.12.11/8.12.11) with ESMTP id j3MMCriA027374;
+	Fri, 22 Apr 2005 16:12:53 -0600
+To: Fabian Franz <FabianFranz@gmx.de>
+User-Agent: KMail/1.7.91
+In-Reply-To: <200504222322.33934.FabianFranz@gmx.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Friday 22 April 2005 21:22, you wrote:
+> Am Freitag, 22. April 2005 23:09 schrieb Greg KH:
+> > On Fri, Apr 22, 2005 at 10:35:22PM +0200, Christian Meder wrote:
+> > > On Thu, 2005-04-21 at 00:33 -0700, Greg KH wrote:
+> > > > Very nice, this looks great.  And hey, we have a git logo now :)
+> > >
+> > > BTW is this logo already officially blessed ?
+> >
+> > "blessed" how?
+>
+> Well if it should be official for git, Linus has to "bless" it imho.
+>
+> > Have an alternative one?
+>
+> Well, yes. I would like something, which has something to do with the
+> original linux mascot.
+>
+> Like a fish (though that is already used by some other projects) - penguins
+> like fish! (Tux too? Or more Linus' fingers ;)? )
 
+I think the logo should be a tortoise.  Why?  Because it's somewhat ironic.  
+One of Linus' complaints about SCMs in-general and one of his praises of 
+BitKeeper was performance/speed.  The tortoise is typified as being a slow 
+and cumbersome animal.  Also, the hare, the tortoise' competition, is 
+typified as being quick and possessing fecundity (things that you'd want to 
+identify with "git"... and the job of any decent C programmer is to obfuscate 
+meaning when possible J/K).  
 
-On Fri, 22 Apr 2005, Junio C Hamano wrote:
-> 
-> Almost, with a counter-example.  Please try this yourself:
+Oh, and there's a picture of a tortoise named "git.gif"... 
 
-I agree that what git outputs is always "based on the archive base". But 
-that's an independent issue from "where is the working directory". That's 
-the issue of "how do you want me to print out the results".
+http://www.angelfire.com/oh5/juniorglory/images/git.gif
 
-To see just how independent that is, think about how git-pasky (and,
-indeed, standard "show-diff") already prints out the results in a
-_different_ base than the working directory _or_ the base. Ie the way we 
-already do
+Perhaps not.  Hah
 
-	--- a/Makefile
-	+++ b/Makefile
-	... patch ...
+-tim
 
-for a patch to "Makefile" in the top-level directory.
-
-IOW, showing pathnames is different from _using_ them. And if you were 
-planning on using the same logic for both, you'd have been making a 
-mistake in the first place.
-
-To _use_ pathnames, you use "pwd". To _show_ them, you use some other
-mechanism. You must not mix up those two issues, or you'd always get
-"show-diff" wrong.
-
-I actually think that showing the pathnames is up to the wrapper scripts. 
-Git core really always just works on the "canonical" format.
-
-(And I personally think that "show-diff" is really part of the "wrapper
-scripts" around git. I wrote it originally just because I needed something
-to verify the index file handling, not because it's "core" like the other
-programs. I do _not_ consider "show-diff" to be part of the core git code,
-really. Same goes for "git-export", btw - for the same reasons. It's not
-"fundamental").
-
-		Linus
+>
+> Or perhaps even a wife for Tux, which helps him organizing and managing?
+>
+> ... Tux & Git having nice holidays on an island? ...
+>
+> Hm, but what is cogito then ...
+>
+> cu
+>
+> Fabian
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
