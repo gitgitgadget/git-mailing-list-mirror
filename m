@@ -1,68 +1,52 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: Git-commits mailing list feed.
-Date: Sat, 23 Apr 2005 16:49:57 -0400
-Message-ID: <20050423204957.GA16751@delft.aura.cs.cmu.edu>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net> <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net> <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org> <20050423183406.GD20410@delft.aura.cs.cmu.edu> <Pine.LNX.4.58.0504231228480.2344@ppc970.osdl.org>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: git pull issues...
+Date: Sat, 23 Apr 2005 17:25:32 -0400
+Message-ID: <118833cc050423142573729ce2@mail.gmail.com>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 23 22:46:01 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Apr 23 23:21:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPRVe-0007cm-0g
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 22:45:50 +0200
+	id 1DPS4L-0002Hh-Nd
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 23:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261801AbVDWUuM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 16:50:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261786AbVDWUuM
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 16:50:12 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:24982 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S261784AbVDWUuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 16:50:04 -0400
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1DPRZd-0004S8-00; Sat, 23 Apr 2005 16:49:57 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
+	id S261960AbVDWVZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 17:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261958AbVDWVZ4
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 17:25:56 -0400
+Received: from rproxy.gmail.com ([64.233.170.199]:27552 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261960AbVDWVZg convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 17:25:36 -0400
+Received: by rproxy.gmail.com with SMTP id a41so716419rng
+        for <git@vger.kernel.org>; Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=r/Z7iO1uQ9YuiZ3/72JMjgAmDxkEmILLtqR46rOP10NEF5G/s0nn5IidMCX4OOrvqOfCcnv/hNlpDWYQWlEquc5oLvccjo4yplpGHliv2B3rRNYAvbDYuqHwqKeHzPJPNGyz4BDNocbidL4pnibvBbmBrMITcb/y1L7ZTEnaQh4=
+Received: by 10.38.6.75 with SMTP id 75mr4341282rnf;
+        Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Sat, 23 Apr 2005 14:25:32 -0700 (PDT)
+To: GIT Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504231228480.2344@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 23, 2005 at 12:30:38PM -0700, Linus Torvalds wrote:
-> On Sat, 23 Apr 2005, Jan Harkes wrote:
-> > 
-> > Why not keep the tags object outside of the tree in the tags/ directory.
-> 
-> Because then you have all those special cases with fetching them and with 
-> fsck, and with shared object directories. In other words: no. 
+Minor issues with "git pull":
 
-I respectfully disagree,
+1. Multiple rsync call might connect to different servers (with
+round-robin DNS).  The effect
+   will be interesting.  One call, if possible, would be better.
 
-rsync works fine for now, but people are already looking at implementing
-smarter (more efficient) ways to synchronize git repositories by
-grabbing missing commits, and from there fetching any missing tree and
-file blobs. However there is no such linkage to discover missing tag
-objects, only a full rsync would be able to get them and for that it has
-to send the name of every object in the repository to the other side to
-check for any missing ones.
+2. If any rsync fails, the process should be aborted.
 
-So fetching tags is already going to be a special case.
+As long as we do have multiple calls:
 
-And any form of validation of a tag is a special operation. In fact tags
-could be as simple as a the sha of an (like pasky's tags) followed by
-the detached pgp signature of the tagged object instead of trying to
-signing the tag itself. That also avoids having to strip the signature
-part from the tag when we want to validate it.
+3. The "grep -v '^MOTD:'" should be changed to kill blank lines after
+MOTDs also.
 
-Jan
+Morten
