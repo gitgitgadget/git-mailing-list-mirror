@@ -1,47 +1,71 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Humble request of 'git' developers
-Date: Sat, 23 Apr 2005 15:58:26 -0400
-Message-ID: <426AA8E2.60403@pobox.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Git-commits mailing list feed.
+Date: Sat, 23 Apr 2005 13:01:59 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504231300140.2344@ppc970.osdl.org>
+References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net>
+ <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net>
+ <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net>
+ <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
+ <20050423175422.GA7100@cip.informatik.uni-erlangen.de>
+ <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org> <20050423184613.GE20410@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Apr 23 21:55:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
+	Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 23 21:57:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPQit-0002YH-Df
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 21:55:27 +0200
+	id 1DPQk1-0002fX-KQ
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 21:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261750AbVDWT7M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 15:59:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVDWT7M
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 15:59:12 -0400
-Received: from 216-237-124-58.infortech.net ([216.237.124.58]:56484 "EHLO
-	mail.dvmed.net") by vger.kernel.org with ESMTP id S261750AbVDWT6h
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 15:58:37 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
-	id 1DPQlv-0002ba-Ua
-	for git@vger.kernel.org; Sat, 23 Apr 2005 19:58:37 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-Spam-Score: 0.0 (/)
+	id S261757AbVDWUAl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 16:00:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261756AbVDWUAl
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 16:00:41 -0400
+Received: from fire.osdl.org ([65.172.181.4]:31908 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261755AbVDWUAS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 16:00:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3NK01s4032501
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Apr 2005 13:00:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3NK00hH015349;
+	Sat, 23 Apr 2005 13:00:00 -0700
+To: Jan Harkes <jaharkes@cs.cmu.edu>
+In-Reply-To: <20050423184613.GE20410@delft.aura.cs.cmu.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Please stop filling up my /usr/local/bin :)
 
-Just have one 'git' script, which looks in /usr/local/libexec/git for 
-further scripts and backends programs like write-tree and diff-cache.
+On Sat, 23 Apr 2005, Jan Harkes wrote:
+> 
+> It is a bit more messy, but it can be done with a detached signature.
 
-Also, please don't assume that "." is in PATH.  I think there is at 
-least one invocation of commit-id with that assumption, in git-pasky-0.6.3.
+Ok, this looks more like it.
 
-	Jeff
+Except:
 
+> To sign,
+>     gpg -ab unsigned_commit
+>     cat unsigned_commit unsigned_commit.asc > signed_commit
+> 
+> To verify,
+>     cat signed_commit | sed '/-----BEGIN PGP/Q' | gpg --verify signed_commit -
 
+Except I think you'd need to searc for the "---BEGIN PGP" starting from
+the end, rather than the beginning.
 
+Anyway, that should be workable. I'll whip something up.
+
+		Linus
