@@ -1,124 +1,65 @@
-From: Martin Schlemmer <azarah@nosferatu.za.org>
-Subject: Re: [patch] fixup GECOS handling
-Date: Sun, 24 Apr 2005 01:49:16 +0200
-Message-ID: <1114300156.27940.22.camel@nosferatu.lan>
-References: <1113820589.16288.5.camel@nosferatu.lan>
-	 <1113827713.5286.13.camel@localhost.localdomain>
-	 <1114179795.29271.18.camel@nosferatu.lan>
-	 <1114186599.31076.409.camel@axer.marchex.com>
-	 <1114189105.29271.36.camel@nosferatu.lan>
-	 <20050422171818.GE7173@pasky.ji.cz>
-	 <1114192702.31076.428.camel@axer.marchex.com>
-	 <1114196803.29271.52.camel@nosferatu.lan>
-	 <20050423233821.GN13222@pasky.ji.cz>
-Reply-To: azarah@nosferatu.za.org
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Hash collision count
+Date: Sun, 24 Apr 2005 01:46:37 +0200
+Message-ID: <20050423234637.GS13222@pasky.ji.cz>
+References: <426AAFC3.800@pobox.com> <1114297231.10264.12.camel@maze.mythral.org> <426AD835.5070404@pobox.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-54lFU/cEXzwkQEPlSlpA"
-Content-Transfer-Encoding: 8bit
-Cc: kyle@marchex.com, GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 01:41:02 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Ray Heasman <lists@mythral.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 01:42:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPUF3-0005Bk-Sn
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:40:54 +0200
+	id 1DPUG2-0005G2-Uw
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262181AbVDWXpg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:45:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262183AbVDWXpg
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:45:36 -0400
-Received: from ctb-mesg7.saix.net ([196.25.240.79]:63458 "EHLO
-	ctb-mesg7.saix.net") by vger.kernel.org with ESMTP id S262181AbVDWXpY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 19:45:24 -0400
-Received: from gateway.lan (wblv-146-254-56.telkomadsl.co.za [165.146.254.56])
-	by ctb-mesg7.saix.net (Postfix) with ESMTP id 516332577;
-	Sun, 24 Apr 2005 01:45:18 +0200 (SAST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by gateway.lan (Postfix) with ESMTP id B7B503A2430;
-	Sun, 24 Apr 2005 01:51:42 +0200 (SAST)
-Received: from gateway.lan ([127.0.0.1])
- by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 03145-12; Sun, 24 Apr 2005 01:51:37 +0200 (SAST)
-Received: from nosferatu.lan (nosferatu.lan [192.168.0.2])
-	(using TLSv1 with cipher IDEA-CBC-SHA (128/128 bits))
-	(No client certificate requested)
-	by gateway.lan (Postfix) with ESMTP id A40C93A241A;
-	Sun, 24 Apr 2005 01:51:37 +0200 (SAST)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050423233821.GN13222@pasky.ji.cz>
-X-Mailer: Evolution 2.2.1.1 
-X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
+	id S262183AbVDWXqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 19:46:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262185AbVDWXqk
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:46:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:38072 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262183AbVDWXqi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:46:38 -0400
+Received: (qmail 2756 invoked by uid 2001); 23 Apr 2005 23:46:37 -0000
+To: Jeff Garzik <jgarzik@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <426AD835.5070404@pobox.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Sun, Apr 24, 2005 at 01:20:21AM CEST, I got a letter
+where Jeff Garzik <jgarzik@pobox.com> told me that...
+> Second, in your scenario, it's highly unlikely you would get 4 billion 
+> sha1 hash collisions, even if you had the disk space to store such a git 
+> database.
 
---=-54lFU/cEXzwkQEPlSlpA
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+It's highly unlikely you would get a _single_ collision.
 
-On Sun, 2005-04-24 at 01:38 +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Apr 22, 2005 at 09:06:43PM CEST, I got a letter
-> where Martin Schlemmer <azarah@nosferatu.za.org> told me that...
-> > @@ -311,6 +296,17 @@
-> >         if (!pw)
-> >                 die("You don't exist. Go away!");
-> >         realgecos =3D pw->pw_gecos;
-> > +       /*
-> > +        * The GECOS fields are seperated via ',' on Linux, FreeBSD, et=
-c,
-> > +        * and ';' on AIX.
-> > +        */
-> > +#if defined(__aix__)
-> > +       if (strchr(realgecos, ';'))
-> > +               *strchr(realgecos, ';') =3D 0;
-> > +#else
-> > +       if (strchr(realgecos, ','))
-> > +               *strchr(realgecos, ',') =3D 0;
-> > +#endif
-> >         len =3D strlen(pw->pw_name);
-> >         memcpy(realemail, pw->pw_name, len);
-> >         realemail[len] =3D '@';
->=20
-> I'm confused, what does this has to do with AIX? Do we even have / can
-> expect to have any major AIX users?
->=20
+> First, the hash is NOT unique.
+> 
+> Second, you lose data if you pretend it is unique.  I don't like losing 
+> data.
 
-Given.
+*sigh*
 
-> I'm not too happy with this, I have to say. It seems it won't do always
-> the right thing anyway. I would still favour the approach when you cut
-> off everything after ';', and everything after ',' if no ';' is found.
-> Seems simplest, safest, etc.
->=20
-> Tell me about anyone who has a semicolon in his realname.
->=20
+We've been through this before, haven't we?
 
-Point I guess is still that the only valid delimiter on linux is ',',
-and the only reason for the ';' was because of some aix/whatever user
-saying that is a delimiter as well. But like I said: cat $this
-> /dev/null ... This is basically the same type of discussion as the
-hash collision one, and I'm sure we all have better things to do.
+> Third, a data check only occurs in the highly unlikely case that a hash 
+> already exists -- a collision.  Rather than "trillions of times", more 
+> like "one in a trillion chance."
 
+No, a collision is pretty common thing, actually. It's the main power of
+git, actually - when you do read-tree, modify it and do write-tree
+(typically when doing commit), everything you didn't modify (99% of
+stuff, most likely) is basically a collision - but it's ok since it
+just stays the same.
 
-Thanks,
-
---=20
-Martin Schlemmer
-
-
---=-54lFU/cEXzwkQEPlSlpA
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQBCat78qburzKaJYLYRAkyRAJsG+OQas0cqVPJtj1xy/psCkZfWdACfdX36
-996+HvSqJ9pdHYBQW3ag+u4=
-=hx74
------END PGP SIGNATURE-----
-
---=-54lFU/cEXzwkQEPlSlpA--
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
