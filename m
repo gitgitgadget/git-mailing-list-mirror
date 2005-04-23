@@ -1,60 +1,170 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: Git-commits mailing list feed.
-Date: Sat, 23 Apr 2005 20:39:09 +0200
-Message-ID: <20050423183909.GC7100@cip.informatik.uni-erlangen.de>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net> <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net> <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org> <20050423175422.GA7100@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [resend] [PATCH] Add -i option to cat-file to allow operation on displaced git object files
+Date: Sun, 24 Apr 2005 04:48:29 +1000
+Message-ID: <2cfc4032050423114860c8e056@mail.gmail.com>
+References: <2cfc403205042311272baee82e@mail.gmail.com>
+Reply-To: jon@zeta.org.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 23 20:45:27 2005
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_405_17663821.1114282109661"
+X-From: git-owner@vger.kernel.org Sat Apr 23 20:46:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPPcr-0004Ns-V2
-	for gcvg-git@gmane.org; Sat, 23 Apr 2005 20:45:10 +0200
+	id 1DPPeE-0004VN-IN
+	for gcvg-git@gmane.org; Sat, 23 Apr 2005 20:46:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261701AbVDWStX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 14:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261698AbVDWSr1
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:47:27 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:3542 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261697AbVDWSqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 14:46:48 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j3NIdAS8000298
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 23 Apr 2005 18:39:10 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j3NId99E000297;
-	Sat, 23 Apr 2005 20:39:09 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	Linus Torvalds <torvalds@osdl.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+	id S261697AbVDWSuL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 14:50:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261715AbVDWSuL
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 14:50:11 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:9873 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261697AbVDWSsc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 14:48:32 -0400
+Received: by rproxy.gmail.com with SMTP id c51so876286rne
+        for <git@vger.kernel.org>; Sat, 23 Apr 2005 11:48:29 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:references;
+        b=hWL7XnWjzvMir3/tfBX8hoNCrq4EeBTn025Lw113JPYLhgNrtlao7bw9jkO++ynKkJnOWqNGK3tNu+J0scsuDNP9A8iY4Xdvf3jGzjfF+NEeLMQ+nn1ZMXs0WFBceQKcfD2YtZBzKdm3FQ+FY4JjVxr9fKd4qkhWtAmP6w5Fnjc=
+Received: by 10.38.15.7 with SMTP id 7mr4752099rno;
+        Sat, 23 Apr 2005 11:48:29 -0700 (PDT)
+Received: by 10.38.104.32 with HTTP; Sat, 23 Apr 2005 11:48:29 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <2cfc403205042311272baee82e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+------=_Part_405_17663821.1114282109661
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> 	commit ....
-> 	tag ...
+[PATCH] Add -i option to cat-file to allow operation on displaced git
+object files
 
-> 	here goes comment
-> 	here goes signature
+For the purposes of merging the contents of remote git object
+repositories at the filesystem level, it would  be helpful to be able
+to verify the integrity of a remote git object file before it is
+actually copied into the local repository.
 
-# This creates only the signature in Ascii Armor.
-gpg -a --detach-sign < to_sign > signature
+To enable this, the option syntax for the usage of the cat-file tool
+is extended with a -i option, per the modified usage string quoted
+below:
 
-	Thomas
+    usage: cat-file [-t | tagname] <sha1> [ -i displaced-git-object-file ]
+
+If the -i option is specified, cat-file uses the filename specified on
+the command line rather than the derived filename to locate and
+process the git object file implied by the sha1 argument.
+
+In addition, the -i option forces cat-file to check the SHA1 signature
+of the specified input file against the SHA1 signature specified on
+the command line and report an error if there is a mismatch.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+Sorry, I noticed after the fact that gmail had line-wrapped my patch,
+so I am resending the patch as a text attachment. If it is not
+acceptable to post patches in this form please let me know.
+
+------=_Part_405_17663821.1114282109661
+Content-Type: text/plain; name="patch.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="patch.txt"
+
+W1BBVENIXSBBZGQgLWkgb3B0aW9uIHRvIGNhdC1maWxlIHRvIGFsbG93IG9wZXJhdGlvbiBvbiBk
+aXNwbGFjZWQgZ2l0IG9iamVjdCBmaWxlcwoKRm9yIHRoZSBwdXJwb3NlcyBvZiBtZXJnaW5nIHRo
+ZSBjb250ZW50cyBvZiByZW1vdGUgZ2l0IG9iamVjdCByZXBvc2l0b3JpZXMgYXQgdGhlIGZpbGVz
+eXN0ZW0gbGV2ZWwsIGl0IHdvdWxkCmJlIGhlbHBmdWwgdG8gYmUgYWJsZSB0byB2ZXJpZnkgdGhl
+IGludGVncml0eSBvZiBhIHJlbW90ZSBnaXQgb2JqZWN0IGZpbGUgYmVmb3JlIGl0IGlzIGFjdHVh
+bGx5CmNvcGllZCBpbnRvIHRoZSBsb2NhbCByZXBvc2l0b3J5LgoKVG8gZW5hYmxlIHRoaXMsIHRo
+ZSBvcHRpb24gc3ludGF4IGZvciB0aGUgdXNhZ2Ugb2YgdGhlIGNhdC1maWxlIHRvb2wgaXMgZXh0
+ZW5kZWQgd2l0aCBhIC1pIG9wdGlvbiwgcGVyIHRoZQptb2RpZmllZCB1c2FnZSBzdHJpbmcgcXVv
+dGVkIGJlbG93OgoKICAgIHVzYWdlOiBjYXQtZmlsZSBbLXQgfCB0YWduYW1lXSA8c2hhMT4gWyAt
+aSBkaXNwbGFjZWQtZ2l0LW9iamVjdC1maWxlIF0KCklmIHRoZSAtaSBvcHRpb24gaXMgc3BlY2lm
+aWVkLCBjYXQtZmlsZSB1c2VzIHRoZSBmaWxlbmFtZSBzcGVjaWZpZWQgb24gdGhlIGNvbW1hbmQg
+bGluZSByYXRoZXIgdGhhbiB0aGUgZGVyaXZlZApmaWxlbmFtZSB0byBsb2NhdGUgYW5kIHByb2Nl
+c3MgdGhlIGdpdCBvYmplY3QgZmlsZSBpbXBsaWVkIGJ5IHRoZSBzaGExIGFyZ3VtZW50LgoKSW4g
+YWRkaXRpb24sIHRoZSAtaSBvcHRpb24gZm9yY2VzIGNhdC1maWxlIHRvIGNoZWNrIHRoZSBTSEEx
+IHNpZ25hdHVyZSBvZiB0aGUgc3BlY2lmaWVkIGlucHV0IGZpbGUgYWdhaW5zdAp0aGUgU0hBMSBz
+aWduYXR1cmUgc3BlY2lmaWVkIG9uIHRoZSBjb21tYW5kIGxpbmUgYW5kIHJlcG9ydCBhbiBlcnJv
+ciBpZiB0aGVyZSBpcyBhIG1pc21hdGNoLgoKU2lnbmVkLW9mZi1ieTogSm9uIFNleW1vdXIgPGpv
+bi5zZXltb3VyQGdtYWlsLmNvbT4KLS0KSW5kZXg6IGNhY2hlLmgKPT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQotLS0gZTZk
+M2E4MWMzMGFkMjM3MTAyZTJjYTgyZjNkZmM1N2QwYjlmMGRkZi9jYWNoZS5oICAobW9kZToxMDA2
+NDQgc2hhMTpiZjMwYWM0NzQxZDJlZWViNDgzMDc5ZjU2NjE4MjUwNTg5ODA4MmYzKQorKysgMWI1
+MDNmMDU3MTcyN2E4NjViNDEzZTI4NjQxZDJiZTA5YzhjMzMwNC9jYWNoZS5oICAobW9kZToxMDA2
+NDQgc2hhMTo1NmVhY2ZhMGFiNDNjOTNhODM4ZWZlZGNhNDI5ZTg2NWM5NWYxNmJjKQpAQCAtMTIx
+LDggKzEyMSw5IEBACiBleHRlcm4gdm9pZCAqIG1hcF9zaGExX2ZpbGUoY29uc3QgdW5zaWduZWQg
+Y2hhciAqc2hhMSwgdW5zaWduZWQgbG9uZyAqc2l6ZSk7CiBleHRlcm4gdm9pZCAqIHVucGFja19z
+aGExX2ZpbGUodm9pZCAqbWFwLCB1bnNpZ25lZCBsb25nIG1hcHNpemUsIGNoYXIgKnR5cGUsIHVu
+c2lnbmVkIGxvbmcgKnNpemUpOwogZXh0ZXJuIHZvaWQgKiByZWFkX3NoYTFfZmlsZShjb25zdCB1
+bnNpZ25lZCBjaGFyICpzaGExLCBjaGFyICp0eXBlLCB1bnNpZ25lZCBsb25nICpzaXplKTsKK2V4
+dGVybiB2b2lkICogcmVhZF9kaXNwbGFjZWRfc2hhMV9maWxlKGNoYXIgKnR5cGUsIHVuc2lnbmVk
+IGxvbmcgKnNpemUsIGNvbnN0IGNoYXIgKmZpbGVuYW1lKTsKIGV4dGVybiBpbnQgd3JpdGVfc2hh
+MV9maWxlKGNoYXIgKmJ1ZiwgdW5zaWduZWQgbGVuLCB1bnNpZ25lZCBjaGFyICpyZXR1cm5fc2hh
+MSk7Ci1leHRlcm4gaW50IGNoZWNrX3NoYTFfc2lnbmF0dXJlKHVuc2lnbmVkIGNoYXIgKnNoYTEs
+IHZvaWQgKmJ1ZiwgdW5zaWduZWQgbG9uZyBzaXplLCBjb25zdCBjaGFyICp0eXBlKTsKK2V4dGVy
+biBpbnQgY2hlY2tfc2hhMV9zaWduYXR1cmUoY29uc3QgdW5zaWduZWQgY2hhciAqc2hhMSwgdm9p
+ZCAqYnVmLCB1bnNpZ25lZCBsb25nIHNpemUsIGNvbnN0IGNoYXIgKnR5cGUpOwogCiAvKiBSZWFk
+IGEgdHJlZSBpbnRvIHRoZSBjYWNoZSAqLwogZXh0ZXJuIGludCByZWFkX3RyZWUodm9pZCAqYnVm
+ZmVyLCB1bnNpZ25lZCBsb25nIHNpemUsIGludCBzdGFnZSk7CkluZGV4OiBjYXQtZmlsZS5jCj09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT0KLS0tIGU2ZDNhODFjMzBhZDIzNzEwMmUyY2E4MmYzZGZjNTdkMGI5ZjBkZGYvY2F0
+LWZpbGUuYyAgKG1vZGU6MTAwNjQ0IHNoYTE6M2M0N2Q3OWExNjMwNWQzMjZhNjU3NjhmZTlmMzdl
+ZTI1OTI4NTEwYikKKysrIDFiNTAzZjA1NzE3MjdhODY1YjQxM2UyODY0MWQyYmUwOWM4YzMzMDQv
+Y2F0LWZpbGUuYyAgKG1vZGU6MTAwNjQ0IHNoYTE6Yzg4ZGY3Mjg3YjZjZTdkNmQzM2QwMTZmZmI1
+MjRjYzVhNzkzY2FkMikKQEAgLTUsMTYgKzUsMzIgQEAKICAqLwogI2luY2x1ZGUgImNhY2hlLmgi
+CiAKK3N0YXRpYyBjaGFyIF91c2FnZVtdPSJjYXQtZmlsZSBbLXQgfCB0YWduYW1lXSA8c2hhMT4g
+WyAtaSBkaXNwbGFjZWQtZ2l0LW9iamVjdC1maWxlIF0iOworCiBpbnQgbWFpbihpbnQgYXJnYywg
+Y2hhciAqKmFyZ3YpCiB7CiAJdW5zaWduZWQgY2hhciBzaGExWzIwXTsKIAljaGFyIHR5cGVbMjBd
+OwotCXZvaWQgKmJ1ZjsKKwl2b2lkICpidWYgPSBOVUxMOwogCXVuc2lnbmVkIGxvbmcgc2l6ZTsK
+IAotCWlmIChhcmdjICE9IDMgfHwgZ2V0X3NoYTFfaGV4KGFyZ3ZbMl0sIHNoYTEpKQotCQl1c2Fn
+ZSgiY2F0LWZpbGUgWy10IHwgdGFnbmFtZV0gPHNoYTE+Iik7Ci0JYnVmID0gcmVhZF9zaGExX2Zp
+bGUoc2hhMSwgdHlwZSwgJnNpemUpOworCWlmIChhcmdjIDwgMyB8fCBnZXRfc2hhMV9oZXgoYXJn
+dlsyXSwgc2hhMSkpCisJCXVzYWdlKF91c2FnZSk7CisKKyAgICAgICAgaWYgKGFyZ2MgPT0gMykg
+eworCSAgICBidWYgPSByZWFkX3NoYTFfZmlsZShzaGExLCB0eXBlLCAmc2l6ZSk7CisgICAgICAg
+IH0gZWxzZSBpZiAoYXJnYyA9PSA1ICYmICFzdHJjbXAoYXJndlszXSwgIi1pIikpIHsKKyAgICAg
+ICAgICAgIGJ1ZiA9IHJlYWRfZGlzcGxhY2VkX3NoYTFfZmlsZSh0eXBlLCAmc2l6ZSwgYXJndls0
+XSk7CisgICAgICAgICAgICBpZiAoIWJ1ZikgCisgICAgICAgICAgICAgICAgICAgIGRpZSgiYmFk
+IGZpbGU6ICVzIiwgYXJndls0XSk7CisJICAgIAorICAgICAgICAgICAgaWYgKGNoZWNrX3NoYTFf
+c2lnbmF0dXJlKHNoYTEsIGJ1Ziwgc2l6ZSwgdHlwZSkgPCAwKQorICAgICAgICAgICAgICAgICAg
+ICBkaWUoInNpZ25hdHVyZSBtaXNtYXRjaCBmb3IgJXMiLCBhcmd2WzRdKTsKKworICAgICAgICB9
+IGVsc2UgeworCSAgICB1c2FnZShfdXNhZ2UpOworICAgICAgICB9CisKIAlpZiAoIWJ1ZikKIAkJ
+ZGllKCJjYXQtZmlsZSAlczogYmFkIGZpbGUiLCBhcmd2WzJdKTsKIAlpZiAoIXN0cmNtcCgiLXQi
+LCBhcmd2WzFdKSkgewpJbmRleDogc2hhMV9maWxlLmMKPT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQotLS0gZTZkM2E4MWMz
+MGFkMjM3MTAyZTJjYTgyZjNkZmM1N2QwYjlmMGRkZi9zaGExX2ZpbGUuYyAgKG1vZGU6MTAwNjQ0
+IHNoYTE6NmY3MjI4ZTEwNmQ0ZTI0YjE4Zjg0MTZjYzZhZGMyYTZmZDMwM2ViNykKKysrIDFiNTAz
+ZjA1NzE3MjdhODY1YjQxM2UyODY0MWQyYmUwOWM4YzMzMDQvc2hhMV9maWxlLmMgIChtb2RlOjEw
+MDY0NCBzaGExOjI1ZTJlOGIyMmNmOTU5MGE2ZGYwNWYyMzRjZTg4ZGI4YzJjZDEwMzApCkBAIC04
+MCw3ICs4MCw3IEBACiAJcmV0dXJuIGJhc2U7CiB9CiAKLWludCBjaGVja19zaGExX3NpZ25hdHVy
+ZSh1bnNpZ25lZCBjaGFyICpzaGExLCB2b2lkICptYXAsIHVuc2lnbmVkIGxvbmcgc2l6ZSwgY29u
+c3QgY2hhciAqdHlwZSkKK2ludCBjaGVja19zaGExX3NpZ25hdHVyZShjb25zdCB1bnNpZ25lZCBj
+aGFyICpzaGExLCB2b2lkICptYXAsIHVuc2lnbmVkIGxvbmcgc2l6ZSwgY29uc3QgY2hhciAqdHlw
+ZSkKIHsKIAljaGFyIGhlYWRlclsxMDBdOwogCXVuc2lnbmVkIGNoYXIgcmVhbF9zaGExWzIwXTsK
+QEAgLTkzLDEzICs5MywxMiBAQAogCXJldHVybiBtZW1jbXAoc2hhMSwgcmVhbF9zaGExLCAyMCkg
+PyAtMSA6IDA7CiB9CiAKLXZvaWQgKm1hcF9zaGExX2ZpbGUoY29uc3QgdW5zaWduZWQgY2hhciAq
+c2hhMSwgdW5zaWduZWQgbG9uZyAqc2l6ZSkKK3N0YXRpYyB2b2lkICptYXBfZmlsZShjb25zdCBj
+aGFyICpmaWxlbmFtZSwgdW5zaWduZWQgbG9uZyAqc2l6ZSkKIHsKLQljaGFyICpmaWxlbmFtZSA9
+IHNoYTFfZmlsZV9uYW1lKHNoYTEpOwotCWludCBmZCA9IG9wZW4oZmlsZW5hbWUsIE9fUkRPTkxZ
+KTsKIAlzdHJ1Y3Qgc3RhdCBzdDsKIAl2b2lkICptYXA7CiAKKwlpbnQgZmQgPSBvcGVuKGZpbGVu
+YW1lLCBPX1JET05MWSk7CiAJaWYgKGZkIDwgMCkgewogCQlwZXJyb3IoZmlsZW5hbWUpOwogCQly
+ZXR1cm4gTlVMTDsKQEAgLTExNiw2ICsxMTUsMTIgQEAKIAlyZXR1cm4gbWFwOwogfQogCit2b2lk
+ICptYXBfc2hhMV9maWxlKGNvbnN0IHVuc2lnbmVkIGNoYXIgKnNoYTEsIHVuc2lnbmVkIGxvbmcg
+KnNpemUpCit7CisgICAgICAgIGNoYXIgKmZpbGVuYW1lID0gc2hhMV9maWxlX25hbWUoc2hhMSk7
+CisgICAgICAgIHJldHVybiBtYXBfZmlsZShmaWxlbmFtZSwgc2l6ZSk7Cit9CisKIHZvaWQgKiB1
+bnBhY2tfc2hhMV9maWxlKHZvaWQgKm1hcCwgdW5zaWduZWQgbG9uZyBtYXBzaXplLCBjaGFyICp0
+eXBlLCB1bnNpZ25lZCBsb25nICpzaXplKQogewogCWludCByZXQsIGJ5dGVzOwpAQCAtMTY2LDYg
+KzE3MSwyMCBAQAogCXJldHVybiBOVUxMOwogfQogCit2b2lkICogcmVhZF9kaXNwbGFjZWRfc2hh
+MV9maWxlKGNoYXIgKnR5cGUsIHVuc2lnbmVkIGxvbmcgKnNpemUsIGNvbnN0IGNoYXIgKmZpbGVu
+YW1lKQoreworCXVuc2lnbmVkIGxvbmcgbWFwc2l6ZTsKKwl2b2lkICptYXAsICpidWY7CisKKwlt
+YXAgPSBtYXBfZmlsZShmaWxlbmFtZSwgJm1hcHNpemUpOworCWlmIChtYXApIHsKKwkJYnVmID0g
+dW5wYWNrX3NoYTFfZmlsZShtYXAsIG1hcHNpemUsIHR5cGUsIHNpemUpOworCQltdW5tYXAobWFw
+LCBtYXBzaXplKTsKKwkJcmV0dXJuIGJ1ZjsKKwl9CisJcmV0dXJuIE5VTEw7Cit9CisKIHZvaWQg
+KnJlYWRfdHJlZV93aXRoX3RyZWVfb3JfY29tbWl0X3NoYTEoY29uc3QgdW5zaWduZWQgY2hhciAq
+c2hhMSwKIAkJCQkJIHVuc2lnbmVkIGxvbmcgKnNpemUsCiAJCQkJCSB1bnNpZ25lZCBjaGFyICp0
+cmVlX3NoYTFfcmV0dXJuKQo=
+------=_Part_405_17663821.1114282109661--
