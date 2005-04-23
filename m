@@ -1,129 +1,101 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: Re: Git-commits mailing list feed.
-Date: Sat, 23 Apr 2005 16:16:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504231602010.28584@sam.ics.uci.edu>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org>
- <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
- <200504231950.43903.FabianFranz@gmx.de>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: Hash collision count
+Date: Sat, 23 Apr 2005 19:20:21 -0400
+Message-ID: <426AD835.5070404@pobox.com>
+References: <426AAFC3.800@pobox.com> <1114297231.10264.12.camel@maze.mythral.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 01:12:51 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 01:16:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPTnr-00036f-4I
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:12:47 +0200
+	id 1DPTrp-0003MJ-IO
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:16:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262168AbVDWXRc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262169AbVDWXRc
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:17:32 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:48529 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S262168AbVDWXRW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:17:22 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3NNGn1e028650;
-	Sat, 23 Apr 2005 16:16:49 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3NNGn1I028646;
-	Sat, 23 Apr 2005 16:16:49 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Fabian Franz <FabianFranz@gmx.de>
-In-Reply-To: <200504231950.43903.FabianFranz@gmx.de>
+	id S262170AbVDWXVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 19:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262171AbVDWXVH
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:21:07 -0400
+Received: from 216-237-124-58.infortech.net ([216.237.124.58]:31129 "EHLO
+	mail.dvmed.net") by vger.kernel.org with ESMTP id S262170AbVDWXU0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 19:20:26 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
+	id 1DPTvE-0002cv-F8; Sat, 23 Apr 2005 23:20:25 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
+X-Accept-Language: en-us, en
+To: Ray Heasman <lists@mythral.org>
+In-Reply-To: <1114297231.10264.12.camel@maze.mythral.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Ray Heasman wrote:
+> On Sat, 2005-04-23 at 16:27 -0400, Jeff Garzik wrote:
+> 
+>>Ideally a hash + collision-count pair would make the best key, rather 
+>>than just hash alone.
+>>
+>>A collision -will- occur eventually, and it is trivial to avoid this 
+>>problem:
+>>
+>>	$n = 0
+>>	attempt to store as $hash-$n
+>>	if $hash-$n exists (unlikely)
+>>		$n++
+>>		goto restart
+>>	key = $hash-$n
+>>
+> 
+> 
+> Great. So what have you done here? Suppose you have 32 bits of counter
+> for n. Whoopee, you just added 32 bits to your hash, using a two stage
+> algorithm. So, you have a 192 bit hash assuming you started with the 160
+> bit SHA. And, one day your 32 bit counter won't be enough. Then what?
 
-I would prefer a generic mechanism to sign _any_ object, not just tag 
-objects:
+First, there is no 32-bit limit.  git stores keys (aka hashes) as 
+strings.  As it should.
 
-- Introduce "signature objects" that contains an implementation-specific 
-  signature. git doesn't care about the content, as long some script can 
-  verify that the signature in the signature object matches the content of 
-  the object(s) it references. The "name" of a signature object is the 
-  SHA1 hash of the content (=gpg signature, for example).
+Second, in your scenario, it's highly unlikely you would get 4 billion 
+sha1 hash collisions, even if you had the disk space to store such a git 
+database.
 
-- Referencing signatures in tags makes no sense IMO, because it would 
-  require to change the (hash) name of tags when someone else wants to 
-  co-sign it later on. I would just distribute two names for that (here is 
-  tag xxxxx and its signature is yyyyy). Tags should only contain a
-  symbolic name and the hash of the commit object they point to.
 
-- A nice benefit of this is that we could sign unnamed commits (think 
-  automatic signing of intermediate commit), or even sign individual
-  files in the tree.
+>>Tangent-as-the-reason-I-bring-this-up:
+>>
+>>One of my long-term projects is an archive service, somewhat like 
+>>Plan9's venti:  a multi-server key-value database, with sha1 hash as the 
+>>key.
+>>
+>>However, as the database grows into the terabyte (possibly petabyte) 
+>>range, the likelihood of a collision transitions rapidly from unlikely 
+>>-> possible -> likely.
+>>
+>>Since it is -so- simple to guarantee that you avoid collisions, I'm 
+>>hoping git will do so before the key structure is too ingrained.
+> 
+> 
+> You aren't solving anything. You're just putting it off, and doing it in
+> a way that breaks all the wonderful semantics possible by just assuming
+> that the hash is unique. All of a sudden we are doing checks of data
+> that we never did before, and we have to do the check trillions of times
+> before the CPU time spent pays off.
 
-Just my 2c.
+First, the hash is NOT unique.
 
-Andreas
+Second, you lose data if you pretend it is unique.  I don't like losing 
+data.
 
-On Sat, 23 Apr 2005, Fabian Franz wrote:
+Third, a data check only occurs in the highly unlikely case that a hash 
+already exists -- a collision.  Rather than "trillions of times", more 
+like "one in a trillion chance."
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
-> 
-> Am Samstag, 23. April 2005 19:31 schrieb Linus Torvalds:
-> > On Sun, 24 Apr 2005, David Woodhouse wrote:
-> > > Nah, asking Linus to tag his releases is the most comfortable way.
-> > >
-> > The reason I've not done tags yet is that I haven't decided how to do
-> > them.
-> >
-> > 	commit a2755a80f40e5794ddc20e00f781af9d6320fafb
-> > 	tag v2.6.12-rc3
-> > 	signer Linus Torvalds
-> >
-> > 	This is my official original 2.6.12-rc2 release
-> >
-> > 	-----BEGIN PGP SIGNATURE-----
-> > 	....
-> > 	-----END PGP SIGNATURE-----
-> >
-> > If somebody writes a script to generate the above kind of thing (and tells
-> > me how to validate it), I'll do the rest, and start tagging things
-> > properly. Oh, and make sure the above sounds sane (ie if somebody has a
-> > better idea for how to more easily identify how to find the public key to
-> > check against, please speak up).
-> 
-> To generate those you do:
-> 
-> # cat unsigned_tag
-> 
-> 	commit a2755a80f40e5794ddc20e00f781af9d6320fafb
-> 	tag v2.6.12-rc3
-> 	signer Linus Torvalds
-> 	This is my official original 2.6.12-rc2 release
-> 
-> # gpg --clearsign < unsigned_tag > signed_tag # gpg will ask here for the 
-> secret key phrase
-> 
-> To verify you do:
-> 
-> # gpg --verify < signed_tag
-> 
-> and check exit status.
-> 
-> Hope that helps,
-> 
-> cu
-> 
-> Fabian 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.2.4 (GNU/Linux)
-> 
-> iD8DBQFCaorzI0lSH7CXz7MRAr3QAJ45f2CQTgJ0sYfF9kRyrWHbsazVQQCeMqW7
-> HCsah/llt/I8sQ36dlDnRWg=
-> =Fgq1
-> -----END PGP SIGNATURE-----
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+	Jeff
+
+
+
