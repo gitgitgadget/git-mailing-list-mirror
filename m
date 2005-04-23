@@ -1,116 +1,70 @@
-From: Pavel Pisa <pisa@cmp.felk.cvut.cz>
-Subject: Re: Humble request of 'git' developers + [PATCH] Slight enhancement of GIT wrapper
-Date: Sun, 24 Apr 2005 01:47:29 +0200
-Message-ID: <200504240147.29642.pisa@cmp.felk.cvut.cz>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Simplify building of programs
+Date: Sun, 24 Apr 2005 01:59:56 +0200
+Message-ID: <20050423235956.GA7437@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Apr 24 01:42:10 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 01:56:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPUG9-0005Gj-VJ
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:42:02 +0200
+	id 1DPUT5-0006CP-4l
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262184AbVDWXqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262185AbVDWXqt
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:46:49 -0400
-Received: from av2.karneval.cz ([81.27.192.108]:54061 "EHLO av2.karneval.cz")
-	by vger.kernel.org with ESMTP id S262184AbVDWXqi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:46:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by av2.karneval.cz (Postfix) with ESMTP id AEB5DA2E69;
-	Sun, 24 Apr 2005 02:10:24 +0200 (CEST)
-Received: from av2.karneval.cz ([127.0.0.1])
- by localhost (av2 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 10195-09; Sun, 24 Apr 2005 02:10:22 +0200 (CEST)
-Received: from mail.karneval.cz (mx1.karneval.cz [81.27.192.53])
-	by av2.karneval.cz (Postfix) with ESMTP id CD051A2E4D;
-	Sun, 24 Apr 2005 02:10:22 +0200 (CEST)
-Received: from [10.5.150.25] (unknown [10.5.150.25])
-	by mail.karneval.cz (Postfix) with ESMTP id 3CBEF56F5BF;
-	Sun, 24 Apr 2005 01:46:34 +0200 (CEST)
-To: Jeff Garzik <jgarzik@pobox.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-User-Agent: KMail/1.8
+	id S262188AbVDXAAC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 20:00:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262189AbVDXAAC
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 20:00:02 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:13026 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S262188AbVDWX75 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:59:57 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 5E7C16E26AA; Sun, 24 Apr 2005 01:59:06 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 328356E2653; Sun, 24 Apr 2005 01:59:06 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id C507561FDD; Sun, 24 Apr 2005 01:59:56 +0200 (CEST)
+To: torvalds@osdl.org
+Mail-Followup-To: torvalds@osdl.org, git@vger.kernel.org
 Content-Disposition: inline
-X-Virus-Scanned: by karneval.cz
+User-Agent: Mutt/1.5.6i
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00,UPPERCASE_25_50 
+	autolearn=no version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello All,
+Don't list libgit.a twice when compiling programs and make them depend
+on the .c files so .o files are not left behind.
 
-I am resending patch from 13 April
-which I have send Petr Baudis.
-He has said, that he combines
-best ideas from more similar patches
-but he has not found time for that probably.
-It is updated according his
-and Johannes Schindelin's remarks.
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-It enables to move all growing number
-of git scripts and programs to the any
-directory out of the search path.
-Actually only "git" script needs to be
-linked symbolically to some directory
-on the search path. This solution worked
-for me with many versions of "git-pasky".
-
-I would vote for this solution
-and for single public exposed multiplexer
-executable script.
-It is how big portable place independent
-projects solve hiding of garbage from
-the search path.
-
-Best wishes
-
-                Pavel Pisa
-        e-mail: pisa@cmp.felk.cvut.cz
-        www:    http://cmp.felk.cvut.cz/~pisa
-        work:   http://www.pikron.com
-
-
-
-
-Slight enhancement of GIT wrapper
-
-Git multiplexer and scripts can reside in non PATH directories
-and linking git multiplexer into some searchables dirs makes the trick.
-
-Signed-off-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
-
---- git.orig	2005-04-24 00:12:56.000000000 +0200
-+++ git	2005-04-24 01:28:01.000000000 +0200
-@@ -17,6 +17,28 @@
- 	exit 1
- }
+--- 66b3fa5bde838935121a2eb7cf4b67587c32de13/Makefile  (mode:100644 sha1:e26b7c3695bf7ee88a75dcb6fd1953ce8b33c748)
++++ uncommitted/Makefile  (mode:100644)
+@@ -49,8 +49,7 @@
+ LIB_H=cache.h object.h
  
-+if [ -z "$GIT_TOOLS_DIR" ] ; then
-+	GIT_MUXBINARY_DIR="$(dirname "$0")"
-+	if [ -h "$0" ]; then
-+		#GIT_TOOLS_DIR="$(ls -l "$0" | sed 's/^.*-> *\(.*\) *$/\1/')"
-+		GIT_TOOLS_DIR="$(ls -L "$0")"
-+	        GIT_TOOLS_DIR="$(dirname "$GIT_TOOLS_DIR")"
-+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; cd "$GIT_TOOLS_DIR" ; pwd )"
-+	else
-+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; pwd )"
-+	fi
-+
-+	if [ -z "$(echo :$PATH: | sed -n -e 's#:'"$GIT_TOOLS_DIR"':#yes#p' )" ] ; then
-+		export PATH="$GIT_TOOLS_DIR:$PATH"
-+	fi
-+
-+	export GIT_TOOLS_DIR
-+fi
-+
-+#echo GIT_TOOLS_DIR=$GIT_TOOLS_DIR
-+#echo PATH=$PATH
-+#echo CWD=$(pwd)
-+#exit 
  
- help () {
- 	cat <<__END__
+-LIBS = $(LIB_FILE)
+-LIBS += -lz
++LIBS = -lz
+ 
+ ifdef MOZILLA_SHA1
+ 	SHA1_HEADER="mozilla-sha1/sha1.h"
+@@ -70,7 +69,7 @@
+ 
+ all: $(PROG) $(GEN_SCRIPT)
+ 
+-$(PROG):%: %.o $(LIB_FILE)
++$(PROG):%: %.c $(LIB_FILE)
+ 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
+ 
+ $(LIB_FILE): $(LIB_OBJS)
+
+-- 
+Jonas Fonseca
