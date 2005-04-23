@@ -1,181 +1,78 @@
-From: James Bottomley <James.Bottomley@SteelEye.com>
-Subject: Re: [PATCH] make file merging respect permissions
-Date: Sat, 23 Apr 2005 19:21:30 -0400
-Message-ID: <1114298490.5264.10.camel@mulgrave>
-References: <1114280570.5068.5.camel@mulgrave>
-	 <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
-	 <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Git-commits mailing list feed.
+Date: Sat, 23 Apr 2005 16:29:56 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504231625470.2344@ppc970.osdl.org>
+References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <42674724.90005@ppp0.net>
+ <20050422002922.GB6829@kroah.com> <426A4669.7080500@ppp0.net>
+ <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net>
+ <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>
+ <20050423183406.GD20410@delft.aura.cs.cmu.edu> <Pine.LNX.4.58.0504231228480.2344@ppc970.osdl.org>
+ <20050423204957.GA16751@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
+	Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 01:17:39 2005
+X-From: git-owner@vger.kernel.org Sun Apr 24 01:23:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPTsX-0003OV-AP
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:17:37 +0200
+	id 1DPTyH-0003ne-Es
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 01:23:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262171AbVDWXWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 19:22:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262172AbVDWXWT
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:22:19 -0400
-Received: from stat16.steeleye.com ([209.192.50.48]:31964 "EHLO
-	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
-	id S262171AbVDWXVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 19:21:47 -0400
-Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
-	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3NNLVA17336;
-	Sat, 23 Apr 2005 19:21:32 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050423230238.GD13222@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 (2.0.4-4) 
+	id S262176AbVDWX2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 19:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262174AbVDWX2O
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 19:28:14 -0400
+Received: from fire.osdl.org ([65.172.181.4]:51659 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262173AbVDWX2H (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 19:28:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3NNRws4014332
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Apr 2005 16:27:58 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3NNRuxc021162;
+	Sat, 23 Apr 2005 16:27:57 -0700
+To: Jan Harkes <jaharkes@cs.cmu.edu>
+In-Reply-To: <20050423204957.GA16751@delft.aura.cs.cmu.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-04-24 at 01:02 +0200, Petr Baudis wrote:
-> *cough*
-
-OK, dirty file in the local tree, sorry.
-
-This is the actual diff
-
----
-
-1) permissions aren't respected in the merge script (primarily because
-they're never passed in to it in the first place).  Fix that and also
-check for permission conflicts in the merge
-
-2) the delete of a file in both branches may indeed be just that, but it
-could also be the indicator of a rename conflict (file moved to
-different locations in both branches), so error out and ask the
-committer for guidance.
-
-Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
-
---- a/git-merge-one-file-script
-+++ b/git-merge-one-file-script
-@@ -20,23 +20,45 @@ mkdir -p "$dir"
- 
- case "${1:-.}${2:-.}${3:-.}" in
- #
--# deleted in both, or deleted in one and unchanged in the other
-+# deleted in both
-+#
-+"$1..")
-+	echo "ERROR: $4 is removed in both branches"
-+	echo "ERROR: This is a potential rename conflict"
-+	exit 1;;
-+#
-+# deleted in one and unchanged in the other
- #
- "$1.." | "$1.$1" | "$1$1.")
- 	rm -f -- "$4"
-+	echo "Removing $4"
- 	update-cache --remove -- "$4"
- 	exit 0
- 	;;
- 
- #
--# added in one, or added identically in both
-+# added in one
- #
--".$2." | "..$3" | ".$2$2")
--	mv $(unpack-file "${2:-$3}") $4
-+".$2." | "..$3" )
-+	echo "Adding $4 with perm $6$7"
-+	mv $(unpack-file "$2$3") $4
-+	chmod "$6$7" $4
- 	update-cache --add -- $4
- 	exit 0
- 	;;
--
-+#
-+# Added in both (check for same permissions)
-+#
-+".$2$2")
-+	if [ "$6" != "$7" ]; then
-+		echo "ERROR: File $4 added in both branches, permissions conflict $6->$7"
-+		exit 1
-+	fi
-+	echo "Adding $4 with perm $6"
-+	mv $(unpack-file "$2") $4
-+	chmod "$6" $4
-+	update-cache --add -- $4
-+	exit 0;;
- #
- # Modified in both, but differently ;(
- #
-@@ -46,12 +68,21 @@ case "${1:-.}${2:-.}${3:-.}" in
- 	src1=$(unpack-file $2)
- 	src2=$(unpack-file $3)
- 	merge "$src2" "$orig" "$src1"
--	if [ $? -ne 0 ]; then
--		echo Leaving conflict merge in $src2
-+	ret=$?
-+	if [ "$6" != "$7" ]; then
-+		echo "ERROR: Permissions $5->$6->$7 don't match merging $src2"
-+		if [ $ret -ne 0 ]; then
-+			echo "ERROR: Leaving conflict merge in $src2"
-+		fi
-+		exit 1
-+	fi
-+	chmod -- "$6" "$src2"
-+	if [ $ret -ne 0 ]; then
-+		echo "ERROR: Leaving conflict merge in $src2"
- 		exit 1
- 	fi
--	cp "$src2" "$4" && update-cache --add -- "$4" && exit 0
-+	cp -- "$src2" "$4" && chmod -- "$6" "$4" &&  update-cache --add -- "$4" && exit 0
- 	;;
- 
- *)
---- a/merge-cache.c
-+++ b/merge-cache.c
-@@ -4,7 +4,7 @@
- #include "cache.h"
- 
- static const char *pgm = NULL;
--static const char *arguments[5];
-+static const char *arguments[8];
- 
- static void run_program(void)
- {
-@@ -18,6 +18,9 @@ static void run_program(void)
- 			    arguments[2],
- 			    arguments[3],
- 			    arguments[4],
-+			    arguments[5],
-+			    arguments[6],
-+			    arguments[7],
- 			    NULL);
- 		die("unable to execute '%s'", pgm);
- 	}
-@@ -36,9 +39,13 @@ static int merge_entry(int pos, const ch
- 	arguments[2] = "";
- 	arguments[3] = "";
- 	arguments[4] = path;
-+	arguments[5] = "";
-+	arguments[6] = "";
-+	arguments[7] = "";
- 	found = 0;
- 	do {
- 		static char hexbuf[4][60];
-+		static char ownbuf[4][60];
- 		struct cache_entry *ce = active_cache[pos];
- 		int stage = ce_stage(ce);
- 
-@@ -46,7 +53,9 @@ static int merge_entry(int pos, const ch
- 			break;
- 		found++;
- 		strcpy(hexbuf[stage], sha1_to_hex(ce->sha1));
-+		sprintf(ownbuf[stage], "%o", ntohl(ce->ce_mode) & (~S_IFMT));
- 		arguments[stage] = hexbuf[stage];
-+		arguments[stage + 4] = ownbuf[stage];
- 	} while (++pos < active_nr);
- 	if (!found)
- 		die("merge-cache: %s not in the cache", path);
 
 
+On Sat, 23 Apr 2005, Jan Harkes wrote:
+> 
+> I respectfully disagree,
+> 
+> rsync works fine for now, but people are already looking at implementing
+> smarter (more efficient) ways to synchronize git repositories by
+> grabbing missing commits, and from there fetching any missing tree and
+> file blobs.
+
+Bit this is a _feature_.
+
+Other people normally shouldn't be interested in your tags. I think it's a 
+mistake to make everybody care.
+
+So you normally would fetch only tags you _know_ about. For example, one 
+of the reasons we've been _avoiding_ personal tags in teh BK trees is that 
+it just gets really ugly really quickly because they get percolated up to 
+everybody else. That means that in a BK tree, you can't sanely use tags 
+for "private" stuff, like telling somebody else "please sync with this 
+tag".
+
+So having the tag in the object database means that fsck etc will notice 
+these things, and can build up a list of tags you know about. It also 
+means that you can have tag-aware synchronization tools, ie exactly the 
+kind of tools that only grab missing commits can also then be used to 
+select missing tags according to some _private_ understanding of what tags 
+you might want to find..
+
+		Linus
