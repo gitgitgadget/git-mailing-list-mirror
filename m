@@ -1,145 +1,83 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Allow multiple date-ordered lists
-Date: Sat, 23 Apr 2005 22:59:46 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504232257390.30848-100000@iabervon.org>
-References: <Pine.LNX.4.21.0504232230080.30848-100000@iabervon.org>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: Date handling.
+Date: Sat, 23 Apr 2005 23:04:16 -0400
+Message-ID: <20050424030416.GE16751@delft.aura.cs.cmu.edu>
+References: <1113466592.12012.192.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504140153230.7211@ppc970.osdl.org> <Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org> <1113500316.27227.8.camel@hades.cambridge.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 04:55:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 04:59:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPXH0-0001Vk-R9
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 04:55:07 +0200
+	id 1DPXLX-0001mI-Ek
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 04:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262236AbVDXC7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 22:59:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262237AbVDXC7r
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 22:59:47 -0400
-Received: from iabervon.org ([66.92.72.58]:23812 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262236AbVDXC7l (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 22:59:41 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DPXLW-00069b-00; Sat, 23 Apr 2005 22:59:46 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.21.0504232230080.30848-100000@iabervon.org>
+	id S262237AbVDXDE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 23:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262238AbVDXDE2
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 23:04:28 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:19373 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S262237AbVDXDEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Apr 2005 23:04:22 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1DPXPs-0000W1-00; Sat, 23 Apr 2005 23:04:16 -0400
+To: David Woodhouse <dwmw2@infradead.org>
+Mail-Followup-To: David Woodhouse <dwmw2@infradead.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1113500316.27227.8.camel@hades.cambridge.redhat.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Make pop_most_recent_commit() return the same objects multiple times, but only
-if called with different bits to mark.
+On Thu, Apr 14, 2005 at 06:38:36PM +0100, David Woodhouse wrote:
+> +/* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
+> +   (i.e. English) day/month names, and it doesn't work correctly with %z. */
+> +static void parse_rfc2822_date(char *date, char *result, int maxlen)
+> +{
+...
+> +	then = mktime(&tm); /* mktime appears to ignore the GMT offset, stupidly */
 
-This is necessary to make merge-base work again.
+I noticed that some commit timestamps seemed to be off, looking into it
+a bit more it seems like mktime is influenced by the setting of the
+local TZ environment. However in parse_rfc2822_date we are trying to
+interpret a time in the timezone of the original author not in the
+timezone of the committer.
 
-Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+Here is a short test program that I believe shows the problem.
 
----
-commit 58ec99a22e3a8dac158d9949b0a704752991ac8a
-tree 6f24c9b481d76e067d64bac1a8dbd5cf5d0dfb05
-parent f4adf2687593e8d6e58ac1c4710e0385a82500e5
-author Daniel Barkalow <barkalow@iabervon.org> 1114311416 -0400
-committer Daniel Barkalow <barkalow@silva-tulga.(none)> 1114311416 -0400
+The question is, do we want to just calculate the time_t offset
+ourselves without using mktime, or force the TZ environment to UTC.
 
-Index: commit.c
-===================================================================
---- 34933617a2e8284ffca6ab2a1b2f00d6996a58e7/commit.c  (mode:100644 sha1:0243e77cb8e839e2972a2882bb1d0719f6e3cff1)
-+++ 6f24c9b481d76e067d64bac1a8dbd5cf5d0dfb05/commit.c  (mode:100644 sha1:2502688262819033f5b8ed60a7bef5eed0aa2d6a)
-@@ -114,7 +114,8 @@
- 	*list = ret;
- }
- 
--struct commit *pop_most_recent_commit(struct commit_list **list)
-+struct commit *pop_most_recent_commit(struct commit_list **list,
-+				      unsigned int mark)
- {
- 	struct commit *ret = (*list)->item;
- 	struct commit_list *parents = ret->parents;
-@@ -125,8 +126,9 @@
- 
- 	while (parents) {
- 		struct commit *commit = parents->item;
--		if (!commit->object.parsed) {
--			parse_commit(commit);
-+		parse_commit(commit);
-+		if (!(commit->object.flags & mark)) {
-+			commit->object.flags |= mark;
- 			insert_by_date(list, commit);
- 		}
- 		parents = parents->next;
-Index: commit.h
-===================================================================
---- 34933617a2e8284ffca6ab2a1b2f00d6996a58e7/commit.h  (mode:100644 sha1:c8684d1cd07d7c9ed0af06a3f3d9e7b49fbed0a2)
-+++ 6f24c9b481d76e067d64bac1a8dbd5cf5d0dfb05/commit.h  (mode:100644 sha1:d61d084c89c72f4fe79c654db721df31c4f04224)
-@@ -31,6 +31,7 @@
- /** Removes the first commit from a list sorted by date, and adds all
-  * of its parents.
-  **/
--struct commit *pop_most_recent_commit(struct commit_list **list);
-+struct commit *pop_most_recent_commit(struct commit_list **list, 
-+				      unsigned int mark);
- 
- #endif /* COMMIT_H */
-Index: merge-base.c
-===================================================================
---- 34933617a2e8284ffca6ab2a1b2f00d6996a58e7/merge-base.c  (mode:100644 sha1:0e4c58ede915aca5719bbd12ecd1945f2f300590)
-+++ 6f24c9b481d76e067d64bac1a8dbd5cf5d0dfb05/merge-base.c  (mode:100644 sha1:2c40881302e586366f03ae6ac6e7c0035847e2f0)
-@@ -6,29 +6,11 @@
- 				   int other_mark)
- {
- 	struct commit *item = (*list_p)->item;
--	
--	if (item->object.flags & this_mark) {
--		/*
--		  printf("%d already seen %s %x\n",
--		  this_mark
--		  sha1_to_hex(posn->parent->sha1),
--		  posn->parent->flags);
--		*/
--		/* do nothing; this indicates that this side
--		 * split and reformed, and we only need to
--		 * mark it once.
--		 */
--		*list_p = (*list_p)->next;
--	} else if (item->object.flags & other_mark) {
-+
-+	if (item->object.flags & other_mark) {
- 		return item;
- 	} else {
--		/*
--		  printf("%d based on %s\n",
--		  this_mark,
--		  sha1_to_hex(posn->parent->sha1));
--		*/
--		pop_most_recent_commit(list_p);
--		item->object.flags |= this_mark;
-+		pop_most_recent_commit(list_p, this_mark);
- 	}
- 	return NULL;
- }
-@@ -39,7 +21,9 @@
- 	struct commit_list *rev2list = NULL;
- 
- 	commit_list_insert(rev1, &rev1list);
-+	rev1->object.flags |= 0x1;
- 	commit_list_insert(rev2, &rev2list);
-+	rev2->object.flags |= 0x2;
- 
- 	parse_commit(rev1);
- 	parse_commit(rev2);
-Index: rev-list.c
-===================================================================
---- 34933617a2e8284ffca6ab2a1b2f00d6996a58e7/rev-list.c  (mode:100644 sha1:1c797d24a91b44994dc11180dd61c3ecf8f93349)
-+++ 6f24c9b481d76e067d64bac1a8dbd5cf5d0dfb05/rev-list.c  (mode:100644 sha1:77bfc29db1aad08ba9d7d87ce08d33d4a88e74e3)
-@@ -16,7 +16,7 @@
- 
- 	commit_list_insert(commit, &list);
- 	do {
--		struct commit *commit = pop_most_recent_commit(&list);
-+		struct commit *commit = pop_most_recent_commit(&list, 0x1);
- 		printf("%s\n", sha1_to_hex(commit->object.sha1));
- 	} while (list);
- 	return 0;
+Jan
 
+
+/* cc -o mktime mktime.c ; ./mktime
+ *
+ * I get the following output,
+ *   current 18000
+ *   TZ=EST 18000
+ *   TZ=UTC 0
+ *   TZ=CET -3600
+ */
+
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char **argv)
+{
+    struct tm tm = { 0, };
+    time_t zero;
+
+    /* 1970-01-01 00:00:00 UTC, should map to 'time_t 0' */
+    tm.tm_mday = 1;
+    tm.tm_year = 70;
+			    zero = mktime(&tm); printf("current %d\n", zero);
+    setenv("TZ", "EST", 1); zero = mktime(&tm); printf("TZ=EST %d\n", zero);
+    setenv("TZ", "UTC", 1); zero = mktime(&tm); printf("TZ=UTC %d\n", zero);
+    setenv("TZ", "CET", 1); zero = mktime(&tm); printf("TZ=CET %d\n", zero);
+}
