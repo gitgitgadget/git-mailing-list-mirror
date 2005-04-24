@@ -1,57 +1,74 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: Old "sparse" archive converted..
-Date: Sun, 24 Apr 2005 01:24:18 -0400
-Message-ID: <426B2D82.5000906@pobox.com>
-References: <Pine.LNX.4.58.0504231815350.2344@ppc970.osdl.org>
+From: Andreas Gal <gal@uci.edu>
+Subject: Re: [PATH] fix segfault in fsck-cache
+Date: Sat, 23 Apr 2005 22:24:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504232223570.8755@sam.ics.uci.edu>
+References: <1114280570.5068.5.camel@mulgrave>  <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
+  <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz> 
+ <1114298490.5264.10.camel@mulgrave>  <Pine.LNX.4.58.0504231759010.2344@ppc970.osdl.org>
+ <1114317771.4980.7.camel@mulgrave> <Pine.LNX.4.58.0504232153500.15879@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504232202380.7195@sam.ics.uci.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: sparse mailing list <linux-sparse@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 07:19:56 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 07:20:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPZX9-0000aG-WE
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:19:56 +0200
+	id 1DPZXF-0000ae-LB
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262263AbVDXFYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 01:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262265AbVDXFYa
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:24:30 -0400
-Received: from 216-237-124-58.infortech.net ([216.237.124.58]:643 "EHLO
-	mail.dvmed.net") by vger.kernel.org with ESMTP id S262263AbVDXFYY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 01:24:24 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
-	id 1DPZbR-0001xj-Qy; Sun, 24 Apr 2005 05:24:24 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
+	id S262265AbVDXFYs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 01:24:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262264AbVDXFYr
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:24:47 -0400
+Received: from sam.ics.uci.edu ([128.195.38.141]:49559 "EHLO sam.ics.uci.edu")
+	by vger.kernel.org with ESMTP id S262266AbVDXFYb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 01:24:31 -0400
+Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
+	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3O5OTYM008760;
+	Sat, 23 Apr 2005 22:24:29 -0700
+Received: from localhost (gal@localhost)
+	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3O5OTWM008756;
+	Sat, 23 Apr 2005 22:24:29 -0700
+X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
+X-X-Sender: gal@sam.ics.uci.edu
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504231815350.2344@ppc970.osdl.org>
-X-Spam-Score: 0.0 (/)
+In-Reply-To: <Pine.LNX.4.58.0504232202380.7195@sam.ics.uci.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> Ok, I expanded on "convert-cache" quite a bit, to the point where it could
-> actually re-write "commit" and "tree" objects entirely, at which point it
-> now became possible to convert the broken old sparse archive that had the
-> wrong date format in its commit objects, and had the old flat-file format
-> for the "tree" objects.
+
+This isn't working right either, depending on your ZLIB version. Do not 
+apply. 
+
+Andreas
+
+On Sat, 23 Apr 2005, Andreas Gal wrote:
+
 > 
-> I updated the tree at
+> I somehow got some corrupted object files in my repository that zlib 
+> refuses to decompress. This patch makes sure we abort early before the 
+> memcpy a few lines downtream segfaults (due to total_out == 0).
 > 
-> 	kernel.org:/pub/linux/kernel/people/torvalds/sparse.git
-
-Any chance you could copy it to
-
-	/pub/scm/linux/kernel/git/torvalds/sparse.git
-
-?
-
-	Jeff
-
-
+> Andreas
+> 
+> Signed-off-by: Andreas Gal <gal@uci.edu>
+> 
+> --- 66308ede85c2dad6b184fb74a7215b06a173d8f7/sha1_file.c
+> +++ sha1_file.c
+> @@ -155,6 +155,8 @@
+>  
+>  	inflateInit(&stream);
+>  	ret = inflate(&stream, 0);
+> +	if (ret != Z_OK)
+> +		return NULL;
+>  	if (sscanf(buffer, "%10s %lu", type, size) != 2)
+>  		return NULL;
+>  
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
