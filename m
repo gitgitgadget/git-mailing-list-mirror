@@ -1,74 +1,61 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: Re: [PATH] fix segfault in fsck-cache
-Date: Sat, 23 Apr 2005 22:24:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504232223570.8755@sam.ics.uci.edu>
-References: <1114280570.5068.5.camel@mulgrave>  <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
-  <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz> 
- <1114298490.5264.10.camel@mulgrave>  <Pine.LNX.4.58.0504231759010.2344@ppc970.osdl.org>
- <1114317771.4980.7.camel@mulgrave> <Pine.LNX.4.58.0504232153500.15879@ppc970.osdl.org>
- <Pine.LNX.4.58.0504232202380.7195@sam.ics.uci.edu>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 07:20:08 2005
+From: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
+Subject: Re: Humble request of 'git' developers
+Date: Sun, 24 Apr 2005 06:47:31 +0100
+Message-ID: <E1DPZxr-0000a3-00@skye.ra.phy.cam.ac.uk>
+References: <426AAB65.2060401@pobox.com>
+Cc: Chris Wedgwood <cw@f00f.org>, git@vger.kernel.org,
+	"David A. Wheeler" <dwheeler@dwheeler.com>
+X-From: git-owner@vger.kernel.org Sun Apr 24 07:43:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPZXF-0000ae-LB
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:20:01 +0200
+	id 1DPZtZ-00025t-Hq
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262265AbVDXFYs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 01:24:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262264AbVDXFYr
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:24:47 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:49559 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S262266AbVDXFYb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 01:24:31 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3O5OTYM008760;
-	Sat, 23 Apr 2005 22:24:29 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3O5OTWM008756;
-	Sat, 23 Apr 2005 22:24:29 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504232202380.7195@sam.ics.uci.edu>
+	id S262268AbVDXFru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 01:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262267AbVDXFru
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:47:50 -0400
+Received: from mraos.ra.phy.cam.ac.uk ([131.111.48.8]:6368 "EHLO
+	mraos.ra.phy.cam.ac.uk") by vger.kernel.org with ESMTP
+	id S262269AbVDXFrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 01:47:39 -0400
+Received: from skye.ra.phy.cam.ac.uk ([131.111.48.158] ident=mail)
+	by mraos.ra.phy.cam.ac.uk with esmtp (Exim 4.43)
+	id 1DPZxs-0003OH-D4; Sun, 24 Apr 2005 06:47:32 +0100
+Received: from sanjoy by skye.ra.phy.cam.ac.uk with local (Exim 3.35 #1)
+	id 1DPZxr-0000a3-00; Sun, 24 Apr 2005 06:47:31 +0100
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: Your message of "Sat, 23 Apr 2005 16:09:09 EDT."
+             <426AAB65.2060401@pobox.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+[Added David Wheeler to the CC given his (admirable) pushes for wide
+standards compliance.]
 
-This isn't working right either, depending on your ZLIB version. Do not 
-apply. 
+>>>Just have one 'git' script, which looks in /usr/local/libexec/git
+> [or] /usr/libexec/git
 
-Andreas
+The FHS <http://www.pathname.com/fhs/pub/fhs-2.3.html> looks like it
+recommends a /usr/lib/git directory:
 
-On Sat, 23 Apr 2005, Andreas Gal wrote:
+  /usr/lib : Libraries for programming and packages
 
-> 
-> I somehow got some corrupted object files in my repository that zlib 
-> refuses to decompress. This patch makes sure we abort early before the 
-> memcpy a few lines downtream segfaults (due to total_out == 0).
-> 
-> Andreas
-> 
-> Signed-off-by: Andreas Gal <gal@uci.edu>
-> 
-> --- 66308ede85c2dad6b184fb74a7215b06a173d8f7/sha1_file.c
-> +++ sha1_file.c
-> @@ -155,6 +155,8 @@
->  
->  	inflateInit(&stream);
->  	ret = inflate(&stream, 0);
-> +	if (ret != Z_OK)
-> +		return NULL;
->  	if (sscanf(buffer, "%10s %lu", type, size) != 2)
->  		return NULL;
->  
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+  Purpose
+     /usr/lib includes object files, libraries, and internal binaries that
+     are not intended to be executed directly by users or shell scripts.
+
+     Applications may use a single subdirectory under /usr/lib. If an
+     application uses a subdirectory, all architecture-dependent data
+     exclusively used by the application must be placed within that  
+     subdirectory.
+
+My Debian sarge system has one libexec-like directory, but it follows
+the FHS:
+
+$ locate '/usr*libexec*'
+/usr/lib/php4/libexec
+
+-Sanjoy
