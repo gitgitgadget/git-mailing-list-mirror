@@ -1,55 +1,46 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] make file merging respect permissions
-Date: Sat, 23 Apr 2005 21:55:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504232153500.15879@ppc970.osdl.org>
-References: <1114280570.5068.5.camel@mulgrave>  <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
-  <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz> 
- <1114298490.5264.10.camel@mulgrave>  <Pine.LNX.4.58.0504231759010.2344@ppc970.osdl.org>
- <1114317771.4980.7.camel@mulgrave>
+From: James Purser <purserj@ksit.dynalias.com>
+Subject: Re: [ANNOUNCE] git-pasky-0.7
+Date: Sun, 24 Apr 2005 14:58:42 +1000
+Message-ID: <1114318722.25535.9.camel@kryten>
+References: <20050423205847.7758bfaa.pj@sgi.com>
+	 <Pine.LNX.4.21.0504240018350.30848-100000@iabervon.org>
+	 <20050423215007.1b2877d2.pj@sgi.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 06:48:49 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>, pasky@ucw.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 06:52:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPZ2v-0007I6-3d
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 06:48:41 +0200
+	id 1DPZ6Q-0007TW-M0
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 06:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262252AbVDXEx3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 00:53:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262253AbVDXEx3
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 00:53:29 -0400
-Received: from fire.osdl.org ([65.172.181.4]:18340 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262252AbVDXEx0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 00:53:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3O4rNs4002939
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 23 Apr 2005 21:53:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3O4rMLx029307;
-	Sat, 23 Apr 2005 21:53:22 -0700
-To: James Bottomley <James.Bottomley@SteelEye.com>
-In-Reply-To: <1114317771.4980.7.camel@mulgrave>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262254AbVDXE5C (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 00:57:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262255AbVDXE5C
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 00:57:02 -0400
+Received: from dsl-202-52-56-051.nsw.veridas.net ([202.52.56.51]:46466 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S262254AbVDXE46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 00:56:58 -0400
+Received: from localhost.localdomain (kryten [127.0.0.1])
+	by localhost.localdomain (8.12.11/8.12.11) with ESMTP id j3O4wh17025812;
+	Sun, 24 Apr 2005 14:58:44 +1000
+Received: (from purserj@localhost)
+	by localhost.localdomain (8.12.11/8.12.11/Submit) id j3O4wgOU025811;
+	Sun, 24 Apr 2005 14:58:42 +1000
+X-Authentication-Warning: localhost.localdomain: purserj set sender to purserj@ksit.dynalias.com using -f
+To: Paul Jackson <pj@sgi.com>
+In-Reply-To: <20050423215007.1b2877d2.pj@sgi.com>
+X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+try git init rsync://rsync.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git
+-- 
+James Purser
+http://ksit.dynalias.com
 
-
-On Sat, 23 Apr 2005, James Bottomley wrote:
-> 
-> OK ... this is done by reapplying to the top of your git tree and then
-> doing a show-diff.  I've checked that it actually applies without
-> rejections to a pristine git tree.
-
-Well, I actually ended up editing the line numbers manually and already 
-pushed out the previous one, so you might want to double-check that my 
-current tree matches yours.
-
-		Linus
