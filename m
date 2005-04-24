@@ -1,74 +1,108 @@
-From: Dan Weber <dan@mirrorlynx.com>
-Subject: Re: Git cancel work
-Date: Sun, 24 Apr 2005 09:04:03 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0504240903400.29083@mirrorlynx.com>
-References: <Pine.LNX.4.62.0504240033230.1980@mirrorlynx.com>
- <20050424124930.GE1507@pasky.ji.cz> <Pine.LNX.4.62.0504240859210.27230@mirrorlynx.com>
- <20050424130028.GG1507@pasky.ji.cz>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Cleanup sha1_file_directory initialization
+Date: Sun, 24 Apr 2005 15:07:30 +0200
+Message-ID: <20050424130730.GA10649@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 14:58:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 15:03:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPggL-0007dL-Jq
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 14:57:53 +0200
+	id 1DPglL-00086A-2p
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 15:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262327AbVDXNCn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 09:02:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262328AbVDXNCn
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 09:02:43 -0400
-Received: from outbound.mailhop.org ([63.208.196.171]:6416 "EHLO
-	outbound.mailhop.org") by vger.kernel.org with ESMTP
-	id S262327AbVDXNCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 09:02:40 -0400
-Received: from pool-68-238-240-238.phlapa.fios.verizon.net ([68.238.240.238] helo=mirrorlynx.com)
-	by outbound.mailhop.org with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.44)
-	id 1DPgkx-000NyM-Oq; Sun, 24 Apr 2005 09:02:39 -0400
-Received: from dan (helo=localhost)
-	by mirrorlynx.com with local-esmtp (Exim 4.34)
-	id 1DPgmJ-0007Zk-7T; Sun, 24 Apr 2005 09:04:03 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050424130028.GG1507@pasky.ji.cz>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Rcpt-To: pasky@ucw.cz, git@vger.kernel.org
-X-SA-Exim-Mail-From: dan@mirrorlynx.com
-X-Spam-Checker-Version: SpamAssassin 3.0.0 (2004-09-13) on mirrorlynx.com
+	id S262328AbVDXNHs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 09:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262329AbVDXNHs
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 09:07:48 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:11214 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S262328AbVDXNHg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 09:07:36 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 665326E2862; Sun, 24 Apr 2005 15:06:44 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id BD41E6E1879; Sun, 24 Apr 2005 15:06:39 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 129CB61FDD; Sun, 24 Apr 2005 15:07:31 +0200 (CEST)
+To: torvalds@osdl.org
+Mail-Followup-To: torvalds@osdl.org, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=unavailable version=3.0.0
-X-SA-Exim-Version: 4.1 (built Tue, 17 Aug 2004 11:06:07 +0200)
-X-SA-Exim-Scanned: Yes (on mirrorlynx.com)
-X-Mail-Handler: MailHop Outbound by DynDNS.org
-X-Originating-IP: 68.238.240.238
-X-Report-Abuse-To: abuse@dyndns.org (see http://www.mailhop.org/outbound/abuse.html for abuse reporting information)
-X-MHO-User: DanWeber1
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Use get_object_directory() when initializing sha1_file_directory
+and make sha1_file_name() work on the global.
 
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-On Sun, 24 Apr 2005, Petr Baudis wrote:
+---
+Actually the initiailzation in ls-tree.c can be removed because call to
+list() will end up in sha1_file_name() which will do it.
 
-> Dear diary, on Sun, Apr 24, 2005 at 02:59:31PM CEST, I got a letter
-> where Dan Weber <dan@mirrorlynx.com> told me that...
->> Why does it take so ridiculously long then?
->
-> That's strange.
->
-> Could you show some time comparisons between the current and your
-> approaches? (Please make sure the cache condition is about the same for
-> both tests; it makes many orders of magnitude difference.)
->
+commit 6a06750a72231eaf285f9fbd2bcb88a39b699679
+tree bec1c4178131a67de1fa639a274b13adec21c1e5
+parent 32141512fff2d42c0233c07610db866926c89a75
+author Jonas Fonseca <jonas@cvalda.(none)> 1114346881 +0200
+committer Jonas Fonseca <jonas@cvalda.(none)> 1114346881 +0200
 
-No need.  Go try running it on the linux kernel. The command git cancel.
+Index: ls-tree.c
+===================================================================
+--- 31e9af73983d640090508b06784ef7db4816c957/ls-tree.c  (mode:100644 sha1:bd99f9ac7b2d6dc23c1ec7d8f03877c20afec63f)
++++ bec1c4178131a67de1fa639a274b13adec21c1e5/ls-tree.c  (mode:100644 sha1:b630f69d8430f18f52799cf32787059b4427f3e8)
+@@ -104,9 +104,8 @@ int main(int argc, char **argv)
+ 		usage(ls_tree_usage);
+ 	if (get_sha1_hex(argv[1], sha1) < 0)
+ 		usage(ls_tree_usage);
+-	sha1_file_directory = getenv(DB_ENVIRONMENT);
+-	if (!sha1_file_directory)
+-		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
++
++	sha1_file_directory = get_object_directory();
+ 	if (list(sha1) < 0)
+ 		die("list failed");
+ 	return 0;
+Index: read-cache.c
+===================================================================
+--- 31e9af73983d640090508b06784ef7db4816c957/read-cache.c  (mode:100644 sha1:f67aceb6b12f6d9cadf6a80bb1d33cf1bcd7f619)
++++ bec1c4178131a67de1fa639a274b13adec21c1e5/read-cache.c  (mode:100644 sha1:deb60df8cbb4f9ec8367f4ff96c62e383b5699e8)
+@@ -183,9 +183,7 @@ int read_cache(void)
+ 	if (active_cache)
+ 		return error("more than one cachefile");
+ 	errno = ENOENT;
+-	sha1_file_directory = getenv(DB_ENVIRONMENT);
+-	if (!sha1_file_directory)
+-		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
++	sha1_file_directory = get_object_directory();
+ 	if (access(sha1_file_directory, X_OK) < 0)
+ 		return error("no access to SHA1 file directory");
+ 	fd = open(get_index_file(), O_RDONLY);
+Index: sha1_file.c
+===================================================================
+--- 31e9af73983d640090508b06784ef7db4816c957/sha1_file.c  (mode:100644 sha1:97a515a073fec5870dfaaa279868ce9330853d3d)
++++ bec1c4178131a67de1fa639a274b13adec21c1e5/sha1_file.c  (mode:100644 sha1:94ab1119383a00a821254c3454fe349845027346)
+@@ -71,8 +71,11 @@ char *sha1_file_name(const unsigned char
+ 	static char *name, *base;
+ 
+ 	if (!base) {
+-		char *sha1_file_directory = getenv(DB_ENVIRONMENT) ? : DEFAULT_DB_ENVIRONMENT;
+-		int len = strlen(sha1_file_directory);
++		int len;
++
++		if (!sha1_file_directory)
++			sha1_file_directory = get_object_directory();
++		len = strlen(sha1_file_directory);
+ 		base = malloc(len + 60);
+ 		memcpy(base, sha1_file_directory, len);
+ 		memset(base+len, 0, 60);
 
-Dan
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
->
+-- 
+Jonas Fonseca
