@@ -1,85 +1,124 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [RFC] Design of name-addressed data portion
-Date: Sun, 24 Apr 2005 14:17:23 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504241336250.30848-100000@iabervon.org>
+Subject: Re: unseeking?
+Date: Sun, 24 Apr 2005 14:47:30 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504241418190.30848-100000@iabervon.org>
+References: <20050424180116.GC11094@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun Apr 24 20:13:14 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 20:42:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPlat-000762-6e
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 20:12:35 +0200
+	id 1DPm4H-00023B-9X
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 20:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262359AbVDXSRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 14:17:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262360AbVDXSRW
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 14:17:22 -0400
-Received: from iabervon.org ([66.92.72.58]:40452 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262359AbVDXSRQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 14:17:16 -0400
+	id S262367AbVDXSrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 14:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262368AbVDXSrr
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 14:47:47 -0400
+Received: from iabervon.org ([66.92.72.58]:58884 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262367AbVDXSr1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 14:47:27 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DPlfX-0005QU-00; Sun, 24 Apr 2005 14:17:23 -0400
-To: git@vger.kernel.org
+	id 1DPm8g-0006Wh-00; Sun, 24 Apr 2005 14:47:30 -0400
+To: Zack Brown <zbrown@tumblerings.org>
+In-Reply-To: <20050424180116.GC11094@tumblerings.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I think it has gotten to be time to have a standard mechanism for
-name-addressed data in the .git directory. We currently have one
-agreed-upon item, HEAD, as well as a number of items in cogito: heads,
-tags, and, to a certain extent, remotes. (Even in core git, when we
-support tags, we'll want a mapping from tag names to tag objects, even if
-this mapping doesn't get transferred by push and pull operations; nobody's
-going to want to cut and paste a hash from email every time they want to
-refer to the tag, and fsck-cache could stand to know which tags you mean
-to have so that it can report the rest to git-prune-script)
+On Sun, 24 Apr 2005, Zack Brown wrote:
 
-It would be useful to have a bit more structure to the repository, such
-that there are a fixed number of paths that hold all of the information
-about the state of the repository, while the rest of the directory has
-information that is particular to a working directory's state (e.g.,
-index).
+> That works a little better for me, but neither really works. If I do
+> 
+> git fork currdir newdir
+> 
+> I get
+> 
+> cat: .git/HEAD: No such file or directory
+> Invalid id: 
+> grep: .git/remotes: No such file or directory
+> /home/zbrown/git/git-pasky-0.6.2/gitfork.sh: line 41: .git/heads/mygitdir: No
+> such file or directory
+> cat: .git/HEAD: No such file or directory
+> Invalid id: 
+> error: no access to SHA1 file directory
+> fatal: invalid cache
+> error: no access to SHA1 file directory
+> fatal: cache corrupted
+> Branch mygitdir ready in mygitdir3 with head 
 
+I think your "mygitdir" directory has lost its idea of what's in it, so
+the fork doesn't know what should be there, either. If it's tracking a
+remote repository, you should be able to do a "git pull" there to both
+bring it up to date and fix this. Then things should work better.
 
+> I'm sure this is all accurate information, but I'm still unclear about several
+> points:
+> 
+> 1) when I fork directory A into directory B, is A at all different from B
+> when the fork completes, and if so, how?
 
-I'd propose the following structure:
+They should be the same, but now independant as far as commits into them.
 
- objects/    the content-addressed repository portion
- references/ the name-addressed repository portion
-   heads/    the heads that are being used out of this repository
-     DEFAULT the head that people pulling this repository mean by default
-     ...     other heads, by name, that fsck-cache should mark reachable
-   tags/     the tags
-     ...     files with the symbolic name of the tags, containing the hash
- info/       other per-repository information
-   remotes   URLs of remote repositories
-   complete  hashes that the repository contains all references from
-   missing   hashes that the repository lacks but wants
-   excluded  hashes that the repository doesn't want
- ...         other files are per .git directory, not shared on push/pull
- index       
- HEAD        symlink to the head that is the local default
- tracked     remote that this working directory tracks
+> 2) Are A and B altered by the forking process? i.e., is this an event that is
+> recorded in the repo, or is it just the equivalent of 'checking out' the repo?
 
-All of the files in references/*/* contain hex for objects in the
-database, and are not synced between repositories in situ (but some sync
-operations will read some of them and write them under different
-names). fsck-cache would use as its reachability starting point $(cat
-references/*/*).
+The repo contains the latest commit on each side in .git/heads/<name>
 
-In info/ are, generically, other files that relate to operations which
-work on the repository rather than a working directory. Transfer programs
-would use and maintain this information.
+> 3) What is the significance of a branch 'name'? Is this like a tag?
 
-I think we'd still eventually want some way of getting from a commit-id to
-any tags about it (I think git log would do well to mention any tags you
-have when it shows a commit), but I don't want to design this quite
-yet. It should also work for going from the real history to cached delta
-info, when we have comparison tools that are sufficiently smart,
-expensive, and intermediate-dependant to want to cache this.
+It's orthogonal to a tag; it's what stays the same when you do more
+commits on something. E.g., linux-scsi or linux-stable would be branch
+names. (Tags, on the other hand, stick where you put them.)
+
+> 4) In normal work-flow, when would forks be created, as opposed to other ways
+> of getting a tree?
+
+I have a tree that I want to modify, but I want to keep the original, and
+I may want to update the original from an upstream source (and then sync
+my work with it). I start with the original:
+
+  cd original
+  git init URL
+  git addremote remote-source URL
+  git track remote-source
+
+I make my own working directory:
+
+  git fork my-changes ../my-changes
+  cd ../my-changes
+
+Then I do my changes, and commit whenever I feel like I've gotten
+somewhere (or when I think I'm about to mess something up and might want
+to undo changes). Periodically, I check on the mainline:
+
+  cd ../original
+  git pull
+
+I also merge changes from the mainline:
+
+  cd ../my-changes
+  git merge remote-source
+
+When I'm done, I make a patch for my work:
+
+  cd ../my-changes
+  git patch remote-source
+
+I generally then fork the original again, split the patch, apply each
+section in the new fork, committing after each one, generate patches for
+each of these commits, and send those out. Then I discard my old branch
+and continue from the new one. If, at some point, all of the changes I
+want to keep have been put into the mainline, I discard all my branches
+and fork again from the mainline.
+
+(My personal style is to discard the history of how the changes got made
+in favor of the history of how the changes got into the mainline, since I
+don't really need to keep all of my debugged mistakes that nobody else
+saw.)
 
 	-Daniel
 *This .sig left intentionally blank*
