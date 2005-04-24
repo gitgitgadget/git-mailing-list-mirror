@@ -1,83 +1,85 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: Date handling.
-Date: Sat, 23 Apr 2005 23:04:16 -0400
-Message-ID: <20050424030416.GE16751@delft.aura.cs.cmu.edu>
-References: <1113466592.12012.192.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504140153230.7211@ppc970.osdl.org> <Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org> <1113500316.27227.8.camel@hades.cambridge.redhat.com>
+From: Andreas Gal <gal@uci.edu>
+Subject: [PATCH] Add -u option to diff-cache to show UNCHANGED files
+Date: Sat, 23 Apr 2005 20:28:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504232022180.4690@sam.ics.uci.edu>
+References: <Pine.LNX.4.21.0504232003490.30848-100000@iabervon.org>
+ <Pine.LNX.4.58.0504231906110.2344@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 04:59:52 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 05:23:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPXLX-0001mI-Ek
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 04:59:47 +0200
+	id 1DPXic-0002yX-Sl
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 05:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262237AbVDXDE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 23:04:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262238AbVDXDE2
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 23:04:28 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:19373 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S262237AbVDXDEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 23:04:22 -0400
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1DPXPs-0000W1-00; Sat, 23 Apr 2005 23:04:16 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-Mail-Followup-To: David Woodhouse <dwmw2@infradead.org>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1113500316.27227.8.camel@hades.cambridge.redhat.com>
-User-Agent: Mutt/1.5.9i
+	id S262238AbVDXD2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 23:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262239AbVDXD2Z
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 23:28:25 -0400
+Received: from sam.ics.uci.edu ([128.195.38.141]:47765 "EHLO sam.ics.uci.edu")
+	by vger.kernel.org with ESMTP id S262238AbVDXD2T (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 23:28:19 -0400
+Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
+	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3O3SHF6004856;
+	Sat, 23 Apr 2005 20:28:17 -0700
+Received: from localhost (gal@localhost)
+	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3O3SH8U004852;
+	Sat, 23 Apr 2005 20:28:17 -0700
+X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
+X-X-Sender: gal@sam.ics.uci.edu
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504231906110.2344@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 14, 2005 at 06:38:36PM +0100, David Woodhouse wrote:
-> +/* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
-> +   (i.e. English) day/month names, and it doesn't work correctly with %z. */
-> +static void parse_rfc2822_date(char *date, char *result, int maxlen)
-> +{
-...
-> +	then = mktime(&tm); /* mktime appears to ignore the GMT offset, stupidly */
 
-I noticed that some commit timestamps seemed to be off, looking into it
-a bit more it seems like mktime is influenced by the setting of the
-local TZ environment. However in parse_rfc2822_date we are trying to
-interpret a time in the timezone of the original author not in the
-timezone of the committer.
+With -u diff-cache shows unchanged files, instead of files that changed. 
+This is useful to implement a "git clean" command that throws away all 
+checked out files that have not changed (yes, I really would like to 
+have that). One could also do show-files and then substract the 
+diff-cache output from it, but thats slow and clumsy. 
 
-Here is a short test program that I believe shows the problem.
+Signed-off-by: Andreas Gal <gal@uci.edu>
 
-The question is, do we want to just calculate the time_t offset
-ourselves without using mktime, or force the TZ environment to UTC.
-
-Jan
-
-
-/* cc -o mktime mktime.c ; ./mktime
- *
- * I get the following output,
- *   current 18000
- *   TZ=EST 18000
- *   TZ=UTC 0
- *   TZ=CET -3600
- */
-
-#include <time.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-int main(int argc, char **argv)
-{
-    struct tm tm = { 0, };
-    time_t zero;
-
-    /* 1970-01-01 00:00:00 UTC, should map to 'time_t 0' */
-    tm.tm_mday = 1;
-    tm.tm_year = 70;
-			    zero = mktime(&tm); printf("current %d\n", zero);
-    setenv("TZ", "EST", 1); zero = mktime(&tm); printf("TZ=EST %d\n", zero);
-    setenv("TZ", "UTC", 1); zero = mktime(&tm); printf("TZ=UTC %d\n", zero);
-    setenv("TZ", "CET", 1); zero = mktime(&tm); printf("TZ=CET %d\n", zero);
-}
+--- b407d753e520fa0b1523d770d98b3015af197275/diff-cache.c
++++ diff-cache.c
+@@ -2,6 +2,7 @@
+ 
+ static int cached_only = 0;
+ static int line_termination = '\n';
++static int show_unchanged = 0;
+ 
+ /* A file entry went away or appeared */
+ static void show_file(const char *prefix, struct cache_entry *ce)
+@@ -32,7 +33,7 @@
+ 	}
+ 
+ 	oldmode = ntohl(old->ce_mode);
+-	if (mode == oldmode && !memcmp(sha1, old->sha1, 20))
++	if ((mode == oldmode && !memcmp(sha1, old->sha1, 20)) != show_unchanged)
+ 		return 0;
+ 
+ 	strcpy(old_sha1_hex, sha1_to_hex(old->sha1));
+@@ -85,7 +86,7 @@
+ 	}
+ }
+ 
+-static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
++static char *diff_cache_usage = "diff-cache [-r] [-u] [-z] [--cached] <tree sha1>";
+ 
+ int main(int argc, char **argv)
+ {
+@@ -102,6 +103,10 @@
+ 			/* We accept the -r flag just to look like diff-tree */
+ 			continue;
+ 		}
++		if (!strcmp(arg, "-u")) {
++			show_unchanged = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "-z")) {
+ 			line_termination = '\0';
+ 			continue;
