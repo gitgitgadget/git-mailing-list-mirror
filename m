@@ -1,66 +1,121 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC] updates for git-pull-script
-Date: Sun, 24 Apr 2005 10:49:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504241045260.15879@ppc970.osdl.org>
-References: <1114352069.4997.24.camel@mulgrave>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: Re: unseeking?
+Date: Sun, 24 Apr 2005 11:01:16 -0700
+Message-ID: <20050424180116.GC11094@tumblerings.org>
+References: <20050424160514.GI1507@pasky.ji.cz> <Pine.LNX.4.21.0504241305370.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 19:43:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 19:58:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPl8T-0003ag-S8
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 19:43:14 +0200
+	id 1DPlMy-0005M9-LH
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 19:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262356AbVDXRre (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 13:47:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262355AbVDXRre
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 13:47:34 -0400
-Received: from fire.osdl.org ([65.172.181.4]:64902 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262356AbVDXRrV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 13:47:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3OHlGs4004239
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 24 Apr 2005 10:47:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3OHlF3C013690;
-	Sun, 24 Apr 2005 10:47:16 -0700
-To: James Bottomley <James.Bottomley@SteelEye.com>
-In-Reply-To: <1114352069.4997.24.camel@mulgrave>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262357AbVDXSDA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 14:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262358AbVDXSDA
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 14:03:00 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:34208 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S262357AbVDXSCo
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 14:02:44 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1DPlPw-0004BK-Ql; Sun, 24 Apr 2005 11:01:16 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0504241305370.30848-100000@iabervon.org>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sun, 24 Apr 2005, James Bottomley wrote:
+On Sun, Apr 24, 2005 at 01:25:35PM -0400, Daniel Barkalow wrote:
+> On Sun, 24 Apr 2005, Petr Baudis wrote:
 > 
-> The attached addresses all these points.  It's what I use, but since
-> others may prefer the original behaviour, I'm sending it as a straw
-> horse.
+> > Dear diary, on Sun, Apr 24, 2005 at 05:47:54PM CEST, I got a letter
+> > where Zack Brown <zbrown@tumblerings.org> told me that...
+> 
+> > git fork seconddeveloper ../mygitdir
+> 
+> Doesn't that have to be from the first one to the second one (rather than
+> the other way)?
 
-I don't think anybody preferes the original behaviour - the reason 
-git-pull-script punted with any non-trivial merge was that when I wrote 
-the damn thing, I was still just testing out the merges, and I definitely 
-didn't trust the automated script.
+That works a little better for me, but neither really works. If I do
 
-However, when you remove the "checkout-cache -f -a" thing, it means that 
-you are leaving all teh checked-out files in a state where it's _very_ 
-easy to mess up later, and doign so silently really is very bad.
+git fork currdir newdir
 
-So at the _very_ least you should do an "update-cache --refresh", and 
-_tell_ the user about the files that are checked-out but not up-to-date.
+I get
 
-And it really sounds like the whole and only reason you don't like 
-checkout-cache is that you normally work with an empty tree, so I actually 
-think that the _right_ answer for you is to add a new flag to 
-"checkout-cache" that only updates files that already exist. Something 
-like "-n" for "don't create new files". 
+cat: .git/HEAD: No such file or directory
+Invalid id: 
+grep: .git/remotes: No such file or directory
+/home/zbrown/git/git-pasky-0.6.2/gitfork.sh: line 41: .git/heads/mygitdir: No
+such file or directory
+cat: .git/HEAD: No such file or directory
+Invalid id: 
+error: no access to SHA1 file directory
+fatal: invalid cache
+error: no access to SHA1 file directory
+fatal: cache corrupted
+Branch mygitdir ready in mygitdir3 with head 
 
-		Linus
+If I cd into mygitdir3, I see a .git directory, but no files. If I do a 'git
+pull', it asks me where to pull from, and I don't know what to tell it.
+
+> > > 4) fork, seek, tag, and track are a little mysterious to me. I can guess at what
+> > > these things do in general, but the specifics are confusing, and the README is a
+> > > little vague.
+> > 
+> > Try head git*.sh. ;-)
+> 
+> Which is to say, there are useful comments at the beginnings of the
+> scripts. I.e., you really want "head `which gitfork.sh`"
+
+I've looked at the scripts, but I don't find the comments specific enough. For
+instance, for gitfork.sh:
+
+# Create a branch sharing the objects database.
+# Copyright (c) Petr Baudis, 2005
+#
+# This script creates a new branch (or revives an unused old branch)
+# in a given directory, sharing the same objects database with the
+# branch in the current directory, and forking from it at the latest
+# commit (in the case of a new branch). You can use the name
+# of the branch as an ID in all the other branches sharing the
+# objects database.
+#
+# The new directory has a fresh checkout of the branch.
+#
+# Takes the desired branch name, its directory name, and potentially
+# the head commit ID (for new branch).
+
+I'm sure this is all accurate information, but I'm still unclear about several
+points:
+
+1) when I fork directory A into directory B, is A at all different from B
+when the fork completes, and if so, how?
+
+2) Are A and B altered by the forking process? i.e., is this an event that is
+recorded in the repo, or is it just the equivalent of 'checking out' the repo?
+
+3) What is the significance of a branch 'name'? Is this like a tag?
+
+4) In normal work-flow, when would forks be created, as opposed to other ways
+of getting a tree?
+
+Thanks,
+Zack
+
+> 
+> 	-Daniel
+> *This .sig left intentionally blank*
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+-- 
+Zack Brown
