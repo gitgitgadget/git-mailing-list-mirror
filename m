@@ -1,60 +1,58 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: [PATH] fix segfault in fsck-cache
-Date: Sat, 23 Apr 2005 22:05:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504232202380.7195@sam.ics.uci.edu>
-References: <1114280570.5068.5.camel@mulgrave>  <Pine.LNX.4.58.0504231311300.2344@ppc970.osdl.org>
-  <1114292680.4799.4.camel@mulgrave>  <20050423230238.GD13222@pasky.ji.cz> 
- <1114298490.5264.10.camel@mulgrave>  <Pine.LNX.4.58.0504231759010.2344@ppc970.osdl.org>
- <1114317771.4980.7.camel@mulgrave> <Pine.LNX.4.58.0504232153500.15879@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [GIT PATCH] Selective diff-tree
+Date: Sat, 23 Apr 2005 22:09:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
+References: <1113400651.20848.135.camel@hades.cambridge.redhat.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 07:01:24 2005
+X-From: git-owner@vger.kernel.org Sun Apr 24 07:02:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPZEz-0007zx-UU
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:01:10 +0200
+	id 1DPZGF-00084y-I9
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262259AbVDXFFy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 01:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262258AbVDXFFy
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:05:54 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:26519 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S262259AbVDXFFt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 01:05:49 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3O55iqd007260;
-	Sat, 23 Apr 2005 22:05:44 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3O55inP007256;
-	Sat, 23 Apr 2005 22:05:44 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504232153500.15879@ppc970.osdl.org>
+	id S262258AbVDXFHM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 01:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262260AbVDXFHM
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:07:12 -0400
+Received: from fire.osdl.org ([65.172.181.4]:28328 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262258AbVDXFHI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 01:07:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3O573s4003818
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Apr 2005 22:07:04 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3O572fb029666;
+	Sat, 23 Apr 2005 22:07:02 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1113400651.20848.135.camel@hades.cambridge.redhat.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-I somehow got some corrupted object files in my repository that zlib 
-refuses to decompress. This patch makes sure we abort early before the 
-memcpy a few lines downtream segfaults (due to total_out == 0).
 
-Andreas
+On Wed, 13 Apr 2005, David Woodhouse wrote:
+>
+> The patch below makes diff-tree take extra arguments, specifying the
+> files or directories which should be considered 'interesting'. Changes
+> in uninteresting directories are not reported; we don't even bother to
+> recurse down into those trees.
 
-Signed-off-by: Andreas Gal <gal@uci.edu>
+David, I took your patch, updated it for some changes in diff-tree, and
+then totally rewrote (and simplified) your testing for "interesting".
+There was no reason to consider "/" special, as it falls out of the other
+cases quite naturally.
 
---- 66308ede85c2dad6b184fb74a7215b06a173d8f7/sha1_file.c
-+++ sha1_file.c
-@@ -155,6 +155,8 @@
- 
- 	inflateInit(&stream);
- 	ret = inflate(&stream, 0);
-+	if (ret != Z_OK)
-+		return NULL;
- 	if (sscanf(buffer, "%10s %lu", type, size) != 2)
- 		return NULL;
- 
+It passes all the tests I threw at it, but they weren't exhaustive (but I 
+do think I tested the border cases). Mind double-checking that it works 
+for your cases too?
 
+		Linus
