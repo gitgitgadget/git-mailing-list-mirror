@@ -1,273 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [FILE] Docs update
-Date: Sun, 24 Apr 2005 14:23:59 -0700
-Message-ID: <7vsm1fswb4.fsf@assigned-by-dhcp.cox.net>
-References: <426BF790.9070406@dgreaves.com>
+From: Imre Simon <imres.g@gmail.com>
+Subject: Re: Hash collision count
+Date: Sun, 24 Apr 2005 18:24:14 -0300
+Message-ID: <68ff9fa6050424142416fbadcd@mail.gmail.com>
+References: <426AAFC3.800@pobox.com>
+	 <1114297231.10264.12.camel@maze.mythral.org>
+	 <426AD835.5070404@pobox.com> <20050423234637.GS13222@pasky.ji.cz>
+	 <426AE9ED.4060005@pobox.com> <20050424004039.GU13222@pasky.ji.cz>
+	 <426AEBAE.1060402@pobox.com>
+Reply-To: Imre Simon <imres.g@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>,
-	GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 23:19:44 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@ucw.cz>, Ray Heasman <lists@mythral.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>, Imre Simon <is@ime.usp.br>
+X-From: git-owner@vger.kernel.org Sun Apr 24 23:20:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPoVs-0000aA-RR
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 23:19:37 +0200
+	id 1DPoW1-0000bY-6b
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 23:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262434AbVDXVY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 17:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262438AbVDXVY2
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 17:24:28 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:43948 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262434AbVDXVYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 17:24:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050424212358.GDWY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 24 Apr 2005 17:23:58 -0400
-To: David Greaves <david@dgreaves.com>
-In-Reply-To: <426BF790.9070406@dgreaves.com> (David Greaves's message of
- "Sun, 24 Apr 2005 20:46:24 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262436AbVDXVYi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 17:24:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262438AbVDXVYi
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 17:24:38 -0400
+Received: from wproxy.gmail.com ([64.233.184.193]:24952 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262436AbVDXVYO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 17:24:14 -0400
+Received: by wproxy.gmail.com with SMTP id 68so1552211wra
+        for <git@vger.kernel.org>; Sun, 24 Apr 2005 14:24:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GjAncW3F5PgD+bK6Z3a4nIyX084csgwxcbw8CouE3zYkYKCAxsl510RYsjr+nChAdOQrzo75216taUyZzokOnjXPfE8kAAhRzM5/SQNLv7/j6xlZpxzqpHZPzV3nilWNfesG4LSmXNzZeLvugt+cYNrGHGq2TGO29nrqRBG2dlE=
+Received: by 10.54.49.31 with SMTP id w31mr1516202wrw;
+        Sun, 24 Apr 2005 14:24:14 -0700 (PDT)
+Received: by 10.54.138.20 with HTTP; Sun, 24 Apr 2005 14:24:14 -0700 (PDT)
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <426AEBAE.1060402@pobox.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DG" == David Greaves <david@dgreaves.com> writes:
+On 4/23/05, Jeff Garzik <jgarzik@pobox.com> wrote:
+> Petr Baudis wrote:
+> > -DCOLLISION_CHECK
+> 
+> Cool.  I am happy, then :)
+> 
+> Make sure that's enabled by default...
+> 
+> Thanks,
+> 
+>         Jeff
 
-Looking much better than before.
+I would like to second the suggestion that this should be enabled by default.
 
-DG> ################################################################
-DG> commit-tree
-DG> 	commit-tree <tree> [-p <parent tree>]*   < changelog
-DG> Options
-DG> ...
-DG> -p <parent tree>
-DG> 	Each -p indicates a the id of a parent commit object.
+First, I do think it is highly unlikely that a collision will ever be
+found. Actually because of this if one is found it would be an
+important byproduct of git and it would probably influence future
+system designs. Hence, I believe that it is worth loosing some
+efficiency in order to illuminate better this question of the
+collision.
 
-Just for consistency:
+I would like to add a reciepe by which one would surely produce a
+collision with two files of the same length and quite similar to each
+other. I believe that there is a popular belief that this is pretty
+much impossible. Of course, we do not have time to execute this
+algorithm, but I believe that it convinces everyone that similar files
+*do* exist (actually in abundance) with the same hash.
 
-    commit-tree <tree> [-p <parent commit>]*   < changelog
-    -p <parent commit>
-	
-DG> ################################################################
-DG> git-export
-DG> 	git-export top [base]
+1. Take your favorite text file, at least 160 characters long. 
+2. Choose 160 positions in this file.
+3. For each position choose your favorite mispelling of that character.
+4. Produce all 2^160 text files, all of the same length, choosing for
+each position either the original or the alternate character
+5. Add an arbitrary file of the same length, different from the above
 
-DG> probably deprecated:
-DG> ...
-DG> Although in Linus' distribution show-diff is not part of 'core' git.
+Two of these files have the same sha1 hash. Or, for that matter, for
+any 160 bit  hash the same is true.
 
-Perhaps:
-
-    Although in Linus' distribution, git-export is not part of 'core' git.
-
-DG> ################################################################
-DG> merge-base
-DG> 	merge-base <commit> <commit>
-DG> ...
-DG> It essentially returns either A or B randomly.
-
-You may want to check this with Daniel Barkalow; the commit ID
-0345fb64d68ba9e1e853c0ee9526fa93c45a67f9 is the latest one that
-touches merge-base.c which has an extensive rework [*1*].
-
-DG> ################################################################
-DG> merge-cache
-DG> 	merge-cache <merge-program> (-a | -- | <file>*) 
-
-DG> Typically this is run with the a script calling the merge command from
-DG> the RCS package.
-
-DG> Example script:
-
-Drop example script and refer the reader to git-merge-one-file-script.  
-The one you attached is already old and missing the last three
-parameter.
-
-Addition before rev-tree:
-
-    rev-list <commit>
-
-    Lists commit objects in reverse chronological order starting
-    at the given commit, taking ancestry relationship into
-    account.  This is useful to produce human-readable log output.
-
-DG> ################################################################
-DG> show-diff
-DG> 	show-diff [-R] [-q] [-s] [-z] [paths...]
-
-DG> Shows the difference between the version of the specified file on disk
-DG> and the file in the cache.
-
-DG> -R
-DG> 	Reverse the diff
-
-DG> -q
-DG> 	Reduce verbosity
-
-This flag means "Do not complain on non-existent files (i.e. a
-dircache entry is found but corresponding file is not in the
-working tree).
-
-DG> -s
-DG> 	Remain silent even on nonexisting files (forces -q)
-
-This flag means "Do not show the diff text.  Just output SHA1
-and name for changed paths."  You are correct that this implies -q.  
-
-DG> -z
-DG> 	Machine readable (including \0 line termination on output)
-	
-This flag changes the behaviour of the program in number of
-subtle ways for script consumption:
-
-    -z
-        Machine readable.
-
-        . Each output record has the path name at the end of the
-          record, instead of the front.
-        . Each record is terminated with a NUL '\0' character.
-        . For unchanged files, nothing is output.
-        . For an unmerged file, the following is output:
-            U name
-        . For a deleted file, the following is output:
-            X name
-        . For a modified file, the following is output:
-            SHA1 name
-          where SHA1 is from the dircache entry.
-
-DG> Although in Linus' distribution show-diff is not part of 'core' git.
-
-Perhaps:
-
-    Although in Linus' distribution, show-diff is not part of 'core' git.
-
-
-[Footnotes]
-
-*1* Here is the jit-trackdown script to help you find out this
-kind of thing.  Sample usage:
-
-    $ jit-trackdown $(cat .git/heads/linus) merge-base.c
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-cat >jit-trackdown <<\EOF
-#!/bin/sh
-
-# Usage: jit-trackdown <commit> paths...
-
-tmp=.jit-trackdown.$$
-hits=$tmp-hits
-
-trap 'rm -f $tmp-*' 0 1 2 3 15
-
-tty -s || to_tty=:
-
-head="$1"
-shift
-rev-list "$head" |
-while read commit
-do
-    for p in $(cat-file commit "$commit" | sed -ne 's/^parent //p;/^$/q')
-    do
-      $to_tty echo >&2 -n .
-      diff-tree -r -z "$p" "$commit" "$@" | jit-diff-tree-helper "$@" >$hits
-      test -s "$hits" || continue;
-      {
-	  $to_tty echo >&2
-	  echo "commit $commit"
-	  cat-file commit "$commit"
-	  echo
-	  cat "$hits"
-      } | ${PAGER-less}
-      case "$to_tty" in
-      '')
-	  echo >&2 -n "Dig further [Y/n]? "
-	  read next </dev/tty
-	  case "$next" in
-	  [nN]) exit 0 ;;
-	  esac
-      esac
-    done
-done
-$to_tty echo >&2
-
-EOF
-cat >jit-diff-tree-helper <<\EOF
-#!/usr/bin/perl -w
-
-use strict;
-use File::Temp qw(mkstemp);
-use Getopt::Long;
-
-my $reverse_diff;
-GetOptions('reverse' => \$reverse_diff)
-    or die "usage: $0 [ --reverse ] [paths...]";
-
-sub cat_file {
-    my ($sha1, $file) = @_;
-    unless (defined $sha1) {
-	return (0, "/dev/null");
-    }
-    if ($sha1 =~ /^0{40}$/) {
-	return (0, $file);
-    }
-    local $/; # slurp mode
-    open I, "-|", "cat-file", "blob", $sha1
-	or die "$0: cannot read $sha1";
-    my ($o, $filename) = mkstemp(",,jit-diff-tree-helperXXXXXX");
-    print $o join("",<I>);
-    close I
-	or die "$0: closing cat-file pipe from $sha1";
-    close $o
-	or die "$0: closing write fd to $filename";
-    return (1, $filename);
-}
-$/ = "\0";
-my $rM = "[0-7]+";
-my $rI = "[0-9a-f]{40}";
-while (<STDIN>) {
-    my ($old, $new, $file, $o_is_temp, $n_is_temp);
-    chomp;
-    if (/^\+$rM\tblob\t($rI)\t(.*)$/os) {
-	($old, $new, $file) = (undef, $1, $2);
-    }
-    elsif (/^-$rM\tblob\t($rI)\t(.*)$/os) {
-	($old, $new, $file) = ($1, undef, $2);
-    }
-    elsif (/^\*$rM->$rM\tblob\t($rI)->($rI)\t(.*)$/os) {
-	($old, $new, $file) = ($1, $2, $3);
-    }
-    else {
-	chomp;
-	print STDERR "warning: $0: ignoring $_\n";
-	next;
-    }
-    if (@ARGV) {
-	my $matches = 0;
-	for (@ARGV) {
-	    my $l = length($_);
-	    if ($file eq $_ ||
-		(substr($file, 0, $l) eq $_ &&
-		 substr($file, $l, 1) eq "/")) {
-		$matches = 1;
-		last;
-	    }
-	}
-	next unless $matches;
-    }
-    ($o_is_temp, $old) = cat_file $old, $file;
-    ($n_is_temp, $new) = cat_file $new, $file;
-    my @a = ($reverse_diff) ? ($new, $old) : ($old, $new);
-    system "diff", "-L", "k/$file", "-L", "l/$file", "-pu", @a;
-    unlink $old if ($o_is_temp);
-    unlink $new if ($n_is_temp);
-}
-EOF
-chmod +x jit-trackdown jit-diff-tree-helper
-
-
+Cheers, Imre Simon
