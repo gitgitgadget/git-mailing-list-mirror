@@ -1,40 +1,86 @@
-From: Christopher Li <git@chrisli.org>
-Subject: NULL check for malloc?
-Date: Sun, 24 Apr 2005 10:03:41 -0400
-Message-ID: <20050424140341.GA15158@64m.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [RFC] Design of name-addressed data portion
+Date: Sun, 24 Apr 2005 14:17:23 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504241336250.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Apr 24 20:00:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun Apr 24 20:13:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPlP1-0005a6-LS
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 20:00:19 +0200
+	id 1DPlat-000762-6e
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 20:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262358AbVDXSFJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 14:05:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262359AbVDXSFJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 14:05:09 -0400
-Received: from sccrmhc14.comcast.net ([204.127.202.59]:43165 "EHLO
-	sccrmhc14.comcast.net") by vger.kernel.org with ESMTP
-	id S262358AbVDXSFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 14:05:07 -0400
-Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
-          by comcast.net (sccrmhc14) with ESMTP
-          id <2005042418050601400olc79e>; Sun, 24 Apr 2005 18:05:06 +0000
-Received: by localhost.localdomain (Postfix, from userid 1027)
-	id 00B653F1AC; Sun, 24 Apr 2005 10:03:41 -0400 (EDT)
-To: git mailing list <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S262359AbVDXSRW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 14:17:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262360AbVDXSRW
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 14:17:22 -0400
+Received: from iabervon.org ([66.92.72.58]:40452 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262359AbVDXSRQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 14:17:16 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DPlfX-0005QU-00; Sun, 24 Apr 2005 14:17:23 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I notice that there are lots of malloc call without
-checking the return NULL pointer.
+I think it has gotten to be time to have a standard mechanism for
+name-addressed data in the .git directory. We currently have one
+agreed-upon item, HEAD, as well as a number of items in cogito: heads,
+tags, and, to a certain extent, remotes. (Even in core git, when we
+support tags, we'll want a mapping from tag names to tag objects, even if
+this mapping doesn't get transferred by push and pull operations; nobody's
+going to want to cut and paste a hash from email every time they want to
+refer to the tag, and fsck-cache could stand to know which tags you mean
+to have so that it can report the rest to git-prune-script)
 
-Should we just have some wrapper function for malloc
-just die if malloc fails?
+It would be useful to have a bit more structure to the repository, such
+that there are a fixed number of paths that hold all of the information
+about the state of the repository, while the rest of the directory has
+information that is particular to a working directory's state (e.g.,
+index).
 
-Chris
+
+
+I'd propose the following structure:
+
+ objects/    the content-addressed repository portion
+ references/ the name-addressed repository portion
+   heads/    the heads that are being used out of this repository
+     DEFAULT the head that people pulling this repository mean by default
+     ...     other heads, by name, that fsck-cache should mark reachable
+   tags/     the tags
+     ...     files with the symbolic name of the tags, containing the hash
+ info/       other per-repository information
+   remotes   URLs of remote repositories
+   complete  hashes that the repository contains all references from
+   missing   hashes that the repository lacks but wants
+   excluded  hashes that the repository doesn't want
+ ...         other files are per .git directory, not shared on push/pull
+ index       
+ HEAD        symlink to the head that is the local default
+ tracked     remote that this working directory tracks
+
+All of the files in references/*/* contain hex for objects in the
+database, and are not synced between repositories in situ (but some sync
+operations will read some of them and write them under different
+names). fsck-cache would use as its reachability starting point $(cat
+references/*/*).
+
+In info/ are, generically, other files that relate to operations which
+work on the repository rather than a working directory. Transfer programs
+would use and maintain this information.
+
+I think we'd still eventually want some way of getting from a commit-id to
+any tags about it (I think git log would do well to mention any tags you
+have when it shows a commit), but I don't want to design this quite
+yet. It should also work for going from the real history to cached delta
+info, when we have comparison tools that are sufficiently smart,
+expensive, and intermediate-dependant to want to cache this.
+
+	-Daniel
+*This .sig left intentionally blank*
+
