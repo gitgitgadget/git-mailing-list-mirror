@@ -1,58 +1,78 @@
-From: James Bottomley <James.Bottomley@SteelEye.com>
-Subject: Re: git-changes-script to show inter tree changes
-Date: Sat, 23 Apr 2005 21:39:22 -0400
-Message-ID: <1114306762.4805.3.camel@mulgrave>
-References: <1114281792.5068.10.camel@mulgrave>
-	 <20050423230937.GF13222@pasky.ji.cz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [ANNOUNCE] git-pasky-0.7
+Date: Sun, 24 Apr 2005 00:32:14 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504240018350.30848-100000@iabervon.org>
+References: <20050423205847.7758bfaa.pj@sgi.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 24 06:19:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 06:28:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPYaG-0005f7-Ty
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 06:19:05 +0200
+	id 1DPYiP-00067X-2s
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 06:27:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262155AbVDXEXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 00:23:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262158AbVDXEXv
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 00:23:51 -0400
-Received: from stat16.steeleye.com ([209.192.50.48]:34527 "EHLO
-	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
-	id S262155AbVDXEXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 00:23:49 -0400
-Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
-	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j3O4NbA30296;
-	Sun, 24 Apr 2005 00:23:38 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050423230937.GF13222@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 (2.0.4-4) 
+	id S262202AbVDXEcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 00:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262216AbVDXEcP
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 00:32:15 -0400
+Received: from iabervon.org ([66.92.72.58]:58372 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262202AbVDXEcJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 00:32:09 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DPYn0-0000vI-00; Sun, 24 Apr 2005 00:32:14 -0400
+To: Paul Jackson <pj@sgi.com>
+In-Reply-To: <20050423205847.7758bfaa.pj@sgi.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-04-24 at 01:09 +0200, Petr Baudis wrote:
-> Linus isn't probably the right person to Cc on this, since this is
-> git-pasky thing.  Can you please post it as a signed-off patch?
+On Sat, 23 Apr 2005, Paul Jackson wrote:
 
-I'm just offering it as one of the scripts I need to operate a git tree
-as a maintainer.  I don't have git-pasky installed, so I can't patch it
-against anything.  However, feel free to incorporate any pieces you
-need.
-
-> I don't get what are you doing anyway. I don't know the "bk changes"
-> tool. Can't you just do
+> I'm missing something here (well, missing alot, but ...).
 > 
-> 	git log theothertree yourtree
+> What are the exact steps, given that I have an empty chunk
+> of diskspace, to get Linux 2.6.12-rc3 to appear there, using
+> git.
+> 
+> Actually, I got part way.  Perhaps someone can complete
+> the following:
+> 
+>     mkdir git
+>     cd git
+>     curl -O ftp://ftp.kernel.org/pub/software/scm/cogito/git-pasky-0.6.3.tar.bz2
+>     tar xvfj git-pasky-0.6.3.tar.bz2
+>     cd git-pasky-0.6.3
+>     ls -l /usr/local/include/openssl/sha.h	 # yup - I have openssl header
+>     make
+>     ./git init rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
+>     make install
+>     git addremote pasky rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
+>     git pull pasky
 
-No idea .. not used it.  However, how does this show the -L and -R diffs
-since there are two possible views of changes between trees?  It's
-primarily -L (changes in local) I need to keep the changes in my local
-tree.  -R (changes in remote) is just useful to show what changes I'm
-missing and might need to merge.
+You might need a "git seek" or a "git cancel" or a "git track
+pasky" here; make sure that VERSION is 0.7.
 
-James
+Then do make install again (to install the 0.7 version that you just got).
 
+Then you want to go into the directory you want linux in:
+
+  cd ..
+  mkdir linux
+  cd linux
+
+And get a version of Linux:
+
+  git init linus rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+(IIRC; I've only really worked on git with git)
+
+If you do another addremote in the git directory, it will think that both
+remote repositories are for different versions of the same project, and it
+will be unhappy with the fact that they are completely unrelated.
+
+	-Daniel
+*This .sig left intentionally blank*
 
