@@ -1,61 +1,75 @@
-From: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
-Subject: Re: Humble request of 'git' developers
-Date: Sun, 24 Apr 2005 06:47:31 +0100
-Message-ID: <E1DPZxr-0000a3-00@skye.ra.phy.cam.ac.uk>
-References: <426AAB65.2060401@pobox.com>
-Cc: Chris Wedgwood <cw@f00f.org>, git@vger.kernel.org,
-	"David A. Wheeler" <dwheeler@dwheeler.com>
-X-From: git-owner@vger.kernel.org Sun Apr 24 07:43:07 2005
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Git for redundant mail servers
+Date: Sun, 24 Apr 2005 15:54:30 +1000
+Message-ID: <1114322071.3419.68.camel@localhost.localdomain>
+References: <1114238562.3419.29.camel@localhost.localdomain>
+	 <2cfc403205042301243841fe0c@mail.gmail.com>
+	 <Pine.LNX.4.62.0504232159030.32287@qynat.qvtvafvgr.pbz>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: jon@zeta.org.au, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 07:51:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPZtZ-00025t-Hq
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:43:05 +0200
+	id 1DPa1G-0002Wq-Hw
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 07:51:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262268AbVDXFru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 01:47:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262267AbVDXFru
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:47:50 -0400
-Received: from mraos.ra.phy.cam.ac.uk ([131.111.48.8]:6368 "EHLO
-	mraos.ra.phy.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S262269AbVDXFrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 01:47:39 -0400
-Received: from skye.ra.phy.cam.ac.uk ([131.111.48.158] ident=mail)
-	by mraos.ra.phy.cam.ac.uk with esmtp (Exim 4.43)
-	id 1DPZxs-0003OH-D4; Sun, 24 Apr 2005 06:47:32 +0100
-Received: from sanjoy by skye.ra.phy.cam.ac.uk with local (Exim 3.35 #1)
-	id 1DPZxr-0000a3-00; Sun, 24 Apr 2005 06:47:31 +0100
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: Your message of "Sat, 23 Apr 2005 16:09:09 EDT."
-             <426AAB65.2060401@pobox.com> 
+	id S262267AbVDXFzf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 01:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262269AbVDXFzf
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 01:55:35 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:45292 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S262267AbVDXFz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 01:55:28 -0400
+Received: from [203.53.50.91] (helo=[172.18.240.72])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DPa5Q-0002Gp-7U; Sun, 24 Apr 2005 06:55:23 +0100
+To: David Lang <david.lang@digitalinsight.com>
+In-Reply-To: <Pine.LNX.4.62.0504232159030.32287@qynat.qvtvafvgr.pbz>
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[Added David Wheeler to the CC given his (admirable) pushes for wide
-standards compliance.]
+On Sat, 2005-04-23 at 22:12 -0700, David Lang wrote:
+> 1. when a new message arrives it gets given a numeric messageid, this 
+> message id is not supposed to change without fairly drastic things 
+> happening (the server telling all clients to forget everything they know 
+> about the status of the mailbox). this requires syncronization between 
+> servers if both are receiving messages.
 
->>>Just have one 'git' script, which looks in /usr/local/libexec/git
-> [or] /usr/libexec/git
+Yeah, that's the most interesting part. One option would be to require
+quorum before a server is allowed to add to a mailbox -- but that would
+render the thing unsuitable for _intentional_ offline use, where you
+want to be able to move mails from one folder to another on your laptop
+while it's disconnected.
 
-The FHS <http://www.pathname.com/fhs/pub/fhs-2.3.html> looks like it
-recommends a /usr/lib/git directory:
+Since it should be relatively rare for 'competing' commits to occur
+during periods of disconnection, I suspect that the solution doesn't
+have to be particularly efficient. I'm not sure I'd really want to
+change UIDVALIDITY if it happened, but perhaps we could simply remove
+_all_ the affected UIDs, and assign new UIDs to the same mails.
 
-  /usr/lib : Libraries for programming and packages
+In practice, it's far more important that for us to ensure that an
+existing UID _never_ refers to a different mail, than it is to make sure
+that a given mail always keeps the same UID.
 
-  Purpose
-     /usr/lib includes object files, libraries, and internal binaries that
-     are not intended to be executed directly by users or shell scripts.
+> 2. git effectivly stores snapshots of things and you deduce the changes by 
+> comparing the snapshots. for things like flags changing this is a 
+> relativly inefficiant way to replicate changes (although if one server is 
+> offline for a while it could be a firly efficiant way to do the merge)
 
-     Applications may use a single subdirectory under /usr/lib. If an
-     application uses a subdirectory, all architecture-dependent data
-     exclusively used by the application must be placed within that  
-     subdirectory.
+We don't have to stick _precisely_ to Maildir -- but flag changes are
+just a rename in Maildir, leaving the mail object entirely intact while
+changing only the tree. That isn't _so_ bad; but yes, it could probably
+be done a little better than just "Maildir in git".
 
-My Debian sarge system has one libexec-like directory, but it follows
-the FHS:
+-- 
+dwmw2
 
-$ locate '/usr*libexec*'
-/usr/lib/php4/libexec
-
--Sanjoy
