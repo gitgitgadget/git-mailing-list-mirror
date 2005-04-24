@@ -1,57 +1,61 @@
-From: Russ Allbery <rra@stanford.edu>
-Subject: Re: Date handling.
-Date: Sat, 23 Apr 2005 23:43:37 -0700
-Organization: The Eyrie
-Message-ID: <87r7h0u12e.fsf@windlord.stanford.edu>
-References: <1113466592.12012.192.camel@baythorne.infradead.org>
-	<Pine.LNX.4.58.0504140153230.7211@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org>
-	<1113500316.27227.8.camel@hades.cambridge.redhat.com>
-	<20050424030416.GE16751@delft.aura.cs.cmu.edu>
-	<1114324729.3419.78.camel@localhost.localdomain>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [ANNOUNCE] git-pasky-0.7
+Date: Sun, 24 Apr 2005 09:14:13 +0200
+Message-ID: <20050424071413.GA578@pasky.ji.cz>
+References: <20050424005923.GA8859@pasky.ji.cz> <20050423205847.7758bfaa.pj@sgi.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Apr 24 08:39:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 09:09:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPalc-0005bT-V3
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 08:38:57 +0200
+	id 1DPbFK-0007gG-6e
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 09:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262272AbVDXGnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 02:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVDXGnq
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 02:43:46 -0400
-Received: from smtp3.Stanford.EDU ([171.67.16.138]:48317 "EHLO
-	smtp3.Stanford.EDU") by vger.kernel.org with ESMTP id S262272AbVDXGno
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 02:43:44 -0400
-Received: from windlord.stanford.edu (windlord.Stanford.EDU [171.64.19.147])
-	by smtp3.Stanford.EDU (8.12.11/8.12.11) with SMTP id j3O6hbiN006606
-	for <git@vger.kernel.org>; Sat, 23 Apr 2005 23:43:42 -0700
-Received: (qmail 2535 invoked by uid 1000); 24 Apr 2005 06:43:37 -0000
-To: git@vger.kernel.org
-In-Reply-To: <1114324729.3419.78.camel@localhost.localdomain> (David
- Woodhouse's message of "Sun, 24 Apr 2005 16:38:49 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
+	id S262274AbVDXHOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 03:14:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262275AbVDXHOT
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 03:14:19 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:26559 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262274AbVDXHOP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 03:14:15 -0400
+Received: (qmail 1341 invoked by uid 2001); 24 Apr 2005 07:14:13 -0000
+To: Paul Jackson <pj@sgi.com>
+Content-Disposition: inline
+In-Reply-To: <20050423205847.7758bfaa.pj@sgi.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse <dwmw2@infradead.org> writes:
+Dear diary, on Sun, Apr 24, 2005 at 05:58:47AM CEST, I got a letter
+where Paul Jackson <pj@sgi.com> told me that...
+> What are the exact steps, given that I have an empty chunk
+> of diskspace, to get Linux 2.6.12-rc3 to appear there, using
+> git.
 
-> I don't think we want to be in the business of counting leap seconds; we
-> need to let the system do it. I don't much like setting TZ to UTC though
-> -- how about we use your test case to find the offset and subtract that?
+FWIW, excerpt from the README:
 
-> Does this work?
+===
 
-Nope, daylight savings time breaks this, since you may or may not be in
-the same time zone on January 1st as you are at the current time.
+If you want to start out new project, do (IN NEW DIRECTORY)
 
-However, you don't need to count leap seconds when you implement your own
-mktime, since mktime doesn't have to take leap seconds into account.  Unix
-timestamps, unless you're using TAI, don't include leap seconds.
+        git init
+
+and if you want to have a look at someone else's project, do
+
+        git init URL
+
+(your working directory will be by default tracking branch 'origin').
+
+===
+
+(although I'm not sure why did I write it when apparently noone bothers
+to read it anyway ;-)
 
 -- 
-Russ Allbery (rra@stanford.edu)             <http://www.eyrie.org/~eagle/>
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
