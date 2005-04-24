@@ -1,56 +1,54 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: A very basic tutorial
-Date: Sat, 23 Apr 2005 22:19:18 -0400
-Message-ID: <426B0226.8020001@dwheeler.com>
-References: <1114305552.3114.3.camel@kryten>
-Reply-To: dwheeler@dwheeler.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 1/5] Add some functions for commit lists
+Date: Sat, 23 Apr 2005 19:20:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504231916300.2344@ppc970.osdl.org>
+References: <Pine.LNX.4.21.0504232003490.30848-100000@iabervon.org>
+ <Pine.LNX.4.58.0504231906110.2344@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Apr 24 04:12:41 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 04:14:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPWbe-00077o-QC
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 04:12:23 +0200
+	id 1DPWdV-0007EH-6j
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 04:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262230AbVDXCRI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 22:17:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262231AbVDXCRI
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 22:17:08 -0400
-Received: from cujo.runbox.com ([193.71.199.138]:43962 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S262230AbVDXCRF (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 22:17:05 -0400
-Received: from [10.9.9.11] (helo=fifi.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DPWgC-0003Vr-47; Sun, 24 Apr 2005 04:17:04 +0200
-Received: from [70.18.249.32] (helo=[192.168.2.73])
-	by fifi.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DPWgB-0002Eg-FO; Sun, 24 Apr 2005 04:17:04 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: James Purser <purserj@ksit.dynalias.com>, git@vger.kernel.org
-In-Reply-To: <1114305552.3114.3.camel@kryten>
-X-Sender: 258406@vger.kernel.org
+	id S262231AbVDXCTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 22:19:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262232AbVDXCTD
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 22:19:03 -0400
+Received: from fire.osdl.org ([65.172.181.4]:19841 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262231AbVDXCTB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 22:19:01 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3O2Ius4025894
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Apr 2005 19:18:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3O2Itt8026017;
+	Sat, 23 Apr 2005 19:18:55 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>, Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <Pine.LNX.4.58.0504231906110.2344@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-James Purser wrote:
-> I've done a very basic tutorial for using git. If someone who knows more
-> about git (pretty much everyone on this list I think) could have a look
-> and point out any glaring errors that would be great.
 
-You mention two layers, but the layers are about to get (pun?)
-separate names: git (lower layer) and Cogito (upper layer, and
-separable from the "real" git lower layer).  You should explain
-the two names.
 
-You concentrate on Cogito, which is almost certainly reasonable
-for normal starting points, but that's not clear in your text.
+On Sat, 23 Apr 2005, Linus Torvalds wrote:
+> 
+> Ok. This is more in like with what I was hoping for, looks good.
 
-Also: The Cogito user interface is about to undergo a
-significant rename of the commands.  It won't be hard to update
-your text for it, but you'll need to do so.
+Oh, Daniel, I notice that you have the same old bug: it will happily add 
+the same parent to the list several times. You need to prune them out, and 
+ignore things you've seen.
 
---- David A. Wheeler
+I pushed out the fix (don't parse and add parents to the list that were 
+already parsed).
+
+		Linus
