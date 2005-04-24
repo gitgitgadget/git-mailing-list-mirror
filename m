@@ -1,126 +1,62 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 2/5] Parse tree objects completely
-Date: Sat, 23 Apr 2005 20:10:33 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504232007150.30848-100000@iabervon.org>
-References: <Pine.LNX.4.21.0504231953490.30848-100000@iabervon.org>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: [ANNOUNCE] git-pasky-0.6.2 && heads-up on upcoming changes
+Date: Sat, 23 Apr 2005 17:09:49 -0700
+Organization: SGI
+Message-ID: <20050423170949.3fc879d9.pj@sgi.com>
+References: <20050420205633.GC19112@pasky.ji.cz>
+	<20050420211919.GA20129@kroah.com>
+	<20050420215117.GJ19112@pasky.ji.cz>
+	<Pine.LNX.4.58.0504201503050.6467@ppc970.osdl.org>
+	<20050420222815.GM19112@pasky.ji.cz>
+	<Pine.LNX.4.58.0504201710500.2344@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504201809170.2344@ppc970.osdl.org>
+	<20050421033526.GA9404@nevyn.them.org>
+	<Pine.LNX.4.58.0504202056310.2344@ppc970.osdl.org>
+	<20050421042833.GA10934@nevyn.them.org>
+	<20050421064931.GA31910@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 02:06:04 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: dan@debian.org, torvalds@osdl.org, greg@kroah.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 02:06:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPUdK-0006nc-7A
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 02:05:58 +0200
+	id 1DPUeB-0006qf-Um
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 02:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262190AbVDXAKl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 20:10:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262193AbVDXAKl
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 20:10:41 -0400
-Received: from iabervon.org ([66.92.72.58]:65030 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262190AbVDXAKZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 20:10:25 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DPUhl-0008MC-00; Sat, 23 Apr 2005 20:10:33 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.21.0504231953490.30848-100000@iabervon.org>
+	id S262193AbVDXALk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 20:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262194AbVDXALj
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 20:11:39 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:23727 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S262193AbVDXALi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 20:11:38 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3O1p8P4002657;
+	Sat, 23 Apr 2005 18:51:18 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3O09rlU17688347;
+	Sat, 23 Apr 2005 17:09:53 -0700 (PDT)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050421064931.GA31910@pasky.ji.cz>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds the contents of trees to struct tree.
+> A little off-topic, anyone knows how to turn off that damn alternate
+> screen thing on the xterm level? 
 
-Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
-commit af03ca2bdc01fdc2565c2914285d9c3ccb1205d3
-tree 144a13fb75a39538ec4578792d2c374c6ef50f46
-parent fda07b139124925a8000207fb1d91feec1fe675d
-author Daniel Barkalow <barkalow@iabervon.org> 1114296377 -0400
-committer Daniel Barkalow <barkalow@silva-tulga.(none)> 1114296377 -0400
+Do you mean the 'feature' where it clears the screen of the
+last page you were viewing on exit from 'less'?
 
-    Parse tree objects completely
+The following stops that clearing:
 
-Index: tree.c
-===================================================================
---- e09a6d73a7c6c7a8bfb7e7003a34a507ed97a3b6/tree.c  (mode:100644 sha1:e988aed6a85d15568dcb93b69035b97a24e30cc9)
-+++ 144a13fb75a39538ec4578792d2c374c6ef50f46/tree.c  (mode:100644 sha1:79b9625855c017ce0298f62cc398ed4d16964cb1)
-@@ -92,6 +92,7 @@
- 	char type[20];
- 	void *buffer, *bufptr;
- 	unsigned long size;
-+	struct tree_entry_list **list_p;
- 	if (item->object.parsed)
- 		return 0;
- 	item->object.parsed = 1;
-@@ -103,8 +104,10 @@
- 	if (strcmp(type, tree_type))
- 		return error("Object %s not a tree",
- 			     sha1_to_hex(item->object.sha1));
-+	list_p = &item->entries;
- 	while (size) {
- 		struct object *obj;
-+		struct tree_entry_list *entry;
- 		int len = 1+strlen(bufptr);
- 		unsigned char *file_sha1 = bufptr + len;
- 		char *path = strchr(bufptr, ' ');
-@@ -113,6 +116,12 @@
- 		    sscanf(bufptr, "%o", &mode) != 1)
- 			return -1;
- 
-+		entry = malloc(sizeof(struct tree_entry_list));
-+		entry->name = strdup(path + 1);
-+		entry->directory = S_ISDIR(mode);
-+		entry->executable = mode & S_IXUSR;
-+		entry->next = NULL;
-+
- 		/* Warn about trees that don't do the recursive thing.. */
- 		if (strchr(path, '/')) {
- 			item->has_full_path = 1;
-@@ -121,12 +130,17 @@
- 		bufptr += len + 20;
- 		size -= len + 20;
- 
--		if (S_ISDIR(mode)) {
--			obj = &lookup_tree(file_sha1)->object;
-+		if (entry->directory) {
-+			entry->item.tree = lookup_tree(file_sha1);
-+			obj = &entry->item.tree->object;
- 		} else {
--			obj = &lookup_blob(file_sha1)->object;
-+			entry->item.blob = lookup_blob(file_sha1);
-+			obj = &entry->item.blob->object;
- 		}
- 		add_ref(&item->object, obj);
-+
-+		*list_p = entry;
-+		list_p = &entry->next;
- 	}
- 	return 0;
- }
-Index: tree.h
-===================================================================
---- e09a6d73a7c6c7a8bfb7e7003a34a507ed97a3b6/tree.h  (mode:100644 sha1:4d5496de307999f5ada8412259e0e86d2c8092de)
-+++ 144a13fb75a39538ec4578792d2c374c6ef50f46/tree.h  (mode:100644 sha1:19b190565957a7a03c34f7efa68a7fe0c6783d04)
-@@ -5,9 +5,21 @@
- 
- extern const char *tree_type;
- 
-+struct tree_entry_list {
-+	struct tree_entry_list *next;
-+	unsigned directory : 1;
-+	unsigned executable : 1;
-+	char *name;
-+	union {
-+		struct tree *tree;
-+		struct blob *blob;
-+	} item;
-+};
-+
- struct tree {
- 	struct object object;
- 	unsigned has_full_path : 1;
-+	struct tree_entry_list *entries;
- };
- 
- struct tree *lookup_tree(unsigned char *sha1);
+    export LESS=-X
 
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
