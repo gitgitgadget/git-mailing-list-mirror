@@ -1,67 +1,89 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [GIT PATCH] Selective diff-tree
-Date: Sun, 24 Apr 2005 10:20:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504241016390.15879@ppc970.osdl.org>
-References: <1113400651.20848.135.camel@hades.cambridge.redhat.com>
- <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org> <7vbr84tyfd.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: unseeking?
+Date: Sun, 24 Apr 2005 13:25:35 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504241305370.30848-100000@iabervon.org>
+References: <20050424160514.GI1507@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 19:13:49 2005
+Cc: Zack Brown <zbrown@tumblerings.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 24 19:22:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPkfr-0008JI-8g
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 19:13:39 +0200
+	id 1DPkn9-0000uI-Ng
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 19:21:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262313AbVDXRS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 13:18:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262308AbVDXRS1
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 13:18:27 -0400
-Received: from fire.osdl.org ([65.172.181.4]:8427 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262283AbVDXRSO (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 13:18:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3OHI5s4002061
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 24 Apr 2005 10:18:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3OHI4GZ013102;
-	Sun, 24 Apr 2005 10:18:04 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr84tyfd.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262308AbVDXRZu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 13:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262314AbVDXRZu
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 13:25:50 -0400
+Received: from iabervon.org ([66.92.72.58]:19972 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262308AbVDXRZk (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 13:25:40 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DPkrP-0003W6-00; Sun, 24 Apr 2005 13:25:35 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050424160514.GI1507@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, 24 Apr 2005, Petr Baudis wrote:
 
+> Dear diary, on Sun, Apr 24, 2005 at 05:47:54PM CEST, I got a letter
+> where Zack Brown <zbrown@tumblerings.org> told me that...
+> > Hi,
+> 
+> Hi,
+> > How can I seek back to the most recent state of the dir?
+> 
+> git seek, without any arguments.
+> 
+> Perhaps we should prohibit absence of arguments and add 'unseek'?
 
-On Sun, 24 Apr 2005, Junio C Hamano wrote:
->
-> Is either of you planning to do the same for diff-cache?
+Have both; I think that it ought to accept anything where it's obvious
+what the user means.
 
-I wasn't. I don't think it's nearly as relevant for diff-cache, since 
-diff-cache is never run thousands of times.
+> Actually, this _would_ work:
+> 
+> 	git init ../mygitdir/.git
+> 
+> Then, you would need to git pull to get the latest changes.
 
-IOW, with diff-cache you can just do
+It's worth pointing out that the reason for this (and why the rsync
+version below didn't work) is that the conventional URLs are for .git
+directories, not the directories that contain them: .../cogito/cogito.git
+mirrors a cogito/.git directory. Or, phrasing it the other way, when it's
+public, it's cogito.git; if it's in a working directory, it gets hidden by
+making it just .git.
 
-	diff-cache <tree> | grep "interesting"
+> git fork seconddeveloper ../mygitdir
 
-and you're done.
+Doesn't that have to be from the first one to the second one (rather than
+the other way)?
 
-Diff-tree is different, simply because diff-tree is the way you find out
-which files changed between two revisions, so if you search for "when did
-this file change" you may well have to do _thousands_ of different
-diff-tree's. That's why pruning the diff-tree output is important: it
-makes diff-tree _much_ cheaper.
+> Git does not record renames, and neither does Cogito (for now).
 
-diff-cache usually doesn't make sense to do against more than one or two
-threes (the parent, and after a merge but before you commit maybe the
-parent_s_).
+And, in general, future history-browsing tools will work based on clever
+analysis of the files, not explicit information in the database. They
+ought to recognize when some content disappears from one place and
+something very similar appears elsewhere, regardless of whether it is a
+complete file or not.
 
-		Linus
+I'm fairly certain that the most common rename-type events are moving code
+within a file, not renaming files, and these would be a major pain to get
+people to explicitly mark.
+
+> > 4) fork, seek, tag, and track are a little mysterious to me. I can guess at what
+> > these things do in general, but the specifics are confusing, and the README is a
+> > little vague.
+> 
+> Try head git*.sh. ;-)
+
+Which is to say, there are useful comments at the beginnings of the
+scripts. I.e., you really want "head `which gitfork.sh`"
+
+	-Daniel
+*This .sig left intentionally blank*
+
