@@ -1,102 +1,74 @@
-From: "Joshua T. Corbin" <jcorbin@wunjo.org>
-Subject: [PATCH] git add - recursive directories
-Date: Sun, 24 Apr 2005 16:51:23 -0400
-Message-ID: <200504241651.24276.jcorbin@wunjo.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [RFC] Design of name-addressed data portion
+Date: Sun, 24 Apr 2005 22:54:38 +0200
+Message-ID: <20050424205438.GN1507@pasky.ji.cz>
+References: <Pine.LNX.4.21.0504241336250.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Apr 24 22:48:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 22:51:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPo1E-0005wG-Fg
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 22:47:56 +0200
+	id 1DPo3R-00069Q-7A
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 22:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262413AbVDXUwt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 16:52:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVDXUwt
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 16:52:49 -0400
-Received: from node1.wunjo.org ([64.62.190.230]:47537 "EHLO node1.wunjo.org")
-	by vger.kernel.org with ESMTP id S262413AbVDXUwh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 16:52:37 -0400
-Received: by node1.wunjo.org (Postfix, from userid 65534)
-	id 6D1BC42EE5; Sun, 24 Apr 2005 16:52:36 -0400 (EDT)
-Received: from thor.circle (24.229.157.212.cmts.dan.ptd.net [24.229.157.212])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by node1.wunjo.org (Postfix) with ESMTP id B496342AB7
-	for <git@vger.kernel.org>; Sun, 24 Apr 2005 16:52:33 -0400 (EDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
+	id S262418AbVDXUzD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 16:55:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262421AbVDXUzD
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 16:55:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:65483 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262418AbVDXUyj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 16:54:39 -0400
+Received: (qmail 11721 invoked by uid 2001); 24 Apr 2005 20:54:38 -0000
+To: Daniel Barkalow <barkalow@iabervon.org>
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=FORGED_RCVD_HELO 
-	autolearn=ham version=3.0.2
+In-Reply-To: <Pine.LNX.4.21.0504241336250.30848-100000@iabervon.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch does two things:
-  1) git add will now by default recursively add any directories given to it.
-  2) this can be disabled and the old behavior used instead with the new -n
-     switch.
+Dear diary, on Sun, Apr 24, 2005 at 08:17:23PM CEST, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> It would be useful to have a bit more structure to the repository, such
+> that there are a fixed number of paths that hold all of the information
+> about the state of the repository, while the rest of the directory has
+> information that is particular to a working directory's state (e.g.,
+> index).
 
-Signed-off-by: Joshua T. Corbin <jcorbin@wunjo.org>
+Agreed.
 
-Index: git
-===================================================================
---- 2aaf94eae20acc451553766f3c063bc46cfa75c6/git  (mode:100755 
-sha1:f8f5e0e4e5c50102415cd479619dd7598d3c42e1)
-+++ 58dd789846677d8d0848b608e365e9742d2db642/git  (mode:100755 
-sha1:24d8c30383fa11d049aafcd659cefe700afe1cf1)
-@@ -25,7 +25,7 @@
- Usage: git COMMAND [ARG]...
- 
- Available commands:
--	add		FILE...
-+	add		[-n] FILE...
- 	addremote	RNAME RSYNC_URL
- 	apply				< patch on stdin
- 	cancel
-Index: gitadd.sh
-===================================================================
---- 2aaf94eae20acc451553766f3c063bc46cfa75c6/gitadd.sh  (mode:100755 
-sha1:fa77d96198dd7d5ebf47bdedb296995ab7e77cf3)
-+++ 58dd789846677d8d0848b608e365e9742d2db642/gitadd.sh  (mode:100755 
-sha1:f0b030e1b4d770d96dabd5350e25f2e8fad5e59d)
-@@ -5,10 +5,31 @@
- #
- # Takes a list of file names at the command line, and schedules them
- # for addition to the GIT repository at the next commit.
-+# Optional "-n" parameter specifies that you don't want to add directories
-+# recursively.
- 
- if [ ! "$1" ]; then
--	echo "gitadd.sh: usage: git add FILE..." >&2
-+	echo "gitadd.sh: usage: git add [-n] FILE..." >&2
- 	exit 1;
- fi
- 
--update-cache --add -- "$@"
-+recur=1
-+if [ "$1" = "-n" ]; then
-+  shift
-+  recur=
-+fi
-+
-+if [ $recur ]; then
-+  ADDFILE=$(mktemp -t gitadd.XXXXXX)
-+  while [ "$1" ]; do
-+    if [ -d "$1" ]; then
-+      find $1 -type f -and -not -name '.*'
-+    else
-+      echo "$1"
-+    fi
-+    shift
-+  done > $ADDFILE
-+  update-cache --add -- $(cat $ADDFILE)
-+else
-+  update-cache --add -- "$@"
-+fi
+> 
+> 
+> I'd propose the following structure:
+> 
+>  objects/    the content-addressed repository portion
+>  references/ the name-addressed repository portion
+
+references/ is just too long for my taste. ;-) What about just refs/ ?
+
+>    heads/    the heads that are being used out of this repository
+>      DEFAULT the head that people pulling this repository mean by default
+>      ...     other heads, by name, that fsck-cache should mark reachable
+>    tags/     the tags
+>      ...     files with the symbolic name of the tags, containing the hash
+>  info/       other per-repository information
+>    remotes   URLs of remote repositories
+>    complete  hashes that the repository contains all references from
+>    missing   hashes that the repository lacks but wants
+>    excluded  hashes that the repository doesn't want
+>  ...         other files are per .git directory, not shared on push/pull
+>  index       
+>  HEAD        symlink to the head that is the local default
+>  tracked     remote that this working directory tracks
+
+I will probably throw the local stuff to local/.
+
+I think I like this otherwise.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
