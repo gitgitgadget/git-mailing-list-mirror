@@ -1,58 +1,49 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: git pull issues...
-Date: Sat, 23 Apr 2005 20:39:17 -0400
-Message-ID: <118833cc05042317391a441448@mail.gmail.com>
-References: <118833cc050423142573729ce2@mail.gmail.com>
-	 <20050423220049.GC13222@pasky.ji.cz>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Hash collision count
+Date: Sun, 24 Apr 2005 02:40:39 +0200
+Message-ID: <20050424004039.GU13222@pasky.ji.cz>
+References: <426AAFC3.800@pobox.com> <1114297231.10264.12.camel@maze.mythral.org> <426AD835.5070404@pobox.com> <20050423234637.GS13222@pasky.ji.cz> <426AE9ED.4060005@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Apr 24 02:35:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Ray Heasman <lists@mythral.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 02:36:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPV50-0000Km-MY
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 02:34:34 +0200
+	id 1DPV6P-0000RT-F2
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 02:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262204AbVDXAjU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Apr 2005 20:39:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262205AbVDXAjU
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 20:39:20 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:1693 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262204AbVDXAjR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Apr 2005 20:39:17 -0400
-Received: by rproxy.gmail.com with SMTP id a41so728585rng
-        for <git@vger.kernel.org>; Sat, 23 Apr 2005 17:39:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Z9Dum0dV9KIvQf3HJ/aVGY8Mje2wAy+Zr9MXQnzVP21M6CimXCMq2ZLWtd362LUjUfHDJoJzT678x0N8llRJsWNrAd4fYCsW772rIUX/aYiSzA+CM/ZzxyBLRBnbIskNkin4tm0tbznsL4zLny2ctPa3qVBwuGEHE14wnJtX9yc=
-Received: by 10.38.74.21 with SMTP id w21mr5042762rna;
-        Sat, 23 Apr 2005 17:39:17 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Sat, 23 Apr 2005 17:39:17 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050423220049.GC13222@pasky.ji.cz>
+	id S261201AbVDXAko (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Apr 2005 20:40:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262205AbVDXAko
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Apr 2005 20:40:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31161 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261201AbVDXAkl (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Apr 2005 20:40:41 -0400
+Received: (qmail 8805 invoked by uid 2001); 24 Apr 2005 00:40:39 -0000
+To: Jeff Garzik <jgarzik@pobox.com>
 Content-Disposition: inline
+In-Reply-To: <426AE9ED.4060005@pobox.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> > 1. Multiple rsync call might connect to different servers (with
-> > round-robin DNS).  The effect
-> >    will be interesting.  One call, if possible, would be better.
-> 
-> If you can do it without overwriting HEAD, please go ahead and send me
-> the patch. :-)
+Dear diary, on Sun, Apr 24, 2005 at 02:35:57AM CEST, I got a letter
+where Jeff Garzik <jgarzik@pobox.com> told me that...
+> Someone just told me that one implementation of the Venti archive 
+> server[1] simply fails the write, if a data item exists with a duplicate 
+> hash value.  As long as git fails or does something -predictable- in the 
+> face of the hash collision, I'm satisfied.
 
-I'll have a go at it later, but something like this ought to work:
+-DCOLLISION_CHECK
 
--d .rsync-git && die "previous pull failed -- cleanup"
-mkdir .rsync-git || die "cannot create .rsync-git"
-ln -s ../.git/objects .rsync-git/objects || die "cannot create symlink"
-rsync ... --keep-dirlinks ...
-...
+See the top of Makefile.
 
-Morten
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
