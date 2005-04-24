@@ -1,223 +1,116 @@
-From: Christian Meder <chris@absolutegiganten.org>
-Subject: Re: First web interface and service API draft
-Date: Mon, 25 Apr 2005 00:29:20 +0200
-Message-ID: <1114381760.3259.37.camel@localhost>
-References: <1114166517.3233.4.camel@localhost>
-	 <20050422121009.GA7173@pasky.ji.cz> <1114176579.3233.42.camel@localhost>
-	 <20050422225733.GH21204@pasky.ji.cz>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: A darcs that can pull from git
+Date: Mon, 25 Apr 2005 00:32:18 +0200
+Message-ID: <7ipswjbybx.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 25 00:24:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 25 00:27:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPpX2-0006yP-1t
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 00:24:52 +0200
+	id 1DPpZi-0007CN-5e
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 00:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262469AbVDXW3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 18:29:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262468AbVDXW3s
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 18:29:48 -0400
-Received: from shadow.prohost.de ([216.71.84.228]:41884 "EHLO
-	shadow.prohost.de") by vger.kernel.org with ESMTP id S262471AbVDXW3a
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 18:29:30 -0400
-Received: from blue (p54A27E62.dip.t-dialin.net [84.162.126.98])
-	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3OMTQ029420;
-	Mon, 25 Apr 2005 00:29:26 +0200
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050422225733.GH21204@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 
+	id S262468AbVDXWcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 18:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262470AbVDXWcd
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 18:32:33 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129]:29649 "EHLO shiva.jussieu.fr")
+	by vger.kernel.org with ESMTP id S262468AbVDXWcY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 18:32:24 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
+          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3OMWLpX056861
+          ; Mon, 25 Apr 2005 00:32:21 +0200 (CEST)
+X-Ids: 165
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
+          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3OMWIoc004770
+          ; Mon, 25 Apr 2005 00:32:18 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DPpeE-0003Zq-LM; Mon, 25 Apr 2005 00:32:18 +0200
+To: darcs-devel@darcs.net
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.165]); Mon, 25 Apr 2005 00:32:21 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 426C1E75.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-04-23 at 00:57 +0200, Petr Baudis wrote:
-> Dear diary, on Fri, Apr 22, 2005 at 03:29:39PM CEST, I got a letter
-> where Christian Meder <chris@absolutegiganten.org> told me that...
-> > > > /<project>
-> > > > 
-> > > > Ok. The URI should start by stating the project name
-> > > > e.g. /linux-2.6. This does bloat the URI slightly but I don't think
-> > > > that we want to have one root namespace per git archive in the long
-> > > > run. Additionally you can always put rewriting or redirecting rules at
-> > > > the root level for additional convenience when there's an obvious
-> > > > default project.
-> > > > 
-> > > > Should provide some meta data, stats, etc. if available.
-> > > 
-> > > I don't think this makes much sense. I think you should just apply -p1
-> > > to all the directories, and define that there should be some / page
-> > > which should contain some metadata regarding the repository you are
-> > > accessing (probably branches, tags, and such).
-> > 
-> > Hi,
-> 
-> Hi,
-> 
-> > remember that I want to stay stateless as long as possible so everything
-> > important has to be encoded in the url. So somewhere in the url the git
-> > archive to show has to be encoded. If I remove the <project> portion how
-> > do I know on the server side which repo to show ?
-> 
-> since you are configured appropriately.
-> 
-> You need to be anyway. Someone needs to tell you or your web server
-> "this lives at http://pasky.or.cz/wit/". So you bind "this" to the
-> given repository.
-> 
-> No problem with an additional configuration possibility to say "at that
-> place, clone your life place for the given repositories", but if I want
-> to have just a single repository at a given URL, it should be possible.
-> 
-> I'm just trying to argue that having it _forced_ to have <project> as
-> the part of the URL is useless; this is matter of configuration.
+I've just finished putting together a hack for darcs to allow it to
+pull from Git repositories.  You'll find the patch (Darcs patch, not
+diff patch) on
 
-Ok. Got it. <project> for a multi-repo setup and in the simple case of
-just one repo <project> can be dropped from the url. Reasonable.
+  http://www.pps.jussieu.fr/~jch/software/files/darcs-git-20050424.darcs
 
-> > > > * Blob data should be probably binary ?
-> > > 
-> > > What do you mean by binary?
-> > 
-> > content-type: binary/octet-stream
-> 
-> Ah. So just as-is, you mean?
+You should get yourself a copy of darcs-unstable, then apply this
+patch:
 
-Yes.
+  $ darcs get http://www.abridgegame.org/repos/darcs-unstable darcs-git
+  $ cd darcs-git
+  $ darcs apply darcs-git-20050424.darcs
+  $ make darcs
 
-> 
-> > > Anything wrong with putting ls-tree output there?
-> > 
-> > ls-tree output should be in .html (see below)
-> 
-> What if I actually want to process it by a script?
+If you get merge conflicts, try using a version of the darcs-unstable
+tree from 18.04.2005, which is what I started with.
 
-Use the .html variant and parse it. Or we add a .txt and/or .xml for
-easier parsing.
+A minor problem: there's something broken with the build procedure;
+you'll probably need to manually do a ``make Context.hs'' followed
+with ``make darcs'' when the build breaks.
 
-> 
-> > > > -------
-> > > > /<project>/tree/<tree-sha1>
-> > > > 
-> > > > Tree objects are served in binary form. Primary audience are scripts,
-> > > > etc. Human beings will probably get a heart attack when they
-> > > > accidentally visit this URI.
-> > > 
-> > > Binary form is unusable for scripts.
-> > 
-> > Why should it be unusable for a downloading script. It's just the raw
-> > git object.
-> > 
-> > > We should also have /gitobj/<sha1> for fetching the raw git objects.
-> > 
-> > Everything above is supposed to be raw git objects. No special encoding
-> > whatever.
-> 
-> You have a consistency problem here.
-> 
-> Raw git objects as in database contain the leading object type at the
-> start, then possibly some more stuff, then '\0' and then compressed
-> binary stuff. You mean you are exporting _this_ stuff through this?
-> 
-> That's not very useful except for http-pull, if you as me. It also does
-> not blend well with the fact that you say commits are in text or so.
+After you build darcs-git, you should be able to do something like
 
-Ok. We spoke of two different things. With raw objects I meant the
-uncompressed raw content while you spoke of the raw compressed git
-objects. Ok I'm dumb but now that I've understood what you said I agree
-with you: we need one generic url for fetching compressed objects.
+  $ cd ..
+  $ mkdir a
+  $ cd a
+  $ darcs initialize
+  $ ../darcs-git/darcs pull /usr/local/src/git-pasky-0.4
+  $ darcs changes
 
-> 
-> > > > -------
-> > > > /<project>/tree/<tree-sha1>/diff/<ancestor-tree-sha1>/html
-> > > > 
-> > > > Non recursive HTML view of the objects which are contained in the diff
-> > > > fully linked with the individual HTML views.
-> > > 
-> > > Why not .html?
-> > 
-> > I think .html isn't very clear because it would
-> > be ..../<ancestor-tree-sha1>.html which somehow looks like it has
-> > anything to do with the ancestor-tree. But it's the html version of the
-> > _diff_ and not the ancestor-tree.
-> 
-> Perhaps /tree/<sha1>.html/diff/<ancestor> ?
-> 
-> I'd lend to ?diff=<ancestor> more and more. The path part of URI is
-> there to express _hierarchy_, I think you are abusing that when there is
-> no hierarchy.
+This version can *pull* from git, but it cannot push; in other words,
+the only way to export your data from Darcs back to git is to use diff
+and patch.
 
-But I'd argue that you are abusing queries ;-)
-After all any given URI of the above kind is linking a specific diff
-resource. It's a completely static resource from a user POV. The fact
-that the server is probably dynamically generating it is just an
-implementation detail.
+Please be aware that this is just a proof-of-concept prototype.  David
+and the rest of the Central Committee haven't looked at this code yet;
+it is quite likely that future versions of Darcs will generate
+completely different patches from git repositories.  It is also likely
+that THIS CODE WILL EAT YOUR DATA.
 
-> 
-> > > For consistency, I'd stay with the plaintext output by default, .html if
-> > > requested.
-> > 
-> > Remember that I'm just sitting on top of git and not git-pasky right
-> > now. So there's no canonical changelog plaintext output for me. But I'm
-> > not religious about that.
-> 
-> But there is canonical HTML output for you? ;-)
+The major issue is that we generate no patch dependencies.  If you try
+to cherry-pick from repositories generated with this version, you'd
+better know what you're doing.
 
-No. Changelog isn't defined by git so there's no canonical output of any
-flavour.
+David, could you please have a look at the patches
 
-> > > OTOH, I'd use
-> > > 
-> > > 	/log/<commit>
-> > > 
-> > > to specify what commit to start at. It just does not make sense
-> > > otherwise, you would not know where to start
-> > 
-> > Start for the changelog is always head, but I guess that's pretty
-> > standard. With git log you always start at the head too.
-> 
-> If you are sitting on top of git and not git-pasky, you have no assured
-> HEAD information at all.
+  Sun Apr 24 16:50:02 CEST 2005  Juliusz Chroboczek <jch@pps.jussieu.fr>
+    * First cut at remodularising repo access.
 
-I've got HEAD. I'm still watching the discussion of tags.
+  Sun Apr 24 16:01:32 CEST 2005  Juliusz Chroboczek <jch@pps.jussieu.fr>
+    * Change Repository to DarcsRepo.
 
-> > If you want to start at a specific commit. Why not start
-> > at /linux-2.6/commit/<sha1>.html ?
-> 
-> And how does that give me the changelog?
+and tell me whether this sort of restructuring is okay with you.
 
-You could click through the commit chain interactively or we could add a
-changelog from here function.
- 
-> > > I think the <commit> should follow the same or similar rules as Cogito
-> > > id decoding. E.g. to get latest Linus' changelog, you'd do
-> > > 
-> > > 	/log/linus
-> > 
-> > Like I said above I think the shown head should be encoded in the
-> > project id.
-> 
-> I thought the project was mapped to repository? But I might just have
-> blindly assumed that. ;-) (That does not make me like your approach
-> more, though.)
+(David, I'm not claiming that this scheme is better than the ``tagging
+like crazy'' scheme that you outlined; I'm only trying to prove that
+my scheme is workable.)
 
-Ok. I think I misunderstood you here. You want to publish the different
-heads you are tracking with the same repo, right ?
+Right now, I'm taking a Git commit and manually generating a Darcs
+patch id from that, which is a bad idea.  A better way would be to get
+Darcs to deal with arbitrarily shaped patch ids; a patch that
+originates with git would get the git patch id, while a patch that
+comes from Darcs would retain its patch id even when pushed to git.
+David, you had some objections to that; any chance we could discuss
+the issue?
 
-The proposal didn't account for this scenario yet. I'll think about it.
+This is slow.  There are a few obvious improvements to make to the
+performance, but I'd rather first implement whatsnew, diff and apply,
+and fix the problem with patch dependencies.  (Whatsnew is where git's
+performance is actually likely to be better than Darcs, but it will
+require some abstracting of ``Slurpy'' in order to make that
+effective.)  Unfortunately, I don't expect to have hacking time before
+next week-end.
 
 
+Enjoy,
 
-				Christian
-
--- 
-Christian Meder, email: chris@absolutegiganten.org
-
-The Way-Seeking Mind of a tenzo is actualized 
-by rolling up your sleeves.
-
-                (Eihei Dogen Zenji)
-
+                                        Juliusz Chroboczek
