@@ -1,106 +1,71 @@
-From: "Joshua T. Corbin" <jcorbin@wunjo.org>
-Subject: [PATCH] git rm -- recursive directories
-Date: Sun, 24 Apr 2005 17:09:05 -0400
-Message-ID: <200504241709.05689.jcorbin@wunjo.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Design of name-addressed data portion
+Date: Sun, 24 Apr 2005 17:14:07 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504241703060.30848-100000@iabervon.org>
+References: <20050424205438.GN1507@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Apr 24 23:06:06 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Apr 24 23:09:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPoIn-0007fM-5d
-	for gcvg-git@gmane.org; Sun, 24 Apr 2005 23:06:05 +0200
+	id 1DPoLu-0007x3-2N
+	for gcvg-git@gmane.org; Sun, 24 Apr 2005 23:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262427AbVDXVKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 17:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262433AbVDXVKs
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 17:10:48 -0400
-Received: from node1.wunjo.org ([64.62.190.230]:49585 "EHLO node1.wunjo.org")
-	by vger.kernel.org with ESMTP id S262427AbVDXVKS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 17:10:18 -0400
-Received: by node1.wunjo.org (Postfix, from userid 65534)
-	id 6D57042EE6; Sun, 24 Apr 2005 17:10:17 -0400 (EDT)
-Received: from thor.circle (24.229.157.212.cmts.dan.ptd.net [24.229.157.212])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by node1.wunjo.org (Postfix) with ESMTP id B35BB42AB7
-	for <git@vger.kernel.org>; Sun, 24 Apr 2005 17:10:14 -0400 (EDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
-X-Spam-Level: 
-X-Spam-Status: No, score=0.1 required=5.0 tests=FORGED_RCVD_HELO 
-	autolearn=ham version=3.0.2
+	id S262429AbVDXVOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 17:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262431AbVDXVOJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 17:14:09 -0400
+Received: from iabervon.org ([66.92.72.58]:58117 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262429AbVDXVOB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 17:14:01 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DPoQZ-0003VF-00; Sun, 24 Apr 2005 17:14:07 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050424205438.GN1507@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-After posting the previous patch, I realized it made sense, to me at least ;), 
-to have git rm work the same way. Same idea as my previous patch except this 
-time the recursion is off by default, must pass -r.
+On Sun, 24 Apr 2005, Petr Baudis wrote:
 
-Signed-off-by: Joshua T. Corbin <jcorbin@wunjo.org>
+> Dear diary, on Sun, Apr 24, 2005 at 08:17:23PM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> > I'd propose the following structure:
+> > 
+> >  objects/    the content-addressed repository portion
+> >  references/ the name-addressed repository portion
+> 
+> references/ is just too long for my taste. ;-) What about just refs/ ?
 
-Index: git
-===================================================================
---- be4029f0225729bd52a08ac39214264247e1d319/git  (mode:100755 
-sha1:24d8c30383fa11d049aafcd659cefe700afe1cf1)
-+++ e925e99aef139d50acc11d906be86809f3a08bcb/git  (mode:100755 
-sha1:3928887f010454a41853b8a836e1b87eeb0aaf51)
-@@ -42,7 +42,7 @@
- 	merge		[-c] [-b BASE_ID] FROM_ID
- 	patch		[COMMIT_ID | COMMIT_ID:COMMIT_ID]
- 	pull		[RNAME]
--	rm		FILE...
-+	rm		[-r] FILE...
- 	seek		[COMMIT_ID]
- 	status
- 	tag		TNAME [COMMIT_ID]
-Index: gitrm.sh
-===================================================================
---- be4029f0225729bd52a08ac39214264247e1d319/gitrm.sh  (mode:100755 
-sha1:3cc50fb9f12d2bf93a285ea18daadca7d3f5b549)
-+++ e925e99aef139d50acc11d906be86809f3a08bcb/gitrm.sh  (mode:100755 
-sha1:236261a53fdce287d32b40b8baf46c338515e555)
-@@ -5,11 +5,36 @@
- #
- # Takes a list of file names at the command line, and schedules them
- # for removal from the GIT repository at the next commit.
-+# Optional "-r" parameter specifies that you don't want to remove directories
-+# recursively.
- 
- if [ ! "$1" ]; then
- 	echo "gitrm.sh: usage: git rm FILE..." >&2
- 	exit 1;
- fi
- 
--rm -f "$@"
--update-cache --remove -- "$@"
-+recur=
-+if [ "$1" = "-r" ]; then
-+  shift
-+  recur=1
-+fi
-+
-+if [ $recur ]; then
-+  RMFILE=$(mktemp -t gitrm.XXXXXX)
-+  RMDIRS=
-+  while [ "$1" ]; do
-+    if [ -d "$1" ]; then
-+      RMDIRS="$DIRS $1"
-+      find $1 -type f -and -not -name '.*'
-+    else
-+      echo "$1"
-+    fi
-+    shift
-+  done > $RMFILE
-+  rm -f $(cat $RMFILE)
-+  rmdir $(find $RMDIRS -depth -type d)
-+  update-cache --remove -- $(cat $RMFILE)
-+else
-+  rm -f "$@"
-+  update-cache --remove -- "$@"
-+fi
+Fine with me. I guess you can't just hit tab when writing a script. :)
+
+> >    heads/    the heads that are being used out of this repository
+> >      DEFAULT the head that people pulling this repository mean by default
+> >      ...     other heads, by name, that fsck-cache should mark reachable
+> >    tags/     the tags
+> >      ...     files with the symbolic name of the tags, containing the hash
+> >  info/       other per-repository information
+> >    remotes   URLs of remote repositories
+> >    complete  hashes that the repository contains all references from
+> >    missing   hashes that the repository lacks but wants
+> >    excluded  hashes that the repository doesn't want
+> >  ...         other files are per .git directory, not shared on push/pull
+> >  index       
+> >  HEAD        symlink to the head that is the local default
+> >  tracked     remote that this working directory tracks
+> 
+> I will probably throw the local stuff to local/.
+
+That seems to encourage confusion with the local/remote repository
+contrast. I think branch/ or fork/ would be more clear. Putting it in a
+directory doesn't seem so important to me, since it won't be shared
+anyway. (The reason I want info/ is so that you just symlink info/ to the
+master info/, and you don't have to remember to make a link for each
+file).
+
+	-Daniel
+*This .sig left intentionally blank*
+
