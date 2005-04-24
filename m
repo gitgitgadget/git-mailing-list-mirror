@@ -1,83 +1,223 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Whales falling on houses - was: Hash collision count
-Date: Mon, 25 Apr 2005 08:25:32 +1000
-Message-ID: <2cfc40320504241525c4153c2@mail.gmail.com>
-References: <426AAFC3.800@pobox.com>
-	 <1114297231.10264.12.camel@maze.mythral.org>
-	 <426AD835.5070404@pobox.com> <20050423234637.GS13222@pasky.ji.cz>
-	 <426AE9ED.4060005@pobox.com> <20050424004039.GU13222@pasky.ji.cz>
-	 <426AEBAE.1060402@pobox.com>
-	 <68ff9fa6050424142416fbadcd@mail.gmail.com>
-Reply-To: jon@zeta.org.au
+From: Christian Meder <chris@absolutegiganten.org>
+Subject: Re: First web interface and service API draft
+Date: Mon, 25 Apr 2005 00:29:20 +0200
+Message-ID: <1114381760.3259.37.camel@localhost>
+References: <1114166517.3233.4.camel@localhost>
+	 <20050422121009.GA7173@pasky.ji.cz> <1114176579.3233.42.camel@localhost>
+	 <20050422225733.GH21204@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff Garzik <jgarzik@pobox.com>, Petr Baudis <pasky@ucw.cz>,
-	Ray Heasman <lists@mythral.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>, Imre Simon <is@ime.usp.br>
-X-From: git-owner@vger.kernel.org Mon Apr 25 00:21:17 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 00:24:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPpTA-0006bn-Ex
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 00:20:52 +0200
+	id 1DPpX2-0006yP-1t
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 00:24:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262462AbVDXWZm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 18:25:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262465AbVDXWZm
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 18:25:42 -0400
-Received: from rproxy.gmail.com ([64.233.170.195]:29071 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262462AbVDXWZd convert rfc822-to-8bit
+	id S262469AbVDXW3s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 18:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262468AbVDXW3s
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 18:29:48 -0400
+Received: from shadow.prohost.de ([216.71.84.228]:41884 "EHLO
+	shadow.prohost.de") by vger.kernel.org with ESMTP id S262471AbVDXW3a
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 18:25:33 -0400
-Received: by rproxy.gmail.com with SMTP id z35so1149691rne
-        for <git@vger.kernel.org>; Sun, 24 Apr 2005 15:25:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oG5jzhLwL0kRAxmmcVVLHcnBoXV19LVuaC7WlSWDhCBnYoTuzjPfZljUIwnSSX67KLiriV23CiVqJlVOYnyUQvWLaIYdtuIZ9i9JuAfKabnPL4B4T6x6s568IopxmnVn806u2OGqJPOTuEcg6Qb+2kyPeeCsCar+OlrPiTlTrho=
-Received: by 10.38.150.79 with SMTP id x79mr5818398rnd;
-        Sun, 24 Apr 2005 15:25:32 -0700 (PDT)
-Received: by 10.38.104.32 with HTTP; Sun, 24 Apr 2005 15:25:32 -0700 (PDT)
-To: Imre Simon <imres.g@gmail.com>
-In-Reply-To: <68ff9fa6050424142416fbadcd@mail.gmail.com>
-Content-Disposition: inline
+	Sun, 24 Apr 2005 18:29:30 -0400
+Received: from blue (p54A27E62.dip.t-dialin.net [84.162.126.98])
+	by shadow.prohost.de (8.11.6/8.11.6) with ESMTP id j3OMTQ029420;
+	Mon, 25 Apr 2005 00:29:26 +0200
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050422225733.GH21204@pasky.ji.cz>
+X-Mailer: Evolution 2.0.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-.> 
-> 1. Take your favorite text file, at least 160 characters long.
-> 2. Choose 160 positions in this file.
-> 3. For each position choose your favorite mispelling of that character.
-> 4. Produce all 2^160 text files, all of the same length, choosing for
-> each position either the original or the alternate character
-> 5. Add an arbitrary file of the same length, different from the above
+On Sat, 2005-04-23 at 00:57 +0200, Petr Baudis wrote:
+> Dear diary, on Fri, Apr 22, 2005 at 03:29:39PM CEST, I got a letter
+> where Christian Meder <chris@absolutegiganten.org> told me that...
+> > > > /<project>
+> > > > 
+> > > > Ok. The URI should start by stating the project name
+> > > > e.g. /linux-2.6. This does bloat the URI slightly but I don't think
+> > > > that we want to have one root namespace per git archive in the long
+> > > > run. Additionally you can always put rewriting or redirecting rules at
+> > > > the root level for additional convenience when there's an obvious
+> > > > default project.
+> > > > 
+> > > > Should provide some meta data, stats, etc. if available.
+> > > 
+> > > I don't think this makes much sense. I think you should just apply -p1
+> > > to all the directories, and define that there should be some / page
+> > > which should contain some metadata regarding the repository you are
+> > > accessing (probably branches, tags, and such).
+> > 
+> > Hi,
 > 
-> Two of these files have the same sha1 hash. Or, for that matter, for
-> any 160 bit  hash the same is true.
+> Hi,
+> 
+> > remember that I want to stay stateless as long as possible so everything
+> > important has to be encoded in the url. So somewhere in the url the git
+> > archive to show has to be encoded. If I remove the <project> portion how
+> > do I know on the server side which repo to show ?
+> 
+> since you are configured appropriately.
+> 
+> You need to be anyway. Someone needs to tell you or your web server
+> "this lives at http://pasky.or.cz/wit/". So you bind "this" to the
+> given repository.
+> 
+> No problem with an additional configuration possibility to say "at that
+> place, clone your life place for the given repositories", but if I want
+> to have just a single repository at a given URL, it should be possible.
+> 
+> I'm just trying to argue that having it _forced_ to have <project> as
+> the part of the URL is useless; this is matter of configuration.
 
-If you were to create those files at 10^9 files per second, it would
-take you 10^38 years before you were in position to take step 5. I am
-about to turn 38 this week. Would that I could live to 10^38.
+Ok. Got it. <project> for a multi-repo setup and in the simple case of
+just one repo <project> can be dropped from the url. Reasonable.
 
-It's absolute rubbish to say that the best solution from an
-<double-quote>engineering</double-quote> point of view is to eliminate
-the infinitessimal possibility of a collision. Engineering is all
-about assessing risk and making suitable trade-offs. Every day of the
-week, "real" engineers accept life-threatening risks that put
-thousands of peoples lives in danger. They do it because we live in a
-world where risk cannot be eliminated, merely reduced to an acceptable
-level.
+> > > > * Blob data should be probably binary ?
+> > > 
+> > > What do you mean by binary?
+> > 
+> > content-type: binary/octet-stream
+> 
+> Ah. So just as-is, you mean?
 
-I can't understand that you are a prepared to drive a car or fly in a
-Boeing or Airbus that has a demonstrated risk of killing you, yet you
-want to insist on eliminating a risk that at most might create an
-interesting Slashdot headline: "Jolt-crazed programmer finds SHA1
-collision - but later dies when whale falls on house".
+Yes.
 
-jon.
+> 
+> > > Anything wrong with putting ls-tree output there?
+> > 
+> > ls-tree output should be in .html (see below)
+> 
+> What if I actually want to process it by a script?
+
+Use the .html variant and parse it. Or we add a .txt and/or .xml for
+easier parsing.
+
+> 
+> > > > -------
+> > > > /<project>/tree/<tree-sha1>
+> > > > 
+> > > > Tree objects are served in binary form. Primary audience are scripts,
+> > > > etc. Human beings will probably get a heart attack when they
+> > > > accidentally visit this URI.
+> > > 
+> > > Binary form is unusable for scripts.
+> > 
+> > Why should it be unusable for a downloading script. It's just the raw
+> > git object.
+> > 
+> > > We should also have /gitobj/<sha1> for fetching the raw git objects.
+> > 
+> > Everything above is supposed to be raw git objects. No special encoding
+> > whatever.
+> 
+> You have a consistency problem here.
+> 
+> Raw git objects as in database contain the leading object type at the
+> start, then possibly some more stuff, then '\0' and then compressed
+> binary stuff. You mean you are exporting _this_ stuff through this?
+> 
+> That's not very useful except for http-pull, if you as me. It also does
+> not blend well with the fact that you say commits are in text or so.
+
+Ok. We spoke of two different things. With raw objects I meant the
+uncompressed raw content while you spoke of the raw compressed git
+objects. Ok I'm dumb but now that I've understood what you said I agree
+with you: we need one generic url for fetching compressed objects.
+
+> 
+> > > > -------
+> > > > /<project>/tree/<tree-sha1>/diff/<ancestor-tree-sha1>/html
+> > > > 
+> > > > Non recursive HTML view of the objects which are contained in the diff
+> > > > fully linked with the individual HTML views.
+> > > 
+> > > Why not .html?
+> > 
+> > I think .html isn't very clear because it would
+> > be ..../<ancestor-tree-sha1>.html which somehow looks like it has
+> > anything to do with the ancestor-tree. But it's the html version of the
+> > _diff_ and not the ancestor-tree.
+> 
+> Perhaps /tree/<sha1>.html/diff/<ancestor> ?
+> 
+> I'd lend to ?diff=<ancestor> more and more. The path part of URI is
+> there to express _hierarchy_, I think you are abusing that when there is
+> no hierarchy.
+
+But I'd argue that you are abusing queries ;-)
+After all any given URI of the above kind is linking a specific diff
+resource. It's a completely static resource from a user POV. The fact
+that the server is probably dynamically generating it is just an
+implementation detail.
+
+> 
+> > > For consistency, I'd stay with the plaintext output by default, .html if
+> > > requested.
+> > 
+> > Remember that I'm just sitting on top of git and not git-pasky right
+> > now. So there's no canonical changelog plaintext output for me. But I'm
+> > not religious about that.
+> 
+> But there is canonical HTML output for you? ;-)
+
+No. Changelog isn't defined by git so there's no canonical output of any
+flavour.
+
+> > > OTOH, I'd use
+> > > 
+> > > 	/log/<commit>
+> > > 
+> > > to specify what commit to start at. It just does not make sense
+> > > otherwise, you would not know where to start
+> > 
+> > Start for the changelog is always head, but I guess that's pretty
+> > standard. With git log you always start at the head too.
+> 
+> If you are sitting on top of git and not git-pasky, you have no assured
+> HEAD information at all.
+
+I've got HEAD. I'm still watching the discussion of tags.
+
+> > If you want to start at a specific commit. Why not start
+> > at /linux-2.6/commit/<sha1>.html ?
+> 
+> And how does that give me the changelog?
+
+You could click through the commit chain interactively or we could add a
+changelog from here function.
+ 
+> > > I think the <commit> should follow the same or similar rules as Cogito
+> > > id decoding. E.g. to get latest Linus' changelog, you'd do
+> > > 
+> > > 	/log/linus
+> > 
+> > Like I said above I think the shown head should be encoded in the
+> > project id.
+> 
+> I thought the project was mapped to repository? But I might just have
+> blindly assumed that. ;-) (That does not make me like your approach
+> more, though.)
+
+Ok. I think I misunderstood you here. You want to publish the different
+heads you are tracking with the same repo, right ?
+
+The proposal didn't account for this scenario yet. I'll think about it.
+
+
+
+				Christian
+
 -- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+Christian Meder, email: chris@absolutegiganten.org
+
+The Way-Seeking Mind of a tenzo is actualized 
+by rolling up your sleeves.
+
+                (Eihei Dogen Zenji)
+
