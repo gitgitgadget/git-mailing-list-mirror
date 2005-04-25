@@ -1,82 +1,86 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: git "tag" objects implemented - and a re-done commit
-Date: Tue, 26 Apr 2005 00:18:11 +0200
-Message-ID: <20050425221810.GM13467@pasky.ji.cz>
-References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org> <426D62C0.40104@zytor.com> <Pine.LNX.4.58.0504251457510.18901@ppc970.osdl.org>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [PATCH] git-pasky spec file
+Date: Mon, 25 Apr 2005 15:21:51 -0700
+Message-ID: <20050425222151.GM493@shell0.pdx.osdl.net>
+References: <20050422015521.GK493@shell0.pdx.osdl.net> <20050422024010.GE7443@pasky.ji.cz> <20050422024834.GM493@shell0.pdx.osdl.net> <20050425142411.1849a5db.paul@permanentmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 00:14:30 2005
+Cc: Chris Wright <chrisw@osdl.org>, pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 00:18:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQBqA-0008Ql-Gy
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 00:14:07 +0200
+	id 1DQBuC-0000eh-VE
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 00:18:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261256AbVDYWSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 18:18:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261251AbVDYWSt
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 18:18:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48102 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261256AbVDYWSP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 18:18:15 -0400
-Received: (qmail 30631 invoked by uid 2001); 25 Apr 2005 22:18:11 -0000
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261251AbVDYWXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 18:23:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261259AbVDYWXT
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 18:23:19 -0400
+Received: from fire.osdl.org ([65.172.181.4]:31169 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261251AbVDYWV4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 18:21:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3PMLps4006331
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 15:21:52 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3PMLpcU010588;
+	Mon, 25 Apr 2005 15:21:51 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j3PMLpMJ010587;
+	Mon, 25 Apr 2005 15:21:51 -0700
+To: Paul Dickson <paul@permanentmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504251457510.18901@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20050425142411.1849a5db.paul@permanentmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 12:05:17AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
+* Paul Dickson (paul@permanentmail.com) wrote:
+> On Thu, 21 Apr 2005 19:48:34 -0700, Chris Wright wrote:
 > 
-> 
-> On Mon, 25 Apr 2005, H. Peter Anvin wrote:
+> > * Petr Baudis (pasky@ucw.cz) wrote:
+> > > Dear diary, on Fri, Apr 22, 2005 at 03:55:21AM CEST, I got a letter
+> > > where Chris Wright <chrisw@osdl.org> told me that...
+> > > > Here's a simple spec file to do rpm builds.  It's against the
+> > > > latest Makefile (which has the s/BINDIR/bindir/ change).  I've used
+> > > > DESTDIR, although it's not clear it's meant to stay in the Makefile.
+> > > > For now, there's no dynamic (git.spec.in, for example) update to the
+> > > > Version, so it's set against 0.6.3 (expecting it to be forthcoming
+> > > > shortly).  It installs to /usr/local/bin, and expects the tarball to be
+> > > > named git-pasky-0.6.3.tar.bz2.  Creates a package named git, which seems
+> > > > fine since Linus' isn't likely to be packaged directly.  Enjoy.
+> > > 
+> > > Thanks, applied. I'll gladly yet you maintain this file, but...
 > > 
-> > It would be good if the tag object could permit junk lines before the 
-> > start of the header; in particular, the standard PGP/GPG signed message 
-> > format looks like:
+> > No problem...
+> > 
+> > > > --- /dev/null	1969-12-31 16:00:00.000000000 -0800
+> > > > +++ git-pasky-0.6.3/git.spec	2005-04-21 18:42:18.000000000 -0700
+> > > > @@ -0,0 +1,43 @@
+> > > > +%install
+> > > > +rm -rf $RPM_BUILD_ROOT
+> > > > +make DESTDIR=$RPM_BUILD_ROOT/usr/local/ bindir=bin/ install
+> > > 
+> > > I doubt this is actually what you want. I suppose you want
+> > > 
+> > > make DESTDIR=$RPM_BUILD_ROOT prefix=/usr/local install
+> > 
+> > Yup, that makes more sense.  Feel free to update if you're so inclined.
 > 
-> No, I've already explained why git doesn't parse arbitrary junk: I want 
-> git to have 100% repeatable behaviour. And that very much means that if 
-> git doesn't understand something, it just doesn't touch it or parse it.
-> 
-> Here's my trivial script to generate tags in proper format. Go wild:
-> 
-> 	#!/bin/sh
-> 	( echo -e "object $(cat .git/HEAD)\ntype commit\ntag $1\n"; cat ) > .tmp-tag
-> 	rm -f .tmp-tag.asc
-> 	gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
-> 	git-mktag < .tmp-tag
-> 	rm -f .tmp-tag*
-> 
-> and it creates objects like this one:
-> 
-> 
-> 	torvalds@ppc970:~/git> cat-file tag 
-> 	ba613c023dcd03e06158caee9c0337e6b6988854
-> 	object ec4465adb38d21966acdc9510ff15c0fe4539468
-> 	type commit
-> 	tag test-release
-> 	Testing tagging
-> 	-----BEGIN PGP SIGNATURE-----
-> 	Version: GnuPG v1.2.4 (GNU/Linux)
-> 	
-> 	iD8DBQBCbVwSF3YsRnbiHLsRAliaAKCMlb6k6VAS7hxajwUtwRdzDZn9rACffVTb
-> 	dRdDS6n+pjSAYbA6Lp11bQU=
-> 	=JNiv
-> 	-----END PGP SIGNATURE-----
+> If you're building an RPM, it should go in /usr not /usr/local.  /usr/local
+> is for unmanaged (non-RPM) installs.
 
-Could we please at least maintain the newline between the "header" and data,
-like in the commit objects?
+That's not quite the definition for FHS, but I don't mind putting into
+/usr/bin.  I had planned upon doing a /usr/bin/git and helpers in
+another directory, but with new command name (ala cg-$cmd) then I think
+they'll all just go in /usr/bin.  Other opinions?
 
-Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+thanks,
+-chris
