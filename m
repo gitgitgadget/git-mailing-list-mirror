@@ -1,73 +1,71 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: Git-commits mailing list feed.
-Date: Mon, 25 Apr 2005 10:31:37 +0100
-Message-ID: <426CB8F9.5010602@dgreaves.com>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <426C4168.6030008@dwheeler.com> <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org> <200504250417.17231.FabianFranz@gmx.de> <Pine.LNX.4.58.0504241938410.18901@ppc970.osdl.org> <426C64E4.4090600@dwheeler.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Revised PPC assembly implementation
+Date: Mon, 25 Apr 2005 19:40:19 +1000
+Message-ID: <17004.47876.414.756912@cargo.ozlabs.ibm.com>
+References: <17003.9009.226712.220822@cargo.ozlabs.ibm.com>
+	<20050425031337.16605.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Fabian Franz <FabianFranz@gmx.de>, Paul Jakma <paul@clubi.ie>,
-	Sean <seanlkml@sympatico.ca>,
-	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 11:27:38 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 11:36:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPzri-0005qB-QL
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 11:26:55 +0200
+	id 1DQ00W-00072O-Ok
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 11:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262556AbVDYJbo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 05:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262552AbVDYJbo
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 05:31:44 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:65475 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262544AbVDYJbk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 05:31:40 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 2DBC7E6D7E; Mon, 25 Apr 2005 10:29:26 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 25129-02; Mon, 25 Apr 2005 10:29:26 +0100 (BST)
-Received: from oak.dgreaves.com (modem-1721.lemur.dialup.pol.co.uk [217.135.134.185])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 5FEF6E6D7B; Mon, 25 Apr 2005 10:29:25 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DPzwI-0002aL-8U; Mon, 25 Apr 2005 10:31:38 +0100
-User-Agent: Debian Thunderbird 1.0 (X11/20050116)
-X-Accept-Language: en-us, en
-To: dwheeler@dwheeler.com
-In-Reply-To: <426C64E4.4090600@dwheeler.com>
-X-Enigmail-Version: 0.90.0.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
+	id S262552AbVDYJkz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 05:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262559AbVDYJkz
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 05:40:55 -0400
+Received: from ozlabs.org ([203.10.76.45]:44744 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S262552AbVDYJks (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 05:40:48 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id BCDB067A6C; Mon, 25 Apr 2005 19:40:46 +1000 (EST)
+To: linux@horizon.com
+In-Reply-To: <20050425031337.16605.qmail@science.horizon.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David A. Wheeler wrote:
-  > $ cat-file signature 000195297c2a6336c2007548f909769e0862b509
-minor comment, cat-file gives you raw access to the object data.
+linux@horizon.com writes:
 
-better:
-$ cat-file signature $(what-signs 000195297c2a6336c2007548f909769e0862b509)
-> signatureof commit 000195297c2a6336c2007548f909769e0862b509
-> signer Petr Baudis <pasky@ucw.cz>
+> Three changes:
+> - Added stack frame as per your description.
+> - Found two bugs.  (Cutting & pasting too fast.)  Fixed.
+> - Minor scheduling improvements.  More to come.
 > 
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.2.6 (GNU/Linux)
-> 
-> iD8DBQBCbFaRCxlT/+f+SU4RAgYSAKCWpPNlDKDkxuuA649zJop7WkQPnACdF1Fg
-> JgXatbJU8YJ7JHqvgyGepRU=
-> =Kttg
-> -----END PGP SIGNATURE-----
+> Which lead to three questions:
+> - Is the stack set properly now?
 
-David
+Not quite; you are saving 20 registers, so you need a 96-byte stack
+frame, like this:
 
+	stwu	%r1,-96(%r1)
+	stmw	%r13,16(%r1)
+	...
+	lmw	%r13,16(%r1)
+	addi	%r1,%r1,96
+	blr
 
--- 
+Since sha1_core is a leaf function, I suppose you could use the lr
+save area (do stwu %r1,-80(%r1); stmw %r13,0(%r1)) but it seems a bit
+dodgy.
+
+> - Does it produce the right answer now?
+
+Yes.
+
+> - Is it any faster?
+
+I did 10 repetitions of my program that calls SHA1_Update with a
+4096-byte block of zeroes 256,000 times.  With my version, the average
+time was 4.6191 seconds with a standard deviation of 0.0157.  With your
+version, the average was 4.6063 and the standard deviation 0.0148.  So
+I would say that your version is probably just a little faster - of the
+order of 0.3% faster.
+
+Paul.
