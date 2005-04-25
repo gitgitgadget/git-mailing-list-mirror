@@ -1,59 +1,112 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH GIT 0.6] make use of register variables & size_t
-Date: Mon, 25 Apr 2005 10:23:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504251021280.18901@ppc970.osdl.org>
-References: <426CD1F1.2010101@tiscali.de> <Pine.LNX.4.58.0504250751330.18901@ppc970.osdl.org>
- <426D21FE.3040401@tiscali.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: unseeking?
+Date: Mon, 25 Apr 2005 13:27:16 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504251236400.30848-100000@iabervon.org>
+References: <20050425161854.GE11094@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 19:26:10 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 19:29:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQ7Kk-0007iT-I1
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 19:25:23 +0200
+	id 1DQ7Ns-0008Bk-Iy
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 19:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262723AbVDYR2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 13:28:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262736AbVDYRZa
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 13:25:30 -0400
-Received: from fire.osdl.org ([65.172.181.4]:61634 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262673AbVDYRVq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 13:21:46 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3PHLfs4011322
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 25 Apr 2005 10:21:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3PHLear024768;
-	Mon, 25 Apr 2005 10:21:40 -0700
-To: Matthias-Christian Ott <matthias.christian@tiscali.de>
-In-Reply-To: <426D21FE.3040401@tiscali.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262731AbVDYRc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 13:32:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262729AbVDYR3Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 13:29:25 -0400
+Received: from iabervon.org ([66.92.72.58]:43013 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262668AbVDYR1Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 13:27:16 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DQ7Ma-0005Sf-00; Mon, 25 Apr 2005 13:27:16 -0400
+To: Zack Brown <zbrown@tumblerings.org>
+In-Reply-To: <20050425161854.GE11094@tumblerings.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 25 Apr 2005, Zack Brown wrote:
 
+> Hi,
+> 
+> Thanks for all the help!
+> 
+> On Sun, Apr 24, 2005 at 06:10:42PM -0400, Daniel Barkalow wrote:
+> > > but I still don't see its significance. What do you get from a fork that
+> > > you don't get from a regular old init and pull?
+> > 
+> > Primarily, the ability to inspect and build the mainline tree. If you want
+> > to take a look at what's going on in the mainline without getting it again
+> > or messing with your working directory or local commits, you can do that. 
+> 
+> OK, I think I understand this so far. So, suppose I want to contribute to
+> cogito. I would first do a git init on Pasky's cogito tree, to get it on my home
+> system. This would be my home base, and whenever I wanted to do some work on the
+> current state of his tree, I would fork off another branch.
+> 
+> So, I want to do this. From inside cogito's root directory, I give the command
+> 
+> git fork mycogito ../mycogito
+> 
+> and ../mycogito is created. In this new directory, the .git directory
+> contains only symlinks to ../cogito/HEAD, ../cogito/heads, ../cogito/objects,
+> ../cogito/remotes, and ../cogito/tags, and an index file.
 
-On Mon, 25 Apr 2005, Matthias-Christian Ott wrote:
->
-> "register" and "auto" variables aren't relicts of the 60's,  they're a 
-> part of the ISO-C 99 standard, I'm following, "man".
+If you look carefully, ../cogito/.git/heads contains several files, one of
+which is "mycogito", and the symlink in mycogito/.git/HEAD is to that one,
+while the one in cogito/.git/HEAD is to a different one. So, while HEAD
+points to a file in a shared directory, each fork points to a different
+file.
 
-They _are_ relicts of the 60's. It's just that the C standard hasn't ever 
-had the reason to remove them.
+> Question: when I make changes to mycogito and commit them, is only the index
+> file in .git/ altered, or are my changes reflected in the cogito/ directory as
+> well? If I do another fork of cogito, will I see mycogito's changes in the new
+> fork?
 
-> And if you think "register" variables are outdated, please remove the 
-> CONFIG_REGPARM option from the Kernel source.
+The changes affect only the "mycogito" head, not the original head. On the
+other hand, the files generated by the commit are accessible from the
+original directory, so you can diff between your new head and the original
+or mainline successors of it.
 
-That does something totally different. And doesn't use "register" at all.
+> So moving on, I now have this mycogito tree. But I don't do any edits yet. I
+> just poke around for awhile, reading files. Finally I realize that there have
+> probably been updates to the upstream sources, and I want to pull those in
+> before I start my work. So, as I would do in the cogito directory, I give the
+> command
+> 
+> git pull pasky; git pull linus
+> 
+> this works fine. There are no new updates to be had, and git tells me my tree is
+> uptodate.
+> 
+> so now I start work. I run aspell on the README file, and it catches some
+> typos.  I fix them and save the file but don't yet commit it. Now mycogito
+> has some changes that I would ultimately like to push up to Pasky.
+> 
+> Now I'm unclear what comes next. Do I just do a 'git diff' from the mycogito
+> directory and post the results to the git list?
 
-Pass the toke, you've been hogging the drugs for way too long.
+Now you commit in your directory. This gives you a new head for
+mycogito. You can then do "git patch pasky" (or something of the sort,
+check the help for the details) to get a patch for the your changes. You
+can also do multiple commits and generate either a single patch or patches
+corresponding to each commit.
 
-		Linus
+> Suppose I want to keep working, changing more stuff in mycogito, but I
+> also want to make sure that mycogito tracks the upstream sources.
+> 
+> git merge pasky; git merge linus
+> 
+> and give that command to bring the upstream changes into mycogito?
+
+In general, you want to use "merge" when you've got local commits. You
+also want to commit before doing this, so that you have a known state
+for your version to revert to if you mess up merging.
+
+	-Daniel
+*This .sig left intentionally blank*
+
