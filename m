@@ -1,112 +1,92 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
+From: Paul Jakma <paul@clubi.ie>
 Subject: Re: Git-commits mailing list feed.
-Date: Sun, 24 Apr 2005 23:08:51 -0400
-Message-ID: <426C5F43.8010705@dwheeler.com>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org>       <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com>       <426A4669.7080500@ppp0.net>       <1114266083.3419.40.camel@localhost.localdomain>       <426A5BFC.1020507@ppp0.net>       <1114266907.3419.43.camel@localhost.localdomain>       <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>       <20050423175422.GA7100@cip.informatik.uni-erlangen.de>       <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org> <2911.10.10.10.24.1114279589.squirrel@linux1> <Pine.LNX.4.58.0504231234550.2344@ppc970.osdl.org> <Pine.LNX.4.62.0504250008370.14200@sheen.jakma.org> <426C4168.6030008@dwheeler.com> <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org>
-Reply-To: dwheeler@dwheeler.com
+Date: Mon, 25 Apr 2005 04:08:39 +0100 (IST)
+Message-ID: <Pine.LNX.4.62.0504250405010.14200@sheen.jakma.org>
+References: <200504210422.j3L4Mo8L021495@hera.kernel.org>      
+ <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com>      
+ <426A4669.7080500@ppp0.net>       <1114266083.3419.40.camel@localhost.localdomain>
+       <426A5BFC.1020507@ppp0.net>       <1114266907.3419.43.camel@localhost.localdomain>
+       <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>      
+ <20050423175422.GA7100@cip.informatik.uni-erlangen.de>      
+ <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org> <2911.10.10.10.24.1114279589.squirrel@linux1>
+ <Pine.LNX.4.58.0504231234550.2344@ppc970.osdl.org>
+ <Pine.LNX.4.62.0504250008370.14200@sheen.jakma.org> <426C4168.6030008@dwheeler.com>
+ <Pine.LNX.4.62.0504250212200.14200@sheen.jakma.org> <426C5266.6050200@dwheeler.com>
+ <Pine.LNX.4.62.0504250323040.14200@sheen.jakma.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Jakma <paul@clubi.ie>, Sean <seanlkml@sympatico.ca>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@osdl.org>, Sean <seanlkml@sympatico.ca>,
 	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	David Woodhouse <dwmw2@infradead.org>,
 	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
 	Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 05:02:22 2005
+X-From: git-owner@vger.kernel.org Mon Apr 25 05:11:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPtrT-0003Wt-HF
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 05:02:15 +0200
+	id 1DPu06-0004Es-5x
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 05:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262494AbVDYDHF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 23:07:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262498AbVDYDHF
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 23:07:05 -0400
-Received: from aibo.runbox.com ([193.71.199.94]:35243 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S262494AbVDYDGl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 23:06:41 -0400
-Received: from [10.9.9.11] (helo=fifi.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DPtvf-0006Ha-DZ; Mon, 25 Apr 2005 05:06:35 +0200
-Received: from [70.18.249.32] (helo=[192.168.2.73])
-	by fifi.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DPtve-0006eG-Dw; Mon, 25 Apr 2005 05:06:35 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org>
-X-Sender: 258406@vger.kernel.org
+	id S262506AbVDYDMu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 23:12:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262505AbVDYDLS
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 23:11:18 -0400
+Received: from hibernia.jakma.org ([212.17.55.49]:47503 "EHLO
+	hibernia.jakma.org") by vger.kernel.org with ESMTP id S262498AbVDYDIy
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 23:08:54 -0400
+Received: from sheen.jakma.org (sheen.jakma.org [212.17.55.53])
+	by hibernia.jakma.org (8.13.1/8.13.1) with ESMTP id j3P38b06016270;
+	Mon, 25 Apr 2005 04:08:37 +0100
+X-X-Sender: paul@sheen.jakma.org
+To: "David A. Wheeler" <dwheeler@dwheeler.com>
+In-Reply-To: <Pine.LNX.4.62.0504250323040.14200@sheen.jakma.org>
+Mail-Followup-To: paul@hibernia.jakma.org
+X-NSA: arafat al aqsar jihad musharef jet-A1 avgas ammonium qran inshallah allah al-akbar martyr iraq saddam hammas hisballah rabin ayatollah korea vietnam revolt mustard gas british airways washington
+X-Virus-Scanned: ClamAV 0.83/851/Mon Apr 25 02:19:30 2005 on hibernia.jakma.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Sun, 24 Apr 2005, David A. Wheeler wrote:
-> 
->>It may be better to have them as simple detached signatures, which are
->>completely separate files (see gpg --detached).
-> 
-> Actually, if we do totally separate files, then the detached thing is ok, 
-> and we migth decide to not call the objects at all, since that seems to be 
-> unnecessarily complex.
-> 
-> Maybe we'll just have signed tags by doing exactly that: just a collection 
-> of detached signature files. The question becomes one of how to name such 
-> things in a distributed tree. That is the thing that using an object for 
-> them would have solved very naturally.
+Ah, to add to below..
 
-I agree, naming signatures using the same way other objects are named
-would be very clean.  So, why not? It's perfectly reasonable to
-just store detached signatures as hashed objects, just like the rest;
-just create a new object type ("signature").
-If 3 different keys are used to sign the same object, the detached
-signatures will have different hash values, so they'll get named easily.
+If one wished, one could optionally store the actual signature data 
+as a seperate blob object and refer to it in the signing object. Not 
+needed really for a GPG ASCII clear-signed detached signature (tiny 
+and they're ASCII obviously :) ), but who knows.
 
-Now you just have to FIND the signature of a signed object,
-i.e. efficiently go the "other way" from signed object to detached
-signature.  A separate directory with this mapping, or embedding the
-mapping inside the object directory (HASH.d/<list>) both solve it.
+On Mon, 25 Apr 2005, Paul Jakma wrote:
 
-The more I think about it, the more I think a separate "reverse"
-index directory would be a better idea. It just needs to from
-"me" to "who references me", at least so that you can quickly
-find all signatures of a given object. If the reverse directory
-gets wonky, anyone can just delete the reverse index directory
-at any time & reconstruct it by iterating the objects.
-Before "-----BEGIN PGP SIGNATURE-----" you should add:
-  signatureof HASHVALUE
-to make reconstruction easy; PGP processors ignore stuff
-before "-----".  The PGP data does include a hash, but it's not
-easy to get it out (I don't see a way to do it in gpg from the
-command line), and it's quite possible that a signer won't
-use SHA-1 when they sign something (they may not even
-realize it; it depends on their implementation's configuration).
-Better to include something about what was signed with the signature.
+> - add the 'signature object' to the respository after the signed
+>  object
+>
+> So a 'signed commit' turns into the
+>
+> - tool preparing the commit object,
+> 	- get the user to sign it
+> 	- save the detached signature for later
+> - adding the commit object to the repository
 
-Hmm, probably worth backtracking to see what's needed.
-There needs to be a way to identify tags, and a way to sign that
-tag so that you can decide to trust some tags & not others.
-There needs to be a way to sign commits, and store that info
-for later.  And really, these are special cases of general
-assertions about other things; you might want someone to be
-able to make other signed assertions (e.g., that it
-passed test suite XYZ).
+   - adding the signature blob, if it is to stored as a blob
 
-If tags & commits are all you plan to sign for now, well, you
-already have commits.  You can just add a "tag" type and a
-"signature" type of object (the "signature" is just a detached
-OpenPGP signature).  "signature" can sign tag or commit types.
-I still like the idea of a more general "assertion" type, esp.
-for assertions that something passed a test suite on a certain date
-or was reviewed at a certain date by someone, but admittedly
-that could be added later in the same manner.
+> - prepare the signing object and add to repository
 
-Then you need to be able to quickly find a signature, given a
-commit or tag.  A "reverse" directory then does that nicely,
-and if you put enough information in front of the signature,
-you can regenerate the reverse directory whenever you wish.
+> The repository head then refers then to signature object, which could 
+> (handwaving) look something like:
+>
+> 	Object		Signature
+> 	Signing 	<object ID, in this case of the commit object>
+> 	Sign-type 	GPG
 
---- David A. Wheeler
+With either a 'Signature  <ID of signature data blob>' or else:
+
+> 	<signature data>
+
+
+regards,
+-- 
+Paul Jakma	paul@clubi.ie	paul@jakma.org	Key ID: 64A2FF6A
+Fortune:
+May you have many beautiful and obedient daughters.
