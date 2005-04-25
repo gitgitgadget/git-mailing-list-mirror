@@ -1,165 +1,133 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Show which files was changed in the git log output
-Date: Mon, 25 Apr 2005 03:22:06 +0200
-Message-ID: <20050425012206.GA29069@diku.dk>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: Date handling.
+Date: Sun, 24 Apr 2005 21:22:23 -0400
+Message-ID: <20050425012216.GH29939@delft.aura.cs.cmu.edu>
+References: <1113466592.12012.192.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504140153230.7211@ppc970.osdl.org> <Pine.LNX.4.58.0504140212100.7211@ppc970.osdl.org> <1113500316.27227.8.camel@hades.cambridge.redhat.com> <20050424030416.GE16751@delft.aura.cs.cmu.edu> <1114324729.3419.78.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="CE+1k2dSO48ffgeK"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 25 03:17:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 25 03:18:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPsE9-0003bH-EY
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 03:17:33 +0200
+	id 1DPsEb-0003ch-LQ
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 03:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262394AbVDYBWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 21:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262395AbVDYBWW
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 21:22:22 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:58103 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S262394AbVDYBWI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 21:22:08 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 513456E2A72; Mon, 25 Apr 2005 03:21:15 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 099ED6E2A6E; Mon, 25 Apr 2005 03:21:15 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id E5F3D61FDD; Mon, 25 Apr 2005 03:22:06 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Mail-Followup-To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+	id S262396AbVDYBWx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 21:22:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262401AbVDYBWw
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 21:22:52 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:60831 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S262396AbVDYBWe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 21:22:34 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1DPsIp-00024R-00; Sun, 24 Apr 2005 21:22:23 -0400
+To: David Woodhouse <dwmw2@infradead.org>
+Mail-Followup-To: David Woodhouse <dwmw2@infradead.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Level: 
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
+In-Reply-To: <1114324729.3419.78.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Apr 24, 2005 at 04:38:49PM +1000, David Woodhouse wrote:
+> On Sat, 2005-04-23 at 23:04 -0400, Jan Harkes wrote:
+> > I noticed that some commit timestamps seemed to be off, looking into it
+> > a bit more it seems like mktime is influenced by the setting of the
+> > local TZ environment.
+> 
+> Ewww. I missed that in the documentation. I suppose I should have worked
+> it out having empirically determined that it ignores the tm_gmtoff
+> field.
+> 
+> > The question is, do we want to just calculate the time_t offset
+> > ourselves without using mktime, or force the TZ environment to UTC.
+> 
+> I don't think we want to be in the business of counting leap seconds; we
+> need to let the system do it. I don't much like setting TZ to UTC though
+> -- how about we use your test case to find the offset and subtract that?
+> 
+> Does this work?
 
---CE+1k2dSO48ffgeK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+As Russ mentioned, that probably doesn't work with daylight savings
+time. However I did some testing and it looks like the following lines
+around mktime make it work as we would expect.
 
-Hi,
+    tm.tm_isdst = -1;
+    then = mktime(&tm);
+    then += tm.tm_gmtoff;
 
-I have attached a patch probe to optionally have the git log command
-list which files was changed by a commit.
+Attached is the program I used to test it, it seems pretty much unfazed
+by changes to the TZ environment variable. Although I tested around a
+daylight savings time switch, I'm still not 100% sure if it doesn't mess
+up in some corner case.
 
-It would be nice if someone with a more in depth knowledge of which
-sha1s to pass to diff-tree when there are multiple parents could comment
-on whether it does the right thing.
+Jan
 
-Right now it does the following: if there are only one parent it is
-diffed against the commit tree and if there are two parents they are
-diffed. I assume the order they are diffed doesn't matter.
 
--- 
-Jonas Fonseca
+#include <time.h>
+#include <stdlib.h>
+#include <stdio.h>
 
---CE+1k2dSO48ffgeK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="show-changed-files.patch"
+time_t mkutctime(struct tm *tm, int offset)
+{
+    time_t time;
 
-Index: githelp.sh
-===================================================================
---- 7de71a831508e51e0985cea173f3f7a7012c82b7/githelp.sh  (mode:100755 sha1:e19176d4ef69a2e7c6da6b9893e2c7cdac24760a)
-+++ uncommitted/githelp.sh  (mode:100755)
-@@ -19,7 +19,7 @@
- 	fork		BNAME BRANCH_DIR [COMMIT_ID]
- 	help
- 	init		RSYNC_URL
--	log		[-c] [COMMIT_ID | COMMIT_ID:COMMIT_ID]
-+	log		[-c] [-f] [COMMIT_ID | COMMIT_ID:COMMIT_ID]
- 	ls		[TREE_ID]
- 	lsobj		[OBJTYPE]
- 	lsremote
-Index: gitlog.sh
-===================================================================
---- 7de71a831508e51e0985cea173f3f7a7012c82b7/gitlog.sh  (mode:100755 sha1:a09ffda484bd859a3bcb1cffcc8fd6f9c65fa8e7)
-+++ uncommitted/gitlog.sh  (mode:100755)
-@@ -13,8 +13,11 @@
- #	header		Green	
- #	author 		Cyan
- #	committer	Magenta
-+#	files		Blue
- #	signoff		Yellow
- #
-+# Takes an -f option to show which files was changed.
-+#
- # Takes an id resolving to a commit to start from (HEAD by default),
- # or id1:id2 representing an (id1;id2] range of commits to show.
- 
-@@ -24,16 +27,25 @@
- 	colheader="$(tput setaf 2)"    # Green
- 	colauthor="$(tput setaf 6)"    # Cyan
- 	colcommitter="$(tput setaf 5)" # Magenta
-+	colfiles="$(tput setaf 4)"     # Blue
- 	colsignoff="$(tput setaf 3)"   # Yellow
- 	coldefault="$(tput op)"        # Restore default
- else
- 	colheader=
- 	colauthor=
- 	colcommitter=
-+	colfiles=
- 	colsignoff=
- 	coldefault=
- fi
- 
-+if [ "$1" = "-f" ]; then
-+	shift
-+	list_files=1
-+else
-+	list_files=
-+fi
-+
- if echo "$1" | grep -q ':'; then
- 	id1=$(commit-id $(echo "$1" | cut -d : -f 1)) || exit 1
- 	id2=$(commit-id $(echo "$1" | cut -d : -f 2)) || exit 1
-@@ -49,6 +61,8 @@
- 
- $revls | $revsort | while read time commit parents; do
- 	[ "$revfmt" = "rev-list" ] && commit="$time"
-+	tree1=
-+	tree2=
- 	echo $colheader""commit ${commit%:*} $coldefault;
- 	cat-file commit $commit | \
- 		while read key rest; do
-@@ -73,11 +87,32 @@
- 				fi
- 				;;
- 			"")
-+				if [ -n $list_files ]; then
-+					sep=
-+					echo
-+					echo -n "    * $colfiles"
-+					diff-tree -r $tree1 $tree2 | \
-+					while read modes type sha1s file; do
-+						echo -n "$sep$file"
-+						sep=", "
-+					done
-+					echo "$coldefault"
-+				fi
- 				echo; sed -re '
- 					/ *Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
- 					s/^/    /
- 				'
- 				;;
-+			"tree"|"parent")
-+				if [ -z $tree1 ]; then
-+					tree1=$rest
-+				elif [ -z $tree2 ]; then
-+					tree2=$rest
-+				else
-+					tree1=$rest
-+				fi
-+				echo $colheader$key $rest $coldefault
-+				;;
- 			*)
- 				echo $colheader$key $rest $coldefault
- 				;;
+    /* we don't know whether our timezone happens to be dst or not, let libc
+     * figure that one out. */
+    tm->tm_isdst = -1;
 
---CE+1k2dSO48ffgeK--
+    /* interpret struct tm in the local timezone */
+    time = mktime(tm);
+    if (time == -1) return -1;
+
+    /* libc lets us know how many seconds our local time differs from UTC
+     * this is a non-standard BSD extension, which is probably not as
+     * portable, but it seems to work. */
+    time += tm->tm_gmtoff;
+
+    /* However as the passed in struct tm was not UTC but in some other
+     * timezone, we still have subtract the offset that came with the
+     * RFC2822 date */
+    time -= offset;
+
+    return time;
+}
+
+int main(int argc, char **argv)
+{
+    struct tm tm = { 0, };
+    time_t time;
+
+    tm.tm_year = 70;
+    tm.tm_mday = 1;
+    time = mkutctime(&tm, 0);
+    printf("1970-01-01 00:00:00 UTC = 0 (%d)\n", time);
+
+    tm.tm_year = 105;
+    tm.tm_mon = 2;
+    tm.tm_mday = 17;
+    tm.tm_hour = 20;
+    tm.tm_min = 58;
+    tm.tm_sec = 31;
+    time = mkutctime(&tm, -5 * 3600);
+    printf("2005-03-17 20:58:31 EST = 1111111111 (%d)\n", time);
+
+    tm.tm_mon = 3;
+    tm.tm_mday = 3;
+    tm.tm_hour = 1;
+    tm.tm_min = 59;
+    tm.tm_sec = 59;
+    time = mkutctime(&tm, -5 * 3600);
+    printf("2005-04-03 01:59:59 EST = 1112511599 (%d)\n", time);
+
+    tm.tm_hour = 3;
+    tm.tm_min = 0;
+    tm.tm_sec = 0;
+    time = mkutctime(&tm, -4 * 3600);
+    printf("2005-04-03 03:00:00 EDT = 1112511600 (%d)\n", time);
+}
+
