@@ -1,86 +1,55 @@
-From: linux@horizon.com
-Subject: Re: Revised PPC assembly implementation
-Date: 25 Apr 2005 17:34:30 -0000
-Message-ID: <20050425173430.11031.qmail@science.horizon.com>
-References: <17004.47876.414.756912@cargo.ozlabs.ibm.com>
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Mon Apr 25 19:34:10 2005
+From: "Bodo Eggert <harvested.in.lkml@posting.7eggert.dyndns.org>" 
+	<7eggert@gmx.de>
+Subject: Re: [PATCH GIT 0.6] make use of register variables & size_t
+Date: Mon, 25 Apr 2005 19:36:36 +0200
+Message-ID: <E1DQ7Vg-0003fq-DC@be1.7eggert.dyndns.org>
+References: <3X9X6-5JP-27@gated-at.bofh.it>
+Reply-To: 7eggert@gmx.de
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Mon Apr 25 19:34:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQ7S4-0000JY-1P
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 19:32:56 +0200
+	id 1DQ7SU-0000PH-7b
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 19:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262715AbVDYRh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 13:37:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262699AbVDYRh1
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 13:37:27 -0400
-Received: from science.horizon.com ([192.35.100.1]:16440 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S262715AbVDYReb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 13:34:31 -0400
-Received: (qmail 11032 invoked by uid 1000); 25 Apr 2005 17:34:30 -0000
-To: paulus@samba.org
-In-Reply-To: <17004.47876.414.756912@cargo.ozlabs.ibm.com>
+	id S262704AbVDYRiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 13:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262675AbVDYRiH
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 13:38:07 -0400
+Received: from mail-in-02.arcor-online.net ([151.189.21.42]:30163 "EHLO
+	mail-in-02.arcor-online.net") by vger.kernel.org with ESMTP
+	id S262699AbVDYRhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2005 13:37:40 -0400
+Received: from be3.lrz.7eggert.dyndns.org (dsl-213-023-007-193.arcor-ip.net [213.23.7.193])
+	by mail-in-02.arcor-online.net (Postfix) with ESMTP
+	id 162B5139878; Mon, 25 Apr 2005 19:37:37 +0200 (CEST)
+Received: from be1.lrz ([192.168.1.201] helo=be1.7eggert.dyndns.org)
+	by be3.lrz.7eggert.dyndns.org with esmtp (Exim 4.43)
+	id 1DQ7ao-0000pq-Jq; Mon, 25 Apr 2005 19:41:58 +0200
+Received: from localhost ([127.0.0.1] helo=be1)
+	by be1.7eggert.dyndns.org with smtp (Exim 4.22)
+	id 1DQ7Vg-0003fq-DC; Mon, 25 Apr 2005 19:36:40 +0200
+To: Matthias-Christian Ott <matthias.christian@tiscali.de>,
+	git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+User-Agent: KNode/0.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->> Which lead to three questions:
->> - Is the stack set properly now?
+Matthias-Christian Ott <matthias.christian@tiscali.de> wrote:
 
-> Not quite; you are saving 20 registers, so you need a 96-byte stack
-> frame, like this:
+> The "git" didn't try store small variables, which aren't referenced, in
+> the processor registers. It also didn't use the size_t type. I corrected
+> a C++ style comment too.
 
-> 	stwu	%r1,-96(%r1)
-> 	stmw	%r13,16(%r1)
-> 	...
-> 	lmw	%r13,16(%r1)
-> 	addi	%r1,%r1,96
-> 	blr
+I have compared functions using 'register' against functions not doing that.
+Not using register allowed better optimization on my x86.
+-- 
+The most dangerous thing in the world is a second lieutenant with a map and
+a compass.
 
-Huh?  I'm saving 19 registers, r13..r31, and not saving 13, namely
-r0..r12.
-
-The dodgy thing *I'm* thinking of is saving %r2 (the TOC pointer)
-and using it as an extra temporary.  (The alternative is spilling
-one of the "old" hash values to the stack, which is not
-too big a disaster.)
-
->> - Is it any faster?
-
-> I did 10 repetitions of my program that calls SHA1_Update with a
-> 4096-byte block of zeroes 256,000 times.  With my version, the average
-> time was 4.6191 seconds with a standard deviation of 0.0157.  With your
-> version, the average was 4.6063 and the standard deviation 0.0148.  So
-> I would say that your version is probably just a little faster - of the
-> order of 0.3% faster.
-
-Damn.  So that's actually *worse* than me earlier version which achieved
-an (also piddling) 2% speedup?
-As you can see, I tried to make the addition tree bushier, but I guess
-it didn't help.  Or the processor isn't out-of-order enough to find
-the parallelism I made available.
-
-Damn, I wish I had at that IBM pipeline profiling tool.  If it could
-just tell me which cycles didn't have both ALUs busy, I could solve it
-in relatively little time.
-
-The place that could really use scheduing help is the G4, which has three
-integer ALUs, but can only *think* about executing the bottom three entries
-in the reorder queue.  So if one of those instructions isn't ready, it
-stalls in the queue and idles the ALU with it.
-
-Especially there, it may be necessary to interleave the EXPANDW code
-with the round code to avoid having the (non-critical-path) EXPANDW
-code scheduled ahead of critical-path round code.
-
-The two critical-path inter-round dependencies are:
-- summing into E to be rotated by 5 and added to D next round.
-  (this is the "A<<<5" code in the current round)
-- rotating B left for use in the next round's F(a,b,c) function.
-  (this is the current round's C input)
-Actually, the E variable isn't critical-path at all; it was last
-modified several rounds ago.
-
-Maybe I can improve the scheduling some more...
