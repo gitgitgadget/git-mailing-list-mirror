@@ -1,33 +1,32 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/2] Split external diff command interface to a separate
- file.
-Date: Sun, 24 Apr 2005 22:15:34 -0700
-Message-ID: <7vvf6bqvwp.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH 2/2] Introduce diff-tree-helper.
+Date: Sun, 24 Apr 2005 22:17:29 -0700
+Message-ID: <7vll77qvti.fsf_-_@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
 	<7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 07:11:29 2005
+X-From: git-owner@vger.kernel.org Mon Apr 25 07:13:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPvsN-0004gy-L5
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 07:11:20 +0200
+	id 1DPvtt-0004no-Tw
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 07:12:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262538AbVDYFQP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 01:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262539AbVDYFQP
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 01:16:15 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:46039 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S262538AbVDYFPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 01:15:36 -0400
+	id S262539AbVDYFRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 01:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262541AbVDYFRw
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 01:17:52 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:43656 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262539AbVDYFRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2005 01:17:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050425051534.KZGH8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 25 Apr 2005 01:15:34 -0400
+          id <20050425051729.LFJT550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 25 Apr 2005 01:17:29 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Sun, 24 Apr 2005 22:12:16 -0700")
@@ -36,285 +35,427 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-With this patch, the non-core'ish part of show-diff command that
-invokes an external "diff" comand to obtain patches is split
-into a separate file.  The next patch will introduce a new
-command, diff-tree-helper, which uses this common diff interface
-to format diff-tree and diff-cache output into a patch form.
+This patch introduces a new program, diff-tree-helper.  It reads
+output from diff-cache and diff-tree, and produces a patch file.
+The diff format customization can be done the same way the
+show-diff uses; the same external diff interface introduced by
+the previous patch to drive diff from show-diff is used so this
+is not surprising.
+
+It is used like the following examples:
+
+   $ diff-cache --cached -z <tree> | diff-tree-helper -z -R paths...
+   $ diff-tree -r -z <tree1> <tree2> | diff-tree-helper -z paths...
+
+ - As usual, the use of the -z flag is recommended in the script
+   to pass NUL-terminated filenames through the pipe between
+   commands.
+
+ - The -R flag is used to generate reverse diff.  It does not
+   matter for diff-tree case, but it is sometimes useful to get
+   a patch in the desired direction out of diff-cache.
+
+ - The paths parameters are used to restrict the paths that
+   appears in the output.  Again this is useful to use with
+   diff-cache, which, unlike diff-tree, does not take such paths
+   restriction parameters.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-Makefile    |    4 ++
-diff.c      |  106 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-diff.h      |   17 +++++++++
-show-diff.c |  101 +--------------------------------------------------------
-4 files changed, 130 insertions(+), 98 deletions(-)
+Makefile           |    6 -
+diff-tree-helper.c |  302 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+strbuf.c           |   43 +++++++
+strbuf.h           |   13 ++
+4 files changed, 363 insertions(+), 1 deletion(-)
 
 --- k/Makefile
 +++ l/Makefile
-@@ -27,6 +27,9 @@ LIB_OBJS=read-cache.o sha1_file.o usage.
+@@ -16,7 +16,8 @@ AR=ar
+ PROG=   update-cache show-diff init-db write-tree read-tree commit-tree \
+ 	cat-file fsck-cache checkout-cache diff-tree rev-tree show-files \
+ 	check-files ls-tree merge-base merge-cache unpack-file git-export \
+-	diff-cache convert-cache http-pull rpush rpull rev-list
++	diff-cache convert-cache http-pull rpush rpull rev-list \
++	diff-tree-helper
+ 
+ all: $(PROG)
+ 
+@@ -27,6 +28,9 @@ LIB_OBJS=read-cache.o sha1_file.o usage.
  LIB_FILE=libgit.a
  LIB_H=cache.h object.h
  
-+LIB_H += diff.h
-+LIB_OBJS += diff.o
++LIB_H += strbuf.h
++LIB_OBJS += strbuf.o
 +
- LIBS = $(LIB_FILE)
- LIBS += -lz
+ LIB_H += diff.h
+ LIB_OBJS += diff.o
  
-@@ -66,6 +69,7 @@ checkout-cache.o: $(LIB_H)
- commit.o: $(LIB_H)
- commit-tree.o: $(LIB_H)
- convert-cache.o: $(LIB_H)
-+diff.o: $(LIB_H)
- diff-cache.o: $(LIB_H)
- diff-tree.o: $(LIB_H)
- fsck-cache.o: $(LIB_H)
---- k/diff.c
-+++ l/diff.c
-@@ -0,0 +1,106 @@
+--- k/diff-tree-helper.c
++++ l/diff-tree-helper.c
+@@ -0,0 +1,302 @@
 +#include "cache.h"
++#include "strbuf.h"
 +#include "diff.h"
 +
-+static char *diff_cmd = "diff -L 'k/%s' -L 'l/%s' ";
-+static char *diff_opts = "-p -u";
-+static char *diff_arg_forward  = " - '%s'";
-+static char *diff_arg_reverse  = " '%s' -";
-+
-+void prepare_diff_cmd(void)
++static int matches_pathspec(const char *name, char **spec, int cnt)
 +{
-+	/*
-+	 * Default values above are meant to match the
-+	 * Linux kernel development style.  Examples of
-+	 * alternative styles you can specify via environment
-+	 * variables are:
-+	 *
-+	 * GIT_DIFF_CMD="diff -L '%s' -L '%s'"
-+	 * GIT_DIFF_OPTS="-c";
-+	 */
-+	diff_cmd = getenv("GIT_DIFF_CMD") ? : diff_cmd;
-+	diff_opts = getenv("GIT_DIFF_OPTS") ? : diff_opts;
++	int i;
++	int namelen = strlen(name);
++	for (i = 0; i < cnt; i++) {
++		int speclen = strlen(spec[i]);
++		if (! strncmp(spec[i], name, speclen) &&
++		    speclen <= namelen &&
++		    (name[speclen] == 0 ||
++		     name[speclen] == '/'))
++			return 1;
++	}
++	return 0;
 +}
 +
-+/* Help to copy the thing properly quoted for the shell safety.
-+ * any single quote is replaced with '\'', and the caller is
-+ * expected to enclose the result within a single quote pair.
-+ *
-+ * E.g.
-+ *  original     sq_expand     result
-+ *  name     ==> name      ==> 'name'
-+ *  a b      ==> a b       ==> 'a b'
-+ *  a'b      ==> a'\''b    ==> 'a'\''b'
-+ */
-+static char *sq_expand(const char *src)
-+{
-+	static char *buf = NULL;
-+	int cnt, c;
-+	const char *cp;
-+	char *bp;
++static int parse_oneside_change(const char *cp, unsigned char *sha1,
++				char *path) {
++	int ch;
++	while ((ch = *cp) && '0' <= ch && ch <= '7')
++		cp++; /* skip mode bits */
++	if (strncmp(cp, "\tblob\t", 6))
++		return -1;
++	cp += 6;
++	if (get_sha1_hex(cp, sha1))
++		return -1;
++	cp += 40;
++	if (*cp++ != '\t')
++		return -1;
++	strcpy(path, cp);
++	return 0;
++}
 +
-+	/* count bytes needed to store the quoted string. */ 
-+	for (cnt = 1, cp = src; *cp; cnt++, cp++)
-+		if (*cp == '\'')
-+			cnt += 3;
++#define STATUS_CACHED    0 /* cached and sha1 valid */
++#define STATUS_ABSENT    1 /* diff-tree says old removed or new added */
++#define STATUS_UNCACHED  2 /* diff-cache output: read from working tree */
 +
-+	if (! (buf = malloc(cnt)))
-+	    return buf;
-+	bp = buf;
-+	while ((c = *src++)) {
-+		if (c != '\'')
-+			*bp++ = c;
-+		else {
-+			bp = strcpy(bp, "'\\''");
-+			bp += 4;
-+		}
++static int parse_diff_tree_output(const char *buf,
++				  unsigned char *old_sha1,
++				  int *old_status,
++				  unsigned char *new_sha1,
++				  int *new_status,
++				  char *path) {
++	const char *cp = buf;
++	int ch;
++	static unsigned char null_sha[20] = { 0, };
++
++	switch (*cp++) {
++	case '+':
++		*old_status = STATUS_ABSENT;
++		*new_status = (memcmp(new_sha1, null_sha, sizeof(null_sha)) ?
++			       STATUS_CACHED : STATUS_UNCACHED);
++		return parse_oneside_change(cp, new_sha1, path);
++	case '-':
++		*new_status = STATUS_ABSENT;
++		*old_status = (memcmp(old_sha1, null_sha, sizeof(null_sha)) ?
++			       STATUS_CACHED : STATUS_UNCACHED);
++		return parse_oneside_change(cp, old_sha1, path);
++	case '*':
++		break;
++	default:
++		return -1;
 +	}
-+	*bp = 0;
++	
++	/* This is for '*' entries */
++	while ((ch = *cp) && ('0' <= ch && ch <= '7'))
++		cp++; /* skip mode bits */
++	if (strncmp(cp, "->", 2))
++		return -1;
++	cp += 2;
++	while ((ch = *cp) && ('0' <= ch && ch <= '7'))
++		cp++; /* skip mode bits */
++	if (strncmp(cp, "\tblob\t", 6))
++		return -1;
++	cp += 6;
++	if (get_sha1_hex(cp, old_sha1))
++		return -1;
++	cp += 40;
++	if (strncmp(cp, "->", 2))
++		return -1;
++	cp += 2;
++	if (get_sha1_hex(cp, new_sha1))
++		return -1;
++	cp += 40;
++	if (*cp++ != '\t')
++		return -1;
++	strcpy(path, cp);
++	*old_status = (memcmp(old_sha1, null_sha, sizeof(null_sha)) ?
++		       STATUS_CACHED : STATUS_UNCACHED);
++	*new_status = (memcmp(new_sha1, null_sha, sizeof(null_sha)) ?
++		       STATUS_CACHED : STATUS_UNCACHED);
++	return 0;
++}
++
++static int sha1err(const char *path, const unsigned char *sha1)
++{
++	return error("diff-tree-helper: unable to read sha1 file of %s (%s)",
++		     path, sha1_to_hex(sha1));
++}
++
++static int fserr(const char *path)
++{
++	return error("diff-tree-helper: unable to read file %s", path);
++}
++
++static char *map_whole_file(const char *path, unsigned long *size) {
++	int fd;
++	struct stat st;
++	void *buf;
++
++	if ((fd = open(path, O_RDONLY)) < 0) {
++		error("diff-tree-helper: unable to read file %s", path);
++		return 0;
++	}
++	if (fstat(fd, &st) < 0) {
++		close(fd);
++		error("diff-tree-helper: unable to stat file %s", path);
++		return 0;
++	}
++	*size = st.st_size;
++	buf = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	close(fd);
 +	return buf;
 +}
 +
-+void show_differences(const char *name, /* filename on the filesystem */
-+		      const char *label, /* diff label to use */
-+		      void *old_contents, /* contents in core */
-+		      unsigned long long old_size, /* size in core */
-+		      int reverse /* 0: diff core file
-+				     1: diff file core */)
++static int show_diff(const unsigned char *old_sha1, int old_status,
++		     const unsigned char *new_sha1, int new_status,
++		     const char *path, int reverse_diff)
 +{
-+	FILE *f;
-+	char *name_sq = sq_expand(name);
-+	const char *label_sq = (name != label) ? sq_expand(label) : name_sq;
-+	char *diff_arg = reverse ? diff_arg_reverse : diff_arg_forward;
-+	int cmd_size = strlen(name_sq) + strlen(label_sq) * 2 +
-+		strlen(diff_cmd) + strlen(diff_opts) + strlen(diff_arg);
-+	char *cmd = malloc(cmd_size);
-+	int next_at;
++	char other[PATH_MAX];
++	unsigned long size;
++	char type[20];
++	int fd;
++	int reverse;
++	void *blob = 0;
++	const char *fs = 0;
++	int need_unmap = 0;
++	int need_unlink = 0;
 +
-+	fflush(stdout);
-+	next_at = snprintf(cmd, cmd_size, diff_cmd, label_sq, label_sq);
-+	next_at += snprintf(cmd+next_at, cmd_size-next_at, "%s", diff_opts);
-+	next_at += snprintf(cmd+next_at, cmd_size-next_at, diff_arg, name_sq);
-+	f = popen(cmd, "w");
-+	if (old_size)
-+		fwrite(old_contents, old_size, 1, f);
-+	pclose(f);
-+	if (label_sq != name_sq)
-+		free((void*)label_sq); /* constness */
-+	free(name_sq);
-+	free(cmd);
++
++	switch (old_status) {
++	case STATUS_CACHED:
++		blob = read_sha1_file(old_sha1, type, &size);
++		if (! blob)
++			return sha1err(path, old_sha1);
++			
++		switch (new_status) {
++		case STATUS_CACHED:
++			strcpy(other, ".diff_tree_helper_XXXXXX");
++			fd = mkstemp(other);
++			if (fd < 0)
++				die("unable to create temp-file");
++			if (write(fd, blob, size) != size)
++				die("unable to write temp-file");
++			close(fd);
++			free(blob);
++
++			blob = read_sha1_file(new_sha1, type, &size);
++			if (! blob)
++				return sha1err(path, new_sha1);
++
++			need_unlink = 1;
++			/* new = blob, old = fs */
++			reverse = !reverse_diff;
++			fs = other;
++			break;
++
++		case STATUS_ABSENT:
++		case STATUS_UNCACHED:
++			fs = ((new_status == STATUS_ABSENT) ?
++			      "/dev/null" : path);
++			reverse = reverse_diff;
++			break;
++
++		default:
++ 			reverse = reverse_diff;
++		}
++		break;
++
++	case STATUS_ABSENT:
++		switch (new_status) {
++		case STATUS_CACHED:
++			blob = read_sha1_file(new_sha1, type, &size);
++			if (! blob)
++				return sha1err(path, new_sha1);
++			/* old = fs, new = blob */
++			fs = "/dev/null";
++			reverse = !reverse_diff;
++			break;
++
++		case STATUS_ABSENT:
++			return error("diff-tree-helper: absent from both old and new?");
++		case STATUS_UNCACHED:
++			fs = path;
++			blob = strdup("");
++			size = 0;
++			/* old = blob, new = fs */
++			reverse = reverse_diff;
++			break;
++		default:
++			reverse = reverse_diff;
++		}
++		break;
++
++	case STATUS_UNCACHED:
++		fs = path; /* old = fs, new = blob */
++		reverse = !reverse_diff;
++
++		switch (new_status) {
++		case STATUS_CACHED:
++			blob = read_sha1_file(new_sha1, type, &size);
++			if (! blob)
++				return sha1err(path, new_sha1);
++			break;
++
++		case STATUS_ABSENT:
++			blob = strdup("");
++			size = 0;
++			break;
++
++		case STATUS_UNCACHED:
++			/* old = fs */
++			blob = map_whole_file(path, &size);
++			if (! blob)
++				return fserr(path);
++			need_unmap = 1;
++			break;
++		default:
++			reverse = reverse_diff;
++		}
++		break;
++
++	default:
++		reverse = reverse_diff;
++	}
++	
++	if (fs)
++		show_differences(fs,
++				 path, /* label */
++				 blob,
++				 size,
++				 reverse /* 0: diff blob fs
++					    1: diff fs blob */);
++
++	if (need_unlink)
++		unlink(other);
++	if (need_unmap && blob)
++		munmap(blob, size);
++	else
++		free(blob);
++	return 0;
 +}
 +
-+void show_diff_empty(const unsigned char *sha1,
-+		     const char *name,
-+		     int reverse)
-+{
-+	char *old;
-+	unsigned long int size;
-+	unsigned char type[20];
++static const char *diff_tree_helper_usage =
++"diff-tree-helper [-R] [-z] paths...";
 +
-+	old = read_sha1_file(sha1, type, &size);
-+	if (! old) {
-+		error("unable to read blob object for %s (%s)", name,
-+		      sha1_to_hex(sha1));
++int main(int ac, char **av) {
++	struct strbuf sb;
++	int reverse_diff = 0;
++	int line_termination = '\n';
++
++	strbuf_init(&sb);
++
++	while (1 < ac && av[1][0] == '-') {
++		if (av[1][1] == 'R')
++			reverse_diff = 1;
++		else if (av[1][1] == 'z')
++			line_termination = 0;
++		else
++			usage(diff_tree_helper_usage);
++		ac--; av++;
++	}
++	/* the remaining parameters are paths patterns */
++
++	prepare_diff_cmd();
++
++	while (1) {
++		int old_status, new_status;
++		unsigned char old_sha1[20], new_sha1[20];
++		char path[PATH_MAX];
++		read_line(&sb, stdin, line_termination);
++		if (sb.eof)
++			break;
++		if (parse_diff_tree_output(sb.buf,
++					   old_sha1, &old_status,
++					   new_sha1, &new_status,
++					   path)) {
++			fprintf(stderr, "cannot parse %s\n", sb.buf);
++			continue;
++		}
++		if (1 < ac && ! matches_pathspec(path, av+1, ac-1))
++			continue;
++
++		show_diff(old_sha1, old_status,
++			  new_sha1, new_status,
++			  path, reverse_diff);
++	}
++	return 0;
++}
+--- k/strbuf.c
++++ l/strbuf.c
+@@ -0,0 +1,43 @@
++#include <stdio.h>
++#include <stdlib.h>
++#include "strbuf.h"
++
++void strbuf_init(struct strbuf *sb) {
++	sb->buf = 0;
++	sb->eof = sb->alloc = sb->len = 0;
++}
++
++static void strbuf_begin(struct strbuf *sb) {
++	free(sb->buf);
++	strbuf_init(sb);
++}
++
++static void inline strbuf_add(struct strbuf *sb, int ch) {
++	if (sb->alloc <= sb->len) {
++		sb->alloc = sb->alloc * 3 / 2 + 16;
++		sb->buf = realloc(sb->buf, sb->alloc);
++	}
++	sb->buf[sb->len++] = ch;
++}
++
++static void strbuf_end(struct strbuf *sb) {
++	strbuf_add(sb, 0);
++}
++
++void read_line(struct strbuf *sb, FILE *fp, int term) {
++	int ch;
++	strbuf_begin(sb);
++	if (feof(fp)) {
++		sb->eof = 1;
 +		return;
 +	}
-+	show_differences("/dev/null", name, old, size, reverse);
++	while ((ch = fgetc(fp)) != EOF) {
++		if (ch == term)
++			break;
++		strbuf_add(sb, ch);
++	}
++	if (sb->len == 0)
++		sb->eof = 1;
++	strbuf_end(sb);
 +}
---- k/diff.h
-+++ l/diff.h
-@@ -0,0 +1,17 @@
-+#ifndef DIFF_H
-+#define DIFF_H
 +
-+extern void prepare_diff_cmd(void);
+--- k/strbuf.h
++++ l/strbuf.h
+@@ -0,0 +1,13 @@
++#ifndef STRBUF_H
++#define STRBUF_H
++struct strbuf {
++	int alloc;
++	int len;
++	int eof;
++	unsigned char *buf;
++};
 +
-+extern void show_differences(const char *name, /* filename on the filesystem */
-+			     const char *label, /* diff label to use */
-+			     void *old_contents, /* contents in core */
-+			     unsigned long long old_size, /* size in core */
-+			     int reverse /* 0: diff core file
-+					    1: diff file core */);
++extern void strbuf_init(struct strbuf *);
++extern void read_line(struct strbuf *, FILE *, int);
 +
-+extern void show_diff_empty(const unsigned char *sha1,
-+			    const char *name,
-+			    int reverse);
-+
-+#endif /* DIFF_H */
---- k/show-diff.c
-+++ l/show-diff.c
-@@ -4,103 +4,7 @@
-  * Copyright (C) Linus Torvalds, 2005
-  */
- #include "cache.h"
--
--static char *diff_cmd = "diff -L 'a/%s' -L 'b/%s' ";
--static char *diff_opts = "-p -u";
--static char *diff_arg_forward  = " - '%s'";
--static char *diff_arg_reverse  = " '%s' -";
--
--static void prepare_diff_cmd(void)
--{
--	/*
--	 * Default values above are meant to match the
--	 * Linux kernel development style.  Examples of
--	 * alternative styles you can specify via environment
--	 * variables are:
--	 *
--	 * GIT_DIFF_CMD="diff -L '%s' -L '%s'"
--	 * GIT_DIFF_OPTS="-c";
--	 */
--	diff_cmd = getenv("GIT_DIFF_CMD") ? : diff_cmd;
--	diff_opts = getenv("GIT_DIFF_OPTS") ? : diff_opts;
--}
--
--/* Help to copy the thing properly quoted for the shell safety.
-- * any single quote is replaced with '\'', and the caller is
-- * expected to enclose the result within a single quote pair.
-- *
-- * E.g.
-- *  original     sq_expand     result
-- *  name     ==> name      ==> 'name'
-- *  a b      ==> a b       ==> 'a b'
-- *  a'b      ==> a'\''b    ==> 'a'\''b'
-- */
--static char *sq_expand(char *src)
--{
--	static char *buf = NULL;
--	int cnt, c;
--	char *cp;
--
--	/* count bytes needed to store the quoted string. */ 
--	for (cnt = 1, cp = src; *cp; cnt++, cp++)
--		if (*cp == '\'')
--			cnt += 3;
--
--	if (! (buf = malloc(cnt)))
--	    return buf;
--	cp = buf;
--	while ((c = *src++)) {
--		if (c != '\'')
--			*cp++ = c;
--		else {
--			cp = strcpy(cp, "'\\''");
--			cp += 4;
--		}
--	}
--	*cp = 0;
--	return buf;
--}
--
--static void show_differences(char *name, char *label, void *old_contents,
--			     unsigned long long old_size, int reverse)
--{
--	FILE *f;
--	char *name_sq = sq_expand(name);
--	char *label_sq = (name != label) ? sq_expand(label) : name_sq;
--	char *diff_arg = reverse ? diff_arg_reverse : diff_arg_forward;
--	int cmd_size = strlen(name_sq) + strlen(label_sq) * 2 +
--		strlen(diff_cmd) + strlen(diff_opts) + strlen(diff_arg);
--	char *cmd = malloc(cmd_size);
--	int next_at;
--
--	fflush(stdout);
--	next_at = snprintf(cmd, cmd_size, diff_cmd, label_sq, label_sq);
--	next_at += snprintf(cmd+next_at, cmd_size-next_at, "%s", diff_opts);
--	next_at += snprintf(cmd+next_at, cmd_size-next_at, diff_arg, name_sq);
--	f = popen(cmd, "w");
--	if (old_size)
--		fwrite(old_contents, old_size, 1, f);
--	pclose(f);
--	if (label_sq != name_sq)
--		free(label_sq);
--	free(name_sq);
--	free(cmd);
--}
--
--static void show_diff_empty(struct cache_entry *ce, int reverse)
--{
--	char *old;
--	unsigned long int size;
--	unsigned char type[20];
--
--	old = read_sha1_file(ce->sha1, type, &size);
--	if (! old) {
--		error("unable to read blob object for %s (%s)", ce->name,
--		      sha1_to_hex(ce->sha1));
--		return;
--	}
--	show_differences("/dev/null", ce->name, old, size, reverse);
--}
-+#include "diff.h"
- 
- static const char *show_diff_usage = "show-diff [-q] [-s] [-z] [paths...]";
- 
-@@ -183,7 +87,8 @@ int main(int argc, char **argv)
- 			else {
- 				printf("%s: %s\n", ce->name, strerror(errno));
- 				if (errno == ENOENT)
--					show_diff_empty(ce, reverse);
-+					show_diff_empty(ce->sha1, ce->name,
-+							reverse);
- 			}
- 			continue;
- 		}
++#endif /* STRBUF_H */
 
