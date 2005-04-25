@@ -1,78 +1,89 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Git-aware darcs: gettable repo
-Date: Mon, 25 Apr 2005 22:09:08 +0200
-Message-ID: <7ipswir53v.fsf@lanthane.pps.jussieu.fr>
+From: Andreas Gal <gal@uci.edu>
+Subject: Re: git "tag" objects implemented - and a re-done commit
+Date: Mon, 25 Apr 2005 13:23:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>
+References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: darcs-devel-bounces@darcs.net Mon Apr 25 22:05:08 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 25 22:21:01 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQ9ob-0005tP-Re
-	for gcvdd-darcs-devel@m.gmane.org; Mon, 25 Apr 2005 22:04:22 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DQ9tL-0003U8-LM; Mon, 25 Apr 2005 16:09:15 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129])
-	by abridgegame.org with esmtp (Exim 4.50) id 1DQ9tJ-0002ic-N3
-	for darcs-devel@darcs.net; Mon, 25 Apr 2005 16:09:14 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
-	[134.157.168.1])
-	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3PK981d067656
-	; Mon, 25 Apr 2005 22:09:11 +0200 (CEST)
-X-Ids: 168
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
-	[134.157.168.57])
-	by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id
-	j3PK99Oj020962 ; Mon, 25 Apr 2005 22:09:09 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DQ9tE-0003vg-Vc; Mon, 25 Apr 2005 22:09:08 +0200
-To: darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
-	(shiva.jussieu.fr [134.157.0.168]);
-	Mon, 25 Apr 2005 22:09:11 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 426D4E64.001 by Joe's j-chkmail
-	(http://j-chkmail.ensmp.fr)!
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+	id 1DQA3y-0008MZ-FB
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 22:20:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261180AbVDYUYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 16:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261174AbVDYUYe
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 16:24:34 -0400
+Received: from sam.ics.uci.edu ([128.195.38.141]:54715 "EHLO sam.ics.uci.edu")
+	by vger.kernel.org with ESMTP id S261155AbVDYUYE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 16:24:04 -0400
+Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
+	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j3PKNw4E011506;
+	Mon, 25 Apr 2005 13:23:58 -0700
+Received: from localhost (gal@localhost)
+	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j3PKNweT011502;
+	Mon, 25 Apr 2005 13:23:58 -0700
+X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
+X-X-Sender: gal@sam.ics.uci.edu
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Just to let you know that, thanks to some friendly tagging by Ian Lynagh,
-I've been able to set up a gettable Darcs repository of the Git-aware
-version of Darcs.
+Are tag objects referenced by trees (and thus limited in scope) or are 
+they stand-alone entities in the repository? The latter would be bad for 
+shared object storages. Also, if I delete and recreate tags, will the old 
+tag remain in the tree or will the file in the object storage disapear? 
+So far all objects were always persistent, which is a nice property to 
+have.
 
-  http://www.pps.jussieu.fr/~jch/software/repos/darcs-git/
+Andreas
 
-If you're on a Linux system with darcs, ghc 6.2, libz, libcurl and libssl,
-you should be able to do
+On Mon, 25 Apr 2005, Linus Torvalds wrote:
 
-  $ darcs get --partial http://www.pps.jussieu.fr/~jch/software/repos/darcs-git
-  $ cd darcs-git
-  $ make darcs
-  $ make Context.hs
-  $ make darcs
-  $ mv darcs ~/bin/darcs-git
-  $ cd ..
-  $ mkdir linux
-  $ cd linux
-  $ darcs-git initialize
-  $ darcs-git pull /usr/local/src/linux-2.6
-
-and see the OOM killer in action.
-
-                                        Juliusz
+> 
+> Ok, I just pushed out my "tag" object implementation, and due to some
+> local braindamage over here, I ended up re-doing one commit, so if you
+> happened to pull my 'git' tree at _just_ the right time, you will have a
+> commit object named 06a02346f6a2e9ff113c189629ff7148f5141bb0 in your git 
+> repository, which is not exactly bogus, but which I ended up undoing.
+> 
+> So if you've been pulling my git stuff, check your "git log" for whether
+> you find that commit in your stuff. If you do, I guess it doesn't much
+> matter (ie should all merge in cleanly), but if you want to match my tree,
+> you should first undo it if it's your HEAD commit (by setting your HEAD to
+> the _parent_ of that commit, and then running the git-prune-script thing).
+> 
+> Anyway, I decided that my original model for tags was the right one, with 
+> a trivial extension. Notably, if you want to tag a single file or a tree 
+> object, go wild. The tag object format is:
+> 
+> 	object <sha1>
+> 	type <type>
+> 	tag <tag>
+> 	.. free-form commentary and signature of this all ..
+> 
+> and the "git-mktag" program verifies that the three first lines are valid 
+> before it accepts it and writes it as a git object.
+> 
+> Right now the tags don't do anything, except fsck can verify them (not the
+> signature - git doesn't even specify any particular format, and you may
+> validly have unsigned tags in your tree), and will print out something
+> like
+> 
+> 	tagged commit e83c5163316f89bfbde7d9ab23ca2e25604af290 (v2.6.12-rc2)
+> 
+> if you were to have such a tag-object in your object database (you don't, 
+> because I've not generated one, but hey..)
+> 
+> 		Linus
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
