@@ -1,72 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Git-commits mailing list feed.
-Date: Sun, 24 Apr 2005 18:50:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org>      
- <42674724.90005@ppp0.net> <20050422002922.GB6829@kroah.com>      
- <426A4669.7080500@ppp0.net>       <1114266083.3419.40.camel@localhost.localdomain>
-       <426A5BFC.1020507@ppp0.net>       <1114266907.3419.43.camel@localhost.localdomain>
-       <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org>      
- <20050423175422.GA7100@cip.informatik.uni-erlangen.de>      
- <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org> <2911.10.10.10.24.1114279589.squirrel@linux1>
- <Pine.LNX.4.58.0504231234550.2344@ppc970.osdl.org>
- <Pine.LNX.4.62.0504250008370.14200@sheen.jakma.org> <426C4168.6030008@dwheeler.com>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: unpack_sha1_file issues
+Date: Sun, 24 Apr 2005 22:01:38 -0400
+Message-ID: <118833cc05042419012f425f0d@mail.gmail.com>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Jakma <paul@clubi.ie>, Sean <seanlkml@sympatico.ca>,
-	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
-	Kernel Mailing List <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 03:44:36 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Apr 25 03:57:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPsdn-0005m8-Ba
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 03:44:03 +0200
+	id 1DPsq9-00075A-1m
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 03:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262440AbVDYBst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 21:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262426AbVDYBst
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 21:48:49 -0400
-Received: from fire.osdl.org ([65.172.181.4]:12933 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262422AbVDYBsp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Apr 2005 21:48:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3P1mJs4005370
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 24 Apr 2005 18:48:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3P1mGQn026504;
-	Sun, 24 Apr 2005 18:48:17 -0700
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <426C4168.6030008@dwheeler.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262426AbVDYCBk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 22:01:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262433AbVDYCBk
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 22:01:40 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:42091 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262426AbVDYCBi convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 22:01:38 -0400
+Received: by rproxy.gmail.com with SMTP id a41so834232rng
+        for <git@vger.kernel.org>; Sun, 24 Apr 2005 19:01:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=sTG8BFNAVMdydBp1XGpepIXqXC9E0CToXcUpNqrJdcF6D8YEno/b5CIB3CUAKS4cP/0whQtmzxDVYrZQIlf4dW2vsbyfMaeCQ9CfA8KBljj2i8aha84PwluYRFCV0xCLXoQtcguHFwdQW/OB5x++HXb2o+E6FNoXwrzQdiUZE8s=
+Received: by 10.38.86.49 with SMTP id j49mr3451888rnb;
+        Sun, 24 Apr 2005 19:01:38 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Sun, 24 Apr 2005 19:01:38 -0700 (PDT)
+To: GIT Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+unpack_sha1_file is being called by fsck-cache.  Therefore it should
+not assume that
+a \0 occurs within the first 8192 bytes of the uncompressed data. 
+However, currently
+both the sscanf and strlen calls do just that.
 
+Also, unpack_sha1_file should call inflateEnd in a couple of the error cases.
 
-On Sun, 24 Apr 2005, David A. Wheeler wrote:
-> 
-> It may be better to have them as simple detached signatures, which are
-> completely separate files (see gpg --detached).
-> Yeah, gpg currently implements detached signatures
-> by repeating what gets signed, which is unfortunate,
-> but the _idea_ is the right one.
+Finally, if *size==0, shouldn't unpack_sha1_file allocate a single
+byte to prevent
+malloc from returning NULL?
 
-Actually, if we do totally separate files, then the detached thing is ok, 
-and we migth decide to not call the objects at all, since that seems to be 
-unnecessarily complex.
-
-Maybe we'll just have signed tags by doing exactly that: just a collection 
-of detached signature files. The question becomes one of how to name such 
-things in a distributed tree. That is the thing that using an object for 
-them would have solved very naturally.
-
-		Linus
+Morten
