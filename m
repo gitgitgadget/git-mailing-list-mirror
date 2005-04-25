@@ -1,57 +1,72 @@
-From: tony.luck@intel.com
-Subject: mod-times (was: keyword expansion)
-Date: Mon, 25 Apr 2005 10:56:28 -0700
-Message-ID: <200504251756.j3PHuSh01362@unix-os.sc.intel.com>
-References: <20050425002343.GF10806@cip.informatik.uni-erlangen.de>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 25 19:52:17 2005
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: [PATCH GIT 0.6] make use of register variables & size_t
+Date: Mon, 25 Apr 2005 14:06:19 -0400
+Message-ID: <426D319B.2040805@dwheeler.com>
+References: <426CD1F1.2010101@tiscali.de> <426CD703.5040009@exactcode.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Apr 25 20:02:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQ7k4-00033t-Ks
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 19:51:32 +0200
+	id 1DQ7tj-0004Ld-9x
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 20:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262648AbVDYR4e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 13:56:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262675AbVDYR4e
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 13:56:34 -0400
-Received: from fmr22.intel.com ([143.183.121.14]:38846 "EHLO
-	scsfmr002.sc.intel.com") by vger.kernel.org with ESMTP
-	id S262648AbVDYR4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 13:56:31 -0400
-Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
-	by scsfmr002.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j3PHuSof005945;
-	Mon, 25 Apr 2005 17:56:28 GMT
-Received: from unix-os.sc.intel.com (unix-os.sc.intel.com [172.25.110.7])
-	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j3PHvs6Z018442;
-	Mon, 25 Apr 2005 17:57:54 GMT
-Received: from localhost (localhost [[UNIX: localhost]])
-	by unix-os.sc.intel.com (8.11.6/8.11.2) id j3PHuSh01362;
-	Mon, 25 Apr 2005 10:56:28 -0700
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050425002343.GF10806@cip.informatik.uni-erlangen.de>
-X-Scanned-By: MIMEDefang 2.44
+	id S262678AbVDYSGZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 14:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262685AbVDYSGZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 14:06:25 -0400
+Received: from aibo.runbox.com ([193.71.199.94]:64162 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S262678AbVDYSGU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 14:06:20 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DQ7yM-0003KS-6I; Mon, 25 Apr 2005 20:06:18 +0200
+Received: from [129.246.254.27] (helo=[129.246.80.140])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DQ7yL-0002CM-U8; Mon, 25 Apr 2005 20:06:18 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: en-us, en
+To: Rene Rebe <rene@exactcode.de>,
+	Matthias-Christian Ott <matthias.christian@tiscali.de>,
+	git@vger.kernel.org
+In-Reply-To: <426CD703.5040009@exactcode.de>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> I am aware that keyword expansion is at the moment at the very bottom of
-> the todo list. However I need it. Has someone something ready to use? I
-> am looking for the following informations:
-> 
-> 	- Time stamp of the last modification of a file
+Rene Rebe wrote:
 
-One way to do this would be to rip on some of the core fundamentals of GIT
-and store the time that an object was created inside the object. E.g.
+> Hi,
+>
+> Matthias-Christian Ott wrote:
+>
+>> The "git" didn't try store small variables, which aren't referenced, 
+>> in the processor registers. It also didn't use the size_t type. I 
+>> corrected a C++ style comment too.
+>
+>
+> Well, modern compilers take register as a non-binding hint. Your 
+> register storage specification for those loop counters will not make 
+> any change. You have not looked into the resulting binary?
 
-   blob size secs-since-1970 ...
+Indeed, register was ALWAYS a non-binding hint. Today,
+unless you have specific measurements showing that adding "register"
+at some point improves the performance for a (somewhat common) situation,
+you're better off NOT including "register" nowadays.  Today's compilers
+are generally better at allocating registers than 
+people-who-have-little-time.
+Premature optimization is the root of all kinds of evil...
 
-Then "read-tree" could fill this into the cache, and checkout-cache could
-set the mod-time on the file when it creates it, which would mean that you
-could see the timestamp for a file simply by using "ls -l file".
+> Also // is valid C99 ...
 
-I think we'd need some other justifications before this would stand any
-hope of getting in though, since it makes such a huge incompatible change
-to the basic GIT format :-)  Maybe queue the idea for GIT2.0?
+It's not, strictly speaking, okay on old pre-C99 compilers.
+But in practice, practically all C compilers from the last 10+ years
+have accepted // comments as a very popular extension.
+So using "//" is unlikely to be a portability problem, even on semi-old 
+compilers.
 
--Tony
+--- David A. Wheeler
+
