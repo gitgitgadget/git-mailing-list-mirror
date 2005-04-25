@@ -1,70 +1,91 @@
-From: Fabian Franz <FabianFranz@gmx.de>
+From: Matt Domsch <Matt_Domsch@dell.com>
 Subject: Re: Git-commits mailing list feed.
-Date: Mon, 25 Apr 2005 04:17:13 +0200
-Message-ID: <200504250417.17231.FabianFranz@gmx.de>
-References: <200504210422.j3L4Mo8L021495@hera.kernel.org> <426C4168.6030008@dwheeler.com> <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org>
+Date: Sun, 24 Apr 2005 21:34:20 -0500
+Message-ID: <20050425023420.GA14696@lists.us.dell.com>
+References: <1114266083.3419.40.camel@localhost.localdomain> <426A5BFC.1020507@ppp0.net> <1114266907.3419.43.camel@localhost.localdomain> <Pine.LNX.4.58.0504231010580.2344@ppc970.osdl.org> <20050423175422.GA7100@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0504231125330.2344@ppc970.osdl.org> <2911.10.10.10.24.1114279589.squirrel@linux1> <Pine.LNX.4.58.0504231234550.2344@ppc970.osdl.org> <Pine.LNX.4.62.0504250008370.14200@sheen.jakma.org> <426C4168.6030008@dwheeler.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Paul Jakma <paul@clubi.ie>, Sean <seanlkml@sympatico.ca>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Jakma <paul@clubi.ie>, Linus Torvalds <torvalds@osdl.org>,
+	Sean <seanlkml@sympatico.ca>,
 	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	David Woodhouse <dwmw2@infradead.org>,
 	Jan Dittmer <jdittmer@ppp0.net>, Greg KH <greg@kroah.com>,
 	Kernel Mailing List <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 04:16:44 2005
+X-From: git-owner@vger.kernel.org Mon Apr 25 04:31:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DPt9B-0008QV-Uw
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 04:16:30 +0200
+	id 1DPtN3-0000ym-RR
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 04:30:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262457AbVDYCVM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Apr 2005 22:21:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262455AbVDYCVM
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 22:21:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:6603 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S262449AbVDYCVG convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Apr 2005 22:21:06 -0400
-Received: (qmail invoked by alias); 25 Apr 2005 02:21:05 -0000
-Received: from p54A3D9C8.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.217.200]
-  by mail.gmx.net (mp004) with SMTP; 25 Apr 2005 04:21:05 +0200
-X-Authenticated: #590723
-To: Linus Torvalds <torvalds@osdl.org>,
-	"David A. Wheeler" <dwheeler@dwheeler.com>
-User-Agent: KMail/1.5.4
-In-Reply-To: <Pine.LNX.4.58.0504241846290.18901@ppc970.osdl.org>
-Content-Description: clearsigned data
+	id S262463AbVDYCfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Apr 2005 22:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262465AbVDYCff
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Apr 2005 22:35:35 -0400
+Received: from ausc60pc101.us.dell.com ([143.166.85.206]:4902 "EHLO
+	ausc60pc101.us.dell.com") by vger.kernel.org with ESMTP
+	id S262459AbVDYCfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Apr 2005 22:35:22 -0400
+Received: from lists.us.dell.com (143.166.224.162)
+  by ausc60pc101.us.dell.com with ESMTP; 24 Apr 2005 21:34:21 -0500
+X-IronPort-AV: i="3.92,127,1112590800"; 
+   d="scan'208"; a="252136203:sNHT27718624"
+To: "David A. Wheeler" <dwheeler@dwheeler.com>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <426C4168.6030008@dwheeler.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Sun, Apr 24, 2005 at 09:01:28PM -0400, David A. Wheeler wrote:
+> It may be better to have them as simple detached signatures, which are
+> completely separate files (see gpg --detached).
+> Yeah, gpg currently implements detached signatures
+> by repeating what gets signed, which is unfortunate,
+> but the _idea_ is the right one.
 
-Am Montag, 25. April 2005 03:50 schrieb Linus Torvalds:
+I solve this with two simple scripts, "sign" calls "cutsig".
 
-> Maybe we'll just have signed tags by doing exactly that: just a collection
-> of detached signature files. The question becomes one of how to name such
-> things in a distributed tree. That is the thing that using an object for
-> them would have solved very naturally.
+--------------
+sign
 
-What about just <sha1 hash of object>.sig or <sha1 hash of object>.asc?
+#!/bin/sh
 
-Or would this violate the concept of the object database to just contain 
-hashes?
+DEFAULT_KEY="my-private-key-string"
+CUTSIG=~/bin/cutsig.pl
+usage()
+{
+    echo "usage: $0 filename"
+    echo " produces filename.sign"
+}
 
-cu
+if [ $# -lt 1 ]; then
+   usage
+   exit 1;
+fi
 
-Fabian
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+gpg --armor --clearsign --detach-sign --default-key "${DEFAULT_KEY} -v -v -o - ${1} | \
+${CUTSIG} > ${1}.sign
 
-iD8DBQFCbFMsI0lSH7CXz7MRAof0AKCILjPE/M72cMSVNDC/DWYSzmrU/ACggOuS
-ogNPwUf2ASAwmbwixzSTuPs=
-=pW5D
------END PGP SIGNATURE-----
+exit 0
 
+
+-----------------
+cutsig
+
+
+#!/usr/bin/perl -w
+
+do {
+    $line = <STDIN>;
+} until $line =~ "-----BEGIN PGP SIGNATURE-----";
+
+
+print $line;
+while ( $line = <STDIN>) {
+    print $line;
+}
+
+exit 0;
