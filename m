@@ -1,84 +1,60 @@
-From: Valdis.Kletnieks@vt.edu
-Subject: Re: [PATCH GIT 0.6] make use of register variables & size_t
-Date: Mon, 25 Apr 2005 14:55:16 -0400
-Message-ID: <200504251855.j3PItHQs021408@turing-police.cc.vt.edu>
-References: <426CD1F1.2010101@tiscali.de> <Pine.LNX.4.58.0504250751330.18901@ppc970.osdl.org> <426D21FE.3040401@tiscali.de> <Pine.LNX.4.58.0504251021280.18901@ppc970.osdl.org>
-            <426D33BA.8040604@tiscali.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git.git object database at kernel.org?
+Date: Mon, 25 Apr 2005 12:05:44 -0700
+Message-ID: <426D3F88.9050709@zytor.com>
+References: <7vhdhvstb2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504241553580.18901@ppc970.osdl.org> <426D3B01.8060408@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="==_Exmh_1114455314_5553P";
-	 micalg=pgp-sha1; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 25 20:51:39 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 25 21:02:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQ8fS-0003XF-Se
-	for gcvg-git@gmane.org; Mon, 25 Apr 2005 20:50:51 +0200
+	id 1DQ8pk-0005II-Ai
+	for gcvg-git@gmane.org; Mon, 25 Apr 2005 21:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262702AbVDYSzr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 14:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262736AbVDYSzr
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 14:55:47 -0400
-Received: from turing-police.cc.vt.edu ([128.173.14.107]:7442 "EHLO
-	turing-police.cc.vt.edu") by vger.kernel.org with ESMTP
-	id S262702AbVDYSzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 14:55:36 -0400
-Received: from turing-police.cc.vt.edu (localhost [127.0.0.1])
-	by turing-police.cc.vt.edu (8.13.4/8.13.4) with ESMTP id j3PItHQs021408;
-	Mon, 25 Apr 2005 14:55:17 -0400
-X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.1-RC3
-To: Matthias-Christian Ott <matthias.christian@tiscali.de>
-In-Reply-To: Your message of "Mon, 25 Apr 2005 20:15:22 +0200."
-             <426D33BA.8040604@tiscali.de> 
+	id S262742AbVDYTGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 15:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262740AbVDYTGS
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 15:06:18 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:64460 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S262749AbVDYTGF
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2005 15:06:05 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3PJ5nth012714
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 25 Apr 2005 12:05:50 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426D3B01.8060408@zytor.com>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---==_Exmh_1114455314_5553P
-Content-Type: text/plain; charset=us-ascii
+H. Peter Anvin wrote:
+> Linus Torvalds wrote:
+> 
+>>    NOTE! The fact that "mktime()" seems to depend on the timezone in 
+>> which    it is made seems to make this questionable. I had always 
+>> assumed that    mktime would take the timezone from the "struct tm", 
+>> and thus be    reliable, but somebody seems to have shown that that is 
+>> not the case at    all!
+> 
+> No, mktime() always uses the local time zone.  It's the inverse of 
+> localtime().  If you know the timezone offset (e.g. if you have a RFC 
+> 2822-style date) then you're probably better off rolling your own; 
+> otherwise setenv("TZ"); tzset(); mktime(); is of course also doable.
+> 
 
-On Mon, 25 Apr 2005 20:15:22 +0200, Matthias-Christian Ott said:
+BTW, curl_getdate() from libcurl is a good multiformat date parser.
 
-> But this makes, like "register",  direct use of processor registers (it stores int arguments in eax, ebx, etc.).
-
-`-mregparm=NUM'
-     Control how many registers are used to pass integer arguments.  By
-     default, no registers are used to pass arguments, and at most 3
-     registers can be used.  You can control this behavior for a
-     specific function by using the function attribute `regparm'.
-     *Note Function Attributes::.
-
-     *Warning:* if you use this switch, and NUM is nonzero, then you
-     must build all modules with the same value, including any
-     libraries.  This includes the system libraries and startup modules.
-
-If it weren't for that *warning*, you could get away with making this another
-auto-optimizable value (similar to register allocation inside a function).
-Alas, the caller and called functions can be in different .o files, and as
-a result, you need to be able to specify the NUM to use to each invocation
-of gcc involved, as there's an ABI change involved....
-
-> Stay serious. The book only teaches you ISO-C 99 like many other books. So
-> where's your problem?
-
-The problem is the supposition that the implied 3 week's experience in a
-language makes anybody qualified to comment on how to use it truly effectively
-(for that matter, I've been programming in C since SunOS 3.2, literally 2
-decades ago, and I'm still finding little corners I didn't previously know...)
-
-
---==_Exmh_1114455314_5553P
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Exmh version 2.5 07/13/2001
-
-iD8DBQFCbT0ScC3lWbTT17ARAq1jAKDnfXWazXNEM3mwxMC/x2PEeQWNYwCgjZ7q
-uR2E5mN9rIlzwmrfoi5AKQc=
-=Xbby
------END PGP SIGNATURE-----
-
---==_Exmh_1114455314_5553P--
+	-hpa
