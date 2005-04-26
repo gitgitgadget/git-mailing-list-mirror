@@ -1,60 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Merge with git-pasky II.
-Date: Tue, 26 Apr 2005 15:25:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504261522340.18901@ppc970.osdl.org>
-References: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] cg-export to tarball
+Date: Wed, 27 Apr 2005 00:24:14 +0200
+Message-ID: <426EBF8E.5000906@lsrfire.ath.cx>
+References: <200504260312.46320.jcorbin@wunjo.org> <20050426202014.GJ13224@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:19:48 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:20:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQYOQ-0002Sk-W3
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:18:59 +0200
+	id 1DQYP4-0002YX-U0
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261818AbVDZWYJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 18:24:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261820AbVDZWYJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:24:09 -0400
-Received: from fire.osdl.org ([65.172.181.4]:29913 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261818AbVDZWYE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 18:24:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QMO0s4032298
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 15:24:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QMNwUa013867;
-	Tue, 26 Apr 2005 15:23:59 -0700
-To: Bram Cohen <bram@bitconjurer.org>
-In-Reply-To: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261822AbVDZWYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 18:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261821AbVDZWY2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:24:28 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:12944 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261820AbVDZWYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 18:24:18 -0400
+Received: from [10.0.1.3] (p508E5FF1.dip.t-dialin.net [80.142.95.241])
+	by neapel230.server4you.de (Postfix) with ESMTP id CEA1A11C;
+	Wed, 27 Apr 2005 00:24:15 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: de-DE, de, en-us, en
+To: "Joshua T. Corbin" <jcorbin@wunjo.org>
+In-Reply-To: <20050426202014.GJ13224@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 26 Apr 2005, Bram Cohen wrote:
+Petr Baudis schrieb:
+> Dear diary, on Tue, Apr 26, 2005 at 09:12:46AM CEST, I got a letter 
+> where "Joshua T. Corbin" <jcorbin@wunjo.org> told me that...
 > 
-> So you think that a system which supports snapshots and history but has no
-> merging functionality whatsoever is the right thing?
+>> The following patch to cg-export will simlpy create a tarball if 
+>> the argument ends in .tar.gz, .tar.bz2, or .tar.
+>> 
+>> Signed-off-by; Joshua T. Corbin <jcorbin@wunjo.org>
+> 
+> 
+> What about cooperating with Rene Scharfe and using his tar-tree? I 
+> didn't actually try it yet (not even look at the code so far), it'd 
+> be cool if someone would give it some review and testing.
 
-You haven't looked at git, have you?
+Yes, this looks like a job for tar-tree.  You could do something like this:
 
-Git already merges better than _any_ open-source SCM out there. It just 
-does it so effortlessly that you didn't even realize it does that.
+   destbasename=${destdir##*/}
+   case "$destdir" in
+   *.tar)
+       tar-tree $id "${destbasename%.tar}" > "$destdir"
+       ;;
+   *.tgz)
+       tar-tree $id "${destbasename%.tgz}" | gzip -9 > "$destdir"
+       ;;
+   # *.tar.gz, *.tar.bz2, ...
+   *)
+       mkdir -p "$destdir" || die "cannot create $destdir"
+       export GIT_INDEX_FILE="$destdir/.git-index"
+       read-tree $id
+       checkout-cache "--prefix=$destdir/" -a
+       rm "$GIT_INDEX_FILE"
+       ;;
+   esac
 
-Today I've done four (count them) fully automated merges on the kernel
-tree: serial, networking, usb and arm.
+The second parameter to tar-tree is an optional prefix for all paths
+inside the archive (official kernel tarballs always have linux-2.x.xx as
+a prefix).  It makes some sense to set this value to the archive
+filename, "cg-export linux-2.6.12-rc3.tar.bz2" would than work as expected.
 
-And they took a fraction of a second (plus the download of the new
-objects, which is the real cost).
+What do you think?  If you like it I'll cook up a patch later unless you
+beat me to it.
 
-This is something that SVN _still_ cannot do, for example. 
-
-		Linus
+Thanks,
+Rene
