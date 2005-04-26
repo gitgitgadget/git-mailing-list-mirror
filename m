@@ -1,63 +1,61 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Hash collision count
-Date: Tue, 26 Apr 2005 02:00:17 +0200
-Message-ID: <20050426000017.GN13467@pasky.ji.cz>
-References: <20050423234637.GS13222@pasky.ji.cz> <200504252350.QAA02241@emf.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git.git object database at kernel.org?
+Date: Mon, 25 Apr 2005 17:32:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504251729080.18901@ppc970.osdl.org>
+References: <7vhdhvstb2.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504241553580.18901@ppc970.osdl.org> <426D3B01.8060408@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 01:55:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 26 02:26:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQDQF-0005DA-FG
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 01:55:27 +0200
+	id 1DQDtR-0000Rh-5y
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 02:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261182AbVDZAA1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 20:00:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261187AbVDZAA1
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 20:00:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:49128 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261182AbVDZAAT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 20:00:19 -0400
-Received: (qmail 7490 invoked by uid 2001); 26 Apr 2005 00:00:17 -0000
-To: Tom Lord <lord@emf.net>
-Content-Disposition: inline
-In-Reply-To: <200504252350.QAA02241@emf.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261224AbVDZAa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 20:30:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261225AbVDZAa3
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 20:30:29 -0400
+Received: from fire.osdl.org ([65.172.181.4]:1516 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261224AbVDZAaY (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 20:30:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3Q0UIs4017520
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 17:30:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3Q0UHvp016988;
+	Mon, 25 Apr 2005 17:30:17 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426D3B01.8060408@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 01:50:31AM CEST, I got a letter
-where Tom Lord <lord@emf.net> told me that...
+
+
+On Mon, 25 Apr 2005, H. Peter Anvin wrote:
 > 
->   From: Petr Baudis <pasky@ucw.cz>
-> 
->   Pasky:
-> 
->   > No, a collision is pretty common thing, actually. It's the main power of
->   > git, actually - when you do read-tree, modify it and do write-tree
->   > (typically when doing commit), everything you didn't modify (99% of
->   > stuff, most likely) is basically a collision - but it's ok since it
->   > just stays the same.
-> 
-> That is not the way people ordinarily use the word "collision".
-> It's pretty much the opposite of the normal way, actually.
+> No, mktime() always uses the local time zone.  It's the inverse of 
+> localtime().
 
-You need to quote me in the context of Jeff Garzik's
+Note that this still doesn't make any sense.
 
-> > Third, a data check only occurs in the highly unlikely case that a hash
-> > already exists -- a collision.  Rather than "trillions of times", more
-> > like "one in a trillion chance."
+A true inverse of "localtime()" should still take the GMT offset from
+"struct tm", and it would work fine, assuming that localtime() set that
+offset correctly.
 
-I just wanted to point out that the data check would hahve to occur
-everytime you didn't modify an object.
+So _I_ think it's incredibly stupid that mktime() looks at the local 
+timezone. 
 
-Kind regards,
+Oh, well.  Not a big issue except for the date conversion, and since there 
+hopefully aren't any old repo's left, we can leave it behind us.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+		Linus
