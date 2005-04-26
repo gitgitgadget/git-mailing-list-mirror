@@ -1,61 +1,65 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Tue, 26 Apr 2005 14:18:18 -0400
-Message-ID: <200504261418.18825.mason@suse.com>
-References: <20050426004111.GI21897@waste.org> <200504261138.46339.mason@suse.com> <aec7e5c305042609231a5d3f0@mail.gmail.com>
+From: "Bodo Eggert <harvested.in.lkml@posting.7eggert.dyndns.org>" 
+	<7eggert@gmx.de>
+Subject: Re: [PATCH GIT 0.6] make use of register variables & size_t
+Date: Tue, 26 Apr 2005 20:18:02 +0200
+Message-ID: <E1DQUdL-0000rx-P3@be1.7eggert.dyndns.org>
+References: <3X9X6-5JP-27@gated-at.bofh.it> <3Xdel-8u2-43@gated-at.bofh.it> <3XfpD-21C-11@gated-at.bofh.it>
+Reply-To: 7eggert@gmx.de
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Mike Taht <mike.taht@timesys.com>,
-	Matt Mackall <mpm@selenic.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:14:33 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:18:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQUZK-0006pN-SD
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:13:59 +0200
+	id 1DQUca-0007Ve-6B
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261699AbVDZSSh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 14:18:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261670AbVDZSSh
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:18:37 -0400
-Received: from ns.suse.de ([195.135.220.2]:53993 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S261577AbVDZSSY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:18:24 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 7AE0C160BCAB;
-	Tue, 26 Apr 2005 20:18:21 +0200 (CEST)
-To: Magnus Damm <magnus.damm@gmail.com>
-User-Agent: KMail/1.8
-In-Reply-To: <aec7e5c305042609231a5d3f0@mail.gmail.com>
-Content-Disposition: inline
+	id S261733AbVDZSVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:21:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261608AbVDZST0
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:19:26 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:42453 "EHLO
+	mail-in-01.arcor-online.net") by vger.kernel.org with ESMTP
+	id S261670AbVDZSTM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 14:19:12 -0400
+Received: from be3.lrz.7eggert.dyndns.org (dsl-213-023-007-254.arcor-ip.net [213.23.7.254])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP
+	id 97A7623DA8; Tue, 26 Apr 2005 20:17:48 +0200 (CEST)
+Received: from be1.lrz ([192.168.1.201] helo=be1.7eggert.dyndns.org)
+	by be3.lrz.7eggert.dyndns.org with esmtp (Exim 4.43)
+	id 1DQUih-0002Hk-RZ; Tue, 26 Apr 2005 20:23:39 +0200
+Received: from localhost ([127.0.0.1] helo=be1)
+	by be1.7eggert.dyndns.org with smtp (Exim 4.22)
+	id 1DQUdL-0000rx-P3; Tue, 26 Apr 2005 20:18:07 +0200
+To: Matthias-Christian Ott <matthias.christian@tiscali.de>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+User-Agent: KNode/0.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 26 April 2005 12:23, Magnus Damm wrote:
+Matthias-Christian Ott <matthias.christian@tiscali.de> wrote:
 
-> Well, maybe I misunderstood everything, but I thought you were
-> applying a lot of patches and complained that it took a lot of time
-> due to the data order.
->
-> When I applied a lot of patches to the kernel recently the cpu load
-> dropped to zero after a while and the HD worked hard a sec or two and
-> then things came back again. My primitive guess is that it was because
-> the ext3 journal became full. To workaround this fact I started
-> hacking on this in-memory patcher.
+> And if you think "register" variables are outdated, please remove the
+> CONFIG_REGPARM option from the Kernel source.
 
-It looks like you'll only see the commits on ext3 when the log fills, and on 
-reiser3 you'll see it every 5 seconds or when the log fills.  With the 
-default mount options, both ext3 and reiser will flush the data blocks at the 
-same time they are writing the metadata.
+Register variables are outdated because they hinder the compiler from
+optimizing by taking away 1/7 of the usable registers on x86. Use six
+register variables and you're back to a accumulator-machine.
+Use -O2 or -Os instead, the compiler is smarter than you.
 
-The easiest way to get around this is to mount -o data=writeback on 
-ext3/reiser, but you'll still have to wait for the data blocks eventually.  
+The regparm calling convention will change the
+load value -> store value on stack -> call sequence into
+load value -> call -> store if needed
+Obviously the second form can be better optimized than the first one.
+Therefore it's a gain instead of a loss.
 
--chris
+If you really want to help the compiler, look for something like repeated
+pointer dereference or access to global variables and cache them in block-
+local variables (pointers, int and uint only, even for caching chars).
+Beware of volatile variables, and don't forget to look at the assembler code.
+-- 
+The generation of random numbers is too important to be left to chance. 
+
