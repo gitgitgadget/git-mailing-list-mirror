@@ -1,64 +1,52 @@
-From: "Joshua T. Corbin" <jcorbin@wunjo.org>
-Subject: Re: [PATCH] cogito recursive cg-add and cg-rm
-Date: Tue, 26 Apr 2005 09:21:36 -0400
-Message-ID: <200504260921.36736.jcorbin@wunjo.org>
-References: <200504260027.03451.jcorbin@wunjo.org> <20050426123901.GF18971@pasky.ji.cz>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
+Date: Tue, 26 Apr 2005 09:36:50 -0400
+Message-ID: <118833cc05042606362cc60ad2@mail.gmail.com>
+References: <20050426032422.GQ13467@pasky.ji.cz>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Apr 26 15:19:26 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Apr 26 15:34:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQPxO-0008Fm-3n
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 15:18:30 +0200
+	id 1DQQA8-0002sZ-9X
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 15:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261511AbVDZNXg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 09:23:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261514AbVDZNXe
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 09:23:34 -0400
-Received: from node1.wunjo.org ([64.62.190.230]:2229 "EHLO node1.wunjo.org")
-	by vger.kernel.org with ESMTP id S261511AbVDZNX0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 09:23:26 -0400
-Received: by node1.wunjo.org (Postfix, from userid 65534)
-	id 5F6AF42EFF; Tue, 26 Apr 2005 09:23:23 -0400 (EDT)
-Received: from [192.168.1.100] (24.238.44.109.res-cmts.tv13.ptd.net [24.238.44.109])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by node1.wunjo.org (Postfix) with ESMTP id 5356E42B74
-	for <git@vger.kernel.org>; Tue, 26 Apr 2005 09:23:21 -0400 (EDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
-In-Reply-To: <20050426123901.GF18971@pasky.ji.cz>
+	id S261494AbVDZNgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 09:36:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261452AbVDZNgv
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 09:36:51 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:63239 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261494AbVDZNgu convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 09:36:50 -0400
+Received: by rproxy.gmail.com with SMTP id a41so1114993rng
+        for <git@vger.kernel.org>; Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=RfdVGsl6ilwrutEUOeJbTnqpWYJRUlSfrBPCRU8YNpl1sUxIH6LEcq/l5jsduvNvadWsF7U3gfASSEahMULooqE3DIc9Yp+ubbtUfIhyjtQltjXdxgwDw1GikrPWKyanq+lmQ77hjYnFDZ8PmI7tfaRlQilqqTJGfSq+TlWoqe0=
+Received: by 10.38.6.75 with SMTP id 75mr7034324rnf;
+        Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
+To: pasky@ucw.cz, git@vger.kernel.org
+In-Reply-To: <20050426032422.GQ13467@pasky.ji.cz>
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
-X-Spam-Level: *
-X-Spam-Status: No, score=1.8 required=5.0 tests=AWL,RCVD_IN_NJABL_DUL,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 26 April 2005 08:39, Petr Baudis wrote:
-> Dear diary, on Tue, Apr 26, 2005 at 06:27:02AM CEST, I got a letter
-> where "Joshua T. Corbin" <jcorbin@wunjo.org> told me that...
->
-> > This patch adds recursive addition and removal to cg-add and cg-rm,
-> > recursion can be disabled with the -n switch.
-> >
-> > Signed-off-by: Joshua T. Corbin <jcorbin@wunjo.org>
->
-> I'd actually prefer -r to explicitly turn the recursion on. That is more
-> consistent with the rest of the UNIX world and I really don't feel
-> comfortable with cg-rm recursing by default. ;-)
-Hmm, I guess for it to work the way I was inteding would take a little more 
-work; it should bail if any of the files are not in the repository or are 
-locally modified.
+> [...] build and install it, [...]
 
-> Also please use tabs for indentation.
-Will do
+It assumes the presense of .git/HEAD but doesn't actually fail when missing.
 
--- 
-Regards,
-Joshua T. Corbin <jcorbin@wunjo.org>
+...
+gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o diff-tree-helper
+diff-tree-helper.c libgit.a -lz -lssl
+cat: .git/HEAD: No such file or directory
+Invalid id: 
+Generating cg-version...
+
+Morten
