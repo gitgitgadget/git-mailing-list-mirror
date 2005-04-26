@@ -1,93 +1,62 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: Re: : Networking
-Date: Tue, 26 Apr 2005 12:51:41 -0700
-Message-ID: <20050426125141.6ec38d31.akpm@osdl.org>
-References: <20050425214326.512b006e.davem@davemloft.net>
-	<20050426005725.6bfe6135.akpm@osdl.org>
-	<20050426183350.GB13224@pasky.ji.cz>
-	<20050426115609.0481401b.akpm@osdl.org>
-	<Pine.LNX.4.58.0504261209470.18901@ppc970.osdl.org>
+From: Chris Mason <mason@suse.com>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Tue, 26 Apr 2005 15:52:23 -0400
+Message-ID: <200504261552.24100.mason@suse.com>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504260939440.18901@ppc970.osdl.org> <200504261339.34680.mason@suse.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: pasky@ucw.cz, davem@davemloft.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 21:48:52 2005
+Cc: Mike Taht <mike.taht@timesys.com>, Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 21:49:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQW1S-0004Jp-0K
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 21:47:06 +0200
+	id 1DQW1f-0004MG-Nn
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 21:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261757AbVDZTwU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 15:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261758AbVDZTwU
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 15:52:20 -0400
-Received: from fire.osdl.org ([65.172.181.4]:42151 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261757AbVDZTwR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 15:52:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QJq7s4018756
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 12:52:08 -0700
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id j3QJq2tE004029;
-	Tue, 26 Apr 2005 12:52:04 -0700
+	id S261760AbVDZTwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 15:52:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261759AbVDZTwb
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 15:52:31 -0400
+Received: from ns1.suse.de ([195.135.220.2]:20916 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261758AbVDZTw1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 15:52:27 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 06886160D04B;
+	Tue, 26 Apr 2005 21:52:27 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504261209470.18901@ppc970.osdl.org>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i386-vine-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: KMail/1.8
+In-Reply-To: <200504261339.34680.mason@suse.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
+On Tuesday 26 April 2005 13:39, Chris Mason wrote:
+
+> As an example, here's the time to apply 300 patches on ext3.  This was with
+> my packed patches applied, but vanilla git should show similar percentage
+> differences.
 >
-> 
-> 
-> On Tue, 26 Apr 2005, Andrew Morton wrote:
-> > 
-> > I don't know if it'll be successful continually merging all those trees
-> > together.  The way I did this with bk was to have a separate repo for each
-> > tree, but I don't think I'll want 30-40 separate git trees.
-> 
-> You really don't. With git, the only thing you need is one object store,
-> and some way to _track_ those 30-40 separate git trees (and "track" really
-> means "remember a single SHA1 name for their top-of-tree").
+> data=writeback  32s
+> data=ordered    44s
+>
+> With a long enough test, data=ordered should fall into the noise, but 10-40
+> second runs really show it.
 
-Petr's wrappers do all that head tracking OK (which is why I'm using a
-combo of those and of lower-level gittiness).  They do handy remote repo
-tracking too.
+I get much closer numbers if the patches directory is already in 
+cache...data=ordered means more contention for the disk when trying to read 
+the patches.  
 
-> Then you can merge any combination of the 40 in the same tree. 
-> 
-> You'll get confused easily, but if you do this all with tools, it 
-> shouldn't be too bad.
-> 
-> > So hm.  I guess git did what it was supposed to do here, and that a `git
-> > merge' would have removed the common patch.  But if I take the approach of
-> > merging all those subsystem trees I do wonder if things will come
-> > unstuck...
-> 
-> Well, git isn't as good at merging as BK is, and your usage sure as hell
-> would be a horrible worst-case example, but it might actually work fine.  
-> Git merges are _cheap_ (with a capital C, and probably H as well) when
-> they work out, and quite frankly, so far they have always worked out for
-> me.
-> 
-> But yeah, you'd be doing some pretty aggressive merging, using a tool that 
-> is two weeks old. It might work. I'd be interested to know ;)
+If the patches are hot in the cache data=writeback and data=ordered both take 
+about 30s.  You still see some writes in data=writeback, but these are mostly 
+async log commits.  
 
-Hm.  For now I might try what I have plus Jan's fancy interdiff command to
-remove duped patches.  We'll see.  I obtained a copy of Tony's ia64 diff
-quite happily - it didn't have any duplicates.
+The same holds true for vanilla git as well, although it needs 1m7s to apply 
+from a hot cache (sorry, couldn't resist the plug ;)
 
-(It's fairly common for two subsystem maintainers to apply the same patch. 
-With bk I was resolving that by just smashing the patches on top of each
-other, ignoring the rejects and refreshing the topmost patch.  That
-approach actually resolved this linus-vs-davem dupe as well.  But the duped
-patch was so damn BIG that it threw me.  And I wasn't feeling gitty enough
-to go hunting about looking for the particular patch(es) which caused the
-problem)
+-chris
