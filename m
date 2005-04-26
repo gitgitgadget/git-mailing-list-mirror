@@ -1,118 +1,140 @@
-From: Bram Cohen <bram@bitconjurer.org>
-Subject: Re: Merge with git-pasky II.
-Date: Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
-Message-ID: <Pine.LNX.4.44.0504261129500.4678-100000@wax.eds.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] diff-cache buglet
+Date: Tue, 26 Apr 2005 11:56:05 -0700
+Message-ID: <7vk6mpnz96.fsf@assigned-by-dhcp.cox.net>
+References: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261005360.18901@ppc970.osdl.org>
+	<7vy8b5o211.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261103550.18901@ppc970.osdl.org>
+	<7vsm1do0t4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261137350.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:52:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:52:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQV9K-0004FJ-FC
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:51:10 +0200
+	id 1DQV9g-0004Ir-Ld
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:51:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261719AbVDZS4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 14:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261732AbVDZS4N
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:56:13 -0400
-Received: from wax.eds.org ([64.147.163.246]:63159 "EHLO wax.eds.org")
-	by vger.kernel.org with ESMTP id S261719AbVDZSzv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:55:51 -0400
-Received: by wax.eds.org (Postfix, from userid 1044)
-	id 77D6D32408F; Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by wax.eds.org (Postfix) with ESMTP id 6E5F0B401A
-	for <git@vger.kernel.org>; Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
-X-X-Sender: bram@wax.eds.org
-To: git@vger.kernel.org
+	id S261726AbVDZS4l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:56:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261734AbVDZS4l
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:56:41 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:33773 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261726AbVDZS4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 14:56:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050426185604.VMAS550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 26 Apr 2005 14:56:04 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504261137350.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 26 Apr 2005 11:38:37 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(my apologies for responding to old messages, I only just subscribed to
-this list)
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Linus Torvalds wrote:
-> On Thu, 14 Apr 2005, Junio C Hamano wrote:
-> >
-> > You say "merge these two trees" above (I take it that you mean
-> > "merge these two trees, taking account of this tree as their
-> > common ancestor", so actually you are dealing with three trees),
->
-> Yes. We're definitely talking three trees.
+LT> On Tue, 26 Apr 2005, Junio C Hamano wrote:
+>> 
+>> Well, I somehow thought these things are in fixed column format;
+>> mode, ->, sha, stage, and filename are all seperated with either
+>> ' ' or '\t'.  So if I copy MN to "1 MN", presumably you would
+>> see this:
+>> 
+>> 100644 a716d58de4a570e0038f5c307bd8db34daea021f 0 MN
+>> 100644 a716d58de4a570e0038f5c307bd8db34daea021f 0 1 MN
+>> 
+>> So while I agree that // would also work, I fail to see why you
+>> would even need that.
 
-The LCA for different files might be at different points in the history.
-Forcing them to all come from the same point produces very bad merges.
+LT> Because I'd rather _not_ have the 0 in there at all for the normal case.
 
-> The fact is, we know how to make tree merges unambiguous, by just
-> totally ignoring the history between them.  Ie we know how to merge
-> data. I am pretty damn sure that _nobody_ knows how to merge "data over
-> time".
+LT> Yes, it's there for "show-files --stages", but it's certainly _not_ there 
+LT> in "diff-tree" output right now.
 
-You're incorrect. Codeville does exactly that (history-aware merges which
-do the right thing even in cases where 3-way merge can't)
+I know.  But first let's step back a bit.
 
-> > This however opens up another set of can of worms---it would
-> > involve not just three trees but all the trees in the commit
-> > chain in between.
->
-> Exactly.  I seriously believe that the model is _broken_, simply because
-> it gets too complicated. At some point it boils down to "keep it simple,
-> stupid".
+Running diff-cache when you have unmerged entries in your
+GIT_INDEX_FILE is fundamentally broken.  You first read_cache(),
+and then you read-tree into stage 1 of the named tree, and at
+that point, you do not know what stage 1 means.
 
-The Codeville merge algorithm is also quite simple, and is already
-implemented and mature.
+We should just fix "remove-merge-entries" and call that
+unconditionally before the read-tree is called.  Once it is
+fixed, we need to think about how to show this stage
+information but that should be a separate discussion.
 
-> I've not even been convinved that renames are worth it. Nobody has
-> really given a good reason why.
+I have attached two versions of patch.  The first one is against
+the original before my stupid question; the second one is
+against the one if you applied my previous patch, to revert most
+of its stupidity.
 
-If one person renames a file and another person modifies it then the
-changes should be applied to the moved file.
+################################################################
+--- Patch against the original before I asked that stupid question:
 
-Also, there's the directory rename case where one person moves a directory
-and another person adds a file to it, in which case the file should be
-moved to the new directory location on merge. I gather than BK doesn't
-support this functionality, but Codeville and Monotone both do.
+cd /opt/packrat/playpen/public/in-place/git/git.junio/
+jit-snap -v 0
+--- k/diff-cache.c
++++ l/diff-cache.c
+@@ -76,7 +76,7 @@ static void remove_merge_entries(void)
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+ 		if (!ce_stage(ce))
+-			break;
++			continue;
+ 		printf("%s: unmerged\n", ce->name);
+ 		while (remove_entry_at(i)) {
+ 			if (!ce_stage(active_cache[i]))
 
->    I think you might as well interpret the whole object thing. Git
-> _does_ tell you how the objects changed, and I actually believe that a
-> diff that works in between objects (ie can show "these lines moved from
-> this file X to tjhat file Y") is a _hell_ of a lot more powerful than
-> "rename"  is.
->
->    So I'd seriously suggest that instead of worryign about renames,
-> people think about global diffs that aren't per-file. Git is good at
-> limiting the changes to a set of objects, and it should be entirely
-> possible to think of diffs as ways of moving lines _between_ objects and
-> not just within objects. It's quite common to move a function from one
-> file to another - certainly more so than renaming the whole file.
->
-> In other words, I really believe renames are just a meaningless special
-> case of a much more interesting problem. Which is just one reason why
-> I'm not at all interested in bothering with them other than as a "data
-> moved" thing, which git already handles very well indeed.
 
-Nothing, not eveny our beloved BitKeeper, has 'move lines between files'
-functionality, and for good reason.
-
-To begin with, it's behaviorally extremely dubious. It would be not
-uncommon for the system to erroneously think that some files deleted from
-one file were added to another, and then further changes down the line
-would cause random unrelated files to get modified in unpredictable ways
-when merges happened.
-
-Also, it presents a completely unsolved UI problem. If one person moves
-lines 5-15 of file A to file B, and another person concurrently rewrites
-lines 10-20 of file A, how on earth is that supposed to be presented to
-the user? Codeville can support line moves *within* files just fine, but
-doesn't do it because of the UI problem of presenting all the corner
-cases. Maybe someday somebody will do a PhD thesis on that topic and we'll
-add it, but until then we're sticking with the basic functionality.
-
-Honestly, that you would think of doing whole-tree three-way merges and
-even consider moving lines between files shows that you haven't explored
-the merge problem very deeply. This is a much harder problem than you
-think it is, and one which has already been solved by other systems.
-
--Bram
+################################################################
+--- Patch to revert the stupidity:
+cd /opt/packrat/playpen/public/in-place/git/git.junio/
+jit-snap -v 2
+--- k/diff-cache.c
++++ l/diff-cache.c
+@@ -1,6 +1,5 @@
+ #include "cache.h"
+ 
+-static int leave_unmerged = 0;
+ static int cached_only = 0;
+ static int line_termination = '\n';
+ 
+@@ -86,8 +85,7 @@ static void remove_merge_entries(void)
+ 	}
+ }
+ 
+-static char *diff_cache_usage =
+-"diff-cache [-r] [-z] [--cached] [--unmerged] <tree sha1>";
++static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
+ 
+ int main(int argc, char **argv)
+ {
+@@ -112,18 +110,13 @@ int main(int argc, char **argv)
+ 			cached_only = 1;
+ 			continue;
+ 		}
+-		if (!strcmp(arg, "--unmerged")) {
+-			leave_unmerged = 1;
+-			continue;
+-		}
+ 		usage(diff_cache_usage);
+ 	}
+ 
+ 	if (argc != 2 || get_sha1_hex(argv[1], tree_sha1))
+ 		usage(diff_cache_usage);
+ 
+-	if (!leave_unmerged)
+-		remove_merge_entries();
++	remove_merge_entries();
+ 
+ 	tree = read_tree_with_tree_or_commit_sha1(tree_sha1, &size, 0);
+ 	if (!tree)
 
