@@ -1,35 +1,37 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Merge with git-pasky II.
-Date: Tue, 26 Apr 2005 15:30:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504261528110.18901@ppc970.osdl.org>
-References: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
- <200504262336.02583.FabianFranz@gmx.de>
+Subject: Re: [PATCH] Add -r flag to show-diff for diff-cache/diff-tree like
+ output.
+Date: Tue, 26 Apr 2005 15:40:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504261534590.18901@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
+ <7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org>
+ <7vy8b5mawy.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bram Cohen <bram@bitconjurer.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:24:55 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:34:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQYSW-0002zO-TI
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:23:13 +0200
+	id 1DQYcT-0004Ik-PK
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:33:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261821AbVDZW2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 18:28:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261823AbVDZW2Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:28:25 -0400
-Received: from fire.osdl.org ([65.172.181.4]:5594 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261821AbVDZW2W (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 18:28:22 -0400
+	id S261826AbVDZWio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 18:38:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261827AbVDZWio
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:38:44 -0400
+Received: from fire.osdl.org ([65.172.181.4]:4828 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261826AbVDZWin (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 18:38:43 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QMS8s4032653
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QMccs4001047
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 15:28:08 -0700
+	Tue, 26 Apr 2005 15:38:38 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QMS7kZ014192;
-	Tue, 26 Apr 2005 15:28:07 -0700
-To: Fabian Franz <FabianFranz@gmx.de>
-In-Reply-To: <200504262336.02583.FabianFranz@gmx.de>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QMcba5014912;
+	Tue, 26 Apr 2005 15:38:38 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy8b5mawy.fsf_-_@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -40,22 +42,22 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Tue, 26 Apr 2005, Fabian Franz wrote:
-> 
-> Am Dienstag, 26. April 2005 23:28 schrieb Bram Cohen:
-> > Now you've just gone off the deep end. This is an apples-to-apples
-> > comparison. Please accept one of thee following two statements:
-> >
-> > (a) Git doesn't do merging, and none of the related new tools around it do
-> > merging.
-> >
-> > (b) Codeville merge (sans rename functionality) would be superior for the
-> > merging which will be done.
-> 
-> I have one very humble question:
-> 
-> Why don't you write and contribute some code for git to do good merging?
+On Tue, 26 Apr 2005, Junio C Hamano wrote:
+>
+> This adds a new option -r (rational) to show-diff command, to
+> produce diff-cache/diff-tree compatible output.
 
-Don't bother. Bram doesn't know what he's talking about. 
+Why not just make this the default? Who really cares about show-diff? I 
+see that "cg-merge" uses it, but does so with the "s" flag, just to see 
+whether there are any changes at all.
+
+So why not just make "rational" the standard format, and then make 
+"diff-tree-helper" warn about unmerged ("U") files?
+
+As far as I can tell, that is really what _everybody_ wants.
+
+And calling "-r" "rational", when it means "recursive" for diff-tree and 
+diff-cache doesn't sound rational to me. It _is_ rational to just silently 
+accept it as "recursive", the same way diff-cache does.
 
 		Linus
