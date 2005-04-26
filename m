@@ -1,57 +1,51 @@
-From: Martin Atukunda <matlads@ds.co.ug>
-Subject: [PATCH GIT 0.6.3] Add an uninstall target to Makefile
-Date: Tue, 26 Apr 2005 16:48:22 +0300
-Message-ID: <200504261648.22814.matlads@ds.co.ug>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Add archive-tree, a cpio archive creator
+Date: Tue, 26 Apr 2005 16:42:04 +0200
+Message-ID: <426E533C.70502@lsrfire.ath.cx>
+References: <20050424014346.GA23083@lsrfire.ath.cx> <20050425153011.34c93b38.paul@permanentmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Apr 26 15:48:53 2005
+Cc: pasky@ucw.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 16:38:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQQPL-00064S-7D
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 15:47:23 +0200
+	id 1DQRC0-0007Et-72
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 16:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261505AbVDZNwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 09:52:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261520AbVDZNwc
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 09:52:32 -0400
-Received: from mail1.imul.com ([217.113.72.31]:57427 "EHLO mail1.starcom.co.ug")
-	by vger.kernel.org with ESMTP id S261505AbVDZNw3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 09:52:29 -0400
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.starcom.co.ug with esmtp; Tue, 26 Apr 2005 16:52:23 +0300
-  id 000E5C1E.426E4797.0000630F
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP id C38DD500B
-	for <git@vger.kernel.org>; Tue, 26 Apr 2005 16:53:23 +0300 (EAT)
-Received: from matlads by igloo.ds.co.ug with local (Exim 4.50)
-	id 1DQQQI-0004EX-V6
-	for git@vger.kernel.org; Tue, 26 Apr 2005 16:48:23 +0300
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
-Content-Disposition: inline
+	id S261566AbVDZOmc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 10:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDZOmb
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 10:42:31 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:10382 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261566AbVDZOmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 10:42:14 -0400
+Received: from [10.0.1.3] (p508E5FF1.dip.t-dialin.net [80.142.95.241])
+	by neapel230.server4you.de (Postfix) with ESMTP id 845A615B;
+	Tue, 26 Apr 2005 16:42:08 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: de-DE, de, en-us, en
+To: Paul Dickson <paul@permanentmail.com>
+In-Reply-To: <20050425153011.34c93b38.paul@permanentmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Add an uninstall target to Makefile that removes installed scripts and
-programs.
+Paul Dickson schrieb:
+> Use the "newc" format.  The "odc" will generate a lot of errors on a
+>  large filesystem (which I discovered this past weekend).
 
-Signed-off-by: Martin Atukunda <matlads@ds.co.ug>
+How is that?  I can only imagine problems with the size of individual
+files inside an archive because the size field in the header is limited
+to 33 bits.
 
-Index: Makefile
-===================================================================
---- 0a9ee5a4d947b998a7ce489242800b39f98eeee5/Makefile  (mode:100644 
-sha1:2d7e4cf0464c45b7c5b169bff7e5c4e7768c13a1)
-+++ uncommitted/Makefile  (mode:100644)
-@@ -82,6 +82,9 @@
-        install -m755 -d $(DESTDIR)$(bindir)
-        install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(bindir)
- 
-+uninstall:
-+       cd $(DESTDIR)$(bindir) && rm $(PROG) $(SCRIPT) $(GEN_SCRIPT)
-+
- clean:
-        rm -f *.o mozilla-sha1/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE)
+In any case, I switched to the tar format.  It's more complicated but it
+turned out that creating these things is still easy.  Parsing them might
+be more of a challenge, but we already have tar for that. :-)
+
+See my other mail for more on the tar creator.  I also rebased it to
+core GIT because it's no helper script.
+
+Rene
