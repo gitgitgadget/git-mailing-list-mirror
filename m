@@ -1,62 +1,75 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Revised PPC assembly implementation
-Date: Tue, 26 Apr 2005 11:22:49 +1000
-Message-ID: <17005.38889.738457.359270@cargo.ozlabs.ibm.com>
-References: <17004.47876.414.756912@cargo.ozlabs.ibm.com>
-	<20050425173430.11031.qmail@science.horizon.com>
-	<17005.30365.995256.963911@cargo.ozlabs.ibm.com>
-	<20050425161746.7d943e62.davem@davemloft.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 0/2] diff-tree/diff-cache helper
+Date: Mon, 25 Apr 2005 18:38:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
+ <7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linux@horizon.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 03:18:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 03:32:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQEiX-0006Fo-WB
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 03:18:26 +0200
+	id 1DQEvW-0007pW-Sy
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 03:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261196AbVDZBXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 21:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVDZBXW
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 21:23:22 -0400
-Received: from ozlabs.org ([203.10.76.45]:51841 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S261196AbVDZBXS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 21:23:18 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 9AE5367B26; Tue, 26 Apr 2005 11:23:16 +1000 (EST)
-To: "David S. Miller" <davem@davemloft.net>
-In-Reply-To: <20050425161746.7d943e62.davem@davemloft.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S261196AbVDZBgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 21:36:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261255AbVDZBgd
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 21:36:33 -0400
+Received: from fire.osdl.org ([65.172.181.4]:37261 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261196AbVDZBgP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 21:36:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3Q1a6s4021939
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 18:36:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3Q1a5h5019376;
+	Mon, 25 Apr 2005 18:36:06 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David S. Miller writes:
 
-> Time to bust out the altivec perhaps :)
 
-I looked at this but I couldn't see a way to use altivec effectively
-for SHA1.
+On Sun, 24 Apr 2005, Junio C Hamano wrote:
+>
+> I use a set of small scripts [*1*] directly on top of the core
+> git, which needed to make patches out of diff-tree and
+> diff-cache output.  Its output is compatible with what show-diff
+> produces.
 
-The problem is that we have a chain of dependencies with the A
-variable (which is 32-bit) where each A value depends on the previous
-A value and on one of the 80 W values.  The W values are derived from
-the 16 words (32-bit) of the input data block.
+Good, applied.
 
-It might be possible to use altivec for generating the W values
-(although there is the problem that W[k] depends on W[k-3], making it
-hard to do a 4-way parallelization), but I don't see any way of
-parallelizing the calculation of the A values, which is the critical
-path.  Using altivec for generating the W values but the integer ALUs
-for the A calculations would mean we had to go via memory, too, since
-there isn't any way to transfer stuff directly between altivec
-registers and GPRs.
+This also makes me think that we should just make "show-diff" show the
+same format, at which point show-diff actually matches all the other
+tools, and it is likely to make show-diff more useful to boot.
 
-We can't do four blocks from the same sequence in parallel either.  We
-could do four blocks from four separate streams in parallel, but that
-seems hard to organize...
+The thing I personally use "show-diff" for these days is actually just to
+check whether I have anything dirty in my tree, and then it would actually
+be preferable to just get the filenaname printout (in the same old
+"diff-cache" format) rather than the full diff.
 
-Regards,
-Paul.
+Maybe rename the "show-diff" command to be "cache-diff", and if somebody
+wants the old "show-diff" thing, just have a script that does
+
+	#!/bin/sh
+	cache-diff | diff-tree-helper
+
+and nothing more.
+
+Talking about renaming, at some point we really should prepend "git-" to 
+all the git commands. I didn't want to do the extra typing when I started 
+out and was unsure about the name, but hey, by now we really should.
+
+Junio, what do you think?
+
+		Linus
