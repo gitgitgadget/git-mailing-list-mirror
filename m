@@ -1,58 +1,68 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: unseeking?
-Date: Tue, 26 Apr 2005 23:53:28 +0200
-Message-ID: <20050426215327.GQ13224@pasky.ji.cz>
-References: <20050425161854.GE11094@tumblerings.org> <Pine.LNX.4.21.0504251236400.30848-100000@iabervon.org> <20050425222833.GA21107@tumblerings.org> <20050426202805.GL13224@pasky.ji.cz> <20050426214819.GA14899@tumblerings.org>
+From: Rhys Hardwick <rhys@rhyshardwick.co.uk>
+Subject: [PATCH] cg-add checks to see if file exists
+Date: Tue, 26 Apr 2005 23:17:49 +0100
+Message-ID: <200504262317.49739.rhys@rhyshardwick.co.uk>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:49:33 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:14:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXul-0006U5-5k
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:48:19 +0200
+	id 1DQYIw-0001XV-9T
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261807AbVDZVxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 17:53:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261810AbVDZVxd
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:53:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37009 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261807AbVDZVx3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:53:29 -0400
-Received: (qmail 15081 invoked by uid 2001); 26 Apr 2005 21:53:28 -0000
-To: Zack Brown <zbrown@tumblerings.org>
+	id S261814AbVDZWSI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 18:18:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261817AbVDZWSI
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:18:08 -0400
+Received: from smtp004.mail.ukl.yahoo.com ([217.12.11.35]:38232 "HELO
+	smtp004.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261814AbVDZWRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 18:17:54 -0400
+Received: from unknown (HELO mail.rhyshardwick.co.uk) (rhys?hardwick@81.103.65.153 with plain)
+  by smtp004.mail.ukl.yahoo.com with SMTP; 26 Apr 2005 22:17:50 -0000
+Received: from [192.168.1.40] (helo=metatron.rhyshardwick.co.uk)
+	by mail.rhyshardwick.co.uk with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)
+	(Exim 4.50)
+	id 1DQYNK-0006ej-3X
+	for git@vger.kernel.org; Tue, 26 Apr 2005 23:17:50 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.7.2
 Content-Disposition: inline
-In-Reply-To: <20050426214819.GA14899@tumblerings.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 11:48:19PM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> On Tue, Apr 26, 2005 at 10:28:05PM +0200, Petr Baudis wrote:
-> > Dear diary, on Tue, Apr 26, 2005 at 12:28:33AM CEST, I got a letter
-> > where Zack Brown <zbrown@tumblerings.org> told me that...
-> > > So, I did 'git patch pasky:this', and got the following. Is this an appropriate
-> > > way to submit a patch? BTW, the 'truckload' fix I tried to change back by
-> > > editing the README again, and committing the change; but the git patch command
-> > > still shows the change.
-> > 
-> > Because it just exports individual patches. Use git diff (cg-diff) if
-> > you want to get the cummulative diff.
-> > 
-> > Could you please sign off your patch?
-> 
-> Spelling fixes.
-> 
-> Signed-off-by: Zack Brown <zbrown@tumblerings.org>
+Hi,
 
-Thanks, applied. (master.kernel.org is now down, so it'll take a while
-before I will be able to push it out.)
+This is a patch to check if the file being added exists, and if not, issues a 
+warning and dies.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Rhys
+
+
+
+
+Signed-off-by: Rhys Hardwick <rhys@rhyshardwick.co.uk
+
+Index: cg-add
+===================================================================
+--- 6159f313b10f0cfcdfedd63d6fb044029fe46aaa/cg-add  (mode:100755 
+sha1:8ba5351a4c7e28a577ea1aa4afa1078c54e9bccc)
++++ uncommitted/cg-add  (mode:100755)
+@@ -10,4 +10,10 @@
+
+ [ "$1" ] || die "usage: cg-add FILE..."
+
++if [ -f "$1" ]; then
++       echo "Adding file $1"
++else
++       die "$1 does not exist"
++fi
++
+ update-cache --add -- "$@"
+
+
