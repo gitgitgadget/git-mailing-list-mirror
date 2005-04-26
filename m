@@ -1,57 +1,155 @@
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 14:22:45 +1000
-Message-ID: <1114489365.7111.40.camel@gaston>
-References: <20050426032422.GQ13467@pasky.ji.cz>
+From: "Joshua T. Corbin" <jcorbin@wunjo.org>
+Subject: [PATCH] cogito recursive cg-add and cg-rm
+Date: Tue, 26 Apr 2005 00:27:02 -0400
+Message-ID: <200504260027.03451.jcorbin@wunjo.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel list <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 06:20:06 2005
+X-From: git-owner@vger.kernel.org Tue Apr 26 06:27:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQHY4-0003Ef-I5
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 06:19:48 +0200
+	id 1DQHf2-0003q0-IE
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 06:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261327AbVDZEY1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 00:24:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261318AbVDZEXo
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 00:23:44 -0400
-Received: from gate.crashing.org ([63.228.1.57]:45510 "EHLO gate.crashing.org")
-	by vger.kernel.org with ESMTP id S261324AbVDZEXJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 00:23:09 -0400
-Received: from gaston (localhost [127.0.0.1])
-	by gate.crashing.org (8.12.8/8.12.8) with ESMTP id j3Q4HhgJ013893;
-	Mon, 25 Apr 2005 23:17:44 -0500
-To: pasky@ucw.cz, git@vger.kernel.org
-In-Reply-To: <20050426032422.GQ13467@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 
+	id S261319AbVDZEbV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 00:31:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261322AbVDZE3k
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 00:29:40 -0400
+Received: from node1.wunjo.org ([64.62.190.230]:23220 "EHLO node1.wunjo.org")
+	by vger.kernel.org with ESMTP id S261319AbVDZE2N (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 00:28:13 -0400
+Received: by node1.wunjo.org (Postfix, from userid 65534)
+	id DDE7342EF9; Tue, 26 Apr 2005 00:28:08 -0400 (EDT)
+Received: from [192.168.1.100] (24.238.44.109.res-cmts.tv13.ptd.net [24.238.44.109])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by node1.wunjo.org (Postfix) with ESMTP id E3E8D42B74
+	for <git@vger.kernel.org>; Tue, 26 Apr 2005 00:28:05 -0400 (EDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
+X-Spam-Level: *
+X-Spam-Status: No, score=1.8 required=5.0 tests=RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2005-04-26 at 05:24 +0200, Petr Baudis wrote:
->   Hello,
-> 
->   here goes Cogito-0.8, my SCMish layer over Linus Torvald's git tree
-> history tracker. This package was formerly called git-pasky, however
-> this release brings big changes. The usage is significantly different,
-> as well as some basic concepts; the history changed again (hopefully the
-> last time?) because of fixing dates of some old commits. The .git/
-> directory layout changed too.
->
-> .../...
+This patch adds recursive addition and removal to cg-add and cg-rm, recursion 
+can be disabled with the -n switch.
 
-Unless you already did this in the latest release, it would be nice to
-have something like havign all the low level tools be by default in some
-~/lib/git or whatever, and only the cg-* scripts in ~/bin on install,
-unless maybe you pass some kind of I_AM_A_REAL_GIT=1 on the make
-line ...
+Signed-off-by: Joshua T. Corbin <jcorbin@wunjo.org>
 
-I don't really plan to use the low level tools, and I don't like the way
-they clobber my bin namespace :)
-
-Ben.
-
-
+Index: cg-add
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/cg-add  (mode:100755 
+sha1:8ba5351a4c7e28a577ea1aa4afa1078c54e9bccc)
++++ ddd5e0ab084034b713bb2f7d9de6f365d5a2e5bf/cg-add  (mode:100755 
+sha1:1b7a821fd0b3f9702508503a082869ed4ec3ab52)
+@@ -5,9 +5,31 @@
+ #
+ # Takes a list of file names at the command line, and schedules them
+ # for addition to the GIT repository at the next commit.
++# Optional "-n" parameter specifies that you don't want to add directories
++# recursively.
+ 
+ . cg-Xlib
+ 
+-[ "$1" ] || die "usage: cg-add FILE..."
++[ "$1" ] || die "usage: cg-add [-n] FILE..."
+ 
+-update-cache --add -- "$@"
++recur=1
++if [ "$1" = "-n" ]; then
++  shift
++  recur=
++fi
++
++if [ $recur ]; then
++  ADDFILE=$(mktemp -t gitadd.XXXXXX)
++  while [ "$1" ]; do
++    if [ -d "$1" ]; then
++      find $1 -type f -and -not -name '.*'
++    else
++      echo "$1"
++    fi
++    shift
++  done > $ADDFILE
++  update-cache --add -- $(cat $ADDFILE)
++  rm -f $RMFILE
++else
++  update-cache --add -- "$@"
++fi
+Index: cg-help
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/cg-help  (mode:100755 
+sha1:86f29161aadf15411244db9514a1fdfb03e664bd)
++++ ddd5e0ab084034b713bb2f7d9de6f365d5a2e5bf/cg-help  (mode:100755 
+sha1:36480174eba9cc54e9baba100cbd368fbced5c76)
+@@ -11,7 +11,7 @@
+ Usage: cg-COMMAND [ARG]...
+ 
+ Available commands:
+- cg-add  FILE...
++ cg-add  [-n] FILE...
+  cg-branch-add BNAME SOURCE_LOC
+  cg-branch-ls
+  cg-cancel
+@@ -27,7 +27,7 @@
+  cg-mkpatch [COMMIT_ID | COMMIT_ID:COMMIT_ID]
+  cg-patch   < patch on stdin
+  cg-pull  [BNAME]
+- cg-rm  FILE...
++ cg-rm  [-n] FILE...
+  cg-seek  [COMMIT_ID]
+  cg-status
+  cg-tag  TNAME [COMMIT_ID]
+Index: cg-rm
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/cg-rm  (mode:100755 
+sha1:029a03128eb7a8dd807335fea2ff52cb2bcda4fa)
++++ ddd5e0ab084034b713bb2f7d9de6f365d5a2e5bf/cg-rm  (mode:100755 
+sha1:1e0c64567767668454a0360785ac84883c7bbd58)
+@@ -5,10 +5,36 @@
+ #
+ # Takes a list of file names at the command line, and schedules them
+ # for removal from the GIT repository at the next commit.
++# Optional "-n" parameter specifies that you don't want to remove directories
++# recursively.
+ 
+ . cg-Xlib
+ 
+-[ "$1" ] || die "usage: cg-rm FILE..."
++[ "$1" ] || die "usage: cg-rm [-n] FILE..."
+ 
+-rm -f "$@"
+-update-cache --remove -- "$@"
++recur=1
++if [ "$1" = "-n" ]; then
++  shift
++  recur=
++fi
++
++if [ $recur ]; then
++  RMFILE=$(mktemp -t gitrm.XXXXXX)
++  RMDIRS=
++  while [ "$1" ]; do
++    if [ -d "$1" ]; then
++      RMDIRS="$DIRS $1"
++      find $1 -type f -and -not -name '.*'
++    else
++      echo "$1"
++    fi
++    shift
++  done > $RMFILE
++  rm -f $(cat $RMFILE)
++  rmdir $(find $RMDIRS -depth -type d)
++  update-cache --remove -- $(cat $RMFILE)
++  rm -f $RMFILE
++else
++  rm -f "$@"
++  update-cache --remove -- "$@"
++fi
