@@ -1,76 +1,62 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git.git object database at kernel.org?
-Date: Mon, 25 Apr 2005 18:05:45 -0700
-Message-ID: <426D93E9.10407@zytor.com>
-References: <7vhdhvstb2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504241553580.18901@ppc970.osdl.org> <426D3B01.8060408@zytor.com> <Pine.LNX.4.58.0504251729080.18901@ppc970.osdl.org> <426D8FDF.5050608@zytor.com> <Pine.LNX.4.58.0504251756190.18901@ppc970.osdl.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Revised PPC assembly implementation
+Date: Tue, 26 Apr 2005 11:22:49 +1000
+Message-ID: <17005.38889.738457.359270@cargo.ozlabs.ibm.com>
+References: <17004.47876.414.756912@cargo.ozlabs.ibm.com>
+	<20050425173430.11031.qmail@science.horizon.com>
+	<17005.30365.995256.963911@cargo.ozlabs.ibm.com>
+	<20050425161746.7d943e62.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 03:01:14 2005
+Cc: linux@horizon.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 03:18:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQERl-0004ZU-0U
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 03:01:05 +0200
+	id 1DQEiX-0006Fo-WB
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 03:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261248AbVDZBGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 21:06:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261254AbVDZBGL
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 21:06:11 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:54228 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261248AbVDZBGJ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 21:06:09 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3Q15ojT017703
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 25 Apr 2005 18:05:50 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504251756190.18901@ppc970.osdl.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261196AbVDZBXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 21:23:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVDZBXW
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 21:23:22 -0400
+Received: from ozlabs.org ([203.10.76.45]:51841 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261196AbVDZBXS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 21:23:18 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 9AE5367B26; Tue, 26 Apr 2005 11:23:16 +1000 (EST)
+To: "David S. Miller" <davem@davemloft.net>
+In-Reply-To: <20050425161746.7d943e62.davem@davemloft.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Mon, 25 Apr 2005, H. Peter Anvin wrote:
-> 
->>Oh well.  If you have the offset, the algorithm is fully arithmetric and 
->>doesn't rely on the zoneinfo system, so it can be trivially implemented. 
-> 
-> You have a different definition of "trivial" than I do. I have not a 
-> frigging clue how to handle leap seconds etc ;)
-> 
+David S. Miller writes:
 
-Leap seconds don't exist in the POSIX time_t universe, so they always obey:
+> Time to bust out the altivec perhaps :)
 
-	... + 3600*hour + 60*min + sec
+I looked at this but I couldn't see a way to use altivec effectively
+for SHA1.
 
-... which means that during a positive leap second, time_t remains 
-unchanged for 2 seconds, and for a negative leap second time_t jumps. 
-Thus, the difference between two time_t doesn't always match the exact 
-number of seconds between those two points in time.
+The problem is that we have a chain of dependencies with the A
+variable (which is 32-bit) where each A value depends on the previous
+A value and on one of the 80 W values.  The W values are derived from
+the 16 words (32-bit) of the input data block.
 
-> 
->>   And again, curl_gettime() does handle the whole string to time_t 
->>conversion of the common formats.
-> 
-> I don't doubt you, I just would prefer to not rely on boutique libraries 
-> too much. 
-> 
-> Yeah, we already use it for http-pull, so I guess it's moot, but at least 
-> that felt less like a core command..
-> 
+It might be possible to use altivec for generating the W values
+(although there is the problem that W[k] depends on W[k-3], making it
+hard to do a 4-way parallelization), but I don't see any way of
+parallelizing the calculation of the A values, which is the critical
+path.  Using altivec for generating the W values but the integer ALUs
+for the A calculations would mean we had to go via memory, too, since
+there isn't any way to transfer stuff directly between altivec
+registers and GPRs.
 
-If we're already using libcurl, we might as well.  Otherwise, I'd just 
-rip out curl_gettime from the libcurl sources.
+We can't do four blocks from the same sequence in parallel either.  We
+could do four blocks from four separate streams in parallel, but that
+seems hard to organize...
 
-	-hpa
+Regards,
+Paul.
