@@ -1,51 +1,82 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Tue, 26 Apr 2005 11:15:06 -0700
-Message-ID: <426E852A.40904@zytor.com>
-References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <426DA7B5.2080204@timesys.com> <Pine.LNX.4.58.0504251938210.18901@ppc970.osdl.org> <Pine.LNX.4.58.0504252032500.18901@ppc970.osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: : Networking
+Date: Tue, 26 Apr 2005 20:15:54 +0200
+Message-ID: <20050426181554.GA13224@pasky.ji.cz>
+References: <Pine.LNX.4.58.0504260746320.18901@ppc970.osdl.org> <Pine.LNX.4.21.0504261114090.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Mike Taht <mike.taht@timesys.com>, Matt Mackall <mpm@selenic.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:11:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Andrew Morton <akpm@osdl.org>,
+	"David S. Miller" <davem@davemloft.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:12:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQUWL-0006H2-8Q
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:10:53 +0200
+	id 1DQUX6-0006Od-4q
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261648AbVDZSPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 14:15:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDZSPs
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:15:48 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:26498 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261539AbVDZSPi
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 14:15:38 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3QIFC3Z003406
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 26 Apr 2005 11:15:13 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504252032500.18901@ppc970.osdl.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261667AbVDZSQj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:16:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDZSQj
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:16:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:6541 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261656AbVDZSQA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:16:00 -0400
+Received: (qmail 13900 invoked by uid 2001); 26 Apr 2005 18:15:54 -0000
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0504261114090.30848-100000@iabervon.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+Dear diary, on Tue, Apr 26, 2005 at 05:40:08PM CEST, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> On Tue, 26 Apr 2005, Linus Torvalds wrote:
 > 
-> And don't try to make me explain why the patchbomb has any IO time at all,
-> it should all have fit in the cache, but I think the writeback logic
-> kicked in.
+> > On Tue, 26 Apr 2005, Andrew Morton wrote:
+> > > 
+> > 
+> > The only thing you should be a bit careful about is to remember what the 
+> > "heads" at different points were. In particular, you want to remember 
+> > where you merged with me last was. I've started tagging my releases with 
+> > the git tag facility (_not_ the pasky one, but I think pasky will start 
+> > picking up on that soon enough), so finding a specific release will be 
+> > easy, but if you ever do a non-release merge you'll just have to tag it 
+> > yourself.
+> 
+> Your tag system is in the "cogito-0.8" release, plus a pasky-style way of
+> keeping track of what tags you have in your repository.
 
-The default log size on ext3 is quite small.  Making the log larger 
-probably would have helped.
+It came in with merge with Linus, but there's no support in the Cogito
+toolkit for it whatsoever.
 
-	-hpa
+I'm personally unlikely to get any time for doing it (or much anything
+else; but this is probably the priority now) until Sunday evening. :-(
+
+> > > d) To generate davem's tree (patch against linus's current tree (ie: patch
+> > >    against 2.6.12-rc3+linus.patch)):
+> > > 
+> > > 	git pull git-net
+> > 
+> > Yes. This should have merged the two (assuming "git pull" does what I 
+> > think it does).
+> 
+> I think git pull only downloads the contents of the repo and saves the new
+> head in a separate file. You're left to do the merge yourself, in case
+> what you actually wanted to do was just read the patches in the remote
+> repo without merging them.
+> 
+> You probably need a "git merge git-net" here, and things will be in the
+> state that Linus expects.
+
+Yes. git pull only pulls the stuff, doesn't merge it (that is, unless it
+is tracked branch; but I think this isn't the case; this was cleaned up
+in cogito-0.8 and cg-pull now always only pulls, cg-update
+pulls+merges).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
