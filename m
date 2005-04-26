@@ -1,31 +1,31 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-mkpatch: Show diffstat before the patch
-Date: Wed, 27 Apr 2005 00:58:55 +0200
-Message-ID: <20050426225855.GA28560@diku.dk>
+Subject: [PATCH] read_tree_recursive(): Fix leaks
+Date: Wed, 27 Apr 2005 01:00:01 +0200
+Message-ID: <20050426230001.GB28560@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 00:55:27 2005
+X-From: git-owner@vger.kernel.org Wed Apr 27 00:56:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQYwy-0006W7-LF
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:54:40 +0200
+	id 1DQYxN-0006Yx-Rd
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 00:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261835AbVDZW7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 18:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261834AbVDZW7S
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 18:59:18 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:30948 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261835AbVDZW7A (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 18:59:00 -0400
+	id S261834AbVDZXAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 19:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261836AbVDZXAP
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 19:00:15 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:34532 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261834AbVDZXAC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 19:00:02 -0400
 Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id BD37B6E2BD0; Wed, 27 Apr 2005 00:58:03 +0200 (CEST)
+	id EF19C6E2B9D; Wed, 27 Apr 2005 00:59:06 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id 387C46E2B32; Wed, 27 Apr 2005 00:58:01 +0200 (CEST)
+	id B79FE6E2B9B; Wed, 27 Apr 2005 00:59:06 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id AC9F161FDE; Wed, 27 Apr 2005 00:58:55 +0200 (CEST)
+	id 3F88D61FDE; Wed, 27 Apr 2005 01:00:01 +0200 (CEST)
 To: pasky@ucw.cz
 Mail-Followup-To: pasky@ucw.cz, git@vger.kernel.org
 Content-Disposition: inline
@@ -39,36 +39,44 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Show diffstat before the patch.
+Fix two potential leaks.
 
 Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
 ---
-commit a738ed98e4557877f8bcd3b992aa55579b22b9d1
-tree 2447d3a399200c8f736344822969f88f675612dd
-parent ed095b1a965517f1674b812a9978c60eb907e192
-author Jonas Fonseca <fonseca@diku.dk> 1114554627 +0200
-committer Jonas Fonseca <fonseca@diku.dk> 1114554627 +0200
+commit 74f5ad9d566408b4d352570ccde67ece0f2650a7
+tree 7a6c485bceed70459c1855ab3c4d8ddfdeeb65d1
+parent a738ed98e4557877f8bcd3b992aa55579b22b9d1
+author Jonas Fonseca <fonseca@diku.dk> 1114555146 +0200
+committer Jonas Fonseca <fonseca@diku.dk> 1114555146 +0200
 
- cg-mkpatch |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletion(-)
+ tree.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-Index: cg-mkpatch
+Index: tree.c
 ===================================================================
---- 6159f313b10f0cfcdfedd63d6fb044029fe46aaa/cg-mkpatch  (mode:100755 sha1:5ba423cbbb3e5f72cd7fb74f2873d49b60557f12)
-+++ 2447d3a399200c8f736344822969f88f675612dd/cg-mkpatch  (mode:100755 sha1:25c67a29296730daeac00e43fd4c18cf914a1c87)
-@@ -23,7 +23,10 @@
- 		echo $line >>$header
- 	done
- 	echo
--	cg-diff -p -r $id
-+	cg-diff -p -r $id > $header
-+	cat $header | diffstat
-+	echo
-+	cat $header
- 	rm $header
- }
+--- 2447d3a399200c8f736344822969f88f675612dd/tree.c  (mode:100644 sha1:15a16d560619aee80e41bf816dd8474a3253b1a5)
++++ 7a6c485bceed70459c1855ab3c4d8ddfdeeb65d1/tree.c  (mode:100644 sha1:7c55bb9bfa1565dc9df5cab31207a02004d7fe10)
+@@ -39,14 +39,17 @@
+ 		if (S_ISDIR(mode)) {
+ 			int retval;
+ 			int pathlen = strlen(path);
+-			char *newbase = xmalloc(baselen + 1 + pathlen);
++			char *newbase;
+ 			void *eltbuf;
+ 			char elttype[20];
+ 			unsigned long eltsize;
  
+ 			eltbuf = read_sha1_file(sha1, elttype, &eltsize);
+-			if (!eltbuf || strcmp(elttype, "tree"))
++			if (!eltbuf || strcmp(elttype, "tree")) {
++				if (eltbuf) free(eltbuf);
+ 				return -1;
++			}
++			newbase = xmalloc(baselen + 1 + pathlen);
+ 			memcpy(newbase, base, baselen);
+ 			memcpy(newbase + baselen, path, pathlen);
+ 			newbase[baselen + pathlen] = '/';
 
 
 -- 
