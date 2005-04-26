@@ -1,74 +1,106 @@
-From: Rhys Hardwick <rhys@rhyshardwick.co.uk>
-Subject: (SOLVED) Re: cg-add and update-cache add fails
-Date: Tue, 26 Apr 2005 17:44:44 +0100
-Message-ID: <200504261744.44394.rhys@rhyshardwick.co.uk>
-References: <200504261735.47008.rhys@rhyshardwick.co.uk>
-Reply-To: rhys@rhyshardwick.co.uk
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFC] diff-cache buglet
+Date: Tue, 26 Apr 2005 09:51:41 -0700
+Message-ID: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:46:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:50:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQTBT-0006Z1-WD
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:45:16 +0200
+	id 1DQTF7-0007Df-Hn
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:49:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261706AbVDZQtX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 12:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261695AbVDZQtV
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:49:21 -0400
-Received: from smtp003.mail.ukl.yahoo.com ([217.12.11.34]:64440 "HELO
-	smtp003.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261677AbVDZQov (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 12:44:51 -0400
-Received: from unknown (HELO mail.rhyshardwick.co.uk) (rhys?hardwick@81.103.65.153 with plain)
-  by smtp003.mail.ukl.yahoo.com with SMTP; 26 Apr 2005 16:44:45 -0000
-Received: from [192.168.1.40] (helo=metatron.rhyshardwick.co.uk)
-	by mail.rhyshardwick.co.uk with esmtpsa (TLS-1.0:RSA_ARCFOUR_MD5:16)
-	(Exim 4.50)
-	id 1DQTAy-0005jg-SM
-	for git@vger.kernel.org; Tue, 26 Apr 2005 17:44:44 +0100
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <200504261735.47008.rhys@rhyshardwick.co.uk>
-Content-Disposition: inline
+	id S261637AbVDZQx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 12:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261686AbVDZQx2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:53:28 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64492 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261637AbVDZQvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 12:51:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050426165143.TIQF7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 26 Apr 2005 12:51:43 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ok, I have been known to be silly.  But this silly? :)
+Linus,
 
-Create the file, then add it to the repository.  Makes sense really.
+	what do you want diff-cache to do upon finding an
+unmerged path?  Currently your code says "undecided" to me.
 
-Rhys
+The main() attempts to first remove all merge entries before
+letting the diff_cache() do its work, but the diff_cache()
+itself has also some code to deal with unmerged entries.
 
-On Tuesday 26 Apr 2005 17:35, Rhys Hardwick wrote:
-> Hey there,
->
-> I posted a little while ago about this, but thought I would collate all my
-> findings.  I am very lost.  Trying to add files to the repository does not
-> seem to work, no matter which git repository I try.  Creating new trees and
-> updating current trees, as well as removing files is not a problem.  All
-> other areas of git seem to work perfectly.  I am currently using
-> cogito-0.8. This error started to occur in pasky-0.63.
->
-> Here is the error I get:
->
-> rhys@metatron:~/repo/learning.repo$ cg-add w1p4d1.c
-> fatal: Unable to add w1p4d1.c to database
-> rhys@metatron:~/repo/learning.repo$ update-cache --add w1p4d1.c
-> fatal: Unable to add w1p4d1.c to database
->
-> All the files under the .git folder appear to be owned by me, and are
-> read-writable.  The disk is not full.
->
-> I have attached the output from strace and ltrace.
->
-> If anyone could shed any light on why this might be happening, I would be
-> very grateful.
->
-> Rhys
+In the attached patch, the second hunk starting at ll 76 is a
+pure and obvious bugfix.  The function is attempting to remove
+all merge entries, but it stops in the middle; that's why I said
+"attempts" in the above.
+
+The patch lets you have it in both ways by adding --unmerged
+flag.  Without it, unmerged entries are culled at the beginning;
+with it, you will see diffs for all unmerged stages.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+jit-snap -v 0
+--- k/diff-cache.c
++++ l/diff-cache.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ 
++static int leave_unmerged = 0;
+ static int cached_only = 0;
+ static int line_termination = '\n';
+ 
+@@ -76,7 +77,7 @@ static void remove_merge_entries(void)
+ 	for (i = 0; i < active_nr; i++) {
+ 		struct cache_entry *ce = active_cache[i];
+ 		if (!ce_stage(ce))
+-			break;
++			continue;
+ 		printf("%s: unmerged\n", ce->name);
+ 		while (remove_entry_at(i)) {
+ 			if (!ce_stage(active_cache[i]))
+@@ -85,7 +86,8 @@ static void remove_merge_entries(void)
+ 	}
+ }
+ 
+-static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
++static char *diff_cache_usage =
++"diff-cache [-r] [-z] [--cached] [--unmerged] <tree sha1>";
+ 
+ int main(int argc, char **argv)
+ {
+@@ -110,13 +112,18 @@ int main(int argc, char **argv)
+ 			cached_only = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--unmerged")) {
++			leave_unmerged = 1;
++			continue;
++		}
+ 		usage(diff_cache_usage);
+ 	}
+ 
+ 	if (argc != 2 || get_sha1_hex(argv[1], tree_sha1))
+ 		usage(diff_cache_usage);
+ 
+-	remove_merge_entries();
++	if (!leave_unmerged)
++		remove_merge_entries();
+ 
+ 	tree = read_tree_with_tree_or_commit_sha1(tree_sha1, &size, 0);
+ 	if (!tree)
+
 
 
