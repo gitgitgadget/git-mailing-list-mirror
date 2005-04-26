@@ -1,55 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Tue, 26 Apr 2005 14:07:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504261405050.18901@ppc970.osdl.org>
-References: <20050426004111.GI21897@waste.org> <200504260713.26020.mason@suse.com>
- <aec7e5c305042608095731d571@mail.gmail.com> <200504261138.46339.mason@suse.com>
- <aec7e5c305042609231a5d3f0@mail.gmail.com> <20050426135606.7b21a2e2.akpm@osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Cogito Tutorial If It Helps
+Date: Tue, 26 Apr 2005 23:18:35 +0200
+Message-ID: <20050426211834.GO13224@pasky.ji.cz>
+References: <1114548747.3083.1.camel@kryten>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Magnus Damm <magnus.damm@gmail.com>, mason@suse.com,
-	mike.taht@timesys.com, mpm@selenic.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:01:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:15:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXAh-0007VA-Lo
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:00:43 +0200
+	id 1DQXNl-0001Pb-DV
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261790AbVDZVFu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 17:05:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261787AbVDZVFu
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:05:50 -0400
-Received: from fire.osdl.org ([65.172.181.4]:6086 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261785AbVDZVFp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:05:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QL5Cs4026475
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 14:05:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QL59Cw008979;
-	Tue, 26 Apr 2005 14:05:10 -0700
-To: Andrew Morton <akpm@osdl.org>
-In-Reply-To: <20050426135606.7b21a2e2.akpm@osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261792AbVDZVSm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 17:18:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261793AbVDZVSm
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:18:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56208 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261792AbVDZVSk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:18:40 -0400
+Received: (qmail 12770 invoked by uid 2001); 26 Apr 2005 21:18:35 -0000
+To: James Purser <purserj@ksit.dynalias.com>
+Content-Disposition: inline
+In-Reply-To: <1114548747.3083.1.camel@kryten>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 26 Apr 2005, Andrew Morton wrote:
+Dear diary, on Tue, Apr 26, 2005 at 10:52:27PM CEST, I got a letter
+where James Purser <purserj@ksit.dynalias.com> told me that...
+> I reworked the previous tutorial to take in the changes in the scripts.
+> Will make this a series of tutorials to cover all aspects. Any
+> suggestions or hints or spelling corrections would be most welcome.
 > 
-> Mounting as ext2 is a useful technique for determining whether the fs is
-> getting in the way.
+> http://ksit.dynalias.com/articles.php?s_id=46&art_id=41
 
-What's the preferred way to try to convert a root filesystem to a bigger
-journal? Forcing "rootfstype=ext2" at boot and boot into single-user, and
-then the appropriate magic tune2fs? Or what?
+Thanks for writing that! :-)
 
-		Linus
+I'd vote for describing the cg-update right near cg-pull, or perhaps
+even before cg-update, as the primary method; I think it's commonly what
+people really want to do when they do cg-pull anyway.
+
+cg-merge is _not_ like doing cg-diff | cg-patch - that's a dangerous
+thought, and not true at all. cg-diff | cg-patch will just apply the
+given diff to your working directory, but it won't record any merging
+metadata, will often get it very wrong, and you will get to all sorts of
+other troubles. Just always use cg-merge. And probably pass it -b only
+when you know what are you doing.
+
+Thanks,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
