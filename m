@@ -1,71 +1,61 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 10:40:22 -0700
-Organization: SGI
-Message-ID: <20050426104022.0c53167d.pj@sgi.com>
-References: <20050426032422.GQ13467@pasky.ji.cz>
-	<426DBF94.3010502@timesys.com>
-	<20050426122304.GD18971@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] diff-cache buglet
+Date: Tue, 26 Apr 2005 11:06:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504261103550.18901@ppc970.osdl.org>
+References: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504261005360.18901@ppc970.osdl.org> <7vy8b5o211.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: mike.taht@timesys.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 19:57:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:02:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQUHY-0002ze-DG
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 19:55:36 +0200
+	id 1DQULw-00040r-IG
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261417AbVDZRt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 13:49:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDZRsP
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 13:48:15 -0400
-Received: from omx3-ext.sgi.com ([192.48.171.20]:11225 "EHLO omx3.sgi.com")
-	by vger.kernel.org with ESMTP id S261505AbVDZRkw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 13:40:52 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3QI5NV4014191;
-	Tue, 26 Apr 2005 11:05:26 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3QHeP5w18646884;
-	Tue, 26 Apr 2005 10:40:25 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050426122304.GD18971@pasky.ji.cz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261505AbVDZSFL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:05:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261550AbVDZSFL
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:05:11 -0400
+Received: from fire.osdl.org ([65.172.181.4]:27014 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261505AbVDZSFD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:05:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QI4ns4009894
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 26 Apr 2005 11:04:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QI4mZS030645;
+	Tue, 26 Apr 2005 11:04:49 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy8b5o211.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> some way to deal with renames sensibly. 
 
-For a Linux kernel merge tool that I did inside SGI, I come to the
-conclusion the following heuristics identified renames fairly
-accurately, coming up with the same renames as a careful manual
-examination.
 
-The key heuristic was to consider one file A to be a rename of another B
-if the size (number of lines) of the diff of A and B (diff -auw A B | wc
--l) is less than 50% of the combined size of A and B (cat A B | wc -l).
+On Tue, 26 Apr 2005, Junio C Hamano wrote:
+> 
+> While I agree with you that we should somehow show the stage, I
+> do not like your suggestion above very much.  How about adding
+> one column for stage number before the filename when --unmerged
+> is given, just like show-files --stage shows?  You'd soon get
+> used to the pattern that has a single digit in between
+> whitespaces to recognize which is merged and which isn't.
 
-Only pathname pairs with the same basename were considered - I was
-focused here on renames due to directory restructuring.  I'm not sure
-now if this is a good assumption - but it sure saved some computation.
+Well, except for the fact that that isn't machine-readable either, since 
+the "1 " thing might just be part of the filename..
 
-Any file with the string "Makefile" in its name had to be excluded from
-consideration.
+But you could use "/" to guarantee that it's unique, together with knowing
+that git refuses to have non-canonical filenames.
 
-In case of multiple potential renames (say one file is copied to two
-places, removing the original and modifying each copy a little), the
-'best' rename was selected, where 'best' meant the lowest ratio of
-diff 'diff -auw' size to combined 'cat' size.
+Ie 1//filename.c _would_ be machine-readable, thanks to the "//" part,
+which cannot be part of a valid canonical git filename.
 
-The end result of the above was a fairly natural identification of
-renames.  If say I moved kernel/cpuset.c to mm/cpuset.c and changed
-it a little bit, the above heuristics would show a rename, plus
-a few changes.
-
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+		Linus
