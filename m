@@ -1,86 +1,72 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Tue, 26 Apr 2005 13:39:33 -0400
-Message-ID: <200504261339.34680.mason@suse.com>
-References: <20050426004111.GI21897@waste.org> <200504260713.26020.mason@suse.com> <Pine.LNX.4.58.0504260939440.18901@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] diff-cache buglet
+Date: Tue, 26 Apr 2005 10:56:10 -0700
+Message-ID: <7vy8b5o211.fsf@assigned-by-dhcp.cox.net>
+References: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261005360.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Mike Taht <mike.taht@timesys.com>, Matt Mackall <mpm@selenic.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261498AbVDZRt6@vger.kernel.org Tue Apr 26 19:51:50 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261498AbVDZRt6@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 19:56:20 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQUDD-00021p-Ho
-	for glk-linux-kernel@gmane.org; Tue, 26 Apr 2005 19:51:07 +0200
+	id 1DQUHa-0002ze-H8
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 19:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261498AbVDZRt6 (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Tue, 26 Apr 2005 13:49:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261505AbVDZRsa
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Tue, 26 Apr 2005 13:48:30 -0400
-Received: from ns2.suse.de ([195.135.220.15]:26062 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S261725AbVDZRjk (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Tue, 26 Apr 2005 13:39:40 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 9263E985E;
-	Tue, 26 Apr 2005 19:39:39 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id 09EE814B73C; Tue, 26 Apr 2005 19:39:37 +0200 (CEST)
+	id S261754AbVDZR7w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 13:59:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261748AbVDZR55
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 13:57:57 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:14512 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261746AbVDZR4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 13:56:40 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050426175610.KFOU22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 26 Apr 2005 13:56:10 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.58.0504260939440.18901@ppc970.osdl.org>
-Content-Disposition: inline
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0504261005360.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 26 Apr 2005 10:11:19 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 26 April 2005 12:42, Linus Torvalds wrote:
-> On Tue, 26 Apr 2005, Chris Mason wrote:
-> > This agrees with my tests here, the time to apply patches is somewhat
-> > disk bound, even for the small 100 or 200 patch series.  The io should be
-> > coming from data=ordered, since the commits are still every 5 seconds or
-> > so.
->
-> Yes, ext3 really does suck in many ways.
->
-> One of my (least) favourite suckage is a process that does "fsync" on a
-> single file (mail readers etc), which apparently causes ext3 to sync all
-> dirty data, because it can only sync the whole log. So if you have stuff
-> that writes out things that aren't critical, it negatively affects
-> something totally independent that _does_ care.
->
-> I remember some early stuff showing that reiserfs was _much_ better for
-> BK. I'd be willing to bet that's probably true for git too.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-reiserfs shares the same basic data=ordered idea as ext3, so the fsync will do 
-the same on reiser as it does on ext3.  I do have code in there to try and 
-keep the data=ordered writeback a little less bursty than it is in ext3 so 
-you might not notice the fsync as much.
+LT> I'm ok with that, but if so I think it should show the stage somehow, and
+LT> make it clear that it's unmerged. Maybe by appending something to the name
+LT> (maybe just a ':' and stage number, but I'd almost prefer the stage number
+LT> to be translated into something human-readable, so maybe we could have
+LT> something like
 
-I haven't compared reiser vs ext3 for git.  reiser tails should help 
-performance because once you read the object inode you've also got the data.  
-But, I would expect the biggest help to come from mounting reiserfs -o 
-alloc=skip_busy.  This basically allocates all new files one right after the 
-other on disk regardless of which subdir they are in.  The effect is to time 
-order most of your files.
+LT> 	filename.c^orig
+LT> 	filename.c^first
+LT> 	filename.c^second
 
-As an example, here's the time to apply 300 patches on ext3.  This was with my 
-packed patches applied, but vanilla git should show similar percentage 
-differences.
+LT> for stages 1-3 respectively)?
 
-data=writeback  32s			
-data=ordered    44s
+I'm the one who has been trying very hard to keep the output
+machine readable (remember? many of the -z flags are mine).
 
-With a long enough test, data=ordered should fall into the noise, but 10-40 
-second runs really show it.
+While I agree with you that we should somehow show the stage, I
+do not like your suggestion above very much.  How about adding
+one column for stage number before the filename when --unmerged
+is given, just like show-files --stage shows?  You'd soon get
+used to the pattern that has a single digit in between
+whitespaces to recognize which is merged and which isn't.
+E.g. this is from show-files --stage:
 
--chris
+    100644 b258508afb7ceb449981bd9d63d2d3e971bf8d34 1 MM
+    100644 b431b272d829ff3aa4d1a5085f4394ab4d3305b6 2 MM
+    100644 19989d4559aae417fedee240ccf2ba315ea4dc2b 3 MM
+    100644 a716d58de4a570e0038f5c307bd8db34daea021f 0 MN
+
+Another thing I'd like to rectify is that show-files use a space
+while diff-tree and friends use a tab in between columns.  Is it
+too late to standardize one way or the other?  My vote goes to
+a space.
+
