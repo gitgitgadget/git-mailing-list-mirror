@@ -1,141 +1,106 @@
-From: Bill Davidsen <davidsen@tmr.com>
+From: Magnus Damm <magnus.damm@gmail.com>
 Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Tue, 26 Apr 2005 12:11:49 -0400
-Message-ID: <426E6845.2030008@tmr.com>
-References: <426DA7B5.2080204@timesys.com><Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <Pine.LNX.4.58.0504251938210.18901@ppc970.osdl.org>
+Date: Tue, 26 Apr 2005 18:23:11 +0200
+Message-ID: <aec7e5c305042609231a5d3f0@mail.gmail.com>
+References: <20050426004111.GI21897@waste.org>
+	 <200504260713.26020.mason@suse.com>
+	 <aec7e5c305042608095731d571@mail.gmail.com>
+	 <200504261138.46339.mason@suse.com>
+Reply-To: Magnus Damm <magnus.damm@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030507050100080507000405"
-Cc: Mike Taht <mike.taht@timesys.com>, Matt Mackall <mpm@selenic.com>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Mike Taht <mike.taht@timesys.com>,
+	Matt Mackall <mpm@selenic.com>,
 	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:16:08 2005
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:26:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQSiK-00011s-Vq
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:15:09 +0200
+	id 1DQSqx-0002eP-Go
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261683AbVDZQTj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 12:19:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVDZQQr
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:16:47 -0400
-Received: from prgy-npn1.prodigy.com ([207.115.54.37]:54155 "EHLO
-	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261637AbVDZQMW
+	id S261672AbVDZQ2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 12:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVDZQYg
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:24:36 -0400
+Received: from wproxy.gmail.com ([64.233.184.201]:23377 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261658AbVDZQXO convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 12:12:22 -0400
-Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
-	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j3QGBtV07815;
-	Tue, 26 Apr 2005 12:12:00 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
-X-Accept-Language: en-us, en
-Newsgroups: mail.linux-kernel
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504251938210.18901@ppc970.osdl.org>
+	Tue, 26 Apr 2005 12:23:14 -0400
+Received: by wproxy.gmail.com with SMTP id 49so92300wri
+        for <git@vger.kernel.org>; Tue, 26 Apr 2005 09:23:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BPWzYhvCeKrLr0IctWIZhkzH4uozT+4Vds3LSOaTW/i74PnwcNMszrHjQm4EFCxy6pTE7qSo3VQxiBMKG4KqY1iF9VVPUP/86DUkwUd1+KKsq1seRARR8/fpzzGW4frfiFIFjHSO3zmMnNyHINOil2WUIT/nk9kutwFDMxRkHt8=
+Received: by 10.54.17.66 with SMTP id 66mr69484wrq;
+        Tue, 26 Apr 2005 09:23:11 -0700 (PDT)
+Received: by 10.54.17.63 with HTTP; Tue, 26 Apr 2005 09:23:11 -0700 (PDT)
+To: Chris Mason <mason@suse.com>
+In-Reply-To: <200504261138.46339.mason@suse.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030507050100080507000405
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Linus Torvalds wrote:
+On 4/26/05, Chris Mason <mason@suse.com> wrote:
+> On Tuesday 26 April 2005 11:09, Magnus Damm wrote:
+> > On 4/26/05, Chris Mason <mason@suse.com> wrote:
+> > > This agrees with my tests here, the time to apply patches is somewhat
+> > > disk bound, even for the small 100 or 200 patch series.  The io should be
+> > > coming from data=ordered, since the commits are still every 5 seconds or
+> > > so.
+> >
+> > Yes, as long as you apply the patches to disk that is. I've hacked up
+> > a small backend tool that applies patches to files kept in memory and
+> > uses a modifed rabin-karp search to match hunks. So you basically read
+> > once and write once per file instead of moving data around for each
+> > applied patch. But it needs two passes.
+> >
+> > And no, the source code for the entire Linux kernel is not kept in
+> > memory - you need a smart frontend to manage the file cache. Drop me a
+> > line if you are interested.
 > 
-> On Mon, 25 Apr 2005, Mike Taht wrote:
-> 
->>One difference is probably - mercurial appears to be using zlib's 
->>*default* compression of 6....
->>
->>using zlib compression of 9 really impacts git...
-> 
-> 
-> I agree that it will hurt for big changes, but since I really do believe 
-> that most changes are just a couple of files, I don't believe it matters 
-> for those. 
-> 
-> I forget what the exact numbers were, but I did some timings on plain
-> "gzip", and it basically said that doing gzip on a medium-sized file was
-> not that different for -6 and -9. Why? Because most of the overhead was
-> elsewhere ;)
+> Sorry, you've lost me.  Right now the cycle goes like this:
 
-Certainly not different in the overall numbers, but after trying gzip on 
-a bunch of various source files on 32 bit CPUs, from P-II to Xeon, it 
-looks as if after 7 the cpu jumps about 40% to 8, and another 30% to 9. 
-Neither 8 nor 9 give any significant size improvement (< 2%).
+Ehrm, maybe I'm way off. =)
 
-Again, this is 32 bit CPU and just the gzip component, reading from 
-stdin and writing to stdout which I hope gets directory operations out 
-of the time measure.
+> 1) patch reads patch file, reads source file, writes source file
+> 2) update-cache reads source file, writes git file
 
-Sample attached.
+Ok.
 
--- 
-    -bill davidsen (davidsen@tmr.com)
-"The secret to procrastination is to put things off until the
-  last possible moment - but no longer"  -me
+> Which of those writes are you avoiding?  We have a smart way to manage the
+> cache already for the source files...the vm does pretty well.  There's
+> nothing to manage for the git files.  For the apply a bunch of patches
+> workload, they are write once, read never (except for the index).
 
---------------030507050100080507000405
-Content-Type: text/plain;
- name="ziptime.log"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="ziptime.log"
+Well, maybe I misunderstood everything, but I thought you were
+applying a lot of patches and complained that it took a lot of time
+due to the data order.
 
-Comp level 1
+When I applied a lot of patches to the kernel recently the cpu load
+dropped to zero after a while and the HD worked hard a sec or two and
+then things came back again. My primitive guess is that it was because
+the ext3 journal became full. To workaround this fact I started
+hacking on this in-memory patcher.
 
-real	0m1.972s
-user	0m1.790s
-sys	0m0.098s
--rw-r--r--    1 davidsen  1792050 Apr 26 11:56 dummy.tar.gz
-Comp level 2
+In the cycle above, I'm trying to speed up step 1:
+If the patch modifies each source file multiple times (either using
+multiple hunks or multiple ---/+++) then the lines below the hunk in
+the source file will be moved multiple times. And if the source file
+is written to disk after each hunk or ---/+++ is applied then this
+will generate a lot of writes that can be avoided if the entire patch
+procedure is broken down into a first pass that analyzes the patches
+and a second pass that applies the patches and keeps source files in
+memory.
 
-real	0m2.021s
-user	0m1.858s
-sys	0m0.097s
--rw-r--r--    1 davidsen  1737227 Apr 26 11:56 dummy.tar.gz
-Comp level 3
+But my rather trivial observation above is of course only suitable if
+you have a lot of patches that should be applied and you are only
+interested in the final version of the patched source files. If you
+apply one patch at a time and import each source file as a new
+revision then my little hack is probably not for you.
 
-real	0m2.296s
-user	0m2.124s
-sys	0m0.095s
--rw-r--r--    1 davidsen  1697644 Apr 26 11:56 dummy.tar.gz
-Comp level 4
-
-real	0m2.604s
-user	0m2.423s
-sys	0m0.099s
--rw-r--r--    1 davidsen  1593207 Apr 26 11:56 dummy.tar.gz
-Comp level 5
-
-real	0m3.181s
-user	0m3.003s
-sys	0m0.087s
--rw-r--r--    1 davidsen  1549050 Apr 26 11:56 dummy.tar.gz
-Comp level 6
-
-real	0m4.185s
-user	0m3.965s
-sys	0m0.089s
--rw-r--r--    1 davidsen  1531866 Apr 26 11:56 dummy.tar.gz
-Comp level 7
-
-real	0m4.889s
-user	0m4.642s
-sys	0m0.096s
--rw-r--r--    1 davidsen  1524350 Apr 26 11:57 dummy.tar.gz
-Comp level 8
-
-real	0m7.836s
-user	0m7.532s
-sys	0m0.085s
--rw-r--r--    1 davidsen  1513763 Apr 26 11:57 dummy.tar.gz
-Comp level 9
-
-real	0m11.020s
-user	0m10.616s
-sys	0m0.092s
--rw-r--r--    1 davidsen  1511970 Apr 26 11:57 dummy.tar.gz
-
---------------030507050100080507000405--
-
+/ magnus
