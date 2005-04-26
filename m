@@ -1,91 +1,118 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: Re: : Networking
-Date: Tue, 26 Apr 2005 11:56:09 -0700
-Message-ID: <20050426115609.0481401b.akpm@osdl.org>
-References: <20050425214326.512b006e.davem@davemloft.net>
-	<20050426005725.6bfe6135.akpm@osdl.org>
-	<20050426183350.GB13224@pasky.ji.cz>
+From: Bram Cohen <bram@bitconjurer.org>
+Subject: Re: Merge with git-pasky II.
+Date: Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.44.0504261129500.4678-100000@wax.eds.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: davem@davemloft.net, torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:51:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:52:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQV9o-0004Jd-TV
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:51:41 +0200
+	id 1DQV9K-0004FJ-FC
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261732AbVDZS4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 14:56:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261734AbVDZS4w
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:56:52 -0400
-Received: from fire.osdl.org ([65.172.181.4]:38037 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261732AbVDZS4f (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:56:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QIuUs4014087
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 11:56:30 -0700
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id j3QIuT3P001199;
-	Tue, 26 Apr 2005 11:56:29 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050426183350.GB13224@pasky.ji.cz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i386-vine-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261719AbVDZS4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:56:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261732AbVDZS4N
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:56:13 -0400
+Received: from wax.eds.org ([64.147.163.246]:63159 "EHLO wax.eds.org")
+	by vger.kernel.org with ESMTP id S261719AbVDZSzv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:55:51 -0400
+Received: by wax.eds.org (Postfix, from userid 1044)
+	id 77D6D32408F; Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by wax.eds.org (Postfix) with ESMTP id 6E5F0B401A
+	for <git@vger.kernel.org>; Tue, 26 Apr 2005 11:55:50 -0700 (PDT)
+X-X-Sender: bram@wax.eds.org
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@ucw.cz> wrote:
+(my apologies for responding to old messages, I only just subscribed to
+this list)
+
+Linus Torvalds wrote:
+> On Thu, 14 Apr 2005, Junio C Hamano wrote:
+> >
+> > You say "merge these two trees" above (I take it that you mean
+> > "merge these two trees, taking account of this tree as their
+> > common ancestor", so actually you are dealing with three trees),
 >
->  > d) To generate davem's tree (patch against linus's current tree (ie: patch
->  >    against 2.6.12-rc3+linus.patch)):
->  > 
->  > 	git pull git-net
->  > 	MERGE_BASE=$(merge-base $(cat .git/heads/origin ) $(cat .git/heads/git-net))
->  > 	git diff -r $MERGE_BASE:$(cat .git/heads/git-net) > ../25/patches/git-net.patch
-> 
->  This is the bad way; I think this suffers of basically the same problems
->  as my ancient merging by "forward-patching". You should probably do a
->  regular merge:
-> 
->  	git pull git-net
->  	git merge git-net
->  	git diff -p
-> 
->  The last command will show diff between current tree and the first
->  parent; that amounts the merged patch in this case.
+> Yes. We're definitely talking three trees.
 
-Bear in mind that there will be 20 or 30 different trees which I'll need
-the diffs for, not just the one git-net.
+The LCA for different files might be at different points in the history.
+Forcing them to all come from the same point produces very bad merges.
 
-I don't know if it'll be successful continually merging all those trees
-together.  The way I did this with bk was to have a separate repo for each
-tree, but I don't think I'll want 30-40 separate git trees.
+> The fact is, we know how to make tree merges unambiguous, by just
+> totally ignoring the history between them.  Ie we know how to merge
+> data. I am pretty damn sure that _nobody_ knows how to merge "data over
+> time".
 
-My little methodology worked nicely for git-ia64.
+You're incorrect. Codeville does exactly that (history-aware merges which
+do the right thing even in cases where 3-way merge can't)
 
-Jan Harkes has pointed out that the problem here is that Linus and Dave
-both applied the same patch from Al and that interdiff was able to fix it
-up:
+> > This however opens up another set of can of worms---it would
+> > involve not just three trees but all the trees in the commit
+> > chain in between.
+>
+> Exactly.  I seriously believe that the model is _broken_, simply because
+> it gets too complicated. At some point it boils down to "keep it simple,
+> stupid".
 
-$ git diff -r 25ee7e3832951cf5896b194f6cd929a44863f419:b453257f057b834fdf9f4a6ad6133598b79bd982 > git-linus.patch
-$ git diff -r 25ee7e3832951cf5896b194f6cd929a44863f419:5523662c4cd585b892811d7bb3e25d9a787e19b3 > git-net.patch
-$ interdiff --no-revert-omitted -p1 git-linus.patch git-net.patch | diffstat
-drivers/net/tg3.c                            |   73 ++++++++++++++-------------
-net/ipv4/ip_output.c                         |    2
-net/ipv4/netfilter/ip_conntrack_ftp.c        |    4 -
-net/ipv4/netfilter/ip_conntrack_standalone.c |    7 --
-net/ipv4/tcp_input.c                         |    1 
-net/sched/simple.c                           |   18 ------
-6 files changed, 46 insertions(+), 59 deletions(-)
+The Codeville merge algorithm is also quite simple, and is already
+implemented and mature.
 
-So hm.  I guess git did what it was supposed to do here, and that a `git
-merge' would have removed the common patch.  But if I take the approach of
-merging all those subsystem trees I do wonder if things will come
-unstuck...
+> I've not even been convinved that renames are worth it. Nobody has
+> really given a good reason why.
+
+If one person renames a file and another person modifies it then the
+changes should be applied to the moved file.
+
+Also, there's the directory rename case where one person moves a directory
+and another person adds a file to it, in which case the file should be
+moved to the new directory location on merge. I gather than BK doesn't
+support this functionality, but Codeville and Monotone both do.
+
+>    I think you might as well interpret the whole object thing. Git
+> _does_ tell you how the objects changed, and I actually believe that a
+> diff that works in between objects (ie can show "these lines moved from
+> this file X to tjhat file Y") is a _hell_ of a lot more powerful than
+> "rename"  is.
+>
+>    So I'd seriously suggest that instead of worryign about renames,
+> people think about global diffs that aren't per-file. Git is good at
+> limiting the changes to a set of objects, and it should be entirely
+> possible to think of diffs as ways of moving lines _between_ objects and
+> not just within objects. It's quite common to move a function from one
+> file to another - certainly more so than renaming the whole file.
+>
+> In other words, I really believe renames are just a meaningless special
+> case of a much more interesting problem. Which is just one reason why
+> I'm not at all interested in bothering with them other than as a "data
+> moved" thing, which git already handles very well indeed.
+
+Nothing, not eveny our beloved BitKeeper, has 'move lines between files'
+functionality, and for good reason.
+
+To begin with, it's behaviorally extremely dubious. It would be not
+uncommon for the system to erroneously think that some files deleted from
+one file were added to another, and then further changes down the line
+would cause random unrelated files to get modified in unpredictable ways
+when merges happened.
+
+Also, it presents a completely unsolved UI problem. If one person moves
+lines 5-15 of file A to file B, and another person concurrently rewrites
+lines 10-20 of file A, how on earth is that supposed to be presented to
+the user? Codeville can support line moves *within* files just fine, but
+doesn't do it because of the UI problem of presenting all the corner
+cases. Maybe someday somebody will do a PhD thesis on that topic and we'll
+add it, but until then we're sticking with the basic functionality.
+
+Honestly, that you would think of doing whole-tree three-way merges and
+even consider moving lines between files shows that you haven't explored
+the merge problem very deeply. This is a much harder problem than you
+think it is, and one which has already been solved by other systems.
+
+-Bram
+
