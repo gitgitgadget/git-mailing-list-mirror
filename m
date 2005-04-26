@@ -1,52 +1,57 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 09:36:50 -0400
-Message-ID: <118833cc05042606362cc60ad2@mail.gmail.com>
-References: <20050426032422.GQ13467@pasky.ji.cz>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Martin Atukunda <matlads@ds.co.ug>
+Subject: [PATCH GIT 0.6.3] Add an uninstall target to Makefile
+Date: Tue, 26 Apr 2005 16:48:22 +0300
+Message-ID: <200504261648.22814.matlads@ds.co.ug>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Apr 26 15:34:12 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Apr 26 15:48:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQQA8-0002sZ-9X
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 15:31:41 +0200
+	id 1DQQPL-00064S-7D
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 15:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261494AbVDZNgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 09:36:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261452AbVDZNgv
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 09:36:51 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:63239 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261494AbVDZNgu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 09:36:50 -0400
-Received: by rproxy.gmail.com with SMTP id a41so1114993rng
-        for <git@vger.kernel.org>; Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RfdVGsl6ilwrutEUOeJbTnqpWYJRUlSfrBPCRU8YNpl1sUxIH6LEcq/l5jsduvNvadWsF7U3gfASSEahMULooqE3DIc9Yp+ubbtUfIhyjtQltjXdxgwDw1GikrPWKyanq+lmQ77hjYnFDZ8PmI7tfaRlQilqqTJGfSq+TlWoqe0=
-Received: by 10.38.6.75 with SMTP id 75mr7034324rnf;
-        Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Tue, 26 Apr 2005 06:36:50 -0700 (PDT)
-To: pasky@ucw.cz, git@vger.kernel.org
-In-Reply-To: <20050426032422.GQ13467@pasky.ji.cz>
+	id S261505AbVDZNwc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 09:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261520AbVDZNwc
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 09:52:32 -0400
+Received: from mail1.imul.com ([217.113.72.31]:57427 "EHLO mail1.starcom.co.ug")
+	by vger.kernel.org with ESMTP id S261505AbVDZNw3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 09:52:29 -0400
+Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
+  by mail1.starcom.co.ug with esmtp; Tue, 26 Apr 2005 16:52:23 +0300
+  id 000E5C1E.426E4797.0000630F
+Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
+	by entandikwa.ds.co.ug (Postfix) with ESMTP id C38DD500B
+	for <git@vger.kernel.org>; Tue, 26 Apr 2005 16:53:23 +0300 (EAT)
+Received: from matlads by igloo.ds.co.ug with local (Exim 4.50)
+	id 1DQQQI-0004EX-V6
+	for git@vger.kernel.org; Tue, 26 Apr 2005 16:48:23 +0300
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> [...] build and install it, [...]
+Add an uninstall target to Makefile that removes installed scripts and
+programs.
 
-It assumes the presense of .git/HEAD but doesn't actually fail when missing.
+Signed-off-by: Martin Atukunda <matlads@ds.co.ug>
 
-...
-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o diff-tree-helper
-diff-tree-helper.c libgit.a -lz -lssl
-cat: .git/HEAD: No such file or directory
-Invalid id: 
-Generating cg-version...
-
-Morten
+Index: Makefile
+===================================================================
+--- 0a9ee5a4d947b998a7ce489242800b39f98eeee5/Makefile  (mode:100644 
+sha1:2d7e4cf0464c45b7c5b169bff7e5c4e7768c13a1)
++++ uncommitted/Makefile  (mode:100644)
+@@ -82,6 +82,9 @@
+        install -m755 -d $(DESTDIR)$(bindir)
+        install $(PROG) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(bindir)
+ 
++uninstall:
++       cd $(DESTDIR)$(bindir) && rm $(PROG) $(SCRIPT) $(GEN_SCRIPT)
++
+ clean:
+        rm -f *.o mozilla-sha1/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE)
