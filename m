@@ -1,66 +1,79 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: git "tag" objects implemented - and a re-done commit
-Date: Tue, 26 Apr 2005 01:55:06 -0400
-Message-ID: <1114494906.5983.23.camel@mythical>
-References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>
-	 <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0504251442480.12019@sam.ics.uci.edu>
-	 <Pine.LNX.4.58.0504251505260.18901@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: [PATCH] Don't use commit-id in building
+Date: Tue, 26 Apr 2005 02:03:23 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504260142130.30848-100000@iabervon.org>
+References: <20050426054017.GS13052@parcelfarce.linux.theplanet.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Gal <gal@uci.edu>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 07:50:27 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff Garzik <jgarzik@pobox.com>, pasky@ucw.cz, git@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 07:59:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQIxe-0001rG-Vv
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 07:50:19 +0200
+	id 1DQJ5i-0002VV-8L
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 07:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261341AbVDZFzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 01:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261343AbVDZFzY
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 01:55:24 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:2517 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261341AbVDZFzT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 01:55:19 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DQJ2J-00040z-M1; Tue, 26 Apr 2005 01:55:07 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DQJ34-0008Ud-00; Tue, 26 Apr 2005 01:55:54 -0400
-Received: from ryan by mythical with local (Exim 4.50)
-	id 1DQJ2J-0006dv-4i; Tue, 26 Apr 2005 01:55:07 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
-X-Mailer: Evolution 2.0.4 
+	id S261343AbVDZGDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 02:03:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261345AbVDZGDf
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 02:03:35 -0400
+Received: from iabervon.org ([66.92.72.58]:47621 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261343AbVDZGD0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 02:03:26 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DQJAJ-0007gQ-00; Tue, 26 Apr 2005 02:03:23 -0400
+To: Al Viro <viro@parcelfarce.linux.theplanet.co.uk>
+In-Reply-To: <20050426054017.GS13052@parcelfarce.linux.theplanet.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2005-04-25 at 15:39 -0700, Linus Torvalds wrote:
-> 
-> On Mon, 25 Apr 2005, Linus Torvalds wrote:
+On Tue, 26 Apr 2005, Al Viro wrote:
+
+> > > So, it still complains about commit-id
 > > 
-> > So I'll probably just push out my tags with my archives, and then people
-> > can verify them if they want to.
+> > In this case, it would complain about .git/HEAD even if it found
+> > commit-id. The right solution is probably to suppress that part if there's
+> > no .git/HEAD.
 > 
-> Ok, for the intrepid users, you can now test to see if you can pick them 
-> out. fsck should make them totally obvious, and here's my public key in 
-> case you also want to verify the things.
-> 
-> Of course, since I normally don't use pgp signing etc, it's entirely 
-> possible that I've done something stupid, and I'm now sending you my 
-> secret key and my full porn-collection.
+> The right thing is to stop assuming that everyone has . in their $PATH,
+> to start with...
 
-(Un?)fortunately, you appear to have done it correctly.
+Does anyone have . in their $PATH? I've only used the commit-id that I
+installed previously. Since the tarball doesn't have a .git directory, the
+only way you end up building cogito from a directory with a repository is
+by using an earlier cogito or something of the sort, in which case, you
+probably have the program.
 
-Now, you just need to get a few people that know for certain it's really
-your key to sign it and upload the signatures to the key server, and it
-would be golden.
+In any case, commit-id isn't actually necessary for this operation.
 
--- 
-Ryan Anderson <ryan@michonline.com>
+-
+We don't necessarily have commit-id available when building. Furthermore,
+we don't necessarily have a repository. Just put in .git/HEAD if it
+exists; otherwise, it's a base distribution.
+
+Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
+
+Index: Makefile
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/Makefile  (mode:100644 sha1:4f01bbbbb3fd0e53e9ce968f167b6dae68fcfa92)
++++ uncommitted/Makefile  (mode:100644)
+@@ -87,11 +87,13 @@
+ http-pull: LIBS += -lcurl
+ 
+ 
+-cg-version: $(VERSION)
++cg-version: $(VERSION) .git/HEAD
+ 	@echo Generating cg-version...
+ 	@rm -f $@
+ 	@echo "#!/bin/sh" > $@
+-	@PATH=.:$(PATH) echo "echo \"$(shell cat $(VERSION)) ($(shell commit-id))\"" >> $@
++	@echo -n "echo \"$(shell cat $(VERSION))" >> $@
++	@if [ -r .git/HEAD ]; then echo -n " ($(shell cat .git/HEAD))" >> $@; fi
++	@echo "\"" >> $@
+ 	@chmod +x $@
+ 
+ install: $(PROG) $(SCRIPTS) $(SCRIPT) $(GEN_SCRIPT)
+
