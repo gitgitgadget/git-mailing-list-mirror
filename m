@@ -1,67 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: : Networking
-Date: Tue, 26 Apr 2005 11:40:08 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504261114090.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0504260746320.18901@ppc970.osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Cogito chicken-and-egg problem
+Date: Tue, 26 Apr 2005 12:06:10 -0400
+Message-ID: <1114531570.19478.6.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andrew Morton <akpm@osdl.org>,
-	"David S. Miller" <davem@davemloft.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 17:45:57 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:07:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQSEq-00036W-GD
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 17:44:41 +0200
+	id 1DQSZb-0007Vi-CO
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:06:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261447AbVDZPnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 11:43:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261615AbVDZPlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 11:41:08 -0400
-Received: from iabervon.org ([66.92.72.58]:1798 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261447AbVDZPkK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 11:40:10 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DQSAT-0003B4-00; Tue, 26 Apr 2005 11:40:09 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504260746320.18901@ppc970.osdl.org>
+	id S261648AbVDZQKw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 12:10:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261658AbVDZQH2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:07:28 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:25494
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261618AbVDZQG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 12:06:29 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id DEA8BEFF3B; Tue, 26 Apr 2005 12:06:10 -0400 (EDT)
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 26 Apr 2005, Linus Torvalds wrote:
+Hello!
 
-> On Tue, 26 Apr 2005, Andrew Morton wrote:
-> > 
-> 
-> The only thing you should be a bit careful about is to remember what the 
-> "heads" at different points were. In particular, you want to remember 
-> where you merged with me last was. I've started tagging my releases with 
-> the git tag facility (_not_ the pasky one, but I think pasky will start 
-> picking up on that soon enough), so finding a specific release will be 
-> easy, but if you ever do a non-release merge you'll just have to tag it 
-> yourself.
+My patch for Makefile was misapplied, so installed commit-id is still
+needed for "make" to succeed.
 
-Your tag system is in the "cogito-0.8" release, plus a pasky-style way of
-keeping track of what tags you have in your repository.
+Shell commands are processed by make before being passed to the shell,
+and $(...) is expanded by make before new PATH is set, as it is done in
+the current Makefile.
 
-> > d) To generate davem's tree (patch against linus's current tree (ie: patch
-> >    against 2.6.12-rc3+linus.patch)):
-> > 
-> > 	git pull git-net
-> 
-> Yes. This should have merged the two (assuming "git pull" does what I 
-> think it does).
+Also, the dependency on commit-id was dropped from my patch for some
+reason.  I believe it's still needed.  Also, we need a dependency on
+cat-file, which is used by commit-id internally.
 
-I think git pull only downloads the contents of the repo and saves the new
-head in a separate file. You're left to do the merge yourself, in case
-what you actually wanted to do was just read the patches in the remote
-repo without merging them.
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-You probably need a "git merge git-net" here, and things will be in the
-state that Linus expects.
+Index: Makefile
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/Makefile  (mode:100644 sha1:4f01bbbbb3fd0e53e9ce968f167b6dae68fcfa92)
++++ uncommitted/Makefile  (mode:100644)
+@@ -87,11 +87,11 @@
+ http-pull: LIBS += -lcurl
+ 
+ 
+-cg-version: $(VERSION)
++cg-version: $(VERSION) commit-id cat-file
+ 	@echo Generating cg-version...
+ 	@rm -f $@
+ 	@echo "#!/bin/sh" > $@
+-	@PATH=.:$(PATH) echo "echo \"$(shell cat $(VERSION)) ($(shell commit-id))\"" >> $@
++	@echo "echo \"$(shell cat $(VERSION)) ($(shell PATH=.:$(PATH) ./commit-id))\"" >> $@
+ 	@chmod +x $@
+ 
+ install: $(PROG) $(SCRIPTS) $(SCRIPT) $(GEN_SCRIPT)
 
-	-Daniel
-*This .sig left intentionally blank*
+
+-- 
+Regards,
+Pavel Roskin
 
