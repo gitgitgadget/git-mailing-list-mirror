@@ -1,112 +1,62 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [PATCH] Cogito chicken-and-egg problem
-Date: Tue, 26 Apr 2005 13:02:22 -0400
-Message-ID: <1114534942.26856.10.camel@dv>
-References: <Pine.LNX.4.21.0504261229220.30848-100000@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC] diff-cache buglet
+Date: Tue, 26 Apr 2005 10:11:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504261005360.18901@ppc970.osdl.org>
+References: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:58:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 19:05:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQTNH-0000J3-D9
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:57:28 +0200
+	id 1DQTUZ-0001dt-5Q
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 19:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261608AbVDZRCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 13:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVDZRCi
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 13:02:38 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:23938
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261608AbVDZRCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 13:02:33 -0400
-Received: by localhost.localdomain (Postfix, from userid 500)
-	id 95A81EFF49; Tue, 26 Apr 2005 13:02:22 -0400 (EDT)
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504261229220.30848-100000@iabervon.org>
-X-Mailer: Evolution 2.2.1.1 
+	id S261498AbVDZRJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 13:09:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261670AbVDZRJx
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 13:09:53 -0400
+Received: from fire.osdl.org ([65.172.181.4]:51165 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261498AbVDZRJ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 13:09:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QH9Ks4004348
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 26 Apr 2005 10:09:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QH9JBO027144;
+	Tue, 26 Apr 2005 10:09:20 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello, Daniel!
 
-On Tue, 2005-04-26 at 12:38 -0400, Daniel Barkalow wrote:
 
-> > Also, the dependency on commit-id was dropped from my patch for some
-> > reason.  I believe it's still needed.  Also, we need a dependency on
-> > cat-file, which is used by commit-id internally.
+On Tue, 26 Apr 2005, Junio C Hamano wrote:
 > 
-> commit-id doesn't really use cat-file; the way it calls gitXnormid.sh
+> The patch lets you have it in both ways by adding --unmerged
+> flag.  Without it, unmerged entries are culled at the beginning;
+> with it, you will see diffs for all unmerged stages.
 
-There is gitXnormid.sh in the current cogito.  Please update your tree.
+I'm ok with that, but if so I think it should show the stage somehow, and
+make it clear that it's unmerged. Maybe by appending something to the name
+(maybe just a ':' and stage number, but I'd almost prefer the stage number
+to be translated into something human-readable, so maybe we could have
+something like
 
-> definitely suppresses that section.
+	filename.c^orig
+	filename.c^first
+	filename.c^second
 
-That's not what I see if I remove cat-file but leave commit-id in my
-$HOME/bin:
+for stages 1-3 respectively)?
 
-proski@dv:~/src/cogito$ make cg-version
-/home/proski/bin/commit-id: line 35: cat-file: command not found
-Invalid id: f9f0459b5b39cf83143c91ae39b4eaf187cf678a
-Generating cg-version...
-proski@dv:~/src/cogito$
+I'll apply your fix right now.
 
-> In fact, commit-id with no arguments
-> is simply an easy-to-remember way of doing "cat .git/HEAD" using a much
-> more complicated script. Earlier, I sent a patch to just do this, since it
-> avoids the whole issue.
-
-That would be fine with me.
-
-> (Also, .git/HEAD is a dependancy, since you want to redo the version
-> script if you commit; but if you don't have it, that's okay and just means
-> you're building from a tarball, which is described completely by VERSION)
-
-It should be a conditional dependency, i.e. it should be a dependency
-if .git exists.
-
-It seems to me that the whole idea of including SHA1 in cg-version is
-broken.  SHA1 is not human readable.  But if the maintainers insist on
-having SHA1 in cg-version, I want it to be done without causing build
-warnings for new users.
-
-Here's an alternative patch.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-Index: Makefile
-===================================================================
---- f262000f302b749e485f5eb971e6aabefbb85680/Makefile  (mode:100644 sha1:4f01bbbbb3fd0e53e9ce968f167b6dae68fcfa92)
-+++ uncommitted/Makefile  (mode:100644)
-@@ -87,12 +87,21 @@
- http-pull: LIBS += -lcurl
- 
- 
-+ifneq (,$(wildcard .git))
-+cg-version: $(VERSION) .git/HEAD
-+	@echo Generating cg-version...
-+	@rm -f $@
-+	@echo "#!/bin/sh" > $@
-+	@echo "echo \"$(shell cat $(VERSION)) ($(shell cat .git/HEAD))\"" >> $@
-+	@chmod +x $@
-+else
- cg-version: $(VERSION)
- 	@echo Generating cg-version...
- 	@rm -f $@
- 	@echo "#!/bin/sh" > $@
--	@PATH=.:$(PATH) echo "echo \"$(shell cat $(VERSION)) ($(shell commit-id))\"" >> $@
-+	@echo "echo \"$(shell cat $(VERSION))\"" >> $@
- 	@chmod +x $@
-+endif
- 
- install: $(PROG) $(SCRIPTS) $(SCRIPT) $(GEN_SCRIPT)
- 	install -m755 -d $(DESTDIR)$(bindir)
-
-
--- 
-Regards,
-Pavel Roskin
-
+		Linus
