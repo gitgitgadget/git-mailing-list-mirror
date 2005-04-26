@@ -1,82 +1,61 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: : Networking
-Date: Tue, 26 Apr 2005 20:15:54 +0200
-Message-ID: <20050426181554.GA13224@pasky.ji.cz>
-References: <Pine.LNX.4.58.0504260746320.18901@ppc970.osdl.org> <Pine.LNX.4.21.0504261114090.30848-100000@iabervon.org>
+From: Chris Mason <mason@suse.com>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Tue, 26 Apr 2005 14:18:18 -0400
+Message-ID: <200504261418.18825.mason@suse.com>
+References: <20050426004111.GI21897@waste.org> <200504261138.46339.mason@suse.com> <aec7e5c305042609231a5d3f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Andrew Morton <akpm@osdl.org>,
-	"David S. Miller" <davem@davemloft.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 20:12:41 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Mike Taht <mike.taht@timesys.com>,
+	Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 20:14:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQUX6-0006Od-4q
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:11:40 +0200
+	id 1DQUZK-0006pN-SD
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 20:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261667AbVDZSQj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 14:16:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261577AbVDZSQj
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:16:39 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:6541 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261656AbVDZSQA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:16:00 -0400
-Received: (qmail 13900 invoked by uid 2001); 26 Apr 2005 18:15:54 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S261699AbVDZSSh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 14:18:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261670AbVDZSSh
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 14:18:37 -0400
+Received: from ns.suse.de ([195.135.220.2]:53993 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261577AbVDZSSY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 14:18:24 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 7AE0C160BCAB;
+	Tue, 26 Apr 2005 20:18:21 +0200 (CEST)
+To: Magnus Damm <magnus.damm@gmail.com>
+User-Agent: KMail/1.8
+In-Reply-To: <aec7e5c305042609231a5d3f0@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504261114090.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 05:40:08PM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> On Tue, 26 Apr 2005, Linus Torvalds wrote:
-> 
-> > On Tue, 26 Apr 2005, Andrew Morton wrote:
-> > > 
-> > 
-> > The only thing you should be a bit careful about is to remember what the 
-> > "heads" at different points were. In particular, you want to remember 
-> > where you merged with me last was. I've started tagging my releases with 
-> > the git tag facility (_not_ the pasky one, but I think pasky will start 
-> > picking up on that soon enough), so finding a specific release will be 
-> > easy, but if you ever do a non-release merge you'll just have to tag it 
-> > yourself.
-> 
-> Your tag system is in the "cogito-0.8" release, plus a pasky-style way of
-> keeping track of what tags you have in your repository.
+On Tuesday 26 April 2005 12:23, Magnus Damm wrote:
 
-It came in with merge with Linus, but there's no support in the Cogito
-toolkit for it whatsoever.
+> Well, maybe I misunderstood everything, but I thought you were
+> applying a lot of patches and complained that it took a lot of time
+> due to the data order.
+>
+> When I applied a lot of patches to the kernel recently the cpu load
+> dropped to zero after a while and the HD worked hard a sec or two and
+> then things came back again. My primitive guess is that it was because
+> the ext3 journal became full. To workaround this fact I started
+> hacking on this in-memory patcher.
 
-I'm personally unlikely to get any time for doing it (or much anything
-else; but this is probably the priority now) until Sunday evening. :-(
+It looks like you'll only see the commits on ext3 when the log fills, and on 
+reiser3 you'll see it every 5 seconds or when the log fills.  With the 
+default mount options, both ext3 and reiser will flush the data blocks at the 
+same time they are writing the metadata.
 
-> > > d) To generate davem's tree (patch against linus's current tree (ie: patch
-> > >    against 2.6.12-rc3+linus.patch)):
-> > > 
-> > > 	git pull git-net
-> > 
-> > Yes. This should have merged the two (assuming "git pull" does what I 
-> > think it does).
-> 
-> I think git pull only downloads the contents of the repo and saves the new
-> head in a separate file. You're left to do the merge yourself, in case
-> what you actually wanted to do was just read the patches in the remote
-> repo without merging them.
-> 
-> You probably need a "git merge git-net" here, and things will be in the
-> state that Linus expects.
+The easiest way to get around this is to mount -o data=writeback on 
+ext3/reiser, but you'll still have to wait for the data blocks eventually.  
 
-Yes. git pull only pulls the stuff, doesn't merge it (that is, unless it
-is tracked branch; but I think this isn't the case; this was cleaned up
-in cogito-0.8 and cg-pull now always only pulls, cg-update
-pulls+merges).
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+-chris
