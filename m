@@ -1,74 +1,66 @@
-From: David Roundy <droundy@abridgegame.org>
-Subject: Re: Re: A darcs that can pull from git
-Date: Tue, 26 Apr 2005 07:06:17 -0400
-Message-ID: <20050426110613.GB20723@abridgegame.org>
-References: <7ipswjbybx.fsf@lanthane.pps.jussieu.fr>
-	<20050425133116.GG11667@abridgegame.org>
-	<7i4qdusxdw.fsf@lanthane.pps.jussieu.fr>
+From: Chris Mason <mason@suse.com>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Tue, 26 Apr 2005 07:13:24 -0400
+Message-ID: <200504260713.26020.mason@suse.com>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251938210.18901@ppc970.osdl.org> <Pine.LNX.4.58.0504252032500.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
-X-From: darcs-devel-bounces@darcs.net Tue Apr 26 13:08:01 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Mike Taht <mike.taht@timesys.com>, Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261437AbVDZLNm@vger.kernel.org Tue Apr 26 13:11:03 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261437AbVDZLNm@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQNuC-0007fm-T4
-	for gcvdd-darcs-devel@m.gmane.org; Tue, 26 Apr 2005 13:07:05 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DQNyp-0007ZP-13; Tue, 26 Apr 2005 07:11:51 -0400
-Received: from user-10mt71s.cable.mindspring.com ([65.110.156.60]
-	helo=localhost) by abridgegame.org with esmtp (Exim 4.50)
-	id 1DQNym-0003R2-0O
-	for darcs-devel@darcs.net; Tue, 26 Apr 2005 07:11:48 -0400
-Received: from droundy by localhost with local (Exim 4.50)
-	id 1DQNtR-0006r6-FM; Tue, 26 Apr 2005 07:06:17 -0400
-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Mail-Followup-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
+	id 1DQNxZ-0008E7-Uk
+	for glk-linux-kernel@gmane.org; Tue, 26 Apr 2005 13:10:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261437AbVDZLNm (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
+	Tue, 26 Apr 2005 07:13:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261429AbVDZLNm
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 26 Apr 2005 07:13:42 -0400
+Received: from ns2.suse.de ([195.135.220.15]:56026 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261400AbVDZLNe (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 26 Apr 2005 07:13:34 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 67D9493AA;
+	Tue, 26 Apr 2005 13:13:33 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id 3BC7C14AF5E; Tue, 26 Apr 2005 13:13:32 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.58.0504252032500.18901@ppc970.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7i4qdusxdw.fsf@lanthane.pps.jussieu.fr>
-User-Agent: Mutt/1.5.6+20040907i
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+Sender: linux-kernel-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: linux-kernel@vger.kernel.org
 
-On Mon, Apr 25, 2005 at 05:12:59PM +0200, Juliusz Chroboczek wrote:
-> > Do you have any plans/ideas for allowing pulls directly from a
-> > remote git repository?
-> 
-> I haven't thought about it yet.  Does anyone have any ideas about how
-> to efficiently pull from git without a complete local copy?
+On Tuesday 26 April 2005 00:00, Linus Torvalds wrote:
+> On Mon, 25 Apr 2005, Linus Torvalds wrote:
+> > The easiest test-case is Andrew's 198-patch patch-bomb on linux-kernel a
+> > few weeks ago: they all apply cleanly to 2.6.12-rc2 (in order), and you
+> > can use my "dotest" script to automate the test..
+>
+> Oh, well. That was so trivial that I just did it:
+[ ... ]
 
-I don't think so.  My best thought so far would be to have something like a
-~/.gitcache/, which would store the sha1 objects themselves, so at least
-we'd only end up with *one* local copy.  I'm actually curious what the true
-git people do about this--it would be nice to share a cache.  For darcs'
-purposes, we could prune the cache from time to time.  If we're running
-with a darcs backend, we really only need the recent versions of files and
-trees.
+> ie the "initial add" is almost twice as fast (because it spends most of
+> the time compressing _all_ the files), but the difference in applying 198
+> patches is not noticeable at all (because the costs are all elsewhere).
+>
+> That's 198 patches in less than a minute even with the highest
+> compression. That rocks.
 
-Do the git have any suggestions about how to avoid excess downloads or
-excess copies of a git repository? It seems to me like it would make sense
-to always download sha1s to ~/.gitcache/, and then hardlink them to the
-current git repository, so you wouldn't end up ever downloading the same
-sha1 twice.  Or we should use $GITCACHE/, to give the user some
-flexibility.  But perhaps this is an already-solved problem, and I've just
-not noticed...
+This agrees with my tests here, the time to apply patches is somewhat disk 
+bound, even for the small 100 or 200 patch series.  The io should be coming 
+from data=ordered, since the commits are still every 5 seconds or so.
 
-As far as other details, currently we can just walk the tree to find out
-what files are needed, right?
--- 
-David Roundy
-http://www.darcs.net
+-chris
