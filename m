@@ -1,60 +1,77 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 14:23:04 +0200
-Message-ID: <20050426122304.GD18971@pasky.ji.cz>
-References: <20050426032422.GQ13467@pasky.ji.cz> <426DBF94.3010502@timesys.com>
+Subject: Re: Re: A darcs that can pull from git
+Date: Tue, 26 Apr 2005 14:34:45 +0200
+Message-ID: <20050426123445.GE18971@pasky.ji.cz>
+References: <7ipswjbybx.fsf@lanthane.pps.jussieu.fr>
+	<20050425133116.GG11667@abridgegame.org>
+	<7i4qdusxdw.fsf@lanthane.pps.jussieu.fr>
+	<20050426110613.GB20723@abridgegame.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 14:19:38 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+X-From: darcs-devel-bounces@darcs.net Tue Apr 26 14:30:54 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQP12-0004Sr-4d
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 14:18:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261417AbVDZMXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 08:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261420AbVDZMXN
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 08:23:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:38022 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261417AbVDZMXJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 08:23:09 -0400
-Received: (qmail 29475 invoked by uid 2001); 26 Apr 2005 12:23:04 -0000
-To: Mike Taht <mike.taht@timesys.com>
+	id 1DQPCe-0006zt-43
+	for gcvdd-darcs-devel@m.gmane.org; Tue, 26 Apr 2005 14:30:12 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DQPHM-0007Sb-C1; Tue, 26 Apr 2005 08:35:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241] helo=machine.sinus.cz ident=qmailr)
+	by abridgegame.org with smtp (Exim 4.50) id 1DQPHI-0005WX-Cc
+	for darcs-devel@darcs.net; Tue, 26 Apr 2005 08:35:00 -0400
+Received: (qmail 30212 invoked by uid 2001); 26 Apr 2005 12:34:45 -0000
+To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
+	darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <426DBF94.3010502@timesys.com>
+In-Reply-To: <20050426110613.GB20723@abridgegame.org>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-Dear diary, on Tue, Apr 26, 2005 at 06:12:04AM CEST, I got a letter
-where Mike Taht <mike.taht@timesys.com> told me that...
+Dear diary, on Tue, Apr 26, 2005 at 01:06:17PM CEST, I got a letter
+where David Roundy <droundy@abridgegame.org> told me that...
+> On Mon, Apr 25, 2005 at 05:12:59PM +0200, Juliusz Chroboczek wrote:
+> > > Do you have any plans/ideas for allowing pulls directly from a
+> > > remote git repository?
+> > 
+> > I haven't thought about it yet.  Does anyone have any ideas about how
+> > to efficiently pull from git without a complete local copy?
 > 
-> >  Yes, this is a huge change. No, I don't expect any further changes of
-> >similar scale. I think the new interface is significantly simpler _and_
-> >cleaner than the old one.
+> I don't think so.  My best thought so far would be to have something like a
+> ~/.gitcache/, which would store the sha1 objects themselves, so at least
+> we'd only end up with *one* local copy.  I'm actually curious what the true
+> git people do about this--it would be nice to share a cache.  For darcs'
+> purposes, we could prune the cache from time to time.  If we're running
+> with a darcs backend, we really only need the recent versions of files and
+> trees.
 > 
-> Heh. Another huge change would be moving the top level directories 
-> around a bit.
-> 
-> 
-> bindings  COPYING  git.spec  Makefile  programs  README.reference  tests
-> contrib   doc      include   po        README    src  VERSION
-> 
-> Leaving fixing the makefiles aside as an exercise for the interested 
-> reader... that's:
+> Do the git have any suggestions about how to avoid excess downloads or
+> excess copies of a git repository? It seems to me like it would make sense
+> to always download sha1s to ~/.gitcache/, and then hardlink them to the
+> current git repository, so you wouldn't end up ever downloading the same
+> sha1 twice.  Or we should use $GITCACHE/, to give the user some
+> flexibility.  But perhaps this is an already-solved problem, and I've just
+> not noticed...
 
-Actually, I've been thinking about this, but I think we just don't need
-it *yet*.
-
-And by the time we will need to make things more hierarchical, we will
-hopefully have some way to deal with renames sensibly. We need something
-for that too - either something ultra-smart as Linus describes, or
-explicit renames, but merging not working across renames makes them
-total nightmare.
+I'm not sure about the problem you are actually trying to solve, and I
+didn't manage to guess it quickly just from the mails themselves;
+cg-init /local/path now hardlinks the sha1 objects to the local
+.git/objects directory, so you get no space waste. If you are talking
+about downloading stuff from remote repositories, http-pull might help.
 
 -- 
 				Petr "Pasky" Baudis
