@@ -1,76 +1,108 @@
-From: Diego Calleja <diegocg@gmail.com>
+From: Bram Cohen <bram@bitconjurer.org>
 Subject: Re: Merge with git-pasky II.
-Date: Tue, 26 Apr 2005 23:26:24 +0200
-Message-ID: <20050426232624.4a68a720.diegocg@gmail.com>
-References: <Pine.LNX.4.58.0504261256150.18901@ppc970.osdl.org>
-	<Pine.LNX.4.44.0504261301520.4678-100000@wax.eds.org>
+Date: Tue, 26 Apr 2005 14:28:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
+References: <Pine.LNX.4.58.0504261347520.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:23:06 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:24:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXUT-0002WT-ML
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:21:10 +0200
+	id 1DQXWe-0002ta-0E
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261797AbVDZV0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 26 Apr 2005 17:26:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261798AbVDZV0Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:26:24 -0400
-Received: from wproxy.gmail.com ([64.233.184.201]:46968 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261797AbVDZV0W convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 17:26:22 -0400
-Received: by wproxy.gmail.com with SMTP id 49so134498wri
-        for <git@vger.kernel.org>; Tue, 26 Apr 2005 14:26:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=uKeIqS/RQvwJh2AmGdgSMYzDwfgziraxBUqBskLsFSkVqvL+2dgviTdx3JiSVx68/7ACohBscoMEFK5g8gI3AXZwfsqkjzMWiJqu1tWBwQqLIo3uVQwF8z9nIA+M+3fUWB1y0CN3VHKDy/mxzhjKm6qYp1DZoXGbUPtdSk7n8jo=
-Received: by 10.54.59.21 with SMTP id h21mr200824wra;
-        Tue, 26 Apr 2005 14:26:22 -0700 (PDT)
-Received: from estel ([80.103.13.203])
-        by mx.gmail.com with ESMTP id 67sm652827wra.2005.04.26.14.26.19;
-        Tue, 26 Apr 2005 14:26:22 -0700 (PDT)
-To: Bram Cohen <bram@bitconjurer.org>
-In-Reply-To: <Pine.LNX.4.44.0504261301520.4678-100000@wax.eds.org>
-X-Mailer: Sylpheed version 1.9.9+svn (GTK+ 2.6.4; i686-pc-linux-gnu)
+	id S261798AbVDZV2j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 17:28:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261799AbVDZV2j
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:28:39 -0400
+Received: from wax.eds.org ([64.147.163.246]:52153 "EHLO wax.eds.org")
+	by vger.kernel.org with ESMTP id S261798AbVDZV2e (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:28:34 -0400
+Received: by wax.eds.org (Postfix, from userid 1044)
+	id 510763240C1; Tue, 26 Apr 2005 14:28:34 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+	by wax.eds.org (Postfix) with ESMTP
+	id 4E802B401A; Tue, 26 Apr 2005 14:28:34 -0700 (PDT)
+X-X-Sender: bram@wax.eds.org
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504261347520.18901@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-El Tue, 26 Apr 2005 13:31:31 -0700 (PDT),
-Bram Cohen <bram@bitconjurer.org> escribi=F3:
+Linus Torvalds wrote:
 
-> Even if we pretend that these are comparable features, that's far fro=
-m
-> clearly true. Function moves within a file occur more frequently, but=
- a
-> file rename moves *all* the functions within that file.
+> On Tue, 26 Apr 2005, Bram Cohen wrote:
+> >
+> > Now that you're done being dismissive, could you either (a) rebut my quite
+> > detailed explanation of exactly why that functionality is both a dubious
+> > idea and difficult to implement, or (b) admit that you have no plans
+> > whatsoever for supporting any of this stuff? You can't have it both ways.
+>
+> I'm absolutely not going to do it myself, you're right about that.
 
-Renaming or moving files is _so_ rare and unusual that even not impleme=
-nting
-it (like CVS) is hardly a big issue. Even in the linux kernel people mo=
-ved subsystems
-around - OSS went from drivers/sound to /sound/oss in 2.6, and a USB su=
-bdirectory
-moved too, I think.
+Now you're just being an ass. I stated, flatly, that what you're proposing
+to have done (by you or whoever, for feasibility it doesn't matter which)
+is not going to happen due to just plain difficulty. You obviously
+disagree with me, but rather than coming out and saying so you're
+pretending I didn't make that statement.
 
-The patch got bigger. People wasted 30 seconds more of their life becau=
-se the .gz
-file was bigger - who cares? If it's something it's going to happen eve=
-ry 5 years,
-I'd rather move them like CVS does rather than wasting a single second
-implementing file renaming/moving...
+> > What I'd really like to hear is some explanation of why git is
+> > reimplementing all of this stuff from scratch.
+>
+> Git does in ~5000 lines and two weeks of work what _I_ think is the right
+> thing to do.
 
-If something so uncommon like file renaming has been implemented, I don=
-'t see
-why people shouldn't implement something really useful like the thing l=
-inus
-proposes, in fact it doesn't looks like a bad idea at all (and you'd ge=
-t
-file renaming for free, too). Perhaps it would be hard to implement and=
- get
-right, but at least it would be _useful_.
+So you think that a system which supports snapshots and history but has no
+merging functionality whatsoever is the right thing? I'm asking this
+seriously. You have a magic --make-somebody-else-do-merge command, but for
+everybody else the current state of things is workable as a stopgap
+measure (the original plan) but very painful for anything more.
+
+Codeville is comparable in terms of number of lines of code to Git, by the
+way.
+
+> You're welcome to disagree, but the fact is, people have whined and
+> moaned about my use of BK FOR THREE YEARS without showing me any better
+> alternatives.
+
+You were happy with BitKeeper, so why should we? Monotone and Codeville
+are only just about now really mature, and you aren't exactly known as a
+model customer.
+
+> So why are you complaining now, when I implement my own version in two
+> weeks?
+
+I'm trying to tell you that the amount of time between now and when a
+system as nice as BitKeeper is in use by the kernel can be dramatically
+reduced by either using an existing system verbatim or basing new efforts
+on one.
+
+If you think that git as it exists right now is at all comparable to
+Monotone or Codeville you're completely delusional.
+
+> > In case these concepts got conflated, I'd like to point out that Codeville
+> > merge both supports renames *and* does better than three-way merge can do
+> > at merging a single, non-renamed file.
+>
+> And I'd like to point out (again) that git doesn't actually care what
+> merge strategy the user uses.
+>
+> Me _personally_, I want to have something that is very repeatable and
+> non-clever. Something I understand _or_ tells me that it can't do it. And
+> quite frankly, merging single-file history _without_ taking all the other
+> files' history into account makes me go "ugh".
+
+Now you've just gone off the deep end. This is an apples-to-apples
+comparison. Please accept one of thee following two statements:
+
+(a) Git doesn't do merging, and none of the related new tools around it do
+merging.
+
+(b) Codeville merge (sans rename functionality) would be superior for the
+merging which will be done.
+
+-Bram
+
