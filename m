@@ -1,42 +1,66 @@
-From: Al Viro <viro@parcelfarce.linux.theplanet.co.uk>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 06:40:17 +0100
-Message-ID: <20050426054017.GS13052@parcelfarce.linux.theplanet.co.uk>
-References: <426DCA75.901@pobox.com> <Pine.LNX.4.21.0504260103050.30848-100000@iabervon.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: git "tag" objects implemented - and a re-done commit
+Date: Tue, 26 Apr 2005 01:55:06 -0400
+Message-ID: <1114494906.5983.23.camel@mythical>
+References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>
+	 <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0504251442480.12019@sam.ics.uci.edu>
+	 <Pine.LNX.4.58.0504251505260.18901@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jgarzik@pobox.com>, pasky@ucw.cz, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 07:35:25 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Gal <gal@uci.edu>, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 07:50:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQIiy-0000db-V9
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 07:35:09 +0200
+	id 1DQIxe-0001rG-Vv
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 07:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261320AbVDZFkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 01:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261290AbVDZFkK
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 01:40:10 -0400
-Received: from parcelfarce.linux.theplanet.co.uk ([195.92.249.252]:65223 "EHLO
-	parcelfarce.linux.theplanet.co.uk") by vger.kernel.org with ESMTP
-	id S261205AbVDZFkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 01:40:06 -0400
-Received: from viro by parcelfarce.linux.theplanet.co.uk with local (Exim 4.43)
-	id 1DQInx-0000iS-Fs; Tue, 26 Apr 2005 06:40:17 +0100
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504260103050.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4.1i
+	id S261341AbVDZFzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 01:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261343AbVDZFzY
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 01:55:24 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:2517 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261341AbVDZFzT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 01:55:19 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DQJ2J-00040z-M1; Tue, 26 Apr 2005 01:55:07 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DQJ34-0008Ud-00; Tue, 26 Apr 2005 01:55:54 -0400
+Received: from ryan by mythical with local (Exim 4.50)
+	id 1DQJ2J-0006dv-4i; Tue, 26 Apr 2005 01:55:07 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> > So, it still complains about commit-id
+On Mon, 2005-04-25 at 15:39 -0700, Linus Torvalds wrote:
 > 
-> In this case, it would complain about .git/HEAD even if it found
-> commit-id. The right solution is probably to suppress that part if there's
-> no .git/HEAD.
+> On Mon, 25 Apr 2005, Linus Torvalds wrote:
+> > 
+> > So I'll probably just push out my tags with my archives, and then people
+> > can verify them if they want to.
+> 
+> Ok, for the intrepid users, you can now test to see if you can pick them 
+> out. fsck should make them totally obvious, and here's my public key in 
+> case you also want to verify the things.
+> 
+> Of course, since I normally don't use pgp signing etc, it's entirely 
+> possible that I've done something stupid, and I'm now sending you my 
+> secret key and my full porn-collection.
 
-The right thing is to stop assuming that everyone has . in their $PATH,
-to start with...
+(Un?)fortunately, you appear to have done it correctly.
+
+Now, you just need to get a few people that know for certain it's really
+your key to sign it and upload the signatures to the key server, and it
+would be golden.
+
+-- 
+Ryan Anderson <ryan@michonline.com>
