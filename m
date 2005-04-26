@@ -1,115 +1,94 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: git "tag" objects implemented - and a re-done commit
-Date: Mon, 25 Apr 2005 22:44:45 -0400 (EDT)
-Message-ID: <1524.10.10.10.24.1114483485.squirrel@linux1>
-References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>   
-    <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>   
-    <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>   
-    <Pine.LNX.4.58.0504251442480.12019@sam.ics.uci.edu>   
-    <Pine.LNX.4.58.0504251505260.18901@ppc970.osdl.org>   
-    <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Mon, 25 Apr 2005 20:04:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504251938210.18901@ppc970.osdl.org>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
+ <426DA7B5.2080204@timesys.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Andreas Gal" <gal@uci.edu>,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 04:39:50 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 04:59:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQFzE-0000sH-1G
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 04:39:44 +0200
+	id 1DQGHS-0002mn-Sr
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 04:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261289AbVDZCou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 22:44:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261290AbVDZCou
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 22:44:50 -0400
-Received: from simmts6.bellnexxia.net ([206.47.199.164]:41715 "EHLO
-	simmts6-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261289AbVDZCoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 22:44:46 -0400
-Received: from linux1 ([67.71.124.169]) by simmts6-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050426024445.ZFDS1597.simmts6-srv.bellnexxia.net@linux1>;
-          Mon, 25 Apr 2005 22:44:45 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j3Q2ih5h010220;
-	Mon, 25 Apr 2005 22:44:44 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Mon, 25 Apr 2005 22:44:45 -0400 (EDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
-In-Reply-To: <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
+	id S261295AbVDZDDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 23:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261293AbVDZDDh
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 23:03:37 -0400
+Received: from fire.osdl.org ([65.172.181.4]:50606 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261291AbVDZDDa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Apr 2005 23:03:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3Q32us4029675
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 20:02:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3Q32sHN022501;
+	Mon, 25 Apr 2005 20:02:55 -0700
+To: Mike Taht <mike.taht@timesys.com>
+In-Reply-To: <426DA7B5.2080204@timesys.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, April 25, 2005 6:39 pm, Linus Torvalds said:
->
-> Ok, for the intrepid users, you can now test to see if you can pick them
-out. fsck should make them totally obvious, and here's my public key in
-case you also want to verify the things.
->
-> Of course, since I normally don't use pgp signing etc, it's entirely
-possible that I've done something stupid, and I'm now sending you my
-secret key and my full porn-collection.
->
 
 
-Linus,
+On Mon, 25 Apr 2005, Mike Taht wrote:
+> 
+> One difference is probably - mercurial appears to be using zlib's 
+> *default* compression of 6....
+> 
+> using zlib compression of 9 really impacts git...
 
-Looks good:
+I agree that it will hurt for big changes, but since I really do believe 
+that most changes are just a couple of files, I don't believe it matters 
+for those. 
 
-$ gpg --import torvalds.pgp
-$ gpg --edit-key Linus trust
-gpg --edit-key Linus trust
- 1 = Don't know
- 2 = I do NOT trust
- 3 = I trust marginally
- 4 = I trust fully
- 5 = I trust ultimately
- m = back to the main menu
+I forget what the exact numbers were, but I did some timings on plain
+"gzip", and it basically said that doing gzip on a medium-sized file was
+not that different for -6 and -9. Why? Because most of the overhead was
+elsewhere ;)
 
-Your decision? 5
-Do you really want to set this key to ultimate trust? y
+Oh, well, I just re-created some numbers. This wasn't exactly what I did 
+last time I tested it, but it's conceptually the same thing:
 
+	torvalds@ppc970:~> time gzip -9 < v2.6/linux/kernel/sched.c > /dev/null 
+	real    0m0.018s
+	user    0m0.018s
+	sys     0m0.000s
 
+	torvalds@ppc970:~> time gzip -6 < v2.6/linux/kernel/sched.c > /dev/null 
+	real    0m0.015s
+	user    0m0.013s
+	sys     0m0.001s
 
-$ fsck-cache  --tags
-tagged commit a2755a80f40e5794ddc20e00f781af9d6320fafb (v2.6.12-rc3) in
-0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
-tagged commit 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 (v2.6.12-rc2) in
-9e734775f7c22d2f89943ad6c745571f1930105f
-expect dangling commits - potential heads - due to lack of head
-information
-dangling commit b453257f057b834fdf9f4a6ad6133598b79bd982
+ie there's a 0.003 second difference, which is certainly noticeable, and
+would be hugely noticeable if you did a lot of these. But in my world-view
+(which is what git is optimized for), the common case is that you usually
+end up compressing maybe five-ten files, so the _compression_ overhead is
+not that huge compared to all the other stuff.
 
+But yes, testing git on big changes will test exactly the things that git
+isn't optimized for. I think git will normally hold up pretty well (ie it
+will still beat anything that isn't designed for speed, and will be
+comparable to things that _are_), but it's not what I'm interested in
+optimizing for.
 
+That said - these days we can trivially change over to a "zlib -6" 
+compression, and nothing should ever notice. So if somebody wants to 
+test it, it should be fairly easy to just compare side-by-side: the 
+results should be identical.
 
-$ chksig.sh 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
-gpg: Signature made Mon Apr 25 18:27:55 2005 EDT using DSA key ID 76E21CBB
-gpg: Good signature from "Linus Torvalds (tag signing key)
-<torvalds@osdl.org>"
+The easiest test-case is Andrew's 198-patch patch-bomb on linux-kernel a 
+few weeks ago: they all apply cleanly to 2.6.12-rc2 (in order), and you 
+can use my "dotest" script to automate the test..
 
-
-
-chksig.sh:
-
-#!/bin/sh
-TAG=$1
-cat-file tag $TAG | sed -ne '/BEGIN PGP/,/END PGP/p' > .tmp.sig
-cat-file tag $TAG | sed -e '/BEGIN PGP/,/END PGP/d' | \
-        gpg --verify .tmp.sig -
-rm -f .tmp.sig
-
-
-
-Sean
-
-
-
-
+			Linus
