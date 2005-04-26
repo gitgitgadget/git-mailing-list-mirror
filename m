@@ -1,106 +1,112 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC] diff-cache buglet
-Date: Tue, 26 Apr 2005 09:51:41 -0700
-Message-ID: <7v7jippjky.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Cogito chicken-and-egg problem
+Date: Tue, 26 Apr 2005 13:02:22 -0400
+Message-ID: <1114534942.26856.10.camel@dv>
+References: <Pine.LNX.4.21.0504261229220.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 18:50:25 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 18:58:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQTF7-0007Df-Hn
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:49:02 +0200
+	id 1DQTNH-0000J3-D9
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 18:57:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261637AbVDZQx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 12:53:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261686AbVDZQx2
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 12:53:28 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:64492 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261637AbVDZQvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 12:51:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050426165143.TIQF7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 26 Apr 2005 12:51:43 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261608AbVDZRCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 13:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVDZRCi
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 13:02:38 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:23938
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261608AbVDZRCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 13:02:33 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 95A81EFF49; Tue, 26 Apr 2005 13:02:22 -0400 (EDT)
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0504261229220.30848-100000@iabervon.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus,
+Hello, Daniel!
 
-	what do you want diff-cache to do upon finding an
-unmerged path?  Currently your code says "undecided" to me.
+On Tue, 2005-04-26 at 12:38 -0400, Daniel Barkalow wrote:
 
-The main() attempts to first remove all merge entries before
-letting the diff_cache() do its work, but the diff_cache()
-itself has also some code to deal with unmerged entries.
+> > Also, the dependency on commit-id was dropped from my patch for some
+> > reason.  I believe it's still needed.  Also, we need a dependency on
+> > cat-file, which is used by commit-id internally.
+> 
+> commit-id doesn't really use cat-file; the way it calls gitXnormid.sh
 
-In the attached patch, the second hunk starting at ll 76 is a
-pure and obvious bugfix.  The function is attempting to remove
-all merge entries, but it stops in the middle; that's why I said
-"attempts" in the above.
+There is gitXnormid.sh in the current cogito.  Please update your tree.
 
-The patch lets you have it in both ways by adding --unmerged
-flag.  Without it, unmerged entries are culled at the beginning;
-with it, you will see diffs for all unmerged stages.
+> definitely suppresses that section.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+That's not what I see if I remove cat-file but leave commit-id in my
+$HOME/bin:
 
-jit-snap -v 0
---- k/diff-cache.c
-+++ l/diff-cache.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
+proski@dv:~/src/cogito$ make cg-version
+/home/proski/bin/commit-id: line 35: cat-file: command not found
+Invalid id: f9f0459b5b39cf83143c91ae39b4eaf187cf678a
+Generating cg-version...
+proski@dv:~/src/cogito$
+
+> In fact, commit-id with no arguments
+> is simply an easy-to-remember way of doing "cat .git/HEAD" using a much
+> more complicated script. Earlier, I sent a patch to just do this, since it
+> avoids the whole issue.
+
+That would be fine with me.
+
+> (Also, .git/HEAD is a dependancy, since you want to redo the version
+> script if you commit; but if you don't have it, that's okay and just means
+> you're building from a tarball, which is described completely by VERSION)
+
+It should be a conditional dependency, i.e. it should be a dependency
+if .git exists.
+
+It seems to me that the whole idea of including SHA1 in cg-version is
+broken.  SHA1 is not human readable.  But if the maintainers insist on
+having SHA1 in cg-version, I want it to be done without causing build
+warnings for new users.
+
+Here's an alternative patch.
+
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+Index: Makefile
+===================================================================
+--- f262000f302b749e485f5eb971e6aabefbb85680/Makefile  (mode:100644 sha1:4f01bbbbb3fd0e53e9ce968f167b6dae68fcfa92)
++++ uncommitted/Makefile  (mode:100644)
+@@ -87,12 +87,21 @@
+ http-pull: LIBS += -lcurl
  
-+static int leave_unmerged = 0;
- static int cached_only = 0;
- static int line_termination = '\n';
  
-@@ -76,7 +77,7 @@ static void remove_merge_entries(void)
- 	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
- 		if (!ce_stage(ce))
--			break;
-+			continue;
- 		printf("%s: unmerged\n", ce->name);
- 		while (remove_entry_at(i)) {
- 			if (!ce_stage(active_cache[i]))
-@@ -85,7 +86,8 @@ static void remove_merge_entries(void)
- 	}
- }
++ifneq (,$(wildcard .git))
++cg-version: $(VERSION) .git/HEAD
++	@echo Generating cg-version...
++	@rm -f $@
++	@echo "#!/bin/sh" > $@
++	@echo "echo \"$(shell cat $(VERSION)) ($(shell cat .git/HEAD))\"" >> $@
++	@chmod +x $@
++else
+ cg-version: $(VERSION)
+ 	@echo Generating cg-version...
+ 	@rm -f $@
+ 	@echo "#!/bin/sh" > $@
+-	@PATH=.:$(PATH) echo "echo \"$(shell cat $(VERSION)) ($(shell commit-id))\"" >> $@
++	@echo "echo \"$(shell cat $(VERSION))\"" >> $@
+ 	@chmod +x $@
++endif
  
--static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
-+static char *diff_cache_usage =
-+"diff-cache [-r] [-z] [--cached] [--unmerged] <tree sha1>";
- 
- int main(int argc, char **argv)
- {
-@@ -110,13 +112,18 @@ int main(int argc, char **argv)
- 			cached_only = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--unmerged")) {
-+			leave_unmerged = 1;
-+			continue;
-+		}
- 		usage(diff_cache_usage);
- 	}
- 
- 	if (argc != 2 || get_sha1_hex(argv[1], tree_sha1))
- 		usage(diff_cache_usage);
- 
--	remove_merge_entries();
-+	if (!leave_unmerged)
-+		remove_merge_entries();
- 
- 	tree = read_tree_with_tree_or_commit_sha1(tree_sha1, &size, 0);
- 	if (!tree)
+ install: $(PROG) $(SCRIPTS) $(SCRIPT) $(GEN_SCRIPT)
+ 	install -m755 -d $(DESTDIR)$(bindir)
 
 
+-- 
+Regards,
+Pavel Roskin
 
