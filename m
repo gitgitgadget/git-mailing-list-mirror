@@ -1,89 +1,115 @@
-From: linux@horizon.com
-Subject: Re: Revised PPC assembly implementation
-Date: 26 Apr 2005 02:35:07 -0000
-Message-ID: <20050426023507.24611.qmail@science.horizon.com>
-References: <20050425161746.7d943e62.davem@davemloft.net>
-Cc: git@vger.kernel.org, linux@horizon.com
-X-From: git-owner@vger.kernel.org Tue Apr 26 04:30:21 2005
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: git "tag" objects implemented - and a re-done commit
+Date: Mon, 25 Apr 2005 22:44:45 -0400 (EDT)
+Message-ID: <1524.10.10.10.24.1114483485.squirrel@linux1>
+References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>   
+    <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>   
+    <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>   
+    <Pine.LNX.4.58.0504251442480.12019@sam.ics.uci.edu>   
+    <Pine.LNX.4.58.0504251505260.18901@ppc970.osdl.org>   
+    <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Andreas Gal" <gal@uci.edu>,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 04:39:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQFq4-0008KE-U6
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 04:30:17 +0200
+	id 1DQFzE-0000sH-1G
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 04:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261285AbVDZCfT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 22:35:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261287AbVDZCfT
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 22:35:19 -0400
-Received: from science.horizon.com ([192.35.100.1]:62512 "HELO
-	science.horizon.com") by vger.kernel.org with SMTP id S261285AbVDZCfI
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 22:35:08 -0400
-Received: (qmail 24612 invoked by uid 1000); 26 Apr 2005 02:35:07 -0000
-To: davem@davemloft.net, paulus@samba.org
-In-Reply-To: <20050425161746.7d943e62.davem@davemloft.net>
+	id S261289AbVDZCou (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Apr 2005 22:44:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261290AbVDZCou
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 22:44:50 -0400
+Received: from simmts6.bellnexxia.net ([206.47.199.164]:41715 "EHLO
+	simmts6-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261289AbVDZCoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Apr 2005 22:44:46 -0400
+Received: from linux1 ([67.71.124.169]) by simmts6-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050426024445.ZFDS1597.simmts6-srv.bellnexxia.net@linux1>;
+          Mon, 25 Apr 2005 22:44:45 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j3Q2ih5h010220;
+	Mon, 25 Apr 2005 22:44:44 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Mon, 25 Apr 2005 22:44:45 -0400 (EDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
+In-Reply-To: <Pine.LNX.4.58.0504251530480.18901@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(Sorry about that last e-mail.  gnome-terminal crashed and sent the file
-before I edited it.  Here's what I meant to send.)
-
-> Do a block with the integer ALUs in parallel with a block done using
-> Altivec :-)  There should be enough spare insn slots so that the loads
-> are absorbed properly.
-
-Unfortunately, the blocks are connected by a data dependency.
-It's basically a large-key block cipher, chained by:
-
-iv[] = fixed_initial_value.
-iv[] += encrypt(iv, text[0..63])
-iv[] += encrypt(iv, text[64..127])
-iv[] += encrypt(iv, text[128..191])
-iv[] += encrypt(iv, text[192..255])
-etc.
-
-There is no coarse-grain parallelism to exploit, unless you want
-to be hashing two separate files at once.  Which would do too much
-damage to the structure of the source to be worth considering.
-
-> Unlike UltraSPARC's VIS, with altivec you can reasonably do shifts and
-> rotates, which is the only reason I'm suggesting this.
-
-I don't quite think it's worth it, though.  It's not data-parallel
-enough.
-
-We could theoretically use it to form the w[] vector, but that's only
-4 instructions in registers which are very flexibly schedulable and
-nicely fill in the cracks between other instructions.
-
-Oh, here's STEPD1+UPDATEW scheduled optimally for the G4.  %r5 holds the
-constant K.  Note that t < s <= t+16.  W(s) and W((s)-16) are actually
-the same register.
-
-add   RE(t),RE(t),W(t);	xor    %r0,RD(t),RB(t);	xor    W(s),W((s)-16),W((s)-3);
-add   RE(t),RE(t),%r5;	xor    %r0,%r0,RC(t);	xor    W(s),W(s),W((s)-8);
-add   RE(t),RE(t),%r0;	rotlwi %r0,RA(t),5;	xor    W(s),W(s),W((s)-14);
-add   RE(t),RE(t),%r0;	rotlwi RB(t),RB(t),30;	rotlwi W(s),W(s),1;
-
-However, whether that can be done in 6 cycles on a G5 is a bit unclear.
-It can't be 6 consecutive cycles, but with some motion of code
-across the edges, perhaps...
-
-0: add   RE(t),RE(t),W(t);		xor    %r0,RD(t),RB(t);
-1: xor    W(s),W((s)-16),W((s)-3);	(add)
-2: add   RE(t),RE(t),%r5;		xor    %r0,%r0,RC(t);
-3: xor    W(s),W(s),W((s)-8);		(rotlwi)
-4: add   RE(t),RE(t),%r0;		rotlwi %r0,RA(t),5;
-5: xor    W(s),W(s),W((s)-14);		rotlwi RB(t),RB(t),30;
-6:
-7: add   RE(t),RE(t),%r0;
-8:
-9: rotlwi W(s),W(s),1;
-
-The problem there is forcing that ordering, rather than issuing the final
-add in cycle 6 and pushing everything else ahead of it.
+On Mon, April 25, 2005 6:39 pm, Linus Torvalds said:
+>
+> Ok, for the intrepid users, you can now test to see if you can pick them
+out. fsck should make them totally obvious, and here's my public key in
+case you also want to verify the things.
+>
+> Of course, since I normally don't use pgp signing etc, it's entirely
+possible that I've done something stupid, and I'm now sending you my
+secret key and my full porn-collection.
+>
 
 
-STEPD0+UPDATEW and STEPD1+UPDATEW are 13 and 14 instructions,
-respectively, and don't fit into a 3-issue machine as neatly.
+Linus,
+
+Looks good:
+
+$ gpg --import torvalds.pgp
+$ gpg --edit-key Linus trust
+gpg --edit-key Linus trust
+ 1 = Don't know
+ 2 = I do NOT trust
+ 3 = I trust marginally
+ 4 = I trust fully
+ 5 = I trust ultimately
+ m = back to the main menu
+
+Your decision? 5
+Do you really want to set this key to ultimate trust? y
+
+
+
+$ fsck-cache  --tags
+tagged commit a2755a80f40e5794ddc20e00f781af9d6320fafb (v2.6.12-rc3) in
+0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
+tagged commit 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 (v2.6.12-rc2) in
+9e734775f7c22d2f89943ad6c745571f1930105f
+expect dangling commits - potential heads - due to lack of head
+information
+dangling commit b453257f057b834fdf9f4a6ad6133598b79bd982
+
+
+
+$ chksig.sh 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
+gpg: Signature made Mon Apr 25 18:27:55 2005 EDT using DSA key ID 76E21CBB
+gpg: Good signature from "Linus Torvalds (tag signing key)
+<torvalds@osdl.org>"
+
+
+
+chksig.sh:
+
+#!/bin/sh
+TAG=$1
+cat-file tag $TAG | sed -ne '/BEGIN PGP/,/END PGP/p' > .tmp.sig
+cat-file tag $TAG | sed -e '/BEGIN PGP/,/END PGP/d' | \
+        gpg --verify .tmp.sig -
+rm -f .tmp.sig
+
+
+
+Sean
+
+
+
+
