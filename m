@@ -1,93 +1,89 @@
-From: Mike Taht <mike.taht@timesys.com>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Mon, 25 Apr 2005 21:12:04 -0700
-Message-ID: <426DBF94.3010502@timesys.com>
-References: <20050426032422.GQ13467@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Mon, 25 Apr 2005 21:20:12 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504252113210.18901@ppc970.osdl.org>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
+ <20050426040127.GK21897@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 06:09:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 06:13:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQHOD-0002QB-IE
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 06:09:37 +0200
+	id 1DQHRt-0002gm-CP
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 06:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261290AbVDZEOn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 00:14:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261304AbVDZEOn
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 00:14:43 -0400
-Received: from mail.timesys.com ([65.117.135.102]:36378 "EHLO
-	exchange.timesys.com") by vger.kernel.org with ESMTP
-	id S261290AbVDZEOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 00:14:25 -0400
-Received: from [10.129.129.212] ([67.180.132.225]) by exchange.timesys.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Tue, 26 Apr 2005 00:08:55 -0400
-X-Accept-Language: en-us, en
-To: pasky@ucw.cz, git@vger.kernel.org
-In-Reply-To: <20050426032422.GQ13467@pasky.ji.cz>
-X-OriginalArrivalTime: 26 Apr 2005 04:08:55.0609 (UTC) FILETIME=[A9F4D290:01C54A15]
+	id S261304AbVDZES2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 00:18:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261314AbVDZES2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 00:18:28 -0400
+Received: from fire.osdl.org ([65.172.181.4]:20158 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261304AbVDZESQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 00:18:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3Q4IDs4002603
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 21:18:14 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3Q4ICMr025953;
+	Mon, 25 Apr 2005 21:18:13 -0700
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050426040127.GK21897@waste.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
->   Yes, this is a huge change. No, I don't expect any further changes of
-> similar scale. I think the new interface is significantly simpler _and_
-> cleaner than the old one.
 
-Heh. Another huge change would be moving the top level directories 
-around a bit.
+On Mon, 25 Apr 2005, Matt Mackall wrote:
+> 
+> And the number of files checked in grows from ~1000 to ~6000. Note
+> that git is growing from 4 to 19 seconds as well.
 
+Heh,. I didn't much look at the git numbers, since I knew those were 
+supposed to be linear in the size of the patch...
 
-bindings  COPYING  git.spec  Makefile  programs  README.reference  tests
-contrib   doc      include   po        README    src  VERSION
+> I'm not versant enough with git enough to know how but I'll give it a
+> shot. Do you have the patches in an mbox, perchance? This is Andrew's
+> x/198 patch bomb?
 
-Leaving fixing the makefiles aside as an exercise for the interested 
-reader... that's:
+Yes. I have my "tools" scripts for git in
 
-#!/bin/sh
+	kernel.org:/pub/linux/kernel/people/torvalds/git-tools.git
 
-# completely rearrange the file structure of cogito/git
-# just to make pasky and other scm users insane once again
-# FIXME - fix the makefiles, git.spec
+and I sent out the script I used to test the 2.6.12-rc2 + patches stuff in 
+the previous email, so you would just have to edit my mbox-applicator 
+tools to work with hg and get comparable numbers.
 
-CFILES=`ls *.c`
-DFILES=`ls ppc/* mozilla-sha1/*`
-HFILES=`ls *.h`
-SRCDIR=src # or libgit?
-INCDIR=include/git-guts # or keep in SRCDIR or include/git or whatever
-COGDIR=programs/cogito # or just cogito. is git-web likely to be inc?
+> It might be simpler for me to just apply everything
+> in -mm to git and hg and compare times.
 
-mkdir -p $SRCDIR $INCDIR $COGDIR \
-bindings/perl bindings/python bindings/ruby po tests doc # just ideas,
-# no files (yet)
+That should work.
 
-mv $CFILES ppc mozilla-sha1 $SRCDIR
-mv $HFILES $INCDIR
-COGFILES=`file * | grep "script text executable" | cut -f1 -d:`
-mv $COGFILES $COGDIR
+> > You're doing something wrong with git here. Why would you need to update 
+> > your cache?
+> 
+> Quite possibly. Without it, I was getting a dump of a bunch of SHAs.
+> I'm pretty git-ignorant, I've been focusing on something else for the
+> past couple weeks.
 
-cg-rm $CFILES $HFILES $COGFILES
-for i in $CFILES $DFILES
-do
-         cg-add $SRCDIR/$i
-done
-for i in $HFILES
-do
-         cg-add $INCDIR/$i
-done
+Getting a bunch of SHA's means that the file contents match, but that your 
+index file wasn't up-to-date, so git had to actually uncompress the object 
+backing store and _compare_ the file contents to notice.
 
-cg-commit
+And I suspect that you may have done _all_ your numbers without ever
+having initialized the git index, in which case git will really suck raw
+eggs, because git will basically always re-read every file (it will never
+realize that they are up-to-date already).
 
+Basically, the theory of git operation is that the index file should
+_always_ be up-to-date.  Normally you don't have to do anything about it,
+since the git helper tools will always just keep it that way, but if you
+didn't, then..
 
-
-
--- 
-
-Mike Taht
-
-
-   "A straw vote only shows which way the hot air blows.
-	-- O'Henry"
+		Linus
