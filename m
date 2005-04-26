@@ -1,77 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git.git object database at kernel.org?
-Date: Mon, 25 Apr 2005 17:48:31 -0700
-Message-ID: <426D8FDF.5050608@zytor.com>
-References: <7vhdhvstb2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504241553580.18901@ppc970.osdl.org> <426D3B01.8060408@zytor.com> <Pine.LNX.4.58.0504251729080.18901@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: A darcs that can pull from git
+Date: Mon, 25 Apr 2005 17:55:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504251752570.18901@ppc970.osdl.org>
+References: <7ipswjbybx.fsf@lanthane.pps.jussieu.fr>
+	<20050425133116.GG11667@abridgegame.org>
+	<7i4qdusxdw.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 26 02:44:19 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Tue Apr 26 02:48:58 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQEBK-00031X-Dl
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 02:44:06 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261196AbVDZAtI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Apr 2005 20:49:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261225AbVDZAtI
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Apr 2005 20:49:08 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:39380 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261196AbVDZAtA
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Apr 2005 20:49:00 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3Q0mbZa017477
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 25 Apr 2005 17:48:37 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504251729080.18901@ppc970.osdl.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DQEFm-0003Z4-6B
+	for gcvdd-darcs-devel@m.gmane.org; Tue, 26 Apr 2005 02:48:42 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DQEKS-000652-Jz; Mon, 25 Apr 2005 20:53:32 -0400
+Received: from fire.osdl.org ([65.172.181.4] helo=smtp.osdl.org)
+	by abridgegame.org with esmtp (Exim 4.50) id 1DQEKN-00064q-F3
+	for darcs-devel@darcs.net; Mon, 25 Apr 2005 20:53:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3Q0rNs4019193
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Apr 2005 17:53:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3Q0rMMV017885;
+	Mon, 25 Apr 2005 17:53:23 -0700
+To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+In-Reply-To: <7i4qdusxdw.fsf@lanthane.pps.jussieu.fr>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-Linus Torvalds wrote:
-> 
-> On Mon, 25 Apr 2005, H. Peter Anvin wrote:
-> 
->>No, mktime() always uses the local time zone.  It's the inverse of 
->>localtime().
-> 
-> Note that this still doesn't make any sense.
-> 
-> A true inverse of "localtime()" should still take the GMT offset from
-> "struct tm", and it would work fine, assuming that localtime() set that
-> offset correctly.
-> 
-> So _I_ think it's incredibly stupid that mktime() looks at the local 
-> timezone. 
-> 
-> Oh, well.  Not a big issue except for the date conversion, and since there 
-> hopefully aren't any old repo's left, we can leave it behind us.
-> 
 
-It *is* incredibly stupid, but dates back to the fact that a the GMT 
-offset field in struct tm is a reasonably recent invention, and a lot of 
-old code depended on just stuffing fields in struct tm and calling 
-mktime(); they would leave the offset field uninitialized, as opposed to 
-setting it to some well-defined "I don't know" value.
+[ Side note: I tend to read the mailing lists much less often, and more 
+  likely to skip stuff, so if you have a question that is literally for me 
+  personally, it's probably best to Cc my private address rather than 
+  depending on me reading every single mailing list email ]
 
-What totally blows is that if mktime() can't be fixed, that we haven't 
-added mktime_have_offset() or something like that.
+On Mon, 25 Apr 2005, Juliusz Chroboczek wrote:
+> 
+> Linus, could you please suggest a suitable license statement to
+> include in whichever files of yours we choose to include in Darcs?  Is
+> David's suggestion (stock GPL boilerplate with ``or any later
+> version'' removed) okay with you?
 
-Oh well.  If you have the offset, the algorithm is fully arithmetric and 
-doesn't rely on the zoneinfo system, so it can be trivially implemented. 
-   And again, curl_gettime() does handle the whole string to time_t 
-conversion of the common formats.
+Stock GNU boilerplate without the "or any later version" works fine. 
 
-	-hpa
+As does a simple one-liner "Licensed under GPLv2", for that matter. It's 
+not like there can be any real confusion.
 
+		Linus
