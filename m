@@ -1,60 +1,71 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Cogito Tutorial If It Helps
-Date: Tue, 26 Apr 2005 23:40:38 +0200
-Message-ID: <20050426214038.GP13224@pasky.ji.cz>
-References: <1114548747.3083.1.camel@kryten> <20050426211834.GO13224@pasky.ji.cz> <1114551403.3083.3.camel@kryten>
+From: Fabian Franz <FabianFranz@gmx.de>
+Subject: Re: Merge with git-pasky II.
+Date: Tue, 26 Apr 2005 23:36:27 +0200
+Message-ID: <200504262336.02583.FabianFranz@gmx.de>
+References: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:36:25 2005
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:36:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXiZ-0004Xx-TU
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:35:44 +0200
+	id 1DQXiK-0004WC-Sp
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261803AbVDZVkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 17:40:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261804AbVDZVkw
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:40:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:18065 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261803AbVDZVkj (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:40:39 -0400
-Received: (qmail 14177 invoked by uid 2001); 26 Apr 2005 21:40:38 -0000
-To: James Purser <purserj@ksit.dynalias.com>
+	id S261802AbVDZVke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 17:40:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261803AbVDZVke
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:40:34 -0400
+Received: from imap.gmx.net ([213.165.64.20]:53655 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S261802AbVDZVk0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:40:26 -0400
+Received: (qmail invoked by alias); 26 Apr 2005 21:40:24 -0000
+Received: from p54A3DA92.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.218.146]
+  by mail.gmx.net (mp002) with SMTP; 26 Apr 2005 23:40:24 +0200
+X-Authenticated: #590723
+To: Bram Cohen <bram@bitconjurer.org>
+User-Agent: KMail/1.5.4
+In-Reply-To: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
+Content-Description: clearsigned data
 Content-Disposition: inline
-In-Reply-To: <1114551403.3083.3.camel@kryten>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 11:36:43PM CEST, I got a letter
-where James Purser <purserj@ksit.dynalias.com> told me that...
-> On Wed, 2005-04-27 at 07:18, Petr Baudis wrote:
-> > cg-merge is _not_ like doing cg-diff | cg-patch - that's a dangerous
-> > thought, and not true at all. cg-diff | cg-patch will just apply the
-> > given diff to your working directory, but it won't record any merging
-> > metadata, will often get it very wrong, and you will get to all sorts of
-> > other troubles. Just always use cg-merge. And probably pass it -b only
-> > when you know what are you doing.
-> 
-> Thanks for that, I've changed it a little to point out that cg-patch
-> should really only be used for small single file patches.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-No, you've missed the point. It isn't the size of the change what
-matters - cg-patch should handle even huge patches (mostly) fine.  What
-matters is that you just did was not merge. It was applying some patch
-to your working tree, but not merging branches.
+Am Dienstag, 26. April 2005 23:28 schrieb Bram Cohen:
+> Now you've just gone off the deep end. This is an apples-to-apples
+> comparison. Please accept one of thee following two statements:
+>
+> (a) Git doesn't do merging, and none of the related new tools around it do
+> merging.
+>
+> (b) Codeville merge (sans rename functionality) would be superior for the
+> merging which will be done.
 
-So after doing cg-diff | cg-patch several times, you have your working
-tree full of huge local changes (making it impossible to sensibly
-cg-merge) and your last commit happenned long ago. Or you commit the
-cg-patch results, but your commits are wrong, since they don't carry the
-appropriate merge information.
+I have one very humble question:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Why don't you write and contribute some code for git to do good merging?
+
+This would resolve all your problems.
+
+I think the "magic-merge" command is quite exchangable and if your way works
+good and is compatible, then people will automatically start using that.
+
+cu
+
+Fabian
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFCbrRdI0lSH7CXz7MRAkS4AJ9JEka71M0Zc6cizXhrYpHiKHhL0gCcD/3Q
+j+UnPU/cXafGjGG6Bt9mZE8=
+=IYk0
+-----END PGP SIGNATURE-----
+
