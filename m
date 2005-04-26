@@ -1,71 +1,61 @@
-From: Fabian Franz <FabianFranz@gmx.de>
-Subject: Re: Merge with git-pasky II.
-Date: Tue, 26 Apr 2005 23:36:27 +0200
-Message-ID: <200504262336.02583.FabianFranz@gmx.de>
-References: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [PATCH] cogito - split out cg-X* to prefix/lib/cogito
+Date: Tue, 26 Apr 2005 14:44:07 -0700
+Message-ID: <20050426214407.GC5324@shell0.pdx.osdl.net>
+References: <200504260053.33506.jcorbin@wunjo.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:36:41 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:41:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXiK-0004WC-Sp
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:35:29 +0200
+	id 1DQXlj-00051c-Pw
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261802AbVDZVke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 17:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261803AbVDZVke
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:40:34 -0400
-Received: from imap.gmx.net ([213.165.64.20]:53655 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S261802AbVDZVk0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:40:26 -0400
-Received: (qmail invoked by alias); 26 Apr 2005 21:40:24 -0000
-Received: from p54A3DA92.dip.t-dialin.net (EHLO ff.cornils.net) [84.163.218.146]
-  by mail.gmx.net (mp002) with SMTP; 26 Apr 2005 23:40:24 +0200
-X-Authenticated: #590723
-To: Bram Cohen <bram@bitconjurer.org>
-User-Agent: KMail/1.5.4
-In-Reply-To: <Pine.LNX.4.44.0504261400570.4678-100000@wax.eds.org>
-Content-Description: clearsigned data
+	id S261781AbVDZVoM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 17:44:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261804AbVDZVoM
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:44:12 -0400
+Received: from fire.osdl.org ([65.172.181.4]:18896 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261781AbVDZVoJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:44:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3QLi7s4029222
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 26 Apr 2005 14:44:08 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3QLi7OG011419;
+	Tue, 26 Apr 2005 14:44:07 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j3QLi7U7011418;
+	Tue, 26 Apr 2005 14:44:07 -0700
+To: "Joshua T. Corbin" <jcorbin@wunjo.org>
 Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200504260053.33506.jcorbin@wunjo.org>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+(BTW, this patch was linewrapped)
 
-Am Dienstag, 26. April 2005 23:28 schrieb Bram Cohen:
-> Now you've just gone off the deep end. This is an apples-to-apples
-> comparison. Please accept one of thee following two statements:
->
-> (a) Git doesn't do merging, and none of the related new tools around it do
-> merging.
->
-> (b) Codeville merge (sans rename functionality) would be superior for the
-> merging which will be done.
+* Joshua T. Corbin (jcorbin@wunjo.org) wrote:
+> The following patch does the following:
+>   * Change the Makefile to install all cg-X* to $(prefix)/lib/cogito
+>   * Modify all cg-* to use this lib prefix.
 
-I have one very humble question:
+Hmm, I agree with the intent of this patch (place extraneous bits out of
+/usr/bin namespace), although I'm not sure it's the best method.  It
+winds up only putting three files there (with cg- prefixes as well).
 
-Why don't you write and contribute some code for git to do good merging?
+I've left it out of the rpm build for now.
 
-This would resolve all your problems.
-
-I think the "magic-merge" command is quite exchangable and if your way works
-good and is compatible, then people will automatically start using that.
-
-cu
-
-Fabian
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQFCbrRdI0lSH7CXz7MRAkS4AJ9JEka71M0Zc6cizXhrYpHiKHhL0gCcD/3Q
-j+UnPU/cXafGjGG6Bt9mZE8=
-=IYk0
------END PGP SIGNATURE-----
-
+thanks,
+-chris
+-- 
+Linux Security Modules     http://lsm.immunix.org     http://lsm.bkbits.net
