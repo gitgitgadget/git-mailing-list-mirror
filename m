@@ -1,69 +1,60 @@
-From: James Purser <purserj@ksit.dynalias.com>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Cogito Tutorial If It Helps
-Date: Wed, 27 Apr 2005 07:36:43 +1000
-Message-ID: <1114551403.3083.3.camel@kryten>
-References: <1114548747.3083.1.camel@kryten>
-	 <20050426211834.GO13224@pasky.ji.cz>
+Date: Tue, 26 Apr 2005 23:40:38 +0200
+Message-ID: <20050426214038.GP13224@pasky.ji.cz>
+References: <1114548747.3083.1.camel@kryten> <20050426211834.GO13224@pasky.ji.cz> <1114551403.3083.3.camel@kryten>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 23:31:48 2005
+X-From: git-owner@vger.kernel.org Tue Apr 26 23:36:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQXd9-0003pV-4m
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:30:07 +0200
+	id 1DQXiZ-0004Xx-TU
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 23:35:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261800AbVDZVfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 17:35:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261801AbVDZVfA
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:35:00 -0400
-Received: from dsl-202-52-56-051.nsw.veridas.net ([202.52.56.51]:25216 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261800AbVDZVe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 17:34:56 -0400
-Received: from localhost.localdomain (kryten [127.0.0.1])
-	by localhost.localdomain (8.12.11/8.12.11) with ESMTP id j3QLamdR003224;
-	Wed, 27 Apr 2005 07:36:48 +1000
-Received: (from purserj@localhost)
-	by localhost.localdomain (8.12.11/8.12.11/Submit) id j3QLah7U003223;
-	Wed, 27 Apr 2005 07:36:43 +1000
-X-Authentication-Warning: localhost.localdomain: purserj set sender to purserj@ksit.dynalias.com using -f
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050426211834.GO13224@pasky.ji.cz>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2) 
+	id S261803AbVDZVkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 17:40:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261804AbVDZVkw
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 17:40:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:18065 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261803AbVDZVkj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 17:40:39 -0400
+Received: (qmail 14177 invoked by uid 2001); 26 Apr 2005 21:40:38 -0000
+To: James Purser <purserj@ksit.dynalias.com>
+Content-Disposition: inline
+In-Reply-To: <1114551403.3083.3.camel@kryten>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-04-27 at 07:18, Petr Baudis wrote:
-> Dear diary, on Tue, Apr 26, 2005 at 10:52:27PM CEST, I got a letter
-> where James Purser <purserj@ksit.dynalias.com> told me that...
-> > I reworked the previous tutorial to take in the changes in the scripts.
-> > Will make this a series of tutorials to cover all aspects. Any
-> > suggestions or hints or spelling corrections would be most welcome.
-> > 
-> > http://ksit.dynalias.com/articles.php?s_id=46&art_id=41
+Dear diary, on Tue, Apr 26, 2005 at 11:36:43PM CEST, I got a letter
+where James Purser <purserj@ksit.dynalias.com> told me that...
+> On Wed, 2005-04-27 at 07:18, Petr Baudis wrote:
+> > cg-merge is _not_ like doing cg-diff | cg-patch - that's a dangerous
+> > thought, and not true at all. cg-diff | cg-patch will just apply the
+> > given diff to your working directory, but it won't record any merging
+> > metadata, will often get it very wrong, and you will get to all sorts of
+> > other troubles. Just always use cg-merge. And probably pass it -b only
+> > when you know what are you doing.
 > 
-> Thanks for writing that! :-)
-> 
-> I'd vote for describing the cg-update right near cg-pull, or perhaps
-> even before cg-update, as the primary method; I think it's commonly what
-> people really want to do when they do cg-pull anyway.
-> 
-> cg-merge is _not_ like doing cg-diff | cg-patch - that's a dangerous
-> thought, and not true at all. cg-diff | cg-patch will just apply the
-> given diff to your working directory, but it won't record any merging
-> metadata, will often get it very wrong, and you will get to all sorts of
-> other troubles. Just always use cg-merge. And probably pass it -b only
-> when you know what are you doing.
-> 
-> Thanks,
+> Thanks for that, I've changed it a little to point out that cg-patch
+> should really only be used for small single file patches.
 
-Thanks for that, I've changed it a little to point out that cg-patch
-should really only be used for small single file patches.
+No, you've missed the point. It isn't the size of the change what
+matters - cg-patch should handle even huge patches (mostly) fine.  What
+matters is that you just did was not merge. It was applying some patch
+to your working tree, but not merging branches.
+
+So after doing cg-diff | cg-patch several times, you have your working
+tree full of huge local changes (making it impossible to sensibly
+cg-merge) and your last commit happenned long ago. Or you commit the
+cg-patch results, but your commits are wrong, since they don't carry the
+appropriate merge information.
+
 -- 
-James Purser
-http://ksit.dynalias.com
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
