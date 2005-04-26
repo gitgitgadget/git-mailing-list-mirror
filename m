@@ -1,68 +1,62 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [ANNOUNCE] Cogito-0.8 (former git-pasky, big changes!)
-Date: Tue, 26 Apr 2005 00:58:29 -0400
-Message-ID: <426DCA75.901@pobox.com>
-References: <20050426032422.GQ13467@pasky.ji.cz>
+From: "Joshua T. Corbin" <jcorbin@wunjo.org>
+Subject: Re: [PATCH] cogito recursive cg-add and cg-rm
+Date: Tue, 26 Apr 2005 01:17:19 -0400
+Message-ID: <200504260117.20205.jcorbin@wunjo.org>
+References: <200504260027.03451.jcorbin@wunjo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 06:53:50 2005
+X-From: git-owner@vger.kernel.org Tue Apr 26 07:13:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQI4m-0005js-T8
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 06:53:37 +0200
+	id 1DQIOE-0007Tg-WE
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 07:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261290AbVDZE6m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 00:58:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261318AbVDZE6m
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 00:58:42 -0400
-Received: from 216-237-124-58.infortech.net ([216.237.124.58]:14722 "EHLO
-	mail.dvmed.net") by vger.kernel.org with ESMTP id S261290AbVDZE6i
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 00:58:38 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
-	id 1DQI9a-0002ef-A3; Tue, 26 Apr 2005 04:58:35 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: pasky@ucw.cz, git@vger.kernel.org
-In-Reply-To: <20050426032422.GQ13467@pasky.ji.cz>
-X-Spam-Score: 0.0 (/)
+	id S261290AbVDZFSa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 01:18:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261320AbVDZFSa
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 01:18:30 -0400
+Received: from node1.wunjo.org ([64.62.190.230]:27828 "EHLO node1.wunjo.org")
+	by vger.kernel.org with ESMTP id S261290AbVDZFSZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 01:18:25 -0400
+Received: by node1.wunjo.org (Postfix, from userid 65534)
+	id AFEA742EFC; Tue, 26 Apr 2005 01:18:24 -0400 (EDT)
+Received: from [192.168.1.100] (24.238.44.109.res-cmts.tv13.ptd.net [24.238.44.109])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by node1.wunjo.org (Postfix) with ESMTP id 59A1A42B74
+	for <git@vger.kernel.org>; Tue, 26 Apr 2005 01:18:22 -0400 (EDT)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
+In-Reply-To: <200504260027.03451.jcorbin@wunjo.org>
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on node1
+X-Spam-Level: *
+X-Spam-Status: No, score=1.8 required=5.0 tests=RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
->   Hello,
-> 
->   here goes Cogito-0.8, my SCMish layer over Linus Torvald's git tree
-> history tracker. This package was formerly called git-pasky, however
-> this release brings big changes. The usage is significantly different,
-> as well as some basic concepts; the history changed again (hopefully the
-> last time?) because of fixing dates of some old commits. The .git/
-> directory layout changed too.
+Small one line fix on top of the previos patch, apparently I was too hasty and 
+didn't test cg-rm on a single file ;)
 
-tar xvfj $x
-cd x
-make
-...
-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o rpull rpull.c 
-libgit.a rsh.c -lz -lssl
-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o rev-list rev-list.c 
-libgit.a -lz -lssl
-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o git-mktag 
-git-mktag.c libgit.a -lz -lssl
-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o diff-tree-helper 
-diff-tree-helper.c libgit.a -lz -lssl
-make: commit-id: Command not found
-Generating cg-version...
+Signed-off-by: Joshua T. Corbin <jcorbin@wunjo.org>
 
-
-
-So, it still complains about commit-id
-
-	Jeff
-
-
+Index: cg-rm
+===================================================================
+--- bb131a04832677b22959ffe47f68900b94accc0c/cg-rm  (mode:100755 
+sha1:f2d2e0c042fdf9496d53e833a50d960331e145b4)
++++ 5b396356f2c852f95a4226e955e186f46851a1f0/cg-rm  (mode:100755 
+sha1:7701a83878c1e02dbce3abc0e3f1290c56c1be16)
+@@ -40,7 +40,7 @@
+     shift
+   done > $RMFILE
+   rm -f $(cat $RMFILE)
+-  rmdir $(find $RMDIRS -depth -type d)
++  [ -n "$RMDIRS" ] && rmdir $(find $RMDIRS -depth -type d)
+   update-cache --remove -- $(cat $RMFILE)
+   rm -f $RMFILE
+ else
