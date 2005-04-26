@@ -1,99 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add -r flag to show-diff for diff-cache/diff-tree like
- output.
-Date: Tue, 26 Apr 2005 16:05:46 -0700
-Message-ID: <7vd5shm94l.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
-	<7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org>
-	<7vy8b5mawy.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504261534590.18901@ppc970.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] cg-mkpatch: Show human-readable dates
+Date: Wed, 27 Apr 2005 01:27:29 +0200
+Message-ID: <20050426232729.GE28560@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 27 01:02:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 01:23:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQZ3L-0007E5-GM
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 01:01:16 +0200
+	id 1DQZNr-0000dY-Gz
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 01:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261839AbVDZXGR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 19:06:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261840AbVDZXGR
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 19:06:17 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:55259 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261839AbVDZXFt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 19:05:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050426230547.UOTV20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 26 Apr 2005 19:05:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504261534590.18901@ppc970.osdl.org> (Linus
- Torvalds's message of "Tue, 26 Apr 2005 15:40:37 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261841AbVDZX1f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 19:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261843AbVDZX1f
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 19:27:35 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:10730 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261841AbVDZX1b (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 19:27:31 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id E4C2F6E18CA; Wed, 27 Apr 2005 01:26:35 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id A9E7A6E17A3; Wed, 27 Apr 2005 01:26:35 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 2924261FDE; Wed, 27 Apr 2005 01:27:30 +0200 (CEST)
+To: pasky@ucw.cz
+Mail-Followup-To: pasky@ucw.cz, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Use the approach from from cg-log to show author and commit date
+in a human-readable format.
 
-LT> Why not just make this the default? Who really cares about
-LT> show-diff?
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-Me, to care enough about it to send patches in ;-).
+---
+commit e9f5d35741f92d64945a072759450b1c43b2b6e4
+tree 01bda4c4ac0c3b938fb4e7954193f2441554acfb
+parent e5eb91b0a47e1169006034af434312c7f38dc902
+author Jonas Fonseca <fonseca@diku.dk> Wed, 27 Apr 2005 01:24:31 +0200
+committer Jonas Fonseca <fonseca@diku.dk> Wed, 27 Apr 2005 01:24:31 +0200
 
-LT> So why not just make "rational" the standard format, and then make 
-LT> "diff-tree-helper" warn about unmerged ("U") files?
+ cg-mkpatch |   34 +++++++++++++++++++++++++---------
+ 1 files changed, 25 insertions(+), 9 deletions(-)
 
-LT> As far as I can tell, that is really what _everybody_ wants.
+Index: cg-mkpatch
+===================================================================
+--- bd580d135661ff0bc8eb32cb36025cd1e7bdda13/cg-mkpatch  (mode:100755 sha1:25c67a29296730daeac00e43fd4c18cf914a1c87)
++++ 01bda4c4ac0c3b938fb4e7954193f2441554acfb/cg-mkpatch  (mode:100755 sha1:efee5dc887677d3122d8630b9ee3ef396b7adbd3)
+@@ -12,15 +12,31 @@
+ showpatch () {
+ 	header=$(mktemp -t gitpatch.XXXXXX)
+ 	id=$1
+-	cat-file commit $id | while read line; do
+-		if [ ! "$line" ]; then
+-			cat
+-			echo
+-			echo ---
+-			echo commit $id
+-			cat $header
+-		fi
+-		echo $line >>$header
++	cat-file commit $id | while read key rest; do
++		case "$key" in
++		"author"|"committer")
++			date=(${rest#*> })
++			sec=${date[0]}; tz=${date[1]}
++			dtz=${tz/+/}
++			lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
++			pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
++			if [ "$pdate" ]; then
++				echo $key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/" >> $header
++			else
++				echo $key $rest >> $header
++			fi
++			;;
++		"")
++			cat
++			echo
++			echo ---
++			echo commit $id
++			cat $header
++			;;
++		*)
++			echo $key $rest >>$header
++			;;
++		esac
+ 	done
+ 	echo
+ 	cg-diff -p -r $id > $header
 
-I do not think of a good reason to forbid people from getting a
-patch out of core GIT without going through the wrapper layer,
-and the code is already there.  That said, I agree that scripts
-usually do not use patch generating form.  I checked Cogito
-before doing the patch to make sure it is not affected by this,
-and my JIT core tools do not use it either.
-
-I think making the diff-tree/cache compatible output default
-would be fine.  The current diff-producing behaviour can be made
-into an option (yes, I want to keep it).
-
-LT> And calling "-r" "rational", when it means "recursive" for
-LT> diff-tree and diff-cache doesn't sound rational to me.
-
-Well, the truth is that -r does not stand for anything.  It just
-is there to match useless -r to diff-cache (the change you made
-to it to accept the same command line parameters -r (and
-optionally -z) people would always give diff-tree.  You can call
-it recursive if you want.
-
-How about me doing the following and resubmitting?
-
- - Make this diff-tree/cache compatible output the default.
-
- - Take but ignore -r flag like diff-cache.
-
- - Add U warning to diff-tree-helper.
-
- - Add -p flag (patch) and have it cause the patch generating
-   behaviour. 
-
-Later I'll add -p flag to diff-cache and diff-tree, so the usage
-of these three commands match.  That is:
-
-    show-diff  -r (useless) -z           | diff-tree-helper -z
-    diff-cache -r (useless) -z tree      | diff-tree-helper -z
-    diff-tree  -r           -z tree tree | diff-tree-helper -z
-
-    show-diff  -p [-r (useless)]
-    diff-cache -p [-r (useless)]
-    diff-tree  -p [-r]
-
-With the GIT_EXTERNAL_DIFF envioronment variable, I suspect that
-wrapper scripts do not have to use the diff-tree-helper but
-directly use the -p form; but that will come later.  Thoughts?
-
+-- 
+Jonas Fonseca
