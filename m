@@ -1,48 +1,41 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: unseeking?
-Date: Tue, 26 Apr 2005 22:28:05 +0200
-Message-ID: <20050426202805.GL13224@pasky.ji.cz>
-References: <20050425161854.GE11094@tumblerings.org> <Pine.LNX.4.21.0504251236400.30848-100000@iabervon.org> <20050425222833.GA21107@tumblerings.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 26 22:23:06 2005
+From: Tom Lord <lord@emf.net>
+Subject: Re: Merge with git-pasky II.
+Date: Tue, 26 Apr 2005 13:30:04 -0700 (PDT)
+Message-ID: <200504262030.NAA21304@emf.net>
+References: <Pine.LNX.4.58.0504261256150.18901@ppc970.osdl.org>
+Cc: bram@bitconjurer.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 26 22:26:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQWa9-00017D-4o
-	for gcvg-git@gmane.org; Tue, 26 Apr 2005 22:22:58 +0200
+	id 1DQWd7-0001cI-Jn
+	for gcvg-git@gmane.org; Tue, 26 Apr 2005 22:26:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261573AbVDZU2J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 16:28:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261590AbVDZU2J
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 16:28:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63119 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261573AbVDZU2G (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 16:28:06 -0400
-Received: (qmail 31969 invoked by uid 2001); 26 Apr 2005 20:28:05 -0000
-To: Zack Brown <zbrown@tumblerings.org>
-Content-Disposition: inline
-In-Reply-To: <20050425222833.GA21107@tumblerings.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261614AbVDZUa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 16:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261616AbVDZUa2
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 16:30:28 -0400
+Received: from emf.emf.net ([205.149.0.19]:62986 "EHLO emf.net")
+	by vger.kernel.org with ESMTP id S261614AbVDZUaQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 16:30:16 -0400
+Received: (from lord@localhost) by emf.net (K/K) id NAA21304; Tue, 26 Apr 2005 13:30:04 -0700 (PDT)
+To: torvalds@osdl.org
+In-reply-to: <Pine.LNX.4.58.0504261256150.18901@ppc970.osdl.org> (message from Linus Torvalds on Tue, 26 Apr 2005 12:58:18 -0700 (PDT))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Apr 26, 2005 at 12:28:33AM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> So, I did 'git patch pasky:this', and got the following. Is this an appropriate
-> way to submit a patch? BTW, the 'truckload' fix I tried to change back by
-> editing the README again, and committing the change; but the git patch command
-> still shows the change.
 
-Because it just exports individual patches. Use git diff (cg-diff) if
-you want to get the cummulative diff.
 
-Could you please sign off your patch?
+   From: Linus Torvalds <torvalds@osdl.org>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+   On Tue, 26 Apr 2005, Bram Cohen wrote:
+   > 
+   > If one person renames a file and another person modifies it then the
+   > changes should be applied to the moved file.
+
+   Bzzt. Wrong answer.
+
+You're a little bit nuts, guy.
+
+-t
