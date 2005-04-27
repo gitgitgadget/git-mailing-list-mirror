@@ -1,71 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: RE: git pull on ia64 linux tree
-Date: Wed, 27 Apr 2005 15:35:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271525520.18901@ppc970.osdl.org>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035B31D9@scsmsx401.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make -s flag to show-diff a no-op.
+Date: Wed, 27 Apr 2005 15:35:51 -0700
+Message-ID: <7v64y7etko.fsf@assigned-by-dhcp.cox.net>
+References: <7vfyxbeuwt.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504271520150.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:36:00 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:36:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQv7W-000677-FI
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:35:02 +0200
+	id 1DQv7Y-000677-2z
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262080AbVD0Wew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 18:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262077AbVD0Wef
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:34:35 -0400
-Received: from fire.osdl.org ([65.172.181.4]:11155 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262054AbVD0WdK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 18:33:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RMX8s4022120
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 15:33:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RMX7GT014126;
-	Wed, 27 Apr 2005 15:33:08 -0700
-To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F035B31D9@scsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262054AbVD0WjE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 18:39:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262086AbVD0Wi5
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:38:57 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:51111 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262054AbVD0Wfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 18:35:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050427223550.KEOR19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 27 Apr 2005 18:35:50 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504271520150.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Wed, 27 Apr 2005 15:20:45 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+LT> I also wonder whether "-p" should turn on recursion by default (for all 
+LT> the tools). "-p" without "-r" doesn't really seem to make much sense, does 
+LT> it?
 
-On Wed, 27 Apr 2005, Luck, Tony wrote:
-> 
-> The merge is right ... but "cg-update" leaves files that have been
-> deleted lying around in the checked out tree.
+When I know which path I am interested in,
 
-Yes. I _think_ the right thing to do ends up being something like the 
-update script doing
+    $ diff-tree -p <tree-1> <tree-2> ls-tree.c
 
-	diff-tree -r $orig $final | grep '^-'
+would still get the benefit of not descending down into ppc and
+mozilla-sha1 subdirectories, if I am not mistaken.
 
-at the end to get the list of deleted files, and just doing 'rm' on the 
-result.
+Think of the kernel sources, and I would say leaving the option
+of not recursing down is a good thing.
 
-One problem with this is that "grep" always thinks lines end in '\n', and 
-what we'd really want (from a scriptability angle) is
-
-	diff-tree -z -r $orig $final | grep -0 '^-'
-
-but I don't think you can tell grep to think that lines are
-zero-terminated instead of terminated with \n'. But I don't see how to do
-that with grep.
-
-Another similar alternative is to use "show-files --others" before and
-after the merge and seeing what files got added to the list of "files we
-don't track", but that just sounds horribly hacky.
-
-Anyway, there are clearly at least two ways of doing this, and we'll just
-have to have people work on the scripts to do it right..
-
-		Linus
