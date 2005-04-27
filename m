@@ -1,60 +1,81 @@
-From: Andrew Morton <akpm@osdl.org>
-Subject: I'm missing isofs.h
-Date: Tue, 26 Apr 2005 21:43:38 -0700
-Message-ID: <20050426214338.32e9ac27.akpm@osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: A shortcoming of the git repo format
+Date: Tue, 26 Apr 2005 22:43:13 -0700
+Message-ID: <426F2671.1080105@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 06:39:43 2005
+X-From: git-owner@vger.kernel.org Wed Apr 27 07:38:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQeKk-0001VZ-Kr
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 06:39:35 +0200
+	id 1DQfFY-0005GQ-Rr
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 07:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261919AbVD0EoV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 00:44:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261921AbVD0EoV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 00:44:21 -0400
-Received: from fire.osdl.org ([65.172.181.4]:44246 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261919AbVD0EoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 00:44:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3R4hxs4027772
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 21:44:00 -0700
-Received: from bix (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with SMTP id j3R4hx20029806;
-	Tue, 26 Apr 2005 21:43:59 -0700
-To: Petr Baudis <pasky@ucw.cz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i386-vine-linux-gnu)
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261573AbVD0FnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 01:43:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261576AbVD0FnZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 01:43:25 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:14747 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261573AbVD0FnU
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 01:43:20 -0400
+Received: from [172.27.3.248] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3R5hEHY027089
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 26 Apr 2005 22:43:17 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Most of git's files are starting to converge toward an RFC822-like 
+header with (tag, data) and a free-form section.  This is a good thing. 
+  However, there is one problem with this, and that is that without 
+knowing every possible tag, a program reading the git repository cannot 
+safely tell what is a link to another git object and what is not.  When 
+I did my repository conversion tools, I simply assumed any string of 20 
+hexadecimal digits was a pointer, but this is probably a bad idea in the 
+long run.
 
-In a current tree, using git-pasky-0.7:
+Additionally, there is the question of the handling of strings that may 
+contain \n or even \0 (which may be necessary for some applications).
 
-bix:/usr/src/git26> cat .git/tags/v2.6.12-rc3 
-a2755a80f40e5794ddc20e00f781af9d6320fafb
-bix:/usr/src/git26> git diff -r v2.6.12-rc3|grep isofs.h
-+#include "isofs.h"
- #include "zisofs.h"
-+#include "isofs.h"
-+#include "isofs.h"
-+#include "isofs.h"
- #include "zisofs.h"
-+#include "isofs.h"
-+#include "isofs.h"
-+#include "isofs.h"
-+#include "isofs.h"
+One solution to all of this would be to define a quoting standard for 
+strings, and simply require that all free-format strings (like the 
+author fields) or at least strings that match [0-9a-f]{20}, are always 
+quoted.
 
+I propose the following:
 
-That diff should have included the addition of the new isofs.h, but it
-isn't there.
+- Any string containing control characters or \ must be quoted;
+- \xXX produces control characters; other characters following \ are 
+verbatim.
+
+Thus,
+
+link 0123456789abcdef0123
+
+... is a link to an object, whereas ...
+
+string \0123456789abcdef0123
+
+... is a string.
+
+string1  This string begins with a space
+string2 This string has an embedded newline ("\x0a")
+
+... are both valid strings; the first contains a leading space and the 
+second an embedded newline.
+
+I'll implement this and integrate it tomorrow.
+
+	-hpa
+
 
