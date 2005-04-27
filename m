@@ -1,208 +1,75 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Finding file revisions
-Date: Wed, 27 Apr 2005 14:23:37 -0400
-Message-ID: <200504271423.37433.mason@suse.com>
-References: <200504271251.00635.mason@suse.com> <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 14:32:40 -0400
+Message-ID: <20050427183239.GE19011@redhat.com>
+References: <426F2671.1080105@zytor.com> <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org> <426FD3EE.5000404@zytor.com>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_pi9bCYOPSdM202a"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:20:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 20:33:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQr7C-0000uX-J0
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 20:18:26 +0200
+	id 1DQrJp-0003Fi-HI
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 20:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261929AbVD0SXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 14:23:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261930AbVD0SXt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 14:23:49 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:52393 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S261929AbVD0SXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 14:23:40 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 247629582;
-	Wed, 27 Apr 2005 20:23:40 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id AD72514E371; Wed, 27 Apr 2005 20:23:39 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
+	id S261937AbVD0SgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 14:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261935AbVD0Sef
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 14:34:35 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:9888 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S261937AbVD0Scq (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 14:32:46 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3RIWeKM025367;
+	Wed, 27 Apr 2005 14:32:40 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3RIWeO05803;
+	Wed, 27 Apr 2005 14:32:40 -0400
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3RIWeqp018384;
+	Wed, 27 Apr 2005 14:32:40 -0400
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3RIWeND018382;
+	Wed, 27 Apr 2005 14:32:40 -0400
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <426FD3EE.5000404@zytor.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---Boundary-00=_pi9bCYOPSdM202a
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On Wed, Apr 27, 2005 at 11:03:26AM -0700, H. Peter Anvin wrote:
+ > Linus Torvalds wrote:
+ > >
+ > >On Tue, 26 Apr 2005, H. Peter Anvin wrote:
+ > >
+ > >>One solution to all of this would be to define a quoting standard for 
+ > >>strings, and simply require that all free-format strings (like the 
+ > >>author fields) or at least strings that match [0-9a-f]{20}, are always 
+ > >>quoted.
+ > >
+ > >
+ > >git uses more of the ".newsrc" format, in that it just knows which 
+ > >characters are legal or not.
+ > >
+ > >To find the email address, look for the first '<'. To find the date, look 
+ > >for the first '>'. Those characters are not allowed in the name or the 
+ > >email, so they act as well-defined delimeters.
+ > >
+ > 
+ > That's true for email addresses, but the point was to distinguish links 
+ > to other git objects from any other kind of text.  Currently there is no 
+ > such delimiter for that.
 
-On Wednesday 27 April 2005 13:34, Linus Torvalds wrote:
-> On Wed, 27 Apr 2005, Chris Mason wrote:
-> > Is there a faster way?
->
-> Yes. Tell "diff-tree" what your desired files are, and it will cut down
-> the amount of work by a _lot_ (because then diff-tree doesn't need to
-> recurse into subdirectories that don't matter).
+That actually broke one of my first git scripts when one of the
+changelog texts started a line with 'tree '.  I hacked around it
+by making my script only grep in the 'head -n4' lines, but this
+seems somewhat fragile having to make assumptions that the field
+I want to see is in the first 4 lines.
 
-Thanks.  I originally called diff-tree without the file list so that I could 
-do the regexp matching, but this is probably one of those features that will 
-never get used.
+		Dave
 
-My test case here is a tree with 400 commits, giving diff-tree the file list 
-brings us down from 16s to 9s on a cold cache.  Hot cache is about 1.5 
-seconds on both.
-
->
-> > This will scale pretty badly as the tree grows, but
-> > I usually only want to search back a few months in the history.  So, it
-> > might make sense to limit the results by date or commit/tag.
->
-> With more history, "rev-list" should do basically the right thing: it will
-> be constant-time for _recent_ commits, and it is linear time in how far
-> back you want to go. Which seems quite reasonable.
->
-> And diff-tree is obviously constant-time (and very fast at that,
-> especially if you limit it to just a few files, since then it won't even
-> bother with any other subdirectories).
-
-Usually the question I will want to ask is "how did foo.c change since tag X", 
-which usually won't go back more then a few months.   This should be 
-reasonable, and I'd rather not slow down common operations adding extra 
-indexing for the uncommon file-changes run.
-
-So, new prog attached.  New usage:
-
-file-changes [-c commit_id] [-s commit_id] file ...
-
--c is the commit where you want to start searching
--s is the commit where you want to stop searching
-
--chris
-
---Boundary-00=_pi9bCYOPSdM202a
-Content-Type: application/x-perl;
-  name="file-changes"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="file-changes"
-
-#!/usr/bin/perl
-
-use strict;
-
-my $last;
-my $ret;
-my $i;
-my @wanted = ();
-my $matched;
-my $argc = scalar(@ARGV);
-my $commit;
-my $stop;
-my $file_list = "";
-
-sub print_usage() {
-    print STDERR "usage: file-changes [-c commit] [-s stop commit] file_list\n";
-    exit(1);
-}
-
-if ($argc < 1) {
-    print_usage();
-}
-
-for ($i = 0 ; $i < $argc ; $i++)  {
-    if ($ARGV[$i] eq "-c") {
-    	if ($i == $argc - 1) {
-	    print_usage();
-	}
-	$commit = $ARGV[++$i];
-    } elsif ($ARGV[$i] eq "-s") {
-    	if ($i == $argc - 1) {
-	    print_usage();
-	}
-	$stop = $ARGV[++$i];
-    } else {
-	push @wanted, $ARGV[$i];
-	$file_list .= "$ARGV[$i] ";
-    }
-}
-
-if (!defined($commit)) {
-    $commit = `commit-id`;
-    if ($?) {
-    	print STDERR "commit-id failed, try using -c to specify a commit\n";
-	exit(1);
-    }
-    chomp $commit;
-}
-
-$last = $commit;
-
-open(RL, "rev-list $commit|") || die "rev-list failed";
-while(<RL>) {
-    chomp;
-    my $cur = $_;
-    $matched = 0;
-    if ($cur eq $last) {
-        next;
-    }
-    # rev-list gives us the commits from newest to oldest
-    open(DT, "diff-tree -r $cur $last $file_list|") || die "diff-tree failed";
-    while(<DT>) {
-        chomp;
-	my @words = split;
-	my $file = $words[3];
-	# if the filename has whitespace, suck it in
-	if (scalar(@words) > 4) {
-	    if (m/$file(.*)/) {
-	        $file .= $1;
-	    }
-	}
-	foreach my $m (@wanted) {
-	    if ($file =~ m/^$m/) {
-		if (!$matched) {
-		    print "diff-tree -r $cur $last\n";
-		}
-		print "$words[2] $file\n";
-		$matched = 1;
-	    }
-	}
-    }
-    close(DT);
-    if ($?) {
-	$ret = $? >> 8;
-	die "diff-tree failed with $ret";
-    }
-    if ($matched) {
-	print "cat-file commit $last\n";
-	open(COMMIT, "cat-file commit $last|") || die "cat-file $last failed";
-	while(<COMMIT>) {
-	    print "    $_";
-	}
-	close(COMMIT);
-	if ($?) {
-	    $ret = $? >> 8;
-	    die "cat-file failed with $ret";
-	}
-	print "\n";
-    }
-    if ($cur eq $stop) {
-        last;
-    }
-    $last = $cur;
-}
-
-close(RL);
-if ($? && ($ret = $? >> 8)) {
-    die "rev-list failed with $ret";
-}
-
-
---Boundary-00=_pi9bCYOPSdM202a--
