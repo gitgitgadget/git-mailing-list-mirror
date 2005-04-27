@@ -1,97 +1,208 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Re: Cogito Tutorial If It Helps
-Date: Wed, 27 Apr 2005 19:22:07 +0100
-Message-ID: <200504271922.07765.alan@chandlerfamily.org.uk>
-References: <1114548747.3083.1.camel@kryten>
+From: Chris Mason <mason@suse.com>
+Subject: Re: Finding file revisions
+Date: Wed, 27 Apr 2005 14:23:37 -0400
+Message-ID: <200504271423.37433.mason@suse.com>
+References: <200504271251.00635.mason@suse.com> <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Apr 27 20:18:17 2005
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_pi9bCYOPSdM202a"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 20:20:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQr5j-0000aq-B5
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 20:16:55 +0200
+	id 1DQr7C-0000uX-J0
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 20:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261926AbVD0SWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 14:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261929AbVD0SWQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 14:22:16 -0400
-Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:22749
-	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
-	id S261926AbVD0SWI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 14:22:08 -0400
-Received: from kanger.home ([192.168.0.21])
-	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
-	id 1DQrAm-0005gp-4d
-	for git@vger.kernel.org; Wed, 27 Apr 2005 19:22:08 +0100
-To: git@vger.kernel.org
+	id S261929AbVD0SXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 14:23:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261930AbVD0SXt
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 14:23:49 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:52393 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261929AbVD0SXk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 14:23:40 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 247629582;
+	Wed, 27 Apr 2005 20:23:40 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id AD72514E371; Wed, 27 Apr 2005 20:23:39 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: KMail/1.8
-In-Reply-To: <1114548747.3083.1.camel@kryten>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 26 April 2005 21:52, James Purser wrote:
-> I reworked the previous tutorial to take in the changes in the scripts.
-> Will make this a series of tutorials to cover all aspects. Any
-> suggestions or hints or spelling corrections would be most welcome.
+--Boundary-00=_pi9bCYOPSdM202a
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+On Wednesday 27 April 2005 13:34, Linus Torvalds wrote:
+> On Wed, 27 Apr 2005, Chris Mason wrote:
+> > Is there a faster way?
 >
-> http://ksit.dynalias.com/articles.php?s_id=46&art_id=41
+> Yes. Tell "diff-tree" what your desired files are, and it will cut down
+> the amount of work by a _lot_ (because then diff-tree doesn't need to
+> recurse into subdirectories that don't matter).
 
-Although I have been reading this mailing list since almost the beginning, I 
-have not had a chance to download and try anything.  Using this message as an 
-incentive to start, I started to follow this.
+Thanks.  I originally called diff-tree without the file list so that I could 
+do the regexp matching, but this is probably one of those features that will 
+never get used.
 
-However I have run into problems.  
+My test case here is a tree with 400 commits, giving diff-tree the file list 
+brings us down from 16s to 9s on a cold cache.  Hot cache is about 1.5 
+seconds on both.
 
-Let me try and explain.
+>
+> > This will scale pretty badly as the tree grows, but
+> > I usually only want to search back a few months in the history.  So, it
+> > might make sense to limit the results by date or commit/tag.
+>
+> With more history, "rev-list" should do basically the right thing: it will
+> be constant-time for _recent_ commits, and it is linear time in how far
+> back you want to go. Which seems quite reasonable.
+>
+> And diff-tree is obviously constant-time (and very fast at that,
+> especially if you limit it to just a few files, since then it won't even
+> bother with any other subdirectories).
 
-The first part of the tutorial of loading the tarball and building things is 
-fine (should be, its a well trodden mental model) - and actually for me I did 
-not have libcurl3-dev installed the first time - but because I already had 
-the mental model in my mind on this stage it was easy to fit.
+Usually the question I will want to ask is "how did foo.c change since tag X", 
+which usually won't go back more then a few months.   This should be 
+reasonable, and I'd rather not slow down common operations adding extra 
+indexing for the uncommon file-changes run.
 
-I then issued the cg-clone command to get a fresh copy of cogito.  This is 
-where I think it would be useful to take time-out from the tutorial and 
-explain what I have here.  For me at least, if I don't have a mental model of 
-what is happening, I am totally confused.
+So, new prog attached.  New usage:
 
-I "think" I understand the git repository with the various content addressable 
-objects.  Reading the README file describes that quite well.  I assume that 
-is what is stored in the .git subdirectory (although I have yet to find any 
-text that formally says that).
+file-changes [-c commit_id] [-s commit_id] file ...
 
-Where I am confused is the relationship between what is in the .git 
-subdirectory and the project tree of cogito that sits around it.  Obviously I 
-understand that its the latest version of the project as represented by the 
-objects in the repository, but what I don't really understand (and neither 
-your tutorial nor all the explanations of each of the commands in the README 
-really explain it either) is how the various commands adjust the 
-relationship.
+-c is the commit where you want to start searching
+-s is the commit where you want to stop searching
 
-For instance cg-branch-add seems to add a branch to the repository from a url 
-(I assume it downloads any "blobs" etc that are not already in my local 
-repository and creates a tag that identifies the head of a tree object), but 
-a don't understand how I am supposed see that particular branch as expanded 
-code.  (I suspect it might be cg-seek, but I am not really sure - and if it 
-is how do you find out what branch this expanded code is now pointed to?).  
-But what do cg-update and cg-pull do in terms of the uncompressed code 
-sitting in the surrounding directory round the repository, particularly when 
-you perform them on a branch that is not the one that the code refers to.  
+-chris
+
+--Boundary-00=_pi9bCYOPSdM202a
+Content-Type: application/x-perl;
+  name="file-changes"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="file-changes"
+
+#!/usr/bin/perl
+
+use strict;
+
+my $last;
+my $ret;
+my $i;
+my @wanted = ();
+my $matched;
+my $argc = scalar(@ARGV);
+my $commit;
+my $stop;
+my $file_list = "";
+
+sub print_usage() {
+    print STDERR "usage: file-changes [-c commit] [-s stop commit] file_list\n";
+    exit(1);
+}
+
+if ($argc < 1) {
+    print_usage();
+}
+
+for ($i = 0 ; $i < $argc ; $i++)  {
+    if ($ARGV[$i] eq "-c") {
+    	if ($i == $argc - 1) {
+	    print_usage();
+	}
+	$commit = $ARGV[++$i];
+    } elsif ($ARGV[$i] eq "-s") {
+    	if ($i == $argc - 1) {
+	    print_usage();
+	}
+	$stop = $ARGV[++$i];
+    } else {
+	push @wanted, $ARGV[$i];
+	$file_list .= "$ARGV[$i] ";
+    }
+}
+
+if (!defined($commit)) {
+    $commit = `commit-id`;
+    if ($?) {
+    	print STDERR "commit-id failed, try using -c to specify a commit\n";
+	exit(1);
+    }
+    chomp $commit;
+}
+
+$last = $commit;
+
+open(RL, "rev-list $commit|") || die "rev-list failed";
+while(<RL>) {
+    chomp;
+    my $cur = $_;
+    $matched = 0;
+    if ($cur eq $last) {
+        next;
+    }
+    # rev-list gives us the commits from newest to oldest
+    open(DT, "diff-tree -r $cur $last $file_list|") || die "diff-tree failed";
+    while(<DT>) {
+        chomp;
+	my @words = split;
+	my $file = $words[3];
+	# if the filename has whitespace, suck it in
+	if (scalar(@words) > 4) {
+	    if (m/$file(.*)/) {
+	        $file .= $1;
+	    }
+	}
+	foreach my $m (@wanted) {
+	    if ($file =~ m/^$m/) {
+		if (!$matched) {
+		    print "diff-tree -r $cur $last\n";
+		}
+		print "$words[2] $file\n";
+		$matched = 1;
+	    }
+	}
+    }
+    close(DT);
+    if ($?) {
+	$ret = $? >> 8;
+	die "diff-tree failed with $ret";
+    }
+    if ($matched) {
+	print "cat-file commit $last\n";
+	open(COMMIT, "cat-file commit $last|") || die "cat-file $last failed";
+	while(<COMMIT>) {
+	    print "    $_";
+	}
+	close(COMMIT);
+	if ($?) {
+	    $ret = $? >> 8;
+	    die "cat-file failed with $ret";
+	}
+	print "\n";
+    }
+    if ($cur eq $stop) {
+        last;
+    }
+    $last = $cur;
+}
+
+close(RL);
+if ($? && ($ret = $? >> 8)) {
+    die "rev-list failed with $ret";
+}
 
 
-The reason I raise all this, is when I follow through on your tutorial and get 
-to the cg-diff stage I get this
-
-xargs: cg-Xdiffdo: No such file or directory
-
-And I have absolutely no idea whats wrong or where to start looking.
-
-
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
+--Boundary-00=_pi9bCYOPSdM202a--
