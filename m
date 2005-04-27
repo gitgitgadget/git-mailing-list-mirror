@@ -1,50 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 7/6] Leftover bits.
-Date: Wed, 27 Apr 2005 10:37:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271036150.18901@ppc970.osdl.org>
-References: <7vekcwkagr.fsf@assigned-by-dhcp.cox.net> <7v4qdsiqgl.fsf@assigned-by-dhcp.cox.net>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: I'm missing isofs.h
+Date: Wed, 27 Apr 2005 11:40:50 -0600
+Message-ID: <426FCEA2.5000708@mesatop.com>
+References: <20050426214338.32e9ac27.akpm@osdl.org> <426FB03B.9090509@mesatop.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 19:32:12 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Morton <akpm@osdl.org>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 19:40:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQqMq-0001e7-TO
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 19:30:33 +0200
+	id 1DQqVL-0002uu-Vj
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 19:39:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261837AbVD0Rfd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 13:35:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261841AbVD0Rfc
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 13:35:32 -0400
-Received: from fire.osdl.org ([65.172.181.4]:28050 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261837AbVD0RfT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 13:35:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RHZCs4027732
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 10:35:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RHZB1M028171;
-	Wed, 27 Apr 2005 10:35:12 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4qdsiqgl.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261853AbVD0Rn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 13:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261842AbVD0RnU
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 13:43:20 -0400
+Received: from mailwasher.lanl.gov ([192.65.95.54]:40099 "EHLO
+	mailwasher-b.lanl.gov") by vger.kernel.org with ESMTP
+	id S261841AbVD0RlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 13:41:00 -0400
+Received: from w-mail.lanl.gov (w-mail.lanl.gov [128.165.4.47])
+	by mailwasher-b.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3RHetp6025034
+	for <git@vger.kernel.org>; Wed, 27 Apr 2005 11:40:55 -0600
+Received: from [128.165.67.197] (spc7.esa.lanl.gov [128.165.67.197])
+	by w-mail.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3RHeoIg024223;
+	Wed, 27 Apr 2005 11:40:51 -0600
+User-Agent: Thunderbird 1.0 (Multics)
+X-Accept-Language: en-us, en
+To: Steven Cole <elenstev@mesatop.com>
+In-Reply-To: <426FB03B.9090509@mesatop.com>
+X-PMX-Version: 4.7.0.111621
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Apr 2005, Junio C Hamano wrote:
+Steven Cole wrote:
+> Andrew Morton wrote:
 > 
-> It also adds code to unlink temporary files used to call the
-> external diff command upon SIGNIT.
+>> In a current tree, using git-pasky-0.7:
+>>
+>> bix:/usr/src/git26> cat .git/tags/v2.6.12-rc3 
+>> a2755a80f40e5794ddc20e00f781af9d6320fafb
+>> bix:/usr/src/git26> git diff -r v2.6.12-rc3|grep isofs.h
+>> +#include "isofs.h"
+>>  #include "zisofs.h"
+>> +#include "isofs.h"
+>> +#include "isofs.h"
+>> +#include "isofs.h"
+>>  #include "zisofs.h"
+>> +#include "isofs.h"
+>> +#include "isofs.h"
+>> +#include "isofs.h"
+>> +#include "isofs.h"
+>>
+>>
+>> That diff should have included the addition of the new isofs.h, but it
+>> isn't there.
+>>
+> 
+> I'm seeing unexplained behaviour using the above technique, and I'm
+> also seeing fs/isofs/isofs.h as missing, along with seven other changes.
+> 
 
-Actually, you should probably do SIGPIPE too. I suspect that's the much
-more common case (somebody does a "diff-tree | less", and then quits).
+Jan Harkes has found the problem to be a missing ':' at the end of the tag.
 
-		Linus
+Steven
