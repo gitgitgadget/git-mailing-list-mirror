@@ -1,46 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] cg-mkpatch: Show diffstat before the patch
-Date: Thu, 28 Apr 2005 01:55:39 +0200
-Message-ID: <20050427235539.GO22956@pasky.ji.cz>
-References: <20050426225855.GA28560@diku.dk>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 16:56:27 -0700
+Message-ID: <427026AB.4070809@zytor.com>
+References: <Pine.LNX.4.21.0504271939100.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:50:47 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:52:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQwIS-0004wq-3X
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:50:24 +0200
+	id 1DQwJQ-00052l-Ek
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:51:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262106AbVD0Xzn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 19:55:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262107AbVD0Xzn
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:55:43 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:40877 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262106AbVD0Xzk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:55:40 -0400
-Received: (qmail 27107 invoked by uid 2001); 27 Apr 2005 23:55:39 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050426225855.GA28560@diku.dk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262107AbVD0X4u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 19:56:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262108AbVD0X4u
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:56:50 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:17793 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S262107AbVD0X4s
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 19:56:48 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3RNuW6u004679
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 27 Apr 2005 16:56:32 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0504271939100.30848-100000@iabervon.org>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 27, 2005 at 12:58:55AM CEST, I got a letter
-where Jonas Fonseca <fonseca@diku.dk> told me that...
-> Show diffstat before the patch.
+Daniel Barkalow wrote:
 > 
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> If you find an object with an unknown tag, you can't do much with it
+> anyway, even if it has a format that matches generic rules. Sure, you
+> could trace reachability through it, but that's only helpful for a couple
+> of generic programs (fsck and pull), and those programs ought to
+> additionally have some clue about what's going on if they're going to act
+> appropriately.
+> 
+> On the other hand, it is probably true that programs should be able to
+> deal abstractly with new tags if built with a libgit that supports them,
+> but that's something that we can arrange a bit later.
+> 
+> 	-Daniel
 
-I think you should first check by which(1) or something whether you have
-diffstat. Piling up dependencies like this is pretty annoying.
+There are a fair number of tools one may want that deal with reachability.
 
-Thanks,
+	-hpa
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
