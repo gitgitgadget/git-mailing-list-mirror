@@ -1,76 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] diff-cache/tree compatible output for show-diff (take
- 2).
-Date: Tue, 26 Apr 2005 18:09:57 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504261805070.18901@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
- <7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org>
- <7vy8b5mawy.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504261534590.18901@ppc970.osdl.org>
- <7vd5shm94l.fsf@assigned-by-dhcp.cox.net> <7vy8b5ksqi.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0504261719230.18901@ppc970.osdl.org>
- <Pine.LNX.4.58.0504261725470.18901@ppc970.osdl.org>
- <Pine.LNX.4.58.0504261750030.18901@ppc970.osdl.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] make cg-export use tar-tree
+Date: Wed, 27 Apr 2005 03:16:25 +0200
+Message-ID: <426EE7E9.5010108@lsrfire.ath.cx>
+References: <200504261928.44538.jcorbin@wunjo.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 27 03:03:26 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Apr 27 03:12:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQaxB-0001tk-Mm
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 03:03:04 +0200
+	id 1DQb5v-0002ZN-PV
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 03:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261876AbVD0BIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 21:08:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261874AbVD0BIL
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 21:08:11 -0400
-Received: from fire.osdl.org ([65.172.181.4]:60315 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261876AbVD0BID (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 21:08:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3R17ws4012521
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 26 Apr 2005 18:07:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3R17veC021866;
-	Tue, 26 Apr 2005 18:07:58 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0504261750030.18901@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261882AbVD0BQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 21:16:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261884AbVD0BQ5
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 21:16:57 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:54672 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261882AbVD0BQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 21:16:38 -0400
+Received: from [10.0.1.3] (p508E5FF1.dip.t-dialin.net [80.142.95.241])
+	by neapel230.server4you.de (Postfix) with ESMTP id 8159A55;
+	Wed, 27 Apr 2005 03:16:33 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: de-DE, de, en-us, en
+To: "Joshua T. Corbin" <jcorbin@wunjo.org>
+In-Reply-To: <200504261928.44538.jcorbin@wunjo.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Joshua T. Corbin schrieb:
+> Here it is (this time with real tabs instead of two spaces ;) ), requires 
+> Rene's tar-tree patch. Works quite speedily too I might add.
 
+Maybe it's just Thunderbird, but I see single spaces instead of tabs
+there.
 
-On Tue, 26 Apr 2005, Linus Torvalds wrote:
-> 
-> I'll need to fix that up, because right now it does the wrong thing (which
-> it has always done): since we _remove_ all the merge entries, we'll first
-> warn about them, but then we'll show the original file going away if there
-> was one. Which is bogus.
+> +  tar=$(mktemp -t cg-export.tar.XXXXXX)
+> +  tar-tree $id "$base" > $tar
+> +  case $ext in
+> +  .tar.gz|.tgz)
+> +   gzip -c9 $tar > $dest
+> +   rm -f $tar
+> +   ;;
+> +  .tar.bz2)
+> +   bzip2 -c $tar > $dest
+> +   rm -f $tar
+> +   ;;
+> +  .tar)
+> +   mv $tar $dest
+> +   ;;
+> +  esac
 
-Fixed. I think. My solution is clever, but untested.
+You don't need to create a temporary file using tar-tree.  The above can
+be done like this:
 
-What I do is that instead of _removing_ the unmerged entries (which we 
-can't do, or we'd later think that the file has gone away if we see that 
-same name in the tree we're comparing against), I make all unmerged 
-entries be in "stage 3".
+  case $ext in
+  .tar.gz|.tgz)
+      tar-tree $id "$base" | gzip -9
+      ;;
+  .tar.bz2)
+      tar-tree $id "$base" | bzip2
+      ;;
+  .tar)
+      tar-tree $id "$base"
+      ;;
+  esac > $dest
 
-Then, when we read in the tree to compare against into stage 1, we have a 
-few cases:
+This is both shorter and (a bit) faster.  More easily readable, too,
+IMO.  Don't fear the pipe. ;-)  And I don't think we need to avoid
+the triplication of tar-tree calls.
 
- - stage 0 only: new file
- - stage 0 and 1: modified file
- - stage 1 only: deleted file
- - stage 1 and 3: unmerged
- - stage 3 only: unmerged
-
-See any problems with this? (a mix of 0 and 3 cannot happen - a file is
-either unmerged or it is ok, since inserting a stage 0 entry always
-removes all unmerged entires).
-
-		Linus
+Thanks,
+Rene
