@@ -1,73 +1,51 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: A shortcoming of the git repo format
-Date: Thu, 28 Apr 2005 08:51:15 +1000
-Message-ID: <2cfc403205042715513d8123f3@mail.gmail.com>
-References: <426F2671.1080105@zytor.com>
-	 <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
-	 <426FD3EE.5000404@zytor.com> <20050427183239.GE19011@redhat.com>
-	 <426FDE48.1050700@zytor.com>
-Reply-To: jon@zeta.org.au
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: git pull on ia64 linux tree
+Date: Thu, 28 Apr 2005 00:58:21 +0200
+Message-ID: <20050427225821.GI22956@pasky.ji.cz>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035B31D9@scsmsx401.amr.corp.intel.com> <Pine.LNX.4.58.0504271525520.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Dave Jones <davej@redhat.com>, Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:47:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:54:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQvJ0-0007MA-26
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:46:54 +0200
+	id 1DQvPg-00086w-UE
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262068AbVD0Wvs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 18:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262067AbVD0Wvs
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:51:48 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:26856 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262068AbVD0WvU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 18:51:20 -0400
-Received: by rproxy.gmail.com with SMTP id j1so248734rnf
-        for <git@vger.kernel.org>; Wed, 27 Apr 2005 15:51:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CIy/vvjmJh9QLOlPOisxM+HYtXENj4W6Z15Sf84TIzG8ctwS0jgz7d+aYwUG/MghjfNtR9w3tHe97OGSV/472gRKFVg41Us+oNYK7CWhHyAN25U+qwwl3PNLsoZHOeamyvCbpCl6jRen1ZH2V8PS7NRniB/AcKAJms7BRkQlKMs=
-Received: by 10.38.97.35 with SMTP id u35mr1645413rnb;
-        Wed, 27 Apr 2005 15:51:16 -0700 (PDT)
-Received: by 10.38.104.32 with HTTP; Wed, 27 Apr 2005 15:51:15 -0700 (PDT)
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <426FDE48.1050700@zytor.com>
+	id S262072AbVD0W6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 18:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262076AbVD0W6j
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:58:39 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:39852 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262072AbVD0W62 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 18:58:28 -0400
+Received: (qmail 12922 invoked by uid 2001); 27 Apr 2005 22:58:21 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504271525520.18901@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 4/28/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> Dave Jones wrote:
-> >
-> > That actually broke one of my first git scripts when one of the
-> > changelog texts started a line with 'tree '.  I hacked around it
-> > by making my script only grep in the 'head -n4' lines, but this
-> > seems somewhat fragile having to make assumptions that the field
-> > I want to see is in the first 4 lines.
-> >
+Dear diary, on Thu, Apr 28, 2005 at 12:35:07AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> One problem with this is that "grep" always thinks lines end in '\n', and 
+> what we'd really want (from a scriptability angle) is
 > 
-> You have the delimiter for that; there is an empty line between the
-> header and the free-form body, similar as for RFC822.
+> 	diff-tree -z -r $orig $final | grep -0 '^-'
 > 
+> but I don't think you can tell grep to think that lines are
+> zero-terminated instead of terminated with \n'. But I don't see how to do
+> that with grep.
 
-...and a relatively simple way to use that rule to extract just the
-header lines:
+Actually, grep has -z parameter. ;-)
 
-      sed -n "1,/^\$/p"                     # with the separator line
+Fixed and pushed out.
 
-or, either one of these to remove the separator line as well:
-
-      sed -n "1,/^\$/s/^\(..*\)/\1/p"  
-      sed -n "1,/^\$/p" | tr -s \\012
-
-jon
 -- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
