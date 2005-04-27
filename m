@@ -1,93 +1,156 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Darcs-git pulling from the Linux repo: a Linux VM
-	question
-Date: Wed, 27 Apr 2005 08:31:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org>
-References: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: I'm missing isofs.h
+Date: Wed, 27 Apr 2005 09:31:07 -0600
+Message-ID: <426FB03B.9090509@mesatop.com>
+References: <20050426214338.32e9ac27.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
-X-From: darcs-devel-bounces@darcs.net Wed Apr 27 17:26:01 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 17:28:23 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQoOp-0006zY-9L
-	for gcvdd-darcs-devel@m.gmane.org; Wed, 27 Apr 2005 17:24:27 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DQoTu-0000rH-HW; Wed, 27 Apr 2005 11:29:42 -0400
-Received: from fire.osdl.org ([65.172.181.4] helo=smtp.osdl.org)
-	by abridgegame.org with esmtp (Exim 4.50) id 1DQoTs-0000mz-MM
-	for darcs-devel@darcs.net; Wed, 27 Apr 2005 11:29:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RFTcs4015825
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 08:29:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RFTbuJ020057;
-	Wed, 27 Apr 2005 08:29:38 -0700
-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-In-Reply-To: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+	id 1DQoQY-0007Ie-7R
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 17:26:15 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261740AbVD0Pb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 11:31:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261741AbVD0Pb1
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 11:31:27 -0400
+Received: from mailwasher.lanl.gov ([192.65.95.54]:11107 "EHLO
+	mailwasher-b.lanl.gov") by vger.kernel.org with ESMTP
+	id S261740AbVD0PbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 11:31:14 -0400
+Received: from w-mail.lanl.gov (w-mail.lanl.gov [128.165.4.47])
+	by mailwasher-b.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3RFVAdx004480
+	for <git@vger.kernel.org>; Wed, 27 Apr 2005 09:31:11 -0600
+Received: from [128.165.67.197] (spc7.esa.lanl.gov [128.165.67.197])
+	by w-mail.lanl.gov (8.12.11/8.12.11/(ccn-5)) with ESMTP id j3RFV7RK003152;
+	Wed, 27 Apr 2005 09:31:08 -0600
+User-Agent: Thunderbird 1.0 (Multics)
+X-Accept-Language: en-us, en
+To: Andrew Morton <akpm@osdl.org>
+In-Reply-To: <20050426214338.32e9ac27.akpm@osdl.org>
+X-PMX-Version: 4.7.0.111621
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Apr 2005, Juliusz Chroboczek wrote:
+Andrew Morton wrote:
+> In a current tree, using git-pasky-0.7:
 > 
-> So yes, in the longer term we need to fix Darcs.  For now, does anyone
-> know how I can tune the Linux VM to get a 720 MB process to run
-> reliably in 640 MB of main memory?
+> bix:/usr/src/git26> cat .git/tags/v2.6.12-rc3 
+> a2755a80f40e5794ddc20e00f781af9d6320fafb
+> bix:/usr/src/git26> git diff -r v2.6.12-rc3|grep isofs.h
+> +#include "isofs.h"
+>  #include "zisofs.h"
+> +#include "isofs.h"
+> +#include "isofs.h"
+> +#include "isofs.h"
+>  #include "zisofs.h"
+> +#include "isofs.h"
+> +#include "isofs.h"
+> +#include "isofs.h"
+> +#include "isofs.h"
+> 
+> 
+> That diff should have included the addition of the new isofs.h, but it
+> isn't there.
+> 
 
-I really think you're screwed. The only way you have even a _chance_ of
-getting it to work well is that if you have very nice access patterns to
-that 720MB, but my guess is that that simply isn't the case. You probably
-read most of it in once (and write out changes once, but I hope you at
-least notice the case of "nothing changed" so that probably is the smaller
-of your problems), and the fact is, you're going to have absolutely
-_horrible_ access patterns, since you'll end up not just with a 720MB
-process that doesn't have much locality, you'll end up with another 720MB
-that you needed to have in the page cache for the IO.
+I'm seeing unexplained behaviour using the above technique, and I'm
+also seeing fs/isofs/isofs.h as missing, along with seven other changes.
 
-The only way I can see to fix it short-term is to try to use "mmap()"  
-instead of "read()" to read the file data, and then try to avoid touching
-the mapping unless you _have_ to. In other words: if you actually need to
-_compare_ the data (which obviously reads from the mapping), you're
-screwed.
+I'm using the latest cogito release:
+[steven@spc0 COGITO]$ cg-version
+cogito-0.8 (3e0fb979cc7541506ec660ab66b83d8120da6d57)
 
-Using mmap() will at least mean that the system can re-use the page cache 
-pages, though, so it should improve memory pressure a bit.
+I updated my linux-2.6 repo with cg-update origin, and then created
+a current linux-2.6 tree using cg-export.  I diffed that exported
+tree with 2.6.12-rc3 and saved the result as "a.diff".
 
-> So what was it you said about self-tuning VM systems?
+I created another diff using Andrew's technique using cg-diff and saved
+that to "b.diff".
 
-The kernel tries to tune itself in the sense that it automatically 
-allocates the memory to user processes vs caching (page cache, directory 
-caching etc) and tunes itself quite well that way.
+I had expected that a.diff and b.diff to be the same, but they are
+not, and the AWOL file fs/isofs/isofs.h is among the missing using
+Andrew's technique.
 
-But there's no way to tune for crappy access patterns and working sets
-bigger than the amount of RAM. Sorry. You really need to fix darcs.
+Here are the details.
 
-You _really_ shouldn't read in files that you don't absolutely need.  
-That's really the biggest point of git: using the sha1 for naming the
-objects is really all about "descrive the contents using 20 bytes instead
-of by reading the contents". Because reading the content _will_ be
-expensive. Even if you have 2GB of memory and you can keep it all cached,
-it will be horribly expensive.
+Steven
 
-		Linus
+[steven@spc0 linux-2.6]$ cat .git/HEAD
+e8108c98dd6d65613fa0ec9d2300f89c48d554bf
+
+[steven@spc0 linux-2.6]$ fsck-cache --tags
+tagged commit a2755a80f40e5794ddc20e00f781af9d6320fafb (v2.6.12-rc3) in 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
+tagged commit 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 (v2.6.12-rc2) in 9e734775f7c22d2f89943ad6c745571f1930105f
+expect dangling commits - potential heads - due to lack of head information
+dangling commit e8108c98dd6d65613fa0ec9d2300f89c48d554bf
+
+[steven@spc0 linux-2.6]$ cg-export ../linux-2.6-current
+[steven@spc0 linux-2.6]$ cg-diff -r v2.6.12-rc3 >../b.diff
+[steven@spc0 linux-2.6]$ cd ..
+
+[steven@spc0 COGITO]$ diff -urN linux-2.6.12-rc3 linux-2.6-current >a.diff
+#note that linux-2.6.12-rc3 was created by patch from kernel.org.
+
+[steven@spc0 COGITO]$ diffstat a.diff >a.diffstat
+[steven@spc0 COGITO]$ diffstat b.diff >b.diffstat
+[steven@spc0 COGITO]$ tail -n 1 a.diffstat
+  199 files changed, 3083 insertions(+), 1601 deletions(-)
+[steven@spc0 COGITO]$ tail -n 1 b.diffstat
+  191 files changed, 2539 insertions(+), 1540 deletions(-)
+[steven@spc0 COGITO]$ diff -u a.diffstat b.diffstat
+--- a.diffstat  2005-04-27 09:07:04.000000000 -0600
++++ b.diffstat  2005-04-27 09:07:14.000000000 -0600
+@@ -101,7 +101,6 @@
+   drivers/usb/net/zd1201.c                     |   20
+   drivers/usb/serial/Kconfig                   |    9
+   drivers/usb/serial/Makefile                  |    1
+- drivers/usb/serial/hp4x.c                    |   85 +++
+   drivers/usb/storage/unusual_devs.h           |   22 -
+   drivers/video/imsttfb.c                      |    4
+   drivers/video/logo/Kconfig                   |    2
+@@ -113,7 +112,6 @@
+   fs/isofs/dir.c                               |   13
+   fs/isofs/export.c                            |    6
+   fs/isofs/inode.c                             |   19
+- fs/isofs/isofs.h                             |  190 ++++++++
+   fs/isofs/joliet.c                            |    6
+   fs/isofs/namei.c                             |   13
+   fs/isofs/rock.c                              |    8
+@@ -136,15 +134,10 @@
+   include/asm-sparc64/pgtable.h                |    5
+   include/asm-sparc64/spinlock.h               |   48 +-
+   include/linux/iso_fs.h                       |  147 ------
+- include/linux/iso_fs_i.h                     |   27 -
+- include/linux/iso_fs_sb.h                    |   34 -
+   include/linux/netfilter_ipv4.h               |    3
+   include/linux/pci_ids.h                      |    1
+- include/linux/tc_act/tc_defact.h             |   21
+- include/net/act_generic.h                    |  142 ++++++
+   include/net/ax25.h                           |   10
+   include/net/ipv6.h                           |    2
+- include/net/tc_act/tc_defact.h               |   13
+   include/net/tcp.h                            |   11
+   kernel/panic.c                               |    4
+   mm/mempolicy.c                               |    2
+@@ -190,11 +183,10 @@
+   net/sched/Kconfig                            |   10
+   net/sched/Makefile                           |   11
+   net/sched/cls_fw.c                           |   31 +
+- net/sched/simple.c                           |   93 ++++
+   net/unix/af_unix.c                           |    1
+   net/xfrm/xfrm_state.c                        |    5
+   scripts/mod/file2alias.c                     |  111 ++++-
+   security/selinux/hooks.c                     |    3
+   sound/oss/msnd_pinnacle.c                    |    2
+   sound/ppc/Kconfig                            |    2
+- 199 files changed, 3083 insertions(+), 1601 deletions(-)
++ 191 files changed, 2539 insertions(+), 1540 deletions(-)
+[steven@spc0 COGITO]$ cg-version
+cogito-0.8 (3e0fb979cc7541506ec660ab66b83d8120da6d57)
+
