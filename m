@@ -1,67 +1,54 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: The criss-cross merge case
-Date: Wed, 27 Apr 2005 19:32:08 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504271854240.30848-100000@iabervon.org>
-References: <Pine.LNX.4.44.0504271254120.4678-100000@wax.eds.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git pull on ia64 linux tree
+Date: Wed, 27 Apr 2005 16:36:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504271632060.18901@ppc970.osdl.org>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035B31D9@scsmsx401.amr.corp.intel.com>
+ <Pine.LNX.4.58.0504271525520.18901@ppc970.osdl.org> <20050427225821.GI22956@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:27:56 2005
+Cc: "Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:29:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQvwN-0002jI-Rh
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:27:36 +0200
+	id 1DQvyB-0002ut-LO
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262099AbVD0Xco (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 19:32:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262102AbVD0Xcn
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:32:43 -0400
-Received: from iabervon.org ([66.92.72.58]:20741 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262099AbVD0XcH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:32:07 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DQw0m-00062b-00; Wed, 27 Apr 2005 19:32:08 -0400
-To: Bram Cohen <bram@bitconjurer.org>
-In-Reply-To: <Pine.LNX.4.44.0504271254120.4678-100000@wax.eds.org>
+	id S262101AbVD0Xel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 19:34:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262102AbVD0Xec
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:34:32 -0400
+Received: from fire.osdl.org ([65.172.181.4]:40116 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262100AbVD0XeX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:34:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RNYKs4031561
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Apr 2005 16:34:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RNYJ2Z017670;
+	Wed, 27 Apr 2005 16:34:20 -0700
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050427225821.GI22956@pasky.ji.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 27 Apr 2005, Bram Cohen wrote:
 
-> The way Git handles this currently is very bad, because it forces the
-> common ancestor to be from the same snapshot across all files, so this
-> problem will happen if the modifications are made even in different files,
-> not just different lines within the same file. That could be improved
-> greatly by finding an LCA for each file individually, which is what
-> Monotone does.
 
-The git core is perfectly sufficient for getting all LCAs or
-per-file best LCAs; merge-base doesn't bother, currently, because the
-deficiencies of "merge" (a.k.a. diff3) are worse than the issues with
-chosing a suboptimal LCA.
+On Thu, 28 Apr 2005, Petr Baudis wrote:
+> 
+> Fixed and pushed out.
 
-My plan is to implement multi-file diff and merge with a suffix tree-based
-algorithm, and then revisit the history stuff once we have a merger that
-can do sensible things with this information.
+It looks like you only did the fix for the pure "just update to the 
+version at the other end" case. 
 
-Note that the present very bad merger is actually seems to be sufficient
-for the Linux kernel, where patches from different sides of a merge are
-generally either unrelated or are identical, and, otherwise, they tend to
-be true conflicts where people fixed the same bug independantly in
-different ways.
+So if you actually end up doing a merge, it still leaves all the old files
+(that the merge may have removed from the tree) around. Or did I miss 
+something?
 
-> Darcs, Codeville, and all the Arch descendants have better merge
-> algorithms which don't have to pick a single common ancestor.
-
-I've been looking at Darcs (which seems to have a good method, although I
-think the underlying diff isn't great), and Codeville still doesn't have
-any documentation. Arch's method is strictly weaker than 3-way merge, and
-generates more rejects (not even conflicts) in my experience than even
-CVS. 
-
-	-Daniel
-*This .sig left intentionally blank*
-
+		Linus
