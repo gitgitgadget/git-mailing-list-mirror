@@ -1,67 +1,102 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: A shortcoming of the git repo format
-Date: Wed, 27 Apr 2005 12:15:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271212460.18901@ppc970.osdl.org>
-References: <426F2671.1080105@zytor.com> <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
- <426FD3EE.5000404@zytor.com> <20050427183239.GE19011@redhat.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Cogito Tutorial If It Helps
+Date: Wed, 27 Apr 2005 21:32:27 +0200
+Message-ID: <20050427193227.GF22956@pasky.ji.cz>
+References: <1114548747.3083.1.camel@kryten> <200504271922.07765.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 27 21:09:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 21:28:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQrtC-0001AB-78
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 21:08:02 +0200
+	id 1DQsBo-0004Dy-3y
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 21:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261969AbVD0TNX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 15:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261960AbVD0TNW
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 15:13:22 -0400
-Received: from fire.osdl.org ([65.172.181.4]:32183 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261969AbVD0TNS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 15:13:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RJDBs4005058
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 12:13:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RJDAbm002752;
-	Wed, 27 Apr 2005 12:13:11 -0700
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20050427183239.GE19011@redhat.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261975AbVD0Tch (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 15:32:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261976AbVD0Tch
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 15:32:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:49576 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261975AbVD0Tcd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 15:32:33 -0400
+Received: (qmail 31974 invoked by uid 2001); 27 Apr 2005 19:32:27 -0000
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+Content-Disposition: inline
+In-Reply-To: <200504271922.07765.alan@chandlerfamily.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Apr 2005, Dave Jones wrote:
+Dear diary, on Wed, Apr 27, 2005 at 08:22:07PM CEST, I got a letter
+where Alan Chandler <alan@chandlerfamily.org.uk> told me that...
+> Where I am confused is the relationship between what is in the .git 
+> subdirectory and the project tree of cogito that sits around it.  Obviously I 
+> understand that its the latest version of the project as represented by the 
+> objects in the repository, but what I don't really understand (and neither 
+> your tutorial nor all the explanations of each of the commands in the README 
+> really explain it either) is how the various commands adjust the 
+> relationship.
 > 
-> That actually broke one of my first git scripts when one of the
-> changelog texts started a line with 'tree '.  I hacked around it
-> by making my script only grep in the 'head -n4' lines, but this
-> seems somewhat fragile having to make assumptions that the field
-> I want to see is in the first 4 lines.
+> For instance cg-branch-add seems to add a branch to the repository from a url 
+> (I assume it downloads any "blobs" etc that are not already in my local 
+> repository and creates a tag that identifies the head of a tree object), but 
+> a don't understand how I am supposed see that particular branch as expanded 
+> code.  (I suspect it might be cg-seek, but I am not really sure - and if it 
+> is how do you find out what branch this expanded code is now pointed to?).  
+> But what do cg-update and cg-pull do in terms of the uncompressed code 
+> sitting in the surrounding directory round the repository, particularly when 
+> you perform them on a branch that is not the one that the code refers to.  
 
-It's not an assumption.
+Those commands affect your working tree:
 
-IT'S THE LAW.
+	cg-cancel
+		Cancels out any modifications in the working tree w.r.t.
+		the last commit
+	cg-merge
+		Merges changes done in another branch to your current
+		branch
+	cg-patch
+		Applies a patch, with regard to special git-specific
+		info generated by cg-diff
+	cg-rm
+		Removed the file from your working tree if it's still
+		around
+	cg-seek
+		Changes your working tree to match some other commit in
+		the database
+	cg-update
+		Potentially brings in changes from a remote branch, and
+		updates your working tree to the latest commit + those
+		changes
 
-The speed of light is not "an assumption". It is.
+Those commands affect the objects database:
 
-The tree is in the first line of a commit. You don't even need to parse 
-it, you do
+	cg-commit
+	cg-pull
+		cg-pull just gets the data from remote objects database
+		to the local objects database; it is the "first part"
+		of what cg-update does
+	cg-update
 
-	tree=$(cat-file commit $head | sed 's/tree //;q')
+This affects both:
 
-and that's it. No parsing.
+	cg-merge
+		Not directly, but it can call cg-commit automatically.
+	cg-update
 
-Git doesn't guess. Git knows.
+> The reason I raise all this, is when I follow through on your tutorial and get 
+> to the cg-diff stage I get this
+> 
+> xargs: cg-Xdiffdo: No such file or directory
+> 
+> And I have absolutely no idea whats wrong or where to start looking.
 
-		Linus
+You didn't do make install and you don't have the cogito tree in your $PATH.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
