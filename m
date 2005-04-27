@@ -1,86 +1,255 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Re: Re: Darcs-git pulling from the Linux repo: a
-	Linux VM question
-Date: Wed, 27 Apr 2005 17:54:32 +0200
-Message-ID: <7iu0lskyfb.fsf@lanthane.pps.jussieu.fr>
-References: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
-	<Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
-X-From: darcs-devel-bounces@darcs.net Wed Apr 27 17:51:37 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+From: linux@horizon.com
+Subject: Re: Revised PPC assembly implementation
+Date: 27 Apr 2005 16:01:35 -0000
+Message-ID: <20050427160135.14648.qmail@science.horizon.com>
+References: <17007.2390.258823.189255@cargo.ozlabs.ibm.com>
+Cc: davem@davemloft.net, git@vger.kernel.org, linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:00:11 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQonF-0002tW-W9
-	for gcvdd-darcs-devel@m.gmane.org; Wed, 27 Apr 2005 17:49:42 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DQos1-0008FU-JD; Wed, 27 Apr 2005 11:54:37 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129])
-	by abridgegame.org with esmtp (Exim 4.50) id 1DQory-0008F6-Jm
-	for darcs-devel@darcs.net; Wed, 27 Apr 2005 11:54:34 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
-	[134.157.168.1])
-	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3RFsWl6012649
-	; Wed, 27 Apr 2005 17:54:32 +0200 (CEST)
-X-Ids: 164
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
-	[134.157.168.57])
-	by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id
-	j3RFsWVW015817 ; Wed, 27 Apr 2005 17:54:32 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DQorw-0004XB-NV; Wed, 27 Apr 2005 17:54:32 +0200
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org> (Linus
-	Torvalds's message of "Wed, 27 Apr 2005 08:31:37 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
-	(shiva.jussieu.fr [134.157.0.164]);
-	Wed, 27 Apr 2005 17:54:32 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 426FB5B8.000 by Joe's j-chkmail
-	(http://j-chkmail.ensmp.fr)!
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+	id 1DQov0-0004EX-JH
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 17:57:42 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261717AbVD0QCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 12:02:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261784AbVD0QCo
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 12:02:44 -0400
+Received: from science.horizon.com ([192.35.100.1]:29245 "HELO
+	science.horizon.com") by vger.kernel.org with SMTP id S261780AbVD0QBg
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 12:01:36 -0400
+Received: (qmail 14649 invoked by uid 1000); 27 Apr 2005 16:01:35 -0000
+To: paulus@samba.org
+In-Reply-To: <17007.2390.258823.189255@cargo.ozlabs.ibm.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
->> For now, does anyone know how I can tune the Linux VM to get a 720
->> MB process to run reliably in 640 MB of main memory?
+> On my powerbook, which has a 1.5GHz G4 (7447A), the same test takes
+> 4.68 seconds with my version, 4.72 seconds with your old version, but
+> only 3.90 seconds with your new version.
 
-> I really think you're screwed.
+20%; now we're getting somewhere!  Thanks for running the tests.
 
-Thanks, that's what I needed to know.
+> Care to check the code and find out why it's giving the wrong answer?
 
-> You _really_ shouldn't read in files that you don't absolutely need.
+You *could* be nice to me and breakpoint it every 20 rounds and tell me
+which group is delivering the wrong answer..
 
-Ahem... you don't expect me to embark on hacking Git without at least
-understanding that, do you?
+But I'll look...
 
-> That's really the biggest point of git: using the sha1 for naming the
-> objects is really all about "descrive the contents using 20 bytes instead
-> of by reading the contents".
+Hey!  It's not the tricky code at all; it's the STEPUP20 macro.
+The third line should be +8, not +4.
+Fix appended, but you can just edit line 127.
 
-Here we're speaking about the initial import.  Committed on 17 April
-2005 by Linus Torvalds, with the comment ``Let it rip''.  220 MB of
-changed files in a single commit.  2 minutes real time just to read
-all the files, never mind doing anything useful with them.
+I can add one more tweak (scheduling the load of k better), and the
+comments, then I think I'm done.
 
-To put it mildly, Darcs is not optimised for that sort of usage.
+Would you mind playing with the number of words of fetchahead and see if
+a value less than 4 is any faster?  It'll probably be a pretty minimal
+change, but it doesn't affect the code size any.
 
-> Sorry.  You really need to fix darcs.
+I suppose we should also test it in a more realistic setting,
+hashing *different* data a lot.  A dcbt in the loop might help.
+(Does any PPC since the G3 have a cache line less than 64 bytes?
+I know the G5 is 64 L1 and 128 L2...)
 
-That's exactly why we're so interested in your repository.
+BTW, what's the best way to refer to PPC processors?  MPC74xx and PPC970FX?
+Or Apple's names?  Or something else?
 
-                                        Juliusz
+
+
+/*
+ * SHA-1 implementation for PowerPC.
+ *
+ * Copyright (C) 2005 Paul Mackerras <paulus@samba.org>
+ */
+
+/*
+ * We roll the registers for A, B, C, D, E around on each
+ * iteration; E on iteration t is D on iteration t+1, and so on.
+ * We use registers 6 - 10 for this.  (Registers 27 - 31 hold
+ * the previous values.)
+ */
+#define RA(t)	(((t)+4)%5+6)
+#define RB(t)	(((t)+3)%5+6)
+#define RC(t)	(((t)+2)%5+6)
+#define RD(t)	(((t)+1)%5+6)
+#define RE(t)	(((t)+0)%5+6)
+
+/* We use registers 11 - 26 for the W values */
+#define W(t)	((t)%16+11)
+
+/* Register 5 is used for the constant k */
+
+/*
+ * There are three F functions, used four groups of 20:
+ * - 20 rounds of f0(b,c,d) = "bit wise b ? c : d" =  (^b & d) + (b & c)
+ * - 20 rounds of f1(b,c,d) = b^c^d = (b^d)^c
+ * - 20 rounds of f2(b,c,d) = majority(b,c,d) = (b&d) + ((b^d)&c)
+ * - 20 more rounds of f1(b,c,d)
+ *
+ * These are all scheduled for near-optimal performance on a G4.
+ * The G4 is a 3-issue out-of-order machine with 3 ALUs, but it can only
+ * *consider* starting the oldest 3 instructions per cycle.  So to get
+ * maximum performace out of it, you have to treat it as an in-order
+ * machine.  Which means interleaving the computation round t with the
+ * computation of W[t+4].
+ *
+ * The first 16 rounds use W values loaded directly from memory, while the
+ * remianing 64 use values computed from those first 16.  We preload
+ * 4 values before starting, so there are three kinds of rounds:
+ * - The first 12 (all f0) also load the W values from memory.
+ * - The next 64 compute W(i+4) in parallel. 8*f0, 20*f1, 20*f2, 16*f1.
+ * - The last 4 (all f1) do not do anything with W.
+ *
+ * Therefore, we have 6 different round functions:
+ * STEPD0_LOAD(t,s) - Perform round t and load W(s).  s < 16
+ * STEPD0_UPDATE(t,s) - Perform round t and compute W(s).  s >= 16.
+ * STEPD1_UPDATE(t,s)
+ * STEPD2_UPDATE(t,s)
+ * STEPD1(t) - Perform round t with no load or update.
+ * 
+ * The G5 is more fully out-of-order, and can find the parallelism
+ * by itself.  The big limit is that it has a 2-cycle ALU latency, so
+ * even though it's 2-way, the code has to be scheduled as if it's
+ * 4-way, which can be a limit.  To help it, we try to schedule the
+ * read of RA(t) as late as possible so it doesn't stall waiting for
+ * the previous round's RE(t-1), and we try to rotate RB(t) as early
+ * as possible while reading RC(t) (= RB(t-1)) as late as possible.
+ */
+
+
+/* the initial loads. */
+#define LOADW(s) \
+	lwz	W(s),(s)*4(%r4)
+
+/*
+ * This is actually 13 instructions, which is an awkward fit,
+ * and uses W(s) as a temporary before loading it.
+ */
+#define STEPD0_LOAD(t,s) \
+add RE(t),RE(t),W(t); andc   %r0,RD(t),RB(t);  /* spare slot */        \
+add RE(t),RE(t),%r0;  and    W(s),RC(t),RB(t); rotlwi %r0,RA(t),5;     \
+add RE(t),RE(t),W(s); add    %r0,%r0,%r5;      rotlwi RB(t),RB(t),30;  \
+add RE(t),RE(t),%r0;  lwz    W(s),(s)*4(%r4);
+
+/*
+ * This can execute starting with 2 out of 3 possible moduli, so it
+ * does 2 rounds in 9 cycles, 4.5 cycles/round.
+ */
+#define STEPD0_UPDATE(t,s) \
+add RE(t),RE(t),W(t); andc   %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
+add RE(t),RE(t),%r0;  and    %r0,RC(t),RB(t); xor    W(s),W(s),W((s)-8);      \
+add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     xor    W(s),W(s),W((s)-14);     \
+add RE(t),RE(t),%r5;  rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1;             \
+add RE(t),RE(t),%r0;
+
+/* Nicely optimal.  Conveniently, also the most common. */
+#define STEPD1_UPDATE(t,s) \
+add RE(t),RE(t),W(t); xor    %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
+add RE(t),RE(t),%r5;  xor    %r0,%r0,RC(t);   xor    W(s),W(s),W((s)-8);      \
+add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     xor    W(s),W(s),W((s)-14);     \
+add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30;  rotlwi W(s),W(s),1;
+
+/*
+ * The naked version, no UPDATE, for the last 4 rounds.  3 cycles per.
+ * We could use W(s) as a temp register, but we don't need it.
+ */
+#define STEPD1(t) \
+/* spare slot */        add   RE(t),RE(t),W(t); xor    %r0,RD(t),RB(t); \
+rotlwi RB(t),RB(t),30;  add   RE(t),RE(t),%r5;  xor    %r0,%r0,RC(t);   \
+add    RE(t),RE(t),%r0; rotlwi %r0,RA(t),5;     /* idle */              \
+add    RE(t),RE(t),%r0;
+
+/* 5 cycles per */
+#define STEPD2_UPDATE(t,s) \
+add RE(t),RE(t),W(t); and    %r0,RD(t),RB(t); xor    W(s),W((s)-16),W((s)-3); \
+add RE(t),RE(t),%r0;  xor    %r0,RD(t),RB(t); xor    W(s),W(s),W((s)-8);      \
+add RE(t),RE(t),%r5;  and    %r0,%r0,RC(t);   xor    W(s),W(s),W((s)-14);     \
+add RE(t),RE(t),%r0;  rotlwi %r0,RA(t),5;     rotlwi W(s),W(s),1;             \
+add RE(t),RE(t),%r0;  rotlwi RB(t),RB(t),30;
+
+#define STEP0_LOAD4(t,s)		\
+	STEPD0_LOAD(t,s);		\
+	STEPD0_LOAD((t+1),(s)+1);	\
+	STEPD0_LOAD((t)+2,(s)+2);	\
+	STEPD0_LOAD((t)+3,(s)+3);
+
+#define STEPUP4(fn, t, s)		\
+	STEP##fn##_UPDATE(t,s);		\
+	STEP##fn##_UPDATE((t)+1,(s)+1);	\
+	STEP##fn##_UPDATE((t)+2,(s)+2);	\
+	STEP##fn##_UPDATE((t)+3,(s)+3);	\
+
+#define STEPUP20(fn, t, s)		\
+	STEPUP4(fn, t, s);		\
+	STEPUP4(fn, (t)+4, (s)+4);	\
+	STEPUP4(fn, (t)+8, (s)+8);	\
+	STEPUP4(fn, (t)+12, (s)+12);	\
+	STEPUP4(fn, (t)+16, (s)+16)
+
+	.globl	sha1_core
+sha1_core:
+	stwu	%r1,-80(%r1)
+	stmw	%r13,4(%r1)
+
+	/* Load up A - E */
+	lmw	%r27,0(%r3)
+
+	mtctr	%r5
+
+1:
+	lis	%r5,0x5a82	/* K0-19 */
+	mr	RA(0),%r27
+	LOADW(0)
+	mr	RB(0),%r28
+	LOADW(1)
+	mr	RC(0),%r29
+	LOADW(2)
+	ori	%r5,%r5,0x7999
+	mr	RD(0),%r30
+	LOADW(3)
+	mr	RE(0),%r31
+
+	STEP0_LOAD4(0, 4)
+	STEP0_LOAD4(4, 8)
+	STEP0_LOAD4(8, 12)
+	STEPUP4(D0, 12, 16)
+	STEPUP4(D0, 16, 20)
+
+	lis	%r5,0x6ed9	/* K20-39 */
+	ori	%r5,%r5,0xeba1
+	STEPUP20(D1, 20, 24)
+
+	lis	%r5,0x8f1b	/* K40-59 */
+	ori	%r5,%r5,0xbcdc
+	STEPUP20(D2, 40, 44)
+
+	lis	%r5,0xca62	/* K60-79 */
+	ori	%r5,%r5,0xc1d6
+	STEPUP4(D1, 60, 64)
+	STEPUP4(D1, 64, 68)
+	STEPUP4(D1, 68, 72)
+	STEPUP4(D1, 72, 76)
+	STEPD1(76)
+	STEPD1(77)
+	STEPD1(78)
+	STEPD1(79)
+
+	/* Add results to original values */
+	add	%r31,%r31,RE(0)
+	add	%r30,%r30,RD(0)
+	add	%r29,%r29,RC(0)
+	add	%r28,%r28,RB(0)
+	add	%r27,%r27,RA(0)
+
+	addi	%r4,%r4,64
+	bdnz	1b
+
+	/* Save final hash, restore registers, and return */
+	stmw	%r27,0(%r3)
+	lmw	%r13,4(%r1)
+	addi	%r1,%r1,80
+	blr
