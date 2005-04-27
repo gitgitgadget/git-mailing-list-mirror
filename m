@@ -1,75 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git "tag" objects implemented - and a re-done commit
-Date: Wed, 27 Apr 2005 08:37:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504270833210.18901@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org>
- <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu>
- <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>
- <pan.2005.04.27.03.36.51.65390@smurf.noris.de>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: Re: Darcs-git pulling from the Linux repo: a
+	Linux VM question
+Date: Wed, 27 Apr 2005 17:54:32 +0200
+Message-ID: <7iu0lskyfb.fsf@lanthane.pps.jussieu.fr>
+References: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
+	<Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 17:34:53 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
+X-From: darcs-devel-bounces@darcs.net Wed Apr 27 17:51:37 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQoWZ-0008RX-EF
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 17:32:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261782AbVD0PhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 11:37:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261802AbVD0PhV
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 11:37:21 -0400
-Received: from fire.osdl.org ([65.172.181.4]:15814 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261787AbVD0Pf5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 11:35:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RFZfs4016301
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 08:35:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RFZeK4020425;
-	Wed, 27 Apr 2005 08:35:41 -0700
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.04.27.03.36.51.65390@smurf.noris.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DQonF-0002tW-W9
+	for gcvdd-darcs-devel@m.gmane.org; Wed, 27 Apr 2005 17:49:42 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DQos1-0008FU-JD; Wed, 27 Apr 2005 11:54:37 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129])
+	by abridgegame.org with esmtp (Exim 4.50) id 1DQory-0008F6-Jm
+	for darcs-devel@darcs.net; Wed, 27 Apr 2005 11:54:34 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
+	[134.157.168.1])
+	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3RFsWl6012649
+	; Wed, 27 Apr 2005 17:54:32 +0200 (CEST)
+X-Ids: 164
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
+	[134.157.168.57])
+	by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id
+	j3RFsWVW015817 ; Wed, 27 Apr 2005 17:54:32 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DQorw-0004XB-NV; Wed, 27 Apr 2005 17:54:32 +0200
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org> (Linus
+	Torvalds's message of "Wed, 27 Apr 2005 08:31:37 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
+	(shiva.jussieu.fr [134.157.0.164]);
+	Wed, 27 Apr 2005 17:54:32 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 426FB5B8.000 by Joe's j-chkmail
+	(http://j-chkmail.ensmp.fr)!
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
+>> For now, does anyone know how I can tune the Linux VM to get a 720
+>> MB process to run reliably in 640 MB of main memory?
 
+> I really think you're screwed.
 
-On Wed, 27 Apr 2005, Matthias Urlichs wrote:
->
-> Hi, Linus Torvalds wrote:
-> 
-> > And if two different developers tag exactly the same object with exactly 
-> > the same tag-name and exactly the same signature, then they get the same 
-> > tag object, and that's fine. They should.
-> 
-> ... except that they can't. I mean, the signature is done by different
-> people at different times, so it can't well be identical.
+Thanks, that's what I needed to know.
 
-You'd quite possibly use some shared secret key for some work. For 
-example, say you're a company, and any "release person" can sign the 
-work..
+> You _really_ shouldn't read in files that you don't absolutely need.
 
-Also, since you can tag things without signing anything at all, it's even 
-more trivial to get the same tag that way.
+Ahem... you don't expect me to embark on hacking Git without at least
+understanding that, do you?
 
-Signing tags really makes sense when you want somebody _else_ to trust it. 
-But unsigned tags are perfectly practical from a _private_ perspective: 
-let's say that you just want to remember certain events but you don't need 
-to tell anybody else about them - what you'd do is to just create your own 
-local tag, and there's no real reason to sign it, since you'll never tell 
-anybody else about it anyway.
+> That's really the biggest point of git: using the sha1 for naming the
+> objects is really all about "descrive the contents using 20 bytes instead
+> of by reading the contents".
 
-(One such thing could be to create a tag every time you compile and
-install a new kernel: your "tag" is just a way to remember what your
-installed kernel was built against, and is meaningless to anybody else.  
-In fact, you might well decide to just remove such tags periodically).
+Here we're speaking about the initial import.  Committed on 17 April
+2005 by Linus Torvalds, with the comment ``Let it rip''.  220 MB of
+changed files in a single commit.  2 minutes real time just to read
+all the files, never mind doing anything useful with them.
 
-		Linus
+To put it mildly, Darcs is not optimised for that sort of usage.
+
+> Sorry.  You really need to fix darcs.
+
+That's exactly why we're so interested in your repository.
+
+                                        Juliusz
