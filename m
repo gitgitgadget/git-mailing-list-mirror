@@ -1,48 +1,53 @@
-From: Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: git add / update-cache --add fails.
-Date: Wed, 27 Apr 2005 12:35:26 +1000
-Organization: Core
-Message-ID: <E1DQcOc-00054l-00@gondolin.me.apana.org.au>
-References: <200504260726.04908.rhys@rhyshardwick.co.uk>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 04:31:04 2005
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Revised PPC assembly implementation
+Date: Wed, 27 Apr 2005 13:39:02 +1000
+Message-ID: <17007.2390.258823.189255@cargo.ozlabs.ibm.com>
+References: <17005.38889.738457.359270@cargo.ozlabs.ibm.com>
+	<20050427014712.13552.qmail@science.horizon.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: davem@davemloft.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 05:32:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQcKF-0000e9-3g
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 04:30:55 +0200
+	id 1DQdHn-0005Go-KW
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 05:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261893AbVD0Cfp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 22:35:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261894AbVD0Cfp
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 22:35:45 -0400
-Received: from arnor.apana.org.au ([203.14.152.115]:25353 "EHLO
-	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261893AbVD0Cfk
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Apr 2005 22:35:40 -0400
-Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
-	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
-	id 1DQcOj-0002jQ-00; Wed, 27 Apr 2005 12:35:34 +1000
-Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
-	id 1DQcOc-00054l-00; Wed, 27 Apr 2005 12:35:26 +1000
-To: rhys@rhyshardwick.co.uk
-In-Reply-To: <200504260726.04908.rhys@rhyshardwick.co.uk>
-X-Newsgroups: apana.lists.os.linux.git
-User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
+	id S261901AbVD0Dh1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 23:37:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261902AbVD0Dh1
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 23:37:27 -0400
+Received: from ozlabs.org ([203.10.76.45]:52407 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261901AbVD0DhW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 23:37:22 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id A4DE367B1A; Wed, 27 Apr 2005 13:37:20 +1000 (EST)
+To: linux@horizon.com
+In-Reply-To: <20050427014712.13552.qmail@science.horizon.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Rhys Hardwick <rhys@rhyshardwick.co.uk> wrote:
-> 
-> rhys@metatron:~/repo/learning.repo$ strace update-cache --add w1d4p1.c
-...
-> open("w1d4p1.c", O_RDONLY)              = -1 ENOENT (No such file or 
-> directory)
+linux@horizon.com writes:
 
-The file that you're trying to add doesn't exist.
--- 
-Visit Openswan at http://www.openswan.org/
-Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+> Here's a massively revised version, scheduled very close to optimally for
+> the G4.  (The main remaining limitation is the loading of the k value
+> in %r5, which could be split up more.)
+> 
+> My hope is that the G5 will do decently on it as well.
+
+Nice... your new version takes 4.413 seconds on my G5 for 1000MB,
+compared to 4.606 for your old version, i.e. it's about 4.4% faster.
+Unfortunately it gives the wrong answer, though.
+
+On my powerbook, which has a 1.5GHz G4 (7447A), the same test takes
+4.68 seconds with my version, 4.72 seconds with your old version, but
+only 3.90 seconds with your new version.
+
+Care to check the code and find out why it's giving the wrong answer?
+
+Regards,
+Paul.
