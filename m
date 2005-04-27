@@ -1,55 +1,73 @@
-From: Florian Weimer <fw@deneb.enyo.de>
+From: Bill Davidsen <davidsen@tmr.com>
 Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Wed, 27 Apr 2005 23:06:06 +0200
-Message-ID: <87r7gw3p6p.fsf@deneb.enyo.de>
-References: <aec7e5c305042608095731d571@mail.gmail.com>
-	<200504261138.46339.mason@suse.com>
-	<aec7e5c305042609231a5d3f0@mail.gmail.com>
-	<20050426135606.7b21a2e2.akpm@osdl.org>
-	<Pine.LNX.4.58.0504261405050.18901@ppc970.osdl.org>
-	<20050426155609.06e3ddcf.akpm@osdl.org> <426ED20B.9070706@zytor.com>
-	<871x8wb6w4.fsf@deneb.enyo.de>
-	<20050427151357.GH1087@cip.informatik.uni-erlangen.de>
-	<426FDFCD.6000309@zytor.com>
-	<20050427190144.GA28848@cip.informatik.uni-erlangen.de>
-	<874qds5489.fsf@deneb.enyo.de> <426FFE58.4050901@zytor.com>
+Date: Wed, 27 Apr 2005 17:10:03 -0400
+Message-ID: <426FFFAB.1030005@tmr.com>
+References: <20050426135606.7b21a2e2.akpm@osdl.org><20050426135606.7b21a2e2.akpm@osdl.org> <20050427063439.GA22014@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@osdl.org>, Linus Torvalds <torvalds@osdl.org>,
-	magnus.damm@gmail.com, mason@suse.com, mike.taht@timesys.com,
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Morton <akpm@osdl.org>, Magnus Damm <magnus.damm@gmail.com>,
+	mason@suse.com, torvalds@osdl.org, mike.taht@timesys.com,
 	mpm@selenic.com, linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 23:01:56 2005
+X-From: git-owner@vger.kernel.org Wed Apr 27 23:07:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQtee-0001uT-8O
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 23:01:08 +0200
+	id 1DQtis-0002f6-OO
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 23:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262024AbVD0VGY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 17:06:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262012AbVD0VGY
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 17:06:24 -0400
-Received: from mail.enyo.de ([212.9.189.167]:21654 "EHLO mail.enyo.de")
-	by vger.kernel.org with ESMTP id S262009AbVD0VGS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 17:06:18 -0400
-Received: from deneb.enyo.de ([212.9.189.171])
-	by albireo.enyo.de with esmtp id 1DQtjU-0001ON-C4; Wed, 27 Apr 2005 23:06:08 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.50)
-	id 1DQtjS-00059v-EN; Wed, 27 Apr 2005 23:06:06 +0200
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <426FFE58.4050901@zytor.com> (H. Peter Anvin's message of "Wed,
-	27 Apr 2005 14:04:24 -0700")
+	id S262012AbVD0VKt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 17:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262026AbVD0VKs
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 17:10:48 -0400
+Received: from prgy-npn1.prodigy.com ([207.115.54.37]:48270 "EHLO
+	oddball.prodigy.com") by vger.kernel.org with ESMTP id S262017AbVD0VKh
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 17:10:37 -0400
+Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
+	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j3RLA4V13010;
+	Wed, 27 Apr 2005 17:10:08 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
+X-Accept-Language: en-us, en
+To: Ingo Molnar <mingo@elte.hu>
+In-Reply-To: <20050427063439.GA22014@elte.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* H. Peter Anvin:
+Ingo Molnar wrote:
+> * Andrew Morton <akpm@osdl.org> wrote:
+> 
+> 
+>>Magnus Damm <magnus.damm@gmail.com> wrote:
+>>
+>>>My primitive guess is that it was because
+>>> the ext3 journal became full.
+>>
+>>The default ext3 journal size is inappropriately small, btw.  Normally 
+>>you should manually make it 128M or so, rather than 32M.  Unless you 
+>>have a small amount of memory and/or a large number of filesystems, in 
+>>which case there might be problems with pinned memory.
+>>
+>>Mounting as ext2 is a useful technique for determining whether the fs 
+>>is getting in the way.
+> 
+> 
+> on ext3, when juggling patches and trees, the biggest performance boost 
+> for me comes from adding noatime,nodiratime to the mount options in 
+> /etc/fstab:
+> 
+>  LABEL=/ / ext3 noatime,nodiratime,defaults 1 1
 
-> Florian Weimer wrote:
->> Benchmarks are actually a bit tricky because as far as I can tell,
->> once you hash the directories, they are tainted even if you mount your
->> file system with ext2.
->
-> That's what fsck -D is for.
+I said much the same in another post, but noatime is not always what I 
+really want. How about a "nojournalatime" option, so the atime would be 
+updated at open and close, but not journaled at any other time. This 
+would reduce journal traffic but still allow an admin to tell if anyone 
+ever uses a file. The info would be lost in a crash, but otherwise 
+preserved just as it is for ext2. Might even be useful for ext2, not to 
+write the atime, just track it in core.
 
-Ah, cool, I didn't know that it works the other way, too.  Thanks.
+-- 
+    -bill davidsen (davidsen@tmr.com)
+"The secret to procrastination is to put things off until the
+  last possible moment - but no longer"  -me
