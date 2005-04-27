@@ -1,175 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 6/6] Alternative patch to diff-cache.c
-Date: Tue, 26 Apr 2005 23:28:45 -0700
-Message-ID: <7vekcwivhe.fsf@assigned-by-dhcp.cox.net>
-References: <7vekcwkagr.fsf@assigned-by-dhcp.cox.net>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Wed, 27 Apr 2005 08:34:39 +0200
+Message-ID: <20050427063439.GA22014@elte.hu>
+References: <20050426004111.GI21897@waste.org> <200504260713.26020.mason@suse.com> <aec7e5c305042608095731d571@mail.gmail.com> <200504261138.46339.mason@suse.com> <aec7e5c305042609231a5d3f0@mail.gmail.com> <20050426135606.7b21a2e2.akpm@osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 08:23:54 2005
+Cc: Magnus Damm <magnus.damm@gmail.com>, mason@suse.com,
+	torvalds@osdl.org, mike.taht@timesys.com, mpm@selenic.com,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 08:30:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQfxY-0000QS-Gb
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 08:23:45 +0200
+	id 1DQg3u-0000z6-2o
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 08:30:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261669AbVD0G3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 02:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261683AbVD0G3A
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 02:29:00 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:13248 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261669AbVD0G2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 02:28:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050427062846.XODC1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 27 Apr 2005 02:28:46 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vekcwkagr.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 26 Apr 2005 23:19:48 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261706AbVD0GfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 02:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261702AbVD0GfY
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 02:35:24 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:14811 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261695AbVD0GfQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 02:35:16 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id 351CE3154FE;
+	Wed, 27 Apr 2005 08:33:26 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 2909C1FC2; Wed, 27 Apr 2005 08:34:42 +0200 (CEST)
+To: Andrew Morton <akpm@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <20050426135606.7b21a2e2.akpm@osdl.org>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a replacement of PATCH 4, in case you have already
-applied the "non-cached still looks only at cache" fix I
-sent you earlier.  If you took it, PATCH 4 may not apply
-cleanly, in which case this should be easier to work with.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+* Andrew Morton <akpm@osdl.org> wrote:
 
-diff-cache.c |   73 ++++++++++++++++++++++++++++++++++++++++++++++++++---------
-1 files changed, 63 insertions(+), 10 deletions(-)
+> Magnus Damm <magnus.damm@gmail.com> wrote:
+> >
+> > My primitive guess is that it was because
+> >  the ext3 journal became full.
+> 
+> The default ext3 journal size is inappropriately small, btw.  Normally 
+> you should manually make it 128M or so, rather than 32M.  Unless you 
+> have a small amount of memory and/or a large number of filesystems, in 
+> which case there might be problems with pinned memory.
+> 
+> Mounting as ext2 is a useful technique for determining whether the fs 
+> is getting in the way.
 
---- k/diff-cache.c
-+++ l/diff-cache.c
-@@ -1,13 +1,41 @@
- #include "cache.h"
-+#include "diff.h"
- 
- static int cached_only = 0;
-+static int generate_patch = 0;
- static int line_termination = '\n';
- 
- /* A file entry went away or appeared */
- static void show_file(const char *prefix, struct cache_entry *ce)
- {
--	printf("%s%o\t%s\t%s\t%s%c", prefix, ntohl(ce->ce_mode), "blob",
--	       sha1_to_hex(ce->sha1), ce->name, line_termination);
-+	if (generate_patch)
-+		diff_addremove(prefix[0], ntohl(ce->ce_mode),
-+			       ce->sha1, ce->name, NULL);
-+	else
-+		printf("%s%06o\tblob\t%s\t%s%c", prefix, ntohl(ce->ce_mode),
-+		       sha1_to_hex(ce->sha1), ce->name,
-+		       line_termination);
-+}
-+
-+/* A file *may* have been added to the working tree */
-+static void show_possible_local_add(struct cache_entry *new)
-+{
-+	static unsigned char no_sha1[20];
-+	struct stat st;
-+	if (stat(new->name, &st) < 0)
-+		/* We signal the missing file by special mode 0 and
-+		 * let diff-tree-helper notice the missing file when it
-+		 * tries to open it by path.  Sneaky but works.
-+		 */
-+		st.st_mode = 0;
-+	else if (cache_match_stat(new, &st))
-+		return show_file("+", new);
-+
-+	if (generate_patch)
-+		diff_addremove('+', st.st_mode, no_sha1, new->name, NULL);
-+	else
-+		printf("+%06o\tblob\t%s\t%s%c", st.st_mode,
-+		       sha1_to_hex(no_sha1), new->name, line_termination);
- }
- 
- static int show_modified(struct cache_entry *old, struct cache_entry *new)
-@@ -35,11 +63,15 @@ static int show_modified(struct cache_en
- 	if (mode == oldmode && !memcmp(sha1, old->sha1, 20))
- 		return 0;
- 
--	strcpy(old_sha1_hex, sha1_to_hex(old->sha1));
--	printf("*%o->%o\t%s\t%s->%s\t%s%c", oldmode, mode,
--	       "blob",
--	       old_sha1_hex, sha1_to_hex(sha1),
--	       old->name, line_termination);
-+	if (generate_patch)
-+		diff_change(oldmode, mode,
-+			    old->sha1, sha1, old->name, NULL);
-+	else {
-+		strcpy(old_sha1_hex, sha1_to_hex(old->sha1));
-+		printf("*%06o->%06o\tblob\t%s->%s\t%s%c", oldmode, mode,
-+		       old_sha1_hex, sha1_to_hex(sha1),
-+		       old->name, line_termination);
-+	}
- 	return 0;
- }
- 
-@@ -54,20 +86,36 @@ static int diff_cache(struct cache_entry
- 			/* No stage 1 entry? That means it's a new file */
- 			if (!same) {
- 				show_file("+", ce);
-+				/* ... not so fast.  The working tree may
-+				 * also not have it anymore.
-+				 */
-+				if (cached_only)
-+					show_file("+", ce);
-+				else
-+					show_possible_local_add(ce);
- 				break;
- 			}
- 			/* Show difference between old and new */
- 			show_modified(ac[1], ce);
- 			break;
- 		case 1:
--			/* No stage 3 (merge) entry? That means it's been deleted */
-+			/* No stage 3 (merge) entry? That means it's been
-+			 * deleted.
-+			 */
- 			if (!same) {
-+				/* The working tree may have it, but it does
-+				 * not matter.  If you write-tree and commit
-+				 * you would lose that file, so take notice.
-+				 */
- 				show_file("-", ce);
- 				break;
- 			}
- 			/* Otherwise we fall through to the "unmerged" case */
- 		case 3:
--			printf("U %s%c", ce->name, line_termination);
-+			if (generate_patch)
-+				diff_unmerge(ce->name);
-+			else
-+				printf("U %s%c", ce->name, line_termination);
- 			break;
- 
- 		default:
-@@ -102,7 +150,8 @@ static void mark_merge_entries(void)
- 	}
- }
- 
--static char *diff_cache_usage = "diff-cache [-r] [-z] [--cached] <tree sha1>";
-+static char *diff_cache_usage =
-+"diff-cache [-r] [-z] [-p] [--cached] <tree sha1>";
- 
- int main(int argc, char **argv)
- {
-@@ -119,6 +168,10 @@ int main(int argc, char **argv)
- 			/* We accept the -r flag just to look like diff-tree */
- 			continue;
- 		}
-+		if (!strcmp(arg, "-p")) {
-+			generate_patch = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "-z")) {
- 			line_termination = '\0';
- 			continue;
+on ext3, when juggling patches and trees, the biggest performance boost 
+for me comes from adding noatime,nodiratime to the mount options in 
+/etc/fstab:
 
+ LABEL=/ / ext3 noatime,nodiratime,defaults 1 1
+
+	Ingo
