@@ -1,43 +1,46 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: import mbox?
-Date: Wed, 27 Apr 2005 19:08:41 -0400
-Message-ID: <42701B79.8080106@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make -s flag to show-diff a no-op.
+Date: Wed, 27 Apr 2005 16:11:16 -0700
+Message-ID: <7vwtqnddd7.fsf@assigned-by-dhcp.cox.net>
+References: <7vfyxbeuwt.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504271520150.18901@ppc970.osdl.org>
+	<7v64y7etko.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504271600280.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:03:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:06:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQvZ0-0000ZU-03
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:03:26 +0200
+	id 1DQvbS-0000mM-0H
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262086AbVD0XIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 19:08:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262087AbVD0XIt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:08:49 -0400
-Received: from srv2.dvmed.net ([216.237.124.58]:58569 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S262086AbVD0XIs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:08:48 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.50 #1 (Red Hat Linux))
-	id 1DQve7-0003YO-F3; Wed, 27 Apr 2005 23:08:45 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S262087AbVD0XLU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 19:11:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262088AbVD0XLU
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:11:20 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:38342 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262087AbVD0XLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 19:11:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050427231115.LAVH19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 27 Apr 2005 19:11:15 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504271600280.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Wed, 27 Apr 2005 16:05:02 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the FAQ, but I didn't see this in any of the scripts in the 
-'git' archives, nor in the README.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-What script should kernel developers use, to import an mbox full of patches?
+LT> Well, if you give pathnames, it's always going to limit recursion to only 
+LT> those subdirectories that match one of them. 
 
-Thanks,
-
-	Jeff
-
+If that is the case then -p should imply -r.  Will fix it up.
 
