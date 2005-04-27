@@ -1,55 +1,75 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: git "tag" objects implemented - and a re-done commit
-Date: Wed, 27 Apr 2005 13:36:51 +1000
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.04.27.03.36.51.65390@smurf.noris.de>
-References: <Pine.LNX.4.58.0504251213530.18901@ppc970.osdl.org> <Pine.LNX.4.58.0504251318290.11481@sam.ics.uci.edu> <Pine.LNX.4.58.0504251339020.18901@ppc970.osdl.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [PATCH] Set AUTHOR_DATE in git-tools
+Date: Tue, 26 Apr 2005 20:52:06 -0700
+Message-ID: <20050427035206.GA27615@kroah.com>
+References: <1114068737.29135.17.camel@localhost.localdomain> <20050426184442.GA20536@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Apr 27 05:33:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 05:48:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQdHx-0005Hm-RF
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 05:32:38 +0200
+	id 1DQdWC-0006MS-Ot
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 05:47:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261902AbVD0Dht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 23:37:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261903AbVD0Dht
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 23:37:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:1232 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261902AbVD0Dhh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 23:37:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DQdHE-0005Db-GH
-	for git@vger.kernel.org; Wed, 27 Apr 2005 05:31:55 +0200
-Received: from intern146.lnk.telstra.net ([165.228.245.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 Apr 2005 05:31:52 +0200
-Received: from smurf by intern146.lnk.telstra.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 27 Apr 2005 05:31:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: intern146.lnk.telstra.net
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table (Debian GNU/Linux))
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261903AbVD0Dwe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 23:52:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261904AbVD0Dwe
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 23:52:34 -0400
+Received: from mail.kroah.org ([69.55.234.183]:5344 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261903AbVD0Dwb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 23:52:31 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j3R3qNi05364;
+	Tue, 26 Apr 2005 20:52:23 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DQdao-7C0-00; Tue, 26 Apr 2005 20:52:06 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+Content-Disposition: inline
+In-Reply-To: <20050426184442.GA20536@kroah.com>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Linus Torvalds wrote:
+On Tue, Apr 26, 2005 at 11:44:42AM -0700, Greg KH wrote:
+> On Thu, Apr 21, 2005 at 05:32:16PM +1000, David Woodhouse wrote:
+> > Entirely untested.
+> 
+> Doesn't work :(
 
-> And if two different developers tag exactly the same object with exactly 
-> the same tag-name and exactly the same signature, then they get the same 
-> tag object, and that's fine. They should.
+I take it back, it works just fine... 
 
-... except that they can't. I mean, the signature is done by different
-people at different times, so it can't well be identical.
+My problem was that bk generates dates with a non-rfc compliant timezone
+string.  And I was trying to apply patches exported from bk in plain
+text format (building a udev git tree...)  The patch below to
+commit-tree.c fixes this issue, if anyone runs into this same issue (I
+wouldn't recommend it to be applied, as it's probably a one-off
+issue...)
 
--- 
-Matthias Urlichs
+thanks,
 
+greg k-h
+--------------
+Allow commit-tree to handle the bk date format.
+
+Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
+
+
+--- a/commit-tree.c	2005-04-25 22:08:49.000000000 -0700
++++ b/commit-tree.c	2005-04-26 20:46:37.000000000 -0700
+@@ -204,6 +204,12 @@
+ 	else
+ 	       return;
+ 
++	/* Handle messed up bk dates */
++	if (p[3] == ':') {
++		p[3] = p[4];
++		p[4] = p[5];
++		p[5] = p[6];
++	}
+ 	if (!isdigit(p[1]) || !isdigit(p[2]) || !isdigit(p[3]) || !isdigit(p[4]))
+ 		return;
+ 
