@@ -1,74 +1,56 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Wed, 27 Apr 2005 17:13:57 +0200
-Message-ID: <20050427151357.GH1087@cip.informatik.uni-erlangen.de>
-References: <20050426004111.GI21897@waste.org> <200504260713.26020.mason@suse.com> <aec7e5c305042608095731d571@mail.gmail.com> <200504261138.46339.mason@suse.com> <aec7e5c305042609231a5d3f0@mail.gmail.com> <20050426135606.7b21a2e2.akpm@osdl.org> <Pine.LNX.4.58.0504261405050.18901@ppc970.osdl.org> <20050426155609.06e3ddcf.akpm@osdl.org> <426ED20B.9070706@zytor.com> <871x8wb6w4.fsf@deneb.enyo.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 08:22:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
+References: <426F2671.1080105@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>,
-	Linus Torvalds <torvalds@osdl.org>, magnus.damm@gmail.com,
-	mason@suse.com, mike.taht@timesys.com, mpm@selenic.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261716AbVD0POZ@vger.kernel.org Wed Apr 27 17:11:13 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261716AbVD0POZ@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 17:16:19 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQoBl-0004lJ-1q
-	for glk-linux-kernel@gmane.org; Wed, 27 Apr 2005 17:10:57 +0200
+	id 1DQoFn-0005WR-Em
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 17:15:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261716AbVD0POZ (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Wed, 27 Apr 2005 11:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261714AbVD0POZ
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 27 Apr 2005 11:14:25 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:46493 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261711AbVD0POR (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 27 Apr 2005 11:14:17 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j3RFDwS8020386
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Apr 2005 15:13:58 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j3RFDvGY020385;
-	Wed, 27 Apr 2005 17:13:57 +0200 (CEST)
-To: Florian Weimer <fw@DENEB.ENYO.DE>
-Mail-Followup-To: Florian Weimer <fw@DENEB.ENYO.DE>,
-	"H. Peter Anvin" <hpa@zytor.com>, Andrew Morton <akpm@osdl.org>,
-	Linus Torvalds <torvalds@osdl.org>, magnus.damm@gmail.com,
-	mason@suse.com, mike.taht@timesys.com, mpm@selenic.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <871x8wb6w4.fsf@deneb.enyo.de>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
-Sender: linux-kernel-owner@vger.kernel.org
+	id S261724AbVD0PUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 11:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261717AbVD0PUX
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 11:20:23 -0400
+Received: from fire.osdl.org ([65.172.181.4]:5312 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261724AbVD0PUR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 11:20:17 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RFKCs4015122
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Apr 2005 08:20:14 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RFK8cV019645;
+	Wed, 27 Apr 2005 08:20:11 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426F2671.1080105@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-> Directory hashing has a negative impact on some applications (notably
-> tar and unpatched mutt on large Maildir folders).  For git, it's a win
-> because hashing destroys locality anyway.
 
-this is inaccurate. Actually turning on directory hashing speeds-up big
-maildirs a lot (tested with mutt-1.5.4 and higher with a maildir
-containing 30thousand messages). But in the mutt case you also have the
-header cache[1] which speeds up a lot - with or without hashed
-directories. See also MEs comment[2] on this.
+On Tue, 26 Apr 2005, H. Peter Anvin wrote:
+> 
+> One solution to all of this would be to define a quoting standard for 
+> strings, and simply require that all free-format strings (like the 
+> author fields) or at least strings that match [0-9a-f]{20}, are always 
+> quoted.
 
-For tar I have no idea why it should slow down the operation, but maybe
-you can enlighten us.
+git uses more of the ".newsrc" format, in that it just knows which 
+characters are legal or not.
 
-	Thomas
+To find the email address, look for the first '<'. To find the date, look 
+for the first '>'. Those characters are not allowed in the name or the 
+email, so they act as well-defined delimeters.
 
-[1] http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/
-	- wait till TLR has released mutt-1.5.10
-	- use mutt CVS HEAD
-	- use mutt-1.5.9 + http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/mutt-cvs-header-cache.29
-	- and put the following in your .muttrc:
-	set header_cache=/tmp/login-hcache
-	set maildir_header_cache_verify=no
-
-[2] http://www.advogato.org/person/scandal/
+		Linus
