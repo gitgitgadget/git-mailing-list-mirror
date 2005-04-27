@@ -1,57 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: import mbox?
-Date: Wed, 27 Apr 2005 16:21:26 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271620150.18901@ppc970.osdl.org>
-References: <42701B79.8080106@pobox.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: PATCH: Allow tree-id to return the ID of a tree object
+Date: Thu, 28 Apr 2005 01:22:23 +0200
+Message-ID: <20050427232223.GM22956@pasky.ji.cz>
+References: <426FBBE7.1090806@mindspring.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 01:14:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 01:17:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQvjP-0001We-Fc
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:14:11 +0200
+	id 1DQvmO-0001mc-NF
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 01:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262092AbVD0XTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 19:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262093AbVD0XTh
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:19:37 -0400
-Received: from fire.osdl.org ([65.172.181.4]:38826 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262092AbVD0XTa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:19:30 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RNJRs4029312
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 16:19:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RNJQk1016828;
-	Wed, 27 Apr 2005 16:19:27 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42701B79.8080106@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262094AbVD0XWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 19:22:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262095AbVD0XWg
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 19:22:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:63404 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262094AbVD0XWZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 19:22:25 -0400
+Received: (qmail 15440 invoked by uid 2001); 27 Apr 2005 23:22:23 -0000
+To: Philip Pokorny <ppokorny@mindspring.com>
+Content-Disposition: inline
+In-Reply-To: <426FBBE7.1090806@mindspring.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Apr 2005, Jeff Garzik wrote:
->
-> Sorry for the FAQ, but I didn't see this in any of the scripts in the 
-> 'git' archives, nor in the README.
+Dear diary, on Wed, Apr 27, 2005 at 06:20:55PM CEST, I got a letter
+where Philip Pokorny <ppokorny@mindspring.com> told me that...
+> While playing with cg-ls, I tried:
 > 
-> What script should kernel developers use, to import an mbox full of patches?
+> % cg-ls
+> ... snip ...
+> 100644  blob    bc607fd55f6ce4e56ce87766369b5d4d55ec79af        object.h
+> 100755  blob    f35877a6aa5b68d2fb4a388dcfa9b3e64262604e        parent-id
+> 040000  tree    bfb75011c32589b282dd9c86621dadb0f0bb3866        ppc
+> 100644  blob    d922305ee0f5583bdfcb629f6d4061e11e0fa859        read-cache.c
+> 100644  blob    1ad7ffc555b635fe57fa7834b12d71ff576be065        read-tree.c
+> ... snip ...
+> % cg-ls bfb75011c32589b282dd9c86621dadb0f0bb3866       <-- the ppc tree ID
+> Invalid id: bfb75011c32589b282dd9c86621dadb0f0bb3866
+> usage: cat-file [-t | tagname] <sha1>
+> usage: cat-file [-t | tagname] <sha1>
+> Invalid id:
+> 
+> 
+> Shouldn't cg-ls give a listing of a sub-tree?  The cg-help says it takes
+> a TREE-ID?
+> 
+> The problem seems to be that tree-id really only accepts a commit-id and
+> returns the TREE-ID of that commit.
+> 
+> So I modified commit-id, tree-id and parent-id to make them more similar
+> in coding style, force "short-id" names to be at least 4 lower case
+> letters, and have tree-id accept short, unambiguous ID's and bare SHA1-ID's.
+> 
+> Patch attached.
 
-I've got a "tools" project at
+Could you please functionally split and sign off your patch?
 
-	kernel.org:/pub/linux/kernel/people/torvalds/git-tools.git
+Also, I'd prefer not to have the sha1 completion logic duplicated; what
+about just having commit-id take a parameter not to validate its id?
+Actually, that's ugly too. I think the cleanest solution would be to
+reintroduce the cg-Xnormid, now to only really do the _common_ stuff -
+basically everything up to the typecheck (exclusively) in commit-id.
 
-which has my old "dotest" scripts re-written for git (yeah, yeah, three 
-years and two generations later, I still call the damn thing "dotest". I'm 
-not very good at this tool naming thing ;)
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
