@@ -1,31 +1,31 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/6] Reworked external diff interface.
-Date: Tue, 26 Apr 2005 23:24:23 -0700
-Message-ID: <7vacnkka94.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 2/6] Reactivate show-diff patch generation
+Date: Tue, 26 Apr 2005 23:25:12 -0700
+Message-ID: <7v4qdska7r.fsf@assigned-by-dhcp.cox.net>
 References: <7vekcwkagr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 08:20:18 2005
+X-From: git-owner@vger.kernel.org Wed Apr 27 08:21:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQftQ-0008Us-Rr
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 08:19:29 +0200
+	id 1DQfuP-00008p-TJ
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 08:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261610AbVD0GYp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 02:24:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261644AbVD0GYp
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 02:24:45 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:32498 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261610AbVD0GYZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 02:24:25 -0400
+	id S261644AbVD0GZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 02:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261648AbVD0GZg
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 02:25:36 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:44191 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261644AbVD0GZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 02:25:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050427062423.JAIZ550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 27 Apr 2005 02:24:23 -0400
+          id <20050427062512.BWUK20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 27 Apr 2005 02:25:12 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7vekcwkagr.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Tue, 26 Apr 2005 23:19:48 -0700")
@@ -34,193 +34,135 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch introduces three public functions for diff-cache and
-friends can use to call out to the GIT_EXTERNAL_DIFF program
-when they wish to.  A normal "add/remove/change" entry is turned
-into 7-parameter process invocation of GIT_EXTERNAL_DIFF program
-as before.  In addition, the program can now be called with a
-single parameter when diff-cache and friends want to report an
-unmerged path.
-
+This patch uses the reworked diff interface to generate patches
+directly out of show-diff when -p is specified.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-diff.c |   93 ++++++++++++++++++++++++++++++++++++++++-------------------------
-diff.h |   19 +++++++++----
-2 files changed, 72 insertions(+), 40 deletions(-)
+show-diff.c |   56 ++++++++++++++++++++++++++++++++++++++++++--------------
+1 files changed, 42 insertions(+), 14 deletions(-)
 
 To be tested with the following:
 
     GIT_INDEX_FILE=junk
     export GIT_INDEX_FILE
-    read-tree $(cat .git/HEAD)
-    t1=$(write-tree)
+    rm -f junk
     date >trash ; update-cache --add trash
-    t2=$(write-tree)
-    read-tree -m $(cat .git/HEAD) $t1 $t2
+    date >>trash;
+    GIT_EXTERNAL_DIFF=echo ./show-diff -p
     update-cache --refresh
-    ./show-diff | GIT_EXTERNAL_DIFF=echo ./diff-tree-helper
+    GIT_EXTERNAL_DIFF=echo ./show-diff -p
 
---- k/diff.c
-+++ l/diff.c
-@@ -194,13 +194,15 @@ void run_external_diff(const char *name,
- 	int pid, status;
- 	static int atexit_asked = 0;
+--- k/show-diff.c
++++ l/show-diff.c
+@@ -4,10 +4,11 @@
+  * Copyright (C) Linus Torvalds, 2005
+  */
+ #include "cache.h"
++#include "diff.h"
  
--	prepare_temp_file(name, &temp[0], one);
--	prepare_temp_file(name, &temp[1], two);
--	if (! atexit_asked &&
--	    (temp[0].name == temp[0].tmp_path ||
--	     temp[1].name == temp[1].tmp_path)) {
--		atexit_asked = 1;
--		atexit(remove_tempfile);
-+	if (one && two) {
-+		prepare_temp_file(name, &temp[0], one);
-+		prepare_temp_file(name, &temp[1], two);
-+		if (! atexit_asked &&
-+		    (temp[0].name == temp[0].tmp_path ||
-+		     temp[1].name == temp[1].tmp_path)) {
-+			atexit_asked = 1;
-+			atexit(remove_tempfile);
-+		}
- 	}
+-static const char *show_diff_usage = "show-diff [-q] [-s] [-z] [paths...]";
++static const char *show_diff_usage = "show-diff [-q] [-s] [-z] [-p] [paths...]";
  
- 	fflush(NULL);
-@@ -209,16 +211,23 @@ void run_external_diff(const char *name,
- 		die("unable to fork");
- 	if (!pid) {
- 		const char *pgm = external_diff();
--		if (pgm)
--			execlp(pgm, pgm,
--			       name,
--			       temp[0].name, temp[0].hex, temp[0].mode,
--			       temp[1].name, temp[1].hex, temp[1].mode,
--			       NULL);
-+		if (pgm) {
-+			if (one && two)
-+				execlp(pgm, pgm,
-+				       name,
-+				       temp[0].name, temp[0].hex, temp[0].mode,
-+				       temp[1].name, temp[1].hex, temp[1].mode,
-+				       NULL);
-+			else
-+				execlp(pgm, pgm, name, NULL);
-+		}
- 		/*
- 		 * otherwise we use the built-in one.
- 		 */
--		builtin_diff(name, temp);
-+		if (one && two)
-+			builtin_diff(name, temp);
-+		else
-+			printf("* Unmerged path %s\n", name);
- 		exit(0);
- 	}
- 	if (waitpid(pid, &status, 0) < 0 || !WIFEXITED(status))
-@@ -227,41 +236,55 @@ void run_external_diff(const char *name,
- 	remove_tempfile();
+-static int recursive = 0;
++static int generate_patch = 0;
+ static int line_termination = '\n';
+ static int silent = 0;
+ static int silent_on_nonexisting_files = 0;
+@@ -27,27 +28,57 @@ static int matches_pathspec(struct cache
+ 	return 0;
  }
  
--void show_diff_empty(const struct cache_entry *ce, int reverse)
-+void diff_addremove(int addremove, unsigned mode,
-+		    const unsigned char *sha1,
-+		    const char *base, const char *path)
+-static void show_file(const char *prefix, struct cache_entry *ce)
++static void show_unmerge(const char *path)
  {
-+	char concatpath[PATH_MAX];
- 	struct diff_spec spec[2], *one, *two;
- 
--	memcpy(spec[0].u.sha1, ce->sha1, 20);
--	spec[0].mode = ntohl(ce->ce_mode);
-+	memcpy(spec[0].u.sha1, sha1, 20);
-+	spec[0].mode = mode;
- 	spec[0].sha1_valid = spec[0].file_valid = 1;
- 	spec[1].file_valid = 0;
- 
--	if (reverse) {
-+	if (addremove == '+') {
- 		one = spec + 1; two = spec;
- 	} else {
- 		one = spec; two = one + 1;
- 	}
--
--	run_external_diff(ce->name, one, two);
-+	
-+	if (path) {
-+		strcpy(concatpath, base);
-+		strcat(concatpath, "/");
-+		strcat(concatpath, path);
-+	}
-+	run_external_diff(path ? concatpath : base, one, two);
- }
- 
--void show_differences(const struct cache_entry *ce, int reverse) 
--{
--	struct diff_spec spec[2], *one, *two;
--
--	memcpy(spec[0].u.sha1, ce->sha1, 20);
--	spec[0].mode = ntohl(ce->ce_mode);
-+void diff_change(unsigned old_mode, unsigned new_mode,
-+		 const unsigned char *old_sha1,
-+		 const unsigned char *new_sha1,
-+		 const char *base, const char *path) {
-+	char concatpath[PATH_MAX];
-+	struct diff_spec spec[2];
-+
-+	memcpy(spec[0].u.sha1, old_sha1, 20);
-+	spec[0].mode = old_mode;
-+	memcpy(spec[1].u.sha1, new_sha1, 20);
-+	spec[1].mode = new_mode;
- 	spec[0].sha1_valid = spec[0].file_valid = 1;
-+	spec[1].sha1_valid = spec[1].file_valid = 1;
- 
--	spec[1].u.name = ce->name; /* the name we stated */
--	spec[1].sha1_valid = 0;
--	spec[1].file_valid = 1;
--
--	if (reverse) {
--		one = spec + 1; two = spec;
--	} else {
--		one = spec; two = one + 1;
-+	if (path) {
-+		strcpy(concatpath, base);
-+		strcat(concatpath, "/");
-+		strcat(concatpath, path);
- 	}
-+	run_external_diff(path ? concatpath : base, &spec[0], &spec[1]);
+-	printf("%s%o\t%s\t%s\t%s%c", prefix, ntohl(ce->ce_mode), "blob",
+-		sha1_to_hex(ce->sha1), ce->name, line_termination);
++	if (generate_patch)
++		diff_unmerge(path);
++	else
++		printf("U %s%c", path, line_termination);
 +}
- 
--	run_external_diff(ce->name, one, two);
-+void diff_unmerge(const char *path)
++
++static void show_file(int pfx, struct cache_entry *ce)
 +{
-+	run_external_diff(path, NULL, NULL);
++	if (generate_patch)
++		diff_addremove(pfx, ntohl(ce->ce_mode), ce->sha1,
++			       ce->name, NULL);
++	else
++		printf("%c%06o\t%s\t%s\t%s%c",
++		       pfx, ntohl(ce->ce_mode), "blob",
++		       sha1_to_hex(ce->sha1), ce->name, line_termination);
++}
++
++static void show_modified(int oldmode, int mode,
++			  const char *old_sha1, const char *sha1,
++			  char *path)
++{
++	char old_sha1_hex[41];
++	strcpy(old_sha1_hex, sha1_to_hex(old_sha1));
++
++	if (generate_patch)
++		diff_change(oldmode, mode, old_sha1, sha1, path, NULL);
++	else
++		printf("*%06o->%06o\tblob\t%s->%s\t%s%c",
++		       oldmode, mode, old_sha1_hex, sha1_to_hex(sha1), path,
++		       line_termination);
  }
---- k/diff.h
-+++ l/diff.h
-@@ -4,11 +4,20 @@
- #ifndef DIFF_H
- #define DIFF_H
  
--/* These two are for backward compatibility with show-diff;
-- * new users should not use them.
-- */
--extern void show_differences(const struct cache_entry *ce, int reverse);
--extern void show_diff_empty(const struct cache_entry *ce, int reverse);
-+extern void diff_addremove(int addremove,
-+			   unsigned mode,
-+			   const unsigned char *sha1,
-+			   const char *base,
-+			   const char *path);
-+
-+extern void diff_change(unsigned mode1, unsigned mode2,
-+			     const unsigned char *sha1,
-+			     const unsigned char *sha2,
-+			     const char *base, const char *path);
-+
-+extern void diff_unmerge(const char *path);
-+
-+/* These are for diff-tree-helper */
+ int main(int argc, char **argv)
+ {
+-	static const char null_sha1_hex[] = "0000000000000000000000000000000000000000";
++	static const char null_sha1[20] = { 0, };
+ 	int entries = read_cache();
+ 	int i;
  
- struct diff_spec {
- 	union {
+ 	while (1 < argc && argv[1][0] == '-') {
+ 		if (!strcmp(argv[1], "-s"))
+ 			silent_on_nonexisting_files = silent = 1;
++		else if (!strcmp(argv[1], "-p"))
++			generate_patch = 1;
+ 		else if (!strcmp(argv[1], "-q"))
+ 			silent_on_nonexisting_files = 1;
+ 		else if (!strcmp(argv[1], "-z"))
+ 			line_termination = 0;
+ 		else if (!strcmp(argv[1], "-r"))
+-			recursive = 1;		/* No-op */
++			; /* no-op */
+ 		else
+ 			usage(show_diff_usage);
+ 		argv++; argc--;
+@@ -72,8 +103,7 @@ int main(int argc, char **argv)
+ 			continue;
+ 
+ 		if (ce_stage(ce)) {
+-			printf("U %s%c", ce->name, line_termination);
+-
++			show_unmerge(ce->name);
+ 			while (i < entries &&
+ 			       !strcmp(ce->name, active_cache[i]->name))
+ 				i++;
+@@ -88,7 +118,7 @@ int main(int argc, char **argv)
+ 			}	
+ 			if (silent_on_nonexisting_files)
+ 				continue;
+-			show_file("-", ce);
++			show_file('-', ce);
+ 			continue;
+ 		}
+ 		changed = cache_match_stat(ce, &st);
+@@ -98,10 +128,8 @@ int main(int argc, char **argv)
+ 		oldmode = ntohl(ce->ce_mode);
+ 		mode = S_IFREG | ce_permissions(st.st_mode);
+ 
+-		printf("*%o->%o\t%s\t%s->%s\t%s%c",
+-			oldmode, mode, "blob",
+-			sha1_to_hex(ce->sha1), null_sha1_hex,
+-			ce->name, line_termination);
++		show_modified(oldmode, mode, ce->sha1, null_sha1,
++			      ce->name);
+ 	}
+ 	return 0;
+ }
 
