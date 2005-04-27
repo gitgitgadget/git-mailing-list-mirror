@@ -1,46 +1,49 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: I'm missing isofs.h
-Date: Wed, 27 Apr 2005 15:58:41 +0200
-Message-ID: <20050427135840.GE3014@pasky.ji.cz>
-References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427125843.GA9454@delft.aura.cs.cmu.edu>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 11:00:46 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504271058120.5008@cag.csail.mit.edu>
+References: <426F2671.1080105@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 27 15:57:18 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 16:58:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQn0V-0001HW-Gi
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 15:55:15 +0200
+	id 1DQnxC-0002Fm-3H
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 16:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261600AbVD0OAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 10:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261597AbVD0OAE
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 10:00:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48801 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261605AbVD0N6u (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 09:58:50 -0400
-Received: (qmail 16312 invoked by uid 2001); 27 Apr 2005 13:58:41 -0000
-To: Andrew Morton <akpm@osdl.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050427125843.GA9454@delft.aura.cs.cmu.edu>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261694AbVD0PBM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 11:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261703AbVD0PBM
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 11:01:12 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:11980 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261694AbVD0PBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 11:01:09 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DQo27-0000ZM-00; Wed, 27 Apr 2005 11:00:59 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426F2671.1080105@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Apr 27, 2005 at 02:58:44PM CEST, I got a letter
-where Jan Harkes <jaharkes@cs.cmu.edu> told me that...
-> On Tue, Apr 26, 2005 at 09:43:38PM -0700, Andrew Morton wrote:
-> > In a current tree, using git-pasky-0.7:
-> 
-> It looks like git-pasky-0.7 doesn't include the following commit, but
-> there are also several other diff and merge related fixes that were
-> added since then.
+On Tue, 26 Apr 2005, H. Peter Anvin wrote:
 
-Why do you think it doesn't include it? I can see the fix in the code.
+> Additionally, there is the question of the handling of strings that may 
+> contain \n or even \0 (which may be necessary for some applications).
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+While we're at it, I'll just mention that '\0' is a rather bad delimiter 
+for zlib-compressed files; it usually ends up enlarging the file by three 
+or more bytes compared to using any whitespace character.  The reason is 
+obvious: \0 isn't actually used anywhere else in the compressed contents, 
+so it tends to pollute zlib's dictionary.
+
+It's probably too late to do anything about this, but hey.
+  --scott
+
+Soviet  STANDEL Yakima JMTRAX Hussein Ft. Meade algorithm JMBLUG CIA 
+SEQUIN Bejing Morwenstow Boston nuclear Sigint Ft. Bragg ZRBRIEF Peking
+                          ( http://cscott.net/ )
