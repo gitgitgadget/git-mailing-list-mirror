@@ -1,182 +1,68 @@
-From: Philip Pokorny <ppokorny@mindspring.com>
-Subject: PATCH: Allow tree-id to return the ID of a tree object
-Date: Wed, 27 Apr 2005 09:20:55 -0700
-Message-ID: <426FBBE7.1090806@mindspring.com>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: I'm missing isofs.h
+Date: Wed, 27 Apr 2005 12:43:51 -0400
+Message-ID: <20050427164351.GA7070@delft.aura.cs.cmu.edu>
+References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427125843.GA9454@delft.aura.cs.cmu.edu> <20050427135840.GE3014@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------020001040200050607070401"
-X-From: git-owner@vger.kernel.org Wed Apr 27 18:19:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 18:39:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQpDq-0007WP-ER
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 18:17:10 +0200
+	id 1DQpYu-0002Nm-Bu
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 18:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261793AbVD0QWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 12:22:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261792AbVD0QWT
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 12:22:19 -0400
-Received: from smtpauth04.mail.atl.earthlink.net ([209.86.89.64]:55217 "EHLO
-	smtpauth04.mail.atl.earthlink.net") by vger.kernel.org with ESMTP
-	id S261793AbVD0QVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 12:21:00 -0400
-Received: from [68.164.169.208] (helo=[172.16.1.11])
-	by smtpauth04.mail.atl.earthlink.net with asmtp (TLSv1:RC4-MD5:128)
-	(Exim 4.34)
-	id 1DQpHU-0003E4-2i
-	for git@vger.kernel.org; Wed, 27 Apr 2005 12:20:56 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.5) Gecko/20041217
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-ELNK-Trace: 662518af21fc89ef9c7f779228e2f6aeda0071232e20db4df72b0bc5d90078951a493785f04f23ea350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 68.164.169.208
+	id S261312AbVD0QoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 12:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261783AbVD0QoI
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 12:44:08 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:14013 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S261312AbVD0Qnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 12:43:52 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1DQpdf-0005iS-00; Wed, 27 Apr 2005 12:43:51 -0400
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Andrew Morton <akpm@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <20050427135840.GE3014@pasky.ji.cz>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------020001040200050607070401
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+On Wed, Apr 27, 2005 at 03:58:41PM +0200, Petr Baudis wrote:
+> Dear diary, on Wed, Apr 27, 2005 at 02:58:44PM CEST, I got a letter
+> where Jan Harkes <jaharkes@cs.cmu.edu> told me that...
+> > On Tue, Apr 26, 2005 at 09:43:38PM -0700, Andrew Morton wrote:
+> > > In a current tree, using git-pasky-0.7:
+> > 
+> > It looks like git-pasky-0.7 doesn't include the following commit, but
+> > there are also several other diff and merge related fixes that were
+> > added since then.
+> 
+> Why do you think it doesn't include it? I can see the fix in the code.
 
-While playing with cg-ls, I tried:
+I looked through the output of cg-log, which I thought had at least some
+ordering, and that commit showed up as more recent than the pasky-0.7
+entry. It looks like the same change is also part of pasky-0.7, but with
+a different commit-id. Sorry about the confusion.
 
-% cg-ls
-... snip ...
-100644  blob    bc607fd55f6ce4e56ce87766369b5d4d55ec79af        object.h
-100755  blob    f35877a6aa5b68d2fb4a388dcfa9b3e64262604e        parent-id
-040000  tree    bfb75011c32589b282dd9c86621dadb0f0bb3866        ppc
-100644  blob    d922305ee0f5583bdfcb629f6d4061e11e0fa859        read-cache.c
-100644  blob    1ad7ffc555b635fe57fa7834b12d71ff576be065        read-tree.c
-... snip ...
-% cg-ls bfb75011c32589b282dd9c86621dadb0f0bb3866       <-- the ppc tree ID
-Invalid id: bfb75011c32589b282dd9c86621dadb0f0bb3866
-usage: cat-file [-t | tagname] <sha1>
-usage: cat-file [-t | tagname] <sha1>
-Invalid id:
+In any case, when I use
+    cg-diff -r a2755a80f40e5794ddc20e00f781af9d6320fafb: | grep isofs.h
 
+the missing file does show up,
+    ...
+    Index: fs/isofs/isofs.h
+    +++ fd1621a8c03331bd78abfe52c8c385977d0a9729/fs/isofs/isofs.h (mode:100644 sha1:9ce7b51fb6141ea6b82d85687d490c74755591fb)
+    ...
 
-Shouldn't cg-ls give a listing of a sub-tree?  The cg-help says it takes
-a TREE-ID?
+so either I'm missing some subtle command line error (missing ':' after
+the tag-id?) or the problem was fixed by some other change. So I looked
+through the logs to see if there was anything obvious and the commit I
+mentioned looked promising.
 
-The problem seems to be that tree-id really only accepts a commit-id and
-returns the TREE-ID of that commit.
+Jan
 
-So I modified commit-id, tree-id and parent-id to make them more similar
-in coding style, force "short-id" names to be at least 4 lower case
-letters, and have tree-id accept short, unambiguous ID's and bare SHA1-ID's.
-
-Patch attached.
-
-
-
-
---------------020001040200050607070401
-Content-Type: text/plain;
- name="cogito-0.8-idparse.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="cogito-0.8-idparse.patch"
-
-Index: commit-id
-===================================================================
---- 6ad600e20c89323c1d3049f75b8ca9b0a2d72167/commit-id  (mode:100755 sha1:4efcb6bdfdb2b2c5744f5d4d47d92beb7777ed59)
-+++ uncommitted/commit-id  (mode:100775)
-@@ -9,22 +9,30 @@
- SHA1ONLY="^$SHA1$"
- 
- id=$1
-+
- if [ ! "$id" ] || [ "$id" = "this" ] || [ "$id" = "HEAD" ]; then
- 	id=$(cat .git/HEAD)
--fi
- 
--if (echo $id | egrep -vq "$SHA1ONLY") && [ -r ".git/refs/tags/$id" ]; then
-+elif [ -r ".git/refs/tags/$id" ]; then
- 	id=$(cat ".git/refs/tags/$id")
--fi
- 
--if (echo $id | egrep -vq "$SHA1ONLY") && [ -r ".git/refs/heads/$id" ]; then
-+elif [ -r ".git/refs/heads/$id" ]; then
- 	id=$(cat ".git/refs/heads/$id")
--fi
- 
--idpref=$(echo "$id" | cut -c -2)
--idpost=$(echo "$id" | cut -c 3-)
--if [ $(find ".git/objects/$idpref" -name "$idpost*" 2>/dev/null | wc -l) -eq 1 ]; then
--	id=$idpref$(basename $(echo .git/objects/$idpref/$idpost*))
-+# Short id's must be lower case and at least 4 digits.
-+elif [[ "$id" == [0-9a-z][0-9a-z][0-9a-z][0-9a-z]* ]]; then
-+	idpost=${id#??}
-+	idpref=${id%$idpost}
-+
-+	# Assign array elements to matching names
-+	idmatch=($(echo .git/objects/$idpref/$idpost*))
-+
-+	if [ ${#idmatch[*]} -eq 1 ] && [ -r "$idmatch" ]; then
-+		id=$idpref${idmatch#.git/objects/$idpref/}
-+	elif [ ${#idmatch[*]} -gt 1 ]; then
-+		echo "Ambiguous id: $id" >&2
-+		exit 1
-+	fi
- fi
- 
- if echo $id | egrep -vq "$SHA1ONLY"; then
-Index: tree-id
-===================================================================
---- 6ad600e20c89323c1d3049f75b8ca9b0a2d72167/tree-id  (mode:100755 sha1:1495ff78af71b57e21653512932bcda88fe05454)
-+++ uncommitted/tree-id  (mode:100775)
-@@ -7,8 +7,35 @@
- 
- SHA1="[A-Za-z0-9]{40}"
- TREE="^tree $SHA1$"
-+SHA1ONLY="^$SHA1$"
- 
--id=$(cat-file commit $(commit-id "$1") | egrep "$TREE" | cut -d ' ' -f 2)
-+id=$1
-+
-+# Is it a commit?
-+commit=$(commit-id $id 2>/dev/null)
-+if [ "$commit" ]; then
-+	id=$(cat-file commit "$commit") | egrep "$TREE" | cut -d ' ' -f 2)
-+
-+# Short id's must be lower case and at least 4 digits.
-+elif [[ "$id" == [0-9a-z][0-9a-z][0-9a-z][0-9a-z]* ]]; then
-+	idpost=${id#??}
-+	idpref=${id%$idpost}
-+
-+	# Assign array elements to matching names
-+	idmatch=($(echo .git/objects/$idpref/$idpost*))
-+
-+	if [ ${#idmatch[*]} -eq 1 ] && [ -r "$idmatch" ]; then
-+		id=$idpref${idmatch#.git/objects/$idpref/}
-+	elif [ ${#idmatch[*]} -gt 1 ]; then
-+		echo "Ambiguous id: $id" >&2
-+		exit 1
-+	fi
-+fi
-+
-+if echo $id | egrep -vq "$SHA1ONLY"; then
-+	echo "Invalid id: $id" >&2
-+	exit 1
-+fi
- 
- if [ "$(cat-file -t "$id")" != "tree" ]; then
- 	echo "Invalid id: $id" >&2
-Index: parent-id
-===================================================================
---- 6ad600e20c89323c1d3049f75b8ca9b0a2d72167/parent-id  (mode:100755 sha1:f35877a6aa5b68d2fb4a388dcfa9b3e64262604e)
-+++ uncommitted/parent-id  (mode:100775)
-@@ -5,7 +5,8 @@
- #
- # Takes ID of the current commit, defaults to HEAD.
- 
--PARENT="^parent [A-Za-z0-9]{40}$"
-+SHA1="[A-Za-z0-9]{40}"
-+PARENT="^parent $SHA1$"
- 
- id=$(commit-id $1) || exit 1
- 
-
-
---------------020001040200050607070401--
