@@ -1,39 +1,36 @@
 From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Mercurial 0.3 vs git benchmarks
-Date: Wed, 27 Apr 2005 13:35:37 -0700
-Message-ID: <426FF799.4000501@zytor.com>
-References: <aec7e5c305042608095731d571@mail.gmail.com> <200504261138.46339.mason@suse.com> <aec7e5c305042609231a5d3f0@mail.gmail.com> <20050426135606.7b21a2e2.akpm@osdl.org> <Pine.LNX.4.58.0504261405050.18901@ppc970.osdl.org> <20050426155609.06e3ddcf.akpm@osdl.org> <426ED20B.9070706@zytor.com> <871x8wb6w4.fsf@deneb.enyo.de> <20050427151357.GH1087@cip.informatik.uni-erlangen.de> <426FDFCD.6000309@zytor.com> <20050427190144.GA28848@cip.informatik.uni-erlangen.de>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 13:40:36 -0700
+Message-ID: <426FF8C4.8080809@zytor.com>
+References: <426F2671.1080105@zytor.com> <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org> <426FD3EE.5000404@zytor.com> <Pine.LNX.4.58.0504271154470.18901@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Florian Weimer <fw@DENEB.ENYO.DE>, Andrew Morton <akpm@osdl.org>,
-	Linus Torvalds <torvalds@osdl.org>, magnus.damm@gmail.com,
-	mason@suse.com, mike.taht@timesys.com, mpm@selenic.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:32:28 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:36:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQtBi-0005nY-KO
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 22:31:15 +0200
+	id 1DQtGE-0006L7-IA
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 22:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262002AbVD0UgS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 16:36:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261999AbVD0UgS
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 16:36:18 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:11965 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261998AbVD0UgK
+	id S262003AbVD0UlI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 16:41:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262006AbVD0UlI
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 16:41:08 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:19133 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S262003AbVD0Ukx
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 16:36:10 -0400
+	Wed, 27 Apr 2005 16:40:53 -0400
 Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
 	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3RKZhJG011607
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3RKeg7d011697
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Apr 2005 13:35:43 -0700
+	Wed, 27 Apr 2005 13:40:42 -0700
 User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
 X-Accept-Language: en-us, en
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050427190144.GA28848@cip.informatik.uni-erlangen.de>
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504271154470.18901@ppc970.osdl.org>
 X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
 	autolearn=ham version=3.0.2
 X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
@@ -41,22 +38,31 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Glanzmann wrote:
-> Hello,
+Linus Torvalds wrote:
 > 
+> No, that's definitely _not_ the point.
 > 
->>Directory hashing slows down operations that do linear sweeps through 
->>the filesystem reading every single file, simply because without 
->>dir_index, there is likely to be a correlation between inode order and 
->>directory order, whereas with dir_index, readdir() returns entries in 
->>hash order.
-> 
-> 
-> thank you for the awareness training. Than mutt should be slower, too.
-> Maybe I should repeat that tests.
+> I repeat: git does not do any free-form parsin AT ALL. The links are in 
+> well-defined places, and you do not ever search for them. And that's 
+> really very very important.
 > 
 
-Only if you read every single file in each directory every time.  I 
-thought mutt did header indexing and thus didn't need to do that.
+I know that.  However, is that going to be true for all versions of the 
+repository format over all time?  If so, the repository format is brittle.
+
+ > > Currently there is no  such delimiter for that.
+ >
+ > There absolutely is.
+ >
+ > For a "commit", the format is...
+
+My point was that with a syntactic delimiter, one can write a tool that 
+doesn't necessarily know everything about every tag, including future 
+tags which may not have been invented when the tool was written.
+
+One can simply say "we don't do that"; finding an unknown tag is always 
+a fatal error.  That means the format is more brittle, but brittle does 
+mean it breaks as opposed to getting deformed in some, potentially 
+undesirable way.
 
 	-hpa
