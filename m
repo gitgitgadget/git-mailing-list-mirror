@@ -1,120 +1,70 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Move common date code to the library file
-Date: Wed, 27 Apr 2005 01:55:32 +0200
-Message-ID: <20050426235532.GF28560@diku.dk>
-References: <20050426232729.GE28560@diku.dk> <20050426233439.GS13224@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add -r flag to show-diff for diff-cache/diff-tree like
+ output.
+Date: Tue, 26 Apr 2005 17:05:46 -0700
+Message-ID: <7vd5shkrs5.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0504232202340.19877@ppc970.osdl.org>
+	<7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504251832480.18901@ppc970.osdl.org>
+	<7vy8b5mawy.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261534590.18901@ppc970.osdl.org>
+	<7vd5shm94l.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504261639420.18901@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 27 01:51:32 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 27 02:01:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQZpO-0003lm-U5
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 01:50:55 +0200
+	id 1DQZz9-0004dx-N6
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 02:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261853AbVDZXzr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Apr 2005 19:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261854AbVDZXzr
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 19:55:47 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:15341 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261853AbVDZXzd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Apr 2005 19:55:33 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 9FE946E175C; Wed, 27 Apr 2005 01:54:38 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 5DF186E13EA; Wed, 27 Apr 2005 01:54:38 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id D69E961FDE; Wed, 27 Apr 2005 01:55:32 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Mail-Followup-To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050426233439.GS13224@pasky.ji.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Level: 
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
+	id S261856AbVD0AF4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Apr 2005 20:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261858AbVD0AF4
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Apr 2005 20:05:56 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:38650 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261856AbVD0AFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Apr 2005 20:05:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050427000546.CVZH23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 26 Apr 2005 20:05:46 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504261639420.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 26 Apr 2005 16:44:38 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Move common date conversion code to showdate() library function.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+>> Later I'll add -p flag to diff-cache and diff-tree, so the usage
+>> of these three commands match.
 
----
-commit e7ab52f0d69a45e69d78f2992c7997283855ac48
-tree 01c206a9520ffa599c3ce17c901b4fce9b162b08
-parent 09da825be78580e991bfd0ccbb90de15bfa18113
-author Jonas Fonseca <fonseca@diku.dk> Wed, 27 Apr 2005 01:53:04 +0200
-committer Jonas Fonseca <fonseca@diku.dk> Wed, 27 Apr 2005 01:53:04 +0200
+LT> The thing is, "-p" is strictly weaker than doing the UNIX
+LT> pipe way, since the latter trivially does the same time (add
+LT> a simple script if you don't want to type it), but can also
+LT> do things like "grep the filenames going past" or similar.
 
- cg-Xlib    |    9 +++++++++
- cg-log     |    7 ++-----
- cg-mkpatch |    7 ++-----
- 3 files changed, 13 insertions(+), 10 deletions(-)
+I do not disagree with that.  Having only "-p" and not having
+diff-cache/tree output _is_ weaker, and I am _not_ advocating
+for removing the diff-cache/tree like output format from these
+three commands.
 
-Index: cg-Xlib
-===================================================================
---- 6b45f2ad7c95fa110c7e8b53dae6d099d726bd4c/cg-Xlib  (mode:100755 sha1:5d84bbdb19510b7399f39ffd920636821a37248c)
-+++ 01c206a9520ffa599c3ce17c901b4fce9b162b08/cg-Xlib  (mode:100755 sha1:665b84360050e7151eb2aa34327a10821ddc9ccf)
-@@ -33,6 +33,15 @@
- 	$(which mktemp) $dirarg $prefix"$1"
- }
- 
-+showdate () {
-+	date="$1"
-+	sec=${date[0]}; tz=${date[1]}
-+	dtz=${tz/+/}
-+	lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
-+	pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
-+
-+	echo "${pdate/+0000/$tz}"
-+}
- 
- # Compatibility hacks:
- # 2005-04-26
-Index: cg-log
-===================================================================
---- 6b45f2ad7c95fa110c7e8b53dae6d099d726bd4c/cg-log  (mode:100755 sha1:1c53b31a956e7c8cbfe653143cc0f91df02a2f86)
-+++ 01c206a9520ffa599c3ce17c901b4fce9b162b08/cg-log  (mode:100755 sha1:5d0b602d32068af0d6e958f1c9c4dd6c870a9ce1)
-@@ -96,12 +96,9 @@
- 				fi
- 
- 				date=(${rest#*> })
--				sec=${date[0]}; tz=${date[1]}
--				dtz=${tz/+/}
--				lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
--				pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
-+				pdate="$(showdate $date)"
- 				if [ "$pdate" ]; then
--					echo -n $color$key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/"
-+					echo -n $color$key $rest | sed "s/>.*/> $pdate/"
- 					echo $coldefault
- 				else
- 					echo $color$key $rest $coldefault
-Index: cg-mkpatch
-===================================================================
---- 6b45f2ad7c95fa110c7e8b53dae6d099d726bd4c/cg-mkpatch  (mode:100755 sha1:efee5dc887677d3122d8630b9ee3ef396b7adbd3)
-+++ 01c206a9520ffa599c3ce17c901b4fce9b162b08/cg-mkpatch  (mode:100755 sha1:c6aa52b6c773718a64feef47a165885b684b593b)
-@@ -16,12 +16,9 @@
- 		case "$key" in
- 			"author"|"committer")
- 				date=(${rest#*> })
--				sec=${date[0]}; tz=${date[1]}
--				dtz=${tz/+/}
--				lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
--				pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
-+				pdate="$(showdate $date)"
- 				if [ "$pdate" ]; then
--					echo $key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/" >> $header
-+					echo $key $rest | sed "s/>.*/> $pdate/" >> $header
- 				else
- 					echo $key $rest >> $header
- 				fi
+What I _am_ advocating for is to obsolete the diff-tree-helper
+program.  What it does can be done, with the diff.[ch] change
+you merged this morning, without going through a pipe to the
+diff-tree-helper process but directly from these three commands,
+once diff-cache/tree acquires the "-p" flag.
 
--- 
-Jonas Fonseca
+By the way, how about renaming show-diff to diff-file?
+
+    diff-tree  : compares two trees.
+    diff-cache : compares a tree and the cache, or a tree and files.
+    diff-file  : compares the cache and files.
+
