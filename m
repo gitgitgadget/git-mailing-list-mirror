@@ -1,98 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Finding file revisions
-Date: Wed, 27 Apr 2005 15:19:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271506290.18901@ppc970.osdl.org>
-References: <200504271251.00635.mason@suse.com> <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
- <200504271423.37433.mason@suse.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: A shortcoming of the git repo format
+Date: Thu, 28 Apr 2005 08:51:15 +1000
+Message-ID: <2cfc403205042715513d8123f3@mail.gmail.com>
+References: <426F2671.1080105@zytor.com>
+	 <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
+	 <426FD3EE.5000404@zytor.com> <20050427183239.GE19011@redhat.com>
+	 <426FDE48.1050700@zytor.com>
+Reply-To: jon@zeta.org.au
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 00:46:10 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Dave Jones <davej@redhat.com>, Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 00:47:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQvHo-0007DD-UF
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:45:41 +0200
+	id 1DQvJ0-0007MA-26
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 00:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262069AbVD0WTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 18:19:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262062AbVD0WSt
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:18:49 -0400
-Received: from fire.osdl.org ([65.172.181.4]:53903 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262052AbVD0WR3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 18:17:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RMHPs4020795
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 15:17:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RMHOqw013057;
-	Wed, 27 Apr 2005 15:17:25 -0700
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504271423.37433.mason@suse.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262068AbVD0Wvs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 18:51:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262067AbVD0Wvs
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 18:51:48 -0400
+Received: from rproxy.gmail.com ([64.233.170.204]:26856 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262068AbVD0WvU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 18:51:20 -0400
+Received: by rproxy.gmail.com with SMTP id j1so248734rnf
+        for <git@vger.kernel.org>; Wed, 27 Apr 2005 15:51:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CIy/vvjmJh9QLOlPOisxM+HYtXENj4W6Z15Sf84TIzG8ctwS0jgz7d+aYwUG/MghjfNtR9w3tHe97OGSV/472gRKFVg41Us+oNYK7CWhHyAN25U+qwwl3PNLsoZHOeamyvCbpCl6jRen1ZH2V8PS7NRniB/AcKAJms7BRkQlKMs=
+Received: by 10.38.97.35 with SMTP id u35mr1645413rnb;
+        Wed, 27 Apr 2005 15:51:16 -0700 (PDT)
+Received: by 10.38.104.32 with HTTP; Wed, 27 Apr 2005 15:51:15 -0700 (PDT)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426FDE48.1050700@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Apr 2005, Chris Mason wrote:
+On 4/28/05, H. Peter Anvin <hpa@zytor.com> wrote:
+> Dave Jones wrote:
+> >
+> > That actually broke one of my first git scripts when one of the
+> > changelog texts started a line with 'tree '.  I hacked around it
+> > by making my script only grep in the 'head -n4' lines, but this
+> > seems somewhat fragile having to make assumptions that the field
+> > I want to see is in the first 4 lines.
+> >
 > 
-> So, new prog attached.  New usage:
+> You have the delimiter for that; there is an empty line between the
+> header and the free-form body, similar as for RFC822.
 > 
-> file-changes [-c commit_id] [-s commit_id] file ...
-> 
-> -c is the commit where you want to start searching
-> -s is the commit where you want to stop searching
 
-Your script will do some funky stuff, because you incorrectly think that
-the rev-list is sorted linearly. It's not. It's sorted in a rough
-chronological order, but you really can't do the "last" vs "cur" thing
-that you do, because two commits after each other in the rev-list listing
-may well be from two totally different branches, so when you compare one
-tree against the other, you're really doing something pretty nonsensical.
+...and a relatively simple way to use that rule to extract just the
+header lines:
 
-diff-tree will happily compare trees that aren't related, so it will 
-"work" in a sense, but it doesn't actually do what you think it does ;)
+      sed -n "1,/^\$/p"                     # with the separator line
 
-So what you should do is basically something like
+or, either one of these to remove the separator line as well:
 
-	open(RL, "rev-list $commit|") || die "rev-list failed";
-	while(<RL>) {
-		chomp;
-		my $cur = $_;
+      sed -n "1,/^\$/s/^\(..*\)/\1/p"  
+      sed -n "1,/^\$/p" | tr -s \\012
 
-(so far so good) but then you should look at the _parents_ of that 
-commit, ie do (NOTE NOTE NOTE! I'm a total perl idiot, so I'm not going to 
-do this right):
-
-		open(PARENT, "cat-file commit $cur") || die "cat-file failed");
-		while(<PARENT>) {
-			chomp;
-			my @words = split;
-			if ($words[1] == "tree")
-				continue;
-			if ($words[1] != "parent")
-				break;
-			test_diff($cur, $words[2]);
-		}
-		close(PARENT);
-	}
-	close(RL);
-
-and now your "test_diff()" thing can do the tree diff.
-
-That way you actually do "tree-diff" on the thing you should do, and it 
-will show you _which_ way it changed in a merge (ie if you hit a 
-merge-point, it will do a tree-diff against both parents, and show you 
-which one had the difference - then you'll obviously usually see that same 
-difference later on when you dig down to the actual changeset that did it 
-too).
-
-Remember: time is not a nice linear stream.
-
-		Linus
+jon
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
