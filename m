@@ -1,106 +1,46 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Darcs-git pulling from the Linux repo: a Linux VM question
-Date: Wed, 27 Apr 2005 15:10:25 +0200
-Message-ID: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: I'm missing isofs.h
+Date: Wed, 27 Apr 2005 15:58:41 +0200
+Message-ID: <20050427135840.GE3014@pasky.ji.cz>
+References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427125843.GA9454@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Apr 27 15:06:20 2005
+X-From: git-owner@vger.kernel.org Wed Apr 27 15:57:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQmEI-0002y1-Qa
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 15:05:27 +0200
+	id 1DQn0V-0001HW-Gi
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 15:55:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261594AbVD0NKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 09:10:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261596AbVD0NKm
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 09:10:42 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:40164 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261594AbVD0NKa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 09:10:30 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3RDAPHW088357
-          ; Wed, 27 Apr 2005 15:10:26 +0200 (CEST)
-X-Ids: 168
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3RDAPod000957
-          ; Wed, 27 Apr 2005 15:10:25 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DQmJ7-0004SZ-Ha; Wed, 27 Apr 2005 15:10:25 +0200
-To: darcs-devel@darcs.net, Git Mailing List <git@vger.kernel.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.168]); Wed, 27 Apr 2005 15:10:26 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 426F8F41.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261600AbVD0OAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 10:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261597AbVD0OAE
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 10:00:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48801 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261605AbVD0N6u (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 09:58:50 -0400
+Received: (qmail 16312 invoked by uid 2001); 27 Apr 2005 13:58:41 -0000
+To: Andrew Morton <akpm@osdl.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050427125843.GA9454@delft.aura.cs.cmu.edu>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Dear diary, on Wed, Apr 27, 2005 at 02:58:44PM CEST, I got a letter
+where Jan Harkes <jaharkes@cs.cmu.edu> told me that...
+> On Tue, Apr 26, 2005 at 09:43:38PM -0700, Andrew Morton wrote:
+> > In a current tree, using git-pasky-0.7:
+> 
+> It looks like git-pasky-0.7 doesn't include the following commit, but
+> there are also several other diff and merge related fixes that were
+> added since then.
 
-If you are one of the few initiated who can tune the Linux VM, please
-skip to the end of this mail and give me some advice.  If you are one
-of the even fewer initiated who understand Darcs' memory usage, read
-the whole of this message and send me a patch.  Otherwise, press D.
+Why do you think it doesn't include it? I can see the fix in the code.
 
-Now that I've got a Darcs that groks Git repos, I can play with a
-fairly large tree -- the Linux 2.6 one.  All the experiments described
-below were done on a 1.4 MHz Pentium-M with 640 MB of memory, running
-Linux 2.6.9 (Debian branded) over Reiserfs. 
-
-All the commands that don't need to actually read the underlying blobs
-are instantaneous; for example, ``darcs changes'' takes 0.4s.
-Commands that require reading the blobs but allow discarding them
-straight away are reasonable enough -- ``darcs changes -s'' on all but
-the initial import takes a very reasonable 15s, ``darcs changes -s''
-including the initial import takes 2m30s real time, (50s CPU time).
-
-The trouble, of course, is with commands that need to read a full tree
-and keep it in memory.  This is, unfortunately, the case with pull of
-the initial commit, which is over 200MB in size.  Darcs behaviour when
-pulling this initial commit is as follows.
-
-As I'm currently reading the git repository eagerly, Darcs starts by
-reading the whole of the initial tree into memory; this takes roughly
-2 minutes of real time (at less than 10% CPU), reads 18987 Git files
-(blobs and trees), of which 18512 are unique (meaning that less than
-500 were read two times or more -- yes, I should be keeping track of
-the blobs I've already read).  When that is done, Darcs' VMEM usage is
-beneath 300MB.
-
-At that point, Darcs stops doing I/O, and starts trying to interpret
-the data.  It runs between 80% and 100% of CPU, and grows steadily
-until its VMEM reaches 550MB.  At that point, the system starts
-swapping very lightly (no more than 200kB/s or so), and Darcs' VMEM
-usage grows up to 720MB after 5 minutes CPU, 8 minutes real time.
-
-When Darcs has grokked the fullness of the Linux kernel, it decides to
-write out a patch.  So it starts touching all of its memory while
-simultaneously writing out data to a patch file at a fairly sustained
-rate.  It gets pretty close to the end -- over 200MB of patch are
-written --, when suddenly the system appears to freeze for a second,
-then the OOM killer triggers and kills the Darcs process.
-
-Now obviously there is a problem with Darcs -- it shouldn't be needing
-720MB of virtual memory just to grok a 250 MB import --, but there's
-also a problem with the VM.  A 720 MB process should be reasonable on
-a machine with 640 MB, and there's no apparent reason why the kernel
-couldn't go more heavily into swap.  My completely uninformed guess
-would be that the heavy I/O activity generated by Darcs in the final
-stage causes a shortage of some resource (probably buffers) that is
-essential for the VM to perform the swapping, and that the only way
-the kernel sees to get itself out of the tight spot is to invoke the
-OOM killer on the process that's causing the I/O activity.
-
-So yes, in the longer term we need to fix Darcs.  For now, does anyone
-know how I can tune the Linux VM to get a 720 MB process to run
-reliably in 640 MB of main memory?  Obviously, adding swap or tuning
-the overcommit policy doesn't help (the issue is precisely that the VM
-refuses to dig into the swap early enough).  I don't understand what
-``swappinness'' is, but it doesn't appear to help.  The
-``min_free_kbytes'' and ``dirty_*'' knobs look promising, but nobody
-seems to know what they mean.
-
-So what was it you said about self-tuning VM systems?
-
-                                        Juliusz
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
