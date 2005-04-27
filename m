@@ -1,75 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: A shortcoming of the git repo format
-Date: Wed, 27 Apr 2005 13:56:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504271352110.18901@ppc970.osdl.org>
-References: <426F2671.1080105@zytor.com> <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
- <426FD3EE.5000404@zytor.com> <Pine.LNX.4.58.0504271154470.18901@ppc970.osdl.org>
- <426FF8C4.8080809@zytor.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: Re: Mercurial 0.3 vs git benchmarks
+Date: Wed, 27 Apr 2005 22:55:50 +0200
+Message-ID: <874qds5489.fsf@deneb.enyo.de>
+References: <aec7e5c305042608095731d571@mail.gmail.com>
+	<200504261138.46339.mason@suse.com>
+	<aec7e5c305042609231a5d3f0@mail.gmail.com>
+	<20050426135606.7b21a2e2.akpm@osdl.org>
+	<Pine.LNX.4.58.0504261405050.18901@ppc970.osdl.org>
+	<20050426155609.06e3ddcf.akpm@osdl.org> <426ED20B.9070706@zytor.com>
+	<871x8wb6w4.fsf@deneb.enyo.de>
+	<20050427151357.GH1087@cip.informatik.uni-erlangen.de>
+	<426FDFCD.6000309@zytor.com>
+	<20050427190144.GA28848@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 27 22:50:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Andrew Morton <akpm@osdl.org>, Linus Torvalds <torvalds@osdl.org>,
+	magnus.damm@gmail.com, mason@suse.com, mike.taht@timesys.com,
+	mpm@selenic.com, linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 27 22:52:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQtTO-0000B9-4Z
-	for gcvg-git@gmane.org; Wed, 27 Apr 2005 22:49:30 +0200
+	id 1DQtUs-0000Ou-RN
+	for gcvg-git@gmane.org; Wed, 27 Apr 2005 22:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261985AbVD0Uyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 16:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262009AbVD0Uyy
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 16:54:54 -0400
-Received: from fire.osdl.org ([65.172.181.4]:53985 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261985AbVD0Uyv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 16:54:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3RKsos4014283
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Apr 2005 13:54:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3RKsnhQ008521;
-	Wed, 27 Apr 2005 13:54:49 -0700
+	id S262016AbVD0U4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 16:56:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262014AbVD0U4M
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 16:56:12 -0400
+Received: from mail.enyo.de ([212.9.189.167]:9110 "EHLO mail.enyo.de")
+	by vger.kernel.org with ESMTP id S262011AbVD0U4D (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 16:56:03 -0400
+Received: from deneb.enyo.de ([212.9.189.171])
+	by albireo.enyo.de with esmtp id 1DQtZY-0001JK-KK; Wed, 27 Apr 2005 22:55:52 +0200
+Received: from fw by deneb.enyo.de with local (Exim 4.50)
+	id 1DQtZW-00055T-AO; Wed, 27 Apr 2005 22:55:50 +0200
 To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <426FF8C4.8080809@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <20050427190144.GA28848@cip.informatik.uni-erlangen.de> (Thomas
+	Glanzmann's message of "Wed, 27 Apr 2005 21:01:44 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+* Thomas Glanzmann:
 
+>> Directory hashing slows down operations that do linear sweeps through 
+>> the filesystem reading every single file, simply because without 
+>> dir_index, there is likely to be a correlation between inode order and 
+>> directory order, whereas with dir_index, readdir() returns entries in 
+>> hash order.
+>
+> thank you for the awareness training. Than mutt should be slower, too.
+> Maybe I should repeat that tests.
 
-On Wed, 27 Apr 2005, H. Peter Anvin wrote:
-> 
-> I know that.  However, is that going to be true for all versions of the 
-> repository format over all time?  If so, the repository format is brittle.
-
-I agree, it's brittle by design, exactly because I think it's very 
-important not to allow any variations.
-
-HOWEVER, that's where "convert-cache" comes in. Any one particular format 
-may be brittle, but if we accept that, and just say "we can upgrade by 
-converting the cache", then we should be ok. IOW, we can change from one 
-brittle format with 160-bit SHA1 names to _another_ brittle format with 
-256-bit SHA1 (or other) names.
-
-> My point was that with a syntactic delimiter, one can write a tool that 
-> doesn't necessarily know everything about every tag, including future 
-> tags which may not have been invented when the tool was written.
-
-Now, I kind of agree with that, but not on a "object level".
-
-But exactly because the object level is "brittle by design", and because I 
-the way to fix that is convert-cache (which may do _big_ changes to the 
-format), I really don't think that the objects should ever be looked at 
-except with very precise tools.
-
-But when it comes to "higher-level information", I agree with you 100%.
-
-For example, this _is_ actually why I wanted pasky to change the format of 
-"git log" (now cg-log). Exactly so that the output of that isn't brittle, 
-it now prepends spaces to the free-form part.
-
-		Linus
+Benchmarks are actually a bit tricky because as far as I can tell,
+once you hash the directories, they are tainted even if you mount your
+file system with ext2.
