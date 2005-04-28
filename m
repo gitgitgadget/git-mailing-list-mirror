@@ -1,80 +1,63 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: kernel.org now has gitweb installed
-Date: Thu, 28 Apr 2005 09:29:15 +0100
-Message-ID: <1114676955.12012.346.camel@baythorne.infradead.org>
-References: <42703E79.8050808@zytor.com>
-	 <1114673723.12012.324.camel@baythorne.infradead.org>
-	 <20050428081005.GG8612@pasky.ji.cz>
+From: Morgan Schweers <mschweers@gmail.com>
+Subject: Re: A shortcoming of the git repo format
+Date: Thu, 28 Apr 2005 01:31:12 -0700
+Message-ID: <b8464fde050428013144672950@mail.gmail.com>
+References: <200504272049.NAA14598@emf.net>
+	 <Pine.LNX.4.58.0504271722260.18901@ppc970.osdl.org>
+Reply-To: Morgan Schweers <mschweers@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 10:24:49 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 10:28:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR4Jm-00017K-D6
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 10:24:18 +0200
+	id 1DR4MS-0001Pv-Pd
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 10:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261784AbVD1I3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 04:29:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261818AbVD1I3e
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 04:29:34 -0400
-Received: from baythorne.infradead.org ([81.187.226.107]:25510 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S261784AbVD1I3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 04:29:17 -0400
-Received: from localhost.localdomain ([127.0.0.1])
-	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DR4OZ-0008CS-Dl; Thu, 28 Apr 2005 09:29:15 +0100
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050428081005.GG8612@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261818AbVD1Ib5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 04:31:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261543AbVD1Ib5
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 04:31:57 -0400
+Received: from zproxy.gmail.com ([64.233.162.203]:54817 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261818AbVD1IbR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 04:31:17 -0400
+Received: by zproxy.gmail.com with SMTP id 13so415170nzp
+        for <git@vger.kernel.org>; Thu, 28 Apr 2005 01:31:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IjBiq9Pq2IBnyklWHJ8l4DUvz20NCEmqqyWLE5UV0hOusUW37MjKYr5A+iiwi0npD+wK0Iiz1v1ub6g12bkqvCOlLEc8iAZclVk92hZ/ji+iAhm8AaBB36MoYTPdipY9r9/NfL28V8d9kReXGW8mcvVzuJxrAYCMbfLHV6KJirE=
+Received: by 10.36.9.12 with SMTP id 12mr86273nzi;
+        Thu, 28 Apr 2005 01:31:12 -0700 (PDT)
+Received: by 10.36.9.13 with HTTP; Thu, 28 Apr 2005 01:31:12 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0504271722260.18901@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 10:10 +0200, Petr Baudis wrote:
->   Linus                     ASM (Anonymous Subsystem Maintainer)
-> 
->     |------------------------.
->    A|                        |B
->     |                        |
->     |                        \-------------\
->     |                        :             |
->     \------------------------\             |E
->    C|                        |D            |
->     |                        /-------------/
->     |                        |F
->     /------------------------/
-> 
-> How would you show that? F E D C B A? F D C A E B?
+Greetings,
 
-Let us assume that C and A were already in Linus' tree (and on our web
-page) yesterday. Thus, they should be last. The newly-pulled stuff
-should be first -- FEDBCA.
+This is off topic, but this is a great paragraph, and an incredibly
+concise and valuable lesson for pre-architect software developers.
 
-I'd say "depth-first, remote parent first" but that would actually show
-show 'A' (as a parent of D) long before it shows C. Walking of remote
-parents should stop as soon as we hit a commit which was accessible
-through a more local parent, rather than as soon as we hit a commit
-which we've already printed. Maybe it should be something like depth-
-first, local parent first, but _reversed_?
+On 4/27/05, Linus Torvalds <torvalds@osdl.org> wrote:
 
-The latter is what the mailing list feeder does, but that has the
-advantage of being about to use 'rev-tree $today ^$yesterday' so we
-_know_ we're excluding the ones people have already seen. Hence I
-haven't really paid that much attention to getting the order strictly
-correct.
+[...deletia...]
 
-(Yes, I know that strictly speaking, git has no concept of 'remote' or
-'local' parents. But the ordering of the two parents in a Cogito merge
-or pull hasn't changed, has it?)
+>    Doing development is a lot about communication. Writing code in many
+>    ways is secondary - it's much more important to try to make sure that
+>    everybody knows what the goals are, because the _real_ pain in
+>    development ends up being not the coding, but the much more fundamental
+>    disagreements that happen when people really have totally different
+>    expectations of what the end result is going to be.
 
--- 
-dwmw2
+[...deletia...]
 
+>                         Linus
 
+--  Morgan Schweers
