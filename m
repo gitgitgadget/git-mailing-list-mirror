@@ -1,109 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: kernel.org now has gitweb installed
-Date: Thu, 28 Apr 2005 15:04:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504281451320.18901@ppc970.osdl.org>
-References: <42703E79.8050808@zytor.com> <1114673723.12012.324.camel@baythorne.infradead.org>
- <20050428081005.GG8612@pasky.ji.cz> <1114676955.12012.346.camel@baythorne.infradead.org>
- <1114680199.12012.363.camel@baythorne.infradead.org>
- <Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org> <7v1x8u7g26.fsf@assigned-by-dhcp.cox.net>
- <1114723402.2734.11.camel@localhost.localdomain> <7voeby60fp.fsf@assigned-by-dhcp.cox.net>
+From: Dave Jones <davej@redhat.com>
+Subject: Re: diff against a tag ?
+Date: Thu, 28 Apr 2005 18:06:26 -0400
+Message-ID: <20050428220626.GC15706@redhat.com>
+References: <20050428200953.GD8514@redhat.com> <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Woodhouse <dwmw2@infradead.org>, Petr Baudis <pasky@ucw.cz>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:59:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 00:02:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRH1b-0007wJ-TW
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:58:24 +0200
+	id 1DRH4z-0008LD-Nl
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 00:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262279AbVD1WDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 18:03:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262280AbVD1WDt
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 18:03:49 -0400
-Received: from fire.osdl.org ([65.172.181.4]:42156 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262279AbVD1WDL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 18:03:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SM2ws4017620
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 15:02:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SM2vSD014381;
-	Thu, 28 Apr 2005 15:02:57 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voeby60fp.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262282AbVD1WGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 18:06:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262283AbVD1WGt
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 18:06:49 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:6547 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S262282AbVD1WGd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 18:06:33 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3SM6Q3M026462;
+	Thu, 28 Apr 2005 18:06:26 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3SM6QO10185;
+	Thu, 28 Apr 2005 18:06:26 -0400
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3SM6Q0R021040;
+	Thu, 28 Apr 2005 18:06:26 -0400
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3SM6QSe021033;
+	Thu, 28 Apr 2005 18:06:26 -0400
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Apr 28, 2005 at 02:01:40PM -0700, Linus Torvalds wrote:
+ > 
+ > 
+ > On Thu, 28 Apr 2005, Junio C Hamano wrote:
+ > > 
+ > > Depends on your definition of today, but with the patch below I
+ > > sent today, you can say "diff-tree -p $tag $(cat .git/HEAD)".
+ > 
+ > I think Dave was wondering how to _find_ the tag in the first place, which 
+ > is a different issue.
 
+Indeed. Sorry if I was unclear.
 
-On Thu, 28 Apr 2005, Junio C Hamano wrote:
-> 
-> If that is really the case, shouldn't we do one of the
-> following:
+ > Right now fsck is the only thing that reports tags that aren't referenced 
+ > some other way. Once you know the tag, things are easy - even without 
+ > Junio's patch you can just do
+ > 
+ > 	object=$(cat-file tag $tag | sed 's/object //;q')
+ > 
+ > and then you can just do
+ > 
+ > 	diff-tree $object $(cat .git/HEAD)
+ > 
+ > or whatever you want to do.
+ > 
+ > Dave: do a "fsck --tags" in your tree, and it will talk about the tags it
+ > finds. Then you can create files like .git/refs/tags/v2.6.12-rc2 that
+ > contain pointers to those tags..
 
-No. It's not the case that time-stamps are meaningless. 
+Groovy. Is it 'THE LAW' that the first one it reports will always be
+the most recent tag ?
 
-The thing about distributed stuff is that time gets "fuzzy". It doesn't go 
-away. It's still very valid to say "this was done yesterday".
+Hmm, in a fresh rsync from your kernel tree, I get this..
+tagged commit a2755a80f40e5794ddc20e00f781af9d6320fafb (v2.6.12-rc3) in 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
+tagged commit 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 (v2.6.12-rc2) in 9e734775f7c22d2f89943ad6c745571f1930105f
+expect dangling commits - potential heads - due to lack of head information
+dangling tag 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a
+dangling commit 9acf6597c533f3d5c991f730c6a1be296679018e
+dangling tag 9e734775f7c22d2f89943ad6c745571f1930105f
 
-But what gets fuzzy is "before" and "after". For two reasons:
+Is that last part to be expected ?
 
- - time isn't synchronized, and clocks can be off. Usually by just a 
-   little bit, but sometimes you'll find just plain badly maintained 
-   machines, and time can be a year or two off.
+		Dave
 
-   Ergo: time is a _hint_. It's usually a pretty good hint, but it's a 
-   hint.
-
- - the "parent" relationship is the only "hard" before/after thing that 
-   git knows about, but it ignores a lot of real-world interaction, so
-   thinking that it is the _only_ before/after measure is ignoring all the
-   other communication in a system.
-
-   So parenthood guarantees that something happened "before", but _not_ 
-   being directly related doesn't mean that they were totally independent. 
-   There's no fixed "speed of light" that defines some absolute "cone of 
-   reachability".
-
-So time is relevant, but it's more of a hint than anything absolute. 
-Anything that -depends- on time is a bug waiting to happen, but something 
-that uses time to visualize things makes sense.
-
-The big advantage with time is that it's cheap. If you want to do a full 
-reachability analysis, you have to look at the whole revision tree. That's 
-quite possible RIGHT NOW, but it simply ill not be practical in a year, 
-when we have 15,000 commits.
-
-So "time" ends up being an approximation for "doing it right".
-
-As an example: it's quite expensive to ask "was this commit part of 
-2.6.12-rc3?" because that involves knowing the whole set of commits 
-involved in 2.6.12-rc3. Which in turn involves walking the whole revision 
-tree starting at 2.6.12-rc3 downwards. 
-
-That's exactly what "rev-tree" does, though. "rev-tree" will do the whole
-reachability thing, and as a result you can see whether something was in
-2.6.12-rc3 or not. But just for fun - time how long it takes for
-"rev-tree" to output its first entry, and how long it takes for "rev-list"
-to print its first line. 
-
-Hint: do it with a cold-cache "sparse" tree. "rev-list" will start
-outputting data immediately, and work it out as it goes along. "rev-tree"  
-will think for some time, and then blast the data out.
-
-In other words: rev-list is what you want for something like "git log", 
-because you care about _latency_ of the result.
-
-And that's why it uses time. It's an approximation, but it is an 
-approximation that has meaning in real life.
-
-		Linus
