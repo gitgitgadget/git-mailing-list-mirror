@@ -1,61 +1,67 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: A shortcoming of the git repo format
-Date: Thu, 28 Apr 2005 14:39:59 +0100
-Message-ID: <1114695600.27227.123.camel@hades.cambridge.redhat.com>
-References: <426F2671.1080105@zytor.com>
-	 <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
-	 <426FD3EE.5000404@zytor.com>
+From: Kris Shannon <kris.shannon.kernel@gmail.com>
+Subject: RT[1/3]: Alternate Encodings (esp. Delta Compression)
+Date: Thu, 28 Apr 2005 23:47:59 +1000
+Message-ID: <5d4799ae05042806477eb1e222@mail.gmail.com>
+References: <5d4799ae0504280559109cd00e@mail.gmail.com>
+Reply-To: Kris Shannon <kris.shannon.kernel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 15:35:38 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Apr 28 15:45:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR9AO-0004iu-Ie
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 15:34:56 +0200
+	id 1DR9Hr-0005re-HB
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 15:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262128AbVD1NkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 09:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262129AbVD1NkU
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:40:20 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:1518 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S262128AbVD1NkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 09:40:15 -0400
-Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DR9FO-0004AV-6g; Thu, 28 Apr 2005 14:40:07 +0100
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <426FD3EE.5000404@zytor.com>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S262131AbVD1NsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 09:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262134AbVD1NsE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:48:04 -0400
+Received: from zproxy.gmail.com ([64.233.162.198]:29038 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262131AbVD1Nr7 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 09:47:59 -0400
+Received: by zproxy.gmail.com with SMTP id 13so472289nzp
+        for <git@vger.kernel.org>; Thu, 28 Apr 2005 06:47:59 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tjVGZ12D2eWS6tl/YV1kSxswtOfAIRXHrVXRrNVPbVPEJvoEExYrhap87q7wifufkDWzdGBJ0v0dLU5ia7Oifh2L4qn+IjAOmBdQWKlXisS7k8rSQGJLAjkHtqfo18WCWCbmr2H5ONUcELXKZ35pGMDp12dbLFcfYirsyX0xVSg=
+Received: by 10.36.9.18 with SMTP id 18mr97702nzi;
+        Thu, 28 Apr 2005 06:47:59 -0700 (PDT)
+Received: by 10.36.4.16 with HTTP; Thu, 28 Apr 2005 06:47:59 -0700 (PDT)
+To: GIT Mailing List <git@vger.kernel.org>
+In-Reply-To: <5d4799ae0504280559109cd00e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-04-27 at 11:03 -0700, H. Peter Anvin wrote:
-> > To find the email address, look for the first '<'. To find the date, look 
-> > for the first '>'. Those characters are not allowed in the name or the 
-> > email, so they act as well-defined delimeters.
-> > 
-> 
-> That's true for email addresses,
+If a format is defined for representing delta compression then
+it would be prudent to make sure that it could be used for
+encoding both forward and backward deltas (not necessarily
+in the same delta :) These deltas could then by kept in the 
+objects directory (i.e. 00/a29c403e751c2a2a61eb24fa2249c8956d1c80.xdelta)
 
-Not in general. You can have just about any character, including @, <
-and >, in either a display-name or a local-part.
+Doing delta compression of old versions is something that should
+be done manually (the subversion people have empirical data
+to back that up I think but I can't seem to find a link ATM)
+A command for wiping old versions from a repository to save space
+could be altered to replace the files with their xdelta equivalents
+for a reduced space savings but still keeping a full history.
 
-For git we actually _remove_ any instances of '<' and '>' from both
-'AUTHOR_NAME' and 'AUTHOR_EMAIL', so what you say becomes true.
+Using delta compression of the new versions (against the old) for
+efficient bandwidth consumption is another possible area.  If these
+delta's are produced on the fly,  they could be cached in the objects
+directory.
 
-I still say these shouldn't be considered email addresses, any more than
-the 'user@host.domain' you see when you connect to an IRC server is
-considered an IP address.
+These two different use cases are IMO a good argument for
+using this as a convention even if it doesn't become a part of git's
+core (i.e. changing read_sha1_file to transparently expand xdelta's)
+
+If you add .xdelta it would follow that other encodings might be useful,
+and added to the objects directory in the same way.
 
 -- 
-dwmw2
-
+Kris Shannon <kris.shannon.kernel@gmail.com>
