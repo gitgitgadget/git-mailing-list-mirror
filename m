@@ -1,66 +1,70 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: suffix array/tree deltas (Was: The criss-cross merge case)
-Date: Thu, 28 Apr 2005 00:30:25 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504280016000.30848-100000@iabervon.org>
-References: <1114659700.5910.10.camel@thamachine>
+Subject: Re: : Networking
+Date: Thu, 28 Apr 2005 00:43:58 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504280031110.30848-100000@iabervon.org>
+References: <20050428035534.GB30308@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 06:25:36 2005
+Cc: Bram Cohen <bram@bitconjurer.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Andrew Morton <akpm@osdl.org>, pasky@ucw.cz,
+	davem@davemloft.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 06:39:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR0aa-0004dD-EA
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 06:25:25 +0200
+	id 1DR0nZ-0005Xg-I5
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 06:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261926AbVD1Ead (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 00:30:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261937AbVD1Ead
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 00:30:33 -0400
-Received: from iabervon.org ([66.92.72.58]:18436 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261926AbVD1Ea0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 00:30:26 -0400
+	id S261937AbVD1EoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 00:44:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261961AbVD1EoJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 00:44:09 -0400
+Received: from iabervon.org ([66.92.72.58]:30724 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261937AbVD1EoE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 00:44:04 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DR0fR-00006w-00; Thu, 28 Apr 2005 00:30:25 -0400
-To: "Zed A. Shaw" <zedshaw@zedshaw.com>
-In-Reply-To: <1114659700.5910.10.camel@thamachine>
+	id 1DR0sY-0000f9-00; Thu, 28 Apr 2005 00:43:58 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050428035534.GB30308@mythryan2.michonline.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 27 Apr 2005, Zed A. Shaw wrote:
+On Wed, 27 Apr 2005, Ryan Anderson wrote:
 
-> On Wed, 2005-04-27 at 19:32 -0400, Daniel Barkalow wrote:
+> Now, all that history I had, with the duplicated imlementation, and
+> useless code is in my tree.
 > 
-> > My plan is to implement multi-file diff and merge with a suffix tree-based
-> > algorithm, and then revisit the history stuff once we have a merger that
-> > can do sensible things with this information.
+> The current (as I understand it) policy is, "We don't want that
+> history."  This means that the developer will build a new tree (maybe),
+> export his patch and reimport it into a clean tree, making a much
+> simpler history graph.
+
+I've been doing just this. I actually import it in pieces, with a commit
+between each, so it's just like I applied the patch series I'm about to
+send out. It actually works beautifully, and, someday, I'll have the
+series up on my site so that a maintainer can just pull it.
+
+Honestly, I'm not interested long-term in my buggy history, even
+locally; I'm interested in the clean history in which I make a series of
+self-contained, logical modifications and they get merged upstream.
+
+> What Andrew is doing isn't too far from this, in concept, it's just a
+> lot more complicated because he's pulling something insane, like 27
+> seperate trees, plus several hundred stand alone patches.
 > 
-> Hey, that's neat.  I've already implemented two versions of this very
-> thing with FastCST.  The original used suffix trees, but I found that
-> there were plenty of pathological cases which chewed memory and
-> processor.  Most of these cases were large (>1MB) PDF files.  Don't ask
-> me why PDF drove suffix tree algorithms insane, but they just did.
+> So, there's a *deliberate* desire to drop history and move some content
+> around outside of version control.
 
-I'm not too surprised; but can you hope to merge or compare PDFs
-anyway? I'd think that you'd just screw up alignment or something. (Note
-that we aren't using deltas for history storage, so we're not interested
-in the "compressing multiple versions" aspect of diffs.) I think I want to
-punt anything too binary-like and try to find an unambiguous history-based
-difference (i.e., there was some commit in the past that replaced one of
-the versions with the other; therefore, we want the replacing one).
-
-I'm thinking of line-based compressed suffix trees, with the obvious delta
-algorithm: make the trees, find the longest prefix of the file, find the
-longest prefix of the rest of the file, add an insertion for a line
-that doesn't match, repeat. I probably need a few extra things to
-stabilize the process (prefer that the next chunk come from the same file,
-prefer that it come from next in the file, ignore copied lines without
-enough content).
-
-I haven't actually started yet; I'm waiting for a weekend when I'm feeling
-inspired and not too fried.
+I think it's more a desire to drop history as it actually happened, and
+replace it with history as it should have happened. The one thing I would
+like is the ability to provide merging help to poor souls who got part of
+the messy history without preserving that history. I think having the head
+of the clean series have a bunch of lines: "replaces <sha1>", where people
+aren't supposed to have or want that commit, but if they've merged it,
+they should know that the clean series includes its content.
 
 	-Daniel
 *This .sig left intentionally blank*
