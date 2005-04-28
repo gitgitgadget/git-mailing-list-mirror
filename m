@@ -1,70 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: I'm missing isofs.h
-Date: Thu, 28 Apr 2005 09:28:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504280918230.18901@ppc970.osdl.org>
-References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427235115.GN22956@pasky.ji.cz>
- <Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org> <20050428003246.GV22956@pasky.ji.cz>
- <7vhdhra2sg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504280740450.18901@ppc970.osdl.org>
- <7vvf6698zq.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] add a diff-files command
+Date: Thu, 28 Apr 2005 09:34:25 -0700
+Message-ID: <7vr7gu97xq.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0504271701080.14033@localhost.localdomain>
+	<7vr7gvevpv.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.62.0504272031330.14033@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Andrew Morton <akpm@osdl.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:22:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:30:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRBlB-0004ga-06
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:21:05 +0200
+	id 1DRBsz-000642-Fq
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:29:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262138AbVD1Q0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 12:26:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262156AbVD1Q0c
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:26:32 -0400
-Received: from fire.osdl.org ([65.172.181.4]:28056 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262138AbVD1Q0a (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 12:26:30 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SGQOs4016313
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 09:26:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SGQNDS025619;
-	Thu, 28 Apr 2005 09:26:23 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf6698zq.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262159AbVD1Qei (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 12:34:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262162AbVD1Qei
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:34:38 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:155 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262159AbVD1Qe1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 12:34:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050428163427.WXOE22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Apr 2005 12:34:27 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0504272031330.14033@localhost.localdomain> (Nicolas
+ Pitre's message of "Wed, 27 Apr 2005 21:02:48 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
+Having thought about it more, although I praise your enthusiasm
+to improve git, I suspect your diff-files is a solution to a
+problem that does not exist.
 
-On Thu, 28 Apr 2005, Junio C Hamano wrote:
-> 
-> Is /dev/null convention OK with you?
+NP> It also has the ability to accept exclude file patterns with
+NP> -x and even a file containing a list of patterns to exclude
+NP> with -X.  This is especially useful to use the famous
+NP> dontdiff file when looking for uncommitted files in a
+NP> compiled kernel tree.
 
-Absolutely. In fact, I prefer it, but I end up just using standard "patch 
--p1" in the end, so..
+If you want to see if working tree has some junk other than
+those listed in dontdiff, wouldn't this be sufficient?
 
-> Here is an example of diffstat getting confused:
+  $ show-files --others | grep -f dontdiff
 
-diffstat is _way_ too easily confused by various things. I've seen it
-claim "no files" just because the diff had some headers that confused it.  
-And yes, you should always tell it to use "-p1" to get the right
-pathnames, otherwise it does nonsensical things (if all the diffs happen
-to be in "drivers/usb/" it ends up deciding that that's just a common
-prefix, and won't actually show it at all).
+NP> First, show-diff doesn't handle files in the work tree which
+NP> are not listed in the cache.
 
-However, I'm surprised that it's confused by /dev/null. Usually the 
-confusion comes from the stuff _after_ the name (ie adding the "mode" etc 
-is what I'd have expected to confuse it).
+That's the whole point of git (and show-diff).  If it is not
+listed in the cache, it does not exist.
 
-One way to un-confuse diffstat is to add the "Index: " line. I'm not
-actually much of a fan of Index: lines myself, and I'd rather somebody
-fixed diffstat, but they _do_ work around diffstat problems.
+NP> ...  So trust me it _is_ pretty damn useful, unless you
+NP> always run "make clean" on your kernel tree before checking
+NP> for potentially uncommitted files then recompile everything
+NP> afterwards which is a hassle.
 
-		Linus
+Why do you need to "make clean"?  Is it because otherwise you
+would get lots of output for things that are listed in dontdiff
+but not listed in the cache, and the uncommitted but not listed
+in dontdiff file that you care about would get lost in the
+noise?
+
+Earlier you complained show-diff does _not_ look at what are not
+listed in the cache.  Now you want to exclude garbage that comes
+out of it because you have tons of stuff that are not listed in
+the cache, which implies show-diff _does_ look at what are not
+listed in the cache.  Either you are contradicting yourself or I
+am confused.
+
+The truth is, as you said earlier, show-diff does not look at
+them, so I do not understand what problem you are trying to
+describe here.
+
+Again, "checking for potentially uncommitted" files is what
+you use show-files --others for, not show-diff.
+
