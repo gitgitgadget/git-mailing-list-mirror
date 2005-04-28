@@ -1,59 +1,55 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: A shortcoming of the git repo format
-Date: Wed, 27 Apr 2005 18:56:59 -0700
-Message-ID: <427042EB.8030501@zytor.com>
-References: <Pine.LNX.4.21.0504272143260.30848-100000@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: I'm missing isofs.h
+Date: Wed, 27 Apr 2005 19:02:38 -0700
+Message-ID: <7vzmvjbqv5.fsf@assigned-by-dhcp.cox.net>
+References: <20050426214338.32e9ac27.akpm@osdl.org>
+	<20050427235115.GN22956@pasky.ji.cz>
+	<Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org>
+	<20050428003246.GV22956@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 03:52:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Andrew Morton <akpm@osdl.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 03:57:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQyCV-0006nl-EG
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 03:52:23 +0200
+	id 1DQyHH-0007sH-HD
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 03:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261694AbVD1B5Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 21:57:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261711AbVD1B5Z
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 21:57:25 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:32643 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261694AbVD1B5W
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 21:57:22 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3S1v544006116
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Apr 2005 18:57:05 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0504272143260.30848-100000@iabervon.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261711AbVD1CCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 22:02:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261717AbVD1CCo
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 22:02:44 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44979 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261711AbVD1CCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Apr 2005 22:02:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050428020239.MFIU1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 27 Apr 2005 22:02:40 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050428003246.GV22956@pasky.ji.cz> (Petr Baudis's message of
+ "Thu, 28 Apr 2005 02:32:47 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Daniel Barkalow wrote:
-> On Wed, 27 Apr 2005, H. Peter Anvin wrote:
->  
->>There are a fair number of tools one may want that deal with reachability.
->  
-> Do you agree that installing a new libgit.so when you want to apply such a
-> tool to a new tag is sufficient? If the library is shared, and everything
-> for parsing the objects (to the point of getting struct object filled
-> out) is in the library, and you want to have some tool able to validate or
-> use any new tag that you want reachability-only tools to process, not
-> having a standard header proto-format for future tags isn't a problem,
-> since you'll get upgrades to the parser portion of all of your tools
-> together.
-> 
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-Only if language bindings are created for this library.
+PB> Dear diary, on Thu, Apr 28, 2005 at 02:19:07AM CEST, I got a letter
+PB> where Linus Torvalds <torvalds@osdl.org> told me that...
+>> And together with Junio's stuff from today, you can literally just do
+>> 
+>> diff-cache -p $tree
+>> 
+>> and you're done - it diffs any release "$tree" against the current state.
 
-	-hpa
+PB> Actually, I can't; the patch generator is not on par with mine yet.
+
+That's what GIT_EXTERNAL_DIFF is there for.
+
+
