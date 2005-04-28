@@ -1,63 +1,67 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 16:58:38 -0400
-Message-ID: <200504281658.39300.mason@suse.com>
-References: <200504271251.00635.mason@suse.com> <200504280745.05505.mason@suse.com> <1114715496.4212.36.camel@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: diff against a tag ?
+Date: Thu, 28 Apr 2005 14:01:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
+References: <20050428200953.GD8514@redhat.com> <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:53:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Dave Jones <davej@redhat.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:57:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRG0W-0000PF-Tt
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:53:13 +0200
+	id 1DRG3d-0000o8-ID
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262160AbVD1U6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 16:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262179AbVD1U6p
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 16:58:45 -0400
-Received: from mx2.suse.de ([195.135.220.15]:63143 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S262160AbVD1U6n (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:58:43 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 9FB0F9C74;
-	Thu, 28 Apr 2005 22:58:42 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id 5360514D25C; Thu, 28 Apr 2005 22:58:42 +0200 (CEST)
-To: Kay Sievers <kay.sievers@vrfy.org>
-User-Agent: KMail/1.8
-In-Reply-To: <1114715496.4212.36.camel@localhost.localdomain>
-Content-Disposition: inline
+	id S262244AbVD1VBU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 17:01:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262272AbVD1VBU
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:01:20 -0400
+Received: from fire.osdl.org ([65.172.181.4]:33940 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262244AbVD1U76 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:59:58 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SKxfs4011336
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 13:59:42 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SKxe0g009333;
+	Thu, 28 Apr 2005 13:59:41 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 28 April 2005 15:11, Kay Sievers wrote:
->
-> Can you confirm this with the kernel tree?
->   file-changes -c 9acf6597c533f3d5c991f730c6a1be296679018e
-> drivers/usb/core/usb.c
->
-> lists the commit:
->   diff-tree -r 1d66c64c3cee10a465cd3f8bd9191bbeb718f650
-> c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
-> f0534ee064901d0108eb7b2b1fcb59a98bb53c2b->c231b4bef314284a168fedb6c5f6c47ae
->c5084fc drivers/usb/core/usb.c cat-file commit
-> c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
->
-> which seems not to have changed the file asked for.
 
-Hmmm, that does work here:
 
-coffee:/src/git # diff-tree -r 1d66c64c3cee10a465cd3f8bd9191bbeb718f650 c79bea07ec4d3ef087962699fe8b2f6dc5ca7754 | grep usb.core.usb.c
-*100644->100644 blob    f0534ee064901d0108eb7b2b1fcb59a98bb53c2b->c231b4bef314284a168fedb6c5f6c47aec5084fc      drivers/usb/core/usb.c
+On Thu, 28 Apr 2005, Junio C Hamano wrote:
+> 
+> Depends on your definition of today, but with the patch below I
+> sent today, you can say "diff-tree -p $tag $(cat .git/HEAD)".
 
--chris
+I think Dave was wondering how to _find_ the tag in the first place, which 
+is a different issue.
+
+Right now fsck is the only thing that reports tags that aren't referenced 
+some other way. Once you know the tag, things are easy - even without 
+Junio's patch you can just do
+
+	object=$(cat-file tag $tag | sed 's/object //;q')
+
+and then you can just do
+
+	diff-tree $object $(cat .git/HEAD)
+
+or whatever you want to do.
+
+Dave: do a "fsck --tags" in your tree, and it will talk about the tags it
+finds. Then you can create files like .git/refs/tags/v2.6.12-rc2 that
+contain pointers to those tags..
+
+		Linus
+
