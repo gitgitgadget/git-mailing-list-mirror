@@ -1,91 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: I'm missing isofs.h
-Date: Thu, 28 Apr 2005 09:11:37 -0700
-Message-ID: <7vvf6698zq.fsf@assigned-by-dhcp.cox.net>
-References: <20050426214338.32e9ac27.akpm@osdl.org>
-	<20050427235115.GN22956@pasky.ji.cz>
-	<Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org>
-	<20050428003246.GV22956@pasky.ji.cz>
-	<7vhdhra2sg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504280740450.18901@ppc970.osdl.org>
+Date: Thu, 28 Apr 2005 09:28:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504280918230.18901@ppc970.osdl.org>
+References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427235115.GN22956@pasky.ji.cz>
+ <Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org> <20050428003246.GV22956@pasky.ji.cz>
+ <7vhdhra2sg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504280740450.18901@ppc970.osdl.org>
+ <7vvf6698zq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Petr Baudis <pasky@ucw.cz>, Andrew Morton <akpm@osdl.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:07:48 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:22:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRBWw-0002A3-5a
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:06:22 +0200
+	id 1DRBlB-0004ga-06
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262117AbVD1QLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 12:11:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262016AbVD1QLq
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:11:46 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:18882 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S262117AbVD1QLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 12:11:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050428161138.CANI7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 28 Apr 2005 12:11:38 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504280740450.18901@ppc970.osdl.org> (Linus
- Torvalds's message of "Thu, 28 Apr 2005 07:42:36 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262138AbVD1Q0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 12:26:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262156AbVD1Q0c
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:26:32 -0400
+Received: from fire.osdl.org ([65.172.181.4]:28056 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262138AbVD1Q0a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 12:26:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SGQOs4016313
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 09:26:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SGQNDS025619;
+	Thu, 28 Apr 2005 09:26:23 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf6698zq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-LT> On Wed, 27 Apr 2005, Junio C Hamano wrote:
->> 
->> Linus & Andrew, is the above (second) format acceptable for the
->> kernel work?
 
-LT> The only thing my stuff needs is that it's "-p1" format, ...
+On Thu, 28 Apr 2005, Junio C Hamano wrote:
+> 
+> Is /dev/null convention OK with you?
 
-Is /dev/null convention OK with you?  I know it is OK for patch
-and cg-patch, both of which have built-in knowledge of the
-convention, but other tools may get confused.  Here is an
-example of diffstat getting confused:
+Absolutely. In fact, I prefer it, but I end up just using standard "patch 
+-p1" in the end, so..
 
-    $ jit-snap -v linus-mirror:0 Makefile comm-z.c
-    # - [PATCH] diff-tree -p implies diff-tree -p -r
-    # + JIT: indent help text from jit-snap.
-    --- k/Makefile  (mode:100644)
-    +++ l/Makefile  (mode:100644)
-    @@ -7,7 +7,8 @@
-     # BREAK YOUR LOCAL DIFFS! show-diff and anything us.....
-     # break unless your underlying filesystem supports .....
-    ...
-    --- /dev/null
-    +++ l/comm-z.c  (mode:100644)
-    @@ -0,0 +1,101 @@
-    +#include <stdio.h>
-    +#include <string.h>
-    ...
+> Here is an example of diffstat getting confused:
 
-    $ jit-snap -v linus-mirror:0 Makefile comm-z.c | diffstat
-    Makefile   |   15 +++++++--
-    l/comm-z.c |  101 ++++++++++++++++++++++++++++++++++.....
-     2 files changed, 114 insertions(+), 2 deletions(-)
+diffstat is _way_ too easily confused by various things. I've seen it
+claim "no files" just because the diff had some headers that confused it.  
+And yes, you should always tell it to use "-p1" to get the right
+pathnames, otherwise it does nonsensical things (if all the diffs happen
+to be in "drivers/usb/" it ends up deciding that that's just a common
+prefix, and won't actually show it at all).
 
-LT> ... but I don't care 
-LT> if the prefix is the sha1 tree-name, or "a/" and "b/" or anything else (I 
-LT> think the current thing that the built-in stuff defaults to is a bit 
-LT> strange. "k/" and "l/"? I understand "a/" and "b/", and I'd even get "x/" 
-LT> and "y/" or "old/" and "new/", but starting counting at "l" is strange ;)
+However, I'm surprised that it's confused by /dev/null. Usually the 
+confusion comes from the stuff _after_ the name (ie adding the "mode" etc 
+is what I'd have expected to confuse it).
 
-I am _very_ glad somebody finally has noticed and voiced the
-puzzlement.  It is meant to be a gentle reminder that the tool's
-primary purpose is to support development of l-k ;-).
+One way to un-confuse diffstat is to add the "Index: " line. I'm not
+actually much of a fan of Index: lines myself, and I'd rather somebody
+fixed diffstat, but they _do_ work around diffstat problems.
 
-I do not mind if you told me to change them to a/ or b/ (or do
-it yourself---it is a single character change in the source) if
-you want.
-
+		Linus
