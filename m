@@ -1,76 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: kernel.org now has gitweb installed
-Date: Thu, 28 Apr 2005 14:44:42 -0700
-Message-ID: <7voeby60fp.fsf@assigned-by-dhcp.cox.net>
-References: <42703E79.8050808@zytor.com>
-	<1114673723.12012.324.camel@baythorne.infradead.org>
-	<20050428081005.GG8612@pasky.ji.cz>
-	<1114676955.12012.346.camel@baythorne.infradead.org>
-	<1114680199.12012.363.camel@baythorne.infradead.org>
-	<Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org>
-	<7v1x8u7g26.fsf@assigned-by-dhcp.cox.net>
-	<1114723402.2734.11.camel@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Finding file revisions
+Date: Thu, 28 Apr 2005 14:50:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504281445280.18901@ppc970.osdl.org>
+References: <200504271251.00635.mason@suse.com>  <200504280745.05505.mason@suse.com>
+  <1114715496.4212.36.camel@localhost.localdomain>  <200504281658.39300.mason@suse.com>
+ <1114723987.4212.51.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:40:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Chris Mason <mason@suse.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:43:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRGj3-0005tY-Pb
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:39:14 +0200
+	id 1DRGmU-0006Hq-Su
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262237AbVD1Vor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 17:44:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262257AbVD1Vor
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:44:47 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:20466 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S262237AbVD1Vop (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 17:44:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050428214444.IVMC7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 28 Apr 2005 17:44:44 -0400
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1114723402.2734.11.camel@localhost.localdomain> (David
- Woodhouse's message of "Thu, 28 Apr 2005 22:23:21 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262259AbVD1VsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 17:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262264AbVD1VsS
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:48:18 -0400
+Received: from fire.osdl.org ([65.172.181.4]:6311 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262259AbVD1VsO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 17:48:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SLm9s4016289
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 14:48:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SLm8iD012716;
+	Thu, 28 Apr 2005 14:48:09 -0700
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <1114723987.4212.51.camel@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DW" == David Woodhouse <dwmw2@infradead.org> writes:
 
-DW> On Thu, 2005-04-28 at 14:21 -0700, Junio C Hamano wrote:
->> 2. Assuming that we do want to enforce that parent fields of a
->> commit object name valid commit objects, is it OK to also
->> require that the commit timestamp of a child object is not in
->> the future relative to any and all of its parent commit
->> objects
 
-DW> No. Time is utterly meaningless -- it's perfectly normal for clocks to
-DW> be out of sync. We really don't want to fall into the trap of assigning
-DW> any meaning to the timestamp.
+On Thu, 28 Apr 2005, Kay Sievers wrote:
+> 
+> Sure. But file-changes lists the commit:
+>   c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
+> 
+> when asked for:
+>   "drivers/usb/core/usb.c"
+> 
+> and that file isn't touched there. Actually it lists merge-commits which
+> are not related to the file.
 
-If that is really the case, shouldn't we do one of the
-following:
+It really _is_ touched by that commit. Look closer.
 
- (1) Timestamp is meaningless.  Stop recording it in the commit
-     objects.
+It has two parents: one that had already merged with Greg's USB tree, and 
+one that had _not_ done so.
 
- (2) Keep recording meaningless timestamp in the commit objects,
-     because otherwise it would break backward compatibility.
-     However, stop looking at timestamp in commit.c; especially
-     pop_most-recent_commit() is meaningless hance what rev-list
-     does.
+So whether it "modifies" the USB files or not really depends on which 
+parent you go back. 
 
- (3) Require the proper ordering in the timestamp as I
-     suggested.  Users should take note and make corrective
-     action if their clocks are _way_ out of sync.
+In general, you tend to want to ignore merge-nodes for looking at 
+differences, but the differences are definitely there, and they are often 
+vital (ie it's often _very_ important to know which side of a merge didn't 
+change something).
 
-I do not think we want to do either (1) or (2).
-
+		Linus
