@@ -1,69 +1,59 @@
-From: Gerhard Schrenk <gps@mittelerde.physik.uni-konstanz.de>
-Subject: Re: kernel.org now has gitweb installed
-Date: Fri, 29 Apr 2005 00:59:07 +0200
-Message-ID: <20050428225906.GA12592@frodo>
-References: <1114723402.2734.11.camel@localhost.localdomain>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: diff against a tag ?
+Date: Thu, 28 Apr 2005 19:14:22 -0400
+Message-ID: <118833cc05042816141ba672a4@mail.gmail.com>
+References: <20050428200953.GD8514@redhat.com>
+	 <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 29 00:54:05 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, Dave Jones <davej@redhat.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 01:09:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRHtA-00052J-2U
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 00:53:44 +0200
+	id 1DRI81-0006M6-98
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 01:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262323AbVD1W7S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 18:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262326AbVD1W7S
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 18:59:18 -0400
-Received: from honk1.physik.uni-konstanz.de ([134.34.140.224]:219 "EHLO
-	honk1.physik.uni-konstanz.de") by vger.kernel.org with ESMTP
-	id S262323AbVD1W7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 18:59:16 -0400
-Received: from localhost (localhost.localnet [127.0.0.1])
-	by honk1.physik.uni-konstanz.de (Postfix) with ESMTP id 8CEB12BC46
-	for <git@vger.kernel.org>; Fri, 29 Apr 2005 00:59:11 +0200 (CEST)
-Received: from honk1.physik.uni-konstanz.de ([127.0.0.1])
-	by localhost (honk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 19079-15 for <git@vger.kernel.org>;
-	Fri, 29 Apr 2005 00:59:07 +0200 (CEST)
-Received: from gandalf.physik.uni-konstanz.de (gandalf.physik.uni-konstanz.de [134.34.140.5])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by honk1.physik.uni-konstanz.de (Postfix) with ESMTP id A79C82BC45
-	for <git@vger.kernel.org>; Fri, 29 Apr 2005 00:59:07 +0200 (CEST)
-Received: from frodo.physik.uni-konstanz.de (frodo.physik.uni-konstanz.de [134.34.140.36])
-	by gandalf.physik.uni-konstanz.de (Postfix) with ESMTP id 3AA18C
-	for <git@vger.kernel.org>; Fri, 29 Apr 2005 00:59:07 +0200 (CEST)
-Received: from gps by frodo.physik.uni-konstanz.de with local (Exim 3.35 #1 (Debian))
-	id 1DRHyN-0003HT-00; Fri, 29 Apr 2005 00:59:07 +0200
-To: Git Mailing List <git@vger.kernel.org>
+	id S262276AbVD1XOZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 19:14:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262311AbVD1XOZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 19:14:25 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:4915 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262276AbVD1XOW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 19:14:22 -0400
+Received: by rproxy.gmail.com with SMTP id a41so455793rng
+        for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pNRQ+cFy7ZdrVhV+xx9sPpKy9Z797/ekJK1UWZuBnrKNGDdqprQENAB2k3G8O4mlbaebN3tFnAP7kq0NfGB5bnlDN7V6gr3mDj8GKet/lsiRf6UtCtpXPUn+S4gBAl7c6ZoAImkGSfQF1N/5Zrdpsy01KvxxJMUMkUqBLw7rU24=
+Received: by 10.38.74.73 with SMTP id w73mr2963514rna;
+        Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <1114723402.2734.11.camel@localhost.localdomain>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at honk.physik.uni-konstanz.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* David Woodhouse <dwmw2@infradead.org> [2005-04-28 23:23]:
- 
-> No. Time is utterly meaningless -- 
+> Right now fsck is the only thing that reports tags that aren't referenced
+> some other way. 
 
-This is fundamentally wrong. Space-time and causality has a *very*
-important meaning.  If don't use this information (directly or
-indirectly) in your data modell or history graph you do something very
-stupid. You simply won't optimize for the common case because you won't
-scale with the fundamental physical laws of information exchange and
-syncronisation, you just kind of break space-time-symmetrie. Ever
-compared feynman diagrams to merge diagrams?
+Which begs the question: why wasn't the type of the object made part of the
+file name?
 
-> it's perfectly normal for clocks to be out of sync.
+commit-babe1234...
+tag-deadbeef5678...
+tree-c0ca4321...
+blob-cafe8765...
 
-Yes even special relativity just boils down to "there is no absolut
-simultaneity". So what? 
+That would have simplied scripts a good deal and listing all tags
+would be trivial.
 
-I'll predict if you break causality your kernel will suddenly
-destabilize and explode like a nuclear bomb ;-)
-
-Gerhard
+Morten
