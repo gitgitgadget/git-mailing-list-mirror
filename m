@@ -1,72 +1,106 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: kernel.org now has gitweb installed
-Date: Thu, 28 Apr 2005 10:23:19 +0100
-Message-ID: <1114680199.12012.363.camel@baythorne.infradead.org>
-References: <42703E79.8050808@zytor.com>
-	 <1114673723.12012.324.camel@baythorne.infradead.org>
-	 <20050428081005.GG8612@pasky.ji.cz>
-	 <1114676955.12012.346.camel@baythorne.infradead.org>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: kernel hacker's git howto
+Date: Thu, 28 Apr 2005 11:22:03 +0100
+Message-ID: <4270B94B.30604@dgreaves.com>
+References: <20050428085657.GA30800@elf.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:22:14 2005
+Cc: kernel list <linux-kernel@vger.kernel.org>, pasky@ucw.cz,
+	torvalds@osdl.org, Greg KH <greg@kroah.com>,
+	GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 12:17:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR5D5-00089q-13
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 11:21:27 +0200
+	id 1DR656-0006L2-SI
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 12:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261986AbVD1JZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 05:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261969AbVD1JZ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 05:25:57 -0400
-Received: from baythorne.infradead.org ([81.187.226.107]:33958 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S261946AbVD1JXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 05:23:21 -0400
-Received: from localhost.localdomain ([127.0.0.1])
-	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DR5Eu-0000AV-4j; Thu, 28 Apr 2005 10:23:20 +0100
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <1114676955.12012.346.camel@baythorne.infradead.org>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261962AbVD1KW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 06:22:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261972AbVD1KW1
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 06:22:27 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:61864 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261962AbVD1KWQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 06:22:16 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id D25ABE6DAB; Thu, 28 Apr 2005 11:19:42 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 08110-07; Thu, 28 Apr 2005 11:19:42 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.157.53])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id EEBD0E6DA6; Thu, 28 Apr 2005 11:19:41 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DR69j-00007Y-OF; Thu, 28 Apr 2005 11:22:03 +0100
+User-Agent: Debian Thunderbird 1.0 (X11/20050116)
+X-Accept-Language: en-us, en
+To: Pavel Machek <pavel@ucw.cz>
+In-Reply-To: <20050428085657.GA30800@elf.ucw.cz>
+X-Enigmail-Version: 0.90.0.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 09:29 +0100, David Woodhouse wrote:
-> Let us assume that C and A were already in Linus' tree (and on our web
-> page) yesterday. Thus, they should be last. The newly-pulled stuff
-> should be first -- FEDBCA.
-> 
-> I'd say "depth-first, remote parent first" but that would actually show
-> show 'A' (as a parent of D) long before it shows C. Walking of remote
-> parents should stop as soon as we hit a commit which was accessible
-> through a more local parent, rather than as soon as we hit a commit
-> which we've already printed.
+I think a lot of people on the git list would like to see this - please 
+CC :)
 
-Walk the tree once. For each commit, count the number of _children_.
-That's not hard -- each new commit you find below HEAD has one child to
-start with, then you increment that figure by one each time you find
-another path to the same commit.
+David
 
-When printing, you walk the tree depth-first, remote-parent-first. If
-you hit a commit with multiple children, decrement its count by one. If
-the count is still non-zero, ignore that commit (and its parents) and
-continue. If the count _is_ zero, then this is the "most local" path to
-the commit in question, so print it and continue to process its
-parents...
+Pavel Machek wrote:
 
-(Actually I'd probably do it by adding real pointers to the children
-instead of using a counter. Operations like convert-cache would be far
-better off working that way round, and 'cg comments' is going to need to
-do something very similar to convert-cache.)
+>Hi!
+>
+>Here's my current version of git HOWTO. I'd like your comments...
+>
+>	Kernel hacker's guide to git
+>	~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>      2005 Pavel Machek <pavel@suse.cz>
+>
+>You can get cogito at http://www.kernel.org/pub/software/scm/cogito/
+>. Compile it, and place it somewhere in $PATH. Then you can get kernel
+>by running
+>
+>mkdir clean-cg; cd clean-cg
+>cg-init rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>
+>... Do cg-update origin to pickup latest changes from Linus. You can
+>do cg-diff to see what changes you done in your local tree. cg-cancel
+>will kill any such changes, and cg-commit will make them permanent.
+>
+>To get diff between your working tree and "next tree up", do cg-diff
+>-r origin: . If you want to get the same diff but separated
+>patch-by-patch, do cg-mkpatch origin: . If you want to pull changes
+>from the "up" tree to your working tree, do cg-pull origin followed by
+>cg-merge origin.
+>
+>
+>How to set up your trees so that you can cooperate with linus
+>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+>What I did:
+>
+>Created clean-cg. Initialized straight from Linus (as above). Then I
+>created "nice" tree, good for Linus to pull from 
+>
+>mkdir /data/l/linux-good; cd /data/l/linux-good
+>cg-init /data/l/clean-cg
+>
+>and then my working tree, based on linux-good
+>
+>mkdir /data/l/linux-cg; cd /data/l/linux-cg
+>cg-init /data/l/linux-good
+>
+>. I do my work in linux-cg. If someone sends me nice patch I should
+>pass up, I apply it to linux-good with nice message and do
+>
+>cd /data/l/linux-cg; cg-pull origin; cg-merge origin
+>
+>  
+>
 
 -- 
-dwmw2
-
 
