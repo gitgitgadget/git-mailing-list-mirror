@@ -1,70 +1,72 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 18:27:54 -0400
-Message-ID: <200504281827.54553.mason@suse.com>
-References: <200504271251.00635.mason@suse.com> <200504281658.39300.mason@suse.com> <1114723987.4212.51.camel@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Built-in diff driver shows Index: line.
+Date: Thu, 28 Apr 2005 15:30:36 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504281522560.18901@ppc970.osdl.org>
+References: <7vy8b27lyf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0504281236090.18901@ppc970.osdl.org> <7vacni5z9y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 00:25:23 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 00:25:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRHQe-0001zb-Bi
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 00:24:16 +0200
+	id 1DRHQf-0001zb-Kq
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 00:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262305AbVD1W2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 18:28:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262303AbVD1W2M
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 18:28:12 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:14529 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S262298AbVD1W15 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 18:27:57 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 31B3C98A6;
-	Fri, 29 Apr 2005 00:27:57 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id D63D714ED3C; Fri, 29 Apr 2005 00:27:56 +0200 (CEST)
-To: Kay Sievers <kay.sievers@vrfy.org>
-User-Agent: KMail/1.8
-In-Reply-To: <1114723987.4212.51.camel@localhost.localdomain>
-Content-Disposition: inline
+	id S262304AbVD1W3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 18:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262301AbVD1W3I
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 18:29:08 -0400
+Received: from fire.osdl.org ([65.172.181.4]:44212 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262298AbVD1W2n (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 18:28:43 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SMSbs4019738
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 15:28:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SMSaAd015982;
+	Thu, 28 Apr 2005 15:28:36 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vacni5z9y.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 28 April 2005 17:33, Kay Sievers wrote:
-> Sure. But file-changes lists the commit:
->   c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
->
-> when asked for:
->   "drivers/usb/core/usb.c"
->
-> and that file isn't touched there. Actually it lists merge-commits which
-> are not related to the file.
 
-Ok, this is what Daniel and David were talking about.  When we've got commit 
-with multiple parents, we'll find the file at least one more time than it was 
-really changed.  Looking at the results on git web, it's easy it ignore the 
-merge sets as noise, but it would be nice if we only printed the merge set 
-when it made some change to the file the original cset being merged did not.
 
-I had misread your first mail, thinking that you had developed this 
-independently and solved these issues ;)  The problem is that if we do a true 
-depth first search, it seems like we'll have to keep a potentially unbounded 
-amount of data in order to find the first changeset that happened to create a 
-given sha1.  I'd really rather print the mergeset and let the user figure it 
-out.
+On Thu, 28 Apr 2005, Junio C Hamano wrote:
+> 
+> So I'd say we'd punt this one for now, unless somebody else has
+> a better idea.
 
-But, we're not really printing a merge set so much as we're printing the 
-complete diff of what was merged.  Is there some way to see what changes had 
-to be done in order to resolve conflicts during a merge?
+It's trivially easy to do it with a external diff helper.
 
--chris
+So you can do it with a few lines of GIT_EXTERNAL_DIFF, and the hardest 
+part is showing it in a nice format (ie do the normalization of the 
+results that diffstat does).
+
+The external diff program can _literally_ just do something like
+
+	#!/bin/sh
+	name="$1"
+	src="$2"
+	dst="$5"
+	diff "$src" "$dst" | cut -c1 | grep '[<>]' | sort | uniq -c
+
+and the output should be something like
+
+    458 <
+    104 >
+
+which means "458 lines removed, 104 lines added". Pretty-print it some, 
+and you're done.
+
+Hacky hacky,
+
+		Linus
