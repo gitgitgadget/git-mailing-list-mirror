@@ -1,54 +1,60 @@
-From: Kris Shannon <kris.shannon.kernel@gmail.com>
-Subject: RT[3/3]: Reverse lookup of SHA1 references
-Date: Thu, 28 Apr 2005 23:54:35 +1000
-Message-ID: <5d4799ae05042806544683b4c9@mail.gmail.com>
-References: <5d4799ae0504280559109cd00e@mail.gmail.com>
-Reply-To: Kris Shannon <kris.shannon.kernel@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Apr 28 15:50:54 2005
+From: "Adam J. Richter" <adam@yggdrasil.com>
+Subject: Re: The criss-cross merge case
+Date: Thu, 28 Apr 2005 22:25:01 +0800
+Message-ID: <200504281425.j3SEP1H00534@freya.yggdrasil.com>
+Cc: barkalow@iabervon.org, bram@bitconjurer.org,
+	droundry@abridgegame.org, git@vger.kernel.org, tupshin@tupshin.com
+X-From: git-owner@vger.kernel.org Thu Apr 28 16:35:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR9OG-0006kY-1s
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 15:49:16 +0200
+	id 1DRA5D-000537-EX
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 16:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262138AbVD1Nym (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 09:54:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262144AbVD1Nym
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:54:42 -0400
-Received: from zproxy.gmail.com ([64.233.162.193]:18075 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262138AbVD1Nyg convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 09:54:36 -0400
-Received: by zproxy.gmail.com with SMTP id 13so474296nzp
-        for <git@vger.kernel.org>; Thu, 28 Apr 2005 06:54:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PC6LQJx7arDyXlXVOFwZNoNeC4CtKF8M146r+hW0gXPC4L14S7FbGGbNT9nJ275fuQIAY2QZczrwNt7DVAR/XgdGOZHv7fOve4GdQKuOgBRE3TfSJ9nYSnddPSkiVc48+aoTnzNVMMfF/Aml7yq9u4j9I3oIIjAnGaNmRMh65Sg=
-Received: by 10.36.58.12 with SMTP id g12mr97865nza;
-        Thu, 28 Apr 2005 06:54:35 -0700 (PDT)
-Received: by 10.36.4.16 with HTTP; Thu, 28 Apr 2005 06:54:35 -0700 (PDT)
-To: GIT Mailing List <git@vger.kernel.org>
-In-Reply-To: <5d4799ae0504280559109cd00e@mail.gmail.com>
-Content-Disposition: inline
+	id S261948AbVD1Oiv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 10:38:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261907AbVD1Oiu
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 10:38:50 -0400
+Received: from [61.48.52.188] ([61.48.52.188]:15852 "EHLO freya.yggdrasil.com")
+	by vger.kernel.org with ESMTP id S261948AbVD1Oid (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 10:38:33 -0400
+Received: (from adam@localhost)
+	by freya.yggdrasil.com (8.11.7/8.11.7) id j3SEP1H00534;
+	Thu, 28 Apr 2005 22:25:01 +0800
+To: ry102@rz.uni-karlsruhe.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-There are a number of places where you want to find all the objects
-which reference this particular object. AIUI this is not currently an easy
-task. Some thought should be put into how to make these reverse
-lookups fast.
+On 2005-04-28, Benedikt Schmidt wrote:
+>AFAIK the paper mentioned in the GNU diff sources [1] is an improvement
+>to an earlier paper by the same author titled
+>"A File Comparison Program" - Miller, Myers - 1985.
+[...]
+>[1] http://citeseer.ist.psu.edu/myers86ond.html
 
-The other two random thoughts would benefit greatly from a relationship
-cache.
+	Monotone apparently uses a futher acceleration of that algorithm
+from the 1989 paper, also co-authored by the Myers, "An O(NP) Sequence
+Comparison Algorithm" by Sun Wu, Udi Manber, and Gene Myers.
+http://www.eecs.berkeley.edu/~gene/Papers/np_diff.pdf .  The Monotone
+implementation was apparently a port of an implementation originally
+written in Scheme by Aubrey Jaffer.
 
-Umm.... I was going to write some more,  but I've gotta go :(
+	I don't fully understand the 1989 paper, but I get the
+general impression that is a small change to the previous algorithm
+(the one in GNU diff) that might be a 30 line patch if someone
+got around to submitting it, and seems to make the code run more
+than twice as fast in practice.  One of these days, I will probably get
+around to coding up a patch to GNU diff if nobody beats me to it.
 
-More thoughts later...
+	Making diff run faster may have at least one potentially useful
+benefit for merging.  A faster diff makes it more practical run diff
+on smaller units of comparison.  I posted a note here before about
+converting the input files to diff3 to have just one character per
+line, and then undoing that transformation of the result to produce
+a character based merge that seemed to work pretty well in the
+couple of tests that I tried.
 
--- 
-Kris Shannon <kris.shannon.kernel@gmail.com>
+                    __     ______________ 
+Adam J. Richter        \ /
+adam@yggdrasil.com      | g g d r a s i l
