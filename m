@@ -1,72 +1,63 @@
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 18:47:56 +0200
-Message-ID: <1114706876.20916.18.camel@tglx.tec.linutronix.de>
+Date: Thu, 28 Apr 2005 12:08:09 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504281147500.30848-100000@iabervon.org>
 References: <200504271251.00635.mason@suse.com>
-	 <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
-	 <1114627268.20916.8.camel@tglx.tec.linutronix.de>
-	 <Pine.LNX.4.58.0504280815120.18901@ppc970.osdl.org>
-Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Chris Mason <mason@suse.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 17:43:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:03:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRBA0-00074u-8y
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 17:42:40 +0200
+	id 1DRBTR-0001bI-8u
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262157AbVD1PsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 11:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262159AbVD1PsI
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 11:48:08 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:29628
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S262157AbVD1PsE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 11:48:04 -0400
-Received: from mail.tec.linutronix.de (213-239-205-147.clients.your-server.de [213.239.205.147])
-	by mail.tglx.de (Postfix) with ESMTP id C315D65C003;
-	Thu, 28 Apr 2005 17:46:15 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 4298B28089;
-	Thu, 28 Apr 2005 17:47:58 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504280815120.18901@ppc970.osdl.org>
-X-Mailer: Evolution 2.0.4 (2.0.4-2) 
+	id S261784AbVD1QIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 12:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262016AbVD1QIO
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:08:14 -0400
+Received: from iabervon.org ([66.92.72.58]:57093 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261784AbVD1QIK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 12:08:10 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DRBYf-00004t-00; Thu, 28 Apr 2005 12:08:09 -0400
+To: Chris Mason <mason@suse.com>
+In-Reply-To: <200504271251.00635.mason@suse.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 08:24 -0700, Linus Torvalds wrote:
-> I disagree. I'm not database allergic, I just don't believe in the notion 
-> that databases solve all the worlds problems.
+On Wed, 27 Apr 2005, Chris Mason wrote:
 
-I never claimed, they did
+> I haven't seen a tool yet to find which changeset modified a given file, so 
+> I whipped up something.  The basic idea is to:
 
-> You just made creating a commit etc much slower. You now have to update 
-> per-file information that you never updated before, and look at 
-> information that git simply doesn't _care_ about. 
+What is the answer supposed to be in the presence of merges? It seems like
+you shouldn't report the merge that brought in the change, but rather
+(assuming it's available) the changeset that originally made it.
 
-I did not say, that such a fetaure should be included into git itself.
-That was never my intention.
+That is:
 
-> what? We've had that. It's called RCS/SCCS/CVS, and it's a piece of total
-> and absolute crap. Exactly because single-file revisions simply do not
-> matter.
+go through the history tree:
+  if a commit has a parent with a different version:
+    if it also has a parent with the same version as the child, ignore the
+      different parent(s) and enqueue the same parent(s)
+    otherwise, report it (for a single head, it's the original change; for
+      a merge, it merged two changes to the file)
+  otherwise, enqueue all the parents
 
-I agree that RCS is crap for distributed development, but seeing a
-change in a file in the correct context is quite helpful at times.
+Sorting by time is probably not useful, because there must be some source
+of the current version, and all paths going back, after ignoring versions
+that were replaced by it in a merge, must go back to that source, so
+depth-first search is fastest. (If there are multiple possible solutions,
+then it means that multiple people applied the same patch, and any of them
+should do).
 
-> If you want to use a database, go wild. But use it as a _cache_. Then you 
-> can build up the database of file revisions "after the fact", and always 
-> know that your database is not the real data, it's just an index, and can 
-> be thrown away and regenerated at will.
+This should be easy in C, but difficult in something that isn't generating
+the history info itself.
 
-Thats all I want to use it for. Exactly for of tracking information over
-various repos and longer time intervals.
-
-tglx
-
+	-Daniel
+*This .sig left intentionally blank*
 
