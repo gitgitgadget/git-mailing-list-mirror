@@ -1,68 +1,64 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 18:34:59 +0200
-Message-ID: <1114706099.4212.25.camel@localhost.localdomain>
-References: <200504271251.00635.mason@suse.com>
-	 <200504271423.37433.mason@suse.com>
-	 <Pine.LNX.4.58.0504271506290.18901@ppc970.osdl.org>
-	 <200504280745.05505.mason@suse.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] add a diff-files command
+Date: Thu, 28 Apr 2005 12:56:43 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0504281238130.14033@localhost.localdomain>
+References: <Pine.LNX.4.62.0504271701080.14033@localhost.localdomain>
+ <7vr7gvevpv.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.62.0504272031330.14033@localhost.localdomain>
+ <7vr7gu97xq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 18:31:52 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 18:52:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRBti-00069U-EP
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:29:54 +0200
+	id 1DRCEj-00016Y-Uo
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 18:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262163AbVD1QfJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 12:35:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262164AbVD1QfJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:35:09 -0400
-Received: from soundwarez.org ([217.160.171.123]:35484 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S262163AbVD1QfA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 12:35:00 -0400
-Received: from dhcp-113.off.vrfy.org (c196135.adsl.hansenet.de [213.39.196.135])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 7B1F419C78;
-	Thu, 28 Apr 2005 18:34:59 +0200 (CEST)
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504280745.05505.mason@suse.com>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+	id S262160AbVD1Q5A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 12:57:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262170AbVD1Q47
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 12:56:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:5805 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S262160AbVD1Q46
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 12:56:58 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IFO00DZ91QJXA@VL-MO-MR007.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 28 Apr 2005 12:56:43 -0400 (EDT)
+In-reply-to: <7vr7gu97xq.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 07:45 -0400, Chris Mason wrote:
-> On Wednesday 27 April 2005 18:19, Linus Torvalds wrote:
-> > On Wed, 27 Apr 2005, Chris Mason wrote:
-> > > So, new prog attached.  New usage:
-> > >
-> > > file-changes [-c commit_id] [-s commit_id] file ...
-> > >
-> > > -c is the commit where you want to start searching
-> > > -s is the commit where you want to stop searching
-> >
-> > Your script will do some funky stuff, because you incorrectly think that
-> > the rev-list is sorted linearly. It's not. It's sorted in a rough
-> > chronological order, but you really can't do the "last" vs "cur" thing
-> > that you do, because two commits after each other in the rev-list listing
-> > may well be from two totally different branches, so when you compare one
-> > tree against the other, you're really doing something pretty nonsensical.
+On Thu, 28 Apr 2005, Junio C Hamano wrote:
+
+> If you want to see if working tree has some junk other than
+> those listed in dontdiff, wouldn't this be sufficient?
 > 
-> One more rev that should work as you suggested Here's the example output 
-> from a cogito changeset with merges.  I print the diff-tree lines once for each 
-> matching parent and then print the commit once.  It's very primitive, but
-> hopefully some day someone will make a gui with happy clicky buttons
-> for changesets and filerevs.
+>   $ show-files --others | grep -f dontdiff
 
-Not really happy clicky, but ... :)
+Well, it would work if the dontdiff file other people are maintaining 
+was made up of regexps.  But it is made of shell wildcard patterns meant 
+to be used with the -X switch of the diff command.
 
-Look at the (history) link:
-  http://ehlo.org/~kay/gitweb.cgi?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fb3b4ebc0be618dbcc2326482a83c920d51af7de
+> Again, "checking for potentially uncommitted" files is what
+> you use show-files --others for, not show-diff.
 
-Kay
+Indeed.  And yesterday I realized that the (currently unimplemented) 
+--ignore switch to show-files, combined with the exclusion pattern list, 
+whould be more logical than teaching show-diff (which I still think is a 
+misnamer in the context of the other diff tools) about files unknown to 
+the cache.  The patch to show-files is also much smaller and logical.
 
+BTW, I don't do this out of pure entousiasm but rather trying to make my 
+own workflow with the Linux kernel source tree more efficient in the 
+context of git usage.  My pure coding entousiasm lies somewhere else.  
+
+
+Nicolas
