@@ -1,82 +1,423 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: How to get bash to shut up about SIGPIPE?
-Date: Thu, 28 Apr 2005 11:28:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] GIT: Create tar archives of tree on the fly, take two
+Date: Thu, 28 Apr 2005 20:51:46 +0200
+Message-ID: <20050428185146.GA26019@lsrfire.ath.cx>
+References: <20050428174038.GA24352@lsrfire.ath.cx> <Pine.LNX.4.58.0504281121070.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Apr 28 20:24:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Joshua T. Corbin" <jcorbin@node1.wunjo.org>,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Apr 28 20:48:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRDfN-0005e0-Az
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 20:23:14 +0200
+	id 1DRE3A-0000RO-K9
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 20:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262209AbVD1S2B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 14:28:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262189AbVD1S07
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 14:26:59 -0400
-Received: from fire.osdl.org ([65.172.181.4]:62148 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262209AbVD1S0o (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 14:26:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SIQfs4027510
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 11:26:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SIQeU8032668;
-	Thu, 28 Apr 2005 11:26:41 -0700
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262218AbVD1SxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 14:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262222AbVD1SxP
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 14:53:15 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:13977 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S262218AbVD1Svr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 14:51:47 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 9323F180; Thu, 28 Apr 2005 20:51:46 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0504281121070.18901@ppc970.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Apr 28, 2005 at 11:21:29AM -0700, Linus Torvalds wrote:
+> 
+> Yes. Mind sending in a sign-off too, and I'll apply it.
 
-Right now my major gripe with cogito is "cg-log" (which is actually the 
-only command I use right now, everything else I just do by hand with the 
-raw git archive) is that bash is being an ass about SIGPIPE, and when I 
-only look at the top part of the log, ie I do something like:
+Sure thing.  Hope it's the only thing I stupidly forgot. :)
 
-	torvalds@ppc970:~/src/cogito> git log | head
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-it spews out the ten first lines of the log, and then it spews about a 
-million lines (well, 20, but anyway) of crap:
-
-	/home/torvalds/bin/cg-log: line 87:  6338 Done                    echo -n $color$key $rest
-	      6339 Broken pipe             | sed "s/>.*/> ${pdate/+0000/$tz}/"
-	/home/torvalds/bin/cg-log: line 87:  6328 Done                    cat-file commit $commit
-	      6329 Broken pipe             | while read key rest; do
-	    case "$key" in 
-	        "author" | "committer")
-	            if [ "$key" = "author" ]; then
-	                color="$colauthor";
-	            else
-	                color="$colcommitter";
-	            fi; date=(${rest#*> }); sec=${date[0]}; tz=${date[1]}; dtz=${tz/+/}; lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec); pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"; if [ "$pdate" ]; then
-	                echo -n $color$key $rest | sed "s/>.*/> ${pdate/+0000/$tz}/"; echo $coldefault;
-	            else
-	                echo $color$key $rest $coldefault;
-	            fi
-	        ;;
-	        "")
-	            echo; sed -re '
-	                                        / 
-	*Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
-	                                        s/./    &/
-	                                '
-	        ;;
-	        *)
-	            echo $colheader$key $rest $coldefault
-	        ;;
-	    esac;
-	done
-
-which is just incredibly annoying, since it makes the ten lines I actually 
-_wanted_ to get scroll off the screen..
-
-Damn bash. What's the magic incantation that says SHUT UP!?
-
-		Linus
+Index: Makefile
+===================================================================
+--- a5d7e40207ee2bd713a15d5bc839168139055f5e/Makefile  (mode:100644 sha1:378d5ee9a24a9fb7690bfdf79fd3fde2b9563fad)
++++ 0fa216c80d3ecf45d3de1552c03d95a21f8c2a11/Makefile  (mode:100644 sha1:0b330dc3fd05253b8fd20ca4f9e98e411074868f)
+@@ -18,7 +18,7 @@
+ 	cat-file fsck-cache checkout-cache diff-tree rev-tree show-files \
+ 	check-files ls-tree merge-base merge-cache unpack-file git-export \
+ 	diff-cache convert-cache http-pull rpush rpull rev-list git-mktag \
+-	diff-tree-helper
++	diff-tree-helper tar-tree
+ 
+ all: $(PROG)
+ 
+Index: tar-tree.c
+===================================================================
+--- /dev/null  (tree:a5d7e40207ee2bd713a15d5bc839168139055f5e)
++++ 0fa216c80d3ecf45d3de1552c03d95a21f8c2a11/tar-tree.c  (mode:100644 sha1:d078cb5a8d4ab5bc2c774b889b602d179bde39b1)
+@@ -0,0 +1,363 @@
++#include <time.h>
++#include "cache.h"
++
++#define RECORDSIZE	(512)
++#define BLOCKSIZE	(RECORDSIZE * 20)
++
++static const char *tar_tree_usage = "tar-tree <key> [basedir]";
++
++static char block[BLOCKSIZE];
++static unsigned long offset;
++
++static const char *basedir;
++static time_t archive_time;
++
++struct path_prefix {
++	struct path_prefix *prev;
++	const char *name;
++};
++
++/* tries hard to write, either succeeds or dies in the attempt */
++static void reliable_write(void *buf, unsigned long size)
++{
++	while (size > 0) {
++		long ret = write(1, buf, size);
++		if (ret < 0) {
++			if (errno == EAGAIN)
++				continue;
++			if (errno == EPIPE)
++				exit(0);
++			die("tar-tree: %s", strerror(errno));
++		} else if (!ret) {
++			die("tar-tree: disk full?");
++		}
++		size -= ret;
++		buf += ret;
++	}
++}
++
++/* writes out the whole block, but only if it is full */
++static void write_if_needed(void)
++{
++	if (offset == BLOCKSIZE) {
++		reliable_write(block, BLOCKSIZE);
++		offset = 0;
++	}
++}
++
++/*
++ * The end of tar archives is marked by 1024 nul bytes and after that
++ * follows the rest of the block (if any).
++ */
++static void write_trailer(void)
++{
++	memset(block + offset, 0, RECORDSIZE);
++	offset += RECORDSIZE;
++	write_if_needed();
++	memset(block + offset, 0, RECORDSIZE);
++	offset += RECORDSIZE;
++	write_if_needed();
++	if (offset) {
++		memset(block + offset, 0, BLOCKSIZE - offset);
++		reliable_write(block, BLOCKSIZE);
++		offset = 0;
++	}
++}
++
++/*
++ * queues up writes, so that all our write(2) calls write exactly one
++ * full block; pads writes to RECORDSIZE
++ */
++static void write_blocked(void *buf, unsigned long size)
++{
++	unsigned long tail;
++
++	if (offset) {
++		unsigned long chunk = BLOCKSIZE - offset;
++		if (size < chunk)
++			chunk = size;
++		memcpy(block + offset, buf, chunk);
++		size -= chunk;
++		offset += chunk;
++		buf += chunk;
++		write_if_needed();
++	}
++	while (size >= BLOCKSIZE) {
++		reliable_write(buf, BLOCKSIZE);
++		size -= BLOCKSIZE;
++		buf += BLOCKSIZE;
++	}
++	if (size) {
++		memcpy(block + offset, buf, size);
++		buf += size;
++		offset += size;
++	}
++	tail = offset % RECORDSIZE;
++	if (tail)  {
++		memset(block + offset, 0, RECORDSIZE - tail);
++		offset += RECORDSIZE - tail;
++	}
++	write_if_needed();
++}
++
++static void append_string(char **p, const char *s)
++{
++	unsigned int len = strlen(s);
++	memcpy(*p, s, len);
++	*p += len;
++}
++
++static void append_char(char **p, char c)
++{
++	**p = c;
++	*p += 1;
++}
++
++static void append_long(char **p, long n)
++{
++	int len = sprintf(*p, "%ld", n);
++	*p += len;
++}
++
++static void append_path_prefix(char **buffer, struct path_prefix *prefix)
++{
++	if (!prefix)
++		return;
++	append_path_prefix(buffer, prefix->prev);
++	append_string(buffer, prefix->name);
++	append_char(buffer, '/');
++}
++
++static unsigned int path_prefix_len(struct path_prefix *prefix)
++{
++	if (!prefix)
++		return 0;
++	return path_prefix_len(prefix->prev) + strlen(prefix->name) + 1;
++}
++
++static void append_path(char **p, int is_dir, const char *basepath,
++                        struct path_prefix *prefix, const char *path)
++{
++	if (basepath) {
++		append_string(p, basepath);
++		append_char(p, '/');
++	}
++	append_path_prefix(p, prefix);
++	append_string(p, path);
++	if (is_dir)
++		append_char(p, '/');
++}
++
++static unsigned int path_len(int is_dir, const char *basepath,
++                             struct path_prefix *prefix, const char *path)
++{
++	unsigned int len = 0;
++	if (basepath)
++		len += strlen(basepath) + 1;
++	len += path_prefix_len(prefix) + strlen(path);
++	if (is_dir)
++		len++;
++	return len;
++}
++
++static void write_header(const char *, const char *, struct path_prefix *,
++                         const char *, unsigned int, unsigned long);
++
++/* stores a pax extended header directly in the block buffer */
++static void write_extended_header(const char *headerfilename, int is_dir,
++                                  const char *basepath,
++                                  struct path_prefix *prefix,
++                                  const char *path, unsigned int namelen)
++{
++	char *records, *p;
++	unsigned int size = 1 + 6 + namelen + 1;
++	if (size > 9)
++		size++;
++	if (size > 99)
++		size++;
++	if (size > RECORDSIZE)
++		die("tar-tree: extended header too big, wtf?");
++	write_header(NULL, NULL, NULL, headerfilename, 0100600, size);
++
++	records = block + offset;
++	memset(records, 0, RECORDSIZE);
++	offset += RECORDSIZE;
++	p = records;
++	append_long(&p, size);
++	append_string(&p, " path=");
++	append_path(&p, is_dir, basepath, prefix, path);
++	append_char(&p, '\n');
++	write_if_needed();
++}
++
++/* stores a ustar header directly in the block buffer */
++static void write_header(const char *sha1, const char *basepath,
++                         struct path_prefix *prefix, const char *path,
++                         unsigned int mode, unsigned long size)
++{
++	unsigned int namelen; 
++	char *p, *header = NULL;
++	unsigned int checksum = 0;
++	int i;
++
++	namelen = path_len(S_ISDIR(mode), basepath, prefix, path);
++	if (namelen > 500) {
++		die("tar-tree: name too log of object %s\n", sha1_to_hex(sha1));
++	} else if (namelen > 100) {
++		char *sha1_hex = sha1_to_hex(sha1);
++		char headerfilename[51];
++		sprintf(headerfilename, "%s.paxheader", sha1_hex);
++		/* the extended header must be written before the normal one */
++		write_extended_header(headerfilename, S_ISDIR(mode), basepath,
++				      prefix, path, namelen);
++
++		header = block + offset;
++		memset(header, 0, RECORDSIZE);
++		offset += RECORDSIZE;
++		sprintf(header, "%s.data", sha1_hex);
++	} else {
++		header = block + offset;
++		memset(header, 0, RECORDSIZE);
++		offset += RECORDSIZE;
++		p = header;
++		append_path(&p, S_ISDIR(mode), basepath, prefix, path);
++	}
++
++	if (S_ISDIR(mode))
++		mode |= 0755;	/* GIT doesn't store permissions of dirs */
++	sprintf(&header[100], "%07o", mode & 07777);
++
++	/* XXX: should we provide more meaningful info here? */
++	sprintf(&header[108], "%07o", 0);	/* uid */
++	sprintf(&header[116], "%07o", 0);	/* gid */
++	strncpy(&header[265], "git", 31);	/* uname */
++	strncpy(&header[297], "git", 31);	/* gname */
++
++	sprintf(&header[124], "%011lo", S_ISDIR(mode) ? 0 : size);
++	sprintf(&header[136], "%011lo", archive_time);
++
++	/* typeflag */
++	if (!sha1)
++		header[156] = 'x';	/* extended header */
++	else
++		header[156] = S_ISDIR(mode) ? '5' : '0';
++
++	memcpy(&header[257], "ustar", 6);
++	memcpy(&header[263], "00", 2);
++
++	printf(&header[329], "%07o", 0);	/* devmajor */
++	printf(&header[337], "%07o", 0);	/* devminor */
++
++	memset(&header[148], ' ', 8);
++	for (i = 0; i < RECORDSIZE; i++)
++		checksum += header[i];
++	sprintf(&header[148], "%07o", checksum & 0x1fffff);
++
++	write_if_needed();
++}
++
++static void traverse_tree(void *buffer, unsigned long size,
++			  struct path_prefix *prefix)
++{
++	struct path_prefix this_prefix;
++	this_prefix.prev = prefix;
++
++	while (size) {
++		int namelen = strlen(buffer)+1;
++		void *eltbuf;
++		char elttype[20];
++		unsigned long eltsize;
++		unsigned char *sha1 = buffer + namelen;
++		char *path = strchr(buffer, ' ') + 1;
++		unsigned int mode;
++
++		if (size < namelen + 20 || sscanf(buffer, "%o", &mode) != 1)
++			die("corrupt 'tree' file");
++		buffer = sha1 + 20;
++		size -= namelen + 20;
++
++		eltbuf = read_sha1_file(sha1, elttype, &eltsize);
++		if (!eltbuf)
++			die("cannot read %s", sha1_to_hex(sha1));
++		write_header(sha1, basedir, prefix, path, mode, eltsize);
++		if (!strcmp(elttype, "tree")) {
++			this_prefix.name = path;
++			traverse_tree(eltbuf, eltsize, &this_prefix);
++		} else if (!strcmp(elttype, "blob")) {
++			write_blocked(eltbuf, eltsize);
++		}
++		free(eltbuf);
++	}
++}
++
++/* get commit time from committer line of commit object */
++time_t commit_time(const unsigned char *sha1)
++{
++        char type[20];
++        void *buffer;
++        unsigned long size;
++	time_t result = 0;
++
++        buffer = read_sha1_file(sha1, type, &size);
++	if (buffer) {
++		char *p = buffer;
++		while (size > 0) {
++			char *endp = memchr(p, '\n', size);
++			if (!endp || endp == p)
++				break;
++			*endp = '\0';
++			if (endp - p > 10 && !memcmp(p, "committer ", 10)) {
++				char *nump = strrchr(p, '>');
++				if (!nump)
++					break;
++				nump++;
++				result = strtoul(nump, &endp, 10);
++				if (*endp != ' ')
++					result = 0;
++				break;
++			}
++			size -= endp - p - 1;
++			p = endp + 1;
++		}
++		free(buffer);
++	}
++	return result;
++}
++
++int main(int argc, char **argv)
++{
++	unsigned char sha1[20];
++	void *buffer;
++	unsigned long size;
++	unsigned char tree_sha1[20];
++
++	switch (argc) {
++	case 3:
++		basedir = argv[2];
++		/* FALLTHROUGH */
++	case 2:
++		if (get_sha1_hex(argv[1], sha1) < 0)
++			usage(tar_tree_usage);
++		break;
++	default:
++		usage(tar_tree_usage);
++	}
++
++	sha1_file_directory = getenv(DB_ENVIRONMENT);
++	if (!sha1_file_directory)
++		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
++
++	buffer = read_tree_with_tree_or_commit_sha1(sha1, &size, tree_sha1);
++	if (!buffer)
++		die("unable to read sha1 file");
++	if (memcmp(sha1, tree_sha1, 20))	/* is sha1 a commit object? */
++		archive_time = commit_time(sha1);
++	if (!archive_time)
++		archive_time = time(NULL);
++	if (basedir)
++		write_header("0", NULL, NULL, basedir, 040755, 0);
++	traverse_tree(buffer, size, NULL);
++	free(buffer);
++	write_trailer();
++	return 0;
++}
