@@ -1,95 +1,59 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: I'm missing isofs.h
-Date: Thu, 28 Apr 2005 09:52:44 +0200
-Message-ID: <20050428075244.GE8612@pasky.ji.cz>
-References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427235115.GN22956@pasky.ji.cz> <Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org> <20050428003246.GV22956@pasky.ji.cz> <7vhdhra2sg.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: kernel.org now has gitweb installed
+Date: Thu, 28 Apr 2005 10:10:05 +0200
+Message-ID: <20050428081005.GG8612@pasky.ji.cz>
+References: <42703E79.8050808@zytor.com> <1114673723.12012.324.camel@baythorne.infradead.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Andrew Morton <akpm@osdl.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 09:50:01 2005
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 10:08:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR3lz-0005P6-7e
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 09:49:23 +0200
+	id 1DR43d-0007QX-Jf
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 10:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261784AbVD1HyB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 03:54:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261620AbVD1HyB
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 03:54:01 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:63669 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261784AbVD1Hww (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 03:52:52 -0400
-Received: (qmail 16721 invoked by uid 2001); 28 Apr 2005 07:52:44 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S261922AbVD1IMn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 04:12:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261959AbVD1IM3
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 04:12:29 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:23222 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261922AbVD1IKK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 04:10:10 -0400
+Received: (qmail 17939 invoked by uid 2001); 28 Apr 2005 08:10:05 -0000
+To: David Woodhouse <dwmw2@infradead.org>
 Content-Disposition: inline
-In-Reply-To: <7vhdhra2sg.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <1114673723.12012.324.camel@baythorne.infradead.org>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 28, 2005 at 07:27:59AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> PB> Actually, I can't; the patch generator is not on par with mine yet.
-> PB> It does not show modes and does not indicate file adds/removals by
-> PB> /dev/null - basically, I need something cg-patch can eat (and it should
-> PB> be backwards compatible). I think throwing the sha1 hashes away will not
-> PB> harm; I got used to the Index: field and === marker, but I don't care if
-> PB> I loose it.
+Dear diary, on Thu, Apr 28, 2005 at 09:35:23AM CEST, I got a letter
+where David Woodhouse <dwmw2@infradead.org> told me that...
+> On Wed, 2005-04-27 at 18:38 -0700, H. Peter Anvin wrote:
+> > http://www.kernel.org/git/
 > 
-> I've looked at what cg-Xdiffdo does.  From the above paragraph,
-> I sense that it does more than what cg-patch requires, so I took
-> a look at cg-patch, too.  
+> Looks like the ordering is wrong. A chronological sort means that
+> commits which were made three weeks ago, but which Linus only pulled
+> yesterday, do not show up at the top of the tree.
 
-Yes; that was what the last sentence was about. ;-)
+  Linus                     ASM (Anonymous Subsystem Maintainer)
 
-> Can you help me verify if I understand the requirements cg-patch
-> has on its input correctly?
-> 
->  - Follow the convention of showing newly added files with
->    "--- /dev/null" and removed files with "+++ /dev/null";
+    |------------------------.
+   A|                        |B
+    |                        |
+    |                        \-------------\
+    |                        :             |
+    \------------------------\             |E
+   C|                        |D            |
+    |                        /-------------/
+    |                        |F
+    /------------------------/
 
-Yes.
-
->  - Label matches this Perl regexp:
-> 
->      m|^(---|\+\+\+)\s+[^/]+\/(\S+)\s+.*mode:([0-7]{3,}).*/|
-> 
->    and you only care about sign ($1), filename ($2) and mode ($3).
-
-Yes..
-
->  (modified files)
->  --- a/fs/ext3/Makefile  (mode:0644)
->  +++ b/fs/ext3/Makefile  (mode:0664)
-> 
->  (deleted files)
->  --- a/fs/ext3/Makefile  (mode:0644)
->  +++ /dev/null
-> 
->  (added files)
->  --- /dev/null
->  +++ b/fs/ext3/Makefile  (mode:0644)
-> 
-> Is my understanding correct?  If so it should not be too much
-> work to generate something like it from within the builtin
-> stuff.
-
-Yes, perfectly.
-
-> Provided if that is what the kernel folks can live with (I do
-> see why the tool wants the mode bits, but it is unusual to see
-> non-timestamp strings after filenames).
-
-There's no reason not to get the timestamps too if you can; just put
-them after the attributes. They aren't in the diff now either.
-
-I need the mode bits to set the mode right, surprisingly. :-) Yes, in
-part it is a leftover from the old times when we didn't just track the
-execute bit; I don't know if it is worth changing this.
+How would you show that? F E D C B A? F D C A E B?
 
 -- 
 				Petr "Pasky" Baudis
