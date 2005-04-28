@@ -1,67 +1,46 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: diff against a tag ?
-Date: Thu, 28 Apr 2005 14:01:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
-References: <20050428200953.GD8514@redhat.com> <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] add a diff-files command (revised and cleaned up)
+Date: Thu, 28 Apr 2005 14:04:47 -0700
+Message-ID: <7vis267guo.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0504272239420.14033@localhost.localdomain>
+	<Pine.LNX.4.58.0504280950340.18901@ppc970.osdl.org>
+	<Pine.LNX.4.62.0504281327520.14033@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dave Jones <davej@redhat.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:57:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:01:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRG3d-0000o8-ID
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:56:25 +0200
+	id 1DRG6l-0001FD-9a
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262244AbVD1VBU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 17:01:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262272AbVD1VBU
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:01:20 -0400
-Received: from fire.osdl.org ([65.172.181.4]:33940 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262244AbVD1U76 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:59:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SKxfs4011336
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 13:59:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SKxe0g009333;
-	Thu, 28 Apr 2005 13:59:41 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262277AbVD1VE6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 17:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVD1VE6
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:04:58 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64466 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262277AbVD1VEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 17:04:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050428210449.IBVO7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Apr 2005 17:04:49 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0504281327520.14033@localhost.localdomain> (Nicolas
+ Pitre's message of "Thu, 28 Apr 2005 13:35:23 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
+NP> What about this patch then?
+NP> =====
+NP> Give show-files the ability to process exclusion pattern.
 
-On Thu, 28 Apr 2005, Junio C Hamano wrote:
-> 
-> Depends on your definition of today, but with the patch below I
-> sent today, you can say "diff-tree -p $tag $(cat .git/HEAD)".
-
-I think Dave was wondering how to _find_ the tag in the first place, which 
-is a different issue.
-
-Right now fsck is the only thing that reports tags that aren't referenced 
-some other way. Once you know the tag, things are easy - even without 
-Junio's patch you can just do
-
-	object=$(cat-file tag $tag | sed 's/object //;q')
-
-and then you can just do
-
-	diff-tree $object $(cat .git/HEAD)
-
-or whatever you want to do.
-
-Dave: do a "fsck --tags" in your tree, and it will talk about the tags it
-finds. Then you can create files like .git/refs/tags/v2.6.12-rc2 that
-contain pointers to those tags..
-
-		Linus
+I just tried this, and I like it.  Thanks!
 
