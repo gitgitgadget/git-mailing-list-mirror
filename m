@@ -1,76 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: diff against a tag ?
-Date: Thu, 28 Apr 2005 16:27:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504281619080.18901@ppc970.osdl.org>
-References: <20050428200953.GD8514@redhat.com>  <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
-  <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
- <118833cc05042816141ba672a4@mail.gmail.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: I'm missing isofs.h
+Date: Thu, 28 Apr 2005 19:39:04 -0400
+Message-ID: <42717418.6050409@dwheeler.com>
+References: <20050426214338.32e9ac27.akpm@osdl.org> <20050427235115.GN22956@pasky.ji.cz> <Pine.LNX.4.58.0504271708550.18901@ppc970.osdl.org> <20050428003246.GV22956@pasky.ji.cz> <7vhdhra2sg.fsf@assigned-by-dhcp.cox.net> <20050428075244.GE8612@pasky.ji.cz>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Dave Jones <davej@redhat.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 01:20:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 01:32:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRIJD-0007Po-4e
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 01:20:39 +0200
+	id 1DRITe-0008Hh-Pg
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 01:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262333AbVD1X0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 19:26:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262334AbVD1X0K
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 19:26:10 -0400
-Received: from fire.osdl.org ([65.172.181.4]:41933 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262333AbVD1X0D (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 19:26:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SNPos4025570
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 16:25:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SNPnMc019217;
-	Thu, 28 Apr 2005 16:25:49 -0700
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc05042816141ba672a4@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262337AbVD1Xgv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 19:36:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262339AbVD1Xgv
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 19:36:51 -0400
+Received: from aibo.runbox.com ([193.71.199.94]:47316 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S262337AbVD1Xgm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 19:36:42 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DRIYd-0003cw-GZ; Fri, 29 Apr 2005 01:36:35 +0200
+Received: from [70.18.249.32] (helo=[192.168.2.73])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DRIYd-0007e0-3g; Fri, 29 Apr 2005 01:36:35 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050428075244.GE8612@pasky.ji.cz>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Thu, 28 Apr 2005, Morten Welinder wrote:
+Petr Baudis wrote:
+> There's no reason not to get the timestamps too if you can; just put
+> them after the attributes. They aren't in the diff now either.
 > 
-> Which begs the question: why wasn't the type of the object made part of the
-> file name?
+> I need the mode bits to set the mode right, surprisingly. :-) Yes, in
+> part it is a leftover from the old times when we didn't just track the
+> execute bit; I don't know if it is worth changing this.
 
-Because it would just have complicated the code and made it less flexible.
+Actually, I like having the full mode bits in there.
+"git" actually can be useful as a more general capability for
+keeping careful track of an entire tree that's NOT just source code
+(e.g., your entire home directory tree, so you can replicate it
+across machines in its current state).
 
-As it is, we can open an object by just knowing its name, and by "name" I 
-mean the true one, the SHA1. No need for "open_blob()" or anything like 
-that. You just do
+I can easily imagine an option flag
+that stores "modes as they really are", and another that says
+"use the modes as they are stored".  Add some support for symlinks,
+and you could do quite a bit. Timestamps would be ducky,
+too, for the same reason.
 
-	sha1_file_name(const unsigned char *sha1)
-
-to find out what the filesystem name of the object is, and this works for 
-_any_ object.
-
-And thanks to this, we can pass in a sha1 _without_ knowing whether it's a 
-tree or a commit (or a tag) and just open in. Then, when we figure out 
-that it was a commit rather than a tree, we look up the tree instead. 
-
-Being able to open files _without_ knowing what they are is hugely useful. 
-The user passes you a name, and you can just do the right thing. 
-
-Besides, I _still_ don't want scripts mucking around with the objects
-directly. Remember? They're encrypted with my super-sekrit zlib encoder
-ring, just because people shouldn't be mucking around in them.
-
-Trust me, when the object directories have a million files, you'll thank
-me. You do _not_ want to do a readdir and try to figure out tags that way. 
-You want to do it the way I _force_ you to do it, ie the right way.
-
-		Linus
+--- David A. Wheeler
