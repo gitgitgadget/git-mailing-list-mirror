@@ -1,59 +1,76 @@
-From: Morten Welinder <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: diff against a tag ?
-Date: Thu, 28 Apr 2005 19:14:22 -0400
-Message-ID: <118833cc05042816141ba672a4@mail.gmail.com>
-References: <20050428200953.GD8514@redhat.com>
-	 <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+Date: Thu, 28 Apr 2005 16:27:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504281619080.18901@ppc970.osdl.org>
+References: <20050428200953.GD8514@redhat.com>  <7vpswe7hvj.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
+ <118833cc05042816141ba672a4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, Dave Jones <davej@redhat.com>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 01:09:14 2005
+X-From: git-owner@vger.kernel.org Fri Apr 29 01:20:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRI81-0006M6-98
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 01:09:05 +0200
+	id 1DRIJD-0007Po-4e
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 01:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262276AbVD1XOZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 19:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262311AbVD1XOZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 19:14:25 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:4915 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262276AbVD1XOW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 19:14:22 -0400
-Received: by rproxy.gmail.com with SMTP id a41so455793rng
-        for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pNRQ+cFy7ZdrVhV+xx9sPpKy9Z797/ekJK1UWZuBnrKNGDdqprQENAB2k3G8O4mlbaebN3tFnAP7kq0NfGB5bnlDN7V6gr3mDj8GKet/lsiRf6UtCtpXPUn+S4gBAl7c6ZoAImkGSfQF1N/5Zrdpsy01KvxxJMUMkUqBLw7rU24=
-Received: by 10.38.74.73 with SMTP id w73mr2963514rna;
-        Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Thu, 28 Apr 2005 16:14:22 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504281358060.18901@ppc970.osdl.org>
-Content-Disposition: inline
+	id S262333AbVD1X0K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 19:26:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262334AbVD1X0K
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 19:26:10 -0400
+Received: from fire.osdl.org ([65.172.181.4]:41933 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262333AbVD1X0D (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 19:26:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SNPos4025570
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 16:25:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SNPnMc019217;
+	Thu, 28 Apr 2005 16:25:49 -0700
+To: Morten Welinder <mwelinder@gmail.com>
+In-Reply-To: <118833cc05042816141ba672a4@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Right now fsck is the only thing that reports tags that aren't referenced
-> some other way. 
 
-Which begs the question: why wasn't the type of the object made part of the
-file name?
 
-commit-babe1234...
-tag-deadbeef5678...
-tree-c0ca4321...
-blob-cafe8765...
+On Thu, 28 Apr 2005, Morten Welinder wrote:
+> 
+> Which begs the question: why wasn't the type of the object made part of the
+> file name?
 
-That would have simplied scripts a good deal and listing all tags
-would be trivial.
+Because it would just have complicated the code and made it less flexible.
 
-Morten
+As it is, we can open an object by just knowing its name, and by "name" I 
+mean the true one, the SHA1. No need for "open_blob()" or anything like 
+that. You just do
+
+	sha1_file_name(const unsigned char *sha1)
+
+to find out what the filesystem name of the object is, and this works for 
+_any_ object.
+
+And thanks to this, we can pass in a sha1 _without_ knowing whether it's a 
+tree or a commit (or a tag) and just open in. Then, when we figure out 
+that it was a commit rather than a tree, we look up the tree instead. 
+
+Being able to open files _without_ knowing what they are is hugely useful. 
+The user passes you a name, and you can just do the right thing. 
+
+Besides, I _still_ don't want scripts mucking around with the objects
+directly. Remember? They're encrypted with my super-sekrit zlib encoder
+ring, just because people shouldn't be mucking around in them.
+
+Trust me, when the object directories have a million files, you'll thank
+me. You do _not_ want to do a readdir and try to figure out tags that way. 
+You want to do it the way I _force_ you to do it, ie the right way.
+
+		Linus
