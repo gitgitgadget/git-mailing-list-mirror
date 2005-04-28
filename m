@@ -1,40 +1,49 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: kernel.org now has gitweb installed
-Date: Wed, 27 Apr 2005 18:38:01 -0700
-Message-ID: <42703E79.8050808@zytor.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 21:51:06 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504272143260.30848-100000@iabervon.org>
+References: <427026AB.4070809@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Apr 28 03:32:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 03:47:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQxte-0005Sp-IN
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 03:32:54 +0200
+	id 1DQy7F-0006Sz-QN
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 03:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261610AbVD1BiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 21:38:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261644AbVD1BiM
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 21:38:12 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:12675 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261610AbVD1BiK
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Apr 2005 21:38:10 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3S1c76U005921
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 27 Apr 2005 18:38:07 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261669AbVD1Bvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 21:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261678AbVD1Bvt
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 21:51:49 -0400
+Received: from iabervon.org ([66.92.72.58]:64518 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261669AbVD1BvL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 21:51:11 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DQyBG-0002XO-00; Wed, 27 Apr 2005 21:51:06 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <427026AB.4070809@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-http://www.kernel.org/git/
+On Wed, 27 Apr 2005, H. Peter Anvin wrote:
 
-	-hpa
+> There are a fair number of tools one may want that deal with reachability.
+
+Do you agree that installing a new libgit.so when you want to apply such a
+tool to a new tag is sufficient? If the library is shared, and everything
+for parsing the objects (to the point of getting struct object filled
+out) is in the library, and you want to have some tool able to validate or
+use any new tag that you want reachability-only tools to process, not
+having a standard header proto-format for future tags isn't a problem,
+since you'll get upgrades to the parser portion of all of your tools
+together.
+
+	-Daniel
+*This .sig left intentionally blank*
+
+
