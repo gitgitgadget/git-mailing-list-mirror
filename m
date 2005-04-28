@@ -1,82 +1,105 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [1'/5] Mark blobs as parsed when they're actually parsed
-Date: Thu, 28 Apr 2005 01:58:08 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504280155320.30848-100000@iabervon.org>
-References: <Pine.LNX.4.21.0504280131400.30848-100000@iabervon.org>
+Subject: [3'/5] Add function to parse an object of unspecified type (take 2)
+Date: Thu, 28 Apr 2005 02:01:56 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0504280158230.30848-100000@iabervon.org>
+References: <Pine.LNX.4.21.0504280106540.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 07:56:35 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 07:57:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR20i-0002gn-Fh
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 07:56:28 +0200
+	id 1DR21S-0002ka-07
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 07:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262145AbVD1GBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 02:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261493AbVD1GAM
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 02:00:12 -0400
-Received: from iabervon.org ([66.92.72.58]:33285 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262145AbVD1F6K (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 01:58:10 -0400
+	id S261493AbVD1GCa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 02:02:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262147AbVD1GCa
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 02:02:30 -0400
+Received: from iabervon.org ([66.92.72.58]:38661 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261493AbVD1GB5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 02:01:57 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DR22K-0003SL-00; Thu, 28 Apr 2005 01:58:08 -0400
+	id 1DR260-0003Sf-00; Thu, 28 Apr 2005 02:01:56 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.21.0504280131400.30848-100000@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0504280106540.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This eliminates the special case for blobs versus other types of
-objects. Now the scheme is entirely regular and I won't introduce stupid
-bugs. (And fsck-cache doesn't have to do the do-nothing parse)
+This adds a function that parses an object from the database when we have
+to look up its actual type. It also checks the hash of the file, due to
+its heritage as part of fsck-cache.
 
 Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
-Index: blob.c
+Index: object.c
 ===================================================================
---- 89fdfd09b281fdf5071bc13a30ef683bd6851b61/blob.c  (mode:100644 sha1:3d99b93f020d84c5410c2b1056f2d7446b647d1e)
-+++ bcb43fecd82fa6f851e266b7e3873973068d51f3/blob.c  (mode:100644 sha1:d4af4a309433744d2fe819886d66741ab016f62b)
-@@ -14,10 +14,28 @@
- 		ret->object.type = blob_type;
- 		return ret;
+--- bcb43fecd82fa6f851e266b7e3873973068d51f3/object.c  (mode:100644 sha1:91bbc6e5e2eadfb0a66b14d992eac260d07267f8)
++++ 52505514b78c9bd77fcd701663c1967919d1cec3/object.c  (mode:100644 sha1:ca4af8fa2dc0672b92310a3ebdd4d14bf070dd69)
+@@ -1,5 +1,9 @@
+ #include "object.h"
++#include "blob.h"
++#include "tree.h"
++#include "commit.h"
+ #include "cache.h"
++#include "tag.h"
+ #include <stdlib.h>
+ #include <string.h>
+ 
+@@ -94,3 +98,39 @@
+ 		p = p->next;
  	}
--	if (obj->parsed && obj->type != blob_type) {
-+	if (obj->type != blob_type) {
- 		error("Object %s is a %s, not a blob", 
- 		      sha1_to_hex(sha1), obj->type);
- 		return NULL;
- 	}
- 	return (struct blob *) obj;
  }
 +
-+int parse_blob(struct blob *item)
++struct object *parse_object(unsigned char *sha1)
 +{
-+        char type[20];
-+        void *buffer;
-+        unsigned long size;
-+        if (item->object.parsed)
-+                return 0;
-+        item->object.parsed = 1;
-+        buffer = read_sha1_file(item->object.sha1, type, &size);
-+        if (!buffer)
-+                return error("Could not read %s",
-+                             sha1_to_hex(item->object.sha1));
-+        if (strcmp(type, blob_type))
-+                return error("Object %s not a blob",
-+                             sha1_to_hex(item->object.sha1));
-+	return 0;
++	unsigned long mapsize;
++	void *map = map_sha1_file(sha1, &mapsize);
++	if (map) {
++		char type[100];
++		unsigned long size;
++		void *buffer = unpack_sha1_file(map, mapsize, type, &size);
++		if (!buffer)
++			return NULL;
++		if (check_sha1_signature(sha1, buffer, size, type) < 0)
++			printf("sha1 mismatch %s\n", sha1_to_hex(sha1));
++		munmap(map, mapsize);
++		if (!strcmp(type, "blob")) {
++			struct blob *ret = lookup_blob(sha1);
++			parse_blob(ret);
++			return &ret->object;
++		} else if (!strcmp(type, "tree")) {
++			struct tree *ret = lookup_tree(sha1);
++			parse_tree(ret);
++			return &ret->object;
++		} else if (!strcmp(type, "commit")) {
++			struct commit *ret = lookup_commit(sha1);
++			parse_commit(ret);
++			return &ret->object;
++		} else if (!strcmp(type, "tag")) {
++			struct tag *ret = lookup_tag(sha1);
++			parse_tag(ret);
++			return &ret->object;
++		} else {
++			return NULL;
++		}
++	}
++	return NULL;
 +}
-Index: blob.h
+Index: object.h
 ===================================================================
---- 89fdfd09b281fdf5071bc13a30ef683bd6851b61/blob.h  (mode:100644 sha1:5cbf6d65ee88e1e0c0f1153af4aa7f80c3c48c16)
-+++ bcb43fecd82fa6f851e266b7e3873973068d51f3/blob.h  (mode:100644 sha1:4afad0f067e1979d7ccc4778e254cce6962ad136)
-@@ -11,4 +11,6 @@
+--- bcb43fecd82fa6f851e266b7e3873973068d51f3/object.h  (mode:100644 sha1:bc607fd55f6ce4e56ce87766369b5d4d55ec79af)
++++ 52505514b78c9bd77fcd701663c1967919d1cec3/object.h  (mode:100644 sha1:d53a35a4d7321b5ec970103208ac576f9f722dff)
+@@ -22,6 +22,9 @@
  
- struct blob *lookup_blob(unsigned char *sha1);
+ void created_object(unsigned char *sha1, struct object *obj);
  
-+int parse_blob(struct blob *item);
++/** Returns the object, having parsed it to find out what it is. **/
++struct object *parse_object(unsigned char *sha1);
 +
- #endif /* BLOB_H */
+ void add_ref(struct object *refer, struct object *target);
+ 
+ void mark_reachable(struct object *obj, unsigned int mask);
 
