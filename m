@@ -1,54 +1,74 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: git pull on ia64 linux tree
-Date: Thu, 28 Apr 2005 02:33:43 +0200
-Message-ID: <20050428003342.GW22956@pasky.ji.cz>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035B31D9@scsmsx401.amr.corp.intel.com> <Pine.LNX.4.58.0504271525520.18901@ppc970.osdl.org> <20050427225821.GI22956@pasky.ji.cz> <Pine.LNX.4.58.0504271632060.18901@ppc970.osdl.org> <20050428000729.GT22956@pasky.ji.cz> <Pine.LNX.4.58.0504271719380.18901@ppc970.osdl.org>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 20:45:01 -0400
+Message-ID: <4270320D.5090708@dwheeler.com>
+References: <426F2671.1080105@zytor.com> <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org> <426FD3EE.5000404@zytor.com> <Pine.LNX.4.58.0504271154470.18901@ppc970.osdl.org> <426FF8C4.8080809@zytor.com> <Pine.LNX.4.58.0504271352110.18901@ppc970.osdl.org>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 02:28:47 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 02:37:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQwtA-0008Ia-1u
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 02:28:20 +0200
+	id 1DQx1q-0000cj-Qw
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 02:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262124AbVD1Adp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 20:33:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262125AbVD1Adp
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 20:33:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28078 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262124AbVD1Ado (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 20:33:44 -0400
-Received: (qmail 2039 invoked by uid 2001); 28 Apr 2005 00:33:43 -0000
+	id S262128AbVD1Amm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 20:42:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262129AbVD1Amm
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 20:42:42 -0400
+Received: from aibo.runbox.com ([193.71.199.94]:8079 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S262128AbVD1Amk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 20:42:40 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DQx6x-0002gg-A0; Thu, 28 Apr 2005 02:42:35 +0200
+Received: from [70.18.249.32] (helo=[192.168.2.73])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DQx6w-0000WD-Os; Thu, 28 Apr 2005 02:42:35 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504271719380.18901@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <Pine.LNX.4.58.0504271352110.18901@ppc970.osdl.org>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 28, 2005 at 02:21:19AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
+Linus Torvalds wrote:
 > 
+> On Wed, 27 Apr 2005, H. Peter Anvin wrote:
 > 
-> On Thu, 28 Apr 2005, Petr Baudis wrote:
-> > 
-> > Hmm, doesn't the three-way read-tree -m take care of that? Then it
-> > should hit
+>>I know that.  However, is that going to be true for all versions of the 
+>>repository format over all time?  If so, the repository format is brittle.
 > 
-> Yes, you're right, I didn't think about the fact that the helper script 
-> actually does the checkout for the clashing files it merges.
-> 
-> (Which is not really nice, because it means that some files get updated 
-> and others don't, depending on how they were merged, but whatever..)
+> I agree, it's brittle by design, exactly because I think it's very 
+> important not to allow any variations.
 
-We always do checkout-cache -f -a after we do merge-cache, so it should
-end up in a consistent state.
+In the short term, not allowing any variations is probably a
+good thing, it'll winnow out mistakes.  Creating a format that
+COULD change in the future is, however, a very good way of avoiding
+getting boxed into a corner if it turns out a mistake has been made.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+> HOWEVER, that's where "convert-cache" comes in. Any one particular format 
+> may be brittle, but if we accept that, and just say "we can upgrade by 
+> converting the cache", then we should be ok. IOW, we can change from one 
+> brittle format with 160-bit SHA1 names to _another_ brittle format with 
+> 256-bit SHA1 (or other) names.
+
+There's a disadvantage to that, unfortunately: invalidating signatures.
+Yes, you can get people to re-sign their stuff... assuming you can
+find them & convince them to do it (ha!).  More than likely,
+you'll lose signatures that way.  Probably not your TOP priority,
+but there are advantages to being able to go back & years later
+SHOW that someone really did sign something.
+
+In the long run, I'd really like to see (at least) signed commits,
+and that those signatures would "stick around" cleanly into the future.
+"Breaks" can be handled other ways, but it is DEFINITELY a pain,
+and an avoidable one.
+
+--- David A. Wheeler
