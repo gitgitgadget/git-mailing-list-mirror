@@ -1,71 +1,129 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: : Networking
-Date: Thu, 28 Apr 2005 00:43:58 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504280031110.30848-100000@iabervon.org>
-References: <20050428035534.GB30308@mythryan2.michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] diff.c: clean temporary files
+Date: Wed, 27 Apr 2005 21:51:20 -0700
+Message-ID: <7v7jinbj1z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bram Cohen <bram@bitconjurer.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Andrew Morton <akpm@osdl.org>, pasky@ucw.cz,
-	davem@davemloft.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 06:39:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 06:46:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR0nZ-0005Xg-I5
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 06:38:49 +0200
+	id 1DR0uf-000645-PA
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 06:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261937AbVD1EoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 00:44:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261961AbVD1EoJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 00:44:09 -0400
-Received: from iabervon.org ([66.92.72.58]:30724 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261937AbVD1EoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 00:44:04 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DR0sY-0000f9-00; Thu, 28 Apr 2005 00:43:58 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050428035534.GB30308@mythryan2.michonline.com>
+	id S261961AbVD1Evd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 00:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261963AbVD1Evd
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 00:51:33 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:22153 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261961AbVD1EvW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 00:51:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050428045120.QGPR22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Apr 2005 00:51:20 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 27 Apr 2005, Ryan Anderson wrote:
+When diff-cache -p and friends are interrupted, they can leave
+their temporary files behind.  Also when the external diff
+program is killed instead of exiting (this usually happens when
+piping the output to a pager, which can cause SIGPIPE when the
+user quits viewing the diff early), they incorrectly died
+without cleaning their temporary file.  This patch fixes these
+problems.
 
-> Now, all that history I had, with the duplicated imlementation, and
-> useless code is in my tree.
-> 
-> The current (as I understand it) policy is, "We don't want that
-> history."  This means that the developer will build a new tree (maybe),
-> export his patch and reimport it into a clean tree, making a much
-> simpler history graph.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-I've been doing just this. I actually import it in pieces, with a commit
-between each, so it's just like I applied the patch series I'm about to
-send out. It actually works beautifully, and, someday, I'll have the
-series up on my site so that a maintainer can just pull it.
+diff.c |   29 ++++++++++++++++++++++++-----
+1 files changed, 24 insertions(+), 5 deletions(-)
 
-Honestly, I'm not interested long-term in my buggy history, even
-locally; I'm interested in the clean history in which I make a series of
-self-contained, logical modifications and they get merged upstream.
-
-> What Andrew is doing isn't too far from this, in concept, it's just a
-> lot more complicated because he's pulling something insane, like 27
-> seperate trees, plus several hundred stand alone patches.
-> 
-> So, there's a *deliberate* desire to drop history and move some content
-> around outside of version control.
-
-I think it's more a desire to drop history as it actually happened, and
-replace it with history as it should have happened. The one thing I would
-like is the ability to provide merging help to poor souls who got part of
-the messy history without preserving that history. I think having the head
-of the clean series have a bunch of lines: "replaces <sha1>", where people
-aren't supposed to have or want that commit, but if they've merged it,
-they should know that the clean series includes its content.
-
-	-Daniel
-*This .sig left intentionally blank*
+# - [PATCH] diff-tree -p implies diff-tree -p -r
+# + 04/27 21:50 diff.c clean up temporary file.
+--- k/diff.c
++++ l/diff.c
+@@ -3,6 +3,7 @@
+  */
+ #include <sys/types.h>
+ #include <sys/wait.h>
++#include <signal.h>
+ #include "cache.h"
+ #include "diff.h"
+ 
+@@ -119,6 +120,9 @@ static void prepare_temp_file(const char
+ 
+ 	if (!one->file_valid) {
+ 	not_a_valid_file:
++		/* A '-' entry produces this for file-2, and
++		 * a '+' entry produces this for file-1.
++		 */
+ 		temp->name = "/dev/null";
+ 		strcpy(temp->hex, ".");
+ 		strcpy(temp->mode, ".");
+@@ -139,7 +143,7 @@ static void prepare_temp_file(const char
+ 				goto not_a_valid_file;
+ 			die("stat(%s): %s", temp->name, strerror(errno));
+ 		}
+-		strcpy(temp->hex, ".");
++		strcpy(temp->hex, sha1_to_hex(null_sha1));
+ 		sprintf(temp->mode, "%06o",
+ 			S_IFREG |ce_permissions(st.st_mode));
+ 	}
+@@ -180,6 +184,11 @@ static void remove_tempfile(void)
+ 		}
+ }
+ 
++static void remove_tempfile_on_signal(int signo)
++{
++	remove_tempfile();
++}
++
+ /* An external diff command takes:
+  *
+  * diff-cmd name infile1 infile1-sha1 infile1-mode \
+@@ -191,7 +200,8 @@ void run_external_diff(const char *name,
+ 		       struct diff_spec *two)
+ {
+ 	struct diff_tempfile *temp = diff_temp;
+-	int pid, status;
++	pid_t pid;
++	int status;
+ 	static int atexit_asked = 0;
+ 
+ 	if (one && two) {
+@@ -203,6 +213,7 @@ void run_external_diff(const char *name,
+ 			atexit_asked = 1;
+ 			atexit(remove_tempfile);
+ 		}
++		signal(SIGINT, remove_tempfile_on_signal);
+ 	}
+ 
+ 	fflush(NULL);
+@@ -230,9 +241,17 @@ void run_external_diff(const char *name,
+ 			printf("* Unmerged path %s\n", name);
+ 		exit(0);
+ 	}
+-	if (waitpid(pid, &status, 0) < 0 || !WIFEXITED(status))
+-		die("diff program failed");
+-
++	if (waitpid(pid, &status, 0) < 0 || !WIFEXITED(status)) {
++		/* We do not check the exit status because typically
++		 * diff exits non-zero if files are different, and
++		 * we are not interested in knowing that.  We *knew*
++		 * they are different and that's why we ran diff
++		 * in the first place!  However if it dies by a signal,
++		 * we stop processing immediately.
++		 */
++		remove_tempfile();
++		die("external diff died unexpectedly.\n");
++	}
+ 	remove_tempfile();
+ }
+ 
 
