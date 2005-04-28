@@ -1,69 +1,60 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 07:56:57 -0400
-Message-ID: <200504280756.58293.mason@suse.com>
-References: <200504271251.00635.mason@suse.com> <200504271831.47830.mason@suse.com> <20050428084156.GK17682@himi.org>
+From: Kris Shannon <kris.shannon.kernel@gmail.com>
+Subject: RT[0/3]: Some related random thoughts
+Date: Thu, 28 Apr 2005 22:59:44 +1000
+Message-ID: <5d4799ae0504280559109cd00e@mail.gmail.com>
+Reply-To: Kris Shannon <kris.shannon.kernel@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 13:52:05 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Apr 28 14:57:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR7Ya-00081t-62
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 13:51:48 +0200
+	id 1DR8Ze-0007fh-7L
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 14:56:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262087AbVD1L5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 07:57:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262088AbVD1L5H
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 07:57:07 -0400
-Received: from cantor.suse.de ([195.135.220.2]:65505 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S262087AbVD1L5D (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 07:57:03 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id B9157160DA76;
-	Thu, 28 Apr 2005 13:57:02 +0200 (CEST)
-To: simon@dreamcraft.com.au
-User-Agent: KMail/1.8
-In-Reply-To: <20050428084156.GK17682@himi.org>
+	id S262104AbVD1NB2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 09:01:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262102AbVD1NBR
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:01:17 -0400
+Received: from zproxy.gmail.com ([64.233.162.198]:1064 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262104AbVD1M7o convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 08:59:44 -0400
+Received: by zproxy.gmail.com with SMTP id 13so459623nzp
+        for <git@vger.kernel.org>; Thu, 28 Apr 2005 05:59:44 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=BDDV9hLPy0ber/OMKbj6IH/r6q8dOh52EBNO2pk9u+PCPW+pPBoYFVC3x+okPw1Q2QdCvWxhQKD1R5rZS0BcI1CCKROEQnYYTDR0c22Y9Qkp2wHVEJkxNyA5nbX3cLkkMA6YSqVhDuCbrjDy7Uw8hn0z7CFjXAwGXwnhA152D6E=
+Received: by 10.36.12.9 with SMTP id 9mr95107nzl;
+        Thu, 28 Apr 2005 05:59:44 -0700 (PDT)
+Received: by 10.36.4.16 with HTTP; Thu, 28 Apr 2005 05:59:44 -0700 (PDT)
+To: GIT Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 28 April 2005 04:41, Simon Fowler wrote:
-> I've got a version of this written in C that I've been working on
-> for a bit - some example output:
->
-> +040000 tree    bfb75011c32589b282dd9c86621dadb0f0bb3866        ppc
-> +100644 blob    5ba4fc5259b063dab6417c142938d987ee894fc0        ppc/sha1.c
-> +100644 blob    c3c51aa4d487f2e85c02b0257c1f0b57d6158d76        ppc/sha1.h
-> +100644 blob    e85611a4ef0598f45911357d0d2f1fc354039de4       
-> ppc/sha1ppc.S commit
-> b5af9107270171b79d46b099ee0b198e653f3a24->a6ef3518f9ac8a1c46a36c8d27173b1f7
->3d839c4
->
-> You run it as:
-> find-changes commit_id file_prefix ...
->
-> The file_prefix is a path prefix to match - it's not as flexible as
-> regexes, but it shouldn't be too much less useful.
+I've had a number of thoughts about the "supposed" missing SCM features of git.
 
-I dropped the regexes for speed with diff-tree, they weren't that important to 
-me...The features I was going for are:
+1) Alternate Encodings (including on-disk delta compression)
+    If the default objects filename doesn't exist, we can try for
+other alternative
+    encodings e.g. 00/a29c403e751c2a2a61eb24fa2249c8956d1c80.xdelta which
+    can specify the object content as a delta or other ingenious idea...
 
-1) ability to see the changeset comments in the output.
-2) ability to look for revs on more than one file at a time.  The single file 
-limit in bk revtool always bugged me.
-3) Some quick cut n' paste method to generate the changeset diff.  This is why 
-I do diff-tree -r in the output, so I can just copy into a different window 
-and go.
+2) Rename/Code-movement Tracking (file and/or function)
+    Additional object type tag(s) "rename" which references a changeset
+    and lists the movement metadata
 
-Your c version would hopefully end up faster on cpu time by limiting the 
-number of times we read/decompress the commit files.
+3) SHA1 backwards reference cache
+    Allows quickly finding all commits which reference a given tree root,
+    all/the "rename" for a given commit, all xdeltas which use this blob.
 
--chris
+There a quite a few important issues with all 3 of these ideas so I
+thought I would
+elaborate each in separate emails... (coming soon :)
+
+-- 
+Kris Shannon <kris.shannon.kernel@gmail.com>
