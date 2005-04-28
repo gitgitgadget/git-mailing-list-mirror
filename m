@@ -1,70 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Built-in diff driver shows Index: line.
-Date: Thu, 28 Apr 2005 13:05:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504281236090.18901@ppc970.osdl.org>
-References: <7vy8b27lyf.fsf@assigned-by-dhcp.cox.net>
+From: Dave Jones <davej@redhat.com>
+Subject: diff against a tag ?
+Date: Thu, 28 Apr 2005 16:09:53 -0400
+Message-ID: <20050428200953.GD8514@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 21:59:33 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:06:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRF9o-0001dl-St
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 21:58:45 +0200
+	id 1DRFFt-0002Ri-Qc
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:05:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262255AbVD1UDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 16:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262258AbVD1UDm
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 16:03:42 -0400
-Received: from fire.osdl.org ([65.172.181.4]:48100 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262255AbVD1UDb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:03:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SK3Rs4003670
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Apr 2005 13:03:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SK3QfE005873;
-	Thu, 28 Apr 2005 13:03:26 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy8b27lyf.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262260AbVD1UKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 16:10:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262259AbVD1UKP
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 16:10:15 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:5062 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S262261AbVD1UJ6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:09:58 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3SK9rpN027071
+	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3SK9rO27424
+	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3SK9rXu008421
+	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3SK9rwf008418
+	for git@vger.kernel.org; Thu, 28 Apr 2005 16:09:53 -0400
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Maybe I missed this in the discussion on tags recently
+(I kinda tuned out after a while on that thread).
 
+Is there an easy way to express 'show me the diff
+between HEAD and 2.6.12rc3' today ?
+Looking at the commit for rc3, theres nothing obvious
+to me distinguishing it from any other commit
+other than the "Linux v2.6.12-rc3" in the description,
+which makes it somewhat difficult to automate.
 
-On Thu, 28 Apr 2005, Junio C Hamano wrote:
->
-> As suggested by Linus as a workaround to unconfuse diffstat,
-> this patch adds Index: line before the diff output the built-in
-> driver produces.
+		Dave
 
-Actually, I do dislike the Index: line, and think this is a pretty
-intrusive work-around for a problem with diffstat.
-
-There are other work-arounds for diffstat. In particular, diffstat has 
-various heuristics for finding the filename from the +++/--- files, and 
-the main one is
-
-	"*** %[^\t]\t%[^ ] %[^ ] %d %d:%d:%d %d"
-
-(where "***" can be either +++ or ---). If if you match that one, diffstat
-will pick up the name (first match) on its own.
-
-Oh, actually maybe the better pattern to use is the one that GNU diff 
-itself ends up matching:
-
-	"*** %[^\t ]%[\t ]%d%c%d%c%d %d:%d:%d"
-
-where the "%c" has to be either '-' or '/' (ie it ends up matching as 
-"numeric date" + "numeric time").
-
-You can put the "mode" thing at the end, and diffstat won't care about it.
-
-		Linus
