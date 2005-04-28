@@ -1,60 +1,62 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: Finding file revisions
-Date: Wed, 27 Apr 2005 20:41:08 +0200
-Message-ID: <1114627268.20916.8.camel@tglx.tec.linutronix.de>
-References: <200504271251.00635.mason@suse.com>
-	 <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
-Reply-To: tglx@linutronix.de
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: [ANNOUNCE] gitkdiff 0.1
+Date: Thu, 28 Apr 2005 12:36:55 +0200
+Message-ID: <20050428103655.GA14076@elte.hu>
+References: <4270711F.7020501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Chris Mason <mason@suse.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 12:30:02 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 12:32:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR6HE-0007gx-Nb
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 12:29:49 +0200
+	id 1DR6JH-0007v8-5p
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 12:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262016AbVD1Ke6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 06:34:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262012AbVD1Ke5
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 06:34:57 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:22716
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S262010AbVD1Keq
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 06:34:46 -0400
-Received: from mail.tec.linutronix.de (213-239-205-147.clients.your-server.de [213.239.205.147])
-	by mail.tglx.de (Postfix) with ESMTP id A2D2E65C065;
-	Thu, 28 Apr 2005 12:32:49 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 3ADF0281D9;
-	Wed, 27 Apr 2005 19:41:10 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504271027460.18901@ppc970.osdl.org>
-X-Mailer: Evolution 2.0.4 (2.0.4-2) 
+	id S262001AbVD1KhP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 06:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262010AbVD1KhP
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 06:37:15 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:25728 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S262001AbVD1KhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 06:37:05 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id C238B31963B;
+	Thu, 28 Apr 2005 12:35:42 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 42F101FC2; Thu, 28 Apr 2005 12:37:00 +0200 (CEST)
+To: Tejun Heo <htejun@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4270711F.7020501@gmail.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-04-27 at 10:34 -0700, Linus Torvalds wrote:
 
-> > This will scale pretty badly as the tree grows, but 
-> > I usually only want to search back a few months in the history.  So, it 
-> > might make sense to limit the results by date or commit/tag.
+* Tejun Heo <htejun@gmail.com> wrote:
+
+>  Hello, guys.
 > 
-> With more history, "rev-list" should do basically the right thing: it will
-> be constant-time for _recent_ commits, and it is linear time in how far
-> back you want to go. Which seems quite reasonable.
+>  I've hacked tkdiff and made a commit viewing utility.  Just download
+> the following tarball and unpack it whereever PATH points to.  It
+> assumes that all base git executables are visible via PATH.
+> 
+>  http://home-tj.org/gitui/files/gitui-200504281405.tar.gz
 
-Which is quite horrible, if you have a 500k+ blobs repo.
+very nice!
 
-I know you are database allergic, but there a database is the correct
-solution. Having stored all the relations of those file/tree/commit
-blobs in a database it takes <20ms to have a list of all those file
-blobs in historical order with some context information retrieved. Thats
-not on a monster machine, its on an ordinary wallmart pc
+there's only one other utility i'm missing: a tool that does the 
+equivalent of 'bk annotate' - and to possibly integrate it with gitkdiff 
+and git-viz. That would make 'history browsing' very powerful: to 
+flexibly switch between changeset history graph view, annotated file 
+view and changeset history within one utility.
 
-tglx
-
-
+	Ingo
