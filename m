@@ -1,70 +1,59 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git fork removal?
-Date: Thu, 28 Apr 2005 11:29:47 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504281115210.30848-100000@iabervon.org>
-References: <20050428091039.GI8612@pasky.ji.cz>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: [darcs-devel] Re: Darcs-git pulling from the Linux repo: a
+ Linux VM question
+Date: Thu, 28 Apr 2005 17:36:01 +0200
+Message-ID: <7ir7guj4m6.fsf@lanthane.pps.jussieu.fr>
+References: <7i7jionz5q.fsf@lanthane.pps.jussieu.fr>
+	<Pine.LNX.4.58.0504270823480.18901@ppc970.osdl.org>
+	<7iu0lskyfb.fsf@lanthane.pps.jussieu.fr>
+	<Pine.LNX.4.58.0504270910510.18901@ppc970.osdl.org>
+	<20050428113947.GC9422@abridgegame.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 17:26:34 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Apr 28 17:31:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRAst-0004NA-Th
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 17:25:00 +0200
+	id 1DRAyJ-0005EE-E6
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 17:30:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262155AbVD1P35 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 11:29:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262158AbVD1P35
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 11:29:57 -0400
-Received: from iabervon.org ([66.92.72.58]:34821 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262155AbVD1P3t (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 11:29:49 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DRAxX-0007Tq-00; Thu, 28 Apr 2005 11:29:47 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050428091039.GI8612@pasky.ji.cz>
+	id S262151AbVD1PgG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 11:36:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262154AbVD1PgG
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 11:36:06 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129]:40403 "EHLO shiva.jussieu.fr")
+	by vger.kernel.org with ESMTP id S262151AbVD1PgF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 11:36:05 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
+          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j3SFZubr079998
+          ; Thu, 28 Apr 2005 17:35:56 +0200 (CEST)
+X-Ids: 166
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
+          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j3SFa1u8004665
+          ; Thu, 28 Apr 2005 17:36:01 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DRB3Z-00054O-LD; Thu, 28 Apr 2005 17:36:01 +0200
+To: Git Mailing List <git@vger.kernel.org>, darcs-devel@darcs.net
+In-Reply-To: <20050428113947.GC9422@abridgegame.org> (David Roundy's message
+ of "Thu, 28 Apr 2005 07:39:52 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.166]); Thu, 28 Apr 2005 17:35:56 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 427102DC.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 28 Apr 2005, Petr Baudis wrote:
+> When we're desperate, we'll special-case the initial commit, but currently
+> I'm sure we can pretty easily adjust things by making the git-tree-reading
+> lazy,
 
-> Dear diary, on Thu, Apr 28, 2005 at 04:47:24AM CEST, I got a letter
-> where Daniel Barkalow <barkalow@iabervon.org> told me that...
->
-> > The thing that I think requires the symlinks is step 2, which requires
-> > that there be somewhere I can run git and have it able to see a pair of
-> > unrelated local heads and the relevant trees.
-> 
-> Just do cg-pull barkalow, to get the latest changes from that repository
-> (perhaps clone should inherit branches information?).
+Just to make it clear: reading the git tree is lazy.  The problem is
+somewhere in the higher layers, probably in pull_cmd.
 
-You can pull from local repositories? I think that having the same concept
-for remote repositories and for different lines of local development is
-what confuses users.
+There's also another problem: reading the git tree takes 220MB.  Then
+Darcs allocates a further 500MB without calling my code at all.  (Some
+of it is doubtless due to linesPS, that should be more than a handful
+of megabytes.)
 
-> But if you want Linus to pull from your tree, you generally want it to
-> be clean - that is, you want to manage clean separation (as Pavel Machek
-> describes in his document).
-
-I'll be using rpush and he'd have to use http-pull (I don't have rsync
-set up); both of these only transfer the reachable objects, so cleanliness
-isn't an issue.
-
-> That is another advantage of hardlinking -
-> you don't get any unrelated stuff in if you don't explicitly pull it, so
-> you can keep your for-linus branch clean. I'd do cg-diff linus:this in
-> the barkalow branch instead to keep this property.
-
-But that doesn't work; when I'm preparing the second patch in the series,
-I want to compare linus+patch 1 against barkalow, so that I'm looking at
-what's left to split. That's why I need to have the unrelated heads, not
-just the linus head and my head based on it. If I go back to linus each
-time, it's more work making the patches and I don't have an easy way of
-telling whether I've included the same part twice or missed a part.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+                                        Juliusz
