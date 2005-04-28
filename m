@@ -1,58 +1,99 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Git fork removal?
-Date: Thu, 28 Apr 2005 04:12:37 +0200
-Message-ID: <20050428021237.GA8612@pasky.ji.cz>
-References: <Pine.LNX.4.21.0504272127400.30848-100000@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 04:07:33 2005
+From: Tom Lord <lord@emf.net>
+Subject: Re: A shortcoming of the git repo format
+Date: Wed, 27 Apr 2005 19:14:23 -0700 (PDT)
+Message-ID: <200504280214.TAA19991@emf.net>
+References: <Pine.LNX.4.58.0504271722260.18901@ppc970.osdl.org>
+Cc: hpa@zytor.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 28 04:09:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DQyQr-0000dP-Td
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 04:07:14 +0200
+	id 1DQySn-0000mD-HG
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 04:09:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261540AbVD1CMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Apr 2005 22:12:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261543AbVD1CMk
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 22:12:40 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43696 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261540AbVD1CMi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 22:12:38 -0400
-Received: (qmail 18735 invoked by uid 2001); 28 Apr 2005 02:12:37 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504272127400.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261543AbVD1COi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Apr 2005 22:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261638AbVD1COi
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Apr 2005 22:14:38 -0400
+Received: from emf.emf.net ([205.149.0.19]:15377 "EHLO emf.net")
+	by vger.kernel.org with ESMTP id S261543AbVD1COZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Apr 2005 22:14:25 -0400
+Received: (from lord@localhost) by emf.net (K/K) id TAA19991; Wed, 27 Apr 2005 19:14:23 -0700 (PDT)
+To: torvalds@osdl.org
+In-reply-to: <Pine.LNX.4.58.0504271722260.18901@ppc970.osdl.org> (message from Linus Torvalds on Wed, 27 Apr 2005 17:57:07 -0700 (PDT))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 28, 2005 at 03:31:18AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> I saw that "fork" was removed when going to the cg- scripts, and the
-> replacements don't do the symlinked trees thing. I found the symlinked
-> trees thing vital to my workflow, so I'm going to want to reintroduce
-> them, or something similar. Is there some reason you went to hardlinked
-> object files instead of symlinked directories?
 
-The user. ;-)
+   > I think a lot of people understand it intellectually, but I really do 
+   > think that we're lackign the kind of "institutionalized" knowledge
+   > where people understand things at a much more visceral level.
 
-Apparently, too many people were confused by the local/remote branches
-distinctions, and even I ceased to like it gradually (BTW, Cogito still
-supports working with them - it just does not offer any interface for
-manipulation with them). The current scheme is much simpler and I
-believe more clear.
+I know that Arch and its progeny, as they stand, don't seduce you
+but you should be made aware that the Arch community is one where
+good SCM sense that you would agree with (although you might not
+recognize it at once) is well on the path to being institutionalized.
+It's gratifying/amazing/inspiring to see a bunch of folk catch up 
+on the topic.
 
-Also, the forked repositories were not truly independent - people
-actually got burnt by forking and then removing the original repository.
+One thing there's still a shortage of in my world is folks steeped
+in both perspectives: "unix" /and/ SCM.  Thus, I get folks who have
+pretty decent SCM ideas in the abstract -- plus utterly terrible 
+ideas about how to make them real.
 
-If this breaks your workflow, could you please describe it? Perhaps we
-could find a good semantics to support both.
+There is a higher-level bug I think you'll eventually viscerally 
+feel yourself, related to:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+   > I think a lot of people understand it intellectually, but I really do 
+   > think that we're lackign the kind of "institutionalized" knowledge
+   > where people understand things at a much more visceral level.
+
+Once you get to the BK or Arch level of SCM, beyond that there are
+many possible paths.  Many of those are false paths -- imaginary
+(unrealizable) ideals about how things like merging can work and
+be good.   Some people seem to get stuck on those paths.
+
+   > With git, this isn't the case. The _only_ reason I started git in the 
+   > first place is that I knew better than pretty much anybody else what my
+   > needs were, and I was forced to act on them because nothing out there 
+   > really solved the problem for me.
+
+That's debatable but neither here nor there.  Supposing that Arch
+were /perfect/ for your needs today (which I don't claim) -- `git'
+would still have been the better route to take (though my reasons
+probably aren't the same as yours).
+
+   > I'm not actually all that interested in SCM's.
+
+In a certain way: same here, oddly enough.  Go figure.
+
+   > Quite the reverse: such a person "knows" a lot of things, but I'm pretty
+   > damn sure that such a person has _never_ actually worked on a system that
+   > works the way the kernel development does
+
+I've been avoiding the topic of how kernel development works ever since
+i realized, that with each additional detail you reveal, i have little
+but yellow and red cards to raise.   Doesn't seem productive to have that
+fight when the option of simply improving the situation is open.
+
+   > And I really _am_ sorry. I don't actually _like_ being nasty about these 
+   > things.
+
+It's healthy enough that you are, for your sanity and others.  Just 
+be tolerant of others pointing that out.
+
+   > The good news? I actually think my needs are very basic.
+
+So it would seem.  This is partly because the process you advertise
+yourself as doing is, sorry, garbage.  It's understandable why it
+happens to work for now, but it's garbage nonetheless.  Not your fault --
+you haven't been afforded the degrees of freedom to do better, afaict.
+
+   > But for now, the _only_ point of git is as a kernel maintenance tool. 
+
+Math is math.  You don't get to say what it means.
+
+-t
+
+
