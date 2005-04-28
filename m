@@ -1,81 +1,62 @@
-From: David Woodhouse <dwmw2@infradead.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: kernel.org now has gitweb installed
-Date: Thu, 28 Apr 2005 22:47:46 +0100
-Message-ID: <1114724866.2734.27.camel@localhost.localdomain>
-References: <42703E79.8050808@zytor.com>
-	 <1114673723.12012.324.camel@baythorne.infradead.org>
-	 <20050428081005.GG8612@pasky.ji.cz>
-	 <1114676955.12012.346.camel@baythorne.infradead.org>
-	 <1114680199.12012.363.camel@baythorne.infradead.org>
-	 <Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org>
-	 <1114723214.2734.9.camel@localhost.localdomain>
-	 <Pine.LNX.4.58.0504281432490.18901@ppc970.osdl.org>
+Date: Thu, 28 Apr 2005 14:50:07 -0700
+Message-ID: <42715A8F.8010803@zytor.com>
+References: <42703E79.8050808@zytor.com>	 <1114673723.12012.324.camel@baythorne.infradead.org>	 <20050428081005.GG8612@pasky.ji.cz>	 <1114676955.12012.346.camel@baythorne.infradead.org>	 <1114680199.12012.363.camel@baythorne.infradead.org>	 <Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org> <1114723214.2734.9.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, "H. Peter Anvin" <hpa@zytor.com>,
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:44:46 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:46:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRGni-0006QC-J0
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:44:02 +0200
+	id 1DRGow-0006XS-SE
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262271AbVD1Vtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 17:49:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262267AbVD1VtY
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:49:24 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:31114 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S262266AbVD1VtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 17:49:18 -0400
-Received: from baythorne.infradead.org ([81.187.226.107] helo=[192.168.129.125])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DRGsi-0006Z0-Fm; Thu, 28 Apr 2005 22:49:12 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504281432490.18901@ppc970.osdl.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S262266AbVD1Vur (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 17:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262267AbVD1Vur
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:50:47 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:19357 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S262266AbVD1Vum
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 17:50:42 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3SLo7NF024159
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 28 Apr 2005 14:50:09 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1114723214.2734.9.camel@localhost.localdomain>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 14:40 -0700, Linus Torvalds wrote:
-> Wrong. The date _does_ have meaning. It shows which of the parents was 
-> more recent, which indirectly is a hint about which side had more activity 
-> going on. 
+David Woodhouse wrote:
 > 
-> In other words, it _is_ meanginful. Maybe it's a _statistical_ meaning 
-> ("that side is probably the active one, because it has the last commit"), 
-> but it's a meaning.
+> Hmm, that's true; albeit unfortunate. 
+> 
+> Still, using the date isn't any better. It'll give results which are
+> about as random as just sorting by the sha1 of each parent.
+> 
+> Yes, the ordering of the parents in a merge is probably meaningless in
+> the general case, but so is the date.
+> 
+> The best we could probably do, from a theoretical standpoint, is to look
+> at the paths via each parent to a common ancestor, and look at how many
+> of the commits on each path were done by the same committer. Even that
+> isn't ideal, and it's probably fairly expensive -- but it's pointless to
+> pretend we can infer anything from _either_ the dates or the ordering of
+> the parents in a merge.
+> 
 
-It's not entirely clear what 'active' is supposed to be useful for in
-this instance. You could just as well count the commits between the
-merge and the common ancestor, if you want to see which side was most
-_active_ -- but that isn't helpful for deciding the order in which
-'cg-log' should show commits.
+Perhaps the right thing to do is to draw a graph instead?
 
-What you really want there is 'local' vs. 'remote', because people want
-to see the order in which changesets arrived in the _local_ repository
--- if the last thing you did was pull from me, people want all my
-changesets to be at the top; regardless of who last committed to their
-tree before the merge -- i.e. regardless of whether I did a last-minute
-commit before you pulled, or whether you'd done another commit to your
-tree immediately before pulling.
-
-As you rightly point out, the local/remote information isn't really
-available in an easy form -- certainly not from the ordering of the
-parents in a merge commit. But let's not fool ourselves that we can
-piece it together from the date either.
-
-OK, the date _is_ meaningful in a way, but only in the same way that the
-author's name and IRC address information is meaningful. Of course we
-didn't include it for _nothing_, but it's outside the scope of git
-itself; it isn't part of the useful information which git should care
-about.
-
--- 
-dwmw2
-
+	-hpa
