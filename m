@@ -1,118 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [5/5] Make fsck-cache read heads out of .git/refs/*/*
-Date: Thu, 28 Apr 2005 01:17:24 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504280113560.30848-100000@iabervon.org>
-References: <Pine.LNX.4.21.0504280055180.30848-100000@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [1/5] Consider a blob to be parsed
+Date: Wed, 27 Apr 2005 22:28:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504272217240.18901@ppc970.osdl.org>
+References: <Pine.LNX.4.21.0504280100360.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 07:12:22 2005
+X-From: git-owner@vger.kernel.org Thu Apr 28 07:21:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR1Jy-0007uC-K2
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 07:12:18 +0200
+	id 1DR1SR-00004t-Lh
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 07:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262001AbVD1FRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 01:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262003AbVD1FRk
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 01:17:40 -0400
-Received: from iabervon.org ([66.92.72.58]:773 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262001AbVD1FRZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 01:17:25 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DR1Ou-0001mm-00; Thu, 28 Apr 2005 01:17:24 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.21.0504280055180.30848-100000@iabervon.org>
+	id S262008AbVD1F0Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 01:26:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262012AbVD1F0Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 01:26:25 -0400
+Received: from fire.osdl.org ([65.172.181.4]:29086 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262008AbVD1F0K (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 01:26:10 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3S5Q6s4026435
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Apr 2005 22:26:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3S5Q5ss031689;
+	Wed, 27 Apr 2005 22:26:06 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0504280100360.30848-100000@iabervon.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This makes fsck-cache expect the root set of the reachability graph (i.e.,
-your heads and tags) to be .git/refs/*/*, which contain hex versions of
-hashs of roots (like .get/HEAD has always been).
 
-Signed-Off-By: Daniel Barkalow <barkalow@iabervon.org>
-Index: fsck-cache.c
-===================================================================
---- ca8a271be1370ab0795a869c15114e566bdd15d8/fsck-cache.c  (mode:100644 sha1:280a104050b665515418c00c33af8e6b0b0e2101)
-+++ c53109e78c0b0d8925a4198fdec8295620f8f349/fsck-cache.c  (mode:100644 sha1:c4ff5bf3d71c35236e769d30035b00acf08d452b)
-@@ -135,6 +135,67 @@
- 	return 0;
- }
- 
-+int read_refs_dirs(char *path)
-+{
-+	DIR *dir = opendir(path);
-+	char filename[NAME_MAX+1];
-+	struct dirent *de;
-+	int total = 0;
-+	char *base;
-+
-+	if (!dir) {
-+		error("missing refs directory '%s'", path);
-+		return 0;
-+	}
-+	strcpy(filename, path);
-+	base = filename + strlen(path);
-+	*(base++) = '/';
-+	while ((de = readdir(dir)) != NULL) {
-+		DIR *subdir;
-+		char *subbase;
-+		if (de->d_name[0] == '.')
-+			continue;
-+		strcpy(base, de->d_name);
-+		subbase = base + strlen(de->d_name);
-+		subdir = opendir(filename);
-+		if (!subdir) {
-+			fprintf(stderr, "can't open subdir %s\n", filename);
-+			continue;
-+		}
-+		*(subbase++) = '/';
-+		while ((de = readdir(subdir)) != NULL) {
-+			char hex[41];
-+			char sha1[20];
-+			int fd;
-+			struct object *obj;
-+			if (de->d_name[0] == '.')
-+				continue;
-+			strcpy(subbase, de->d_name);
-+			fd = open(filename, O_RDONLY);
-+			if (fd < 0) {
-+				fprintf(stderr, "Couldn't open %s\n", filename);
-+				continue;
-+			}
-+			if ((read(fd, hex, 41) < 41) ||
-+			    (hex[40] != '\n') ||
-+			    get_sha1_hex(hex, sha1)) {
-+				fprintf(stderr, "Couldn't read a hash from %s\n",
-+					filename);
-+				continue;
-+			}
-+			obj = parse_object(sha1);
-+			obj->used = 1;
-+			mark_reachable(obj, REACHABLE);
-+			
-+			total++;
-+		}
-+		closedir(subdir);
-+	}
-+	closedir(dir);
-+
-+	return total;
-+}
-+
- int main(int argc, char **argv)
- {
- 	int i, heads;
-@@ -183,6 +244,8 @@
- 		error("expected sha1, got %s", arg);
- 	}
- 
-+	heads += read_refs_dirs(".git/refs");
-+
- 	if (!heads) {
- 		if (show_unreachable) {
- 			fprintf(stderr, "unable to do reachability without a head\n");
 
+On Thu, 28 Apr 2005, Daniel Barkalow wrote:
+>
+> We don't parse blobs at all, so any that we've got are as parsed as
+> they're going to get. Don't make fsck-cache mark them.
+
+NO NO NO!
+
+This is WRONG, dammit. I fixed it once, you are re-introducing the same
+bug.
+
+Daniel, the problem is that you parse them only when you SEE them, and 
+that is totally different from having seen a REFERENCE to them. One says 
+"I've seen this object", the other says "I _want_ to see this object". 
+They are two totally different things.
+
+You now mark all "blob" objects parsed regardless of whether you have 
+actually seen the blob or not. Ie you mark a blob parsed just from having 
+seen a _reference_ to it, and fsck can never know whether it actually 
+really saw the object or not.
+
+This is the commit that already fixed this bug once, and that you are now 
+re-introducing:
+
+	commit 4728b861ace127dc39c648f3bea64c3b86bbabc5
+	tree 242227fc3c3a74d070ed36496e790335dd00c44a
+	parent da6abf5d9c342a74dffbcc2015b9c27d7819a900
+	author Linus Torvalds <torvalds@ppc970.osdl.org> Sun, 24 Apr 2005 14:10:55 -0700
+	committer Linus Torvalds <torvalds@ppc970.osdl.org> Sun, 24 Apr 2005 14:10:55 -0700
+	
+	    fsck-cache: notice missing "blob" objects.
+	    
+	    We should _not_ mark a blob object "parsed" just because we
+	    looked it up: it gets marked that way only once we've actually
+	    seen it. Otherwise we can never notice a missing blob.
+
+please think about it.
+
+Try to make some test-cases for fsck. They are quite easy to make: copy a 
+good directory, and 
+ - remove one commit (in the middle)
+ - remove at least on tree
+ - remove at least one blob
+ - corrupt a file obviously (make it not uncompress ok)
+ - corrupt a file in a subtle way (make it uncompress ok and have the
+   right signature, but be the wrong type - for example, make a "commit" 
+   object that points to a "tree" object that actually is a "blob")
+
+And you'll see how this "consider a blob parsed" totally destroys fsck's 
+ability to notice that the blob doesn't even _exist_ any more (case 3 
+above).
+
+"parsing" and "looking up" are two totally independent operations. They
+are independent for commits and trees, and they are independent for blobs.  
+
+To mark a blob parsed, you _need_ to have actually looked it up and
+verified that it exists and that the object header is valid (and if you're 
+fsck, that the sha1 matches). You MUST NOT do it in "lookup_blob()".
+
+		Linus
