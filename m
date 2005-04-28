@@ -1,52 +1,65 @@
-From: Dave Jones <davej@redhat.com>
-Subject: diff against a tag ?
-Date: Thu, 28 Apr 2005 16:09:53 -0400
-Message-ID: <20050428200953.GD8514@redhat.com>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: How to get bash to shut up about SIGPIPE?
+Date: Thu, 28 Apr 2005 22:13:25 +0200
+Message-ID: <427143E5.4080505@lsrfire.ath.cx>
+References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org> <42713379.7080107@lsrfire.ath.cx> <Pine.LNX.4.58.0504281217100.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Apr 28 22:06:37 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Apr 28 22:10:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRFFt-0002Ri-Qc
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:05:02 +0200
+	id 1DRFKL-000365-6I
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 22:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262260AbVD1UKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 16:10:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262259AbVD1UKP
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 16:10:15 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:5062 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S262261AbVD1UJ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 16:09:58 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j3SK9rpN027071
-	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
-Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j3SK9rO27424
-	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
-Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
-	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j3SK9rXu008421
-	for <git@vger.kernel.org>; Thu, 28 Apr 2005 16:09:53 -0400
-Received: (from davej@localhost)
-	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j3SK9rwf008418
-	for git@vger.kernel.org; Thu, 28 Apr 2005 16:09:53 -0400
-X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S262263AbVD1UOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 16:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262262AbVD1UO3
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 16:14:29 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:37017 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S262259AbVD1UN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 16:13:28 -0400
+Received: from [10.0.1.3] (p508E4F7A.dip.t-dialin.net [80.142.79.122])
+	by neapel230.server4you.de (Postfix) with ESMTP id A5011B4;
+	Thu, 28 Apr 2005 22:13:26 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: de-DE, de, en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504281217100.18901@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Maybe I missed this in the discussion on tags recently
-(I kinda tuned out after a while on that thread).
+Linus Torvalds schrieb:
+> 
+> On Thu, 28 Apr 2005, Rene Scharfe wrote:
+> 
+>>I think you misspelled "cg-log". :-D
+> 
+> 
+> My fingers have a hard time learning new patterns, so I've got:
+> 
+> 	torvalds@ppc970:~/git> cat ~/bin/git   
+> 	#!/bin/sh
+> 	cmd="cg-$1"
+> 	shift
+> 	$cmd "$@"
 
-Is there an easy way to express 'show me the diff
-between HEAD and 2.6.12rc3' today ?
-Looking at the commit for rc3, theres nothing obvious
-to me distinguishing it from any other commit
-other than the "Linux v2.6.12-rc3" in the description,
-which makes it somewhat difficult to automate.
+As a workaround, add this line after the shift to suppress the ugly
+messages:
 
-		Dave
+	[ "$cmd" = cg-log ] && exec 2>/dev/null
 
+> Defining "DONT_REPORT_SIGPIPE" in config-top.h when building bash gets rid
+> of it, but I really don't want to rebuild bash just because of this ;)
+
+Yes, I just compiled it and in the version from gnu.org this defaults to
+not being defined.  Man, am I glad my distro uncommented that line. :-)
+
+Looking briefly at the source there doesn't seem to be a way to turn it
+off besides this compile time setting.  I really wonder why..
+
+Rene
