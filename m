@@ -1,78 +1,92 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: Finding file revisions
-Date: Thu, 28 Apr 2005 23:33:06 +0200
-Message-ID: <1114723987.4212.51.camel@localhost.localdomain>
-References: <200504271251.00635.mason@suse.com>
-	 <200504280745.05505.mason@suse.com>
-	 <1114715496.4212.36.camel@localhost.localdomain>
-	 <200504281658.39300.mason@suse.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org now has gitweb installed
+Date: Thu, 28 Apr 2005 14:40:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504281432490.18901@ppc970.osdl.org>
+References: <42703E79.8050808@zytor.com>  <1114673723.12012.324.camel@baythorne.infradead.org>
+  <20050428081005.GG8612@pasky.ji.cz>  <1114676955.12012.346.camel@baythorne.infradead.org>
+  <1114680199.12012.363.camel@baythorne.infradead.org> 
+ <Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org>
+ <1114723214.2734.9.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 23:29:21 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 23:34:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRGYJ-0004do-S8
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:28:08 +0200
+	id 1DRGdQ-0005GK-1g
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 23:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262225AbVD1Vd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 17:33:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262229AbVD1Vd3
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:33:29 -0400
-Received: from soundwarez.org ([217.160.171.123]:442 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S262225AbVD1VdM (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 17:33:12 -0400
-Received: from dhcp-113.off.vrfy.org (c196135.adsl.hansenet.de [213.39.196.135])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 09E4F2822F;
-	Thu, 28 Apr 2005 23:33:06 +0200 (CEST)
-To: Chris Mason <mason@suse.com>
-In-Reply-To: <200504281658.39300.mason@suse.com>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+	id S262229AbVD1Viz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 17:38:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262231AbVD1Viz
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 17:38:55 -0400
+Received: from fire.osdl.org ([65.172.181.4]:54946 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262229AbVD1Viw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 17:38:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3SLcks4015658
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 28 Apr 2005 14:38:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3SLcjFc011604;
+	Thu, 28 Apr 2005 14:38:46 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1114723214.2734.9.camel@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-04-28 at 16:58 -0400, Chris Mason wrote:
-> On Thursday 28 April 2005 15:11, Kay Sievers wrote:
-> >
-> > Can you confirm this with the kernel tree?
-> >   file-changes -c 9acf6597c533f3d5c991f730c6a1be296679018e
-> > drivers/usb/core/usb.c
-> >
-> > lists the commit:
-> >   diff-tree -r 1d66c64c3cee10a465cd3f8bd9191bbeb718f650
-> > c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
-> > f0534ee064901d0108eb7b2b1fcb59a98bb53c2b->c231b4bef314284a168fedb6c5f6c47ae
-> >c5084fc drivers/usb/core/usb.c cat-file commit
-> > c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
-> >
-> > which seems not to have changed the file asked for.
+
+
+On Thu, 28 Apr 2005, David Woodhouse wrote:
 > 
-> Hmmm, that does work here:
-> 
-> coffee:/src/git # diff-tree -r 1d66c64c3cee10a465cd3f8bd9191bbeb718f650 c79bea07ec4d3ef087962699fe8b2f6dc5ca7754 | grep usb.core.usb.c
-> *100644->100644 blob    f0534ee064901d0108eb7b2b1fcb59a98bb53c2b->c231b4bef314284a168fedb6c5f6c47aec5084fc      drivers/usb/core/usb.c
-> 
-> -chris
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Still, using the date isn't any better. It'll give results which are
+> about as random as just sorting by the sha1 of each parent.
 
-Sure. But file-changes lists the commit:
-  c79bea07ec4d3ef087962699fe8b2f6dc5ca7754
+Well, it does use real information, and it is repeatable. And I don't see 
+why you say that the date is meaningless, when it clearly isn't. The date 
+absolutely does have meaning. 
 
-when asked for:
-  "drivers/usb/core/usb.c"
+Not having a global clock doesn't mean that clocks go away. It just means 
+that they don't generate a total sort. They still generate a _partial_ 
+sort, though, and it's a very valid partial sort.
 
-and that file isn't touched there. Actually it lists merge-commits which
-are not related to the file.
+The fact is, this is how the world works in real life too. Relativity 
+doesn't make time "pointless". You still have "before" and "after" for 
+almost all relevant events. The fact that not _all_ events can be sorted 
+by "before" and "after", and different observers can disagree about some 
+of the ordering does not mean that causality has gone away and that time 
+is meaningless.
 
-Thanks,
-Kay
+The same is true in a distributed system. Time still exists, and is still 
+meaningful even outside the direct "causality" links implied by the 
+parents. People probably discussed things, and there are methods of 
+communication other than just direct parent links, and while you're not 
+_guaranteed_ that "before" and "after" always makes sense, they definitely 
+still exist 99% of the time.
 
+> The best we could probably do, from a theoretical standpoint, is to look
+> at the paths via each parent to a common ancestor, and look at how many
+> of the commits on each path were done by the same committer.
 
+That's quite expensive. 
+
+> Even that isn't ideal, and it's probably fairly expensive -- but it's
+> pointless to pretend we can infer anything from _either_ the dates or
+> the ordering of the parents in a merge.
+
+Wrong. The date _does_ have meaning. It shows which of the parents was 
+more recent, which indirectly is a hint about which side had more activity 
+going on. 
+
+In other words, it _is_ meanginful. Maybe it's a _statistical_ meaning 
+("that side is probably the active one, because it has the last commit"), 
+but it's a meaning.
+
+		Linus
