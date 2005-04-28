@@ -1,77 +1,72 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Git fork removal?
-Date: Thu, 28 Apr 2005 11:10:39 +0200
-Message-ID: <20050428091039.GI8612@pasky.ji.cz>
-References: <20050428021237.GA8612@pasky.ji.cz> <Pine.LNX.4.21.0504272221030.30848-100000@iabervon.org>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: kernel.org now has gitweb installed
+Date: Thu, 28 Apr 2005 10:23:19 +0100
+Message-ID: <1114680199.12012.363.camel@baythorne.infradead.org>
+References: <42703E79.8050808@zytor.com>
+	 <1114673723.12012.324.camel@baythorne.infradead.org>
+	 <20050428081005.GG8612@pasky.ji.cz>
+	 <1114676955.12012.346.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 28 11:12:25 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 11:22:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR53O-0006st-0G
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 11:11:26 +0200
+	id 1DR5D5-00089q-13
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 11:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261948AbVD1JQb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 05:16:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262001AbVD1JNN
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 05:13:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42935 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261962AbVD1JKl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 05:10:41 -0400
-Received: (qmail 21645 invoked by uid 2001); 28 Apr 2005 09:10:39 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0504272221030.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261986AbVD1JZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 05:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261969AbVD1JZ5
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 05:25:57 -0400
+Received: from baythorne.infradead.org ([81.187.226.107]:33958 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S261946AbVD1JXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 05:23:21 -0400
+Received: from localhost.localdomain ([127.0.0.1])
+	by baythorne.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DR5Eu-0000AV-4j; Thu, 28 Apr 2005 10:23:20 +0100
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <1114676955.12012.346.camel@baythorne.infradead.org>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Apr 28, 2005 at 04:47:24AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > If this breaks your workflow, could you please describe it? Perhaps we
-> > could find a good semantics to support both.
+On Thu, 2005-04-28 at 09:29 +0100, David Woodhouse wrote:
+> Let us assume that C and A were already in Linus' tree (and on our web
+> page) yesterday. Thus, they should be last. The newly-pulled stuff
+> should be first -- FEDBCA.
 > 
-> The part that I'm worried about is the way I turn a mass of debugging and
-> little local commits into a clean patch series. I've got a working fork
-> "barkalow", which is the result of a bunch of stuff and a dozen
-> commits. It is derived from "linus". I want to split up the changes and
-> make a series of commits, each of which will be a patch to submit.
-> 
-> 1) I fork "linus" into "for-linus". I go into "for-linus".
-> 
-> 2) I do "git diff this:barkalow > patch". This gives me the complete set
->    of changes I want to submit.
-> 
-> 3) I cut down the diff to a single logical change by removing all of the
->    other hunks.
-> 
-> 4) I do "git apply < patch". I do "git commit". I describe the logical
->    change.
-> 
-> 5) I go back to step 2, unless I'm done.
-> 
-> 6) For each of the commits between "linus" and "for-linus", I do 
->    "git patch <commit>", and send out the result.
-> 
-> The thing that I think requires the symlinks is step 2, which requires
-> that there be somewhere I can run git and have it able to see a pair of
-> unrelated local heads and the relevant trees.
+> I'd say "depth-first, remote parent first" but that would actually show
+> show 'A' (as a parent of D) long before it shows C. Walking of remote
+> parents should stop as soon as we hit a commit which was accessible
+> through a more local parent, rather than as soon as we hit a commit
+> which we've already printed.
 
-Just do cg-pull barkalow, to get the latest changes from that repository
-(perhaps clone should inherit branches information?).
+Walk the tree once. For each commit, count the number of _children_.
+That's not hard -- each new commit you find below HEAD has one child to
+start with, then you increment that figure by one each time you find
+another path to the same commit.
 
-But if you want Linus to pull from your tree, you generally want it to
-be clean - that is, you want to manage clean separation (as Pavel Machek
-describes in his document). That is another advantage of hardlinking -
-you don't get any unrelated stuff in if you don't explicitly pull it, so
-you can keep your for-linus branch clean. I'd do cg-diff linus:this in
-the barkalow branch instead to keep this property.
+When printing, you walk the tree depth-first, remote-parent-first. If
+you hit a commit with multiple children, decrement its count by one. If
+the count is still non-zero, ignore that commit (and its parents) and
+continue. If the count _is_ zero, then this is the "most local" path to
+the commit in question, so print it and continue to process its
+parents...
+
+(Actually I'd probably do it by adding real pointers to the children
+instead of using a counter. Operations like convert-cache would be far
+better off working that way round, and 'cg comments' is going to need to
+do something very similar to convert-cache.)
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+dwmw2
+
+
