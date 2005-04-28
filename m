@@ -1,66 +1,61 @@
-From: Kris Shannon <kris.shannon.kernel@gmail.com>
-Subject: RT[2/3]: Rename/Code-movement Tracking
-Date: Thu, 28 Apr 2005 23:34:15 +1000
-Message-ID: <5d4799ae05042806344aa9d75f@mail.gmail.com>
-References: <5d4799ae0504280559109cd00e@mail.gmail.com>
-Reply-To: Kris Shannon <kris.shannon.kernel@gmail.com>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: A shortcoming of the git repo format
+Date: Thu, 28 Apr 2005 14:39:59 +0100
+Message-ID: <1114695600.27227.123.camel@hades.cambridge.redhat.com>
+References: <426F2671.1080105@zytor.com>
+	 <Pine.LNX.4.58.0504270820370.18901@ppc970.osdl.org>
+	 <426FD3EE.5000404@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Apr 28 15:29:57 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 28 15:35:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DR94V-0003ua-G5
-	for gcvg-git@gmane.org; Thu, 28 Apr 2005 15:28:51 +0200
+	id 1DR9AO-0004iu-Ie
+	for gcvg-git@gmane.org; Thu, 28 Apr 2005 15:34:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262127AbVD1NeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 09:34:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262128AbVD1NeT
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:34:19 -0400
-Received: from zproxy.gmail.com ([64.233.162.205]:55828 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262127AbVD1NeP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 09:34:15 -0400
-Received: by zproxy.gmail.com with SMTP id 13so468679nzp
-        for <git@vger.kernel.org>; Thu, 28 Apr 2005 06:34:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IOngWKbk6td8XA1ZwczXoKAhly7rtu1hb+ZGqtpcFvu8QxaWmdp77xAFI0s1ZA2g/dw33LYzfI0Atq17CGpRkvb3QSZPavESbSB0stS7SSq6rRmLKH5WYKDyxU1Upg0XwVDiIzTuU5AWjNjxlUMmqB21tN7QNcQtKG3PV2+iYHw=
-Received: by 10.36.59.18 with SMTP id h18mr96909nza;
-        Thu, 28 Apr 2005 06:34:15 -0700 (PDT)
-Received: by 10.36.4.16 with HTTP; Thu, 28 Apr 2005 06:34:15 -0700 (PDT)
-To: GIT Mailing List <git@vger.kernel.org>
-In-Reply-To: <5d4799ae0504280559109cd00e@mail.gmail.com>
-Content-Disposition: inline
+	id S262128AbVD1NkU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 09:40:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262129AbVD1NkU
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 09:40:20 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:1518 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S262128AbVD1NkP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 09:40:15 -0400
+Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DR9FO-0004AV-6g; Thu, 28 Apr 2005 14:40:07 +0100
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <426FD3EE.5000404@zytor.com>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-IMO adding a new object type tag (or tags) for tracking would fit the git model.
+On Wed, 2005-04-27 at 11:03 -0700, H. Peter Anvin wrote:
+> > To find the email address, look for the first '<'. To find the date, look 
+> > for the first '>'. Those characters are not allowed in the name or the 
+> > email, so they act as well-defined delimeters.
+> > 
+> 
+> That's true for email addresses,
 
-Call it "rename" for example (better yet think of a better name)
-Let the contents be something along the lines of:
+Not in general. You can have just about any character, including @, <
+and >, in either a display-name or a local-part.
 
-commit CHANGESET-SHA1
-PARENT-TREE-SHA1 /old/path\0/new/path\0
-PARENT-TREE-SHA1 /old/path/2\0/new/path/2\0
-...
+For git we actually _remove_ any instances of '<' and '>' from both
+'AUTHOR_NAME' and 'AUTHOR_EMAIL', so what you say becomes true.
 
-The exact details will depend on the renaming model and I don't care to
-much at the moment what that turns out to be.
-
-This new tag allows the rename data to be added on to commit's from people
-like linus who don't care about rename.
-
-It doesn't reduce security because any can happen to the rename object
-and that will cover the whole commit (and those who sign the commit are
-obviously not validating any rename information)
-
-The rename objects can be used to assist in automatic merging but from my
-experience I would agree with linus that if the right way to merge is not
-really obvious then you probably need user input anyway.
+I still say these shouldn't be considered email addresses, any more than
+the 'user@host.domain' you see when you connect to an IRC server is
+considered an IP address.
 
 -- 
-Kris Shannon <kris.shannon.kernel@gmail.com>
+dwmw2
+
