@@ -1,123 +1,96 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] Use read_object_with_reference() in tar-tree
-Date: Fri, 29 Apr 2005 05:21:27 +0200
-Message-ID: <20050429032127.GA12160@lsrfire.ath.cx>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] allow cg-log to display commit entries for particular
+ files/directories
+Date: Thu, 28 Apr 2005 23:27:02 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0504282308200.14033@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 05:16:14 2005
+X-From: git-owner@vger.kernel.org Fri Apr 29 05:21:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRLyw-0005YV-By
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 05:15:58 +0200
+	id 1DRM4Z-0006Dn-Ft
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 05:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262375AbVD2DVd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 23:21:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262376AbVD2DVd
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 23:21:33 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:62106 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S262375AbVD2DV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Apr 2005 23:21:28 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 2FD593A5; Fri, 29 Apr 2005 05:21:27 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S262376AbVD2D1N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 23:27:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262377AbVD2D1M
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 23:27:12 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:7649 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S262376AbVD2D1F
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 23:27:05 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR011.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IFO00KQAUX2FN@VL-MO-MR011.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 28 Apr 2005 23:27:02 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: Petr Baudis <pasky@ucw.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch replaces the usage of read_tree_with_tree_or_commit_sha1()
-with read_object_with_reference() in tar-tree.  As a result the code
-that tries to figure out the commit time doesn't need to open the commit
-object 'by hand' any more.
+This patch allows for one or more paths to be specified with the effect 
+of restricting the log to commits that affected those files or files 
+under given directories.
 
-Signed-off-by: Rene Scharfe <lsrfire.ath.cx>
+This is not perfect as some merge commits might or might not be listed.
+But usually they're not really interesting in the context of this 
+feature.  It is otherwise pretty simple and effective until a better 
+tool is available.
 
-Index: tar-tree.c
-===================================================================
---- dc0b54b68c90574a689fef23c5ab26d165f3ee2e/tar-tree.c  (mode:100644 sha1:d078cb5a8d4ab5bc2c774b889b602d179bde39b1)
-+++ 1e2168c7d554a4fbd25a09bb591ae0f82dac6513/tar-tree.c  (mode:100644 sha1:5cc7cfef6db1269d81589b82255537fb64ba02fa)
-@@ -291,35 +291,28 @@
- }
+For example:
+
+	cg-log arch/arm/kernel/
+
+will show all commits that affected files under arch/arm/kernel/ 
+starting from the head branch.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+--- k/cg-log
++++ l/cg-log
+@@ -14,6 +14,9 @@
+ #
+ # Takes an id resolving to a commit to start from (HEAD by default),
+ # or id1:id2 representing an (id1;id2] range of commits to show.
++#
++# May also take one or more files and/or directories to reduce the
++# log to commits modifying those files/directories only.
  
- /* get commit time from committer line of commit object */
--time_t commit_time(const unsigned char *sha1)
-+time_t commit_time(void * buffer, unsigned long size)
- {
--        char type[20];
--        void *buffer;
--        unsigned long size;
- 	time_t result = 0;
-+	char *p = buffer;
+ . cg-Xlib
  
--        buffer = read_sha1_file(sha1, type, &size);
--	if (buffer) {
--		char *p = buffer;
--		while (size > 0) {
--			char *endp = memchr(p, '\n', size);
--			if (!endp || endp == p)
--				break;
--			*endp = '\0';
--			if (endp - p > 10 && !memcmp(p, "committer ", 10)) {
--				char *nump = strrchr(p, '>');
--				if (!nump)
--					break;
--				nump++;
--				result = strtoul(nump, &endp, 10);
--				if (*endp != ' ')
--					result = 0;
-+	while (size > 0) {
-+		char *endp = memchr(p, '\n', size);
-+		if (!endp || endp == p)
-+			break;
-+		*endp = '\0';
-+		if (endp - p > 10 && !memcmp(p, "committer ", 10)) {
-+			char *nump = strrchr(p, '>');
-+			if (!nump)
- 				break;
--			}
--			size -= endp - p - 1;
--			p = endp + 1;
-+			nump++;
-+			result = strtoul(nump, &endp, 10);
-+			if (*endp != ' ')
-+				result = 0;
-+			break;
- 		}
--		free(buffer);
-+		size -= endp - p - 1;
-+		p = endp + 1;
- 	}
- 	return result;
- }
-@@ -329,7 +322,6 @@
- 	unsigned char sha1[20];
- 	void *buffer;
- 	unsigned long size;
--	unsigned char tree_sha1[20];
+@@ -33,14 +36,16 @@ else
+ 	coldefault=
+ fi
  
- 	switch (argc) {
- 	case 3:
-@@ -347,11 +339,15 @@
- 	if (!sha1_file_directory)
- 		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
+-if echo "$1" | grep -q ':'; then
+-	id1=$(commit-id $(echo "$1" | cut -d : -f 1)) || exit 1
+-	id2=$(commit-id $(echo "$1" | cut -d : -f 2)) || exit 1
++id="$1"; [ -a "$1" ] && id="" || shift
++
++if echo "$id" | grep -q ':'; then
++	id1=$(commit-id $(echo "$id" | cut -d : -f 1)) || exit 1
++	id2=$(commit-id $(echo "$id" | cut -d : -f 2)) || exit 1
+ 	revls="rev-tree $id2 ^$id1"
+ 	revsort="sort -rn"
+ 	revfmt="rev-tree"
+ else
+-	id1="$(commit-id $1)" || exit 1
++	id1="$(commit-id $id)" || exit 1
+ 	revls="rev-list $id1" || exit 1
+ 	revsort="cat"
+ 	revfmt="rev-list"
+@@ -48,6 +53,10 @@ fi
  
--	buffer = read_tree_with_tree_or_commit_sha1(sha1, &size, tree_sha1);
-+	buffer = read_object_with_reference(sha1, "commit", &size, NULL);
-+	if (buffer) {
-+		archive_time = commit_time(buffer, size);
-+		free(buffer);
-+	}
-+	buffer = read_object_with_reference(sha1, "tree", &size, NULL);
- 	if (!buffer)
--		die("unable to read sha1 file");
--	if (memcmp(sha1, tree_sha1, 20))	/* is sha1 a commit object? */
--		archive_time = commit_time(sha1);
-+		die("not a reference to a tag, commit or tree object: %s",
-+		    sha1_to_hex(sha1));
- 	if (!archive_time)
- 		archive_time = time(NULL);
- 	if (basedir)
+ $revls | $revsort | while read time commit parents; do
+ 	[ "$revfmt" = "rev-list" ] && commit="$time"
++	if [ $# -ne 0 ]; then
++		parent=$(cat-file commit $commit | sed -n '2s/parent //p;2Q')
++		[ "$parent" ] && [ "$(diff-tree -r $commit $parent "$@")" ] || continue
++	fi
+ 	echo $colheader""commit ${commit%:*} $coldefault;
+ 	cat-file commit $commit | \
+ 		while read key rest; do
