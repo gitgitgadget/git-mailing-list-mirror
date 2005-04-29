@@ -1,59 +1,50 @@
-From: Tom Lord <lord@emf.net>
+From: "C. Scott Ananian" <cscott@cscott.net>
 Subject: Re: Val Henson's critique of hash-based content storage systems
-Date: Fri, 29 Apr 2005 13:37:47 -0700 (PDT)
-Message-ID: <200504292037.NAA28344@emf.net>
-References: <Pine.LNX.4.61.0504291608410.32145@cag.csail.mit.edu>
+Date: Fri, 29 Apr 2005 16:41:23 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504291639590.32145@cag.csail.mit.edu>
+References: <200504292037.NAA28344@emf.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org, robj@unrealities.com
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:38:15 2005
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:38:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRcFZ-0008Up-Br
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:38:13 +0200
+	id 1DRcFZ-0008Up-Qz
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262936AbVD2UmV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:42:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262940AbVD2UjK
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:39:10 -0400
-Received: from emf.emf.net ([205.149.0.19]:10 "EHLO emf.net")
-	by vger.kernel.org with ESMTP id S262963AbVD2Uhx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 16:37:53 -0400
-Received: (from lord@localhost) by emf.net (K/K) id NAA28344; Fri, 29 Apr 2005 13:37:47 -0700 (PDT)
-To: cscott@cscott.net
-In-reply-to: <Pine.LNX.4.61.0504291608410.32145@cag.csail.mit.edu> (cscott@cscott.net)
+	id S262942AbVD2Umk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262940AbVD2Umk
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:42:40 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:50870 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S262967AbVD2Ulk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 16:41:40 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DRcIr-0008EU-00; Fri, 29 Apr 2005 16:41:37 -0400
+To: Tom Lord <lord@emf.net>
+In-Reply-To: <200504292037.NAA28344@emf.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 29 Apr 2005, Tom Lord wrote:
 
-  lord:
+> My point is simply that blob-db implementations should assume that the
+> mathemeticians will succeed and take the small steps necessary to make
+> sure that those bitstrings can't be used to crash a distributed
+> blob-db infrastructure.
 
-  > I would expect someone to have on hand a small number of blobs that are
-  > different but have different hashes and, eventually, to drop said files
-  > into a blob-based infrastructure to wreak havoc.
+And my point is that you haven't *begun* to describe how one might use an 
+arbitrary hash collision to "crash a distributed blob-db infrastructure".
 
-  cscott:
-  
-  This is just ridiculous.  The number of known collisions in SHA1 is 
-  *exactly zero* at this point in time --- not guaranteed to stay that way, 
-  of course, but generating collisions is likely to remain relatively 
-  expensive for some time.
+Remember, first you've got to get some reference to your collision into 
+the db...  (and if you can do that, why are you mucking around with hash 
+collisions?)
+   --scott
 
-Blob-dbs and the low-level object system (trees, file-contents, and
-changesets) are pretty fundamental things.  It is likely (and
-desirable) -- not guaranteed but likely (and desirable) -- that people
-will invest heavily in building infrastructure that operates solely at
-that level of abstraction.  Arguably, that is already happening.
-
-Simultaneously, it is very desirable that some mathemetican somewhere
-will discover two bitstrings which are different but have SHA1
-checksums, and then tell everyone in the world about their discovery.
-
-My point is simply that blob-db implementations should assume that the
-mathemeticians will succeed and take the small steps necessary to make
-sure that those bitstrings can't be used to crash a distributed
-blob-db infrastructure.
-
--t
-
-
+Philadelphia PBPRIME STANDEL for Dummies milita Richard Tomlinson 
+ESSENCE SUMAC Nader KUCLUB WSHOOFS QKENCHANT AK-47 AMQUACK supercomputer
+                          ( http://cscott.net/ )
