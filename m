@@ -1,101 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] leftover bits for git rename
-Date: Fri, 29 Apr 2005 15:42:09 -0700
-Message-ID: <7voebx2oji.fsf@assigned-by-dhcp.cox.net>
+From: Andrea Arcangeli <andrea@suse.de>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Sat, 30 Apr 2005 00:47:42 +0200
+Message-ID: <20050429224742.GN17379@opteron.random>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1> <20050429201957.GJ17379@opteron.random> <20050429223052.GD28540@dspnet.fr.eu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 00:37:23 2005
+X-From: git-owner@vger.kernel.org Sat Apr 30 00:37:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRe6e-0004A8-8N
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 00:37:08 +0200
+	id 1DRe6n-0004Al-Tl
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 00:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263042AbVD2Wmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 18:42:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263044AbVD2Wmi
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 18:42:38 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:439 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S263042AbVD2WmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 18:42:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050429224210.YIIN12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 29 Apr 2005 18:42:10 -0400
-To: Linus Torvalds <torvalds@ppc970.osdl.org>
+	id S263043AbVD2Wmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 18:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263045AbVD2Wmr
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 18:42:47 -0400
+Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:25400
+	"EHLO opteron.random") by vger.kernel.org with ESMTP
+	id S263043AbVD2Wmd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 18:42:33 -0400
+Received: by opteron.random (Postfix, from userid 500)
+	id 6F1161C159B; Sat, 30 Apr 2005 00:47:42 +0200 (CEST)
+To: Olivier Galibert <galibert@pobox.com>,
+	Sean <seanlkml@sympatico.ca>, Matt Mackall <mpm@selenic.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050429223052.GD28540@dspnet.fr.eu.org>
+X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  commit 2d280e1c5e6fdcf5428e60219eae14a2c6629c51
-  parent aed7a5a9dab96d1a17be4fadf7685086047178cc
-  author Linus Torvalds <torvalds@ppc970.osdl.org> Fri Apr 29 15:02:43 2005
-  committer Linus Torvalds <torvalds@ppc970.osdl.org> Fri Apr 29 15:02:43 2005
+On Sat, Apr 30, 2005 at 12:30:52AM +0200, Olivier Galibert wrote:
+> Nothing a little caching can't solve.  Given that git's objects are
+> immutable caching is especially easy to do, you can have the delta
+> reference indexes in the filename.
 
-    Update the merge scripts for the big git rename.
+Rather than creating delta reference indexes we can as well use
+mercurial that uses them as primary storage.
 
-    Let's see what else I forgot..
-
-Not that many, but here they are.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-----
-
-git-merge-one-file-script |    6 +++---
-git-prune-script          |    2 +-
-git-tag-script            |    2 +-
-
-cd /opt/packrat/playpen/public/in-place/git/git.linus/
-jit-snap -v 0
-# - [PATCH] Makefile: The big git command renaming fallout fix.
-# + working tree
---- k/git-merge-one-file-script  (mode:100755)
-+++ l/git-merge-one-file-script  (mode:100755)
-@@ -9,7 +9,7 @@
- #
- #
- # Handle some trivial cases.. The _really_ trivial cases have
--# been handled already by read-tree, but that one doesn't
-+# been handled already by git-read-tree, but that one doesn't
- # do any merges that migth change the tree layout
- #
- 
-@@ -41,7 +41,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- #
- ".$2." | "..$3" )
- 	echo "Adding $4 with perm $6$7"
--	mv $(unpack-file "$2$3") $4
-+	mv $(git-unpack-file "$2$3") $4
- 	chmod "$6$7" $4
- 	git-update-cache --add -- $4
- 	exit 0
-@@ -55,7 +55,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 		exit 1
- 	fi
- 	echo "Adding $4 with perm $6"
--	mv $(unpack-file "$2") $4
-+	mv $(git-unpack-file "$2") $4
- 	chmod "$6" $4
- 	git-update-cache --add -- $4
- 	exit 0;;
---- k/git-prune-script  (mode:100755)
-+++ l/git-prune-script  (mode:100755)
-@@ -1,2 +1,2 @@
- #!/bin/sh
--fsck-cache --unreachable $(cat .git/HEAD ) | grep unreachable | cut -d' ' -f3 | sed 's:^\(..\):.git/objects/\1/:' | xargs rm
-+git-fsck-cache --unreachable $(cat .git/HEAD ) | grep unreachable | cut -d' ' -f3 | sed 's:^\(..\):.git/objects/\1/:' | xargs rm
---- k/git-tag-script  (mode:100755)
-+++ l/git-tag-script  (mode:100755)
-@@ -1,6 +1,6 @@
- #!/bin/sh
- object=${2:-$(cat .git/HEAD)}
--type=$(cat-file -t $object) || exit 1
-+type=$(git-cat-file -t $object) || exit 1
- ( echo -e "object $object\ntype $type\ntag $1\n"; cat ) > .tmp-tag
- rm -f .tmp-tag.asc
- gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
-
-
+git is the _storage_ filesystem, if we can't use it but we've to create
+another different representation to do efficient network download, we
+can as well the more efficient representation instead of git, that's
+what mercurial does AFIK.
