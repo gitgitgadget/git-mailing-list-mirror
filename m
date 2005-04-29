@@ -1,44 +1,50 @@
-From: Kevin Smith <yarcs@qualitycode.com>
-Subject: Signed commit vulnerabilities? (was: Mercurial 0.4b vs git patchbomb
- benchmark)
-Date: Fri, 29 Apr 2005 16:29:24 -0400
-Message-ID: <42729924.6090308@qualitycode.com>
-References: <200504291954.MAA27561@emf.net>
+From: Morgan Schweers <mschweers@gmail.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 13:16:44 -0700
+Message-ID: <b8464fde050429131677ae06d1@mail.gmail.com>
+References: <20050429194753.GA14222@uglybox.localnet>
+	 <200504291954.MAA27561@emf.net>
+Reply-To: Morgan Schweers <mschweers@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:28:48 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Tom Lord <lord@emf.net>
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:30:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRc6B-0007Kj-Br
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:28:31 +0200
+	id 1DRc7G-0007Rc-7m
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262971AbVD2UdW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:33:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262930AbVD2Uao
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:30:44 -0400
-Received: from deuterium.rootr.net ([203.194.209.160]:65041 "EHLO
-	vulcan.rootr.net") by vger.kernel.org with ESMTP id S262963AbVD2U3o
+	id S262955AbVD2UUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:20:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262949AbVD2URw
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:17:52 -0400
+Received: from zproxy.gmail.com ([64.233.162.205]:64123 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262948AbVD2UQy convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:29:44 -0400
-Received: from [10.10.10.20] (147-49.35-65.tampabay.res.rr.com [65.35.49.147])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vulcan.rootr.net (Postfix) with ESMTP id 2457C3C2A;
-	Fri, 29 Apr 2005 20:29:26 +0000 (UTC)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050325)
-X-Accept-Language: en-us, en
-To: Tom Lord <lord@emf.net>
+	Fri, 29 Apr 2005 16:16:54 -0400
+Received: by zproxy.gmail.com with SMTP id 13so815732nzp
+        for <git@vger.kernel.org>; Fri, 29 Apr 2005 13:16:44 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jPE07xDWwucmtlw0fX0Ss8u4vzUIRvDLr7rJohQqOqnSXEjnaouo3AWCQ8QQwo7+g8ba7rbYqbiXqq1QIw/ivGBiPLwt6ZU6TRBNvLToYEtg1Uas6JS6ySpHcacypBg8Efgp3Ru7fQ664zL9ckO7DZCpPor6djXIga54mD0lGzE=
+Received: by 10.36.72.20 with SMTP id u20mr238238nza;
+        Fri, 29 Apr 2005 13:16:44 -0700 (PDT)
+Received: by 10.36.9.13 with HTTP; Fri, 29 Apr 2005 13:16:44 -0700 (PDT)
+To: git@vger.kernel.org
 In-Reply-To: <200504291954.MAA27561@emf.net>
-X-Enigmail-Version: 0.90.2.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Tom Lord wrote:
+Greetings,
+
+On 4/29/05, Tom Lord <lord@emf.net> wrote:
+> 
+> 
 >   > Call me a naive git, but seems to me the "git way" is a little
 >   > different. It's tree-based rather than diff-based, and doesn't involve
 >   > passing diffs around, right?
@@ -50,38 +56,36 @@ Tom Lord wrote:
 > 
 > Very much so.
 
-So far, this is a frustrating conversation to watch. Here's my own
-interpretation, presented to help the participants understand whether or
-not their intended messages are getting through clearly.
+It doesn't appear that he is.  You appeared to predicate your argument
+on the 'auditor' believing a diff looks good, but getting a tree
+instead, that might not reflect the diff.
 
-Originally, Tom seemed to claim that the problem was that git requires
-you to sign an entire tree, rather than a diff, even though the signer
-is only vouching for their diff.
+Instead, in the git-world, the auditor actually gets a tree, and
+produces the diff themselves, and then decides whether the diff looks
+good enough to keep.
 
-Linus responded by saying that a git signature of a tree would match
-that description, but signing a commit is different. I think he claimed
-that (by convention) signing a commit ONLY means you are signing the
-most recent change, which turned tree A into tree B.
+The argument about the high velocity of git-transfers causing the
+inability to check doesn't appear to apply here, because the
+distributed development environment of Linux says that the
+'gatekeepers' ARE in fact validating the changes from people in their
+area of expertise are good (or are relying on sub-gatekeepers), and
+then Linus is trusting them completely.
 
-Tom then appeared to propose some specific attacks that could work
-against the git model. The precondition seems to be if the patch
-receiver does not exhaustively analyze each and every patch. The
-receiver trusts the contents based solely on who signed the commit object.
+This seems like the methodology that has been used up until now via bk
+previously.  Git doesn't change that, and in fact supports that method
+of development.
 
-One category of attacks were that a computer or communication channel
-was broken. It's not immediately clear to me how git's model contributes
-any weakness to these cases, compared to other signing strategies.
+Your further suggestion that Linus could be replaced by a
+patch-manager, in that case, got a chuckle from me at least, but the
+more serious point is that Linus is necessary as the arbiter of who
+actually receives the absolute trust of a gatekeeper.  He is, in
+effect, a meta-gatekeeper.
 
-The other category of attack mentioned was social, such as a signer
-creating a patch that claims to do one thing, but actually does another.
-Again, I don't see how git is weaker in this case than any other tool.
+> -t
 
-Noel then pointed out that in practice, someone receiving a signed
-commit in git would view the commit comments and the diff, so the effect
-is similar to having the diff itself be signed.
+In reading this conversation, it seems you're looking for a more
+absolute standard of trust than the kernel developers are working
+with.  I believe this is an example of 'good enough' process being
+accepted, versus 'perfect' process.
 
-And that's where we are right now. So, from here, it looks like Tom
-needs to be more specific about which attacks might be more effective
-against git's signing strategy than against signed diffs.
-
-Kevin
+--  Morgan Schweers
