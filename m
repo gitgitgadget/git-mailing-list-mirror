@@ -1,54 +1,67 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: Val Henson's critique of hash-based content storage systems
-Date: Fri, 29 Apr 2005 16:47:17 -0400
-Message-ID: <118833cc0504291347ea1a3fa@mail.gmail.com>
-References: <loom.20050429T015434-928@post.gmane.org>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 13:49:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504291338540.18901@ppc970.osdl.org>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
+ <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1>
+ <20050429074043.GT21897@waste.org> <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
+ <20050429163705.GU21897@waste.org> <Pine.LNX.4.58.0504291006450.18901@ppc970.osdl.org>
+ <20050429191207.GX21897@waste.org> <Pine.LNX.4.58.0504291248210.18901@ppc970.osdl.org>
+ <20050429202341.GB21897@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:43:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sean <seanlkml@sympatico.ca>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:43:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRcKC-0000bY-GE
+	id 1DRcKD-0000bY-Fi
 	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:43:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262973AbVD2Urm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262972AbVD2Urm
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:47:42 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:14256 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262929AbVD2UrW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:47:22 -0400
-Received: by rproxy.gmail.com with SMTP id a41so620909rng
-        for <git@vger.kernel.org>; Fri, 29 Apr 2005 13:47:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QHiR9vrrA6VW+ajYnytCSpKWQNDXQ6xq5GWGi/TdZzHCn+WCJliPsxGYJlYa2x0zJRyC41+j0CyvD7pX4Eor2+OanRFeVkx/KFiwiq9iFB9cnWL9pk/C7XGDDI9wb1PAN9RIVJ86IwZr3/zq3Lnoh2/d3DEF7PV/+EJzd7e/5WE=
-Received: by 10.38.72.40 with SMTP id u40mr3339905rna;
-        Fri, 29 Apr 2005 13:47:17 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Fri, 29 Apr 2005 13:47:17 -0700 (PDT)
-To: Rob Jellinghaus <robj@unrealities.com>
-In-Reply-To: <loom.20050429T015434-928@post.gmane.org>
-Content-Disposition: inline
+	id S262953AbVD2UsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:48:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262952AbVD2UsK
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:48:10 -0400
+Received: from fire.osdl.org ([65.172.181.4]:44442 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262963AbVD2Ur1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 16:47:27 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3TKlJs4004973
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 29 Apr 2005 13:47:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3TKlIqG003590;
+	Fri, 29 Apr 2005 13:47:19 -0700
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050429202341.GB21897@waste.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 4/28/05, Rob Jellinghaus <robj@unrealities.com> wrote:
-> I assume most people here have read this, but just in case:
+
+
+On Fri, 29 Apr 2005, Matt Mackall wrote:
 > 
-> http://www.usenix.org/events/hotos03/tech/full_papers/henson/henson.pdf
+> The changeset log (and everything else) has an external index.
 
-The math in section 3 is bogus.  1-(1-2^-b)^n  isn't hard to compute and
-even if it was, it is the wrong formula.  (Set n==2^b; you obviously should
-get probability 1 for collision.)
+I don't actually know exactly how the BK changeset file works, but your 
+explanation really sounds _very_ much like it.
 
-The right formula is 1-B!/B^n/(B-n)! where B=2^n.  For n=2^80 and b=160
-you get about 39%.
+I didn't want to do anything that even smelled of BK. Of course, part of
+my reason for that is that I didn't feel comfortable with a delta model at
+all (I wouldn't know where to start, and I hate how they always end up
+having different rules for "delta"ble and "non-delta"ble objects).
 
-Morten
+But another was that exactly since I've been using BK for so long, I
+wanted to make sure that my model just emulated the way I've been _using_
+BK, rather than any BK technical details.
+
+So it sounds like it could work fine, but it in fact sounds so much like 
+the ChangeSet file that I'd personally not have done it that way. 
+
+			Linus
