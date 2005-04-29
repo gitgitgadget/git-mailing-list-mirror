@@ -1,65 +1,74 @@
-From: Rob Jellinghaus <robj@unrealities.com>
-Subject: Val Henson's critique of hash-based content storage systems
-Date: Fri, 29 Apr 2005 00:06:01 +0000 (UTC)
-Message-ID: <loom.20050429T015434-928@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Apr 29 17:23:53 2005
+From: Tom Lord <lord@emf.net>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 08:44:30 -0700 (PDT)
+Message-ID: <200504291544.IAA23584@emf.net>
+References: <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
+Cc: mpm@selenic.com, seanlkml@sympatico.ca,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 17:40:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRXJ6-0001Yf-Mu
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 17:21:32 +0200
+	id 1DRXa3-0003nl-3E
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 17:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262793AbVD2P1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 11:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262795AbVD2P1J
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 11:27:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:64166 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262793AbVD2P1F (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 11:27:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DRXIJ-0001Rf-2H
-	for git@vger.kernel.org; Fri, 29 Apr 2005 17:20:47 +0200
-Received: from mailhost.nimblefish.com ([207.213.220.164])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Apr 2005 17:20:43 +0200
-Received: from robj by mailhost.nimblefish.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 29 Apr 2005 17:20:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 66.54.159.162 (Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1)
+	id S262805AbVD2Pok (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 11:44:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262802AbVD2Pok
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 11:44:40 -0400
+Received: from emf.emf.net ([205.149.0.19]:4361 "EHLO emf.net")
+	by vger.kernel.org with ESMTP id S262801AbVD2Poc (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 11:44:32 -0400
+Received: (from lord@localhost) by emf.net (K/K) id IAA23584; Fri, 29 Apr 2005 08:44:30 -0700 (PDT)
+To: torvalds@osdl.org
+In-reply-to: <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org> (message from Linus Torvalds on Fri, 29 Apr 2005 07:34:15 -0700 (PDT))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I assume most people here have read this, but just in case:
 
-http://www.usenix.org/events/hotos03/tech/full_papers/henson/henson.pdf
 
-Is git vulnerable to attacks in the event that SHA-1 is broken?
+  > ie does mercurial do distributed merges, which git was designed for, and 
+  > does mercurial notice single-bit errors in a reasonably secure manner, or 
+  > can people just mess with history willy-nilly?
 
-If an attacker used an SHA-1 attack to create a blob that matched the hash of
-some well-known git object (say, the tree for Linux 2.7-rc1), and spammed public
-git repositories with it ahead of Linus's release, what would be the potential
-for mischief, and what would the recovery process be?
+  > For the latter, the cryptographic nature of sha1 is an added bonus - the
+  > _big_ issue is that it is a good hash, and an _exteremely_ effective CRC
+  > of the data. You can't mess up an archive and lie about it later.
 
-It seems that git is optimized to support networks of trust, so provided you
-accept only signed commits from people you trust, it's likely that corruption
-and mischief can be mostly avoided.  But probably not completely; there is still
-a window of vulnerability.
+On the other hand, you're asking people to sign whole trees and not just at
+first-import time but also for every change.
 
-It seems that git repositories could (at great expense) be regenerated to use a
-new hash algorithm.  Is that the plan if SHA-1 is compromised (or comes so close
-to compromise as to make Linus nervous ;-)?
+That's an impedence mismatch and undermines the security features of the
+approach you're taking and here is why:
 
-Cheers,
-Rob
+I shouldn't sign anything I haven't reviewed pretty carefully.  For
+the kernel and in many other situations, it is too expensive to review
+the whole tree.  Thus, the thing actually signed and the thing meant
+by the signature are not equal.  I sign a tree, in this system,
+because I think the right diffs and only the right diffs have been
+applied to it.   My signature is intended to mean, though, that I vouche
+for the *diffs*, not the tree.
 
+If I've changed five files, I should be signing a statement of:
+
+	1) my belief about the identity of the immediate ancestor tree
+	2) a robust summary of my changes, sufficient to recreate my
+	   new tree given a faithful copy of the ancestor
+
+That's a short enough amount of data that a human can really review it
+and thus it makes the signatures much more meaningful.
+
+Probably doesn't matter much other than in cases where a mainline
+is undergoing massive batch-patching based mostly on a web of trust.
+
+But in that case --- someone or something generates purported diffs of
+a tree; someone or something else scans those diffs and decides they
+look good ---- and then on this basis, something distinct from
+directly using those diffs occurs.  The diffs were used to vette the
+change; the signature asserts that a certain tree is a faithful result
+of applying those diffs.  Nothing checks that second assertion -- it's
+taken on faith.
+
+-t
 
