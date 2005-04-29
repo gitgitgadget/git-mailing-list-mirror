@@ -1,48 +1,75 @@
-From: Andrea Arcangeli <andrea@suse.de>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Sat, 30 Apr 2005 00:47:42 +0200
-Message-ID: <20050429224742.GN17379@opteron.random>
-References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1> <20050429201957.GJ17379@opteron.random> <20050429223052.GD28540@dspnet.fr.eu.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: The big git command renaming..
+Date: Fri, 29 Apr 2005 16:09:16 -0700
+Message-ID: <4272BE9C.7090906@zytor.com>
+References: <Pine.LNX.4.58.0504291416190.18901@ppc970.osdl.org> <20050429213540.GA1691@redhat.com> <4272AE05.2070202@zytor.com> <Pine.LNX.4.58.0504291511410.18901@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Apr 30 00:37:33 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dave Jones <davej@redhat.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 30 01:04:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRe6n-0004Al-Tl
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 00:37:18 +0200
+	id 1DReX4-0006Kd-5v
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 01:04:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263043AbVD2Wmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 18:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263045AbVD2Wmr
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 18:42:47 -0400
-Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:25400
-	"EHLO opteron.random") by vger.kernel.org with ESMTP
-	id S263043AbVD2Wmd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 18:42:33 -0400
-Received: by opteron.random (Postfix, from userid 500)
-	id 6F1161C159B; Sat, 30 Apr 2005 00:47:42 +0200 (CEST)
-To: Olivier Galibert <galibert@pobox.com>,
-	Sean <seanlkml@sympatico.ca>, Matt Mackall <mpm@selenic.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050429223052.GD28540@dspnet.fr.eu.org>
-X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
-User-Agent: Mutt/1.5.9i
+	id S263053AbVD2XKB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 19:10:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263057AbVD2XKB
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 19:10:01 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:33214 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S263053AbVD2XJq
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 19:09:46 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3TN9MG0016973
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 29 Apr 2005 16:09:23 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504291511410.18901@ppc970.osdl.org>
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 30, 2005 at 12:30:52AM +0200, Olivier Galibert wrote:
-> Nothing a little caching can't solve.  Given that git's objects are
-> immutable caching is especially easy to do, you can have the delta
-> reference indexes in the filename.
+Linus Torvalds wrote:
+> 
+> Sure. 
+> 
+> Just a quick question: what are the "rules" for /pub/scm/git? 
+> 
+> Should I put just git in it, or is it meant for any "git project", and
+> should I also copy the 2.6.x kernel home from
+> 
+> 	/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> 
+> to
+> 
+> 	/pub/scm/git/linux-2.6.git
+> 
+> or what?
+> 
+> Me, I can do either or both, I just don't know what the intent was..
 
-Rather than creating delta reference indexes we can as well use
-mercurial that uses them as primary storage.
+/pub/scm/git I created for your git project; don't move the kernel in there.
 
-git is the _storage_ filesystem, if we can't use it but we've to create
-another different representation to do efficient network download, we
-can as well the more efficient representation instead of git, that's
-what mercurial does AFIK.
+If you have any other non-kernel git projects, just let me know and I'll 
+make directories for them.
+
+	-hpa
+
+P.S. Are you still updating the trees in 
+/pub/linux/kernel/people/torvalds/?  They still show up on our change 
+reports, and cause problems for the mirrors.  Perhaps you could replace 
+those trees with symlinks into /pub/scm.
+
+	-hpa
+
+
