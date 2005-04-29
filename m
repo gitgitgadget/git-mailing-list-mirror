@@ -1,75 +1,58 @@
-From: Andrea Arcangeli <andrea@suse.de>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 22:30:27 +0200
-Message-ID: <20050429203027.GK17379@opteron.random>
-References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org>
+From: "Andrew Timberlake-Newell" 
+	<Andrew.Timberlake-Newell@AllianceOneInc.com>
+Subject: RE: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 16:13:50 -0400
+Message-ID: <000e01c54cf7$f61ee4a0$9b11a8c0@allianceoneinc.com>
+References: <200504291954.MAA27561@emf.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:21:43 2005
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <seanlkml@sympatico.ca>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:25:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRbzD-0006ah-Gg
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:21:19 +0200
+	id 1DRc2n-0006w4-AU
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262959AbVD2U0M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:26:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262963AbVD2UZo
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:25:44 -0400
-Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:35683
-	"EHLO opteron.random") by vger.kernel.org with ESMTP
-	id S262944AbVD2UZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:25:19 -0400
-Received: by opteron.random (Postfix, from userid 500)
-	id AAF501C1593; Fri, 29 Apr 2005 22:30:27 +0200 (CEST)
-To: Matt Mackall <mpm@selenic.com>
-Content-Disposition: inline
-In-Reply-To: <20050429060157.GS21897@waste.org>
-X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
-User-Agent: Mutt/1.5.9i
+	id S262949AbVD2UUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262948AbVD2USK
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:18:10 -0400
+Received: from mail.allianceoneinc.com ([65.213.221.36]:10255 "EHLO
+	mail.allianceoneinc.com") by vger.kernel.org with ESMTP
+	id S262930AbVD2UPW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 16:15:22 -0400
+Received: from epa20012 [192.168.17.155] by mail.allianceoneinc.com with ESMTP
+  (SMTPD32-8.14) id A57E2E3900A8; Fri, 29 Apr 2005 16:13:50 -0400
+To: "'Tom Lord'" <lord@emf.net>, <noel@zhtwn.com>
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <200504291954.MAA27561@emf.net>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+Importance: Normal
+X-IMAIL-SPAM-VALFROM: (957e2e3900a8e1d5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 28, 2005 at 11:01:57PM -0700, Matt Mackall wrote:
-> change nodes so you've got to potentially traverse all the commits to
-> reconstruct a file's history. That's gonna be O(top-level changes)
-> seeks. This introduces a number of problems:
+Tom Lord responded to Noel Maddy: 
+>   > Call me a naive git, but seems to me the "git way" is a little
+>   > different. It's tree-based rather than diff-based, and doesn't involve
+>   > passing diffs around, right?
 > 
-> - no way to easily find previous revisions of a file
->   (being able to see when a particular change was introduced is a
->   pretty critical feature)
-> - no way to do bandwidth-efficient delta transfer
-> - no way to do efficient delta storage
-> - no way to do merges based on the file's history[1]
+> Isn't that a significant part of what I said?  Go back and read more
+> carefully, is my suggestion.
 
-And IMHO also no-way to implement a git-on-the-fly efficient network
-protocol if tons of clients connects at the same time, it would be
-dosable etc... At the very least such a system would require an huge
-amount of ram. So I see the only efficient way to design a network
-protocol for git not to use git, but to import the data into mercurial
-and to implement the network protocol on top of mercurial.
+It looks to me like he did read carefully.
 
-The one downside is that git is sort of rock solid in the way it stores
-data on disk, it makes rsync usage trivial too, the git fsck is reliable
-and you can just sign the hash of the root of the tree and you sign
-everything including file contents. And of course the checkin is
-absolutely trivial and fast too.
+There were two different ideas:
+   TL)  Passing tree & diff and trusting diff to create tree
+   NM)  Passing tree and generating diff versus local tree for review
 
-With a more efficient diff-based storage like mercurial we'd be losing
-those fsck properties etc.. but those reliability properties don't worth
-the network and disk space they take IMHO, and the checkin time
-shouldn't be substantially different (still running in O(1) when
-appending at the head). And we could always store the hash of the
-changeset, to give it some basic self-checking.
+Maybe I'm reading them wrong, but that certainly looks like what each was
+expressing and they don't look like the same thing.
 
-I give extreme value in a SCM in how efficiently it can represent the
-whole tree for both network downloads and backups too. Being able to
-store the whole history of 2.5 in < 100M is a very valuable feature
-IMHO, much more valuable than to be able to sign the root.
 
-Also don't get me wrong, I'm _very_ happy about git too, but I just
-happen to prefer mercurial storage (I would never use git for anything
-but the kernel, just like I wasn't using arch for similar reasons).
