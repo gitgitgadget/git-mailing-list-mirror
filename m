@@ -1,518 +1,63 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Odd decision of git-pasky-0.7 to do a merge
-Date: Fri, 29 Apr 2005 08:36:16 +0100
-Message-ID: <20050429083615.A32271@flint.arm.linux.org.uk>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 00:40:43 -0700
+Message-ID: <20050429074043.GT21897@waste.org>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 29 09:33:01 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 09:36:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRPzY-0001XK-Q2
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 09:32:53 +0200
+	id 1DRQ2N-0001uJ-SY
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 09:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262450AbVD2HiQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 03:38:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262451AbVD2HiQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 03:38:16 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:14355 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S262450AbVD2HhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 03:37:03 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DRQ3W-0004BK-3N
-	for git@vger.kernel.org; Fri, 29 Apr 2005 08:36:58 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DRQ3V-0000L2-6F
-	for git@vger.kernel.org; Fri, 29 Apr 2005 08:36:57 +0100
-To: git@vger.kernel.org
+	id S262476AbVD2HlH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 03:41:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262473AbVD2HlH
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 03:41:07 -0400
+Received: from waste.org ([216.27.176.166]:12170 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S262469AbVD2Hkw (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 03:40:52 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3T7eh4i001095
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 29 Apr 2005 02:40:43 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j3T7ehoK001092;
+	Fri, 29 Apr 2005 02:40:43 -0500
+To: Sean <seanlkml@sympatico.ca>
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <3817.10.10.10.24.1114756831.squirrel@linux1>
+User-Agent: Mutt/1.5.6+20040907i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is what happened this morning to a tree which only gets pulled
-from Linus' tree.  No other changes are ever committed to it.
+On Fri, Apr 29, 2005 at 02:40:31AM -0400, Sean wrote:
+> > - no way to do efficient delta storage
+> 
+> This has been discussed.  It is a recognized and accepted design
+> trade-off.  Disk is cheap.
 
-Why it decided that a merge was necessary is beyond me.  Any ideas?
-Did Linus forget to merge his tree properly?
+This trade-off FAILS, as my benchmarks against Mercurial have shown.
+It trades 10x disk space for maybe 10% performance relative to my
+approach. Meanwhile, it makes a bunch of other things hard, namely the
+ones I've listed. Yes, you can hack around them, but the back end will
+still be bloated.
 
-MOTD:	
-MOTD:	Welcome to the Linux Kernel Archive.
-MOTD:	
-MOTD:	Due to U.S. Exports Regulations, all cryptographic software on this
-MOTD:	site is subject to the following legal notice:
-MOTD:	
-MOTD:	This site includes publicly available encryption source code
-MOTD:	which, together with object code resulting from the compiling of
-MOTD:	publicly available source code, may be exported from the United
-MOTD:	States under License Exception "TSU" pursuant to 15 C.F.R. Section
-MOTD:	740.13(e).
-MOTD:	
-MOTD:	This legal notice applies to cryptographic software only.
-MOTD:	Please see the Bureau of Industry and Security,
-MOTD:	http://www.bis.doc.gov/ for more information about current
-MOTD:	U.S. regulations.
-MOTD:	
+> Your concearns are about performance rather than real limitations and it's
+> just too damn early in the development process for that.  Frankly it's
+> amazing how good git is considering its age; it's already _way_ faster and
+> easier to use than bk ever was for my use.
 
-client: nothing to do: perhaps you need to specify some filenames or the --recursive option?
-
-
-receiving file list ... done
-00/10511083fce44618d4e8c522d588a9a983a668
-00/46c219833d6cfbef77e85addc663e1be71e290
-01/e714b511b58e754d425c2e6cf942b501b139de
-04/14eb325468076106ba93369a3b83fbc1fe38f1
-04/7a2428a14216a83980ed26b6a59b3ca40a1fb0
-05/262249b01a4822e9e7ec2ab766ae90b5924cee
-05/61d95240fb019e4be919ce529f23cbb5be6f23
-05/8c70c6f1ac32b5672fea3674dd6950fd03dd62
-06/5558c4234f8a19cf2fcc0d036c919798556412
-07/5d3961a119e8f27294cd77193f8fee7908a521
-07/838a5ba3a1778572a0266335f92a677c347709
-08/5109d2b55e21f31dd368336b40f66d3778bf13
-09/9a58f681ed951434574ec39bdfe87055bafe73
-09/d1db5c6131232f764046160c29118cd4e5e646
-0b/338eca6dc0b1559e2392af2964f5d7fcfe1820
-0c/b766ae629c70d53040f85de73db0583eadb233
-0c/fbd4329546e2892de17eb748a26cbe1fbc2775
-0f/440d7ba256e0319eec350e8fe4f48cccac5866
-0f/7ad450394560a6b6c72115e04bf7afd6230e70
-10/3c63af4e29ee400b0bef59ed5a9d0be65a7a2b
-11/aa0149d0e49ee1791735ec4ae3079b27b9a68e
-11/aaf9d3ebfd4998fc7d550c9af4f502105f0835
-11/dbfcb33b10c6c589b19377f8ed7a9ac61f1526
-12/4fb98b8a1a09d395815daace2db1902855bf68
-12/ba81d7b07f6d1baefc380a43fb24261a583991
-15/3fae07372c65d4291522e42aa5a39135d5b18b
-15/8e8f25b1c05b05aa221ae40483e5061b6b4732
-17/3372162ddbd414cc471c1a3a52ad7ea279aaf4
-17/4114fec801a31e00f5ffaeb7e9b9fc1ca40a40
-17/44196a8cf6bf3edfd7ad63c6a10f1609bd206a
-18/c8baff8fe151ea02e00047afc369ee31939e9b
-18/f0bf2e180d1585d88fee4f47af7c43d7a51399
-19/59c7c4b185b48793ed81aee9d1cd61b50cc070
-19/8d0b03c0afa7974cd6dcea4e711351f4e056eb
-19/9311746932ee3952abebc5d008b8c9daf9c11b
-19/da861e523d8dbbfe327e4b07d166c61544a623
-19/eab8ed1f4482c1603df19d25095a44d2610c62
-1a/2849fe1ee2603a9f8e6c6ccc0d43e73b70e02f
-1a/4db9bc742bcfd7368caf79b9c751f49b4c667b
-1a/8828481234fae6a6858e868f3c0f6058cb4673
-1b/0070dfc51ceacc55cb568d64db7405e950e8d9
-1b/3082d79379d872481aa3b109be42f408cb7c3f
-1b/53dcd0f2ebc3e13f9f30bb3170692009b3cdc7
-1b/5ee6f1b9909861b19b2ae8f932a77eb0331143
-1c/ac5216b3a2b41e313dc90069861663d73d8531
-1d/a0c78b32abe122a959d2a57ba3d41563d8e39f
-1d/f26ddf68b1534f0602f5b8c2bca870814c4ca7
-1e/8490ed694878b3bbed1e96ab792791ddf1daed
-1e/e90350d3ad6c2c3d59fa598c1440fcdf5a34e8
-1f/22b85324cf479f26b890819af1b53858c282ce
-21/a246473a910264fa847e6e472803ff879ee77b
-22/557716f9afb48c032d9c7759706183f01b6a9f
-23/7e3bf94bfe888475053e2aced02b7d140fee8d
-23/c85a236c4197dce7c0681dea1849d8f10871b5
-26/04f6da1afb56fae5930b58349e43a2b0345933
-27/5cde1a1f3880601509c851d72c82bb8d3ee67c
-27/d433fad9b7bda681bc4c0904e95052007aca92
-2b/2eb698450143266af83c36c96f53a3b8a3b8f2
-2c/7fe5e4b7676df9483294bd164664ed202a948b
-2e/1f9c3556f5922a9018c30055949f7a64f333be
-31/0bdee25400f6f3bcbc3d946a885a794a6097c6
-31/ca3bc3c569f9fe02aae6974ac3a9126f14902f
-32/2a12450ad3b0f527d2d05fe27585a14197062d
-32/2c700ba3ea72525b3b24d3107a0eadcfb3f968
-32/f2249411fadabea3767ce3b20ad820f382f401
-33/4f61773e6d692844aab739df7ca0084f54ab1c
-33/ac8bf47b0e0d64b2ba9a75b136bc82eac1fa65
-36/d3c128a58bde9166e94cab813ef3314ea28926
-38/3c9b6e6992bbc2297092c79bf262a3d78b8c8f
-38/3e55fa7d260687930daeb43b1309f58175de33
-39/0f22fa343908003b4241c3d99e7bde2ea84ba6
-39/170cffcad8289a1ca92283aa6435c33b20f0e5
-3b/8a7cf7a9528501b0e3d72ccc8cbd384fd88b3a
-3b/a5f5e71434a3805151f82cf3a50c1201fc254d
-3b/f8a0254f81b64aa4a5429ad7b725699d810b15
-3d/036bf689d8bf986c13824170cca71c0d1ea35e
-3d/5365b9f5ba3791eafe9e8b9c654dffac0d9d30
-3d/61d96d740787e6b56a2709ca905c5a373fb50c
-3d/bbf61f4416fd32ab54f5b7612066201a230f7b
-3e/20876b3b1d6d4fda144c0e13029e5570dd237a
-3e/386fd4c5c6e627699ccd04117b712030f0f3f4
-40/4eac144d1403a60d5aaa07a435df987936cd30
-40/61e43471c1a1dc1822fcae3dca02c4406794f0
-41/2b6d243d539994f903007b7299af797580842e
-41/9f145c80b53f5e84688e68fd35e840b7b4d089
-42/1be78e49566536638effd2fa3f222686cf27fd
-43/37f8e30352d7ee14c33fe758ada91e66b93d80
-43/3dc24f24b409fb130f638aa85470a0eb666206
-43/7be1efe99e2ac4a2047e43f660e94beaff39d3
-43/b3119a16edf5abae4106c36f685c6066163cb2
-43/bdc521e20d9564ccec6472b30d95328e7d1329
-46/1a706b237b3a474af78c4d93661da38a74f2b7
-46/810cbf3d951c1ce8ce3311639996ad43ca4ed1
-47/6b6398ae1e816b7a937f79a827077c8a07b651
-48/c37a6e9c3f9520389b68a1587a1dfbcb566206
-49/1cf960229a066196d1efb3f5687912b8b44fee
-49/c01a01a105271d692fedc49056f91021363075
-4a/33add24d53e0c3238b6efaf189529254c4b2ba
-4c/46d8ccdfb80d31afe11dc64b66bcc698aa7119
-4d/2404305ab687c2a0eee84b3c5842ba9852965a
-4e/b701dfc618491c9b97377df6e61de36dfc39ce
-4e/dda35d03b190cd17a160203dc03ad317da3d03
-4f/53f1bc37e568392bc9250bca411c8b678133bd
-4f/cf343d0bd39cbd233f169bbca59026c80d28f1
-4f/f37981c0fe65da379ec6d9e5b3e789e18669d3
-50/15a6eb19cc62766fba00c3183e21e5ad50ae9b
-52/a66ef24ea412473702a63f261e1520cf8e1885
-53/acb51d98359b351d34b48ecc0dbcfe7b3c982b
-54/b8e3482da23d0265c01a1cbd6e4327e460cc62
-54/f82454cc3b22e0dcb54c8be3b1c5be9eadd6af
-55/fffb67b924fbca2a5a16e83100a5d1000daaf4
-57/337e42f1393941d59d5154eed27a63988ff2be
-59/4ccc14dfe4d61b476491758425a1c2ca4ec71b
-59/8d971c43acfae63d15a0f18e65c154639b3299
-5b/352890f0929e952a544925ecdd59c6436e1504
-5b/ec0039f4ac8d707d7afe7739cc2e7004447e38
-5c/73444b7f1d60b759c223d915fb7645984e5865
-5c/ca3685e4f5153f1e9cd1e896ef64d66222fcbf
-5d/8887f8f749c986ef320a3f4f0d169056791dd7
-5e/6bc34f86e450ff14c4817902d66aa9c786bc06
-5f/132c390eff9766a2d46dbd8fcacc3e5707576a
-5f/365aa9daaf89a9890c53dc681474a7fd292e45
-5f/8488a8f3616b2e85322fb7a07f71604a7dee48
-5f/8d25b40a7d8c95778a024d9883dad271e4062d
-60/3753f5c534a7abaafd93231cefb35c59636165
-63/22aada491f53a45c8680312fca1c55f65ec24f
-63/4d6d1da8876b618060bbe5032d6cddbabcf840
-64/7c40faf379ca38f47c4d13b3528baddc9728ef
-65/40623d747e228ae1b8ca606847c584568a63f4
-65/6dcf2b1a26d714cd71059652e51e8ad8916426
-65/ab9cf2032aa9c262397ae04acf30daa0af26ec
-65/b4b2d1f2cef8d7db8a3c907748e1e959bbf1af
-67/010fbc6ff889aaf86592bc148d705c5b9e1a27
-67/0947288262c099a0f32ecffd3e4ca110ad9eb4
-6a/0b48245a135cd132e747815854e3999967f8a7
-6b/d012e17f832096d507cb0e47ab3c13ffa58ed2
-6c/24d9cd3d66c2849dbcfe544c0739232bb4e690
-6c/91d362f1e1ebbd4513adb68fc79d552c11e2c0
-6d/7098bc350768f59a41090ca248ae430cd95b25
-6d/7bb427e4fae5a3222bb0ef4ce955a86d28d488
-6f/a7c25204d4af62822ebb1e02694744d897b644
-71/1bb7a3a98e09e737c8c90c2e1d72c07af1257d
-72/51e83f83f790140c6d27c442fee90a4b1d5407
-72/fdc10dfdd7c94327ad87efff1dec2adbb67cbd
-73/52e455053cc857e70f0cb1e008eb7adabbe011
-73/5bdadb8025241a514c672537f231c614010c61
-73/7b758c965a9b223ac1243ab38d9e507ac86c64
-73/882e54b4c37169922ad83b62822ce2026ca05b
-75/cf6bdc52d86ca815f1129529e43f0d904b18d5
-75/fd3bd6e233fcee34230f6072379d5f9117b935
-76/23e9fb5cd3dbb14ececd909dd838f5bfb676f7
-76/fdc06010b9b73965893a5bf7bfc30ec2adf2e4
-77/2998147e3ef989988c184520f6dacba9fb601d
-78/a6cc041b24a1c09d4551326db14e0e8e0581ce
-79/944bf71352f33f984ac3973b159b5c2cee139d
-79/bf686a2a190875dcb37a239811659c2e2c95df
-7b/20171f30377b2baf999e5723eb8f75a516852e
-7b/3c63ac7cb5e2e6680727045aa35c2e5f1bace7
-7b/4ac096cd114d34e623bafaed91b85ba4a95e62
-7b/798a53b5306ddf45e969eb03badd6aa10d8064
-7b/84b2bb8c4a85e8e50247ee3a514c6baad8dd7d
-7b/e4a4dc45e83e793f729a69d94b9970d08a2092
-7c/a876b6f2aba485db21483603e0774f4bf7f469
-7d/2a9202c39a3291969307c1c57bdc18237fca57
-7d/80df9364db5bb892b70ee99e82395ac9859f88
-7e/3e0360b711568fb8ba5973accf51d51e746abc
-7e/6b9867ece039ea5dcc66171890f02390b96052
-7f/8df48d633406be25ebadfc94e8dc16a0501224
-7f/c31849312ba85976eb1024161d057b02c672a2
-7f/d02697b12e47852cbbf60e2be51dbbce799514
-81/1e994ac8d41515d3ec3420e234867db660293f
-81/4e709ca0cab6eebcd31cabd5939392423c08b7
-81/babab265e1a31fcad6c97429fadc8d052890fd
-82/235e9170f19fa327361ee82a76618e60f2db47
-82/ae59d7cf9d2551c65bdcbea120eba517c92372
-83/4297f7b5e197cf8bcba37e163c0ea15cef4727
-83/974efa2e0d3f83db0f5eed5abb2128457cd51f
-83/e05457625800d3ec336f4355e49a8c2c368331
-84/8f3fce45d2ba93e10b5e9d65bcae0d9269ad0d
-84/b5b370b09d7b0025152062643284160d80e107
-87/1a5cc574d49a75ead6df5ad8c721f6941788b4
-87/d760fc71fc8fc2c328a8f92d0ded2deef7afec
-89/c8b3a11086a2a43ac4240116da77b707f37fbf
-8a/8aa785e7b7c7a30a39f464b55e05bed78377ae
-8a/dee7996cf8dd7e0cdb94f0efb8837e1eba31e4
-8b/5c596a1ccca947e24eec86840af439721c27bf
-8c/2077ab23c9a76cc631a63ff573afd0571bdcae
-8c/5d310514ea8304f719fe310fe3e236029057b7
-8c/c23e7d0d5d34e69924e7752e3a816dd6297cfc
-8e/01b8f09ac28914573c81727d9e19ab55076652
-8e/567fd0f45d16c4656e7e9a42c7d4749d19ca48
-8e/f414a2ae93a0773a9c8aabe2254c87502d3ed7
-8f/742796a627d46e142ae0eb8ba563857bc74c7c
-8f/c0801f8457222c72ffc82dce4301f094ded654
-90/0121a79544f627e6918783e917f44ee76454dc
-91/3fa9f6202ba7c0039c3a3bb7cc1bfbd2c56e66
-92/81fdc7897f155733567fc229eb38f7cff2c673
-92/9b8ce02fd119502699442cf0178c0b68eef926
-93/08e8acb6522fcec648e09aa77ddc3a6a694fcb
-93/900fc4adaa7a9f426d68b78360fae5a94b45ee
-93/91321485e530375cb5ce1fced0ece2acc02a67
-95/bd6eb828035af5e788ed8ba4a11b9b004eb85e
-96/6ca9234754ece58870075972ef103e354de075
-99/a096d3f84d679d668807d5081baf4beeabc95f
-9a/41bee11c5a58621e990e539361e2d1e9975ac6
-9a/cf6597c533f3d5c991f730c6a1be296679018e
-9b/4b4abb85b045fbf95700c1a9ca6e6ed7dfd60b
-9c/7755053099534e865fa3c179f525237fc9945d
-9d/cdaf3b573a2a27d0d43c1477a18867b144e5f4
-a0/08f82439538b89bd8dcd34a40166d857a297dd
-a1/c818b0347170e47aac074cb02d74d016c1caeb
-a4/593f83188c646e0f5350102ef3ef2a71e4b476
-a4/f1c34a8dc7fa518e557f8f57beab4c1a4ee3a5
-a5/271dd6144a683554f85e311e67c15000022646
-a6/1a577f0f2b2fa55652b137d96cbddfa8c665cc
-a6/9227415a73d9a771ada4d617802d3ecf0bcf56
-a6/e66974b2863135d298232cfb2973a7a9721658
-a8/d592bc33fe25c8bef37ff9d16353a30fa26aa7
-a9/2af41d44119a2c464f3b905b181f4445c9f1db
-a9/e4f989b7f744439989125e453017a7f323fa5b
-aa/b62ed4698223d915e5621339b30396d9c38eea
-ac/1f970e5369749c8aaffbf52095d0bba7f374a5
-ad/009ac96509e005d9978d0ae9e9ec4d63ad2990
-ae/48ef0429774c406307909e72db1238b5f3af43
-ae/de6a81316794a1a20de497c9684f96e20f6f0c
-af/014fda7701d3e844a3c5791b0c782d01d37eeb
-b0/04fef0a42bac42e8b3490fba19df1ea233762d
-b0/67113d0f0f4dcf0e11cca228b50e275679e0d6
-b0/8d4fbdf4cb46820898b71a1e55139c676c1b1f
-b0/ea6687ab55e8116a4790a52682e24c71146c34
-b1/02ddb977ca0352fb2c1b3bc94f40b72204c56a
-b2/99a2ead3f966dff04343a7b53bfd07e6b986b4
-b3/03c4998c1c66d271165a6b6a4c49ef0092eab4
-b4/86ba738d955db6acdb074e089831b9c6109b43
-b4/9f31ebecda19d071d3ae3777be2a6a8c9e5c34
-b5/99e682e12af8dd9d15d295bbb2d29f064a2904
-b5/a5278ab6c4cfaa35f41662b2c8d0fcaf0555ca
-b7/63f4acf57f69b51d00a3a62ad30cb91b02baba
-b8/4faf8d07d46d0a4604140264365a271a97cee5
-b8/643e1b5253a6a51da5574a55a2f9148e255cfd
-b8/6a48f6a44cd924684aa5efc55b2760e2365f78
-b9/b9e10f180fa63b55b93412edf0ab9648675646
-bb/bde0ef164c9e08491ac57846354ef8f14f70ad
-bd/3b55e1be179c671cbdb94060bb580def15d113
-bd/e0fabfece0aeeaecd9ab4b1c2cf733009975b1
-be/3a57509e60e8dd6aee31fcd5b409a7fd104c15
-be/c7b3fc8a721c5a84e24b22ae8db9ca2c535cfc
-bf/f2ec6e054adbc83c37c4befe9c22d8d68cc919
-bf/f893e2aa5c3644133d680b24af9940c5b2189d
-c1/e02eff1d25a222613f48b5312cb055776abc00
-c4/d12b98ead8bb2437f656c17e7ef065fa160e13
-c5/8c850264587902314b46d6f2e511ba784f9379
-c5/a3642f18f171b57c1154ec25fafdfd14d99502
-c6/0c390620e0abb60d4ae8c43583714bda27763f
-c6/2be999df17e02a94cba833885174daab8e7a5f
-c6/4f3c478297b38361f91fea0609fb4fbedaffaf
-c6/7593a03129967eae8939c4899767182eb6d6cd
-c6/95b98cd83e7a80e14db529c67f8a90f102e290
-c8/1156dd217818c143a09b6a744e797a04571e99
-c8/d89b33813151793660c6bac60d3e67b0e573f3
-c9/99583d11b09a94481bb67508a708fd5bc353fd
-c9/ae0503631e4c0851499af9a3e28508c1d4ac4f
-c9/d9ea064734ad58e18c14e03055816b0c219dd7
-ca/88216b053d73a571db992fecc3f2709dfe5dda
-cb/e0476fa6a76b01b79e7c117963d45ed0a28758
-cd/41c67ff8d3b6a4aa75012b38fbbcfe28dc67bb
-cd/63499cbe37e53e6cc084c8a35d911a4613c797
-ce/16b0ae772ef6db31cad1930a259236e1629448
-ce/4cf5c1c05d7affced4678fea31b1fcdf68822d
-ce/9423bb2de319d095a3ac5d8e762dcd6d8b3913
-cf/72cd46896e32aa3c579a15119f425fa20ea059
-d0/0b3bfe1a5213830c6aec6c39f56d0910be390a
-d0/724714fd49aeec1383b94807174de7e96021bf
-d1/4537f103bf746ca766f739f9f5a5bf7a8b4806
-d2/b6d5727cd0c5c945c600d9099c6ff543e33afd
-d3/2dddbd699516a02d197eb9df0bef775082ffcd
-d3/fa896c5b32f370a8019b32391edff25638704b
-d4/335c1c884c7ae9384be6003e808cd91bdff918
-d5/d49b584db48329e89c48c6c542b1d20d897e0e
-d6/ad33e52ea955d714dca140269a1b43abef1473
-d7/6f309be63c401be4647e05428a96d5d2daf5fe
-d8/37c51bd6e522be497a94b9a335bf65aaa6532a
-d8/c1630a530a825d27e517c78e894bf565255a6d
-d9/668d210a2b9bb78e3a8bb71cec272a7773d4ef
-db/14b503d89e596dfa2c4102fca9469a7e814ce2
-dd/3c2338700b787accbe2eacf77ecbfd82996ad9
-dd/54716d7f77c2c35cc698208e79e5797ee0f9d4
-dd/95c2bcbc25b869f0f059842fa5391d4fb1a1f5
-dd/e2d251fc3d6b0d387559bf5c590ede89bcf80a
-de/63a0e3f4ce3960f1f6564f73f496533d4cdc24
-de/8858028d64a8a3d3fbbb7bbd7b138d7897d356
-df/aabc8d8fb6ad8caedc34c5a30f4eec3555a0cc
-e0/e46f4bff970554c924404cec04d007b8d073a1
-e2/e5a870dd0b95c54d1b01a318b1a119181309e2
-e3/137aa48cdd6a4f4dbc5df53f03deab774f84ee
-e3/503e7a58208b635f444880ce44fd996c5e7ebe
-e3/b177a90b37838c6d9c98461ce2446091e646ec
-e3/e92615705e96211ff6b70978516151badaa90e
-e4/5a78777f977ba4670e7419bfdcde8a1429ceee
-e4/b4b0f5eb3338e043eb3b7a78c16eb162f62e72
-e4/eb295d38b57f4d4b956942a48887eb252d97c6
-e5/0249ae3d227c320d8ca2fbb03b2258b04c7c95
-e5/68cc47a7f93005518d1470696f89ee1444a1ae
-e7/1f64f2f4c33c9e343d121fcbeff7b660961382
-e7/bd93e6226d58d9fcb9501671ab8ca2bf7b0820
-e8/b6981ac7b6aa63b025dda4800407136a1b7865
-e9/a6cf21a3281605f290b754404c748fe328e560
-e9/bb29c86d6e7554427e601a93e523c5bdde01bf
-e9/f832c9ea690e067a86ab23ea5f245a1d201b1d
-ea/3f4eaca09de1bcc80e922e56a6dabba5882f56
-ea/67562c18336e7ae5c61e3492f1909b987d00dd
-eb/134af00ca96e45460e2b835616673902a09cda
-eb/15ee8333fd7b5816f8fe3d02250ff99601eba0
-ec/00d61d53080b1b5e771ba3b0d0d2a83ce6e30a
-ee/86cb8216e6dd9f0400e54a39718448c9566a41
-ef/a099165b22ea5d52a2d8c454cbbaf201596083
-f0/10f523dc053a249859b9862803bb24ecc6e2d8
-f0/5e4cf6bcb6ce8e0aed29e6670c0fbfa1e33192
-f2/8ac91b0541a49d5bc7bfb9f0efd5289a7dd181
-f2/a026073b62b683cd1ca4facf40c7f338b2e7a8
-f2/e75ed4c6c757caca14fa19cb488e75d97f685e
-f2/e86a794765410c29d089b514a7afb6d0dad38e
-f4/845b6023750b8276053916750bd5a2ff29e4af
-f4/d0ee983ec01e59a77e157ab702246f397b2a2b
-f4/dc76916955edbdff326bcbefd7be2686d1ef1a
-f4/fcee104707ae7961605b632aba1bf620c25603
-f6/54bac2227adc5c6956405290eeb4f81f09e9ff
-f7/c076d76280f292d76344eaefb3250b80c57697
-f7/c4914c3dd98ba6da3a10bb117e63fecfb5ad60
-f8/edf816b4bed1de6a253cb45a553caea1af8276
-f9/2c6c1ddc6c70c54dc9fa93a1c56edef67563c4
-f9/e16b39898c5f137327094d2efaf873c249d46d
-fb/835c7bb8ce592803c6285806ac7c3fa9ecf16e
-fd/717aa63e7bd485937e080c0764e3f3f6f0a532
-fe/14097995135d35279d8e6c7e92f9b2a90cca55
-fe/abea16b92f378a66388eedb82d07ab89a90143
-ff/84d433f8d1291559a76e79bab44239b8d9f3e1
-ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-ff/df28ddd4d7888ec532a26c7c1f81e061c4eff0
-
-sent 6894 bytes  received 2681866 bytes  43020.16 bytes/sec
-total size is 70076313  speedup is 26.06
-
-receiving file list ... done
-client: nothing to do: perhaps you need to specify some filenames or the --recursive option?
-Tree change: bdceb6a0162274934386f19f3ea5a9d44feb0b20:c60c390620e0abb60d4ae8c43583714bda27763f
-*100644->100644	blob	fa4b4dd4a9ff00958b4dd2555d97e42c596878b6->f2e75ed4c6c757caca14fa19cb488e75d97f685e	arch/x86_64/ia32/vsyscall.lds
-*100644->100644	blob	903d0ced7ddb95eb4168775ff5a28ed14f210b98->058c70c6f1ac32b5672fea3674dd6950fd03dd62	drivers/net/tg3.c
-*100644->100644	blob	acdba0c67fb8c6102bb613b400ae9822964ca2df->3e386fd4c5c6e627699ccd04117b712030f0f3f4	drivers/video/amba-clcd.c
-*100644->100644	blob	6ae62cbf7c2e5ccd083aaea4648c47a04acb9059->ce9423bb2de319d095a3ac5d8e762dcd6d8b3913	fs/binfmt_elf.c
-*100644->100644	blob	acce36e25d2eecaec84eb5aa0d7f0c608a30bc33->72fdc10dfdd7c94327ad87efff1dec2adbb67cbd	fs/cifs/AUTHORS
-*100644->100644	blob	5316c8dd6bfff87d97c8105b0b4639cd2d44194a->4d2404305ab687c2a0eee84b3c5842ba9852965a	fs/cifs/CHANGES
-*100644->100644	blob	0f20edc935b5d9b87e3d08c91ada0846e237e9da->7b4ac096cd114d34e623bafaed91b85ba4a95e62	fs/cifs/README
-*100644->100644	blob	f4e3e1f67ee41afd911df3fcfb8a374881fb3c63->1e8490ed694878b3bbed1e96ab792791ddf1daed	fs/cifs/TODO
-*100644->100644	blob	db28b561cd4b54b0723e582ce81daba56f3ccb73->4061e43471c1a1dc1822fcae3dca02c4406794f0	fs/cifs/cifs_debug.c
-*100644->100644	blob	77da902d8f32975c0773e8010147849ac9a04364->ec00d61d53080b1b5e771ba3b0d0d2a83ce6e30a	fs/cifs/cifs_fs_sb.h
-*100644->100644	blob	a17adf4cb9babbfbcab8d7eab4eeddd89a079755->99a096d3f84d679d668807d5081baf4beeabc95f	fs/cifs/cifs_unicode.c
-*100644->100644	blob	78829e7d8cd0187b327a8b051019848258754259->1959c7c4b185b48793ed81aee9d1cd61b50cc070	fs/cifs/cifsencrypt.c
-*100644->100644	blob	5082fce3c566d56d81d3b7cbcf447807437ddd2f->8cc23e7d0d5d34e69924e7752e3a816dd6297cfc	fs/cifs/cifsfs.c
-*100644->100644	blob	451f18af320696e8b1b168489ec1441e6a33420e->d00b3bfe1a5213830c6aec6c39f56d0910be390a	fs/cifs/cifsfs.h
-*100644->100644	blob	69aff1a7da9b3d1396dc430478afe75c0d19be50->81babab265e1a31fcad6c97429fadc8d052890fd	fs/cifs/cifsglob.h
-*100644->100644	blob	bcd4a6136f08a879b0f46cda8f10e3286fdf4a6a->aede6a81316794a1a20de497c9684f96e20f6f0c	fs/cifs/cifspdu.h
-*100644->100644	blob	787eef4d86d379a56fd57e48ea51a78fc5bf69f3->0010511083fce44618d4e8c522d588a9a983a668	fs/cifs/cifsproto.h
-*100644->100644	blob	df6a619a682132f4fc204933b60b85940afcd694->b004fef0a42bac42e8b3490fba19df1ea233762d	fs/cifs/cifssmb.c
-*100644->100644	blob	40470b9d5477a144331f10f12bd5bd7c2c7065be->e568cc47a7f93005518d1470696f89ee1444a1ae	fs/cifs/connect.c
-*100644->100644	blob	f54e1866f0f4407ecda76e810ec953f2209d16a0->e3137aa48cdd6a4f4dbc5df53f03deab774f84ee	fs/cifs/dir.c
-*100644->100644	blob	9d24c40f1967ad6ec5aad6e79d88db69deda93d2->7d2a9202c39a3291969307c1c57bdc18237fca57	fs/cifs/fcntl.c
-*100644->100644	blob	dcab7cf1b53bf16de9c151bfaa651535b4e4f179->dde2d251fc3d6b0d387559bf5c590ede89bcf80a	fs/cifs/file.c
-*100644->100644	blob	d73b0aa86775e6ca4c73f33ce8c1bd47433e2e03->670947288262c099a0f32ecffd3e4ca110ad9eb4	fs/cifs/inode.c
-*100644->100644	blob	b4b8e201d428de1b271e090c50f39cfb8d7ea568->b0ea6687ab55e8116a4790a52682e24c71146c34	fs/cifs/ioctl.c
-*100644->100644	blob	1455810ba1cbba4b6fdc0ddd95eb2cc67542382a->bde0fabfece0aeeaecd9ab4b1c2cf733009975b1	fs/cifs/link.c
-*100644->100644	blob	7b38d3059a83d6e916e75f66a7a860aba094b438->db14b503d89e596dfa2c4102fca9469a7e814ce2	fs/cifs/misc.c
-*100644->100644	blob	4e34c89cec5dc8e5c975edd10f420161c37652b8->a92af41d44119a2c464f3b905b181f4445c9f1db	fs/cifs/netmisc.c
-*100644->100644	blob	f8bea395ec9e28aee2f81ed5f0461bc53ee3dc0f->22557716f9afb48c032d9c7759706183f01b6a9f	fs/cifs/readdir.c
-*100644->100644	blob	e21f1384661f3e4e6fc42c574cdb047c8689a066->cd41c67ff8d3b6a4aa75012b38fbbcfe28dc67bb	fs/cifs/smberr.h
-*100644->100644	blob	af13e526b150ce3bf052eda83578bbb906f06d55->0046c219833d6cfbef77e85addc663e1be71e290	fs/cifs/transport.c
-*100644->100644	blob	549afa184fd67f852e3e55319af42731ced1b9b9->c1e02eff1d25a222613f48b5312cb055776abc00	fs/cifs/xattr.c
-*100644->100644	blob	2149be7c7023702e7b0dca0bf19b30ed1081ec34->ce4cf5c1c05d7affced4678fea31b1fcdf68822d	include/asm-arm/hardware/amba_clcd.h
-*100644->100644	blob	4983449ff2c7fdf98708ea101fb26441f6393982->19da861e523d8dbbfe327e4b07d166c61544a623	include/asm-arm/hardware/clock.h
-*100644->100644	blob	358d52b0c445578bbbe1df9c2787e0a0e3250e29->772998147e3ef989988c184520f6dacba9fb601d	include/linux/sysctl.h
-*100644->100644	blob	87496e3aa3302a4e8dc42f5c4f53a22f550d5008->7352e455053cc857e70f0cb1e008eb7adabbe011	include/net/pkt_sched.h
-*100644->100644	blob	5576db56324dd88ed87f6355a603464532dd0190->f4fcee104707ae7961605b632aba1bf620c25603	include/net/sctp/sm.h
-*100644->100644	blob	7e64cf6bda1ef739a64b15a670708c33bbdc4cfd->6c24d9cd3d66c2849dbcfe544c0739232bb4e690	include/net/sctp/structs.h
-*100644->100644	blob	96fd0f499631d1036d27b1589c47f1b4c66bc27e->d4335c1c884c7ae9384be6003e808cd91bdff918	kernel/time.c
-*100644->100644	blob	0a2f67bbef2ec0862821c55e70c2625e229c8f18->43bdc521e20d9564ccec6472b30d95328e7d1329	net/core/neighbour.c
-*100644->100644	blob	bb90a0c3a91eb52020d0db0e8b4f94d30e02d596->199311746932ee3952abebc5d008b8c9daf9c11b	net/ipv4/route.c
-*100644->100644	blob	183802902c023eb0fed16e3623097edf17211dd4->3bf8a0254f81b64aa4a5429ad7b725699d810b15	net/ipv6/route.c
-*100644->100644	blob	544b75077dbdd62bdbf2dd15ca244a00fe634a88->334f61773e6d692844aab739df7ca0084f54ab1c	net/sctp/endpointola.c
-*100644->100644	blob	e42c74e3ec1e8f9334ecb451599467d3531da57e->c9d9ea064734ad58e18c14e03055816b0c219dd7	net/sctp/ipv6.c
-*100644->100644	blob	9013f64f5219760917af8337e390f81323102b34->84b5b370b09d7b0025152062643284160d80e107	net/sctp/output.c
-*100644->100644	blob	b9813cf3d91c6ea8a99fa3e63f8f19636eae8e14->2e1f9c3556f5922a9018c30055949f7a64f333be	net/sctp/protocol.c
-*100644->100644	blob	1db12cc18cf7fc4fd0b7209d3e5b03e192df2944->33ac8bf47b0e0d64b2ba9a75b136bc82eac1fa65	net/sctp/sm_make_chunk.c
-*100644->100644	blob	278c56a2d0765086f540c66d64ff151eaba9a155->8e01b8f09ac28914573c81727d9e19ab55076652	net/sctp/sm_statefuns.c
-*100644->100644	blob	e8c2101825710512f0f7393ecb482835a8664a34->0b338eca6dc0b1559e2392af2964f5d7fcfe1820	net/sctp/socket.c
-*100644->100644	blob	89fa20c73a5cc244fe8199101452bc606ca26b1c->7fc31849312ba85976eb1024161d057b02c672a2	net/sctp/sysctl.c
-Tracked branch, applying changes...
-Merging e8108c98dd6d65613fa0ec9d2300f89c48d554bf -> c60c390620e0abb60d4ae8c43583714bda27763f
-	to bdceb6a0162274934386f19f3ea5a9d44feb0b20...
-
-Enter commit message, terminated by ctrl-D on a separate line:
-Merge with c60c390620e0abb60d4ae8c43583714bda27763f
-
-Committed as 7598082671ce811737eca8119968dc056d78ac4b.
-
-Here's that commit:
-
-commit 7598082671ce811737eca8119968dc056d78ac4b
-tree f63e2ded3ec39f348ac7c5e03d51da4ed1ff0eeb
-parent bdceb6a0162274934386f19f3ea5a9d44feb0b20
-parent c60c390620e0abb60d4ae8c43583714bda27763f
-author Source <src@flint.(none)> Fri, 29 Apr 2005 07:03:57 +0100
-committer Source <src@flint.(none)> Fri, 29 Apr 2005 07:03:57 +0100
-
-    Merge with c60c390620e0abb60d4ae8c43583714bda27763f
-
-
-and the two parents:
-
-commit bdceb6a0162274934386f19f3ea5a9d44feb0b20
-tree 326774cd0818e893561a3e77fc57ad5ea320771a
-parent 5fc3e624ad7278604628c598e92aa77c67064166
-author Benjamin Herrenschmidt <benh@kernel.crashing.org> Wed, 27 Apr 2005 18:04:45 -0700
-committer Linus Torvalds <torvalds@ppc970.osdl.org> Wed, 27 Apr 2005 18:04:45 -0700
-
-    [PATCH] ppc64: Fix return value of some vDSO calls
-
-    The ppc vDSO would not properly clear the return value for some calls,
-    which will be a problem when interfacing those calls with glibc. This
-    should be fixed before 2.6.12 is released (as it is the first kernel
-    with the ppc vDSO) so that we don't have to play with symbol versioning
-    and ugly workarounds.
-
-    Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-
-commit c60c390620e0abb60d4ae8c43583714bda27763f
-tree 11aaf9d3ebfd4998fc7d550c9af4f502105f0835
-parent 0cb766ae629c70d53040f85de73db0583eadb233
-author Roland McGrath <roland@redhat.com> Thu, 28 Apr 2005 22:47:29 -0700
-committer Linus Torvalds <torvalds@ppc970.osdl.org> Thu, 28 Apr 2005 22:47:29 -0700
-
-    [PATCH] x86_64: fix PT_NOTE addition to IA32 vDSO
-
-    The addition of the PT_NOTE didn't take in the x86_64 version of the i386
-    vDSO, because I forgot the linker script bit in that copy.
-
-    Signed-off-by: Roland McGrath <roland@redhat.com>
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-
+Mercurial is even younger (Linus had a few days' head start, not to
+mention a bunch of help), and it is already as fast as git, relatively
+easy to use, much simpler, and much more space and bandwidth
+efficient.
 
 -- 
-Russell King
-
-
+Mathematics is the supreme nostalgia of our time.
