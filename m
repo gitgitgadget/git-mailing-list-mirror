@@ -1,59 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: More problems...
-Date: Fri, 29 Apr 2005 17:27:57 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0504291717360.30848-100000@iabervon.org>
-References: <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Ryan Anderson <ryan@michonline.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 23:41:02 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 17:45:50 -0400
+Message-ID: <200504292145.j3TLjoTC014157@laptop11.inf.utfsm.cl>
+References: <lord@emf.net>
+Cc: seanlkml@sympatico.ca, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 23:43:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRdEK-0007FA-WE
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 23:41:01 +0200
+	id 1DRdG1-0007UN-6l
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 23:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263021AbVD2VqB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 17:46:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262991AbVD2VoF
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 17:44:05 -0400
-Received: from iabervon.org ([66.92.72.58]:57094 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S263009AbVD2V3p (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 17:29:45 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DRd1h-0006AZ-00; Fri, 29 Apr 2005 17:27:57 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
+	id S262984AbVD2Vrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 17:47:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263009AbVD2Vqn
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 17:46:43 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:21215 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S262984AbVD2VqH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 17:46:07 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j3TLiEBA023399
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 29 Apr 2005 17:44:14 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j3TLjolt014160;
+	Fri, 29 Apr 2005 17:45:50 -0400
+Received: from laptop11.inf.utfsm.cl (vonbrand@localhost)
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.4/Submit) with ESMTP id j3TLjoTC014157;
+	Fri, 29 Apr 2005 17:45:50 -0400
+To: Tom Lord <lord@emf.net>
+In-Reply-To: Message from Tom Lord <lord@emf.net> 
+   of "Fri, 29 Apr 2005 12:28:41 MST." <200504291928.MAA27145@emf.net> 
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 29 Apr 2005 17:44:14 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 29 Apr 2005, Junio C Hamano wrote:
-
-> >>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Tom Lord <lord@emf.net> said:
+> Think of it this way:
 > 
-> LT> Absolutely. I use the same "git-pull-script" between two local directories 
-> LT> on disk...
-> LT> Of course, I don't bother with the linking. But that's the trivial part.
+>   (a) Joe, the mainline maintainer, gets a trusted message containing
+>       a diff.
 > 
-> Would it be useful if somebody wrote local-pull.c similar to
-> http-pull.c, which clones one local SHA_FILE_DIRECTORY to
-> another, with an option to (1) try hardlink and if it fails
-> fail; (2) try hardlink and if it fails try symlink and if it
-> fails fail; (3) try hardlink and if it fails try copy and if it
-> fails fail?
+>   (b) Joe reads the diff, it makes great sense, he wants to merge.
+> 
+>   (c) Joe downloads a tree.  Supposedly that tree is the result of
+>       applying this diff.   The tree, not the diff, is used for
+>       merging.
+> 
+> You can see the logical whole there... now the practical one:
+> 
+> 
+>    (d) Joe is repeating (a..c) at an unfathomably high rate.
+>        At a low rate, he could be double-checking enough that
+>        that the diff-vs-tree problem isn't that serious.  But
+>        at the rate he operates, exploits appear all along the
+>        patch-flow pipeline because so much stuff goes unchecked.
+> 
+>        Joe may be scan the changes he's merged before committing but,
+>        if his rate is high, that scan *must*, out of biological and
+>        physical necessity, be shallow.   Exploits can occur on the
+>        submitter machine, in the communication channel, and on Joe's 
+>        machine.   Social exploits can occur because of the separation
+>        between a submitter saying "this is what I'm doing" vs. the reality
+>        of what the submitter is doing.
 
-If someone does this, they should make a pull.c out of http-pull and
-rpull; the logic for determining what you need to copy, given what you
-have and what the user wants to have, should be shared.
-
-(Note that some usage patterns only require the latest commit, or at least
-can deal with fetching other stuff only when needed.)
-
-	-Daniel
-*This .sig left intentionally blank*
-
+Now pray tell how Joe signing one, two, three, or none of the things he is
+juggling makes any difference here.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
