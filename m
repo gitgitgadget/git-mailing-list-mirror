@@ -1,57 +1,45 @@
-From: "Joshua T. Corbin" <jcorbin@wunjo.org>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Thu, 28 Apr 2005 21:00:53 -0400
-Message-ID: <200504282100.53567.jcorbin@wunjo.org>
-References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
+Subject: Re: kernel.org now has gitweb installed
+Date: Thu, 28 Apr 2005 22:46:49 -0400
+Message-ID: <20050429024649.GB11692@delft.aura.cs.cmu.edu>
+References: <42703E79.8050808@zytor.com> <1114673723.12012.324.camel@baythorne.infradead.org> <20050428081005.GG8612@pasky.ji.cz> <1114676955.12012.346.camel@baythorne.infradead.org> <1114680199.12012.363.camel@baythorne.infradead.org> <Pine.LNX.4.58.0504281149330.18901@ppc970.osdl.org> <1114723214.2734.9.camel@localhost.localdomain> <42715B30.6010705@zytor.com> <1114726373.2734.47.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 02:56:02 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Apr 29 04:41:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRJmy-0001uZ-6H
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 02:55:28 +0200
+	id 1DRLRX-00020U-FC
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 04:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262359AbVD2BBD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Apr 2005 21:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262364AbVD2BBD
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 21:01:03 -0400
-Received: from smtp1.losch.net ([66.212.32.3]:709 "HELO smtp1.losch.net")
-	by vger.kernel.org with SMTP id S262359AbVD2BA7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Apr 2005 21:00:59 -0400
-Received: (qmail 31318 invoked by uid 102); 29 Apr 2005 01:01:01 -0000
-Received: from 66.212.35.47 by smtp1 (envelope-from <jcorbin@wunjo.org>, uid 71) with qmail-scanner-1.24 
- (clamdscan: 0.80/856.  
- Clear:RC:1(66.212.35.47):. 
- Processed in 0.022985 secs); 29 Apr 2005 01:01:01 -0000
-Received: from office.losch.net (66.212.35.47)
-  by smtp1.losch.net with SMTP; 29 Apr 2005 01:01:01 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+	id S261428AbVD2Cqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Apr 2005 22:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261431AbVD2Cqy
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Apr 2005 22:46:54 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:54665 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S261428AbVD2Cqx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Apr 2005 22:46:53 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1DRLWj-0003A2-00
+	for <git@vger.kernel.org>; Thu, 28 Apr 2005 22:46:49 -0400
+To: Git Mailing List <git@vger.kernel.org>
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <1114726373.2734.47.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 28 April 2005 14:28, you wrote:
-> Right now my major gripe with cogito is "cg-log" (which is actually the
-> only command I use right now, everything else I just do by hand with the
-> raw git archive) is that bash is being an ass about SIGPIPE, and when I
-> only look at the top part of the log, ie I do something like:
+On Thu, Apr 28, 2005 at 11:12:52PM +0100, David Woodhouse wrote:
+> You might perhaps attempt to find a path through the graph which takes
+> in as many commits as possible where committer == `logname`@`hostname`
+> -- but as Linus and I already said, that's expensive.
+> 
+> I'm not entirely sure what the answer is; but it isn't parent ordering
+> and it isn't dates.
 
-If cg-log is all you use, then you could get away with using yagf:
-  rsync://node1.wunjo.org/yagf.git
+Perhaps a lamport clock?
 
-Features of cg-log missing in yagf log:
-  * colors
-  * sigpipe gripes ;)
-  * #!/bin/bash (or /usr/bin/env bash)
-  * ability to log between two commits with rev-tree (it's a planned feature
-    in the near future.)
-
-Cheers,
-Josh
+Jan
