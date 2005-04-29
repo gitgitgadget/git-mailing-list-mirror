@@ -1,68 +1,65 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 11:18:20 -0400
-Message-ID: <118833cc05042908181d09bdfd@mail.gmail.com>
-References: <20050426004111.GI21897@waste.org>
-	 <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
-	 <20050429060157.GS21897@waste.org>
-	 <3817.10.10.10.24.1114756831.squirrel@linux1>
-	 <20050429074043.GT21897@waste.org>
-	 <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Rob Jellinghaus <robj@unrealities.com>
+Subject: Val Henson's critique of hash-based content storage systems
+Date: Fri, 29 Apr 2005 00:06:01 +0000 (UTC)
+Message-ID: <loom.20050429T015434-928@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Matt Mackall <mpm@selenic.com>, Sean <seanlkml@sympatico.ca>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 17:13:17 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Apr 29 17:23:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRXAp-0000Px-Ba
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 17:12:59 +0200
+	id 1DRXJ6-0001Yf-Mu
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 17:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262783AbVD2PS0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 11:18:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262792AbVD2PS0
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 11:18:26 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:30194 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262783AbVD2PSV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 11:18:21 -0400
-Received: by rproxy.gmail.com with SMTP id a41so566699rng
-        for <git@vger.kernel.org>; Fri, 29 Apr 2005 08:18:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=h6vEASOO1af6FVMS5XEPwz7e8lGo+CGQrM1Lg1qyO89qlz9ePa8EtMcpOyME5a3Kf4Ra/AEE0BlKo+wLHvpFwkEnY78+clQs92ucDB40dZxe2gKMAXxwdMTRSJbtWdzZG5ydiJ4Clh5/VOcH5AnPsEZPG74jXAUgLVirNAhw5N4=
-Received: by 10.38.74.73 with SMTP id w73mr3733962rna;
-        Fri, 29 Apr 2005 08:18:20 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Fri, 29 Apr 2005 08:18:20 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
-Content-Disposition: inline
+	id S262793AbVD2P1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 11:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262795AbVD2P1J
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 11:27:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:64166 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262793AbVD2P1F (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 11:27:05 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DRXIJ-0001Rf-2H
+	for git@vger.kernel.org; Fri, 29 Apr 2005 17:20:47 +0200
+Received: from mailhost.nimblefish.com ([207.213.220.164])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Apr 2005 17:20:43 +0200
+Received: from robj by mailhost.nimblefish.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Apr 2005 17:20:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.54.159.162 (Mozilla/5.0 (Windows; U; Windows NT 5.1; rv:1.7.3) Gecko/20041001 Firefox/0.10.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> I had three design goals. "disk space" wasn't one of them
+I assume most people here have read this, but just in case:
 
-And, if at some point it should become an issue, it's fixable.  Since
-access to objects
-is fairly centralized and since they are immutable, it would be quite
-simple to move
-an arbitrary selection of the objects into some other storage form
-which could take
-similarities between objects into account.
+http://www.usenix.org/events/hotos03/tech/full_papers/henson/henson.pdf
 
-If you chose the selection of objects with care -- say those for files
-that have changed
-many times since -- it shouldn't even hurt performance of day-to-day
-tasks (which aren't
-likely to ever need those objects).
+Is git vulnerable to attacks in the event that SHA-1 is broken?
 
-So disk space and its cousin number-of-files are both when-and-if
-problems.  And not
-scary ones at that.
+If an attacker used an SHA-1 attack to create a blob that matched the hash of
+some well-known git object (say, the tree for Linux 2.7-rc1), and spammed public
+git repositories with it ahead of Linus's release, what would be the potential
+for mischief, and what would the recovery process be?
 
-Morten
+It seems that git is optimized to support networks of trust, so provided you
+accept only signed commits from people you trust, it's likely that corruption
+and mischief can be mostly avoided.  But probably not completely; there is still
+a window of vulnerability.
+
+It seems that git repositories could (at great expense) be regenerated to use a
+new hash algorithm.  Is that the plan if SHA-1 is compromised (or comes so close
+to compromise as to make Linus nervous ;-)?
+
+Cheers,
+Rob
+
+
