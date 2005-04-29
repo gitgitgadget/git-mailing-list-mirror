@@ -1,75 +1,71 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 13:23:41 -0700
-Message-ID: <20050429202341.GB21897@waste.org>
-References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1> <20050429074043.GT21897@waste.org> <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org> <20050429163705.GU21897@waste.org> <Pine.LNX.4.58.0504291006450.18901@ppc970.osdl.org> <20050429191207.GX21897@waste.org> <Pine.LNX.4.58.0504291248210.18901@ppc970.osdl.org>
+From: "C. Scott Ananian" <cscott@cscott.net>
+Subject: Re: Val Henson's critique of hash-based content storage systems
+Date: Fri, 29 Apr 2005 16:17:25 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0504291608410.32145@cag.csail.mit.edu>
+References: <200504291952.MAA27541@emf.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:20:16 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, robj@unrealities.com
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:21:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRbxd-0006Q9-7N
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:19:41 +0200
+	id 1DRbzD-0006ah-Tq
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262961AbVD2UZC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:25:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262959AbVD2UYp
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:24:45 -0400
-Received: from waste.org ([216.27.176.166]:23448 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S262950AbVD2UXq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 16:23:46 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3TKNfgC018537
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 29 Apr 2005 15:23:41 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j3TKNfu2018534;
-	Fri, 29 Apr 2005 15:23:41 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504291248210.18901@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+	id S262957AbVD2UVw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:21:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262919AbVD2UUh
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:20:37 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:59571 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S262944AbVD2URu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 16:17:50 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DRbvf-0007y1-00; Fri, 29 Apr 2005 16:17:39 -0400
+To: Tom Lord <lord@emf.net>
+In-Reply-To: <200504291952.MAA27541@emf.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 29, 2005 at 12:50:55PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Fri, 29 Apr 2005, Matt Mackall wrote:
-> > 
-> > Here's an excerpt from http://selenic.com/mercurial/notes.txt on how
-> > the back-end works.
-> 
-> Any notes on how you maintain repository-level information?
-> 
-> For example, the expense in BK wasn't the single-file history, it was the
-> _repository_ history, ie the "ChangeSet" file. Which grows quite slowly,
-> but because it _always_ grows, it ends up being quite big and expensive to
-> parse after three years.
-> 
-> Ie do you have the git kind of "independent trees/commits", or do you 
-> create a revision history of those too?
+On Fri, 29 Apr 2005, Tom Lord wrote:
 
-The changeset log (and everything else) has an external index. The
-index is basically an array of (base, offset, length, parent1-hash,
-parent2-hash, my-hash). This has everything you need to reconstruct a
-given file revision with one seek/read into the data stream itself,
-and also everything you need for doing graph merging.
+> I would expect someone to have on hand a small number of blobs that are
+> different but have different hashes and, eventually, to drop said files
+> into a blob-based infrastructure to wreak havoc.
 
-This is small enough (68 bytes, currently) that the index for a
-million changesets can be read into memory in a couple seconds or so,
-even in Python. It can also be mmapped and random accessed since the
-index entries are fixed-sized. (And it's already stored big-endian.)
+This is just ridiculous.  The number of known collisions in SHA1 is 
+*exactly zero* at this point in time --- not guaranteed to stay that way, 
+of course, but generating collisions is likely to remain relatively 
+expensive for some time.  The collisions are highly structured; they are 
+not just arbitrary blobs.  If, after doing your 2^69 work or so to 
+generate a real honest-to-goodness SHA-1 collision, you think an 
+attacker would "DROP THEM IN A REPOSITORY TO CREATE HAVOC"?  You'd have to 
+break into the repository, etc, and then you'd find that *NOTHING 
+REFERENCED THEM* and so *ABSOLUTELY NOTHING WOULD HAPPEN*.
 
-So you never have to read all the data. You also never need more than
-a few indices in memory at once. And you never have to rewrite the
-data (it's all append-only), except to do a bulk copy when you break a
-hardlink.
+It's far more likely that SHA1 collisions will be used to generate forged 
+X509 certificates, for a number of highly technical reasons.
 
--- 
-Mathematics is the supreme nostalgia of our time.
+Git's highly constrained and derided 'brittle' file formats also serve
+to protect against the collision attacks against SHA-1 which are beginning 
+to look possible.
+
+> So: a way to locally mark a given checksum as "controversial" seems
+> prudent, to me (hence, support for such in my blob-db code/spec).
+
+Arguably that's what *upgrades* to the spec might be for -- git has a 
+solid philosophy of not creating 'features' unless it is sure that they 
+are needed/will be used, and I think this is always the wise route in 
+software development.  Of much specification comes no code.
+
+And, if you actually create a 'flexible' blob-db spec with 'room for 
+expansion' -- congratulations, you've just made yourself more vulnerable 
+to collision attacks.
+  --scott
+
+terrorist MI5 SKILLET hack AMLASH security KMPLEBE KUFIRE SCRANTON 
+D5 SLBM LINCOLN KUDESK SMOTH Kojarena Moscow HTAUTOMAT WSBURNT Chechnya
+                          ( http://cscott.net/ )
