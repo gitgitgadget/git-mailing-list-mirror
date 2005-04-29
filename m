@@ -1,53 +1,61 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: More problems...
-Date: Fri, 29 Apr 2005 20:27:08 +0200
-Message-ID: <20050429182708.GB14202@pasky.ji.cz>
-References: <20050429170127.A30010@flint.arm.linux.org.uk>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] GIT: Honour SHA1_FILE_DIRECTORY env var in git-pull-script
+Date: Fri, 29 Apr 2005 20:31:50 +0200
+Message-ID: <20050429183150.GA29729@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 20:23:35 2005
+X-From: git-owner@vger.kernel.org Fri Apr 29 20:27:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRa7w-0000oB-7Z
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 20:22:12 +0200
+	id 1DRaBs-0001Im-Ob
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 20:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262873AbVD2S1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 14:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262880AbVD2S1R
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 14:27:17 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:3801 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262876AbVD2S1K (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 14:27:10 -0400
-Received: (qmail 15137 invoked by uid 2001); 29 Apr 2005 18:27:09 -0000
-To: Russell King <rmk@arm.linux.org.uk>
+	id S262875AbVD2Sbz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 14:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262876AbVD2Sbz
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 14:31:55 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:1694 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S262875AbVD2Sbv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 14:31:51 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 69F4440F; Fri, 29 Apr 2005 20:31:50 +0200 (CEST)
+To: Linux Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20050429170127.A30010@flint.arm.linux.org.uk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Apr 29, 2005 at 06:01:27PM CEST, I got a letter
-where Russell King <rmk@arm.linux.org.uk> told me that...
-> rmk@dyn-67:[linux-2.6-rmk]:<1049> cg-update origin
-> `../linux-2.6/.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901' -> `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901'
-> cp: cannot create link `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901': File exists
-> 
-> By that time, the object files in the reference tree appear to have
-> a newer timestamp than the corresponding ones in my local tree, and
-> cp -lua fails.
+If you set SHA1_FILE_DIRECTORY to something else than .git/objects
+git-pull-script will store the fetched files in a location the rest of
+the tools does not expect.
 
-I'm now away ,unfortunately, and no immediate idea stems to my mind on
-how to fix it. Ideas welcomed - I need to hardlink missing entries from
-one tree to another; it would be enough to be able to just tell cp to
-ignore already present files.
+git-prune-script also ignores this setting, but I think this is good,
+because pruning a shared tree to fit a single project means throwing
+away a lot of useful data. :-)
 
-Could you please try to give cp the -f flag?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+---
+commit 6fef2965444a6509d11a79bd33842125034dcec0
+tree 63e9cdf5ff724bf462d9dc408b9c951985d4cecf
+parent db413479f1bb0dabfc613b2b0017ca74aeb5a919
+author Rene Scharfe <rene.scharfe@lsrfire.ath.cx> 1114799335 +0200
+committer Rene Scharfe <rene.scharfe@lsrfire.ath.cx> 1114799335 +0200
+
+Index: git-pull-script
+===================================================================
+--- 1e2168c7d554a4fbd25a09bb591ae0f82dac6513/git-pull-script  (mode:100755 sha1:5111da98e68f4c3eb44499d20a210966dd445212)
++++ 63e9cdf5ff724bf462d9dc408b9c951985d4cecf/git-pull-script  (mode:100755 sha1:0198c4805db7c2b78cd4424634873b0a86ee4107)
+@@ -9,7 +9,7 @@
+ cp .git/HEAD .git/ORIG_HEAD
+ 
+ echo "Getting object database"
+-rsync -avz --ignore-existing $merge_repo/objects/. .git/objects/.
++rsync -avz --ignore-existing $merge_repo/objects/. ${SHA1_FILE_DIRECTORY:-.git/objects}/.
+ 
+ echo "Getting remote head"
+ rsync -L $merge_repo/HEAD .git/MERGE_HEAD || exit 1
