@@ -1,64 +1,64 @@
-From: "Andrew Timberlake-Newell" 
-	<Andrew.Timberlake-Newell@AllianceOneInc.com>
-Subject: RE: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 16:57:15 -0400
-Message-ID: <001401c54cfe$061375f0$9b11a8c0@allianceoneinc.com>
-References: <200504292026.NAA28131@emf.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Makefile: The big git command renaming fallout fix.
+Date: Fri, 29 Apr 2005 14:53:35 -0700
+Message-ID: <7v3bt945cw.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0504291416190.18901@ppc970.osdl.org>
+	<7vacnh45x0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: <noel@zhtwn.com>, <seanlkml@sympatico.ca>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 29 23:43:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 29 23:49:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRdG0-0007UN-Ox
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 23:42:45 +0200
+	id 1DRdLc-00089r-SS
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 23:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262987AbVD2U7y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:59:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262981AbVD2U7U
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:59:20 -0400
-Received: from mail.allianceoneinc.com ([65.213.221.36]:7689 "EHLO
-	mail.allianceoneinc.com") by vger.kernel.org with ESMTP
-	id S262978AbVD2U6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:58:07 -0400
-Received: from epa20012 [192.168.17.155] by mail.allianceoneinc.com with ESMTP
-  (SMTPD32-8.14) id AFAA2AD600B2; Fri, 29 Apr 2005 16:57:14 -0400
-To: "'Tom Lord'" <lord@emf.net>
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-In-Reply-To: <200504292026.NAA28131@emf.net>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
-Importance: Normal
-X-IMAIL-SPAM-VALFROM: (9faa2ad600b2e541)
+	id S262991AbVD2Vxz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 17:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263022AbVD2Vxz
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 17:53:55 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:45760 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262991AbVD2Vxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 17:53:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050429215336.UIAJ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 29 Apr 2005 17:53:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vacnh45x0.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Fri, 29 Apr 2005 14:41:31 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->   > It looks to me like he did read carefully.
-> 
->   > There were two different ideas:
->   >   TL)  Passing tree & diff and trusting diff to create tree
->   >   NM)  Passing tree and generating diff versus local tree for review
-> 
-> Well, I guess *you* didn't read carefully.  I also spoke about the
-> value of passing around triples: ancestry, diff, and tree.  The
-> question is about linking signatures to things that humans can
-> reasonably *intend* and be reasonably held accountable for, hence one
-> of the values of signed diffs.  (I cited other practical reasons to
-> value signed diffs and use them in specific ways, too.)
+Here is another.  This one belongs to a clean-up category.
 
-I know that you mentioned other things.  That doesn't invalidate that Noel
-was talking about your starting point description of how git works and
-suggesting that it isn't how git actually works.  The relevance of your
-other points depends upon having the base model correct.
-
-You can argue that glass houses are inherently brittle, but why should I
-care if mine is already made of bricks instead of glass?  If the model
-against which you are arguing is not the model which is used by git, then
-the model isn't a relevant basis for claiming problems with git.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+cd /opt/packrat/playpen/public/in-place/git/git.linus/
+show-diff -p Makefile
+--- k/Makefile  (mode:100644)
++++ l/Makefile  (mode:100644)
+@@ -59,8 +59,6 @@ CFLAGS += '-DSHA1_HEADER=$(SHA1_HEADER)'
+ $(LIB_FILE): $(LIB_OBJS)
+ 	$(AR) rcs $@ $(LIB_OBJS)
+ 
+-init-db: init-db.o
+-
+ git-%: %.c $(LIB_FILE)
+ 	$(CC) $(CFLAGS) -o $@ $(filter %.c,$^) $(LIBS)
+ 
+@@ -104,6 +102,7 @@ read-cache.o: $(LIB_H)
+ sha1_file.o: $(LIB_H)
+ usage.o: $(LIB_H)
+ diff.o: $(LIB_H)
++strbuf.o: $(LIB_H)
+ 
+ clean:
+ 	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(LIB_FILE)
 
 
