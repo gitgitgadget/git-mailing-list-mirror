@@ -1,122 +1,108 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Mercurial 0.4b vs git patchbomb benchmark
-Date: Thu, 28 Apr 2005 23:01:57 -0700
-Message-ID: <20050429060157.GS21897@waste.org>
-References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 02:40:31 -0400 (EDT)
+Message-ID: <3817.10.10.10.24.1114756831.squirrel@linux1>
+References: <20050426004111.GI21897@waste.org>
+    <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
+    <20050429060157.GS21897@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 07:58:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"linux-kernel" <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 08:35:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DROVA-00010n-W3
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 07:57:25 +0200
+	id 1DRP5t-0003zL-MI
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 08:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262430AbVD2GCl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 02:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262433AbVD2GCl
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 02:02:41 -0400
-Received: from waste.org ([216.27.176.166]:24555 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S262430AbVD2GCA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 02:02:00 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3T61vG3023251
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 29 Apr 2005 01:01:57 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j3T61vAs023248;
-	Fri, 29 Apr 2005 01:01:57 -0500
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+	id S262444AbVD2Gkt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 02:40:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262442AbVD2Gkt
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 02:40:49 -0400
+Received: from simmts5.bellnexxia.net ([206.47.199.163]:32946 "EHLO
+	simmts5-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S262441AbVD2Gkc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 02:40:32 -0400
+Received: from linux1 ([67.71.124.169]) by simmts5-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050429064031.IKTF1614.simmts5-srv.bellnexxia.net@linux1>;
+          Fri, 29 Apr 2005 02:40:31 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j3T6eVIs025220;
+	Fri, 29 Apr 2005 02:40:31 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Fri, 29 Apr 2005 02:40:31 -0400 (EDT)
+In-Reply-To: <20050429060157.GS21897@waste.org>
+To: "Matt Mackall" <mpm@selenic.com>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 25, 2005 at 07:08:28PM -0700, Linus Torvalds wrote:
-> 
-> To make an interesting benchmark, try applying the first 200 patches in 
-> the current git kernel archive. Can you do them three per second? THAT is 
-> the thing you should optimize for, not checking in huge changes.
+On Fri, April 29, 2005 2:01 am, Matt Mackall said:
 
-Ok, I've optimized for it a bit. This is basically:
+> What I'd like to highlight here is that git's repo is growing more
+> than 10 times faster. 52 megs is twice the size of a full kernel
+> tarball. And that's going to be the bottleneck for network pull
+> operations.
 
- hg import -p1 -b ../broken-out `cat ../broken-out | grep -v #`
-
- ( latest code is at: http://selenic.com/mercurial/ )
-
-My benchmark is to apply all 819 patches from -mm3 to 2.6.12-rc:
-
-hg:
-
-real    3m22.075s
-user    1m57.195s
-sys     0m14.068s
-
-819/(60+57.195 + 14.068) = 6.239 patches/second  user+sys
-repository: before 167M after 173M (3.5% growth)
-
-git:
-
-real    2m58.568s
-user    1m11.196s
-sys     0m50.144s
-
-819/(60+11.196+50.144) = 6.750 patches/second  user+sys
-repository: before 102M after 154M (51% growth)
-
-Again, pretty close, time-wise. My code is actually spending a fair
-amount of time doing delta compression in Python, which accounts for
-most of the extra user time. So I think I can optimize most of that
-away at some point. Interestingly hg is also using substantially less
-system time.
-
-What I'd like to highlight here is that git's repo is growing more
-than 10 times faster. 52 megs is twice the size of a full kernel
-tarball. And that's going to be the bottleneck for network pull
-operations.
-
-The fundamental problem I see with git is that the back-end has no
-concept of the relation between files. This data is only present in
-change nodes so you've got to potentially traverse all the commits to
-reconstruct a file's history. That's gonna be O(top-level changes)
-seeks. This introduces a number of problems:
-
-- no way to easily find previous revisions of a file
-  (being able to see when a particular change was introduced is a
-  pretty critical feature)
-- no way to do bandwidth-efficient delta transfer
-- no way to do efficient delta storage
-- no way to do merges based on the file's history[1]
-
-Mercurial can grab look up and grab revisions of a file in O(1)
-time/seeks. I haven't implemented annotate yet, but it can also be
-done O(1) or O(file revisions).
+There isn't anything preventing optomized transfer protocols for git. 
+Give it time.
 
 
-[1] This last one is interesting. If we've got a repository with files A
-and B:
+> The fundamental problem I see with git is that the back-end has no
+> concept of the relation between files. This data is only present in
+> change nodes so you've got to potentially traverse all the commits to
+> reconstruct a file's history. That's gonna be O(top-level changes)
+> seeks. This introduces a number of problems:
+>
+> - no way to easily find previous revisions of a file
+>   (being able to see when a particular change was introduced is a
+>   pretty critical feature)
 
-M   M1   M2
+Scanning back through the history is a linear operation and will quite
+likely be just fine for many uses.   As others have pointed out, you can
+cache the result to improve subsequent lookups.
 
-AB
- |`-------v     M2 clones M
-aB       AB     file A is change in mainline
- |`---v  AB'    file B is changed in M2
- |   aB / |     M1 clones M
- |   ab/  |     M1 changes B
- |   ab'  |     M1 merges from M2, changes to B conflict
- |    |  A'B'   M2 changes A
-  `---+--.|
-      |  a'B'   M2 merges from mainline, changes to A conflict
-      `--.|
-         ???    depending on which ancestor we choose, we will have
-	        to redo A hand-merge, B hand-merge, or both
-                but if we look at the files independently, everything
-		is fine
 
--- 
-Mathematics is the supreme nostalgia of our time.
+> - no way to do bandwidth-efficient delta transfer
+
+There's nothing preventing this in the longer term.  And you know, we're
+only talking about a few megabytes per release.  We're not talking about
+video here.
+
+
+> - no way to do efficient delta storage
+
+This has been discussed.  It is a recognized and accepted design
+trade-off.  Disk is cheap.
+
+
+> - no way to do merges based on the file's history[1]
+
+What is preventing merges from looking back through the git history?
+
+
+
+The fundamental design of git is essentially done, it is what it is.
+
+Your concearns are about performance rather than real limitations and it's
+just too damn early in the development process for that.  Frankly it's
+amazing how good git is considering its age; it's already _way_ faster and
+easier to use than bk ever was for my use.
+
+
+> Mathematics is the supreme nostalgia of our time.
+
+I've been tying to figure out what this means for a while now <g>
+
+
+Sean
+
+
