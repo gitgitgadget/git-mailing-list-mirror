@@ -1,81 +1,95 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 04:40:16 -0400 (EDT)
-Message-ID: <1680.10.10.10.24.1114764016.squirrel@linux1>
-References: <20050426004111.GI21897@waste.org>
-    <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org>
-    <20050429060157.GS21897@waste.org>
-    <3817.10.10.10.24.1114756831.squirrel@linux1>
-    <20050429074043.GT21897@waste.org>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: Odd decision of git-pasky-0.7 to do a merge
+Date: Fri, 29 Apr 2005 10:07:17 +0100
+Message-ID: <20050429100717.A5035@flint.arm.linux.org.uk>
+References: <20050429083615.A32271@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Linus Torvalds" <torvalds@osdl.org>,
-	"linux-kernel" <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 10:35:24 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri Apr 29 11:02:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRQxo-0005tb-Op
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 10:35:09 +0200
+	id 1DRRNq-0000jg-S6
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 11:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262467AbVD2Ik2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 04:40:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262465AbVD2Ik2
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 04:40:28 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:25999 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S262473AbVD2IkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 04:40:18 -0400
-Received: from linux1 ([67.71.124.169]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050429084017.ZEGM1623.simmts8-srv.bellnexxia.net@linux1>;
-          Fri, 29 Apr 2005 04:40:17 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j3T8eGw9027371;
-	Fri, 29 Apr 2005 04:40:16 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Fri, 29 Apr 2005 04:40:16 -0400 (EDT)
-In-Reply-To: <20050429074043.GT21897@waste.org>
-To: "Matt Mackall" <mpm@selenic.com>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S262477AbVD2JHb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 05:07:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262478AbVD2JHb
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 05:07:31 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:4361 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S262477AbVD2JHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 05:07:21 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DRRSw-0004Fz-JS
+	for git@vger.kernel.org; Fri, 29 Apr 2005 10:07:18 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DRRSv-00044C-Lo
+	for git@vger.kernel.org; Fri, 29 Apr 2005 10:07:17 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <20050429083615.A32271@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Fri, Apr 29, 2005 at 08:36:16AM +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, April 29, 2005 3:40 am, Matt Mackall said:
+On Fri, Apr 29, 2005 at 08:36:16AM +0100, Russell King wrote:
+> This is what happened this morning to a tree which only gets pulled
+> from Linus' tree.  No other changes are ever committed to it.
+> 
+> Why it decided that a merge was necessary is beyond me.  Any ideas?
+> Did Linus forget to merge his tree properly?
 
-> This trade-off FAILS, as my benchmarks against Mercurial have shown.
-> It trades 10x disk space for maybe 10% performance relative to my
-> approach. Meanwhile, it makes a bunch of other things hard, namely the
-> ones I've listed. Yes, you can hack around them, but the back end will
-> still be bloated.
+Ok, there's something weird going on here.  On hera:
 
-But since performance can be seen as worth so much more than disk, this
-might still be a good tradeoff, even given your numbers.
+rmk@hera:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git(0)$ SHA1_FILE_DIRECTORY=./objects fsck-cache
+expect dangling commits - potential heads - due to lack of head information
+dangling commit c60c390620e0abb60d4ae8c43583714bda27763f
+rmk@hera:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git(0)$ md5sum objects/03/97236d43e48e821cce5bbe6a80a1a56bb7cc3a
+fd1369dbbd494b1839ad3d633a5d088e  objects/03/97236d43e48e821cce5bbe6a80a1a56bb7cc3a
+rmk@hera:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git(0)$ md5sum objects/9e/734775f7c22d2f89943ad6c745571f1930105f
+b3b788308b7f137231652b5e97cb08c0  objects/9e/734775f7c22d2f89943ad6c745571f1930105f
+
+In my repository:
+
+$ fsck-cache
+bad sha1 file: .git/objects/03/97236d43e48e821cce5bbe6a80a1a56bb7cc3a
+root 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2
+bad sha1 file: .git/objects/9e/734775f7c22d2f89943ad6c745571f1930105f
+expect dangling commits - potential heads - due to lack of head information
+dangling commit 7598082671ce811737eca8119968dc056d78ac4b
+$ md5sum objects/03/97236d43e48e821cce5bbe6a80a1a56bb7cc3a
+fd1369dbbd494b1839ad3d633a5d088e  objects/03/97236d43e48e821cce5bbe6a80a1a56bb7cc3a
+$ md5sum objects/9e/734775f7c22d2f89943ad6c745571f1930105f
+b3b788308b7f137231652b5e97cb08c0  objects/9e/734775f7c22d2f89943ad6c745571f1930105f
+
+These two objects appear to be tags according to cat-file -t on hera,
+so these probably aren't the cause - it's more likely that git-pasky-0.7
+doesn't know how to handle these objects.
 
 
-> Mercurial is even younger (Linus had a few days' head start, not to
-> mention a bunch of help), and it is already as fast as git, relatively
-> easy to use, much simpler, and much more space and bandwidth
-> efficient.
+> Tracked branch, applying changes...
+> Merging e8108c98dd6d65613fa0ec9d2300f89c48d554bf -> c60c390620e0abb60d4ae8c43583714bda27763f
+> 	to bdceb6a0162274934386f19f3ea5a9d44feb0b20...
 
+Ok.  So.
 
-There are some really nice things about the git design, not just
-performance related.   However, i have a git repository going back to the
-start of 2.4 and for my uses there aren't any performance problems.  (okay
-fsck-cache, gets oom killed but i suspect that can be fixed).
+rmk@hera:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git(0)$ SHA1_FILE_DIRECTORY=./objects merge-base c60c390620e0abb60d4ae8c43583714bda27763f bdceb6a0162274934386f19f3ea5a9d44feb0b20
+bdceb6a0162274934386f19f3ea5a9d44feb0b20
 
-No _argument_ is going to change the fundamental design of git, it is what
-it is.  Git started out as just an interim fix and maybe that's all it
-will turn out to be.  But it's working pretty well so far, with lots of
-room for improvement over time, and in my estimation Linus has made a
-pretty compelling argument for the design tradeoffs he's made.
+$ merge-base c60c390620e0abb60d4ae8c43583714bda27763f bdceb6a0162274934386f19f3ea5a9d44feb0b20
+e8108c98dd6d65613fa0ec9d2300f89c48d554bf
 
-Sean
+Hmm.  At this point, I think we need something which graphically
+shows the layout of the commit tree to work out what's going on,
+and why my merge-base picked that particular commit id.
 
+However, at this point, I think I can say that git obviously isn't
+working as designed for me.
+
+-- 
+Russell King
 
