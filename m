@@ -1,86 +1,62 @@
-From: Bill Davidsen <davidsen@tmr.com>
+From: Matt Mackall <mpm@selenic.com>
 Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 12:46:42 -0400
-Message-ID: <427264F2.1040609@tmr.com>
-References: <20050429074043.GT21897@waste.org><Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
+Date: Fri, 29 Apr 2005 09:52:32 -0700
+Message-ID: <20050429165232.GV21897@waste.org>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1> <20050429074043.GT21897@waste.org> <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org> <118833cc05042908181d09bdfd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Sean <seanlkml@sympatico.ca>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Sean <seanlkml@sympatico.ca>,
 	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 18:49:27 2005
+X-From: git-owner@vger.kernel.org Fri Apr 29 18:50:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRYfl-0005LR-Mr
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 18:49:01 +0200
+	id 1DRYgP-0005WO-Gw
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 18:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262841AbVD2Qt4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 12:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262838AbVD2Qsl
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 12:48:41 -0400
-Received: from prgy-npn1.prodigy.com ([207.115.54.37]:59652 "EHLO
-	oddball.prodigy.com") by vger.kernel.org with ESMTP id S262826AbVD2Qq7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 12:46:59 -0400
-Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
-	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j3TGkhp09345;
-	Fri, 29 Apr 2005 12:46:47 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504290728090.18901@ppc970.osdl.org>
+	id S262848AbVD2Qyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 12:54:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262830AbVD2Qyc
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 12:54:32 -0400
+Received: from waste.org ([216.27.176.166]:36059 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S262845AbVD2Qwj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 12:52:39 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3TGqWPf022044
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 29 Apr 2005 11:52:32 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j3TGqWsc022041;
+	Fri, 29 Apr 2005 11:52:32 -0500
+To: Morten Welinder <mwelinder@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <118833cc05042908181d09bdfd@mail.gmail.com>
+User-Agent: Mutt/1.5.6+20040907i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+On Fri, Apr 29, 2005 at 11:18:20AM -0400, Morten Welinder wrote:
+> > I had three design goals. "disk space" wasn't one of them
 > 
-> On Fri, 29 Apr 2005, Matt Mackall wrote:
-> 
->>Mercurial is even younger (Linus had a few days' head start, not to
->>mention a bunch of help), and it is already as fast as git, relatively
->>easy to use, much simpler, and much more space and bandwidth
->>efficient.
-> 
-> 
-> You've not mentioned two out of my three design goals:
->  - distribution
->  - reliability/trustability
-> 
-> ie does mercurial do distributed merges, which git was designed for, and 
-> does mercurial notice single-bit errors in a reasonably secure manner, or 
-> can people just mess with history willy-nilly?
-> 
-> For the latter, the cryptographic nature of sha1 is an added bonus - the
-> _big_ issue is that it is a good hash, and an _exteremely_ effective CRC
-> of the data. You can't mess up an archive and lie about it later. And if
-> you have random memory or filesystem corruption, it's not a "shit happens"  
-> kind of situation - it's a "uhhoh, we can catch it (and hopefully even fix
-> it, thanks to distribution)" thing.
-> 
-> I had three design goals. "disk space" wasn't one of them, so you've
-> concentrated on only one so far in your arguments.
+> And, if at some point it should become an issue, it's fixable. Since
+> access to objects is fairly centralized and since they are
+> immutable, it would be quite simple to move an arbitrary selection
+> of the objects into some other storage form which could take
+> similarities between objects into account.
 
-Reliability is a must have, but disk space matters in the real world if 
-all other things are roughly equal. And bandwidth requirements are 
-certainly another real issue if they result in significant delay.
+This is not a fix, this is a band-aid. A fix is fitting all the data
+in 10 times less space without sacrificing too much performance.
 
-Isn't the important thing  having the SCC reliable and easy to use, as 
-in supports the things you want to do without jumping through hoops? One 
-advantage of Mercurial is that it can be the only major project for 
-someone who seems to understand the problems, as opposed to taking the 
-time of someone (you) who has a load of other things in the fire. And if 
-there isn't time to do all the things you want, perhaps generating a 
-wisj list and stepping back would be a good thing.
+> So disk space and its cousin number-of-files are both when-and-if
+> problems. And not scary ones at that.
 
-If you have the energy and time to stay with git, I'm sure it will be 
-great, but you might want to provide input on Mercurial and let it run.
-
-PS: I don't think the performance difference is enough to constitute a 
-real advantage in either direction.
+But its sibling bandwidth _is_ a problem. The delta between 2.6.10 and
+2.6.11 in git terms will be much larger than a _full kernel tarball_.
+Simply checking in patch-2.6.11 on top of 2.6.10 as a single changeset
+takes 41M. Break that into a thousand overlapping deltas (ie the way
+it is actually done) and it will be much larger.
 
 -- 
-    -bill davidsen (davidsen@tmr.com)
-"The secret to procrastination is to put things off until the
-  last possible moment - but no longer"  -me
+Mathematics is the supreme nostalgia of our time.
