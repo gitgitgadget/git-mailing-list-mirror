@@ -1,91 +1,69 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: More problems...
-Date: Fri, 29 Apr 2005 17:12:05 +0100
-Message-ID: <20050429171205.B30010@flint.arm.linux.org.uk>
-References: <20050429170127.A30010@flint.arm.linux.org.uk>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: [PATCH]: first take at cleanup of #include, xmalloc / xrealloc,
+ git status report usage.
+Date: Fri, 29 Apr 2005 18:24:07 +0200
+Message-ID: <20050429182407.5f6afd15.froese@gmx.de>
+References: <bfbb1f23220e1918afe70d4cf3de24f5@mpe.mpg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 29 18:07:59 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 18:21:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRY1A-0007jD-3I
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 18:07:04 +0200
+	id 1DRYDb-0001BR-Ox
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 18:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262811AbVD2QMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 12:12:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262808AbVD2QMe
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 12:12:34 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:40209 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S262811AbVD2QMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 12:12:10 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DRY63-0004ca-69
-	for git@vger.kernel.org; Fri, 29 Apr 2005 17:12:07 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DRY62-0008J4-4l
-	for git@vger.kernel.org; Fri, 29 Apr 2005 17:12:06 +0100
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050429170127.A30010@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Fri, Apr 29, 2005 at 05:01:27PM +0100
+	id S262833AbVD2QYp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 29 Apr 2005 12:24:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262826AbVD2QYc
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 12:24:32 -0400
+Received: from imap.gmx.net ([213.165.64.20]:20969 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S262820AbVD2QYO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 12:24:14 -0400
+Received: (qmail invoked by alias); 29 Apr 2005 16:24:11 -0000
+Received: from p509052DC.dip.t-dialin.net (EHLO dialup) [80.144.82.220]
+  by mail.gmx.net (mp019) with SMTP; 29 Apr 2005 18:24:11 +0200
+X-Authenticated: #271361
+To: Robert =?ISO-8859-1?Q?S=FCtterlin?= <robert@mpe.mpg.de>
+In-Reply-To: <bfbb1f23220e1918afe70d4cf3de24f5@mpe.mpg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 29, 2005 at 05:01:27PM +0100, Russell King wrote:
-> Ok.  cogito-0.8.
-> 
-> rmk@dyn-67:[linux-2.6-rmk]:<1049> cg-update origin
-> `../linux-2.6/.git/refs/heads/master' -> `.git/refs/heads/origin'
-> `../linux-2.6/.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901' -> `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901'
-> cp: cannot create link `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901': File exists
-> `../linux-2.6/.git/objects/01/ca31cc7bfdd18d6f72288915021730442f386d' -> `.git/objects/01/ca31cc7bfdd18d6f72288915021730442f386d'
-> cp: cannot create link `.git/objects/01/ca31cc7bfdd18d6f72288915021730442f386d': File exists
-> `../linux-2.6/.git/objects/04/17820d15efac837a84f9ade46f56339016a282' -> `.git/objects/04/17820d15efac837a84f9ade46f56339016a282'
-> cp: cannot create link `.git/objects/04/17820d15efac837a84f9ade46f56339016a282': File exists
-> `../linux-2.6/.git/objects/07/da010b67d4d715b5e97dfb824eb70433776a20' -> `.git/objects/07/da010b67d4d715b5e97dfb824eb70433776a20'
-> cp: cannot create link `.git/objects/07/da010b67d4d715b5e97dfb824eb70433776a20': File exists
-> `../linux-2.6/.git/objects/07/5d3961a119e8f27294cd77193f8fee7908a521' -> `.git/objects/07/5d3961a119e8f27294cd77193f8fee7908a521'
-> ...
-> cp: cannot create link `.git/objects/fc/1428905472a61e8e51057a4237acab5d8594d8': File exists
-> `../linux-2.6/.git/objects/fc/373c483e62dc1bbc5c3915f2d3c795fb316ec5' -> `.git/objects/fc/373c483e62dc1bbc5c3915f2d3c795fb316ec5'
-> cp: cannot create link `.git/objects/fc/373c483e62dc1bbc5c3915f2d3c795fb316ec5': File exists
-> `../linux-2.6/.git/objects/ff/c3be3dff7e20e2ad5367fa8d6d0d2f0baa8a24' -> `.git/objects/ff/c3be3dff7e20e2ad5367fa8d6d0d2f0baa8a24'
-> cp: cannot create link `.git/objects/ff/c3be3dff7e20e2ad5367fa8d6d0d2f0baa8a24': File exists
-> `../linux-2.6/.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783' -> `.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783'
-> cp: cannot create link `.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783': File exists
-> cg-pull: rsync error
-> 
-> rmk@dyn-67:[linux-2.6-rmk]:<1052> md5sum .git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783 ../linux-2.6/.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> 194b70d0eed786807e14e97dd0a5ad8d  .git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> 194b70d0eed786807e14e97dd0a5ad8d  ../linux-2.6/.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> rmk@dyn-67:[linux-2.6-rmk]:<1053> vdir .git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783 ../linux-2.6/.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> -rw-rw-r--  1 rmk rmk 3070 Apr 28 10:43 .git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> -rw-r--r--  1 rmk rmk 3070 Apr 29 16:50 ../linux-2.6/.git/objects/ff/8b49966a9f6ed23f6489bb986de87a14d4b783
-> 
-> What seems to be happening is that I create changes in my tree, rsync
-> them out to kernel.org.  Linus pulls them into his tree.  I pull them
-> back into my reference tree, and then try and update my working tree.
-> 
-> By that time, the object files in the reference tree appear to have
-> a newer timestamp than the corresponding ones in my local tree, and
-> cp -lua fails.
-> 
-> Which means cogito fails to work for me...  Help.
+Robert S=FCtterlin wrote:
+>[...]
+> +static int
+> +create_directories(const char *path)
+>   {
+> -	int len =3D strlen(path);
+> -	char *buf =3D xmalloc(len + 1);
+> -	const char *slash =3D path;
+> +	char *buf =3D (char *)path;
+> +	char *slash =3D buf;
+>=20
+>   	while ((slash =3D strchr(slash+1, '/')) !=3D NULL) {
+> -		len =3D slash - path;
+> -		memcpy(buf, path, len);
+> -		buf[len] =3D 0;
+> -		mkdir(buf, 0755);
+> +		*slash =3D '\0';
+> +		if (0 !=3D mkdir(buf, 0755))
+> +			return error("Unable to mkdir(``%s'', 0755)", buf);
+> +		*slash =3D '/';
 
-I've worked around it by doing:
+You need the temp buffer.  Simply casting the const away may
+shut up the compiler but it's not correct.
 
-$ rm -rf .git/objects/*
-$ cg-update origin
+> -		if (errno !=3D EEXIST)
+> +		if (EEXIST !=3D errno)
 
-Not particularly nice, but very necessary, and apparantly the only
-way to get this to work.  Grumble.  Why am I seemingly the only one
-running into all these blocking problems.
+Too much Star Wars?  Joda-speak?
 
--- 
-Russell King
+Ciao, ET.
+
+
+PS: the mkdir mode should be 0777 ...
 
