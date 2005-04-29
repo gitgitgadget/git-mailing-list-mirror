@@ -1,75 +1,85 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 14:33:40 -0400 (EDT)
-Message-ID: <2712.10.10.10.24.1114799620.squirrel@linux1>
-References: <Pine.LNX.4.58.0504291051460.18901@ppc970.osdl.org> (message from
-    Linus Torvalds on Fri, 29 Apr 2005 10:56:30 -0700 (PDT))
-    <200504291808.LAA25870@emf.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCh] jit-trackdown
+Date: Fri, 29 Apr 2005 11:47:54 -0700
+Message-ID: <7voebx4dyd.fsf@assigned-by-dhcp.cox.net>
+References: <42725AB8.5090501@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: torvalds@osdl.org, mpm@selenic.com, linux-kernel@vger.kernel.org,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 20:28:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 29 20:42:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRaDp-0001ZD-BU
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 20:28:17 +0200
+	id 1DRaRW-0003J8-Fq
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 20:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262880AbVD2Sdz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 14:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262879AbVD2Sdz
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 14:33:55 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:46791 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S262877AbVD2Sdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 14:33:50 -0400
-Received: from linux1 ([67.71.124.169]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050429183345.DBBO1623.simmts8-srv.bellnexxia.net@linux1>;
-          Fri, 29 Apr 2005 14:33:45 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j3TIXaId000787;
-	Fri, 29 Apr 2005 14:33:40 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Fri, 29 Apr 2005 14:33:40 -0400 (EDT)
-In-Reply-To: <200504291808.LAA25870@emf.net>
-To: "Tom Lord" <lord@emf.net>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S262864AbVD2SsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 14:48:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262885AbVD2SsE
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 14:48:04 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:12736 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262864AbVD2Sr4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 14:47:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050429184755.PGUF23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 29 Apr 2005 14:47:55 -0400
+To: David Greaves <david@dgreaves.com>
+In-Reply-To: <42725AB8.5090501@dgreaves.com> (David Greaves's message of
+ "Fri, 29 Apr 2005 17:03:04 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, April 29, 2005 2:08 pm, Tom Lord said:
+>>>>> "DG" == David Greaves <david@dgreaves.com> writes:
 
-> The confusion here is that you are talking about computational complexity
-> while I am talking about complexity measured in hours of labor.
->
-> You are assuming that the programmer generating the signature blindly
-> trusts the tool to generate the signed document accurately.   I am
-> saying that it should be tractable for human beings to read the documents
-> they are going to sign.
+DG> Should really be cg-trackdown
 
+Thanks for your kind words and the patch.
 
-Developers obviously _do_ read the changes they submit to a project or
-they would lose their trusted status.  That has absolutely nothing to do
-with signing, it's the exact same way things work today, without sigs.
+     head="$1"
+    +if [ $head == "HEAD" ]; then
+    +  head=$(cat .git/HEAD)
+    +elif [ -f .git/refs/tags/$head ]; then
+    +  head=$(cat .git/refs/tags/$head)
+    +elif [ -f .git/refs/heads/$head ]; then
+    +  head=$(cat .git/refs/heads/$head)
+    +fi
+    +
 
-It's not "blind trust" to expect a script to reproducibly sign documents
-you've decided to submit to a project.  The signature is not a QUALITY
-guarantee in and of itself.  It doesn't mean you have any additional
-responsibility to remove all bugs before submitting.  Conversely, not
-signing something doesn't mean you can submit crap.
+I have been primarily looking at the plumbing side and not the
+toilet side, and I still have not grokked cg-* yet.  That's why
+I did not do the right thing with these .git/refs/* stuff.  If
+this were to become part of cg-* suite, I would recommend just
+using $(commit-id) there, which should be the only one that
+needs to know the .git/* structure convention.
 
-See?  Signing something does not change the quality guarantee one way or
-the other.  It does not put any additional demands on the developer, so
-it's fine to have an automated script do it.  It's just a way to avoid
-impersonations.
+Have toilet side gitters reached a concensus (or semi-concensus)
+on how things under .git/ should be organized?  Is there a
+summary somewhere, something along the following lines?
 
-Sean
+    In subdirectories under $GIT_PROJECT_TOP/.git, you have
+    files that have some special meaning to the Cogito layer.
+    These files are all 41-byte long, which stores a 40-byte
+    SHA1 with terminating newline.  What is stored in each
+    location is as follows:
+
+    .git/HEAD           	Head commit object of the
+                                current tree. 
+
+    .git/refs/heads/$ext	Head commit object of the
+                                external tree $ext.  [*Q1*]
+
+    .git/refs/tags/$tag		Named Tag object. [*Q2*]
+
+    *Q1* What is the syntax and semantics rule for $ext, like
+         "$ext matches '^[-A-Za-z0-9_]$' and is one of the
+         entries in .git/remotes"?
+
+    *Q2* What is the syntax and semantics rule for $tag, like
+         "$tag matches '^[-A-Za-z0-9_]$' and can be anything not
+         just commit"?
 
