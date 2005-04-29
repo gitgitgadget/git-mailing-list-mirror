@@ -1,49 +1,43 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: More problems...
-Date: Fri, 29 Apr 2005 22:03:38 +0200
-Message-ID: <20050429200338.GL7331@cip.informatik.uni-erlangen.de>
-References: <20050429170127.A30010@flint.arm.linux.org.uk> <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com>
+From: Andrea Arcangeli <andrea@suse.de>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Fri, 29 Apr 2005 22:19:57 +0200
+Message-ID: <20050429201957.GJ17379@opteron.random>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <3817.10.10.10.24.1114756831.squirrel@linux1>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:02:15 2005
+Cc: Matt Mackall <mpm@selenic.com>, Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 22:13:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRbeg-00048l-NB
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:00:06 +0200
+	id 1DRbqo-0005cC-JH
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:12:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262922AbVD2UFU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:05:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262934AbVD2UFU
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:05:20 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:39860 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262922AbVD2UDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:03:40 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j3TK3cS8014864
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 29 Apr 2005 20:03:39 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j3TK3cLh014863
-	for git@vger.kernel.org; Fri, 29 Apr 2005 22:03:38 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S262951AbVD2URO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 16:17:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262945AbVD2UP3
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:15:29 -0400
+Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:29544
+	"EHLO opteron.random") by vger.kernel.org with ESMTP
+	id S262384AbVD2UOw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 16:14:52 -0400
+Received: by opteron.random (Postfix, from userid 500)
+	id E598A1C1593; Fri, 29 Apr 2005 22:19:57 +0200 (CEST)
+To: Sean <seanlkml@sympatico.ca>
 Content-Disposition: inline
-In-Reply-To: <20050429195055.GE1233@mythryan2.michonline.com>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
+In-Reply-To: <3817.10.10.10.24.1114756831.squirrel@linux1>
+X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Apr 29, 2005 at 02:40:31AM -0400, Sean wrote:
+> There isn't anything preventing optomized transfer protocols for git. 
 
-> Why not just use "rsync" for both remote and local synchronization, and
-> provide a "relink" command to scan two .git/objects/ repositories and
-> hardlink matching files together?
-
-That came to my mind, too. And it is actually the only thing that makes
-sense. - In matters of KISS. :-)
-
-	Thomas
+such a system might fall apart under load, converting on the fly from
+git to network-optimized format sound quite expensive operation, even
+ignorign the initial decompression of the payload. If something it
+should be pre-converted to mercurial, so you checkout from mercurial and
+you apply to local git.
