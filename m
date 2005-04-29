@@ -1,57 +1,59 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: Odd decision of git-pasky-0.7 to do a merge
-Date: Fri, 29 Apr 2005 21:52:50 +0100
-Message-ID: <20050429215250.E30010@flint.arm.linux.org.uk>
-References: <20050429083615.A32271@flint.arm.linux.org.uk> <Pine.LNX.4.58.0504291043060.18901@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: More problems...
+Date: Fri, 29 Apr 2005 14:07:29 -0700
+Message-ID: <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
+References: <20050429170127.A30010@flint.arm.linux.org.uk>
+	<20050429182708.GB14202@pasky.ji.cz>
+	<20050429195055.GE1233@mythryan2.michonline.com>
+	<Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 22:55:55 2005
+Cc: Ryan Anderson <ryan@michonline.com>, Petr Baudis <pasky@ucw.cz>,
+	Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 23:08:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRcWB-000200-1S
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 22:55:23 +0200
+	id 1DRchk-0003SQ-Jx
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 23:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262929AbVD2Uzv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 16:55:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262976AbVD2UzM
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 16:55:12 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:22792 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S262929AbVD2Uw4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 16:52:56 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DRcTj-0004ww-P8; Fri, 29 Apr 2005 21:52:52 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DRcTi-0002p3-U0; Fri, 29 Apr 2005 21:52:50 +0100
+	id S262993AbVD2VMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 17:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262994AbVD2VJZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 17:09:25 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:21442 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262982AbVD2VHf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 17:07:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050429210731.WMTZ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 29 Apr 2005 17:07:31 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <Pine.LNX.4.58.0504291043060.18901@ppc970.osdl.org>; from torvalds@osdl.org on Fri, Apr 29, 2005 at 10:44:29AM -0700
+In-Reply-To: <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org> (Linus
+ Torvalds's message of "Fri, 29 Apr 2005 13:21:21 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 29, 2005 at 10:44:29AM -0700, Linus Torvalds wrote:
-> On Fri, 29 Apr 2005, Russell King wrote:
-> > Why it decided that a merge was necessary is beyond me.  Any ideas?
-> > Did Linus forget to merge his tree properly?
-> 
-> It looks like it was unable to find the right common ancestor.
-> 
-> If you only had my stuff in it, the common ancestor _should_ have been the 
-> parent (c60c390620e0abb60d4ae8c43583714bda27763f), which _should_ have 
-> been your old top.
-> 
-> But maybe merge-base didn't work right?
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Yup - pasky-0.7 came out with some weird commit-id, but cogito-0.8
-got it right.  Now using cogito-0.8 here, so I'm no longer concerned
-about this particular problem.
+LT> Absolutely. I use the same "git-pull-script" between two local directories 
+LT> on disk...
+LT> Of course, I don't bother with the linking. But that's the trivial part.
 
--- 
-Russell King
+Would it be useful if somebody wrote local-pull.c similar to
+http-pull.c, which clones one local SHA_FILE_DIRECTORY to
+another, with an option to (1) try hardlink and if it fails
+fail; (2) try hardlink and if it fails try symlink and if it
+fails fail; (3) try hardlink and if it fails try copy and if it
+fails fail?
+
+Then from a source repository that contains good stuff plus
+throwaway experimental commits you can prepare pruned for-public
+tree.  Of course you can do it today by copying and then running
+git-prune in the destination, though.
+
 
