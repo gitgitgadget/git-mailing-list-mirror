@@ -1,80 +1,70 @@
-From: Noel Maddy <noel@zhtwn.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Fri, 29 Apr 2005 15:47:53 -0400
-Message-ID: <20050429194753.GA14222@uglybox.localnet>
-References: <2944.10.10.10.24.1114802002.squirrel@linux1> <200504291928.MAA27145@emf.net>
-Reply-To: Noel Maddy <noel@zhtwn.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: More problems...
+Date: Fri, 29 Apr 2005 15:50:55 -0400
+Message-ID: <20050429195055.GE1233@mythryan2.michonline.com>
+References: <20050429170127.A30010@flint.arm.linux.org.uk> <20050429182708.GB14202@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: seanlkml@sympatico.ca, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 29 21:46:23 2005
+Cc: Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 29 21:46:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRbQv-0002Wx-CP
-	for gcvg-git@gmane.org; Fri, 29 Apr 2005 21:45:53 +0200
+	id 1DRbRL-0002ap-Rd
+	for gcvg-git@gmane.org; Fri, 29 Apr 2005 21:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262910AbVD2TvA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 15:51:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262914AbVD2TvA
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 15:51:00 -0400
-Received: from rwcrmhc13.comcast.net ([204.127.198.39]:47247 "EHLO
-	rwcrmhc13.comcast.net") by vger.kernel.org with ESMTP
-	id S262910AbVD2Tus (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 15:50:48 -0400
-Received: from uglybox (pcp04038668pcs.wbrmfd01.mi.comcast.net[68.43.211.146])
-          by comcast.net (rwcrmhc13) with ESMTP
-          id <20050429194925015004rjove>; Fri, 29 Apr 2005 19:50:41 +0000
-Received: from noel by uglybox with local (Exim 4.50)
-	id 1DRbSr-0003rj-JB; Fri, 29 Apr 2005 15:47:53 -0400
-To: Tom Lord <lord@emf.net>
+	id S262914AbVD2Tva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 15:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262915AbVD2Tva
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 15:51:30 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:27274 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S262914AbVD2TvB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 15:51:01 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DRbVo-00056X-59; Fri, 29 Apr 2005 15:50:56 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DRbVo-0002i2-00; Fri, 29 Apr 2005 15:50:56 -0400
+Received: from ryan by mythical with local (Exim 4.50)
+	id 1DRbVn-0008WS-Rq; Fri, 29 Apr 2005 15:50:55 -0400
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <200504291928.MAA27145@emf.net>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20050429182708.GB14202@pasky.ji.cz>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 29, 2005 at 12:28:41PM -0700, Tom Lord wrote:
+On Fri, Apr 29, 2005 at 08:27:08PM +0200, Petr Baudis wrote:
+> Dear diary, on Fri, Apr 29, 2005 at 06:01:27PM CEST, I got a letter
+> where Russell King <rmk@arm.linux.org.uk> told me that...
+> > rmk@dyn-67:[linux-2.6-rmk]:<1049> cg-update origin
+> > `../linux-2.6/.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901' -> `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901'
+> > cp: cannot create link `.git/objects/00/78aeb85737197a84af1eeb0353dbef74427901': File exists
+> > 
+> > By that time, the object files in the reference tree appear to have
+> > a newer timestamp than the corresponding ones in my local tree, and
+> > cp -lua fails.
 > 
-> Think of it this way:
+> I'm now away ,unfortunately, and no immediate idea stems to my mind on
+> how to fix it. Ideas welcomed - I need to hardlink missing entries from
+> one tree to another; it would be enough to be able to just tell cp to
+> ignore already present files.
 > 
->   (a) Joe, the mainline maintainer, gets a trusted message containing
->       a diff.
-> 
->   (b) Joe reads the diff, it makes great sense, he wants to merge.
-> 
->   (c) Joe downloads a tree.  Supposedly that tree is the result of
->       applying this diff.   The tree, not the diff, is used for
->       merging.
+> Could you please try to give cp the -f flag?
 
-Call me a naive git, but seems to me the "git way" is a little
-different. It's tree-based rather than diff-based, and doesn't involve
-passing diffs around, right?
+Why not just use "rsync" for both remote and local synchronization, and
+provide a "relink" command to scan two .git/objects/ repositories and
+hardlink matching files together?
 
-This is the process I'd expect:
-
-    (a)' Joe is notified of an update made to an external git tree
-
-    (b)' Joe pulls tree from the external git tree (signed by external
-         developer)
-
-    (c)' Joe reviews the (git-generated) diffs from his current
-	     (trusted) tree to the new (signed) tree. If they pass
-         review, he merges the new versions into his tree, commits,
-         and signs his tree.
-
-The logical hole that you point out is assuming that the diff is passed
-separately from the tree rather than being directly generated from the
-current maintainer tree and the signed remote tree.
-
-If the diff is generated from the two signed trees, I don't see a hole.
-
-Or am I missing something?
-
+With the SHA1 hash, you can even have a --unsafe option that just
+compares the has names and does a link based purely off of that and the
+stat(2) results of both files.  (I'd expect that a ... safer variant
+would extract both files and compare them, but the --unsafe should be
+sufficient, in practice, I would think.)
 
 -- 
-The world's largest Internet database in the country.
-					      -- Trading Times radio ad
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-Noel Maddy <noel@zhtwn.com>
+
+Ryan Anderson
+  sometimes Pug Majere
