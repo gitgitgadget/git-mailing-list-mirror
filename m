@@ -1,67 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Russ Allbery <rra@stanford.edu>
 Subject: Re: Trying to use AUTHOR_DATE
-Date: Fri, 29 Apr 2005 21:22:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
+Date: Fri, 29 Apr 2005 21:32:30 -0700
+Organization: The Eyrie
+Message-ID: <87zmvganq9.fsf@windlord.stanford.edu>
 References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
- <42730061.5010106@zytor.com> <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+	<42730061.5010106@zytor.com>
+	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Luck, Tony" <tony.luck@intel.com>, Edgar Toernig <froese@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 06:15:16 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sat Apr 30 06:27:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRjNn-0001mh-JX
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 06:15:12 +0200
+	id 1DRjZ4-0002Ts-4v
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 06:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262503AbVD3EUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 00:20:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262504AbVD3EUi
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 00:20:38 -0400
-Received: from fire.osdl.org ([65.172.181.4]:36267 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262503AbVD3EUd (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 00:20:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3U4KSs4012017
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 29 Apr 2005 21:20:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3U4KRBe021725;
-	Fri, 29 Apr 2005 21:20:28 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262505AbVD3Ecd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 00:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262508AbVD3Ecd
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 00:32:33 -0400
+Received: from smtp2.Stanford.EDU ([171.67.16.125]:37540 "EHLO
+	smtp2.Stanford.EDU") by vger.kernel.org with ESMTP id S262505AbVD3Ecc
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2005 00:32:32 -0400
+Received: from windlord.stanford.edu (windlord.Stanford.EDU [171.64.19.147])
+	by smtp2.Stanford.EDU (8.12.11/8.12.11) with SMTP id j3U4WU8a030722
+	for <git@vger.kernel.org>; Fri, 29 Apr 2005 21:32:31 -0700
+Received: (qmail 8572 invoked by uid 1000); 30 Apr 2005 04:32:30 -0000
+To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org> (Linus
+ Torvalds's message of "Fri, 29 Apr 2005 21:22:27 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> It also seems to do so in a particularly stupid way, and David
+> Woodhouses suggestion of just using mktime() on Jan 1st, 1970, seems to
+> be much simpler than what curl does.
 
-On Fri, 29 Apr 2005, Linus Torvalds wrote:
-> 
-> I'll happily depend on libcurl, but I put my foot down on that tool of the 
-> devil called "autoconf".
+Because of daylight savings time, this doesn't actually work.  I know from
+personal experience; this is the tactic that I took at first when writing
+INN's date parser and was educated by test failures.
 
-Btw, looking at curl's "getdate.c", it doesn't seem to be _that_ much more 
-different from the date parsing we used to have. In particular, it 
-actually uses "mktime()" twice and subtracts out the difference.
-
-It also seems to do so in a particularly stupid way, and David Woodhouses 
-suggestion of just using mktime() on Jan 1st, 1970, seems to be much 
-simpler than what curl does.
-
-(Actually, it might make sense to modify David's version to use "Jan 2nd,
-1970" and subtract 24 hours, in case some mktime() implementation decides
-that underflow is a problem...)
-
-Of course, I think we might as well go with Edgars version after all. 
-
-Edgar, willing to create a separate "parse-date.c" with your "my_mktime()" 
-thing and move the old date parsing there? That way we'll just use that 
-instead of libcurl..
-
-		Linus
+-- 
+Russ Allbery (rra@stanford.edu)             <http://www.eyrie.org/~eagle/>
