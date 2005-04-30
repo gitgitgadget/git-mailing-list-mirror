@@ -1,66 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Resurrect diff-tree-helper -R
-Date: Sat, 30 Apr 2005 18:09:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org>
-References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Sat, 30 Apr 2005 16:14:59 -0700
+Message-ID: <42741173.9040507@zytor.com>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>	 <42730061.5010106@zytor.com>	 <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>	 <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>	 <20050430125333.2bd81b18.froese@gmx.de> <1114859594.24014.60.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 03:59:15 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Edgar Toernig <froese@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
+	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 01 03:59:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DS3j1-0001qL-5S
-	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:27 +0200
+	id 1DS3jA-0001qL-Th
+	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261484AbVEABIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 21:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261486AbVEABIF
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 21:08:05 -0400
-Received: from fire.osdl.org ([65.172.181.4]:2226 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261484AbVEABIC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 21:08:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4117rs4028677
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 30 Apr 2005 18:07:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4117qhN026511;
-	Sat, 30 Apr 2005 18:07:53 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261455AbVD3XPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 19:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261451AbVD3XPf
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 19:15:35 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:41680 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261455AbVD3XPa
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2005 19:15:30 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3UNF0EU000954
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 30 Apr 2005 16:15:00 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1114859594.24014.60.camel@localhost.localdomain>
+X-Spam-Status: No, score=-5.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+David Woodhouse wrote:
+> On Sat, 2005-04-30 at 12:53 +0200, Edgar Toernig wrote:
+> 
+>>+       tm = localtime(&now); /* get timezone and tm_isdst */
+>>+       offset = -timezone / 60;
+>>+       if (tm->tm_isdst > 0)
+>>+               offset += 60;
+> 
+> 
+> Some locales have DST offsets which aren't 60 minutes, don't they?
+> 
 
+Correct.  I believe South Australia is among them.
 
-On Sat, 30 Apr 2005, Junio C Hamano wrote:
->
-> Diff-tree-helper take two patch inadvertently dropped the
-> support of -R option
-
-Talking about the diffs, I'm beginning to hate those "mode" things.
-
-Not only do they screw up diffstat (big deal), but they are pointless, 
-since 99.9% of the time the mode stays the same.
-
-So it would be much nicer (I think) if mode changes are handled 
-separately, with a simple separate line before the diff saying
-
-	"Mode change: %o->%o %s", oldmode, newmode, path
-
-and not mess up the diff header. That way, you only see it when it
-actually makes any difference, and it's more readable both for humans
-_and_ machines as a result.
-
-Normal "patch" will just ignore the extra lines before the diff anyway, so 
-it won't matter there.
-
-Comments?
-
-		Linus
+	-hpa
