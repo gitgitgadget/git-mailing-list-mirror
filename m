@@ -1,102 +1,190 @@
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Subject: Re: questions about cg-update, cg-pull, and cg-clone.
-Date: Fri, 29 Apr 2005 22:37:29 -0400
-Message-ID: <4272EF69.2090806@dwheeler.com>
-References: <20050430005322.GA5408@tumblerings.org>
-Reply-To: dwheeler@dwheeler.com
+From: Andrea Arcangeli <andrea@suse.de>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Sat, 30 Apr 2005 04:52:11 +0200
+Message-ID: <20050430025211.GP17379@opteron.random>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <20050429203027.GK17379@opteron.random> <20050429203959.GC21897@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
-	xpasky@machine.sinus.cz
-X-From: git-owner@vger.kernel.org Sat Apr 30 04:30:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 04:42:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRhju-0004Qo-GO
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 04:29:54 +0200
+	id 1DRhwP-0005M8-Vp
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 04:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263130AbVD3CfQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 22:35:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263134AbVD3CfQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 22:35:16 -0400
-Received: from aibo.runbox.com ([193.71.199.94]:20964 "EHLO cujo.runbox.com")
-	by vger.kernel.org with ESMTP id S263130AbVD3CfB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 22:35:01 -0400
-Received: from [10.9.9.16] (helo=lassie.runbox.com)
-	by greyhound.runbox.com with esmtp (Exim 4.34)
-	id 1DRhoo-0002oD-9E; Sat, 30 Apr 2005 04:34:58 +0200
-Received: from [70.18.249.32] (helo=[192.168.2.73])
-	by lassie.runbox.com with asmtp (uid:258406) (Exim 4.34)
-	id 1DRhon-0005fP-OR; Sat, 30 Apr 2005 04:34:58 +0200
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20050430005322.GA5408@tumblerings.org>
-X-Sender: 258406@vger.kernel.org
+	id S263138AbVD3CsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 22:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263137AbVD3CsY
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 22:48:24 -0400
+Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:34373
+	"EHLO opteron.random") by vger.kernel.org with ESMTP
+	id S263138AbVD3CrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Apr 2005 22:47:10 -0400
+Received: by opteron.random (Postfix, from userid 500)
+	id 11C101C15D4; Sat, 30 Apr 2005 04:52:11 +0200 (CEST)
+To: Matt Mackall <mpm@selenic.com>
+Content-Disposition: inline
+In-Reply-To: <20050429203959.GC21897@waste.org>
+X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Zack Brown wrote:
-> Hi,
-> 
-> I'm trying to figure out the new Cogito syntax. What is the difference between
-> cg-update and cg-pull? Here is my take so far, please correct me:
-> 
-> 'cg-update branch-name' grabs any new changes from the upstream repository and
-> merges them into my local repository. If I've been editing files in my local
-> repository, the update attempts to merge the changes cleanly.
+On Fri, Apr 29, 2005 at 01:39:59PM -0700, Matt Mackall wrote:
+> Mercurial is ammenable to rsync provided you devote a read-only
+> repository to it on the client side. In other words, you rsync from
+> kernel.org/mercurial/linus to local/linus and then you merge from
+> local/linus to your own branch. Mercurial's hashing hierarchy is
+> similar to git's (and Monotone's), so you can sign a single hash of
+> the tree as well.
 
-Yes. "cg-update branch-name" is EXACTLY the same as
-  cg-pull branch-name && cg-merge branch-name
-You can see this by examining the last lines of the cg-update script.
-Because updating is one of the single most common operations for an SCM,
-it makes sense to have a single command that does it.
+Ok fine. It's also interesting how you already enabled partial transfers
+through http.
 
-Currently cg-update without a branch name does "recover deleted files"
-instead, but I think that's a wart & Petr agrees (that will probably
-get moved to a different command, see separate discussion).
+Please apply this patch so it doesn't fail on my setup ;)
 
+--- mercurial-0.4b/hg.~1~	2005-04-29 02:52:52.000000000 +0200
++++ mercurial-0.4b/hg	2005-04-30 00:53:02.000000000 +0200
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ #
+ # mercurial - a minimal scalable distributed SCM
+ # v0.4b "oedipa maas"
 
-> Now, if the update is clean, a cg-commit is invoked automatically,
+On a bit more technical side, one thing I'm wondering about is the
+compression. If I change mercurial like this:
 
-Correct; cg-merge calls "cg-commit -C" (ignore cache)
-if the merge is clean.
-
-> and if the
-> update is not clean, I then have to resolve any conflicts and give the cg-commit
-> command by hand.
-
-Correct.
-
-> But: what is the significance of either of these cg-commit
-> commands? Why should I have to write a changelog entry recording this merge? All
-> I'm doing is updating my tree to be current. Why should I have to 'commit' that
-> update?
-
-I can't speak Petr, but I would guess that he's doing that because
-he's trying to avoid data loss.
-
-> Now I look at 'cg-pull'. What does this do? The readme says something about
-> printing two ids, and being useful for diffs. But can't I do a diff after a
-> cg-update and get the same result? I'm very confused about cg-pull right now.
-
-cg-pull BRANCH copies any changes from the named branch into your
-repository.  You could do a diff afterwards, yes, to get the
-same results as long as the data is in your repository.  However,
-after a successful merge the HEAD will be different from before
-a successful merge, so the DEFAULT answers from a
-diff will be different.
+--- revlog.py.~1~	2005-04-29 01:33:14.000000000 +0200
++++ revlog.py	2005-04-30 03:54:12.000000000 +0200
+@@ -11,9 +11,11 @@
+ import zlib, struct, mdiff, sha, binascii, os, tempfile
+ 
+ def compress(text):
++    return text
+     return zlib.compress(text)
+ 
+ def decompress(bin):
++    return text
+     return zlib.decompress(bin)
+ 
+ def hash(text):
 
 
-> Also, the README says that cg-clone and cg-init are identical, except that
-> cg-clone creates a new directory for the repository. Is that really the only
-> difference? Why do we have cg-clone then?
+the .hg directory sizes changes from 167M to 302M _BUT_ the _compressed_
+size of the .hg directory (i.e. like in a full network transfer with
+rsync -z or a tar.gz backup) changes from 55M to 38M:
 
-You'll have to ask Petr.  My guess is that he has bigger plans
-for cg-clone, what you're seeing is just the current stub.
+andrea@opteron:~/devel/kernel> du -sm hg-orig hg-aa hg-orig.tar.bz2 hg-aa.tar.bz2 
+167     hg-orig
+302     hg-aa
+55      hg-orig.tar.bz2
+38      hg-aa.tar.bz2
+^^^^^^^^^^^^^^^^^^^^^ 38M backup and network transfer is what I want
 
-Anyway, hope my guessing helps.
+So I don't really see an huge benefit in compression, other than to
+slowdown the checkins measurably [i.e. what Linus doesn't want] (the
+time of compression is a lot higher than the time of python runtime during
+checkin, so it's hard to believe your 100% boost with psyco in the hg file,
+sometime psyco doesn't make any difference infact, I'd rather prefer people to
+work on the real thing of generating native bytecode at compile time, rather
+than at runtime, like some haskell compiler can do).
 
---- David A. Wheeler
+mercurial is already good at decreasing the entropy by using an efficient
+storage format, it doesn't need to cheat by putting compression on each blob
+that can only leads to bad ratios when doing backups and while transferring
+more than one blob through the network.
+
+So I suggest to try disabling compression optionally, perhaps it'll be even
+faster than git in the initial checkin that way! No need of compressing or
+decompressing anything with mercurial (unlike with git that would explode
+without control w/o compression).
+
+My time measurements follows:
+
+w/o compression:
+
+	9.52user 73.11system 1:30.49elapsed 91%CPU (0avgtext+0avgdata 0maxresident)k
+	^
+	0inputs+0outputs (0major+80109minor)pagefaults 0swaps
+
+w/ compression (i.e. official package):
+
+	26.78user 75.90system 1:44.87elapsed 97%CPU (0avgtext+0avgdata 0maxresident)k
+	^^
+	0inputs+0outputs (0major+484522minor)pagefaults 0swaps
+
+The user time is by far the most important reliable number here, 17 seconds of
+difference wasted in compression time. The 1:30 time w/o cache didn't fit
+completely in cache, but still it was faster (only 14 sec faster instead of 17
+sec faster due some minor I/O that happened due the larger pagecache size that
+was recycled a bit).
+
+Without compression the time is 90% system time, very little time is spent in
+userland, and of course I made sure very little time is spent in I/O.  vmstat
+looks like this:
+
+ 1  0 107008  61320  31964 546076    0    0     0  7860 1095  1147  5 46 41  9
+ 1  0 107008  59336  31972 547564    0    0     0     0 1074  1093  6 46 48  0
+ 1  0 107008  57544  31988 549044    0    0     0     0 1095  1239  5 45 50  0
+ 1  0 107008  55304  32000 550936    0    0     0     0 1064  1041  5 46 50  0
+ 1  0 107008  53384  32012 552488    0    0     0     0 1080  1081  5 45 50  0
+ 1  0 107008  51592  32032 553964    0    0     0  8260 1087  1018  3 48 40 10
+ 1  0 107008  49144  32040 555180    0    0     0     0 1099  1090  5 48 47  0
+ 1  0 107008  47432  32048 556532    0    0     0     0 1086  1014  4 46 50  0
+ 1  0 107008  45632  32060 557676    0    0     0     0 1102  1073  4 47 49  0
+ 2  0 107008  44032  32068 558892    0    0     0     0 1088  1044  4 46 49  0
+ 1  0 107008  42864  32116 560204    0    0     8  6672 1136  1265  5 47 41  7
+ 1  0 107008  41008  32124 561420    0    0     0   484 1182  1078  5 43 49  3
+
+(5 = user, 43 system, 49 idle is the second cpu doing nothing, 3 is io-wait
+time)
+
+While with compression (default) the user time goes up, a lot higher than
+what python wasted in the above trace:
+
+ 1  0 107008 282688  26756 346396    0    0     0 12064 1122   997 20 32 38 12
+ 1  0 107008 279936  26776 348552    0    0     0     0 1074   938 15 36 50  0
+ 1  0 107008 277296  26780 350656    0    0     0     0 1087  1070 15 36 50  0
+ 1  0 107008 274672  26796 352816    0    0     4    28 1060  1021 15 36 49  1
+ 1  0 107008 272176  26824 354828    0    0     0    52 1092  1082 19 32 50  0
+ 1  1 107008 269616  26844 356780    0    0     0 10856 1106  1019 16 36 36 13
+ 1  0 107008 267312  26864 358936    0    0     0     4 1081  1068 27 24 49  0
+ 1  0 107008 265072  26876 360760    0    0     0     0 1068  1073 23 27 50  0
+ 1  0 107008 263024  26888 362516    0    0     0  2764 1224  1457 18 29 49  5
+ 1  0 107008 260928  26900 364408    0    0     0    20 1060   969 21 29 50  0
+ 1  0 107008 258752  26928 366216    0    0     0  9768 1098   916 18 32 37 12
+ 1  0 107008 256640  26940 367972    0    0     0     0 1058  1093 13 37 50  0
+ 1  0 107008 254384  26952 369796    0    0     0     0 1089  1259 18 33 50  0
+ 1  0 107008 252016  26972 371680    0    0     0     0 1063  1040 29 22 50  0
+
+The difference in time may be even higher than the above since the pass w/o
+compression may have done some read I/O too sometime,  since I've 1G and
+it didn't fit completely in cache (I made sure the second pass was completely
+from cache instead, by running twice and verifying the free memory never went
+lower than 100M).
+
+Http is not intended for maximal efficiency, it's there just to make
+life easy. special protocol with zlib is required for maximum
+efficiency.
+
+My suggestion is to leave compression optional by storing a bit in the .hg
+directory (a global bit) to know if the blob is compressed or not... so if
+people have problems and runs out of pagecache they can use it, but Linus
+definitely must keep compression off to run the checkin at max speed (i.e.
+potentially much faster than git, especially on big files). The cost of one
+branch in python to know if compression is enabled or not shouldn't be an issue.
+Compression should be a parameter to "hg init", perhaps hg -z, so in the future
+we can add -j to add bzip2 too.
+
+You also should move the .py into a hg directory, so that they won't
+pollute the site-packages.
+
+Matt, very great work with mercurial. The small mercurial size is striking, 1037
+lines total excluding the classes you rightfully shared from other python
+projects. That's less than 1/7 of the size of cogito (ok perhaps it's not as
+mature as cogito but anyway). Great choice for the language too (but
+perhaps I'm biased ;).
