@@ -1,102 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Resurrect diff-tree-helper -R
-Date: Sat, 30 Apr 2005 17:34:10 -0700
-Message-ID: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Sat, 30 Apr 2005 16:14:23 -0700
+Message-ID: <4274114F.20706@zytor.com>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE5C@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 03:59:48 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Edgar Toernig <froese@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 01 04:00:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DS3if-0001qL-E1
-	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:06 +0200
+	id 1DS3jE-0001qL-Sr
+	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261483AbVEAAeh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 20:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261479AbVEAAef
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 20:34:35 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:22414 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261482AbVEAAeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 20:34:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050501003411.SIBW12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 30 Apr 2005 20:34:11 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261456AbVD3XOh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 19:14:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261457AbVD3XOh
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 19:14:37 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:39120 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261456AbVD3XOd
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2005 19:14:33 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3UNEOkU000948
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 30 Apr 2005 16:14:24 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: "Luck, Tony" <tony.luck@intel.com>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE5C@scsmsx401.amr.corp.intel.com>
+X-Spam-Status: No, score=-3.6 required=5.0 tests=ALL_TRUSTED,AWL 
+	autolearn=ham version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Diff-tree-helper take two patch inadvertently dropped the
-support of -R option, which is necessary to produce reverse diff
-based on diff-cache and diff-files output (diff-tree does not
-matter since you can feed two trees in reverse order).  This
-patch restores it.
+Luck, Tony wrote:
+>>Fixed version below.
+> 
+> 
+> Yup ... that fixes it for my initial test cases.  Thanks.
+> 
+> -Tony
+> 
+> P.S. The libcurl that I found (curl-7.12.1-3.src.rpm) has curl_getdate()
+> implemented as >1000 lines of yacc.  Which seems like overkill (unless
+> I really need to set AUTHOR_DATE="a week ago last tuesday" :-)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff-tree-helper.c |   17 +++++++++++------
-1 files changed, 11 insertions(+), 6 deletions(-)
+That one is obsolete.
 
-jit-diff 0 diff-tree-helper.c
-# - Fix up d_type handling - we need to include <dirent.h> before
-# + working-tree
---- k/diff-tree-helper.c  (mode:100644)
-+++ l/diff-tree-helper.c  (mode:100644)
-@@ -44,7 +44,8 @@ static int parse_oneside_change(const ch
- 	return 0;
- }
- 
--static int parse_diff_tree_output(const char *buf, const char **spec, int cnt)
-+static int parse_diff_tree_output(const char *buf,
-+				  const char **spec, int cnt, int reverse)
- {
- 	struct diff_spec old, new;
- 	char path[PATH_MAX];
-@@ -98,8 +99,12 @@ static int parse_diff_tree_output(const 
- 	default:
- 		return -1;
- 	}
--	if (!cnt || matches_pathspec(path, spec, cnt))
--		run_external_diff(path, &old, &new);
-+	if (!cnt || matches_pathspec(path, spec, cnt)) {
-+		if (reverse)
-+			run_external_diff(path, &new, &old);
-+		else
-+			run_external_diff(path, &old, &new);
-+	}
- 	return 0;
- }
- 
-@@ -108,14 +113,14 @@ static const char *diff_tree_helper_usag
- 
- int main(int ac, const char **av) {
- 	struct strbuf sb;
--	int reverse_diff = 0;
-+	int reverse = 0;
- 	int line_termination = '\n';
- 
- 	strbuf_init(&sb);
- 
- 	while (1 < ac && av[1][0] == '-') {
- 		if (av[1][1] == 'R')
--			reverse_diff = 1;
-+			reverse = 1;
- 		else if (av[1][1] == 'z')
- 			line_termination = 0;
- 		else
-@@ -129,7 +134,7 @@ int main(int ac, const char **av) {
- 		read_line(&sb, stdin, line_termination);
- 		if (sb.eof)
- 			break;
--		status = parse_diff_tree_output(sb.buf, av+1, ac-1);
-+		status = parse_diff_tree_output(sb.buf, av+1, ac-1, reverse);
- 		if (status)
- 			fprintf(stderr, "cannot parse %s\n", sb.buf);
- 	}
-
-
-
+	-hpa
