@@ -1,59 +1,57 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Trying to use AUTHOR_DATE
-Date: Fri, 29 Apr 2005 20:49:53 -0700
-Message-ID: <42730061.5010106@zytor.com>
+Date: Fri, 29 Apr 2005 21:02:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
 References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
+ <42730061.5010106@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Edgar Toernig <froese@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 05:46:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Luck, Tony" <tony.luck@intel.com>, Edgar Toernig <froese@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 05:55:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRivd-0008MA-Ki
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 05:46:05 +0200
+	id 1DRj4s-0000aG-Sb
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 05:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262498AbVD3Dvv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 23:51:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262502AbVD3Dvv
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 23:51:51 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:13762 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S262498AbVD3Dvt
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 23:51:49 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3U3nrXq019937
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 29 Apr 2005 20:49:54 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=ham 
-	version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S262502AbVD3EBE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 00:01:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262503AbVD3EBE
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 00:01:04 -0400
+Received: from fire.osdl.org ([65.172.181.4]:45481 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262502AbVD3EBD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 00:01:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3U40ks4010840
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 29 Apr 2005 21:00:49 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3U40jLD021230;
+	Fri, 29 Apr 2005 21:00:45 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42730061.5010106@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Luck, Tony wrote:
->>Another dependency :-(   I can live without http-pull but not
->>without commit-tree.
+
+
+On Fri, 29 Apr 2005, H. Peter Anvin wrote:
 > 
-> Yes, the extra dependency sucks ... libcurl is missing from one of
-> the systems that I'd like to use GIT on ... so I'd prefer a solution
-> that doesn't involve libcurl.
+> For gawd's sake people, just grab a copy of the working code in libcurl, 
+> and turn it into a standalone .c file.  It'll even let you merge in 
+> future fixes, and you could even use autoconf to use libcurl or the 
+> standalone code depending on what's available.
 
-...
+I'll happily depend on libcurl, but I put my foot down on that tool of the 
+devil called "autoconf".
 
-> I'd much rather see your version fixed up to preserve the timezone
-> than have the libcurl dependency.
+Any package that starts using autoconf eventually becomes a total mess. 
+Don't do it. 
 
-For gawd's sake people, just grab a copy of the working code in libcurl, 
-and turn it into a standalone .c file.  It'll even let you merge in 
-future fixes, and you could even use autoconf to use libcurl or the 
-standalone code depending on what's available.
-
-	-hpa
+		Linus
