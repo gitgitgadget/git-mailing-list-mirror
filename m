@@ -1,115 +1,66 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Fri, 29 Apr 2005 17:22:35 -0700
-Organization: SGI
-Message-ID: <20050429172235.21c1af10.pj@sgi.com>
-References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] git-fsck-cache: Gracefully handle non-commit IDs
+Date: Sat, 30 Apr 2005 02:28:09 +0200
+Message-ID: <20050430002809.GB32339@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Sat Apr 30 02:17:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 02:23:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRffQ-0003ZO-3O
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 02:17:08 +0200
+	id 1DRflT-0003zD-AJ
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 02:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263082AbVD3AWw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 20:22:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263083AbVD3AWw
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 20:22:52 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:59832 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S263082AbVD3AWs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 20:22:48 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3U24Wlu000864;
-	Fri, 29 Apr 2005 19:04:32 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3U0Mc5w19814864;
-	Fri, 29 Apr 2005 17:22:38 -0700 (PDT)
+	id S263086AbVD3A20 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 20:28:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263090AbVD3A20
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 20:28:26 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:8187 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S263086AbVD3A2N (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 20:28:13 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 8A7F36E2D7A; Sat, 30 Apr 2005 02:27:11 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 544646E2D76; Sat, 30 Apr 2005 02:27:11 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id B89CB61FDE; Sat, 30 Apr 2005 02:28:09 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> bash is being an ass about SIGPIPE
+Gracefully handle non-commit IDs instead of segfaulting.
 
-You have a multiprocessor, don't you.
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-The following silly little shell script will provoke the bash SIGPIPE
-complaint reliably on a multiprocessor.  It writes a big file, twice,
-from a for-loop in a separate bash subshell through a pipe to a command
-that exits after seeing one line.
-
-Code Sample 1:
-
-    #!/bin/bash
-    for x in 1 2
-    do
-        cat /etc/termcap	# a big text file
-    done | sed 1q
-
-Adding a right trap _inside_ the shell loop that is _before_ the pipe
-will reduce the verbosity of the complaint substantially (not show the
-line number and text for each command inside the loop that is killed by
-the SIGPIPE; rather just show the simple "Broken pipe" error message):
-
-Code Sample 2:
-
-    #!/bin/bash
-    for x in 1 2
-    do
-	trap continue PIPE	# reduce broken pipe screeching
-	cat /etc/termcap	# a big text file
-    done | sed 1q
-
-Then wrapping the entire pipeline (now that the bogus output is a
-constant "Broken pipe" string) in the following manner will filter out
-just that noise, leaving whatever else was on stdout and/or stderr
-unscathed:
-
-Code Sample 3:
-
-    #!/bin/bash
-    ( ( (
-	for x in 1 2
-	do
-		trap continue PIPE      # reduce broken pipe screeching
-		cat /etc/termcap        # a big text file
-	done | sed 1q
-    ) 1>&3 ) 2>&1 | grep -vxF 'Broken pipe' 1>&2 ) 3>&1
-
-The following patch to bash jobs.c will enable "Code Sample 2" to do the
-right thing, without depending (so much) on the DONT_REPORT_SIGPIPE
-compile time flag.  With this patch, you don't have to go all the way to
-the baroque code in "Code Sample 3" to shut bash up.  Just a well placed
-trap is sufficient.
-
-Whether or not this is actually worth persuing (or was even worth
-reading ;) I don't know.
-
---- jobs.c.orig 2001-03-26 10:08:24.000000000 -0800
-+++ jobs.c      2005-04-29 17:09:44.294763496 -0700
-@@ -2686,11 +2686,8 @@ notify_of_job_status ()
-                }
-              else if (IS_FOREGROUND (job))
-                {
--#if !defined (DONT_REPORT_SIGPIPE)
--                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT)
--#else
--                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT && termsig != SIGPIPE)
--#endif
-+                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT &&
-+                   (termsig != SIGPIPE || signal_is_trapped (termsig) == 0))
-                    {
-                      fprintf (stderr, "%s", strsignal (termsig));
-
-
-
+--- 09465be469eef9711e93b583f4cd1092baa58f90/fsck-cache.c  (mode:100644 sha1:280a104050b665515418c00c33af8e6b0b0e2101)
++++ uncommitted/fsck-cache.c  (mode:100644)
+@@ -174,7 +216,14 @@
+ 			continue;
+ 
+ 		if (!get_sha1_hex(arg, head_sha1)) {
+-			struct object *obj = &lookup_commit(head_sha1)->object;
++			struct commit *commit = lookup_commit(head_sha1);
++			struct object *obj;
++
++			/* Error is printed by lookup_commit(). */
++			if (!commit)
++				continue;
++
++			obj = &commit->object;
+ 			obj->used = 1;
+ 			mark_reachable(obj, REACHABLE);
+ 			heads++;
 -- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+Jonas Fonseca
