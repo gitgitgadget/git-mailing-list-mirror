@@ -1,64 +1,54 @@
-From: Matt Mackall <mpm@selenic.com>
+From: Andrea Arcangeli <andrea@suse.de>
 Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Sat, 30 Apr 2005 09:06:40 -0700
-Message-ID: <20050430160640.GK21897@waste.org>
-References: <200504301444.j3UEiHN05686@adam.yggdrasil.com>
+Date: Sat, 30 Apr 2005 18:37:24 +0200
+Message-ID: <20050430163724.GE20146@opteron.random>
+References: <20050426004111.GI21897@waste.org> <Pine.LNX.4.58.0504251859550.18901@ppc970.osdl.org> <20050429060157.GS21897@waste.org> <20050429203027.GK17379@opteron.random> <20050429203959.GC21897@waste.org> <20050430025211.GP17379@opteron.random> <20050430152014.GI21897@waste.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: andrea@suse.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 18:01:11 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 18:27:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRuOo-00059x-OE
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 18:00:59 +0200
+	id 1DRunn-0007kS-So
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 18:26:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261271AbVD3QGs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 12:06:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261274AbVD3QGs
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 12:06:48 -0400
-Received: from waste.org ([216.27.176.166]:45240 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261271AbVD3QGq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 12:06:46 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j3UG6e9G016914
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 30 Apr 2005 11:06:40 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j3UG6e5J016911;
-	Sat, 30 Apr 2005 11:06:40 -0500
-To: "Adam J. Richter" <adam@yggdrasil.com>
+	id S261281AbVD3QcR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 12:32:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261283AbVD3QcR
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 12:32:17 -0400
+Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:48167
+	"EHLO opteron.random") by vger.kernel.org with ESMTP
+	id S261285AbVD3QcF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2005 12:32:05 -0400
+Received: by opteron.random (Postfix, from userid 500)
+	id 65F761C1690; Sat, 30 Apr 2005 18:37:24 +0200 (CEST)
+To: Matt Mackall <mpm@selenic.com>
 Content-Disposition: inline
-In-Reply-To: <200504301444.j3UEiHN05686@adam.yggdrasil.com>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+In-Reply-To: <20050430152014.GI21897@waste.org>
+X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 30, 2005 at 07:44:17AM -0700, Adam J. Richter wrote:
->
-> 	I'd like to mention a couple of possible optimizations
-> for both the with and without compression approaches.
-> 
-> 	If you remove the gzip compression, then I imagine you could
-> do much of the IO of checking out files via sendfile, without
-> ever copying data to program space or even changing the program's
-> memory map.  There apparently exists a python sendfile module.
-> 
-> 	If this mercurial were written in C, much of the rest of
-> the IO could be optimized with mmap (to reduce copies) and writev
-> in the absense of a compression pass.  I don't know enough about
-> python to know if these optimizations are available.
+On Sat, Apr 30, 2005 at 08:20:15AM -0700, Matt Mackall wrote:
+> Most of that psyco speed up is accelerating subsequent diffs in
+> difflib, which you probably didn't hit yet.
 
-Python can do mmap, not sure about writev. 
+Correct. Plus I've a 64bit python so I can't use psyco anyway.
 
-But I'm currently still in the "keep it as simple as possible" stage.
-There's a bunch of room for optimization still, but if I do it all
-now, it'll make things hard when I run into the next design change.
+> I can make it some sort of environment variable, sure. I think the
+> speed is already in a domain where it's not a big deal though. There
 
-And there's still some important core work that needs doing - checkout
-and commit need to be a subcase of the core merge code.
+No big deal of course, I mentioned it just because it was by far the
+most CPU userland intensive operation during checkin. Perhaps doing less
+vfs syscalls would improve checkin time too, but I'm unsure if that's
+easily feasible (while disabling compression was certainly easy ;)
 
--- 
-Mathematics is the supreme nostalgia of our time.
+> Yep, I'm rather new to actually packaging my Python hacks.
+
+I sent you by private email a modified package that gets that right.
+
+Thanks!
