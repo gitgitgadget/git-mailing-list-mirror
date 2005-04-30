@@ -1,236 +1,115 @@
-From: tony.luck@intel.com
-Subject: Re: Trying to use AUTHOR_DATE
-Date: Fri, 29 Apr 2005 17:21:36 -0700
-Message-ID: <200504300021.j3U0La023762@unix-os.sc.intel.com>
-References: <200504292314.j3TNE1P23342@unix-os.sc.intel.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 02:16:12 2005
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: How to get bash to shut up about SIGPIPE?
+Date: Fri, 29 Apr 2005 17:22:35 -0700
+Organization: SGI
+Message-ID: <20050429172235.21c1af10.pj@sgi.com>
+References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Sat Apr 30 02:17:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRfeO-0003UK-4E
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 02:16:04 +0200
+	id 1DRffQ-0003ZO-3O
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 02:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263081AbVD3AVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 20:21:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263082AbVD3AVr
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 20:21:47 -0400
-Received: from fmr24.intel.com ([143.183.121.16]:1456 "EHLO
-	scsfmr004.sc.intel.com") by vger.kernel.org with ESMTP
-	id S263081AbVD3AVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Apr 2005 20:21:37 -0400
-Received: from scsfmr101.sc.intel.com (scsfmr101.sc.intel.com [10.3.253.10])
-	by scsfmr004.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j3U0LaeO015518;
-	Sat, 30 Apr 2005 00:21:36 GMT
-Received: from unix-os.sc.intel.com (unix-os.sc.intel.com [172.25.110.7])
-	by scsfmr101.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j3U0Gc5F011617;
-	Sat, 30 Apr 2005 00:16:38 GMT
-Received: from localhost (localhost [[UNIX: localhost]])
-	by unix-os.sc.intel.com (8.11.6/8.11.2) id j3U0La023762;
-	Fri, 29 Apr 2005 17:21:36 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4272C4DE.8090806@zytor.com>
-X-Scanned-By: MIMEDefang 2.44
+	id S263082AbVD3AWw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 20:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263083AbVD3AWw
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 20:22:52 -0400
+Received: from omx2-ext.sgi.com ([192.48.171.19]:59832 "EHLO omx2.sgi.com")
+	by vger.kernel.org with ESMTP id S263082AbVD3AWs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 20:22:48 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j3U24Wlu000864;
+	Fri, 29 Apr 2005 19:04:32 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j3U0Mc5w19814864;
+	Fri, 29 Apr 2005 17:22:38 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> There was a time-parsing bug somewhere, where mktime() got invoked on a 
-> UTC date.  I proposed changing it to curl_gettime() instead.
+> bash is being an ass about SIGPIPE
 
-Here's a patch to switch to using curl_getdate():
+You have a multiprocessor, don't you.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+The following silly little shell script will provoke the bash SIGPIPE
+complaint reliably on a multiprocessor.  It writes a big file, twice,
+from a for-loop in a separate bash subshell through a pipe to a command
+that exits after seeing one line.
 
----
+Code Sample 1:
 
- Makefile      |    1 
- commit-tree.c |  143 ++++------------------------------------------------------
- 2 files changed, 11 insertions(+), 133 deletions(-)
+    #!/bin/bash
+    for x in 1 2
+    do
+        cat /etc/termcap	# a big text file
+    done | sed 1q
 
-Makefile: d73bea1cbb9451a89b03d6066bf2ed7fec32fd31
---- k/Makefile
-+++ l/Makefile
-@@ -92,6 +92,7 @@ $(LIB_FILE): $(LIB_OBJS)
- rpush: rsh.c
- rpull: rsh.c
- http-pull: LIBS += -lcurl
-+commit-tree: LIBS += -lcurl
- 
- 
- ifneq (,$(wildcard .git))
-commit-tree.c: 23de13361944ad7ba7c5320cf7cdd04e81842c60
---- k/commit-tree.c
-+++ l/commit-tree.c
-@@ -10,6 +10,7 @@
- #include <string.h>
- #include <ctype.h>
- #include <time.h>
-+#include <curl/curl.h>
- 
- #define BLOCKING (1ul << 14)
- 
-@@ -80,146 +81,22 @@ static void remove_special(char *p)
- 	}
- }
- 
--static const char *month_names[] = {
--        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
--        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
--};
--
--static const char *weekday_names[] = {
--        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
--};
--
--
--static char *skipfws(char *str)
--{
--	while (isspace(*str))
--		str++;
--	return str;
--}
--
--	
- /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
-    (i.e. English) day/month names, and it doesn't work correctly with %z. */
--static void parse_rfc2822_date(char *date, char *result, int maxlen)
-+static void parse_date(char *date, time_t *now, char *result, int maxlen)
- {
--	struct tm tm;
- 	char *p;
--	int i, offset;
- 	time_t then;
- 
--	memset(&tm, 0, sizeof(tm));
--
--	/* Skip day-name */
--	p = skipfws(date);
--	if (!isdigit(*p)) {
--		for (i=0; i<7; i++) {
--			if (!strncmp(p,weekday_names[i],3) && p[3] == ',') {
--				p = skipfws(p+4);
--				goto day;
--			}
--		}
--		return;
--	}					
--
--	/* day */
-- day:
--	tm.tm_mday = strtoul(p, &p, 10);
--
--	if (tm.tm_mday < 1 || tm.tm_mday > 31)
--		return;
--
--	if (!isspace(*p))
--		return;
--
--	p = skipfws(p);
--
--	/* month */
--
--	for (i=0; i<12; i++) {
--		if (!strncmp(p, month_names[i], 3) && isspace(p[3])) {
--			tm.tm_mon = i;
--			p = skipfws(p+strlen(month_names[i]));
--			goto year;
--		}
--	}
--	return; /* Error -- bad month */
--
--	/* year */
-- year:	
--	tm.tm_year = strtoul(p, &p, 10);
--
--	if (!tm.tm_year && !isspace(*p))
--		return;
--
--	if (tm.tm_year > 1900)
--		tm.tm_year -= 1900;
--		
--	p=skipfws(p);
--
--	/* hour */
--	if (!isdigit(*p))
--		return;
--	tm.tm_hour = strtoul(p, &p, 10);
--	
--	if (!tm.tm_hour > 23)
--		return;
--
--	if (*p != ':')
--		return; /* Error -- bad time */
--	p++;
--
--	/* minute */
--	if (!isdigit(*p))
--		return;
--	tm.tm_min = strtoul(p, &p, 10);
--	
--	if (!tm.tm_min > 59)
-+	if ((then = curl_getdate(date, now)) == 0)
- 		return;
- 
--	if (isspace(*p))
--		goto zone;
--
--	if (*p != ':')
--		return; /* Error -- bad time */
--	p++;
--
--	/* second */
--	if (!isdigit(*p))
--		return;
--	tm.tm_sec = strtoul(p, &p, 10);
--	
--	if (!tm.tm_sec > 59)
--		return;
--
--	if (!isspace(*p))
--		return;
--
-- zone:
--	p = skipfws(p);
--
--	if (*p == '-')
--		offset = -60;
--	else if (*p == '+')
--		offset = 60;
--	else
--	       return;
--
--	if (!isdigit(p[1]) || !isdigit(p[2]) || !isdigit(p[3]) || !isdigit(p[4]))
--		return;
--
--	i = strtoul(p+1, NULL, 10);
--	offset *= ((i % 100) + ((i / 100) * 60));
--
--	if (*(skipfws(p + 5)))
--		return;
--
--	then = mktime(&tm); /* mktime appears to ignore the GMT offset, stupidly */
--	if (then == -1)
--		return;
--
--	then -= offset;
--
--	snprintf(result, maxlen, "%lu %5.5s", then, p);
-+	/* find the timezone at the end */
-+	p = date + strlen(date);
-+	while (p > date && isdigit(*--p))
-+		;
-+	if ((*p == '+' || *p == '-') && strlen(p) == 5)
-+		snprintf(result, maxlen, "%lu %5.5s", then, p);
- }
- 
- static void check_valid(unsigned char *sha1, const char *expect)
-@@ -298,7 +175,7 @@ int main(int argc, char **argv)
- 	email = getenv("AUTHOR_EMAIL") ? : realemail;
- 	audate = getenv("AUTHOR_DATE");
- 	if (audate)
--		parse_rfc2822_date(audate, date, sizeof(date));
-+		parse_date(audate, &now, date, sizeof(date));
- 
- 	remove_special(gecos); remove_special(realgecos); remove_special(commitgecos);
- 	remove_special(email); remove_special(realemail); remove_special(commitemail);
+Adding a right trap _inside_ the shell loop that is _before_ the pipe
+will reduce the verbosity of the complaint substantially (not show the
+line number and text for each command inside the loop that is killed by
+the SIGPIPE; rather just show the simple "Broken pipe" error message):
+
+Code Sample 2:
+
+    #!/bin/bash
+    for x in 1 2
+    do
+	trap continue PIPE	# reduce broken pipe screeching
+	cat /etc/termcap	# a big text file
+    done | sed 1q
+
+Then wrapping the entire pipeline (now that the bogus output is a
+constant "Broken pipe" string) in the following manner will filter out
+just that noise, leaving whatever else was on stdout and/or stderr
+unscathed:
+
+Code Sample 3:
+
+    #!/bin/bash
+    ( ( (
+	for x in 1 2
+	do
+		trap continue PIPE      # reduce broken pipe screeching
+		cat /etc/termcap        # a big text file
+	done | sed 1q
+    ) 1>&3 ) 2>&1 | grep -vxF 'Broken pipe' 1>&2 ) 3>&1
+
+The following patch to bash jobs.c will enable "Code Sample 2" to do the
+right thing, without depending (so much) on the DONT_REPORT_SIGPIPE
+compile time flag.  With this patch, you don't have to go all the way to
+the baroque code in "Code Sample 3" to shut bash up.  Just a well placed
+trap is sufficient.
+
+Whether or not this is actually worth persuing (or was even worth
+reading ;) I don't know.
+
+--- jobs.c.orig 2001-03-26 10:08:24.000000000 -0800
++++ jobs.c      2005-04-29 17:09:44.294763496 -0700
+@@ -2686,11 +2686,8 @@ notify_of_job_status ()
+                }
+              else if (IS_FOREGROUND (job))
+                {
+-#if !defined (DONT_REPORT_SIGPIPE)
+-                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT)
+-#else
+-                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT && termsig != SIGPIPE)
+-#endif
++                 if (termsig && WIFSIGNALED (s) && termsig != SIGINT &&
++                   (termsig != SIGPIPE || signal_is_trapped (termsig) == 0))
+                    {
+                      fprintf (stderr, "%s", strsignal (termsig));
+
+
+
+-- 
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
