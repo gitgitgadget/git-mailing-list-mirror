@@ -1,62 +1,61 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Trying to use AUTHOR_DATE
-Date: Sat, 30 Apr 2005 13:13:40 +0100
-Message-ID: <1114863221.24014.68.camel@localhost.localdomain>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
-	 <42730061.5010106@zytor.com>
-	 <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
-	 <20050430125333.2bd81b18.froese@gmx.de>
-	 <1114859594.24014.60.camel@localhost.localdomain>
-	 <1114862920.17673.1.camel@localhost.localdomain>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: description
+Date: Sat, 30 Apr 2005 14:43:27 +0200
+Message-ID: <20050430124327.GA8942@vrfy.org>
+References: <4272CDF1.9060207@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Edgar Toernig <froese@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 14:10:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Apr 30 14:37:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRqnP-0001Yq-GA
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 14:10:07 +0200
+	id 1DRrE6-0004Mh-EO
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 14:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261205AbVD3MPj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 08:15:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVD3MPj
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 08:15:39 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:25521 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S261205AbVD3MPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 08:15:35 -0400
-Received: from shinybook.infradead.org ([81.187.226.99])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DRqsW-0006f0-My; Sat, 30 Apr 2005 13:15:25 +0100
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <1114862920.17673.1.camel@localhost.localdomain>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261210AbVD3Mnb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 08:43:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261211AbVD3Mnb
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 08:43:31 -0400
+Received: from soundwarez.org ([217.160.171.123]:24556 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261210AbVD3Mn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 08:43:29 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 8C2AF2929D; Sat, 30 Apr 2005 14:43:27 +0200 (CEST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <4272CDF1.9060207@zytor.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-04-30 at 14:08 +0200, Kay Sievers wrote:
-> Yes, some have half-hour offsets:
-> http://www.timeanddate.com/library/abbreviations/timezones/au/nft.html
+On Fri, Apr 29, 2005 at 05:14:41PM -0700, H. Peter Anvin wrote:
+> I guess this is technically speaking complete nonstandard addition to 
+> git :) but I have added the following to the script that generates 
+> http://www.kernel.org/git/:
+> 
+> If there is a plain text file called "description" in the .git 
+> directory, it will appear on that webpage.
 
-That doesn't count -- that timezone is honoured all year round. We're
-talking about the difference between wintertime and summertime in any
-given locale.
+That's a nice idea. We may add the owner of the repo to this file too?
+Or where does your script know that from the permissions? Is the projects
+overview page updating itself?
 
-TBH I think I'd rather just put a gmt_mktime() which uses my trick of
-looking at tm.tm_gmtoff after the mktime call into a separate file
-wrapped in #ifdef GLIBC and let anyone else who really cares about their
-own non-BSD-compatible system worry about whether it works there and fix
-it up accordingly.
 
--- 
-dwmw2
+Here is a new gitweb.cgi version that integrates with that page. The
+own project browser is removed now and the top-link points now to your
+link-list.
 
+!! It already uses the new binaries with the git-* prepended. !!
+
+See it working here:
+  http://ehlo.org/~kay/git/
+
+Get the cgi from here:
+  ftp://ehlo.org/git/gitweb.cgi
+
+!! Just remove lines 26-30, which are the settings to run on my box. !!
+
+Thanks,
+Kay
