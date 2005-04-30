@@ -1,90 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Fri, 29 Apr 2005 19:59:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0504291956030.2296@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
- <20050429172235.21c1af10.pj@sgi.com>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Sat, 30 Apr 2005 05:23:18 +0200
+Message-ID: <20050430052318.1bd4b189.froese@gmx.de>
+References: <200504292314.j3TNE1P23342@unix-os.sc.intel.com>
+	<200504300021.j3U0La023762@unix-os.sc.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Sat Apr 30 04:52:40 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 05:18:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRi5u-0005ng-0p
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 04:52:38 +0200
+	id 1DRiUK-000737-V3
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 05:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262471AbVD3C6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Apr 2005 22:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263139AbVD3C6Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 22:58:16 -0400
-Received: from fire.osdl.org ([65.172.181.4]:63386 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262471AbVD3C54 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 22:57:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3U2vls4006572
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 29 Apr 2005 19:57:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3U2vkCQ019438;
-	Fri, 29 Apr 2005 19:57:46 -0700
-To: Paul Jackson <pj@sgi.com>
-In-Reply-To: <20050429172235.21c1af10.pj@sgi.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262487AbVD3DX0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Apr 2005 23:23:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262493AbVD3DX0
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Apr 2005 23:23:26 -0400
+Received: from imap.gmx.net ([213.165.64.20]:46466 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S262487AbVD3DXW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Apr 2005 23:23:22 -0400
+Received: (qmail invoked by alias); 30 Apr 2005 03:23:21 -0000
+Received: from p50906D95.dip.t-dialin.net (EHLO dialup) [80.144.109.149]
+  by mail.gmx.net (mp026) with SMTP; 30 Apr 2005 05:23:21 +0200
+X-Authenticated: #271361
+To: tony.luck@intel.com
+In-Reply-To: <200504300021.j3U0La023762@unix-os.sc.intel.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Fri, 29 Apr 2005, Paul Jackson wrote:
+tony.luck@intel.com wrote:
 >
-> > bash is being an ass about SIGPIPE
+> > There was a time-parsing bug somewhere, where mktime() got invoked on a 
+> > UTC date.  I proposed changing it to curl_gettime() instead.
 > 
-> You have a multiprocessor, don't you.
+> Here's a patch to switch to using curl_getdate():
 
-Yes. 
+Another dependency :-(   I can live without http-pull but not
+without commit-tree.
 
-> The following silly little shell script will provoke the bash SIGPIPE
-> complaint reliably on a multiprocessor.
+What's wrong with the patch I sent to fix this:
 
-Yup:
+	http://marc.theaimsgroup.com/?m=111446501003389
 
-	t: line 5:  3853 Broken pipe             cat /etc/termcap
-	t: line 5:  3855 Broken pipe             cat /etc/termcap
+> +	/* find the timezone at the end */
+> +	p = date + strlen(date);
+> +	while (p > date && isdigit(*--p))
+> +		;
+> +	if ((*p == '+' || *p == '-') && strlen(p) == 5)
+> +		snprintf(result, maxlen, "%lu %5.5s", then, p);
 
-> Adding a right trap _inside_ the shell loop that is _before_ the pipe
-> will reduce the verbosity of the complaint substantially (not show the
-> line number and text for each command inside the loop that is killed by
-> the SIGPIPE; rather just show the simple "Broken pipe" error message):
-> 
-> Code Sample 2:
-> 
->     #!/bin/bash
->     for x in 1 2
->     do
-> 	trap continue PIPE	# reduce broken pipe screeching
-> 	cat /etc/termcap	# a big text file
->     done | sed 1q
+This will choke on dates from Linus which have a trailing comment:
 
-Didn't change anything for me. Same thing.
+	Date: Fri, 29 Apr 2005 15:26:14 -0700 (PDT)
 
-> Then wrapping the entire pipeline (now that the bogus output is a
-> constant "Broken pipe" string) in the following manner will filter out
-> just that noise, leaving whatever else was on stdout and/or stderr
-> unscathed:
-
-It will also grep out any occurrence of "Broken pipe", so if we're talking 
-about a kernel changelog, where we fix a pipe bug...
-
-> Whether or not this is actually worth persuing (or was even worth
-> reading ;) I don't know.
-
-I don't know why the bash people have that stupid pipe reporting in the 
-first place, considering that no other shell seems to do it, and everybody 
-just wants to shut it up..
-
-		Linus
+Ciao, ET.
