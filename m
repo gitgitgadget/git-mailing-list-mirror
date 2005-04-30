@@ -1,56 +1,67 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Trying to use AUTHOR_DATE
-Date: Sat, 30 Apr 2005 16:14:59 -0700
-Message-ID: <42741173.9040507@zytor.com>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>	 <42730061.5010106@zytor.com>	 <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>	 <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>	 <20050430125333.2bd81b18.froese@gmx.de> <1114859594.24014.60.camel@localhost.localdomain>
+Date: Sat, 30 Apr 2005 16:18:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504301607570.2296@ppc970.osdl.org>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
+ <42730061.5010106@zytor.com> <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org> <87zmvganq9.fsf@windlord.stanford.edu>
+ <1114848175.24014.35.camel@localhost.localdomain> <20050430124048.79119cac.froese@gmx.de>
+ <87r7gs87a9.fsf@windlord.stanford.edu> <Pine.LNX.4.58.0504301322130.2296@ppc970.osdl.org>
+ <20050501005434.2d47131a.froese@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Edgar Toernig <froese@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
-	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 03:59:33 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 01 03:59:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DS3jA-0001qL-Th
-	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:37 +0200
+	id 1DS3jC-0001qL-Ve
+	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261455AbVD3XPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 19:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261451AbVD3XPf
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 19:15:35 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:41680 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261455AbVD3XPa
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 19:15:30 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3UNF0EU000954
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 30 Apr 2005 16:15:00 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1114859594.24014.60.camel@localhost.localdomain>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261451AbVD3XQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 19:16:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261459AbVD3XQ2
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 19:16:28 -0400
+Received: from fire.osdl.org ([65.172.181.4]:59298 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261451AbVD3XQ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 19:16:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3UNGCs4022282
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 30 Apr 2005 16:16:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3UNGBDR023372;
+	Sat, 30 Apr 2005 16:16:12 -0700
+To: Edgar Toernig <froese@gmx.de>
+In-Reply-To: <20050501005434.2d47131a.froese@gmx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse wrote:
-> On Sat, 2005-04-30 at 12:53 +0200, Edgar Toernig wrote:
-> 
->>+       tm = localtime(&now); /* get timezone and tm_isdst */
->>+       offset = -timezone / 60;
->>+       if (tm->tm_isdst > 0)
->>+               offset += 60;
-> 
-> 
-> Some locales have DST offsets which aren't 60 minutes, don't they?
-> 
 
-Correct.  I believe South Australia is among them.
 
-	-hpa
+On Sun, 1 May 2005, Edgar Toernig wrote:
+> 
+> > I'll probably tweak it a bit more (make "no timezone means local 
+> > timezone", for example, rather than UTC like it is now).
+> 
+> Here's my try on that.  But whether it works everywhere ...
+
+I already did that part.
+
+> Btw, your %+03d%02d printf gave wrong results for i.e. -0130 (-01-30).
+
+Dang. Oh, well. That's what I get for not testing.
+
+I don't much like that "%+05s" trick either, since that one also depends 
+on the direction of rounding for negative division (it just gets it right 
+for the normal case, and I guess C90 finally specified it precisely).
+
+Let's just do unsigned arithmetic and check the sign specially. I already 
+did that on input, just not on output.
+
+		Linus
