@@ -1,75 +1,97 @@
-From: Russ Allbery <rra@stanford.edu>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Trying to use AUTHOR_DATE
-Date: Sat, 30 Apr 2005 11:10:38 -0700
-Organization: The Eyrie
-Message-ID: <87r7gs87a9.fsf@windlord.stanford.edu>
+Date: Sat, 30 Apr 2005 13:32:35 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504301322130.2296@ppc970.osdl.org>
 References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
-	<42730061.5010106@zytor.com>
-	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
-	<87zmvganq9.fsf@windlord.stanford.edu>
-	<1114848175.24014.35.camel@localhost.localdomain>
-	<20050430124048.79119cac.froese@gmx.de>
+ <42730061.5010106@zytor.com> <Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org> <87zmvganq9.fsf@windlord.stanford.edu>
+ <1114848175.24014.35.camel@localhost.localdomain> <20050430124048.79119cac.froese@gmx.de>
+ <87r7gs87a9.fsf@windlord.stanford.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 30 20:06:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Edgar Toernig <froese@gmx.de>,
+	David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 30 22:31:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DRwLh-0008Bj-Fz
-	for gcvg-git@gmane.org; Sat, 30 Apr 2005 20:05:54 +0200
+	id 1DRycS-0004hW-Kk
+	for gcvg-git@gmane.org; Sat, 30 Apr 2005 22:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261326AbVD3SLD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 14:11:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261324AbVD3SLC
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 14:11:02 -0400
-Received: from smtp3.Stanford.EDU ([171.67.16.138]:48059 "EHLO
-	smtp3.Stanford.EDU") by vger.kernel.org with ESMTP id S261330AbVD3SKm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 14:10:42 -0400
-Received: from windlord.stanford.edu (windlord.Stanford.EDU [171.64.19.147])
-	by smtp3.Stanford.EDU (8.12.11/8.12.11) with SMTP id j3UIAdeI017471
-	for <git@vger.kernel.org>; Sat, 30 Apr 2005 11:10:39 -0700
-Received: (qmail 1080 invoked by uid 1000); 30 Apr 2005 18:10:39 -0000
-To: Edgar Toernig <froese@gmx.de>
-In-Reply-To: <20050430124048.79119cac.froese@gmx.de> (Edgar Toernig's
- message of "Sat, 30 Apr 2005 12:40:48 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
+	id S261423AbVD3Uek (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 16:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261425AbVD3Ucq
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 16:32:46 -0400
+Received: from fire.osdl.org ([65.172.181.4]:23177 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261414AbVD3Ua5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Apr 2005 16:30:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j3UKUbs4012257
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 30 Apr 2005 13:30:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j3UKUZuj018252;
+	Sat, 30 Apr 2005 13:30:36 -0700
+To: Russ Allbery <rra@stanford.edu>
+In-Reply-To: <87r7gs87a9.fsf@windlord.stanford.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Edgar Toernig <froese@gmx.de> writes:
 
-> Oh btw, when we are about sucking time functions: the %s and %z
-> strftime- sequences used further down are also non-standard (POSIX has
-> no %s, old libc has neither %s nor %z).
 
-> A possible workaround:
+On Sat, 30 Apr 2005, Russ Allbery wrote:
+> 
+> You really cannot get portable behavior in this area without something
+> akin to Autoconf probes, unfortunately. 
 
-[...]
+Ok, since this only really matters for AUTHOR_DATE, which we pass in as a
+random string anyway, and which comes from various mail programs which may
+or may not follow all RFC's, I just rewrote it to give "almost correct 
+results" for "pretty much any crap you throw at it".
 
-> 	tm = localtime(&now); /* get timezone and tm_isdst */
-> 	tz = -timezone / 60;
-> 	if (tm->tm_isdst > 0)
-> 		tz += 60;
+As a test-bed, a "test-date" program that parses a date and then prints 
+it out in git format _and_ in the local timezone format, here's a few 
+examples:
 
-The global timezone variable isn't available on all systems.  :)
+	./test-date "$(date)" "April 4th, 1992 at 13:45" "13:04:09 +0100 2004 Yesterday, Friday 13th, December"
 
-You really cannot get portable behavior in this area without something
-akin to Autoconf probes, unfortunately.  Oh, and you can't assume daylight
-savings time is an hour; it is sometimes two hours.  You have to instead
-use the altzone variable to get the offset when you're in daylight savings
-time, but this again isn't available on all systems.
+results in
 
-I posted a pointer to the INN source a while back; I'm really not sure
-that anything less is sufficient to get full portability, although I
-certainly trust Paul Eggart's implementation.
+	Sat Apr 30 13:26:52 PDT 2005 -> 1114892812 -0700 -> Sat Apr 30 13:26:52 2005
 
-BTW, the yacc-based thing is exactly what I wrote the INN code to get rid
-of, since I didn't want a yacc dependency.
+	April 4th, 1992 at 13:45 -> 702395100 +0000 -> Sat Apr  4 05:45:00 1992
 
--- 
-Russ Allbery (rra@stanford.edu)             <http://www.eyrie.org/~eagle/>
+	13:04:09 +0100 2004 Yesterday, Friday 13th, December -> 1102939449 +0100 -> Mon Dec 13 04:04:09 2004
+
+which is just because it really doesn't check a hell of a lot.
+
+For example, if you say
+
+	"I caught 14 fishes in December 1998"
+
+test-date will happily parse this as
+
+	Sun Dec 13 16:00:00 1998
+
+(That's "0:00:00 Dec 14th, 1998 UTC" shown in the local timezone ;). Or:
+
+	./test-date  "12:15 4/17/2009"
+
+	12:15 4/17/2009 -> 1239970500 +0000 -> Fri Apr 17 05:15:00 2009
+
+ie it just greedily tries to make _some_ sense of the random strings you 
+throw at it.
+
+It doesn't even try getting timezones right - it doesn't know about 
+summertime or anything. Besides, I probably used the wrong timezone info 
+anyway.
+
+I'll probably tweak it a bit more (make "no timezone means local 
+timezone", for example, rather than UTC like it is now).
+
+		Linus
