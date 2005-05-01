@@ -1,250 +1,233 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [1/2] Library support for refs/
-Date: Sun, 1 May 2005 17:52:56 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505011750050.30848-100000@iabervon.org>
+Subject: [2/2] Complete http-pull
+Date: Sun, 1 May 2005 17:56:25 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505011753000.30848-100000@iabervon.org>
 References: <Pine.LNX.4.21.0505011746230.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 23:53:50 2005
+X-From: git-owner@vger.kernel.org Sun May 01 23:57:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSMNh-00052E-0q
-	for gcvg-git@gmane.org; Sun, 01 May 2005 23:53:41 +0200
+	id 1DSMRH-0005fz-Nr
+	for gcvg-git@gmane.org; Sun, 01 May 2005 23:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262719AbVEAV6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 17:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262727AbVEAV5J
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 17:57:09 -0400
-Received: from iabervon.org ([66.92.72.58]:48900 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262718AbVEAVxC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 17:53:02 -0400
+	id S262680AbVEAWCu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 18:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262727AbVEAWA1
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 18:00:27 -0400
+Received: from iabervon.org ([66.92.72.58]:52996 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262680AbVEAV4c (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 17:56:32 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DSMMy-0002Qy-00; Sun, 1 May 2005 17:52:56 -0400
+	id 1DSMQL-0002zI-00; Sun, 1 May 2005 17:56:25 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <Pine.LNX.4.21.0505011746230.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This includes three things: in init, create .git/refs/; a function to read
-a refs file; and a function to write a refs file.
+This adds support for fetching a reference from the remote repository and
+for writing to a local reference file (with the -w option). It also makes
+rpull aware that it lacks this capability.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-Index: Makefile
+Index: http-pull.c
 ===================================================================
---- bab2f51e8218b023728539c7841ee7613ebd36e8/Makefile  (mode:100644 sha1:a3028efd80a4165ade03158361e0224fb46364f5)
-+++ f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/Makefile  (mode:100644 sha1:e43a1db55962c771cc934227213d6520939bd0ce)
-@@ -29,9 +29,10 @@
- 	install $(PROG) $(SCRIPTS) $(HOME)/bin/
+--- f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/http-pull.c  (mode:100644 sha1:d877c4abe3ff7766d858bfeac5c9a0eaf1385b65)
++++ 6bae8854157f3f8b29f9afee2c54434334f899e4/http-pull.c  (mode:100644 sha1:9a52c08f51d8e9f96c4704f84f8d0d15637fe397)
+@@ -7,6 +7,8 @@
+ #include <errno.h>
+ #include <stdio.h>
  
- LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
--	 tag.o date.o
-+	 tag.o date.o refs.o
-+
- LIB_FILE=libgit.a
--LIB_H=cache.h object.h blob.h tree.h commit.h tag.h
-+LIB_H=cache.h object.h blob.h tree.h commit.h tag.h refs.h
- 
- LIB_H += strbuf.h
- LIB_OBJS += strbuf.o
-Index: cache.h
-===================================================================
---- bab2f51e8218b023728539c7841ee7613ebd36e8/cache.h  (mode:100644 sha1:af6345820f3f8c533868394059b2d3b189e6b422)
-+++ f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/cache.h  (mode:100644 sha1:42a08f57c5b7a7cd013ab3e99f3965014068b787)
-@@ -100,6 +100,11 @@
- 
- #define get_object_directory() (getenv(DB_ENVIRONMENT) ? : DEFAULT_DB_ENVIRONMENT)
- 
-+#define REF_ENVIRONMENT "REF_FILE_DIRECTORY"
-+#define DEFAULT_REF_ENVIRONMENT ".git/refs"
-+
-+#define get_refs_directory() (getenv(REF_ENVIRONMENT) ? : DEFAULT_REF_ENVIRONMENT)
-+
- #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
- #define DEFAULT_INDEX_ENVIRONMENT ".git/index"
- 
-Index: init-db.c
-===================================================================
---- bab2f51e8218b023728539c7841ee7613ebd36e8/init-db.c  (mode:100644 sha1:83f95e8b926f4fd28e0db0ccfc4f040d4172ee8a)
-+++ f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/init-db.c  (mode:100644 sha1:6bed5a6abdfd7da152ed13b825376c2d2f8820c4)
-@@ -38,6 +38,7 @@
- 	memcpy(path, sha1_dir, len);
- 
- 	safe_create_dir(sha1_dir);
-+	safe_create_dir(get_refs_directory());
- 	for (i = 0; i < 256; i++) {
- 		sprintf(path+len, "/%02x", i);
- 		safe_create_dir(path);
-Index: refs.c
-===================================================================
---- /dev/null  (tree:bab2f51e8218b023728539c7841ee7613ebd36e8)
-+++ f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/refs.c  (mode:100644 sha1:9ba5696c15d8597236e1f5b7a4dbd609045efc81)
-@@ -0,0 +1,139 @@
 +#include "refs.h"
-+#include "cache.h"
 +
-+#include <errno.h>
-+
-+static char *split_ref_file_name(const char *dir, const char *name)
+ #include "pull.h"
+ 
+ #include <curl/curl.h>
+@@ -45,6 +47,23 @@
+ 	return size;
+ }
+ 
++struct buffer
 +{
-+	char *base = get_refs_directory();
-+	int baselen = strlen(base);
-+	int dirlen = strlen(dir);
-+	int namelen = strlen(name);
-+	char *ret;
-+	if (dir[0] == '.')
-+		return NULL;
-+	if (strchr(dir, '/'))
-+		return NULL;
-+	if (strchr(name, '/'))
-+		return NULL;
-+	ret = xmalloc(baselen + 3 + dirlen + namelen);
-+	strcpy(ret, base);
-+	ret[baselen] = '/';
-+	strcpy(ret + baselen + 1, dir);
-+	ret[baselen + 1 + dirlen] = '/';
-+	strcpy(ret + baselen + 2 + dirlen, name);
-+	ret[baselen + 2 + dirlen + namelen] = '\0';
-+	return ret;
++	size_t posn;
++	size_t size;
++	void *buffer;
++};
++
++static size_t fwrite_buffer(void *ptr, size_t eltsize, size_t nmemb,
++			    struct buffer *buffer) {
++	size_t size = eltsize * nmemb;
++	if (size > buffer->size - buffer->posn)
++		size = buffer->size - buffer->posn;
++	memcpy(buffer->buffer + buffer->posn, ptr, size);
++	buffer->posn += size;
++	return size;
 +}
 +
-+static char *ref_file_name(const char *ref)
+ int fetch(unsigned char *sha1)
+ {
+ 	char *hex = sha1_to_hex(sha1);
+@@ -103,6 +122,40 @@
+ 	return 0;
+ }
+ 
++int fetch_ref(char *dir, char *name, unsigned char *sha1)
 +{
-+	char *base = get_refs_directory();
-+	int baselen = strlen(base);
-+	int reflen = strlen(ref);
-+	char *ret;
-+	char *check;
-+	if (ref[0] == '.')
-+		return NULL;
-+	check = strchr(ref, '/');
-+	if (!check)
-+		return NULL;
-+	if (strchr(check + 1, '/'))
-+		return NULL;
-+	ret = xmalloc(baselen + 2 + reflen);
-+	strcpy(ret, base);
-+	ret[baselen] = '/';
-+	strcpy(ret + baselen + 1, ref);
-+	ret[baselen + 1 + reflen] = '\0';
-+	return ret;
-+}
-+
-+static int read_ref_file(char *filename, unsigned char *sha1) {
-+	int fd = open(filename, O_RDONLY);
-+	char hex[41];
-+	if (fd < 0) {
-+		return error("Couldn't open %s\n", filename);
-+	}
-+	if ((read(fd, hex, 41) < 41) ||
-+	    (hex[40] != '\n') ||
-+	    get_sha1_hex(hex, sha1)) {
-+		error("Couldn't read a hash from %s\n", filename);
-+		close(fd);
-+		return -1;
-+	}
-+	close(fd);
-+	return 0;
-+}
-+
-+int get_split_ref_sha1(const char *dir, const char *name, unsigned char *sha1)
-+{
-+	char *filename = split_ref_file_name(dir, name);
-+	int retval;
-+	if (!filename)
-+		return -1;
-+	retval = read_ref_file(filename, sha1);
-+	free(filename);
-+	return retval;
-+}
-+
-+int get_ref_sha1(const char *ref, unsigned char *sha1)
-+{
-+	char *filename = ref_file_name(ref);
-+	int retval;
-+	if (!filename)
-+		return -1;
-+	retval = read_ref_file(filename, sha1);
-+	free(filename);
-+	return retval;
-+}
-+
-+int write_split_ref_sha1(const char *dir, const char *name,
-+			 unsigned char *sha1)
-+{
-+	char *filename = split_ref_file_name(dir, name);
-+	char *hex = sha1_to_hex(sha1);
-+	char term = '\n';
-+	int fd;
-+	if (!filename)
-+		return -1;
-+	unlink(filename);
-+	fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
-+	if (fd < 0 && errno == ENOENT) {
-+		char *dirname = split_ref_file_name(dir, "");
-+		mkdir(dirname, 0755);
-+		free(dirname);
-+		fd = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
-+	}
-+	if (fd < 0) {
-+		error("Couldn't open for writing %s: %s\n", filename,
-+		      strerror(errno));
-+		free(filename);
-+		return -1;
-+	}
-+	if (write(fd, hex, 40) < 40 ||
-+	    write(fd, &term, 1) < 1) {
-+		error("Couldn't write %s\n", filename);
-+		free(filename);
-+		close(fd);
-+		return -1;
-+	}
-+	close(fd);
-+	return 0;
++	char *url, *posn;
++	char hex[42];
++	struct buffer buffer;
++	buffer.size = 41;
++	buffer.posn = 0;
++	buffer.buffer = hex;
++	hex[41] = '\0';
 +	
-+}
++	curl_easy_setopt(curl, CURLOPT_FILE, &buffer);
++	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
 +
-+int split_ref(char **dir, char **name, const char *ref)
-+{
-+	char *middle = strchr(ref, '/');
-+	if (ref[0] == '.')
-+		return -1;
-+	if (!middle)
-+		return -1;
-+	if (strchr(middle + 1, '/'))
-+		return -1;
-+	*dir = xmalloc(middle - ref + 1);
-+	*name = strdup(middle + 1);
-+	(*dir)[middle - ref] = '\0';
-+	memcpy(*dir, ref, middle - ref);
++	url = xmalloc(strlen(base) + 7 + strlen(dir) + strlen(name));
++	strcpy(url, base);
++	posn = url + strlen(base);
++	strcpy(posn, "refs/");
++	posn += 5;
++	strcpy(posn, dir);
++	posn += strlen(dir);
++	*(posn++) = '/';
++	strcpy(posn, name);
++
++	curl_easy_setopt(curl, CURLOPT_URL, url);
++
++	if (curl_easy_perform(curl))
++		return error("Couldn't get %s for %s/%s\n", url,
++			     dir, name);
++
++	hex[40] = '\0';
++	get_sha1_hex(hex, sha1);
 +	return 0;
 +}
-Index: refs.h
++
+ int main(int argc, char **argv)
+ {
+ 	char *commit_id;
+@@ -118,6 +171,10 @@
+ 			get_all = 1;
+ 			get_tree = 1;
+ 			get_history = 1;
++		} else if (argv[arg][1] == 'w') {
++			char *write_ref = argv[arg + 1];
++			split_ref(&write_ref_dir, &write_ref_name, write_ref);
++			arg++;
+ 		}
+ 		arg++;
+ 	}
+Index: pull.c
 ===================================================================
---- /dev/null  (tree:bab2f51e8218b023728539c7841ee7613ebd36e8)
-+++ f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/refs.h  (mode:100644 sha1:9ef6ed7563f70273aef6574a01d5626fee28345a)
-@@ -0,0 +1,20 @@
-+#ifndef REFS_H
-+#define REFS_H
+--- f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/pull.c  (mode:100644 sha1:90d2d41ed2c56580f72f020bc93c3e1b8a3befa5)
++++ 6bae8854157f3f8b29f9afee2c54434334f899e4/pull.c  (mode:100644 sha1:89f11906f67ea9b36e1d4d85fa87f0e9b7d08d65)
+@@ -3,6 +3,12 @@
+ #include "cache.h"
+ #include "commit.h"
+ #include "tree.h"
++#include "tag.h"
 +
-+/** Reads the refs file specified into sha1 **/
-+extern int get_split_ref_sha1(const char *dir, const char *name,
-+			      unsigned char *sha1);
++#include "refs.h"
 +
-+/** Reads the refs file specified into sha1 **/
-+extern int get_ref_sha1(const char *ref, unsigned char *sha1);
++char *write_ref_dir = NULL;
++char *write_ref_name = NULL;
+ 
+ int get_tree = 0;
+ int get_history = 0;
+@@ -61,15 +67,53 @@
+ 	return 0;
+ }
+ 
++static int process_tag(unsigned char *sha1)
++{
++	return 0;
++}
 +
-+/** Writes sha1 into the refs file specified **/
-+extern int write_split_ref_sha1(const char *dir, const char *name, 
-+				unsigned char *sha1);
++static int process_unknown(unsigned char *sha1)
++{
++	struct object *obj;
++	if (fetch(sha1))
++		return -1;
++	obj = parse_object(sha1);
++	if (obj->type == commit_type)
++		return process_commit(sha1);
++	else if (obj->type == tag_type)
++		return process_tag(sha1);
++	return error("Cannot pull a %s object", obj->type);
++}
 +
-+/** Sets dir and name to the directory and name parts of ref, in new
-+ * storage. 
-+ **/
-+extern int split_ref(char **dir, char **name, const char *ref);
++static int interpret_target(char *target, unsigned char *sha1)
++{
++	char *dir, *name;
++	if (!get_sha1_hex(target, sha1))
++		return 0;
++	if (!split_ref(&dir, &name, target)) {
++		if (!fetch_ref(dir, name, sha1)) {
++			return 0;
++		}
++	}
++	return -1;
++}
 +
-+#endif /* REFS_H */
+ int pull(char *target)
+ {
+ 	int retval;
+ 	unsigned char sha1[20];
+-	retval = get_sha1_hex(target, sha1);
++	retval = interpret_target(target, sha1);
++	if (retval) {
++		return error("Could not interpret %s as something to pull",
++			     target);
++	}
++	retval = fetch(sha1);
+ 	if (retval)
+ 		return retval;
+-	retval = fetch(sha1);
++	retval = process_unknown(sha1);
+ 	if (retval)
+ 		return retval;
+-	return process_commit(sha1);
++	if (write_ref_dir && write_ref_name)
++		write_split_ref_sha1(write_ref_dir, write_ref_name, sha1);
++	return 0;
+ }
+Index: pull.h
+===================================================================
+--- f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/pull.h  (mode:100644 sha1:314bc7e95ab1a73634f6a96a8a3782fda91ea261)
++++ 6bae8854157f3f8b29f9afee2c54434334f899e4/pull.h  (mode:100644 sha1:5df0ff6001ad4129dcd8b2af7c927bade8c413d2)
+@@ -4,6 +4,12 @@
+ /** To be provided by the particular implementation. **/
+ extern int fetch(unsigned char *sha1);
+ 
++extern int fetch_ref(char *dir, char *name, unsigned char *sha1);
++
++/** Ref filename to write target to. **/
++extern char *write_ref_dir;
++extern char *write_ref_name;
++
+ /** Set to fetch the target tree. */
+ extern int get_tree;
+ 
+Index: rpull.c
+===================================================================
+--- f0d6a3af54a5ec8dd588fb8e501e38f6252eda19/rpull.c  (mode:100644 sha1:6624440d5ad24854e1bd1a8dff628427581198e0)
++++ 6bae8854157f3f8b29f9afee2c54434334f899e4/rpull.c  (mode:100644 sha1:a1c1be18195d40a152f86ed35886364dbc806d80)
+@@ -20,6 +20,11 @@
+ 	return write_sha1_from_fd(sha1, fd_in);
+ }
+ 
++int fetch_ref(char *name, char *dir, unsigned char *sha1)
++{
++	return -1;
++}
++
+ int main(int argc, char **argv)
+ {
+ 	char *commit_id;
 
