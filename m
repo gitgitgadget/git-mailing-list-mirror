@@ -1,55 +1,88 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Trying to use AUTHOR_DATE
-Date: Sat, 30 Apr 2005 16:14:23 -0700
-Message-ID: <4274114F.20706@zytor.com>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE5C@scsmsx401.amr.corp.intel.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Resurrect diff-tree-helper -R
+Date: Sat, 30 Apr 2005 19:22:57 -0700
+Message-ID: <7vis231y7y.fsf@assigned-by-dhcp.cox.net>
+References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Edgar Toernig <froese@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 04:00:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 01 04:17:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DS3jE-0001qL-Sr
-	for gcvg-git@gmane.org; Sun, 01 May 2005 03:58:41 +0200
+	id 1DS41J-000411-II
+	for gcvg-git@gmane.org; Sun, 01 May 2005 04:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261456AbVD3XOh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 19:14:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261457AbVD3XOh
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 19:14:37 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:39120 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261456AbVD3XOd
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 19:14:33 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j3UNEOkU000948
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 30 Apr 2005 16:14:24 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE5C@scsmsx401.amr.corp.intel.com>
-X-Spam-Status: No, score=-3.6 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on terminus.zytor.com
+	id S261450AbVEACXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Apr 2005 22:23:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261512AbVEACXF
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 22:23:05 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:57340 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261450AbVEACW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Apr 2005 22:22:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050501022256.ESMI7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 30 Apr 2005 22:22:56 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org> (Linus
+ Torvalds's message of "Sat, 30 Apr 2005 18:09:53 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Luck, Tony wrote:
->>Fixed version below.
-> 
-> 
-> Yup ... that fixes it for my initial test cases.  Thanks.
-> 
-> -Tony
-> 
-> P.S. The libcurl that I found (curl-7.12.1-3.src.rpm) has curl_getdate()
-> implemented as >1000 lines of yacc.  Which seems like overkill (unless
-> I really need to set AUTHOR_DATE="a week ago last tuesday" :-)
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-That one is obsolete.
+LT> Talking about the diffs, I'm beginning to hate those "mode" things.
 
-	-hpa
+Likewise.
+
+LT> Not only do they screw up diffstat (big deal), but they are pointless, 
+LT> since 99.9% of the time the mode stays the same.
+
+Pointless, yes.  mode is not what screwing up diffstat but
+comparing against /dev/null is, so it is not a reason to hate
+mode, and my fingers learned to say diffstat -p1 already so it
+is not a big deal anymore.
+
+LT> Normal "patch" will just ignore the extra lines before the
+LT> diff anyway, so it won't matter there.
+
+LT> Comments?
+
+I am 100% in agreement with you here.  The only reason I added
+it was to match what Pasky does so that his cg-patch can eat its
+output.  To me, pleasing cg-patch is far lower priority than
+pleasing l-k developers, so your veto counts.
+
+My JIT tools do not use that mode thing in the patch.  I apply a
+patch between two commits (or trees) to the work tree by doing
+something like this:
+
+    GIT_EXTERNAL_DIFF=jit-diff-extract \
+    jit-diff "$@" | {
+        cd "${GIT_PROJECT_TOP}"
+        sh
+    }
+
+Here jit-diff-extract is the gem that creates a small shell
+script that patches the file and runs "chmod +x" or "chmod -x"
+when necessary, and does git-update-cache for added or removed
+files.  Its output would look something like this:
+
+    patch -p1 <<\EOF
+    --- /dev/null
+    +++ fs/ext9/Makefile
+    @@ ....
+    EOF
+    chmod -x 'fs/ext9/Makefile'
+    git-update-cache --add --remove -- 'fs/ext9/Makefile'
+
+Maybe I can make the default diff output just like the above?
+As you say, normal patch would not look at those shell script
+part at all anyway.
+
