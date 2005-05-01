@@ -1,88 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Resurrect diff-tree-helper -R
-Date: Sat, 30 Apr 2005 19:22:57 -0700
-Message-ID: <7vis231y7y.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 30 Apr 2005 22:27:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0504302224510.2296@ppc970.osdl.org>
 References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org>
+ <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org> <7vis231y7y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 04:17:25 2005
+X-From: git-owner@vger.kernel.org Sun May 01 07:20:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DS41J-000411-II
-	for gcvg-git@gmane.org; Sun, 01 May 2005 04:17:21 +0200
+	id 1DS6sL-0002PW-1F
+	for gcvg-git@gmane.org; Sun, 01 May 2005 07:20:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261450AbVEACXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Apr 2005 22:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261512AbVEACXF
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Apr 2005 22:23:05 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:57340 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261450AbVEACW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Apr 2005 22:22:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050501022256.ESMI7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 30 Apr 2005 22:22:56 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org> (Linus
- Torvalds's message of "Sat, 30 Apr 2005 18:09:53 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261532AbVEAF0D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 01:26:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261533AbVEAF0D
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 01:26:03 -0400
+Received: from fire.osdl.org ([65.172.181.4]:39896 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261532AbVEAFZ7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 01:25:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j415Pps4011313
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 30 Apr 2005 22:25:52 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j415PotY001465;
+	Sat, 30 Apr 2005 22:25:51 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vis231y7y.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-LT> Talking about the diffs, I'm beginning to hate those "mode" things.
 
-Likewise.
+On Sat, 30 Apr 2005, Junio C Hamano wrote:
+>  Its output would look something like this:
+> 
+>     patch -p1 <<\EOF
+>     --- /dev/null
+>     +++ fs/ext9/Makefile
+>     @@ ....
+>     EOF
+>     chmod -x 'fs/ext9/Makefile'
+>     git-update-cache --add --remove -- 'fs/ext9/Makefile'
+> 
+> Maybe I can make the default diff output just like the above?
+> As you say, normal patch would not look at those shell script
+> part at all anyway.
 
-LT> Not only do they screw up diffstat (big deal), but they are pointless, 
-LT> since 99.9% of the time the mode stays the same.
+I actually do end up looking at diffs, and I'd hate it. I'd much rather
+have as little extra fluff as possible, and putting shell scipt fragments
+in it definitely counts as distraction.
 
-Pointless, yes.  mode is not what screwing up diffstat but
-comparing against /dev/null is, so it is not a reason to hate
-mode, and my fingers learned to say diffstat -p1 already so it
-is not a big deal anymore.
+The fewer lines there are that don't usually tell a human anything, the 
+better. Dense is good. 
 
-LT> Normal "patch" will just ignore the extra lines before the
-LT> diff anyway, so it won't matter there.
-
-LT> Comments?
-
-I am 100% in agreement with you here.  The only reason I added
-it was to match what Pasky does so that his cg-patch can eat its
-output.  To me, pleasing cg-patch is far lower priority than
-pleasing l-k developers, so your veto counts.
-
-My JIT tools do not use that mode thing in the patch.  I apply a
-patch between two commits (or trees) to the work tree by doing
-something like this:
-
-    GIT_EXTERNAL_DIFF=jit-diff-extract \
-    jit-diff "$@" | {
-        cd "${GIT_PROJECT_TOP}"
-        sh
-    }
-
-Here jit-diff-extract is the gem that creates a small shell
-script that patches the file and runs "chmod +x" or "chmod -x"
-when necessary, and does git-update-cache for added or removed
-files.  Its output would look something like this:
-
-    patch -p1 <<\EOF
-    --- /dev/null
-    +++ fs/ext9/Makefile
-    @@ ....
-    EOF
-    chmod -x 'fs/ext9/Makefile'
-    git-update-cache --add --remove -- 'fs/ext9/Makefile'
-
-Maybe I can make the default diff output just like the above?
-As you say, normal patch would not look at those shell script
-part at all anyway.
-
+		Linus
