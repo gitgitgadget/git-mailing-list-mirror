@@ -1,72 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Complete http-pull; where should it go?
-Date: Sun, 1 May 2005 16:30:01 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505011544120.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0505011237410.2296@ppc970.osdl.org>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: Quick command reference
+Date: Sun, 01 May 2005 21:31:40 +0100
+Message-ID: <42753CAC.7060900@dgreaves.com>
+References: <17012.53862.704670.858276@cargo.ozlabs.ibm.com>    <4274EB3D.2060602@dgreaves.com> <4274F373.6030001@khandalf.com> <427537C6.9070806@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sun May 01 22:24:43 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: omb@bluewin.ch, Paul Mackerras <paulus@samba.org>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun May 01 22:27:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSKzU-0007s9-Tf
-	for gcvg-git@gmane.org; Sun, 01 May 2005 22:24:37 +0200
+	id 1DSL1e-0008BY-QE
+	for gcvg-git@gmane.org; Sun, 01 May 2005 22:26:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262664AbVEAUa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 16:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262665AbVEAUaV
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 16:30:21 -0400
-Received: from iabervon.org ([66.92.72.58]:1540 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262664AbVEAUaI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 16:30:08 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DSL4j-00088z-00; Sun, 1 May 2005 16:30:01 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505011237410.2296@ppc970.osdl.org>
+	id S262665AbVEAUcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 16:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262668AbVEAUcN
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 16:32:13 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:12941 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262665AbVEAUb4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 16:31:56 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 3D9DEE6D69; Sun,  1 May 2005 21:31:38 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 20884-14; Sun,  1 May 2005 21:31:38 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.140.133])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 8C5EAE6D3A; Sun,  1 May 2005 21:31:37 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DSL6K-0008NI-Vd; Sun, 01 May 2005 21:31:40 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <427537C6.9070806@zytor.com>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 1 May 2005, Linus Torvalds wrote:
+H. Peter Anvin wrote:
 
-> For example, if I want to know what objects I have in my object directory 
-> that are needed for a release, I want to be able to tell fsck to list the 
-> objects that are extraneous for that release _regardless_ of the fact that 
-> I may have .git/refs/*/* files that point to other things.
+> Brian O'Mahoney wrote:
 >
-> So if fsck-cache automatically looks up references in .git/refs/ like in
-> one of your earlier patches, then instead of adding value to the program,
-> you actually _remove_ value from it by making it less flexible, and
-> enforcing a world-view that is not necessarily the only view.
+>> Thank you both for taking the time and trouble to do this, particularly
+>> with the name changes and new options; why don't you merge your efforts
+>> and produce a GIT-Mini-HOWTO BTW send it off as a patch again!
+>
+>
+> Even better... man page(s)!
 
-It's true that you might not want to include all of the refs; but doesn't
-it make more sense to support the standard arrangement of refs (i.e.,
-they're in .git/refs/kind/name) for the ones you want to include, rather
-than having to pull out the hex to pass in yourself?
+Of course.
 
-> This is why I want the true _plumbing_ to not care about these things, and 
-> if you include references to trees, you _list_ them explicitly. 
+Eventually.
 
-Right; what I want to make programs able to do is take explicit
-references, instead of only taking the objects they reference. So you say
-heads/master or heads/linus instead of
-"198b0fb635ed8a007bac0c16eab112c5e2c7995c".
+But I'd probably get limited reviewers if I posted nroff to the list...
+(probably more than if I included html in my emails though)
 
-The part that makes this important is that the user may be trying to look
-up a reference on a remote machine using the same connection that the
-objects will come over, and this is impractical without having the program
-know how to handle reference files.
+:)
 
-> And if you want to have a command that takes implied references, then just 
-> make a script that does that for you, rather than making the core plumbing 
-> understand it.
+Nice to see there's a lot of support for and interest in getting the
+docs though.
+[Hmm, making statements like that with Linus on the cc - I could be in
+politics ;) ]
 
-Agreed; which references to use are up to either the power user or the
-script, not the core. I'm just interested in having a core implementation
-for using them when specified.
-
-	-Daniel
-*This .sig left intentionally blank*
+David
 
