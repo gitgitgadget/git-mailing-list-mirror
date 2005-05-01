@@ -1,76 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Allow removing files in a subdirectory.
-Date: Sun, 01 May 2005 04:16:17 -0700
-Message-ID: <7vu0lnxkla.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 13:11:01 2005
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: How to get bash to shut up about SIGPIPE?
+Date: Sun, 01 May 2005 22:07:31 +1000
+Organization: Core
+Message-ID: <E1DSDER-0000kS-00@gondolin.me.apana.org.au>
+References: <20050428202739.GE30308@mythryan2.michonline.com>
+Cc: torvalds@osdl.org, rene.scharfe@lsrfire.ath.cx,
+	git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Sun May 01 14:03:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSCLe-0008TJ-64
-	for gcvg-git@gmane.org; Sun, 01 May 2005 13:10:54 +0200
+	id 1DSD9a-0003u6-C0
+	for gcvg-git@gmane.org; Sun, 01 May 2005 14:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261593AbVEALQe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 07:16:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261598AbVEALQe
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 07:16:34 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45469 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261593AbVEALQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2005 07:16:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050501111618.VIEG16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 1 May 2005 07:16:18 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261602AbVEAMIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 08:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261604AbVEAMIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 08:08:16 -0400
+Received: from arnor.apana.org.au ([203.14.152.115]:783 "EHLO
+	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261602AbVEAMIM
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 1 May 2005 08:08:12 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
+	id 1DSDEY-0006Ar-00; Sun, 01 May 2005 22:07:38 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1DSDER-0000kS-00; Sun, 01 May 2005 22:07:31 +1000
+To: ryan@michonline.com (Ryan Anderson)
+In-Reply-To: <20050428202739.GE30308@mythryan2.michonline.com>
+X-Newsgroups: apana.lists.os.linux.git
+User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I found this during a conflict merge testing.  The original did
-not have either DF (a file) or DF/DF (a file DF/DF under a
-directory DF).  One side created DF, the other created DF/DF.  I
-first resolved DF as a new file by taking what the first side
-did.  After that, the entry DF/DF cannot be resolved by running
-git-update-cache --remove although it does not exist on the
-filesystem.
+Ryan Anderson <ryan@michonline.com> wrote:
+> On Thu, Apr 28, 2005 at 12:21:26PM -0700, Linus Torvalds wrote:
+> 
+>> Defining "DONT_REPORT_SIGPIPE" in config-top.h when building bash gets rid 
+>> of it, but I really don't want to rebuild bash just because of this ;)
+> 
+> Debian's bash seems to have that set, so it's a bit hard for me to test
 
-    $ /bin/ls -F
-    AN  DF  MN  NM  NN  SS  Z/
-    $ git-ls-files --stage | grep DF
-    100644 71420ab81e254145d26d6fc0cddee64c1acd4787 0 DF
-    100644 68a6d8b91da11045cf4aa3a5ab9f2a781c701249 2 DF/DF
-    $ git-update-cache --remove DF/DF
-    fatal: Unable to add DF/DF to database
+This issue has been around for years.  The discussion that led to
+Debian setting this option may be helpful in understanding it:
 
-It turns out that the errno from open() in this case was not
-ENOENT but ENOTDIR, which the code did not check.  Here is a
-fix.
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=10494
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+A brief time line:
 
+11 Jun 1997 The issue was reported to Debian.
+20 Nov 1999 Chet Ramey remarks that bash's default will not change.
+ 4 Sep 2004 Debian sets DONT_REPORT_SIGPIPE.
 
-BTW, Linus do you want the updates to my merge-test-script-from-hell? 
+Chet Ramey claims that setting DONT_REPORT_SIGPIPE by default
+would make bash incompatible with every other shell out there.
+Interestingly, all the non-bash shells that I've tried disagree
+with him.
 
-
-update-cache.c |    2 +-
-1 files changed, 1 insertion(+), 1 deletion(-)
-
-# - [PATCH] Resurrect diff-tree-helper -R
-# + [PATCH] Allow removing files in a subdirectory.
---- k/update-cache.c
-+++ l/update-cache.c
-@@ -111,7 +111,7 @@ static int add_file_to_cache(char *path)
- 
- 	fd = open(path, O_RDONLY);
- 	if (fd < 0) {
--		if (errno == ENOENT) {
-+		if (errno == ENOENT || errno == ENOTDIR) {
- 			if (allow_remove)
- 				return remove_file_from_cache(path);
- 		}
-
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
