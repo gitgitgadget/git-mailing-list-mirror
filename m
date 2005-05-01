@@ -1,166 +1,72 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Really fix git-merge-one-file-script this time.
-Date: Sun, 1 May 2005 13:29:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505011312080.2296@ppc970.osdl.org>
-References: <7vd5sbz436.fsf@assigned-by-dhcp.cox.net> <7vzmveu6zs.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Complete http-pull; where should it go?
+Date: Sun, 1 May 2005 16:30:01 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505011544120.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0505011237410.2296@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 22:22:46 2005
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun May 01 22:24:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSKxJ-0007a1-2p
-	for gcvg-git@gmane.org; Sun, 01 May 2005 22:22:21 +0200
+	id 1DSKzU-0007s9-Tf
+	for gcvg-git@gmane.org; Sun, 01 May 2005 22:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262660AbVEAU2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 16:28:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262663AbVEAU2S
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 16:28:18 -0400
-Received: from fire.osdl.org ([65.172.181.4]:57018 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262660AbVEAU2F (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 16:28:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j41KS0s4027781
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 1 May 2005 13:28:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j41KRxQR028950;
-	Sun, 1 May 2005 13:27:59 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmveu6zs.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262664AbVEAUa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 16:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262665AbVEAUaV
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 16:30:21 -0400
+Received: from iabervon.org ([66.92.72.58]:1540 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262664AbVEAUaI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 16:30:08 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DSL4j-00088z-00; Sun, 1 May 2005 16:30:01 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505011237410.2296@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, 1 May 2005, Linus Torvalds wrote:
 
+> For example, if I want to know what objects I have in my object directory 
+> that are needed for a release, I want to be able to tell fsck to list the 
+> objects that are extraneous for that release _regardless_ of the fact that 
+> I may have .git/refs/*/* files that point to other things.
+>
+> So if fsck-cache automatically looks up references in .git/refs/ like in
+> one of your earlier patches, then instead of adding value to the program,
+> you actually _remove_ value from it by making it less flexible, and
+> enforcing a world-view that is not necessarily the only view.
 
-On Sun, 1 May 2005, Junio C Hamano wrote:
-> 
-> Linus, have you decided to like or dislike the behaviour of
-> git-merge-one-file-script touching the work tree in some cases
-> but not in other cases?  A straightforward merge implementation
-> that does a "git-read-tree -m" followed by a "git-merge-cache
-> git-merge-one-file-script" does the following to your work tree
-> and the cache:
-> 
->  - Paths merged unsuccessfully makes git-merge-cache phase fail
->    and the work tree is not affected for such paths.
-> 
->  - Paths merged "git-read-tree -m" trivially does not change the
->    work tree and "git-read-tree -m" result is kept in the cache.
-> 
->  - Paths merged by "merge" successfully, and paths chosen from a
->    single side by "git-merge-one-file-script" change the work
->    tree, possibly checking out the file if you started out from
->    an empty work tree.
->  
-> I am not worried about the first case where you will have to
-> manually examine and resolve anyway. I am wondering if the rest
-> is the desired behavior for _your_ way of using the GIT merge.
-> After a successful merge, what kind of verification would you
-> typically do?
+It's true that you might not want to include all of the refs; but doesn't
+it make more sense to support the standard arrangement of refs (i.e.,
+they're in .git/refs/kind/name) for the ones you want to include, rather
+than having to pull out the hex to pass in yourself?
 
-I don't care about the _successful_ merge, since a successful merge is 
-basically always followed by a "git-checkout-cache -f -a" anyway (and 
-update-cache + remove now-stale files etc).
+> This is why I want the true _plumbing_ to not care about these things, and 
+> if you include references to trees, you _list_ them explicitly. 
 
-So let's totally ignore the case of "the tree was up-to-date before, and 
-the merge is successful". It's not an interesting case.
+Right; what I want to make programs able to do is take explicit
+references, instead of only taking the objects they reference. So you say
+heads/master or heads/linus instead of
+"198b0fb635ed8a007bac0c16eab112c5e2c7995c".
 
-No, the reason I'd prefer to be consistent is for the _strange_ cases, 
-where the merge fails. There's two of those:
- - we had local modifications that weren't checked in
- - we had a real conflict that wasn't automatically merged.
+The part that makes this important is that the user may be trying to look
+up a reference on a remote machine using the same connection that the
+objects will come over, and this is impractical without having the program
+know how to handle reference files.
 
-and in both of these cases we end up having to fix things up, and I
-generally think that we're better off if we do _not_ update the working
-tree.
+> And if you want to have a command that takes implied references, then just 
+> make a script that does that for you, rather than making the core plumbing 
+> understand it.
 
-In particular, the "local modifications" case is much nicer to handle if
-we can just do the merge totally (and successfully) in the index, and then
-handle the "local modifications" as a failure case of "git-checkout-cache"
-instead.
+Agreed; which references to use are up to either the power user or the
+script, not the core. I'm just interested in having a core implementation
+for using them when specified.
 
-In particular, I think the "apply the patch forward" (that cogito does) is
-as wrong with the "local modifications" as it is for the merge itself, and
-that a truly good merge would actually have _another_ three-way merge on
-the working file - the "original" is the version in our old HEAD branch,
-with the two branches being merged are "working copy before the merge" and
-"merge results".
+	-Daniel
+*This .sig left intentionally blank*
 
-Notice? See how this _nice_ handling of the local modifications actually
-meant that our merge itself should never have touched the working tree
-file. We'd actually commit the merge, and then do the "checkout-cache -f
--a", adn leave the dirty files with the result of being merged with the
-new (which may, of course, have a merge clash: the user sees that very
-clearly from the output of "git-diff-cache").
-
-The other case is the "real conflict" case, and that's the case where I
-again don't like modifying the working tree, because I think it's a
-perfectly natural thing to do to say "ok, the merge didn't work out this
-way", so let's not do it at all. Again, that means that the working tree
-should not have been modified, and we should _not_ have written out the
-conflict file to the same file that was conflicting. We'd be much better
-off if we left _all_ checked-out files in the original state instead.
-
-So my personal preference is still that if we actually have a real 
-conflict, we don't actually "consummate" the merge at all, and that very 
-much means that we don't write out some partially merged state. We'd leave 
-the working directory alone, and now we can fairly easily create a MERGE 
-directory which has it's .git file as a symlink to ../.git, and which 
-contains all the files that had conflicts in them.
-
-Then, if you decide to not go forwared with the merge, just doing
-
-	read-tree $(cat .git/HEAD)
-	rm -rf MERGE
-
-does exactly that. Boom, it's gone.
-
-See? THAT is good behaviour, I think.
-
-> I am wondering if the following changes would make sense and
-> make things easier for you:
-> 
->  * git-merge-one-file-script is changed to register the path
->    with --cacheinfo using magic SHA1 0{40} instead of using the
->    resulting file on the filesystem.
-
-This sounds fine.
-
->					  Do keep the current
->    behaviour of leaving the merge results of trivial merges
->    (both kind) in the work tree.
-
-I'd actually prefer not to. Exactly because it fails _both_ the "dirty
-files" case _and_ the "merge didn't complete" case.
-
-But if the "magic SHA1" meant that we look for it in a special merge 
-directory, that would work.
-
->  * git-write-tree is changed to refuse to write from a cache
->    that records the magic SHA1.
-> 
->  * git-ls-files acquires a new option --merged to notice the
->    magic SHA1 and shows the paths that have such SHA1.
-> 
->  * git-update-cache acquires a new option --resolve to notice
->    the magic SHA1 and:
-> 
->    - if the named path is not in the work tree anymore, delete
->      the entry.
-> 
->    - if the named path exists in the work tree, compute the
->      latest SHA1 for that file and update the entry.
-
-Sounds sane.
-
-On the other hand, I think it would actually be easier to just make your 
-"magic SHA1" be just another "stage".
-
-		Linus
