@@ -1,101 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Make git-prune-script a bit more careful.
-Date: Sun, 01 May 2005 14:27:35 -0700
-Message-ID: <7vk6miskl4.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vwtqjxlrv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505010916510.2296@ppc970.osdl.org>
-	<7vll6yyiax.fsf@assigned-by-dhcp.cox.net>
-	<7vwtqismpn.fsf@assigned-by-dhcp.cox.net>
+From: bert hubert <ahu@ds9a.nl>
+Subject: Re: Quick command reference
+Date: Sun, 1 May 2005 23:18:08 +0200
+Message-ID: <20050501211808.GA6900@outpost.ds9a.nl>
+References: <17012.53862.704670.858276@cargo.ozlabs.ibm.com> <4274EB3D.2060602@dgreaves.com> <4274F373.6030001@khandalf.com> <4274FB3F.8090206@dgreaves.com> <Pine.LNX.4.58.0505010927040.2296@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 23:37:48 2005
+Cc: David Greaves <david@dgreaves.com>, omb@bluewin.ch,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun May 01 23:38:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSM7x-00027W-37
-	for gcvg-git@gmane.org; Sun, 01 May 2005 23:37:25 +0200
+	id 1DSM8O-0002Ck-NX
+	for gcvg-git@gmane.org; Sun, 01 May 2005 23:37:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262736AbVEAVmM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 17:42:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262739AbVEAVa0
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 17:30:26 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4571 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S262694AbVEAV1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2005 17:27:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050501212734.FRP23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 1 May 2005 17:27:34 -0400
+	id S262694AbVEAVmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 17:42:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262711AbVEAVZM
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 17:25:12 -0400
+Received: from outpost.ds9a.nl ([213.244.168.210]:36273 "EHLO outpost.ds9a.nl")
+	by vger.kernel.org with ESMTP id S262691AbVEAVXd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 17:23:33 -0400
+Received: by outpost.ds9a.nl (Postfix, from userid 1000)
+	id 8E2D63F6F; Sun,  1 May 2005 23:18:08 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vwtqismpn.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sun, 01 May 2005 13:41:40 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505010927040.2296@ppc970.osdl.org>
+User-Agent: Mutt/1.3.28i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-As discussed on the git list, this patch makes the sample script
-git-prune-script a bit more careful by keeping the objects
-referenced from the current cache from being reclaimed.
+On Sun, May 01, 2005 at 09:29:23AM -0700, Linus Torvalds wrote:
+> (And no, by "standard format" I do _not_ mean xml or stuff like that. I 
+> mean something that is actually easy to read ;)
 
-At the same time it also fixes and enhances the following:
+I've recently been very happy with AsciiDoc
+http://www.methods.co.nz/asciidoc/ - it's input is as easy to read as to
+write.
 
- - Optional command line parameters can specify which commit
-   heads to start reachablity test from.  Earlier we had a
-   hardcoded .git/HEAD.  It now defaults to the contents of
-   .git/HEAD and .git/refs/*/* files.
+>From this input:
+http://ds9a.nl/splitpipe/splitpipe-0.3/doc/splitpipe.1.txt
 
- - It does not assume SHA1_FILE_DIRECTORY is .git/objects/ but
-   uses the value from the environment if there is one.
+It produces this lovely page (html, man, pdf, the works):
+http://ds9a.nl/splitpipe/splitpipe-0.3/doc/splitpipe.1.html
 
- - It runs xargs with "-r" option to prevent it from making "rm"
-   command barf if there is nothing to remove.
+And if you are really in a wild mood, you can have it make entire websites,
+like http://ds9a.nl/splitpipe
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+When used properly it builds tables of contents, indexes, books and whatnot.
 
-git-prune-script |   32 +++++++++++++++++++++++++++++++-
-1 files changed, 31 insertions(+), 1 deletion(-)
-
-# - date handling: handle "AM"/"PM" on time
-# + [PATCH] Make git-prune-script a bit more careful.
---- k/git-prune-script
-+++ l/git-prune-script
-@@ -1,2 +1,32 @@
- #!/bin/sh
--git-fsck-cache --unreachable $(cat .git/HEAD ) | grep unreachable | cut -d' ' -f3 | sed 's:^\(..\):.git/objects/\1/:' | xargs rm
-+
-+tmp=.git-prune-script-$$
-+trap 'rm -f $tmp-*' 0 1 2 3 15 
-+
-+# Defaulting to include .git/refs/*/* may be debatable from the
-+# purist POV but power users can always give explicit parameters
-+# to the script anyway.
-+case "$#" in
-+0) set x $(cat .git/HEAD .git/refs/*/*); shift ;;
-+esac
-+
-+git-fsck-cache --unreachable "$@" |
-+sed -ne 's/unreachable [^ ][^ ]* //p' |
-+sort >$tmp-unreachable
-+
-+# This makes extra objects to be kept if the cache has an entry
-+# with an unusual name like "this\n0 0123...abcdef 0 file", but
-+# we are trying not to discard information and keeping extra in
-+# an unusual situation would be OK.
-+git-ls-files --stage |
-+sed -ne 's|^[0-7][0-7]* \([0-9a-f][0-9a-f]*\) [0-3] .*|\1|p' |
-+sort >$tmp-keep
-+
-+comm -23 $tmp-unreachable $tmp-keep |
-+sed -e 's|\(..\)|\1/|' | {
-+	case "$SHA1_FILE_DIRECTORY" in
-+	'') cd .git/objects/ ;;
-+	*) cd "$SHA1_FILE_DIRECTORY" ;;
-+	esac || exit
-+	xargs -r echo rm -f
-+}
-
+-- 
+http://www.PowerDNS.com      Open source, database driven DNS Software 
+http://netherlabs.nl              Open and Closed source services
