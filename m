@@ -1,70 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Should git-prune-script warn about dircache?
-Date: Sun, 01 May 2005 10:20:22 -0700
-Message-ID: <7vll6yyiax.fsf@assigned-by-dhcp.cox.net>
-References: <7vwtqjxlrv.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505010916510.2296@ppc970.osdl.org>
+From: Edgar Toernig <froese@gmx.de>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Sun, 1 May 2005 19:23:03 +0200
+Message-ID: <20050501192303.49ed8f0c.froese@gmx.de>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
+	<42730061.5010106@zytor.com>
+	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
+	<87zmvganq9.fsf@windlord.stanford.edu>
+	<1114848175.24014.35.camel@localhost.localdomain>
+	<20050430124048.79119cac.froese@gmx.de>
+	<87r7gs87a9.fsf@windlord.stanford.edu>
+	<Pine.LNX.4.58.0504301322130.2296@ppc970.osdl.org>
+	<20050501005434.2d47131a.froese@gmx.de>
+	<Pine.LNX.4.58.0505010934480.2296@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 01 19:15:12 2005
+X-From: git-owner@vger.kernel.org Sun May 01 19:17:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSI23-000738-5J
-	for gcvg-git@gmane.org; Sun, 01 May 2005 19:15:03 +0200
+	id 1DSI4H-0007OC-Nl
+	for gcvg-git@gmane.org; Sun, 01 May 2005 19:17:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262623AbVEARUs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 13:20:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262624AbVEARUs
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 13:20:48 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:28132 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S262623AbVEARU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 May 2005 13:20:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050501172022.PLMV7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 1 May 2005 13:20:22 -0400
+	id S262624AbVEARXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 13:23:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262628AbVEARXQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 13:23:16 -0400
+Received: from mail.gmx.de ([213.165.64.20]:53458 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S262624AbVEARXK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 13:23:10 -0400
+Received: (qmail invoked by alias); 01 May 2005 17:23:06 -0000
+Received: from p50907FAA.dip.t-dialin.net (EHLO dialup) [80.144.127.170]
+  by mail.gmx.net (mp015) with SMTP; 01 May 2005 19:23:06 +0200
+X-Authenticated: #271361
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505010916510.2296@ppc970.osdl.org> (Linus
- Torvalds's message of "Sun, 1 May 2005 09:18:07 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.58.0505010934480.2296@ppc970.osdl.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Linus Torvalds wrote:
+>
+> 	Date: Fri, 08 Apr 2005 02:20:10 0200 -> bad
+> 	Date: Mon, 18 Apr 05 15:05:29 Hora oficial do Brasil -> bad
+> 	Date: 2002/04/11 18:29:07 -> bad
+> 
+> The second one is funny. Not just the "Hora oficial do Brasil" (hey, I 
+> could add it as a real timezone and my parser would do the right thing ;) 
+> but also because my parser decides that "05" is not a year, but the day in 
+> the month, so it doesn't see the year.
+> 
+> I can fake out that year thing pretty easily ("if it starts with '0' it's 
+> not a day of the month"), but it does show just how _strange_ stuff 
+> there's out there.
 
-LT> How about making git-prune-script first run "git-update-cache --refresh",
-LT> and checking the return value of it (this, of course, assumes that
-LT> git-update-cache --refresh would return non-zero if it can't refresh a
-LT> file, which is currently not true, but should be easily fixable).
-
-Or just check if it sees anything in the output, especially
-"needs update" line.
-
-I do not think it is such a big deal [*1*] but I should point
-out that, "git-update-cache --refresh" needs to be run on all of
-them if the user (or the porcelain layer) is using more than one
-GIT_INDEX_FILEs [*2*].
-
-
-[Footnotes]
-
-*1* Because git-prune-script is just an example and it already
-assumes it knows where the valid heads are; right now it looks
-only at .git/HEAD and not .git/refs/*/*.  Each Porcelain layer
-implementation should provide its own prune script anyway.
-
-*2* I do not do this anymore but an earlier incarnation of my
-little SCM on GIT [*3*] allowed a user to keep snapshots of work
-tree state and switch between them by juggling multiple
-GIT_INDEX_FILE.  I just create commits off of the current state
-when making a snapshot in the latest version so it is not a
-problem anymore for me.
-
-*3* (PLUG) found in http://members.cox.net/junkio/.
+And what happens then with the first example?  2008 Apr 2005?
 
 
+I thought about missing timezones once more.  Don't you think it's
+better to default to -0000?  Afaics, it was defined for just these
+cases.  Simply appending an arbitrary timezone seems wrong.
+
+Ciao, ET.
