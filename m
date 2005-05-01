@@ -1,83 +1,85 @@
-From: David Greaves <david@dgreaves.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: update-cache ./test.c
-Date: Sun, 01 May 2005 10:43:34 +0100
-Message-ID: <4274A4C6.3000400@dgreaves.com>
+Date: Sun, 01 May 2005 03:31:11 -0700
+Message-ID: <7v64y3z18w.fsf@assigned-by-dhcp.cox.net>
 References: <20050501084145.GA30692@xi.wantstofly.org>
+	<20050501084710.GJ26663@cip.informatik.uni-erlangen.de>
+	<20050501085427.GB30692@xi.wantstofly.org>
+	<20050501085922.GC30692@xi.wantstofly.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun May 01 11:38:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 01 12:25:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSAtg-0002Jc-T6
-	for gcvg-git@gmane.org; Sun, 01 May 2005 11:37:58 +0200
+	id 1DSBdr-0005R7-Nj
+	for gcvg-git@gmane.org; Sun, 01 May 2005 12:25:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261415AbVEAJnu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 05:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261576AbVEAJnt
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 05:43:49 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:59043 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261415AbVEAJnr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 05:43:47 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 11A1CE6D99; Sun,  1 May 2005 10:43:35 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 21721-01; Sun,  1 May 2005 10:43:34 +0100 (BST)
-Received: from oak.dgreaves.com (unknown [217.135.200.138])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 58864E6A83; Sun,  1 May 2005 10:43:34 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DSAz9-0007a1-26; Sun, 01 May 2005 10:43:35 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
+	id S261586AbVEAKb3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 06:31:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261585AbVEAKb3
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 06:31:29 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:1200 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261586AbVEAKbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2005 06:31:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050501103113.DMVX8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 1 May 2005 06:31:13 -0400
 To: Lennert Buytenhek <buytenh@wantstofly.org>
-In-Reply-To: <20050501084145.GA30692@xi.wantstofly.org>
-X-Enigmail-Version: 0.91.0.0
+In-Reply-To: <20050501085922.GC30692@xi.wantstofly.org> (Lennert Buytenhek's
+ message of "Sun, 1 May 2005 10:59:22 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Lennert Buytenhek wrote:
+>>>>> "LB" == Lennert Buytenhek <buytenh@wantstofly.org> writes:
 
->Hi,
->
->update-cache seems to ignore paths containing path components
->starting with a dot:
->
->	pi% update-cache --add ./test.c
->	Ignoring path ./test.c
->	pi% update-cache --add test.c
->	pi%
->
->This is slightly annoying as 'find -type f | xargs update-cache --add'
->doesn't work because of this.  ('find * -type f | ...` does.)  Instead
->of ignoring the file, can we just strip off the leading "./"
->  
->
+LB> Something like this:
 
-This is documented behaviour:
-<file>
-    Files to act on.
-    Note that files begining with '.' are discarded. This includes
-    "./file" and "dir/./file". If you don't want this, then use   
-    cleaner names.
-    The same applies to directories ending '/' and paths with '//'
+LB> --- git/update-cache.c.orig	2005-05-01 10:56:17.859313581 +0200
+LB> +++ git/update-cache.c	2005-05-01 10:57:31.634897508 +0200
+LB> @@ -328,6 +328,7 @@
+LB> -		if (!verify_path(path)) {
+LB> +		_path = path;
+LB> +		if (!strncmp(_path, "./", 2))
+LB> +			_path += 2;
+LB> +		if (!verify_path(_path)) {
+
+Once you start doing ./ specially, you would be tempted to
+handle foo/../bar/../../baz, which would lead to complexity
+Linus did not want in the Core GIT layer.  Please do not pursue
+this path again.
+
+I once advocated that the path we get from the user should be
+treated relative to the working directory on the filesystem and
+not relative to the cache entry root as the current Core GIT
+layer does (see archive).  With some clever scripting this
+inconvenience can be hidden by the Porcelain layer without much
+difficulty [*1*] and that was the reason behind the decision by
+Linus to keep paths Plumbing layer gets relative to the cache.
+
+I do not know Cogito already can do this, but you should be able
+to do something like:
+
+    $ cd linux-2.6
+    $ ls -a
+    ./  ../  .git/ fs/ mm/ Makefile ...
+    $ cd fs
+    $ xx-update-cache Makefile ../Makefile ext3/Makefile
+    $ xx-diff-files Makefile ../Makefile ext3/Makefile
+
+where xx-* are what the Porcelain layer would provide the end
+user with.
 
 
-"Where?" you ask...
-
-Well, Linus hasn't accepted the docs for some reason - you have to
-search the archives...
-
-Sorry about that...
-
-David
-PS Changing this behaviour was discussed and dismissed for the core tools.
-If the problem appears in Cogito however, then it's worth patching...
+[Footnotes]
+*1* (PLUG) An implementation of my little SCM on top of GIT is
+found at <http://members.cox.net/junkio/>   I've been using it
+to manage the patches I feed Linus on the plumbing side.
 
 
