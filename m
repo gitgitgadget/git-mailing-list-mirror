@@ -1,72 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 2 May 2005 09:31:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505020921080.3594@ppc970.osdl.org>
-References: <20050429203959.GC21897@waste.org><20050429203959.GC21897@waste.org>
- <20050430025211.GP17379@opteron.random> <42764C0C.8030604@tmr.com>
+From: Juliusz Chroboczek <jch@pps.jussieu.fr>
+Subject: Re: Anyone working on a CVS->git converter?
+Date: Mon, 02 May 2005 18:11:11 +0200
+Message-ID: <7ioebtvc9s.fsf@lanthane.pps.jussieu.fr>
+References: <4275857A.1050106@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andrea Arcangeli <andrea@suse.de>, Matt Mackall <mpm@selenic.com>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 18:30:12 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon May 02 18:54:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSdmz-00015g-9T
-	for gcvg-git@gmane.org; Mon, 02 May 2005 18:28:57 +0200
+	id 1DSeAr-0007Pw-RH
+	for gcvg-git@gmane.org; Mon, 02 May 2005 18:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261450AbVEBQdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 12:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVEBQaO
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:30:14 -0400
-Received: from fire.osdl.org ([65.172.181.4]:61670 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261438AbVEBQ3R (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:29:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42GT6s4015135
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 09:29:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42GT5CC003421;
-	Mon, 2 May 2005 09:29:05 -0700
-To: Bill Davidsen <davidsen@tmr.com>
-In-Reply-To: <42764C0C.8030604@tmr.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261409AbVEBQx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 12:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261467AbVEBQmY
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:42:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:53737 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261409AbVEBQ1p (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:27:45 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DSded-0007Qw-O7
+	for git@vger.kernel.org; Mon, 02 May 2005 18:20:19 +0200
+Received: from lanthane.pps.jussieu.fr ([134.157.168.57])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 02 May 2005 18:20:19 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 02 May 2005 18:20:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: lanthane.pps.jussieu.fr
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+Cancel-Lock: sha1:iR6T9qU7J3bb+xTuPI3QPARIKpQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+> Anyone working on a CVS->git converter?
+
+Not directly, but you might get your wish Real Soon Now.
+
+I'm currently putting the finishing touches on commit support for
+darcs-git.  Once that's finished, you should be able to run tailor
+(the CVS to Darcs converter) over a Git repository.
+
+So hold on for a few days, and drop me a mail if you don't hear from
+me.
+
+                                        Juliusz
 
 
-On Mon, 2 May 2005, Bill Davidsen wrote:
-> > -#!/usr/bin/python
-> > +#!/usr/bin/env python
-
-> Could you explain why this is necessary or desirable? I looked at what 
-> env does, and I am missing the point of duplicating bash normal 
-> behaviour regarding definition of per-process environment entries.
-
-It's not about environment.
-
-It's about the fact that many people have things like python in
-/usr/local/bin/python, because they compiled it themselves or similar.
-
-Pretty much the only path you can _really_ depend on for #! stuff is 
-/bin/sh.
-
-Any system that doesn't have /bin/sh is so fucked up that it's not worth
-worrying about. Anything else can be in /bin, /usr/bin or /usr/local/bin
-(and sometimes other strange places).
-
-That said, I think the /usr/bin/env trick is stupid too. It may be more 
-portable for various Linux distributions, but if you want _true_ 
-portability, you use /bin/sh, and you do something like
-
-	#!/bin/sh
-	exec perl perlscript.pl "$@"
-
-instead.
-		Linus
