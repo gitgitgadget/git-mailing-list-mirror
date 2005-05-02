@@ -1,61 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Just a note: .git/refs/snap/ is not standard
-Date: Sun, 1 May 2005 23:13:14 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505012249460.30848-100000@iabervon.org>
-References: <7vacneqtn8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] typo fixes to git-apply-patch-script
+Date: Sun, 01 May 2005 20:19:41 -0700
+Message-ID: <7vvf62pb5e.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 05:07:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 05:14:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSRHO-0007Ws-U0
-	for gcvg-git@gmane.org; Mon, 02 May 2005 05:07:31 +0200
+	id 1DSRNQ-0007wb-Lt
+	for gcvg-git@gmane.org; Mon, 02 May 2005 05:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261154AbVEBDN2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 May 2005 23:13:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261454AbVEBDN2
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 23:13:28 -0400
-Received: from iabervon.org ([66.92.72.58]:24071 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261154AbVEBDNY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 1 May 2005 23:13:24 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DSRMw-0006DY-00; Sun, 1 May 2005 23:13:14 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vacneqtn8.fsf@assigned-by-dhcp.cox.net>
+	id S261413AbVEBDTp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 May 2005 23:19:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261454AbVEBDTp
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 May 2005 23:19:45 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:18309 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261413AbVEBDTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 May 2005 23:19:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050502031941.FQVL23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 1 May 2005 23:19:41 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 1 May 2005, Junio C Hamano wrote:
+When git-apply-patch-script creates a new file without
+executable mode set, a typo caused it not to report that
+activity to the user.  Also it was mistakenly running
+git-update-cache twice for newly created or deleted paths.  This
+patch fixes these problems.
 
-> Linus, 
-> 
->     not that there is any "de facto" or any standard there, but
-> the name .git/refs/snap/ you lifted from the vicinity thing is
-> not something Cogito folks have.  My understanding is of their
-> concensus is that .git/refs have single level subdirectories
-> like 'heads' and 'tags', and there will be little 41-byte text
-> files that look like .git/HEAD.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-I was intending this to be a more general concensus (and you seem to have
-followed it with your "snap" subdirectory).
+****************************************************************
+Linus, please do not forget to make this script EXECUTABLE this
+time.
+****************************************************************
 
-> So you probably would want to either (1) readdir in .git/refs (to future
-> proof) or (2) drop refs/snap from the vicinity list for now (to not give
-> special treatment to JIT, which I myself do not mind ;-)).  Also if you
-> go route (2) drop "refs" itself as well.
+jit-diff linus-mirror: git-apply-patch-script
+# - Fix missing '\n' at end of git-cat-file -t output.
+# + working-tree
+Mode changed: git-apply-patch-script (100644->100755)
 
-Actually, my code was intended to take things like "heads/master" or
-"tags/linux-2.6.13", which are found under "refs/" (although I also check
-that they don't start with "." and have exactly one "/", to enforce the
-naming system). Making it "heads/linus" rather than "linus" is important
-for writing the files, since you can't guess reliably what subdirectory
-the user means; also, it is easier for dealing with HTTP servers, where
-you don't know what to ask for.
-
-	-Daniel
-*This .sig left intentionally blank*
+--- k/git-apply-patch-script
++++ l/git-apply-patch-script
+@@ -31,7 +31,7 @@ test -f "$name.rej" || {
+ 	    echo >&2 "created $name with mode +x."
+ 	    chmod "$mode2" "$name"
+ 	    ;;
+-	-)
++	-x)
+ 	    echo >&2 "created $name."
+ 	    ;;
+ 	esac
+@@ -52,9 +52,7 @@ test -f "$name.rej" || {
+ 	    chmod "$mode2" "$name"
+ 	    ;;
+ 	esac
++	git-update-cache -- "$name"
+     esac
+-    # This bit is debatable---the SCM may not want to keep
+-    # cache in sync with the work tree (JIT does want to).
+-    git-update-cache -- "$name"
+ }
+ exit 0
 
