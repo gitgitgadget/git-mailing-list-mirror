@@ -1,72 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: question on merges
-Date: Mon, 2 May 2005 08:56:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505020850500.3824@ppc970.osdl.org>
-References: <20050502151200.GA4592@xi.wantstofly.org>
+From: Bill Davidsen <davidsen@tmr.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 02 May 2005 11:49:32 -0400
+Message-ID: <42764C0C.8030604@tmr.com>
+References: <20050429203959.GC21897@waste.org><20050429203959.GC21897@waste.org> <20050430025211.GP17379@opteron.random>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 17:48:41 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matt Mackall <mpm@selenic.com>, Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 17:50:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSd9s-0001rf-Ji
-	for gcvg-git@gmane.org; Mon, 02 May 2005 17:48:32 +0200
+	id 1DSdBg-00023Q-FM
+	for gcvg-git@gmane.org; Mon, 02 May 2005 17:50:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261343AbVEBPyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 11:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261346AbVEBPyT
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 11:54:19 -0400
-Received: from fire.osdl.org ([65.172.181.4]:54490 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261343AbVEBPyL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 11:54:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42Fs9s4012533
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 08:54:09 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42Fs68l001712;
-	Mon, 2 May 2005 08:54:08 -0700
-To: Lennert Buytenhek <buytenh@wantstofly.org>
-In-Reply-To: <20050502151200.GA4592@xi.wantstofly.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261351AbVEBP4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 11:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261349AbVEBP4I
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 11:56:08 -0400
+Received: from prgy-npn1.prodigy.com ([207.115.54.37]:15754 "EHLO
+	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261347AbVEBPzc
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 11:55:32 -0400
+Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
+	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j42FtGp29772;
+	Mon, 2 May 2005 11:55:20 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
+X-Accept-Language: en-us, en
+To: Andrea Arcangeli <andrea@suse.de>
+In-Reply-To: <20050430025211.GP17379@opteron.random>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Mon, 2 May 2005, Lennert Buytenhek wrote:
+Andrea Arcangeli wrote:
+> On Fri, Apr 29, 2005 at 01:39:59PM -0700, Matt Mackall wrote:
 > 
-> If a git user has X as his most recent local commit, and merges in a
-> commit Y from someone else to create commit Z, shouldn't commit Z have
-> both commit X and Y as parents?  Or is is the other way round and is it
-> perfectly well possible that a 'merge commit' only has one parent?
+>>Mercurial is ammenable to rsync provided you devote a read-only
+>>repository to it on the client side. In other words, you rsync from
+>>kernel.org/mercurial/linus to local/linus and then you merge from
+>>local/linus to your own branch. Mercurial's hashing hierarchy is
+>>similar to git's (and Monotone's), so you can sign a single hash of
+>>the tree as well.
+> 
+> 
+> Ok fine. It's also interesting how you already enabled partial transfers
+> through http.
+> 
+> Please apply this patch so it doesn't fail on my setup ;)
+> 
+> --- mercurial-0.4b/hg.~1~	2005-04-29 02:52:52.000000000 +0200
+> +++ mercurial-0.4b/hg	2005-04-30 00:53:02.000000000 +0200
+> @@ -1,4 +1,4 @@
+> -#!/usr/bin/python
+> +#!/usr/bin/env python
+>  #
+>  # mercurial - a minimal scalable distributed SCM
+>  # v0.4b "oedipa maas"
 
-There are two classes of git merges:
- - the "totally trivial one", where one side is fully contained within the 
-   other (ie one side has not done any development at all)
+Could you explain why this is necessary or desirable? I looked at what 
+env does, and I am missing the point of duplicating bash normal 
+behaviour regarding definition of per-process environment entries.
 
-   In this case, the "merge" ends up being a no-op, and just ends up being 
-   a trivial "update" to the bigger set of objects. There are no two 
-   parents, because the merge never even creates a new commit - it just
-   takes the top commit from the other side.
+-- 
+    -bill davidsen (davidsen@tmr.com)
+"The secret to procrastination is to put things off until the
+  last possible moment - but no longer"  -me
 
- - a real merge, where both repositories have had concurrent development, 
-   and then you see a new merge commit that has two parents (and they'll 
-   be the two HEAD commits of the repositories).
-
-So I assume you're just seeing the trivial case, but if what you're seeing 
-doesn't seem to match that pattern, then holler.
-
-NOTE! There's a real reason why the trivial merge _has_ to be just a plain 
-"fast-forward the history to the new state", namely the fact that if you 
-create a new merge-node for that, then you can never ever "stabilize": 
-people merging back and forth will always get new nodes, and you end up 
-with this run-away situation where you can never get the same tree on both 
-sides.
-
-		Linus
