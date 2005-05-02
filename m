@@ -1,76 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 2 May 2005 15:02:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org>
-References: <118833cc05042908181d09bdfd@mail.gmail.com><118833cc05042908181d09bdfd@mail.gmail.com>
- <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com>
+From: Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Tue, 03 May 2005 00:10:45 +0200
+Message-ID: <m3wtqhe0t6.fsf@defiant.localdomain>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
+	<42730061.5010106@zytor.com>
+	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
+	<20050430125333.2bd81b18.froese@gmx.de>
+	<1114859594.24014.60.camel@localhost.localdomain>
+	<20050430144936.6b05cc90.froese@gmx.de>
+	<1114865964.24014.77.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matt Mackall <mpm@selenic.com>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Sean <seanlkml@sympatico.ca>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261167AbVEBWAc@vger.kernel.org Tue May 03 00:17:01 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261167AbVEBWAc@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Edgar Toernig <froese@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 00:17:29 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSjDD-0002B7-Dq
-	for glk-linux-kernel@gmane.org; Tue, 03 May 2005 00:16:23 +0200
+	id 1DSjD8-0002B7-Aq
+	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261167AbVEBWAc (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Mon, 2 May 2005 18:00:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261171AbVEBWAc
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Mon, 2 May 2005 18:00:32 -0400
-Received: from fire.osdl.org ([65.172.181.4]:4837 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261165AbVEBWAX (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 2 May 2005 18:00:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42M0Gs4011392
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 15:00:16 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42M0E1v022570;
-	Mon, 2 May 2005 15:00:15 -0700
-To: Bill Davidsen <davidsen@tmr.com>
-In-Reply-To: <427650E7.2000802@tmr.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: linux-kernel-owner@vger.kernel.org
+	id S261173AbVEBWKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 18:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261175AbVEBWKy
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:10:54 -0400
+Received: from khc.piap.pl ([195.187.100.11]:22020 "EHLO khc.piap.pl")
+	by vger.kernel.org with ESMTP id S261173AbVEBWKt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 18:10:49 -0400
+Received: by khc.piap.pl (Postfix, from userid 500)
+	id A024510922; Tue,  3 May 2005 00:10:46 +0200 (CEST)
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1114865964.24014.77.camel@localhost.localdomain> (David
+ Woodhouse's message of "Sat, 30 Apr 2005 13:59:23 +0100")
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
+David Woodhouse <dwmw2@infradead.org> writes:
 
+> During a leap second, won't tm_sec be 60?
 
-On Mon, 2 May 2005, Bill Davidsen wrote:
-> 
-> If there is a functional reason to use git, something Mercurial doesn't 
-> do, then developers will and should use git. But the associated hassles 
-> with large change size, rather than the absolute size, are worth 
-> considering.
+You could rather have two 59th seconds. Or the "seconds" could be, say,
+0.1% longer for 1000 s. Depends on synchronization mechanism.
 
-Note that we discussed this early on, and the issues with full-file 
-handling haven't changed. It does actually have real functional 
-advantages:
+I think 60th second could only be possible with leap-seconds aware
+things (NTP, GPS, reference radio clocks etc.).
 
- - you can share the objects freely between different trees, never 
-   worrying about one tree corrupting another trees object by mistake.
- - you can drop old objects.
+> And in fact you don't seem to
+> handle leap seconds at all, so isn't my_mktime going to be out by one
+> second for every leap second which has occurred since 1970?
 
-delta models very fundamentally don't support this. 
-
-For example, a simple tree re-linker will work on any mirror site, and
-work reliably, even if I end up uploading new objects with some tool that
-doesn't know to break hardlinks etc. That can easily be much more than a
-10x win for a git repository site (imagine something like bkbits.net, but
-got git).
-
-Whether it is a huge deal or not, I don't know. I do know that the big 
-deal to me is just the simplicity of the git object models. It makes me 
-trust it, even in the presense of inevitable bugs. It's a very safe model, 
-and right now safe is good.
-
-		Linus
+No, actually the system time (i.e., the number of seconds since 1970)
+is already corrected (minutes are seconds/60, hrs = minutes/60 etc.)
+You are off calculating time deltas, but I guess if you need such
+accuracy your software already knows about leap seconds.
+-- 
+Krzysztof Halasa
