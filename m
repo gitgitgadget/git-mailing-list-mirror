@@ -1,60 +1,82 @@
-From: Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: Trying to use AUTHOR_DATE
-Date: Tue, 03 May 2005 00:10:45 +0200
-Message-ID: <m3wtqhe0t6.fsf@defiant.localdomain>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
-	<42730061.5010106@zytor.com>
-	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
-	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
-	<20050430125333.2bd81b18.froese@gmx.de>
-	<1114859594.24014.60.camel@localhost.localdomain>
-	<20050430144936.6b05cc90.froese@gmx.de>
-	<1114865964.24014.77.camel@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: More problems...
+Date: Mon, 2 May 2005 15:19:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505021509530.3594@ppc970.osdl.org>
+References: <20050429170127.A30010@flint.arm.linux.org.uk>
+ <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com>
+ <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org> <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
+ <20050429221903.F30010@flint.arm.linux.org.uk>
+ <Pine.LNX.4.60.0504292254430.25700@hermes-1.csi.cam.ac.uk>
+ <20050502193327.GB20818@pasky.ji.cz> <Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Edgar Toernig <froese@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 00:17:29 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Russell King <rmk@arm.linux.org.uk>,
+	Junio C Hamano <junkio@cox.net>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 00:17:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSjD8-0002B7-Aq
-	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:18 +0200
+	id 1DSjD6-0002B7-8M
+	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261173AbVEBWKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 18:10:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261175AbVEBWKy
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:10:54 -0400
-Received: from khc.piap.pl ([195.187.100.11]:22020 "EHLO khc.piap.pl")
-	by vger.kernel.org with ESMTP id S261173AbVEBWKt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 18:10:49 -0400
-Received: by khc.piap.pl (Postfix, from userid 500)
-	id A024510922; Tue,  3 May 2005 00:10:46 +0200 (CEST)
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1114865964.24014.77.camel@localhost.localdomain> (David
- Woodhouse's message of "Sat, 30 Apr 2005 13:59:23 +0100")
+	id S261175AbVEBWRg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 18:17:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261180AbVEBWRg
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:17:36 -0400
+Received: from fire.osdl.org ([65.172.181.4]:47338 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261175AbVEBWRd (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 18:17:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42MHGs4012723
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 15:17:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42MHFwT023418;
+	Mon, 2 May 2005 15:17:15 -0700
+To: Anton Altaparmakov <aia21@cam.ac.uk>
+In-Reply-To: <Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse <dwmw2@infradead.org> writes:
 
-> During a leap second, won't tm_sec be 60?
 
-You could rather have two 59th seconds. Or the "seconds" could be, say,
-0.1% longer for 1000 s. Depends on synchronization mechanism.
+On Mon, 2 May 2005, Anton Altaparmakov wrote:
+> 
+> Yes, yes, I know all tools are perfect and never have bugs but I am
+> paranoid.  (-;
 
-I think 60th second could only be possible with leap-seconds aware
-things (NTP, GPS, reference radio clocks etc.).
+I do agree.
 
-> And in fact you don't seem to
-> handle leap seconds at all, so isn't my_mktime going to be out by one
-> second for every leap second which has occurred since 1970?
+I think hardlinks are wonderful for
 
-No, actually the system time (i.e., the number of seconds since 1970)
-is already corrected (minutes are seconds/60, hrs = minutes/60 etc.)
-You are off calculating time deltas, but I guess if you need such
-accuracy your software already knows about leap seconds.
--- 
-Krzysztof Halasa
+ - "git farms" (ie something like what kernel.org does, but in a more 
+   controlled manner - right now kernel.org is really just a standard
+   location for different people putting their own files in).
+
+   In this environment, doing hard-linking should also imply 
+
+	- mounting the filesystem "noatime"
+	- using a different UID for the hardlinked objects
+
+   ie the "farm administrator" does the hardlinking automatically, and 
+   chown()'s them to himself, so that different git trees cannot screw 
+   each other up. The "noatime" thing is there because having different 
+   users means that git's internal "O_NOATIME" optimization no longer 
+   works, and you really want to avoi dgetting lots of write-backs just 
+   for "atime".
+
+ - people who have lots of trees. I think Jeff Garzik has something like
+   20+ BK trees. At that point, hardlinking just makes sense, and your 
+   work patterns are likely to be aware of the different trees anyway.
+
+But for "normal" situations, where you have a tree or two, the hardlinking 
+win might not be big enough to warrant the maintenance headache. With 
+hardlinking, you _do_ need to "trust" the other trees to some degree.
+
+		Linus
