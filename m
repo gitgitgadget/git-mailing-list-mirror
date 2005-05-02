@@ -1,72 +1,69 @@
-From: Valdis.Kletnieks@vt.edu
+From: Bill Davidsen <davidsen@tmr.com>
 Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 02 May 2005 12:14:56 -0400
-Message-ID: <200505021614.j42GEufG008441@turing-police.cc.vt.edu>
-References: <20050429203959.GC21897@waste.org> <20050429203959.GC21897@waste.org> <20050430025211.GP17379@opteron.random>
-            <42764C0C.8030604@tmr.com>
+Date: Mon, 02 May 2005 12:15:14 -0400
+Message-ID: <42765212.8030605@tmr.com>
+References: <200504291854.LAA26550@emf.net><2712.10.10.10.24.1114799620.squirrel@linux1> <2944.10.10.10.24.1114802002.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="==_Exmh_1115050495_5213P";
-	 micalg=pgp-sha1; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andrea Arcangeli <andrea@suse.de>, Matt Mackall <mpm@selenic.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 18:10:08 2005
+Cc: Tom Lord <lord@emf.net>, torvalds@osdl.org, mpm@selenic.com,
+	linux-kernel@vger.kernel.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 18:10:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSdU3-0005Ah-8y
-	for gcvg-git@gmane.org; Mon, 02 May 2005 18:09:23 +0200
+	id 1DSdUC-0005C7-IU
+	for gcvg-git@gmane.org; Mon, 02 May 2005 18:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261422AbVEBQPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 12:15:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261417AbVEBQPU
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:15:20 -0400
-Received: from turing-police.cc.vt.edu ([128.173.14.107]:33039 "EHLO
-	turing-police.cc.vt.edu") by vger.kernel.org with ESMTP
-	id S261409AbVEBQPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2005 12:15:11 -0400
-Received: from turing-police.cc.vt.edu (localhost [127.0.0.1])
-	by turing-police.cc.vt.edu (8.13.4/8.13.4) with ESMTP id j42GEufG008441;
-	Mon, 2 May 2005 12:14:56 -0400
-X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.1-RC3
-To: Bill Davidsen <davidsen@tmr.com>
-In-Reply-To: Your message of "Mon, 02 May 2005 11:49:32 EDT."
-             <42764C0C.8030604@tmr.com> 
+	id S261423AbVEBQPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 12:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261417AbVEBQPb
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:15:31 -0400
+Received: from prgy-npn1.prodigy.com ([207.115.54.37]:19338 "EHLO
+	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261414AbVEBQPS
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:15:18 -0400
+Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
+	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j42GFFp29836;
+	Mon, 2 May 2005 12:15:17 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
+X-Accept-Language: en-us, en
+Newsgroups: mail.linux-kernel
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <2944.10.10.10.24.1114802002.squirrel@linux1>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---==_Exmh_1115050495_5213P
-Content-Type: text/plain; charset=us-ascii
-
-On Mon, 02 May 2005 11:49:32 EDT, Bill Davidsen said:
-> Andrea Arcangeli wrote:
-> > On Fri, Apr 29, 2005 at 01:39:59PM -0700, Matt Mackall wrote:
-
-> > -#!/usr/bin/python
-> > +#!/usr/bin/env python
-> >  #
-> >  # mercurial - a minimal scalable distributed SCM
-> >  # v0.4b "oedipa maas"
+Sean wrote:
+> On Fri, April 29, 2005 2:54 pm, Tom Lord said:
 > 
-> Could you explain why this is necessary or desirable? I looked at what 
-> env does, and I am missing the point of duplicating bash normal 
-> behaviour regarding definition of per-process environment entries.
+> 
+>>The process should not rely on the security of every developer's
+>>machine.  The process should not rely on simply trusting quality
+>>contributors by reputation (e.g., most cons begin by establishing
+>>trust and continue by relying inappropriately on
+>>trust-without-verification).  This relates to why Linus'
+>>self-advertised process should be raising yellow and red cards all
+>>over the place: either he is wasting a huge amount of his own time and
+>>should be largely replaced by an automated patch queue manager, or he
+>>is being trusted to do more than is humanly possible.
+>>
+> 
+> 
+> Ahh, you don't believe in the development model that has produced Linux! 
+> Personally I do believe in it, so much so that I question the value of
+> signatures at the changeset level.  To me it doesn't matter where the code
+> came from just so long as it works.
 
-Most likely, his python lives elsewhere than /usr/bin, and the 'env' call
-results in causing a walk across $PATH to find it....
+Lawyers must love you... That approach doesn't work in court.
 
---==_Exmh_1115050495_5213P
-Content-Type: application/pgp-signature
+Related: look at the new software patent law, it ignores the existing 
+law, judge and jury, and lets MS avoid paying the judgement for a suit 
+it already lost.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Exmh version 2.5 07/13/2001
+See Computerworld etc for details.
 
-iD8DBQFCdlH/cC3lWbTT17ARAq/cAKDmu+G8AokTYiz085V8JCaAtT4ytgCg61Tn
-JWb2Qqgasiqj2fy9vWns4so=
-=xIsP
------END PGP SIGNATURE-----
-
---==_Exmh_1115050495_5213P--
+-- 
+    -bill davidsen (davidsen@tmr.com)
+"The secret to procrastination is to put things off until the
+  last possible moment - but no longer"  -me
