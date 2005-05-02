@@ -1,52 +1,110 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: gitweb.pl on kernel.org non-functional
-Date: Mon, 02 May 2005 00:00:08 -0700
-Message-ID: <4275CFF8.5000503@zytor.com>
-References: <4275C582.7020602@lsrfire.ath.cx>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: [PATCH] add git.spec and adapt Makefile for RPM build
+Date: Mon, 2 May 2005 12:23:03 +0200
+Message-ID: <20050502102303.GA22630@vrfy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 08:54:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon May 02 12:17:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSUp7-00050b-NR
-	for gcvg-git@gmane.org; Mon, 02 May 2005 08:54:34 +0200
+	id 1DSXzD-00008W-TO
+	for gcvg-git@gmane.org; Mon, 02 May 2005 12:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261249AbVEBHAU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 03:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261288AbVEBHAU
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 03:00:20 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:27803 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261249AbVEBHAQ
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 03:00:16 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j42708Zb030511
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 2 May 2005 00:00:09 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <4275C582.7020602@lsrfire.ath.cx>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-3.5 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261192AbVEBKXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 06:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261195AbVEBKXO
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 06:23:14 -0400
+Received: from soundwarez.org ([217.160.171.123]:24236 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261192AbVEBKXF (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 06:23:05 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 7066D29A86; Mon,  2 May 2005 12:23:03 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Rene Scharfe wrote:
-> Hi,
-> 
-> none of the projects linked on http://www.kernel.org/git/ seem to list
-> their commits anymore.  The repositories are still there, so it looks
-> like a glitch in gitweb.cgi.
-> 
+Add support for building the rpm package directly from the git tree.
 
-Indeed.  I have reverted the update.
+Signed-off-by: Kay Sievers <kay.sievers@vrfy.org>
+---
 
-	-hpa
+--- a/Makefile
++++ b/Makefile
+@@ -7,6 +7,10 @@
+ # BREAK YOUR LOCAL DIFFS! show-diff and anything using it will likely randomly
+ # break unless your underlying filesystem supports those sub-second times
+ # (my ext3 doesn't).
++
++prefix=$(HOME)
++bindir=$(prefix)/bin
++
+ CFLAGS=-g -O2 -Wall
+ 
+ CC=gcc
+@@ -26,7 +30,11 @@ PROG=   git-update-cache git-diff-files 
+ all: $(PROG)
+ 
+ install: $(PROG) $(SCRIPTS)
+-	install $(PROG) $(SCRIPTS) $(HOME)/bin/
++	install -m755 -d $(DESTDIR)$(bindir)
++	install $(PROG) $(SCRIPTS) $(DESTDIR)$(bindir)
++
++uninstall:
++	cd $(DESTDIR)$(bindir) && rm $(PROG) $(SCRIPTS)
+ 
+ LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
+ 	 tag.o date.o
+Created: git.spec (mode:100644)
+--- /dev/null
++++ b/git.spec
+@@ -0,0 +1,44 @@
++Name: 		git
++Version: 	0.7
++Release: 	1
++Vendor: 	Linus Torvalds <torvalds@osdl.org>
++Summary:  	git
++License: 	GPL
++Group: 		Development/Tools
++URL: 		http://www.kernel.org/pub/software/scm/git/
++Source: 	http://www.kernel.org/pub/software/scm/git/%{name}-%{version}.tar.bz2
++Provides: 	git = %{version}
++BuildRequires:	zlib-devel openssl-devel curl-devel
++BuildRoot:	%{_tmppath}/%{name}-%{version}-root
++Prereq: 	sh-utils diffutils
++
++%description
++git is an fast and flexible filesystem-based database designed to store directory
++trees with regard to their history. It is the base for SCM tools bild on top of
++git like cogito.
++
++%prep
++%setup -q -n %{name}-%{version}
++
++%build
++
++make
++
++%install
++rm -rf $RPM_BUILD_ROOT
++make DESTDIR=$RPM_BUILD_ROOT prefix=/usr install
++
++%clean
++rm -rf $RPM_BUILD_ROOT
++
++%files
++%defattr(-,root,root)
++/usr/bin/*
++#%{_mandir}/*/*
++
++%changelog
++* Thu May 2 2005 Kay Sievers <kay.sievers@vrfy.org> 0.7-1
++- rpm build for core git
++
++* Thu Apr 21 2005 Chris Wright <chrisw@osdl.org> 0.6.3-1
++- Initial rpm build
+
