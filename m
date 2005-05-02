@@ -1,102 +1,72 @@
-From: "Sean" <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: question on merges
-Date: Mon, 2 May 2005 11:47:17 -0400 (EDT)
-Message-ID: <3294.10.10.10.24.1115048837.squirrel@linux1>
+Date: Mon, 2 May 2005 08:56:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505020850500.3824@ppc970.osdl.org>
 References: <20050502151200.GA4592@xi.wantstofly.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 17:43:18 2005
+X-From: git-owner@vger.kernel.org Mon May 02 17:48:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSd30-0000yI-2Y
-	for gcvg-git@gmane.org; Mon, 02 May 2005 17:41:26 +0200
+	id 1DSd9s-0001rf-Ji
+	for gcvg-git@gmane.org; Mon, 02 May 2005 17:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261337AbVEBPrZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 11:47:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261341AbVEBPrZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 11:47:25 -0400
-Received: from simmts5.bellnexxia.net ([206.47.199.163]:49849 "EHLO
-	simmts5-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261337AbVEBPrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2005 11:47:18 -0400
-Received: from linux1 ([69.156.111.46]) by simmts5-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050502154717.BDKL1614.simmts5-srv.bellnexxia.net@linux1>;
-          Mon, 2 May 2005 11:47:17 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j42FlE1f023773;
-	Mon, 2 May 2005 11:47:15 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Mon, 2 May 2005 11:47:17 -0400 (EDT)
+	id S261343AbVEBPyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 11:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261346AbVEBPyT
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 11:54:19 -0400
+Received: from fire.osdl.org ([65.172.181.4]:54490 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261343AbVEBPyL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 11:54:11 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42Fs9s4012533
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 08:54:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42Fs68l001712;
+	Mon, 2 May 2005 08:54:08 -0700
+To: Lennert Buytenhek <buytenh@wantstofly.org>
 In-Reply-To: <20050502151200.GA4592@xi.wantstofly.org>
-To: "Lennert Buytenhek" <buytenh@wantstofly.org>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 2, 2005 11:12 am, Lennert Buytenhek said:
-> Hi,
->
+
+
+On Mon, 2 May 2005, Lennert Buytenhek wrote:
+> 
 > If a git user has X as his most recent local commit, and merges in a
 > commit Y from someone else to create commit Z, shouldn't commit Z have
 > both commit X and Y as parents?  Or is is the other way round and is it
 > perfectly well possible that a 'merge commit' only has one parent?
->
-> In the current linux-2.6 git tree, gregkh clones torvalds'
-> 7f907d7486f2519c2ff1493bfbcdc36dcacd85b7 and creates a chain of commits
-> starting with ac21e9ff08db3d6fac41d356c77fcb531c2e03e1 and ending in
-> e838a0d4d5260bce452c96914a6e86b217c53c55.  torvalds merges this chain
-> back into his version in a9e4820c4c170b3df0d2185f7b4130b0b2daed2c, but
-> that commit has as parents e838a0d4d5260bce452c96914a6e86b217c53c55
-> (gregkh's last commit), and c0698f2f6e4839ce9463ce731c892993215ea067,
-> one of jejb's intermediate commits.  But now why is
-> 7f907d7486f2519c2ff1493bfbcdc36dcacd85b7 not a parent of
-> a9e4820c4c170b3df0d2185f7b4130b0b2daed2c?  I would expect it to be,
-> since it is linus' most recent local commit when he merges in gregkh's
-> tree.
->
-> This pattern happens a few more times:
-> - davem creates c4d541106bc5d0a2134aaf9e8735eee3c70b0db2 from torvalds'
->   561bbe3235da614562fb26bb14042af684971a2d, and torvalds merges davem's
->   tree back in at a2755a80f40e5794ddc20e00f781af9d6320fafb (v2.6.12-rc3),
->   but that commit only has one parent (even though it's a merge.)
->
-> See this image:
-> 	http://www.liacs.nl/~buytenh/graph_2cacb3da620a4a93f3a77e1d2c8c06bb3c74bcb0.png
 
-Hi Lennert,
+There are two classes of git merges:
+ - the "totally trivial one", where one side is fully contained within the 
+   other (ie one side has not done any development at all)
 
-Nice work, the labelled vectors are a nice touch.  How hard would it be to
-add a format where all linear commits on a single branch were listed in a
-single bubble?  That would reduce the size of the graphic considerably
-with no loss of info.
+   In this case, the "merge" ends up being a no-op, and just ends up being 
+   a trivial "update" to the bigger set of objects. There are no two 
+   parents, because the merge never even creates a new commit - it just
+   takes the top commit from the other side.
 
-As for your question the top of Linus' tree at that merge was actually
-commit c0698f2f6e4839ce9463ce731c892993215ea067  :
+ - a real merge, where both repositories have had concurrent development, 
+   and then you see a new merge commit that has two parents (and they'll 
+   be the two HEAD commits of the repositories).
 
-tree b05fc8a950ace937460212e996441e4c05a227f6
-parent cb624029cab62e5415287d15b2ec907b8f322ff5
-parent 7f907d7486f2519c2ff1493bfbcdc36dcacd85b7
-author James Bottomley <jejb@titanic> 1113875709 -0500
-committer James Bottomley <jejb@titanic> 1113875709 -0500
+So I assume you're just seeing the trivial case, but if what you're seeing 
+doesn't seem to match that pattern, then holler.
 
-fully merge up to scsi-misc-2.6
+NOTE! There's a real reason why the trivial merge _has_ to be just a plain 
+"fast-forward the history to the new state", namely the fact that if you 
+create a new merge-node for that, then you can never ever "stabilize": 
+people merging back and forth will always get new nodes, and you end up 
+with this run-away situation where you can never get the same tree on both 
+sides.
 
------
-
-Which includes the 7f90* parent for a9e4* you were expecting.  The graph
-kind of hides the fact that c069* actually originated in his tree and was
-actually his most recent local commit when he merged with gregkh.
-
-Sean
-
-
-
+		Linus
