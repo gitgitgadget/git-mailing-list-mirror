@@ -1,56 +1,75 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Mon, 2 May 2005 15:17:14 -0700
-Organization: SGI
-Message-ID: <20050502151714.7a33d79d.pj@sgi.com>
-References: <Pine.LNX.4.58.0504281121430.18901@ppc970.osdl.org>
-	<20050429172235.21c1af10.pj@sgi.com>
-	<Pine.LNX.4.58.0504291956030.2296@ppc970.osdl.org>
-	<20050429232922.03057aba.pj@sgi.com>
-	<20050430110410.GA25322@lsrfire.ath.cx>
+From: Anton Altaparmakov <aia21@cam.ac.uk>
+Subject: Re: More problems...
+Date: Mon, 2 May 2005 23:01:01 +0100 (BST)
+Message-ID: <Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
+References: <20050429170127.A30010@flint.arm.linux.org.uk>
+ <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com>
+ <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org> <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
+ <20050429221903.F30010@flint.arm.linux.org.uk>
+ <Pine.LNX.4.60.0504292254430.25700@hermes-1.csi.cam.ac.uk>
+ <20050502193327.GB20818@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: torvalds@osdl.org, git@vger.kernel.org, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Tue May 03 00:17:53 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Russell King <rmk@arm.linux.org.uk>,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 00:19:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSjD6-0002B7-Pg
-	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:18 +0200
+	id 1DSjDB-0002B7-06
+	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261177AbVEBWRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 18:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261180AbVEBWRi
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:17:38 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:52372 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S261177AbVEBWRd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 18:17:33 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j42NxaeM002975;
-	Mon, 2 May 2005 16:59:36 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j42MHG5w20749773;
-	Mon, 2 May 2005 15:17:17 -0700 (PDT)
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <20050430110410.GA25322@lsrfire.ath.cx>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261172AbVEBWCv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 18:02:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261173AbVEBWCv
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:02:51 -0400
+Received: from ppsw-9.csi.cam.ac.uk ([131.111.8.139]:13207 "EHLO
+	ppsw-9.csi.cam.ac.uk") by vger.kernel.org with ESMTP
+	id S261172AbVEBWBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2005 18:01:21 -0400
+X-Cam-SpamDetails: Not scanned
+X-Cam-AntiVirus: No virus found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:53851)
+	by ppsw-9.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpa (EXTERNAL:aia21) id 1DSiyL-0008LC-Uk (Exim 4.51)
+	(return-path <aia21@hermes.cam.ac.uk>); Mon, 02 May 2005 23:01:01 +0100
+Received: from aia21 (helo=localhost) by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1DSiyL-0007sb-Fw (Exim 4.43)
+	(return-path <aia21@hermes.cam.ac.uk>); Mon, 02 May 2005 23:01:01 +0100
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050502193327.GB20818@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Rene wrote:
-> Are you sure it's SMP dependant?
+On Mon, 2 May 2005, Petr Baudis wrote:
+> Dear diary, on Fri, Apr 29, 2005 at 11:57:53PM CEST, I got a letter
+> where Anton Altaparmakov <aia21@cam.ac.uk> told me that...
+> > There should definitely be an option to either enable or disable this as 
+> > there are legitimate cases for not wanting hard links or indeed using 
+> > file systems which do not support them.
+> 
+> Are there legitimate cases for not wanting hard links when you are able
+> to create them? (Same filesystem, filesystem supports them...)
 
-No - I'm not sure.  It just happened to be that way on the couple of
-systems I looked at (and I figured that in any case, it was a good bet
-that Linus had multiple processors ;).
+I would say yes.  For example, I want to update my git tools to the latest 
+and greatest development version.  Do I really want to let it loose on all 
+the repositories?  Probably not.  So I would want to make a clone of the 
+repository that is not connected in any way with the old one and then 
+try the new tools.  If there were hard links involved working on the 
+cloned repository could potentially damage the original one.
 
-> Here's a patch for cg-log
+Yes, yes, I know all tools are perfect and never have bugs but I am 
+paranoid.  (-;
 
-Looks plausible to me.
+Best regards,
 
+	Anton
 -- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
+Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
+Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
+WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
