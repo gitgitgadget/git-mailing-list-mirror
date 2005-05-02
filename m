@@ -1,77 +1,76 @@
-From: Kyle Moffett <mrmacman_g4@mac.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 2 May 2005 17:17:32 -0400
-Message-ID: <F9443EC8-A8F7-47D7-AC64-AEC476E7223F@mac.com>
-References: <20050429203959.GC21897@waste.org> <20050429203959.GC21897@waste.org> <20050430025211.GP17379@opteron.random> <42764C0C.8030604@tmr.com> <Pine.LNX.4.58.0505020921080.3594@ppc970.osdl.org>
-Mime-Version: 1.0 (Apple Message framework v728)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bill Davidsen <davidsen@tmr.com>,
-	Andrea Arcangeli <andrea@suse.de>,
-	Matt Mackall <mpm@selenic.com>,
+Date: Mon, 2 May 2005 15:02:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org>
+References: <118833cc05042908181d09bdfd@mail.gmail.com><118833cc05042908181d09bdfd@mail.gmail.com>
+ <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matt Mackall <mpm@selenic.com>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Sean <seanlkml@sympatico.ca>,
 	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 23:14:08 2005
-Return-path: <git-owner@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261167AbVEBWAc@vger.kernel.org Tue May 03 00:17:01 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261167AbVEBWAc@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSiEl-0003ju-4k
-	for gcvg-git@gmane.org; Mon, 02 May 2005 23:13:55 +0200
+	id 1DSjDD-0002B7-Dq
+	for glk-linux-kernel@gmane.org; Tue, 03 May 2005 00:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261788AbVEBVSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 17:18:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261783AbVEBVSu
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 17:18:50 -0400
-Received: from smtpout.mac.com ([17.250.248.87]:12501 "EHLO smtpout.mac.com")
-	by vger.kernel.org with ESMTP id S261781AbVEBVRn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 17:17:43 -0400
-Received: from mac.com (smtpin07-en2 [10.13.10.152])
-	by smtpout.mac.com (Xserve/8.12.11/smtpout05/MantshX 4.0) with ESMTP id j42LHVYX012382;
-	Mon, 2 May 2005 14:17:31 -0700 (PDT)
-Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin07/MantshX 4.0) with ESMTP id j42LHRdZ005701
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 2 May 2005 14:17:29 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.58.0505020921080.3594@ppc970.osdl.org>
-To: Linus Torvalds <torvalds@osdl.org>
-X-Mailer: Apple Mail (2.728)
-Sender: git-owner@vger.kernel.org
+	id S261167AbVEBWAc (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
+	Mon, 2 May 2005 18:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261171AbVEBWAc
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Mon, 2 May 2005 18:00:32 -0400
+Received: from fire.osdl.org ([65.172.181.4]:4837 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261165AbVEBWAX (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 2 May 2005 18:00:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42M0Gs4011392
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 15:00:16 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42M0E1v022570;
+	Mon, 2 May 2005 15:00:15 -0700
+To: Bill Davidsen <davidsen@tmr.com>
+In-Reply-To: <427650E7.2000802@tmr.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-
-On May 2, 2005, at 12:31:06, Linus Torvalds wrote:
-> That said, I think the /usr/bin/env trick is stupid too. It may be  
-> more
-> portable for various Linux distributions, but if you want _true_
-> portability, you use /bin/sh, and you do something like
->
->     #!/bin/sh
->     exec perl perlscript.pl "$@"
-
-Oooh, I can one-up that hack with this evil from perlrun(1):
-
-#!/bin/sh -- # -*- perl -*- -W -T
-eval 'exec perl -wS $0 ${1+"$@"}'
-     if 0;
-# PERL SCRIPT HERE
-
-Description:
-Perl ignores the eval($string) because of the "if 0" in the  
-statement. The
-shell sees the statement end at the newline, and executes it faithfully.
-The end result is that the preferred Perl gets the script.  I don't know
-Python, so I don't know if such a trick exists there.
-
-Cheers,
-Kyle Moffett
-
------BEGIN GEEK CODE BLOCK-----
-Version: 3.12
-GCM/CS/IT/U d- s++: a18 C++++>$ UB/L/X/*++++(+)>$ P+++(++++)>$
-L++++(+++) E W++(+) N+++(++) o? K? w--- O? M++ V? PS+() PE+(-) Y+
-PGP+++ t+(+++) 5 X R? tv-(--) b++++(++) DI+ D+ G e->++++$ h!*()>++$  
-r  !y?(-)
-------END GEEK CODE BLOCK------
+X-Mailing-List: linux-kernel@vger.kernel.org
 
 
 
+On Mon, 2 May 2005, Bill Davidsen wrote:
+> 
+> If there is a functional reason to use git, something Mercurial doesn't 
+> do, then developers will and should use git. But the associated hassles 
+> with large change size, rather than the absolute size, are worth 
+> considering.
+
+Note that we discussed this early on, and the issues with full-file 
+handling haven't changed. It does actually have real functional 
+advantages:
+
+ - you can share the objects freely between different trees, never 
+   worrying about one tree corrupting another trees object by mistake.
+ - you can drop old objects.
+
+delta models very fundamentally don't support this. 
+
+For example, a simple tree re-linker will work on any mirror site, and
+work reliably, even if I end up uploading new objects with some tool that
+doesn't know to break hardlinks etc. That can easily be much more than a
+10x win for a git repository site (imagine something like bkbits.net, but
+got git).
+
+Whether it is a huge deal or not, I don't know. I do know that the big 
+deal to me is just the simplicity of the git object models. It makes me 
+trust it, even in the presense of inevitable bugs. It's a very safe model, 
+and right now safe is good.
+
+		Linus
