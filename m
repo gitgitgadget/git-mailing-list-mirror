@@ -1,96 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: on when to checksum
-Date: Mon, 2 May 2005 12:57:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505021250450.3594@ppc970.osdl.org>
-References: <200505021921.MAA26977@emf.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: questions about cg-update, cg-pull, and cg-clone.
+Date: Mon, 2 May 2005 21:58:46 +0200
+Message-ID: <20050502195846.GC20818@pasky.ji.cz>
+References: <20050430005322.GA5408@tumblerings.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 21:50:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 02 21:53:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSgvF-0005zx-Gn
-	for gcvg-git@gmane.org; Mon, 02 May 2005 21:49:41 +0200
+	id 1DSgy8-0006qa-H7
+	for gcvg-git@gmane.org; Mon, 02 May 2005 21:52:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261735AbVEBTzq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 15:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVEBTzq
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 15:55:46 -0400
-Received: from fire.osdl.org ([65.172.181.4]:63929 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261735AbVEBTzf (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 15:55:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42JtXs4000515
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 12:55:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42JtWZ3015909;
-	Mon, 2 May 2005 12:55:33 -0700
-To: Tom Lord <lord@emf.net>
-In-Reply-To: <200505021921.MAA26977@emf.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261743AbVEBT6v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 15:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261746AbVEBT6v
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 15:58:51 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:55216 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261743AbVEBT6s (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 15:58:48 -0400
+Received: (qmail 29688 invoked by uid 2001); 2 May 2005 19:58:46 -0000
+To: Zack Brown <zbrown@tumblerings.org>
+Content-Disposition: inline
+In-Reply-To: <20050430005322.GA5408@tumblerings.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Sat, Apr 30, 2005 at 02:53:22AM CEST, I got a letter
+where Zack Brown <zbrown@tumblerings.org> told me that...
+> 'cg-update branch-name' grabs any new changes from the upstream repository and
+> merges them into my local repository. If I've been editing files in my local
+> repository, the update attempts to merge the changes cleanly.
 
+Yes.
 
-On Mon, 2 May 2005, Tom Lord wrote:
-> 
-> I'm curious about what is the value of the "batch" nature of that
-> proces?
+> Now, if the update is clean, a cg-commit is invoked automatically, and if the
+> update is not clean, I then have to resolve any conflicts and give the cg-commit
+> command by hand. But: what is the significance of either of these cg-commit
+> commands? Why should I have to write a changelog entry recording this merge? All
 
-My time.
+You might want to write some special notes regarding the merge, e.g.
+when you want to describe some non-trivial conflict resolution, or even
+give a short blurb of the changes you are merging.
 
-I don't know about other people, but I don't multitask. I do one thing, 
-and that's it. I don't move my mouse around. I sit in my mail reader, and 
-I read email. I don't read one email, switch to another window, apply it, 
-swithc back, read the next email etc etc.
+If you don't know what to say, just press Ctrl-D. The first line of the
+commit always says "Merge with what_you_are_merging_with".
 
-In fact, I claim that anybody who works that way is going to have an IQ of 
-about 15 points lower than somebody who batches things up. Just because 
-you end up losing your context, and that effectively makes you stupid. 
+> I'm doing is updating my tree to be current. Why should I have to 'commit' that
+> update?
 
-Concentration is a wonderful thing, but it _requires_ that you do things 
-in a concentrated manner.
+If you are only updating your tree to be current, you don't have to
+commit, and in fact you don't commit (you do so-called "fast-forward
+merge", which will just update your HEAD pointer to point at the newer
+commit). You commit only when you were merging stuff (so-called "tree
+merge"; well, that's at least how I call it to differentiate it from the
+fast-forward merge). That means you have some local commits over there -
+I can't just update your tree to be current, sorry. That would lose your
+commit. I have to merge the changes into your tree through a merge
+commit.
 
-> So, if I understand, you review each change before stuffing it in a
-> mailbox, then you apply all the patches in that mailbox in batch.
-> In the majority of cases, the buffering of changes in the mailbox
-> adds nothing.
+> Now I look at 'cg-pull'. What does this do? The readme says something about
+> printing two ids, and being useful for diffs. But can't I do a diff after a
+> cg-update and get the same result? I'm very confused about cg-pull right now.
 
-I read email, and while reading email I save the interesting ones off to
-another mbox (I call mine "doit"). They get saved off for "later perusal".
+cg-pull does the first part of cg-update. It is concerned by fetching
+the stuff from the remote repository to the local one. cg-merge then
+does the second part, merging the stuff to your local tree (doing either
+fast-forward or tree merge).
 
-I do a first-order review at that stage, and in fact, 95% of the time, 
-what goes into the "doit" folder _will_ get applied. Not 100%, though, 
-exactly because at this stage I just read email and work in a mail-reader: 
-I don't usually even look at the actual kernel sources that a patch 
-involves. In particular, sometimes it turns out that the patch wasn't 
-against my version at all, but against a -mm tree, and I just don't even 
-worry about technical details at that stage.
-
-Stage #2 is going through the "doit" folder at some later date (maybe a 
-couple of times a day), and going through it one more time. Maybe not that 
-much more "carefully", but with a different intent - now I actually check 
-sign-offs, add my own, and check out the actual problems in the source 
-tree if needed.
-
-Stage #3 is actually applying it.
-
-_Each_ stage culls out bad things.
-
-And I _really_ don't bounce between stages.
-
-> In other words, a more asynchronous process might save you time *and*
-> pay off by reserving more of your attention for areas where it's 
-> really needed.
-
-It's not asynchronous. It's batched in different stages so that I can 
-work better. And latency matters.
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
