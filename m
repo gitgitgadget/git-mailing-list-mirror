@@ -1,69 +1,62 @@
-From: Bill Davidsen <davidsen@tmr.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 02 May 2005 11:49:32 -0400
-Message-ID: <42764C0C.8030604@tmr.com>
-References: <20050429203959.GC21897@waste.org><20050429203959.GC21897@waste.org> <20050430025211.GP17379@opteron.random>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: How to get bash to shut up about SIGPIPE?
+Date: Mon, 2 May 2005 09:10:27 -0700
+Organization: SGI
+Message-ID: <20050502091027.6753998e.pj@sgi.com>
+References: <E1DSDER-0000kS-00@gondolin.me.apana.org.au>
+	<4274FB10.6090600@dwheeler.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Linus Torvalds <torvalds@osdl.org>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 17:50:26 2005
+Cc: herbert@gondor.apana.org.au, ryan@michonline.com,
+	torvalds@osdl.org, rene.scharfe@lsrfire.ath.cx,
+	git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Mon May 02 18:06:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSdBg-00023Q-FM
-	for gcvg-git@gmane.org; Mon, 02 May 2005 17:50:25 +0200
+	id 1DSdQJ-0004JR-1o
+	for gcvg-git@gmane.org; Mon, 02 May 2005 18:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261351AbVEBP4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 11:56:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261349AbVEBP4I
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 11:56:08 -0400
-Received: from prgy-npn1.prodigy.com ([207.115.54.37]:15754 "EHLO
-	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261347AbVEBPzc
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 11:55:32 -0400
-Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
-	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j42FtGp29772;
-	Mon, 2 May 2005 11:55:20 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
-X-Accept-Language: en-us, en
-To: Andrea Arcangeli <andrea@suse.de>
-In-Reply-To: <20050430025211.GP17379@opteron.random>
+	id S261371AbVEBQLa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 12:11:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261383AbVEBQLa
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:11:30 -0400
+Received: from omx3-ext.sgi.com ([192.48.171.20]:41416 "EHLO omx3.sgi.com")
+	by vger.kernel.org with ESMTP id S261371AbVEBQLZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:11:25 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j42GaL3C027590;
+	Mon, 2 May 2005 09:36:21 -0700
+Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j42GAT5w20643156;
+	Mon, 2 May 2005 09:10:29 -0700 (PDT)
+To: dwheeler@dwheeler.com
+In-Reply-To: <4274FB10.6090600@dwheeler.com>
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Andrea Arcangeli wrote:
-> On Fri, Apr 29, 2005 at 01:39:59PM -0700, Matt Mackall wrote:
-> 
->>Mercurial is ammenable to rsync provided you devote a read-only
->>repository to it on the client side. In other words, you rsync from
->>kernel.org/mercurial/linus to local/linus and then you merge from
->>local/linus to your own branch. Mercurial's hashing hierarchy is
->>similar to git's (and Monotone's), so you can sign a single hash of
->>the tree as well.
-> 
-> 
-> Ok fine. It's also interesting how you already enabled partial transfers
-> through http.
-> 
-> Please apply this patch so it doesn't fail on my setup ;)
-> 
-> --- mercurial-0.4b/hg.~1~	2005-04-29 02:52:52.000000000 +0200
-> +++ mercurial-0.4b/hg	2005-04-30 00:53:02.000000000 +0200
-> @@ -1,4 +1,4 @@
-> -#!/usr/bin/python
-> +#!/usr/bin/env python
->  #
->  # mercurial - a minimal scalable distributed SCM
->  # v0.4b "oedipa maas"
+David wrote:
+> One approach is to install a trap for SIGPIPE in
+> non-terminating command in a pipeline where the
+> later items might not process all the data, e.g.:
+>    (trap {} SIGPIPE; find .) | head -1
 
-Could you explain why this is necessary or desirable? I looked at what 
-env does, and I am missing the point of duplicating bash normal 
-behaviour regarding definition of per-process environment entries.
+Both the versions of bash that I looked at (2.05 and 3.0) _still_
+complain even if SIGPIPE is trapped - they just complain with
+a more terse message, unless DONT_REPORT_SIGPIPE is not defined.
+
+Linus's version apparently isn't even more terse with this trap.
+
+What bash do you have that this trap silences?
+
+> ... rant ...
+
+agreed
 
 -- 
-    -bill davidsen (davidsen@tmr.com)
-"The secret to procrastination is to put things off until the
-  last possible moment - but no longer"  -me
-
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
