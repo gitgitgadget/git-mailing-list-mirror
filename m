@@ -1,69 +1,72 @@
-From: Bill Davidsen <davidsen@tmr.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 02 May 2005 12:15:14 -0400
-Message-ID: <42765212.8030605@tmr.com>
-References: <200504291854.LAA26550@emf.net><2712.10.10.10.24.1114799620.squirrel@linux1> <2944.10.10.10.24.1114802002.squirrel@linux1>
+Date: Mon, 2 May 2005 09:31:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505020921080.3594@ppc970.osdl.org>
+References: <20050429203959.GC21897@waste.org><20050429203959.GC21897@waste.org>
+ <20050430025211.GP17379@opteron.random> <42764C0C.8030604@tmr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Tom Lord <lord@emf.net>, torvalds@osdl.org, mpm@selenic.com,
-	linux-kernel@vger.kernel.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 02 18:10:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andrea Arcangeli <andrea@suse.de>, Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 18:30:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSdUC-0005C7-IU
-	for gcvg-git@gmane.org; Mon, 02 May 2005 18:09:33 +0200
+	id 1DSdmz-00015g-9T
+	for gcvg-git@gmane.org; Mon, 02 May 2005 18:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261423AbVEBQPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 12:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261417AbVEBQPb
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:15:31 -0400
-Received: from prgy-npn1.prodigy.com ([207.115.54.37]:19338 "EHLO
-	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261414AbVEBQPS
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:15:18 -0400
-Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
-	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j42GFFp29836;
-	Mon, 2 May 2005 12:15:17 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
-X-Accept-Language: en-us, en
-Newsgroups: mail.linux-kernel
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <2944.10.10.10.24.1114802002.squirrel@linux1>
+	id S261450AbVEBQdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 12:33:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVEBQaO
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:30:14 -0400
+Received: from fire.osdl.org ([65.172.181.4]:61670 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261438AbVEBQ3R (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:29:17 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42GT6s4015135
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 09:29:06 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42GT5CC003421;
+	Mon, 2 May 2005 09:29:05 -0700
+To: Bill Davidsen <davidsen@tmr.com>
+In-Reply-To: <42764C0C.8030604@tmr.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Sean wrote:
-> On Fri, April 29, 2005 2:54 pm, Tom Lord said:
-> 
-> 
->>The process should not rely on the security of every developer's
->>machine.  The process should not rely on simply trusting quality
->>contributors by reputation (e.g., most cons begin by establishing
->>trust and continue by relying inappropriately on
->>trust-without-verification).  This relates to why Linus'
->>self-advertised process should be raising yellow and red cards all
->>over the place: either he is wasting a huge amount of his own time and
->>should be largely replaced by an automated patch queue manager, or he
->>is being trusted to do more than is humanly possible.
->>
-> 
-> 
-> Ahh, you don't believe in the development model that has produced Linux! 
-> Personally I do believe in it, so much so that I question the value of
-> signatures at the changeset level.  To me it doesn't matter where the code
-> came from just so long as it works.
 
-Lawyers must love you... That approach doesn't work in court.
 
-Related: look at the new software patent law, it ignores the existing 
-law, judge and jury, and lets MS avoid paying the judgement for a suit 
-it already lost.
+On Mon, 2 May 2005, Bill Davidsen wrote:
+> > -#!/usr/bin/python
+> > +#!/usr/bin/env python
 
-See Computerworld etc for details.
+> Could you explain why this is necessary or desirable? I looked at what 
+> env does, and I am missing the point of duplicating bash normal 
+> behaviour regarding definition of per-process environment entries.
 
--- 
-    -bill davidsen (davidsen@tmr.com)
-"The secret to procrastination is to put things off until the
-  last possible moment - but no longer"  -me
+It's not about environment.
+
+It's about the fact that many people have things like python in
+/usr/local/bin/python, because they compiled it themselves or similar.
+
+Pretty much the only path you can _really_ depend on for #! stuff is 
+/bin/sh.
+
+Any system that doesn't have /bin/sh is so fucked up that it's not worth
+worrying about. Anything else can be in /bin, /usr/bin or /usr/local/bin
+(and sometimes other strange places).
+
+That said, I think the /usr/bin/env trick is stupid too. It may be more 
+portable for various Linux distributions, but if you want _true_ 
+portability, you use /bin/sh, and you do something like
+
+	#!/bin/sh
+	exec perl perlscript.pl "$@"
+
+instead.
+		Linus
