@@ -1,52 +1,70 @@
-From: Matt Porter <mporter@kernel.crashing.org>
-Subject: Re: cogito: linux-2.6 merge fails due to cg-rm
-Date: Mon, 2 May 2005 10:20:34 -0700
-Message-ID: <20050502102034.B21716@cox.net>
-References: <20050502101250.A21716@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 2 May 2005 10:31:04 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505021028540.3594@ppc970.osdl.org>
+References: <20050430025211.GP17379@opteron.random> <42764C0C.8030604@tmr.com>
+ <Pine.LNX.4.58.0505020921080.3594@ppc970.osdl.org>
+ <20050502172012.GD11726@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 02 19:23:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Davidsen <davidsen@tmr.com>,
+	Andrea Arcangeli <andrea@suse.de>,
+	Matt Mackall <mpm@selenic.com>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 19:32:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSedS-00031m-0b
-	for gcvg-git@gmane.org; Mon, 02 May 2005 19:23:10 +0200
+	id 1DSekf-0004Bj-7L
+	for gcvg-git@gmane.org; Mon, 02 May 2005 19:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261365AbVEBRY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 13:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261334AbVEBRXT
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 13:23:19 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:46061 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261461AbVEBRWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2005 13:22:25 -0400
-Received: from liberty.homelinux.org ([68.2.41.86]) by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050502172224.NLWE7629.fed1rmmtao01.cox.net@liberty.homelinux.org>
-          for <git@vger.kernel.org>; Mon, 2 May 2005 13:22:24 -0400
-Received: (from mmporter@localhost)
-	by liberty.homelinux.org (8.9.3/8.9.3/Debian 8.9.3-21) id KAA22107
-	for git@vger.kernel.org; Mon, 2 May 2005 10:20:35 -0700
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5i
-In-Reply-To: <20050502101250.A21716@cox.net>; from mporter@kernel.crashing.org on Mon, May 02, 2005 at 10:12:50AM -0700
+	id S261315AbVEBRdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 13:33:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261506AbVEBRb4
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 13:31:56 -0400
+Received: from fire.osdl.org ([65.172.181.4]:19090 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261315AbVEBR33 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 13:29:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42HT3s4021215
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 10:29:04 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42HT2IA007330;
+	Mon, 2 May 2005 10:29:03 -0700
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050502172012.GD11726@mythryan2.michonline.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 02, 2005 at 10:12:50AM -0700, Matt Porter wrote:
-> These kept showing up as "needs merged" even though I explicitly
-> tried to cg-rm them or "update-cache --remove" them. It turns out
-> that cg-rm is 'rm -f'ing the files before calling update-cache.
-> By touching each file, and then modifying cg-rm as follows, I
-> was able to complete the merge. I'm not sure yet if this is the
-> proper fix to the cogito script. It at least made update-cache
-> happy for this remove case.
 
-Looking a bit further, I see the cg-Xmergefile also removes the
-file before update-cache --remove which doesn't seem to work. This
-seems to be the actual culprit during the merge, but cg-rm needed
-fixed to manually fix without calling git commands directly.
 
--Matt
+On Mon, 2 May 2005, Ryan Anderson wrote:
+>
+> On Mon, May 02, 2005 at 09:31:06AM -0700, Linus Torvalds wrote:
+> > That said, I think the /usr/bin/env trick is stupid too. It may be more 
+> > portable for various Linux distributions, but if you want _true_ 
+> > portability, you use /bin/sh, and you do something like
+> > 
+> > 	#!/bin/sh
+> > 	exec perl perlscript.pl "$@"
+> 		if 0;
+> 
+> You don't really want Perl to get itself into an exec loop.
+
+This would _not_ be "perlscript.pl" itself. This is the shell-script, and 
+it's not called ".pl".
+
+In other words, you'd put this as ~/bin/cg-xxxx, and then "perlscript.pl" 
+wouldn't be in the path at all, it would be in some separate install 
+directory.
+
+But hey, if people want to be safe for bad installations, add the extra 
+line. Shell won't care ;)
+
+		Linus
