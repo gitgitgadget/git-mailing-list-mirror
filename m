@@ -1,62 +1,48 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Mon, 2 May 2005 09:10:27 -0700
-Organization: SGI
-Message-ID: <20050502091027.6753998e.pj@sgi.com>
-References: <E1DSDER-0000kS-00@gondolin.me.apana.org.au>
-	<4274FB10.6090600@dwheeler.com>
+From: Andrea Arcangeli <andrea@suse.de>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 2 May 2005 18:17:22 +0200
+Message-ID: <20050502161722.GN20146@opteron.random>
+References: <20050430025211.GP17379@opteron.random> <42764C0C.8030604@tmr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: herbert@gondor.apana.org.au, ryan@michonline.com,
-	torvalds@osdl.org, rene.scharfe@lsrfire.ath.cx,
-	git@vger.kernel.org, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Mon May 02 18:06:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 02 18:06:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSdQJ-0004JR-1o
-	for gcvg-git@gmane.org; Mon, 02 May 2005 18:05:31 +0200
+	id 1DSdQR-0004KZ-Sh
+	for gcvg-git@gmane.org; Mon, 02 May 2005 18:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261371AbVEBQLa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 12:11:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261383AbVEBQLa
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:11:30 -0400
-Received: from omx3-ext.sgi.com ([192.48.171.20]:41416 "EHLO omx3.sgi.com")
-	by vger.kernel.org with ESMTP id S261371AbVEBQLZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 12:11:25 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j42GaL3C027590;
-	Mon, 2 May 2005 09:36:21 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j42GAT5w20643156;
-	Mon, 2 May 2005 09:10:29 -0700 (PDT)
-To: dwheeler@dwheeler.com
-In-Reply-To: <4274FB10.6090600@dwheeler.com>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261392AbVEBQLl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 12:11:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261390AbVEBQLi
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 12:11:38 -0400
+Received: from ppp-217-133-42-200.cust-adsl.tiscali.it ([217.133.42.200]:11564
+	"EHLO opteron.random") by vger.kernel.org with ESMTP
+	id S261383AbVEBQLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 May 2005 12:11:33 -0400
+Received: by opteron.random (Postfix, from userid 500)
+	id DA2DB1C180F; Mon,  2 May 2005 18:17:22 +0200 (CEST)
+To: Bill Davidsen <davidsen@tmr.com>
+Content-Disposition: inline
+In-Reply-To: <42764C0C.8030604@tmr.com>
+X-GPG-Key: 1024D/68B9CB43 13D9 8355 295F 4823 7C49  C012 DFA1 686E 68B9 CB43
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David wrote:
-> One approach is to install a trap for SIGPIPE in
-> non-terminating command in a pipeline where the
-> later items might not process all the data, e.g.:
->    (trap {} SIGPIPE; find .) | head -1
+On Mon, May 02, 2005 at 11:49:32AM -0400, Bill Davidsen wrote:
+> Could you explain why this is necessary or desirable? I looked at what 
 
-Both the versions of bash that I looked at (2.05 and 3.0) _still_
-complain even if SIGPIPE is trapped - they just complain with
-a more terse message, unless DONT_REPORT_SIGPIPE is not defined.
+This is necessary here because of this:
 
-Linus's version apparently isn't even more terse with this trap.
+andrea@opteron:~> which python
+/home/andrea/bin/x86_64/python/bin/python
 
-What bash do you have that this trap silences?
+Of course I've /home/andrea/bin/x86_64/python/bin in the path before
+/usr/bin.
 
-> ... rant ...
-
-agreed
-
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+The generally accepted way to start it is through env, other scripts in
+mercurial were already getting that right too so it was probably not
+intentional to hardcode it in the hg binary.
