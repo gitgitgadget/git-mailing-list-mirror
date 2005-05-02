@@ -1,61 +1,74 @@
-From: Chris Wright <chrisw@osdl.org>
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
 Subject: Re: [PATCH] add git.spec and adapt Makefile for RPM build
-Date: Mon, 2 May 2005 11:39:02 -0700
-Message-ID: <20050502183902.GD5324@shell0.pdx.osdl.net>
-References: <kay.sievers@vrfy.org> <20050502145255.GA26439@vrfy.org> <200505021741.j42HfUZx013620@laptop11.inf.utfsm.cl>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Mon, 02 May 2005 14:58:04 -0400
+Message-ID: <200505021858.j42Iw4M1029427@laptop11.inf.utfsm.cl>
+References: <chrisw@osdl.org>
 Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon May 02 20:34:28 2005
+X-From: git-owner@vger.kernel.org Mon May 02 20:53:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSfjg-0001bC-Gd
-	for gcvg-git@gmane.org; Mon, 02 May 2005 20:33:40 +0200
+	id 1DSg1j-0007ur-Lo
+	for gcvg-git@gmane.org; Mon, 02 May 2005 20:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261618AbVEBSjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 14:39:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261631AbVEBSjV
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 14:39:21 -0400
-Received: from fire.osdl.org ([65.172.181.4]:23718 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261618AbVEBSjK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 14:39:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j42Id2s4027290
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 11:39:02 -0700
-Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j42Id2Fe011837;
-	Mon, 2 May 2005 11:39:02 -0700
-Received: (from chrisw@localhost)
-	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j42Id287011836;
-	Mon, 2 May 2005 11:39:02 -0700
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-Content-Disposition: inline
-In-Reply-To: <200505021741.j42HfUZx013620@laptop11.inf.utfsm.cl>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261667AbVEBS6W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 14:58:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261656AbVEBS6W
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 14:58:22 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:60643 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S261654AbVEBS6P (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 14:58:15 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j42Iu9wH015382
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 2 May 2005 14:56:10 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j42Iw4Bf029430;
+	Mon, 2 May 2005 14:58:04 -0400
+Received: from laptop11.inf.utfsm.cl (vonbrand@localhost)
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.4/Submit) with ESMTP id j42Iw4M1029427;
+	Mon, 2 May 2005 14:58:04 -0400
+To: Chris Wright <chrisw@osdl.org>
+In-Reply-To: Message from Chris Wright <chrisw@osdl.org> 
+   of "Mon, 02 May 2005 11:39:02 MST." <20050502183902.GD5324@shell0.pdx.osdl.net> 
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Mon, 02 May 2005 14:56:10 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* Horst von Brand (vonbrand@inf.utfsm.cl) wrote:
-> Kay Sievers <kay.sievers@vrfy.org> said:
-> > On Mon, May 02, 2005 at 12:23:03PM +0200, Kay Sievers wrote:
-> > > Add support for building the rpm package directly from the git tree.
-> > 
-> > This version creates the git.spec from a git.spec.in with the version
-> > number from the Makefile.
-> 
-> Please don't. The spec file /controls/ the building of the package, it can't
-> be generated as part of the build process.
+Chris Wright <chrisw@osdl.org> said:
+> * Horst von Brand (vonbrand@inf.utfsm.cl) wrote:
+> > Kay Sievers <kay.sievers@vrfy.org> said:
+> > > On Mon, May 02, 2005 at 12:23:03PM +0200, Kay Sievers wrote:
 
-It certainly can.  It simply means a structured release process.  IOW,
-the git.spec would be generated for a release tarball.
+> > > This version creates the git.spec from a git.spec.in with the version
+> > > number from the Makefile.
 
-thanks,
--chris
+> > Please don't. The spec file /controls/ the building of the package, it
+> > can't be generated as part of the build process.
+
+> It certainly can.
+
+Yep. Maybe "can't" was a bit too strong. "Should never be" is right.
+
+>                   It simply means a structured release process.  IOW,
+> the git.spec would be generated for a release tarball.
+
+Come on, you have to fix the spec file for the changelog and version by
+hand anyway, autoconfiscating it doesn't help one iota there.
+
+And yes, I've seen quite a few packages autogenerating the spec file. As a
+result, you /can't/ build the package from pristine sources, you have to
+unpack and configure to get enough for building. For me that just isn't
+acceptable, as it completely misses the point of RPM.
+
+(You can go "rpmbuild -ta whatever-2.3.1.tar.bz2" if the tarball is set up
+correctly, your idea prevents that).
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
