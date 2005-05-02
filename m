@@ -1,75 +1,98 @@
-From: Anton Altaparmakov <aia21@cam.ac.uk>
-Subject: Re: More problems...
-Date: Mon, 2 May 2005 23:01:01 +0100 (BST)
-Message-ID: <Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
-References: <20050429170127.A30010@flint.arm.linux.org.uk>
- <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com>
- <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org> <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
- <20050429221903.F30010@flint.arm.linux.org.uk>
- <Pine.LNX.4.60.0504292254430.25700@hermes-1.csi.cam.ac.uk>
- <20050502193327.GB20818@pasky.ji.cz>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 2 May 2005 15:30:02 -0700
+Message-ID: <20050502223002.GP21897@waste.org>
+References: <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com> <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Russell King <rmk@arm.linux.org.uk>,
-	Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 00:19:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Bill Davidsen <davidsen@tmr.com>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Sean <seanlkml@sympatico.ca>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 00:25:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSjDB-0002B7-06
-	for gcvg-git@gmane.org; Tue, 03 May 2005 00:16:21 +0200
+	id 1DSjL1-0004Et-PE
+	for gcvg-git@gmane.org; Tue, 03 May 2005 00:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261172AbVEBWCv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 18:02:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261173AbVEBWCv
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:02:51 -0400
-Received: from ppsw-9.csi.cam.ac.uk ([131.111.8.139]:13207 "EHLO
-	ppsw-9.csi.cam.ac.uk") by vger.kernel.org with ESMTP
-	id S261172AbVEBWBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2005 18:01:21 -0400
-X-Cam-SpamDetails: Not scanned
-X-Cam-AntiVirus: No virus found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:53851)
-	by ppsw-9.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
-	with esmtpa (EXTERNAL:aia21) id 1DSiyL-0008LC-Uk (Exim 4.51)
-	(return-path <aia21@hermes.cam.ac.uk>); Mon, 02 May 2005 23:01:01 +0100
-Received: from aia21 (helo=localhost) by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1DSiyL-0007sb-Fw (Exim 4.43)
-	(return-path <aia21@hermes.cam.ac.uk>); Mon, 02 May 2005 23:01:01 +0100
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050502193327.GB20818@pasky.ji.cz>
+	id S261197AbVEBWa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 18:30:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVEBWa2
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 18:30:28 -0400
+Received: from waste.org ([216.27.176.166]:52379 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S261188AbVEBWaL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 18:30:11 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j42MU3lE019690
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 2 May 2005 17:30:03 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j42MU2C1019540;
+	Mon, 2 May 2005 17:30:02 -0500
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org>
+User-Agent: Mutt/1.5.6+20040907i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2 May 2005, Petr Baudis wrote:
-> Dear diary, on Fri, Apr 29, 2005 at 11:57:53PM CEST, I got a letter
-> where Anton Altaparmakov <aia21@cam.ac.uk> told me that...
-> > There should definitely be an option to either enable or disable this as 
-> > there are legitimate cases for not wanting hard links or indeed using 
-> > file systems which do not support them.
+On Mon, May 02, 2005 at 03:02:16PM -0700, Linus Torvalds wrote:
 > 
-> Are there legitimate cases for not wanting hard links when you are able
-> to create them? (Same filesystem, filesystem supports them...)
+> 
+> On Mon, 2 May 2005, Bill Davidsen wrote:
+> > 
+> > If there is a functional reason to use git, something Mercurial doesn't 
+> > do, then developers will and should use git. But the associated hassles 
+> > with large change size, rather than the absolute size, are worth 
+> > considering.
+> 
+> Note that we discussed this early on, and the issues with full-file 
+> handling haven't changed. It does actually have real functional 
+> advantages:
+> 
+>  - you can share the objects freely between different trees, never 
+>    worrying about one tree corrupting another trees object by mistake.
 
-I would say yes.  For example, I want to update my git tools to the latest 
-and greatest development version.  Do I really want to let it loose on all 
-the repositories?  Probably not.  So I would want to make a clone of the 
-repository that is not connected in any way with the old one and then 
-try the new tools.  If there were hard links involved working on the 
-cloned repository could potentially damage the original one.
+Not sure if this is terribly useful. It just makes it harder to pull
+the subset you're interested in.
 
-Yes, yes, I know all tools are perfect and never have bugs but I am 
-paranoid.  (-;
+>  - you can drop old objects.
 
-Best regards,
+You can't drop old objects without dropping all the changesets that
+refer to them or otherwise being prepared to deal with the broken
+links.
 
-	Anton
+> delta models very fundamentally don't support this. 
+
+The latter can be done in a pretty straightforward manner in mercurial
+with one pass over the data. But I have a goal to make keeping the
+whole history cheap enough that no one balks at it.
+
+> For example, a simple tree re-linker will work on any mirror site, and
+> work reliably, even if I end up uploading new objects with some tool that
+> doesn't know to break hardlinks etc. That can easily be much more than a
+> 10x win for a git repository site (imagine something like bkbits.net, but
+> got git).
+
+What is a tree re-linker? Finds duplicate files and hard-links them?
+Ok, that makes some sense. But it's a win on one machine and a lose
+everywhere else.
+
+> Whether it is a huge deal or not, I don't know. I do know that the big 
+> deal to me is just the simplicity of the git object models. It makes me 
+> trust it, even in the presense of inevitable bugs. It's a very safe model, 
+> and right now safe is good.
+
+I've added an "hg verify" command to Mercurial. It doesn't attempt to
+fix anything up yet, but it can catch a couple things that git
+probably can't (like file revisions that aren't owned by any
+changeset), namely because there's more metadata around to look at.
+
+I'll probably post an updated version tomorrow, I'm beginning to work
+on a git2hg script.
+
 -- 
-Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
-Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
-Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
-WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
+Mathematics is the supreme nostalgia of our time.
