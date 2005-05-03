@@ -1,66 +1,77 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 2 May 2005 20:29:16 -0700
-Message-ID: <20050503032916.GE22038@waste.org>
-References: <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com> <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org> <20050502223002.GP21897@waste.org> <Pine.LNX.4.58.0505021540070.3594@ppc970.osdl.org> <20050503000011.GA22038@waste.org> <Pine.LNX.4.58.0505021932270.3594@ppc970.osdl.org>
+From: Alon Ziv <alonz@nolaviz.org>
+Subject: RFC: adding xdelta compression to git
+Date: Tue, 3 May 2005 05:57:38 +0200
+Message-ID: <200505030657.38309.alonz@nolaviz.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bill Davidsen <davidsen@tmr.com>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Sean <seanlkml@sympatico.ca>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 05:23:36 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 03 05:52:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSo0M-0006aW-PN
-	for gcvg-git@gmane.org; Tue, 03 May 2005 05:23:27 +0200
+	id 1DSoRv-0001gW-9z
+	for gcvg-git@gmane.org; Tue, 03 May 2005 05:51:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261353AbVECD3d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 23:29:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261343AbVECD3d
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 23:29:33 -0400
-Received: from waste.org ([216.27.176.166]:60105 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261351AbVECD32 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 23:29:28 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j433THHJ018471
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 2 May 2005 22:29:17 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j433TG9R018468;
-	Mon, 2 May 2005 22:29:16 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261352AbVECD56 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 23:57:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261362AbVECD56
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 23:57:58 -0400
+Received: from bzq-114-36.red.bezeqint.net ([62.219.114.36]:40978 "EHLO
+	wonder.nolaviz.org") by vger.kernel.org with ESMTP id S261352AbVECD5z
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 23:57:55 -0400
+Received: from bruno.nolaviz.org (bruno.nolaviz.org [192.168.0.18])
+	(authenticated bits=0)
+	by wonder.nolaviz.org (8.12.11/8.12.11) with ESMTP id j433xCam030039
+	for <git@vger.kernel.org>; Tue, 3 May 2005 06:59:14 +0300
+To: git@vger.kernel.org
+User-Agent: KMail/1.6.1
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505021932270.3594@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on wonder.nolaviz.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 02, 2005 at 07:48:29PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Mon, 2 May 2005, Matt Mackall wrote:
-> > 
-> > Umm.. I am _not_ calculating the SHA of the delta itself. That'd be
-> > silly.
-> 
-> It's not silly.
+Looking for novel methods of wasting my time :), I am considering adding 
+xdelta to git.
 
-The delta is not the object I care about and its representation is
-arbitrary. In fact different branches will store different deltas
-depending on how their DAGs get topologically sorted. The object I
-care about is the original text, so that's the hash I store.
+I have two concrete proposals, both of which (IMO) are consistent with the git 
+philosophy:
 
-> In other words, you need to hash the metadata too. Otherwise how do you
-> consistency-check the _collection_ of files?
+1. Add a git-deltify command, which will take two trees and replace the second 
+tree's blobs with delta-blobs referring to the first tree. Each delta-blob is 
+self-contained; from the outside it looks like any other blob, but internally 
+it contains another blob reference + an xdelta. The only function which would 
+need to understand the new format would be unpack_sha1_file.
+The scripting level will be in charge of deciding which trees to deltify (or 
+undeltify--we could also have a "git-undeltify" command). A sane 
+deltification schedule, for example, could be to always keep tagged versions 
+as stand-alone objects, and deltify intermediate versions against the latest 
+tag. It would also do its best to avoid delta chains (i.e. a delta referring 
+to another delta).
+Pros:
+* Interoperates with the existing structure (including pull/push) with almost 
+no changes to existing infrastructure.
+Cons:
+* Changes the repository format.
+* Some performance impact (probably quite small).
+* Same blob may have different representation in two repositories (one 
+compressed, on deltified). [I am not sure this is really a bad thing...]
 
-Well naturally, I hash the metadata too. For every change, there's a
-toplevel changeset hash that is the hash of the entire project state
-at that time. And it's all signable and so on. Just like git and just
-like Monotone.
+2. Add a completely external framework which manages a "deltas repository" of 
+deltas. The shadow repository will contain delta objects between selected 
+trees; again the scripts will need to populate it.
+Pros:
+* No changes at all to existing code.
+Cons:
+* Push/pull tools will need to be taught to talk with the new "deltas  
+repository".
+* Synchronization between the deltas repository and the real one may be lost, 
+leading to odd failures.
 
--- 
-Mathematics is the supreme nostalgia of our time.
+Personally I'm rooting for #1 above... I would like to begin implementation in 
+a few days, so any discussion will be useful.
+
+	-az
