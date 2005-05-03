@@ -1,59 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git and symlinks as tracked content
-Date: Tue, 3 May 2005 13:05:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
-References: <1115145234.21105.111.camel@localhost.localdomain>
- <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
- <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
+From: Pavel Roskin <proski@gnu.org>
+Subject: commit-id fails after cg-init
+Date: Tue, 03 May 2005 16:03:05 -0400
+Message-ID: <1115150585.28520.11.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 21:57:54 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 03 21:58:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT3WU-0002Hv-Hy
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:57:38 +0200
+	id 1DT3X1-0002UJ-HM
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261671AbVECUDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 16:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261672AbVECUDy
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:03:54 -0400
-Received: from fire.osdl.org ([65.172.181.4]:45965 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261671AbVECUDu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 16:03:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43K3as4014286
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 May 2005 13:03:37 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43K3Z06012875;
-	Tue, 3 May 2005 13:03:35 -0700
-To: Andreas Gal <gal@uci.edu>
-In-Reply-To: <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261672AbVECUEa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 16:04:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261674AbVECUEa
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:04:30 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:39565
+	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261672AbVECUE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2005 16:04:26 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id F3D49EFF3E; Tue,  3 May 2005 16:03:05 -0400 (EDT)
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello!
 
+I tried to start a new project using cogito (current snapshot) and I was
+immediately greeted by a bug (or a buglet if you want).  Let's do this
+in a clean directory:
 
-On Tue, 3 May 2005, Andreas Gal wrote:
-> 
-> Yuck. Thats really ugly. Right now all files have a uniform touch to them. 
-> For every hash you can locate the file, determine its type/tag, unpack it, 
-> and check the SHA1 hash. The proposal above breaks all that. Why not just 
-> introduce a new object type "dev" and put major minor in there. It 
-> will still always hash to the same SHA1 hash value, but fits much better in the 
-> overall design. 
+$ cg-init 
+defaulting to local storage area
+$ cg-diff 
+cat: .git/refs/tags/: Is a directory
+cat: .git/refs/heads/: Is a directory
+Invalid id: 
+usage: git-cat-file [-t | tagname] <sha1>
+usage: git-cat-file [-t | tagname] <sha1>
+Invalid id: 
+usage: diff-cache [-r] [-z] [-p] [--cached] <tree sha1>
+mkdir: cannot create directory `/tmp/gitdiff.k4FHLY/': File exists
+$
 
-Hey, I don't personally care that much. I don't see anybody using 
-character device nodes in the kernel tree, and I don't think most SCM's 
-support stuff like that anyway ;)
+Not nice.  Trivial debugging shows that it's commit-id that fails:
 
-If you want to make it a blob (and have a use for it), go wild. 
+$ sh -x commit-id 
++ SHA1='[A-Za-z0-9]{40}'
++ SHA1ONLY='^[A-Za-z0-9]{40}$'
++ id=
++ '[' '!' '' ']'
+++ cat .git/HEAD
++ id=
++ echo
++ egrep -vq '^[A-Za-z0-9]{40}$'
++ '[' -r .git/refs/tags/ ']'
+++ cat .git/refs/tags/
+cat: .git/refs/tags/: Is a directory
+...
 
-		Linus
+$ ls -al .git/HEAD 
+lrwxrwxrwx  1 proski proski 17 2005-05-03 15:50 .git/HEAD -> refs/heads/master
+$ cat .git/refs/heads/master
+$
+
+So, cg-init created an empty .git/refs/heads/master and made .git/HEAD a
+symlink to it.  Now, commit-id reads that file and gets confused.
+
+If anybody has an idea what to put to .git/refs/heads/master please
+speak up so that cg-init could be fixed.
+
+-- 
+Regards,
+Pavel Roskin
+
