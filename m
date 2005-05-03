@@ -1,46 +1,77 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: git and symlinks as tracked content
-Date: Tue, 3 May 2005 15:10:57 -0400
-Message-ID: <118833cc05050312101f2715d3@mail.gmail.com>
-References: <1115145234.21105.111.camel@localhost.localdomain>
-	 <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Careful object writing..
+Date: Tue, 3 May 2005 12:15:08 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 21:05:41 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Tue May 03 21:07:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT2hK-00053R-84
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:04:46 +0200
+	id 1DT2jR-0005lG-U8
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:06:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261613AbVECTLC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 15:11:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261614AbVECTLC
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:11:02 -0400
-Received: from rproxy.gmail.com ([64.233.170.197]:62905 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261613AbVECTK7 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:10:59 -0400
-Received: by rproxy.gmail.com with SMTP id a41so20881rng
-        for <git@vger.kernel.org>; Tue, 03 May 2005 12:10:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sdGI47CphtJ73EGqJWvmBphHfkH6/XMdI9ErvmXYUVzzg+iEQHsEvm+OwkgCCuh5/NNj04Evhl3UisDU0ZNrJD6rQNxSQtWiYol48DetQ/BzexbV8dJ1lU18vq5S4mrNM3FmFkLlVI2MWyOEyKlxpgg2+XF/Dko7szQv1lO00Ms=
-Received: by 10.38.72.11 with SMTP id u11mr120890rna;
-        Tue, 03 May 2005 12:10:57 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Tue, 3 May 2005 12:10:57 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
-Content-Disposition: inline
+	id S261614AbVECTNP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 15:13:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261616AbVECTNP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:13:15 -0400
+Received: from fire.osdl.org ([65.172.181.4]:43137 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261614AbVECTNK (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:13:10 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43JD7s4010980
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
+	for <git@vger.kernel.org>; Tue, 3 May 2005 12:13:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43JD7c8010857
+	for <git@vger.kernel.org>; Tue, 3 May 2005 12:13:07 -0700
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Something in the patching food chain will also need to know how to turn
-regular files into symlinks (and vice versa) in the same we ought to have
-that for directories right now.
 
-Morten
+I just pushed out the commit that tries to finally actually write the sha1
+objects the right way in a shared object directory environment.
+
+I used to be lazy, and just do "O_CREAT | O_EXCL" on the final name, but
+that obviously is not very nice when it can result in other people seeing
+objects that haven't been fully finalized yet.
+
+So now I do it "right", and create a temporary file in the "top" object
+directory, and then when it's all done, I do a "link()" to the final place
+and unlink the original.
+
+I also change the permission to 0444 before it gets its final name.
+
+Two notes:
+
+ - because the objects all get created initially in .git/objects rather 
+   than in the subdirectory they get moved to, you can't use symlinks 
+   to other filesystems for the 256 object subdirectories. The object 
+   directory has to be one filesystem (but it doesn't have to be the same 
+   one as you actually keep your working ddirectories on, of course)
+
+ - The upside of this is that filesystem block allocators should do the 
+   right thing. Instead of spreading the objects out (because they are in 
+   different directories), they should be created together.
+
+Anyway, somebody should double-check the thing. It _should_ now work
+correctly over NFS etc too, and everything should be nice and atomic (and
+with any half-way decent filesystem, it also means that even if you have a
+system crash in the middle, you'll never see half-created objects).
+
+NOTE NOTE NOTE! I have _not_ updated all the helper stuff that also write 
+objects. So things like "git-http-pull" etc will still write objects 
+directly into the object directory, and that can cause problems with 
+shared usage. Same goes for "write_sha1_from_fd()" that rpull.c uses. I 
+hope somebody will take a look at those issues..
+
+Anyway, at least the really core operations should now really be
+"thread-safe" in a shared object directory environment.
+
+		Linus
