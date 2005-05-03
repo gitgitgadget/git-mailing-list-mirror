@@ -1,61 +1,53 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: RFC: adding xdelta compression to git
-Date: Mon, 2 May 2005 22:30:17 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505022215110.21733@bigblue.dev.mdolabs.com>
-References: <200505030657.38309.alonz@nolaviz.org>
- <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: cogito cg-update fails
+Date: Tue, 3 May 2005 08:46:33 +0200
+Message-ID: <20050503064633.GA10244@pasky.ji.cz>
+References: <1115090374.6030.50.camel@gaston> <200505022157.07800.elenstev@mesatop.com> <1115094227.6031.62.camel@gaston>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alon Ziv <alonz@nolaviz.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 07:25:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Cole <elenstev@mesatop.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 08:40:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSptm-0000BJ-LS
-	for gcvg-git@gmane.org; Tue, 03 May 2005 07:24:46 +0200
+	id 1DSr55-0001ky-OG
+	for gcvg-git@gmane.org; Tue, 03 May 2005 08:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261394AbVECFam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 01:30:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261395AbVECFam
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 01:30:42 -0400
-Received: from x35.xmailserver.org ([69.30.125.51]:9161 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP id S261394AbVECFah
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 01:30:37 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from bigblue.dev.mdolabs.com
-	by xmailserver.org with [XMail 1.21 ESMTP Server]
-	id <S17B6BE> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Mon, 2 May 2005 22:32:51 -0700
-X-X-Sender: davide@bigblue.dev.mdolabs.com
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S261405AbVECGqk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 02:46:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261407AbVECGqk
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 02:46:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:5309 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261405AbVECGqf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 02:46:35 -0400
+Received: (qmail 19099 invoked by uid 2001); 3 May 2005 06:46:33 -0000
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Content-Disposition: inline
+In-Reply-To: <1115094227.6031.62.camel@gaston>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2 May 2005, Linus Torvalds wrote:
+Dear diary, on Tue, May 03, 2005 at 06:23:46AM CEST, I got a letter
+where Benjamin Herrenschmidt <benh@kernel.crashing.org> told me that...
+> 
+> > 
+> > Yeah, I got exactly the same behavior a little while ago, but thanks
+> > to www.kernel.org/git, I saw that the problem had been found and fixed.
+> > 
+> > I had an older backup copy of all the cogito scripts, so I used that to update.
+> > 
+> > I believe the fix is this patch:
+> 
+> Thanks, fixed it ! Current top of tree seem to be fine too.
 
-> Yes. EXCEPT for one thing. fsck. I'd _really_ like fsck to be able to know
-> something about any xdelta objects, if only because if/when things go
-> wrong, it's really nasty to suddenly see a million "blob" objects not work
-> any more, with no indication of _why_ they don't work. The core reason may
-> be that one original object (that just got used as a base for tons of
-> other objects through deltas) is corrupt or missing. And then you want to
-> show that _one_ object.
+Yes, sorry about this. I fixed it right away but then forgot to push it,
+so it appears some people got it in the meantime. :-(
 
-Linus, xdelta-based algorithms already stores informations regarding the 
-object that originated the diff. Since they have no context (like 
-text-based diffs) and are simply based on offset-driven copy/insert 
-operations, this is a requirement. Libxdiff uses an adler32+size of the 
-original object, but you can get as fancy as you like in your own 
-implementation. Before a delta patching, the stored information are cross 
-checked with the input base object, and the delta patch will fail in the 
-eventuality of mismatch. So an fsck is simply a walk backward (or forward, 
-depending on your metadata model) of the whole delta chain.
-
-
-
-- Davide
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
