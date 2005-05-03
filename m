@@ -1,178 +1,59 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: Anyone working on a CVS->git converter?
-Date: Tue, 03 May 2005 02:28:59 +0200
-Message-ID: <1115080139.21105.18.camel@localhost.localdomain>
-References: <4275857A.1050106@zytor.com>
+From: Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: Trying to use AUTHOR_DATE
+Date: Tue, 03 May 2005 02:30:48 +0200
+Message-ID: <m38y2xdubr.fsf@defiant.localdomain>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F035EDE2C@scsmsx401.amr.corp.intel.com>
+	<42730061.5010106@zytor.com>
+	<Pine.LNX.4.58.0504292101230.2296@ppc970.osdl.org>
+	<Pine.LNX.4.58.0504292114580.2296@ppc970.osdl.org>
+	<20050430125333.2bd81b18.froese@gmx.de>
+	<1114859594.24014.60.camel@localhost.localdomain>
+	<20050430144936.6b05cc90.froese@gmx.de>
+	<1114865964.24014.77.camel@localhost.localdomain>
+	<m3wtqhe0t6.fsf@defiant.localdomain> <4276A906.2040403@zytor.com>
+	<m3mzrddx44.fsf@defiant.localdomain> <4276B8A1.7070500@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-V2122xenL7tX0s3kE1tr"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 03 02:23:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: David Woodhouse <dwmw2@infradead.org>,
+	Edgar Toernig <froese@gmx.de>,
+	Linus Torvalds <torvalds@osdl.org>,
+	"Luck, Tony" <tony.luck@intel.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 02:25:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSlC2-0003WG-K4
-	for gcvg-git@gmane.org; Tue, 03 May 2005 02:23:18 +0200
+	id 1DSlDh-0003tR-MW
+	for gcvg-git@gmane.org; Tue, 03 May 2005 02:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261251AbVECA3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 20:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261253AbVECA3Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 20:29:25 -0400
-Received: from soundwarez.org ([217.160.171.123]:33680 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261251AbVECA3A (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 20:29:00 -0400
-Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 3D5762BD30;
-	Tue,  3 May 2005 02:28:58 +0200 (CEST)
+	id S261254AbVECAbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 20:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261253AbVECAbD
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 20:31:03 -0400
+Received: from khc.piap.pl ([195.187.100.11]:26116 "EHLO khc.piap.pl")
+	by vger.kernel.org with ESMTP id S261254AbVECAav (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 20:30:51 -0400
+Received: by khc.piap.pl (Postfix, from userid 500)
+	id D690610922; Tue,  3 May 2005 02:30:48 +0200 (CEST)
 To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <4275857A.1050106@zytor.com>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+In-Reply-To: <4276B8A1.7070500@zytor.com> (H. Peter Anvin's message of "Mon,
+ 02 May 2005 16:32:49 -0700")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
---=-V2122xenL7tX0s3kE1tr
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+> No.  You cannot get 61.
 
-On Sun, 2005-05-01 at 18:42 -0700, H. Peter Anvin wrote:
-> Anyone working on a CVS->git converter?  I'd like to move klibc 
-> development into git.
+I was told it would be possible if two leap seconds were needed in some
+point of time. Have never occured yet, and maybe never will.
 
-I tried it with two completely stupid scripts and the nice cvsps.
+Well, it seems it would need two seconds a month (at least 13 leap seconds
+a year) -> not in this century if ever, and it wouldn't be UTC anymore.
 
-Here is the tree to browse:
-  http://ehlo.org/~kay/git/gitweb.cgi?p=klibc.git;a=log
+> You can, however, get jumps from 58 to 00.
 
-
-In the CVS repo directory export patchsets as individual patches with a
-header containing metadata:
-  cvsps -x -b HEAD -g -p ../../patches/
-
-split exported patches into individial files like author data, log, file list:
-  for i in `seq 1 546`; do ../parse-cvsps-patch.pl ../patches/$i.patch ;done
-
-apply it to an completely empty git-repo:
-  for i in `seq 1 546`; do ../apply.sh ../patches/$i.patch ;done
-
-Stupid scripts are attached. cvsps is here:
-  http://www.cobite.com/cvsps/
-
-Kay
-
---=-V2122xenL7tX0s3kE1tr
-Content-Disposition: inline; filename=apply.sh
-Content-Type: application/x-shellscript; name=apply.sh
-Content-Transfer-Encoding: 7bit
-
-#!/bin/sh
-
-FILES=$1.files
-PATCHFILE=$1
-LOG=$1.log
-. $1.author
-
-if [ -e .git/HEAD ]; then
-	git-check-files $(cat $FILES) || exit 1
-	git-checkout-cache -q $(cat $FILES) || exit 1
-fi
-
-patch -u --no-backup-if-mismatch -f -p0 --fuzz=0 --input=$PATCHFILE || exit 1
-git-update-cache --add --remove $(cat $FILES) || exit 1
-tree=$(git-write-tree) || exit 1
-echo Wrote tree $tree
-
-if [ -e .git/HEAD ]; then
-	commit=$(git-commit-tree $tree -p HEAD < $LOG) || exit 1
-else
-	commit=$(git-commit-tree $tree < $LOG) || exit 1
-fi
-
-echo Committed: $commit
-echo $commit > .git/HEAD
-
-
---=-V2122xenL7tX0s3kE1tr
-Content-Disposition: inline; filename=parse-cvsps-patch.pl
-Content-Type: application/x-perl; name=parse-cvsps-patch.pl
-Content-Transfer-Encoding: 7bit
-
-#!/usr/bin/perl
-
-use strict;
-use warnings;
-
-# ---------------------
-# PatchSet 1 
-# Date: 2002/07/23 07:41:30
-# Author: hpa
-# Branch: HEAD
-# Tag: (none) 
-# Log:
-# Initial revision
-# 
-# Members: 
-# 	klibc.cvsroot/snprintf.c:INITIAL->1.1 
-# 	klibc.cvsroot/vsnprintf.c:INITIAL->1.1 
-# 	klibc.cvsroot/klibc/Makefile:INITIAL->1.1 
-# 	klibc.cvsroot/klibc/snprintf.c:INITIAL->1.1 
-# 	klibc.cvsroot/klibc/vsnprintf.c:INITIAL->1.1 
-# 
-# --- /dev/null	2005-04-30 18:00:24.840397008 +0200
-# +++ klibc/klibc.cvsroot/snprintf.c	2005-05-02 19:57:42.879913000 +0200
-# @@ -0,0 +1,19 @@
-# +/*
-
-
-my $patch = $ARGV[0];
-
-my $author_name = "";
-my $author_mail = "";
-my $author_date = "";
-my @log = ();
-my %files = ();
-
-open (my $fd, $patch);
-while (my $line = <$fd>) {
-	if ($line =~ m/^Date: (.*)/) {
-		$author_date = $1;
-	} elsif ($line =~ m/^Author: (.*)/) {
-		$author_name = $1;
-	} elsif ($line =~ m/^Log:/) {
-		while (my $line = <$fd>) {
-			if ($line =~ m/^Members: /) {
-				last;
-			}
-			push @log, $line;
-		}
-	} elsif ($line =~ m/^(---|\+\+\+) ([^\t]*)/) {
-		chomp($line);
-		if ($2 ne "/dev/null") {
-			$files{$2} = $2;
-		}
-	}
-}
-close $fd;
-
-open $fd, "> $patch.files";
-foreach my $file (sort keys %files) {
-	print $fd "$file\n";
-};
-close $fd;
-
-open $fd, "> $patch.log";
-print $fd (@log);
-close $fd;
-
-open $fd, "> $patch.author";
-print $fd "export AUTHOR_NAME=\"$author_name\"\n";
-print $fd "export AUTHOR_EMAIL=\"$author_mail\"\n";
-print $fd "export AUTHOR_DATE=\"$author_date\"\n";
-close $fd;
-
-print "$patch $author_name \[$author_date\]\n";
-
---=-V2122xenL7tX0s3kE1tr--
-
+Correct, that would be a deletion. Not yet tried, either, but they say
+it's possible.
+-- 
+Krzysztof Halasa
