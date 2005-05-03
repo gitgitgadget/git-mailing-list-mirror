@@ -1,58 +1,60 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: git and symlinks as tracked content
-Date: Tue, 03 May 2005 22:09:19 +0200
-Message-ID: <1115150959.21105.116.camel@localhost.localdomain>
-References: <1115145234.21105.111.camel@localhost.localdomain>
-	 <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
-	 <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Careful object writing..
+Date: Tue, 3 May 2005 13:11:47 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505031306310.26698@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
+ <20050503200034.GA16104@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Gal <gal@uci.edu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 22:04:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 22:04:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT3bq-00045x-Hg
-	for gcvg-git@gmane.org; Tue, 03 May 2005 22:03:11 +0200
+	id 1DT3cB-0004Dj-4c
+	for gcvg-git@gmane.org; Tue, 03 May 2005 22:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261601AbVECUJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 16:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVECUJX
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:09:23 -0400
-Received: from soundwarez.org ([217.160.171.123]:38808 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261601AbVECUJU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 16:09:20 -0400
-Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 694442C982;
-	Tue,  3 May 2005 22:09:18 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+	id S261657AbVECUJv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 16:09:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261674AbVECUJv
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:09:51 -0400
+Received: from fire.osdl.org ([65.172.181.4]:14991 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261657AbVECUJt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 16:09:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43K9ks4014740
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 May 2005 13:09:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43K9jFg013120;
+	Tue, 3 May 2005 13:09:46 -0700
+To: Jan Harkes <jaharkes@cs.cmu.edu>
+In-Reply-To: <20050503200034.GA16104@delft.aura.cs.cmu.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2005-05-03 at 13:05 -0700, Linus Torvalds wrote:
+
+
+On Tue, 3 May 2005, Jan Harkes wrote:
 > 
-> On Tue, 3 May 2005, Andreas Gal wrote:
-> > 
-> > Yuck. Thats really ugly. Right now all files have a uniform touch to them. 
-> > For every hash you can locate the file, determine its type/tag, unpack it, 
-> > and check the SHA1 hash. The proposal above breaks all that. Why not just 
-> > introduce a new object type "dev" and put major minor in there. It 
-> > will still always hash to the same SHA1 hash value, but fits much better in the 
-> > overall design. 
-> 
-> Hey, I don't personally care that much. I don't see anybody using 
-> character device nodes in the kernel tree, and I don't think most SCM's 
-> support stuff like that anyway ;)
+> I tried to pull in the latest version of your tree, but it doesn't look
+> like this commit has propagated to rsync.kernel.org yet. Hopefully you
+> will accept a small patch (should be < 5 lines) that makes git work
+> nicely when Coda complains about the cross-directory hardlink without
+> affecting the reliability of using link/unlink on normal filesystems.
 
-Well, you need to be root to create device nodes, that is not a usual
-requirement for an SCM checkout. :)
+What is it that coda wants to do, and is there some portable way to get 
+there? 
 
-Kay
+Is it just that you want to stay within the directory? Or is it any link 
+action that is nasty?
 
+What makes resolving renames hard when the file contents are the same? 
+Maybe Coda could just do a trivial resolve of that "conflict" too?
+
+			Linus
