@@ -1,61 +1,72 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
-Date: Mon, 2 May 2005 21:27:39 -0700
-Message-ID: <20050503042739.GF22038@waste.org>
-References: <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com> <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org> <20050502223002.GP21897@waste.org> <Pine.LNX.4.58.0505021540070.3594@ppc970.osdl.org> <20050503000011.GA22038@waste.org> <Pine.LNX.4.58.0505022123270.3594@ppc970.osdl.org>
+From: Matt Porter <mporter@kernel.crashing.org>
+Subject: Re: [PATCH] Add exclude file support to cg-status
+Date: Mon, 2 May 2005 21:27:01 -0700
+Message-ID: <20050502212701.B26102@cox.net>
+References: <20050502171042.A24299@cox.net> <7vd5s9nmio.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bill Davidsen <davidsen@tmr.com>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Sean <seanlkml@sympatico.ca>,
-	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 06:21:48 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 06:23:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSouh-0005y2-4x
-	for gcvg-git@gmane.org; Tue, 03 May 2005 06:21:40 +0200
+	id 1DSowD-0006EX-8h
+	for gcvg-git@gmane.org; Tue, 03 May 2005 06:23:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261385AbVECE1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 00:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261388AbVECE1u
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:27:50 -0400
-Received: from waste.org ([216.27.176.166]:4559 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261385AbVECE1r (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 00:27:47 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j434Re3W022731
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 2 May 2005 23:27:40 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j434RdTa022728;
-	Mon, 2 May 2005 23:27:39 -0500
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261391AbVECE3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 00:29:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261388AbVECE3P
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:29:15 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37760 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261386AbVECE25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2005 00:28:57 -0400
+Received: from liberty.homelinux.org ([68.2.41.86]) by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050503042852.QVPD1367.fed1rmmtao07.cox.net@liberty.homelinux.org>;
+          Tue, 3 May 2005 00:28:52 -0400
+Received: (from mmporter@localhost)
+	by liberty.homelinux.org (8.9.3/8.9.3/Debian 8.9.3-21) id VAA26233;
+	Mon, 2 May 2005 21:27:01 -0700
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505022123270.3594@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+User-Agent: Mutt/1.2.5i
+In-Reply-To: <7vd5s9nmio.fsf@assigned-by-dhcp.cox.net>; from junkio@cox.net on Mon, May 02, 2005 at 06:09:19PM -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 02, 2005 at 09:24:54PM -0700, Linus Torvalds wrote:
+On Mon, May 02, 2005 at 06:09:19PM -0700, Junio C Hamano wrote:
+> >>>>> "MP" == Matt Porter <mporter@kernel.crashing.org> writes:
 > 
+> MP> Adds a trivial per-repository exclude file implementation for
+> MP> cg-status on top of the new git-ls-files option.
 > 
-> On Mon, 2 May 2005, Matt Mackall wrote:
-> > 
-> > It's still simple in Mercurial, but more importantly Mercurial _won't
-> > need it_. Dropping history is a work-around, not a feature.
+>  
+> MP> +EXCLUDEFILE=.git/exclude
 > 
-> Side note: this is what Larry thought about BK too. Until three years had
-> passed, and the ChangeSet file was many megabytes in size. Even slow
-> growth ends up being big growth in the end..
-> 
-> We had been talking about pruning the BK history as long back as a year 
-> ago.
+> Good intentions, but shouldn't the file be .git/info/exclude
+> (i.e. under .git/info)?
 
-Ok, I'll implement it on my red eye flight tonight. But Mercurial
-won't suffer from the O(filesize) problem of BK.
+Ok, here is the updated version.
 
--- 
-Mathematics is the supreme nostalgia of our time.
+Signed-off-by: Matt Porter <mporter@kernel.crashing.org>
+
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-status  (mode:100755 sha1:9e7f0e59284a3d15cda35bbd5579c44d8eda05d5)
++++ d69eece260c0c4fcd53991c1b37ac91b99962681/cg-status  (mode:100755 sha1:874504aa8cf9ab7076eb405e19995615b4f59eab)
+@@ -7,8 +7,14 @@
+ 
+ . cg-Xlib
+ 
++EXCLUDEFILE=.git/info/exclude
++EXCLUDE=
++if [ -f $EXCLUDEFILE ]; then
++	EXCLUDE="--exclude-from=$EXCLUDEFILE"
++fi
++
+ {
+-	git-ls-files -z -t --others --deleted --unmerged
++	git-ls-files -z -t --others --deleted --unmerged $EXCLUDE
+ } | sort -z -k 2 | xargs -0 sh -c '
+ while [ "$1" ]; do
+ 	tag=${1% *};
