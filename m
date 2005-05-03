@@ -1,94 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add exclude file support to cg-status
-Date: Mon, 02 May 2005 21:15:43 -0700
-Message-ID: <7v4qdlndw0.fsf@assigned-by-dhcp.cox.net>
-References: <20050502171042.A24299@cox.net>
-	<7vd5s9nmio.fsf@assigned-by-dhcp.cox.net>
-	<20050502193343.A25462@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 2 May 2005 21:18:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505022116080.3594@ppc970.osdl.org>
+References: <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com>
+ <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org> <20050502223002.GP21897@waste.org>
+ <Pine.LNX.4.58.0505021540070.3594@ppc970.osdl.org> <20050503000011.GA22038@waste.org>
+ <Pine.LNX.4.58.0505021932270.3594@ppc970.osdl.org> <20050503032916.GE22038@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 06:10:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Davidsen <davidsen@tmr.com>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Sean <seanlkml@sympatico.ca>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 06:10:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSoje-0003mI-GP
-	for gcvg-git@gmane.org; Tue, 03 May 2005 06:10:14 +0200
+	id 1DSojz-0003oY-PM
+	for gcvg-git@gmane.org; Tue, 03 May 2005 06:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261371AbVECEQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 00:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261372AbVECEQR
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:16:17 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:48040 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261371AbVECEPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 00:15:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050503041543.GDVW22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 3 May 2005 00:15:43 -0400
-To: Matt Porter <mporter@kernel.crashing.org>
-In-Reply-To: <20050502193343.A25462@cox.net> (Matt Porter's message of "Mon,
- 2 May 2005 19:33:43 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261377AbVECEQj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 00:16:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261375AbVECEQi
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:16:38 -0400
+Received: from fire.osdl.org ([65.172.181.4]:61386 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261374AbVECEQb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 00:16:31 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j434GNs4006645
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 21:16:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j434GLv3007030;
+	Mon, 2 May 2005 21:16:22 -0700
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050503032916.GE22038@waste.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "MP" == Matt Porter <mporter@kernel.crashing.org> writes:
 
-MP> My reasoning for not doing something like this was that there is
-MP> only ever one exclude file.  In other instances of cogito specific
-MP> data in the .git directory, there is a subdir named for the class
-MP> of data being stored there (i.e. branches, refs).  In this case,
-MP> it didn't seem necessary.  On the other hand, this made me
-MP> wonder whether there should just be a .git/cginfo subdir where
-MP> exclude, branches, refs, etc. all live under since they are
-MP> cogito specfic functionality. Something like:
 
-MP> .git/cginfo/
+On Mon, 2 May 2005, Matt Mackall wrote:
+> 
+> The delta is not the object I care about and its representation is
+> arbitrary. In fact different branches will store different deltas
+> depending on how their DAGs get topologically sorted. The object I
+> care about is the original text, so that's the hash I store.
 
-MP> 	    exclude
-MP> 	    branches/
-MP> 	    refs/
+Ok. In that case, it sounds like you're really doing everything git is
+doing, except your "blob" objects effectively can have pointers to a
+previous object (and you have a different on-disk representation)?  Is
+that correct?
 
-MP> and so on...
-
-You may want to check the past thread, like this one:
-
-    From: Daniel Barkalow <barkalow@iabervon.org>
-    To: Junio C Hamano <junkio@cox.net>
-    cc: David Greaves <david@dgreaves.com>, 
-        GIT Mailing Lists <git@vger.kernel.org>
-    Subject: Re: [PATCh] jit-trackdown
-    Message-ID: <Pine.LNX.4.21.0504291730000.30848-100000@iabervon.org>
-
-    On Fri, 29 Apr 2005, Junio C Hamano wrote:
-
-    > Have toilet side gitters reached a concensus (or semi-concensus)
-    > on how things under .git/ should be organized?  Is there a
-    > summary somewhere, something along the following lines?
-
-    I've made a proposal like the following:
-
-    .git/
-      objects/    (traditional)
-      refs/       Directories of hex SHA1 + newline files
-        heads/    Commits which are heads of various sorts
-        tags/     Tags, by the tag name (or some local renaming of it)
-      info/       Other shared information
-        remotes
-      ...         Everything else isn't shared
-      HEAD        Symlink to refs/heads/<something>
-
-    The plumbing doesn't care what you name heads or tags, but expects things
-    to be in heads to be commit objects and tags to be tag objects (which can
-    tag whatever).
-
-    AFAICT, there is general concensus that this is how things should be, but
-    I haven't convinced Linus that the plumbing should know about anything
-    other than objects/.
-
-            -Daniel
-
+			Linus
