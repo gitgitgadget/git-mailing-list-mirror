@@ -1,76 +1,59 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: Re: RFC: adding xdelta compression to git
-Date: Tue, 03 May 2005 14:48:14 +0200
-Message-ID: <d57rip$ojm$1@sea.gmane.org>
-References: <200505030657.38309.alonz@nolaviz.org> <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] add the ability to create and retrieve delta objects
+Date: Tue, 03 May 2005 08:51:03 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505030847140.14033@localhost.localdomain>
+References: <200505030657.38309.alonz@nolaviz.org>
+ <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
+ <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
+ <200505030724.57827.mason@suse.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue May 03 14:45:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, Alon Ziv <alonz@nolaviz.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 14:46:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSwlQ-0005sQ-2E
-	for gcvg-git@gmane.org; Tue, 03 May 2005 14:44:36 +0200
+	id 1DSwmC-0006A7-Gm
+	for gcvg-git@gmane.org; Tue, 03 May 2005 14:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261526AbVECMuO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 08:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261511AbVECMuO
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 08:50:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:26014 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261526AbVECMto (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 08:49:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DSwjm-0005He-6j
-	for git@vger.kernel.org; Tue, 03 May 2005 14:42:54 +0200
-Received: from h65n2fls35o265.telia.com ([217.211.115.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 May 2005 14:42:54 +0200
-Received: from holmsand by h65n2fls35o265.telia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 03 May 2005 14:42:54 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: h65n2fls35o265.telia.com
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-In-Reply-To: <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
+	id S261529AbVECMvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 08:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261524AbVECMvc
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 08:51:32 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42815 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261509AbVECMvZ
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 08:51:25 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IFW007R5ZP3BW@VL-MO-MR010.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 May 2005 08:51:03 -0400 (EDT)
+In-reply-to: <200505030724.57827.mason@suse.com>
+X-X-Sender: nico@localhost.localdomain
+To: Chris Mason <mason@suse.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> Also, the fact is, since git saves things as separate files, you'd not win
-> as much as you would with some other backing store. So the second step is
-> to start packing the objects etc. I think there is actually a very steep
-> complexity edge here - not because any of the individual steps necessarily
-> add a whole lot, but because they all lead to the "next step".
+On Tue, 3 May 2005, Chris Mason wrote:
 
-Actually, you can win quite a lot.
+> This looks much nicer than using zdelta, I'll try switching my packed item to 
+> your delta generator later this week.  Some quick and dirty space numbers to 
+> show why we need to pack the files together:
+> 
+> On the full import of all the bk->cvs changesets, the average file size 
+> in .git is 4074 bytes.  73% of the files are 4096 bytes or smaller.
+> 
+> This means that of the 2.5GB the .git directory consumes, about 1GB is taken 
+> up by files under 4k where deltas won't save space.  If the remaining files 
+> could be delta compressed down to less than 4k, they would still take up 
+> around 400MB on disk.
 
-I've just been playing with storing the entire 
-linux-2.4.0-to-2.6.12-rc2-patchset as xdelta patches in git. The entire 
-thing ended up being 577M (instead of some 3.5G), according to du -sh 
---apparent-size. Considering that that's some 800M of patches, that's 
-not too bad.
+Sure.  However it helps for history backups and network transfer.
 
-I used a very simple scheme: I stored a delta to the previous version of 
-every file if that delta was less than 20% in size of the new file 
-(otherwise, the whole file was stored as usual). If the previous version 
-was already in delta form, the delta was computed from that versions 
-"parent". I didn't even care to look at files less than 4k in size.
+However if the delta compression and packed storage can remain as 
+decoupled as possible from each other this is good for flexibility.
 
-In other words, I didn't have to use any delta "chains", and still got 
-quite massive storage size gains. And this scheme could easily be used 
-on the fly; I'm guessing that it would be performance neutral (or even a 
-slight gain, since less has to be compressed and written to disk on 
-commits, and there might be less to read when diffing, since two 
-"delta-blobs" might share the same parent).
 
-Or, with careful tuning, a repo might be "deltaified" later on (assuming 
-that delta blobs are addressed using the expanded files' hash).
-
-/dan
-
+Nicolas
