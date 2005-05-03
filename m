@@ -1,81 +1,65 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git and symlinks as tracked content
-Date: Tue, 03 May 2005 12:50:33 -0700
-Message-ID: <4277D609.5050701@zytor.com>
-References: <1115145234.21105.111.camel@localhost.localdomain> <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Careful object writing..
+Date: Tue, 3 May 2005 12:56:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505031254550.26698@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
+ <20050503192753.GA6435@taniwha.stupidest.org> <Pine.LNX.4.58.0505031242330.26698@ppc970.osdl.org>
+ <20050503194739.GA7082@taniwha.stupidest.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 21:45:42 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 21:49:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT3Jx-0007NT-VN
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:44:42 +0200
+	id 1DT3NG-0008DY-AJ
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261649AbVECTu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 15:50:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261650AbVECTu4
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:50:56 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:59359 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261649AbVECTus
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:50:48 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j43JocLU005618
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 3 May 2005 12:50:38 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=ham 
-	version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261650AbVECTyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 15:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261651AbVECTyT
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:54:19 -0400
+Received: from fire.osdl.org ([65.172.181.4]:24202 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261650AbVECTyP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:54:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43JsDs4013542
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 May 2005 12:54:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43JsCZX012316;
+	Tue, 3 May 2005 12:54:12 -0700
+To: Chris Wedgwood <cw@f00f.org>
+In-Reply-To: <20050503194739.GA7082@taniwha.stupidest.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> So you have
-> 
->  - directories: S_IFDIR (0040000) point to "tree" objects for contents
->  - symlinks: S_IFLNK (0120000) point to "blob" objects
->  - executables: S_IFREG | 0755 (0100755) point to "blob" objects
->  - regular files: S_IFREG | 0644 (0100644) point to "blob" objects
-> 
-> which seems very sane and regular. 
-> 
 
-One thing about using a hierarchy of "tree" objects... as far as I 
-understand today, it's possible for "git" to represent a limited 
-scattering of files underneath the root, such as keeping one's 
-configuration files underneath one's home directory.  Scanning the whole 
-home directory to check in (or worse, out) files would suck.
 
-On the other hand, having a single "tree" object for a large project 
-that would have to be constantly updated would suck, too.
-
-This is certainly *not* mutually exclusive; it's mostly a matter of 
-making sure that if scaffolding directory objects are necessary, that 
-they can be automatically added/created, and aren't exhaustively 
-searched for uncontrolled objects.
-
-> Now, I also haev a plan for device nodes, but that one is so ugly that I'm 
-> a bit ashamed of it. That one does:
+On Tue, 3 May 2005, Chris Wedgwood wrote:
+>
+> On Tue, May 03, 2005 at 12:47:36PM -0700, Linus Torvalds wrote:
 > 
->  - S_IFCHR/S_IFBLK (0020000 or 0060000), with the 20-byte SHA1 not being a 
->    SHA1 at all, but just the major:minor numbers in some nice binary 
->    encoding. Probably: two network byte order 32-bit values, with twelve 
->    bytes of some non-zero signature (the SHA1 of all zeroes should be 
->    avoided, so the signature really should be soemthing else than just 
->    twelve bytes of zero).
+> > Me, I refuse to slow down my habits for old filesystems. You can
+> > either fsck, or use a logging filesystem.
 > 
+> ok, so you're saying everyone use linux ext3 or similar more or
+> less...
 
-OK, that's ugly.  I'm impressed.  :)
+No. I'm saying
+ - you can use git-fsck-cache
+ - or you can use a logging filesystem.
 
-	-hpa
+I happen to use both.
+
+> how about we drop all the objects in one directory then?
+
+I don't even have directory hashing on, and as mentioned, the logging 
+filesystem is _not_ a requirement. It's just a reality for most of us.
+
+		Linus
