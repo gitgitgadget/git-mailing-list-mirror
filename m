@@ -1,102 +1,178 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Short-cut error return path in git-local-pull.
-Date: Mon, 02 May 2005 17:26:17 -0700
-Message-ID: <7vll6xnoie.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: Anyone working on a CVS->git converter?
+Date: Tue, 03 May 2005 02:28:59 +0200
+Message-ID: <1115080139.21105.18.camel@localhost.localdomain>
+References: <4275857A.1050106@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 02:22:01 2005
+Content-Type: multipart/mixed; boundary="=-V2122xenL7tX0s3kE1tr"
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 02:23:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSlAI-00039K-Dk
-	for gcvg-git@gmane.org; Tue, 03 May 2005 02:21:31 +0200
+	id 1DSlC2-0003WG-K4
+	for gcvg-git@gmane.org; Tue, 03 May 2005 02:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261250AbVECA07 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 20:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261251AbVECA07
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 20:26:59 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:51381 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261250AbVECA0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 May 2005 20:26:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050503002618.MHZQ1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 2 May 2005 20:26:18 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261251AbVECA3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 20:29:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261253AbVECA3Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 20:29:25 -0400
+Received: from soundwarez.org ([217.160.171.123]:33680 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261251AbVECA3A (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 20:29:00 -0400
+Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id 3D5762BD30;
+	Tue,  3 May 2005 02:28:58 +0200 (CEST)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4275857A.1050106@zytor.com>
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When git-local-pull with -l option gets ENOENT attempting to create
-a hard link, there is no point falling back to other copy methods.
-This patch implements a short-cut to detect that case.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+--=-V2122xenL7tX0s3kE1tr
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-local-pull.c |   25 ++++++++++++++++---------
-1 files changed, 16 insertions(+), 9 deletions(-)
+On Sun, 2005-05-01 at 18:42 -0700, H. Peter Anvin wrote:
+> Anyone working on a CVS->git converter?  I'd like to move klibc 
+> development into git.
 
---- a/local-pull.c
-+++ b/local-pull.c
-@@ -39,12 +39,19 @@ int fetch(unsigned char *sha1)
- 	filename[object_name_start+1] = hex[1];
- 	filename[object_name_start+2] = '/';
- 	strcpy(filename + object_name_start + 3, hex + 2);
--	if (use_link && !link(filename, dest_filename)) {
--		say("Hardlinked %s.\n", hex);
--		return 0;
-+	if (use_link) {
-+		if (!link(filename, dest_filename)) {
-+			say("link %s\n", hex);
-+			return 0;
-+		}
-+		/* If we got ENOENT there is no point continuing. */
-+		if (errno == ENOENT) {
-+			fprintf(stderr, "does not exist %s\n", filename);
-+			return -1;
-+		}
- 	}
- 	if (use_symlink && !symlink(filename, dest_filename)) {
--		say("Symlinked %s.\n", hex);
-+		say("symlink %s\n", hex);
- 		return 0;
- 	}
- 	if (use_filecopy) {
-@@ -54,13 +61,13 @@ int fetch(unsigned char *sha1)
- 		ifd = open(filename, O_RDONLY);
- 		if (ifd < 0 || fstat(ifd, &st) < 0) {
- 			close(ifd);
--			fprintf(stderr, "Cannot open %s\n", filename);
-+			fprintf(stderr, "cannot open %s\n", filename);
- 			return -1;
- 		}
- 		map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, ifd, 0);
- 		close(ifd);
- 		if (-1 == (int)(long)map) {
--			fprintf(stderr, "Cannot mmap %s\n", filename);
-+			fprintf(stderr, "cannot mmap %s\n", filename);
- 			return -1;
- 		}
- 		ofd = open(dest_filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
-@@ -69,13 +76,13 @@ int fetch(unsigned char *sha1)
- 		munmap(map, st.st_size);
- 		close(ofd);
- 		if (status)
--			fprintf(stderr, "Cannot write %s (%ld bytes)\n",
-+			fprintf(stderr, "cannot write %s (%ld bytes)\n",
- 				dest_filename, st.st_size);
- 		else
--			say("Copied %s.\n", hex);
-+			say("copy %s\n", hex);
- 		return status;
- 	}
--	fprintf(stderr, "No copy method was provided to copy %s.\n", hex);
-+	fprintf(stderr, "failed to copy %s with given copy methods.\n", hex);
- 	return -1;
- }
- 
+I tried it with two completely stupid scripts and the nice cvsps.
+
+Here is the tree to browse:
+  http://ehlo.org/~kay/git/gitweb.cgi?p=klibc.git;a=log
+
+
+In the CVS repo directory export patchsets as individual patches with a
+header containing metadata:
+  cvsps -x -b HEAD -g -p ../../patches/
+
+split exported patches into individial files like author data, log, file list:
+  for i in `seq 1 546`; do ../parse-cvsps-patch.pl ../patches/$i.patch ;done
+
+apply it to an completely empty git-repo:
+  for i in `seq 1 546`; do ../apply.sh ../patches/$i.patch ;done
+
+Stupid scripts are attached. cvsps is here:
+  http://www.cobite.com/cvsps/
+
+Kay
+
+--=-V2122xenL7tX0s3kE1tr
+Content-Disposition: inline; filename=apply.sh
+Content-Type: application/x-shellscript; name=apply.sh
+Content-Transfer-Encoding: 7bit
+
+#!/bin/sh
+
+FILES=$1.files
+PATCHFILE=$1
+LOG=$1.log
+. $1.author
+
+if [ -e .git/HEAD ]; then
+	git-check-files $(cat $FILES) || exit 1
+	git-checkout-cache -q $(cat $FILES) || exit 1
+fi
+
+patch -u --no-backup-if-mismatch -f -p0 --fuzz=0 --input=$PATCHFILE || exit 1
+git-update-cache --add --remove $(cat $FILES) || exit 1
+tree=$(git-write-tree) || exit 1
+echo Wrote tree $tree
+
+if [ -e .git/HEAD ]; then
+	commit=$(git-commit-tree $tree -p HEAD < $LOG) || exit 1
+else
+	commit=$(git-commit-tree $tree < $LOG) || exit 1
+fi
+
+echo Committed: $commit
+echo $commit > .git/HEAD
+
+
+--=-V2122xenL7tX0s3kE1tr
+Content-Disposition: inline; filename=parse-cvsps-patch.pl
+Content-Type: application/x-perl; name=parse-cvsps-patch.pl
+Content-Transfer-Encoding: 7bit
+
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+# ---------------------
+# PatchSet 1 
+# Date: 2002/07/23 07:41:30
+# Author: hpa
+# Branch: HEAD
+# Tag: (none) 
+# Log:
+# Initial revision
+# 
+# Members: 
+# 	klibc.cvsroot/snprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/vsnprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/Makefile:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/snprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/vsnprintf.c:INITIAL->1.1 
+# 
+# --- /dev/null	2005-04-30 18:00:24.840397008 +0200
+# +++ klibc/klibc.cvsroot/snprintf.c	2005-05-02 19:57:42.879913000 +0200
+# @@ -0,0 +1,19 @@
+# +/*
+
+
+my $patch = $ARGV[0];
+
+my $author_name = "";
+my $author_mail = "";
+my $author_date = "";
+my @log = ();
+my %files = ();
+
+open (my $fd, $patch);
+while (my $line = <$fd>) {
+	if ($line =~ m/^Date: (.*)/) {
+		$author_date = $1;
+	} elsif ($line =~ m/^Author: (.*)/) {
+		$author_name = $1;
+	} elsif ($line =~ m/^Log:/) {
+		while (my $line = <$fd>) {
+			if ($line =~ m/^Members: /) {
+				last;
+			}
+			push @log, $line;
+		}
+	} elsif ($line =~ m/^(---|\+\+\+) ([^\t]*)/) {
+		chomp($line);
+		if ($2 ne "/dev/null") {
+			$files{$2} = $2;
+		}
+	}
+}
+close $fd;
+
+open $fd, "> $patch.files";
+foreach my $file (sort keys %files) {
+	print $fd "$file\n";
+};
+close $fd;
+
+open $fd, "> $patch.log";
+print $fd (@log);
+close $fd;
+
+open $fd, "> $patch.author";
+print $fd "export AUTHOR_NAME=\"$author_name\"\n";
+print $fd "export AUTHOR_EMAIL=\"$author_mail\"\n";
+print $fd "export AUTHOR_DATE=\"$author_date\"\n";
+close $fd;
+
+print "$patch $author_name \[$author_date\]\n";
+
+--=-V2122xenL7tX0s3kE1tr--
 
