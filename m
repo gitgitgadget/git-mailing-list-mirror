@@ -1,77 +1,90 @@
-From: Alon Ziv <alonz@nolaviz.org>
-Subject: RFC: adding xdelta compression to git
-Date: Tue, 3 May 2005 05:57:38 +0200
-Message-ID: <200505030657.38309.alonz@nolaviz.org>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: cogito cg-update fails
+Date: Mon, 2 May 2005 21:57:07 -0600
+Message-ID: <200505022157.07800.elenstev@mesatop.com>
+References: <1115090374.6030.50.camel@gaston>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue May 03 05:52:06 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 05:55:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSoRv-0001gW-9z
-	for gcvg-git@gmane.org; Tue, 03 May 2005 05:51:55 +0200
+	id 1DSoVU-0001zn-6z
+	for gcvg-git@gmane.org; Tue, 03 May 2005 05:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261352AbVECD56 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 23:57:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261362AbVECD56
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 23:57:58 -0400
-Received: from bzq-114-36.red.bezeqint.net ([62.219.114.36]:40978 "EHLO
-	wonder.nolaviz.org") by vger.kernel.org with ESMTP id S261352AbVECD5z
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 2 May 2005 23:57:55 -0400
-Received: from bruno.nolaviz.org (bruno.nolaviz.org [192.168.0.18])
-	(authenticated bits=0)
-	by wonder.nolaviz.org (8.12.11/8.12.11) with ESMTP id j433xCam030039
-	for <git@vger.kernel.org>; Tue, 3 May 2005 06:59:14 +0300
-To: git@vger.kernel.org
+	id S261362AbVECEBu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 00:01:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261363AbVECEBu
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:01:50 -0400
+Received: from nacho.zianet.com ([216.234.192.105]:14604 "HELO
+	nacho.zianet.com") by vger.kernel.org with SMTP id S261362AbVECEBq
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 00:01:46 -0400
+Received: (qmail 42412 invoked from network); 3 May 2005 04:01:45 -0000
+Received: from 216-31-65-216.zianet.com (216.31.65.216)
+  by 0 with SMTP; 3 May 2005 04:01:45 -0000
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 User-Agent: KMail/1.6.1
+In-Reply-To: <1115090374.6030.50.camel@gaston>
 Content-Disposition: inline
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on wonder.nolaviz.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Looking for novel methods of wasting my time :), I am considering adding 
-xdelta to git.
+On Monday 02 May 2005 09:19 pm, Benjamin Herrenschmidt wrote:
+> Hi Folks !
+> 
+> I have something weird happening with cogito. What I did is:
+> 
+>  - d/l & install 0.8 archive
+>  - cg-init <rync path>
+>  - built & install that, removed 0.8 files
+>  - a bit later: cg-update origin to check for new stuffs
+> 
+> The last one fails with:
+> 
+> benh@pogo:~/cogito$ cg-update origin
+> MOTD:
+> MOTD:   .../.. stripped kernel.org legal blurb
+> 
+> receiving file list ... done
+> .git/refs/heads/origin
+> 
+> sent 119 bytes  received 857 bytes  390.40 bytes/sec
+> total size is 41  speedup is 0.04
+> rsync: link_stat "/home/benh/cogito/origin/objects/." failed: No such file or directory (2)
+> building file list ... done
+> rsync error: some files could not be transferred (code 23) at main.c(702)
+> 
+> sent 17 bytes  received 20 bytes  74.00 bytes/sec
+> total size is 0  speedup is 0.00
+> cg-pull: objects pull failed
+> 
+> So it looks like it's trying to rsync to a bogus destination ...
+> 
+> Ben.
+> 
 
-I have two concrete proposals, both of which (IMO) are consistent with the git 
-philosophy:
+Yeah, I got exactly the same behavior a little while ago, but thanks
+to www.kernel.org/git, I saw that the problem had been found and fixed.
 
-1. Add a git-deltify command, which will take two trees and replace the second 
-tree's blobs with delta-blobs referring to the first tree. Each delta-blob is 
-self-contained; from the outside it looks like any other blob, but internally 
-it contains another blob reference + an xdelta. The only function which would 
-need to understand the new format would be unpack_sha1_file.
-The scripting level will be in charge of deciding which trees to deltify (or 
-undeltify--we could also have a "git-undeltify" command). A sane 
-deltification schedule, for example, could be to always keep tagged versions 
-as stand-alone objects, and deltify intermediate versions against the latest 
-tag. It would also do its best to avoid delta chains (i.e. a delta referring 
-to another delta).
-Pros:
-* Interoperates with the existing structure (including pull/push) with almost 
-no changes to existing infrastructure.
-Cons:
-* Changes the repository format.
-* Some performance impact (probably quite small).
-* Same blob may have different representation in two repositories (one 
-compressed, on deltified). [I am not sure this is really a bad thing...]
+I had an older backup copy of all the cogito scripts, so I used that to update.
 
-2. Add a completely external framework which manages a "deltas repository" of 
-deltas. The shadow repository will contain delta objects between selected 
-trees; again the scripts will need to populate it.
-Pros:
-* No changes at all to existing code.
-Cons:
-* Push/pull tools will need to be taught to talk with the new "deltas  
-repository".
-* Synchronization between the deltas repository and the real one may be lost, 
-leading to odd failures.
+I believe the fix is this patch:
 
-Personally I'm rooting for #1 above... I would like to begin implementation in 
-a few days, so any discussion will be useful.
-
-	-az
+===== cd7a12e5d569d59a04823114c275a83d65b9f37e vs 437167273f77c0d5f039280d158b43324a79f820 =====
+--- a/cg-pull
++++ b/cg-pull
+@@ -48,7 +48,7 @@ fetch_rsync () {
+ }
+ 
+ pull_rsync () {
+-	fetch_rsync -s -u -d "$1/objects" ".git/objects"
++	fetch_rsync -s -u -d "$2/objects" ".git/objects"
+ }
+ 
+ 
+Hope this helps,
+Steven
