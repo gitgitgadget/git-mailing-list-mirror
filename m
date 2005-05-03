@@ -1,59 +1,118 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Chris Mason <mason@suse.com>
 Subject: Re: [PATCH] add the ability to create and retrieve delta objects
-Date: Tue, 03 May 2005 08:51:03 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0505030847140.14033@localhost.localdomain>
-References: <200505030657.38309.alonz@nolaviz.org>
- <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
- <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
- <200505030724.57827.mason@suse.com>
+Date: Tue, 3 May 2005 10:13:56 -0400
+Message-ID: <200505031013.57476.mason@suse.com>
+References: <200505030657.38309.alonz@nolaviz.org> <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org> <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@osdl.org>, Alon Ziv <alonz@nolaviz.org>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 14:46:22 2005
+X-From: git-owner@vger.kernel.org Tue May 03 16:11:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSwmC-0006A7-Gm
-	for gcvg-git@gmane.org; Tue, 03 May 2005 14:45:24 +0200
+	id 1DSy7K-0001RT-Va
+	for gcvg-git@gmane.org; Tue, 03 May 2005 16:11:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261529AbVECMvd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 08:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261524AbVECMvc
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 08:51:32 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:42815 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261509AbVECMvZ
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 08:51:25 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IFW007R5ZP3BW@VL-MO-MR010.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 May 2005 08:51:03 -0400 (EDT)
-In-reply-to: <200505030724.57827.mason@suse.com>
-X-X-Sender: nico@localhost.localdomain
-To: Chris Mason <mason@suse.com>
+	id S261595AbVECOQy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 10:16:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261572AbVECOPi
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 10:15:38 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36510 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261585AbVECOOC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 10:14:02 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id 118AB9C23;
+	Tue,  3 May 2005 16:14:01 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id 0BF57150825; Tue,  3 May 2005 16:14:00 +0200 (CEST)
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 3 May 2005, Chris Mason wrote:
+On Tuesday 03 May 2005 04:06, Nicolas Pitre wrote:
+> On Mon, 2 May 2005, Linus Torvalds wrote:
+> > If you do something like this, you want such a delta-blob to be named by
+> > the sha1 of the result, so that things that refer to it can transparently
+> > see either the original blob _or_ the "deltified" one, and will never
+> > care.
+>
+> Yep, that's what I've done last weekend (and just made it actually
+> work since people are getting interested).
 
-> This looks much nicer than using zdelta, I'll try switching my packed item to 
-> your delta generator later this week.  Some quick and dirty space numbers to 
-> show why we need to pack the files together:
-> 
-> On the full import of all the bk->cvs changesets, the average file size 
-> in .git is 4074 bytes.  73% of the files are 4096 bytes or smaller.
-> 
-> This means that of the 2.5GB the .git directory consumes, about 1GB is taken 
-> up by files under 4k where deltas won't save space.  If the remaining files 
-> could be delta compressed down to less than 4k, they would still take up 
-> around 400MB on disk.
+Hmmm, something is strange here, am I using this wrong?
 
-Sure.  However it helps for history backups and network transfer.
+coffee:~/git/linus.orig # ./test-delta -d foo foo2 delta1
+coffee:~/git/linus.orig # ./test-delta -p foo delta1 out
+*** glibc detected *** free(): invalid next size (fast): 0x0804b008 ***
+Aborted
 
-However if the delta compression and packed storage can remain as 
-decoupled as possible from each other this is good for flexibility.
+Valgrind output:
 
+==9634== Invalid read of size 1
+==9634==    at 0x1B9036F0: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1B90906F is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid write of size 1
+==9634==    at 0x1B9036F3: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1BA3A08D is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid read of size 1
+==9634==    at 0x1B9036F6: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1B90906E is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid write of size 1
+==9634==    at 0x1B9036F9: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1BA3A08C is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid read of size 1
+==9634==    at 0x1B9036FC: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1B90906D is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid write of size 1
+==9634==    at 0x1B9036FF: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1BA3A08B is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid read of size 1
+==9634==    at 0x1B903702: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1B90906C is not stack'd, malloc'd or (recently) free'd
+==9634==
+==9634== Invalid write of size 1
+==9634==    at 0x1B903708: memcpy (in /usr/lib/valgrind/vgpreload_memcheck.so)
+==9634==    by 0x8049142: patch_delta (patch-delta.c:59)
+==9634==    by 0x80487CB: main (test-delta.c:65)
+==9634==  Address 0x1BA3A08A is not stack'd, malloc'd or (recently) free'd
+delta operation failed (returned NULL)
+==9634==
+==9634== ERROR SUMMARY: 206 errors from 13 contexts (suppressed: 0 from 0)
+==9634== malloc/free: in use at exit: 0 bytes in 0 blocks.
+==9634== malloc/free: 1 allocs, 1 frees, 5 bytes allocated.
+==9634== For a detailed leak analysis,  rerun with: --leak-check=yes
+==9634== For counts of detected errors, rerun with: -v
 
-Nicolas
+-chris
