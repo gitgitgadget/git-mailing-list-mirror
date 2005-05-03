@@ -1,70 +1,80 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: commit-id fails after cg-init
-Date: Tue, 3 May 2005 14:14:58 -0700
-Message-ID: <20050503211458.GY4747@ca-server1.us.oracle.com>
-References: <1115150585.28520.11.camel@dv>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH 0/3] cogito spec file updates
+Date: Tue, 3 May 2005 23:21:43 +0200
+Message-ID: <20050503212142.GB15995@pasky.ji.cz>
+References: <20050503182850.GL18917@shell0.pdx.osdl.net> <20050503193536.GE5324@shell0.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 03 23:13:23 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 23:16:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT4hM-0008Ct-3w
-	for gcvg-git@gmane.org; Tue, 03 May 2005 23:12:56 +0200
+	id 1DT4js-0000bW-CZ
+	for gcvg-git@gmane.org; Tue, 03 May 2005 23:15:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261703AbVECVTO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 17:19:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261717AbVECVTO
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 17:19:14 -0400
-Received: from agminet02.oracle.com ([141.146.126.229]:15188 "EHLO
-	agminet02.oracle.com") by vger.kernel.org with ESMTP
-	id S261703AbVECVTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 17:19:10 -0400
-Received: from rgmgw3.us.oracle.com (rgmgw3.us.oracle.com [138.1.191.12])
-	by agminet02.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j43LExcO011218;
-	Tue, 3 May 2005 16:14:59 -0500
-Received: from rgmgw3.us.oracle.com (localhost [127.0.0.1])
-	by rgmgw3.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j43LEwaF027356;
-	Tue, 3 May 2005 15:14:59 -0600
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
-	by rgmgw3.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j43LEwo2027346;
-	Tue, 3 May 2005 15:14:58 -0600
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.50)
-	id 1DT4jK-0000nI-JU; Tue, 03 May 2005 14:14:58 -0700
-To: Pavel Roskin <proski@gnu.org>
+	id S261717AbVECVVw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 17:21:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261727AbVECVVw
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 17:21:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56011 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261717AbVECVVt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 17:21:49 -0400
+Received: (qmail 10261 invoked by uid 2001); 3 May 2005 21:21:43 -0000
+To: Chris Wright <chrisw@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <1115150585.28520.11.camel@dv>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.9i
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+In-Reply-To: <20050503193536.GE5324@shell0.pdx.osdl.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 03, 2005 at 04:03:05PM -0400, Pavel Roskin wrote:
-> So, cg-init created an empty .git/refs/heads/master and made .git/HEAD a
-> symlink to it.  Now, commit-id reads that file and gets confused.
+Dear diary, on Tue, May 03, 2005 at 09:35:36PM CEST, I got a letter
+where Chris Wright <chrisw@osdl.org> told me that...
+> * Chris Wright (chrisw@osdl.org) wrote:
+> > Here's the outstanding updates for the spec file, up to 0.8-2 which is
+> > the latest on kernel.org.
+> > 
+> > 	http://www.kernel.org/pub/software/scm/cogito/RPMS/
 > 
-> If anybody has an idea what to put to .git/refs/heads/master please
-> speak up so that cg-init could be fixed.
+> What's your method for creating a release tarball?  If it were formalized
+> (i.e. Makefile rule), then it'd be simple to use VERSION to drive the
+> spec file, and it'd only need updating for real content changes (similar
+> to what Kay did).
 
-	Well, cg-init in this case creates no objects.  I'd say,
-instead, it should create an empty tree object (representing a project
-with no files) and commit that.  That would be your initial commit, and
-would put something valid in heads/master.
+For now, I do it so seldom that I just manually do
 
-Joel
+	cg-log >Changelog
+	cg-export ~/cogito-0.9
+	cp Changelog ~/cogito-0.9
+	cd ~
+	tar cvvfz cogito-0.9.tar.gz cogito-0.9
+
+OTOH, I'd like to change this all to just
+
+	cg-export ~/cogito-0.9.tar.gz
+
+when I get to merge the relevant patches; I'm not sure there is so much
+of a value to bundle the Changelog; just get the git tree and do cg-log
+on your own, or use the web interface.
+
+I might however have some private mkrelease.sh script which would do
+
+	echo "$1" >VERSION
+	update-spec-file
+	echo "$1" | cg-commit
+	cg-tag "$1"
+
+or something.
+
+
+BTW, did you have a particular reason to split the .spec file updates to
+three parts? I think it doesn't make much sense and it'd be probably
+enough to update it at once, when we are not doing it at the right time
+anyway.
 
 -- 
-
-"The cynics are right nine times out of ten."  
-        - H. L. Mencken
-
-Joel Becker
-Senior Member of Technical Staff
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
