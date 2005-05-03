@@ -1,44 +1,54 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Careful object writing..
-Date: Wed, 4 May 2005 01:04:23 +0200
-Message-ID: <81b0412b05050316045fa31c2a@mail.gmail.com>
-References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git and symlinks as tracked content
+Date: Tue, 03 May 2005 16:16:16 -0700
+Message-ID: <7v1x8nuchr.fsf@assigned-by-dhcp.cox.net>
+References: <1115145234.21105.111.camel@localhost.localdomain>
+	<Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+	<Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
+	<Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
+	<7vr7got2tz.fsf@assigned-by-dhcp.cox.net> <42780185.7010204@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 04 00:58:38 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Andreas Gal <gal@uci.edu>,
+	Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 01:13:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT6L9-0001AO-4y
-	for gcvg-git@gmane.org; Wed, 04 May 2005 00:58:07 +0200
+	id 1DT6ZB-0004pV-JI
+	for gcvg-git@gmane.org; Wed, 04 May 2005 01:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261898AbVECXEZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 19:04:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261899AbVECXEZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 19:04:25 -0400
-Received: from wproxy.gmail.com ([64.233.184.196]:15244 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261898AbVECXEY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 19:04:24 -0400
-Received: by wproxy.gmail.com with SMTP id 68so87320wra
-        for <git@vger.kernel.org>; Tue, 03 May 2005 16:04:23 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aENMqWomEx5rp6t6c/ipkUnMUDG6YoyGYwwBo1MCyPJ1OwUr1m9Bzky/t8KMslJSTGGB+wV/C+mV/B33HbedqOftBQ7q6/U/67kRlfJQJQPGhtv+6sR5zeyA8JVIA0AAVk2FBbVZKscHmOQ8osalD6vYakvo46f+aiN5tdKRN3o=
-Received: by 10.54.94.12 with SMTP id r12mr140765wrb;
-        Tue, 03 May 2005 16:04:23 -0700 (PDT)
-Received: by 10.54.79.20 with HTTP; Tue, 3 May 2005 16:04:23 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
-Content-Disposition: inline
+	id S261907AbVECXR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 19:17:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261906AbVECXR7
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 19:17:59 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:53680 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261905AbVECXQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2005 19:16:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050503231618.XIHW7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 3 May 2005 19:16:18 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42780185.7010204@zytor.com> (H. Peter Anvin's message of "Tue,
+ 03 May 2005 15:56:05 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 5/3/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> I also change the permission to 0444 before it gets its final name.
+>>>>> "HPA" == H Peter Anvin <hpa@zytor.com> writes:
 
-Maybe umask it first? Just in case.
+HPA> Owner and permissions are part of the tree object, and apply to all
+HPA> file types.
+
+Huh?  I am confused...  Do you mean tree object should be
+changed to record these?  That would make the existing in-cache
+merging of files, which GIT was built for, quite interesting...
+
+Well, doing device nodes _is_ a tangent, so let's drop this
+discussion.
+
+
