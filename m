@@ -1,71 +1,57 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: Careful object writing..
-Date: Tue, 3 May 2005 12:27:53 -0700
-Message-ID: <20050503192753.GA6435@taniwha.stupidest.org>
-References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [PATCH 0/3] cogito spec file updates
+Date: Tue, 3 May 2005 12:35:36 -0700
+Message-ID: <20050503193536.GE5324@shell0.pdx.osdl.net>
+References: <20050503182850.GL18917@shell0.pdx.osdl.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 03 21:22:19 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 21:30:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT2xs-0001nt-Uq
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:21:53 +0200
+	id 1DT35Y-0003wK-J6
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:29:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261625AbVECT2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 15:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261626AbVECT2A
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:28:00 -0400
-Received: from pimout2-ext.prodigy.net ([207.115.63.101]:23720 "EHLO
-	pimout2-ext.prodigy.net") by vger.kernel.org with ESMTP
-	id S261625AbVECT16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 15:27:58 -0400
-X-ORBL: [67.124.119.21]
-Received: from taniwha.stupidest.org (adsl-67-124-119-21.dsl.snfc21.pacbell.net [67.124.119.21])
-	by pimout2-ext.prodigy.net (8.12.10 milter /8.12.10) with ESMTP id j43JRsFh131354;
-	Tue, 3 May 2005 15:27:54 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id 37F46528F22; Tue,  3 May 2005 12:27:53 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261636AbVECTf4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 15:35:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261641AbVECTf4
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:35:56 -0400
+Received: from fire.osdl.org ([65.172.181.4]:35974 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261636AbVECTfl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:35:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43JZas4012296
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 May 2005 12:35:37 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43JZaEE011679;
+	Tue, 3 May 2005 12:35:36 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j43JZa2p011678;
+	Tue, 3 May 2005 12:35:36 -0700
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
+In-Reply-To: <20050503182850.GL18917@shell0.pdx.osdl.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 03, 2005 at 12:15:08PM -0700, Linus Torvalds wrote:
+* Chris Wright (chrisw@osdl.org) wrote:
+> Here's the outstanding updates for the spec file, up to 0.8-2 which is
+> the latest on kernel.org.
+> 
+> 	http://www.kernel.org/pub/software/scm/cogito/RPMS/
 
-> So now I do it "right", and create a temporary file in the "top"
-> object directory, and then when it's all done, I do a "link()" to
-> the final place and unlink the original.
+What's your method for creating a release tarball?  If it were formalized
+(i.e. Makefile rule), then it'd be simple to use VERSION to drive the
+spec file, and it'd only need updating for real content changes (similar
+to what Kay did).
 
-how is this better than a single rename?  i take it there is something
-fundamental from clue.101 i slept though here?
-
-also, if you are *really* paranoid you want to fsync *before* you do
-the link/unklink or rename --- which is what MTAs do[1]
-
-however, that said it *kills* performance and if it's not critical
-it's really a terrible idea
-
-also, shouldn't HEAD (and similar)[2] be updated with a temporary and
-a rename too?
-
-> I also change the permission to 0444 before it gets its final name.
-
-cool
-
-> NOTE NOTE NOTE! I have _not_ updated all the helper stuff that also
-> write objects.
-
-i thought this was all common code?  if it's not maybe now is the time
-to change that?
-
-
-
-[1] yes, i know this depends on the fs used and various things and
-    ext3 should be fine, blah blah blah, but not everyone uses ext3
-    and quite probably not everyone will use git under Linux
-
-[2] i didn't check the code as i'm still using BK in places
+thanks,
+-chris
