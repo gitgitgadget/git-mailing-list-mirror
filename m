@@ -1,108 +1,75 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: Re: More problems...
-Date: Tue, 3 May 2005 08:00:42 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505030757440.29716@sam.ics.uci.edu>
-References: <20050429170127.A30010@flint.arm.linux.org.uk>
- <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com>
- <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org> <7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
- <20050429221903.F30010@flint.arm.linux.org.uk>
- <Pine.LNX.4.60.0504292254430.25700@hermes-1.csi.cam.ac.uk>
- <20050502193327.GB20818@pasky.ji.cz> <Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
- <Pine.LNX.4.58.0505021509530.3594@ppc970.osdl.org> <20050503014816.GQ20818@pasky.ji.cz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] add the ability to create and retrieve delta objects
+Date: Tue, 03 May 2005 11:04:51 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505031104080.14033@localhost.localdomain>
+References: <200505030657.38309.alonz@nolaviz.org>
+ <200505031013.57476.mason@suse.com>
+ <Pine.LNX.4.62.0505031022340.14033@localhost.localdomain>
+ <200505031037.38005.mason@suse.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Anton Altaparmakov <aia21@cam.ac.uk>,
-	Russell King <rmk@arm.linux.org.uk>,
-	Junio C Hamano <junkio@cox.net>,
-	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 16:56:52 2005
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, Alon Ziv <alonz@nolaviz.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 17:00:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSynu-00019S-C5
-	for gcvg-git@gmane.org; Tue, 03 May 2005 16:55:19 +0200
+	id 1DSyri-0001q9-5a
+	for gcvg-git@gmane.org; Tue, 03 May 2005 16:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261572AbVECPBd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 11:01:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261578AbVECPBd
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 11:01:33 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:1690 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S261572AbVECPBZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 11:01:25 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j43F0lPV029742;
-	Tue, 3 May 2005 08:00:47 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j43F0gMl029738;
-	Tue, 3 May 2005 08:00:42 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050503014816.GQ20818@pasky.ji.cz>
+	id S261642AbVECPFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 11:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261654AbVECPFX
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 11:05:23 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:58842 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261642AbVECPFO
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 11:05:14 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IFX005A25W3WM@VL-MO-MR007.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 May 2005 11:04:52 -0400 (EDT)
+In-reply-to: <200505031037.38005.mason@suse.com>
+X-X-Sender: nico@localhost.localdomain
+To: Chris Mason <mason@suse.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 3 May 2005, Chris Mason wrote:
 
-I am just soft-linking objects/ in the branched tree. I can live with 
-dangling objects, branching is extremly fast, and diskspace is cheap 
-anyway. The only downside is that it doesn't work too well with rsync as 
-network protocol, but I use only http-pull and rpush anyway.
+> On Tuesday 03 May 2005 10:24, Nicolas Pitre wrote:
+> > On Tue, 3 May 2005, Chris Mason wrote:
+> > > Hmmm, something is strange here, am I using this wrong?
+> > >
+> > > coffee:~/git/linus.orig # ./test-delta -d foo foo2 delta1
+> > > coffee:~/git/linus.orig # ./test-delta -p foo delta1 out
+> > > *** glibc detected *** free(): invalid next size (fast): 0x0804b008 ***
+> > > Aborted
+> >
+> > Can you send me your foo and delta2 files?
+> >
+> Sorry, thought I had the whole command history in there.  I went for something 
+> small to start ;)
+> 
+> coffee:~/git/linus.orig # echo foo > foo
+> coffee:~/git/linus.orig # echo foo2 > foo2
+> coffee:~/git/linus.orig # ./test-delta -d foo foo2 delta1
+> coffee:~/git/linus.orig # ls -la delta1
+> -rw-r--r--  1 root root 14 2005-05-03 10:36 delta1
+> coffee:~/git/linus.orig # ./test-delta -p foo delta1 out
+> *** glibc detected *** free(): invalid next size (fast): 0x0804b008 ***
 
-Andreas
+OK, doh!
 
-On Tue, 3 May 2005, Petr Baudis wrote:
-
-> Dear diary, on Tue, May 03, 2005 at 12:19:16AM CEST, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> told me that...
-> > But for "normal" situations, where you have a tree or two, the hardlinking 
-> > win might not be big enough to warrant the maintenance headache. With 
-> > hardlinking, you _do_ need to "trust" the other trees to some degree.
-> 
-> As long as the trees aren't yours and you aren't doing something really
-> horrible with them...
-> 
-> $ time git-local-pull -a -l $(cat ~/git-devel/.git/HEAD) ~/git-devel/.git/
-> real    0m0.332s
-> 
-> $ time git-local-pull -a $(cat ~/git-devel/.git/HEAD) ~/git-devel/.git/
-> real    0m4.306s
-> 
-> And this is only 13M Cogito objects database. I think one of the
-> important things is to encourage branching, therefore it must be fast
-> enough; that's why I really wanted to do hardlinks. The disk space is
-> important, but the speed hit probably equally (if not more) so.
-> 
-> BTW, the object database files should have 0444 or such; they really
-> _are_ read-only and making them so mode-wise could help against some
-> mistakes too.
-> 
-> It's clear that Cogito should have a way to choose whether to hardlink
-> or copy; the question is which one should be the default one and how
-> should it be specified.  I thought about using file:// vs. just local
-> path to differentiate between copy and hardlinking, but that'd be
-> totally non-obvious, therefore bad UI-wise.
-> 
-> BTW, I've just committed support for pulling from remote repositories
-> over the HTTP and SSH protocols (http://your.git/repo,
-> git+ssh://root@git.nasa.gov/srv/git/mars) (note that I was unable to
-> test the SSH stuff properly now; success reports or patches welcome).
-> Also, the local hardlinking access is now done over git-local-pull,
-> therefore the cp errors should go away now.
-> 
-> I'm not yet decided whether locations like
-> 
-> 	kernel.org:/pub/scm/cogito/cogito.git
-> 
-> should invoke rsync, rpull, throw an error or print a fortune cookie.
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+--- diff-delta.c.orig	2005-05-03 11:00:39.900529634 -0400
++++ diff-delta.c	2005-05-03 11:01:03.210031176 -0400
+@@ -307,7 +307,7 @@
+ 	}
+ 
+ 	if (inscnt)
+-		out[-inscnt - 1] = inscnt;
++		out[outpos - inscnt - 1] = inscnt;
+ 
+ 	delta_cleanup(&bdf);
+ 	*delta_size = outpos;
