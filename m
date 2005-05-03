@@ -1,80 +1,58 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: commit-id fails after cg-init
-Date: Tue, 03 May 2005 16:03:05 -0400
-Message-ID: <1115150585.28520.11.camel@dv>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: git and symlinks as tracked content
+Date: Tue, 03 May 2005 22:09:19 +0200
+Message-ID: <1115150959.21105.116.camel@localhost.localdomain>
+References: <1115145234.21105.111.camel@localhost.localdomain>
+	 <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
+	 <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue May 03 21:58:41 2005
+Cc: Andreas Gal <gal@uci.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 22:04:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT3X1-0002UJ-HM
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:58:12 +0200
+	id 1DT3bq-00045x-Hg
+	for gcvg-git@gmane.org; Tue, 03 May 2005 22:03:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261672AbVECUEa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 16:04:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261674AbVECUEa
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:04:30 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:39565
-	"EHLO localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261672AbVECUE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 16:04:26 -0400
-Received: by localhost.localdomain (Postfix, from userid 500)
-	id F3D49EFF3E; Tue,  3 May 2005 16:03:05 -0400 (EDT)
-To: git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.1.1 
+	id S261601AbVECUJX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 16:09:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVECUJX
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 16:09:23 -0400
+Received: from soundwarez.org ([217.160.171.123]:38808 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261601AbVECUJU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 16:09:20 -0400
+Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id 694442C982;
+	Tue,  3 May 2005 22:09:18 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+On Tue, 2005-05-03 at 13:05 -0700, Linus Torvalds wrote:
+> 
+> On Tue, 3 May 2005, Andreas Gal wrote:
+> > 
+> > Yuck. Thats really ugly. Right now all files have a uniform touch to them. 
+> > For every hash you can locate the file, determine its type/tag, unpack it, 
+> > and check the SHA1 hash. The proposal above breaks all that. Why not just 
+> > introduce a new object type "dev" and put major minor in there. It 
+> > will still always hash to the same SHA1 hash value, but fits much better in the 
+> > overall design. 
+> 
+> Hey, I don't personally care that much. I don't see anybody using 
+> character device nodes in the kernel tree, and I don't think most SCM's 
+> support stuff like that anyway ;)
 
-I tried to start a new project using cogito (current snapshot) and I was
-immediately greeted by a bug (or a buglet if you want).  Let's do this
-in a clean directory:
+Well, you need to be root to create device nodes, that is not a usual
+requirement for an SCM checkout. :)
 
-$ cg-init 
-defaulting to local storage area
-$ cg-diff 
-cat: .git/refs/tags/: Is a directory
-cat: .git/refs/heads/: Is a directory
-Invalid id: 
-usage: git-cat-file [-t | tagname] <sha1>
-usage: git-cat-file [-t | tagname] <sha1>
-Invalid id: 
-usage: diff-cache [-r] [-z] [-p] [--cached] <tree sha1>
-mkdir: cannot create directory `/tmp/gitdiff.k4FHLY/': File exists
-$
-
-Not nice.  Trivial debugging shows that it's commit-id that fails:
-
-$ sh -x commit-id 
-+ SHA1='[A-Za-z0-9]{40}'
-+ SHA1ONLY='^[A-Za-z0-9]{40}$'
-+ id=
-+ '[' '!' '' ']'
-++ cat .git/HEAD
-+ id=
-+ echo
-+ egrep -vq '^[A-Za-z0-9]{40}$'
-+ '[' -r .git/refs/tags/ ']'
-++ cat .git/refs/tags/
-cat: .git/refs/tags/: Is a directory
-...
-
-$ ls -al .git/HEAD 
-lrwxrwxrwx  1 proski proski 17 2005-05-03 15:50 .git/HEAD -> refs/heads/master
-$ cat .git/refs/heads/master
-$
-
-So, cg-init created an empty .git/refs/heads/master and made .git/HEAD a
-symlink to it.  Now, commit-id reads that file and gets confused.
-
-If anybody has an idea what to put to .git/refs/heads/master please
-speak up so that cg-init could be fixed.
-
--- 
-Regards,
-Pavel Roskin
+Kay
 
