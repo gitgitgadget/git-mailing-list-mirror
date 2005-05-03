@@ -1,60 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: More problems...
-Date: Tue, 03 May 2005 12:18:03 -0700
-Message-ID: <7v7jigw238.fsf@assigned-by-dhcp.cox.net>
-References: <20050429170127.A30010@flint.arm.linux.org.uk>
-	<20050429182708.GB14202@pasky.ji.cz>
-	<20050429195055.GE1233@mythryan2.michonline.com>
-	<Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org>
-	<7vhdhp47hq.fsf@assigned-by-dhcp.cox.net>
-	<20050429221903.F30010@flint.arm.linux.org.uk>
-	<Pine.LNX.4.60.0504292254430.25700@hermes-1.csi.cam.ac.uk>
-	<20050502193327.GB20818@pasky.ji.cz>
-	<Pine.LNX.4.60.0505022258150.27741@hermes-1.csi.cam.ac.uk>
-	<Pine.LNX.4.58.0505021509530.3594@ppc970.osdl.org>
-	<20050503014816.GQ20818@pasky.ji.cz>
-	<Pine.LNX.4.58.0505030757440.29716@sam.ics.uci.edu>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: Careful object writing..
+Date: Tue, 3 May 2005 12:27:53 -0700
+Message-ID: <20050503192753.GA6435@taniwha.stupidest.org>
+References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>,
-	Anton Altaparmakov <aia21@cam.ac.uk>,
-	Russell King <rmk@arm.linux.org.uk>,
-	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 21:12:27 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 03 21:22:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT2oB-0007FH-8V
-	for gcvg-git@gmane.org; Tue, 03 May 2005 21:11:51 +0200
+	id 1DT2xs-0001nt-Uq
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261623AbVECTSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 15:18:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261625AbVECTSH
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:18:07 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35474 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261623AbVECTSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 15:18:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050503191805.OILK16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 3 May 2005 15:18:05 -0400
-To: Andreas Gal <gal@uci.edu>
-In-Reply-To: <Pine.LNX.4.58.0505030757440.29716@sam.ics.uci.edu> (Andreas
- Gal's message of "Tue, 3 May 2005 08:00:42 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261625AbVECT2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 15:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261626AbVECT2A
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:28:00 -0400
+Received: from pimout2-ext.prodigy.net ([207.115.63.101]:23720 "EHLO
+	pimout2-ext.prodigy.net") by vger.kernel.org with ESMTP
+	id S261625AbVECT16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2005 15:27:58 -0400
+X-ORBL: [67.124.119.21]
+Received: from taniwha.stupidest.org (adsl-67-124-119-21.dsl.snfc21.pacbell.net [67.124.119.21])
+	by pimout2-ext.prodigy.net (8.12.10 milter /8.12.10) with ESMTP id j43JRsFh131354;
+	Tue, 3 May 2005 15:27:54 -0400
+Received: by taniwha.stupidest.org (Postfix, from userid 38689)
+	id 37F46528F22; Tue,  3 May 2005 12:27:53 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "AG" == Andreas Gal <gal@uci.edu> writes:
+On Tue, May 03, 2005 at 12:15:08PM -0700, Linus Torvalds wrote:
 
-AG> I am just soft-linking objects/ in the branched tree. I can live with 
-AG> dangling objects, branching is extremly fast, and diskspace is cheap 
-AG> anyway. The only downside is that it doesn't work too well with rsync as 
-AG> network protocol,...
+> So now I do it "right", and create a temporary file in the "top"
+> object directory, and then when it's all done, I do a "link()" to
+> the final place and unlink the original.
 
-I usually do not symlinks myself, but doesn't "rsync -L" work
-for you?
+how is this better than a single rename?  i take it there is something
+fundamental from clue.101 i slept though here?
 
+also, if you are *really* paranoid you want to fsync *before* you do
+the link/unklink or rename --- which is what MTAs do[1]
+
+however, that said it *kills* performance and if it's not critical
+it's really a terrible idea
+
+also, shouldn't HEAD (and similar)[2] be updated with a temporary and
+a rename too?
+
+> I also change the permission to 0444 before it gets its final name.
+
+cool
+
+> NOTE NOTE NOTE! I have _not_ updated all the helper stuff that also
+> write objects.
+
+i thought this was all common code?  if it's not maybe now is the time
+to change that?
+
+
+
+[1] yes, i know this depends on the fs used and various things and
+    ext3 should be fine, blah blah blah, but not everyone uses ext3
+    and quite probably not everyone will use git under Linux
+
+[2] i didn't check the code as i'm still using BK in places
