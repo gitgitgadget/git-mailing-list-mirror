@@ -1,93 +1,46 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Morten Welinder <mwelinder@gmail.com>
 Subject: Re: git and symlinks as tracked content
-Date: Tue, 3 May 2005 12:02:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+Date: Tue, 3 May 2005 15:10:57 -0400
+Message-ID: <118833cc05050312101f2715d3@mail.gmail.com>
 References: <1115145234.21105.111.camel@localhost.localdomain>
+	 <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 20:55:05 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 21:05:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT2Xb-0001mR-9q
-	for gcvg-git@gmane.org; Tue, 03 May 2005 20:54:43 +0200
+	id 1DT2hK-00053R-84
+	for gcvg-git@gmane.org; Tue, 03 May 2005 21:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261596AbVECTAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 15:00:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261599AbVECTAw
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:00:52 -0400
-Received: from fire.osdl.org ([65.172.181.4]:63209 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261596AbVECTAe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:00:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43J0Ws4009819
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 May 2005 12:00:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43J0Vu6010338;
-	Tue, 3 May 2005 12:00:32 -0700
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <1115145234.21105.111.camel@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261613AbVECTLC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 15:11:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261614AbVECTLC
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 15:11:02 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:62905 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261613AbVECTK7 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 15:10:59 -0400
+Received: by rproxy.gmail.com with SMTP id a41so20881rng
+        for <git@vger.kernel.org>; Tue, 03 May 2005 12:10:57 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sdGI47CphtJ73EGqJWvmBphHfkH6/XMdI9ErvmXYUVzzg+iEQHsEvm+OwkgCCuh5/NNj04Evhl3UisDU0ZNrJD6rQNxSQtWiYol48DetQ/BzexbV8dJ1lU18vq5S4mrNM3FmFkLlVI2MWyOEyKlxpgg2+XF/Dko7szQv1lO00Ms=
+Received: by 10.38.72.11 with SMTP id u11mr120890rna;
+        Tue, 03 May 2005 12:10:57 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Tue, 3 May 2005 12:10:57 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Something in the patching food chain will also need to know how to turn
+regular files into symlinks (and vice versa) in the same we ought to have
+that for directories right now.
 
-
-On Tue, 3 May 2005, Kay Sievers wrote:
->
-> Is there a sane model to make git aware of tracking symlinks in the
-> repository? In the bk udev tree we've had a test sysfs-tree with a lot
-> of symlinks in it.
-> 
-> Where can we store the link-target? In its own blob-object or directly
-> in the tree-object?
-
-I'd suggest you create a blob object with the symlink name, and then in
-the tree you point to that blob, but with the S_IFLNK value in the mode
-field (0120000).
-
-So you have
-
- - directories: S_IFDIR (0040000) point to "tree" objects for contents
- - symlinks: S_IFLNK (0120000) point to "blob" objects
- - executables: S_IFREG | 0755 (0100755) point to "blob" objects
- - regular files: S_IFREG | 0644 (0100644) point to "blob" objects
-
-which seems very sane and regular. 
-
-Now, I also haev a plan for device nodes, but that one is so ugly that I'm 
-a bit ashamed of it. That one does:
-
- - S_IFCHR/S_IFBLK (0020000 or 0060000), with the 20-byte SHA1 not being a 
-   SHA1 at all, but just the major:minor numbers in some nice binary 
-   encoding. Probably: two network byte order 32-bit values, with twelve 
-   bytes of some non-zero signature (the SHA1 of all zeroes should be 
-   avoided, so the signature really should be soemthing else than just 
-   twelve bytes of zero).
-
-That should cover most of it.
-
-> How would a exported "patch" with symlinks as content look like?
-
-The easiest way is to make this exactly the same as the "executable bit". 
-A symlink is just a normal blob, it just has a "symlink mode" instead of 
-"0755" or "0644" mode.
-
-When you think of it that way, the "patch" ends up falling out very 
-naturally, I think. It would look like
-
-	New file: filename (Mode: 0120000)
-	--- /dev/null
-	+++ filename
-	@@ 0,0 1,1
-	+symlink-value
-
-(or something, you get the idea).
-
-		Linus
+Morten
