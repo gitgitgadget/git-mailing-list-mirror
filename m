@@ -1,63 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Git-prune-script loses blobs referenced from an uncommitted
- cache.
-Date: Mon, 2 May 2005 19:56:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505021953160.3594@ppc970.osdl.org>
-References: <7vis21no03.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: More problems...
+Date: Mon, 2 May 2005 22:56:37 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505022240040.30848-100000@iabervon.org>
+References: <20050503014816.GQ20818@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 04:49:03 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Anton Altaparmakov <aia21@cam.ac.uk>,
+	Russell King <rmk@arm.linux.org.uk>,
+	Junio C Hamano <junkio@cox.net>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 04:51:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSnSY-0008WL-Gd
-	for gcvg-git@gmane.org; Tue, 03 May 2005 04:48:30 +0200
+	id 1DSnV3-0000cP-2s
+	for gcvg-git@gmane.org; Tue, 03 May 2005 04:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261324AbVECCyb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 May 2005 22:54:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261329AbVECCyb
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 22:54:31 -0400
-Received: from fire.osdl.org ([65.172.181.4]:1472 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261324AbVECCyS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 22:54:18 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j432sBs4001804
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 2 May 2005 19:54:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j432sAR2004042;
-	Mon, 2 May 2005 19:54:10 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vis21no03.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261329AbVECC5S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 May 2005 22:57:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261330AbVECC5R
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 May 2005 22:57:17 -0400
+Received: from iabervon.org ([66.92.72.58]:10246 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261329AbVECC5P (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 May 2005 22:57:15 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DSnaP-0008FV-00; Mon, 2 May 2005 22:56:37 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050503014816.GQ20818@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 3 May 2005, Petr Baudis wrote:
 
+> BTW, I've just committed support for pulling from remote repositories
+> over the HTTP and SSH protocols (http://your.git/repo,
+> git+ssh://root@git.nasa.gov/srv/git/mars) (note that I was unable to
+> test the SSH stuff properly now; success reports or patches welcome).
+> Also, the local hardlinking access is now done over git-local-pull,
+> therefore the cp errors should go away now.
 
-On Mon, 2 May 2005, Junio C Hamano wrote:
->
-> When a new blob is registered with update-cache, and before the cache
-> is written as a tree and committed, git-fsck-cache will find the blob
-> unreachable.  This patch fixes git-prune-script to keep such blob objects
-> referenced from the cache.
+Before you get too far with the SSH version, I have some protocol changes
+which (1) allow transmission of things other than objects; (2) allow the
+pushing side to report that it doesn't have something without killing the
+connection; (3) send refs. (1) and (2) are needed to make the protocol
+extensible; (3) takes advantage of (1) to make it possible to maintain a
+remote repository without doing anything other than rpush to it.
 
-Actually, I'd almost rather just have git-fsck-cache actually do a
-"read_cache()" and walk through that and marking the sha1's as "needed".
+This goes with my patches from the weekend to enable git-*-pull to
+transfer refs/ files in the same process.
 
-That's useful for another reason: not only does it mean that we don't drop 
-objects that may be in the current index, but it _also_ means that we 
-check that the current index actually has everything that it needs. I had 
-that situation a few times after I did a "convert-cache" - where I had an 
-old index file that pointed to the old objects _before_ the conversion.
+> I'm not yet decided whether locations like
+> 
+> 	kernel.org:/pub/scm/cogito/cogito.git
+> 
+> should invoke rsync, rpull, throw an error or print a fortune cookie.
 
-I noticed it the hard way, and happily it's easily fixed by just doing a 
-"git-read-cache <new-head>", but it was actually very confusing when it 
-happened, and it would have been good to have fsck-cache warn about it.
+Probably not rpull, which requires a login, at least not unless the others
+fail. I think that http-pull is going to be nicer in the long run than
+rsync, since the remote repository could have a bunch of mingled heads
+and http-pull will get exclusively the interesting stuff. If you're trying
+to push, then rpush, since that's the only push.
 
-		Linus
+Personally, I've been using http://... for http-pull, rsync://... for
+rsync, and //... for rpull/rpush (which is somewhat justified wrt the URI
+standard for using the program's default method).
+
+	-Daniel
+*This .sig left intentionally blank*
+
