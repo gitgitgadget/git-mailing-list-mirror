@@ -1,64 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Careful object writing..
-Date: Tue, 3 May 2005 16:22:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505031618360.26698@ppc970.osdl.org>
+Date: Tue, 03 May 2005 16:22:53 -0700
+Message-ID: <7vr7gnsxma.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
- <81b0412b05050316045fa31c2a@mail.gmail.com>
+	<81b0412b05050316045fa31c2a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 04 01:15:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 04 01:16:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT6bh-0005Vw-Pa
-	for gcvg-git@gmane.org; Wed, 04 May 2005 01:15:14 +0200
+	id 1DT6d1-0005rQ-6X
+	for gcvg-git@gmane.org; Wed, 04 May 2005 01:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261910AbVECXVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 19:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261909AbVECXVH
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 19:21:07 -0400
-Received: from fire.osdl.org ([65.172.181.4]:58826 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261911AbVECXUy (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 19:20:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43NKks4031144
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 May 2005 16:20:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43NKiGi024639;
-	Tue, 3 May 2005 16:20:45 -0700
+	id S261908AbVECXW4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 19:22:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261911AbVECXW4
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 19:22:56 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:49303 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261908AbVECXWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 May 2005 19:22:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050503232253.QQFV23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 3 May 2005 19:22:53 -0400
 To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b05050316045fa31c2a@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <81b0412b05050316045fa31c2a@mail.gmail.com> (Alex Riesen's
+ message of "Wed, 4 May 2005 01:04:23 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "AR" == Alex Riesen <raa.lkml@gmail.com> writes:
 
+AR> On 5/3/05, Linus Torvalds <torvalds@osdl.org> wrote:
+>> I also change the permission to 0444 before it gets its final name.
 
-On Wed, 4 May 2005, Alex Riesen wrote:
->
-> On 5/3/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> > I also change the permission to 0444 before it gets its final name.
-> 
-> Maybe umask it first? Just in case.
+AR> Maybe umask it first? Just in case.
 
-I considered it, but it's not worth it.
+In general worrying about umask when you see chmod is a good
+practice, but it probably is not applicable to this particular
+case.  A person with umask 077 should still get 0444 if the
+SHA1_FILE_DIRECTORY is shared with other people, and if it is
+not shared, his initial git-init-db would have made it 0700, so
+it does not matter it the files files underneath it have 0444.
 
-If you don't want somebody else to see your objects, you should just 
-disable execute permission on your .git directory. "umask" is actually a 
-fairly nasty interface, since it takes effect on create(), and we do want 
-to fchmod _after_ the create (some filesystems don't like it when you 
-create a non-writable object and then write to it, but more importantly, 
-since we use "mkstemp()" for the temp-file handling, we don't even have 
-control of the initial umask.
-
-So to make it (0444 & umask) git would actually have to jump through silly
-hoops. Without actually buying you anything new, since the access
-permissions for git objects really are about the _directory_ anyway.
-
-		Linus
