@@ -1,82 +1,67 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: questions about cg-update, cg-pull, and cg-clone.
-Date: Tue, 3 May 2005 10:20:57 -0700
-Message-ID: <20050503172057.GW4747@ca-server1.us.oracle.com>
-References: <20050430005322.GA5408@tumblerings.org> <20050502195846.GC20818@pasky.ji.cz> <20050503152214.GA1704@tumblerings.org> <20050503155915.GV4747@ca-server1.us.oracle.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: RFC: adding xdelta compression to git
+Date: Tue, 3 May 2005 10:35:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505031031240.3594@ppc970.osdl.org>
+References: <200505030657.38309.alonz@nolaviz.org>
+ <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505022215110.21733@bigblue.dev.mdolabs.com>
+ <Pine.LNX.4.61.0505031151380.32767@cag.csail.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 03 19:16:27 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Davide Libenzi <davidel@xmailserver.org>,
+	Alon Ziv <alonz@nolaviz.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 19:27:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT0zG-00012z-QL
-	for gcvg-git@gmane.org; Tue, 03 May 2005 19:15:11 +0200
+	id 1DT1Ax-0003Uq-13
+	for gcvg-git@gmane.org; Tue, 03 May 2005 19:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261426AbVECRVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 13:21:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261436AbVECRVQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 13:21:16 -0400
-Received: from agminet01.oracle.com ([141.146.126.228]:14247 "EHLO
-	agminet01.oracle.com") by vger.kernel.org with ESMTP
-	id S261426AbVECRVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 13:21:06 -0400
-Received: from rgmgw3.us.oracle.com (rgmgw3.us.oracle.com [138.1.191.12])
-	by agminet01.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j43HKwlx007039;
-	Tue, 3 May 2005 12:20:58 -0500
-Received: from rgmgw3.us.oracle.com (localhost [127.0.0.1])
-	by rgmgw3.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j43HKvXq031274;
-	Tue, 3 May 2005 11:20:57 -0600
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
-	by rgmgw3.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j43HKvwX031269;
-	Tue, 3 May 2005 11:20:57 -0600
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.50)
-	id 1DT14r-0000cH-8O; Tue, 03 May 2005 10:20:57 -0700
-To: Zack Brown <zbrown@tumblerings.org>
-Content-Disposition: inline
-In-Reply-To: <20050503155915.GV4747@ca-server1.us.oracle.com>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
-User-Agent: Mutt/1.5.9i
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
+	id S261482AbVECRdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 13:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261488AbVECRdd
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 13:33:33 -0400
+Received: from fire.osdl.org ([65.172.181.4]:48073 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261482AbVECRda (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 13:33:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43HXCs4002125
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 May 2005 10:33:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43HXB1K005499;
+	Tue, 3 May 2005 10:33:12 -0700
+To: "C. Scott Ananian" <cscott@cscott.net>
+In-Reply-To: <Pine.LNX.4.61.0505031151380.32767@cag.csail.mit.edu>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 03, 2005 at 08:59:15AM -0700, Joel Becker wrote:
-> 	Then you change the first file, adding a few functions.  You
-> commit it, and it now has the hash 111111.  This change means the tree
-> hash becomes 222222.  So, HEAD contains 222222.
-> 	You then update from Petr again.  He's changed the second file.
-> It's hash is no longer cccccc, it's eeeeee.  In his tree, the hash of
-> the tree is 333333 (from file 1's aaaaaa and file 2's eeeeee).  But the
-> hash of your tree is 444444 (from your local file 1's 111111 and file 2's eeeeee).  So, the hash of the your tree becomes 444444.  Your HEAD contains 444444.
-> This does _not_ match his 333333 HEAD.  You are committing the
-> combination of his change and yours.  He is saying that this work, which
-> may have required hand-merging or commit resolution, is "interesting"
-> information.
 
-	Actually, it is more than interesting.  The tree has gone from a
-HEAD of 222222 to a HEAD of 444444.  When HEAD changes, you need a
-commit to describe the path.  Otherwise, you have a breakdown in the
-history.  cg-log (or any other command) would have no way to get back
-from 444444 to 222222 (or Petr's 333333) without the commit object
-specifying its parent(s).
-	If you have made no commits on your side, then the old HEAD is
-Petr's old HEAD, the new HEAD is Petr's new 333333, and he's already
-created a commit object describing this.  You're just fast-forwarding.
 
-Joel
+On Tue, 3 May 2005, C. Scott Ananian wrote:
+> 
+> Linus knows this.  His point is just to be sure you actually *code* that 
+> walk in fsck, and (hopefully) do so w/o complicating the fsck too much.
 
--- 
+Indeed. It's also a performance issue.
 
-"The nice thing about egotists is that they don't talk about other
- people."
-         - Lucille S. Harper
+If you do xdelta objects, and don't tell fsck about it, then fsck will 
+just check every object as a blob. Why is that bad?
 
-Joel Becker
-Senior Member of Technical Staff
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+Think about it: let's say that you have a series of xdelta objects, and a 
+fsck that is xdelta-unaware. It will unpack each object independently, 
+which means that it will keep on doing the same early xdelta work over and 
+over and over again. Instead of just applying them in order, and checking 
+the sha1 of the result at each point.
+
+Now, You probably want to limit the length of the chains to some firly 
+small number anyway, so maybe that's not a big deal. Who knows. And I'm 
+actually still so anal that I don't think I'd use this for _my_ tree, just 
+because I'm a worry-wart (and I still think disk is incredibly cheap ;)
+
+		Linus
