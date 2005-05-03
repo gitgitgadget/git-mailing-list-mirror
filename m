@@ -1,59 +1,59 @@
-From: Matt Porter <mporter@kernel.crashing.org>
-Subject: Re: [PATCH] Add exclude file support to cg-status
-Date: Mon, 2 May 2005 21:21:07 -0700
-Message-ID: <20050502212107.A26102@cox.net>
-References: <20050502171042.A24299@cox.net> <7vd5s9nmio.fsf@assigned-by-dhcp.cox.net> <20050502193343.A25462@cox.net> <7v4qdlndw0.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Mon, 2 May 2005 21:24:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505022123270.3594@ppc970.osdl.org>
+References: <20050429165232.GV21897@waste.org> <427650E7.2000802@tmr.com>
+ <Pine.LNX.4.58.0505021457060.3594@ppc970.osdl.org> <20050502223002.GP21897@waste.org>
+ <Pine.LNX.4.58.0505021540070.3594@ppc970.osdl.org> <20050503000011.GA22038@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 06:17:29 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Davidsen <davidsen@tmr.com>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Sean <seanlkml@sympatico.ca>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 06:17:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSoq9-0004mG-76
-	for gcvg-git@gmane.org; Tue, 03 May 2005 06:16:57 +0200
+	id 1DSoqG-0004oF-3K
+	for gcvg-git@gmane.org; Tue, 03 May 2005 06:17:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261375AbVECEXD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 00:23:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261384AbVECEXC
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:23:02 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17337 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261375AbVECEW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 00:22:59 -0400
-Received: from liberty.homelinux.org ([68.2.41.86]) by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050503042258.NSBJ7275.fed1rmmtao09.cox.net@liberty.homelinux.org>;
-          Tue, 3 May 2005 00:22:58 -0400
-Received: (from mmporter@localhost)
-	by liberty.homelinux.org (8.9.3/8.9.3/Debian 8.9.3-21) id VAA26194;
-	Mon, 2 May 2005 21:21:07 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5i
-In-Reply-To: <7v4qdlndw0.fsf@assigned-by-dhcp.cox.net>; from junkio@cox.net on Mon, May 02, 2005 at 09:15:43PM -0700
+	id S261381AbVECEXL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 00:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261380AbVECEXI
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 00:23:08 -0400
+Received: from fire.osdl.org ([65.172.181.4]:4044 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261381AbVECEXA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 00:23:00 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j434Mss4007161
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 2 May 2005 21:22:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j434MroF007300;
+	Mon, 2 May 2005 21:22:53 -0700
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050503000011.GA22038@waste.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 02, 2005 at 09:15:43PM -0700, Junio C Hamano wrote:
-> You may want to check the past thread, like this one:
 
-<snip>
 
->     .git/
->       objects/    (traditional)
->       refs/       Directories of hex SHA1 + newline files
->         heads/    Commits which are heads of various sorts
->         tags/     Tags, by the tag name (or some local renaming of it)
->       info/       Other shared information
->         remotes
->       ...         Everything else isn't shared
->       HEAD        Symlink to refs/heads/<something>
+On Mon, 2 May 2005, Matt Mackall wrote:
+> 
+> It's still simple in Mercurial, but more importantly Mercurial _won't
+> need it_. Dropping history is a work-around, not a feature.
 
-Ok, I see I skimmed the archives way too fast after vacation. :)
+Side note: this is what Larry thought about BK too. Until three years had
+passed, and the ChangeSet file was many megabytes in size. Even slow
+growth ends up being big growth in the end..
 
-I'll update the patch to match.
+We had been talking about pruning the BK history as long back as a year 
+ago.
 
-Thanks,
-Matt
+		Linus
