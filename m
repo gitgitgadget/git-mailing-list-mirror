@@ -1,108 +1,44 @@
-From: Chris Wright <chrisw@osdl.org>
-Subject: [PATCH 2/3] cogito spec file 0.8-1
-Date: Tue, 3 May 2005 11:32:11 -0700
-Message-ID: <20050503183211.GN18917@shell0.pdx.osdl.net>
-References: <20050503182850.GL18917@shell0.pdx.osdl.net> <20050503183038.GM18917@shell0.pdx.osdl.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: git and symlinks as tracked content
+Date: Tue, 03 May 2005 20:33:54 +0200
+Message-ID: <1115145234.21105.111.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 20:31:31 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 03 20:32:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT29c-0001zA-8p
-	for gcvg-git@gmane.org; Tue, 03 May 2005 20:29:56 +0200
+	id 1DT29p-00023a-CW
+	for gcvg-git@gmane.org; Tue, 03 May 2005 20:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261548AbVECSfg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 14:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261570AbVECSfb
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 14:35:31 -0400
-Received: from fire.osdl.org ([65.172.181.4]:7904 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261548AbVECScO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 14:32:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j43IWBs4007304
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 May 2005 11:32:11 -0700
-Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j43IWBPo008798;
-	Tue, 3 May 2005 11:32:11 -0700
-Received: (from chrisw@localhost)
-	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j43IWBml008797;
-	Tue, 3 May 2005 11:32:11 -0700
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050503183038.GM18917@shell0.pdx.osdl.net>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261570AbVECSgC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 14:36:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261566AbVECSfo
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 14:35:44 -0400
+Received: from soundwarez.org ([217.160.171.123]:19343 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261559AbVECSd7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 14:33:59 -0400
+Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id C2D3A2C97D
+	for <git@vger.kernel.org>; Tue,  3 May 2005 20:33:53 +0200 (CEST)
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Update spec file to cogito 0.8.  Obsolete the git package, add some
-more build and install prereqs, move to /usr/bin, update URLs.
+Is there a sane model to make git aware of tracking symlinks in the
+repository? In the bk udev tree we've had a test sysfs-tree with a lot
+of symlinks in it.
 
-Signed-off-by: Chris Wright <chrisw@osdl.org>
+Where can we store the link-target? In its own blob-object or directly
+in the tree-object?
 
---- cogito/git.spec~0.7-1	2005-05-03 11:02:15.000000000 -0700
-+++ cogito/git.spec	2005-05-03 11:10:32.000000000 -0700
-@@ -1,16 +1,17 @@
--Name: 		git
--Version: 	0.7
-+Name: 		cogito
-+Version: 	0.8
- Release: 	1
- Vendor: 	Petr Baudis <pasky@ucw.cz>
- Summary:  	Git core and tools
- License: 	GPL
- Group: 		Development/Tools
--URL: 		http://pasky.or.cz/~pasky/dev/git/
--Source: 	http://pasky.or.cz/~pasky/dev/git/%{name}-pasky-%{version}.tar.bz2
--Provides: 	git = %{version}
--BuildRequires:	zlib-devel openssl-devel
-+URL: 		http://kernel.org/pub/software/scm/cogito/
-+Source: 	http://kernel.org/pub/software/scm/cogito/%{name}-%{version}.tar.bz2
-+Provides: 	cogito = %{version}
-+Obsoletes:	git
-+BuildRequires:	zlib-devel, openssl-devel, curl-devel
- BuildRoot:	%{_tmppath}/%{name}-%{version}-root
--Prereq: 	sh-utils diffutils
-+Prereq: 	sh-utils, diffutils, rsync, rcs, mktemp >= 1.5
- 
- %description
- GIT comes in two layers. The bottom layer is merely an extremely fast
-@@ -20,7 +21,7 @@ enables human beings to work with the da
- similar to other SCM tools (like CVS, BitKeeper or Monotone).
- 
- %prep
--%setup -q -n %{name}-pasky-%{version}
-+%setup -q -n %{name}-%{version}
- 
- %build
- 
-@@ -28,17 +29,19 @@ make
- 
- %install
- rm -rf $RPM_BUILD_ROOT
--make DESTDIR=$RPM_BUILD_ROOT prefix=/usr/local install
-+make DESTDIR=$RPM_BUILD_ROOT prefix=/usr/ install
- 
- %clean
- rm -rf $RPM_BUILD_ROOT
- 
- %files
- %defattr(-,root,root)
--/usr/local/bin/*
--#%{_mandir}/*/*
-+/usr/bin/*
- 
- %changelog
-+* Mon Apr 25 2005 Chris Wright <chrisw@osdl.org> 0.8-1
-+- Update to cogito, rename package, move to /usr/bin, update prereqs
-+
- * Mon Apr 25 2005 Chris Wright <chrisw@osdl.org> 0.7-1
- - Update to 0.7
- 
+How would a exported "patch" with symlinks as content look like?
+
+Thanks,
+Kay
+
