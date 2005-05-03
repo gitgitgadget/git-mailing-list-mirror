@@ -1,78 +1,85 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: [PATCH] add the ability to create and retrieve delta objects
-Date: Tue, 3 May 2005 12:09:51 -0400
-Message-ID: <200505031209.52460.mason@suse.com>
-References: <200505030657.38309.alonz@nolaviz.org> <200505030724.57827.mason@suse.com> <Pine.LNX.4.58.0505030804170.3594@ppc970.osdl.org>
+From: Bill Davidsen <davidsen@tmr.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark
+Date: Tue, 03 May 2005 12:22:06 -0400
+Message-ID: <4277A52E.1020601@tmr.com>
+References: <E1DSm1T-0002Tc-FV@be1.7eggert.dyndns.org><E1DSm1T-0002Tc-FV@be1.7eggert.dyndns.org> <20050503012921.GD22038@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Alon Ziv <alonz@nolaviz.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 18:05:41 2005
+Cc: "Bodo Eggert <harvested.in.lkml@posting.7eggert.dyndns.org>" 
+	<7eggert@gmx.de>, Linus Torvalds <torvalds@osdl.org>,
+	Ryan Anderson <ryan@michonline.com>,
+	Andrea Arcangeli <andrea@suse.de>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 18:21:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSzse-0006cY-JC
-	for gcvg-git@gmane.org; Tue, 03 May 2005 18:04:16 +0200
+	id 1DT08L-0000xt-C9
+	for gcvg-git@gmane.org; Tue, 03 May 2005 18:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261814AbVECQKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 12:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261819AbVECQKS
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 12:10:18 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:17102 "EHLO mx2.suse.de")
-	by vger.kernel.org with ESMTP id S261814AbVECQJ6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 12:09:58 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx2.suse.de (Postfix) with ESMTP id 8542F9D75;
-	Tue,  3 May 2005 18:09:56 +0200 (CEST)
-Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by extimap.suse.de (Postfix) with ESMTP
-	id 33FD31509EC; Tue,  3 May 2005 18:09:56 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.58.0505030804170.3594@ppc970.osdl.org>
-Content-Disposition: inline
+	id S261267AbVECQZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 12:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261222AbVECQZp
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 12:25:45 -0400
+Received: from prgy-npn1.prodigy.com ([207.115.54.37]:49549 "EHLO
+	oddball.prodigy.com") by vger.kernel.org with ESMTP id S261190AbVECQX0
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 3 May 2005 12:23:26 -0400
+Received: from [127.0.0.1] (oddball.prodigy.com [127.0.0.1])
+	by oddball.prodigy.com (8.11.6/8.11.6) with ESMTP id j43GM7p06807;
+	Tue, 3 May 2005 12:22:16 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050319
+X-Accept-Language: en-us, en
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050503012921.GD22038@waste.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tuesday 03 May 2005 11:07, Linus Torvalds wrote:
-> On Tue, 3 May 2005, Chris Mason wrote:
-> > On the full import of all the bk->cvs changesets, the average file size
-> > in .git is 4074 bytes.  73% of the files are 4096 bytes or smaller.
->
-> Have you checked how many of those are blobs?
->
-I've got cg-admin-lsobj running (effectively find .git -type f | xargs 
-cat-file), it is taking a looong time but the ratios seem to stay pretty 
-constant as it makes progress:
+Matt Mackall wrote:
+> On Tue, May 03, 2005 at 03:16:26AM +0200, Bodo Eggert <harvested.in.lkml@posting.7eggert.dyndns.org> wrote:
+> 
+>>Linus Torvalds <torvalds@osdl.org> wrote:
+>>
+>>>On Mon, 2 May 2005, Ryan Anderson wrote:
+>>>
+>>>>On Mon, May 02, 2005 at 09:31:06AM -0700, Linus Torvalds wrote:
+>>
+>>>>>That said, I think the /usr/bin/env trick is stupid too. It may be more
+>>>>>portable for various Linux distributions, but if you want _true_
+>>>>>portability, you use /bin/sh, and you do something like
+>>>>>
+>>>>>#!/bin/sh
+>>>>>exec perl perlscript.pl "$@"
+>>>>
+>>>>if 0;
+>>
+>>exec may fail.
+>>
+>>#!/bin/sh
+>>exec perl -x $0 ${1+"$@"} || exit 127
+>>#!perl
+>>
+>>
+>>>>You don't really want Perl to get itself into an exec loop.
+>>>
+>>>This would _not_ be "perlscript.pl" itself. This is the shell-script, and
+>>>it's not called ".pl".
+>>
+>>In this thread, it originally was.
+> 
+> 
+> In this thread, it was originally a Python script. In particular, one
+> aimed at managing the Linux kernel source. I'm going to use
+> /usr/bin/env, systems where that doesn't exist can edit the source.
 
-total: 186863
-blob: 93688     (6.6 per commit)
-commit: 14172
-tree: 79003      (5.5 per commit)
+On the theory that my first post got lost, why use /usr/bin/env at all, 
+when bash already does that substitution? To support people who use 
+other shells?
 
-> For many commits, we generate as many (or more) _tree_ objects as we
-> generate blobs.
->
-> And tree obejcts from the same "supertree" really is something that I
-> wouldn't mind packing some way, because they really tend to be very much
-> related (since they refer to each other). Eg the commit and the top-level
-> tree are almost always a pair, since you'd get a shared top-level tree
-> only with two commits that have the exact same content (which definitely
-> happens, don't get me wrong, but it we get some duplication for that case,
-> we'd still be winning).
->
-
-The packed item patch wouldn't duplicate info in this case.  When it initially 
-creates the packed buffer (before compression), it checks for an existing 
-file with the same sha1 and returns if one is found.  This is to preserve the 
-optimizations for write_tree case where it frequently tries to create files 
-that already exist.
-
--chris
+ie.:
+    FOO=xx perl -e '$a=$ENV{FOO}; print "$a\n"'
+-- 
+    -bill davidsen (davidsen@tmr.com)
+"The secret to procrastination is to put things off until the
+  last possible moment - but no longer"  -me
