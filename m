@@ -1,51 +1,62 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb on kernel.org lies?
-Date: Tue, 03 May 2005 12:52:17 +0200
-Message-ID: <1115117537.21105.53.camel@localhost.localdomain>
-References: <1115109604.8508.34.camel@localhost.localdomain>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] add the ability to create and retrieve delta objects
+Date: Tue, 3 May 2005 07:24:56 -0400
+Message-ID: <200505030724.57827.mason@suse.com>
+References: <200505030657.38309.alonz@nolaviz.org> <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org> <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 03 12:48:21 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, Alon Ziv <alonz@nolaviz.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 03 13:19:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DSuun-0005Op-22
-	for gcvg-git@gmane.org; Tue, 03 May 2005 12:46:09 +0200
+	id 1DSvQb-0000bC-7h
+	for gcvg-git@gmane.org; Tue, 03 May 2005 13:19:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261446AbVECKwV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 06:52:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261449AbVECKwV
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 06:52:21 -0400
-Received: from soundwarez.org ([217.160.171.123]:6862 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261446AbVECKwT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 06:52:19 -0400
-Received: from dhcp-113.off.vrfy.org (c169067.adsl.hansenet.de [213.39.169.67])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	id S261468AbVECLZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 07:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261479AbVECLZL
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 07:25:11 -0400
+Received: from ns1.suse.de ([195.135.220.2]:32696 "EHLO mx1.suse.de")
+	by vger.kernel.org with ESMTP id S261468AbVECLZG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 07:25:06 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
 	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 93AB22BE95;
-	Tue,  3 May 2005 12:52:16 +0200 (CEST)
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1115109604.8508.34.camel@localhost.localdomain>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+	by mx1.suse.de (Postfix) with ESMTP id B05C7160E711;
+	Tue,  3 May 2005 13:25:05 +0200 (CEST)
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2005-05-03 at 09:40 +0100, David Woodhouse wrote:
-> http://www.kernel.org/git/gitweb.cgi?p=linux%2Fkernel%2Fgit%2Fdwmw2%2Faudit-2.6.git;a=log
-> doesn't seem to show the commits which were just put there. Why?
+On Tuesday 03 May 2005 04:06, Nicolas Pitre wrote:
+> On Mon, 2 May 2005, Linus Torvalds wrote:
+> > If you do something like this, you want such a delta-blob to be named by
+> > the sha1 of the result, so that things that refer to it can transparently
+> > see either the original blob _or_ the "deltified" one, and will never
+> > care.
+>
+> Yep, that's what I've done last weekend (and just made it actually
+> work since people are getting interested).
+>
+This looks much nicer than using zdelta, I'll try switching my packed item to 
+your delta generator later this week.  Some quick and dirty space numbers to 
+show why we need to pack the files together:
 
-The HEAD:
-  ftp://kernel.org/pub/scm/linux/kernel/git/dwmw2/audit-2.6.git/HEAD
+On the full import of all the bk->cvs changesets, the average file size 
+in .git is 4074 bytes.  73% of the files are 4096 bytes or smaller.
 
-points to:
-  42d4dc3f4e1ec1396371aac89d0dccfdd977191b
-  authorBenjamin Herrenschmidt <benh@kernel.crashing.org>
-  Fri, 29 Apr 2005 14:40:12 +0000 (07:40 -0700)
+This means that of the 2.5GB the .git directory consumes, about 1GB is taken 
+up by files under 4k where deltas won't save space.  If the remaining files 
+could be delta compressed down to less than 4k, they would still take up 
+around 400MB on disk.
 
-which is 3 days old, right?
-
-Kay
+-chris
 
