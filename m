@@ -1,117 +1,45 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: plumbing pull request
-Date: Wed, 04 May 2005 02:22:36 -0700
-Message-ID: <7vll6vpcpv.fsf@assigned-by-dhcp.cox.net>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: [PATCH] Careful object pulling
+Date: Wed, 4 May 2005 05:35:10 -0400
+Message-ID: <118833cc050504023569e00d38@mail.gmail.com>
+References: <Pine.LNX.4.58.0505031204030.26698@ppc970.osdl.org>
+	 <Pine.LNX.4.21.0505040004290.30848-100000@iabervon.org>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 11:16:57 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 04 11:29:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTFzZ-00011n-1a
-	for gcvg-git@gmane.org; Wed, 04 May 2005 11:16:29 +0200
+	id 1DTGBn-0002Vg-Tc
+	for gcvg-git@gmane.org; Wed, 04 May 2005 11:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261546AbVEDJWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 05:22:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261545AbVEDJWu
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 05:22:50 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12193 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261546AbVEDJWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2005 05:22:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050504092237.OOEO7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 4 May 2005 05:22:37 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261559AbVEDJfN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 05:35:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261567AbVEDJfN
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 05:35:13 -0400
+Received: from rproxy.gmail.com ([64.233.170.199]:52097 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261559AbVEDJfL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2005 05:35:11 -0400
+Received: by rproxy.gmail.com with SMTP id a41so126900rng
+        for <git@vger.kernel.org>; Wed, 04 May 2005 02:35:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JiG7PVFtL4h0NTH+zbAMyFjITqMMYloUAqj/phFDGMOshlLFVSyg33ukZqk/xaq6AQeVcMkOaUfzyowm1dBajKuVQmIoF6qNLG5Uk7nnGMa+rvzF6XAqX8qPhYyv55nJdo0POifv0ZUUxIK5qkI7ZRb/LJcEQuC/3t6yqntozR4=
+Received: by 10.38.86.11 with SMTP id j11mr934185rnb;
+        Wed, 04 May 2005 02:35:10 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Wed, 4 May 2005 02:35:10 -0700 (PDT)
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0505040004290.30848-100000@iabervon.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus, please pull from http://members.cox.net/junkio/git-jc.git/
-which contains the following changes.
+Something's fishy there.  You are comparing the result from link with EEXIST.
 
-----------------------------------------------------------------
-
-  Optimize diff-cache -p --cached
-
-  This patch optimizes "diff-cache -p --cached" by avoiding to
-  inflate blobs into temporary files when the blob recorded in the
-  cache matches the corresponding file in the work tree.  The file
-  in the work tree is passed as the comparison source in such a
-  case instead.
-
-  This optimization kicks in only when we have already read the
-  cache this optimization and this is deliberate.  Especially,
-  diff-tree does not use this code, because changes are contained
-  in small number of files relative to the project size most of
-  the time, and reading cache is so expensive for a large project
-  that the cost of reading it outweighs the savings by not
-  inflating blobs.
-
-  Also this patch cleans up the structure passed from diff clients
-  by removing one unused structure member.
-
-----------------------------------------------------------------
-
-  Terminate diff-* on non-zero exit from GIT_EXTERNAL_DIFF
-
-  (slightly updated from the version posted to the GIT mailing list
-  with small bugfixes).
-
-  This patch changes the git-apply-patch-script to exit non-zero when
-  the patch cannot be applied.  Previously, the external diff driver
-  deliberately ignored the exit status of GIT_EXTERNAL_DIFF command,
-  which was a design mistake.  It now stops the processing when
-  GIT_EXTERNAL_DIFF exits non-zero, so the damages from running
-  git-diff-* with git-apply-patch-script between two wrong trees can be
-  contained.
-
-  The "diff" command line generated by the built-in driver is changed to
-  always exit 0 in order to match this new behaviour.  I know Pasky does
-  not use GIT_EXTERNAL_DIFF yet, so this change should not break Cogito,
-  either.
-
-----------------------------------------------------------------
-
-  Git-prune-script loses blobs referenced from an uncommitted cache.
-
-  (updated from the version posted to GIT mailing list).
-
-  When a new blob is registered with update-cache, and before the cache
-  is written as a tree and committed, git-fsck-cache will find the blob
-  unreachable.  This patch adds a new flag, "--cache" to git-fsck-cache,
-  with which it keeps such blobs from considered "unreachable".
-
-  The git-prune-script is updated to use this new flag.  At the same time
-  it adds .git/refs/*/* to the set of default locations to look for heads,
-  which should be consistent with expectations from Cogito users.
-
-  Without this fix, "diff-cache -p --cached" after git-prune-script has
-  pruned the blob object will fail mysteriously and git-write-tree would
-  also fail.
-
-----------------------------------------------------------------
-
-  Short-cut error return path in git-local-pull.
-
-  When git-local-pull with -l option gets ENOENT attempting to create
-  a hard link, there is no point falling back to other copy methods.
-  With this patch, git-local-pull detects such a case and gives up
-  copying the file early.
-
-----------------------------------------------------------------
-
-  Make git-*-pull say who wants them for missing objects.
-
-  This patch updates pull.c, the engine that decides which objects are
-  needed, given a commit to traverse from, to report which commit was
-  calling for the object that cannot be retrieved from the remote side.
-  This complements git-fsck-cache in that it checks the consistency of
-  the remote repository for reachability.
-
-----------------------------------------------------------------
-
+Morten
