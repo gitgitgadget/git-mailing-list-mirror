@@ -1,81 +1,122 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: [PATCH] add the ability to create and retrieve delta objects
-Date: Wed, 4 May 2005 13:44:50 -0400
-Message-ID: <200505041344.51637.mason@suse.com>
-References: <200505030657.38309.alonz@nolaviz.org> <200505041156.19499.mason@suse.com> <Pine.LNX.4.61.0505041202270.22203@cag.csail.mit.edu>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] cogito: replace "git-* $(tree-id)" with "git-* HEAD"
+Date: Wed, 4 May 2005 19:48:07 +0200
+Message-ID: <20050504174807.GA21145@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>,
-	Alon Ziv <alonz@nolaviz.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 19:39:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 19:45:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTNpm-0000QH-W6
-	for gcvg-git@gmane.org; Wed, 04 May 2005 19:38:55 +0200
+	id 1DTNvE-0001C8-N9
+	for gcvg-git@gmane.org; Wed, 04 May 2005 19:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261197AbVEDRpP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 13:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261251AbVEDRpP
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 13:45:15 -0400
-Received: from cantor.suse.de ([195.135.220.2]:39642 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S261197AbVEDRo5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 13:44:57 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 1C5A6160E227;
-	Wed,  4 May 2005 19:44:57 +0200 (CEST)
-To: "C. Scott Ananian" <cscott@cscott.net>
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.61.0505041202270.22203@cag.csail.mit.edu>
+	id S261251AbVEDRtz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 13:49:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261171AbVEDRtz
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 13:49:55 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:47794 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261251AbVEDRsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 13:48:09 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 828C9543; Wed,  4 May 2005 19:48:07 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 04 May 2005 12:12, C. Scott Ananian wrote:
-> On Wed, 4 May 2005, Chris Mason wrote:
-> > 3) create a git-pack tool that can pack/unpack existing changesets,trees
-> > and files, optionally adding/removing deltas.
->
-> A 'git-pull' tool might be more use.  I can imagine Linus maintaining his
-> local tree uncompressed, but the 'kernel.org' tree set up to
-> git-pull-delta from him every hour or whatever, so that the
-> network-accessible version is always network-efficient.  'git-pack'
-> would then simplify to a git-pull-delta from an existing local repository.
+tree-id, when called without parameters, prints the tree ID in the
+commit object whose ID is in .git/HEAD.  Both git-diff-cache and
+git-read-tree (in general all GIT tools that use get_sha1()) can get
+this ID from .git/HEAD themselves when they are called with "HEAD" as
+ID parameter.  So this patch replaces occurences of "git-* $(tree-id)"
+with "git-* HEAD".  This speeds things up a bit and also makes the
+intent of the git-* calls a bit more clear.
 
-I had pictured the opposite, after the regular pull you would run git-pack to 
-redelta/pack things to your local settings.  There's a ton of things to try 
-in git pull for delta transmission, and I'd rather keep it separate from the 
-local repository packing for now.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-Later on if both tools are working properly we could look at combining them.
-
->
-> Ideally, you'd also be able to git-pull from a network packed repository
-> and (transparently) unpack and undelta-fy the pulled files as they're
-> added to your local repo.  This would keep Linus from accidentally getting
-> packed files in his tree when he pulled from a maintainer's
-> packed/delta-ed network-accessible tree.
->
-Yes, if Linus does take the patches, it's really important for people to be 
-able to easily continue without deltas/packing if they want.
-
-> I'd also be interested in seeing the speed/space numbers for some other
-> delta chain lengths between 1 and 16.  Maybe some intermediate point is
-> optimal.  [Also, limiting delta chains to a certain number of other
-> *packed* objects -- instead of just 'objects' -- might be an improvement.
-> Right now you're packing entire commits together, right?  Maybe defining a
-> delta chain as 'N other commits max' might improve i/o performance, as
-> you'd just have to keep N other unpacked files around, instead of an
-> arbitrary number.]
-
-It's easy to do additional runs, but I would rather do this kind of fine 
-tuning with the git-pack tool.  That way we could experiment with packing 
-multiple commits into a single file, deltas on tree objects, or even 
-combining commits based on which files tye modify.
-
--chris
+Index: cg-cancel
+===================================================================
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-cancel  (mode:100755 sha1:4d1e6d9d112f050b402a454a4c04de4d4e379524)
++++ 0ff2b865104800b6a0dbbe17093bfca6e8b52898/cg-cancel  (mode:100755 sha1:dab527132a33922901bc184a8e7dad57b757b991)
+@@ -26,7 +26,7 @@
+ fi
+ 
+ rm -f .git/blocked .git/merging .git/merging-sym .git/merge-base
+-git-read-tree -m $(tree-id) || git-read-tree $(tree-id)
++git-read-tree -m HEAD || git-read-tree HEAD
+ 
+ git-checkout-cache -f -a
+ git-update-cache --refresh
+Index: cg-commit
+===================================================================
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-commit  (mode:100755 sha1:e80567a50e297d2a060773b5f10e193243ac340e)
++++ 0ff2b865104800b6a0dbbe17093bfca6e8b52898/cg-commit  (mode:100755 sha1:8f2514eac77fb9a23d6eba4e2f748914162da3d8)
+@@ -37,7 +37,7 @@
+ 	# be committed along automagically as well.
+ 
+ 	if [ ! "$ignorecache" ]; then
+-		changedfiles=$(git-diff-cache $(tree-id) | cut -f 4-)
++		changedfiles=$(git-diff-cache HEAD | cut -f 4-)
+ 		commitfiles="$addedfiles $remfiles $changedfiles"
+ 	fi
+ 
+@@ -79,7 +79,7 @@
+ 		echo $commitfiles | xargs git-update-cache --add --remove \
+ 			|| die "update-cache failed"
+ 		export GIT_INDEX_FILE=$(mktemp -t gitci.XXXXXX)
+-		git-read-tree $(tree-id)
++		git-read-tree HEAD
+ 	fi
+ 	# TODO: Do the proper separation of adds, removes, and changes.
+ 	echo $commitfiles | xargs git-update-cache --add --remove \
+Index: cg-init
+===================================================================
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-init  (mode:100755 sha1:229b64901d7d8e67d900b9c8e558f18ceb3b8a5f)
++++ 0ff2b865104800b6a0dbbe17093bfca6e8b52898/cg-init  (mode:100755 sha1:90a9d5497a0a70830094d2ee552d974819858ec4)
+@@ -22,7 +22,7 @@
+ 	cg-pull origin || die "pull failed"
+ 
+ 	cp .git/refs/heads/origin .git/refs/heads/master
+-	git-read-tree $(tree-id)
++	git-read-tree HEAD
+ 	git-checkout-cache -a
+ 	git-update-cache --refresh
+ 
+Index: cg-merge
+===================================================================
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-merge  (mode:100755 sha1:8c3f68b26346ad02474f595b651be77fc8958aa5)
++++ 0ff2b865104800b6a0dbbe17093bfca6e8b52898/cg-merge  (mode:100755 sha1:13b4dcf70dfa7f878c9599276c0d77908190b834)
+@@ -79,7 +79,7 @@
+ 
+ 
+ [ "$(git-diff-files -s)" ] && git-update-cache --refresh
+-if [ "$(git-diff-files -s)" ] || [ "$(git-diff-cache $(tree-id))" ]; then
++if [ "$(git-diff-files -s)" ] || [ "$(git-diff-cache HEAD)" ]; then
+ 	die "merge blocked: local changes"
+ fi
+ 
+@@ -139,5 +139,5 @@
+ readtree=
+ cg-commit -C || { readtree=1 ; echo "cg-merge: COMMIT FAILED, retry manually" >&2; }
+ 
+-[ "$readtree" ] && git-read-tree -m $(tree-id)
++[ "$readtree" ] && git-read-tree -m HEAD
+ git-update-cache --refresh
+Index: cg-seek
+===================================================================
+--- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-seek  (mode:100755 sha1:111f7842e5ec20a1e0714e162ca221da5e06ce33)
++++ 0ff2b865104800b6a0dbbe17093bfca6e8b52898/cg-seek  (mode:100755 sha1:648c2b0db6e935d4768ca4820c91e7863e8487f4)
+@@ -45,7 +45,7 @@
+ fi
+ 
+ if [ "$curcommit" != "$dstcommit" ]; then
+-	git-read-tree -m $(tree-id)
++	git-read-tree -m HEAD
+ 	cg-diff -r $curcommit:$dstcommit | cg-patch
+ 	git-update-cache --refresh
+ fi
