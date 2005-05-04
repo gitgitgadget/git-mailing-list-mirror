@@ -1,51 +1,72 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: 'read-tree -m head' vs 'read-tree head'
-Date: Wed, 4 May 2005 09:01:48 +0200
-Message-ID: <20050504070148.GF18380@cip.informatik.uni-erlangen.de>
-References: <20050503124935.GT25004@cip.informatik.uni-erlangen.de> <7vbr7sw2aj.fsf@assigned-by-dhcp.cox.net> <20050503213444.GD15995@pasky.ji.cz> <7vr7gnpjkq.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 04 08:55:44 2005
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: How to get bash to shut up about SIGPIPE?
+Date: Wed, 04 May 2005 18:26:25 +1000
+Organization: Core
+Message-ID: <E1DTFD7-00063T-00@gondolin.me.apana.org.au>
+References: <Pine.LNX.4.58.0505031947530.26698@ppc970.osdl.org>
+Cc: dwheeler@dwheeler.com, pj@sgi.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 10:21:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTDn8-0007SH-8N
-	for gcvg-git@gmane.org; Wed, 04 May 2005 08:55:30 +0200
+	id 1DTF8C-0002VL-64
+	for gcvg-git@gmane.org; Wed, 04 May 2005 10:21:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261176AbVEDHBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 03:01:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261600AbVEDHBv
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 03:01:51 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:60612 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261176AbVEDHBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2005 03:01:50 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4471mS8010543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 4 May 2005 07:01:48 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4471mSX010537
-	for git@vger.kernel.org; Wed, 4 May 2005 09:01:48 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Mail-Followup-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <7vr7gnpjkq.fsf@assigned-by-dhcp.cox.net>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+	id S261388AbVEDI1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 04:27:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261496AbVEDI1T
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 04:27:19 -0400
+Received: from arnor.apana.org.au ([203.14.152.115]:14604 "EHLO
+	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261388AbVEDI06
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2005 04:26:58 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
+	id 1DTFDA-00030N-00; Wed, 04 May 2005 18:26:28 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1DTFD7-00063T-00; Wed, 04 May 2005 18:26:25 +1000
+To: torvalds@osdl.org (Linus Torvalds)
+In-Reply-To: <Pine.LNX.4.58.0505031947530.26698@ppc970.osdl.org>
+X-Newsgroups: apana.lists.os.linux.git
+User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello Junio,
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> But putting the traps _inside_ the loops seems to help. So something like 
+> the appended at least makes it somewhat useful
 
->     Normally "read-tree -m" is the preferred form from
->     performance point of view, especially on a large project.
->     The only case you need to use "read-tree" without -m is when
->     the cache contains conflicting merge results and you want to
->     start from scratch.
+It's not the loop that's important, but the subshell where the
+signal is caught.  Every time you enter a subshell all traps are
+reset.  Since anything that comes (before or) after a pipe symbol
+goes into a subshell...
 
-thanks for the bottom line. That explains why Linus uses it in his
-git-pull-script.
+> Index: cg-log
+> ===================================================================
+> --- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-log  (mode:100755 sha1:aa2abf370753117a350818dbc91991b14d30ec6b)
+> +++ uncommitted/cg-log  (mode:100755)
+> @@ -47,10 +47,12 @@
+> fi
+> 
+> $revls | $revsort | while read time commit parents; do
+> +       trap "exit 1" SIGPIPE
+>        [ "$revfmt" = "git-rev-list" ] && commit="$time"
+>        echo $colheader""commit ${commit%:*} $coldefault;
+>        git-cat-file commit $commit | \
+>                while read key rest; do
+> +                       trap "exit 1" SIGPIPE
+>                        case "$key" in
+>                        "author"|"committer")
+>                                if [ "$key" = "author" ]; then
 
-	Thomas
+You need it in both places because the signal may be received
+in either place, depending on whether it's the echo or something
+inside the loop that dies while writing output.
+
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
