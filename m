@@ -1,56 +1,70 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: Howto update a 'dirty' entry in the cache from the object database
-Date: Wed, 4 May 2005 21:20:02 +0200
-Message-ID: <20050504192002.GH20994@cip.informatik.uni-erlangen.de>
-References: <20050504142351.GL18380@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505041014510.2328@ppc970.osdl.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 04 21:15:33 2005
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [PATCH] add the ability to create and retrieve delta objects
+Date: Wed, 4 May 2005 17:47:27 -0400
+Message-ID: <DE5D04E8-B182-45B1-AB9A-6AA178005FFD@adacore.com>
+References: <200505030657.38309.alonz@nolaviz.org> <Pine.LNX.4.58.0505022131380.3594@ppc970.osdl.org> <Pine.LNX.4.62.0505030344170.14033@localhost.localdomain> <200505041156.19499.mason@suse.com>
+Mime-Version: 1.0 (Apple Message framework v728)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Linus Torvalds <torvalds@osdl.org>,
+	Alon Ziv <alonz@nolaviz.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 23:51:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTPJy-0005qi-Jb
-	for gcvg-git@gmane.org; Wed, 04 May 2005 21:14:10 +0200
+	id 1DTRlP-0003Z8-7x
+	for gcvg-git@gmane.org; Wed, 04 May 2005 23:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVEDTUS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 15:20:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVEDTUS
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 15:20:18 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:50076 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261399AbVEDTUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2005 15:20:05 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j44JK2S8008512
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 4 May 2005 19:20:02 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j44JK2Y1008510
-	for git@vger.kernel.org; Wed, 4 May 2005 21:20:02 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Mail-Followup-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505041014510.2328@ppc970.osdl.org>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+	id S261717AbVEDV44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 17:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261716AbVEDV44
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 17:56:56 -0400
+Received: from nile.gnat.com ([205.232.38.5]:64489 "EHLO nile.gnat.com")
+	by vger.kernel.org with ESMTP id S261748AbVEDV4f (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 17:56:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP
+	id D784A9655; Wed,  4 May 2005 17:56:31 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 13336-03-9; Wed,  4 May 2005 17:56:31 -0400 (EDT)
+Received: from [172.16.1.2] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	by nile.gnat.com (Postfix) with ESMTP
+	id BDB5B9822; Wed,  4 May 2005 17:56:30 -0400 (EDT)
+In-Reply-To: <200505041156.19499.mason@suse.com>
+To: Chris Mason <mason@suse.com>
+X-Mailer: Apple Mail (2.728)
+X-Virus-Scanned: by amavisd-new at nile.gnat.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+ From your tests it would seem that the zdelta version is the only one
+to provide a uniform improvement over plain git. As it also seems the
+simplest approach, I wonder why the consensus is that using xdiff
+would be better?
 
-> 	# read a new index file with the HEAD information
-> 	GIT_INDEX_FILE=tmp-index git-read-tree HEAD
+   -Geert
 
-> 	# check out just the one file you want to have
-> 	GIT_INDEX_FILE=tmp-index git-checkout-cache -f filename
+On May 4, 2005, at 11:56, Chris Mason wrote:
+> I did two additional runs, first where I fixed the delta chain  
+> length at 1 as
+> in the zdelta patch.   In this mode, if it tried to diff against a  
+> delta it
+> would find the delta's parent and diff against that instead.  Even  
+> though
+> zdelta had the same speeds for applying patches as xdiff(1), zdelta  
+> used
+> significantly more cpu (53m vs 40m).
+>
+> The next run was with the patch I've attached below, it allows  
+> chains up to 16
+> deltas in length.
+>                              git         zdelta       xdiff  
+> (1)      xdiff(16)
+> apply                  150m       117m       117m         104m
+> checkout             4m30s      3m41      4m43s        7m11s
+> checkout (hot)     56s           12s         14s             16s
+> space usage        2.5G         1G           1.2G           800m
+>
 
-> 	# remove the now useless temporary index
-> 	rm tmp-index
-
-> 	# update your _real_ index file with the file information
-> 	git-update-cache filename
-
-thanks. That is exactly what I was looking for.
-
-	Thomas
