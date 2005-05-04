@@ -1,64 +1,112 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git and symlinks as tracked content
-Date: Wed, 4 May 2005 19:03:25 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505041854040.30848-100000@iabervon.org>
-References: <4278EEC6.2090607@dwheeler.com>
+Date: Wed, 04 May 2005 16:16:22 -0700
+Message-ID: <7vwtqemvjt.fsf@assigned-by-dhcp.cox.net>
+References: <1115145234.21105.111.camel@localhost.localdomain>
+	<Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+	<20050504223532.GA22967@vrfy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, Andreas Gal <gal@uci.edu>,
-	Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 00:58:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 01:10:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTSoG-00034l-4u
-	for gcvg-git@gmane.org; Thu, 05 May 2005 00:57:40 +0200
+	id 1DTT0B-0004Hy-2V
+	for gcvg-git@gmane.org; Thu, 05 May 2005 01:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261948AbVEDXD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 19:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261949AbVEDXD7
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 19:03:59 -0400
-Received: from iabervon.org ([66.92.72.58]:59141 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261948AbVEDXD5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 19:03:57 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DTStp-0004oD-00; Wed, 4 May 2005 19:03:25 -0400
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <4278EEC6.2090607@dwheeler.com>
+	id S261949AbVEDXQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 19:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261954AbVEDXQ3
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 19:16:29 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:642 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261949AbVEDXQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 19:16:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050504231621.CJLH550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 4 May 2005 19:16:21 -0400
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050504223532.GA22967@vrfy.org> (Kay Sievers's message of
+ "Thu, 5 May 2005 00:35:32 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 4 May 2005, David A. Wheeler wrote:
+It seems to follow the original suggestion by Linus and looks
+good.  Some comments:
 
-> Once you're there, it wouldn't be hard to add logic to add options to
-> (1) record the REAL permission bits, (2) record "." files, and
-> (3) recover the permission bits.  That would be enough to
-> store & recover in a distributed way a single person's home directory.
-> THAT might be darn useful, for those of us who float between
-> different systems & would like to use a single system for multiple purposes.
-> That's clearly beyond the scope of a typical SCM, but since
-> it's easy to get there, that'd make sense.
+ * It continues to assume that S_IFREG, S_IFDIR and S_IFLNK have
+   the same bit pattern everywhere.  In the same spirit as we
+   store mode bits in network byte order, it may be a good time
+   to introduce something like this:
 
-The status quo with respect to the permissions is actually the correct
-thing for an SCM, because you want to generate the corresponding tree for
-a different user (e.g., with the other user's umask applied, etc.), not
-the same tree.
+   -#define ce_permissions(mode) (((mode) & 0100) ? 0755 : 0644)
+   -#define create_ce_mode(mode) htonl(S_IFREG | ce_permissions(mode))
+   +#define CE_IFREG  0100000
+   +#define CE_IFDIR  0040000
+   +#define CE_IFLNK  0120000
+   +#define CE_IFMASK 0770000
+   +
+   +#define ce_permissions(mode) (((mode) & 0100) ? 0755 : 0644) /* REG only */ 
+   +#define create_ce_mode(mode) htonl(S_ISREG(mode) ?
+   +				   (CE_IFREG | ce_permissions(mode)) :
+   +				   S_ISLNK(mode) ?
+   +				   CE_IFLNK :
+   +				   0) /* what would we do for unknowns? */
 
-This is a situation in which doing 90% of one thing, and then supporting
-90% of something else separately is best. What you really want is to have
-a "directory" object type that stores the exact permissions, and the
-uid/gid, and even xattr stuff. Then you use those for distributing your
-home directory, but not for distributing source trees, where that stuff is
-useless and somewhat wrong. You could probably have the same kind of
-commit objects, although you still need some way of figuring out what kind
-of object is desired for the directories in a commit.
+ * read-cache.c:cache_match_stat() needs to know about the
+   object type.  It was allowed to assume that anything thrown
+   at it was a file, but not anymore.  How about something like
+   this:
 
-(on the other hand, it might make sense for git to handle files starting
-with '.', and only skip .git).
+     int cache_match_stat(struct cache_entry 
+     {
+            unsigned int changed = 0;
 
-	-Daniel
-*This .sig left intentionally blank*
+    +       switch (ntohl(ce->ce_mode) & CE_IFMASK) {
+    +       case CE_IFREG:
+    +               changed |= !S_ISREG(st->st_mode) ? TYPE_CHANGED : 0;
+    +               break;
+    +       case CE_IFLNK:
+    +               changed |= !S_ISLNK(st->st_mode) ? TYPE_CHANGED : 0;
+    +               break;
+    +       default:
+    +               die("internal error: ce_mode is %o", ntohl(ce->ce_mode));
+    +       }
+
+    (in cache.h) 
+     #define INODE_CHANGED   0x0010
+     #define DATA_CHANGED    0x0020
+    +#define TYPE_CHANGED    0x0040
+
+  * update-cache.c:refresh_entry() needs to know that if the
+    type of the path changed, it would never match:
+
+            /*
+    -        * If the mode has changed, there's no point in trying
+    +        * If the mode or type has changed, there's no point in trying
+             * to refresh the entry - it's not going to match
+             */
+    -       if (changed & MODE_CHANGED)
+    +       if (changed & (MODE_CHANGED | TYPE_CHANGED))
+                    return ERR_PTR(-EINVAL);
+
+            if (compare_data(ce, st.st_size))
+
+  * (this is just a minor nit).  Since you have st here,
+    st.st_size can be used to see how big a buffer you need to
+    prepare for readlink() here:
+
+    +               unsigned int len;
+    +               char target[1024];
+    +               ce->ce_mode = htonl(S_IFLNK);
+    +               len = readlink(path, target, sizeof(target));
+    +               if (len == -1 || len+1 > sizeof(target))
+    +                       return -1;
+
+  * Probably diff.c needs to be made aware of this change.
 
