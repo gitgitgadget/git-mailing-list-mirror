@@ -1,60 +1,56 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Mercurial v0.4d
-Date: Wed, 4 May 2005 11:18:02 -0700
-Message-ID: <20050504181802.GS22038@waste.org>
-References: <20050504025852.GK22038@waste.org>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: Howto update a 'dirty' entry in the cache from the object database
+Date: Wed, 4 May 2005 21:20:02 +0200
+Message-ID: <20050504192002.GH20994@cip.informatik.uni-erlangen.de>
+References: <20050504142351.GL18380@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505041014510.2328@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261311AbVEDSWB@vger.kernel.org Wed May 04 20:20:17 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S261311AbVEDSWB@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 04 21:15:33 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTOTI-0006Hr-7d
-	for glk-linux-kernel@gmane.org; Wed, 04 May 2005 20:19:44 +0200
+	id 1DTPJy-0005qi-Jb
+	for gcvg-git@gmane.org; Wed, 04 May 2005 21:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261311AbVEDSWB (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Wed, 4 May 2005 14:22:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261353AbVEDSVv
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Wed, 4 May 2005 14:21:51 -0400
-Received: from waste.org ([216.27.176.166]:55188 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261311AbVEDSSI (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 4 May 2005 14:18:08 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j44II2tY018704
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 4 May 2005 13:18:02 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j44II2Iu018701;
-	Wed, 4 May 2005 13:18:02 -0500
-To: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
+	id S261399AbVEDTUS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 15:20:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVEDTUS
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 15:20:18 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:50076 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261399AbVEDTUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 15:20:05 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j44JK2S8008512
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 4 May 2005 19:20:02 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j44JK2Y1008510
+	for git@vger.kernel.org; Wed, 4 May 2005 21:20:02 +0200 (CEST)
+To: GIT <git@vger.kernel.org>
+Mail-Followup-To: GIT <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <20050504025852.GK22038@waste.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
-Sender: linux-kernel-owner@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0505041014510.2328@ppc970.osdl.org>
+X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
+User-Agent: Mutt/1.5.9i
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
-A new version of Mercurial is available at:
- 
-  http://selenic.com/mercurial/
+Hello,
 
-This fixes a handful of bugs reported last night, most notably failing
-to pull from the http repo. This turned out to be a failure to quote
-'%' characters. Thanks to everyone for their feedback.
- 
-Once you've got the new version installed, to pull the repo:
+> 	# read a new index file with the HEAD information
+> 	GIT_INDEX_FILE=tmp-index git-read-tree HEAD
 
-  hg init
-  hg merge http://selenic.com/hg
-  hg checkout    # 'hg co' works too
+> 	# check out just the one file you want to have
+> 	GIT_INDEX_FILE=tmp-index git-checkout-cache -f filename
 
-The web protocol is painfully slow, mostly because it makes an http
-round trip per file revision to pull. I'm about to start working on a
-replacement that minimizes round trips.
+> 	# remove the now useless temporary index
+> 	rm tmp-index
 
--- 
-Mathematics is the supreme nostalgia of our time.
+> 	# update your _real_ index file with the file information
+> 	git-update-cache filename
+
+thanks. That is exactly what I was looking for.
+
+	Thomas
