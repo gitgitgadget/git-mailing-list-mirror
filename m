@@ -1,58 +1,61 @@
-From: Darren Williams <dsw@gelato.unsw.edu.au>
-Subject: Re: Kernel autobuild now uses Git
-Date: Wed, 4 May 2005 10:20:24 +1000
-Message-ID: <20050504002024.GG26031@cse.unsw.EDU.AU>
-References: <20050503222951.GE26031@cse.unsw.EDU.AU>
+From: "Brian O'Mahoney" <omb@khandalf.com>
+Subject: Sym-links, b/c-special files, pipes, ... Scope Creep
+Date: Wed, 04 May 2005 02:39:19 +0200
+Message-ID: <427819B7.3010706@khandalf.com>
+References: <1115145234.21105.111.camel@localhost.localdomain>
+    <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+    <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
+    <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
+    <7vr7got2tz.fsf@assigned-by-dhcp.cox.net>
+    <Pine.LNX.4.58.0505031446220.31626@sam.ics.uci.edu>
+    <7v8y2wszdy.fsf@assigned-by-dhcp.cox.net>
+Reply-To: omb@bluewin.ch
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ia64 Linux <linux-ia64@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 04 02:14:39 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 02:33:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT7X7-0003l3-2n
-	for gcvg-git@gmane.org; Wed, 04 May 2005 02:14:33 +0200
+	id 1DT7og-0008FN-0h
+	for gcvg-git@gmane.org; Wed, 04 May 2005 02:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261948AbVEDAUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 20:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261946AbVEDAUg
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 20:20:36 -0400
-Received: from note.orchestra.cse.unsw.EDU.AU ([129.94.242.24]:10447 "EHLO
-	note.orchestra.cse.unsw.EDU.AU") by vger.kernel.org with ESMTP
-	id S261945AbVEDAU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 May 2005 20:20:27 -0400
-Received: From wagner With LocalMail ; Wed, 4 May 2005 10:20:24 +1000 
-To: LKML <linux-kernel@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050503222951.GE26031@cse.unsw.EDU.AU>
-User-Agent: Mutt/1.5.6+20040523i
+	id S261958AbVEDAjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 20:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261960AbVEDAjA
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 20:39:00 -0400
+Received: from mxout.hispeed.ch ([62.2.95.247]:59364 "EHLO smtp.hispeed.ch")
+	by vger.kernel.org with ESMTP id S261958AbVEDAi6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 20:38:58 -0400
+Received: from khandalf.com (80-218-57-125.dclient.hispeed.ch [80.218.57.125])
+	(authenticated bits=0)
+	by smtp.hispeed.ch (8.12.6/8.12.6/tornado-1.0) with ESMTP id j440ctKl003192
+	for <git@vger.kernel.org.>; Wed, 4 May 2005 02:38:57 +0200
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+    teraflex.teraflex-research.com (8.12.10/8.12.10/SuSE Linux 0.7) with ESMTP
+    id j440dJWY025760; Wed, 4 May 2005 02:39:22 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8y2wszdy.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Md5-Body: 3c1f50234dc8bf9e7f441bf30e53e3db
+X-Transmit-Date: Wednesday, 4 May 2005 2:39:33 +0200
+X-Message-Uid: 0000b49cec9d88840000000200000000427819c5000992b300000001000a237b
+Replyto: omb@bluewin.ch
+X-Sender-Postmaster: Postmaster@80-218-57-125.dclient.hispeed.ch.
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on smtp-07.tornado.cablecom.ch
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Darren
+Caution, let us all carefully understand the Source-Code/
+Configuration Management issue.
 
-On Wed, 04 May 2005, Darren Williams wrote:
+I for one will be very happy if we get a really good distributed
+SCM out of this.
 
-> Hi All
->   Our ia64 autobuild system has been moved from using
-> BK to Git. Here we do a nightly pull on Linus's 
-> (not so mainline) Git tree and test the ia64 build.
-> 
-> This may be a benefit to the Git developers to see
-> the results of a nightly 'cg-pull'.
-> 
-> Thanks to all for the effort, the conversation from BK
-> to Git was relatively painless.
-> 
->  - dsw
-> 
-
-Hmmm, how about a URL
-http://www.gelato.unsw.edu.au/kerncomp/ 
-
---------------------------------------------------
-Darren Williams <dsw AT gelato.unsw.edu.au>
-Gelato@UNSW <www.gelato.unsw.edu.au>
---------------------------------------------------
+Brian
