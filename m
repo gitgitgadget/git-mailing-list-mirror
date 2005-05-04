@@ -1,191 +1,91 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Add git-relink-script, a tool to hardlink two existing repositories.
-Date: Wed, 4 May 2005 01:54:01 -0400
-Message-ID: <20050504055401.GC1740@mythryan2.michonline.com>
-References: <20050429170127.A30010@flint.arm.linux.org.uk> <20050429182708.GB14202@pasky.ji.cz> <20050429195055.GE1233@mythryan2.michonline.com> <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: 'read-tree -m head' vs 'read-tree head'
+Date: Tue, 03 May 2005 23:54:29 -0700
+Message-ID: <7vr7gnpjkq.fsf@assigned-by-dhcp.cox.net>
+References: <20050503124935.GT25004@cip.informatik.uni-erlangen.de>
+	<7vbr7sw2aj.fsf@assigned-by-dhcp.cox.net>
+	<20050503213444.GD15995@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 07:48:23 2005
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 04 08:50:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTCjv-0007E2-Dy
-	for gcvg-git@gmane.org; Wed, 04 May 2005 07:48:08 +0200
+	id 1DTDhY-0006hq-8n
+	for gcvg-git@gmane.org; Wed, 04 May 2005 08:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262034AbVEDFyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 01:54:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262035AbVEDFyV
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 01:54:21 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:18663 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S262034AbVEDFyF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 01:54:05 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DTCpe-0008KC-6t; Wed, 04 May 2005 01:54:02 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DTCpe-000113-00; Wed, 04 May 2005 01:54:02 -0400
-Received: from ryan by mythical with local (Exim 4.50)
-	id 1DTCpd-0006Pe-SS; Wed, 04 May 2005 01:54:02 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0504291311320.18901@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
+	id S262049AbVEDGyf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 02:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261176AbVEDGyf
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 02:54:35 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:53999 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262049AbVEDGya (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 02:54:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050504065429.EHVF23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 4 May 2005 02:54:29 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050503213444.GD15995@pasky.ji.cz> (Petr Baudis's message of
+ "Tue, 3 May 2005 23:34:44 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-Add git-relink-script, which will find common objects in two git
-repositories and replace one copy with a hardlink.
+PB> Dear diary, on Tue, May 03, 2005 at 09:13:40PM CEST, I got a letter
+PB> where Junio C Hamano <junkio@cox.net> told me that...
 
-Signed-Off-By: Ryan Anderson <ryan@michonline.com>
+>> That said, I've been wondering ... if there
+>> is a valid use case where you would want to use it without "-m"
+>> because "-m" does something wrong...
 
----
-commit a3bcc763d71bdb91a3b48e9105fbaa5e79abb807
-tree 2553e2d8befbe0cda3e413616fd4cc7bf04157ad
-parent a31c6d022e2435a514fcc8ca57f9995c4376a986
-author Ryan Anderson <ryan@mythryan2.(none)> 1115185675 -0400
-committer Ryan Anderson <ryan@michonline.com> 1115185675 -0400
+PB> -m fails when your cache file is missing/corrupted. Not that it cannot
+PB> be fixed, just remember to fix it if you are going to do what you
+PB> described.
 
-Index: Makefile
-===================================================================
---- 51a882a2dc62e0d3cdc79e0badc61559fb723481/Makefile  (mode:100644 sha1:99b4753d34879842b972da9b68694c9d0485f216)
-+++ 2553e2d8befbe0cda3e413616fd4cc7bf04157ad/Makefile  (mode:100644 sha1:a99665e252a2342caa84238e886a80a5f27ac3c8)
-@@ -13,7 +13,7 @@
- AR=ar
- 
- SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
--	git-pull-script git-tag-script
-+	git-pull-script git-tag-script git-relink-script
- 
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-Index: git-relink-script
-===================================================================
---- /dev/null  (tree:51a882a2dc62e0d3cdc79e0badc61559fb723481)
-+++ 2553e2d8befbe0cda3e413616fd4cc7bf04157ad/git-relink-script  (mode:100644 sha1:78c954edcc370d8be951c856bfbfd38975d08348)
-@@ -0,0 +1,115 @@
-+#!/usr/bin/env perl
-+# Copyright 2005, Ryan Anderson <ryan@michonline.com>
-+# Distribution permitted under the GPL v2, as distributed
-+# by the Free Software Foundation.
-+# Later versions of the GPL at the discretion of Linus Torvalds
-+#
-+# Scan two git object-trees, and hardlink any common objects between them.
-+
-+use 5.006;
-+use strict;
-+use warnings;
-+
-+sub get_canonical_form($);
-+sub do_scan_directory($$$);
-+sub compare_two_files($$);
-+
-+# stats
-+my $linked = 0;
-+my $already = 0;
-+
-+my ($dir1, $dir2) = @ARGV;
-+
-+if (!defined $dir1 || !defined $dir2) {
-+	print("Usage: $0 <dir1> <dir2>\nBoth dir1 and dir2 should contain a .git/objects/ subdirectory.\n");
-+	exit(1);
-+}
-+
-+$dir1 = get_canonical_form($dir1);
-+$dir2 = get_canonical_form($dir2);
-+
-+printf("Searching '%s' and '%s' for common objects and hardlinking them...\n",$dir1,$dir2);
-+
-+opendir(D,$dir1 . "objects/")
-+	or die "Failed to open $dir1/objects/ : $!";
-+
-+my @hashdirs = grep !/^\.{1,2}$/, readdir(D);
-+foreach my $hashdir (@hashdirs) {
-+	do_scan_directory($dir1, $hashdir, $dir2);
-+}
-+
-+printf("Linked %d files, %d were already linked.\n",$linked, $already);
-+
-+
-+sub do_scan_directory($$$) {
-+	my ($srcdir, $subdir, $dstdir) = @_;
-+
-+	my $sfulldir = sprintf("%sobjects/%s/",$srcdir,$subdir);
-+	my $dfulldir = sprintf("%sobjects/%s/",$dstdir,$subdir);
-+
-+	opendir(S,$sfulldir)
-+		or die "Failed to opendir $sfulldir: $!";
-+
-+	foreach my $file (grep(!/\.{1,2}$/, readdir(S))) {
-+		my $sfilename = $sfulldir . $file;
-+		my $dfilename = $dfulldir . $file;
-+
-+		compare_two_files($sfilename,$dfilename);
-+
-+	}
-+	closedir(S);
-+}
-+
-+sub compare_two_files($$) {
-+	my ($sfilename, $dfilename) = @_;
-+
-+	# Perl's stat returns relevant information as follows:
-+	# 0 = dev number
-+	# 1 = inode number
-+	# 7 = size
-+	my @sstatinfo = stat($sfilename);
-+	my @dstatinfo = stat($dfilename);
-+
-+	if (@sstatinfo == 0 && @dstatinfo == 0) {
-+		die sprintf("Stat of both %s and %s failed: %s\n",$sfilename, $dfilename, $!);
-+
-+	} elsif (@dstatinfo == 0) {
-+		return;
-+	}
-+
-+	if ( ($sstatinfo[0] == $dstatinfo[0]) &&
-+	     ($sstatinfo[1] != $dstatinfo[1])) {
-+		if ($sstatinfo[7] == $dstatinfo[7]) {
-+			unlink($dfilename)
-+				or die "Unlink of $dfilename failed: $!\n";
-+
-+			link($sfilename,$dfilename)
-+				or die "Failed to link $sfilename to $dfilename: $!\n" .
-+					"Git Repository containing $dfilename is probably corrupted, please copy '$sfilename' to '$dfilename' to fix.\n";
-+
-+			$linked++;
-+
-+		} else {
-+			die sprintf("ERROR: File sizes are not the same, cannot relink %s to %s.\n",
-+				$sfilename, $dfilename);
-+		}
-+
-+	} elsif ( ($sstatinfo[0] == $dstatinfo[0]) &&
-+	     ($sstatinfo[1] == $dstatinfo[1])) {
-+		$already++;
-+	}
-+}
-+
-+sub get_canonical_form($) {
-+	my $dir = shift;
-+	my $original = $dir;
-+
-+	die "$dir is not a directory." unless -d $dir;
-+
-+	$dir .= "/" unless $dir =~ m#/$#;
-+	$dir .= ".git/" unless $dir =~ m#\.git/$#;
-+
-+	die "$original does not have a .git/ subdirectory.\n" unless -d $dir;
-+
-+	return $dir;
-+}
+Missing case seems to be handled fine.  It spits out a message
+from error() on a corrupt cache, but does not choke on it and
+creates a valid cache in the end.
 
+I just found out why we *do* need non -m version. The -m version
+refuses to work on an unmerged cache, which is the right thing
+to do.  If you try a merge, and if you do not like the result,
+you can throw the index away and start from scratch with non -m
+version.  Of course "rm .git/index" would work just fine as
+well.
 
+Another reason we may want to avoid -m version is that it takes
+a long time to read the cache on a large project, but I think a
+read-tree almost always is followed by a checkout-cache in a
+typical use case, and -m version significantly improves the
+performance of the latter.
 
--- 
+    read-tree -m $other; checkout-cache -f -a
+    read-tree    $other; checkout-cache -f -a
 
-Ryan Anderson
-  sometimes Pug Majere
+A not so scientific benchmark of reading one commit in a work
+tree based on a commit several steps away (this is linux-2.6
+tree so the index file is 1.6MB), run on my machine with a slow
+disk, does the former in 12 seconds and the latter in about 18
+seconds.  Comparison between the following is more drastic.
+
+    read-tree -m $other; update-cache --refresh
+    read-tree    $other; update-cache --refresh
+
+The version with -m wins by factor of ten.
+
+So Thomas, here is my conclusion:
+
+    Normally "read-tree -m" is the preferred form from
+    performance point of view, especially on a large project.
+    The only case you need to use "read-tree" without -m is when
+    the cache contains conflicting merge results and you want to
+    start from scratch.
+
