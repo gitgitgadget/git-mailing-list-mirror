@@ -1,67 +1,84 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: commit-id fails after cg-init
-Date: Wed, 04 May 2005 08:45:36 -0700
-Message-ID: <4278EE20.8080004@zytor.com>
-References: <1115150585.28520.11.camel@dv> <20050503211301.GA15995@pasky.ji.cz> <4278E6D4.6060807@dwheeler.com>
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: git and symlinks as tracked content
+Date: Wed, 04 May 2005 11:48:22 -0400
+Message-ID: <4278EEC6.2090607@dwheeler.com>
+References: <1115145234.21105.111.camel@localhost.localdomain>	<Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>	<Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>	<Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org> <7vr7got2tz.fsf@assigned-by-dhcp.cox.net> <42780185.7010204@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, Pavel Roskin <proski@gnu.org>,
-	git <git@vger.kernel.org>, Joel.Becker@oracle.com
-X-From: git-owner@vger.kernel.org Wed May 04 17:42:03 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, Andreas Gal <gal@uci.edu>,
+	Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 17:43:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTLym-0005yH-4Y
-	for gcvg-git@gmane.org; Wed, 04 May 2005 17:40:04 +0200
+	id 1DTM0p-0006Ip-4u
+	for gcvg-git@gmane.org; Wed, 04 May 2005 17:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261888AbVEDPq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 11:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261889AbVEDPq0
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 11:46:26 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:4501 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261888AbVEDPqX
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2005 11:46:23 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j44Fjgrb025713
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 4 May 2005 08:45:43 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+	id S261889AbVEDPsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 11:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261891AbVEDPsi
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 11:48:38 -0400
+Received: from aibo.runbox.com ([193.71.199.94]:61416 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261889AbVEDPse (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 11:48:34 -0400
+Received: from [10.9.9.110] (helo=snoopy.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DTM6m-0004GV-AQ; Wed, 04 May 2005 17:48:20 +0200
+Received: from [129.246.254.14] (helo=[129.246.80.140])
+	by snoopy.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DTM6m-0004Uf-0l; Wed, 04 May 2005 17:48:20 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
 X-Accept-Language: en-us, en
-To: "David A. Wheeler" <dwheeler@dwheeler.com>
-In-Reply-To: <4278E6D4.6060807@dwheeler.com>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.0 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42780185.7010204@zytor.com>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David A. Wheeler wrote:
-> Joel Becker said:
-> 
->> Well, cg-init in this case creates no objects.  I'd say,
->> instead, it should create an empty tree object (representing a project
->> with no files) and commit that.  That would be your initial commit, and
->> would put something valid in heads/master.
-> 
-> That would actually make sense; commits would go all the way
-> back to the "empty tree" as the ultimate initial tree.
-> 
-> There's an interesting side-effect of this; I _think_ it's
-> fine but it might be worth thinking through. If all
-> new projects start with an empty tree, that creates a
-> "common root" that all projects can appeal to.
-> That means that in theory a merge between any two project root
-> trees can eventually find a common ancestor: the empty tree.
-> I _think_ that's okay... is it?
-> 
+Linus Torvalds wrote:
+ >Also, right now git will actually ignore most of the permission bits 
+too.  
+ >We can change that, and make it a dynamic setting somewhere (some flag in
+ >a ".git/settings" file or something), but it does boil down to the fact
+ >that a software development tree tracker wants different things than
+ >something that tracks system settings.
+...
+ >So if you want to track system files, right now "raw git" is _not_ the 
+way
+ >to do it. You'd want something else.
+...
+ >But if you'd want to track other system directories with git, you'd
+ >probably need to either (a) do serious surgery on git itself, or (probably
+ >preferable) by (b) track the extra things you want "manually" using a file
+ >(that is tracked in git) that describes the ownership and permission data.
+ >
+ >Whether git is really suitable for tracking non-source projects is
+ >obviously debatable. It's not what it was designed for, and it _may_ be
+ >able to do so partly just by luck.
 
-In fact, I think that's a Very Good Thing... it eliminates an 
-unnecessary corner case.  Same reason linked lists want head nodes and 
-all that jazz.
+I suspect there's a 95% point which is easily achieved, &
+beyond that it's not clear it's worth it.
 
-	-hpa
+I recall seeing several source code directories that actually use symlinks
+in their source, and thus would want them preserved by the SCM.
+(Not arguing that's the BEST plan, merely an observation).
+As this discussion has noted, that wouldn't be hard to add symlink
+support to git, and WOULD be helpful for its primary purpose as SCM support.
+
+Once you're there, it wouldn't be hard to add logic to add options to
+(1) record the REAL permission bits, (2) record "." files, and
+(3) recover the permission bits.  That would be enough to
+store & recover in a distributed way a single person's home directory.
+THAT might be darn useful, for those of us who float between
+different systems & would like to use a single system for multiple purposes.
+That's clearly beyond the scope of a typical SCM, but since
+it's easy to get there, that'd make sense.
+
+I'm ambivalent about supporting dev, uid/gid, and mtime, and how
+it should be done; that may be beyond the "worth it" step.
+
+--- David A. Wheeler
+
