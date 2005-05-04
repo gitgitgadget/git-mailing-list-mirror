@@ -1,61 +1,78 @@
-From: "Brian O'Mahoney" <omb@khandalf.com>
-Subject: Sym-links, b/c-special files, pipes, ... Scope Creep
-Date: Wed, 04 May 2005 02:39:19 +0200
-Message-ID: <427819B7.3010706@khandalf.com>
-References: <1115145234.21105.111.camel@localhost.localdomain>
-    <Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
-    <Pine.LNX.4.58.0505031255000.30768@sam.ics.uci.edu>
-    <Pine.LNX.4.58.0505031304140.26698@ppc970.osdl.org>
-    <7vr7got2tz.fsf@assigned-by-dhcp.cox.net>
-    <Pine.LNX.4.58.0505031446220.31626@sam.ics.uci.edu>
-    <7v8y2wszdy.fsf@assigned-by-dhcp.cox.net>
-Reply-To: omb@bluewin.ch
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Subject: Re: Mercurial 0.4b vs git patchbomb benchmark (/usr/bin/env again)
+Date: Tue, 03 May 2005 22:10:40 -0400
+Message-ID: <42782F20.5080401@dwheeler.com>
+References: <20050430025211.GP17379@opteron.random> <200505021614.j42GEufG008441@turing-police.cc.vt.edu> <4277B778.5020206@tmr.com>
+Reply-To: dwheeler@dwheeler.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 02:33:17 2005
+Cc: Valdis.Kletnieks@vt.edu, Andrea Arcangeli <andrea@suse.de>,
+	Matt Mackall <mpm@selenic.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 04:02:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DT7og-0008FN-0h
-	for gcvg-git@gmane.org; Wed, 04 May 2005 02:32:43 +0200
+	id 1DT9DI-0002r6-37
+	for gcvg-git@gmane.org; Wed, 04 May 2005 04:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261958AbVEDAjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 May 2005 20:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261960AbVEDAjA
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 20:39:00 -0400
-Received: from mxout.hispeed.ch ([62.2.95.247]:59364 "EHLO smtp.hispeed.ch")
-	by vger.kernel.org with ESMTP id S261958AbVEDAi6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 20:38:58 -0400
-Received: from khandalf.com (80-218-57-125.dclient.hispeed.ch [80.218.57.125])
-	(authenticated bits=0)
-	by smtp.hispeed.ch (8.12.6/8.12.6/tornado-1.0) with ESMTP id j440ctKl003192
-	for <git@vger.kernel.org.>; Wed, 4 May 2005 02:38:57 +0200
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by
-    teraflex.teraflex-research.com (8.12.10/8.12.10/SuSE Linux 0.7) with ESMTP
-    id j440dJWY025760; Wed, 4 May 2005 02:39:22 +0200
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+	id S261982AbVEDCIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 May 2005 22:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261981AbVEDCIP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 May 2005 22:08:15 -0400
+Received: from aibo.runbox.com ([193.71.199.94]:5281 "EHLO cujo.runbox.com")
+	by vger.kernel.org with ESMTP id S261980AbVEDCII (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 May 2005 22:08:08 -0400
+Received: from [10.9.9.11] (helo=fifi.runbox.com)
+	by greyhound.runbox.com with esmtp (Exim 4.34)
+	id 1DT9Iq-0001Fz-4D; Wed, 04 May 2005 04:07:56 +0200
+Received: from [70.21.9.158] (helo=[192.168.2.73])
+	by fifi.runbox.com with asmtp (uid:258406) (Exim 4.34)
+	id 1DT9Ip-0000SN-Nl; Wed, 04 May 2005 04:07:56 +0200
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8y2wszdy.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.90.2.0
-X-Enigmail-Supports: pgp-inline, pgp-mime
-X-Md5-Body: 3c1f50234dc8bf9e7f441bf30e53e3db
-X-Transmit-Date: Wednesday, 4 May 2005 2:39:33 +0200
-X-Message-Uid: 0000b49cec9d88840000000200000000427819c5000992b300000001000a237b
-Replyto: omb@bluewin.ch
-X-Sender-Postmaster: Postmaster@80-218-57-125.dclient.hispeed.ch.
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on smtp-07.tornado.cablecom.ch
-X-Virus-Status: Clean
+To: Bill Davidsen <davidsen@tmr.com>
+In-Reply-To: <4277B778.5020206@tmr.com>
+X-Sender: 258406@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Caution, let us all carefully understand the Source-Code/
-Configuration Management issue.
+Valdis.Kletnieks@vt.edu wrote:
+>> Most likely, his python lives elsewhere than /usr/bin, and the 'env' call
+>> results in causing a walk across $PATH to find it....
 
-I for one will be very happy if we get a really good distributed
-SCM out of this.
+Bill Davidsen wrote:
+> Assuming that he has env in a standard place... I hope this isn't going 
+> to start some rash of efforts to make packages run on non-standard 
+> toolchains, which add requirements for one tool to get around 
+> misplacement of another.
 
-Brian
+The #!/usr/bin/env prefix is, in my opinion, a very good idea.
+There are a very few systems where env isn't in /usr/bin, but they
+were extremely rare years ago & are essentially extinct now.
+Basically, it's a 99% solution; getting the last 1% is really painful,
+but since getting the 99% is easy, let's do it and be happy.
+
+There are LOTS of systems where Python, bash, etc., do NOT
+live in whatever place you think of as "standard".
+I routinely use an OpenBSD 3.1 system; there is no /usr/bin/bash,
+but there _IS_ a /usr/local/bin/bash (in my PATH) and a /usr/bin/env.
+So this /usr/bin/env stuff REALLY is useful on a lot of systems, such
+as OpenBSD.  It's critical to me, at least!
+
+This is actually really useful on ANY system, though.
+Even if some interpreter IS where you think it should be,
+that is NOT necessarily the interpreter you want to use.
+Using "/usr/bin/env" lets you use PATH
+to override things, so you don't HAVE to use the interpreter
+in some fixed location.  That's REALLY handy for testing... I
+can download the whizbang Python 9.8.2, set it on the path,
+and see if everything works as expected.  It's also nice
+if someone insists on never upgrading a package; you can
+install an interpreter "locally".  Yes, you can patch all the
+files up, but resetting a PATH is _much_ easier.
+
+--- David A. Wheeler
