@@ -1,72 +1,117 @@
-From: Herbert Xu <herbert@gondor.apana.org.au>
-Subject: Re: How to get bash to shut up about SIGPIPE?
-Date: Wed, 04 May 2005 18:26:25 +1000
-Organization: Core
-Message-ID: <E1DTFD7-00063T-00@gondolin.me.apana.org.au>
-References: <Pine.LNX.4.58.0505031947530.26698@ppc970.osdl.org>
-Cc: dwheeler@dwheeler.com, pj@sgi.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 04 10:21:40 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: plumbing pull request
+Date: Wed, 04 May 2005 02:22:36 -0700
+Message-ID: <7vll6vpcpv.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 04 11:16:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTF8C-0002VL-64
-	for gcvg-git@gmane.org; Wed, 04 May 2005 10:21:20 +0200
+	id 1DTFzZ-00011n-1a
+	for gcvg-git@gmane.org; Wed, 04 May 2005 11:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261388AbVEDI1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 04:27:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261496AbVEDI1T
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 04:27:19 -0400
-Received: from arnor.apana.org.au ([203.14.152.115]:14604 "EHLO
-	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261388AbVEDI06
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2005 04:26:58 -0400
-Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
-	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
-	id 1DTFDA-00030N-00; Wed, 04 May 2005 18:26:28 +1000
-Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
-	id 1DTFD7-00063T-00; Wed, 04 May 2005 18:26:25 +1000
-To: torvalds@osdl.org (Linus Torvalds)
-In-Reply-To: <Pine.LNX.4.58.0505031947530.26698@ppc970.osdl.org>
-X-Newsgroups: apana.lists.os.linux.git
-User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
+	id S261546AbVEDJWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 05:22:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261545AbVEDJWu
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 05:22:50 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:12193 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261546AbVEDJWj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 05:22:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050504092237.OOEO7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 4 May 2005 05:22:37 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> But putting the traps _inside_ the loops seems to help. So something like 
-> the appended at least makes it somewhat useful
+Linus, please pull from http://members.cox.net/junkio/git-jc.git/
+which contains the following changes.
 
-It's not the loop that's important, but the subshell where the
-signal is caught.  Every time you enter a subshell all traps are
-reset.  Since anything that comes (before or) after a pipe symbol
-goes into a subshell...
+----------------------------------------------------------------
 
-> Index: cg-log
-> ===================================================================
-> --- aa6233be6d1b8bf42797c409a7c23b50593afc99/cg-log  (mode:100755 sha1:aa2abf370753117a350818dbc91991b14d30ec6b)
-> +++ uncommitted/cg-log  (mode:100755)
-> @@ -47,10 +47,12 @@
-> fi
-> 
-> $revls | $revsort | while read time commit parents; do
-> +       trap "exit 1" SIGPIPE
->        [ "$revfmt" = "git-rev-list" ] && commit="$time"
->        echo $colheader""commit ${commit%:*} $coldefault;
->        git-cat-file commit $commit | \
->                while read key rest; do
-> +                       trap "exit 1" SIGPIPE
->                        case "$key" in
->                        "author"|"committer")
->                                if [ "$key" = "author" ]; then
+  Optimize diff-cache -p --cached
 
-You need it in both places because the signal may be received
-in either place, depending on whether it's the echo or something
-inside the loop that dies while writing output.
+  This patch optimizes "diff-cache -p --cached" by avoiding to
+  inflate blobs into temporary files when the blob recorded in the
+  cache matches the corresponding file in the work tree.  The file
+  in the work tree is passed as the comparison source in such a
+  case instead.
 
-Cheers,
--- 
-Visit Openswan at http://www.openswan.org/
-Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+  This optimization kicks in only when we have already read the
+  cache this optimization and this is deliberate.  Especially,
+  diff-tree does not use this code, because changes are contained
+  in small number of files relative to the project size most of
+  the time, and reading cache is so expensive for a large project
+  that the cost of reading it outweighs the savings by not
+  inflating blobs.
+
+  Also this patch cleans up the structure passed from diff clients
+  by removing one unused structure member.
+
+----------------------------------------------------------------
+
+  Terminate diff-* on non-zero exit from GIT_EXTERNAL_DIFF
+
+  (slightly updated from the version posted to the GIT mailing list
+  with small bugfixes).
+
+  This patch changes the git-apply-patch-script to exit non-zero when
+  the patch cannot be applied.  Previously, the external diff driver
+  deliberately ignored the exit status of GIT_EXTERNAL_DIFF command,
+  which was a design mistake.  It now stops the processing when
+  GIT_EXTERNAL_DIFF exits non-zero, so the damages from running
+  git-diff-* with git-apply-patch-script between two wrong trees can be
+  contained.
+
+  The "diff" command line generated by the built-in driver is changed to
+  always exit 0 in order to match this new behaviour.  I know Pasky does
+  not use GIT_EXTERNAL_DIFF yet, so this change should not break Cogito,
+  either.
+
+----------------------------------------------------------------
+
+  Git-prune-script loses blobs referenced from an uncommitted cache.
+
+  (updated from the version posted to GIT mailing list).
+
+  When a new blob is registered with update-cache, and before the cache
+  is written as a tree and committed, git-fsck-cache will find the blob
+  unreachable.  This patch adds a new flag, "--cache" to git-fsck-cache,
+  with which it keeps such blobs from considered "unreachable".
+
+  The git-prune-script is updated to use this new flag.  At the same time
+  it adds .git/refs/*/* to the set of default locations to look for heads,
+  which should be consistent with expectations from Cogito users.
+
+  Without this fix, "diff-cache -p --cached" after git-prune-script has
+  pruned the blob object will fail mysteriously and git-write-tree would
+  also fail.
+
+----------------------------------------------------------------
+
+  Short-cut error return path in git-local-pull.
+
+  When git-local-pull with -l option gets ENOENT attempting to create
+  a hard link, there is no point falling back to other copy methods.
+  With this patch, git-local-pull detects such a case and gives up
+  copying the file early.
+
+----------------------------------------------------------------
+
+  Make git-*-pull say who wants them for missing objects.
+
+  This patch updates pull.c, the engine that decides which objects are
+  needed, given a commit to traverse from, to report which commit was
+  calling for the object that cannot be retrieved from the remote side.
+  This complements git-fsck-cache in that it checks the consistency of
+  the remote repository for reachability.
+
+----------------------------------------------------------------
+
