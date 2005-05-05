@@ -1,79 +1,85 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Kernel nightly snapshots..
-Date: Wed, 04 May 2005 19:06:23 -0700
-Message-ID: <42797F9F.9030002@zytor.com>
-References: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git and symlinks as tracked content
+Date: Wed, 04 May 2005 19:13:43 -0700
+Message-ID: <7vy8aul8rs.fsf@assigned-by-dhcp.cox.net>
+References: <1115145234.21105.111.camel@localhost.localdomain>
+	<Pine.LNX.4.58.0505031151240.26698@ppc970.osdl.org>
+	<20050504223532.GA22967@vrfy.org>
+	<7vwtqemvjt.fsf@assigned-by-dhcp.cox.net>
+	<20050505012051.GA26201@vrfy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Woodhouse <dwmw2@infradead.org>
-X-From: git-owner@vger.kernel.org Thu May 05 04:01:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 04:07:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTVfe-0005RJ-2L
-	for gcvg-git@gmane.org; Thu, 05 May 2005 04:00:58 +0200
+	id 1DTVlq-00062T-6m
+	for gcvg-git@gmane.org; Thu, 05 May 2005 04:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261790AbVEECHK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 22:07:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261799AbVEECHK
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 22:07:10 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:4276 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261790AbVEECHD
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 4 May 2005 22:07:03 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4526SRc009467
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 4 May 2005 19:06:28 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-3.7 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261800AbVEECNy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 22:13:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261809AbVEECNy
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 22:13:54 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:31670 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261800AbVEECNu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 May 2005 22:13:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050505021345.FTZA7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 4 May 2005 22:13:45 -0400
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050505012051.GA26201@vrfy.org> (Kay Sievers's message of
+ "Thu, 5 May 2005 03:20:51 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-It used to be Jeff Garzik, but David Woodhouse volunteered to take this 
-over a few days ago, so yesterday I chowned those directories to him.
+>>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
 
-	-hpa
+>> * It continues to assume that S_IFREG, S_IFDIR and S_IFLNK have
+>> the same bit pattern everywhere....
 
-Linus Torvalds wrote:
-> I forget who it is that used to do the nightly snapshots for the BK
-> kernels, but I _think_ it was David Woodhouse (every time I've blamed it
-> on somebody, I've blamed the wrong person, so I'm probably off on this one
-> too, but maybe I finally got it right).
-> 
-> I was wondering how to get that re-started.. It should be technically
-> pretty easy, except I realized that my tree doesn't even have plain 2.6.11
-> in it. But I just fixed that in the tree, since I need such a baseline 
-> myself for my next release..
-> 
-> Anyway, I just pushed out a kernel tree that contains a tag of a _tree_ 
-> that points to the tree at the point of 2.6.11. I also had to teach 
-> fsck-cache about the fact that you can give it any kind of object to start 
-> your references at, and to make fsck-cache happy, you need to
-> 
-> 	git-fsck-cache --unreachable HEAD v2.6.11
-> 
-> to tell it that the kernel tree now has an unconnected tree (described by
-> the tag "v2.6.11-tree", and I made the appropriate entry for it in
-> .git/refs/tags).
-> 
-> I also updated git-prune-script to not remove these kinds of things.
-> 
-> With this, it should be trivial to create snapshots with
-> 
-> 	git-diff-tree -p v2.6.11 HEAD
-> 
-> or similar.
-> 
-> 		Linus
+>> * read-cache.c:cache_match_stat() ...
+
+KS> Both included and updated.
+
+The second one, yes, but the first one is "not really".  If you
+are going to do this:
+
+KS> +#define CE_IFREG  0100000
+KS> +#define CE_IFDIR  0040000
+KS> ...
+KS> +#define CE_IFMASK 0770000
+ 
+then you need to touch these things:
+
+KS> +	mode = ntohl(ce->ce_mode);
+KS> +	if (S_ISLNK(mode)) {
+
+Here mode encodes type in CE_ format, so S_ISLNK() is bad.
+
+KS> @@ -165,7 +165,7 @@ static void prepare_temp_file(const char
+KS>  		}
+KS>  		strcpy(temp->hex, sha1_to_hex(null_sha1));
+KS>  		sprintf(temp->mode, "%06o",
+KS> -			S_IFREG |ce_permissions(st.st_mode));
+KS> +			S_IFREG | ce_permissions(st.st_mode));
+KS>  	}
+
+Likewise here, although this is my bad.  I did not know if you
+are going to take CE_ type suggestion so I left it as it was.
+
+There are more.  "grep 'S_I[SF]' *.[ch] */*.[ch]" would tell us
+most if not all.  We probably would want to have CE_ISLNK() and
+friends, parallel to S_ISLNK() and friends if we go this route.
+
+Does POSIX or something have nice to say that we do not have to
+worry about this?  Or are the stat type bits really different on
+different Unixen?  I used to do porting for living across a
+dozen or so different Unixen long time ago and I should know the
+answer to this kind of thing by heart, but I do not anymore X-<.
 
