@@ -1,57 +1,46 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: Re: list all dirty files in working directory
-Date: Thu, 5 May 2005 14:35:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505051433190.8745@sam.ics.uci.edu>
-References: <20050505212152.GP20994@cip.informatik.uni-erlangen.de>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Please rename cg-X* to something else
+Date: Thu, 05 May 2005 17:37:06 -0400
+Message-ID: <1115329026.3838.8.camel@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 05 23:29:13 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu May 05 23:31:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTntm-0005at-C3
-	for gcvg-git@gmane.org; Thu, 05 May 2005 23:28:46 +0200
+	id 1DTnvn-0005rB-Dk
+	for gcvg-git@gmane.org; Thu, 05 May 2005 23:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261935AbVEEVfR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 May 2005 17:35:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261943AbVEEVfQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 17:35:16 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:62168 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S261935AbVEEVfK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2005 17:35:10 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j45LZ6er008752;
-	Thu, 5 May 2005 14:35:06 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j45LZ5Ht008748;
-	Thu, 5 May 2005 14:35:05 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050505212152.GP20994@cip.informatik.uni-erlangen.de>
+	id S261944AbVEEVhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 May 2005 17:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261943AbVEEVhW
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 17:37:22 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:1726 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S261944AbVEEVhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2005 17:37:10 -0400
+Received: by localhost.localdomain (Postfix, from userid 500)
+	id 89018EFDD1; Thu,  5 May 2005 17:37:06 -0400 (EDT)
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello!
 
-git-update-cache --refresh | while read line; do
-    echo $line | cut -d ':' -f 1
-done
+Since cg-X* scripts are not supposed to be used by the end users, I
+suggest that we rename them so something not starting with "cg-" or even
+"cg" so that tab completion in bash doesn't show them.  I suggest "_cgX"
+instead of "cg-X"
 
-That should give you one file per line, for every dirty file. 
+In the long term, the internal scripts should go to
+$prefix/share/cogito, but it would require generating other scripts from
+templates to substitute $prefix, which could be inconvenient at this
+stage.
 
-Andreas
+-- 
+Regards,
+Pavel Roskin
 
-On Thu, 5 May 2005, Thomas Glanzmann wrote:
-
-> Hello,
-> is there another way than call 'checkout-cache -a' and parse the output?
-> Maybe a command which lists one dirty file per line?
-> 
-> 	Thomas
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
