@@ -1,146 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Prepare diff side for upcoming symlink work.
-Date: Wed, 04 May 2005 17:00:40 -0700
-Message-ID: <7vd5s6mthz.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Kernel nightly snapshots..
+Date: Wed, 4 May 2005 17:28:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 05 01:54:51 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter Anvin <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu May 05 02:20:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTThM-0000ca-CN
-	for gcvg-git@gmane.org; Thu, 05 May 2005 01:54:36 +0200
+	id 1DTU6J-00037R-1q
+	for gcvg-git@gmane.org; Thu, 05 May 2005 02:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261963AbVEEABB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 May 2005 20:01:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261968AbVEEABB
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 20:01:01 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:58109 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261963AbVEEAAm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 May 2005 20:00:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050505000040.BVYK20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 4 May 2005 20:00:40 -0400
-To: Linus Torvalds <torvalds@osdl.org>,
-	Kay Sievers <kay.sievers@vrfy.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261971AbVEEA0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 May 2005 20:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261975AbVEEA0u
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 May 2005 20:26:50 -0400
+Received: from fire.osdl.org ([65.172.181.4]:38084 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261971AbVEEA0q (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 May 2005 20:26:46 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j450QdU3017175
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 4 May 2005 17:26:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j450QcLg025325;
+	Wed, 4 May 2005 17:26:38 -0700
+To: Git Mailing List <git@vger.kernel.org>,
+	David Woodhouse <dwmw2@infradead.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch prepares the external diff interface engine for the
-change to store the symbolic links in the cache, being worked on
-by Kay Sievers.
 
-The main thing it does is when comparing with the work tree, it
-prepares the counterpart to the blob being compared by doing a
-readlink followed by sending that result to a temporary file to
-be diffed.
+I forget who it is that used to do the nightly snapshots for the BK
+kernels, but I _think_ it was David Woodhouse (every time I've blamed it
+on somebody, I've blamed the wrong person, so I'm probably off on this one
+too, but maybe I finally got it right).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+I was wondering how to get that re-started.. It should be technically
+pretty easy, except I realized that my tree doesn't even have plain 2.6.11
+in it. But I just fixed that in the tree, since I need such a baseline 
+myself for my next release..
 
---- a/diff.c
-+++ b/diff.c
-@@ -163,13 +163,35 @@ static int work_tree_matches(const char 
- 	if (pos < 0)
- 		return 0;
- 	ce = active_cache[pos];
--	if ((stat(name, &st) < 0) ||
-+	if ((lstat(name, &st) < 0) ||
-+	    !S_ISREG(st.st_mode) ||
- 	    cache_match_stat(ce, &st) ||
- 	    memcmp(sha1, ce->sha1, 20))
- 		return 0;
- 	return 1;
- }
- 
-+static void prep_temp_blob(struct diff_tempfile *temp,
-+			   void *blob,
-+			   unsigned long size,
-+			   unsigned char *sha1,
-+			   int mode)
-+{
-+	int fd;
-+
-+	strcpy(temp->tmp_path, ".diff_XXXXXX");
-+	fd = mkstemp(temp->tmp_path);
-+	if (fd < 0)
-+		die("unable to create temp-file");
-+	if (write(fd, blob, size) != size)
-+		die("unable to write temp-file");
-+	close(fd);
-+	temp->name = temp->tmp_path;
-+	strcpy(temp->hex, sha1_to_hex(sha1));
-+	temp->hex[40] = 0;
-+	sprintf(temp->mode, "%06o", mode);
-+}
-+
- static void prepare_temp_file(const char *name,
- 			      struct diff_tempfile *temp,
- 			      struct diff_spec *one)
-@@ -196,20 +218,35 @@ static void prepare_temp_file(const char
- 	if (!one->sha1_valid || use_work_tree) {
- 		struct stat st;
- 		temp->name = name;
--		if (stat(temp->name, &st) < 0) {
-+		if (lstat(temp->name, &st) < 0) {
- 			if (errno == ENOENT)
- 				goto not_a_valid_file;
- 			die("stat(%s): %s", temp->name, strerror(errno));
- 		}
-+		if (S_ISLNK(st.st_mode)) {
-+			int ret;
-+			char *buf, buf_[1024];
-+			buf = ((sizeof(buf_) < st.st_size) ?
-+			       xmalloc(st.st_size) : buf_);
-+			ret = readlink(name, buf, st.st_size);
-+			if (ret < 0)
-+				die("readlink(%s)", name);
-+			prep_temp_blob(temp, buf, st.st_size,
-+				       (one->sha1_valid ?
-+					one->blob_sha1 : null_sha1),
-+				       (one->sha1_valid ?
-+					one->mode : 
-+					S_IFREG|ce_permissions(st.st_mode)));
-+		}
- 		if (!one->sha1_valid)
- 			strcpy(temp->hex, sha1_to_hex(null_sha1));
- 		else
- 			strcpy(temp->hex, sha1_to_hex(one->blob_sha1));
- 		sprintf(temp->mode, "%06o",
--			S_IFREG |ce_permissions(st.st_mode));
-+			S_IFREG | ce_permissions(st.st_mode));
-+		return;
- 	}
- 	else {
--		int fd;
- 		void *blob;
- 		char type[20];
- 		unsigned long size;
-@@ -218,19 +255,8 @@ static void prepare_temp_file(const char
- 		if (!blob || strcmp(type, "blob"))
- 			die("unable to read blob object for %s (%s)",
- 			    name, sha1_to_hex(one->blob_sha1));
--
--		strcpy(temp->tmp_path, ".diff_XXXXXX");
--		fd = mkstemp(temp->tmp_path);
--		if (fd < 0)
--			die("unable to create temp-file");
--		if (write(fd, blob, size) != size)
--			die("unable to write temp-file");
--		close(fd);
-+		prep_temp_blob(temp, blob, size, one->blob_sha1, one->mode);
- 		free(blob);
--		temp->name = temp->tmp_path;
--		strcpy(temp->hex, sha1_to_hex(one->blob_sha1));
--		temp->hex[40] = 0;
--		sprintf(temp->mode, "%06o", one->mode);
- 	}
- }
- 
+Anyway, I just pushed out a kernel tree that contains a tag of a _tree_ 
+that points to the tree at the point of 2.6.11. I also had to teach 
+fsck-cache about the fact that you can give it any kind of object to start 
+your references at, and to make fsck-cache happy, you need to
 
+	git-fsck-cache --unreachable HEAD v2.6.11
+
+to tell it that the kernel tree now has an unconnected tree (described by
+the tag "v2.6.11-tree", and I made the appropriate entry for it in
+.git/refs/tags).
+
+I also updated git-prune-script to not remove these kinds of things.
+
+With this, it should be trivial to create snapshots with
+
+	git-diff-tree -p v2.6.11 HEAD
+
+or similar.
+
+		Linus
