@@ -1,70 +1,57 @@
-From: Alexander Beyn <malex-git@fatelectrons.org>
-Subject: [PATCH] have commit-id dereference git tags
-Date: Thu, 5 May 2005 00:48:23 -0700
-Message-ID: <20050505074823.GA9075@fatelectrons.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: read-only git repositories
+Date: Thu, 5 May 2005 02:51:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0505050231300.15451@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.21.0505041854040.30848-100000@iabervon.org>
+ <200505050709.43307.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu May 05 09:42:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+X-From: git-owner@vger.kernel.org Thu May 05 11:46:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTazg-0000O5-Kd
-	for gcvg-git@gmane.org; Thu, 05 May 2005 09:42:01 +0200
+	id 1DTcvg-0004H2-6W
+	for gcvg-git@gmane.org; Thu, 05 May 2005 11:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261959AbVEEHs3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 May 2005 03:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261984AbVEEHs3
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 03:48:29 -0400
-Received: from adsl-66-51-204-13.dslextreme.com ([66.51.204.13]:40929 "EHLO
-	mail.fatelectrons.org") by vger.kernel.org with ESMTP
-	id S261959AbVEEHsZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 May 2005 03:48:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.fatelectrons.org (Postfix) with ESMTP id 46F5A10FE2A0
-	for <git@vger.kernel.org>; Thu,  5 May 2005 00:48:24 -0700 (PDT)
-Received: from mail.fatelectrons.org ([127.0.0.1])
- by localhost (hmm [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 07193-08 for <git@vger.kernel.org>; Thu,  5 May 2005 00:48:24 -0700 (PDT)
-Received: by mail.fatelectrons.org (Postfix, from userid 1000)
-	id 031DE10FE291; Thu,  5 May 2005 00:48:23 -0700 (PDT)
+	id S262003AbVEEJwS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 May 2005 05:52:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262005AbVEEJwS
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 05:52:18 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:5259 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S262003AbVEEJwP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2005 05:52:15 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Thu, 5 May 2005 02:47:08 -0700
+Received: by atlexc02.diginsite.com with Internet Mail Service (5.5.2653.19)
+	id <KC1C0L8C>; Thu, 5 May 2005 05:51:53 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id K18GZ5D5; Thu, 5 May 2005 02:51:50 -0700
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new at fatelectrons.org
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <200505050709.43307.alan@chandlerfamily.org.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-With this patch, if commit-id is passed a git tag, it will check to see
-if the tag points to a commit. If it does, commit-id will return that
-commit's id.
+given that git already treats everything in the object storage as being 
+fixed it occured to me that there may be value in makeing it so that git 
+can make use of more then one pool of storage.
 
-I'm not sure if this is the proper place to handle git tags, but it does
-make things like "cg-diff -r v2.6.12-rc2:v2.6.12-rc3" work in the Linus
-kernel tree. I've not noticed any problems this introduces, but I didn't 
-do a thorough check.
+possible uses of this would be to have a bunch of data on read-only media 
+(say the 3G+ kernel history on a DVD), having a pruned local object store 
+with automated fetching from elsewhere if the object isn't found locally, 
+or marking the object store that you plan on sharing with the world as 
+read-only (with your changed object going into a secondary store) so that 
+you don't pollute it accidently (this could also cut down on the storage 
+requirements)
 
-Signed-Off-By: Alexander Beyn <malex-git@fatelectrons.org>
+there are probably other uses and it seems like a fairly small 
+modification to add a hook to use if the object isn't found initially that 
+I thought I'd mention it to the group.
 
+David Lang
 
-Index: commit-id
-===================================================================
---- 6a20fd05c468097d5a5a47cd37b41581c963cf63/commit-id  (mode:100755 sha1:daf0ea1e35f1bee22eb4c4771495b2212d15f4e7)
-+++ 66fded2e9d931ecc8b03aa282a7eb9559955c172/commit-id  (mode:100755 sha1:978c3ffeb072422436af7af1ad4a8de0e91c9632)
-@@ -32,7 +32,15 @@
- 	exit 1
- fi
- 
--if [ "$(git-cat-file -t "$id")" != "commit" ]; then
-+type="$(git-cat-file -t "$id")"
-+
-+if [ "$type" = "tag" ]; then
-+	id=$(git-cat-file tag "$id" | egrep -m 1 "^object $SHA1")
-+	id="${id#object }"
-+	type="$(git-cat-file -t "$id")"
-+fi
-+
-+if [ "$type" != "commit" ]; then
- 	echo "Invalid id: $id" >&2
- 	exit 1
- fi
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
