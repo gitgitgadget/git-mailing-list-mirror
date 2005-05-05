@@ -1,68 +1,62 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: Mercurial v0.4d
-Date: Thu, 5 May 2005 13:36:58 -0700
-Message-ID: <20050505203658.GG22038@waste.org>
-References: <20050504025852.GK22038@waste.org> <20050504181802.GS22038@waste.org> <427A6E3F.5090904@pobox.com>
+From: Matt Porter <mporter@kernel.crashing.org>
+Subject: Re: [PATCH] have commit-id dereference git tags
+Date: Thu, 5 May 2005 14:14:44 -0700
+Message-ID: <20050505141444.B10541@cox.net>
+References: <20050505074823.GA9075@fatelectrons.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 05 22:31:01 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 05 23:11:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTmzp-0002yI-MR
-	for gcvg-git@gmane.org; Thu, 05 May 2005 22:30:58 +0200
+	id 1DTnbn-0002FA-50
+	for gcvg-git@gmane.org; Thu, 05 May 2005 23:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262196AbVEEUhK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 May 2005 16:37:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262184AbVEEUhK
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 16:37:10 -0400
-Received: from waste.org ([216.27.176.166]:46045 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261540AbVEEUhC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 May 2005 16:37:02 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j45Kaxac025999
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 5 May 2005 15:36:59 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j45KawTM025996;
-	Thu, 5 May 2005 15:36:58 -0500
-To: Jeff Garzik <jgarzik@pobox.com>
+	id S261446AbVEEVQr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 May 2005 17:16:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261757AbVEEVQr
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 May 2005 17:16:47 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20735 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261446AbVEEVQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 May 2005 17:16:45 -0400
+Received: from liberty.homelinux.org ([68.2.41.86]) by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050505211640.MWPD19494.fed1rmmtao06.cox.net@liberty.homelinux.org>;
+          Thu, 5 May 2005 17:16:40 -0400
+Received: (from mmporter@localhost)
+	by liberty.homelinux.org (8.9.3/8.9.3/Debian 8.9.3-21) id OAA12948;
+	Thu, 5 May 2005 14:14:44 -0700
+To: Alexander Beyn <malex-git@fatelectrons.org>
 Content-Disposition: inline
-In-Reply-To: <427A6E3F.5090904@pobox.com>
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new
+User-Agent: Mutt/1.2.5i
+In-Reply-To: <20050505074823.GA9075@fatelectrons.org>; from malex-git@fatelectrons.org on Thu, May 05, 2005 at 12:48:23AM -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 05, 2005 at 03:04:31PM -0400, Jeff Garzik wrote:
-> Matt Mackall wrote:
-> >The web protocol is painfully slow, mostly because it makes an http
-> >round trip per file revision to pull. I'm about to start working on a
-> >replacement that minimizes round trips.
+On Thu, May 05, 2005 at 12:48:23AM -0700, Alexander Beyn wrote:
+> With this patch, if commit-id is passed a git tag, it will check to see
+> if the tag points to a commit. If it does, commit-id will return that
+> commit's id.
 > 
-> Can you make it do HTTP 1.1 pipelining?
+> I'm not sure if this is the proper place to handle git tags, but it does
+> make things like "cg-diff -r v2.6.12-rc2:v2.6.12-rc3" work in the Linus
+> kernel tree. I've not noticed any problems this introduces, but I didn't 
+> do a thorough check.
 
-Yes, a zsync-like protocol ought to be doable. But you'll still
-potentially be doing 16k requests to pull something the size of the
-kernel, which isn't very friendly to a web server. So I'm working on a
-stand-alone or possibly CGI-based replacement.
+I like this feature and it works on the Linus tree for me as well.
+However, it fails on the cogito tree as follows:
 
-My goal is to do something like this:
+mporter@beef:~/src/cogito$ cg-diff -r git-pasky-0.7:cogito-0.8
+.git/objects/c8/3b95297c2a6336c2007548f909769e0862b509: No such file or directory
+fatal: git-cat-file c83b95297c2a6336c2007548f909769e0862b509: bad file
+Invalid id: c83b95297c2a6336c2007548f909769e0862b509
+usage: git-cat-file [-t | tagname] <sha1>
+usage: git-cat-file [-t | tagname] <sha1>
+Invalid id:
 
-client                             server
-I last saw change N from you 
-                                   W, X, Y, and Z are newer here
-Send me X, Y, and Z relative to N
-                                   Here you go, deltas from N to X to
-				   Y to Z, sorted by file
+I haven't looked any further at it yet though.
 
-So not only can we be efficient in number of round trips and data
-transferred, we can reduce seeks by applying all per-file changes together.
-We can also usually avoid decompress/recompress and patch/diff because
-both ends will end up storing the same delta.
-
--- 
-Mathematics is the supreme nostalgia of our time.
+-Matt
