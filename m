@@ -1,56 +1,60 @@
-From: "Luck, Tony" <tony.luck@intel.com>
-Subject: cg-update doesn't clean away empty directories
-Date: Fri, 6 May 2005 09:22:30 -0700
-Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F036A5809@scsmsx401.amr.corp.intel.com>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: [PATCH] fix compare symlink against readlink not data
+Date: Fri, 06 May 2005 18:23:34 +0200
+Message-ID: <1115396614.32065.23.camel@localhost.localdomain>
+References: <20050506134501.GA11430@vrfy.org>
+	 <20050506160359.GB6904@kroah.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-X-From: git-owner@vger.kernel.org Fri May 06 18:17:16 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 18:18:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU5Um-0002ZS-VN
-	for gcvg-git@gmane.org; Fri, 06 May 2005 18:16:09 +0200
+	id 1DU5VU-0002g7-7D
+	for gcvg-git@gmane.org; Fri, 06 May 2005 18:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261222AbVEFQWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 12:22:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261200AbVEFQWf
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 12:22:35 -0400
-Received: from fmr13.intel.com ([192.55.52.67]:31370 "EHLO
-	fmsfmr001.fm.intel.com") by vger.kernel.org with ESMTP
-	id S261157AbVEFQWd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 12:22:33 -0400
-Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.1.192.59])
-	by fmsfmr001.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j46GMVZS000402
-	for <git@vger.kernel.org>; Fri, 6 May 2005 16:22:31 GMT
-Received: from fmsmsxvs040.fm.intel.com (fmsmsxvs040.fm.intel.com [132.233.42.124])
-	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id j46GMT8w020864
-	for <git@vger.kernel.org>; Fri, 6 May 2005 16:22:31 GMT
-Received: from fmsmsx332.amr.corp.intel.com ([132.233.42.148])
- by fmsmsxvs040.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005050609223126914
- for <git@vger.kernel.org>; Fri, 06 May 2005 09:22:31 -0700
-Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx332.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 6 May 2005 09:22:31 -0700
-Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 6 May 2005 09:22:30 -0700
-X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: cg-update doesn't clean away empty directories
-Thread-Index: AcVSV80BrMN/qAlAQDm639NmlADTeA==
-To: <git@vger.kernel.org>
-X-OriginalArrivalTime: 06 May 2005 16:22:30.0957 (UTC) FILETIME=[CD476DD0:01C55257]
-X-Scanned-By: MIMEDefang 2.44
+	id S261157AbVEFQXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 12:23:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261186AbVEFQXi
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 12:23:38 -0400
+Received: from soundwarez.org ([217.160.171.123]:1753 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261157AbVEFQXg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 12:23:36 -0400
+Received: from dhcp-113.off.vrfy.org (d081180.adsl.hansenet.de [80.171.81.180])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id 88A9F2E91E;
+	Fri,  6 May 2005 18:23:33 +0200 (CEST)
+To: Greg KH <greg@kroah.com>
+In-Reply-To: <20050506160359.GB6904@kroah.com>
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I just did a cg-update from Linus' tree, and all the files
-in Documentation/BK-Usage were neatly thrown away from my
-working directory.  But Documentation/BK-Usage itself is
-still there.  Looking at the output from git-ls-tree it was
-removed from the GIT level.
+On Fri, 2005-05-06 at 09:03 -0700, Greg KH wrote:
+> On Fri, May 06, 2005 at 03:45:01PM +0200, Kay Sievers wrote:
+> > Fix update-cache to compare the blob of a symlink against the link-target
+> > and not the file it points to. Also ignore all permissions applied to
+> > links.
+> > Thanks to Greg for recognizing this while he added our list of symlinks
+> > back to the udev repository.
+> 
+> Hm, even with this patch applied (it's in Linus's tree right now), I
+> still get the following with a clean checked out udev tree:
+>  $ cg-diff
+>  Index: test/sys/block/cciss!c0d0/device
+>  ===================================================================
 
--Tony
+I can't reproduce this. Are you sure, that the git-core binaries are
+called and not the cogito ones?
+
+  git-update-cache --refresh
+  git-diff-cache -r HEAD
+from the core-git should print nothing.
+
+Thanks,
+Kay
+
