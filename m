@@ -1,61 +1,97 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Kernel nightly snapshots..
-Date: Fri, 06 May 2005 08:42:23 +0100
-Message-ID: <1115365344.29495.37.camel@localhost.localdomain>
-References: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>
-	 <42797F9F.9030002@zytor.com>
-	 <1115303933.16187.135.camel@hades.cambridge.redhat.com>
-	 <Pine.LNX.4.58.0505050742180.2328@ppc970.osdl.org>
-	 <1115305813.16187.143.camel@hades.cambridge.redhat.com>
-	 <Pine.LNX.4.58.0505050834550.2328@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: GIT blame (was Re: Quick command reference)
+Date: Fri, 06 May 2005 02:32:30 -0700
+Message-ID: <7v3bt0em35.fsf_-_@assigned-by-dhcp.cox.net>
+References: <17012.53862.704670.858276@cargo.ozlabs.ibm.com>
+	<4274EB3D.2060602@dgreaves.com> <4274F373.6030001@khandalf.com>
+	<4274FB3F.8090206@dgreaves.com>
+	<Pine.LNX.4.58.0505010927040.2296@ppc970.osdl.org>
+	<42750D06.70004@dgreaves.com>
+	<7vhdhgeuj1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 06 09:36:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: David Greaves <david@dgreaves.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 11:26:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTxNf-00078d-Kh
-	for gcvg-git@gmane.org; Fri, 06 May 2005 09:36:15 +0200
+	id 1DTz5q-0003Wa-C4
+	for gcvg-git@gmane.org; Fri, 06 May 2005 11:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261162AbVEFHmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 03:42:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261163AbVEFHmz
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 03:42:55 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:56039 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S261162AbVEFHmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 03:42:54 -0400
-Received: from shinybook.infradead.org ([81.187.226.99])
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DTxU2-0007W2-IM; Fri, 06 May 2005 08:42:51 +0100
+	id S261172AbVEFJcg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 05:32:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVEFJcg
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 05:32:36 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:44493 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261172AbVEFJcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 05:32:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050506093232.QYXH7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 6 May 2005 05:32:32 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505050834550.2328@ppc970.osdl.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-1) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+In-Reply-To: <7vhdhgeuj1.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 05 May 2005 23:30:10 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-05-05 at 08:46 -0700, Linus Torvalds wrote:
-> So this _should_ work for a while, but will eventually (before a -rc10
-> happens or we get to v2.6.100 ;^) need something better. That something
-> better probably being to ignore any tags that don't point to commits, and
-> then sorting by the date of the commit object.
+>>>>> I == Junio C Hamano <junkio@cox.net> said:
 
-Enough with the dates already. I don't want to be doing snapshots
-against 2.6.11.9 just because that happened to get tagged more recently
-than 2.6.12-rc4. Time is an illusion; especially so when looking at
-branches which may not even have been merged.
+JCH> Linus, please pull from git-jc.git archive at:
+JCH>     http://members.cox.net/junkio/git-jc.git/
 
-The tag I want is the one which refers to a commit which is made by
-yourself and is accessible from the current HEAD in the lowest number of
-steps. And I don't _care_ if you tagged it 'Woozy Numbat'.
+Since that message I have added a couple more commits there.
+One of the things is a backport of -t (tag) flag to git-ls-files
+from Cogito fork.
 
--- 
-dwmw2
+The reason I am writing this message is not because I am excited
+about the backport [*1*], but because I find it quite cool the
+way I found out which commit in Pasky's development line
+introduced the change.  It demonstrates your previous "renames
+does not matter when doing CVS blame" argument actually works.
+
+Here is what I did:
+
+  1. Go into git.pasky and look at ls-files.c, grab a couple of
+     lines that look particular to Cogito version and store
+     those lines in a file.  I used the following:
+
+     $ cat >pattern <<\EOF
+     static const char *tag_cached = "";
+     static const char *tag_unmerged = "";
+     static const char *tag_removed = "";
+     static const char *tag_other = "";
+     EOF
+
+  2. Run the following command:
+
+     $ jit-search-change HEAD pattern
+
+What jit-search-change does is essentially what you described in
+your "renames do not matter" argument.  It does git-rev-list to
+list the commits from newer to older, runs git-diff-tree between
+parent-commit pairs, with GIT_EXTERNAL_DIFF set to a script that
+shows the diff between corresponding file in these two trees
+only if the file from one tree has that pattern string and the
+other tree's does not.  When it shows this diff, it also reports
+the commit pair, and that's how you can find out which commit
+introduced that change.
+
+It currently shows useless hits when it sees merges from you to
+Cogito, since those merges re-introduces the same change by
+forward porting it over and over, which I am thinking about ways
+to cull.  Maybe limiting the search only to parent-commit pair
+that has only one parent would be good enough.  There are other
+things to improve, but I am reasonably happy how it worked out.
+
+[Footnote]
+
+*1* The reason for the backport is because it is so small and
+trivial change that does not affect the operation of the command
+when the flag is not used.  I do not see a reason to force Pasky
+to keep shipping the version modified for Cogito use.
 
