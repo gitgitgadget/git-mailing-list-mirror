@@ -1,86 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Version of dirdiff to display diffs between git trees
-Date: Fri, 6 May 2005 12:07:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505061200060.2233@ppc970.osdl.org>
-References: <17019.28326.351036.268948@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.58.0505060916320.2233@ppc970.osdl.org> <m3d5s4jieh.fsf@defiant.localdomain>
+From: Frank Sorenson <frank@tuxrocks.com>
+Subject: Re: How do I...
+Date: Fri, 06 May 2005 13:07:29 -0600
+Message-ID: <427BC071.5090000@tuxrocks.com>
+References: <427B3DB3.4000507@tuxrocks.com>	 <1115390221.10459.4.camel@localhost>  <427B9DC5.9060905@tuxrocks.com> <1115402331.10460.16.camel@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 20:59:56 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 06 21:01:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU82b-00032c-Cb
-	for gcvg-git@gmane.org; Fri, 06 May 2005 20:59:13 +0200
+	id 1DU84H-0003IT-Vt
+	for gcvg-git@gmane.org; Fri, 06 May 2005 21:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261268AbVEFTFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 15:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVEFTFo
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:05:44 -0400
-Received: from fire.osdl.org ([65.172.181.4]:47328 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261268AbVEFTFf (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 15:05:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j46J5RU3018093
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 6 May 2005 12:05:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j46J5QRW024723;
-	Fri, 6 May 2005 12:05:26 -0700
-To: Krzysztof Halasa <khc@pm.waw.pl>
-In-Reply-To: <m3d5s4jieh.fsf@defiant.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261271AbVEFTHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 15:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVEFTHk
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:07:40 -0400
+Received: from www.tuxrocks.com ([64.62.190.123]:58123 "EHLO tuxrocks.com")
+	by vger.kernel.org with ESMTP id S261271AbVEFTHd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 15:07:33 -0400
+Received: from [128.187.171.102] (obelix.cs.byu.edu [128.187.171.102])
+	(authenticated bits=0)
+	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j46J7TRT012428
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 6 May 2005 13:07:31 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Dave Kleikamp <shaggy@austin.ibm.com>
+In-Reply-To: <1115402331.10460.16.camel@localhost>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
+Dave Kleikamp wrote:
+> I'm not sure if I was clear.  cg-pull should be 'cg-pull origin".
 
-On Fri, 6 May 2005, Krzysztof Halasa wrote:
->
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > 	cat .git/ORIG_HEAD > .git/HEAD
-> > 	git-read-tree -m HEAD
-> > 	git-checkout-cache -f -a
-> > 	git-update-cache --refresh
-> >
-> > and you're back to your original head (the above is basically "unpull").
-> 
-> So, is "git-read-tree -m HEAD" actually equivalent to "git-read-tree HEAD"
-> and does it simply write complete index (ignoring the old one)
-> corresponding to given HEAD?
+Got it, and it does just what I wanted.
 
-Yes, "git-read-tree -m HEAD" is 100% equivalent to the version without
-"-m" except: that it reads the old index file, and picks up the file stat
-information from there if the name/SHA1 pair matches.
+> I take this to mean you're seeing problems with cg-update too. cg-update
+> simply runs cg-pull & cg-merge together, so running them separately
+> shouldn't make any difference.
 
-This has two implications:
+Yes.  cg-pull and cg-update have both shown odd breakage of this sort,
+putting my tree into a bad state.  Sometimes deleting files fixes it,
+but more often than not, I've needed to just start a new tree again in
+order to fix it.  This is probably due to inexperience with git, but
+tree corruption probably shouldn't occur like this.
 
- - "git-read-tree -m HEAD" is a lot better than the non "-m" version, 
-   since it means that if most of the files are unchanged between the new
-   and the old tree, _most_ of the index is still up-to-date.
+Frank
+- --
+Frank Sorenson - KD7TZK
+Systems Manager, Computer Science Department
+Brigham Young University
+frank@tuxrocks.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-   You still need to do "git-update-cache --refresh" to make sure the 
-   index is fully up-to-date, but now the refresh has to do a _lot_ less.
-
- - If your old index file has crap in it, it won't work. If you have a 
-   corrupt index file, you can't use "-m". And in particular, if the merge 
-   _failed_ and you have unmerged entries in your index file, you can't
-   use "-m" (I might change that, and let the single-merge case just 
-   ignore unmerged entries).
-
-So the rule is: normally you probably want to use "-m", but if you want to
-start from a totally clean slate because something went wrong, you should
-skip the "-m" which then does the "reset the whole index" without the
-merge of the old index information.
-
-(Also, if the new tree you're reading is totally different from the old 
-one, or you don't have anything checked out, you're better off without the 
-"-m", since it will just add overhead for no gain).
-
-			Linus
+iD8DBQFCe8BxaI0dwg4A47wRAk2OAJ915s2KHTNxrpi6k3wa7HiDhpOFGgCgrMxp
+73JzFxl7lg2c9korTF8L7Ek=
+=ILPh
+-----END PGP SIGNATURE-----
