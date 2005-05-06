@@ -1,65 +1,51 @@
-From: <uwesmail2005-git@yahoo.de>
-Subject: Stronger Hashes
-Date: Fri, 6 May 2005 23:05:02 +0200 (CEST)
-Message-ID: <20050506210502.20956.qmail@web25608.mail.ukl.yahoo.com>
-Reply-To: uwesmail2005-git@yahoo.de
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Tweak git-diff-tree -v output further (take 2).
+Date: Fri, 6 May 2005 14:40:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505061440180.2233@ppc970.osdl.org>
+References: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri May 06 22:59:17 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 23:34:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU9uB-0001tr-Fv
-	for gcvg-git@gmane.org; Fri, 06 May 2005 22:58:39 +0200
+	id 1DUASL-0007j2-KZ
+	for gcvg-git@gmane.org; Fri, 06 May 2005 23:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261222AbVEFVFK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 17:05:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261268AbVEFVFK
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:05:10 -0400
-Received: from web25608.mail.ukl.yahoo.com ([217.12.10.167]:60595 "HELO
-	web25608.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261222AbVEFVFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 17:05:04 -0400
-Received: (qmail 20958 invoked by uid 60001); 6 May 2005 21:05:02 -0000
-Received: from [84.190.74.106] by web25608.mail.ukl.yahoo.com via HTTP; Fri, 06 May 2005 23:05:02 CEST
-To: git@vger.kernel.org
+	id S261278AbVEFVkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 17:40:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261282AbVEFVkF
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:40:05 -0400
+Received: from fire.osdl.org ([65.172.181.4]:20146 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261278AbVEFVix (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 17:38:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j46LcmU3003263
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 6 May 2005 14:38:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j46Lcl7g032232;
+	Fri, 6 May 2005 14:38:47 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Cryptographic hashes are never strong enough, it seems. There are two
-threats against which they have to be defended.
-Defense against incidental collisions:
-Can only be made by making the hash longer. Easy way to make the hash
-6-times as long: pad to multiple of 6 bits (can be skipped if hash
-algorithm is implemented with bit-granularity)
-,create normal hash (from all bits),create hash from all even numbered
-bits
-,create hash from all odd numbered bits, create hash from all bits with
-fully triple bit number, create hash from all bits that follow them and
-last create a hash from all bit that precede a fully triple numbered
-bit. Concatenate (or interleave) these 6 hashes and you're set.
-The same is possible with 28. And all perfect numbers.
-Defense against intentional collisions:
-The mechanism by which a collision is computed uses the property of the
-cryptographic hash to update an IV. If a collision was created, and
-the next bytes are the same, these files will collide too. Such
-computation is dependent on the concrete IV the hash starts with.
-If that IV is not predictable anymore, these algorithms will break.
-So the easiest way to break them is to hash 'cat file file'. More
-secure
-will be 'gzip -c<file|cat - file' because the starting offset of file
-will probably be not aligned to the hash blocks. With
-'$(hashprog)<file|cat - file' you can strike through "probably" and
-replace "definitly".
-
-Both methods can be combined. 
 
 
-	
+On Fri, 6 May 2005, Junio C Hamano wrote:
+> 
+> The first hunk of this is a pure bugfix---it guards us against a
+> commit message that does not end with a newline.
 
-	
-		
-___________________________________________________________ 
-Gesendet von Yahoo! Mail - Jetzt mit 1GB Speicher kostenlos - Hier anmelden: http://mail.yahoo.de
+Why do you think it helps anything at all?
+
+We have a _length_ of buffer. We don't have any zero-termination.
+
+		Linus
