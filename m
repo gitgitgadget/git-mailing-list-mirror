@@ -1,97 +1,45 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Tweak git-diff-tree -v output further (take 2).
-Date: Fri, 06 May 2005 12:37:00 -0700
-Message-ID: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 0/5] git-tar-tree: add symlink support
+Date: Fri, 6 May 2005 22:55:29 +0200
+Message-ID: <20050506205529.GA19518@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 21:31:06 2005
+X-From: git-owner@vger.kernel.org Fri May 06 22:49:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU8Wz-0007Hq-2Z
-	for gcvg-git@gmane.org; Fri, 06 May 2005 21:30:38 +0200
+	id 1DU9l8-0000Qx-TR
+	for gcvg-git@gmane.org; Fri, 06 May 2005 22:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261278AbVEFThR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 15:37:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261279AbVEFThR
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:37:17 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:1259 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261278AbVEFThC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 15:37:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050506193701.POZY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 6 May 2005 15:37:01 -0400
+	id S261232AbVEFUze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 16:55:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261249AbVEFUze
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 16:55:34 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:25019 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261232AbVEFUza (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 16:55:30 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id 1C7B4307; Fri,  6 May 2005 22:55:29 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(This one is simpler than the previous one I just sent out)
+Since symlinks can be stored inside GIT, git-tar-tree should properly
+handle them, too.  The first three patches do a bit of cleanup to make
+adding symlink support easier.  The fourth patch actually dirties the
+code, also to make the fifth one easier. :)  I just couldn't think of a
+better way to split the changes and a combined patch of 4&5 did too much
+at once.
 
-The first hunk of this is a pure bugfix---it guards us against a
-commit message that does not end with a newline.
+If a link target is longer than 100 chars than an extended header is
+created.  Because of the way git-tar-tree handles extended headers that
+means the sum of path and target of a symlink must be less than about
+490 chars.  This is not a limitation of the archive format, so we can
+fix it later.
 
-This adds the full header information to git-diff-tree -v output
-in addition to the log message it already produces.  It also
-stops indenting the log message to match what git-export does.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
-diff-tree.c |   22 ++++++++++++----------
-1 files changed, 12 insertions(+), 10 deletions(-)
-
-# - linus-mirror: diff-tree: add "verbose header" mode
-# + (working tree)
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -278,7 +278,7 @@ static int get_one_line(const char *msg,
- 
- 	while (len--) {
- 		ret++;
--		if (*msg++ == '\n')
-+		if (!*msg || *msg++ == '\n')
- 			break;
- 	}
- 	return ret;
-@@ -287,12 +287,14 @@ static int get_one_line(const char *msg,
- static char *generate_header(const char *commit, const char *parent, const char *msg, unsigned long len)
- {
- 	static char this_header[1000];
--	int offset;
- 
--	offset = sprintf(this_header, "%s%s (from %s)\n", header_prefix, commit, parent);
--	if (verbose_header) {
-+	if (!verbose_header)
-+		sprintf(this_header, "%s%s (from %s)\n", header_prefix,
-+			commit, parent);
-+	else {
-+		int offset;
- 		int hdr = 1;
--
-+		offset = sprintf(this_header, "Id: %s\n", commit);
- 		for (;;) {
- 			const char *line = msg;
- 			int linelen = get_one_line(msg, len);
-@@ -306,11 +308,11 @@ static char *generate_header(const char 
- 			len -= linelen;
- 			if (linelen == 1)
- 				hdr = 0;
--			if (hdr)
--				continue;
--			memset(this_header + offset, ' ', 4);
--			memcpy(this_header + offset + 4, line, linelen);
--			offset += linelen + 4;
-+			memcpy(this_header + offset, line, linelen);
-+			if (hdr && !strncmp(line, "parent ", 7) &&
-+			    !strncmp(line+7, parent, 40))
-+				this_header[offset + 6] = '*';
-+			offset += linelen;
- 		}
- 		this_header[offset++] = '\n';
- 		this_header[offset] = 0;
-
+Rene
