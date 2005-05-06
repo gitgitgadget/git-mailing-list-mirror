@@ -1,114 +1,97 @@
-From: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
-Subject: Re: How do I...
-Date: Fri, 6 May 2005 21:35:07 +0200 (MEST)
-Message-ID: <15316.1115408107@www80.gmx.net>
-References: <Pine.LNX.4.58.0505061158520.2233@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Tweak git-diff-tree -v output further (take 2).
+Date: Fri, 06 May 2005 12:37:00 -0700
+Message-ID: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 21:29:21 2005
+X-From: git-owner@vger.kernel.org Fri May 06 21:31:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU8VH-00073H-Rm
-	for gcvg-git@gmane.org; Fri, 06 May 2005 21:28:52 +0200
+	id 1DU8Wz-0007Hq-2Z
+	for gcvg-git@gmane.org; Fri, 06 May 2005 21:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261276AbVEFTfW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 15:35:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261277AbVEFTfV
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:35:21 -0400
-Received: from pop.gmx.net ([213.165.64.20]:14785 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S261276AbVEFTfI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 15:35:08 -0400
-Received: (qmail 1909 invoked by uid 0); 6 May 2005 19:35:07 -0000
-Received: from 141.130.250.71 by www80.gmx.net with HTTP;
-	Fri, 6 May 2005 21:35:07 +0200 (MEST)
+	id S261278AbVEFThR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 15:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261279AbVEFThR
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:37:17 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:1259 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261278AbVEFThC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 15:37:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050506193701.POZY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 6 May 2005 15:37:01 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-X-Priority: 3 (Normal)
-X-Authenticated: #20307258
-X-Mailer: WWW-Mail 1.6 (Global Message Exchange)
-X-Flags: 0001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+(This one is simpler than the previous one I just sent out)
 
-I've written a script that shows all commits when a certain file was
-changed.
+The first hunk of this is a pure bugfix---it guards us against a
+commit message that does not end with a newline.
 
-It goes back the commits, looks into the tree ... and if a change is found,
-print out the commit.
+This adds the full header information to git-diff-tree -v output
+in addition to the log message it already produces.  It also
+stops indenting the log message to match what git-export does.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Thomas
+diff-tree.c |   22 ++++++++++++----------
+1 files changed, 12 insertions(+), 10 deletions(-)
 
+# - linus-mirror: diff-tree: add "verbose header" mode
+# + (working tree)
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -278,7 +278,7 @@ static int get_one_line(const char *msg,
+ 
+ 	while (len--) {
+ 		ret++;
+-		if (*msg++ == '\n')
++		if (!*msg || *msg++ == '\n')
+ 			break;
+ 	}
+ 	return ret;
+@@ -287,12 +287,14 @@ static int get_one_line(const char *msg,
+ static char *generate_header(const char *commit, const char *parent, const char *msg, unsigned long len)
+ {
+ 	static char this_header[1000];
+-	int offset;
+ 
+-	offset = sprintf(this_header, "%s%s (from %s)\n", header_prefix, commit, parent);
+-	if (verbose_header) {
++	if (!verbose_header)
++		sprintf(this_header, "%s%s (from %s)\n", header_prefix,
++			commit, parent);
++	else {
++		int offset;
+ 		int hdr = 1;
+-
++		offset = sprintf(this_header, "Id: %s\n", commit);
+ 		for (;;) {
+ 			const char *line = msg;
+ 			int linelen = get_one_line(msg, len);
+@@ -306,11 +308,11 @@ static char *generate_header(const char 
+ 			len -= linelen;
+ 			if (linelen == 1)
+ 				hdr = 0;
+-			if (hdr)
+-				continue;
+-			memset(this_header + offset, ' ', 4);
+-			memcpy(this_header + offset + 4, line, linelen);
+-			offset += linelen + 4;
++			memcpy(this_header + offset, line, linelen);
++			if (hdr && !strncmp(line, "parent ", 7) &&
++			    !strncmp(line+7, parent, 40))
++				this_header[offset + 6] = '*';
++			offset += linelen;
+ 		}
+ 		this_header[offset++] = '\n';
+ 		this_header[offset] = 0;
 
-
---- /dev/null	1970-01-01 01:00:00.000000000 +0100
-+++ git-file-history-script	2005-05-06 21:24:41.000000000 +0200
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+# 
-+# Copyright (C) 2005 Thomas Kolejka
-+#
-+# usage - $0 [commit] pathname
-+
-+
-+if [ $# -gt 1 ]
-+then
-+	HEAD=$1
-+	shift
-+else
-+	HEAD=`cat $SHA1_FILE_DIRECTORY/../HEAD`
-+fi
-+
-+git-cat-file commit $HEAD >> /dev/null
-+
-+if [ $? -ne 0 ]
-+then
-+	exit
-+fi
-+
-+f_name=$1
-+
-+
-+echo "starting from commit $HEAD"
-+
-+last_sha1="last-revision"
-+last_commit=$HEAD
-+
-+git-rev-list $HEAD | while read the_commit
-+do
-+
-+	the_tree=`git-cat-file commit $the_commit|head -n1 | awk '{ print $2 }'`
-+
-+
-+	the_sha1=`git-ls-tree -r $the_tree|grep -w "${f_name}$"|awk '{ print $3
-}'`
-+
-+	if [ -z "$the_sha1" ]
-+	then
-+		continue
-+	fi
-+
-+
-+	if [ $last_sha1 != $the_sha1 ]
-+	then
-+		echo commit $the_commit - tree $the_tree - sha1 $the_sha1
-+		echo " "
-+		# echo "$the_sha1 -> $last_sha1"
-+		last_sha1=$the_sha1
-+		git-cat-file commit $last_commit
-+
-+		echo " "
-+		echo " "
-+		echo " "
-+	fi
-+
-+	last_commit=$the_commit
-+done
-
--- 
-+++ Neu: Echte DSL-Flatrates von GMX - Surfen ohne Limits +++
-Always online ab 4,99 Euro/Monat: http://www.gmx.net/de/go/dsl
