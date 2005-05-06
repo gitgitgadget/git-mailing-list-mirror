@@ -1,77 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: How do I...
-Date: Fri, 06 May 2005 09:35:52 -0700
-Message-ID: <7vsm10cnx3.fsf@assigned-by-dhcp.cox.net>
-References: <427B3DB3.4000507@tuxrocks.com>
-	<Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org>
+From: Greg KH <greg@kroah.com>
+Subject: Re: [PATCH] fix compare symlink against readlink not data
+Date: Fri, 6 May 2005 09:36:04 -0700
+Message-ID: <20050506163603.GA17766@kroah.com>
+References: <20050506134501.GA11430@vrfy.org> <20050506160359.GB6904@kroah.com> <1115396614.32065.23.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Frank Sorenson <frank@tuxrocks.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 18:32:45 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 18:33:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU5ja-0005TH-Ns
-	for gcvg-git@gmane.org; Fri, 06 May 2005 18:31:27 +0200
+	id 1DU5kh-0005dd-Kv
+	for gcvg-git@gmane.org; Fri, 06 May 2005 18:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261218AbVEFQha (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 12:37:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261157AbVEFQha
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 12:37:30 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:49836 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261218AbVEFQfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 12:35:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050506163553.OSIH16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 6 May 2005 12:35:53 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org> (Linus
- Torvalds's message of "Fri, 6 May 2005 09:13:27 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261232AbVEFQh7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 12:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVEFQh7
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 12:37:59 -0400
+Received: from mail.kroah.org ([69.55.234.183]:12678 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261222AbVEFQgF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 12:36:05 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j46Ga1i03939;
+	Fri, 6 May 2005 09:36:01 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DU5o4-54R-00; Fri, 06 May 2005 09:36:04 -0700
+To: Kay Sievers <kay.sievers@vrfy.org>
+Content-Disposition: inline
+In-Reply-To: <1115396614.32065.23.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+On Fri, May 06, 2005 at 06:23:34PM +0200, Kay Sievers wrote:
+> On Fri, 2005-05-06 at 09:03 -0700, Greg KH wrote:
+> > On Fri, May 06, 2005 at 03:45:01PM +0200, Kay Sievers wrote:
+> > > Fix update-cache to compare the blob of a symlink against the link-target
+> > > and not the file it points to. Also ignore all permissions applied to
+> > > links.
+> > > Thanks to Greg for recognizing this while he added our list of symlinks
+> > > back to the udev repository.
+> > 
+> > Hm, even with this patch applied (it's in Linus's tree right now), I
+> > still get the following with a clean checked out udev tree:
+> >  $ cg-diff
+> >  Index: test/sys/block/cciss!c0d0/device
+> >  ===================================================================
+> 
+> I can't reproduce this. Are you sure, that the git-core binaries are
+> called and not the cogito ones?
+> 
+>   git-update-cache --refresh
+>   git-diff-cache -r HEAD
+> from the core-git should print nothing.
 
-LT> On Fri, 6 May 2005, Frank Sorenson wrote:
->> 
->> Okay, I've got some "How can I?" questions.  I hope I'm not the only one
->> still working to "git it".
->> 
->> How can I git a list of commits that have modified a particular file?
->> For example, I'd like to do something like this:
->> # git-file-revs Makefile
->> f7eb55878f11575281add2a5726e483aed5e45bb
->> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
->> bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+Odd.  If I reclone the whole tree from the udev kernel.org tree, then it
+works just fine.  If I create a new copy of my local tree, I still have
+the same problem.  Diffing the trees shows no difference in the objects
+at all...
 
-LT> Guys - whoever wrote one of the scripts, can you please send out your 
-LT> current version to the git list and cc me, and explain why yours is 
-LT> superior to the other peoples version. Please?
+Can you add a symlink to a local tree and see if you can duplicate this?
 
-I think I mentioned and posted an interactive version called
-jit-trackdown.  It is part of JIT found at [*1*].  You may have
-an older version that does not have the command.
+thanks,
 
-LT> But I might cook something up myself too. 
-
-Yourself or not, I think it is a good idea to do something that
-does exactly Frank wants, namely, just list commits.  Even
-better would be, to take commits with multiple parents into
-account, list of <commit> <parent> pairs, like:
-
-    $ git-file-revs Makefile
-    f7eb55....... aaaaaa.......
-    f7eb55....... bbbbbb.......
-    aaaaaa....... dddddd.......
-
-which shows commit f7eb55... changed it relative to both of its
-parents aaaaaa... and bbbbbb...
-
-[Footnotes]
-*1* http://members.cox.net/junkio/
-
+greg k-h
