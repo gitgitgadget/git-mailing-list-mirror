@@ -1,53 +1,60 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Kernel nightly snapshots..
-Date: Fri, 06 May 2005 14:50:17 -0700
-Message-ID: <427BE699.60802@zytor.com>
-References: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>	 <42797F9F.9030002@zytor.com>	 <1115303933.16187.135.camel@hades.cambridge.redhat.com>	 <Pine.LNX.4.58.0505050742180.2328@ppc970.osdl.org>	 <1115305813.16187.143.camel@hades.cambridge.redhat.com>	 <1115307033.16187.146.camel@hades.cambridge.redhat.com>	 <427ABA45.3050803@zytor.com> <1115364543.29495.24.camel@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Tweak git-diff-tree -v output further.
+Date: Fri, 6 May 2005 14:54:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505061451530.2233@ppc970.osdl.org>
+References: <7vd5s4cfzq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 06 23:44:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 23:46:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUAcC-0000kW-PV
-	for gcvg-git@gmane.org; Fri, 06 May 2005 23:44:09 +0200
+	id 1DUAdi-0000y2-Fw
+	for gcvg-git@gmane.org; Fri, 06 May 2005 23:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261286AbVEFVuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 17:50:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261288AbVEFVuw
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:50:52 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:21923 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261286AbVEFVus
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 May 2005 17:50:48 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j46LoM8K026822
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 6 May 2005 14:50:22 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: David Woodhouse <dwmw2@infradead.org>,
-	Marcelo Tosatti <marcelo.tosatti@cyclades.com>
-In-Reply-To: <1115364543.29495.24.camel@localhost.localdomain>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-3.3 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261288AbVEFVwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 17:52:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261290AbVEFVwb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:52:31 -0400
+Received: from fire.osdl.org ([65.172.181.4]:36534 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261288AbVEFVw3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 17:52:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j46LqMU3004762
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 6 May 2005 14:52:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j46LqL16000521;
+	Fri, 6 May 2005 14:52:21 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5s4cfzq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse wrote:
-> On Thu, 2005-05-05 at 17:28 -0700, H. Peter Anvin wrote:
-> 
->>Could you add that to 2.4 as well, too?
-> 
-> Is there a 2.4 git tree?
-> 
 
-I thought so, but now I can't find it.  Marcelo?
 
-	-hpa
+On Fri, 6 May 2005, Junio C Hamano wrote:
+> 
+> This adds the full header information to git-diff-tree -v output
+> in addition to the log message it already produces.
+
+I don't actually like the git internal commit format, it's not very 
+readable. It's designed to be nicely readable by machines, not humans.
+
+If you want machine-readable output, you shouldn't use "-v" (or probably
+-p either) anyway, you'd be better off with the raw file changes.
+
+> Maybe we want to stop indenting so that it matches what
+> git-export produces better.
+
+Again, it's indented so that it's human-readable, and I was planning on
+adding _some_ human-readable output from the headers (author and a
+human-readable date or something).
+
+		Linus
