@@ -1,52 +1,53 @@
 From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] Tweak git-diff-tree -v output further (take 2).
-Date: Fri, 06 May 2005 14:47:32 -0700
-Message-ID: <427BE5F4.3040602@zytor.com>
-References: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Kernel nightly snapshots..
+Date: Fri, 06 May 2005 14:50:17 -0700
+Message-ID: <427BE699.60802@zytor.com>
+References: <Pine.LNX.4.58.0505041639130.2328@ppc970.osdl.org>	 <42797F9F.9030002@zytor.com>	 <1115303933.16187.135.camel@hades.cambridge.redhat.com>	 <Pine.LNX.4.58.0505050742180.2328@ppc970.osdl.org>	 <1115305813.16187.143.camel@hades.cambridge.redhat.com>	 <1115307033.16187.146.camel@hades.cambridge.redhat.com>	 <427ABA45.3050803@zytor.com> <1115364543.29495.24.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 23:42:04 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 06 23:44:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUAZT-0000Nk-Mw
-	for gcvg-git@gmane.org; Fri, 06 May 2005 23:41:19 +0200
+	id 1DUAcC-0000kW-PV
+	for gcvg-git@gmane.org; Fri, 06 May 2005 23:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261283AbVEFVsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 17:48:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261286AbVEFVsF
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:48:05 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:14243 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261283AbVEFVsC
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 May 2005 17:48:02 -0400
+	id S261286AbVEFVuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 17:50:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261288AbVEFVuw
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 17:50:52 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:21923 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261286AbVEFVus
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 6 May 2005 17:50:48 -0400
 Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
 	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j46Llb7W026764
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j46LoM8K026822
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 6 May 2005 14:47:37 -0700
+	Fri, 6 May 2005 14:50:22 -0700
 User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr7ocfj7.fsf@assigned-by-dhcp.cox.net>
+To: David Woodhouse <dwmw2@infradead.org>,
+	Marcelo Tosatti <marcelo.tosatti@cyclades.com>
+In-Reply-To: <1115364543.29495.24.camel@localhost.localdomain>
 X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
 X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+X-Spam-Status: No, score=-3.3 required=5.0 tests=ALL_TRUSTED,AWL 
 	autolearn=ham version=3.0.3
 X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> (This one is simpler than the previous one I just sent out)
+David Woodhouse wrote:
+> On Thu, 2005-05-05 at 17:28 -0700, H. Peter Anvin wrote:
 > 
-> The first hunk of this is a pure bugfix---it guards us against a
-> commit message that does not end with a newline.
+>>Could you add that to 2.4 as well, too?
+> 
+> Is there a 2.4 git tree?
+> 
 
-No it doesn't.  What it does is "guard" you against a commit message 
-which contains a null character.  What's not entirely clear is if that's 
-what you wanted to do.
+I thought so, but now I can't find it.  Marcelo?
 
 	-hpa
