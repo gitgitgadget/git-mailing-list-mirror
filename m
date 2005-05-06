@@ -1,97 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: GIT blame (was Re: Quick command reference)
-Date: Fri, 06 May 2005 02:32:30 -0700
-Message-ID: <7v3bt0em35.fsf_-_@assigned-by-dhcp.cox.net>
-References: <17012.53862.704670.858276@cargo.ozlabs.ibm.com>
-	<4274EB3D.2060602@dgreaves.com> <4274F373.6030001@khandalf.com>
-	<4274FB3F.8090206@dgreaves.com>
-	<Pine.LNX.4.58.0505010927040.2296@ppc970.osdl.org>
-	<42750D06.70004@dgreaves.com>
-	<7vhdhgeuj1.fsf@assigned-by-dhcp.cox.net>
+From: Frank Sorenson <frank@tuxrocks.com>
+Subject: How do I...
+Date: Fri, 06 May 2005 03:49:39 -0600
+Message-ID: <427B3DB3.4000507@tuxrocks.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Greaves <david@dgreaves.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 11:26:05 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri May 06 11:43:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DTz5q-0003Wa-C4
-	for gcvg-git@gmane.org; Fri, 06 May 2005 11:25:58 +0200
+	id 1DTzMr-0006Fm-5u
+	for gcvg-git@gmane.org; Fri, 06 May 2005 11:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261172AbVEFJcg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 05:32:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVEFJcg
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 05:32:36 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:44493 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261172AbVEFJcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 05:32:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050506093232.QYXH7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 6 May 2005 05:32:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vhdhgeuj1.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Thu, 05 May 2005 23:30:10 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261199AbVEFJuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 05:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261194AbVEFJuF
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 05:50:05 -0400
+Received: from www.tuxrocks.com ([64.62.190.123]:9993 "EHLO tuxrocks.com")
+	by vger.kernel.org with ESMTP id S261200AbVEFJtq (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 05:49:46 -0400
+Received: from [10.0.0.10] (byu-gw.customer.csolutions.net [216.190.206.130])
+	(authenticated bits=0)
+	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j469nh6h008461
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 6 May 2005 03:49:44 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> I == Junio C Hamano <junkio@cox.net> said:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-JCH> Linus, please pull from git-jc.git archive at:
-JCH>     http://members.cox.net/junkio/git-jc.git/
+Okay, I've got some "How can I?" questions.  I hope I'm not the only one
+still working to "git it".
 
-Since that message I have added a couple more commits there.
-One of the things is a backport of -t (tag) flag to git-ls-files
-from Cogito fork.
+How can I git a list of commits that have modified a particular file?
+For example, I'd like to do something like this:
+# git-file-revs Makefile
+f7eb55878f11575281add2a5726e483aed5e45bb
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+...
 
-The reason I am writing this message is not because I am excited
-about the backport [*1*], but because I find it quite cool the
-way I found out which commit in Pasky's development line
-introduced the change.  It demonstrates your previous "renames
-does not matter when doing CVS blame" argument actually works.
+How can I output a list of the filename(s) modified by a particular
+commit? (for example)
+# git-commit-info files 6741f3a7f9922391cd02b3ca1329e669497dc22f
+Makefile
+file1
+arch/file2
 
-Here is what I did:
+Can I use cg-log to output just the information about a particular
+commit?  (I don't need all the commits, just the one I'm interested in).
 
-  1. Go into git.pasky and look at ls-files.c, grab a couple of
-     lines that look particular to Cogito version and store
-     those lines in a file.  I used the following:
+After doing a cg-update, can I cg-log just the changes since the last
+update?  Alternatively, how can I tell cg-log I'm caught up, and don't
+need anything historical?
 
-     $ cat >pattern <<\EOF
-     static const char *tag_cached = "";
-     static const char *tag_unmerged = "";
-     static const char *tag_removed = "";
-     static const char *tag_other = "";
-     EOF
+Can I do these with git/cogito, or will I need to start diving deeper
+into the code?
 
-  2. Run the following command:
+Thanks,
 
-     $ jit-search-change HEAD pattern
+Frank
+- --
+Frank Sorenson - KD7TZK
+Systems Manager, Computer Science Department
+Brigham Young University
+frank@tuxrocks.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-What jit-search-change does is essentially what you described in
-your "renames do not matter" argument.  It does git-rev-list to
-list the commits from newer to older, runs git-diff-tree between
-parent-commit pairs, with GIT_EXTERNAL_DIFF set to a script that
-shows the diff between corresponding file in these two trees
-only if the file from one tree has that pattern string and the
-other tree's does not.  When it shows this diff, it also reports
-the commit pair, and that's how you can find out which commit
-introduced that change.
-
-It currently shows useless hits when it sees merges from you to
-Cogito, since those merges re-introduces the same change by
-forward porting it over and over, which I am thinking about ways
-to cull.  Maybe limiting the search only to parent-commit pair
-that has only one parent would be good enough.  There are other
-things to improve, but I am reasonably happy how it worked out.
-
-[Footnote]
-
-*1* The reason for the backport is because it is so small and
-trivial change that does not affect the operation of the command
-when the flag is not used.  I do not see a reason to force Pasky
-to keep shipping the version modified for Cogito use.
-
+iD8DBQFCez2zaI0dwg4A47wRAuNAAJ0QsBkwwHFbFQshRGSDCLv/pEaZXQCfeZj6
+rqC9ZoVAYNeMwKqppbyXx9o=
+=pJDl
+-----END PGP SIGNATURE-----
