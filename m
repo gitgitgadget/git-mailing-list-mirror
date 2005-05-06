@@ -1,64 +1,86 @@
-From: Tom Lord <lord@emf.net>
-Subject: Re: the blob metanet (welcome to the future)
-Date: Fri, 6 May 2005 16:27:43 -0700 (PDT)
-Message-ID: <200505062327.QAA01095@emf.net>
-References: <20050506232254.GI32629@pasky.ji.cz>
-Cc: gnu-arch-dev@lists.seyza.com, git@vger.kernel.org
-X-From: gnu-arch-dev-bounces@lists.seyza.com Sat May 07 01:21:35 2005
-Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
-Received: from [207.166.200.220] (helo=hera.museatech.net)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1DUC84-0003RE-3A
-	for gcvad-gnu-arch-dev@gmane.org; Sat, 07 May 2005 01:21:08 +0200
-Received: (qmail 15262 invoked by uid 110); 6 May 2005 23:27:57 -0000
-Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
- (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
- Processed in 1.560221 secs); 06 May 2005 23:27:57 -0000
-Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
-  by hera.museatech.net with SMTP; 6 May 2005 23:27:56 -0000
-Delivered-To: list-gnu-arch-dev@lists.seyza.com
-Received: (qmail 15230 invoked by uid 110); 6 May 2005 23:27:51 -0000
-Received: from lord@emf.net by hera by uid 102 with qmail-scanner-1.20 
-	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
-	Processed in 1.547727 secs); 06 May 2005 23:27:51 -0000
-Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
-	by hera.museatech.net with SMTP; 6 May 2005 23:27:49 -0000
-Received: (qmail 2095 invoked from network); 6 May 2005 23:40:47 -0000
-Received: from emf.emf.net (HELO emf.net) (205.149.0.19)
-	by a1.mx.alal.us with SMTP; 6 May 2005 23:40:45 -0000
-Received: (from lord@localhost) by emf.net (K/K) id QAA01095;
-	Fri, 6 May 2005 16:27:43 -0700 (PDT)
-To: pasky@ucw.cz
-In-reply-to: <20050506232254.GI32629@pasky.ji.cz> (message from Petr Baudis on
-	Sat, 7 May 2005 01:22:54 +0200)
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=9.0 tests=AWL, BAYES_00, RM_sl_LeadChar 
-	autolearn=no version=3.0.2
-X-BeenThere: gnu-arch-dev@lists.seyza.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
-List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
-List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
-List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
-List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
-List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
-Sender: gnu-arch-dev-bounces@lists.seyza.com
-Errors-To: gnu-arch-dev-bounces@lists.seyza.com
-X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Do not initialize sha1_file_directory by hand.
+Date: Fri, 06 May 2005 16:32:28 -0700
+Message-ID: <7vsm10aq2b.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 01:30:57 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1DUCGz-0004Py-Jl
+	for gcvg-git@gmane.org; Sat, 07 May 2005 01:30:21 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261318AbVEFXgR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 19:36:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261364AbVEFXgA
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 19:36:00 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:60856 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261318AbVEFXce (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 19:32:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050506233229.VDQM8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 6 May 2005 19:32:29 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
+Some commands initialize sha1_file_directory by hand.  There is no
+need to do so; sha1_file.c knows how to handle it.
 
-GAH!
+The next patch will remove the variable altogether.
 
-   From: Petr Baudis <pasky@ucw.cz>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-   Do you think you could make the pages not have all the content enclosed
-   within an HTML comment, please?
+ ls-tree.c    |    3 ---
+ read-cache.c |    5 -----
+ tar-tree.c   |    5 -----
+ 3 files changed, 13 deletions(-)
 
-Yes, i'll fix that.  Meanwhile, please just s/.html/.txt  in the URL
-and you can read things just fine.  
+--- a/ls-tree.c
++++ b/ls-tree.c
+@@ -104,9 +104,6 @@ int main(int argc, char **argv)
+ 		usage(ls_tree_usage);
+ 	if (get_sha1(argv[1], sha1) < 0)
+ 		usage(ls_tree_usage);
+-	sha1_file_directory = getenv(DB_ENVIRONMENT);
+-	if (!sha1_file_directory)
+-		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
+ 	if (list(sha1) < 0)
+ 		die("list failed");
+ 	return 0;
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -193,11 +193,6 @@ int read_cache(void)
+ 	if (active_cache)
+ 		return error("more than one cachefile");
+ 	errno = ENOENT;
+-	sha1_file_directory = getenv(DB_ENVIRONMENT);
+-	if (!sha1_file_directory)
+-		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
+-	if (access(sha1_file_directory, X_OK) < 0)
+-		return error("no access to SHA1 file directory");
+ 	fd = open(get_index_file(), O_RDONLY);
+ 	if (fd < 0)
+ 		return (errno == ENOENT) ? 0 : error("open failed");
+--- a/tar-tree.c
++++ b/tar-tree.c
+@@ -418,10 +418,6 @@ int main(int argc, char **argv)
+ 		usage(tar_tree_usage);
+ 	}
+ 
+-	sha1_file_directory = getenv(DB_ENVIRONMENT);
+-	if (!sha1_file_directory)
+-		sha1_file_directory = DEFAULT_DB_ENVIRONMENT;
+-
+ 	buffer = read_object_with_reference(sha1, "commit", &size, commit_sha1);
+ 	if (buffer) {
+ 		write_global_extended_header(commit_sha1);
+----------------------------------------------------------------
 
--t
