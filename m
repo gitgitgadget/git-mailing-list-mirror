@@ -1,53 +1,46 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: How do I...
-Date: Fri, 06 May 2005 19:39:30 +0100
-Message-ID: <1115404771.16187.343.camel@hades.cambridge.redhat.com>
-References: <427B3DB3.4000507@tuxrocks.com>
-	 <Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org>
-	 <7vsm10cnx3.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.58.0505061006060.2233@ppc970.osdl.org>
+From: Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: Version of dirdiff to display diffs between git trees
+Date: Fri, 06 May 2005 20:53:10 +0200
+Message-ID: <m3d5s4jieh.fsf@defiant.localdomain>
+References: <17019.28326.351036.268948@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0505060916320.2233@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Frank Sorenson <frank@tuxrocks.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 20:34:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 20:47:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU7dh-0007oB-M1
-	for gcvg-git@gmane.org; Fri, 06 May 2005 20:33:29 +0200
+	id 1DU7qj-0001L0-J5
+	for gcvg-git@gmane.org; Fri, 06 May 2005 20:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261263AbVEFSjr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 14:39:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261261AbVEFSjr
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 14:39:47 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:35467 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S261260AbVEFSjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 14:39:39 -0400
-Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
-	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
-	id 1DU7jY-0001iz-Od; Fri, 06 May 2005 19:39:33 +0100
+	id S261260AbVEFSxZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 14:53:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261261AbVEFSxZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 14:53:25 -0400
+Received: from khc.piap.pl ([195.187.100.11]:32004 "EHLO khc.piap.pl")
+	by vger.kernel.org with ESMTP id S261260AbVEFSxS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 14:53:18 -0400
+Received: by khc.piap.pl (Postfix, from userid 500)
+	id 8D4421097C; Fri,  6 May 2005 20:53:11 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505061006060.2233@ppc970.osdl.org>
-X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+In-Reply-To: <Pine.LNX.4.58.0505060916320.2233@ppc970.osdl.org> (Linus
+ Torvalds's message of "Fri, 6 May 2005 09:19:02 -0700 (PDT)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-05-06 at 10:09 -0700, Linus Torvalds wrote:
-> So now you can do
-> 
->         git-rev-list HEAD --max-count=10 | git-diff-tree --stdin update-cache.c
-> 
-> to see which of the last 10 commits changed "update-cache.c".
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Now show the graph of revision history which connects those commits.
+> 	cat .git/ORIG_HEAD > .git/HEAD
+> 	git-read-tree -m HEAD
+> 	git-checkout-cache -f -a
+> 	git-update-cache --refresh
+>
+> and you're back to your original head (the above is basically "unpull").
 
+So, is "git-read-tree -m HEAD" actually equivalent to "git-read-tree HEAD"
+and does it simply write complete index (ignoring the old one)
+corresponding to given HEAD?
 -- 
-dwmw2
-
+Krzysztof Halasa
