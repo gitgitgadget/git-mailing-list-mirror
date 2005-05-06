@@ -1,70 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Greg KH <greg@kroah.com>
 Subject: Re: [PATCH] fix compare symlink against readlink not data
-Date: Fri, 6 May 2005 10:11:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505061009340.2233@ppc970.osdl.org>
-References: <20050506134501.GA11430@vrfy.org> <20050506160359.GB6904@kroah.com>
- <1115396614.32065.23.camel@localhost.localdomain> <20050506163603.GA17766@kroah.com>
+Date: Fri, 6 May 2005 10:19:51 -0700
+Message-ID: <20050506171950.GA20132@kroah.com>
+References: <20050506134501.GA11430@vrfy.org> <20050506160359.GB6904@kroah.com> <1115396614.32065.23.camel@localhost.localdomain> <20050506163603.GA17766@kroah.com> <Pine.LNX.4.58.0505061009340.2233@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 06 19:03:23 2005
+X-From: git-owner@vger.kernel.org Fri May 06 19:14:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU6EC-00029f-OO
-	for gcvg-git@gmane.org; Fri, 06 May 2005 19:03:05 +0200
+	id 1DU6O7-0003wQ-Pj
+	for gcvg-git@gmane.org; Fri, 06 May 2005 19:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261157AbVEFRJw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 13:09:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVEFRJw
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 13:09:52 -0400
-Received: from fire.osdl.org ([65.172.181.4]:50609 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261157AbVEFRJu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 13:09:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j46H9mU3006630
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 6 May 2005 10:09:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j46H9kW8019215;
-	Fri, 6 May 2005 10:09:48 -0700
-To: Greg KH <greg@kroah.com>
-In-Reply-To: <20050506163603.GA17766@kroah.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261218AbVEFRT7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 13:19:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261224AbVEFRT7
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 13:19:59 -0400
+Received: from mail.kroah.org ([69.55.234.183]:62103 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S261218AbVEFRT4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 13:19:56 -0400
+Received: from [192.168.0.10] (c-24-22-118-199.hsd1.or.comcast.net [24.22.118.199])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j46HJoi06832;
+	Fri, 6 May 2005 10:19:50 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DU6UR-5FS-00; Fri, 06 May 2005 10:19:51 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505061009340.2233@ppc970.osdl.org>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Fri, 6 May 2005, Greg KH wrote:
+On Fri, May 06, 2005 at 10:11:49AM -0700, Linus Torvalds wrote:
 > 
-> Odd.  If I reclone the whole tree from the udev kernel.org tree, then it
-> works just fine.  If I create a new copy of my local tree, I still have
-> the same problem.  Diffing the trees shows no difference in the objects
-> at all...
+> 
+> On Fri, 6 May 2005, Greg KH wrote:
+> > 
+> > Odd.  If I reclone the whole tree from the udev kernel.org tree, then it
+> > works just fine.  If I create a new copy of my local tree, I still have
+> > the same problem.  Diffing the trees shows no difference in the objects
+> > at all...
+> 
+> You've not updated your cache.
+> 
+> Guys, remember this command:
+> 
+> 	git-diff-files
+> 
+> Just like that, with no arguments. It shows you what is different in your 
+> cache. If you get a lot of output, it means that your index file isn't 
+> up-to-date.
+> 
+> The other magic command is
+> 
+> 	git-update-cache --refresh
 
-You've not updated your cache.
+Damm, I still was using update-cache and checkout-cache from an old git
+version.  That was my problem.
 
-Guys, remember this command:
+Sorry for the noise, it works just fine.
 
-	git-diff-files
+thanks,
 
-Just like that, with no arguments. It shows you what is different in your 
-cache. If you get a lot of output, it means that your index file isn't 
-up-to-date.
-
-The other magic command is
-
-	git-update-cache --refresh
-
-and you need to do that after you merge.
-
-If you use cogito, and cogito doesn't refresh after pulls etc, that would
-be a cogito bug. But if you do things like "cp -a" of a git tree, and 
-you forget to refresh the cache in the new tree, than that is _your_ bug..
-
-		Linus
+greg k-h
