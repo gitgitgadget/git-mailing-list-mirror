@@ -1,66 +1,62 @@
-From: Tom Lord <lord@emf.net>
-Subject: the blob metanet (welcome to the future)
-Date: Fri, 6 May 2005 16:20:46 -0700 (PDT)
-Message-ID: <200505062320.QAA00974@emf.net>
-References: <Pine.LNX.4.58.0505061558400.2233@ppc970.osdl.org>
-Cc: git@vger.kernel.org
-X-From: gnu-arch-dev-bounces@lists.seyza.com Sat May 07 01:14:22 2005
-Return-path: <gnu-arch-dev-bounces@lists.seyza.com>
-Received: from [207.166.200.220] (helo=hera.museatech.net)
-	by ciao.gmane.org with smtp (Exim 4.43)
-	id 1DUC1Q-0002io-Ex
-	for gcvad-gnu-arch-dev@gmane.org; Sat, 07 May 2005 01:14:16 +0200
-Received: (qmail 14581 invoked by uid 110); 6 May 2005 23:20:56 -0000
-Received: from gnu-arch-dev-bounces@lists.seyza.com by hera by uid 102 with qmail-scanner-1.20 
- (clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(127.0.0.1):. 
- Processed in 1.559024 secs); 06 May 2005 23:20:56 -0000
-Received: from unknown (HELO hera.museatech.net) (127.0.0.1)
-  by hera.museatech.net with SMTP; 6 May 2005 23:20:54 -0000
-Delivered-To: list-gnu-arch-dev@lists.seyza.com
-Received: (qmail 14549 invoked by uid 110); 6 May 2005 23:20:49 -0000
-Received: from lord@emf.net by hera by uid 102 with qmail-scanner-1.20 
-	(clamscan: 0.60. spamassassin: 2.60.  Clear:RC:1(207.166.200.201):. 
-	Processed in 1.548479 secs); 06 May 2005 23:20:49 -0000
-Received: from unknown (HELO a1.mx.alal.us) (207.166.200.201)
-	by hera.museatech.net with SMTP; 6 May 2005 23:20:48 -0000
-Received: (qmail 1751 invoked from network); 6 May 2005 23:33:45 -0000
-Received: from emf.emf.net (HELO emf.net) (205.149.0.19)
-	by a1.mx.alal.us with SMTP; 6 May 2005 23:33:44 -0000
-Received: (from lord@localhost) by emf.net (K/K) id QAA00974;
-	Fri, 6 May 2005 16:20:46 -0700 (PDT)
-To: gnu-arch-dev@lists.seyza.com
-In-reply-to: <Pine.LNX.4.58.0505061558400.2233@ppc970.osdl.org> (message from
-	Linus Torvalds on Fri, 6 May 2005 16:05:06 -0700 (PDT))
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on dev.alal.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.6 required=9.0 tests=AWL, BAYES_00, RM_sl_LeadChar 
-	autolearn=no version=3.0.2
-X-BeenThere: gnu-arch-dev@lists.seyza.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: a mailing list for GNU Arch developers <gnu-arch-dev.lists.seyza.com>
-List-Unsubscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=unsubscribe>
-List-Archive: <http://lists.seyza.com/pipermail/gnu-arch-dev>
-List-Post: <mailto:gnu-arch-dev@lists.seyza.com>
-List-Help: <mailto:gnu-arch-dev-request@lists.seyza.com?subject=help>
-List-Subscribe: <http://lists.seyza.com/cgi-bin/mailman/listinfo/gnu-arch-dev>, 
-	<mailto:gnu-arch-dev-request@lists.seyza.com?subject=subscribe>
-Sender: gnu-arch-dev-bounces@lists.seyza.com
-Errors-To: gnu-arch-dev-bounces@lists.seyza.com
-X-Broken-Reverse-DNS: no host name found for IP address 207.166.200.220
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: How do I...
+Date: Sat, 07 May 2005 00:20:40 +0100
+Message-ID: <1115421642.29495.53.camel@localhost.localdomain>
+References: <427B3DB3.4000507@tuxrocks.com>
+	 <Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org>
+	 <7vsm10cnx3.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0505061006060.2233@ppc970.osdl.org>
+	 <1115404771.16187.343.camel@hades.cambridge.redhat.com>
+	 <Pine.LNX.4.58.0505061158520.2233@ppc970.osdl.org>
+	 <1115406628.16187.353.camel@hades.cambridge.redhat.com>
+	 <Pine.LNX.4.58.0505061552140.2233@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Sorenson <frank@tuxrocks.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 01:15:13 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1DUC1s-0002n2-CD
+	for gcvg-git@gmane.org; Sat, 07 May 2005 01:14:44 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261313AbVEFXVZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 19:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261327AbVEFXVZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 19:21:25 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:59538 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261313AbVEFXVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 19:21:19 -0400
+Received: from shinybook.infradead.org ([81.187.226.99])
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DUC8A-0002sy-Cj; Sat, 07 May 2005 00:21:15 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505061552140.2233@ppc970.osdl.org>
+X-Mailer: Evolution 2.2.2 (2.2.2-1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
+On Fri, 2005-05-06 at 15:57 -0700, Linus Torvalds wrote:
+> To do that, you'd just have to always show the commit/parent pairs, 
+> regardless of whether it had a difference or not.
 
+Nah, you just prune the commits from which aren't interesting, then dump
+the graph you're left with. So instead of printing just the immediate
+parent(s) for each interesting commit, you print the "nearest
+interesting ancestor(s)".
 
-Check it out...
+Take copy of rev-tree, let it mark commits as interesting if they touch
+the file(s) in question, then effectively perform a list_del() on any
+commit which _isn't_ interesting, and any merge which merges only
+uninteresting commits... then dump the resulting pruned graph.
 
-  http://www.seyza.com/=clients/linus/tree/src/libdx/blob-xmt.html
+-- 
+dwmw2
 
-This is handy background:
-
-  http://www.seyza.com/=clients/linus/tree/src/liblob/index.html
-
-and neither of those documents are works of art yet -- just something
-I should not be sitting on.
-
--t
