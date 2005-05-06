@@ -1,69 +1,90 @@
-From: Frank Sorenson <frank@tuxrocks.com>
+From: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: How do I...
-Date: Fri, 06 May 2005 13:07:29 -0600
-Message-ID: <427BC071.5090000@tuxrocks.com>
-References: <427B3DB3.4000507@tuxrocks.com>	 <1115390221.10459.4.camel@localhost>  <427B9DC5.9060905@tuxrocks.com> <1115402331.10460.16.camel@localhost>
+Date: Fri, 06 May 2005 20:10:27 +0100
+Message-ID: <1115406628.16187.353.camel@hades.cambridge.redhat.com>
+References: <427B3DB3.4000507@tuxrocks.com>
+	 <Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org>
+	 <7vsm10cnx3.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0505061006060.2233@ppc970.osdl.org>
+	 <1115404771.16187.343.camel@hades.cambridge.redhat.com>
+	 <Pine.LNX.4.58.0505061158520.2233@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 06 21:01:24 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Sorenson <frank@tuxrocks.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 06 21:05:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DU84H-0003IT-Vt
-	for gcvg-git@gmane.org; Fri, 06 May 2005 21:00:58 +0200
+	id 1DU87I-0003ie-Jq
+	for gcvg-git@gmane.org; Fri, 06 May 2005 21:04:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261271AbVEFTHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 15:07:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVEFTHk
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:07:40 -0400
-Received: from www.tuxrocks.com ([64.62.190.123]:58123 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S261271AbVEFTHd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 15:07:33 -0400
-Received: from [128.187.171.102] (obelix.cs.byu.edu [128.187.171.102])
-	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j46J7TRT012428
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 6 May 2005 13:07:31 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Dave Kleikamp <shaggy@austin.ibm.com>
-In-Reply-To: <1115402331.10460.16.camel@localhost>
-X-Enigmail-Version: 0.91.0.0
+	id S261274AbVEFTKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 15:10:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261275AbVEFTKp
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 15:10:45 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:34444 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261274AbVEFTKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 15:10:34 -0400
+Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DU8DV-0001sp-00; Fri, 06 May 2005 20:10:29 +0100
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505061158520.2233@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Fri, 2005-05-06 at 11:59 -0700, Linus Torvalds wrote:
+> I don't do no steenking GUI's. That's for others, and you'll need to
+> parse the git-rev-list output yourself to do that.
 
-Dave Kleikamp wrote:
-> I'm not sure if I was clear.  cg-pull should be 'cg-pull origin".
+When I said 'show' I meant merely provide sufficient information. 
 
-Got it, and it does just what I wanted.
+I believe that what you get at the moment from the command you showed is
+an unconnected list of commits, each of which may be in different
+branches, where the _parent_ of each commit you show may not even be
+included in the list. 
 
-> I take this to mean you're seeing problems with cg-update too. cg-update
-> simply runs cg-pull & cg-merge together, so running them separately
-> shouldn't make any difference.
+I.e. you're giving them a bag of unconnected objects which each look
+something like this...
 
-Yes.  cg-pull and cg-update have both shown odd breakage of this sort,
-putting my tree into a bad state.  Sometimes deleting files fixes it,
-but more often than not, I've needed to just start a new tree again in
-order to fix it.  This is probably due to inexperience with git, but
-tree corruption probably shouldn't occur like this.
+		 (COMMIT)--> 
+or
+		 (COMMIT)--->
+		         \-->
 
-Frank
-- --
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-iD8DBQFCe8BxaI0dwg4A47wRAk2OAJ915s2KHTNxrpi6k3wa7HiDhpOFGgCgrMxp
-73JzFxl7lg2c9korTF8L7Ek=
-=ILPh
------END PGP SIGNATURE-----
+But you need to give them a _graph_...
+
+	/------> (COMMIT) --> (COMMIT) --\
+ (COMMIT)                                 -> (COMMIT) 
+	\-----------> (COMMIT) ----------/
+
+Leaving the pretty GUI as an exercise for the reader is fine. But we do
+actually have to give enough information to allow them to connect the
+bits together.
+
+My recursive script attempted this but wasn't quite good enough -- we
+had enough information to track _merges_ but not _branches_. Hence I was
+only giving this much information...
+
+	/------> (COMMIT) --> (COMMIT) --\
+ (COMMIT)                                 -> (COMMIT) 
+	              (COMMIT) ----------/
+
+(...or this one, depending on which order I parsed the tree...)
+
+	         (COMMIT) --> (COMMIT) --\
+ (COMMIT)                                 -> (COMMIT) 
+	\-----------> (COMMIT) ----------/
+
+-- 
+dwmw2
+
