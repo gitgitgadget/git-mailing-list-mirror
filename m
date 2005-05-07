@@ -1,64 +1,47 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [patch] add simple git documentation
-Date: Sat, 7 May 2005 13:36:18 +0200
-Message-ID: <20050507113618.GA9495@pasky.ji.cz>
-References: <20050505102600.GA16387@elf.ucw.cz> <20050506175835.65b9c9c1.akpm@osdl.org> <427C7E38.3010301@dgreaves.com>
+Subject: Re: [PATCH] git-tar-tree: Lift path length limit
+Date: Sat, 7 May 2005 14:09:35 +0200
+Message-ID: <20050507120935.GB9495@pasky.ji.cz>
+References: <20050507002527.GA5082@lsrfire.ath.cx> <20050507005706.GA6093@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 07 13:30:05 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 14:02:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUNV3-0000st-3q
-	for gcvg-git@gmane.org; Sat, 07 May 2005 13:29:37 +0200
+	id 1DUO1C-0004co-5m
+	for gcvg-git@gmane.org; Sat, 07 May 2005 14:02:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263020AbVEGLg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 07:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263021AbVEGLgZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 07:36:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2235 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S263020AbVEGLgU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 07:36:20 -0400
-Received: (qmail 5182 invoked by uid 2001); 7 May 2005 11:36:18 -0000
-To: David Greaves <david@dgreaves.com>
+	id S263059AbVEGMJk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 08:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263060AbVEGMJk
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 08:09:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:32187 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S263059AbVEGMJg (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 08:09:36 -0400
+Received: (qmail 7192 invoked by uid 2001); 7 May 2005 12:09:35 -0000
+To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 Content-Disposition: inline
-In-Reply-To: <427C7E38.3010301@dgreaves.com>
+In-Reply-To: <20050507005706.GA6093@lsrfire.ath.cx>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 07, 2005 at 10:37:12AM CEST, I got a letter
-where David Greaves <david@dgreaves.com> told me that...
-> Andrew Morton wrote:
+Dear diary, on Sat, May 07, 2005 at 02:57:06AM CEST, I got a letter
+where Rene Scharfe <rene.scharfe@lsrfire.ath.cx> told me that...
+> On Sat, May 07, 2005 at 02:25:27AM +0200, Rene Scharfe wrote:
+> > Last minute patch?
 > 
-> >Pavel Machek <pavel@ucw.cz> wrote:
-> >  
-> >
-> >>This adds short intro to git aimed at kernel hackers.
-> >>
-> >>    
-> >>
-> >
-> >OK, but I'm hoping that shortly we'll have something more complete than
-> >this, and your patch might not be a suitable starting point for that. 
-> >(Large hint-dropping sounds).
-> >  
-> >
-> What are you looking for.
+> This leaks memory.  D'oh!
 > 
-> For man-page-a-like, have you seen Documentation/core-git.txt in Linus'
-> repository?
-> 
-> I'll be working more on that this weekend.
+> Petr, would you add the (hopefully) fixed version below to your tree now
+> that Linus is on vacation?  (Patch applies to tip of GIT tree.)
 
-Are you planning to split it to individual files at some point?
-
-(That's what I'd like to do with Documentation/cogito/, speaking of
-manpageness...)
+It appears to me that the patch currently in the git tree is this
+(correct) one?
 
 -- 
 				Petr "Pasky" Baudis
