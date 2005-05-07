@@ -1,60 +1,72 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: [PATCH] Use backticks instead of $(command) to maintain /bin/sh compatibility
-Date: Sat, 7 May 2005 16:22:15 -0400
-Message-ID: <118833cc0505071322480e8e09@mail.gmail.com>
-References: <20050507084549.GF23680@cip.informatik.uni-erlangen.de>
-	 <7v3bszbeoo.fsf@assigned-by-dhcp.cox.net>
-	 <20050507090543.GG23680@cip.informatik.uni-erlangen.de>
-	 <20050507172429.GJ3562@admingilde.org>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Broken adding of cache entries
+Date: Sun, 8 May 2005 00:41:16 +0200
+Message-ID: <20050507224116.GF9495@pasky.ji.cz>
+References: <1115408460.32065.37.camel@localhost.localdomain> <20050506231447.GG32629@pasky.ji.cz> <1115421933.32065.111.camel@localhost.localdomain> <20050506233003.GJ32629@pasky.ji.cz> <1115423450.32065.138.camel@localhost.localdomain> <20050507001409.GP32629@pasky.ji.cz> <1115431767.32065.182.camel@localhost.localdomain> <20050507152849.GD9495@pasky.ji.cz> <7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat May 07 22:15:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 00:34:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUVhw-0006kx-Ax
-	for gcvg-git@gmane.org; Sat, 07 May 2005 22:15:28 +0200
+	id 1DUXsd-000187-Ux
+	for gcvg-git@gmane.org; Sun, 08 May 2005 00:34:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262750AbVEGUWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 16:22:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262751AbVEGUWS
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 16:22:18 -0400
-Received: from rproxy.gmail.com ([64.233.170.205]:12750 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262750AbVEGUWP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 May 2005 16:22:15 -0400
-Received: by rproxy.gmail.com with SMTP id a41so641823rng
-        for <git@vger.kernel.org>; Sat, 07 May 2005 13:22:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dupCbQ/Amn+uBe+GySwmGOH9FBDXVb7FnWizB1onOBD1svr43qpbXOZo7HwZb0JL1W1tGLl+s7Rz4WofDj8dRCxOsIMMyAskv6qfzEggKGtb4yvVgULKvhuTvRXUKgiaujG2W+x+kiSSnoUjGLmtYW5q3Echq7KcUzE+Nq+GW3k=
-Received: by 10.38.90.57 with SMTP id n57mr742030rnb;
-        Sat, 07 May 2005 13:22:15 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Sat, 7 May 2005 13:22:15 -0700 (PDT)
-To: Martin Waitz <tali@admingilde.org>
-In-Reply-To: <20050507172429.GJ3562@admingilde.org>
+	id S262759AbVEGWla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 18:41:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262760AbVEGWla
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 18:41:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:58565 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262759AbVEGWlR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 18:41:17 -0400
+Received: (qmail 14132 invoked by uid 2001); 7 May 2005 22:41:16 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 5/7/05, Martin Waitz <tali@admingilde.org> wrote:
-> hoi :)
-> 
-> On Sat, May 07, 2005 at 11:05:43AM +0200, Thomas Glanzmann wrote:
-> > * Junio C Hamano <junkio@cox.net> [050507 10:54]:
-> > > A quick question.  Which construct in this bashism?
-> > > Not using backtick but saying $(command)?
-> >
-> > Exactly:
-> 
-> huh? which broken shell does not understand $()?
+Dear diary, on Sat, May 07, 2005 at 09:22:21PM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Kay Sievers noticed that you can have both path and path/file in
+> the cache and write-tree happily creates a tree object from such
+> a state.  Since a merge can result in such situation and the
+> user should be able to see the situation by looking at the
+> cache, rather than forbidding add_cache_entry() to create such
+> conflicts, fix it by making write-tree refuse to write such an
+> nonsensical tree.
 
-Solaris' /bin/sh
+I'd still prefer add_cache_entry() to just replace the original entry
+(as it does otherwise). Only make it to care about which stage it is
+working in, to make merges to work. IOW, I think you are solving this at
+the wrong workflow point. It is too "late" to know at that point, and
+(a huge) PITA for the higher levels to deal with it then - that all when
+it shouldn't fail _at all_ in the first place.
 
-I thought everything we were relying on bash anyway.  It'll take it.
+What about
 
-Morten
+--- b7ae63ab415e556c2f0f0ad2803f701b4a6d6956/read-cache.c  (mode:100644)
++++ uncommitted/read-cache.c  (mode:100644)
+@@ -68,9 +68,9 @@
+                return -1;
+        if (len1 > len2)
+                return 1;
+-       if (flags1 < flags2)
++       if (flags1 & CE_STAGEMASK < flags2 & CE_STAGEMASK)
+                return -1;
+-       if (flags1 > flags2)
++       if (flags1 & CE_STAGEMASK > flags2 & CE_STAGEMASK)
+                return 1;
+        return 0;
+ }
+
+then? (Completely untested and everything.)
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
