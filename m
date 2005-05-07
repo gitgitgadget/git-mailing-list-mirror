@@ -1,67 +1,70 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: [PATCH] make INSTALL binary in Makefile configurable via make variable
-Date: Sat, 7 May 2005 10:41:54 +0200
-Message-ID: <20050507084154.GE23680@cip.informatik.uni-erlangen.de>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [patch] add simple git documentation
+Date: Sat, 07 May 2005 09:37:12 +0100
+Message-ID: <427C7E38.3010301@dgreaves.com>
+References: <20050505102600.GA16387@elf.ucw.cz> <20050506175835.65b9c9c1.akpm@osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat May 07 10:40:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Pavel Machek <pavel@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 10:42:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUKrL-0000C1-Cb
-	for gcvg-git@gmane.org; Sat, 07 May 2005 10:40:27 +0200
+	id 1DUKtX-0000Ny-0v
+	for gcvg-git@gmane.org; Sat, 07 May 2005 10:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262845AbVEGIqd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 04:46:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262850AbVEGImv
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 04:42:51 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:61628 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262845AbVEGIl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2005 04:41:59 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j478ftS8001771
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 7 May 2005 08:41:55 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j478fso9001770;
-	Sat, 7 May 2005 10:41:54 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Mail-Followup-To: GIT <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S262794AbVEGIk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 04:40:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262802AbVEGIic
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 04:38:32 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:37340 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262832AbVEGIhZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 04:37:25 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 882A6E6D9E; Sat,  7 May 2005 09:36:35 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 15827-03; Sat,  7 May 2005 09:36:35 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.135.119])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id F331EE6D53; Sat,  7 May 2005 09:36:34 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DUKoC-0001Ze-9E; Sat, 07 May 2005 09:37:12 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Andrew Morton <akpm@osdl.org>
+In-Reply-To: <20050506175835.65b9c9c1.akpm@osdl.org>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[PATCH] make INSTALL binary in Makefile configurable via make variable
+Andrew Morton wrote:
 
-On Solaris machines gnu install called ginstall
+>Pavel Machek <pavel@ucw.cz> wrote:
+>  
+>
+>>This adds short intro to git aimed at kernel hackers.
+>>
+>>    
+>>
+>
+>OK, but I'm hoping that shortly we'll have something more complete than
+>this, and your patch might not be a suitable starting point for that. 
+>(Large hint-dropping sounds).
+>  
+>
+What are you looking for.
 
-Signed-Off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+For man-page-a-like, have you seen Documentation/core-git.txt in Linus'
+repository?
 
---- a/Makefile
-+++ b/Makefile
-@@ -11,6 +11,7 @@
- 
- CC=gcc
- AR=ar
-+INSTALL=install
- 
- SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
- 	git-pull-script git-tag-script git-resolve-script
-@@ -26,7 +27,7 @@
- all: $(PROG)
- 
- install: $(PROG) $(SCRIPTS)
--	install $(PROG) $(SCRIPTS) $(HOME)/bin/
-+	$(INSTALL) $(PROG) $(SCRIPTS) $(HOME)/bin/
- 
- LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
- 	 tag.o date.o
--
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I'll be working more on that this weekend.
+
+David
+
+-- 
+
