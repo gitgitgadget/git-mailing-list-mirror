@@ -1,95 +1,76 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] git-tar-tree: Lift path length limit
-Date: Sat, 7 May 2005 02:25:27 +0200
-Message-ID: <20050507002527.GA5082@lsrfire.ath.cx>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Introduce SHA1_FILE_DIRECTORIES
+Date: Fri, 6 May 2005 20:32:42 -0400 (EDT)
+Message-ID: <2721.10.10.10.24.1115425962.squirrel@linux1>
+References: <7vmzr8apxc.fsf@assigned-by-dhcp.cox.net>
+    <2637.10.10.10.24.1115425225.squirrel@linux1>
+    <7vis1vc27f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat May 07 02:19:01 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 02:26:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUD1y-0000Wj-JO
-	for gcvg-git@gmane.org; Sat, 07 May 2005 02:18:54 +0200
+	id 1DUD9H-0001Hz-Dj
+	for gcvg-git@gmane.org; Sat, 07 May 2005 02:26:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261333AbVEGAZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 20:25:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261337AbVEGAZj
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 20:25:39 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:19644 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S261333AbVEGAZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 May 2005 20:25:28 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id 6321F19D; Sat,  7 May 2005 02:25:27 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S261361AbVEGAdE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 20:33:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261367AbVEGAcw
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 20:32:52 -0400
+Received: from simmts12.bellnexxia.net ([206.47.199.141]:17374 "EHLO
+	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261361AbVEGAcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 May 2005 20:32:43 -0400
+Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050507003242.YDFF1542.simmts12-srv.bellnexxia.net@linux1>;
+          Fri, 6 May 2005 20:32:42 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j470Wg5h019218;
+	Fri, 6 May 2005 20:32:42 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Fri, 6 May 2005 20:32:42 -0400 (EDT)
+In-Reply-To: <7vis1vc27f.fsf@assigned-by-dhcp.cox.net>
+To: "Junio C Hamano" <junkio@cox.net>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Last minute patch?  This lifts the limits from path length and link
-path length that are in git-tar-tree.
+On Fri, May 6, 2005 8:24 pm, Junio C Hamano said:
+>>>>>> "S" == Sean  <seanlkml@sympatico.ca> writes:
+>
+> S> has_sha1_file can be reduced to:
+>
+> S> int has_sha1_file(const unsigned char *sha1)
+> S> {
+> S>        return (!!find_sha1_file(sha1));
+> S> }
+>
+> Not really.  If you do not have alternates it does not even
+> bother to stat so you get the path that supposed to contain the
+> data and you need to do the checking yourself.
+>
+>
 
-Have a nice vacation!
+Perhaps I'm just missing something in your code, but this fragment makes
+it look to me that stat is always called in find_sha1_file even when there
+are no alternates:
 
-Rene
++        char *name = sha1_file_name(sha1);
+[...]
++        if (!stat(name, &st))
++                return name;
++        for (i = 0; i < num_alt; i++) {
 
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Sean
 
----
-commit 2d7b8f2afc47c753aaab4bf48587fdea730b0db3
-tree 378fae86e43460c1c53feccbde3573ced26818f6
-parent a02ebff6127c5fc981668fb570f0a80f2b7657ca
-author Rene Scharfe <rene.scharfe@lsrfire.ath.cx> 1115320521 +0200
-committer Rene Scharfe <rene.scharfe@lsrfire.ath.cx> 1115320521 +0200
 
-Index: tar-tree.c
-===================================================================
---- 8477488c1965186c98b59ad0da04d221aff3c9a1/tar-tree.c  (mode:100644 sha1:a09cb416595094e493a52dd7f45d943c81c0310a)
-+++ 378fae86e43460c1c53feccbde3573ced26818f6/tar-tree.c  (mode:100644 sha1:0fb6514c27a0f0edc2fc6e9850c361c8a58c0a9f)
-@@ -212,7 +212,7 @@
-                                   const char *path, unsigned int namelen,
-                                   void *content, unsigned int contentsize)
- {
--	char *p;
-+	char *buffer, *p;
- 	unsigned int pathlen, size, linkpathlen = 0;
- 
- 	size = pathlen = extended_header_len("path", namelen);
-@@ -220,18 +220,18 @@
- 		linkpathlen = extended_header_len("linkpath", contentsize);
- 		size += linkpathlen;
- 	}
--	if (size > RECORDSIZE)
--		die("tar-tree: extended header too big, wtf?");
- 	write_header(NULL, TYPEFLAG_EXT_HEADER, NULL, NULL, headerfilename,
- 	             0100600, NULL, size);
- 
--	p = get_record();
-+	buffer = p = malloc(size);
-+	if (!buffer)
-+		die("git-tar-tree: %s", strerror(errno));
- 	append_extended_header_prefix(&p, pathlen, "path");
- 	append_path(&p, is_dir, basepath, prefix, path);
- 	append_char(&p, '\n');
- 	if (flags & EXT_HEADER_LINKPATH)
- 		append_extended_header(&p, "linkpath", content, contentsize);
--	write_if_needed();
-+	write_blocked(buffer, size);
- }
- 
- static void write_global_extended_header(const char *sha1)
-@@ -269,9 +269,7 @@
- 	}
- 
- 	namelen = path_len(S_ISDIR(mode), basepath, prefix, path);
--	if (namelen > 500)
--		die("tar-tree: name too log of object %s\n", sha1_to_hex(sha1));
--	else if (namelen > 100)
-+	if (namelen > 100)
- 		ext_header |= EXT_HEADER_PATH;
- 	if (typeflag == TYPEFLAG_LNK && size > 100)
- 		ext_header |= EXT_HEADER_LINKPATH;
