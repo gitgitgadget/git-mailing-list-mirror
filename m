@@ -1,67 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: How do I...
-Date: Fri, 6 May 2005 16:54:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505061652240.2233@ppc970.osdl.org>
-References: <427B3DB3.4000507@tuxrocks.com>  <Pine.LNX.4.58.0505060905090.2233@ppc970.osdl.org>
-  <7vsm10cnx3.fsf@assigned-by-dhcp.cox.net>  <Pine.LNX.4.58.0505061006060.2233@ppc970.osdl.org>
-  <1115404771.16187.343.camel@hades.cambridge.redhat.com> 
- <Pine.LNX.4.58.0505061158520.2233@ppc970.osdl.org> 
- <1115406628.16187.353.camel@hades.cambridge.redhat.com> 
- <Pine.LNX.4.58.0505061552140.2233@ppc970.osdl.org>
- <1115421642.29495.53.camel@localhost.localdomain>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Version of dirdiff to display diffs between git trees
+Date: Sat, 7 May 2005 10:01:18 +1000
+Message-ID: <17020.1358.415173.230113@cargo.ozlabs.ibm.com>
+References: <17019.28326.351036.268948@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0505060916320.2233@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Frank Sorenson <frank@tuxrocks.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 07 01:51:47 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 01:55:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUCbV-0006WS-Vn
-	for gcvg-git@gmane.org; Sat, 07 May 2005 01:51:34 +0200
+	id 1DUCfL-0006r9-Ur
+	for gcvg-git@gmane.org; Sat, 07 May 2005 01:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261337AbVEFXxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 May 2005 19:53:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261293AbVEFXxO
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 19:53:14 -0400
-Received: from fire.osdl.org ([65.172.181.4]:32220 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261337AbVEFXww (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 19:52:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j46NqfU3016061
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 6 May 2005 16:52:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j46NqeMF007275;
-	Fri, 6 May 2005 16:52:40 -0700
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1115421642.29495.53.camel@localhost.localdomain>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.35__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261413AbVEGABr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 May 2005 20:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261417AbVEGABr
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 May 2005 20:01:47 -0400
+Received: from ozlabs.org ([203.10.76.45]:23985 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261413AbVEGABH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 May 2005 20:01:07 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4EA8B679F3; Sat,  7 May 2005 10:01:02 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505060916320.2233@ppc970.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds writes:
 
+> If you use git-pull-script, it does this for you (except it calls it
 
-On Sat, 7 May 2005, David Woodhouse wrote:
+OK, cool
+
+> ORIG_HEAD), and you can just do
 > 
-> Nah, you just prune the commits from which aren't interesting, then dump
-> the graph you're left with. So instead of printing just the immediate
-> parent(s) for each interesting commit, you print the "nearest
-> interesting ancestor(s)".
+> 	git-diff-tree -p ORIG_HEAD HEAD
+> 
+> to see the changes. In fact git-pull-script will do that for you, and 
+> output the diffstat of it.
 
-Nope. That's just stupid. 
+Yes, girdiff with two trees is mostly equivalent to git-diff-tree,
+except that I find the girdiff/dirdiff display much easier to nagivate
+and parse than a patch viewed in an xterm with less.  (I say "mostly
+equivalent" because if neither tree is the ancestor of the other,
+girdiff looks at the common ancestor to get an idea of which tree has
+the more recent version of each file that differs, and colors that one
+green and the other red, which is extra information that git-diff-tree
+doesn't give you.)
 
-Use the whole commit history, and if you want to simplify it from there
-once you notice that some branches end up never being interesting, then
-that's ok.
+Similarly, girdiff with a tree and "." is equivalent to
+git-diff-cache.
 
-But trying to be clever while building this up is just crazy talk. When
-diff-tree prints out the changes, it has no way of knowing what the
-context around it was - it doesn't know about merges far away, and it
-_shouldn't_ know.
+Girdiff also has the new dirdiff features of being able to expand the
+displayed context for a hunk, to move changed lines up and down within
+a hunk (provided the movement doesn't change the meaning of the diff),
+and to split context lines into identical -/+ lines (which, together
+with being able to move -/+ lines makes it possible to rearrange a
+diff to make it more understandable).
 
-		Linus
+If the working directory is one of the trees being diffed, you can
+select parts of the diff for a file to be applied to the working
+directory file.  (You can't apply changes to a git tree, of course,
+because it's immutable.)  You can also select parts of the diff for a
+file and generate a patch embodying just the selected changes.
+
+Next I want to do a commit viewer with the ability to display the
+differences between arbitrary points in the commit tree using girdiff.
+
+Paul.
