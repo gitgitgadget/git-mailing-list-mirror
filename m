@@ -1,72 +1,47 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Broken adding of cache entries
-Date: Sun, 8 May 2005 00:41:16 +0200
-Message-ID: <20050507224116.GF9495@pasky.ji.cz>
-References: <1115408460.32065.37.camel@localhost.localdomain> <20050506231447.GG32629@pasky.ji.cz> <1115421933.32065.111.camel@localhost.localdomain> <20050506233003.GJ32629@pasky.ji.cz> <1115423450.32065.138.camel@localhost.localdomain> <20050507001409.GP32629@pasky.ji.cz> <1115431767.32065.182.camel@localhost.localdomain> <20050507152849.GD9495@pasky.ji.cz> <7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: [PATCH] Use backticks instead of $(command) to maintain /bin/sh compatibility
+Date: Sun, 8 May 2005 01:15:05 +0200
+Message-ID: <20050507231505.GA2497@cip.informatik.uni-erlangen.de>
+References: <20050507084549.GF23680@cip.informatik.uni-erlangen.de> <7v3bszbeoo.fsf@assigned-by-dhcp.cox.net> <20050507090543.GG23680@cip.informatik.uni-erlangen.de> <20050507100348.GA16461@outpost.ds9a.nl> <20050507101530.GH23680@cip.informatik.uni-erlangen.de> <7vy8aqanlh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 00:34:47 2005
+X-From: git-owner@vger.kernel.org Sun May 08 01:08:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUXsd-000187-Ux
-	for gcvg-git@gmane.org; Sun, 08 May 2005 00:34:40 +0200
+	id 1DUYPO-0006nu-TB
+	for gcvg-git@gmane.org; Sun, 08 May 2005 01:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262759AbVEGWla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 18:41:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262760AbVEGWla
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 18:41:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:58565 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262759AbVEGWlR (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 18:41:17 -0400
-Received: (qmail 14132 invoked by uid 2001); 7 May 2005 22:41:16 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S262761AbVEGXPK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 19:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262762AbVEGXPJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 19:15:09 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:43469 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S262761AbVEGXPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2005 19:15:07 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j47NF5S8029760
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sat, 7 May 2005 23:15:06 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j47NF5r7029759
+	for git@vger.kernel.org; Sun, 8 May 2005 01:15:05 +0200 (CEST)
+To: GIT <git@vger.kernel.org>
+Mail-Followup-To: GIT <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7vy8aqanlh.fsf@assigned-by-dhcp.cox.net>
+X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 07, 2005 at 09:22:21PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Kay Sievers noticed that you can have both path and path/file in
-> the cache and write-tree happily creates a tree object from such
-> a state.  Since a merge can result in such situation and the
-> user should be able to see the situation by looking at the
-> cache, rather than forbidding add_cache_entry() to create such
-> conflicts, fix it by making write-tree refuse to write such an
-> nonsensical tree.
+Hello,
 
-I'd still prefer add_cache_entry() to just replace the original entry
-(as it does otherwise). Only make it to care about which stage it is
-working in, to make merges to work. IOW, I think you are solving this at
-the wrong workflow point. It is too "late" to know at that point, and
-(a huge) PITA for the higher levels to deal with it then - that all when
-it shouldn't fail _at all_ in the first place.
+> If that is the case then I think the patch you posted to force
+> bash is backwards.  How about changing it to use backticks?
 
-What about
+agreed. Already did that see previous eMail.
 
---- b7ae63ab415e556c2f0f0ad2803f701b4a6d6956/read-cache.c  (mode:100644)
-+++ uncommitted/read-cache.c  (mode:100644)
-@@ -68,9 +68,9 @@
-                return -1;
-        if (len1 > len2)
-                return 1;
--       if (flags1 < flags2)
-+       if (flags1 & CE_STAGEMASK < flags2 & CE_STAGEMASK)
-                return -1;
--       if (flags1 > flags2)
-+       if (flags1 & CE_STAGEMASK > flags2 & CE_STAGEMASK)
-                return 1;
-        return 0;
- }
-
-then? (Completely untested and everything.)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+	Thomas
