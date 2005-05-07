@@ -1,47 +1,66 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH] Use backticks instead of $(command) to maintain /bin/sh compatibility
-Date: Sat, 7 May 2005 12:15:30 +0200
-Message-ID: <20050507101530.GH23680@cip.informatik.uni-erlangen.de>
-References: <20050507084549.GF23680@cip.informatik.uni-erlangen.de> <7v3bszbeoo.fsf@assigned-by-dhcp.cox.net> <20050507090543.GG23680@cip.informatik.uni-erlangen.de> <20050507100348.GA16461@outpost.ds9a.nl>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [patch] add simple git documentation
+Date: Sat, 7 May 2005 13:36:18 +0200
+Message-ID: <20050507113618.GA9495@pasky.ji.cz>
+References: <20050505102600.GA16387@elf.ucw.cz> <20050506175835.65b9c9c1.akpm@osdl.org> <427C7E38.3010301@dgreaves.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat May 07 12:09:07 2005
+Cc: Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 13:30:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUMF0-0000IE-LL
-	for gcvg-git@gmane.org; Sat, 07 May 2005 12:08:58 +0200
+	id 1DUNV3-0000st-3q
+	for gcvg-git@gmane.org; Sat, 07 May 2005 13:29:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262946AbVEGKPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 06:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262948AbVEGKPf
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 06:15:35 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:51146 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262946AbVEGKPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2005 06:15:32 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j47AFUS8007901
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 7 May 2005 10:15:31 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j47AFU0Q007900
-	for git@vger.kernel.org; Sat, 7 May 2005 12:15:30 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Mail-Followup-To: GIT <git@vger.kernel.org>
+	id S263020AbVEGLg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 07:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263021AbVEGLgZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 07:36:25 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2235 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S263020AbVEGLgU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 May 2005 07:36:20 -0400
+Received: (qmail 5182 invoked by uid 2001); 7 May 2005 11:36:18 -0000
+To: David Greaves <david@dgreaves.com>
 Content-Disposition: inline
-In-Reply-To: <20050507100348.GA16461@outpost.ds9a.nl>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <427C7E38.3010301@dgreaves.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Dear diary, on Sat, May 07, 2005 at 10:37:12AM CEST, I got a letter
+where David Greaves <david@dgreaves.com> told me that...
+> Andrew Morton wrote:
+> 
+> >Pavel Machek <pavel@ucw.cz> wrote:
+> >  
+> >
+> >>This adds short intro to git aimed at kernel hackers.
+> >>
+> >>    
+> >>
+> >
+> >OK, but I'm hoping that shortly we'll have something more complete than
+> >this, and your patch might not be a suitable starting point for that. 
+> >(Large hint-dropping sounds).
+> >  
+> >
+> What are you looking for.
+> 
+> For man-page-a-like, have you seen Documentation/core-git.txt in Linus'
+> repository?
+> 
+> I'll be working more on that this weekend.
 
-> You can nest $() which is valuable, unlike backtics.
+Are you planning to split it to individual files at some point?
 
-we're aware of this. But the specific script works perfectly fine
-without nested simple-command redirection. So what is your point?
+(That's what I'd like to do with Documentation/cogito/, speaking of
+manpageness...)
 
-	Thomas
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
