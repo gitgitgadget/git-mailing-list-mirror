@@ -1,148 +1,264 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Broken adding of cache entries
-Date: Sat, 07 May 2005 12:22:21 -0700
-Message-ID: <7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
-References: <1115408460.32065.37.camel@localhost.localdomain>
-	<20050506231447.GG32629@pasky.ji.cz>
-	<1115421933.32065.111.camel@localhost.localdomain>
-	<20050506233003.GJ32629@pasky.ji.cz>
-	<1115423450.32065.138.camel@localhost.localdomain>
-	<20050507001409.GP32629@pasky.ji.cz>
-	<1115431767.32065.182.camel@localhost.localdomain>
-	<20050507152849.GD9495@pasky.ji.cz>
+Subject: Re: [PATCH] Introduce SHA1_FILE_DIRECTORIES
+Date: Sat, 07 May 2005 12:51:04 -0700
+Message-ID: <7vacn6ak7r.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzr8apxc.fsf@assigned-by-dhcp.cox.net>
+	<2637.10.10.10.24.1115425225.squirrel@linux1>
+	<7vis1vc27f.fsf@assigned-by-dhcp.cox.net>
+	<2721.10.10.10.24.1115425962.squirrel@linux1>
+	<7vbr7nbl89.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat May 07 21:16:12 2005
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Linus Torvalds" <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 07 21:44:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUUm6-0000gH-Pv
-	for gcvg-git@gmane.org; Sat, 07 May 2005 21:15:43 +0200
+	id 1DUVEG-0003uL-7B
+	for gcvg-git@gmane.org; Sat, 07 May 2005 21:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261648AbVEGTWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 May 2005 15:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262745AbVEGTWg
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 15:22:36 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:62919 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261648AbVEGTWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 May 2005 15:22:24 -0400
+	id S262747AbVEGTva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 May 2005 15:51:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262748AbVEGTva
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 May 2005 15:51:30 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57501 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S262747AbVEGTvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 May 2005 15:51:06 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao07.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050507192221.BZJJ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 7 May 2005 15:22:21 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050507152849.GD9495@pasky.ji.cz> (Petr Baudis's message of
- "Sat, 7 May 2005 17:28:50 +0200")
+          id <20050507195106.BXWV1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 7 May 2005 15:51:06 -0400
+To: "Sean" <seanlkml@sympatico.ca>
+In-Reply-To: <7vbr7nbl89.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Fri, 06 May 2005 23:31:34 -0700")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'll keep this in git-jc repository until Linus returns.  Pasky
-and Kay could you give it a try?
+>>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
+>>>>> "S" == Sean  <seanlkml@sympatico.ca> writes:
 
--- test case --
+S> Perhaps I'm just missing something in your code,...
+JCH> Thankfully I think Linus had rejected this part in the series.
+JCH> I'll fix it up.
 
-$ ls -a
-./  ../
-$ git-init-db
-defaulting to local storage area
-$ date >path
-$ git-update-cache --add path
-$ rm path
-$ mkdir path
-$ date >path/file
-$ git-update-cache --add path/file
-$ git-ls-files --stage
-100644 1738f2536b1201218c41153941da065cc26174c9 0 path
-100644 620c72f1c1de15f56ff9d63d6d7cdc69e828f1e3 0 path/file
-$ git-ls-tree $(git-write-tree)                     ;# using old one
-100644	blob	1738f2536b1201218c41153941da065cc26174c9	path
-040000	tree	ec116937f223e3df95aeac9f076902ae1618ae98	path
-$ ../git-write-tree                                 ;# using new one
-You have both path and path/file
-fatal: write-tree: not able to write tree
-$ exit
+Here is the fixed one.  The previous one was ugly and
+inconvenient to use (thanks for noticing, Sean).
 
-----------------------------------------------------------------
-Notice index that has path and path/file and refuse to write such a tree.
+I'll keep it in the git-jc repository until Linus returns.
 
-Kay Sievers noticed that you can have both path and path/file in
-the cache and write-tree happily creates a tree object from such
-a state.  Since a merge can result in such situation and the
-user should be able to see the situation by looking at the
-cache, rather than forbidding add_cache_entry() to create such
-conflicts, fix it by making write-tree refuse to write such an
-nonsensical tree.
+------------
+
+Author: Junio C Hamano <junkio@cox.net>
+Date:   Sat May 7 00:38:04 2005 -0700
+    
+Introduce SHA1_FILE_DIRECTORIES to support multiple object databases.
+
+SHA1_FILE_DIRECTORIES environment variable is a colon separated paths
+used when looking for SHA1 files not found in the usual place for
+reading.  Creating a new SHA1 file does not use this alternate object
+database location mechanism.  This is useful to archive older, rarely
+used objects into separate directories.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
----
 
-write-tree.c |   35 +++++++++++++++++++++++++++++++----
-1 files changed, 31 insertions(+), 4 deletions(-)
-
---- a/write-tree.c
-+++ b/write-tree.c
-@@ -84,7 +84,7 @@ static int write_tree(struct cache_entry
+--- a/cache.h
++++ b/cache.h
+@@ -101,6 +101,7 @@ unsigned int active_nr, active_alloc, ac
  
- int main(int argc, char **argv)
- {
--	int i, unmerged;
-+	int i, funny;
- 	int entries = read_cache();
- 	unsigned char sha1[20];
+ #define DB_ENVIRONMENT "SHA1_FILE_DIRECTORY"
+ #define DEFAULT_DB_ENVIRONMENT ".git/objects"
++#define ALTERNATE_DB_ENVIRONMENT "SHA1_FILE_DIRECTORIES"
  
-@@ -92,18 +92,45 @@ int main(int argc, char **argv)
- 		die("write-tree: no cache contents to write");
+ #define get_object_directory() (getenv(DB_ENVIRONMENT) ? : DEFAULT_DB_ENVIRONMENT)
  
- 	/* Verify that the tree is merged */
--	unmerged = 0;
-+	funny = 0;
- 	for (i = 0; i < entries; i++) {
- 		struct cache_entry *ce = active_cache[i];
- 		if (ntohs(ce->ce_flags) & ~CE_NAMEMASK) {
--			if (++unmerged > 10) {
-+			if (10 < ++funny) {
- 				fprintf(stderr, "...\n");
- 				break;
- 			}
- 			fprintf(stderr, "%s: unmerged (%s)\n", ce->name, sha1_to_hex(ce->sha1));
- 		}
+--- a/fsck-cache.c
++++ b/fsck-cache.c
+@@ -306,7 +306,7 @@ int main(int argc, char **argv)
+ 			usage("fsck-cache [--tags] [[--unreachable] [--cache] <head-sha1>*]");
  	}
--	if (unmerged)
-+	if (funny)
-+		die("write-tree: not able to write tree");
-+
-+	/* Also verify that the cache does not have path and path/file
-+	 * at the same time.  At this point we know the cache has only
-+	 * stage 0 entries.
-+	 */
-+	funny = 0;
-+	for (i = 0; i < entries - 1; i++) {
-+		/* path/file always comes after path because of the way
-+		 * the cache is sorted.  Also path can appear only once,
-+		 * which means conflicting one would immediately follow.
-+		 */
-+		const char *this_name = active_cache[i]->name;
-+		const char *next_name = active_cache[i+1]->name;
-+		int this_len = strlen(this_name);
-+		if (this_len < strlen(next_name) &&
-+		    strncmp(this_name, next_name, this_len) == 0 &&
-+		    next_name[this_len] == '/') {
-+			if (10 < ++funny) {
-+				fprintf(stderr, "...\n");
-+				break;
-+			}
-+			fprintf(stderr, "You have both %s and %s\n",
-+				this_name, next_name);
-+		}
-+	}
-+	if (funny)
- 		die("write-tree: not able to write tree");
  
- 	/* Ok, write it out */
+-	sha1_dir = getenv(DB_ENVIRONMENT) ? : DEFAULT_DB_ENVIRONMENT;
++	sha1_dir = get_object_directory();
+ 	for (i = 0; i < 256; i++) {
+ 		static char dir[4096];
+ 		sprintf(dir, "%s/%02x", sha1_dir, i);
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -100,18 +100,34 @@ char * sha1_to_hex(const unsigned char *
+ 	return buffer;
+ }
+ 
++static void fill_sha1_path(char *pathbuf, const unsigned char *sha1)
++{
++	int i;
++	for (i = 0; i < 20; i++) {
++		static char hex[] = "0123456789abcdef";
++		unsigned int val = sha1[i];
++		char *pos = pathbuf + i*2 + (i > 0);
++		*pos++ = hex[val >> 4];
++		*pos = hex[val & 0xf];
++	}
++}
++
+ /*
+  * NOTE! This returns a statically allocated buffer, so you have to be
+  * careful about using it. Do a "strdup()" if you need to save the
+  * filename.
++ *
++ * Also note that this returns the location for creating.  Reading
++ * SHA1 file can happen from any alternate directory listed in the
++ * SHA1_FILE_DIRECTORIES environment variable if it is not found in
++ * the primary object database.
+  */
+ char *sha1_file_name(const unsigned char *sha1)
+ {
+-	int i;
+ 	static char *name, *base;
+ 
+ 	if (!base) {
+-		char *sha1_file_directory = getenv(DB_ENVIRONMENT) ? : DEFAULT_DB_ENVIRONMENT;
++		char *sha1_file_directory = get_object_directory();
+ 		int len = strlen(sha1_file_directory);
+ 		base = xmalloc(len + 60);
+ 		memcpy(base, sha1_file_directory, len);
+@@ -120,16 +136,74 @@ char *sha1_file_name(const unsigned char
+ 		base[len+3] = '/';
+ 		name = base + len + 1;
+ 	}
+-	for (i = 0; i < 20; i++) {
+-		static char hex[] = "0123456789abcdef";
+-		unsigned int val = sha1[i];
+-		char *pos = name + i*2 + (i > 0);
+-		*pos++ = hex[val >> 4];
+-		*pos = hex[val & 0xf];
+-	}
++	fill_sha1_path(name, sha1);
+ 	return base;
+ }
+ 
++static struct alternate_object_database
++{
++	char *base;
++	char *name;
++} *alt_odb;
++
++static void prepare_alt_odb(void)
++{
++	int pass, totlen, i;
++	void *buf;
++	const char *cp, *last;
++	char *op = 0;
++	const char *alt = getenv(ALTERNATE_DB_ENVIRONMENT) ? : "";
++
++	for (totlen = pass = 0; pass < 2; pass++) {
++		last = alt;
++		i = 0;
++		do {
++			cp = strchr(last, ':') ? : last + strlen(last);
++			if (last != cp) {
++				/* 43 = 40-byte + 2 '/' + terminating NUL */
++				int pfxlen = cp - last;
++				int entlen = pfxlen + 43;
++				if (pass == 0)
++					totlen += entlen;
++				else {
++					alt_odb[i].base = op;
++					alt_odb[i].name = op + pfxlen + 1;
++					memcpy(op, last, pfxlen);
++					op[pfxlen] = op[pfxlen + 3] = '/';
++					op[entlen-1] = 0;
++					op += entlen;
++				}
++				i++;
++			}
++			while (*cp && *cp == ':')
++				cp++;
++			last = cp;
++		} while (*cp);
++		if (pass)
++			break;
++		alt_odb = buf = xmalloc(sizeof(*alt_odb) * (i + 1) + totlen);
++		alt_odb[i].base = alt_odb[i].name = 0;
++		op = (char*)(&alt_odb[i+1]);
++	}
++}
++
++static char *find_sha1_file(const unsigned char *sha1, struct stat *st)
++{
++	int i;
++	char *name = sha1_file_name(sha1);
++
++	if (!stat(name, st))
++		return name;
++	if (!alt_odb)
++		prepare_alt_odb();
++	for (i = 0; (name = alt_odb[i].name) != NULL; i++) {
++		fill_sha1_path(name, sha1);
++		if (!stat(alt_odb[i].base, st))
++			return alt_odb[i].base;
++	}
++	return NULL;
++}
++
+ int check_sha1_signature(unsigned char *sha1, void *map, unsigned long size, const char *type)
+ {
+ 	char header[100];
+@@ -145,10 +219,15 @@ int check_sha1_signature(unsigned char *
+ 
+ void *map_sha1_file(const unsigned char *sha1, unsigned long *size)
+ {
+-	char *filename = sha1_file_name(sha1);
+ 	struct stat st;
+ 	void *map;
+ 	int fd;
++	char *filename = find_sha1_file(sha1, &st);
++
++	if (!filename) {
++		error("cannot map sha1 file %s", sha1_to_hex(sha1));
++		return NULL;
++	}
+ 
+ 	fd = open(filename, O_RDONLY | sha1_file_open_flag);
+ 	if (fd < 0) {
+@@ -167,10 +246,6 @@ void *map_sha1_file(const unsigned char 
+ 		/* If it failed once, it will probably fail again. Stop using O_NOATIME */
+ 		sha1_file_open_flag = 0;
+ 	}
+-	if (fstat(fd, &st) < 0) {
+-		close(fd);
+-		return NULL;
+-	}
+ 	map = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 	if (-1 == (int)(long)map)
+@@ -315,6 +390,7 @@ int write_sha1_file(char *buf, unsigned 
+ 	}
+ 
+ 	snprintf(tmpfile, sizeof(tmpfile), "%s/obj_XXXXXX", get_object_directory());
++
+ 	fd = mkstemp(tmpfile);
+ 	if (fd < 0) {
+ 		fprintf(stderr, "unable to create temporary sha1 filename %s: %s", tmpfile, strerror(errno));
+@@ -442,12 +518,8 @@ int write_sha1_from_fd(const unsigned ch
+ 
+ int has_sha1_file(const unsigned char *sha1)
+ {
+-	char *filename = sha1_file_name(sha1);
+ 	struct stat st;
+-
+-	if (!stat(filename, &st))
+-		return 1;
+-	return 0;
++	return !!find_sha1_file(sha1, &st);
+ }
+ 
+ int index_fd(unsigned char *sha1, int fd, struct stat *st)
+
+
+
 
