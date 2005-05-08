@@ -1,79 +1,71 @@
-From: Marcel Holtmann <marcel@holtmann.org>
+From: "Sean" <seanlkml@sympatico.ca>
 Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
-Date: Sun, 08 May 2005 23:43:20 +0200
-Message-ID: <1115588600.8949.77.camel@pegasus>
-References: <20050508152529.GU9495@pasky.ji.cz>
-	 <1115566990.9031.108.camel@pegasus> <20050508155656.GV9495@pasky.ji.cz>
-	 <1115568937.9031.129.camel@pegasus> <20050508171209.GX9495@pasky.ji.cz>
-	 <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz>
-	 <1115574035.9031.145.camel@pegasus> <20050508175156.GA9495@pasky.ji.cz>
-	 <1115578658.8949.9.camel@pegasus>  <20050508200334.GG9495@pasky.ji.cz>
+Date: Sun, 8 May 2005 17:46:48 -0400 (EDT)
+Message-ID: <2293.10.10.10.24.1115588808.squirrel@linux1>
+References: <20050508152529.GU9495@pasky.ji.cz> 
+    <1115566990.9031.108.camel@pegasus> <20050508155656.GV9495@pasky.ji.cz>
+     <1115568937.9031.129.camel@pegasus>
+    <20050508171209.GX9495@pasky.ji.cz> 
+    <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz>
+     <1115574035.9031.145.camel@pegasus>
+    <20050508175156.GA9495@pasky.ji.cz>  <1115578658.8949.9.camel@pegasus> 
+    <20050508200334.GG9495@pasky.ji.cz>
+    <1115584015.8949.43.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 23:36:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Petr Baudis" <pasky@ucw.cz>,
+	"GIT Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 23:40:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUtRM-0000HQ-DA
-	for gcvg-git@gmane.org; Sun, 08 May 2005 23:35:56 +0200
+	id 1DUtV1-0000ib-C9
+	for gcvg-git@gmane.org; Sun, 08 May 2005 23:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262984AbVEHVm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 17:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262987AbVEHVm7
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:42:59 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:5294 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S262984AbVEHVm5
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:42:57 -0400
-Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j48LiFWX006051
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Sun, 8 May 2005 23:44:16 +0200
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050508200334.GG9495@pasky.ji.cz>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S262989AbVEHVqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 17:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262995AbVEHVqu
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:46:50 -0400
+Received: from simmts12.bellnexxia.net ([206.47.199.141]:40624 "EHLO
+	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S262989AbVEHVqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2005 17:46:49 -0400
+Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050508214648.NXEX1542.simmts12-srv.bellnexxia.net@linux1>;
+          Sun, 8 May 2005 17:46:48 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j48LkjLg029668;
+	Sun, 8 May 2005 17:46:45 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Sun, 8 May 2005 17:46:48 -0400 (EDT)
+In-Reply-To: <1115584015.8949.43.camel@pegasus>
+To: "Marcel Holtmann" <marcel@holtmann.org>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Petr,
+On Sun, May 8, 2005 4:26 pm, Marcel Holtmann said:
 
-> #/bin/sh
-> 
-> leading=1
-> emptylines=0
-> while read line; do
->         if ! [ "$line" ]; then
-> 		[ "$leading" ] && continue
-> 		emptylines=$(($emptylines + 1))
->         else
-> 		leading=0
->                 while [ $emptylines -gt 0 ]; do
->                         echo ""
->                         emptylines=$(($emptylines - 1))
->                 done
->                 echo $line
->         fi
-> done
-> 
-> or something? (Based on someone else's script since I was too lazy. ;-)
+> /*
+>  * Remove empty lines from the beginning and end.
+>  *
+>  * Turn multiple consecutive empty lines into just one
+>  * empty line.
+>  */
 
-@@ -134,7 +134,7 @@
- else
-        cat >>$LOGMSG2
- fi
--grep -v ^CG: $LOGMSG2 >$LOGMSG
-+grep -v ^CG: $LOGMSG2 | sed '/./,${/./b;:a;$d;N;/\n$/ba;b;};d' >$LOGMSG
- rm $LOGMSG2
- 
- 
-If you don't wanna squeeze then you can do it with a one-line in sed.
+sed ' 1{:a;s/^[ \t]*$//;T;N;s/\n//;ta}
+      /^[ \t]*$/{:b;$d;N;s/\n[ \t]*$//;tb}'  filename
 
-Regards
+There's probably shorter... but it's mothers day.. time to go!
 
-Marcel
+Cheers,
+Sean
 
 
