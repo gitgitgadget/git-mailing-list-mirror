@@ -1,67 +1,58 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: [FILES] core-git documentation update
-Date: Sun, 08 May 2005 18:42:04 +0100
-Message-ID: <427E4F6C.6090302@dgreaves.com>
-References: <427E4AED.9050702@dgreaves.com> <20050508173109.GZ9495@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
+Date: Sun, 8 May 2005 19:51:56 +0200
+Message-ID: <20050508175156.GA9495@pasky.ji.cz>
+References: <1115564550.9031.96.camel@pegasus> <20050508152529.GU9495@pasky.ji.cz> <1115566990.9031.108.camel@pegasus> <20050508155656.GV9495@pasky.ji.cz> <1115568937.9031.129.camel@pegasus> <20050508171209.GX9495@pasky.ji.cz> <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz> <1115574035.9031.145.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun May 08 19:35:20 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 19:45:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUpgM-0008QL-SK
-	for gcvg-git@gmane.org; Sun, 08 May 2005 19:35:11 +0200
+	id 1DUppo-0000pX-Bp
+	for gcvg-git@gmane.org; Sun, 08 May 2005 19:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262911AbVEHRmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 13:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262912AbVEHRmO
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 13:42:14 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:2955 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262911AbVEHRmL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 13:42:11 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 9B557E6D4F; Sun,  8 May 2005 18:41:13 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 14332-06; Sun,  8 May 2005 18:41:13 +0100 (BST)
-Received: from oak.dgreaves.com (modem-2142.leopard.dialup.pol.co.uk [217.135.152.94])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id EB764E6A8B; Sun,  8 May 2005 18:41:12 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DUpn3-0005kd-7f; Sun, 08 May 2005 18:42:05 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050508173109.GZ9495@pasky.ji.cz>
-X-Enigmail-Version: 0.91.0.0
+	id S262914AbVEHRv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 13:51:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262915AbVEHRv7
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 13:51:59 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:33242 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262914AbVEHRv6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 13:51:58 -0400
+Received: (qmail 7291 invoked by uid 2001); 8 May 2005 17:51:56 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
+Content-Disposition: inline
+In-Reply-To: <1115574035.9031.145.camel@pegasus>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
+Dear diary, on Sun, May 08, 2005 at 07:40:34PM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> > > Sometime you don't have any other choice, because diff is not perfect.
+> > > Do you wanna apply that patch or should I change the mktemp templates
+> > > first?
+> > 
+> > It looks like it'll be most painless when I just reinvent parts of your
+> > patch here locally and you can send me patches on top of that.
+> 
+> it is your choice. I can change that if you like. My latest version
+> should apply cleanly against your current tree.
 
->Dear diary, on Sun, May 08, 2005 at 07:22:53PM CEST, I got a letter
->where David Greaves <david@dgreaves.com> told me that...
->  
->
->>I've converted the core-git.txt to asciidoc format and created a trivial
->>splitter to create individual txt, html and man pages.
->>    
->>
->
->Is there any reason to keep the source in a single huge monolithic file?
->  
->
-it just makes across the board changes easier and at the minute the
-stuff I've been doing is systemic.
+I've pushed my changes, please have a look at them. I think I've got
+everything important, but I might've forgot something.
 
-I have no problems with breaking it up - hence the script...
+> If you want the extra newline(s) then it is a good idea to add something
+> that strips heading and trailing empty lines from the final commit
+> message, because otherwise it will be ugly if you don't enter extra text
+> for the merge.
 
-David
+Isn't that what I initially suggested? :-)
 
 -- 
-
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
