@@ -1,75 +1,175 @@
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH] Really *do* nothing in while loop
-Date: Sun, 08 May 2005 15:40:40 +0400
-Organization: Telecom Service, JSC
-Message-ID: <427DFAB8.5050000@tls.msk.ru>
-References: <20050508093440.GA9873@cip.informatik.uni-erlangen.de> <427DE086.40307@tls.msk.ru> <1115551204.3085.0.camel@kryten> <12e801c553c1$c454ea20$1225a8c0@kittycat>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: [PATCH Cogito] Make use of external editor work like CVS
+Date: Sun, 08 May 2005 17:02:30 +0200
+Message-ID: <1115564550.9031.96.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: James Purser <purserj@ksit.dynalias.com>,
-	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	LKML <linux-kernel@vger.kernel.org>, GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 13:34:13 2005
+Content-Type: multipart/mixed; boundary="=-kIxjKESLEXfOBaOdNT86"
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 16:56:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUk2v-0008Oi-R5
-	for gcvg-git@gmane.org; Sun, 08 May 2005 13:34:06 +0200
+	id 1DUnBw-0001GE-Vz
+	for gcvg-git@gmane.org; Sun, 08 May 2005 16:55:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262851AbVEHLkx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 07:40:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262853AbVEHLkx
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 07:40:53 -0400
-Received: from hobbit.corpit.ru ([81.13.94.6]:45152 "EHLO hobbit.corpit.ru")
-	by vger.kernel.org with ESMTP id S262851AbVEHLko (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 07:40:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hobbit.corpit.ru (Postfix) with ESMTP id 95B80295EA;
-	Sun,  8 May 2005 15:40:41 +0400 (MSD)
-	(envelope-from mjt@tls.msk.ru)
-Received: from [192.168.1.200] (mjt.ppp.tls.msk.ru [192.168.1.200])
-	by hobbit.corpit.ru (Postfix) with ESMTP;
-	Sun,  8 May 2005 15:40:41 +0400 (MSD)
-	(envelope-from mjt@tls.msk.ru)
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: jdow <jdow@earthlink.net>
-In-Reply-To: <12e801c553c1$c454ea20$1225a8c0@kittycat>
+	id S262879AbVEHPCe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 11:02:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262880AbVEHPCe
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 11:02:34 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:52653 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S262879AbVEHPCS
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 11:02:18 -0400
+Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j48F3ZWX003484
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sun, 8 May 2005 17:03:36 +0200
+To: Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-jdow wrote:
-> From: "James Purser" <purserj@ksit.dynalias.com>
-> 
-   while (deflate(&stream, 0) == Z_OK)
--  /* nothing */
-+  /* nothing */;
-  stream.next_in = buf;
-> 
-> You guys REALLY do not see the changed semantics here? You are
-> changing:
->   while (deflate(&stream, 0) == Z_OK)
->       stream.next_in = buf;
-> 
-> into
-> 
->   while (deflate(&stream, 0) == Z_OK)
->     ;
->   /* Then the data itself.. */
->   stream.next_in = buf;
-> 
-> I suspect the results of that tiny bit of code would be slightly
-> different, especially if "stream.next_in" is volatile, "buf"
-> is volatile, or if the assignment to next_in has an effect on
-> the "deflate" operation.
 
-As I already said, deflate() in this case does only ONE iteration.
-stream.avail_in is NOT changed in the loop (except of the deflate()
-itself, where it will be set to 0 - provided out buffer have enouth
-room).  So the whole while loop does only ONE iteration, returning
-Z_NEED_DATA or something the next one.  So no, the semantics here
-(actual semantics) does NOT change.
+--=-kIxjKESLEXfOBaOdNT86
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-/mjt
+Hi Petr,
+
+this is a modified version of my patch that integrates the your latest
+modifications to cg-commit and also fixes the cleanup of the temporary
+files when we abort the operation.
+
+Regards
+
+Marcel
+
+
+--=-kIxjKESLEXfOBaOdNT86
+Content-Disposition: attachment; filename=patch
+Content-Type: text/plain; name=patch; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+[PATCH] Make use of external editor work like CVS
+
+The lines starting with `CG:' should be a trailer and not at the top
+of the message presented in the editor. Also extend the number of `-'
+up to 74 characters so that people know when they should start a new
+line. If it's not a merge and no commit text is given as parameter
+then add an extra empty line at the top. And don't forget to take
+care of the temporary files when a commit is unneeded or canceled.
+
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+
+---
+commit 895bcd02ecc96bed1d35275def6dca1ca6f20e5f
+tree be440e169fa3b5ec5450fa9574cd8789b0e3ab20
+parent 64142a39e7a6701e69654a930de86a9fe296f8a0
+author Marcel Holtmann <marcel@holtmann.org> Sun, 08 May 2005 16:58:50 +0200
+committer Marcel Holtmann <marcel@holtmann.org> Sun, 08 May 2005 16:58:50 +0200
+
+ cg-commit |   63 ++++++++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 37 insertions(+), 26 deletions(-)
+
+Index: cg-commit
+===================================================================
+--- 8bb38f8bfdc7411460c300c811da1987173f412f/cg-commit  (mode:100755)
++++ be440e169fa3b5ec5450fa9574cd8789b0e3ab20/cg-commit  (mode:100755)
+@@ -61,26 +61,10 @@
+ 
+ LOGMSG=$(mktemp -t gitci.XXXXXX)
+ LOGMSG2=$(mktemp -t gitci2.XXXXXX)
+-echo CG: ---------------------------------------------------------- >>$LOGMSG
+-echo CG: Lines beggining with CG: will be automatically removed     >>$LOGMSG
+-echo CG:                                                            >>$LOGMSG
+-if [ ! "$ignorecache" ]; then
+-	if [ ! "${commitfiles[*]}" ]; then
+-		echo 'Nothing to commit.' >&2
+-		exit 2
+-	fi
+-	for file in "${commitfiles[@]}"; do
+-		# Prepend a letter describing whether it's addition,
+-		# removal or update. Or call git status on those files.
+-		echo CG: $file >>$LOGMSG
+-		[ "$msgs" ] && echo $file
+-	done
+-	echo CG: >>$LOGMSG
+-fi
+ 
+ if [ "$merging" ]; then
+-	echo -n 'Merge with ' >>$LOGMSG
+-	[ "$msgs" ] && echo -n 'Merge with '
++	echo -n "Merge with " >>$LOGMSG
++	[ "$msgs" ] && echo -n "Merge with "
+ 	[ -s .git/merging-sym ] || cp .git/merging .git/merging-sym
+ 	for sym in $(cat .git/merging-sym); do
+ 		uri=$(cat .git/branches/$sym)
+@@ -88,28 +72,55 @@
+ 		echo "$uri" >>$LOGMSG
+ 		[ "$msgs" ] && echo "$uri"
+ 	done
+-	echo >>$LOGMSG
++else
++	first=1
+ fi
+-first=1
++
+ for msg in "${msgs[@]}"; do
+ 	if [ "$first" ]; then
+ 		first=
+ 	else
+ 		echo >>$LOGMSG
+ 	fi
+-	echo $msg | fmt >>$LOGMSG
++	echo $msg | fmt -s -w 74 >>$LOGMSG
+ done
++
++if [ "$first" ]; then
++	echo >>$LOGMSG
++fi
++
++echo "CG: ----------------------------------------------------------------------" >>$LOGMSG
++echo "CG: Enter Log.  Lines beginning with \`CG:' are removed automatically"      >>$LOGMSG
++if [ ! "$ignorecache" ]; then
++	if [ ! "${commitfiles[*]}" ]; then
++		rm $LOGMSG $LOGMSG2
++		die 'Nothing to commit.'
++	fi
++	echo "CG: " >>$LOGMSG
++	echo "CG: Modified Files:" >>$LOGMSG
++	for file in "${commitfiles[@]}"; do
++		# Prepend a letter describing whether it's addition,
++		# removal or update. Or call git status on those files.
++		echo "CG:    $file" >>$LOGMSG
++		[ "$msgs" ] && echo "$file"
++	done
++fi
++echo "CG: ----------------------------------------------------------------------" >>$LOGMSG
++
+ cp $LOGMSG $LOGMSG2
+ if tty -s; then
+ 	if ! [ "$msgs" ]; then
+-		${EDITOR:-vi} $LOGMSG2
+-		[ $LOGMSG2 -nt $LOGMSG ] || die 'Commit message not modified, commit aborted'
++		${EDITOR:-vi} $LOGMSG
++		if [ ! $LOGMSG -nt $LOGMSG2 ]; then
++			rm $LOGMSG $LOGMSG2
++			die 'Commit message not modified, commit aborted.'
++		fi
+ 	fi
+ else
+-	cat >>$LOGMSG2
++	cat >>$LOGMSG
+ fi
+-grep -v ^CG: $LOGMSG2 >$LOGMSG
+-rm $LOGMSG2
++grep -v ^CG: $LOGMSG >$LOGMSG2
++mv $LOGMSG2 $LOGMSG
+ 
+ if [ ! "$ignorecache" ]; then
+ 	if [ "$customfiles" ]; then
+
+--=-kIxjKESLEXfOBaOdNT86--
+
