@@ -1,49 +1,58 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Make errors
-Date: Sun, 8 May 2005 21:43:26 +0200
-Message-ID: <20050508194326.GD6347@cip.informatik.uni-erlangen.de>
+Date: Sun, 8 May 2005 21:46:57 +0200
+Message-ID: <20050508194657.GF9495@pasky.ji.cz>
 References: <1115580904.5536.28.camel@linux.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 08 21:42:12 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 21:42:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUreX-00043H-3o
+	id 1DUreX-00043H-HR
 	for gcvg-git@gmane.org; Sun, 08 May 2005 21:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262836AbVEHTpm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 15:45:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262957AbVEHTp3
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 15:45:29 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:48022 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262836AbVEHTn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2005 15:43:28 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j48JhRS8023822
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sun, 8 May 2005 19:43:27 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j48JhQ2L023821
-	for git@vger.kernel.org; Sun, 8 May 2005 21:43:26 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
+	id S262952AbVEHTr5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 15:47:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262964AbVEHTr4
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 15:47:56 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:45276 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262952AbVEHTq7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 15:46:59 -0400
+Received: (qmail 17586 invoked by uid 2001); 8 May 2005 19:46:57 -0000
+To: John Kacur <jkacur@rogers.com>
 Content-Disposition: inline
 In-Reply-To: <1115580904.5536.28.camel@linux.site>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello John,
+Dear diary, on Sun, May 08, 2005 at 09:35:04PM CEST, I got a letter
+where John Kacur <jkacur@rogers.com> told me that...
+> gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o git-convert-cache
+> convert-c
+> ache.c libgit.a -lz -lssl
+> convert-cache.c: In function `write_subdirectory':
+> convert-cache.c:102: warning: field precision is not type int (arg 4)
 
+I'm not sure how serious this is in practice.
+
+> gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>' -o git-http-pull
+> http-pull.c l
+> ibgit.a -lz -lssl -lcurl
 > http-pull.c:10:23: curl/curl.h: No such file or directory
 > http-pull.c:11:23: curl/easy.h: No such file or directory
 > http-pull.c:13: error: parse error before '*' token
 
-Install curl + curl development package. Your compiler complains that it
-can't find the header files for libcurl.
+You need curl in order to compile http-pull. It is not a core part of
+git, so if you just remove it from the makefile, things should work as
+long as you don't want to pull over http. (You can pull Linus' and my
+trees over rsync, not sure about Junio - I *think* he is http-only.)
 
-	Thomas
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
