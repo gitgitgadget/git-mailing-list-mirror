@@ -1,102 +1,90 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Broken adding of cache entries
-Date: Sat, 07 May 2005 22:22:31 -0700
-Message-ID: <7vll6q70mg.fsf@assigned-by-dhcp.cox.net>
-References: <1115408460.32065.37.camel@localhost.localdomain>
-	<20050506231447.GG32629@pasky.ji.cz>
-	<1115421933.32065.111.camel@localhost.localdomain>
-	<20050506233003.GJ32629@pasky.ji.cz>
-	<1115423450.32065.138.camel@localhost.localdomain>
-	<20050507001409.GP32629@pasky.ji.cz>
-	<1115431767.32065.182.camel@localhost.localdomain>
-	<20050507152849.GD9495@pasky.ji.cz>
-	<7vhdhealjm.fsf@assigned-by-dhcp.cox.net>
-	<20050507224116.GF9495@pasky.ji.cz>
-	<7vll6q8s4o.fsf@assigned-by-dhcp.cox.net>
-	<7vbr7m8p05.fsf@assigned-by-dhcp.cox.net>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [patch] add simple git documentation
+Date: Sun, 08 May 2005 08:35:56 +0100
+Message-ID: <427DC15C.3080208@dgreaves.com>
+References: <20050505102600.GA16387@elf.ucw.cz> <20050506175835.65b9c9c1.akpm@osdl.org> <427C7E38.3010301@dgreaves.com> <20050507113618.GA9495@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 07:15:44 2005
+Content-Transfer-Encoding: 7bit
+Cc: Andrew Morton <akpm@osdl.org>, Pavel Machek <pavel@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 09:30:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUe8j-0007uc-Ku
-	for gcvg-git@gmane.org; Sun, 08 May 2005 07:15:41 +0200
+	id 1DUgDz-0006uA-Dc
+	for gcvg-git@gmane.org; Sun, 08 May 2005 09:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262815AbVEHFWg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 01:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262816AbVEHFWg
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 01:22:36 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:26080 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262815AbVEHFWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2005 01:22:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050508052231.QNZV22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 8 May 2005 01:22:31 -0400
+	id S262822AbVEHHgO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 03:36:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262823AbVEHHgO
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 03:36:14 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:2728 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262822AbVEHHgI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 03:36:08 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id C2A94E6A96; Sun,  8 May 2005 08:35:13 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 14236-11; Sun,  8 May 2005 08:35:13 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.156.200])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 070C9E6A93; Sun,  8 May 2005 08:35:13 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DUgKS-0004zj-H9; Sun, 08 May 2005 08:35:56 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <7vbr7m8p05.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sat, 07 May 2005 18:50:34 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <20050507113618.GA9495@pasky.ji.cz>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
+Petr Baudis wrote:
 
-JCH> I am not quite sure the semantics is quite right, so I am
-JCH> holding it off from putting it in git-jc repository for now, but
-JCH> please review it, give it a try and tell me what you think.
+>Dear diary, on Sat, May 07, 2005 at 10:37:12AM CEST, I got a letter
+>where David Greaves <david@dgreaves.com> told me that...
+>  
+>
+>>Andrew Morton wrote:
+>>    
+>>
+>>>Pavel Machek <pavel@ucw.cz> wrote:
+>>>      
+>>>
+>>>>This adds short intro to git aimed at kernel hackers.
+>>>>        
+>>>>
+>>>OK, but I'm hoping that shortly we'll have something more complete than
+>>>this, and your patch might not be a suitable starting point for that. 
+>>>(Large hint-dropping sounds).
+>>>      
+>>>
+>>What are you looking for.
+>>
+>>For man-page-a-like, have you seen Documentation/core-git.txt in Linus'
+>>repository?
+>>
+>>I'll be working more on that this weekend.
+>>    
+>>
+>Are you planning to split it to individual files at some point?
+>  
+>
+Yes. I'll see how using asciidoc affects that.
+And with Linus vacationing it looks like there'll be time this week.
 
-Ok, I have two updates pushed out at git-jc archive at
-http://members.cox.net/junkio/git-jc.git/
+>(That's what I'd like to do with Documentation/cogito/, speaking of
+>manpageness...)
+>  
+>
+OK
+BTW, whatever happened to perlification - the initial stab I sent you
+used the perl/pod approach.
+The reason I ask is that that means the docs should/could be initially
+written as here-documents within the scripts rather than external manpages.
 
-Here is the summary of what the changes do.
-
-The first commit is to simply prevent Kay's situation from
-happening from git-update-cache.
-
-By default, git-update-cache refuses to:
-
- - add "path" when "path/file" exists.  That is, you cannot
-   replace a directory with a file (or a symlink).
-
- - add "path/file" when "path" exists.  That is, you cannot
-   replace a file (or a symlink) with a directory.
-
-And the second commit introduces --replace option to the
-command.  When --replace is in effect, instead of refusing, the
-existing path that conflicts with whatever is being added is
-dropped with a warning message.  That means you would lose an
-entire subdirectory from the index when you rename it and
-replace it with a file and then call git-update-cache on it
-(which is probably fine and what the user expects anyway).
-
-Note that this is not enough to prevent nonsensical tree from
-happening.  Three-way read-tree can be fed with an ancestor tree
-that does not have anything interesting, one side adding "path"
-(as a file) and the other side adding "path/file".  Just after
-read-tree finishes reading three trees, you would have:
-
-    100644 1 not-interesting
-    100644 2 not-interesting
-    100644 3 not-interesting
-    100644 2 path
-    100644 3 path/file
-
-And all of these paths are candidate for trivial "collapsing to
-stage 0" operation.  You would end up with path vs path/file
-conflicts this way, so the previous change to write-tree to
-prevent it from writing such a result is still needed.
-
-Ideally the "collapsing to stage 0" logic could also be tweaked
-to detect and prevent this from happening, but I'd rather keep
-it simple for now (the tool should not be too clever).  The user
-cannot write such a tree, and when this kind of conflict
-happens, essentially both heads being merged needs to be
-examined and manual resolution is required anyway.
-
-
+David
