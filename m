@@ -1,105 +1,53 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
-Date: Sun, 8 May 2005 23:08:58 +0200
-Message-ID: <20050508210857.GL9495@pasky.ji.cz>
-References: <20050508155656.GV9495@pasky.ji.cz> <1115568937.9031.129.camel@pegasus> <20050508171209.GX9495@pasky.ji.cz> <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz> <1115574035.9031.145.camel@pegasus> <20050508175156.GA9495@pasky.ji.cz> <1115578658.8949.9.camel@pegasus> <20050508200334.GG9495@pasky.ji.cz> <1115584015.8949.43.camel@pegasus>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Really *do* nothing in while loop
+Date: Sun, 8 May 2005 17:16:21 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505081713070.30848-100000@iabervon.org>
+References: <7vy8ap4e8l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 23:03:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael Tokarev <mjt@tls.msk.ru>, jdow <jdow@earthlink.net>,
+	James Purser <purserj@ksit.dynalias.com>,
+	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 23:11:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUsvU-0005iF-Sv
-	for gcvg-git@gmane.org; Sun, 08 May 2005 23:03:01 +0200
+	id 1DUt2v-0006T3-N7
+	for gcvg-git@gmane.org; Sun, 08 May 2005 23:10:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262973AbVEHVKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 17:10:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261685AbVEHVJa
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:09:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:13534 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262935AbVEHVJB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:09:01 -0400
-Received: (qmail 30082 invoked by uid 2001); 8 May 2005 21:08:58 -0000
-To: Marcel Holtmann <marcel@holtmann.org>
-Content-Disposition: inline
-In-Reply-To: <1115584015.8949.43.camel@pegasus>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261685AbVEHVRs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 17:17:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262935AbVEHVRs
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:17:48 -0400
+Received: from iabervon.org ([66.92.72.58]:10245 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261685AbVEHVRq (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:17:46 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DUt8P-0004lW-00; Sun, 8 May 2005 17:16:21 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy8ap4e8l.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 08, 2005 at 10:26:55PM CEST, I got a letter
-where Marcel Holtmann <marcel@holtmann.org> told me that...
-> Hi Petr,
+On Sun, 8 May 2005, Junio C Hamano wrote:
 
-Hi,
-
-> > > look at the attached patch. We should use "fmt -s" to keep newlines that
-> > > are inside the commit message and there is one unneeded empty CG: line.
-> > 
-> > thanks, fixed and pushed out.
+> >>>>> "MT" == Michael Tokarev <mjt@tls.msk.ru> writes:
 > 
-> cool. Now I have everything I am used to from CVS, but ...
-
-Excellent.
-
-> @@ -113,7 +113,9 @@
->                 # TODO: Prepend a letter describing whether it's addition,
->                 # removal or update. Or call git status on those files.
->                 echo "CG:    $file" >>$LOGMSG
-> -               [ "$msgs" ] && echo $file
-> +               if [ "$msgs" ] && ! [ "$forceeditor" ]; then
-> +                       echo $file
-> +               fi
->         done
->  fi
+> MT> As I already said, deflate() in this case does only ONE iteration.
+> MT> stream.avail_in is NOT changed in the loop (except of the deflate()
+> MT> itself, where it will be set to 0 - provided out buffer have enouth
+> MT> room)....
 > 
-> There is no need to print out the files if we start the editor anyway.
+> Just a stupid question, but what happens when we do not have
+> enough room in the buffer?
 
-Thanks, fixed.
+We must have enough room; we sized the buffer with deflateBound to fit the
+worst case.
 
-> @@ -122,10 +124,10 @@
->  if tty -s; then
->         if ! [ "$msgs" ] || [ "$forceeditor" ]; then
->                 ${EDITOR:-vi} $LOGMSG2
-> -       fi
-> -       if ! [ "$msgs" ] && ! [ $LOGMSG2 -nt $LOGMSG ]; then
-> -               rm $LOGMSG $LOGMSG2
-> -               die 'Commit message not modified, commit aborted'
-> +               if ! [ $LOGMSG2 -nt $LOGMSG ]; then
-> +                       rm $LOGMSG $LOGMSG2
-> +                       die 'Commit message not modified, commit aborted'
-> +               fi
->         fi
->  else
-> 
-> If you provide a commit message via -m and then close the editor without
-> changing it, it will commit the message. I think that will not be the
-> intention of the user.
+	-Daniel
+*This .sig left intentionally blank*
 
-Now, this is a pretty difficult question. The only other place in the
-Cogito toolkit which uses cg-commit -e is now cg-init when doing the
-initial commit - and you definitively want to commit even if the message
-was not modified in that case. Also, what if you want to just review
-how the -m stuff flows like before committing?
 
-OTOH, we might want to stay consistent in behaviour and always abandon
-action when the file was not modified (except for the initial commit).
-Perhaps some -E for that? Other thoughts?
-
-> /*
->  * Remove empty lines from the beginning and end.
->  *
->  * Turn multiple consecutive empty lines into just one
->  * empty line.
->  */
-
-Bah, that's even easier when you want to squeeze the empty lines inside
-of the commit message. I don't, though.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
