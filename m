@@ -1,69 +1,52 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: Commit template
-Date: Sun, 08 May 2005 21:30:30 +0200
-Message-ID: <1115580630.8949.27.camel@pegasus>
-References: <1965.10.10.10.24.1115579256.squirrel@linux1>
-	 <1115579764.8949.15.camel@pegasus>
-	 <2003.10.10.10.24.1115580031.squirrel@linux1>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [FILES] core-git documentation update
+Date: Sun, 08 May 2005 12:30:20 -0700
+Message-ID: <7vpsw15xdf.fsf@assigned-by-dhcp.cox.net>
+References: <427E4AED.9050702@dgreaves.com>
+	<20050508173109.GZ9495@pasky.ji.cz> <427E4F6C.6090302@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 21:28:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 21:28:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUrRT-0002bB-Qf
-	for gcvg-git@gmane.org; Sun, 08 May 2005 21:27:56 +0200
+	id 1DUrRT-0002bB-DB
+	for gcvg-git@gmane.org; Sun, 08 May 2005 21:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262883AbVEHTdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S262971AbVEHTdj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Sun, 8 May 2005 15:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262971AbVEHTcV
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 15:32:21 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:64941 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S262967AbVEHTaI
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 15:30:08 -0400
-Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j48JVOWX004995
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Sun, 8 May 2005 21:31:25 +0200
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <2003.10.10.10.24.1115580031.squirrel@linux1>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
-X-Virus-Status: Clean
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262976AbVEHTbz
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 15:31:55 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:64436 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262973AbVEHTaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2005 15:30:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050508193022.ZHKD22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 8 May 2005 15:30:22 -0400
+To: David Greaves <david@dgreaves.com>
+In-Reply-To: <427E4F6C.6090302@dgreaves.com> (David Greaves's message of
+ "Sun, 08 May 2005 18:42:04 +0100")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sean,
+>>>>> "DG" == David Greaves <david@dgreaves.com> writes:
 
-> >> This adds the ability to have a per repository commit template.  Create
-> >> a
-> >> .git/commit.form file containg  "CG: " and other lines and it will be
-> >> used
-> >> in place of the regular top 3 lines.  This is kind of handy so that you
-> >> can include your signed-off-by: with your email etc.
-> >
-> > I think it is a bad idea to take the CG: into it. Let them be created by
-> > the cg-commit script, because it knows what to do.
-> >
-> > The question now is when we should provide that form. For me it only
-> > makes sense if it is not a merge and if no commit message is provided
-> > via command line.
->
-> Yeah, it was just a quick hack.  You're not forced to put any CG: lines in
-> the commit template of course, but it will handle it if you do.   Even
-> with the patch, cg-commit will add addtional CG: lines containing a list
-> of modified files etc..
+DG> it just makes across the board changes easier and at the minute the
+DG> stuff I've been doing is systemic.
+DG> I have no problems with breaking it up - hence the script...
 
-if you don't put any CG: lines in the commit template you screw up the
-look of the modified files list. So I propose to leave all the CG: lines
-additions as they are in cg-commit and only add the template in front of
-it.
-
-Regards
-
-Marcel
+Monolithic version is easier to work with when there is only one
+or very few people working on it but when the document matures
+enough to describe the current state of affairs accurately
+enough, further changes would come almost solely from changing
+the programs the document describes.  At that point having
+separate files describing each program is easier to work with,
+and I think that point is now.
 
 
