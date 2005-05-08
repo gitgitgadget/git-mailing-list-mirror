@@ -1,58 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add exclude file support to cg-status
-Date: Sun, 08 May 2005 16:28:44 -0700
-Message-ID: <7vfywx2t77.fsf@assigned-by-dhcp.cox.net>
-References: <20050502171042.A24299@cox.net>
-	<20050508015016.GL9495@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: [ANNOUNCE] Cogito-0.10
+Date: Mon, 9 May 2005 01:34:31 +0200
+Message-ID: <20050508233431.GP9495@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matt Porter <mporter@kernel.crashing.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 09 01:22:59 2005
+X-From: git-owner@vger.kernel.org Mon May 09 01:27:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUv6p-0000ve-G2
-	for gcvg-git@gmane.org; Mon, 09 May 2005 01:22:51 +0200
+	id 1DUvBN-0001FY-Vp
+	for gcvg-git@gmane.org; Mon, 09 May 2005 01:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263006AbVEHX3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 19:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263010AbVEHX3J
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 19:29:09 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:43238 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S263006AbVEHX2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2005 19:28:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050508232844.KQJ7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 8 May 2005 19:28:44 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050508015016.GL9495@pasky.ji.cz> (Petr Baudis's message of
- "Sun, 8 May 2005 03:50:16 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263007AbVEHXek (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 19:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263008AbVEHXek
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 19:34:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56032 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S263007AbVEHXeh (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 19:34:37 -0400
+Received: (qmail 14031 invoked by uid 2001); 8 May 2005 23:34:31 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+  Hello,
 
-PB> ... since I *don't* think you want to share this. The very
-PB> fact it is in the .git/ directory implies here that these
-PB> are your local exclude patterns which are likely
-PB> temporary...
+  I'm happy to announce new release of Cogito, my SCM-like layer upon
+the Linus' GIT tree history storage engine, aiming for user-friendliness.
+Get it at
 
-Is it really the case?  I recall that Linux kernel started
-shipping with the standard dontdiff file for everybody's use
-some time ago, after enough people wanted it included in the
-upstream release.  Maybe you would want to read from both?
+	http://www.kernel.org/pub/software/scm/cogito
 
-PB> The fact that we have no support for version-tracked exclude file can't
-PB> stop me! ;-)
+or cg-update if you already have any decently fresh version.
 
-What darcs folks do is that they have a per-tree configuration
-(kept in ./_darcs, which is similar to our ./.git) that says
-which file is the exclude list, and by setting configuration
-item to point at a file which _is_ version controlled they can
-share the exclude file.
+  The highlights are cg-logging of individual files, cg-export
+foo.tar.gz, fixed cg-init of fresh trees (it makes an initial commit
+now), cg-commit message processing enhancements (in cooperation mainly
+with Marcel Holtmann), cg-restore, cg-admin-uncommit, and cg-X* stuff in
+a library directory. And also merge with Linus, which brings some stuff
+chronologically pre-cogito-0.9, but I forgot to pull before release.
 
+  Usage changes:
+    * cg-update without parameters now does not recover lost files;
+      that functionality was moved to cg-restore which can do that
+      with individual files only too.
+    * cg-update and cg-pull w/o arguments default to "origin" again.
+      Everyone rejoices.
+    * cg-init SOURCE_LOC is now deprecated, cg-init should not be
+      called directly for the cloning stuff anymore. Use it only for
+      creating new repositories now.
+    * cg-clone can take a -s argument now which makes it to clone to
+      the current directory instead of a subdirectory.
+
+  I think the usage is very stabilized by now, and is actually quite
+unlikely to change anymore - you can safely start to get used to it. The
+only change still queued is removing cg-init SOURCE_LOC functionality
+altogether; I'm delaying that yet mainly because of the
+http://www.kernel.org/git/ text. ;-)
+
+  I think we are overall stabilizing very nicely, and might actually
+be nearing cogito-1.0 (but let that not stop you doing anything yet...
+perhaps except rewriting the whole thing in Befunge).
+
+  Please note that my patch queue is basically empty now. The only
+things I have marked for consideration yet are:
+
+4778 N   Apr 22 Morten Welinder ( 7.0K) [PATCH] Constify
+5607 N T Apr 28 Philip Pokorny  ( 2.5K) PATCH[*/4]: Allow tree-id to return the ID of a tree object
+
+  So if you have a patch you think I should have in my tree too, please
+resend it. Do not forget to put the patch inline to the mail body or as
+a text/plain attachment, and to sign it off.
+
+  Have fun,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
