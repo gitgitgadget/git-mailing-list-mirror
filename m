@@ -1,100 +1,117 @@
 From: David Greaves <david@dgreaves.com>
-Subject: [BUG] in asciidoc was Re: [FILES] core-git documentation update
-Date: Sun, 08 May 2005 22:25:36 +0100
-Message-ID: <427E83D0.5040607@dgreaves.com>
-References: <427E4AED.9050702@dgreaves.com>	<20050508173109.GZ9495@pasky.ji.cz> <427E4F6C.6090302@dgreaves.com> <7vpsw15xdf.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 0/2] core-git documentation update
+Date: Sun, 08 May 2005 22:26:02 +0100
+Message-ID: <427E83EA.2000104@dgreaves.com>
+References: <427E4AE1.2040105@dgreaves.com> <7vd5s15up8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 08 23:19:15 2005
+Content-Type: multipart/mixed;
+ boundary="------------030307070505090605000203"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 08 23:21:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUtAw-0007CA-VP
-	for gcvg-git@gmane.org; Sun, 08 May 2005 23:18:59 +0200
+	id 1DUtB5-0007De-SQ
+	for gcvg-git@gmane.org; Sun, 08 May 2005 23:19:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262966AbVEHV0A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 17:26:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262969AbVEHV0A
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:26:00 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:38311 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262966AbVEHVZt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:25:49 -0400
+	id S262980AbVEHV0P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 17:26:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262982AbVEHV0P
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:26:15 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:39335 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262980AbVEHV0I (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:26:08 -0400
 Received: from localhost (lucy.ukfsn.org [127.0.0.1])
 	by mail.ukfsn.org (Postfix) with ESMTP
-	id 13AB9E6D4F; Sun,  8 May 2005 22:24:51 +0100 (BST)
+	id 25502E6D4F; Sun,  8 May 2005 22:25:09 +0100 (BST)
 Received: from mail.ukfsn.org ([127.0.0.1])
  by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 26870-04; Sun,  8 May 2005 22:24:50 +0100 (BST)
-Received: from oak.dgreaves.com (unknown [217.135.145.157])
+ with ESMTP id 26635-16; Sun,  8 May 2005 22:25:09 +0100 (BST)
+Received: from oak.dgreaves.com (modem-413.leopard.dialup.pol.co.uk [217.135.145.157])
 	by mail.ukfsn.org (Postfix) with ESMTP
-	id D4035E6A8B; Sun,  8 May 2005 22:24:49 +0100 (BST)
+	id E5264E6A8B; Sun,  8 May 2005 22:25:07 +0100 (BST)
 Received: from ash.dgreaves.com ([10.0.0.90])
 	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DUtHM-00062l-RK; Sun, 08 May 2005 22:25:36 +0100
+	id 1DUtHm-00062o-SK; Sun, 08 May 2005 22:26:02 +0100
 User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
 X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpsw15xdf.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vd5s15up8.fsf@assigned-by-dhcp.cox.net>
 X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------030307070505090605000203
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
 Junio C Hamano wrote:
 
->>>>>>"DG" == David Greaves <david@dgreaves.com> writes:
->>>>>>            
->>>>>>
->
->DG> it just makes across the board changes easier and at the minute the
->DG> stuff I've been doing is systemic.
->DG> I have no problems with breaking it up - hence the script...
->
->Monolithic version is easier to work with when there is only one
->or very few people working on it but when the document matures
->enough to describe the current state of affairs accurately
->enough, further changes would come almost solely from changing
->the programs the document describes.  At that point having
->separate files describing each program is easier to work with,
->and I think that point is now.
+>David, thanks for taking time to update the document.  I ended
+>up hand merging your two patches since I had a bit more
+>documentation updates in git-jc tree, so I'd like you to
+>proofread the result.
 >  
 >
-I was waiting for comments on this set in case there were comments like:
-every document should have 'x' or change all 'y' to 'z'
-I fully intend to split it out...
+This merged fine.
+Purely for editorial consistency I added "" around the command - see patch
 
-I will send patches next time.
+The intention now was for me to go through Linus' HEAD and verify the
+docs actually documented the HEAD.
+Then I think comparing the HEAD to jit-jc and preparing patches for that?
 
-One thing I failed to mention.
-There's a minor bug in asciidoc for which I've submitted a patch to the
-author. IIRC the bug causes problems with the -man option and is
-cosmetically wrong with the html.
+>It is my understanding that if I have a correct patch result
+>from your patch 1 and patch 2, I can throw away this message:
+>
+>    Subject: [FILES] core-git documentation update
+>
+>Am I correct?
+>  
+>
+yes - that was just to assist people in reading the docs without having
+to apply patches etc etc.
 
->From the asciidoc docs:
-The first manpage section is mandatory and must be called /NAME/ and
-contain a single paragraph (usually a single line) consisting of a list
-of one or more comma separated command name(s) separated from the
-command purpose by a dash character. **The dash must have at least one
-white space character on either side.**
+>I intend to keep not-so-controvercial stuff in git-jc tree, so
+>that when Linus returns he can pull from it instead of patching
+>from a pile of e-mails, potentially risking to leave good stuff
+>in his mailbox during that process.
+>  
+>
+I had hoped you'd pick this up in that manner - thanks
 
-However this is not enforced (or indeed possible) at the moment - the
-NAME section seems to split on the first hyphen.
+David
+PS Removed Linus from cc
 
-This patch fixes that for me.
+Add quotes for editorial consistency
 
---- /usr/bin/asciidoc.orig      2005-05-08 17:03:42.666249974 +0100
-+++ /usr/bin/asciidoc   2005-05-08 16:56:00.518923960 +0100
-@@ -1067,7 +1067,7 @@
-                     error('malformed NAME section body')
-                 lines = reader.read_until(r'^$')
-                 s = string.join(lines)
--                mo = re.match(r'^(?P<manname>.*?)-(?P<manpurpose>.*)$',s)
-+                mo =
-re.match(r'^(?P<manname>.*?)\s+-\s+(?P<manpurpose>.*)$',s)
-                 if not mo:
-                     error('malformed NAME section body')
-                 attrs['manname'] = string.strip(mo.group('manname'))
+Signed-off-by: David Greaves <david@dgreaves.com>
+---
 
 
+
+
+--------------030307070505090605000203
+Content-Type: text/x-patch;
+ name="core-git_editorial.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="core-git_editorial.patch"
+
+Documentation/core-git.txt: needs update
+Index: Documentation/core-git.txt
+===================================================================
+--- 08cd7ce14ca4da7db37dce88e416e67b01f3452a/Documentation/core-git.txt  (mode:100644 sha1:e046119fcdd948dec81b11376ec9198e76a109af)
++++ uncommitted/Documentation/core-git.txt  (mode:100644)
+@@ -503,7 +503,7 @@
+ -m::
+ 	By default, files recorded in the index but not checked
+ 	out are reported as deleted.  This flag makes
+-	git-diff-cache say that all non-checked-out files are up
++	"git-diff-cache" say that all non-checked-out files are up
+ 	to date.
+ 
+ Output format
+
+--------------030307070505090605000203--
