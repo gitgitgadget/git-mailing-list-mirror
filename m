@@ -1,79 +1,78 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: cg-log patches
-Date: Sun, 8 May 2005 15:52:18 -0400 (EDT)
-Message-ID: <2088.10.10.10.24.1115581938.squirrel@linux1>
-References: <1742.10.10.10.24.1115573750.squirrel@linux1>
-    <1115574136.9031.147.camel@pegasus>
-    <1856.10.10.10.24.1115576809.squirrel@linux1>
-    <1115578807.8949.12.camel@pegasus> <20050508191831.GD9495@pasky.ji.cz>
-    <2014.10.10.10.24.1115580230.squirrel@linux1>
-    <20050508192536.GE9495@pasky.ji.cz>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: Commit template
+Date: Sun, 08 May 2005 22:03:21 +0200
+Message-ID: <1115582601.8949.31.camel@pegasus>
+References: <1965.10.10.10.24.1115579256.squirrel@linux1>
+	 <1115579764.8949.15.camel@pegasus>
+	 <2003.10.10.10.24.1115580031.squirrel@linux1>
+	 <1115580630.8949.27.camel@pegasus>
+	 <2095.10.10.10.24.1115582244.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Marcel Holtmann" <marcel@holtmann.org>,
-	"GIT Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 21:47:19 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 22:00:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUrjZ-0004cM-1e
-	for gcvg-git@gmane.org; Sun, 08 May 2005 21:46:37 +0200
+	id 1DUrvn-0007IM-B6
+	for gcvg-git@gmane.org; Sun, 08 May 2005 21:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262815AbVEHTw5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 15:52:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262879AbVEHTwt
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 15:52:49 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:44498 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S262815AbVEHTwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2005 15:52:19 -0400
-Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050508195218.ZRTL1623.simmts8-srv.bellnexxia.net@linux1>;
-          Sun, 8 May 2005 15:52:18 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j48JqHnp028295;
-	Sun, 8 May 2005 15:52:17 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Sun, 8 May 2005 15:52:18 -0400 (EDT)
-In-Reply-To: <20050508192536.GE9495@pasky.ji.cz>
-To: "Petr Baudis" <pasky@ucw.cz>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S262761AbVEHUFY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 16:05:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262779AbVEHUFO
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 16:05:14 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:174 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S262761AbVEHUDA
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 16:03:00 -0400
+Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j48K4GWX005225
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sun, 8 May 2005 22:04:17 +0200
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <2095.10.10.10.24.1115582244.squirrel@linux1>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 8, 2005 3:25 pm, Petr Baudis said:
+Hi Sean,
 
->>
->> cg-log -c -f -u petr
->>
->> or
->>
->> cg-log -uxpasky
->>
->> Sean
->
-> That sounds great. Could you please post a patch against the current
-> Cogito's cg-log?
->
+> > if you don't put any CG: lines in the commit template you screw up the
+> > look of the modified files list. So I propose to leave all the CG: lines
+> > additions as they are in cg-commit and only add the template in front of
+> > it.
+> 
+> Yes, but you're free to make it look however you like.  Here's a sample:
+> 
+> CG: -[DO NOT COMMIT!]-------------------------------------------
+> CG:
+> CG: Hey! You don't want to commit here, use a cloned repository!
+> CG:
+> 
+> 
+> and another:
+> 
+> CG: -[USB CHANGES REPO!]----------------------------------------
+> CG:
+> CG: Commit only USB changes here!
+> CG:
+> 
+> Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+> CG:
+> CG:
+> 
+> The trailing CG: lines ensure that those added by cg-commit look okay.
+> It's not perfect, but it's a nice feature.
 
-Hey Petr,
+my argument is; not to mess up with the CG: lines created by cg-commit.
+If you wanna insert a warning then you can of course add additional CG:
+lines to the commit template.
 
-Sorry it relies on other patches in a series.  If you're interested in
-them they're available from:
+Regards
 
-http://git.homelinux.com/cogito
-
-Actually, if you look you'll see I renamed the option -a and added help so
-that it shows up on -h or --help.
-
-Cheers,
-Sean
+Marcel
 
 
