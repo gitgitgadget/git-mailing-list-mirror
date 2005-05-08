@@ -1,58 +1,61 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
-Date: Sun, 8 May 2005 19:51:56 +0200
-Message-ID: <20050508175156.GA9495@pasky.ji.cz>
-References: <1115564550.9031.96.camel@pegasus> <20050508152529.GU9495@pasky.ji.cz> <1115566990.9031.108.camel@pegasus> <20050508155656.GV9495@pasky.ji.cz> <1115568937.9031.129.camel@pegasus> <20050508171209.GX9495@pasky.ji.cz> <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz> <1115574035.9031.145.camel@pegasus>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: cg-log patches
+Date: Sun, 8 May 2005 14:26:49 -0400 (EDT)
+Message-ID: <1856.10.10.10.24.1115576809.squirrel@linux1>
+References: <1742.10.10.10.24.1115573750.squirrel@linux1>
+    <1115574136.9031.147.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 19:45:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Petr Baudis" <pasky@ucw.cz>,
+	"GIT Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 20:20:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUppo-0000pX-Bp
-	for gcvg-git@gmane.org; Sun, 08 May 2005 19:44:56 +0200
+	id 1DUqNV-00047j-7d
+	for gcvg-git@gmane.org; Sun, 08 May 2005 20:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262914AbVEHRv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 13:51:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262915AbVEHRv7
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 13:51:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33242 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262914AbVEHRv6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 13:51:58 -0400
-Received: (qmail 7291 invoked by uid 2001); 8 May 2005 17:51:56 -0000
-To: Marcel Holtmann <marcel@holtmann.org>
-Content-Disposition: inline
-In-Reply-To: <1115574035.9031.145.camel@pegasus>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262918AbVEHS0v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 14:26:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262920AbVEHS0v
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 14:26:51 -0400
+Received: from simmts6.bellnexxia.net ([206.47.199.164]:46056 "EHLO
+	simmts6-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S262918AbVEHS0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2005 14:26:50 -0400
+Received: from linux1 ([69.156.111.46]) by simmts6-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050508182649.IXPR1834.simmts6-srv.bellnexxia.net@linux1>;
+          Sun, 8 May 2005 14:26:49 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j48IQmha027136;
+	Sun, 8 May 2005 14:26:49 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Sun, 8 May 2005 14:26:49 -0400 (EDT)
+In-Reply-To: <1115574136.9031.147.camel@pegasus>
+To: "Marcel Holtmann" <marcel@holtmann.org>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 08, 2005 at 07:40:34PM CEST, I got a letter
-where Marcel Holtmann <marcel@holtmann.org> told me that...
-> > > Sometime you don't have any other choice, because diff is not perfect.
-> > > Do you wanna apply that patch or should I change the mktemp templates
-> > > first?
-> > 
-> > It looks like it'll be most painless when I just reinvent parts of your
-> > patch here locally and you can send me patches on top of that.
-> 
-> it is your choice. I can change that if you like. My latest version
-> should apply cleanly against your current tree.
+On Sun, May 8, 2005 1:42 pm, Marcel Holtmann said:
 
-I've pushed my changes, please have a look at them. I think I've got
-everything important, but I might've forgot something.
+> why don't you use diffstat for it? I think that it is more handy then
+> the list of modified files.
 
-> If you want the extra newline(s) then it is a good idea to add something
-> that strips heading and trailing empty lines from the final commit
-> message, because otherwise it will be ugly if you don't enter extra text
-> for the merge.
+Hi Marcel,
 
-Isn't that what I initially suggested? :-)
+Is a good idea, but would be a fair bit harder to generate unfortunately. 
+Right now the blobs themselves don't have to be opened and inspected, just
+the commit trees.   Actually, i'm not sure exactly how you'd even go about
+generating a correct diffstat for commits that have multiple parents.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Sean
+
+
