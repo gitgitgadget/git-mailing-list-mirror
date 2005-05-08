@@ -1,141 +1,105 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: Commit template
-Date: Sun, 08 May 2005 23:09:16 +0200
-Message-ID: <1115586556.8949.65.camel@pegasus>
-References: <1965.10.10.10.24.1115579256.squirrel@linux1>
-	 <1115579764.8949.15.camel@pegasus>
-	 <2003.10.10.10.24.1115580031.squirrel@linux1>
-	 <1115580630.8949.27.camel@pegasus>
-	 <2095.10.10.10.24.1115582244.squirrel@linux1>
-	 <1115582601.8949.31.camel@pegasus>
-	 <2159.10.10.10.24.1115582791.squirrel@linux1>
-	 <20050508201723.GH9495@pasky.ji.cz> <1115584617.8949.51.camel@pegasus>
-	 <20050508204043.GJ9495@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
+Date: Sun, 8 May 2005 23:08:58 +0200
+Message-ID: <20050508210857.GL9495@pasky.ji.cz>
+References: <20050508155656.GV9495@pasky.ji.cz> <1115568937.9031.129.camel@pegasus> <20050508171209.GX9495@pasky.ji.cz> <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz> <1115574035.9031.145.camel@pegasus> <20050508175156.GA9495@pasky.ji.cz> <1115578658.8949.9.camel@pegasus> <20050508200334.GG9495@pasky.ji.cz> <1115584015.8949.43.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Sean <seanlkml@sympatico.ca>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 08 23:02:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 08 23:03:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUsua-0005d7-Cp
-	for gcvg-git@gmane.org; Sun, 08 May 2005 23:02:04 +0200
+	id 1DUsvU-0005iF-Sv
+	for gcvg-git@gmane.org; Sun, 08 May 2005 23:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262931AbVEHVJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 17:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262934AbVEHVJA
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:09:00 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:3502 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S262931AbVEHVIy
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:08:54 -0400
-Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j48LABWX005593
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Sun, 8 May 2005 23:10:11 +0200
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050508204043.GJ9495@pasky.ji.cz>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S262973AbVEHVKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 17:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261685AbVEHVJa
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 17:09:30 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:13534 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262935AbVEHVJB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 17:09:01 -0400
+Received: (qmail 30082 invoked by uid 2001); 8 May 2005 21:08:58 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
+Content-Disposition: inline
+In-Reply-To: <1115584015.8949.43.camel@pegasus>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Petr,
+Dear diary, on Sun, May 08, 2005 at 10:26:55PM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> Hi Petr,
 
-> > > > > my argument is; not to mess up with the CG: lines created by cg-commit.
-> > > > > If you wanna insert a warning then you can of course add additional CG:
-> > > > > lines to the commit template.
-> > > > 
-> > > > Well, i'd argue that anyone making their own commit should be responsible
-> > > > for making it look however they like.  Maybe they want to only use only 60
-> > > > character wide lines and are tired of seeing the notice about CG: being
-> > > > ignored.  Gives the power user a tad more flexibility.   But I really
-> > > > don't care much either way.
-> > > 
-> > > I'm with Sean on this one - implemented (with current cg-commit, and I
-> > > used .git/commit-template file instead), committed, pushed out.
+Hi,
+
+> > > look at the attached patch. We should use "fmt -s" to keep newlines that
+> > > are inside the commit message and there is one unneeded empty CG: line.
 > > 
-> > then please do a "touch .git/commit-template" and call cg-commit. Now
-> > you will see what I mean. It is too easy to screw up.
+> > thanks, fixed and pushed out.
 > 
-> So don't touch .git/commit-template. It's not like it stops working, you
-> just don't get the top stuff. Which you probably wanted, why would you
-> touch .git/commit-template otherwise?
+> cool. Now I have everything I am used to from CVS, but ...
 
-maybe I am the only one who sees a problem here and thinks that it is a
-mis-design. Let me try one last time to explain it. We speak here about
-end users of Cogito, right? They don't know what is inside the scripts
-and how they work. So you tell them that they can create a commit
-template that will be presented at every commit time. So lets do it.
+Excellent.
 
----snip---
-[PATCH]
-
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
----snip---
-
-I would create a file like this and save it as .git/commit-template,
-because I don't really know about the CG: lines and actually I don't
-really care, because they get deleted anyway. Stupid as I am, I am
-expecting now something like this:
-
----snip---
-[PATCH]
-
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-CG: -----------------------------------------------------------------------
-CG: Lines beginning with the CG: prefix are removed automatically
-CG:
-CG: Modified files:
-CG:    Makefile
-CG: -----------------------------------------------------------------------
----snip---
-
-But instead I am getting this:
-
----snip---
-
-[PATCH]
-
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-CG:
-CG: Modified files:
-CG:    Makefile
-CG: -----------------------------------------------------------------------
----snip---
-
-As an end user, what would you say?
-
-> > Why not leave the list of modified files in the hand of the cg-commit
-> > and people that wanna extra text inside their commit-template add
-> > something like:
-> > 
-> > CG: ---
-> > CG: This is my testing tree, don't commit
-> > 
-> > This will look much prettier and gives people the same possibilities to
-> > change everything.
+> @@ -113,7 +113,9 @@
+>                 # TODO: Prepend a letter describing whether it's addition,
+>                 # removal or update. Or call git status on those files.
+>                 echo "CG:    $file" >>$LOGMSG
+> -               [ "$msgs" ] && echo $file
+> +               if [ "$msgs" ] && ! [ "$forceeditor" ]; then
+> +                       echo $file
+> +               fi
+>         done
+>  fi
 > 
-> But you have extra stuff both before and after the list of modified
-> files.
+> There is no need to print out the files if we start the editor anyway.
 
-Adding extra CG: lines in a commit template is only good for reminding
-you of something, right? Why else would you add them?
+Thanks, fixed.
 
-> > If you wanna make the modified files list into a full configurable
-> > template, then I think you must introduce place holders.
+> @@ -122,10 +124,10 @@
+>  if tty -s; then
+>         if ! [ "$msgs" ] || [ "$forceeditor" ]; then
+>                 ${EDITOR:-vi} $LOGMSG2
+> -       fi
+> -       if ! [ "$msgs" ] && ! [ $LOGMSG2 -nt $LOGMSG ]; then
+> -               rm $LOGMSG $LOGMSG2
+> -               die 'Commit message not modified, commit aborted'
+> +               if ! [ $LOGMSG2 -nt $LOGMSG ]; then
+> +                       rm $LOGMSG $LOGMSG2
+> +                       die 'Commit message not modified, commit aborted'
+> +               fi
+>         fi
+>  else
 > 
-> That's what I was thinking about, actually - @@MODIFIED@@ and such, and
-> it replaces _all_ the CG: stuff. Just decided that I have better things
-> to do now personally.
+> If you provide a commit message via -m and then close the editor without
+> changing it, it will commit the message. I think that will not be the
+> intention of the user.
 
-I understand that :)
+Now, this is a pretty difficult question. The only other place in the
+Cogito toolkit which uses cg-commit -e is now cg-init when doing the
+initial commit - and you definitively want to commit even if the message
+was not modified in that case. Also, what if you want to just review
+how the -m stuff flows like before committing?
 
-Regards
+OTOH, we might want to stay consistent in behaviour and always abandon
+action when the file was not modified (except for the initial commit).
+Perhaps some -E for that? Other thoughts?
 
-Marcel
+> /*
+>  * Remove empty lines from the beginning and end.
+>  *
+>  * Turn multiple consecutive empty lines into just one
+>  * empty line.
+>  */
 
+Bah, that's even easier when you want to squeeze the empty lines inside
+of the commit message. I don't, though.
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
