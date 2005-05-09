@@ -1,57 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: kernel.org upgraded to cogito-0.10
-Date: Mon, 09 May 2005 08:21:19 -0700
-Message-ID: <427F7FEF.7040406@zytor.com>
-References: <427F70F4.4030409@zytor.com> <20050509145943.GJ24187@lug-owl.de>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [RFC] allow file list editing during cg-commit
+Date: Mon, 9 May 2005 17:24:11 +0200
+Message-ID: <20050509152411.GA24779@diku.dk>
+References: <20050509041459.GA13475@gate.ebshome.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Kay Sievers <kay.sievers@vrfy.org>
-X-From: git-owner@vger.kernel.org Mon May 09 17:35:51 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon May 09 17:44:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DV9yI-0002Tx-Jk
-	for gcvg-git@gmane.org; Mon, 09 May 2005 17:15:03 +0200
+	id 1DVA25-0003DT-6Z
+	for gcvg-git@gmane.org; Mon, 09 May 2005 17:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261411AbVEIPVy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 11:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261427AbVEIPVy
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 11:21:54 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:13488 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261411AbVEIPVk
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 11:21:40 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j49FLPSI024203
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 9 May 2005 08:21:25 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20050509145943.GJ24187@lug-owl.de>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261427AbVEIPZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 11:25:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261429AbVEIPZm
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 11:25:42 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:3314 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261427AbVEIPYM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 11:24:12 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 51CEB6E0CA8; Mon,  9 May 2005 17:24:10 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP id 1CC356E008D
+	for <git@vger.kernel.org>; Mon,  9 May 2005 17:24:10 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 5C3AB61FDE; Mon,  9 May 2005 17:24:11 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050509041459.GA13475@gate.ebshome.net>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Jan-Benedict Glaw wrote:
-> On Mon, 2005-05-09 07:17:24 -0700, H. Peter Anvin <hpa@zytor.com> wrote:
-> 
->>I have installed cogito-0.10 on the kernel.org machines.
-> 
-> 
-> ...and you'd probably revert or fix the bug(s) that make all project's
-> logs look quite empty at http://www.kernel.org/git ...
-> 
+Eugene Surovegin <ebs@ebshome.net> wrote Sun, May 08, 2005:
+> I just started playing with cogito and failed to find _easy_ way to
+> select which files will be committed and which won't. cg-commit seems
+> to support specifying file list in command line, but this isn't very
+> convenient when the list is big.
 
-Kay has a new version of the git web client which is needed for the new 
-version... Kay?
+The commit message is already very self documenting so it would be great
+if this feature was also documented there. Something like the following,
+but clearer:
 
-	-hpa
+CG: -----------------------------------------------------------------
+CG: Lines beginning with the CG: prefix are removed automatically.
+CG: By deleting lines beginning with `CG:F' the associated file will
+CG: be removed from the commit list.
+CG: ...
 
+-- 
+Jonas Fonseca
