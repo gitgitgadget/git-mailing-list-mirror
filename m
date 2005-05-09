@@ -1,52 +1,54 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Howto get repository up2date after pull with touching as less as possible files in the working directory
-Date: Mon, 9 May 2005 20:18:42 +0200
-Message-ID: <20050509181842.GA7040@pasky.ji.cz>
-References: <20050509174951.GK24216@cip.informatik.uni-erlangen.de>
+From: Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: Prototype git commit viewer
+Date: Mon, 09 May 2005 20:50:04 +0200
+Message-ID: <m3fywwjktf.fsf@defiant.localdomain>
+References: <17022.49021.344841.79940@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 09 20:53:17 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 20:55:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVCj4-0006Iy-F6
-	for gcvg-git@gmane.org; Mon, 09 May 2005 20:11:30 +0200
+	id 1DVDDi-0000Uq-QJ
+	for gcvg-git@gmane.org; Mon, 09 May 2005 20:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261459AbVEISSq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 14:18:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261465AbVEISSq
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 14:18:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:62854 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261459AbVEISSp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 14:18:45 -0400
-Received: (qmail 8036 invoked by uid 2001); 9 May 2005 18:18:42 -0000
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050509174951.GK24216@cip.informatik.uni-erlangen.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261487AbVEISuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 14:50:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261489AbVEISuT
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 14:50:19 -0400
+Received: from khc.piap.pl ([195.187.100.11]:33540 "EHLO khc.piap.pl")
+	by vger.kernel.org with ESMTP id S261487AbVEISuO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 14:50:14 -0400
+Received: by khc.piap.pl (Postfix, from userid 500)
+	id 67E1F107C0; Mon,  9 May 2005 20:50:05 +0200 (CEST)
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17022.49021.344841.79940@cargo.ozlabs.ibm.com> (Paul
+ Mackerras's message of "Mon, 9 May 2005 11:40:13 +1000")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 09, 2005 at 07:49:51PM CEST, I got a letter
-where Thomas Glanzmann <sithglan@stud.uni-erlangen.de> told me that...
-> Hello alltogether,
-> at the moment I ensrure that there are no dirty files before the pull
-> and do a
-> 
-> 	git-read-tree HEAD
-> 	git-checkout -a -f
-> 	git-update-cache --refresh
-> 
-> this is suboptimal because all the files in my working directory get a
-> new timestamp and if I call make everything is recompiled (ccache helps,
-> but is not the solution to this problem).
+Paul Mackerras <paulus@samba.org> writes:
 
-Do git-read-tree -m HEAD instead. That will keep the original stat
-information and checkout will rewrite only files it needs to.
+> Over the weekend I hacked up a prototype viewer for git commits in
+> Tk.  It's called gitk and is at:
+>
+> 	http://ozlabs.org/~paulus/gitk
 
+Nice. I wonder how well would it work with a longer history, say all
+linux-2.[56] data. It takes gitk ~ 10 seconds to read ~ 1000 Linux
+commits from cache now, on my system.
+
+In fact I'm thinking about something working with WWW browser. I've
+written a very simple experimental show-tree tool in C and it seems
+reading current Linux tree (no HTTP output yet) takes 0.065s with it.
+
+Now I'm thinking about output language. (X)HTML seems to be not
+capable (I'm not HTML expert, please correct me if I'm wrong).
+
+Any idea of what can I use?
+
+(will post the source if there is interest)
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Krzysztof Halasa
