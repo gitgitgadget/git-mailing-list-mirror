@@ -1,199 +1,62 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Git-aware Darcs: a tutorial
-Date: Mon, 09 May 2005 18:29:22 +0200
-Message-ID: <7i4qdc8isd.fsf@lanthane.pps.jussieu.fr>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: History messup
+Date: Mon, 09 May 2005 18:27:57 +0100
+Message-ID: <1115659677.16187.393.camel@hades.cambridge.redhat.com>
+References: <1115657971.19236.33.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: darcs-users@abridgegame.org, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 19:22:47 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon May 09 19:27:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVB1i-0003hD-6q
-	for gcvg-git@gmane.org; Mon, 09 May 2005 18:22:39 +0200
+	id 1DVBwE-0002q6-Es
+	for gcvg-git@gmane.org; Mon, 09 May 2005 19:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261438AbVEIQ3t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 12:29:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261445AbVEIQ3q
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 12:29:46 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:48124 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261438AbVEIQ30 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 12:29:26 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j49GSxTD032086
-          ; Mon, 9 May 2005 18:28:59 +0200 (CEST)
-X-Ids: 168
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j49GTNoA019091
-          ; Mon, 9 May 2005 18:29:23 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DVB8F-000723-0q; Mon, 09 May 2005 18:29:23 +0200
-To: darcs-devel@abridgegame.org
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.168]); Mon, 09 May 2005 18:28:59 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 427F8FCB.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261449AbVEIR2G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 13:28:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261450AbVEIR2F
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 13:28:05 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:10477 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261449AbVEIR2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2005 13:28:00 -0400
+Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DVC2w-0003Cs-IC; Mon, 09 May 2005 18:27:59 +0100
+To: tglx@linutronix.de
+In-Reply-To: <1115657971.19236.33.camel@tglx>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-0. What is Darcs-git
+On Mon, 2005-05-09 at 16:59 +0000, Thomas Gleixner wrote:
+> David merged from Linus repository . Linus synced later with David.
+> Linus did not create a new commit for this update and just pointed his
+> "HEAD" to Davids "HEAD", which means he forked Davids repository at
+> this point.
+> 
+> Due to that the parent->parent history is not longer unique. This
+> makes it impossible to do file revision graphs over the various
+> repositories in the correct order.
+> 
+> Is this a unique problem or is the omission of a commit in cases like
+> that usual practice ? In the latter case proper history tracking is
+> almost impossible.
 
-Darcs-git is a branch of Darcs that can work with Git repositories.
+It's normal practice, and it _has_ to be the case. Otherwise the trees
+would never stabilise -- every time Linus pulled from my tree he would
+create a merge-commit which I don't yet have, and vice versa.
 
-Darcs-git is deliberately Darcs, not Git.  All commands either work in
-the same way on Git repositories as on Darcs repositories, or they
-fail.  If you're a Darcs user, you'll like darcs-git.  If you're a Git
-user, you'll probably find it infuriating.
+Unless a commit also carries a unique repo-id identifying the repository
+in which it originally occurred, you'll only ever be able to track
+history in the way people want by means of heuristics.
 
-On the other hand, Darcs-git uses stock Git repositories; a Darcs
-command either works as-is on a Git repository, or fails.
+-- 
+dwmw2
 
-
-1. What you can expect
-
-The following should work reasonably well on Git repositories:
-
-  darcs changes
-  darcs whatsnew
-  darcs pull
-  darcs send
-  darcs record
-
-The following commands work, but have serious performance problems:
-
-  darcs diff
-  darcs changes with a file argument
-
-The following commands should in principle work but haven't been tested:
-
-  darcs add
-  darcs remove
-  darcs dist
-  darcs trackdown
-
-The following commands don't work because I'm lazy::
-
-  darcs push
-  darcs unrecord
-  darcs unpull
-  darcs amend-record
-  darcs annotate
-  darcs rollback
-
-The following commands only work on native Darcs repositories, either
-because they don't make sense on Git repositories, or because there
-are perfectly good native Git tools to perform their function:
-
-  darcs initialize
-  darcs get/put
-  darcs check
-  darcs repair
-  darcs optimize
-  darcs mv
-  darcs replace
-  darcs resolve
-  darcs tag
-  darcs setpref
-
-Remote Git repositories are not supported.
-
-
-2. A tutorial
-
-(0) Build darcs-git
-
-  $ darcs get --partial http://www.pps.jussieu.fr/~jch/software/repos/darcs-git
-  $ cd darcs-git
-  $ make darcs
-  $ make Context.hs
-  $ make darcs
-  $ cp darcs ~/bin/
-
-(1) Get a copy of the Linux Git repository:
-
-  $ cd /usr/local/src
-  $ mkdir linux-2.6
-  $ cd linux-2.6
-  $ rsync -r rsync://rsync.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git .git
-  $ curl http://rsync.kernel.org/pub/linux/kernel/people/torvalds/linux-2.6.git/HEAD > .git/HEAD
-
-We still need to bring the cache and working directory into a state
-that Darcs will be happy with.  While this could in principle be done
-with Darcs itself, it will be faster to do it with Git:
-
-  $ read-tree `cat .git/HEAD`
-  $ checkout-cache -a
-  $ update-cache --refresh
-
-(2) Check what the friendly Linux hackers have been up to:
-
-  $ darcs changes | more
-  $ darcs changes -s | more
-
-(3) Create a local clone of the Linux repository:
-
-  $ cd ..
-  $ mkdir linux-2.6-local
-  $ mkdir linux-2.6-local/.git
-  $ ln -s `pwd`/linux-2.6/.git/objects linux-2.6-local/.git
-  $ cp linux-2.6/.git/HEAD linux-2.6-local/.git
-  $ cd linux-2.6-local
-  $ read-tree `cat .git/HEAD`
-  $ checkout-cache -a
-  $ update-cache --refresh
-
-(4) Commit some work
-
-First, check that Darcs is happy with the new repository.
-
-  $ darcs whatsnew
-
-This should take a few seconds at most; if it takes minutes instead,
-try running ``update-cache --refresh''.
-
-Okay, let's add myself to the list of Linux maintainers.
-
-  $ echo 'P:    Juliusz Chroboczek' >> MAINTAINERS
-
-Let's see if Darcs agrees.
-
-  $ darcs whatsnew -s
-  $ darcs whatsnew
-
-Everything looks fine, let's record (commit) this patch.
-
-  $ darcs record -a
-  $ darcs changes | more
-  $ darcs changes -s | more
-
-(5) Send it upstream
-
-If Linus were using Darcs, we could just send him a Darcs patch, which
-is a patch-like data structure that contains just enough context
-information to allow Darcs to perform a history-sensitive merge:
-
-  $ darcs send ../linux-2.6
-
-However, until Linus switches to Darcs, we're stuck with old-fashioned
-patches.
-
-  $ darcs diff -u --patch='.' | mail bill@microsoft.com
-
-Unfortunately, until I've spent some time optimising ``darcs diff'',
-the above won't terminate on a repository the size of Linux'.
-
-
-3. Caveats
-
-There is little input validation.  In particular, if you enter an
-e-mail address that doesn't end in ``>'', Darcs will write a commit
-that neither Git nor Darcs itself will be able to parse.
-
-Darcs never updates the Git cache.  If you perform many commits using
-Darcs, you'll need to manually run ``update-cache --refresh''.
-
-Darcs treats Git merges by reverse-engineering a Darcs merge (thanks
-to David Roundy for outlining how that can be done).  In practice,
-this means that Darcs will collapse as soon as it sees a nontrivial
-Git merge.
