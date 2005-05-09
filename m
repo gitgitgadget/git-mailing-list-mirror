@@ -1,55 +1,66 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: History messup
-Date: Mon, 9 May 2005 19:06:11 +0200
-Message-ID: <20050509170611.GJ24216@cip.informatik.uni-erlangen.de>
-References: <1115657971.19236.33.camel@tglx>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: History messup
+Date: Mon, 09 May 2005 16:59:31 +0000
+Organization: linutronix
+Message-ID: <1115657971.19236.33.camel@tglx>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Woodhouse <dwmw2@infradead.org>,
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: David Woodhouse <dwmw2@infradead.org>,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon May 09 19:09:24 2005
+X-From: git-owner@vger.kernel.org Mon May 09 19:11:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVBiO-0007Uv-8c
-	for gcvg-git@gmane.org; Mon, 09 May 2005 19:06:44 +0200
+	id 1DVBTn-0005lW-Ny
+	for gcvg-git@gmane.org; Mon, 09 May 2005 18:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261262AbVEIRN5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 13:13:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261447AbVEIRN5
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 13:13:57 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:34214 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261262AbVEIRN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2005 13:13:56 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j49H6CS8027744
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 9 May 2005 17:06:12 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j49H6CkT027743;
-	Mon, 9 May 2005 19:06:12 +0200 (CEST)
-To: Thomas Gleixner <tglx@linutronix.de>
-Mail-Followup-To: Thomas Gleixner <tglx@linutronix.de>, git@vger.kernel.org,
-	David Woodhouse <dwmw2@infradead.org>,
-	Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <1115657971.19236.33.camel@tglx>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+	id S261158AbVEIQ6y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 12:58:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261165AbVEIQ6y
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 12:58:54 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:1410
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261158AbVEIQ6v
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 12:58:51 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id F029965C003;
+	Mon,  9 May 2005 18:56:25 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 9EDB52829B;
+	Mon,  9 May 2005 18:58:45 +0200 (CEST)
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-if merging with a repository just means to bring the head forward (e.g.
-no local development since the fork) there is no seperate commit object,
-just an update of the HEAD. Linus did explain this behaviour and the
-thoughts behind this decission on the ML:
+Hi,
 
-If two repositories pull alternating from each other one has never the
-exact state the other has. They would play ping-pong and this is a bad
-thing. That was AFAIK the reason there is no COMMIT object introduced on
-'head forward' merges.
+I wrote a git repository tracker, which can track and coordinate
+multiple git repositories. Before it goes public, I want to clarify a
+problem which I encountered
 
-	Thomas
+The commit bfd4bda097f8758d28e632ff2035e25577f6b060 
+by David Woodhouse (Thu May 5 12:59:37 2005 +100)  
+Merge with
+master.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git 
+
+breaks the history.
+
+David merged from Linus repository . Linus synced later with David.
+Linus did not create a new commit for this update and just pointed his
+"HEAD" to Davids "HEAD", which means he forked Davids repository at this
+point.
+
+Due to that the parent->parent history is not longer unique. This makes
+it impossible to do file revision graphs over the various repositories
+in the correct order.
+
+Is this a unique problem or is the omission of a commit in cases like
+that usual practice ? In the latter case proper history tracking is
+almost impossible.
+
+tglx
+
+
