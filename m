@@ -1,204 +1,110 @@
-From: Jonas Fonseca <fonseca@diku.dk>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: cg-log patches
-Date: Mon, 9 May 2005 13:39:07 +0200
-Message-ID: <20050509113907.GA22830@diku.dk>
-References: <1742.10.10.10.24.1115573750.squirrel@linux1> <20050508234936.GA26624@diku.dk> <4302.10.10.10.24.1115610350.squirrel@linux1>
+Date: Mon, 9 May 2005 14:14:35 +0200
+Message-ID: <20050509121435.GB18382@pasky.ji.cz>
+References: <1742.10.10.10.24.1115573750.squirrel@linux1> <20050508234936.GA26624@diku.dk> <4302.10.10.10.24.1115610350.squirrel@linux1> <20050509113907.GA22830@diku.dk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="wRRV7LY7NUeQGEoC"
-Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 13:34:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Sean <seanlkml@sympatico.ca>,
+	GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 09 14:09:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DV6V4-00009t-6b
-	for gcvg-git@gmane.org; Mon, 09 May 2005 13:32:39 +0200
+	id 1DV73o-0001sF-Kc
+	for gcvg-git@gmane.org; Mon, 09 May 2005 14:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261254AbVEILjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 07:39:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261264AbVEILjg
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 07:39:36 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:35778 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261254AbVEILjJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 07:39:09 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 4A6BC6E2454; Mon,  9 May 2005 13:39:07 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id E81A56E225B; Mon,  9 May 2005 13:39:06 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id E173961FDE; Mon,  9 May 2005 13:39:07 +0200 (CEST)
-To: Sean <seanlkml@sympatico.ca>
+	id S261311AbVEIMPQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 08:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261314AbVEIMPQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 08:15:16 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:7296 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261311AbVEIMOh (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 08:14:37 -0400
+Received: (qmail 22993 invoked by uid 2001); 9 May 2005 12:14:35 -0000
+To: Jonas Fonseca <fonseca@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <4302.10.10.10.24.1115610350.squirrel@linux1>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+In-Reply-To: <20050509113907.GA22830@diku.dk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
---wRRV7LY7NUeQGEoC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Sean <seanlkml@sympatico.ca> wrote Sun, May 08, 2005:
-> On Sun, May 8, 2005 7:49 pm, Jonas Fonseca said:
-> Hey Jonas,
-
-Hi Sean,
-
-> >>     Fix cg-log -f option so that a complete list of files is
-> >>     displayed when a commit has more than one parent.
-> >
-> > This sounds great.
+Dear diary, on Mon, May 09, 2005 at 01:39:07PM CEST, I got a letter
+where Jonas Fonseca <fonseca@diku.dk> told me that...
+> Fix cg-log -f option so that a complete list of files is
+> displayed when a commit has more than one parent.
 > 
-> You might want to rip it out and submit it, because it's not likely to see
-> the light of day otherwise.
+> Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-I ripped it out and made a patch only with the fix.
+But that makes no sense, since each merge will have enormous amount of
+files listed, making no sense. E.g. each merge of Cogito with Linus will
+have all the Cogito files listed, since they aren't in the Linus branch
+- but that's wrong, since the merge _to_ the Cogito branch concerns no
+Cogito files.
 
-Pasky, I also updated the line-wrapping patch if you want it.
+In git, the parents list is unordered. But this is different in Cogito,
+where the first parent _is_ special. If you are merging _from_ branch B
+_to_ branch A, the order of parents will be always
 
-> > The reason I put it at the top was to make it more similar to GNU-style
-> > changelogs (if there is such a style).
-> 
-> Yeah, I felt a bit guilty sliding that shift in, really I had no rationale
-> other than it looked better _to me_.
+parent A
+parent B
 
-I don't feel strong about it. I guess I have just gotten used to it that
-way.
+In practice, it does not make too much difference, but this is one of
+the cases where it makes difference. So I think the current behaviour is
+right.
+
+BTW, this also implies that merges
+
+  A --
+      \
+  B ---+--
+
+and
+
+  A ---+--
+      /
+  B --
+
+are considered as different ones by Cogito; in git itself, you might
+model that as
+
+  A --.
+       >---
+  B --'
+
+which is not possible in Cogito. I could imagine doing it by e.g.
+passing cg-clone multiple arguments, but I'd have to first see a
+compelling real-world usage for this first.
+
+> Index: cg-log
+> ===================================================================
+> --- 95bc73fd188347aa294991d1c5c7cffd60422098/cg-log  (mode:100755)
+> +++ ddf82a0140bdc1440eb93bcbe01e14e90e44a3e8/cg-log  (mode:100755)
+> @@ -67,8 +67,16 @@
+>  		done
+>  	fi | sort -u | \
+>  	while read modes type sha1s file; do
+> -		echo -n "$sep$file"
+> +		echo -n "$sep"
+>  		sep=", "
+> + 		if [ $(echo "$line$sep$file" | wc -c) -lt 75 ]; then
+> + 			line="$line$sep$file"
+> + 			echo -n "$file"
+> + 		else
+> + 			line="$file"
+> + 			echo "$coldefault"
+> + 			echo -n "    $colfiles$file"
+> + 		fi
+>  	done
+>  	echo "$coldefault:"
+>  }
+
+Could we have a trailing comma at the previous line?
 
 -- 
-Jonas Fonseca
-
---wRRV7LY7NUeQGEoC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="fix-cg-log.patch"
-
-Fix cg-log -f option so that a complete list of files is
-displayed when a commit has more than one parent.
-
-Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-
----
-commit 06a6b40f8e52eff0e34706c7024b54df50abb6b9
-tree 95bc73fd188347aa294991d1c5c7cffd60422098
-parent 4ed293bc0a5ffca9683e139cad499b69a4c4d569
-author jonas <fonseca@diku.dk> Mon, 09 May 2005 13:23:20 +0200
-committer jonas <fonseca@diku.dk> Mon, 09 May 2005 13:23:20 +0200
-
- cg-log |   34 +++++++++++++++-------------------
- 1 files changed, 15 insertions(+), 19 deletions(-)
-
-Index: cg-log
-===================================================================
---- 00b94eea5b99d5dd1d1bbe9c9ca3502d11aec581/cg-log  (mode:100755)
-+++ 95bc73fd188347aa294991d1c5c7cffd60422098/cg-log  (mode:100755)
-@@ -53,17 +53,20 @@
- 
- list_commit_files()
- {
--	tree1="$1"
--	tree2="$2"
-+	tree="$1"
- 	sep="    * $colfiles"
--	# List all files for for the initial commit
--	if [ -z $tree2 ]; then
--		list_cmd="git-ls-tree $tree1"
--	else
--		list_cmd="git-diff-tree -r $tree1 $tree2"
--	fi
- 	echo
--	$list_cmd | while read modes type sha1s file; do
-+	if [ -z $2 ]; then
-+		# List all files for the initial commit
-+		git-ls-tree $tree
-+	else
-+		shift
-+		# List changes from each parent
-+		for parent; do
-+			git-diff-tree -r $tree $parent
-+		done
-+	fi | sort -u | \
-+	while read modes type sha1s file; do
- 		echo -n "$sep$file"
- 		sep=", "
- 	done
-@@ -102,8 +105,7 @@
- 
- $revls | $revsort | while read time commit parents; do
- 	trap exit SIGPIPE
--	tree1=
--	tree2=
-+	trees=
- 	[ "$revfmt" = "git-rev-list" ] && commit="$time"
- 	if [ $# -ne 0 ]; then
- 		parent=$(git-cat-file commit $commit | sed -n '2s/parent //p;2Q')
-@@ -131,17 +133,11 @@
- 				fi
- 				;;
- 			"tree"|"parent")
--				if [ -z $tree1 ]; then
--					tree1=$rest
--				elif [ -z $tree2 ]; then
--					tree2=$rest
--				fi
-+				trees="$trees $rest"
- 				echo $colheader$key $rest $coldefault
- 				;;
- 			"")
--				if [ -n "$list_files" ]; then
--					list_commit_files "$tree1" "$tree2"
--				fi
-+				[ -n "$list_files" ] && list_commit_files $trees
- 				echo; sed -re '
- 					/ *Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
- 					/ *Acked-by:.*/Is//'$colsignoff'&'$coldefault'/
-
---wRRV7LY7NUeQGEoC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="wrap-file-listing-lines.patch"
-
-Wrap file listing lines near the 80th column.
-
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-
----
-commit 9d86f44f7d1eee525ed4c45731ad07b95f62dbb6
-tree ddf82a0140bdc1440eb93bcbe01e14e90e44a3e8
-parent 06a6b40f8e52eff0e34706c7024b54df50abb6b9
-author jonas <fonseca@diku.dk> Mon, 09 May 2005 13:27:20 +0200
-committer jonas <fonseca@diku.dk> Mon, 09 May 2005 13:27:20 +0200
-
- cg-log |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletion(-)
-
-Index: cg-log
-===================================================================
---- 95bc73fd188347aa294991d1c5c7cffd60422098/cg-log  (mode:100755)
-+++ ddf82a0140bdc1440eb93bcbe01e14e90e44a3e8/cg-log  (mode:100755)
-@@ -67,8 +67,16 @@
- 		done
- 	fi | sort -u | \
- 	while read modes type sha1s file; do
--		echo -n "$sep$file"
-+		echo -n "$sep"
- 		sep=", "
-+ 		if [ $(echo "$line$sep$file" | wc -c) -lt 75 ]; then
-+ 			line="$line$sep$file"
-+ 			echo -n "$file"
-+ 		else
-+ 			line="$file"
-+ 			echo "$coldefault"
-+ 			echo -n "    $colfiles$file"
-+ 		fi
- 	done
- 	echo "$coldefault:"
- }
-
---wRRV7LY7NUeQGEoC--
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
