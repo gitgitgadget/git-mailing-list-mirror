@@ -1,48 +1,58 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: Prototype git commit viewer
-Date: Tue, 10 May 2005 08:12:13 +1000
-Message-ID: <17023.57405.35272.46557@cargo.ozlabs.ibm.com>
-References: <17022.49021.344841.79940@cargo.ozlabs.ibm.com>
-	<20050509071341.GA3599@pasky.ji.cz>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Darcs-git: a few notes for Git hackers
+Date: Mon, 09 May 2005 15:20:56 -0700
+Message-ID: <427FE248.7040403@zytor.com>
+References: <7ihdhc5le2.fsf@lanthane.pps.jussieu.fr>	<20050509212842.GC15712@pasky.ji.cz> <7iu0lc129m.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 00:06:12 2005
+Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>,
+	darcs-devel@abridgegame.org
+X-From: git-owner@vger.kernel.org Tue May 10 00:14:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVGNS-0005au-A2
-	for gcvg-git@gmane.org; Tue, 10 May 2005 00:05:26 +0200
+	id 1DVGVr-0006e9-D0
+	for gcvg-git@gmane.org; Tue, 10 May 2005 00:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261542AbVEIWM2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 18:12:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261543AbVEIWM2
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 18:12:28 -0400
-Received: from ozlabs.org ([203.10.76.45]:30426 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S261542AbVEIWMQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 18:12:16 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 123AB679F5; Tue, 10 May 2005 08:12:14 +1000 (EST)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050509071341.GA3599@pasky.ji.cz>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S261547AbVEIWVV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 18:21:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261548AbVEIWVV
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 18:21:21 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:28099 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261547AbVEIWVS
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 18:21:18 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j49MKuUv001628
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 9 May 2005 15:20:58 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+In-Reply-To: <7iu0lc129m.fsf@lanthane.pps.jussieu.fr>
+X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis writes:
+Juliusz Chroboczek wrote:
+> Ahoj,
+> 
+> 
+>>FWIW, Cogito does not lock at all yet - this is one of the things which
+>>should be fixed soon.
+> 
+> 
+> I see.  Let me know if you decide to use a different name for the lock
+> file so I can switch to using the same one as yours.
+> 
 
-> What are its advantages to git-viz?
+Are you using flock(), or some other contraption that breaks if a 
+process dies unexpectedly?
 
-As a kernel developer, when I do a pull from Linus' tree, the question
-I want to ask is "who has been making what changes?"  That's why gitk
-shows the headline and author of each of 30 commits in one screenful.
-AFAICS from the screenshots, git-viz doesn't give me that density of
-information (and neither did bk revtool, for that matter).
-
-It seems to me that git-viz makes the graph topology the primary thing
-and the details of the commits the secondary thing.  I want it the
-other way around.
-
-Paul.
+	-hpa
