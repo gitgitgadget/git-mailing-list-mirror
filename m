@@ -1,55 +1,53 @@
-From: Jonas Fonseca <fonseca@diku.dk>
+From: "Sean" <seanlkml@sympatico.ca>
 Subject: Re: cg-log patches
-Date: Mon, 9 May 2005 14:41:00 +0200
-Message-ID: <20050509124100.GB22830@diku.dk>
-References: <1742.10.10.10.24.1115573750.squirrel@linux1> <20050508234936.GA26624@diku.dk> <4302.10.10.10.24.1115610350.squirrel@linux1> <20050509113907.GA22830@diku.dk> <20050509121435.GB18382@pasky.ji.cz>
+Date: Mon, 9 May 2005 09:13:47 -0400 (EDT)
+Message-ID: <4712.10.10.10.24.1115644427.squirrel@linux1>
+References: <1742.10.10.10.24.1115573750.squirrel@linux1>
+    <20050508234936.GA26624@diku.dk>
+    <4302.10.10.10.24.1115610350.squirrel@linux1>
+    <20050509113907.GA22830@diku.dk> <20050509121435.GB18382@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 14:34:50 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Jonas Fonseca" <fonseca@diku.dk>,
+	"GIT Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 09 15:08:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DV7SX-0008TF-2u
-	for gcvg-git@gmane.org; Mon, 09 May 2005 14:34:06 +0200
+	id 1DV7y1-00004w-Tg
+	for gcvg-git@gmane.org; Mon, 09 May 2005 15:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261337AbVEIMlJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 08:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261345AbVEIMlJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 08:41:09 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:45774 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261337AbVEIMlB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 08:41:01 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 0459A6E257F; Mon,  9 May 2005 14:41:00 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id ACEBD6E2014; Mon,  9 May 2005 14:40:59 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id BC9FD61FDE; Mon,  9 May 2005 14:41:00 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
+	id S261354AbVEINNv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 09:13:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261359AbVEINNv
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 09:13:51 -0400
+Received: from simmts8.bellnexxia.net ([206.47.199.166]:42937 "EHLO
+	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261354AbVEINNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2005 09:13:48 -0400
+Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050509131347.GMIA1623.simmts8-srv.bellnexxia.net@linux1>;
+          Mon, 9 May 2005 09:13:47 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j49DDiS2004546;
+	Mon, 9 May 2005 09:13:44 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Mon, 9 May 2005 09:13:47 -0400 (EDT)
 In-Reply-To: <20050509121435.GB18382@pasky.ji.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+To: "Petr Baudis" <pasky@ucw.cz>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@ucw.cz> wrote Mon, May 09, 2005:
-> Dear diary, on Mon, May 09, 2005 at 01:39:07PM CEST, I got a letter
-> where Jonas Fonseca <fonseca@diku.dk> told me that...
-> > Fix cg-log -f option so that a complete list of files is
-> > displayed when a commit has more than one parent.
-> > 
-> > Signed-off-by: Sean Estabrooks <seanlkml@sympatico.ca>
-> > Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> 
+On Mon, May 9, 2005 8:14 am, Petr Baudis said:
+
 > But that makes no sense, since each merge will have enormous amount of
 > files listed, making no sense. E.g. each merge of Cogito with Linus will
 > have all the Cogito files listed, since they aren't in the Linus branch
@@ -59,45 +57,17 @@ Petr Baudis <pasky@ucw.cz> wrote Mon, May 09, 2005:
 > In git, the parents list is unordered. But this is different in Cogito,
 > where the first parent _is_ special. If you are merging _from_ branch B
 > _to_ branch A, the order of parents will be always
-> 
-> parent A
-> parent B
 
-Ok, forget the patch then. I was not sure how to handle the multiple parents.
+But, there are commits (even in your tree) that aren't produced by Cogito.
+ And the current logic gets them wrong.
 
-> > Index: cg-log
-> > ===================================================================
-> > --- 95bc73fd188347aa294991d1c5c7cffd60422098/cg-log  (mode:100755)
-> > +++ ddf82a0140bdc1440eb93bcbe01e14e90e44a3e8/cg-log  (mode:100755)
-> > @@ -67,8 +67,16 @@
-> >  		done
-> >  	fi | sort -u | \
-> >  	while read modes type sha1s file; do
-> > -		echo -n "$sep$file"
-		# Always put a trailing comma
-> > +		echo -n "$sep"
-> >  		sep=", "
-> > + 		if [ $(echo "$line$sep$file" | wc -c) -lt 75 ]; then
-> > + 			line="$line$sep$file"
-> > + 			echo -n "$file"
-> > + 		else
-> > + 			line="$file"
-> > + 			echo "$coldefault"
-> > + 			echo -n "    $colfiles$file"
-> > + 		fi
-> >  	done
-> >  	echo "$coldefault:"
-> >  }
-> 
-> Could we have a trailing comma at the previous line?
+Look at commit:  211232bae64bcc60bbf5d1b5e5b2344c22ed767e in your tree.
 
-It should already do that ..
+The current logic will miss the fact that one of the other parents
+altered, git-apply-patch-script.   Seems better to over report, than under
+report changes, although I agree that some way must be found to handle the
+merge case.
 
-committer Petr Baudis <xpasky@machine.sinus.cz> Sun, 08 May 2005 23:54:08 +0200
+Sean
 
-    * cg-Xlib, cg-update, cg-seek, cg-pull, cg-tag-ls, cg-branch-ls, cg-merge,
-    cg-commit, cg-tag, cg-init, cg-branch-add, cg-admin-lsobj, cg-status,
-    cg-cancel, cg-admin-uncommit:
 
--- 
-Jonas Fonseca
