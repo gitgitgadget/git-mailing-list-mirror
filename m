@@ -1,78 +1,134 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: cg-log patches
-Date: Sun, 8 May 2005 23:45:50 -0400 (EDT)
-Message-ID: <4302.10.10.10.24.1115610350.squirrel@linux1>
-References: <1742.10.10.10.24.1115573750.squirrel@linux1>
-    <20050508234936.GA26624@diku.dk>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: Re: [PATCH] Add cg-printenv command.
+Date: Sun, 8 May 2005 21:59:59 -0600
+Message-ID: <200505082159.59595.elenstev@mesatop.com>
+References: <200505081911.10371.elenstev@mesatop.com> <200505082125.28521.elenstev@mesatop.com> <2970.10.10.10.24.1115610025.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Petr Baudis" <pasky@ucw.cz>,
-	"GIT Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 05:39:01 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Marcel Holtmann" <marcel@holtmann.org>,
+	"Petr Baudis" <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 05:58:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUz6a-0001fj-Ko
-	for gcvg-git@gmane.org; Mon, 09 May 2005 05:38:52 +0200
+	id 1DUzPB-0002lr-Qy
+	for gcvg-git@gmane.org; Mon, 09 May 2005 05:58:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263034AbVEIDp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 23:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263035AbVEIDp5
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 23:45:57 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:9617 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S263034AbVEIDpu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 May 2005 23:45:50 -0400
-Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050509034550.CTUK1623.simmts8-srv.bellnexxia.net@linux1>;
-          Sun, 8 May 2005 23:45:50 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j493jnGv032050;
-	Sun, 8 May 2005 23:45:50 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Sun, 8 May 2005 23:45:50 -0400 (EDT)
-In-Reply-To: <20050508234936.GA26624@diku.dk>
-To: "Jonas Fonseca" <fonseca@diku.dk>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S263038AbVEIEFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 00:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263040AbVEIEFI
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 00:05:08 -0400
+Received: from taco.zianet.com ([216.234.192.159]:46861 "HELO taco.zianet.com")
+	by vger.kernel.org with SMTP id S263038AbVEIEEv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 00:04:51 -0400
+Received: (qmail 4998 invoked from network); 9 May 2005 04:04:48 -0000
+Received: from 216-31-65-49.zianet.com (216.31.65.49)
+  by 0 with SMTP; 9 May 2005 04:04:48 -0000
+To: "Sean" <seanlkml@sympatico.ca>
+User-Agent: KMail/1.6.1
+In-Reply-To: <2970.10.10.10.24.1115610025.squirrel@linux1>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 8, 2005 7:49 pm, Jonas Fonseca said:
+On Sunday 08 May 2005 09:40 pm, Sean wrote:
+> On Sun, May 8, 2005 11:25 pm, Steven Cole said:
+> 
+> > I had intended it only as a quick check by an end-user before doing
+> > a commit that the values had been set as desired.
+> 
+> Hey Steven,
+> 
+> Rather than creating a separate command, perhaps the values could
+> automatically be added to the initial commit message in a few "CG:" lines?
+> 
+> Sean
 
+A secondary reason for adding the cg-printenv capability was that a user would
+see this command in the cg-help list, and cg-help printenv would give:
 
-Hey Jonas,
+Print exported git environment variables
+Copyright (c) Steven Cole 2005  <--- Petr, my early version of cg-help stripped (c) lines.
 
->>     Fix cg-log -f option so that a complete list of files is
->>     displayed when a commit has more than one parent.
->
-> This sounds great.
+These git environment variables are used in case
+values other than that returned by getpwuid(getuid())
+are desired when performing a commit.
 
-You might want to rip it out and submit it, because it's not likely to see
-the light of day otherwise.
+AUTHOR_NAME		Author's name
+AUTHOR_EMAIL		Author's e-mail address
+AUTHOR_DATE		Date, perhaps from a patch e-mail
+COMMIT_AUTHOR_NAME	Committer's name
+COMMIT_AUTHOR_EMAIL	Committer's e-mail address
 
-> The reason I put it at the top was to make it more similar to GNU-style
-> changelogs (if there is such a style).
+Takes no parameters.
+-------------
+Yes, I know that the environment variables are documented in Documentation/core-git.txt,
+but having this usage right up front like this may help those who only RTFM as a last resort.
 
-Yeah, I felt a bit guilty sliding that shift in, really I had no rationale
-other than it looked better _to me_.
+If others feel that the more obscure environment variables should be exposed here, feel
+free to submit patches.
 
-> I think that will make `-f' less usable because of the extra scrolling.
->
-> Assuming use of wc will not create more dependency nightmares and the
-> extra overhead is acceptable here is a patch that will wrap file listing
-> lines near the 80th column.
+Here is a patch with Junio's improved version:
 
-Your patch will work fine but I did test my version out against the kernel
-repo and it didn't seem to be a problem.
+--------------------------------------------------------------------------------------
+The cg-printenv command will print exported git environment variables.
 
-Cheers,
-Sean
+Signed-off-by: Steven Cole <elenstev@mesatop.com>
 
+Index: Makefile
+===================================================================
+--- 3974261da777f55a7a11aff6e02f584bbfe2b475/Makefile  (mode:100644)
++++ uncommitted/Makefile  (mode:100644)
+@@ -48,7 +48,8 @@
+ SCRIPT=	commit-id tree-id parent-id cg-add cg-admin-lsobj cg-admin-uncommit \
+ 	cg-branch-add cg-branch-ls cg-cancel cg-clone cg-commit cg-diff \
+ 	cg-export cg-help cg-init cg-log cg-ls cg-merge cg-mkpatch cg-patch \
+-	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update
++	cg-printenv cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls \
++	cg-update
+ 
+ LIB_SCRIPT=cg-Xlib cg-Xdiffdo cg-Xmergefile
+ 
+Index: cg-help
+===================================================================
+--- 3974261da777f55a7a11aff6e02f584bbfe2b475/cg-help  (mode:100755)
++++ uncommitted/cg-help  (mode:100755)
+@@ -35,6 +35,7 @@
+ 	cg-merge	[-c] [-b BASE_ID] FROM_ID
+ 	cg-mkpatch	[-s] [-r FROM_ID[:TO_ID]]
+ 	cg-patch			< patch on stdin
++	cg-printenv
+ 	cg-pull		[BNAME]
+ 	cg-restore	[FILE]...
+ 	cg-rm		FILE...
+Index: cg-printenv
+===================================================================
+--- /dev/null  (tree:3974261da777f55a7a11aff6e02f584bbfe2b475)
++++ uncommitted/cg-printenv  (mode:100755)
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++#
++# Print exported git environment variables
++# Copyright (c) Steven Cole 2005
++#
++#These git environment variables are used in case
++#values other than that returned by getpwuid(getuid())
++#are desired when performing a commit.
++#
++#AUTHOR_NAME		Author's name
++#AUTHOR_EMAIL		Author's e-mail address
++#AUTHOR_DATE		Date, perhaps from a patch e-mail
++#COMMIT_AUTHOR_NAME	Committer's name
++#COMMIT_AUTHOR_EMAIL	Committer's e-mail address
++#
++# Takes no parameters.
++echo AUTHOR_NAME="$AUTHOR_NAME"
++echo AUTHOR_EMAIL="$AUTHOR_EMAIL"
++echo AUTHOR_DATE="$AUTHOR_DATE"
++echo COMMIT_AUTHOR_NAME="$COMMIT_AUTHOR_NAME"
++echo COMMIT_AUTHOR_EMAIL="$COMMIT_AUTHOR_EMAIL"
 
