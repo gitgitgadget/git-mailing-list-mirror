@@ -1,76 +1,89 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: [PATCH Cogito] Strip .git suffix from destination directory
-Date: Mon, 09 May 2005 03:10:34 +0200
-Message-ID: <1115601034.8949.99.camel@pegasus>
+From: Steven Cole <elenstev@mesatop.com>
+Subject: [PATCH] Add cg-printenv command.
+Date: Sun, 8 May 2005 19:11:10 -0600
+Message-ID: <200505081911.10371.elenstev@mesatop.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-iFKFGfPet21ExRM2FQ6i"
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 03:03:30 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 03:09:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUwgD-0000NQ-Fv
-	for gcvg-git@gmane.org; Mon, 09 May 2005 03:03:29 +0200
+	id 1DUwla-0000m8-69
+	for gcvg-git@gmane.org; Mon, 09 May 2005 03:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263004AbVEIBKS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 21:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263019AbVEIBKS
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 21:10:18 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:9646 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S263004AbVEIBKK
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 21:10:10 -0400
-Received: from pegasus (p5487D02F.dip.t-dialin.net [84.135.208.47])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j491BTWX008454
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Mon, 9 May 2005 03:11:29 +0200
+	id S263019AbVEIBQI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 21:16:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263020AbVEIBQI
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 21:16:08 -0400
+Received: from nacho.zianet.com ([216.234.192.105]:55570 "HELO
+	nacho.zianet.com") by vger.kernel.org with SMTP id S263019AbVEIBQB
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 8 May 2005 21:16:01 -0400
+Received: (qmail 42768 invoked from network); 9 May 2005 01:15:59 -0000
+Received: from 216-31-65-49.zianet.com (216.31.65.49)
+  by 0 with SMTP; 9 May 2005 01:15:59 -0000
 To: Petr Baudis <pasky@ucw.cz>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
-X-Virus-Status: Clean
+User-Agent: KMail/1.6.1
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+The cg-printenv command will print exported git environment variables.
 
---=-iFKFGfPet21ExRM2FQ6i
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Signed-off-by: Steven Cole <elenstev@mesatop.com>
 
-Hi Petr,
-
-the attached patch brings back the feature where a .git suffix got
-stripped from the directory name when cloning another tree.
-
-It also fixes a $samedir vs. $same_dir spelling mistake.
-
-Regards
-
-Marcel
-
-
---=-iFKFGfPet21ExRM2FQ6i
-Content-Disposition: attachment; filename=patch
-Content-Type: text/plain; name=patch; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-
-cg-clone: needs update
-Index: cg-clone
+Index: Makefile
 ===================================================================
---- 00b94eea5b99d5dd1d1bbe9c9ca3502d11aec581/cg-clone  (mode:100755)
-+++ uncommitted/cg-clone  (mode:100755)
-@@ -28,10 +28,10 @@
+--- 3974261da777f55a7a11aff6e02f584bbfe2b475/Makefile  (mode:100644)
++++ uncommitted/Makefile  (mode:100644)
+@@ -48,7 +48,8 @@
+ SCRIPT=	commit-id tree-id parent-id cg-add cg-admin-lsobj cg-admin-uncommit \
+ 	cg-branch-add cg-branch-ls cg-cancel cg-clone cg-commit cg-diff \
+ 	cg-export cg-help cg-init cg-log cg-ls cg-merge cg-mkpatch cg-patch \
+-	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update
++	cg-printenv cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls \
++	cg-update
  
- destdir=$2
- if [ "$destdir" ]; then
--	[ ! "$samedir" ] || die "specifying both -s and DESTDIR makes no sense"
-+	[ ! "$same_dir" ] || die "specifying both -s and DESTDIR makes no sense"
- 	dir=$destdir
- else
--	dir=${location%/.git}; dir=${dir##*/}
-+	dir=${location%/.git}; dir=${dir##*/}; dir=${dir%.git}
- fi
+ LIB_SCRIPT=cg-Xlib cg-Xdiffdo cg-Xmergefile
  
- if ! echo "$location" | grep -q ":" ; then
-
---=-iFKFGfPet21ExRM2FQ6i--
-
+Index: cg-help
+===================================================================
+--- 3974261da777f55a7a11aff6e02f584bbfe2b475/cg-help  (mode:100755)
++++ uncommitted/cg-help  (mode:100755)
+@@ -35,6 +35,7 @@
+ 	cg-merge	[-c] [-b BASE_ID] FROM_ID
+ 	cg-mkpatch	[-s] [-r FROM_ID[:TO_ID]]
+ 	cg-patch			< patch on stdin
++	cg-printenv
+ 	cg-pull		[BNAME]
+ 	cg-restore	[FILE]...
+ 	cg-rm		FILE...
+Index: cg-printenv
+===================================================================
+--- /dev/null  (tree:3974261da777f55a7a11aff6e02f584bbfe2b475)
++++ uncommitted/cg-printenv  (mode:100755)
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++#
++# Print exported git environment variables
++# Copyright (c) Steven Cole 2005
++#
++#These git environment variables are used in case
++#values other than that returned by getpwuid(getuid())
++#are desired when performing a commit.
++#
++#AUTHOR_NAME		Author's name
++#AUTHOR_EMAIL		Author's e-mail address
++#AUTHOR_DATE		Date, perhaps from a patch e-mail
++#COMMIT_AUTHOR_NAME	Committer's name
++#COMMIT_AUTHOR_EMAIL	Committer's e-mail address
++#
++# Takes no parameters.
++echo "AUTHOR_NAME="$AUTHOR_NAME
++echo "AUTHOR_EMAIL="$AUTHOR_EMAIL
++echo "AUTHOR_DATE="$AUTHOR_DATE
++echo "COMMIT_AUTHOR_NAME="$COMMIT_AUTHOR_NAME
++echo "COMMIT_AUTHOR_EMAIL="$COMMIT_AUTHOR_EMAIL
