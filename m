@@ -1,53 +1,66 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Prototype git commit viewer
-Date: Mon, 9 May 2005 11:40:13 +1000
-Message-ID: <17022.49021.344841.79940@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add cg-printenv command.
+Date: Sun, 08 May 2005 19:38:11 -0700
+Message-ID: <7vpsw115v0.fsf@assigned-by-dhcp.cox.net>
+References: <200505081911.10371.elenstev@mesatop.com>
+	<1115601540.8949.104.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon May 09 03:31:32 2005
+Cc: Steven Cole <elenstev@mesatop.com>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 04:31:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DUx7G-00029u-Hg
-	for gcvg-git@gmane.org; Mon, 09 May 2005 03:31:26 +0200
+	id 1DUy3H-0006KZ-0D
+	for gcvg-git@gmane.org; Mon, 09 May 2005 04:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263021AbVEIBib (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 May 2005 21:38:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263022AbVEIBib
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 21:38:31 -0400
-Received: from ozlabs.org ([203.10.76.45]:53144 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S263021AbVEIBi2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 May 2005 21:38:28 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id CC232679F8; Mon,  9 May 2005 11:38:26 +1000 (EST)
-To: git@vger.kernel.org
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S263024AbVEICiT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 May 2005 22:38:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263025AbVEICiT
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 May 2005 22:38:19 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:14268 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S263024AbVEICiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 May 2005 22:38:15 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050509023812.HRWK20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 8 May 2005 22:38:12 -0400
+To: Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1115601540.8949.104.camel@pegasus> (Marcel Holtmann's message
+ of "Mon, 09 May 2005 03:19:00 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Over the weekend I hacked up a prototype viewer for git commits in
-Tk.  It's called gitk and is at:
+MH> Hi Steven,
+>> The cg-printenv command will print exported git environment variables.
+SC> +echo "AUTHOR_NAME="$AUTHOR_NAME
+SC> +echo "AUTHOR_EMAIL="$AUTHOR_EMAIL
+SC> +echo "AUTHOR_DATE="$AUTHOR_DATE
+SC> +echo "COMMIT_AUTHOR_NAME="$COMMIT_AUTHOR_NAME
+SC> +echo "COMMIT_AUTHOR_EMAIL="$COMMIT_AUTHOR_EMAIL
 
-	http://ozlabs.org/~paulus/gitk
+MH> I like that idea. It is much more handy then using env and grep for the
+MH> variable names.
 
-(that's the actual script itself :).
+I wonder what this command is used for?  In a script to be
+"eval"ed?  Or just interactively by the end-user?
 
-It displays a window with two panes; the upper one shows a summary of
-all the commits with a graph on the left showing the relationship of
-the commits (each dot represents a commit, with lines joining parents
-and children).  The list is displayed with the most recent commit at
-the top, and parents below their children.
+Even if it is just for human consumption, I think the echo
+commands I quoted above have double quotes backwards.  Wouldn't
+it make more sense to quote the variables so shell expansion
+would not lose whitespaces inside of variable values, like this?
 
-If you click on a commit, the bottom pane shows more details of the
-commit including the commit comments.
+    echo AUTHOR_NAME="$AUTHOR_NAME"
+    echo AUTHOR_EMAIL="$AUTHOR_EMAIL"
+    echo AUTHOR_DATE="$AUTHOR_DATE"
+    echo COMMIT_AUTHOR_NAME="$COMMIT_AUTHOR_NAME"
+    echo COMMIT_AUTHOR_EMAIL="$COMMIT_AUTHOR_EMAIL"
 
-I plan to add a pane to show the list of files changed by the commit,
-and provide a way to pop up a dirdiff-style diff viewer window to view
-the actual diffs.  I also plan to add a way to view the diffs between
-arbitrary points in the graph using girdiff.  There is quite a lot of
-UI tweaking to be done too.  However, it's already quite useful in its
-current state.
+If it is for eval consumption of course they have to be much
+more careful.
 
-Paul.
