@@ -1,54 +1,62 @@
-From: Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: Prototype git commit viewer
-Date: Mon, 09 May 2005 20:50:04 +0200
-Message-ID: <m3fywwjktf.fsf@defiant.localdomain>
-References: <17022.49021.344841.79940@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce SHA1_FILE_DIRECTORIES
+Date: Mon, 09 May 2005 11:50:22 -0700
+Message-ID: <7vfywwz11t.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzr8apxc.fsf@assigned-by-dhcp.cox.net>
+	<2637.10.10.10.24.1115425225.squirrel@linux1>
+	<7vis1vc27f.fsf@assigned-by-dhcp.cox.net>
+	<2721.10.10.10.24.1115425962.squirrel@linux1>
+	<7vbr7nbl89.fsf@assigned-by-dhcp.cox.net>
+	<7vacn6ak7r.fsf@assigned-by-dhcp.cox.net> <427F6693.2080707@zytor.com>
+	<7vll6oz755.fsf@assigned-by-dhcp.cox.net>
+	<3087.10.10.10.24.1115656919.squirrel@linux1>
+	<427FA5FD.1050000@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 09 20:55:58 2005
+Cc: Sean <seanlkml@sympatico.ca>, Linus Torvalds <torvalds@osdl.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 20:59:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVDDi-0000Uq-QJ
-	for gcvg-git@gmane.org; Mon, 09 May 2005 20:43:11 +0200
+	id 1DVDDv-0000Wk-Dp
+	for gcvg-git@gmane.org; Mon, 09 May 2005 20:43:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261487AbVEISuT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 14:50:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261489AbVEISuT
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 14:50:19 -0400
-Received: from khc.piap.pl ([195.187.100.11]:33540 "EHLO khc.piap.pl")
-	by vger.kernel.org with ESMTP id S261487AbVEISuO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 14:50:14 -0400
-Received: by khc.piap.pl (Postfix, from userid 500)
-	id 67E1F107C0; Mon,  9 May 2005 20:50:05 +0200 (CEST)
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17022.49021.344841.79940@cargo.ozlabs.ibm.com> (Paul
- Mackerras's message of "Mon, 9 May 2005 11:40:13 +1000")
+	id S261489AbVEISud (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 14:50:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261493AbVEISud
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 14:50:33 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42706 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261490AbVEISuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2005 14:50:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050509185022.IMIM16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 9 May 2005 14:50:22 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <427FA5FD.1050000@zytor.com> (H. Peter Anvin's message of "Mon,
+ 09 May 2005 11:03:41 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Paul Mackerras <paulus@samba.org> writes:
+>>>>> "HPA" == H Peter Anvin <hpa@zytor.com> writes:
 
-> Over the weekend I hacked up a prototype viewer for git commits in
-> Tk.  It's called gitk and is at:
->
-> 	http://ozlabs.org/~paulus/gitk
+HPA> Sean wrote:
+>> What about creating a transition plan that uses the GIT_ name if it
+>> exists
+>> and the SHA1_ name if it doesn't.  And mark the SHA1_ name as depreciated.
+>> That should be okay to do this week, no?
+>> 
 
-Nice. I wonder how well would it work with a longer history, say all
-linux-2.[56] data. It takes gitk ~ 10 seconds to read ~ 1000 Linux
-commits from cache now, on my system.
+HPA> Should work.
 
-In fact I'm thinking about something working with WWW browser. I've
-written a very simple experimental show-tree tool in C and it seems
-reading current Linux tree (no HTTP output yet) takes 0.065s with it.
+Thanks, both Sean and H. Peter.  Would cook something up.
 
-Now I'm thinking about output language. (X)HTML seems to be not
-capable (I'm not HTML expert, please correct me if I'm wrong).
 
-Any idea of what can I use?
 
-(will post the source if there is interest)
--- 
-Krzysztof Halasa
+
+
