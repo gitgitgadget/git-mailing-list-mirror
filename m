@@ -1,56 +1,88 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+From: "Sean" <seanlkml@sympatico.ca>
 Subject: Re: [RFC] Renaming environment variables.
-Date: Mon, 9 May 2005 22:15:20 +0200
-Message-ID: <20050509201520.GL24216@cip.informatik.uni-erlangen.de>
-References: <7vis1vc27f.fsf@assigned-by-dhcp.cox.net> <2721.10.10.10.24.1115425962.squirrel@linux1> <7vbr7nbl89.fsf@assigned-by-dhcp.cox.net> <7vacn6ak7r.fsf@assigned-by-dhcp.cox.net> <427F6693.2080707@zytor.com> <7vll6oz755.fsf@assigned-by-dhcp.cox.net> <3087.10.10.10.24.1115656919.squirrel@linux1> <427FA5FD.1050000@zytor.com> <7vfywwz11t.fsf@assigned-by-dhcp.cox.net> <7vhdhcxj0z.fsf_-_@assigned-by-dhcp.cox.net>
+Date: Mon, 9 May 2005 17:04:38 -0400 (EDT)
+Message-ID: <3677.10.10.10.24.1115672678.squirrel@linux1>
+References: <7vmzr8apxc.fsf@assigned-by-dhcp.cox.net>
+    <2637.10.10.10.24.1115425225.squirrel@linux1>
+    <7vis1vc27f.fsf@assigned-by-dhcp.cox.net>
+    <2721.10.10.10.24.1115425962.squirrel@linux1>
+    <7vbr7nbl89.fsf@assigned-by-dhcp.cox.net>
+    <7vacn6ak7r.fsf@assigned-by-dhcp.cox.net> <427F6693.2080707@zytor.com>
+    <7vll6oz755.fsf@assigned-by-dhcp.cox.net>
+    <3087.10.10.10.24.1115656919.squirrel@linux1>
+    <427FA5FD.1050000@zytor.com> <7vfywwz11t.fsf@assigned-by-dhcp.cox.net>
+    <7vhdhcxj0z.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 09 22:08:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Linus Torvalds" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon May 09 23:00:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVEY2-0006kS-V7
-	for gcvg-git@gmane.org; Mon, 09 May 2005 22:08:15 +0200
+	id 1DVFLi-0005D4-1A
+	for gcvg-git@gmane.org; Mon, 09 May 2005 22:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261503AbVEIUP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 16:15:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261508AbVEIUP0
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 16:15:26 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:31181 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261503AbVEIUPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 May 2005 16:15:21 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j49KFKS8011473
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 9 May 2005 20:15:20 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j49KFK4E011472
-	for git@vger.kernel.org; Mon, 9 May 2005 22:15:20 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S261519AbVEIVGi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 17:06:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261521AbVEIVGi
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 17:06:38 -0400
+Received: from simmts12.bellnexxia.net ([206.47.199.141]:21681 "EHLO
+	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261519AbVEIVGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2005 17:06:20 -0400
+Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050509210438.ZNTQ1542.simmts12-srv.bellnexxia.net@linux1>;
+          Mon, 9 May 2005 17:04:38 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j49L4ZB6010204;
+	Mon, 9 May 2005 17:04:35 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Mon, 9 May 2005 17:04:38 -0400 (EDT)
 In-Reply-To: <7vhdhcxj0z.fsf_-_@assigned-by-dhcp.cox.net>
-X-URL: http://wwwcip.informatik.uni-erlangen.de/~sithglan/
-User-Agent: Mutt/1.5.9i
+To: "Junio C Hamano" <junkio@cox.net>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
+On Mon, May 9, 2005 4:05 pm, Junio C Hamano said:
+> H. Peter Anvin mentioned that using SHA1_whatever as an
+> environment variable name is not nice and we should instead use
+> names starting with "GIT_" prefix to avoid conflicts.
+>
 > Here is a patch, requesting for comments.
 
-sounds good. But I would forget about downward compatibility. There is
-no need to maintain it at this early stage.
+Junio,
 
-And one thing which bothers me all the time but never spoke up about it:
-There is no way to provide a GIT_COMMIT_DATE. This would be useful for
-vendortracking a CVS repository for example.
+Look quite good; you made short work of that!
 
-And personally I think GIT_COMMIT_AUTHOR_EMAIL and
-GIT_COMMIT_AUTHOR_NAME are to long what about
-GIT_COMMITTER_{NAME,EMAIL}?  Whatever. You script them or put them in
-your environment anyway so no big issue.
+However I don't understand your gitenv_bc, wouldn't the following suffice?
 
-	Thomas
+char *gitenv_bc(const char *e)
+{
+        int i;
+        char *val = getenv(e);
+        if (val)
+                return val;
+
+        for (i=0; i < sizeof(bc_name) / sizeof(bc_name[0]); ++i) {
+                if (!strcmp(e, bc_name[i].canonical)) {
+                        if (val = getenv(bc_name[i].old))
+                                warn_old_environment();
+                        return val;
+                }
+        }
+        return NULL;
+}
+
+
+Cheers,
+Sean
+
+
