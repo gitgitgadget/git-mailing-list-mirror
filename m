@@ -1,63 +1,52 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH Cogito] Make use of external editor work like CVS
-Date: Mon, 9 May 2005 09:33:33 +0200
-Message-ID: <20050509073333.GC3599@pasky.ji.cz>
-References: <20050508171209.GX9495@pasky.ji.cz> <1115572667.9031.139.camel@pegasus> <20050508173003.GY9495@pasky.ji.cz> <1115574035.9031.145.camel@pegasus> <20050508175156.GA9495@pasky.ji.cz> <1115578658.8949.9.camel@pegasus> <20050508200334.GG9495@pasky.ji.cz> <1115584015.8949.43.camel@pegasus> <20050508210857.GL9495@pasky.ji.cz> <20050509052814.617dceac.froese@gmx.de>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: [RFC] allow file list editing during cg-commit
+Date: Mon, 09 May 2005 10:27:09 +0200
+Message-ID: <1115627229.8949.132.camel@pegasus>
+References: <20050509041459.GA13475@gate.ebshome.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 09 09:26:27 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 09 10:20:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DV2eo-0008SE-PR
-	for gcvg-git@gmane.org; Mon, 09 May 2005 09:26:27 +0200
+	id 1DV3UJ-0004tG-Cb
+	for gcvg-git@gmane.org; Mon, 09 May 2005 10:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263069AbVEIHdg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 03:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263071AbVEIHdg
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 03:33:36 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:31977 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S263069AbVEIHde (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 03:33:34 -0400
-Received: (qmail 8991 invoked by uid 2001); 9 May 2005 07:33:33 -0000
-To: Edgar Toernig <froese@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <20050509052814.617dceac.froese@gmx.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261165AbVEII0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 04:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261173AbVEII0u
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 04:26:50 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:24494 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S261165AbVEII0s
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 04:26:48 -0400
+Received: from pegasus (p5487DDD1.dip.t-dialin.net [84.135.221.209])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j498S4WX011065
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Mon, 9 May 2005 10:28:05 +0200
+To: Eugene Surovegin <ebs@ebshome.net>
+In-Reply-To: <20050509041459.GA13475@gate.ebshome.net>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV version 0.83, clamav-milter version 0.83 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 09, 2005 at 05:28:14AM CEST, I got a letter
-where Edgar Toernig <froese@gmx.de> told me that...
-> Petr Baudis wrote:
-> >
-> > > +               if ! [ $LOGMSG2 -nt $LOGMSG ]; then
-> > > +                       rm $LOGMSG $LOGMSG2
-> > > +                       die 'Commit message not modified, commit aborted'
-> > > +               fi
-> 
-> Just in case you come to a conclusion some day, how about changing the
-> if-test to
-> 
-> 	if cmp -s $LOGMSG LOGMSG2; then
-> 
-> ?  :-)  IMHO much better then comparing only the date.
-> 
-> Ciao, ET.
+Hi Eugene,
 
-Much, much worse. What if I really actually do not want to change
-anything in the merge message or the series of -m's? Ok, :x didn't work
-now since we cannot know. But now, :wq won't do either, and you actually
-need to do some silly dummy change now.
+> I just started playing with cogito and failed to find _easy_ way to
+> select which files will be committed and which won't. cg-commit seems
+> to support specifying file list in command line, but this isn't very
+> convenient when the list is big.
 
-I think we should really ask the user as CVS, as Marcel (or whoever)
-suggested.
+do you know any SCM native text interface that supports such a thing? In
+general this is done by high-level GUI based interfaces to the SCM or a
+special Emacs mode etc.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Regards
+
+Marcel
+
+
