@@ -1,97 +1,79 @@
-From: Eugene Surovegin <ebs@ebshome.net>
-Subject: Re: [RFC] allow file list editing during cg-commit
-Date: Mon, 9 May 2005 15:24:35 -0700
-Message-ID: <20050509222435.GA25901@gate.ebshome.net>
-References: <20050509041459.GA13475@gate.ebshome.net> <1115627229.8949.132.camel@pegasus> <20050509084606.GD3599@pasky.ji.cz>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: Darcs-git: a few notes for Git hackers
+Date: Tue, 10 May 2005 00:46:10 +0200
+Message-ID: <7ipsw010i5.fsf@lanthane.pps.jussieu.fr>
+References: <7ihdhc5le2.fsf@lanthane.pps.jussieu.fr>
+	<20050509212842.GC15712@pasky.ji.cz>
+	<7iu0lc129m.fsf@lanthane.pps.jussieu.fr> <427FE248.7040403@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 00:17:56 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: darcs-devel@abridgegame.org, Git Mailing List <git@vger.kernel.org>
+X-From: darcs-devel-bounces@darcs.net Tue May 10 00:40:15 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVGZ2-0006z2-3S
-	for gcvg-git@gmane.org; Tue, 10 May 2005 00:17:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261549AbVEIWYl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 18:24:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261550AbVEIWYk
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 18:24:40 -0400
-Received: from gate.ebshome.net ([64.81.67.12]:53979 "EHLO gate.ebshome.net")
-	by vger.kernel.org with ESMTP id S261549AbVEIWYg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 18:24:36 -0400
-Received: (qmail 28884 invoked by uid 1000); 9 May 2005 15:24:35 -0700
-To: Petr Baudis <pasky@ucw.cz>
-Mail-Followup-To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050509084606.GD3599@pasky.ji.cz>
-X-ICQ-UIN: 1193073
-X-Operating-System: Linux i686
-X-PGP-Key: http://www.ebshome.net/pubkey.asc
-User-Agent: Mutt/1.5.5.1i
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DVGu2-0001DB-9k
+	for gcvdd-darcs-devel@m.gmane.org; Tue, 10 May 2005 00:39:06 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DVH0y-0003bA-DI; Mon, 09 May 2005 18:46:16 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129])
+	by abridgegame.org with esmtp (Exim 4.50) id 1DVH0w-0003b5-Vv
+	for darcs-devel@abridgegame.org; Mon, 09 May 2005 18:46:15 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
+	[134.157.168.1])
+	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j49Mk0t0001022
+	; Tue, 10 May 2005 00:46:00 +0200 (CEST)
+X-Ids: 164
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
+	[134.157.168.57])
+	by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id
+	j49MkAFc025045 ; Tue, 10 May 2005 00:46:10 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DVH0s-0007Ne-Qj; Tue, 10 May 2005 00:46:10 +0200
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <427FE248.7040403@zytor.com> (H. Peter Anvin's message of "Mon,
+	09 May 2005 15:20:56 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
+	(shiva.jussieu.fr [134.157.0.164]);
+	Tue, 10 May 2005 00:46:00 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 427FE828.000 by Joe's j-chkmail
+	(http://j-chkmail.ensmp.fr)!
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
-On Mon, May 09, 2005 at 10:46:06AM +0200, Petr Baudis wrote:
+>> I see.  Let me know if you decide to use a different name for the
+>> lock file so I can switch to using the same one as yours.
 
-[snip]
+> Are you using flock(), or some other contraption that breaks if a
+> process dies unexpectedly?
 
-> The only thing to watch out for is that cg-commit -C produces no such
-> list at all; it should deal with that and tell the user he is not going
-> to be able to control what is going to be committed then.
-> 
-> Another thing is that at the moment you modify the file list, you should
-> set customfiles - otherwise you will commit even cg-adds and cg-rms of
-> files you didn't select. But do that really only when you change the
-> file list, since it is more expensive.
-> 
-> You should also place an appropriate hint near the CG: lines, saying
-> that removing some of them will limit the list of files to be committed.
+No, I'm using a file that is created by the NFS-safe equivalent of
+open(O_CREAT | O_EXCL).  This is what Darcs has been doing basically
+forever.
 
-OK, how about the following patch? I tried to address all issues you 
-mentioned and also $merging case as well.
+Darcs usually doesn't die unexpectedly -- it's a Haskell program, so
+bugs usually manifest themselves with an exception being thrown
+allowing Darcs to clean-up after itself.
 
-Signed-off-by: Eugene Surovegin <ebs@ebshome.net>
+The one exception is when Darcs gets killed by the OOM killer (which,
+as you doubtless know, doesn't give any advance warning to a process,
+thus making it impossible for a process to deal with it gracefully).
+In such cases, manual intervention is necessary anyway -- a file could
+have been written half-way.
 
-Index: cg-commit
-===================================================================
---- 972d8624458936868e6f392b40858b7c362af8cd/cg-commit  (mode:100755)
-+++ uncommitted/cg-commit  (mode:100755)
-@@ -111,12 +111,16 @@
- 		rm $LOGMSG $LOGMSG2
- 		die 'Nothing to commit'
- 	fi
-+	if [ ! "$merging" ]; then
-+		echo "CG: By deleting lines beginning with CG:F the associated file" >>$LOGMSG 
-+		echo "CG: will be removed from the commit list." >>$LOGMSG 
-+	fi	
- 	echo "CG:" >>$LOGMSG
- 	echo "CG: Modified files:" >>$LOGMSG
- 	for file in "${commitfiles[@]}"; do
- 		# TODO: Prepend a letter describing whether it's addition,
- 		# removal or update. Or call git status on those files.
--		echo "CG:    $file" >>$LOGMSG
-+		echo "CG:F    $file" >>$LOGMSG
- 		[ "$msgs" ] && ! [ "$forceeditor" ] && echo $file
- 	done
- fi
-@@ -131,6 +135,17 @@
- 		rm $LOGMSG $LOGMSG2
- 		die 'Commit message not modified, commit aborted'
- 	fi
-+	if [ ! "$ignorecache" ] && [ ! "$merging" ]; then
-+		eval newcommitfiles=($(grep ^CG:F $LOGMSG2 | sed 's/^CG:F//'))
-+		if [ ! "${newcommitfiles[*]}" ]; then
-+			rm $LOGMSG $LOGMSG2
-+			die 'Nothing to commit'
-+		fi
-+		if [ "${commitfiles[*]}" != "${newcommitfiles[*]}" ]; then
-+			commitfiles="${newcommitfiles[*]}"
-+			customfiles="${commitfiles[*]}"
-+		fi
-+	fi
- else
- 	cat >>$LOGMSG2
- fi
-
+                                        Juliusz
