@@ -1,53 +1,72 @@
-From: Morten Welinder <mwelinder@gmail.com>
-Subject: Re: "git-checkout-cache -f -a" failure
-Date: Mon, 9 May 2005 23:04:46 -0400
-Message-ID: <118833cc05050920045204db03@mail.gmail.com>
-References: <118833cc05050911255e601fc@mail.gmail.com>
-	 <7v64xru83t.fsf@assigned-by-dhcp.cox.net>
-Reply-To: Morten Welinder <mwelinder@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Renaming environment variables.
+Date: Mon, 9 May 2005 23:23:19 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505092311590.30848-100000@iabervon.org>
+References: <7vy8anu8po.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: GIT Mailing List <git@vger.kernel.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>, Sean <seanlkml@sympatico.ca>,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue May 10 04:57:36 2005
+X-From: git-owner@vger.kernel.org Tue May 10 05:16:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVKw7-0000b3-6f
-	for gcvg-git@gmane.org; Tue, 10 May 2005 04:57:31 +0200
+	id 1DVLES-00023B-Bq
+	for gcvg-git@gmane.org; Tue, 10 May 2005 05:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261470AbVEJDEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 23:04:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261539AbVEJDEr
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 23:04:47 -0400
-Received: from rproxy.gmail.com ([64.233.170.196]:65115 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261470AbVEJDEq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 23:04:46 -0400
-Received: by rproxy.gmail.com with SMTP id a41so892389rng
-        for <git@vger.kernel.org>; Mon, 09 May 2005 20:04:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NY5Zw+BbpZN0sFm3G/uejF0fK4GFlGDVkPFKBpx85947ee2C/uJVkFrYEpAZZqdLs13NFc5nhyAkfOAGBXgEl5X9tHXLrEB3qeZWEmhtxiQXW9d4w44QuSpug4SyNjiK1EW0Qkx29FyM3rjxlL6VVw0lYaWLCYEUcOC0MGBr2Lw=
-Received: by 10.38.76.80 with SMTP id y80mr1816603rna;
-        Mon, 09 May 2005 20:04:46 -0700 (PDT)
-Received: by 10.38.76.77 with HTTP; Mon, 9 May 2005 20:04:46 -0700 (PDT)
+	id S261542AbVEJDXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 23:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261546AbVEJDXp
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 23:23:45 -0400
+Received: from iabervon.org ([66.92.72.58]:32005 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261542AbVEJDXm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 23:23:42 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DVLL5-0004t5-00; Mon, 9 May 2005 23:23:19 -0400
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64xru83t.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vy8anu8po.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Changing files vs directories _is_ a big change and happens
-> rarely in practice; I think the current behaviour is
-> justified---it makes the user take notice and the user _should_
-> take notice.
+On Mon, 9 May 2005, Junio C Hamano wrote:
 
-File vs. directory was just the easiest way to demonstrate.  In the presense
-of symlinks I am not sure you will always get a warning.  It'll be more of a
-silent file-corrupting failure kind of thing.  (Somewhat worse if yyy points
-to /your/home/.ssh and zzz is "authorized_keys".)
+> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+> 
+> DB> While we're at it, it would be useful to have one for what is normally
+> DB> ".git", rather than just ".git/objects".
+> 
+> PB> I think it would be nice to have something like GIT_BASEDIR, which would
+> PB> default to .git, and the objects directory would then default to
+> PB> $GIT_BASEDIR/objects and the index file would default to
+> PB> $GIT_BASEDIR/index.
+> 
+> Although what I pushed out at git-jc repository does not have
+> this, it does not mean I forgot this issue you two have raised,
+> nor would want to veto it or anything like that.  Just that,
+> unlike the one that I already committed, the proposed change
+> would touch rather many lines and I have not managed to
+> determine the extent of the damage yet.
 
-Morten
+It *should* only affect the places where the variables that depend on it
+get computed; didn't you already centralize the code to figure this out?
+
+> I am currently waiting for community consensus, including the
+> final name of the variable.  I think the current consensus is
+> that this is a good idea, the semantics for it is to name what
+> corresponds to the current "$(pwd)/.git" directory, use it to
+> build the default for GIT_INDEX_FILE and SHA1_FILE_DIRECTORY,
+> and this directory does _not_ have anything to do with my
+> previous "the directory that corresponds to the root of the tree
+> structure GIT_INDEX_FILE describes".  I agree to all of the
+> above.
+
+I agree to all of that, too. I'd suggest GIT_DIR for the variable, simply
+because I can't think of anything else that name could mean.
+
+	-Daniel
+*This .sig left intentionally blank*
+
