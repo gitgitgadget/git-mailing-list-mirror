@@ -1,96 +1,47 @@
-From: "Eduardo Teixeira Dias" <eduardo@tendencies.com.br>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 19:34:12 -0300 (BRT)
-Message-ID: <1520.200.158.14.67.1115764452.squirrel@www.tendencies.com.br>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
-        <1115739511.16187.432.camel@hades.cambridge.redhat.com>
-        <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br>
-        <1115740844.16187.445.camel@hades.cambridge.redhat.com>
-        <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
-        <20050510234501.79eea7a4.diegocg@gmail.com>
-Reply-To: eduardo@tendencies.com.br
+Date: Wed, 11 May 2005 00:44:33 +0200
+Message-ID: <20050510224433.GC26384@pasky.ji.cz>
+References: <2cfc40320505100800426d38ca@mail.gmail.com> <1115739511.16187.432.camel@hades.cambridge.redhat.com> <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br> <1115740844.16187.445.camel@hades.cambridge.redhat.com> <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br> <20050510234501.79eea7a4.diegocg@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <eduardo@tendencies.com.br>, <dwmw2@infradead.org>,
-	<jon@blackcubes.dyndns.org>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 11 00:28:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: eduardo@tendencies.com.br, dwmw2@infradead.org,
+	jon@blackcubes.dyndns.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 11 00:38:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVdC9-000752-O7
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:27:17 +0200
+	id 1DVdMD-00085m-M8
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261816AbVEJWem convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 May 2005 18:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261813AbVEJWem
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:34:42 -0400
-Received: from tendencies.com.br ([72.29.102.143]:47500 "EHLO
-	tendencies.com.br") by vger.kernel.org with ESMTP id S261816AbVEJWeg
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 18:34:36 -0400
-Received: from tendencies.com.br (localhost [127.0.0.1])
-	by tendencies.com.br (8.12.11/8.12.11) with ESMTP id j4AMYCCN014217;
-	Tue, 10 May 2005 18:34:13 -0400
-Received: (from apache@localhost)
-	by tendencies.com.br (8.12.11/8.12.11/Submit) id j4AMYC3R014216;
-	Tue, 10 May 2005 19:34:12 -0300
-X-Authentication-Warning: tendencies.com.br: apache set sender to eduardo@tendencies.com.br using -f
-Received: from 200.158.14.67 (proxying for 200.158.14.67)
-        (SquirrelMail authenticated user etdias)
-        by www.tendencies.com.br with HTTP;
-        Tue, 10 May 2005 19:34:12 -0300 (BRT)
-To: <diegocg@gmail.com>
+	id S261844AbVEJWoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 18:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261842AbVEJWoy
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:44:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:43944 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261822AbVEJWom (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 18:44:42 -0400
+Received: (qmail 5682 invoked by uid 2001); 10 May 2005 22:44:33 -0000
+To: Diego Calleja <diegocg@gmail.com>
+Content-Disposition: inline
 In-Reply-To: <20050510234501.79eea7a4.diegocg@gmail.com>
-X-Priority: 3
-Importance: Normal
-X-Mailer: SquirrelMail (version 1.2.11)
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'm a Java programmer and I was thinking like one (Culture thing).
+Dear diary, on Tue, May 10, 2005 at 11:45:01PM CEST, I got a letter
+where Diego Calleja <diegocg@gmail.com> told me that...
+> Someone who is going to hack the kernel can very well install more things.
+> And anyway, git is "the linux SCM tool" so all distros will package it. Also,
+> people who hacks the linux kernel usually runs it, so "git is not ported
+> to win32" is not a big problem.
 
-The reuse argument is very Strong.
+It's not like everything git is ever going to be used for is kernel and
+only the kernel.
 
-The git-core are ready and it's a very good idea to reuse it. Any chang=
-e
-in the core or in the internal representation of git repository will
-benefit the Git-Java implementation...
-
-I think that a growing utilization of GCJ and ClassPath will contribute=
- to
-a Gradual Culture Change in the Java Land and promote a beter
-reutilization among all GCC languages...
-
-Write Once Run Everywhere that GCJ Runs (Sounds Good).
-
-Eclipse will be compiled with GCJ in Fedora 4. Let's see how it works..=
-=2E
-
-Cheers!
-
-> El Tue, 10 May 2005 13:19:49 -0300 (BRT),
-> "Eduardo Teixeira Dias" <eduardo@tendencies.com.br> escribi=F3:
->
->>   - Just a .jar download
->>   - Installation without external dependencies
->
->
-> Someone who is going to hack the kernel can very well install more
-> things. And anyway, git is "the linux SCM tool" so all distros will
-> package it. Also, people who hacks the linux kernel usually runs it, =
-so
-> "git is not ported to win32" is not a big problem.
->
-> ...and I don't think people who use eclipse wants to have the fastest
-> tool on earth, so "java-invoking-C is slower than pure java" is not a
-> great excuse either...
->
-> Code reuse =3D=3D good. Java programmers should know that. Anyway, pe=
-ople is
-> free to do whatever they want with their time :)
-
-
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
