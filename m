@@ -1,34 +1,35 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] Overlapping projects
-Date: Mon, 09 May 2005 22:31:39 -0700
-Message-ID: <7v8y2nsl38.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.21.0505100040320.30848-100000@iabervon.org>
+Subject: Re: [RFC] Renaming environment variables.
+Date: Mon, 09 May 2005 22:45:42 -0700
+Message-ID: <7voebjr5vd.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0505092012340.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 07:24:57 2005
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+	Sean <seanlkml@sympatico.ca>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 10 07:38:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVNEV-0004Ud-Hk
-	for gcvg-git@gmane.org; Tue, 10 May 2005 07:24:39 +0200
+	id 1DVNS7-0005bb-Ra
+	for gcvg-git@gmane.org; Tue, 10 May 2005 07:38:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261563AbVEJFbx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 01:31:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261564AbVEJFbx
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 01:31:53 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:65231 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261563AbVEJFbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 01:31:43 -0400
+	id S261540AbVEJFp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 01:45:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261546AbVEJFp5
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 01:45:57 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:56025 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261540AbVEJFpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 01:45:45 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050510053138.EGOK12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 10 May 2005 01:31:38 -0400
+          id <20050510054543.WCGN16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 May 2005 01:45:43 -0400
 To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0505100040320.30848-100000@iabervon.org> (Daniel
- Barkalow's message of "Tue, 10 May 2005 00:56:33 -0400 (EDT)")
+In-Reply-To: <Pine.LNX.4.21.0505092012340.30848-100000@iabervon.org> (Daniel
+ Barkalow's message of "Mon, 9 May 2005 20:38:53 -0400 (EDT)")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -36,58 +37,70 @@ X-Mailing-List: git@vger.kernel.org
 
 >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-DB> It seems to me like projects like cogito which are based on a core which
-DB> is itself a project and which is also part of other projects would benefit
-DB> from some sort of support.
+DB> On Mon, 9 May 2005, Junio C Hamano wrote:
+>> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+>> 
+DB> While we're at it, it would be useful to have one for what is normally
+DB> ".git",...
+>> 
+>> If you mean the parent directory of ${SHA1_FILE_DIRECTORY}, and
+>> your only gripe is about git-init-db creating ".git" in the
+>> current working directory regardless of SHA1_FILE_DIRECTORY, I
+>> would agree that what git-init-db does is broken.  Not that I
+>> have a suggested "right behaviour" for it, though.
 
-I personally feel supporting that kind of development directory
-structure is backwards, and Cogito is a very bad example for it.
+DB> It could just create all missing parents of the object directory, which
+DB> would be better, at least.
 
-Things could have been structured in such a way to have Cogito
-and core GIT in separate directories hanging from the top level,
-and Cogito can borrow pieces of GIT from the neighboring
-directory if it needed to build specialized binary using
-libgit.a.  Unless Petr makes changes to core GIT that is _too_
-specific for general use (read: does not meet Linus' taste), we
-should be able to port the nicer changes made to the core GIT
-for Cogito's use (like git-ls-files "-t" flag) back to core GIT
-and there would not be a reason for Cogito to keep carrying its
-own copy of modified core GIT.
+I am ambivalent about this.  Here is an excerpt from my WIP.  I
+am trying to keep the original semantics of "we create the
+leading paths only if we default to .git/objects":
 
-DB> In particular, it would be nice if Linus could pull the
-DB> changes to the core without getting the wrapper programs at
-DB> all.
+$ GIT_DIFF_OPTS=-u8 jit-diff 1: init-db.c
+# - HEAD: Rename environment variables.
+# + (working tree)
+--- a/init-db.c
++++ b/init-db.c
+@@ -22,21 +22,22 @@
+  * be the judge.  The default case is to have one DB per managed directory.
+  */
+ int main(int argc, char **argv)
+ {
+ 	const char *sha1_dir;
+ 	char *path;
+ 	int len, i;
+ 
+-	safe_create_dir(".git");
+-
+-	sha1_dir = gitenv(DB_ENVIRONMENT);
+-	if (!sha1_dir) {
+-		sha1_dir = DEFAULT_DB_ENVIRONMENT;
++	sha1_dir = get_object_directory();
++	if (!gitenv(DB_ENVIRONMENT) && !gitenv(GIT_DIR_ENVIRONMENT)) {
++		/* We create leading paths only when we fall back
++		 * to local ".git/objects".
++		 */
++		safe_create_dir(DEFAULT_GIT_DIR_ENVIRONMENT);
+ 		fprintf(stderr, "defaulting to local storage area\n");
+ 	}
+ 	len = strlen(sha1_dir);
+ 	path = xmalloc(len + 40);
+ 	memcpy(path, sha1_dir, len);
+ 
+ 	safe_create_dir(sha1_dir);
+ 	for (i = 0; i < 256; i++) {
 
-Yes, that is a very desirable arrangement.
+Here DEFAULT_GIT_DIR_ENVIRONMENT is defined as ".git", and the
+directory is created only if we do not have GIT_OBJECT_DIRECTORY
+nor GIT_DIR environment variables, which should match the intent
+of the original by Linus.  Otherwise we at least require the
+parent directory of GIT_OBJECT_DIRECTORY to exist.  I think that
+is a reasonable default (well that is not something I can take
+credit), in that if the user is clued enough to use something
+different from the default he should at least know enough to
+create the leading paths beforehand (or the script could do that
+for him).
 
-However, that does not require to keep them in the same
-repository.  Cogito _could_ have been shipped this way:
+Other than this part, I think the code is ready to go.
 
-                      + (top-level)
-                     / \
-                    cg git
-     (Cogito sources)   (copy of core GIT files)
-     .git/ for Cogito   .git/ for core GIT
-     only
-
-with an instruction like:
-
-    The tarball contains cg and git subdirectories.  cg part
-    implements Cogito, and git part is a copy of recent if not
-    latest core GIT.  Go to cg and type "make" to build both of
-    them.  Theoretically they can be independently updated to
-    the latest but preferred combination is to use at least this
-    release of core GIT to use this version of Cogito ...
-
-Maybe I am being too idealistic.  I do not deny there are people
-who want to manage "projects within projects" structure and
-other people like CVS, subversion and arch do support that
-style.  My impression about them is that the way CVS does it via
-CVSROOT/modules looked like an ugly hack bolted onto it as an
-afterthought, external stuff subversion uses did not feel quite
-right (although nicer than what CVS does), and what arch does
-was more reasonable but the boundary between SCM and build
-environment was quite blurry there.  And many people "wanting to
-do so" and other people "supporting doing it" do not necessarily
-make that right.
 
