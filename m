@@ -1,69 +1,54 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 11:01:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0505101059380.10668@localhost.localdomain>
-References: <2cfc40320505100800426d38ca@mail.gmail.com> 
- <1115739511.16187.432.camel@hades.cambridge.redhat.com> 
- <2cfc4032050510092238259b63@mail.gmail.com>  <1115744609.16187.455.camel@hades.cambridge.redhat.com>
-  <2cfc403205051010151304d88a@mail.gmail.com>  <2cfc4032050510101553d391b2@mail.gmail.com>
-  <1115745912.16187.468.camel@hades.cambridge.redhat.com> 
- <2cfc4032050510103664ebef28@mail.gmail.com>  <20050510174150.GA2072@infradead.org>
-  <2cfc40320505101051207c9ce4@mail.gmail.com> <2cfc403205051010514cf183e2@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] minor Makefile and local-pull.c edits for Darwin
+Date: Tue, 10 May 2005 14:05:58 -0700
+Message-ID: <7vekceyeo9.fsf@assigned-by-dhcp.cox.net>
+References: <20050510021105.53984.qmail@web41213.mail.yahoo.com>
+	<428038D0.5000706@zytor.com> <7vpsvzpolp.fsf@assigned-by-dhcp.cox.net>
+	<4280C883.6080209@zytor.com> <4280CAC6.4000805@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 19:55:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Allen <mrallen1@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 23:04:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVYw8-00086F-AP
-	for gcvg-git@gmane.org; Tue, 10 May 2005 19:54:28 +0200
+	id 1DVbth-0004fY-T2
+	for gcvg-git@gmane.org; Tue, 10 May 2005 23:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261720AbVEJSBx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 14:01:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261721AbVEJSBx
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 14:01:53 -0400
-Received: from x35.xmailserver.org ([69.30.125.51]:8114 "EHLO
-	x35.xmailserver.org") by vger.kernel.org with ESMTP id S261720AbVEJSBv
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 14:01:51 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from debstar.dev.mdolabs.com
-	by xmailserver.org with [XMail 1.21 ESMTP Server]
-	id <S17D004> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Tue, 10 May 2005 11:02:13 -0700
-X-X-Sender: davide@localhost.localdomain
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc403205051010514cf183e2@mail.gmail.com>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S261796AbVEJVKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 17:10:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261798AbVEJVGk
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 17:06:40 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64237 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261796AbVEJVGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 17:06:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050510210558.DXHJ20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 May 2005 17:05:58 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4280CAC6.4000805@zytor.com> (H. Peter Anvin's message of "Tue,
+ 10 May 2005 07:52:54 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 11 May 2005, Jon Seymour wrote:
+>>>>> "HPA" == H Peter Anvin <hpa@zytor.com> writes:
 
-> On 5/11/05, Christoph Hellwig <hch@infradead.org> wrote:
->> On Wed, May 11, 2005 at 03:36:29AM +1000, Jon Seymour wrote:
->>> I have already explained all the pragmatic reasons for doing a GIT
->>> implementation in Java but you are prepared to ignore all of those
->>> reasons. You have ignored all these reasons rather than lift a finger
->>> to compose a well-reasoned rebuttal.
->>
->> You tried to argue for re-inventing the wheel.  Fortunately you are
->> allowed to reinvent the wheel here (which isn't given anymore these
->> days).  Just don't expect any support from people who have been burnt
->> by that before.  And the Java world is re-inventing the wheel far to
->> often - I suspect that'll be cured when the community gets more mature
->> in a few years..
->>
->
-> I am _not_ re-inventing any wheel. Merely building a road through
-> different territory upon which the GIT wheel may roll more freely.
+HPA> That being said, there are also a whole bunch of assumptions that any
+HPA> object can be memory-mapped *plus* fit uncompressed in
+HPA> memory... that's obviously not going to be the case for large files.
 
-Would you mind fixing your mailer before, so that your messages won't 
-appear as new Subject: every time?
+HPA> On the other hand, one has to start cleaning up somewhere...
+
+I agree to that, but on the other hand one also has to know
+where to stop.  The primary purpose of GIT being to manage the
+source files for the Linux kernel project, not worrying about
+_huge_ files that would cause mmap+uncompressed or st.st_size
+not fitting in unsigned long may just be fine.
 
 
-- Davide
 
