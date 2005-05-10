@@ -1,78 +1,69 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH Cogito] cg-init breaks if . contains sub-dir
-Date: Tue, 10 May 2005 11:58:25 +0200
-Message-ID: <20050510095825.GI11221@kiste.smurf.noris.de>
-References: <20050509233904.GB878@osuosl.org> <pan.2005.05.10.03.41.15.683163@smurf.noris.de> <428043EB.7010004@didntduck.org> <20050510075227.GA8176@lug-owl.de> <20050510080445.GB8176@lug-owl.de> <7vis1rpi8a.fsf@assigned-by-dhcp.cox.net> <20050510093212.GD8176@lug-owl.de> <20050510093924.GH11221@kiste.smurf.noris.de> <20050510094538.GE8176@lug-owl.de>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: [RFD] Overlapping projects
+Date: Tue, 10 May 2005 08:04:54 -0400 (EDT)
+Message-ID: <4385.10.10.10.24.1115726694.squirrel@linux1>
+References: <Pine.LNX.4.21.0505100040320.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HCdXmnRlPgeNBad2"
-Cc: Junio C Hamano <junkio@cox.net>,
-	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 11:54:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 13:58:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVRQN-0002kE-5v
-	for gcvg-git@gmane.org; Tue, 10 May 2005 11:53:11 +0200
+	id 1DVTMp-0001mU-OU
+	for gcvg-git@gmane.org; Tue, 10 May 2005 13:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261600AbVEJKAG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 06:00:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261601AbVEJKAG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 06:00:06 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:33461 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261600AbVEJJ7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 05:59:32 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DVRVR-0008PT-BD; Tue, 10 May 2005 11:58:40 +0200
-Received: (nullmailer pid 6157 invoked by uid 501);
-	Tue, 10 May 2005 09:58:25 -0000
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-Content-Disposition: inline
-In-Reply-To: <20050510094538.GE8176@lug-owl.de>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S261620AbVEJME6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 08:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261622AbVEJME6
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 08:04:58 -0400
+Received: from simmts5.bellnexxia.net ([206.47.199.163]:16081 "EHLO
+	simmts5-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261620AbVEJME4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 08:04:56 -0400
+Received: from linux1 ([69.156.111.46]) by simmts5-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050510120455.GFW1614.simmts5-srv.bellnexxia.net@linux1>;
+          Tue, 10 May 2005 08:04:55 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4AC4pNj016749;
+	Tue, 10 May 2005 08:04:52 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Tue, 10 May 2005 08:04:54 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.21.0505100040320.30848-100000@iabervon.org>
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, May 10, 2005 12:56 am, Daniel Barkalow said:
+> It seems to me like projects like cogito which are based on a core which
+> is itself a project and which is also part of other projects would benefit
+> from some sort of support.
+>
+> In particular, it would be nice if Linus could pull the changes to the
+> core without getting the wrapper programs at all.
+>
+> I'm thinking something like having a head for cogito and a head for git in
+> the same repository, where the trees for git only have the core files, and
+> the commits for cogito have, in addition to a tree with only the
+> cogito-specific files, a reference to a git commit that they include.
+>
+> It seems to me like this area contains a brilliant idea that I haven't
+> had so far, and maybe someone can come up with it.
+>
 
---HCdXmnRlPgeNBad2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That sounds like a great idea and shouldn't need any brilliant ideas to
+implement.  Just need to push a little more multi-head handling down into 
+ git.  The Cogito build process could then include a checkout of the
+git-core branch.  Would be much cleaner than the way it is handled now.
 
-Hi,
+Sean
 
-Jan-Benedict Glaw:
-> > Please don't change that without talking to Linus.
->=20
-> I won't.  You haven't seen a patch from me "fixing" this, too.  *I*
-> consider this as a defect, but that doesn't mean that I'll force others
-> to take this view, too.  But maybe I'll talk Linus into this when he's
-> back from his trip.
 
-That would be a good idea; I do support dropping (or at least relaxing)
-that rule. For excluding unwanted files, I'd suggest using a .git/ignore
-file with nice shiny patterns (*.a *.o *.swp ...) inside -- git already
-supports that anyway.
-
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-
---HCdXmnRlPgeNBad2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
-
-iD8DBQFCgIXB8+hUANcKr/kRAoCtAKCp0qZ3THoeSYd5BxrGWeHg6hpp5QCeKvH4
-FJ+8ETZAgLAlAYirRFQyk3k=
-=se5p
------END PGP SIGNATURE-----
-
---HCdXmnRlPgeNBad2--
