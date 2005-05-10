@@ -1,57 +1,53 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: optimize gitdiff-do script
-Date: Mon, 9 May 2005 19:56:45 -0700
-Organization: SGI
-Message-ID: <20050509195645.1af2383c.pj@sgi.com>
-References: <20050416232749.23430.93360.sendpatchset@sam.engr.sgi.com>
-	<20050416232810.23430.78712.sendpatchset@sam.engr.sgi.com>
-	<20050416234344.GQ19099@pasky.ji.cz>
-	<20050416171009.0bedbab4.pj@sgi.com>
-	<20050418082334.25359013.pj@sgi.com>
-	<20050418183038.GB5554@pasky.ji.cz>
+From: Morten Welinder <mwelinder@gmail.com>
+Subject: Re: "git-checkout-cache -f -a" failure
+Date: Mon, 9 May 2005 23:04:46 -0400
+Message-ID: <118833cc05050920045204db03@mail.gmail.com>
+References: <118833cc05050911255e601fc@mail.gmail.com>
+	 <7v64xru83t.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Morten Welinder <mwelinder@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 04:50:04 2005
+Content-Transfer-Encoding: 7BIT
+Cc: GIT Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 10 04:57:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVKoR-00005h-C8
-	for gcvg-git@gmane.org; Tue, 10 May 2005 04:49:35 +0200
+	id 1DVKw7-0000b3-6f
+	for gcvg-git@gmane.org; Tue, 10 May 2005 04:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261469AbVEJC4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 22:56:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261470AbVEJC4w
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 22:56:52 -0400
-Received: from omx3-ext.sgi.com ([192.48.171.20]:63173 "EHLO omx3.sgi.com")
-	by vger.kernel.org with ESMTP id S261469AbVEJC4u (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 22:56:50 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j4A3Niuv005974;
-	Mon, 9 May 2005 20:23:44 -0700
-Received: from vpn2 (mtv-vpn-hw-pj-2.corp.sgi.com [134.15.25.219])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j4A2uk5w23692803;
-	Mon, 9 May 2005 19:56:46 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050418183038.GB5554@pasky.ji.cz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i686-pc-linux-gnu)
+	id S261470AbVEJDEr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 23:04:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261539AbVEJDEr
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 23:04:47 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:65115 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261470AbVEJDEq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 9 May 2005 23:04:46 -0400
+Received: by rproxy.gmail.com with SMTP id a41so892389rng
+        for <git@vger.kernel.org>; Mon, 09 May 2005 20:04:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NY5Zw+BbpZN0sFm3G/uejF0fK4GFlGDVkPFKBpx85947ee2C/uJVkFrYEpAZZqdLs13NFc5nhyAkfOAGBXgEl5X9tHXLrEB3qeZWEmhtxiQXW9d4w44QuSpug4SyNjiK1EW0Qkx29FyM3rjxlL6VVw0lYaWLCYEUcOC0MGBr2Lw=
+Received: by 10.38.76.80 with SMTP id y80mr1816603rna;
+        Mon, 09 May 2005 20:04:46 -0700 (PDT)
+Received: by 10.38.76.77 with HTTP; Mon, 9 May 2005 20:04:46 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64xru83t.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Weeks ago, Pasky replied to pj:
-> >  1) How do you want me to fix the indentation on my patch
-> >     to optimize gitdiff-do script:
-> > 	- forget my first patch and resend from scratch, or
-> > 	- a second patch restoring indentation, on top of my first one.
-> 
-> Resend from scratch, please.
+> Changing files vs directories _is_ a big change and happens
+> rarely in practice; I think the current behaviour is
+> justified---it makes the user take notice and the user _should_
+> take notice.
 
-As was already no doubt obvious to everyone but me,
-I'm not going to get to this.  Sorry.  Good luck.
+File vs. directory was just the easiest way to demonstrate.  In the presense
+of symlinks I am not sure you will always get a warning.  It'll be more of a
+silent file-corrupting failure kind of thing.  (Somewhat worse if yyy points
+to /your/home/.ssh and zzz is "authorized_keys".)
 
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@engr.sgi.com> 1.650.933.1373, 1.925.600.0401
+Morten
