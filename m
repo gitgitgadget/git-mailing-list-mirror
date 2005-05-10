@@ -1,75 +1,139 @@
-From: Andreas Gal <gal@uci.edu>
-Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 15:54:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505101552500.29765@sam.ics.uci.edu>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
- <1115739511.16187.432.camel@hades.cambridge.redhat.com>
- <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br>
- <1115740844.16187.445.camel@hades.cambridge.redhat.com>
- <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
- <20050510234501.79eea7a4.diegocg@gmail.com> <20050510224433.GC26384@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "git-checkout-cache -f -a" failure
+Date: Tue, 10 May 2005 15:57:34 -0700
+Message-ID: <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
+References: <118833cc05050911255e601fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Diego Calleja <diegocg@gmail.com>, eduardo@tendencies.com.br,
-	dwmw2@infradead.org, jon@blackcubes.dyndns.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 00:49:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 11 00:50:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVdWp-0000mE-BM
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:48:39 +0200
+	id 1DVdYO-0000wR-B0
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:50:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261808AbVEJWzw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 18:55:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261816AbVEJWzw
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:55:52 -0400
-Received: from sam.ics.uci.edu ([128.195.38.141]:28323 "EHLO sam.ics.uci.edu")
-	by vger.kernel.org with ESMTP id S261808AbVEJWzp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 18:55:45 -0400
-Received: from sam.ics.uci.edu (localhost.localdomain [127.0.0.1])
-	by sam.ics.uci.edu (8.12.11/8.12.11) with ESMTP id j4AMsw48029815;
-	Tue, 10 May 2005 15:54:58 -0700
-Received: from localhost (gal@localhost)
-	by sam.ics.uci.edu (8.12.11/8.12.8/Submit) with ESMTP id j4AMswER029811;
-	Tue, 10 May 2005 15:54:58 -0700
-X-Authentication-Warning: sam.ics.uci.edu: gal owned process doing -bs
-X-X-Sender: gal@sam.ics.uci.edu
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050510224433.GC26384@pasky.ji.cz>
+	id S261816AbVEJW5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 18:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261837AbVEJW5n
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:57:43 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:7098 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261816AbVEJW5h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 18:57:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050510225734.IYET19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 10 May 2005 18:57:34 -0400
+To: Morten Welinder <mwelinder@gmail.com>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "MW" == Morten Welinder <mwelinder@gmail.com> writes:
 
-Btw, I rewrote about 90% of git in python, just out of curiousity. 
-Performance is pretty competitive, and I can optimize certain operations 
-by keeping the index in memory temporarily. It also saves a lot of output 
-parsing, simplifies error-handling (if the frontend is written in python 
-too, which bit now is), and the best of all: its about 600 lines of python 
-code. I am all for a Java implementation. After its done we will see 
-whether it works and how well it works. We can still throw it away if it 
-sucks. 
+MW> git-checkout-cache is having problems when files change from directories to
+MW> plain files or vice versa.  cg-seek seems to be similarly affected.
 
-Andreas
+Could you give this patch a try?  It lets checkout-cache remove
+a file where you want to have a directory (because you want to
+create something underneath) or remove a whole subdirectory
+where you want to have a non-directory, when '-f' parameter is
+specified.
 
-On Wed, 11 May 2005, Petr Baudis wrote:
+If things test well, I'll put this in the git-jc repository and
+ask Linus to pull from it alongside with other accumulated
+patches when he returns.
 
-> Dear diary, on Tue, May 10, 2005 at 11:45:01PM CEST, I got a letter
-> where Diego Calleja <diegocg@gmail.com> told me that...
-> > Someone who is going to hack the kernel can very well install more things.
-> > And anyway, git is "the linux SCM tool" so all distros will package it. Also,
-> > people who hacks the linux kernel usually runs it, so "git is not ported
-> > to win32" is not a big problem.
-> 
-> It's not like everything git is ever going to be used for is kernel and
-> only the kernel.
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Thanks.
+
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+------------
+# - HEAD: Adjust quoting styles for some environment variables in the documentation.
+# + 7: Let checkout-cache stomp on existing file/directory with -f.
+--- a/checkout-cache.c
++++ b/checkout-cache.c
+@@ -32,6 +32,8 @@
+  * of "-a" causing problems (not possible in the above example,
+  * but get used to it in scripting!).
+  */
++#include <sys/types.h>
++#include <dirent.h>
+ #include "cache.h"
+ 
+ static int force = 0, quiet = 0, not_new = 0;
+@@ -46,11 +48,51 @@ static void create_directories(const cha
+ 		len = slash - path;
+ 		memcpy(buf, path, len);
+ 		buf[len] = 0;
+-		mkdir(buf, 0755);
++		if (mkdir(buf, 0755)) {
++			if (errno == EEXIST) {
++				struct stat st;
++				if (!lstat(buf, &st) && S_ISDIR(st.st_mode))
++					continue; /* ok */
++				if (force && !unlink(buf) && !mkdir(buf, 0755))
++					continue;
++			}
++			die("cannot create directory at %s", buf);
++		}
+ 	}
+ 	free(buf);
+ }
+ 
++static void remove_subtree(const char *path)
++{
++	DIR *dir = opendir(path);
++	struct dirent *de;
++	char pathbuf[PATH_MAX];
++	char *name;
++	
++	if (!dir)
++		die("cannot opendir %s", path);
++	strcpy(pathbuf, path);
++	name = pathbuf + strlen(path);
++	*name++ = '/';
++	while ((de = readdir(dir)) != NULL) {
++		struct stat st;
++		if (de->d_name[0] == '.')
++			continue; /* we mean . and .. but verify_path would
++				   * have rejected any dotfiles earlier.
++				   */
++		strcpy(name, de->d_name);
++		if (lstat(pathbuf, &st))
++			die("cannot lstat %s", pathbuf);
++		if (S_ISDIR(st.st_mode))
++			remove_subtree(pathbuf);
++		else if (unlink(pathbuf))
++			die("cannot unlink %s", pathbuf);
++	}
++	closedir(dir);
++	if (rmdir(path))
++		die("cannot rmdir %s", path);
++}
++
+ static int create_file(const char *path, unsigned int mode)
+ {
+ 	int fd;
+@@ -62,6 +104,14 @@ static int create_file(const char *path,
+ 			create_directories(path);
+ 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
+ 		}
++		else if (errno == EISDIR && force) {
++			remove_subtree(path);
++			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
++		}
++		else if (errno == ENOTDIR && force) {
++			create_directories(path);
++			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
++		}
+ 	}
+ 	return fd;
+ }
+
+
+
