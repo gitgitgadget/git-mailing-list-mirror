@@ -1,91 +1,96 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: "Eduardo Teixeira Dias" <eduardo@tendencies.com.br>
 Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 18:18:09 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505101743520.30848-100000@iabervon.org>
+Date: Tue, 10 May 2005 19:33:14 -0300 (BRT)
+Message-ID: <58433.200.158.14.67.1115764394.squirrel@www.tendencies.com.br>
 References: <2cfc40320505100800426d38ca@mail.gmail.com>
+        <1115739511.16187.432.camel@hades.cambridge.redhat.com>
+        <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br>
+        <1115740844.16187.445.camel@hades.cambridge.redhat.com>
+        <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
+        <20050510234501.79eea7a4.diegocg@gmail.com>
+Reply-To: eduardo@tendencies.com.br
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 00:12:13 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <eduardo@tendencies.com.br>, <dwmw2@infradead.org>,
+	<jon@blackcubes.dyndns.org>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 11 00:26:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVcwl-0005Fo-M2
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:11:23 +0200
+	id 1DVdBI-0006ym-Tb
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261839AbVEJWSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 18:18:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261835AbVEJWSn
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:18:43 -0400
-Received: from iabervon.org ([66.92.72.58]:16903 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261839AbVEJWSa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 18:18:30 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DVd3J-0005p0-00; Tue, 10 May 2005 18:18:09 -0400
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc40320505100800426d38ca@mail.gmail.com>
+	id S261806AbVEJWdq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 May 2005 18:33:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261808AbVEJWdq
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:33:46 -0400
+Received: from tendencies.com.br ([72.29.102.143]:42380 "EHLO
+	tendencies.com.br") by vger.kernel.org with ESMTP id S261806AbVEJWdn
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 18:33:43 -0400
+Received: from tendencies.com.br (localhost [127.0.0.1])
+	by tendencies.com.br (8.12.11/8.12.11) with ESMTP id j4AMXPUR014201;
+	Tue, 10 May 2005 18:33:25 -0400
+Received: (from apache@localhost)
+	by tendencies.com.br (8.12.11/8.12.11/Submit) id j4AMXE2a014199;
+	Tue, 10 May 2005 19:33:14 -0300
+X-Authentication-Warning: tendencies.com.br: apache set sender to eduardo@tendencies.com.br using -f
+Received: from 200.158.14.67 (proxying for 200.158.14.67)
+        (SquirrelMail authenticated user etdias)
+        by www.tendencies.com.br with HTTP;
+        Tue, 10 May 2005 19:33:14 -0300 (BRT)
+To: <diegocg@gmail.com>
+In-Reply-To: <20050510234501.79eea7a4.diegocg@gmail.com>
+X-Priority: 3
+Importance: Normal
+X-Mailer: SquirrelMail (version 1.2.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 11 May 2005, Jon Seymour wrote:
+I'm a Java programmer and I was thinking like one (Culture thing).
 
-> I have been experimenting with pure-Java implementation of GIT
-> concepts with a goal of eventually providing plugins to Eclipse to
-> allow the Eclipse GUI to interact with GIT repositories.
-> 
-> One thing I noticed when doing this is that the present index/cache
-> structure is rather arbitrary and the optimum index structure is
-> determined by the structure of the tools that use a GIT repository
-> rather than the structure of the GIT repository itself.
+The reuse argument is very Strong.
 
-I'd guess that an Eclipse plugin wouldn't have a on-disk cache at all,
-since it expects to keep the same address space through a whole day's
-work.
+The git-core are ready and it's a very good idea to reuse it. Any chang=
+e
+in the core or in the internal representation of git repository will
+benefit the Git-Java implementation...
 
-> To give a concrete example: the cache currently contains most of the
-> posix stat structure primarily to allow quick change detection. In the
-> Java world, most of the posix stat structure is not directly
-> accessible via the pure-Java file system abstractions. However, for
-> most purposes detecting changes to files modification time and file
-> size would be enough. Given this is the case, a Java-GIT client
-> doesn't need to bother getting access to a posix stat structure and
-> could therefore get away with a simpler  index structure, provided it
-> doesn't need to interoperate with a 'C'-GIT client that shared the
-> same workspace. A Java-GIT client might also choose to represent an
-> index cache as a complex serialized Java object graph or (perhaps) an
-> XML document.
+I think that a growing utilization of GCJ and ClassPath will contribute=
+ to
+a Gradual Culture Change in the Java Land and promote a beter
+reutilization among all GCC languages...
 
-The two clients should be able to interoperate trivially; the C version
-would just treat the Java one as a text editor whose modifications happen
-to match commits going into the same head; as soon as the C user does
-either read-tree or update-cache, everything will be seen to be consistent
-again.
+Write Once Run Everywhere that GCJ Runs (Sounds Good).
 
-> Currently the GIT stack is structured as follows:
-> 
-> cogito
-> git-core 
-> 
-> I think it would be worthwhile if care was taken to draw a distinction
-> between the repository and the cache aspects of the git core, perhaps
-> even going to the extreme of moving all knowledge of the  cache into
-> cogito itself. By clearly drawing this distinction, we will more
-> easily enable the creation of different kind of tools sets atop the
-> foundation of the GIT repository format.
+Eclipse will be compiled with GCJ in Fedora 4. Let's see how it works..=
+=2E
 
-I think this is nonsensical. The cache format is tied to the way in which
-the repository accessing code is written, so a git-core separate from the
-cache wouldn't have a useful set of code.
+Cheers!
 
-It might be worthwhile to produce a separate document describing the
-repository format, such that it could be accessed by different code,
-however. Of course, the index file wouldn't be part of this documentation,
-for the same reason that the public git repositories don't include index
-files.
+> El Tue, 10 May 2005 13:19:49 -0300 (BRT),
+> "Eduardo Teixeira Dias" <eduardo@tendencies.com.br> escribi=F3:
+>
+>>   - Just a .jar download
+>>   - Installation without external dependencies
+>
+>
+> Someone who is going to hack the kernel can very well install more
+> things. And anyway, git is "the linux SCM tool" so all distros will
+> package it. Also, people who hacks the linux kernel usually runs it, =
+so
+> "git is not ported to win32" is not a big problem.
+>
+> ...and I don't think people who use eclipse wants to have the fastest
+> tool on earth, so "java-invoking-C is slower than pure java" is not a
+> great excuse either...
+>
+> Code reuse =3D=3D good. Java programmers should know that. Anyway, pe=
+ople is
+> free to do whatever they want with their time :)
 
-	-Daniel
-*This .sig left intentionally blank*
+
+
 
