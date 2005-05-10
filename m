@@ -1,70 +1,58 @@
-From: Diego Calleja <diegocg@gmail.com>
-Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 23:45:01 +0200
-Message-ID: <20050510234501.79eea7a4.diegocg@gmail.com>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
-	<1115739511.16187.432.camel@hades.cambridge.redhat.com>
-	<17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br>
-	<1115740844.16187.445.camel@hades.cambridge.redhat.com>
-	<26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
+From: David Greaves <david@dgreaves.com>
+Subject: [PATCH 0/4] split core-git.txt and update
+Date: Tue, 10 May 2005 22:32:22 +0100
+Message-ID: <42812866.2040208@dgreaves.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: dwmw2@infradead.org, jon@blackcubes.dyndns.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 23:55:54 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 10 23:56:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVch0-000374-F4
-	for gcvg-git@gmane.org; Tue, 10 May 2005 23:55:06 +0200
+	id 1DVch0-000374-Se
+	for gcvg-git@gmane.org; Tue, 10 May 2005 23:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261829AbVEJWAi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 May 2005 18:00:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261837AbVEJWAW
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:00:22 -0400
-Received: from wproxy.gmail.com ([64.233.184.194]:8246 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261822AbVEJVqP convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 17:46:15 -0400
-Received: by wproxy.gmail.com with SMTP id 68so33011wri
-        for <git@vger.kernel.org>; Tue, 10 May 2005 14:46:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=DJtXsJzQCu8ZF0J4SAzClM1iW07u4Oj8n+qRFtS4BKheXf+JuDl1YJi2ZKq3fOPC2gs8R3Tm68uPS3Jv9+WXKNcfndd87M0or44en6gzC0MOqiQmUPplMoG0qPSbkTtiPP9MUxN48V1wIqNmWVyEzDj3BcxVfY/HMN8gJG0paIY=
-Received: by 10.54.41.78 with SMTP id o78mr10685wro;
-        Tue, 10 May 2005 14:46:13 -0700 (PDT)
-Received: from estel ([80.103.1.132])
-        by mx.gmail.com with ESMTP id 8sm783205wrl.2005.05.10.14.46.10;
-        Tue, 10 May 2005 14:46:13 -0700 (PDT)
-To: eduardo@tendencies.com.br
-In-Reply-To: <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
-X-Mailer: Sylpheed version 1.9.9+svn (GTK+ 2.6.4; i686-pc-linux-gnu)
+	id S261816AbVEJWAi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 18:00:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261835AbVEJWAF
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:00:05 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:30644 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261806AbVEJVcg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 17:32:36 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 2BEA9E6DEA; Tue, 10 May 2005 22:31:26 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 21441-10; Tue, 10 May 2005 22:31:26 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.163.57])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id A07EAE6DA7; Tue, 10 May 2005 22:31:25 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DVcL0-0001N7-Hm; Tue, 10 May 2005 22:32:22 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing Lists <git@vger.kernel.org>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-El Tue, 10 May 2005 13:19:49 -0300 (BRT),
-"Eduardo Teixeira Dias" <eduardo@tendencies.com.br> escribi=F3:
+Hi Junio
 
->   - Just a .jar download
->   - Installation without external dependencies
+Here are some more doc patches.
+I've :
+* split up core-git.txt
+* restructured the git.txt page
+* described the environment variable usage and symbolic identifiers
+* verified the docs for the first section of commands
+* created a Makefile
 
+All against your repository.
 
-Someone who is going to hack the kernel can very well install more thin=
-gs.
-And anyway, git is "the linux SCM tool" so all distros will package it.=
- Also,
-people who hacks the linux kernel usually runs it, so "git is not porte=
-d
-to win32" is not a big problem.
+David
 
-=2E..and I don't think people who use eclipse wants to have the fastest=
- tool
-on earth, so "java-invoking-C is slower than pure java" is not a great =
-excuse
-either...
+-- 
 
-Code reuse =3D=3D good. Java programmers should know that. Anyway, peop=
-le
-is free to do whatever they want with their time :)
