@@ -1,60 +1,63 @@
-From: James Purser <purserj@ksit.dynalias.com>
-Subject: Re: Core and Not-So Core
-Date: Wed, 11 May 2005 09:04:21 +1000
-Message-ID: <1115766261.3068.0.camel@kryten>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
-	 <1115739511.16187.432.camel@hades.cambridge.redhat.com>
-	 <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br>
-	 <1115740844.16187.445.camel@hades.cambridge.redhat.com>
-	 <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br>
-	 <20050510234501.79eea7a4.diegocg@gmail.com>
-	 <20050510224433.GC26384@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: "git-checkout-cache -f -a" failure
+Date: Wed, 11 May 2005 01:03:58 +0200
+Message-ID: <20050510230357.GF26384@pasky.ji.cz>
+References: <118833cc05050911255e601fc@mail.gmail.com> <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Diego Calleja <diegocg@gmail.com>, eduardo@tendencies.com.br,
-	dwmw2@infradead.org, jon@blackcubes.dyndns.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 00:56:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Morten Welinder <mwelinder@gmail.com>,
+	GIT Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 11 00:56:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVddV-0001Tf-NY
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:55:34 +0200
+	id 1DVdeY-0001Zv-55
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261840AbVEJXC7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 19:02:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261842AbVEJXC7
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:02:59 -0400
-Received: from dsl-202-52-56-051.nsw.veridas.net ([202.52.56.51]:18816 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S261840AbVEJXC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 19:02:57 -0400
-Received: from localhost.localdomain (kryten [127.0.0.1])
-	by localhost.localdomain (8.12.11/8.12.11) with ESMTP id j4AN4QKX004235;
-	Wed, 11 May 2005 09:04:26 +1000
-Received: (from purserj@localhost)
-	by localhost.localdomain (8.12.11/8.12.11/Submit) id j4AN4Mwt004234;
-	Wed, 11 May 2005 09:04:22 +1000
-X-Authentication-Warning: localhost.localdomain: purserj set sender to purserj@ksit.dynalias.com using -f
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050510224433.GC26384@pasky.ji.cz>
-X-Mailer: Ximian Evolution 1.4.6 (1.4.6-2) 
+	id S261844AbVEJXEC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 19:04:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261846AbVEJXEC
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:04:02 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:5801 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261844AbVEJXD7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 19:03:59 -0400
+Received: (qmail 8628 invoked by uid 2001); 10 May 2005 23:03:58 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-05-11 at 08:44, Petr Baudis wrote:
-> Dear diary, on Tue, May 10, 2005 at 11:45:01PM CEST, I got a letter
-> where Diego Calleja <diegocg@gmail.com> told me that...
-> > Someone who is going to hack the kernel can very well install more things.
-> > And anyway, git is "the linux SCM tool" so all distros will package it. Also,
-> > people who hacks the linux kernel usually runs it, so "git is not ported
-> > to win32" is not a big problem.
+Dear diary, on Wed, May 11, 2005 at 12:57:34AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> >>>>> "MW" == Morten Welinder <mwelinder@gmail.com> writes:
 > 
-> It's not like everything git is ever going to be used for is kernel and
-> only the kernel.
-So does this mean I can keep working on my wxWidgets implementation? :)
--- 
-James Purser
-http://ksit.dynalias.com
+> MW> git-checkout-cache is having problems when files change from directories to
+> MW> plain files or vice versa.  cg-seek seems to be similarly affected.
+> 
+> Could you give this patch a try?  It lets checkout-cache remove
+> a file where you want to have a directory (because you want to
+> create something underneath) or remove a whole subdirectory
+> where you want to have a non-directory, when '-f' parameter is
+> specified.
+> 
+> If things test well, I'll put this in the git-jc repository and
+> ask Linus to pull from it alongside with other accumulated
+> patches when he returns.
 
+Chilling.
+
+What if you have some files not tracked by git in the subdirectory?
+Either you need to check for this and deal with it (Cogito's approach
+would be to remove the git-tracked files and rename the subdirectory),
+or not do it at all. Or at least please use -F or something if you
+really want this and like to gamble.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
