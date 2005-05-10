@@ -1,59 +1,72 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [RFC] Renaming environment variables.
-Date: Tue, 10 May 2005 02:32:35 +0200
-Message-ID: <20050510003235.GK15712@pasky.ji.cz>
-References: <2721.10.10.10.24.1115425962.squirrel@linux1> <7vbr7nbl89.fsf@assigned-by-dhcp.cox.net> <7vacn6ak7r.fsf@assigned-by-dhcp.cox.net> <427F6693.2080707@zytor.com> <7vll6oz755.fsf@assigned-by-dhcp.cox.net> <3087.10.10.10.24.1115656919.squirrel@linux1> <427FA5FD.1050000@zytor.com> <7vfywwz11t.fsf@assigned-by-dhcp.cox.net> <7vhdhcxj0z.fsf_-_@assigned-by-dhcp.cox.net> <20050509201520.GL24216@cip.informatik.uni-erlangen.de>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Prototype git commit viewer
+Date: Tue, 10 May 2005 10:33:00 +1000
+Message-ID: <17024.316.828536.230448@cargo.ozlabs.ibm.com>
+References: <17022.49021.344841.79940@cargo.ozlabs.ibm.com>
+	<m3fywwjktf.fsf@defiant.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue May 10 02:25:28 2005
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 02:26:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVIYt-00033N-E9
-	for gcvg-git@gmane.org; Tue, 10 May 2005 02:25:23 +0200
+	id 1DVIZR-00039N-Iq
+	for gcvg-git@gmane.org; Tue, 10 May 2005 02:25:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261449AbVEJAci (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 20:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261458AbVEJAci
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 20:32:38 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43406 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261449AbVEJAcg (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 20:32:36 -0400
-Received: (qmail 5392 invoked by uid 2001); 10 May 2005 00:32:35 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050509201520.GL24216@cip.informatik.uni-erlangen.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261458AbVEJAdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 20:33:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261459AbVEJAdG
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 20:33:06 -0400
+Received: from ozlabs.org ([203.10.76.45]:60895 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261458AbVEJAdB (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 20:33:01 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4BB6E679FA; Tue, 10 May 2005 10:33:00 +1000 (EST)
+To: Krzysztof Halasa <khc@pm.waw.pl>
+In-Reply-To: <m3fywwjktf.fsf@defiant.localdomain>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 09, 2005 at 10:15:20PM CEST, I got a letter
-where Thomas Glanzmann <sithglan@stud.uni-erlangen.de> told me that...
-> > Here is a patch, requesting for comments.
+Krzysztof Halasa writes:
+
+> Nice. I wonder how well would it work with a longer history, say all
+> linux-2.[56] data. It takes gitk ~ 10 seconds to read ~ 1000 Linux
+> commits from cache now, on my system.
+
+Any arguments you give to gitk (other than -b and -d) get passed to
+git-rev-tree, so you can just look at a section of the tree.  (I just
+fixed a bug where it would crash if a commit had a parent that wasn't
+listed in the git-rev-tree output, so refetch if you want to try it.)
+So you can do e.g.
+	gitk 88d7bd8cb9eb8d64bf7997600b0d64f7834047c5 \
+		^a2755a80f40e5794ddc20e00f781af9d6320fafb
+
+to see all the commits from v2.6.12-rc4 back to but not including
+v2.6.12-rc3 (unfortunately git-rev-tree seems not to cope with being
+given tags rather than commit ids).
+
+Ultimately I want to add ways to select the range of commits you want
+to look at, e.g. by tags or by dates.
+
+So as long as git-rev-tree remains fast as the history grows, gitk
+should remain usable for looking at reasonable-sized chunks of the
+history.  There are various things I can do to make gitk faster, too,
+up to and including tcl bindings for the core git library. :)  
+
+> In fact I'm thinking about something working with WWW browser. I've
+> written a very simple experimental show-tree tool in C and it seems
+> reading current Linux tree (no HTTP output yet) takes 0.065s with it.
 > 
-> sounds good. But I would forget about downward compatibility. There is
-> no need to maintain it at this early stage.
+> Now I'm thinking about output language. (X)HTML seems to be not
+> capable (I'm not HTML expert, please correct me if I'm wrong).
+> 
+> Any idea of what can I use?
 
-Sure there is. We are actually far from an early stage now, I'd say.
+I think I am even less of an HTML expert than you. :)
 
-And what I don't want to see are commits with messed up author
-information since people upgraded and did not notice.
-
-> And one thing which bothers me all the time but never spoke up about it:
-> There is no way to provide a GIT_COMMIT_DATE. This would be useful for
-> vendortracking a CVS repository for example.
-
-You could use GIT_AUTHOR_DATE. :-)
-
-But yes, I actually agree. When you are doing vendortracking of CVS
-repository, you have one canonical source of the commit, and when you do
-the CVS import twice independently, I think you _want_ the same commit,
-since it _is_ the same commit after all (if the history is same too,
-obviously).
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Regards,
+Paul.
