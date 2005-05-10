@@ -1,45 +1,60 @@
 From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: Core and Not-So Core
-Date: Wed, 11 May 2005 00:44:33 +0200
-Message-ID: <20050510224433.GC26384@pasky.ji.cz>
-References: <2cfc40320505100800426d38ca@mail.gmail.com> <1115739511.16187.432.camel@hades.cambridge.redhat.com> <17115.200.158.14.67.1115740220.squirrel@www.tendencies.com.br> <1115740844.16187.445.camel@hades.cambridge.redhat.com> <26021.200.158.14.67.1115741989.squirrel@www.tendencies.com.br> <20050510234501.79eea7a4.diegocg@gmail.com>
+Date: Wed, 11 May 2005 00:52:35 +0200
+Message-ID: <20050510225235.GD26384@pasky.ji.cz>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: eduardo@tendencies.com.br, dwmw2@infradead.org,
-	jon@blackcubes.dyndns.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 00:38:24 2005
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 11 00:46:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVdMD-00085m-M8
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:37:41 +0200
+	id 1DVdTY-0000PH-Ud
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261844AbVEJWoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 18:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261842AbVEJWoy
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:44:54 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:43944 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261822AbVEJWom (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 18:44:42 -0400
-Received: (qmail 5682 invoked by uid 2001); 10 May 2005 22:44:33 -0000
-To: Diego Calleja <diegocg@gmail.com>
+	id S261806AbVEJWwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 18:52:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261808AbVEJWwk
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 18:52:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54696 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261806AbVEJWwg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 18:52:36 -0400
+Received: (qmail 6794 invoked by uid 2001); 10 May 2005 22:52:35 -0000
+To: Jon Seymour <jon.seymour@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20050510234501.79eea7a4.diegocg@gmail.com>
+In-Reply-To: <2cfc40320505100800426d38ca@mail.gmail.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, May 10, 2005 at 11:45:01PM CEST, I got a letter
-where Diego Calleja <diegocg@gmail.com> told me that...
-> Someone who is going to hack the kernel can very well install more things.
-> And anyway, git is "the linux SCM tool" so all distros will package it. Also,
-> people who hacks the linux kernel usually runs it, so "git is not ported
-> to win32" is not a big problem.
+Dear diary, on Tue, May 10, 2005 at 05:00:33PM CEST, I got a letter
+where Jon Seymour <jon.seymour@gmail.com> told me that...
+> One thing I noticed when doing this is that the present index/cache
+> structure is rather arbitrary and the optimum index structure is
+> determined by the structure of the tools that use a GIT repository
+> rather than the structure of the GIT repository itself.
 
-It's not like everything git is ever going to be used for is kernel and
-only the kernel.
+Yes. And that's how it should be - the directory cache is just that - a
+_cache_. It does not hold any permanent information, merely serves to
+record git tools' working state relative to the given working tree. So
+unlike the objects database which has well-defined format and is
+supposed to be "public", you should view the directory cache as internal
+git tools' structure. If you want to mess with it too, either use the
+proper level of abstraction and call the git tools, or don't mess with
+it at all. And you need to care about it only if you want the git tools
+working on the same tree properly too - so in that case use the git
+tools too.
+
+ From your arguments, it's not clear to me what really is the big
+problem with the git tools. They are _designed_ for automatic use
+instead of human interaction - you can perceive them just as methods
+with funny (but actually friendly to your programs) calling convention.
+
+Kind regards,
 
 -- 
 				Petr "Pasky" Baudis
