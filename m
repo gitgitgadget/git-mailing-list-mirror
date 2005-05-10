@@ -1,99 +1,55 @@
-From: Brandon Philips <brandon@ifup.org>
-Subject: [PATCH Cogito] cg-init breaks if . contains sub-dir
-Date: Mon, 9 May 2005 16:39:05 -0700
-Message-ID: <20050509233904.GB878@osuosl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Prototype git commit viewer
+Date: Tue, 10 May 2005 02:03:57 +0200
+Message-ID: <20050510000357.GG15712@pasky.ji.cz>
+References: <17022.49021.344841.79940@cargo.ozlabs.ibm.com> <20050509071341.GA3599@pasky.ji.cz> <17023.57405.35272.46557@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="3uo+9/B/ebqu+fSQ"
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 10 01:33:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 10 01:57:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVHjh-0006p6-4Q
-	for gcvg-git@gmane.org; Tue, 10 May 2005 01:32:29 +0200
+	id 1DVI7C-0000jB-TJ
+	for gcvg-git@gmane.org; Tue, 10 May 2005 01:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261377AbVEIXjj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 19:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261411AbVEIXjd
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 19:39:33 -0400
-Received: from ns1.osuosl.org ([140.211.166.130]:52648 "EHLO ns1.osuosl.org")
-	by vger.kernel.org with ESMTP id S261377AbVEIXjI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 19:39:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by ns1.osuosl.org (Postfix) with ESMTP id 97F15BC31F;
-	Mon,  9 May 2005 16:39:05 -0700 (PDT)
-Received: from ns1.osuosl.org ([127.0.0.1])
-	by localhost (ns1.osuosl.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 12284-88; Mon, 9 May 2005 16:39:05 -0700 (PDT)
-Received: from shell.osuosl.org (shell.osuosl.org [140.211.166.149])
-	by ns1.osuosl.org (Postfix) with ESMTP id 6449DBC31A;
-	Mon,  9 May 2005 16:39:05 -0700 (PDT)
-Received: by shell.osuosl.org (Postfix, from userid 1000)
-	id 50CD82F401C; Mon,  9 May 2005 16:39:05 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
+	id S261436AbVEJAEC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 20:04:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVEJAEC
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 20:04:02 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:59533 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261436AbVEJAD7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 20:03:59 -0400
+Received: (qmail 2585 invoked by uid 2001); 10 May 2005 00:03:57 -0000
+To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at osuosl.org
-X-Spam-Status: No, hits=0.0 tagged_above=-999.0 required=5.0 tests=
-X-Spam-Level: 
+In-Reply-To: <17023.57405.35272.46557@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Tue, May 10, 2005 at 12:12:13AM CEST, I got a letter
+where Paul Mackerras <paulus@samba.org> told me that...
+> Petr Baudis writes:
+> 
+> > What are its advantages to git-viz?
+> 
+> As a kernel developer, when I do a pull from Linus' tree, the question
+> I want to ask is "who has been making what changes?"  That's why gitk
+> shows the headline and author of each of 30 commits in one screenful.
+> AFAICS from the screenshots, git-viz doesn't give me that density of
+> information (and neither did bk revtool, for that matter).
+> 
+> It seems to me that git-viz makes the graph topology the primary thing
+> and the details of the commits the secondary thing.  I want it the
+> other way around.
 
---3uo+9/B/ebqu+fSQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, it looks indeed pretty nice, I have to say after actually looking
+at it.
 
-Hi Petr,
-
-cg-init has the ability to cg-add all files in the current directory.
-
-But if the current directory has a sub directory cg-init breaks because
-the `find *` command on line 34 returns directories which cg-add doesn't
-accept.
-
-Regards
-
-Brandon Philips
-
-Shameless plug: cogito-0.10 available in Gentoo
-
---
-http://ifup.org
-
----
-
-cg-init: needs update
-Index: cg-init
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- 972d8624458936868e6f392b40858b7c362af8cd/cg-init  (mode:100755)
-+++ uncommitted/cg-init  (mode:100755)
-@@ -31,7 +31,7 @@
- 	echo "Cloned (origin $uri available as branch \"origin\")"
- else
- 	git-read-tree # Seed the dircache
--	find * | xargs cg-add
-+	find * ! -type d | xargs cg-add=20
- 	cg-commit -C -m"Initial commit" -e
- fi
- exit 0
-
---3uo+9/B/ebqu+fSQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQFCf/SYoP8TDUUjhZ0RAkpjAJ4gmvEbQsZ5JxdRKW/KzHHrQVI0AQCfRBE1
-LGoWHcPL0Ft3h0brD9m/u1c=
-=FLBb
------END PGP SIGNATURE-----
-
---3uo+9/B/ebqu+fSQ--
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
