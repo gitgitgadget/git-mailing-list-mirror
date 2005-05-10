@@ -1,98 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Darcs-git: a few notes for Git hackers
-Date: Mon, 9 May 2005 20:07:36 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505091913250.30848-100000@iabervon.org>
-References: <7ihdhc5le2.fsf@lanthane.pps.jussieu.fr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Renaming environment variables.
+Date: Mon, 09 May 2005 17:09:19 -0700
+Message-ID: <7v7ji8vt5c.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0505091847050.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>, darcs-devel@abridgegame.org
-X-From: git-owner@vger.kernel.org Tue May 10 02:01:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>,
+	Sean <seanlkml@sympatico.ca>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 10 02:02:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVIB6-00014R-LN
-	for gcvg-git@gmane.org; Tue, 10 May 2005 02:00:48 +0200
+	id 1DVICk-0001Eo-Ui
+	for gcvg-git@gmane.org; Tue, 10 May 2005 02:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261438AbVEJAIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 20:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261441AbVEJAIG
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 20:08:06 -0400
-Received: from iabervon.org ([66.92.72.58]:37639 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261438AbVEJAH7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 20:07:59 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DVIHg-0005z6-00; Mon, 9 May 2005 20:07:36 -0400
-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-In-Reply-To: <7ihdhc5le2.fsf@lanthane.pps.jussieu.fr>
+	id S261441AbVEJAJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 20:09:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261449AbVEJAJs
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 20:09:48 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:6654 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261441AbVEJAJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 May 2005 20:09:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050510000919.KIMY22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 9 May 2005 20:09:19 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0505091847050.30848-100000@iabervon.org> (Daniel
+ Barkalow's message of "Mon, 9 May 2005 19:08:20 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 9 May 2005, Juliusz Chroboczek wrote:
+>>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> Hi,
-> 
-> Here are a few notes about Git that should probably be taken into
-> account by people working on Git itself or on Git wrappers.  The notes
-> apply to Linus' Git-0.6, which is the code I'm using in Darcs-git;
-> some of them might no longer be applicable to Darcs.
-> 
-> 
-> 1. Darcs-git uses the fact that Git updates are atomic when reading
-> from a Git repository.  Darcs-git almost writes to Git repositories
-> atomically, with one exception: it performs a non-atomic
-> read/update/write cycle on .git/HEAD.
-> 
-> For that reason, I'm taking a high-level lock on .git repositories
-> whenever I write them.  The lockfile is ``.git/lock''.  I haven't
-> thought about whether Darcs can be easily coerced into accessing Git
-> repos atomically; have people writing Git wrappers found the need for
-> a global lock?
+DB> While we're at it, it would be useful to have one for what is normally
+DB> ".git",...
 
-I think most things are using the O_CREAT | O_EXCL write to a file and
-then rename or link/unlink to the desired location. I have some code to do
-this with refs/*/* as well, and I think people have generally settled on
-symlinking HEAD to something in refs/heads/. So it shouldn't be necessary
-to lock the whole repository, unless you're doing some operation like
-swapping two heads.
+If you mean the parent directory of ${SHA1_FILE_DIRECTORY}, and
+your only gripe is about git-init-db creating ".git" in the
+current working directory regardless of SHA1_FILE_DIRECTORY, I
+would agree that what git-init-db does is broken.  Not that I
+have a suggested "right behaviour" for it, though.
 
-> 2. The files git.h and git.c in Darcs-git are a simple ``libgit'' that
-> contains just enough functionality for Darcs-git; they use the
-> functionality of sha1_file.c and read_cache.c from Git-0.6.
-> 
-> I've found a few problems with the interfaces in these files:
-> 
->  - the global variables sha1_file_directory, active_cache, active_nr
->    and active_alloc are not marked ``extern'' in cache.h.  This breaks
->    linkers that don't grok common symbols, such as the one in GHCi
->    (silly GHCi).
+However if you also mean by ".git" the directory refs/heads and
+friends hang underneath, then I have to disagree.  That does not
+belong to core GIT, which always expects to run from the top
+level directory that has such directory directly under it, and
+at the same time corresponds to the tree structure the dircache
+describes.  There is no need for the environment variable you
+suggest, since it always is the ".git" subdirectory of such a
+directory.
 
-Should be trivial to fix.
+I once advocated GIT_WORKING_TREE to mean the current project
+top, which is the parent directory of ".git".  The proposal was
+shot down (see archives [*1*]).  While I still think that
+configuration (or your ".git" location proposal, which is
+essentially the equivalent) may sometimes useful, I'd rather not
+conflate this environment variable renames with that issue.
+They are pretty much independent issues.
 
->  - the function write_sha1_file takes the metadata and the data in a
->    contiguous buffer, which is a problem when the data has been
->    allocated by a higher layer.  I'm currently working around the
->    problem by memcpy-ing everything into a temp buffer, but that's
->    obviously not a good thing.  I don't care whether write_sha1_file
->    is changed to use a writev-like interface, or to take the metadata
->    explicitly (as in char *type, unsigned long length).
-
-I've got some patches to make new functions of the write_sha1_file sort
-easier to write cleanly (for making git-*-pull clean); it wouldn't be too
-hard to have an open/write/close set.
-
->  - there is no (usable) function to write a tree; there's the code in
->    write_tree.c, but it's not generally useful.  See the function
->    ``git_write_tree_done'' in git.c for the type of interface I'm
->    thinking of.
-
-I'm working on making this cleaner. Are you wanting to write a tree from
-something other than a cache?
-
-I can post my patches, but Linus is on vacation, so they couldn't go into
-the mainline until Friday or so anyway.
-
-	-Daniel
-*This .sig left intentionally blank*
+[References]
+*1* http://marc.theaimsgroup.com/?l=git&m=111412959320946&w=2
 
