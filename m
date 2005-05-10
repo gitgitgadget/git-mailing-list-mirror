@@ -1,67 +1,74 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
+From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: Core and Not-So Core
-Date: Tue, 10 May 2005 19:11:10 -0400
-Message-ID: <200505102311.j4ANBAUq011203@laptop11.inf.utfsm.cl>
-References: <diegocg@gmail.com>
+Date: Wed, 11 May 2005 09:20:42 +1000
+Message-ID: <2cfc403205051016205d722f23@mail.gmail.com>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
+	 <Pine.LNX.4.21.0505101743520.30848-100000@iabervon.org>
+	 <2cfc40320505101605721420@mail.gmail.com>
+	 <2cfc4032050510160578b81fa7@mail.gmail.com>
+	 <20050510230844.GG26384@pasky.ji.cz>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: eduardo@tendencies.com.br, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 01:04:14 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 11 01:14:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVdln-0002Hh-R3
-	for gcvg-git@gmane.org; Wed, 11 May 2005 01:04:08 +0200
+	id 1DVdv0-0003Dy-Iz
+	for gcvg-git@gmane.org; Wed, 11 May 2005 01:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261806AbVEJXLf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 19:11:35 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261808AbVEJXLf
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:11:35 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:21955 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S261806AbVEJXLd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 19:11:33 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j4AN8PYn008505
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 May 2005 19:08:26 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j4ANBAUq011203;
-	Tue, 10 May 2005 19:11:11 -0400
-To: Diego Calleja <diegocg@gmail.com>
-In-Reply-To: Message from Diego Calleja <diegocg@gmail.com> 
-   of "Wed, 11 May 2005 01:03:02 +0200." <20050511010302.3ab47c74.diegocg@gmail.com> 
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Tue, 10 May 2005 19:08:26 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
+	id S261806AbVEJXUx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 19:20:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261842AbVEJXUx
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:20:53 -0400
+Received: from rproxy.gmail.com ([64.233.170.194]:22002 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261806AbVEJXUm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 19:20:42 -0400
+Received: by rproxy.gmail.com with SMTP id j1so15411rnf
+        for <git@vger.kernel.org>; Tue, 10 May 2005 16:20:42 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Q2QHlE4aC3k5aAmWsys1VZLrfvQwPLiGQwKugIrUIVqyo22eA07XUgIOZMs5r0UrdUArjfdUHQWkQxKRI1XwluytmzPD/ppA/3tlcgv5loVyH3osBuuEgAiFW/3XGcxVMm8A0ZUCWqC8UET+6RQzqJP4/DyvSO/RA6WaSjXssN8=
+Received: by 10.38.75.74 with SMTP id x74mr62297rna;
+        Tue, 10 May 2005 16:20:42 -0700 (PDT)
+Received: by 10.38.104.59 with HTTP; Tue, 10 May 2005 16:20:42 -0700 (PDT)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050510230844.GG26384@pasky.ji.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Diego Calleja <diegocg@gmail.com> said:
-> El Tue, 10 May 2005 19:33:14 -0300 (BRT),
-> "Eduardo Teixeira Dias" <eduardo@tendencies.com.br> escribi=F3:
-> > Write Once Run Everywhere that GCJ Runs (Sounds Good).
+On 5/11/05, Petr Baudis <pasky@ucw.cz> wrote:
+> Dear diary, on Wed, May 11, 2005 at 01:05:55AM CEST, I got a letter
+> where Jon Seymour <jon.seymour@gmail.com> told me that...
+> >
+> > I guess I agree it is somewhat nonsensical if one considers the
+> > current git toolset as a collection of programs - the exercise now
+> > might simply reduce to classifying git tools as
+> > index-using/non-index-using and nothing more. However, it might be
+> > worth keeping in mind when/if the "libification" of git happens so
+> > that there is a clean separation of layers in the API between the
+> > repository API and index/cache/workspace API.
+> 
+> In that case the repository API's input/output is data structure
+> equivalent to the index, and workspace API's input/output is the index
+> too. That is what it really is - and it is kept on the disk only since
+> the commands are invoked separately so it needs to keep the state around
+> somewhere.
+> 
 
-> GCJ in fact supports more architectures than Sun's java VM so with GC=
-J
-> you _really_ can run your java code everywhere.
+Not sure I agree...
 
-But then again, a half decent C implementation is even more ubicuous, s=
-o...
---=20
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+The repository API would contain functionality equivalent to cat-file,
+ls-tree, most of fsck-cache, rev-list, rev-tree, diff-tree, most of
+the transport code - things that don't involve use of the index.
 
+The workspace API would contain read-tree, write-tree, commit-tree,
+etc - things that do involve use of the the index.
+
+jon.
