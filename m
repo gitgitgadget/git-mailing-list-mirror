@@ -1,63 +1,88 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] minor Makefile and local-pull.c edits for Darwin
-Date: Tue, 10 May 2005 14:12:00 -0700
-Message-ID: <428123A0.3070000@zytor.com>
-References: <20050510021105.53984.qmail@web41213.mail.yahoo.com>	<428038D0.5000706@zytor.com> <7vpsvzpolp.fsf@assigned-by-dhcp.cox.net>	<4280C883.6080209@zytor.com> <4280CAC6.4000805@zytor.com> <7vekceyeo9.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Mark Allen <mrallen1@yahoo.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 23:13:49 2005
+From: David Greaves <david@dgreaves.com>
+Subject: [PATCH 4/4] split core-git.txt and update
+Date: Tue, 10 May 2005 22:32:39 +0100
+Message-ID: <E1DVcLH-0004jr-44@ash.dgreaves.com>
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 10 23:54:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVc24-0005pQ-I6
-	for gcvg-git@gmane.org; Tue, 10 May 2005 23:12:48 +0200
+	id 1DVcfp-0002wZ-Uz
+	for gcvg-git@gmane.org; Tue, 10 May 2005 23:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261808AbVEJVSz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 17:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261790AbVEJVPU
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 17:15:20 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:25988 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261814AbVEJVMX
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 17:12:23 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4ALC6Fs026796
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 May 2005 14:12:06 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
+	id S261806AbVEJWAi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 18:00:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261816AbVEJV7f
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 17:59:35 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:32692 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261813AbVEJVcq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 17:32:46 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id BDEC1E6DF8; Tue, 10 May 2005 22:31:35 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 21831-04; Tue, 10 May 2005 22:31:35 +0100 (BST)
+Received: from oak.dgreaves.com (modem-825.lion.dialup.pol.co.uk [217.135.163.57])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id E16F7E6DEF; Tue, 10 May 2005 22:31:34 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DVcLG-0001NP-WF; Tue, 10 May 2005 22:32:39 +0100
+Received: from david by ash.dgreaves.com with local (Exim 4.50)
+	id 1DVcLH-0004jr-44; Tue, 10 May 2005 22:32:39 +0100
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vekceyeo9.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-3.0 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
->>>>>>"HPA" == H Peter Anvin <hpa@zytor.com> writes:
-> 
-> 
-> HPA> That being said, there are also a whole bunch of assumptions that any
-> HPA> object can be memory-mapped *plus* fit uncompressed in
-> HPA> memory... that's obviously not going to be the case for large files.
-> 
-> HPA> On the other hand, one has to start cleaning up somewhere...
-> 
-> I agree to that, but on the other hand one also has to know
-> where to stop.  The primary purpose of GIT being to manage the
-> source files for the Linux kernel project, not worrying about
-> _huge_ files that would cause mmap+uncompressed or st.st_size
-> not fitting in unsigned long may just be fine.
-> 
+Makefile for html and man
 
-Using the correct data types is a good start, though.
+Signed-off-by: David Greaves <david@dgreaves.com>
 
-	-hpa
+
+---
+commit 9b651818abae168f7e0dbfafda81c9a4298ea410
+tree 4e3b4488b60547a6c90e8aefebb1befea26e0402
+parent 6cec96ce19223f1852a12632ad44007822e2a3de
+author David Greaves <david@dgreaves.com> Tue, 10 May 2005 22:20:25 +0100
+committer David Greaves <david@dgreaves.com> Tue, 10 May 2005 22:20:25 +0100
+
+ Documentation/Makefile |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+)
+
+Index: Documentation/Makefile
+===================================================================
+--- /dev/null  (tree:0b343ac5a1a6f8d6a4cb796c523ef84bf7e7254c)
++++ 4e3b4488b60547a6c90e8aefebb1befea26e0402/Documentation/Makefile  (mode:100644)
+@@ -0,0 +1,24 @@
++DOC_SRC=$(wildcard git*.txt)
++DOC_HTML=$(patsubst %.txt,%.html,$(DOC_SRC))
++DOC_MAN=$(patsubst %.txt,%.1,$(DOC_SRC))
++
++all: $(DOC_HTML) $(DOC_MAN)
++
++html: $(DOC_HTML)
++
++man: $(DOC_MAN)
++
++git-%: %.c $(LIB_FILE)
++	$(CC) $(CFLAGS) -o $@ $(filter %.c,$^) $(LIBS)
++
++clean:
++	rm -f *.xml *.html *.1
++
++%.html : %.txt
++	asciidoc -b css-embedded -d manpage $<
++
++%.1 : %.xml
++	xmlto man $<
++
++%.xml : %.txt
++	asciidoc -b docbook -d manpage $<
+
+
+
+!-------------------------------------------------------------flip-
+
 
