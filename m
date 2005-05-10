@@ -1,63 +1,76 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: "git-checkout-cache -f -a" failure
-Date: Wed, 11 May 2005 01:03:58 +0200
-Message-ID: <20050510230357.GF26384@pasky.ji.cz>
-References: <118833cc05050911255e601fc@mail.gmail.com> <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Core and Not-So Core
+Date: Wed, 11 May 2005 09:05:55 +1000
+Message-ID: <2cfc4032050510160578b81fa7@mail.gmail.com>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
+	 <Pine.LNX.4.21.0505101743520.30848-100000@iabervon.org>
+	 <2cfc40320505101605721420@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Morten Welinder <mwelinder@gmail.com>,
-	GIT Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 00:56:41 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 11 00:59:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVdeY-0001Zv-55
-	for gcvg-git@gmane.org; Wed, 11 May 2005 00:56:38 +0200
+	id 1DVdgc-0001mW-HB
+	for gcvg-git@gmane.org; Wed, 11 May 2005 00:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261844AbVEJXEC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 19:04:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261846AbVEJXEC
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:04:02 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:5801 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261844AbVEJXD7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 19:03:59 -0400
-Received: (qmail 8628 invoked by uid 2001); 10 May 2005 23:03:58 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S261847AbVEJXGE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 19:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261848AbVEJXGE
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 19:06:04 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:21719 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261847AbVEJXFz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 19:05:55 -0400
+Received: by rproxy.gmail.com with SMTP id j1so14339rnf
+        for <git@vger.kernel.org>; Tue, 10 May 2005 16:05:55 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NGdBdB2Ceec8gMuOO+Ty7OU2gZ+jSkOrR5hyQlEsjGnNwj0igQb6lNAUGjaqyrV4jm32AaLeUwIdBe9eGDWsPSF5ll5RP5VxkCMWnUAymg4DJHsCSomf1el1sTCvoldP8jfCnwIiyvWbu3ImSIYTgR2WwKbHnSzQtOSatTXwcHM=
+Received: by 10.38.97.47 with SMTP id u47mr52475rnb;
+        Tue, 10 May 2005 16:05:55 -0700 (PDT)
+Received: by 10.38.104.59 with HTTP; Tue, 10 May 2005 16:05:55 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <2cfc40320505101605721420@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, May 11, 2005 at 12:57:34AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "MW" == Morten Welinder <mwelinder@gmail.com> writes:
-> 
-> MW> git-checkout-cache is having problems when files change from directories to
-> MW> plain files or vice versa.  cg-seek seems to be similarly affected.
-> 
-> Could you give this patch a try?  It lets checkout-cache remove
-> a file where you want to have a directory (because you want to
-> create something underneath) or remove a whole subdirectory
-> where you want to have a non-directory, when '-f' parameter is
-> specified.
-> 
-> If things test well, I'll put this in the git-jc repository and
-> ask Linus to pull from it alongside with other accumulated
-> patches when he returns.
+>
+> > I think it would be worthwhile if care was taken to draw a distinction
+> > between the repository and the cache aspects of the git core, perhaps
+> > even going to the extreme of moving all knowledge of the  cache into
+> > cogito itself. By clearly drawing this distinction, we will more
+> > easily enable the creation of different kind of tools sets atop the
+> > foundation of the GIT repository format.
+>
+> I think this is nonsensical. The cache format is tied to the way in which
+> the repository accessing code is written, so a git-core separate from the
+> cache wouldn't have a useful set of code.
+>
 
-Chilling.
+I guess I agree it is somewhat nonsensical if one considers the
+current git toolset as a collection of programs - the exercise now
+might simply reduce to classifying git tools as
+index-using/non-index-using and nothing more. However, it might be
+worth keeping in mind when/if the "libification" of git happens so
+that there is a clean separation of layers in the API between the
+repository API and index/cache/workspace API.
 
-What if you have some files not tracked by git in the subdirectory?
-Either you need to check for this and deal with it (Cogito's approach
-would be to remove the git-tracked files and rename the subdirectory),
-or not do it at all. Or at least please use -F or something if you
-really want this and like to gamble.
+> It might be worthwhile to produce a separate document describing the
+> repository format, such that it could be accessed by different code,
+> however. Of course, the index file wouldn't be part of this documentation,
+> for the same reason that the public git repositories don't include index
+> files.
+>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+And thanks for your constructive criticism.
+
+jon.
+--
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
