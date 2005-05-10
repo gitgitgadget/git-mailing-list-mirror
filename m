@@ -1,72 +1,59 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Renaming environment variables.
-Date: Mon, 9 May 2005 23:23:19 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505092311590.30848-100000@iabervon.org>
-References: <7vy8anu8po.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH Cogito] cg-init breaks if . contains sub-dir
+Date: Tue, 10 May 2005 05:41:16 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.05.10.03.41.15.683163@smurf.noris.de>
+References: <20050509233904.GB878@osuosl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, Sean <seanlkml@sympatico.ca>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue May 10 05:16:51 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue May 10 05:35:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVLES-00023B-Bq
-	for gcvg-git@gmane.org; Tue, 10 May 2005 05:16:28 +0200
+	id 1DVLWe-0004tu-NS
+	for gcvg-git@gmane.org; Tue, 10 May 2005 05:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261542AbVEJDXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 May 2005 23:23:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261546AbVEJDXp
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 23:23:45 -0400
-Received: from iabervon.org ([66.92.72.58]:32005 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261542AbVEJDXm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 23:23:42 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DVLL5-0004t5-00; Mon, 9 May 2005 23:23:19 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy8anu8po.fsf@assigned-by-dhcp.cox.net>
+	id S261540AbVEJDmc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 May 2005 23:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261547AbVEJDmc
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 May 2005 23:42:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:37306 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261540AbVEJDma (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 May 2005 23:42:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DVLVd-0004go-6Z
+	for git@vger.kernel.org; Tue, 10 May 2005 05:34:13 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 May 2005 05:34:13 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 May 2005 05:34:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 9 May 2005, Junio C Hamano wrote:
+Hi, Brandon Philips wrote:
 
-> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
-> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
-> 
-> DB> While we're at it, it would be useful to have one for what is normally
-> DB> ".git", rather than just ".git/objects".
-> 
-> PB> I think it would be nice to have something like GIT_BASEDIR, which would
-> PB> default to .git, and the objects directory would then default to
-> PB> $GIT_BASEDIR/objects and the index file would default to
-> PB> $GIT_BASEDIR/index.
-> 
-> Although what I pushed out at git-jc repository does not have
-> this, it does not mean I forgot this issue you two have raised,
-> nor would want to veto it or anything like that.  Just that,
-> unlike the one that I already committed, the proposed change
-> would touch rather many lines and I have not managed to
-> determine the extent of the damage yet.
+> -	find * | xargs cg-add
+> +	find * ! -type d | xargs cg-add
 
-It *should* only affect the places where the variables that depend on it
-get computed; didn't you already centralize the code to figure this out?
+Actually, (almost) every use of "find | xargs" which is not a subset of
+"find -print0 | xargs -0r" is a bug.
 
-> I am currently waiting for community consensus, including the
-> final name of the variable.  I think the current consensus is
-> that this is a good idea, the semantics for it is to name what
-> corresponds to the current "$(pwd)/.git" directory, use it to
-> build the default for GIT_INDEX_FILE and SHA1_FILE_DIRECTORY,
-> and this directory does _not_ have anything to do with my
-> previous "the directory that corresponds to the root of the tree
-> structure GIT_INDEX_FILE describes".  I agree to all of the
-> above.
+So please don't do that. Special files aren't liked by git either, thus:
 
-I agree to all of that, too. I'd suggest GIT_DIR for the variable, simply
-because I can't think of anything else that name could mean.
+        find * -type f -print0 | xargs -0r cg-add
 
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+
 
