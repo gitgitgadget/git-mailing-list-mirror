@@ -1,66 +1,49 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH Cogito] cg-init breaks if . contains sub-dir
-Date: Tue, 10 May 2005 08:14:06 -0700
-Message-ID: <4280CFBE.6010904@zytor.com>
-References: <20050509233904.GB878@osuosl.org> <pan.2005.05.10.03.41.15.683163@smurf.noris.de> <428043EB.7010004@didntduck.org> <20050510075227.GA8176@lug-owl.de> <20050510080445.GB8176@lug-owl.de> <7vis1rpi8a.fsf@assigned-by-dhcp.cox.net> <20050510093212.GD8176@lug-owl.de> <20050510093924.GH11221@kiste.smurf.noris.de> <20050510094538.GE8176@lug-owl.de>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: Core and Not-So Core
+Date: Tue, 10 May 2005 16:38:31 +0100
+Message-ID: <1115739511.16187.432.camel@hades.cambridge.redhat.com>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Matthias Urlichs <smurf@smurf.noris.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 10 17:10:54 2005
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 10 17:34:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVWMZ-000543-WE
-	for gcvg-git@gmane.org; Tue, 10 May 2005 17:09:36 +0200
+	id 1DVWj8-0000rj-Kv
+	for gcvg-git@gmane.org; Tue, 10 May 2005 17:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261675AbVEJPQ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 11:16:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261678AbVEJPQ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 11:16:27 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:25318 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261682AbVEJPOz
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 11:14:55 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4AFE6rU020105
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 10 May 2005 08:14:08 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20050510094538.GE8176@lug-owl.de>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-3.0 required=5.0 tests=ALL_TRUSTED,AWL 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261696AbVEJPjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 11:39:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261690AbVEJPjM
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 11:39:12 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:64663 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261689AbVEJPig (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 11:38:36 -0400
+Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DVWoa-0008MH-RM; Tue, 10 May 2005 16:38:33 +0100
+To: jon@blackcubes.dyndns.org
+In-Reply-To: <2cfc40320505100800426d38ca@mail.gmail.com>
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Jan-Benedict Glaw wrote:
-> On Tue, 2005-05-10 11:39:24 +0200, Matthias Urlichs <smurf@smurf.noris.de> wrote:
-> 
->>Jan-Benedict Glaw:
->>
->>>Ever thought about keeping some important files (of your $HOME) in some
->>>SCM? For sure, some of those are dot files:-)
->>
->>Yeah, but so are various local temporary files.
->>
->>Please don't change that without talking to Linus.
-> 
-> 
-> I won't.  You haven't seen a patch from me "fixing" this, too.  *I*
-> consider this as a defect, but that doesn't mean that I'll force others
-> to take this view, too.  But maybe I'll talk Linus into this when he's
-> back from his trip.
-> 
+On Wed, 2005-05-11 at 01:00 +1000, Jon Seymour wrote:
+> I have been experimenting with pure-Java implementation of GIT
+> concepts with a goal of eventually providing plugins to Eclipse to
+> allow the Eclipse GUI to interact with GIT repositories.
 
-Another vote for fixing this!
+It's not April 1st. Why would you want to reimplement it in Java instead
+of just using the existing implementation? Is this a religious issue?
 
-	-hpa
+-- 
+dwmw2
+
