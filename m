@@ -1,60 +1,91 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: History messup
-Date: Wed, 11 May 2005 22:31:22 +0200
-Message-ID: <20050511203122.GD22686@pasky.ji.cz>
-References: <1115657971.19236.33.camel@tglx> <1115659677.16187.393.camel@hades.cambridge.redhat.com> <1115660903.19236.39.camel@tglx> <427FB3A7.8050906@zytor.com> <1115665598.12012.422.camel@baythorne.infradead.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Core and Not-So Core
+Date: Thu, 12 May 2005 07:09:38 +1000
+Message-ID: <2cfc403205051114096117e62f@mail.gmail.com>
+References: <2cfc403205051016205d722f23@mail.gmail.com>
+	 <Pine.LNX.4.21.0505111235030.30848-100000@iabervon.org>
+	 <2cfc403205051114087d283279@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>, tglx@linutronix.de,
-	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 22:26:09 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed May 11 23:04:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVxkn-0004Ic-7y
-	for gcvg-git@gmane.org; Wed, 11 May 2005 22:24:25 +0200
+	id 1DVyML-0003CR-7U
+	for gcvg-git@gmane.org; Wed, 11 May 2005 23:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262047AbVEKUbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 16:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262046AbVEKUbl
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 16:31:41 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50880 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262044AbVEKUbY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 16:31:24 -0400
-Received: (qmail 26700 invoked by uid 2001); 11 May 2005 20:31:22 -0000
-To: David Woodhouse <dwmw2@infradead.org>
+	id S262051AbVEKVKc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 17:10:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262054AbVEKVKO
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 17:10:14 -0400
+Received: from rproxy.gmail.com ([64.233.170.207]:29748 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262051AbVEKVJj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 17:09:39 -0400
+Received: by rproxy.gmail.com with SMTP id j1so164326rnf
+        for <git@vger.kernel.org>; Wed, 11 May 2005 14:09:38 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hIJLNXwVWScyypQMSW/uMX4ibnlDVZtRAq6dYo8Hp3Yr0Er91DSBnaMy7yvLxvpPDEJBS+CpoZzn/Q2HiSwQqsrmqN+vSKSVXO/ezOwgeBDHn9r17lMUOleZDayfsy4C/FzGc8LFTzaRvshX1J135lL9xxfTZ+MQ5oAbnU+98w8=
+Received: by 10.39.3.79 with SMTP id f79mr630683rni;
+        Wed, 11 May 2005 14:09:38 -0700 (PDT)
+Received: by 10.38.104.59 with HTTP; Wed, 11 May 2005 14:09:38 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <2cfc403205051114087d283279@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1115665598.12012.422.camel@baythorne.infradead.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 09, 2005 at 09:06:38PM CEST, I got a letter
-where David Woodhouse <dwmw2@infradead.org> told me that...
-> On Mon, 2005-05-09 at 12:01 -0700, H. Peter Anvin wrote:
-> > Seems like a UUID or a SHA-1 identifier would be better.
-> > 
-> > However, one can definitely argue that even the meaning of "a 
-> > repository" isn't well-defined in the context of git.
-> 
-> Of course it isn't. But neither is the meaning "a committer" or 
-> "an author" or even "a date".
-> 
-> Including some kind of repo-specific identifier with each commit would
-> help us to make sense of the history, just as those other fields do.
+On 5/12/05, Daniel Barkalow <barkalow@iabervon.org> wrote:
+> On Wed, 11 May 2005, Jon Seymour wrote:
+>
+> > The repository API would contain functionality equivalent to cat-file,
+> > ls-tree, most of fsck-cache, rev-list, rev-tree, diff-tree, most of
+> > the transport code - things that don't involve use of the index.
+> >
+> > The workspace API would contain read-tree, write-tree, commit-tree,
+> > etc - things that do involve use of the the index.
+>
+> Unfortunately for this idea, you can't actually check files into or out of
+> the repository using the git tools without the index (in memory at least,
+> if not on disk). This is a bit like having a libc with all the system
+> calls except read and write. Sure, there are a number of programs that
+> would be fine that way, but it makes the API unintuitive, and most serious
+> programs need the extension anyway.
+>
 
-FWIW, I recently added .git/branch-name to Cogito, since I needed some
-identifier through which to differentiate between the branches
-(repositories - it's all blurred in Cogito view) when sending commits
-to CIA.
+Daniel,
 
-It is strictly per-branch (never to be shared by multiple repositories),
-optional, informative and more of a temporary solution for now I had to
-cook together in a minute.
+Checking in/checking out is definitely a workspace API function that
+involves an index (almost certainly) an on-disk index, but reading and
+writing from and to the repository is purely a repository API
+function.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+There is no reason why the workspace API can't make use of
+"lower-level" functions in the repository API. I guess I would argue
+that the repository API really shouldn't need much, if any knowledge,
+of the workspace API.
+
+The repository API knows about the on-disk structure of repository
+objects - it knows how to write writing compressed, SHA1 signed
+objects, it also knows how to pack and unpack the various object types
+from their on-disk representation into structures manipulated by the
+workspace API.
+
+On the otherhand the workspace API knows about managing index
+(workspace) state. It knows how to determine whether the
+pre-conditions for a commit have been reached. It knows how to read
+the workspace structures and coordinate read and writes from and to
+the repository.
+
+I really don't think this makes the API unintuitive, but then I don't
+really understand why you think this is the case.
+
+jon.
+--
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com
