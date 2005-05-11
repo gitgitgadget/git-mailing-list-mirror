@@ -1,65 +1,65 @@
-From: Petr Baudis <pasky@ucw.cz>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Core and Not-So Core
-Date: Wed, 11 May 2005 04:14:13 +0200
-Message-ID: <20050511021413.GN26384@pasky.ji.cz>
-References: <2cfc40320505100800426d38ca@mail.gmail.com> <1115739511.16187.432.camel@hades.cambridge.redhat.com> <2cfc4032050510092238259b63@mail.gmail.com> <1115744609.16187.455.camel@hades.cambridge.redhat.com> <2cfc403205051010151304d88a@mail.gmail.com> <2cfc4032050510101553d391b2@mail.gmail.com> <Pine.LNX.4.61.0505102158140.17216@chimarrao.boston.redhat.com> <2cfc4032050510190950bba995@mail.gmail.com>
+Date: Tue, 10 May 2005 22:30:21 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505102226020.5426@localhost.localdomain>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
+ <20050510225235.GD26384@pasky.ji.cz>
+ <2cfc403205051017505b57da72@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rik van Riel <riel@redhat.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 11 04:07:42 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 11 04:23:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVgdL-0001br-6B
-	for gcvg-git@gmane.org; Wed, 11 May 2005 04:07:35 +0200
+	id 1DVgst-0002tb-2f
+	for gcvg-git@gmane.org; Wed, 11 May 2005 04:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261881AbVEKCOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 22:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261882AbVEKCOT
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 22:14:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56748 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261881AbVEKCOO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 22:14:14 -0400
-Received: (qmail 12369 invoked by uid 2001); 11 May 2005 02:14:13 -0000
+	id S261742AbVEKCas (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 22:30:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261882AbVEKCas
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 22:30:48 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:41569 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261742AbVEKCam
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 22:30:42 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IGB001OG0ALJH@VL-MO-MR010.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 10 May 2005 22:30:23 -0400 (EDT)
+In-reply-to: <2cfc403205051017505b57da72@mail.gmail.com>
+X-X-Sender: nico@localhost.localdomain
 To: Jon Seymour <jon.seymour@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <2cfc4032050510190950bba995@mail.gmail.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, May 11, 2005 at 04:09:49AM CEST, I got a letter
-where Jon Seymour <jon.seymour@gmail.com> told me that...
-> On 5/11/05, Rik van Riel <riel@redhat.com> wrote:
-> > On Wed, 11 May 2005, Jon Seymour wrote:
-> > 
-> > > I did consider wrapping it - I really did. But after thinking about it
-> > > for a couple of weeks I eventually came to the conclusion it would be a
-> > > sub-optimal solution.
-> > 
-> > > So, if I want a stable foundation to build my stuff on, basing it on
-> > > the output of the C tools would be a huge mistake.
-> > 
-> > Can Java use a library that's implemented in C, like Python
-> > and Perl can?  If that is the case, the C implementation of
-> > git simply needs the ability to be called as a library and
-> > you can implement Java bindings for it.
-> > 
-> 
-> It can in principle, yes. This is the so-called Java-Native-Interface (JNI).
-> 
-> I think in the longer term it would make sense to write a JNI layer
-> but the GIT source code is probably a little too unstable for that
-> now. What needs to happen first, I think, is that a solid and stable C
-> API (e.g. a libgit) be proposed and developed.
+On Wed, 11 May 2005, Jon Seymour wrote:
 
-FWIW, this is actually happening now (see Brad Roberts' posts in nearby
-thread).
+> On 5/11/05, Petr Baudis <pasky@ucw.cz> wrote:
+> > So unlike the objects database which has well-defined format and is
+> > supposed to be "public", you should view the directory cache as internal
+> > git tools' structure. If you want to mess with it too, either use the
+> > proper level of abstraction and call the git tools, or don't mess with
+> > it at all. And you need to care about it only if you want the git tools
+> > working on the same tree properly too - so in that case use the git
+> > tools too.
+> 
+> I agree in principle, though I'd like users to be able to easily
+> switch between the Eclipse and git tools view of the workspace if they
+> want to - who am I to say how a user should work? Eclipse does this
+> kind of thing quite well with CVS precisely because it shares the
+> workspace structures with the CVS command line tools rather than
+> "re-inventing" the wheel.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+In this case you just need to manage to use the current index format 
+somehow.  
+
+Honestly I don't think Linus might be interested into changing the index 
+format just to make a Java implementation happier.  So your best bet is 
+probably to use it as is or ignore it entirely.
+
+
+Nicolas
