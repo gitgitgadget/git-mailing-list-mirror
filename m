@@ -1,75 +1,77 @@
 From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Wed, 11 May 2005 22:48:38 +0000
+Subject: Re: [PATCH] Stop git-rev-list at sha1 match
+Date: Wed, 11 May 2005 22:49:02 +0000
 Organization: linutronix
-Message-ID: <1115851718.22180.153.camel@tglx>
-References: <1115847510.22180.108.camel@tglx>
-	 <2780.10.10.10.24.1115848852.squirrel@linux1>
-	 <1115849141.22180.123.camel@tglx>
-	 <2807.10.10.10.24.1115850254.squirrel@linux1>
-	 <1115850619.22180.133.camel@tglx>
-	 <2853.10.10.10.24.1115850996.squirrel@linux1>
+Message-ID: <1115851742.22180.154.camel@tglx>
+References: <1115839456.22180.79.camel@tglx>
+	 <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx>
+	 <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net>
+	 <20050511221719.GH22686@pasky.ji.cz>
 Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 00:41:18 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 00:41:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVzsR-0002MK-F2
-	for gcvg-git@gmane.org; Thu, 12 May 2005 00:40:27 +0200
+	id 1DVzsz-0002Qh-8V
+	for gcvg-git@gmane.org; Thu, 12 May 2005 00:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261295AbVEKWr6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 18:47:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261299AbVEKWr6
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:47:58 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:64898
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261295AbVEKWrs
+	id S261297AbVEKWsc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 18:48:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261291AbVEKWsc
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:48:32 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:131
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261297AbVEKWsL
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 18:47:48 -0400
+	Wed, 11 May 2005 18:48:11 -0400
 Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 8273565C003;
-	Thu, 12 May 2005 00:47:45 +0200 (CEST)
+	by mail.tglx.de (Postfix) with ESMTP id B47B065C003;
+	Thu, 12 May 2005 00:48:09 +0200 (CEST)
 Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 33081282A1;
-	Thu, 12 May 2005 00:47:47 +0200 (CEST)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <2853.10.10.10.24.1115850996.squirrel@linux1>
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 7C587282A1;
+	Thu, 12 May 2005 00:48:11 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050511221719.GH22686@pasky.ji.cz>
 X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-05-11 at 18:36 -0400, Sean wrote:
-> On Wed, May 11, 2005 6:30 pm, Thomas Gleixner said:
+On Thu, 2005-05-12 at 00:17 +0200, Petr Baudis wrote:
+> But the very fact that you want this makes me *quite* nervous - I think
+> this is bad thing to do. The problem is, for something like
+> it won't show the full merge. 
 > 
-> > At this point it is completely irrelevant if you pulled from A or B. The
-> > originator of Head A is A forever.
-> 
-> But who cares what repository was used to create the object?   You can't
-> talk to a repository.   What you want to know is who created the object,
-> and Author/Committer completely solves that problem.
+> I think you mean it to show everything going into the tree since foo -
+> that would include the whole branch you cut off now.
 
-Maybe you have missed the point, where one Committer holds more than one
-repository. See davem/net-2.6 and davem/sparc-2.6. Not to talk of
-Russell King's and Greg's multiple repositories.
-The Author is irrelevant, because one Author sends patches to more than
-one maintainer. Author _cannot_ be a source of tracking information. If
-you want to do heuristic guesses on Author/Committer pairs, then you
-make the situation more complex than it is already.
+>From a SCM POV it does not matter.
 
-> If on the otherhand you're trying to reliably track the chain-of-command
-> that landed the object in your repository, your patch falls short.
+Rn   o
+     | \
+Rn-1 o  |
+     |  o Mn
+     |  o Mn-1
+Rn-2 o /
+Rn-3 o
 
-As I said before it is completely irrelevant whether fast forward was
-pulled into C directly from A or from B. 
+If you are in Repository R, then tracking Rn to Rn-123 gives you a
+linear result depending on the stop point you chose.
+Rn
+---- Stop = Rn-1
+Rn-1
+---- Stop = Rn-2
+Rn-2
+---- Stop = Rn-3
 
-Whats the relevant content of getting the same thing from A or B ? 
+The diff between Rn and Rn-1 contains always the changes merged from M
 
-If you want to do this, you break the fast forward mechanism and
-reinvent the pull ping-pong which is avoided by the fast forwards.
+> Thomas, what are you going to use it for?
+
+Displaing the the changes between commit shaX and shaY :)
 
 tglx
 
