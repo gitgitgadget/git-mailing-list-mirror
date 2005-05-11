@@ -1,64 +1,87 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Stop git-rev-list at sha1 match
-Date: Thu, 12 May 2005 00:50:58 +0200
-Message-ID: <20050511225058.GK22686@pasky.ji.cz>
-References: <1115839456.22180.79.camel@tglx> <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx> <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net> <20050511221719.GH22686@pasky.ji.cz> <1115851742.22180.154.camel@tglx>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Wed, 11 May 2005 19:01:03 -0400 (EDT)
+Message-ID: <2883.10.10.10.24.1115852463.squirrel@linux1>
+References: <1115847510.22180.108.camel@tglx> 
+    <2780.10.10.10.24.1115848852.squirrel@linux1> 
+    <1115849141.22180.123.camel@tglx> 
+    <2807.10.10.10.24.1115850254.squirrel@linux1> 
+    <1115850619.22180.133.camel@tglx> 
+    <2853.10.10.10.24.1115850996.squirrel@linux1>
+    <1115851718.22180.153.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 00:44:45 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 01:04:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVzve-0002oV-Gc
-	for gcvg-git@gmane.org; Thu, 12 May 2005 00:43:46 +0200
+	id 1DW0FB-0005iQ-LQ
+	for gcvg-git@gmane.org; Thu, 12 May 2005 01:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261304AbVEKWvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 18:51:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVEKWvM
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:51:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46531 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261304AbVEKWu7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 18:50:59 -0400
-Received: (qmail 13104 invoked by uid 2001); 11 May 2005 22:50:58 -0000
-To: Thomas Gleixner <tglx@linutronix.de>
-Content-Disposition: inline
-In-Reply-To: <1115851742.22180.154.camel@tglx>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261746AbVEKXJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 19:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262066AbVEKXIH
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:08:07 -0400
+Received: from simmts7.bellnexxia.net ([206.47.199.165]:47051 "EHLO
+	simmts7-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S262076AbVEKXBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 19:01:04 -0400
+Received: from linux1 ([69.156.111.46]) by simmts7-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050511230103.OAEB23474.simmts7-srv.bellnexxia.net@linux1>;
+          Wed, 11 May 2005 19:01:03 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4BN11oR003747;
+	Wed, 11 May 2005 19:01:01 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Wed, 11 May 2005 19:01:03 -0400 (EDT)
+In-Reply-To: <1115851718.22180.153.camel@tglx>
+To: tglx@linutronix.de
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 12, 2005 at 12:49:02AM CEST, I got a letter
-where Thomas Gleixner <tglx@linutronix.de> told me that...
-> Rn   o
->      | \
-> Rn-1 o  |
->      |  o Mn
->      |  o Mn-1
-> Rn-2 o /
-> Rn-3 o
-> 
-> If you are in Repository R, then tracking Rn to Rn-123 gives you a
-> linear result depending on the stop point you chose.
-> Rn
-> ---- Stop = Rn-1
-> Rn-1
-> ---- Stop = Rn-2
+On Wed, May 11, 2005 6:48 pm, Thomas Gleixner said:
 
-Mn
-Mn-1
+Hey Thomas,
 
-> Rn-2
-> ---- Stop = Rn-3
-> 
-> The diff between Rn and Rn-1 contains always the changes merged from M
+> Maybe you have missed the point, where one Committer holds more than one
+> repository. See davem/net-2.6 and davem/sparc-2.6. Not to talk of
+> Russell King's and Greg's multiple repositories.
+> The Author is irrelevant, because one Author sends patches to more than
+> one maintainer. Author _cannot_ be a source of tracking information. If
+> you want to do heuristic guesses on Author/Committer pairs, then you
+> make the situation more complex than it is already.
 
-Yes, but you get the merge commits again since rev-list follows all the
-parents.
+Why would anyone care how many repositories Russell or Greg use?  Why does
+anyone care if Dave used his repo A, B, or C?   Aren't I still just going
+to contact him via his author email addy if I have an issue with an object
+he has added to the stream?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+And if I do care which repo he used, why don't I care about the case i've
+outlined where the chain of command information is lost?
+
+> As I said before it is completely irrelevant whether fast forward was
+> pulled into C directly from A or from B.
+>
+> Whats the relevant content of getting the same thing from A or B ?
+
+Exactly!!!  So what is relevant of getting the same thing from Dave's A or
+B?  The only point would be to show chain of command, but you don't seem
+interested in that.
+
+> If you want to do this, you break the fast forward mechanism and
+> reinvent the pull ping-pong which is avoided by the fast forwards.
+
+Yes, I think there are other ways to avoid the ping pong too.
+
+Sean
+
+
