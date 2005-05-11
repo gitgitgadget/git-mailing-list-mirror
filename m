@@ -1,51 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] No more git-jc tree at cox.net
-Date: Wed, 11 May 2005 12:12:15 -0700
-Message-ID: <7vbr7hshkg.fsf@assigned-by-dhcp.cox.net>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH] Stop git-rev-list at sha1 match
+Date: Wed, 11 May 2005 19:24:16 +0000
+Organization: linutronix
+Message-ID: <1115839456.22180.79.camel@tglx>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pasky@ucw.cz, <david@dgreaves.com>
-X-From: git-owner@vger.kernel.org Wed May 11 21:07:01 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed May 11 21:17:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVwWB-0006S4-Ex
-	for gcvg-git@gmane.org; Wed, 11 May 2005 21:05:15 +0200
+	id 1DVwhO-00007h-Uz
+	for gcvg-git@gmane.org; Wed, 11 May 2005 21:16:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262012AbVEKTMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 15:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262017AbVEKTMd
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 15:12:33 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:16024 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S262012AbVEKTMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 15:12:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050511191217.EMJG20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 11 May 2005 15:12:17 -0400
+	id S262026AbVEKTXi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 15:23:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262029AbVEKTXi
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 15:23:38 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:27265
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S262026AbVEKTX0
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 15:23:26 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id D794565C003
+	for <git@vger.kernel.org>; Wed, 11 May 2005 21:23:24 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 156A928204
+	for <git@vger.kernel.org>; Wed, 11 May 2005 21:23:26 +0200 (CEST)
 To: git@vger.kernel.org
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-As some of you may already know, for the past couple of weeks
-I've been keeping changes to the core GIT that came from
-discussion and review on the mailing list in git-jc tree.  The
-intent was to keep the things organized to save time for Linus
-when he wants to integrate those good bits.
+The patch adds an option to stop the output of git-rev-list
+on a sha1 match. 
 
-The purpose Petr stated for git-pb tree is a superset of the
-purpose of git-jc tree, and currently git-pb tree is fully
-synched up with git-jc.  I do not see much point in duplicated
-effort, and also git-jc tree housed at my ISP webspace is
-nearing the disc quota.  So I'm removing git-jc tree from there,
-at least until I find it a new home.
+Signed-Off: Thomas Gleixner <tglx@linutronix.de>
 
-JIT (my own Porcelain layer) will still be at the same address,
-<http://members.cox.net/junkio/jit.git/>.
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -7,6 +7,8 @@ int main(int argc, char **argv)
+ 	struct commit_list *list = NULL;
+ 	struct commit *commit;
+ 	char *commit_arg = NULL;
++	char *sha1hex;
++	char *to_sha1 = NULL;
+ 	int i;
+ 	unsigned long max_age = -1;
+ 	unsigned long min_age = -1;
+@@ -21,6 +23,8 @@ int main(int argc, char **argv)
+ 			max_age = atoi(arg + 10);
+ 		} else if (!strncmp(arg, "--min-age=", 10)) {
+ 			min_age = atoi(arg + 10);
++		} else if (!strncmp(arg, "--to_sha1=", 10)) {
++			to_sha1 = arg + 10;
+ 		} else {
+ 			commit_arg = arg;
+ 		}
+@@ -30,7 +34,8 @@ int main(int argc, char **argv)
+ 		usage("usage: rev-list [OPTION] commit-id\n"
+ 		      "  --max-count=nr\n"
+ 		      "  --max-age=epoch\n"
+-		      "  --min-age=epoch\n");
++		      "  --min-age=epoch\n"
++		      "  --to-sha1=sha1\n");
+ 
+ 	commit = lookup_commit(sha1);
+ 	if (!commit || parse_commit(commit) < 0)
+@@ -46,7 +51,10 @@ int main(int argc, char **argv)
+ 			break;
+ 		if (max_count != -1 && !max_count--)
+ 			break;
+-		printf("%s\n", sha1_to_hex(commit->object.sha1));
++		sha1hex = sha1_to_hex(commit->object.sha1);
++		if (to_sha1 != NULL && strcmp(to_sha1, sha1hex) == 0)
++			break;
++		printf("%s\n", sha1hex);
+ 	} while (list);
+ 	return 0;
+ }
 
-Thanks.
 
