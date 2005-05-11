@@ -1,91 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: "git-checkout-cache -f -a" failure
-Date: Tue, 10 May 2005 22:16:22 -0700
-Message-ID: <7vsm0us5p5.fsf@assigned-by-dhcp.cox.net>
-References: <118833cc05050911255e601fc@mail.gmail.com>
-	<7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
-	<20050510230357.GF26384@pasky.ji.cz>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: [PATCH Cogito] match pathnames in exclude handling
+Date: Wed, 11 May 2005 07:25:46 +0200
+Message-ID: <20050511052546.GC11192@kiste.smurf.noris.de>
+References: <pan.2005.05.10.03.41.15.683163@smurf.noris.de> <428043EB.7010004@didntduck.org> <20050510075227.GA8176@lug-owl.de> <20050510080445.GB8176@lug-owl.de> <7vis1rpi8a.fsf@assigned-by-dhcp.cox.net> <20050510093212.GD8176@lug-owl.de> <20050510093924.GH11221@kiste.smurf.noris.de> <20050510094538.GE8176@lug-owl.de> <20050510095825.GI11221@kiste.smurf.noris.de> <4281281F.6000101@cobite.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Morten Welinder <mwelinder@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 07:09:25 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CdrF4e02JqNVZeln"
+Cc: Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 11 07:19:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVjTG-0000X7-OW
-	for gcvg-git@gmane.org; Wed, 11 May 2005 07:09:23 +0200
+	id 1DVjcw-0001NW-2i
+	for gcvg-git@gmane.org; Wed, 11 May 2005 07:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261877AbVEKFQg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 01:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261881AbVEKFQg
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 01:16:36 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:37555 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261877AbVEKFQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 01:16:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050511051622.KHHH7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 11 May 2005 01:16:22 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050510230357.GF26384@pasky.ji.cz> (Petr Baudis's message of
- "Wed, 11 May 2005 01:03:58 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261877AbVEKF0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 01:26:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261881AbVEKF0r
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 01:26:47 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:60894 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S261877AbVEKF0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 01:26:43 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1DVjj9-0000vL-34; Wed, 11 May 2005 07:25:56 +0200
+Received: (nullmailer pid 29730 invoked by uid 501);
+	Wed, 11 May 2005 05:25:46 -0000
+To: David Mansfield <david@cobite.com>
+Content-Disposition: inline
+In-Reply-To: <4281281F.6000101@cobite.com>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-PB> What if you have some files not tracked by git in the subdirectory?
-PB> Either you need to check for this and deal with it (Cogito's approach
-PB> would be to remove the git-tracked files and rename the subdirectory),
-PB> or not do it at all.
+--CdrF4e02JqNVZeln
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Let me understand you correctly.  You "rename the subdirectory"
-because the cache you want to check out records a non-directory
-there.  Is this correct?  When do you "remove the git-tracked
-files"?  Do you mean "if a file that is not tracked (in the
-user's mind) is there in the filesystem, and the cache to be
-checked out has a file there, the file on the filesystem is
-removed"?  What happens if an existing non-directory interferes
-with a directory to be checked out from the cache?
+Hi,
 
-I think the right thing for the core GIT layer to do, when the
-end user is using the Plumbing tools directly and says "really
-please" by specifying an '-f', is to make the checkout succeed
-by removing conflicting stuff, as my fixed patch does.
+David Mansfield:
+> Is there/will there be support for path matching in the ignore files?
+>=20
+> If the answer is no, but people like the idea, I could look into it.
+>=20
+I already did, last week. (I do need to cleanup my changes...)
 
-If the Porcelain runs checkout-cache on the user's behalf, the
-story is a bit different.  Porcelain would have some idea of
-what GIT tree the files in the working directory originated from
-("the last commit", or "my head before the read-tree -m merge")
-before the user started working in it.  When the user wants to
-update the work tree to match a cache (which may be quite
-different from "the last commit", if it is coming from cg-seek
-or result of a merge), the Porcelain knows:
+The idea is that "foo" matches anywhere, "foo/bar" the exact pathname.
+As a special case, "./foo" matches in the root directory only.
 
- - the set of non git-tracked (from the point of view from "the
-   last commit") files that are in the work tree;
+NB: "*" can cross subdirectory paths, so "*/foo/bar" does match
+"a/b/c/foo/bar".
 
- - among those, the set of files that would be overwritten by
-   this checkout.  This includes, but not limited to, the files
-   that would otherwise interfere because of file-directory
-   conflicts.
+Signed-Off-By: Matthias Urlichs <smurf@smurf.noris.de>
 
-And then you can set aside those "to-be-overwritten" files,
-remove them from the filesystem, and run your checkout.
+---
+Index: ls-files.c
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--- 972d8624458936868e6f392b40858b7c362af8cd/ls-files.c  (mode:100644)
++++ 12deb13b12cdb338fe3fdc2e77a024490d6c39ea/ls-files.c  (mode:100644)
+@@ -80,9 +80,17 @@
+ 	if (nr_excludes) {
+ 		const char *basename =3D strrchr(pathname, '/');
+ 		basename =3D (basename) ? basename+1 : pathname;
+-		for (i =3D 0; i < nr_excludes; i++)
+-			if (fnmatch(excludes[i], basename, 0) =3D=3D 0)
+-				return 1;
++		for (i =3D 0; i < nr_excludes; i++) {
++			if (excludes[i][0] !=3D '.' || excludes[i][1] !=3D '/') {
++				if (fnmatch(excludes[i], pathname, 0) =3D=3D 0)
++					return 1;
++				if (basename !=3D pathname && fnmatch(excludes[i], pathname, 0) =3D=3D=
+ 0)
++					return 1;
++			} else {
++				if (fnmatch(excludes[i]+2, pathname, 0) =3D=3D 0)
++					return 1;
++			}
++		}
+ 	}
+ 	return 0;
+ }
+@@ -129,10 +137,10 @@
+=20
+ 			if (de->d_name[0] =3D=3D '.')
+ 				continue;
+-			if (excluded(de->d_name) !=3D show_ignored)
+-				continue;
+ 			len =3D strlen(de->d_name);
+ 			memcpy(fullname + baselen, de->d_name, len+1);
++			if (excluded(fullname) !=3D show_ignored)
++				continue;
+=20
+ 			switch (DTYPE(de)) {
+ 			struct stat st;
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
 
-The determination of which files to set aside should not be done
-based on whether they cause file-directory conflicts.  If the
-user has a non-tracked file which happens to be registered as a
-tracked file in the cache to be checked out (e.g. after a
-three-way merge), that file is as valuable as a non-tracked file
-that is in a subdirectory that the new cache happens to have as
-a non-directory.  Losing the former is as harmful as losing the
-latter.  From what you say above, it sounds like you are saving
-the latter but not the former, but my readins of what you wrote
-above may be mistaken.
+--CdrF4e02JqNVZeln
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCgZda8+hUANcKr/kRAk3KAKCVYkXgesDpLQLHvJPws0e7pEjRSgCgoyHU
+VS1bSyesq8BVU96++hUK9Us=
+=jiYZ
+-----END PGP SIGNATURE-----
+
+--CdrF4e02JqNVZeln--
