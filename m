@@ -1,105 +1,81 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Core and Not-So Core
-Date: Wed, 11 May 2005 10:50:00 +1000
-Message-ID: <2cfc403205051017505b57da72@mail.gmail.com>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
-	 <20050510225235.GD26384@pasky.ji.cz>
-Reply-To: jon@blackcubes.dyndns.org
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Fix cg-commit to handle files with leading '-'
+Date: Wed, 11 May 2005 02:55:25 +0200
+Message-ID: <20050511005525.GB3055@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 02:43:10 2005
+Content-Type: multipart/mixed; boundary="xHFwDpU9dbj6ez1V"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 11 02:48:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVfJV-0002jD-Oj
-	for gcvg-git@gmane.org; Wed, 11 May 2005 02:43:02 +0200
+	id 1DVfOW-00034a-QE
+	for gcvg-git@gmane.org; Wed, 11 May 2005 02:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261862AbVEKAuL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 20:50:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261864AbVEKAuL
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 20:50:11 -0400
-Received: from rproxy.gmail.com ([64.233.170.193]:44993 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261862AbVEKAuA convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 20:50:00 -0400
-Received: by rproxy.gmail.com with SMTP id j1so21530rnf
-        for <git@vger.kernel.org>; Tue, 10 May 2005 17:50:00 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r50rBJ9lk4Xl0bnkzMkN+8OGzIpTHXc5bSEdlxryGcK2l05FqSrOdKA4cX4f7E3vpBgXrZadd7xFl/Qsh8LoWeDtD5uQosZbT4VhAPwsJGSwbs9q6OMUGcnixeMDUwaZootvnw90q5meAXTQPLICcbk+9AKTwkO3jtXDqMqFNZM=
-Received: by 10.38.82.65 with SMTP id f65mr15730rnb;
-        Tue, 10 May 2005 17:50:00 -0700 (PDT)
-Received: by 10.38.104.59 with HTTP; Tue, 10 May 2005 17:50:00 -0700 (PDT)
+	id S261863AbVEKAzf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 20:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261864AbVEKAze
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 20:55:34 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:4830 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261863AbVEKAz0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 May 2005 20:55:26 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 833D16E12E6; Wed, 11 May 2005 02:55:22 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 370126E0E7D; Wed, 11 May 2005 02:55:22 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 77C0B61FDE; Wed, 11 May 2005 02:55:25 +0200 (CEST)
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050510225235.GD26384@pasky.ji.cz>
 Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 5/11/05, Petr Baudis <pasky@ucw.cz> wrote:
-> Dear diary, on Tue, May 10, 2005 at 05:00:33PM CEST, I got a letter
-> where Jon Seymour <jon.seymour@gmail.com> told me that...
-> 
-> Yes. And that's how it should be - the directory cache is just that - a
-> _cache_. 
 
-No argument there.
+--xHFwDpU9dbj6ez1V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->  So unlike the objects database which has well-defined format and is
-> supposed to be "public", you should view the directory cache as internal
-> git tools' structure. If you want to mess with it too, either use the
-> proper level of abstraction and call the git tools, or don't mess with
-> it at all. And you need to care about it only if you want the git tools
-> working on the same tree properly too - so in that case use the git
-> tools too.
+Hi Pasky,
 
-I agree in principle, though I'd like users to be able to easily
-switch between the Eclipse and git tools view of the workspace if they
-want to - who am I to say how a user should work? Eclipse does this
-kind of thing quite well with CVS precisely because it shares the
-workspace structures with the CVS command line tools rather than
-"re-inventing" the wheel. Yes, separation of concerns has been lost
-(two implementations of a CVS client), but the big win is that the
-tools behave like the user wants them to behave.
+cg-commit dies with "update-cache failed" message when adding files
+beginning with a '-' because the '--' arg is missing.
 
-The trickiest case here is when the user switches between toolsets
-mid-merge. I guess what I can do is this:
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 
-user switch from eclipse -> to git-tools:
-    1. blow away existing git tools index
-    2. use git-read-tree to repeat the merge executed in eclipse (my
-workspace will track parents)
-    3. use git-update-cache --add/--remove to reflect merge actions
-that have occurred since the workspace deviated from the HEAD.
+-- 
+Jonas Fonseca
 
-Alternatively, I can just make Eclipse reflect cache changing actions
-out onto the git-tools, via an exec of those tools, as and when they
-occur.
+--xHFwDpU9dbj6ez1V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="fix-cg-commit.patch"
 
-Making use of the git tools index going the other way isn't so easy to
-achieve because the git tools workspace as it stands doesn't track the
-merges that have occurred (i.e. which parents were used to form the
-current cache). However, that's not necessarily a big problem. I just
-rebuild my "cache" from scratch based on the merges I know about and
-treat every other difference from the HEAD as a user edit to the
-workspace.
+Index: cg-commit
+===================================================================
+--- 673ad20e23591a8e5bdf18a755a5dea1755b7bf6/cg-commit  (mode:100755)
++++ uncommitted/cg-commit  (mode:100755)
+@@ -140,13 +140,13 @@
  
-> 
-> From your arguments, it's not clear to me what really is the big
-> problem with the git tools. They are _designed_ for automatic use
-> instead of human interaction - you can perceive them just as methods
-> with funny (but actually friendly to your programs) calling convention.
-> 
+ if [ ! "$ignorecache" ]; then
+ 	if [ "$customfiles" ]; then
+-		git-update-cache --add --remove "${commitfiles[@]}" \
++		git-update-cache --add --remove -- "${commitfiles[@]}" \
+ 			|| die "update-cache failed"
+ 		export GIT_INDEX_FILE=$(mktemp -t gitci.XXXXXX)
+ 		git-read-tree HEAD
+ 	fi
+ 	# TODO: Do the proper separation of adds, removes, and changes.
+-	git-update-cache --add --remove "${commitfiles[@]}" \
++	git-update-cache --add --remove -- "${commitfiles[@]}" \
+ 		|| die "update-cache failed"
+ fi
+ 
 
-I am not really arguing that there is a big problem with the existing
-git tools. However, what I am arguing is that the existing workspace
-tools are just one way to manage the workspace (Eclipse might be
-another, as an example) and it would be helpful to keep this in mind,
-particularly when/if libification ever happens.
-
-jon.
+--xHFwDpU9dbj6ez1V--
