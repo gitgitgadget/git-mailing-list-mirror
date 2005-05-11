@@ -1,83 +1,68 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH] Stop git-rev-list at sha1 match
-Date: Wed, 11 May 2005 23:08:34 +0000
-Organization: linutronix
-Message-ID: <1115852914.22180.170.camel@tglx>
-References: <1115839456.22180.79.camel@tglx>
-	 <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx>
-	 <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net>
-	 <20050511221719.GH22686@pasky.ji.cz> <1115851742.22180.154.camel@tglx>
-	 <20050511225058.GK22686@pasky.ji.cz>
-Reply-To: tglx@linutronix.de
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Wed, 11 May 2005 16:14:21 -0700
+Message-ID: <428291CD.7010701@zytor.com>
+References: <1115847510.22180.108.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 01:04:08 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 01:07:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW0FB-0005iQ-8p
-	for gcvg-git@gmane.org; Thu, 12 May 2005 01:03:57 +0200
+	id 1DW0Ia-0006WI-Ge
+	for gcvg-git@gmane.org; Thu, 12 May 2005 01:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261730AbVEKXJK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 19:09:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262059AbVEKXIk
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:08:40 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:13699
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261730AbVEKXHq
+	id S261310AbVEKXO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 19:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261312AbVEKXO4
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:14:56 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:16824 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261310AbVEKXOu
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 19:07:46 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 7CCDB65C003;
-	Thu, 12 May 2005 01:07:41 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 26AE928204;
-	Thu, 12 May 2005 01:07:43 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050511225058.GK22686@pasky.ji.cz>
-X-Mailer: Evolution 2.2.2 
+	Wed, 11 May 2005 19:14:50 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4BNERIS021672
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 11 May 2005 16:14:27 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: tglx@linutronix.de
+In-Reply-To: <1115847510.22180.108.camel@tglx>
+X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-4.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-05-12 at 00:50 +0200, Petr Baudis wrote:
-> > Rn
-> > ---- Stop = Rn-1
-> > Rn-1
-> > ---- Stop = Rn-2
+Thomas Gleixner wrote:
+> This is an initial attempt to enable history tracking for multiple
+> repositories in a consistent state. At the moment this can only be done
+> by heuristic guessing on the parent dates and the committer names. 
+> This fails for example with Dave Millers net-2.6 and sparc-2.6 trees, as
+> in both cases the committer name is the same. It fails also completely
+> in cases where the system clock of the committer is wrong and the merge
+> is a head forward. The old bk repository contains entries from 1999 and
+> 2027, which will happen also with git over the time. 
 > 
-> Mn
-> Mn-1
+> To identify a repository commit-tree tries to read an environment
+> variable "GIT_REPOSITORY_ID" and has a fallback to the current working
+> directory. The environment variable keeps the door open for managed
+> repository id's, but the current working directory is certainly a quite
+> helpful information to solve the origin decision for history tracking.
 > 
-> > Rn-2
-> > ---- Stop = Rn-3
-> > 
-> > The diff between Rn and Rn-1 contains always the changes merged from M
+> Adding a line after the committer should not break any existing tools
+> AFAICS.
 > 
-> Yes, but you get the merge commits again since rev-list follows all the
-> parents.
 
-That's plain wrong. The Mn(1) change hit repository r between revision
-Rn and Rn-1 and nowhere else. 
+I would like to suggest a few limiters are set on the repoid.  In 
+particular, I'd like to suggest that a repoid is a UUID, that a file is 
+used to track it (.git/repoid), and that if it doesn't exist, a new one 
+is created from /dev/urandom.
 
-Date is irrelevant. The only relevant thing is the parent child(s)
-relationship.
-
-What you get doing this is history cluttering. In the repository R it is
-completely irrelevant when Mn resp. Mn-1 was created. The only relevant
-point is when it was merged into repository R.
-
-Bitkeeper does the same bogus thing to make changesets appear in a
-linear order. Look at the changeset logs. If you diff the versions
-exported by bitkeeper then you get complete nonsense. 
-
-Please do not make the same mistake. 
-
-
-tglx
-
-
-
-
-
+	-hpa
