@@ -1,303 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: "git-checkout-cache -f -a" failure
-Date: Wed, 11 May 2005 14:37:16 -0700
-Message-ID: <7vpsvxqwab.fsf@assigned-by-dhcp.cox.net>
-References: <118833cc05050911255e601fc@mail.gmail.com>
-	<7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
-	<20050510230357.GF26384@pasky.ji.cz>
-	<7vsm0us5p5.fsf@assigned-by-dhcp.cox.net>
-	<118833cc050511113122e2d17d@mail.gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH] [RFD] Add repoid identifier to commit
+Date: Wed, 11 May 2005 21:38:30 +0000
+Organization: linutronix
+Message-ID: <1115847510.22180.108.camel@tglx>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 23:32:15 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed May 11 23:34:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVynk-0008L1-87
-	for gcvg-git@gmane.org; Wed, 11 May 2005 23:31:32 +0200
+	id 1DVypE-0000BT-Rb
+	for gcvg-git@gmane.org; Wed, 11 May 2005 23:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261236AbVEKViz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 17:38:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261260AbVEKViz
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 17:38:55 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:645 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261236AbVEKVhV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 17:37:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050511213716.PBTT23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 11 May 2005 17:37:16 -0400
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc050511113122e2d17d@mail.gmail.com> (Morten Welinder's
- message of "Wed, 11 May 2005 14:31:48 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261270AbVEKVjR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 17:39:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261260AbVEKVjQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 17:39:16 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:24194
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261270AbVEKVhm
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 17:37:42 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id C70FC65C003
+	for <git@vger.kernel.org>; Wed, 11 May 2005 23:37:37 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 64805282A1
+	for <git@vger.kernel.org>; Wed, 11 May 2005 23:37:39 +0200 (CEST)
+To: git@vger.kernel.org
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "MW" == Morten Welinder <mwelinder@gmail.com> writes:
+This is an initial attempt to enable history tracking for multiple
+repositories in a consistent state. At the moment this can only be done
+by heuristic guessing on the parent dates and the committer names. 
+This fails for example with Dave Millers net-2.6 and sparc-2.6 trees, as
+in both cases the committer name is the same. It fails also completely
+in cases where the system clock of the committer is wrong and the merge
+is a head forward. The old bk repository contains entries from 1999 and
+2027, which will happen also with git over the time. 
 
-MW> Here's the symlink version.  Note, that git does not complain but
-MW> simply creates (or
-MW> overwrites) the wrong file.
+To identify a repository commit-tree tries to read an environment
+variable "GIT_REPOSITORY_ID" and has a fallback to the current working
+directory. The environment variable keeps the door open for managed
+repository id's, but the current working directory is certainly a quite
+helpful information to solve the origin decision for history tracking.
 
-MW> Morten
+Adding a line after the committer should not break any existing tools
+AFAICS.
 
-Here is a proposed fix.
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 
-------------
-Commit    685c391c9a755936175193f8b58973b74eaef930
-Author    Junio C Hamano <junkio@cox.net>, Wed May 11 14:36:05 2005 -0700
-Committer Junio C Hamano <junkio@cox.net>, Wed May 11 14:36:05 2005 -0700
-
-Fix checkout-cache when existing work tree interferes with the checkout.
-
-The checkout-cache command gets confused when checking out a
-file in a subdirectory and the work tree has a symlink to the
-subdirectory.  Also it fails to check things out when there is a
-non-directory in the work tree when cache expects a directory
-there, and vice versa.  This patch fixes the first problem by
-making sure all the leading paths in the file being checked out
-are indeed directories, and also fixes directory vs
-non-directory conflicts when '-f' is specified by removing the
-offending paths.
-
-I've added test subdirectory and two tests to check the above
-problems are fixed.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
---- a/checkout-cache.c
-+++ b/checkout-cache.c
-@@ -32,6 +32,8 @@
-  * of "-a" causing problems (not possible in the above example,
-  * but get used to it in scripting!).
-  */
-+#include <sys/types.h>
-+#include <dirent.h>
- #include "cache.h"
+--- a/commit-tree.c
++++ b/commit-tree.c
+@@ -110,6 +110,7 @@ int main(int argc, char **argv)
+ 	char *gecos, *realgecos, *commitgecos;
+ 	char *email, *commitemail, realemail[1000];
+ 	char date[20], realdate[20];
++	char *repoid, repoidbuf[MAXPATHLEN];
+ 	char *audate;
+ 	char comment[1000];
+ 	struct passwd *pw;
+@@ -154,6 +155,14 @@ int main(int argc, char **argv)
+ 	if (audate)
+ 		parse_date(audate, date, sizeof(date));
  
- static int force = 0, quiet = 0, not_new = 0;
-@@ -46,22 +48,67 @@ static void create_directories(const cha
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
--		mkdir(buf, 0755);
-+		if (mkdir(buf, 0755)) {
-+			if (errno == EEXIST) {
-+				struct stat st;
-+				if (!lstat(buf, &st) && S_ISDIR(st.st_mode))
-+					continue; /* ok */
-+				if (force && !unlink(buf) && !mkdir(buf, 0755))
-+					continue;
-+			}
-+			die("cannot create directory at %s", buf);
-+		}
- 	}
- 	free(buf);
- }
- 
-+static void remove_subtree(const char *path)
-+{
-+	DIR *dir = opendir(path);
-+	struct dirent *de;
-+	char pathbuf[PATH_MAX];
-+	char *name;
-+	
-+	if (!dir)
-+		die("cannot opendir %s", path);
-+	strcpy(pathbuf, path);
-+	name = pathbuf + strlen(path);
-+	*name++ = '/';
-+	while ((de = readdir(dir)) != NULL) {
-+		struct stat st;
-+		if ((de->d_name[0] == '.') &&
-+		    ((de->d_name[1] == 0) ||
-+		     ((de->d_name[1] == '.') && de->d_name[2] == 0)))
-+			continue;
-+		strcpy(name, de->d_name);
-+		if (lstat(pathbuf, &st))
-+			die("cannot lstat %s", pathbuf);
-+		if (S_ISDIR(st.st_mode))
-+			remove_subtree(pathbuf);
-+		else if (unlink(pathbuf))
-+			die("cannot unlink %s", pathbuf);
++	repoid = getenv("GIT_REPOSITORY_ID");
++	if (!repoid)
++		repoid = getcwd(repoidbuf, MAXPATHLEN);
++	else {
++		if (strlen(repoid) == 0)
++			die("GIT_REPOSITORY_ID is empty. Fix it !");
 +	}
-+	closedir(dir);
-+	if (rmdir(path))
-+		die("cannot rmdir %s", path);
-+}
 +
- static int create_file(const char *path, unsigned int mode)
- {
- 	int fd;
+ 	remove_special(gecos); remove_special(realgecos); remove_special(commitgecos);
+ 	remove_special(email); remove_special(realemail); remove_special(commitemail);
  
- 	mode = (mode & 0100) ? 0777 : 0666;
-+	create_directories(path);
- 	fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 	if (fd < 0) {
--		if (errno == ENOENT) {
-+		if ((errno == ENOENT) || (errno == ENOTDIR && force)) {
- 			create_directories(path);
- 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 		}
-+		else if (errno == EISDIR && force) {
-+			remove_subtree(path);
-+			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
-+		}
- 	}
- 	return fd;
- }
-Created: t/t0000.sh (mode:100755)
---- /dev/null
-+++ b/t/t0000.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+case "${verbose+set}" in
-+set)	say= ;;
-+*)	say=: ;;
-+esac
-+
-+export LANG C
-+unset AUTHOR_DATE
-+unset AUTHOR_EMAIL
-+unset AUTHOR_NAME
-+unset COMMIT_AUTHOR_EMAIL
-+unset COMMIT_AUTHOR_NAME
-+unset GIT_ALTERNATE_OBJECT_DIRECTORIES
-+unset GIT_AUTHOR_DATE
-+unset GIT_AUTHOR_EMAIL
-+unset GIT_AUTHOR_NAME
-+unset GIT_COMMITTER_EMAIL
-+unset GIT_COMMITTER_NAME
-+unset GIT_DIFF_OPTS
-+unset GIT_DIR
-+unset GIT_EXTERNAL_DIFF
-+unset GIT_INDEX_FILE
-+unset GIT_OBJECT_DIRECTORY
-+unset SHA1_FILE_DIRECTORIES
-+unset SHA1_FILE_DIRECTORY
-+
-+# Test the binaries we have just built.
-+PATH=$(pwd)/..:$PATH
-+
-+# Test repository
-+test=test-repo
-+rm -fr "$test"
-+mkdir "$test"
-+cd "$test"
-Created: t/t1000-checkout-cache.sh (mode:100755)
---- /dev/null
-+++ b/t/t1000-checkout-cache.sh
-@@ -0,0 +1,39 @@
-+#!/bin/sh
-+
-+. ./t0000.sh
-+git-init-db 2>/dev/null || exit
-+date >path0
-+mkdir path1
-+date >path1/file1
-+git-update-cache --add path0 path1/file1
-+$say git-ls-files --stage
-+
-+rm -fr path0 path1
-+mkdir path0
-+date >path0/file0
-+date >path1
-+$say git-ls-files --stage
-+$say find path*
-+
-+echo >&2 "* checkout-cache sans -f"
-+git-checkout-cache -a
-+case "$?" in
-+0)	echo >&2 "*** bug: should not have succeeded." ;;
-+*)	echo >&2 "*** ok: failed as expected." ;;
-+esac
-+$say find path*
-+
-+echo >&2 "* checkout-cache with -f"
-+git-checkout-cache -f -a
-+case "$?" in
-+0)	echo >&2 "*** ok: succeeded as expected." ;;
-+*)	echo >&2 "*** bug: should have succeeded." ;;
-+esac
-+$say find path*
-+if test -f path0 && test -d path1 && test -f path1/file1
-+then
-+	echo >&2 "*** ok: checked out correctly."
-+else
-+	echo >&2 "*** bug: checkout failed."
-+	exit 1
-+fi
-Created: t/t1001-checkout-cache.sh (mode:100755)
---- /dev/null
-+++ b/t/t1001-checkout-cache.sh
-@@ -0,0 +1,61 @@
-+#!/bin/sh
-+
-+. ./t0000.sh
-+git-init-db 2>/dev/null || exit
-+
-+show_files() {
-+	find path? -ls |
-+	sed -e 's/^[0-9]* * [0-9]* * \([-bcdl]\)[^ ]* *[0-9]* *[^ ]* *[^ ]* *[0-9]* [A-Z][a-z][a-z] [0-9][0-9] [^ ]* /fs: \1 /'
-+	git-ls-files --stage |
-+	sed -e 's/^\([0-9]*\) [0-9a-f]* [0-3] /ca: \1 /'
-+	git-ls-tree -r "$1" |
-+	sed -e 's/^\([0-9]*\)	[^ ]*	[0-9a-f]*	/tr: \1 /'
-+}
-+
-+mkdir path0
-+date >path0/file0
-+git-update-cache --add path0/file0
-+echo >&2 "* initial state: one file under one directory"
-+tree1=$(git-write-tree)
-+$say show_files $tree1
-+
-+mkdir path1
-+date >path1/file1
-+git-update-cache --add path1/file1
-+echo >&2 "* two directories with one file each"
-+tree2=$(git-write-tree)
-+$say show_files $tree2
-+
-+rm -fr path1
-+git-read-tree -m $tree1
-+git-checkout-cache -f -a
-+echo >&2 "* go back to initial state"
-+$say show_files $tree1
-+
-+ln -s path0 path1
-+git-update-cache --add path1
-+echo >&2 "* a symlink where the other side would create a directory."
-+tree3=$(git-write-tree)
-+$say show_files $tree3
-+
-+# Morten says "Got that?" here.
-+
-+git-read-tree $tree2
-+git-checkout-cache -f -a
-+case "$?" in
-+0)	echo >&2 "*** ok: succeeded as expected." ;;
-+*)	echo >&2 "*** bug: should have succeeded." ;;
-+esac
-+echo >&2 "* read tree2 and checkout"
-+$say show_files $tree2
-+
-+if test ! -h path0 && test -d path0 &&
-+   test ! -h path1 && test -d path1 &&
-+   test ! -h path0/file0 && test -f path0/file0 &&
-+   test ! -h path1/file1 && test -f path1/file1
-+then
-+    echo >&2 "*** ok: checked out correctly."
-+else
-+    echo >&2 "*** bug: did not check out correctly."
-+    exit 1
-+fi
-------------------------------------------------
+@@ -170,7 +179,8 @@ int main(int argc, char **argv)
+ 
+ 	/* Person/date information */
+ 	add_buffer(&buffer, &size, "author %s <%s> %s\n", gecos, email, date);
+-	add_buffer(&buffer, &size, "committer %s <%s> %s\n\n", commitgecos, commitemail, realdate);
++	add_buffer(&buffer, &size, "committer %s <%s> %s\n", commitgecos, commitemail, realdate);
++	add_buffer(&buffer, &size, "repoid %s\n\n", repoid);
+ 
+ 	/* And add the comment */
+ 	while (fgets(comment, sizeof(comment), stdin) != NULL)
+
 
