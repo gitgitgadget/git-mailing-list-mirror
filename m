@@ -1,89 +1,88 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: Re: GIT compile error on Sun Sparc SB2000
-Date: Wed, 11 May 2005 13:32:38 +0400
-Message-ID: <200505111332.38491.snake@penza-gsm.ru>
-References: <200505111141.27725.snake@penza-gsm.ru> <4281BBC4.8060709@dgreaves.com>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: [ANNOUNCE] git tracker online
+Date: Wed, 11 May 2005 11:55:01 +0200
+Message-ID: <20050511095501.GL8176@lug-owl.de>
+References: <1115794878.22180.27.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="koi8-r"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed May 11 11:25:56 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="va4/JQ6j8/8uipEp"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 11 11:47:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVnSt-0002E9-50
-	for gcvg-git@gmane.org; Wed, 11 May 2005 11:25:15 +0200
+	id 1DVnoh-0004pI-KT
+	for gcvg-git@gmane.org; Wed, 11 May 2005 11:47:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261940AbVEKJcq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 05:32:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261945AbVEKJcq
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 05:32:46 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:22747
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261940AbVEKJcn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 05:32:43 -0400
-Received: (qmail 28655 invoked from network); 11 May 2005 09:32:41 -0000
-Received: from unknown (HELO snake) (192.168.0.20)
-  by fileserver.penza-gsm.ru with SMTP; 11 May 2005 09:32:38 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <4281BBC4.8060709@dgreaves.com>
+	id S261954AbVEKJzN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 05:55:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261948AbVEKJzN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 05:55:13 -0400
+Received: from lug-owl.de ([195.71.106.12]:47008 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S261955AbVEKJzB (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 05:55:01 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id 33C791901B8; Wed, 11 May 2005 11:55:01 +0200 (CEST)
+To: Thomas Gleixner <tglx@linutronix.de>
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
-X-Spam-Level: 
-X-Spam-Status: No, score=-105.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	TW_LR,TW_RW,TW_WX,USER_IN_WHITELIST autolearn=ham version=3.0.2
+In-Reply-To: <1115794878.22180.27.camel@tglx>
+X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Wensday, 11 May 2005 12:01 David Greaves wrote:
-> Alexey Nezhdanov wrote:
-> >Hello. GIT refuses to compile on Debian sarge on sparc64.
-> >Probably some compile flag is incompartible but can't figure out which.
->
-> read the error message:
-> >/usr/bin/ld: skipping
-> >incompatible /usr/lib/gcc-lib/sparc-linux/3.3.3/../../../libz.so when
->
-> hmm...
-> libz.so
->
-> >/usr/bin/ld: cannot find -lz
->
-> Can't find often equals "not installed"
-webmaster@www:/tmp/cogito-0.10$ ls -l /usr/lib/libz.so
-lrwxr-xr-x    1 root     root            9 2005-05-11 11:18 /usr/lib/libz.so 
--> libz.so.1
-webmaster@www:/tmp/cogito-0.10$ ls -l /usr/lib/libz.a 
--rw-r--r--    1 root     root        83610 2004-12-07 21:38 /usr/lib/libz.a
 
->
-> So go to aptitude, search for zlib
-> You'll find libz-dev
-> Install it
->
-> Or just run
-> apt-get install libz-dev
->
-> And try again
-Nope, not helped.
-www:/home/snake# apt-get install libz-dev
-Reading Package Lists... Done
-Building Dependency Tree... Done
-Note, selecting zlib1g-dev instead of libz-dev
-zlib1g-dev is already the newest version.
-0 upgraded, 0 newly installed, 0 to remove and 307 not upgraded.
-www:/home/snake# 
->
-> David
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--va4/JQ6j8/8uipEp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Respectfully
-Alexey Nezhdanov
+On Wed, 2005-05-11 07:01:18 +0000, Thomas Gleixner <tglx@linutronix.de> wro=
+te:
 
+> http://www.tglx.de/gittracker
+>
+> It does:
+> - multi repository tracking
+> - Tree browsing
+> - File revision history
+> - File diffs
+> - File annotation
+> - commit viewer with filtering (e.g. all commits in a tree which are not
+> in another tree)
+
+Very nice. One (personal) preference: I'd like to see not only the
+check-in date, but also the actual time (resolution of one second is
+enough, no need to display the =C2=B5sec parts:-)
+
+MfG, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im Ira=
+k!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--va4/JQ6j8/8uipEp
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCgdZ1Hb1edYOZ4bsRAglvAJ4gYBsrQVxt14wExmB2xuiX6jKGZwCggG08
+nWo2tlw1prZro9XpwwbyZ3Q=
+=i70D
+-----END PGP SIGNATURE-----
+
+--va4/JQ6j8/8uipEp--
