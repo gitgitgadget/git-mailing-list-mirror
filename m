@@ -1,141 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: "git-checkout-cache -f -a" failure
-Date: Tue, 10 May 2005 19:53:10 -0700
-Message-ID: <7vpsvyv5gp.fsf@assigned-by-dhcp.cox.net>
-References: <118833cc05050911255e601fc@mail.gmail.com>
-	<7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: Core and Not-So Core
+Date: Wed, 11 May 2005 13:02:19 +1000
+Message-ID: <2cfc403205051020023e84ec7b@mail.gmail.com>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
+	 <20050510225235.GD26384@pasky.ji.cz>
+	 <2cfc403205051017505b57da72@mail.gmail.com>
+	 <Pine.LNX.4.62.0505102226020.5426@localhost.localdomain>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 11 04:46:01 2005
+X-From: git-owner@vger.kernel.org Wed May 11 04:55:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVhEV-0004VP-LF
-	for gcvg-git@gmane.org; Wed, 11 May 2005 04:45:59 +0200
+	id 1DVhNU-0005BZ-EC
+	for gcvg-git@gmane.org; Wed, 11 May 2005 04:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261885AbVEKCxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 May 2005 22:53:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261886AbVEKCxY
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 22:53:24 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:36996 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261885AbVEKCxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 May 2005 22:53:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050511025312.YMAL1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 10 May 2005 22:53:12 -0400
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 10 May 2005 15:57:34 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261891AbVEKDC3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 May 2005 23:02:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261890AbVEKDC3
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 May 2005 23:02:29 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:30524 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261891AbVEKDCU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 May 2005 23:02:20 -0400
+Received: by rproxy.gmail.com with SMTP id j1so31418rnf
+        for <git@vger.kernel.org>; Tue, 10 May 2005 20:02:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EGqVSZxofEeXlL9dHIZXxSLQZn78/ZJIngqHRgDds7GUpbQTiDjOgktOE4nt4ypvcX6PdNR9LXfZOiARB4rgZJVKPcCbqnFfGAQ1zD2Nq0W3rhjtubp5LClaSN3BLuIfh4ydT8PTKAUymvPwQnUyG6vlTcmi3tvxdbN+djWBvAQ=
+Received: by 10.39.3.79 with SMTP id f79mr173982rni;
+        Tue, 10 May 2005 20:02:19 -0700 (PDT)
+Received: by 10.38.104.59 with HTTP; Tue, 10 May 2005 20:02:19 -0700 (PDT)
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0505102226020.5426@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Please forget about the previous one which was buggy when you
-had ".something" file under the directory being replaced.
+On 5/11/05, Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 11 May 2005, Jon Seymour wrote:
+> > I agree in principle, though I'd like users to be able to easily
+> > switch between the Eclipse and git tools view of the workspace if they
+> > want to - who am I to say how a user should work? Eclipse does this
+> > kind of thing quite well with CVS precisely because it shares the
+> > workspace structures with the CVS command line tools rather than
+> > "re-inventing" the wheel.
+> 
+> In this case you just need to manage to use the current index format
+> somehow.
+> 
+> Honestly I don't think Linus might be interested into changing the index
+> format just to make a Java implementation happier.  So your best bet is
+> probably to use it as is or ignore it entirely.
+> 
 
-Could you give this patch a try?
+Agreed - I am not proposing a change to the index format, merely
+highlighting that the index format is closely bound to the
+workspace-oriented toolset and that the workspace-oriented toolset is
+distinct from the repository-oriented toolset; different
+workspace-oriented toolsets will have different requirements for their
+index files and so their index files might quite rightly differ in
+both form and substance.
 
----
+That said, their is no harm making my set of tools interoperable with
+the git tools, where that is possible so that the user can decide to
+use which ever toolset fits the job immediately at hand. With this in
+mind, a published specification of the index format would help, but I
+am not going insist on that. I am certainly not going to ask for
+changes to it! Life is too short :-)
 
-Running git-checkout-cache -f -a to check out a file in a
-directory fails when the work tree has a non-directory with the
-same name as the directory being checked out.  Similarly it
-fails to check out a file when the work tree has a directory
-with the same name as the file being checked out.
-
-When '-f' is specified, the user is telling us that "I really
-want to match the work tree with what is in the cache."  So
-removing the offending file or directory from the work tree to
-make room when necessary and possible in order to make the
-checkout succeed is the right thing to do.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
---- a/checkout-cache.c
-+++ b/checkout-cache.c
-@@ -32,6 +32,8 @@
-  * of "-a" causing problems (not possible in the above example,
-  * but get used to it in scripting!).
-  */
-+#include <sys/types.h>
-+#include <dirent.h>
- #include "cache.h"
- 
- static int force = 0, quiet = 0, not_new = 0;
-@@ -46,11 +48,51 @@ static void create_directories(const cha
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
--		mkdir(buf, 0755);
-+		if (mkdir(buf, 0755)) {
-+			if (errno == EEXIST) {
-+				struct stat st;
-+				if (!lstat(buf, &st) && S_ISDIR(st.st_mode))
-+					continue; /* ok */
-+				if (force && !unlink(buf) && !mkdir(buf, 0755))
-+					continue;
-+			}
-+			die("cannot create directory at %s", buf);
-+		}
- 	}
- 	free(buf);
- }
- 
-+static void remove_subtree(const char *path)
-+{
-+	DIR *dir = opendir(path);
-+	struct dirent *de;
-+	char pathbuf[PATH_MAX];
-+	char *name;
-+	
-+	if (!dir)
-+		die("cannot opendir %s", path);
-+	strcpy(pathbuf, path);
-+	name = pathbuf + strlen(path);
-+	*name++ = '/';
-+	while ((de = readdir(dir)) != NULL) {
-+		struct stat st;
-+		if ((de->d_name[0] == '.') &&
-+		    ((de->d_name[1] == 0) ||
-+		     (de->d_name[1] == '.') && de->d_name[2] == 0))
-+			continue;
-+		strcpy(name, de->d_name);
-+		if (lstat(pathbuf, &st))
-+			die("cannot lstat %s", pathbuf);
-+		if (S_ISDIR(st.st_mode))
-+			remove_subtree(pathbuf);
-+		else if (unlink(pathbuf))
-+			die("cannot unlink %s", pathbuf);
-+	}
-+	closedir(dir);
-+	if (rmdir(path))
-+		die("cannot rmdir %s", path);
-+}
-+
- static int create_file(const char *path, unsigned int mode)
- {
- 	int fd;
-@@ -58,10 +100,14 @@ static int create_file(const char *path,
- 	mode = (mode & 0100) ? 0777 : 0666;
- 	fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 	if (fd < 0) {
--		if (errno == ENOENT) {
-+		if ((errno == ENOENT) || (errno == ENOTDIR && force)) {
- 			create_directories(path);
- 			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
- 		}
-+		else if (errno == EISDIR && force) {
-+			remove_subtree(path);
-+			fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, mode);
-+		}
- 	}
- 	return fd;
- }
-------------------------------------------------
-
+jon.
