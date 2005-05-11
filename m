@@ -1,68 +1,87 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Wed, 11 May 2005 16:14:21 -0700
-Message-ID: <428291CD.7010701@zytor.com>
+Date: Wed, 11 May 2005 23:33:39 +0000
+Organization: linutronix
+Message-ID: <1115854419.22180.196.camel@tglx>
 References: <1115847510.22180.108.camel@tglx>
+	 <2780.10.10.10.24.1115848852.squirrel@linux1>
+	 <1115849141.22180.123.camel@tglx>
+	 <2807.10.10.10.24.1115850254.squirrel@linux1>
+	 <1115850619.22180.133.camel@tglx>
+	 <2853.10.10.10.24.1115850996.squirrel@linux1>
+	 <1115851718.22180.153.camel@tglx>
+	 <2883.10.10.10.24.1115852463.squirrel@linux1>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 01:07:43 2005
+X-From: git-owner@vger.kernel.org Thu May 12 01:25:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW0Ia-0006WI-Ge
-	for gcvg-git@gmane.org; Thu, 12 May 2005 01:07:31 +0200
+	id 1DW0Zy-0000vQ-W3
+	for gcvg-git@gmane.org; Thu, 12 May 2005 01:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261310AbVEKXO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 19:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261312AbVEKXO4
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:14:56 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:16824 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261310AbVEKXOu
+	id S261317AbVEKXcz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 19:32:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261319AbVEKXcz
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:32:55 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:26499
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261317AbVEKXcx
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 19:14:50 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4BNERIS021672
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 11 May 2005 16:14:27 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: tglx@linutronix.de
-In-Reply-To: <1115847510.22180.108.camel@tglx>
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-4.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	Wed, 11 May 2005 19:32:53 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 3469C65C003;
+	Thu, 12 May 2005 01:32:46 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id E190C28204;
+	Thu, 12 May 2005 01:32:47 +0200 (CEST)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <2883.10.10.10.24.1115852463.squirrel@linux1>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gleixner wrote:
-> This is an initial attempt to enable history tracking for multiple
-> repositories in a consistent state. At the moment this can only be done
-> by heuristic guessing on the parent dates and the committer names. 
-> This fails for example with Dave Millers net-2.6 and sparc-2.6 trees, as
-> in both cases the committer name is the same. It fails also completely
-> in cases where the system clock of the committer is wrong and the merge
-> is a head forward. The old bk repository contains entries from 1999 and
-> 2027, which will happen also with git over the time. 
-> 
-> To identify a repository commit-tree tries to read an environment
-> variable "GIT_REPOSITORY_ID" and has a fallback to the current working
-> directory. The environment variable keeps the door open for managed
-> repository id's, but the current working directory is certainly a quite
-> helpful information to solve the origin decision for history tracking.
-> 
-> Adding a line after the committer should not break any existing tools
-> AFAICS.
-> 
+On Wed, 2005-05-11 at 19:01 -0400, Sean wrote:
+> Why would anyone care how many repositories Russell or Greg use?  Why does
+> anyone care if Dave used his repo A, B, or C?   Aren't I still just going
+> to contact him via his author email addy if I have an issue with an object
+> he has added to the stream?
 
-I would like to suggest a few limiters are set on the repoid.  In 
-particular, I'd like to suggest that a repoid is a UUID, that a file is 
-used to track it (.git/repoid), and that if it doesn't exist, a new one 
-is created from /dev/urandom.
+He? What the hell have the sparc-2.6 and net-2.6 in common except the
+same owner/maintainer ? Should we base the heuristics on directories and
+filenames ? Cool.
 
-	-hpa
+It is relevant for the maintainers to have information which is
+consistent over a repository. So the source of change _is_ relevant.
+
+> Exactly!!!  So what is relevant of getting the same thing from Dave's A or
+> B?  
+
+The relevant part is, that it _is_ relevant for Dave to know where the
+hell a problem was introduced.
+
+> The only point would be to show chain of command, but you don't seem
+> interested in that.
+
+What is the chain of commands good for ? Does the chain of commands
+change the history information in a specific repository ? 
+
+No. 
+
+If you buy food, then it is relevant if you get it from A directly or
+via B. The commit and the referenced tree is immutable and does neither
+change the consistency nor gets uneatable.
+
+> > If you want to do this, you break the fast forward mechanism and
+> > reinvent the pull ping-pong which is avoided by the fast forwards.
+> 
+> Yes, I think there are other ways to avoid the ping pong too.
+
+True, but not with a plain rsync approach
+
+tglx
+
+
