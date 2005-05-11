@@ -1,124 +1,131 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Stop git-rev-list at sha1 match
-Date: Thu, 12 May 2005 00:17:19 +0200
-Message-ID: <20050511221719.GH22686@pasky.ji.cz>
-References: <1115839456.22180.79.camel@tglx> <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx> <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [RFC] Embedding asciidoc manpages in the cg scripts
+Date: Wed, 11 May 2005 23:20:10 +0100
+Message-ID: <4282851A.2010305@dgreaves.com>
+References: <20050511014445.GA14377@diku.dk> <20050511213217.GG22686@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: tglx@linutronix.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 00:11:31 2005
+Content-Transfer-Encoding: 7bit
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 00:13:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVzPa-0006VT-SC
-	for gcvg-git@gmane.org; Thu, 12 May 2005 00:10:39 +0200
+	id 1DVzS0-0006vp-Kc
+	for gcvg-git@gmane.org; Thu, 12 May 2005 00:13:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261590AbVEKWSG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 18:18:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261530AbVEKWSF
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:18:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64706 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261730AbVEKWRY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 18:17:24 -0400
-Received: (qmail 8995 invoked by uid 2001); 11 May 2005 22:17:19 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261530AbVEKWUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 18:20:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261635AbVEKWUi
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:20:38 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:10940 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261530AbVEKWUX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 18:20:23 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 04DA7E6DD3; Wed, 11 May 2005 23:19:06 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 04135-19; Wed, 11 May 2005 23:19:05 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.189.224])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 39FA1E6DC6; Wed, 11 May 2005 23:19:05 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DVzYo-0003DB-W8; Wed, 11 May 2005 23:20:11 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050511213217.GG22686@pasky.ji.cz>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, May 11, 2005 at 11:54:11PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "TG" == Thomas Gleixner <tglx@linutronix.de> writes:
-> 
-> TG> You moved the stop behind the printf which is inconsistent to the other
-> TG> stop conditions, but thats a pure cosmetic question as long as it stays
-> TG> that way for ever. 
-> 
-> While I work on the core GIT changes, I often find myself doing
-> 
->     $ jit-log -l --since linus
->     $ jit-log -l --since git-jc
-> 
-> to see what changes I have in my local work repository, and
-> seeing the branching point (or origin) at the very end of the
-> log made me feel assured that I am not losing anything in the
-> log.  But come to think of it, that is really an unnecessary
-> thing and stopping _before_ the named commit would make more
-> sense.
-> 
-> Here is a fixed version.  I am CC'ing pasky hoping he would pick
-> it up.
+Petr Baudis wrote:
 
-Yes, looks better and more consistent with the rest of the stuff.
+>> #
+>>+# NAME
+>>+# ----
+>>+# cg-add - add files to a GIT repository
+>>    
+>>
+>
+>Half of this is useless, too.
+>
+>I think you should just keep the first paragraph of the files as it is
+>now. Don't touch it, just parse it.
+>  
+>
+A bit harsh Petr.
 
-But the very fact that you want this makes me *quite* nervous - I think
-this is bad thing to do. The problem is, for something like
+Isn't the idea of using an already written tool that you don't _have_ to
+parse it?
+Where, consistently, do the cg-files have a 1 line summary.
 
-     o
-     | \
-     o  |
-     |  o
-     |  o
-     o /
-     o
-    ------
+>>+#
+>>+# SYNOPSIS
+>>+# --------
+>>    
+>>
+>No need for this heading either.
+>  
+>
+Actually there is :)
+asciidoc won't produce a manpage without it.
 
-it will show the merged revisions properly, but for
+>>+USAGE="cg-add FILE..."
+>>+#
+>>+# DESCRIPTION
+>>+# -----------
+>> # Takes a list of file names at the command line, and schedules them
+>> # for addition to the GIT repository at the next commit.
+>>+#
+>>+# The command will fail if one of the given files does not exist.
+>>+#
+>>+# cg-add is part of Cogito, an SCM-like toolkit for managing GIT trees.
+>>    
+>>
+>
+>Useless.
+>  
+>
+Yes - if you happen to have written and breathed the code - not so
+useless if you're a normal user.
 
-     o
-     | \
-     o  |
-    ------
-     |  o
-     |  o
-     o /
-     o
+It cogito is ever installed as part of a distro (maybe even by default)
+then it would be nice if "man cg-add" actually mentioned it was part of
+cogito and git...
 
-it won't show the full merge. Whilst when you do
+>>+#
+>>+# OPTIONS
+>>+# -------
+>>+# No options.
+>>    
+>>
+>
+>The rest of DESCRIPTION and OPTIONS looks fine.
+>
+>I'd just expect you to be much less intrusive in the in-file comments
+>and do more work when processing the stuff. I'm commenting on how it
+>looks inside of the sources - do whatever is necessary when processing
+>it to generate a proper-looking manpage from it.
+>  
+>
+Having worked hard on being consistent throughout the git docs I'd say
+that a little excess verbiage in the comments is a worthwhile price. I
+don't think you can worry about performance or anything - these _are_
+shell scripts!
 
-	*-log --since foo
 
-I think you mean it to show everything going into the tree since foo -
-that would include the whole branch you cut off now.
+Maybe you'd be happier if they were moved to the bottom of the file and
+preceded with:
 
-Thomas, what are you going to use it for?
+#asciidoc follows
 
-> Add --stop-at to git-rev-list command.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
+Or if you don't like that then maybe keep them external.
 
-I liked the previous patch revision commit message much better, I have
-to admit. ;-)
-
-> ---
-> --- a/checkout-cache.c
-> +++ b/checkout-cache.c
-
-I assume this is irrelevant here?
-
-> --- a/rev-list.c
-> +++ b/rev-list.c
-
-Looks ok.
-
-Could you please also update the documentation appropriately? (If we
-have it, let's keep it up to date.)
-
-> Created: t/t0000.sh (mode:100755)
-> --- /dev/null
-> +++ b/t/t0000.sh
-
-You want this in too?
-
-Starting to build a testsuite sounds like a good idea, but we should
-probably first devise some calling convention etc. I personally suck at
-automated testing.
+David
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+
