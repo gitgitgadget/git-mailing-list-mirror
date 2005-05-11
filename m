@@ -1,68 +1,60 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH] Stop git-rev-list at sha1 match
-Date: Wed, 11 May 2005 20:30:29 +0000
-Organization: linutronix
-Message-ID: <1115843429.22180.90.camel@tglx>
-References: <1115839456.22180.79.camel@tglx>
-	 <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net>
-Reply-To: tglx@linutronix.de
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: History messup
+Date: Wed, 11 May 2005 22:31:22 +0200
+Message-ID: <20050511203122.GD22686@pasky.ji.cz>
+References: <1115657971.19236.33.camel@tglx> <1115659677.16187.393.camel@hades.cambridge.redhat.com> <1115660903.19236.39.camel@tglx> <427FB3A7.8050906@zytor.com> <1115665598.12012.422.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 11 22:24:26 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>, tglx@linutronix.de,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed May 11 22:26:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVxin-0003vH-0p
-	for gcvg-git@gmane.org; Wed, 11 May 2005 22:22:21 +0200
+	id 1DVxkn-0004Ic-7y
+	for gcvg-git@gmane.org; Wed, 11 May 2005 22:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261284AbVEKU3p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 16:29:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262043AbVEKU3p
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 16:29:45 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:52353
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261284AbVEKU3i
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 16:29:38 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 4CBAF65C003;
-	Wed, 11 May 2005 22:29:37 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id C1B812807D;
-	Wed, 11 May 2005 22:29:38 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.2.2 
+	id S262047AbVEKUbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 16:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262046AbVEKUbl
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 16:31:41 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50880 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262044AbVEKUbY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 16:31:24 -0400
+Received: (qmail 26700 invoked by uid 2001); 11 May 2005 20:31:22 -0000
+To: David Woodhouse <dwmw2@infradead.org>
+Content-Disposition: inline
+In-Reply-To: <1115665598.12012.422.camel@baythorne.infradead.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-05-11 at 13:03 -0700, Junio C Hamano wrote:
-> Suggestion.  How about renaming "--to_sha1" to "--since"?  If
-> you do not like "--since", then "--stop-at" would also be good.
+Dear diary, on Mon, May 09, 2005 at 09:06:38PM CEST, I got a letter
+where David Woodhouse <dwmw2@infradead.org> told me that...
+> On Mon, 2005-05-09 at 12:01 -0700, H. Peter Anvin wrote:
+> > Seems like a UUID or a SHA-1 identifier would be better.
+> > 
+> > However, one can definitely argue that even the meaning of "a 
+> > repository" isn't well-defined in the context of git.
+> 
+> Of course it isn't. But neither is the meaning "a committer" or 
+> "an author" or even "a date".
+> 
+> Including some kind of repo-specific identifier with each commit would
+> help us to make sense of the history, just as those other fields do.
 
-No preference here :)
+FWIW, I recently added .git/branch-name to Cogito, since I needed some
+identifier through which to differentiate between the branches
+(repositories - it's all blurred in Cogito view) when sending commits
+to CIA.
 
-> Suggestion.  Instead of running sha1_to_hex on the SHA1 of the
-> commit and comparing strings for every commit you encounter, how
-> about keeping 20-byte raw SHA1 of to_sha1 and doing memcmp of
-> 20-byte?  That way you would also detect malformed --to-sha1
-> parameter when you do the initial conversion upon argument
-> parsing.  Also the argument parsing using get_sha1() would give
-> you an added benefit of using mnemonics (tag and heads).
+It is strictly per-branch (never to be shared by multiple repositories),
+optional, informative and more of a temporary solution for now I had to
+cook together in a minute.
 
-Makes sense. I just used the sha1_to_hex as it is called anyway for the
-printf 
-
-> What do you think about this revision?
-
-You moved the stop behind the printf which is inconsistent to the other
-stop conditions, but thats a pure cosmetic question as long as it stays
-that way for ever. 
-
-Otherwise not objections.
-
-tglx
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
