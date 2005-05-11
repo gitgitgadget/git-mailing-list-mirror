@@ -1,88 +1,73 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Wed, 11 May 2005 19:44:09 -0400 (EDT)
-Message-ID: <2997.10.10.10.24.1115855049.squirrel@linux1>
-References: <1115847510.22180.108.camel@tglx> 
-    <2780.10.10.10.24.1115848852.squirrel@linux1> 
-    <1115849141.22180.123.camel@tglx> 
-    <2807.10.10.10.24.1115850254.squirrel@linux1> 
-    <1115850619.22180.133.camel@tglx> 
-    <2853.10.10.10.24.1115850996.squirrel@linux1> 
-    <1115851718.22180.153.camel@tglx> 
-    <2883.10.10.10.24.1115852463.squirrel@linux1>
-    <1115854419.22180.196.camel@tglx>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] Stop git-rev-list at sha1 match
+Date: Thu, 12 May 2005 01:44:55 +0200
+Message-ID: <20050511234455.GL22686@pasky.ji.cz>
+References: <1115839456.22180.79.camel@tglx> <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx> <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net> <20050511221719.GH22686@pasky.ji.cz> <1115851742.22180.154.camel@tglx> <20050511225058.GK22686@pasky.ji.cz> <1115852914.22180.170.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 01:36:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 01:37:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW0ks-0002Dx-Hc
-	for gcvg-git@gmane.org; Thu, 12 May 2005 01:36:42 +0200
+	id 1DW0ln-0002J1-CJ
+	for gcvg-git@gmane.org; Thu, 12 May 2005 01:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261323AbVEKXoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 19:44:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261325AbVEKXoP
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:44:15 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:55745 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261323AbVEKXoK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 May 2005 19:44:10 -0400
-Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050511234409.PTTZ26867.simmts8-srv.bellnexxia.net@linux1>;
-          Wed, 11 May 2005 19:44:09 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j4BNi9ae004431;
-	Wed, 11 May 2005 19:44:09 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Wed, 11 May 2005 19:44:09 -0400 (EDT)
-In-Reply-To: <1115854419.22180.196.camel@tglx>
-To: tglx@linutronix.de
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S261328AbVEKXpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 19:45:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261325AbVEKXpK
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:45:10 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35012 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261328AbVEKXo6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 19:44:58 -0400
+Received: (qmail 15629 invoked by uid 2001); 11 May 2005 23:44:55 -0000
+To: Thomas Gleixner <tglx@linutronix.de>
+Content-Disposition: inline
+In-Reply-To: <1115852914.22180.170.camel@tglx>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 11, 2005 7:33 pm, Thomas Gleixner said:
+Dear diary, on Thu, May 12, 2005 at 01:08:34AM CEST, I got a letter
+where Thomas Gleixner <tglx@linutronix.de> told me that...
+> On Thu, 2005-05-12 at 00:50 +0200, Petr Baudis wrote:
+> > > Rn
+> > > ---- Stop = Rn-1
+> > > Rn-1
+> > > ---- Stop = Rn-2
+> > 
+> > Mn
+> > Mn-1
+> > 
+> > > Rn-2
+> > > ---- Stop = Rn-3
+> > > 
+> > > The diff between Rn and Rn-1 contains always the changes merged from M
+> > 
+> > Yes, but you get the merge commits again since rev-list follows all the
+> > parents.
+> 
+> That's plain wrong. The Mn(1) change hit repository r between revision
+> Rn and Rn-1 and nowhere else. 
+> 
+> Date is irrelevant. The only relevant thing is the parent child(s)
+> relationship.
 
-> He? What the hell have the sparc-2.6 and net-2.6 in common except the
-> same owner/maintainer ? Should we base the heuristics on directories and
-> filenames ? Cool.
+What I described is just how rev-list works (now), nothing more. This is
+what you get when you use rev-list.
 
-What problem are you trying to solve?  Has dave or russell or anybody with
-multiple repositories given you reason to think they have a problem
-tracking their personal repositories?   I doubt it very much.
+Please see the thread of
 
->> The only point would be to show chain of command, but you don't seem
->> interested in that.
->
-> What is the chain of commands good for ? Does the chain of commands
-> change the history information in a specific repository ?
+5730     Apr 27 H. Peter Anvin  ( 0.2K) kernel.org now has gitweb installed
 
-The chain of command might be good to know in the same way that an
-accurate signed-off-by chain is good to know.
+for extensive discussion on how (it is impossible or very hard) to do
+better.
 
-> No.
+So how would you order the list of commits?
 
-Yes.  Not that I care personally very much.
-
-> If you buy food, then it is relevant if you get it from A directly or
-> via B. The commit and the referenced tree is immutable and does neither
-> change the consistency nor gets uneatable.
-
-Lol..
-
-> True, but not with a plain rsync approach
-
-Agreed.
-
-Sean.
-
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
