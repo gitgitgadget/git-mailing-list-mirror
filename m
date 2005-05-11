@@ -1,73 +1,57 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Stop git-rev-list at sha1 match
-Date: Thu, 12 May 2005 01:44:55 +0200
-Message-ID: <20050511234455.GL22686@pasky.ji.cz>
-References: <1115839456.22180.79.camel@tglx> <7vy8alr0mz.fsf@assigned-by-dhcp.cox.net> <1115843429.22180.90.camel@tglx> <7vis1pqvi4.fsf@assigned-by-dhcp.cox.net> <20050511221719.GH22686@pasky.ji.cz> <1115851742.22180.154.camel@tglx> <20050511225058.GK22686@pasky.ji.cz> <1115852914.22180.170.camel@tglx>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Wed, 11 May 2005 19:45:30 -0400 (EDT)
+Message-ID: <3004.10.10.10.24.1115855130.squirrel@linux1>
+References: <1115847510.22180.108.camel@tglx>  <428291CD.7010701@zytor.com>
+    <1115854733.22180.202.camel@tglx> <428297DB.8030905@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 01:37:53 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: tglx@linutronix.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 01:38:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW0ln-0002J1-CJ
-	for gcvg-git@gmane.org; Thu, 12 May 2005 01:37:39 +0200
+	id 1DW0mB-0002ML-CY
+	for gcvg-git@gmane.org; Thu, 12 May 2005 01:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261328AbVEKXpK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 19:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261325AbVEKXpK
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:45:10 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:35012 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261328AbVEKXo6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 19:44:58 -0400
-Received: (qmail 15629 invoked by uid 2001); 11 May 2005 23:44:55 -0000
-To: Thomas Gleixner <tglx@linutronix.de>
-Content-Disposition: inline
-In-Reply-To: <1115852914.22180.170.camel@tglx>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261325AbVEKXpf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 19:45:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261448AbVEKXpf
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 19:45:35 -0400
+Received: from simmts12.bellnexxia.net ([206.47.199.141]:42371 "EHLO
+	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261325AbVEKXpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 19:45:31 -0400
+Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050511234530.SKKE19200.simmts12-srv.bellnexxia.net@linux1>;
+          Wed, 11 May 2005 19:45:30 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4BNjSeD004472;
+	Wed, 11 May 2005 19:45:30 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Wed, 11 May 2005 19:45:30 -0400 (EDT)
+In-Reply-To: <428297DB.8030905@zytor.com>
+To: "H. Peter Anvin" <hpa@zytor.com>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 12, 2005 at 01:08:34AM CEST, I got a letter
-where Thomas Gleixner <tglx@linutronix.de> told me that...
-> On Thu, 2005-05-12 at 00:50 +0200, Petr Baudis wrote:
-> > > Rn
-> > > ---- Stop = Rn-1
-> > > Rn-1
-> > > ---- Stop = Rn-2
-> > 
-> > Mn
-> > Mn-1
-> > 
-> > > Rn-2
-> > > ---- Stop = Rn-3
-> > > 
-> > > The diff between Rn and Rn-1 contains always the changes merged from M
-> > 
-> > Yes, but you get the merge commits again since rev-list follows all the
-> > parents.
-> 
-> That's plain wrong. The Mn(1) change hit repository r between revision
-> Rn and Rn-1 and nowhere else. 
-> 
-> Date is irrelevant. The only relevant thing is the parent child(s)
-> relationship.
+On Wed, May 11, 2005 7:40 pm, H. Peter Anvin said:
 
-What I described is just how rev-list works (now), nothing more. This is
-what you get when you use rev-list.
+> I can tell you what would happen in at least my case: you'll see each
+> "repository" with about 23 different IDs.
+>
 
-Please see the thread of
+Amongst other issues and complexity this will introduce.   This is really
+a solution in search of a problem anyway.
 
-5730     Apr 27 H. Peter Anvin  ( 0.2K) kernel.org now has gitweb installed
+Sean
 
-for extensive discussion on how (it is impossible or very hard) to do
-better.
 
-So how would you order the list of commits?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
