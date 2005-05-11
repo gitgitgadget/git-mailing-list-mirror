@@ -1,115 +1,76 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [RFC] Embedding asciidoc manpages in the cg scripts
-Date: Thu, 12 May 2005 00:48:06 +0200
-Message-ID: <20050511224806.GJ22686@pasky.ji.cz>
-References: <20050511014445.GA14377@diku.dk> <20050511213217.GG22686@pasky.ji.cz> <4282851A.2010305@dgreaves.com>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Wed, 11 May 2005 22:48:38 +0000
+Organization: linutronix
+Message-ID: <1115851718.22180.153.camel@tglx>
+References: <1115847510.22180.108.camel@tglx>
+	 <2780.10.10.10.24.1115848852.squirrel@linux1>
+	 <1115849141.22180.123.camel@tglx>
+	 <2807.10.10.10.24.1115850254.squirrel@linux1>
+	 <1115850619.22180.133.camel@tglx>
+	 <2853.10.10.10.24.1115850996.squirrel@linux1>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 00:41:13 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 00:41:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DVzsq-0002Pc-5E
-	for gcvg-git@gmane.org; Thu, 12 May 2005 00:40:52 +0200
+	id 1DVzsR-0002MK-F2
+	for gcvg-git@gmane.org; Thu, 12 May 2005 00:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261296AbVEKWsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 May 2005 18:48:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261291AbVEKWsV
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:48:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41155 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261744AbVEKWsI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 18:48:08 -0400
-Received: (qmail 12423 invoked by uid 2001); 11 May 2005 22:48:07 -0000
-To: David Greaves <david@dgreaves.com>
-Content-Disposition: inline
-In-Reply-To: <4282851A.2010305@dgreaves.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261295AbVEKWr6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 18:47:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261299AbVEKWr6
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 18:47:58 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:64898
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261295AbVEKWrs
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 18:47:48 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 8273565C003;
+	Thu, 12 May 2005 00:47:45 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 33081282A1;
+	Thu, 12 May 2005 00:47:47 +0200 (CEST)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <2853.10.10.10.24.1115850996.squirrel@linux1>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 12, 2005 at 12:20:10AM CEST, I got a letter
-where David Greaves <david@dgreaves.com> told me that...
-> Petr Baudis wrote:
+On Wed, 2005-05-11 at 18:36 -0400, Sean wrote:
+> On Wed, May 11, 2005 6:30 pm, Thomas Gleixner said:
 > 
-> >> #
-> >>+# NAME
-> >>+# ----
-> >>+# cg-add - add files to a GIT repository
-> >>    
-> >>
-> >
-> >Half of this is useless, too.
-> >
-> >I think you should just keep the first paragraph of the files as it is
-> >now. Don't touch it, just parse it.
-> >  
-> >
-> A bit harsh Petr.
+> > At this point it is completely irrelevant if you pulled from A or B. The
+> > originator of Head A is A forever.
+> 
+> But who cares what repository was used to create the object?   You can't
+> talk to a repository.   What you want to know is who created the object,
+> and Author/Committer completely solves that problem.
 
-Sorry, I didn't mean to sound (too) harsh. ;-)
+Maybe you have missed the point, where one Committer holds more than one
+repository. See davem/net-2.6 and davem/sparc-2.6. Not to talk of
+Russell King's and Greg's multiple repositories.
+The Author is irrelevant, because one Author sends patches to more than
+one maintainer. Author _cannot_ be a source of tracking information. If
+you want to do heuristic guesses on Author/Committer pairs, then you
+make the situation more complex than it is already.
 
-> Isn't the idea of using an already written tool that you don't _have_ to
-> parse it?
+> If on the otherhand you're trying to reliably track the chain-of-command
+> that landed the object in your repository, your patch falls short.
 
-No, the idea is to get nice output while keeping the input easily human
-readable. I'm only stretching that further, since we know more than
-asciidoc itself does about the file. :-)
+As I said before it is completely irrelevant whether fast forward was
+pulled into C directly from A or from B. 
 
-> Where, consistently, do the cg-files have a 1 line summary.
+Whats the relevant content of getting the same thing from A or B ? 
 
-I can't parse this sentence, I fear. All the cg-files have a 1 line
-summary, then one or more copyright lines, then the description 'n
-stuff. That's fixed format, much like the git commit format.
+If you want to do this, you break the fast forward mechanism and
+reinvent the pull ping-pong which is avoided by the fast forwards.
 
-> >>+#
-> >>+# SYNOPSIS
-> >>+# --------
-> >>    
-> >>
-> >No need for this heading either.
-> >  
-> >
-> Actually there is :)
-> asciidoc won't produce a manpage without it.
+tglx
 
-So the script piping this to asciidoc can add this at the proper point.
 
-> >>+USAGE="cg-add FILE..."
-> >>+#
-> >>+# DESCRIPTION
-> >>+# -----------
-> >> # Takes a list of file names at the command line, and schedules them
-> >> # for addition to the GIT repository at the next commit.
-> >>+#
-> >>+# The command will fail if one of the given files does not exist.
-> >>+#
-> >>+# cg-add is part of Cogito, an SCM-like toolkit for managing GIT trees.
-> >>    
-> >>
-> >
-> >Useless.
-> >  
-> >
-> Yes - if you happen to have written and breathed the code - not so
-> useless if you're a normal user.
-
-Sorry, I've meant only the "cg-add is part of Cogito, an SCM-like
-toolkit for managing GIT trees" part is useless.
-
-> It cogito is ever installed as part of a distro (maybe even by default)
-> then it would be nice if "man cg-add" actually mentioned it was part of
-> cogito and git...
-
-Yes. I'm fine with it being in the manpage. I just don't want it in the
-code since again, it is obvious there. And code (be it program code or
-documentation code) duplication is wrong, if you have a non-trivial
-chunk repeated over and over everywhere, you probably want to move it to
-a single place. That'd be the conversion script here.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
