@@ -1,61 +1,55 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Mercurial 0.4e vs git network pull
-Date: Thu, 12 May 2005 20:23:41 +0200
-Message-ID: <20050512182340.GA324@pasky.ji.cz>
-References: <20050512094406.GZ5914@waste.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] Support projects including other projects
+Date: Thu, 12 May 2005 11:47:50 -0700
+Message-ID: <7vll6kgu21.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0505121218280.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
-	mercurial@selenic.com, Linus Torvalds <torvalds@osdl.org>
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262110AbVELSYj@vger.kernel.org Thu May 12 20:21:47 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262110AbVELSYj@vger.kernel.org>
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 12 20:41:50 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWIIo-0001m9-7F
-	for glk-linux-kernel@gmane.org; Thu, 12 May 2005 20:20:54 +0200
+	id 1DWIbX-0005Ci-T8
+	for gcvg-git@gmane.org; Thu, 12 May 2005 20:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262110AbVELSYj (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Thu, 12 May 2005 14:24:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262109AbVELSYe
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 12 May 2005 14:24:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:65239 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262102AbVELSXn (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 12 May 2005 14:23:43 -0400
-Received: (qmail 1017 invoked by uid 2001); 12 May 2005 18:23:41 -0000
-To: Matt Mackall <mpm@selenic.com>
-Content-Disposition: inline
-In-Reply-To: <20050512094406.GZ5914@waste.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-Sender: linux-kernel-owner@vger.kernel.org
+	id S261246AbVELSry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 14:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261252AbVELSrx
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 14:47:53 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7337 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261246AbVELSrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 14:47:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512184750.HLLC8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 14:47:50 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0505121218280.30848-100000@iabervon.org> (Daniel
+ Barkalow's message of "Thu, 12 May 2005 12:51:29 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 12, 2005 at 11:44:06AM CEST, I got a letter
-where Matt Mackall <mpm@selenic.com> told me that...
-> Mercurial is more than 10 times as bandwidth efficient and
-> considerably more I/O efficient. On the server side, rsync uses about
-> twice as much CPU time as the Mercurial server and has about 10 times
-> the I/O and pagecache footprint as well.
-> 
-> Mercurial is also much smarter than rsync at determining what
-> outstanding changesets exist. Here's an empty pull as a demonstration:
-> 
->  $ time hg merge hg://selenic.com/linux-hg/
->  retrieving changegroup
-> 
->  real    0m0.363s
->  user    0m0.083s
->  sys     0m0.007s
-> 
-> That's a single http request and a one line response.
+>>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-So, what about comparing it with something comparable, say git pull over
-HTTP? :-)
+DB> Do you have some solution to the problem of having the
+DB> porcelain layer (or the end user) find the version of git
+DB> that a version of cogito needs, in some way such that if I'm
+DB> working on the project and make a change to cogito and a
+DB> matching change to git, Petr can get them.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+I have to think about this a bit but let me understand the
+problem first.  Let's say it is a couple of weeks ago when there
+were not cg-status.  You write cg-status, by adding -t flag to
+ls-files.c  You commit the addition of -t flag to git-pb
+repository and note the commit id.  You then commit addition of
+cg-status to cogito repository and when you do so you want the
+party that pulls the latter commit to know it needs the former
+commit in the git-pb tree.  Is it what you are solving here?
+
+
