@@ -1,78 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: New version of gitk
-Date: Fri, 13 May 2005 01:06:18 +0200
-Message-ID: <81b0412b050512160664965bfd@mail.gmail.com>
-References: <17026.43676.670725.66502@cargo.ozlabs.ibm.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Fix git-diff-files for symlinks.
+Date: Thu, 12 May 2005 16:51:08 -0700
+Message-ID: <7vekccc8b7.fsf_-_@assigned-by-dhcp.cox.net>
+References: <118833cc05050911255e601fc@mail.gmail.com>
+	<7vr7gewuxt.fsf@assigned-by-dhcp.cox.net>
+	<20050510230357.GF26384@pasky.ji.cz>
+	<7vsm0us5p5.fsf@assigned-by-dhcp.cox.net>
+	<118833cc050511113122e2d17d@mail.gmail.com>
+	<7vpsvxqwab.fsf@assigned-by-dhcp.cox.net>
+	<7vd5rxquo5.fsf@assigned-by-dhcp.cox.net>
+	<20050511224044.GI22686@pasky.ji.cz>
+	<7vu0l9nwgx.fsf_-_@assigned-by-dhcp.cox.net>
+	<20050512192941.GC324@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 00:59:01 2005
+X-From: git-owner@vger.kernel.org Fri May 13 01:44:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWMdk-0001wt-0d
-	for gcvg-git@gmane.org; Fri, 13 May 2005 00:58:48 +0200
+	id 1DWNLU-0005uX-71
+	for gcvg-git@gmane.org; Fri, 13 May 2005 01:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262175AbVELXG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 19:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262177AbVELXG0
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 19:06:26 -0400
-Received: from wproxy.gmail.com ([64.233.184.202]:65096 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262175AbVELXGU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 19:06:20 -0400
-Received: by wproxy.gmail.com with SMTP id 68so868947wra
-        for <git@vger.kernel.org>; Thu, 12 May 2005 16:06:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tCmaq458/Mvh4XwqThg3gjoCaoWAgCVRh6bcN60eksUnb4JadovkJMsXYPV8A7o4HBnUs1IK6tDZ02WZKS8UbY8pJFvJEF8tFqgW5PE7pkNScLDmYipvlGQgGI2Vym/jlP/u7RvPJ/1C8F01hKeb0g3+Ku/YCCIwiVrw4auILog=
-Received: by 10.54.48.24 with SMTP id v24mr1240783wrv;
-        Thu, 12 May 2005 16:06:18 -0700 (PDT)
-Received: by 10.54.79.20 with HTTP; Thu, 12 May 2005 16:06:18 -0700 (PDT)
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17026.43676.670725.66502@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S262182AbVELXvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 19:51:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262184AbVELXvj
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 19:51:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:25850 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262182AbVELXvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 19:51:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512235108.OQIM22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 19:51:08 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050512192941.GC324@pasky.ji.cz> (Petr Baudis's message of
+ "Thu, 12 May 2005 21:29:41 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 5/12/05, Paul Mackerras <paulus@samba.org> wrote:
-> I have just put a new version of gitk at:
-> 
->         http://ozlabs.org/~paulus/gitk-0.9
-> 
+Again I am not sure why this was missed during the last round,
+but git-diff-files mishandles symlinks on the filesystem.  This
+patch fixes it.
 
-Very, very nice and useful. Thank you!
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Btw, how does the tree look like with unconnected (unmerged) branches?
-And the case where Linus just pointed HEAD to most recent commit?
+*** Petr, this one falls into "emergency obvious fix" category.
+*** I found it during adding more "basic" test to the test suite,
+*** which turns out to be quite useful.
 
-There are some confusing interconnections in the tree, like around this commit:
-"Author: David Woodhouse <dwmw2@shinybook.infradead.org>  2005-05-05 14:59:37
-Committer: David Woodhouse <dwmw2@shinybook.infradead.org>  2005-05-05 14:59:37
+diff-files.c |    3 ++-
+1 files changed, 2 insertions(+), 1 deletion(-)
 
-Merge with master.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git"
-(Maybe show sha1's, just for reference?)
+--- a/diff-files.c
++++ b/diff-files.c
+@@ -126,7 +126,8 @@
+ 			continue;
+ 
+ 		oldmode = ntohl(ce->ce_mode);
+-		mode = S_IFREG | ce_permissions(st.st_mode);
++		mode = (S_ISLNK(st.st_mode) ? S_IFLNK :
++			S_IFREG | ce_permissions(st.st_mode));
+ 
+ 		show_modified(oldmode, mode, ce->sha1, null_sha1,
+ 			      ce->name);
+------------------------------------------------
 
-And I got the error below trying to run gitk in kernel git (latest).
-Probably because I
-closed window before the script finished something.
-
-Error in startup script: invalid command name ".ctop.clist.canv"
-    while executing
-"$canv create line $x $linestarty($level) $x $canvy  -width 2 -fill
-$colormap($id)"
-    (procedure "drawgraph" line 40)
-    invoked from within
-"drawgraph $start" 
-    invoked from within
-"if {$start != {}} {
-    drawgraph $start
-}"
-    (file "/home/raa/bin/gitk" line 703)
-
---
-Alex
