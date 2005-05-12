@@ -1,58 +1,56 @@
-From: Dmitry Torokhov <dtor_core@ameritech.net>
+From: Thomas Gleixner <tglx@linutronix.de>
 Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Wed, 11 May 2005 19:41:03 -0500
-Message-ID: <200505111941.04104.dtor_core@ameritech.net>
-References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com> <1115854733.22180.202.camel@tglx>
+Date: Thu, 12 May 2005 00:44:30 +0000
+Organization: linutronix
+Message-ID: <1115858670.22180.259.camel@tglx>
+References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com>
+	 <1115854733.22180.202.camel@tglx>
+	 <200505111941.04104.dtor_core@ameritech.net>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu May 12 02:33:43 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu May 12 02:36:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW1dx-0008Co-EG
-	for gcvg-git@gmane.org; Thu, 12 May 2005 02:33:38 +0200
+	id 1DW1gP-0008Sa-Lu
+	for gcvg-git@gmane.org; Thu, 12 May 2005 02:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261221AbVELAlJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 May 2005 20:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261249AbVELAlJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 20:41:09 -0400
-Received: from smtp812.mail.sc5.yahoo.com ([66.163.170.82]:16823 "HELO
-	smtp812.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S261221AbVELAlH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 May 2005 20:41:07 -0400
-Received: from unknown (HELO core.corenet.prv) (dtor?core@ameritech.net@68.23.10.155 with plain)
-  by smtp812.mail.sc5.yahoo.com with SMTP; 12 May 2005 00:41:06 -0000
-To: git@vger.kernel.org, tglx@linutronix.de
-User-Agent: KMail/1.8
-In-Reply-To: <1115854733.22180.202.camel@tglx>
-Content-Disposition: inline
+	id S261249AbVELAnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 May 2005 20:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261265AbVELAnp
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 May 2005 20:43:45 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:57475
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261249AbVELAno
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 May 2005 20:43:44 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 3C89265C003;
+	Thu, 12 May 2005 02:43:37 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 133502807D;
+	Thu, 12 May 2005 02:43:39 +0200 (CEST)
+To: Dmitry Torokhov <dtor_core@ameritech.net>
+In-Reply-To: <200505111941.04104.dtor_core@ameritech.net>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 11 May 2005 18:38, Thomas Gleixner wrote:
-> On Wed, 2005-05-11 at 16:14 -0700, H. Peter Anvin wrote:
-> > I would like to suggest a few limiters are set on the repoid. =C2=A0=
-In=20
-> > particular, I'd like to suggest that a repoid is a UUID, that a fil=
-e is=20
-> > used to track it (.git/repoid), and that if it doesn't exist, a new=
- one=20
-> > is created from /dev/urandom.
->=20
-> Which is complety error prone due to rsync. Some of the repositories =
-on
-> kernel.org keep identical copies of .git/description already. Why sho=
-uld
-> they preserve an unique .git/repoid ?
+On Wed, 2005-05-11 at 19:41 -0500, Dmitry Torokhov wrote:
+> > 
+> > Which is complety error prone due to rsync. Some of the repositories on
+> > kernel.org keep identical copies of .git/description already. Why should
+> > they preserve an unique .git/repoid ?
+> 
+> I think that an unique repoid should be created automatically every time
+> you clone. It is ok for it to go away when you discard a tree, it will just
+> identify a line (set) of changes originating from some place.
 
-I think that an unique repoid should be created automatically every tim=
-e
-you clone. It is ok for it to go away when you discard a tree, it will =
-just
-identify a line (set) of changes originating from some place.
+Yes, as long as you make sure that rsync does _NOT_ pollute/populate it
 
---=20
-Dmitry
+tglx
+
+
