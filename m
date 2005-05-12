@@ -1,53 +1,86 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH Cogito] cg-init breaks if . contains sub-dir
-Date: Thu, 12 May 2005 20:53:58 +0200
-Message-ID: <20050512185358.GB324@pasky.ji.cz>
-References: <20050509233904.GB878@osuosl.org> <pan.2005.05.10.03.41.15.683163@smurf.noris.de> <428043EB.7010004@didntduck.org> <20050510075227.GA8176@lug-owl.de>
+From: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+Subject: Re: [ANNOUNCE] git tracker online
+Date: Thu, 12 May 2005 21:04:33 +0200
+Message-ID: <20050512190433.GB8176@lug-owl.de>
+References: <1115794878.22180.27.camel@tglx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gerst <bgerst@didntduck.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 20:47:39 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="oRWDw5wXQ3uCJU7V"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 20:57:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWIht-0006Ls-Sg
-	for gcvg-git@gmane.org; Thu, 12 May 2005 20:46:50 +0200
+	id 1DWIrh-00082A-FX
+	for gcvg-git@gmane.org; Thu, 12 May 2005 20:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261370AbVELSyW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 14:54:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261373AbVELSyT
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 14:54:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37336 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261368AbVELSyD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 14:54:03 -0400
-Received: (qmail 3514 invoked by uid 2001); 12 May 2005 18:53:58 -0000
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+	id S261304AbVELTEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 15:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261373AbVELTEh
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:04:37 -0400
+Received: from lug-owl.de ([195.71.106.12]:62667 "EHLO lug-owl.de")
+	by vger.kernel.org with ESMTP id S261304AbVELTEe (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 15:04:34 -0400
+Received: by lug-owl.de (Postfix, from userid 1001)
+	id ABB5F1902E0; Thu, 12 May 2005 21:04:33 +0200 (CEST)
+To: Thomas Gleixner <tglx@linutronix.de>
 Content-Disposition: inline
-In-Reply-To: <20050510075227.GA8176@lug-owl.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <1115794878.22180.27.camel@tglx>
+X-Operating-System: Linux mail 2.6.10-rc2-bk5lug-owl 
+X-gpg-fingerprint: 250D 3BCF 7127 0D8C A444  A961 1DBD 5E75 8399 E1BB
+X-gpg-key: wwwkeys.de.pgp.net
+X-Echelon-Enable: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+X-TKUeV: howto poison arsenous mail psychological biological nuclear warfare test the bombastical terror of flooding the spy listeners explosion sex drugs and rock'n'roll
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, May 10, 2005 at 09:52:27AM CEST, I got a letter
-where Jan-Benedict Glaw <jbglaw@lug-owl.de> told me that...
-> On Tue, 2005-05-10 01:17:31 -0400, Brian Gerst <bgerst@didntduck.org> wrote:
-> > But it can handle symlinks:
-> > 
-> > 	find * -type f -o -type l -print0 | xargs -0r cg-add
-> 
-> This won't work because the explicit OR (-o) lower precedence compared
-> to the implicit AND between "-type l" and "-print0", thus this find
-> command will do print0 IFF the matched entry is a symlink. Use something
-> like this instead:
-> 
-> 	find * \( -type f -o tyle l \) -print0 | ...
 
-Thanks to all the four co-authors, applied.
+--oRWDw5wXQ3uCJU7V
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+On Wed, 2005-05-11 07:01:18 +0000, Thomas Gleixner <tglx@linutronix.de> wro=
+te:
+> git tracker is online in a beta version:
+>=20
+> http://www.tglx.de/gittracker
+
+I already said I like it, here are two suggestions:
+
+	- Browsing the Cogito repository doesn't work. Could you fix
+	  that?
+
+	- When the {repository,diff against} drop-down box is changed,
+	  it would be nice to fire off a onchange=3D"submit()" so that (if
+	  your browser is wacked with JavaScript) you don't need to
+	  press the submit button.
+
+Thanks, JBG
+
+--=20
+Jan-Benedict Glaw       jbglaw@lug-owl.de    . +49-172-7608481             =
+_ O _
+"Eine Freie Meinung in  einem Freien Kopf    | Gegen Zensur | Gegen Krieg  =
+_ _ O
+ fuer einen Freien Staat voll Freier B=C3=BCrger" | im Internet! |   im Ira=
+k!   O O O
+ret =3D do_actions((curr | FREE_SPEECH) & ~(NEW_COPYRIGHT_LAW | DRM | TCPA)=
+);
+
+--oRWDw5wXQ3uCJU7V
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCg6jBHb1edYOZ4bsRAuqOAJ9OyFkl8uwh77NyqHNhq7LXIGMqXACfZifs
+py2TVuTZBvHP63S9vGLWb1I=
+=MHIQ
+-----END PGP SIGNATURE-----
+
+--oRWDw5wXQ3uCJU7V--
