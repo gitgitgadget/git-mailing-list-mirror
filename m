@@ -1,82 +1,102 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH Cogito] match pathnames in exclude handling
-Date: Thu, 12 May 2005 09:54:16 +0200
-Message-ID: <20050512075415.GA27670@kiste.smurf.noris.de>
-References: <20050510075227.GA8176@lug-owl.de> <20050510080445.GB8176@lug-owl.de> <7vis1rpi8a.fsf@assigned-by-dhcp.cox.net> <20050510093212.GD8176@lug-owl.de> <20050510093924.GH11221@kiste.smurf.noris.de> <20050510094538.GE8176@lug-owl.de> <20050510095825.GI11221@kiste.smurf.noris.de> <4281281F.6000101@cobite.com> <20050511052546.GC11192@kiste.smurf.noris.de> <4282797A.5020001@zytor.com>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Thu, 12 May 2005 07:57:17 +0000
+Organization: linutronix
+Message-ID: <1115884637.22180.277.camel@tglx>
+References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com>
+	 <1115854733.22180.202.camel@tglx> <428297DB.8030905@zytor.com>
+	 <1115858022.22180.256.camel@tglx> <7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
-Cc: David Mansfield <david@cobite.com>,
-	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 09:49:20 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 09:49:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW8Qt-0003Th-5m
-	for gcvg-git@gmane.org; Thu, 12 May 2005 09:48:35 +0200
+	id 1DW8RJ-0003X5-8a
+	for gcvg-git@gmane.org; Thu, 12 May 2005 09:49:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261252AbVELH4G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 03:56:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261267AbVELH4G
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 03:56:06 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:3036 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261252AbVELHzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 03:55:53 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DW8WO-0005cY-DY; Thu, 12 May 2005 09:54:47 +0200
-Received: (nullmailer pid 28623 invoked by uid 501);
-	Thu, 12 May 2005 07:54:16 -0000
-To: "H\. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <4282797A.5020001@zytor.com>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S261267AbVELH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 03:56:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261289AbVELH4g
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 03:56:36 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:34438
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261267AbVELH4Z
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 03:56:25 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 7CDA565C003;
+	Thu, 12 May 2005 09:56:22 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 3AF0B28284;
+	Thu, 12 May 2005 09:56:25 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 2005-05-11 at 18:46 -0700, Junio C Hamano wrote:
+> >>>>> "TG" == Thomas Gleixner <tglx@linutronix.de> writes:
+> So I am having a hard time understanding what problem repo-id
+> solves.
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Rn   o
+     | \
+Rn-1 o  |
+     |  o Mn
+     |  o Mn-1
+Rn-2 o /
+Rn-3 o
 
-Hi,
+rev-tree shows you 
 
-H. Peter Anvin:
-> How does that mean foo*.c would match foo/bar/quux.c?  That's probably a=
-=20
-> bad thing.
->=20
-No, of course not -- that was a thinko on my part when I typed the
-examples.  :-/
+Rn
+Rn-1
+Mn
+Mn-1
+Rn-2
+Rn-3
 
-> I do like the (sadly, rarely used) convention that ** matches / whereas=
-=20
-> * doesn't.
->=20
-fnmatch() doesn't support that. Of course, if there's demand for it,
-it should be reasonably easy to have our own extended copy.
+Which is wrong. 
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+After syncing M to Rn you see the same thing in M
 
---gKMricLos+KVdGMg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Rn
+Rn-1
+Mn
+Mn-1
+Rn-2
+Rn-3
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
+which is also wrong. 
 
-iD8DBQFCgwun8+hUANcKr/kRApTEAJ93LN10xiI2+4QxoseIOUQMietn/ACfe1qu
-2Tdmr9hH8taZ+O7Xd6rz8k4=
-=WpcO
------END PGP SIGNATURE-----
+The correct display looking at R is
 
---gKMricLos+KVdGMg--
+Rn
+ Mn
+ Mn-1
+Rn-1
+Rn-2
+Rn-3
+
+Looking from M it is
+
+Rn
+ Rn-1
+ Rn-2
+Mn
+Mn-2
+Rn-3
+
+tglx
+
+
+
+
+
+
+
