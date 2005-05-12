@@ -1,69 +1,98 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 09:29:22 -0400
-Message-ID: <20050512132922.GB20785@delft.aura.cs.cmu.edu>
-References: <428297DB.8030905@zytor.com> <1115858022.22180.256.camel@tglx> <7vekcdmd16.fsf@assigned-by-dhcp.cox.net> <1115884637.22180.277.camel@tglx> <1895.10.10.10.24.1115890333.squirrel@linux1> <1115890792.22180.306.camel@tglx> <3656.10.10.10.24.1115891188.squirrel@linux1> <1115896713.22180.314.camel@tglx> <3745.10.10.10.24.1115897090.squirrel@linux1> <1115898230.11872.8.camel@tglx>
+From: Alexey Nezhdanov <snake@penza-gsm.ru>
+Subject: Adapting scripts to work in current (not top) directory
+Date: Thu, 12 May 2005 17:58:10 +0400
+Message-ID: <200505121758.10971.snake@penza-gsm.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, Junio C Hamano <junkio@cox.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 15:23:13 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu May 12 15:55:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWDdk-0003eJ-RV
-	for gcvg-git@gmane.org; Thu, 12 May 2005 15:22:13 +0200
+	id 1DWE5L-0005n4-4Y
+	for gcvg-git@gmane.org; Thu, 12 May 2005 15:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261370AbVELN3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 09:29:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261931AbVELN3z
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 09:29:55 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:14008 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S261370AbVELN3w (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 09:29:52 -0400
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1DWDkg-0002YQ-00; Thu, 12 May 2005 09:29:22 -0400
-To: Thomas Gleixner <tglx@linutronix.de>
-Mail-Followup-To: Thomas Gleixner <tglx@linutronix.de>,
-	Sean <seanlkml@sympatico.ca>, Junio C Hamano <junkio@cox.net>,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+	id S261931AbVELN6W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 09:58:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261953AbVELN6W
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 09:58:22 -0400
+Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:54667
+	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261931AbVELN6P
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 09:58:15 -0400
+Received: (qmail 4166 invoked from network); 12 May 2005 13:58:13 -0000
+Received: from unknown (HELO snake) (192.168.0.20)
+  by fileserver.penza-gsm.ru with SMTP; 12 May 2005 13:58:12 -0000
+To: GIT Mailing List <git@vger.kernel.org>
+User-Agent: KMail/1.7.2
 Content-Disposition: inline
-In-Reply-To: <1115898230.11872.8.camel@tglx>
-User-Agent: Mutt/1.5.9i
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-105.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	USER_IN_WHITELIST autolearn=ham version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 12, 2005 at 01:43:50PM +0200, Thomas Gleixner wrote:
-> > Is there any _useful_ question you can ask where the answer
-> > is lost for all time because of this.
-> 
-> I want to see the history of _any_ repository in the order of  changes
-> in the specific repository. The fast forward heads without additional
-> information simply do not allow this. 
+All git and cogito scripts wants .git subdirectory. If I'm in a subdirectory 
+that have no .git direcory in it I'm out of luck.
+I have wrote an example script that determines the lowest possible .git 
+directory position and changes to it to satisfy user request.
 
-But you can't add additional information to the fast-forward head. That
-would defeat the whole point of the fast-forward.
+Problems with script:
+1) May be I misunderstood the git ideology and it needs not this at all.
 
-> I want to see the history of a file in the correct order. The current
-> solution ends up with useless file version diffs or annotates where
-> changes are shown in random order and therefor worthless.
+if point (1) is false then there are couple of other problems:
+2) Script is extremelly ugly. I'm a week bash programmer so please criticize.
+3) This logic shold be somehow embedded to all git- and cg- scripts. I can not 
+figure how to do it non-intruisively.
+4) files and patch with spaces not supported. Probably fixable but first I 
+want to resolve points (1), (2) and (3)
 
-Not random order, those changes were performed in parallel, so there is
-no order between them until they are merged, at which point the parent
-linkage defines the order. If you want to add a total ordering to them,
-write out a file with 'commit-id parent-id' pairs and run it through
-'tsort'.
+===========================
+#!/bin/bash
+#
+# Add new file to a GIT repository.
+# Copyright (c) Petr Baudis, 2005
+#
+# Takes a list of file names at the command line, and schedules them
+# for addition to the GIT repository at the next commit.
 
-Your examples break if you consider additional merges where M syncs up a
-couple of times (f.i. at Rn-2) before M is merged back into R.
+. ${COGITO_LIB:-/home/snake/lib/cogito/}cg-Xlib
 
-What you seem to want won't be fixed by adding a repoid, you need to
-keep a list of all the commits you have already seen and append any new
-ones whenever you look at the history. If you look whenever you pull or
-merge the list will be in the total ordering that you seem to expect for
-your repository. But that is a porcelain thing.
+[ "$1" ] || die "usage: cg-add FILE..."
 
-Jan
+gitpath=
+subpath=
+curpath=`pwd`
+for ((i=2;i<9999;i=i+1)) ; do {
+        path1=`echo $curpath | cut -d / -f 0-$i`
+        path2=`echo $curpath | cut -d / -f $((i+1))-`
+        [ -d "$path1"/.git ] && gitpath=$path1 && subpath=$path2
+        [ "$path1" == "$curpath" ] && break
+}; done
+
+for file in "$@"; do
+        if [ -f "$file" ]; then
+                echo "Adding file $file"
+        else
+                die "$file does not exist"
+        fi
+done
+
+cd "$gitpath"
+
+files=
+
+for file in "$@"; do
+        files="$files $subpath/$file"
+done
+
+git-update-cache --add -- $files
+===========================
+
+-- 
+Respectfully
+Alexey Nezhdanov
 
