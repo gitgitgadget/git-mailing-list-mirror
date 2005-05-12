@@ -1,59 +1,69 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Fri, 13 May 2005 03:12:13 +1000
-Message-ID: <2cfc4032050512101211bc030b@mail.gmail.com>
-References: <1895.10.10.10.24.1115890333.squirrel@linux1>
-	 <1115896713.22180.314.camel@tglx>
-	 <3745.10.10.10.24.1115897090.squirrel@linux1>
-	 <1115898230.11872.8.camel@tglx>
-	 <20050512132922.GB20785@delft.aura.cs.cmu.edu>
-	 <2cfc4032050512084426ea3d4d@mail.gmail.com>
-	 <2cfc403205051208483132921@mail.gmail.com>
-	 <2cfc403205051208506249c9aa@mail.gmail.com>
-	 <20050512162023.GA14010@delft.aura.cs.cmu.edu>
-	 <2cfc403205051210093e1a396d@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] improved delta support for git
+Date: Thu, 12 May 2005 10:16:11 -0700
+Message-ID: <7vbr7gicv8.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain>
+	<7voebhkql5.fsf@assigned-by-dhcp.cox.net>
+	<200505121027.01964.mason@suse.com>
+	<2cfc403205051207467755cdf@mail.gmail.com>
+	<2cfc403205051207471f6957e0@mail.gmail.com>
+	<Pine.LNX.4.62.0505121110490.5426@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu May 12 19:05:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: jon@blackcubes.dyndns.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 12 19:08:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWH71-0006DC-1b
-	for gcvg-git@gmane.org; Thu, 12 May 2005 19:04:39 +0200
+	id 1DWHAl-0006oL-Sx
+	for gcvg-git@gmane.org; Thu, 12 May 2005 19:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262081AbVELRMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 13:12:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262082AbVELRMQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 13:12:16 -0400
-Received: from rproxy.gmail.com ([64.233.170.203]:17493 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262081AbVELRMN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 13:12:13 -0400
-Received: by rproxy.gmail.com with SMTP id i8so86006rne
-        for <git@vger.kernel.org>; Thu, 12 May 2005 10:12:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gI4iGKoE9IKrkZ57pX/vFgMks1ABa4K2PYTEK0PXo19B/u07/k0YM66Iifp27guxYUa3cy0o7m/ol0v9Pb0hMONYhmkia4vvQiMVe8m2HL7QhL4aU9YxEIvKzfULeOH5h2oeLsQ7ISdPgNUt+3j1X5uewdq+/VWYJq6O6egasI4=
-Received: by 10.38.104.76 with SMTP id b76mr285378rnc;
-        Thu, 12 May 2005 10:12:13 -0700 (PDT)
-Received: by 10.38.104.37 with HTTP; Thu, 12 May 2005 10:12:13 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <2cfc403205051210093e1a396d@mail.gmail.com>
-Content-Disposition: inline
+	id S262082AbVELRQP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 13:16:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262083AbVELRQP
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 13:16:15 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:27793 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S262082AbVELRQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 13:16:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512171612.CGBM12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 13:16:12 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0505121110490.5426@localhost.localdomain> (Nicolas
+ Pitre's message of "Thu, 12 May 2005 11:18:17 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-| added "local" to clarify what I meant the first-pass should do
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
-> My previous algorithm was incorrect, but I suspect it could probably
-> be fixed with a 2-pass algorithm that marked any nodes in the "local" path
-> between the merge base and the merge head as local and then ensured
-> that nodes marked that way are sorted after any nodes reached via
-> "foreign" paths.
--- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+>> On 5/13/05, Chris Mason <mason@suse.com> wrote:
+>> > On Thursday 12 May 2005 00:36, Junio C Hamano wrote:
+>> > > It appears to me that changes to the make_sure_we_have_it() ...
+>> >
+>> > If we fetch the named object and it is a delta, the delta will either depend
+>> > on an object we already have or an object that we don't have.  If we don't
+>> > have it, the pull should find it while pulling other commits we don't have.
+
+NP> 1) If you happen to already have the referenced object in your local 
+NP>    repository then you're done.
+
+Yes.
+
+NP> 2) If not you pull the referenced object from the remote repository, 
+NP>    repeat with #1 if it happens to be another delta object.
+
+Yes, that is the outline of what my (untested) patch does.
+
+Unless I am grossly mistaken, what Chris says is true only when
+we are pulling with -a flag to the git-*-pull family.  If we are
+pulling "partially near the tip", we do not necessarily pull
+"other commits we don't have", hence detecting delta's
+requirement at per-object level and pulling the dependent
+becomes necessary, which is essentially what you wrote in (2)
+above.
+
