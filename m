@@ -1,69 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] improved delta support for git
-Date: Thu, 12 May 2005 10:16:11 -0700
-Message-ID: <7vbr7gicv8.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain>
-	<7voebhkql5.fsf@assigned-by-dhcp.cox.net>
-	<200505121027.01964.mason@suse.com>
-	<2cfc403205051207467755cdf@mail.gmail.com>
-	<2cfc403205051207471f6957e0@mail.gmail.com>
-	<Pine.LNX.4.62.0505121110490.5426@localhost.localdomain>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [RFC] Support projects including other projects
+Date: Thu, 12 May 2005 10:24:42 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0505121006150.25177@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.21.0505121218280.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: jon@blackcubes.dyndns.org, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 12 19:08:53 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 12 19:19:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWHAl-0006oL-Sx
-	for gcvg-git@gmane.org; Thu, 12 May 2005 19:08:32 +0200
+	id 1DWHK6-0008P1-33
+	for gcvg-git@gmane.org; Thu, 12 May 2005 19:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262082AbVELRQP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 13:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262083AbVELRQP
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 13:16:15 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:27793 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S262082AbVELRQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 13:16:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050512171612.CGBM12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 May 2005 13:16:12 -0400
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.62.0505121110490.5426@localhost.localdomain> (Nicolas
- Pitre's message of "Thu, 12 May 2005 11:18:17 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262084AbVELRZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 13:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262085AbVELRZs
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 13:25:48 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:6831 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S262084AbVELRZi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 13:25:38 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Thu, 12 May 2005 10:20:30 -0700
+Received: by ATHEXC01 with Internet Mail Service (5.5.2657.72)
+	id <KQJLG8CM>; Thu, 12 May 2005 13:24:46 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id KQRNCZFH; Thu, 12 May 2005 10:24:42 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.21.0505121218280.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
+I was thinking about this recently while reading an article on bittorrent 
+and how it works and it occured to me that perhapse the network access 
+model of git should be reexamined.
 
->> On 5/13/05, Chris Mason <mason@suse.com> wrote:
->> > On Thursday 12 May 2005 00:36, Junio C Hamano wrote:
->> > > It appears to me that changes to the make_sure_we_have_it() ...
->> >
->> > If we fetch the named object and it is a delta, the delta will either depend
->> > on an object we already have or an object that we don't have.  If we don't
->> > have it, the pull should find it while pulling other commits we don't have.
+git produces a large pool of objects, there are two ways that people want 
+to access these objects.
 
-NP> 1) If you happen to already have the referenced object in your local 
-NP>    repository then you're done.
+1. pull the current version of a project (either a straight 'ckeckout' 
+type pull or a 'merge' to a local project)
 
-Yes.
+2. pull the objects nessasary for past versions of a project (either all 
+the way back to the beginning of time or back to some point, that point 
+being a number of possibilities (date, version, things you don't have, 
+etc)
 
-NP> 2) If not you pull the referenced object from the remote repository, 
-NP>    repeat with #1 if it happens to be another delta object.
+in either case the important thing that's key are the indexes related to a 
+particular project, the objects themselves could all be in one huge pool 
+for all projects that ever existed (this doesn't make sense if you use 
+rsync to copy repositories as Linux origionally did, but if you have a 
+more git-aware transport it can make sense)
 
-Yes, that is the outline of what my (untested) patch does.
+I believe that there are going to be quite a number of cases where the 
+same object is used for multiple projects (either becouse the project is a 
+fork of another project or becouse some functions (or include files) are 
+so trivial that they are basicly boilerplate and get reused or recreated) 
+if you think about a major mirror server distributing a dozen linux 
+distros via git you will realize that in many cases the source files, 
+scripts, and (in many cases) even the binaries are really going to be 
+identical objects for all the distros so a ftp/http server that used a git 
+filesystem could result in a pretty significant saveings in disk space.
 
-Unless I am grossly mistaken, what Chris says is true only when
-we are pulling with -a flag to the git-*-pull family.  If we are
-pulling "partially near the tip", we do not necessarily pull
-"other commits we don't have", hence detecting delta's
-requirement at per-object level and pulling the dependent
-becomes necessary, which is essentially what you wrote in (2)
-above.
+In addition, when you are doing a pull you can accept data from 
+non-authoritative sources since each object (and it's index info) includes 
+enough info to validate the object hasn't been tampered with (at least 
+until such time as the hashes are sufficiantly broken, but that's another 
+debate, and we had that one :-). so a bittorrent-like peer sharing system 
+to fetch objects identified by the index files would open the potential 
+for saving significant bandwith on the master servers while not 
+comprimising the trees at all.
 
+Going back (somewhat) to the subject at hand, with something like this you 
+should be able to combine as many projects as you want in one repository, 
+and the only issue would be the work nessasary to go through that 
+repository and all the index files that point at it when you want to prune 
+old data out of the object pool to save disk space.
+
+thoughts? unfortunnatly I don't have the time to even consider codeing 
+something like this up, but hopefully it will spark interest for someone 
+who does.
+
+David Lang
+
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
