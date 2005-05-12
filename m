@@ -1,8 +1,7 @@
-From: Thomas Gleixner <tglx@linutronix.de>
+From: David Woodhouse <dwmw2@infradead.org>
 Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 10:42:59 +0000
-Organization: linutronix
-Message-ID: <1115894579.22180.309.camel@tglx>
+Date: Thu, 12 May 2005 11:43:09 +0100
+Message-ID: <1115894589.16187.570.camel@hades.cambridge.redhat.com>
 References: <1115847510.22180.108.camel@tglx>
 	 <2780.10.10.10.24.1115848852.squirrel@linux1>
 	 <1115849141.22180.123.camel@tglx>
@@ -19,43 +18,49 @@ References: <1115847510.22180.108.camel@tglx>
 	 <3259.10.10.10.24.1115859535.squirrel@linux1>
 	 <1115892451.16187.561.camel@hades.cambridge.redhat.com>
 	 <3203.10.10.10.24.1115893120.squirrel@linux1>
-Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: David Woodhouse <dwmw2@infradead.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 12:35:09 2005
+Cc: tglx@linutronix.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 12:35:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWB1S-0005O1-Fp
-	for gcvg-git@gmane.org; Thu, 12 May 2005 12:34:30 +0200
+	id 1DWB2X-0005Yk-49
+	for gcvg-git@gmane.org; Thu, 12 May 2005 12:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261409AbVELKmI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 06:42:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261420AbVELKmI
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 06:42:08 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:3976
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261409AbVELKmG
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 06:42:06 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 782D465C003;
-	Thu, 12 May 2005 12:42:03 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 98346282A1;
-	Thu, 12 May 2005 12:42:06 +0200 (CEST)
+	id S261420AbVELKnP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 06:43:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261428AbVELKnP
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 06:43:15 -0400
+Received: from pentafluge.infradead.org ([213.146.154.40]:61637 "EHLO
+	pentafluge.infradead.org") by vger.kernel.org with ESMTP
+	id S261420AbVELKnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 06:43:12 -0400
+Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
+	by pentafluge.infradead.org with esmtpsa (Exim 4.43 #1 (Red Hat Linux))
+	id 1DWB9q-0003vP-Kh; Thu, 12 May 2005 11:43:11 +0100
 To: Sean <seanlkml@sympatico.ca>
 In-Reply-To: <3203.10.10.10.24.1115893120.squirrel@linux1>
-X-Mailer: Evolution 2.2.2 
+X-Mailer: Evolution 2.0.4 (2.0.4-1.dwmw2.1) 
+X-Spam-Score: 0.0 (/)
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
+	See http://www.infradead.org/rpr.html
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, 2005-05-12 at 06:18 -0400, Sean wrote:
-> Does BK use a repo ID ?  
+> Does BK use a repo ID ?  If not, can you not apply the same process to
+> git?   Seems the fast forward heads might complicate things
+> slightly....
 
-Yes.
+BK doesn't fast-forward in quite the same way as git does. But we're not
+really supposed to be paying too much attention to how BK works.
 
+Your claim is that you can do this with existing git tools. I await that
+demonstration.
 
+-- 
+dwmw2
 
