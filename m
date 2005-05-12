@@ -1,54 +1,65 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Overwriting files in Makefile
-Date: Thu, 12 May 2005 11:56:27 -0400
-Message-ID: <200505121556.j4CFuRVS010004@laptop11.inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Thu May 12 17:49:16 2005
+From: David Greaves <david@dgreaves.com>
+Subject: [PATCH] cg-init should only process files
+Date: Thu, 12 May 2005 17:03:15 +0100
+Message-ID: <E1DWG9b-0001VV-V0@ash.dgreaves.com>
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 12 17:58:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWFvn-0002Co-Dc
-	for gcvg-git@gmane.org; Thu, 12 May 2005 17:48:59 +0200
+	id 1DWG35-0003S4-6d
+	for gcvg-git@gmane.org; Thu, 12 May 2005 17:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262059AbVELP4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 11:56:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262060AbVELP4f
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 11:56:35 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:9113 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S262059AbVELP43 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 11:56:29 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j4CFrVrJ020714
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 12 May 2005 11:53:32 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j4CFuRVS010004
-	for <git@vger.kernel.org>; Thu, 12 May 2005 11:56:27 -0400
-To: git@vger.kernel.org
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Thu, 12 May 2005 11:53:32 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
-X-Virus-Status: Clean
+	id S262065AbVELQDl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 12:03:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262066AbVELQDl
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 12:03:41 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:28903 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262065AbVELQDS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 12:03:18 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 8C837E6E07; Thu, 12 May 2005 17:01:56 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 28174-02; Thu, 12 May 2005 17:01:56 +0100 (BST)
+Received: from oak.dgreaves.com (modem-485.leopard.dialup.pol.co.uk [217.135.145.229])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id F1D97E6E04; Thu, 12 May 2005 17:01:55 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DWG9c-0004Y6-20; Thu, 12 May 2005 17:03:16 +0100
+Received: from david by ash.dgreaves.com with local (Exim 4.50)
+	id 1DWG9b-0001VV-V0; Thu, 12 May 2005 17:03:15 +0100
+To: Petr Baudis <pasky@ucw.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The current setup disturbs me. The Makefile copies the scripts into the
-destination, and then edits them in place. Why not just generate them from
-.in files before installing, i.e. by a rule something like
+cg-init tries to add directories
 
-%: %.in
-   sed -e 's;@LIBDIR@;$(sedlibdir);g' $^ > $@
+Signed-off-by: David Greaves <david@dgreaves.com>
 
-with '@LIBDIR@' in the .in file whereever the substitution should take
-place. This way you also avoid the possible loss of the permission bits
-when fooling around (any SUID/SGID would get lost; not that it matters
-here).
+---
+commit c6ecba40932efa0b28cd15d00fdab3b2607ec069
+tree 39f7bebbadf6ebae67367b629d8cec298f7dcc90
+parent f7d4b2adfc6a29036e2a8abe5b742e57b64e50d7
+author David Greaves <david@dgreaves.com> Thu, 12 May 2005 13:05:03 +0100
+committer David Greaves <david@ash.(none)> Thu, 12 May 2005 13:05:03 +0100
 
-In any case, the '\/'s (LTS, "Leaning Toothpick Syndrome") when futzing
-around with file paths can be avoided by using something else than '/' as
-delimiter for sed(1)'s substitute command, like ';' here.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+ cg-init |    2 +-
+ 1 files changed, 1 insertion(+), 1 deletion(-)
+
+Index: cg-init
+===================================================================
+--- 85d8d081e2012da8dd1af35b62ae82f79f89ebd0/cg-init  (mode:100755)
++++ 39f7bebbadf6ebae67367b629d8cec298f7dcc90/cg-init  (mode:100755)
+@@ -31,7 +31,7 @@
+ 	echo "Cloned (origin $uri available as branch \"origin\")"
+ else
+ 	git-read-tree # Seed the dircache
+-	find * | xargs cg-add
++	find * -type f | xargs cg-add
+ 	cg-commit -C -m"Initial commit" -e
+ fi
+ exit 0
