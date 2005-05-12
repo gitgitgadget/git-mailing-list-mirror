@@ -1,126 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Support symlinks in git-ls-files --others.
-Date: Thu, 12 May 2005 00:48:18 -0700
-Message-ID: <7v1x8ckhq5.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH Cogito] match pathnames in exclude handling
+Date: Thu, 12 May 2005 09:54:16 +0200
+Message-ID: <20050512075415.GA27670@kiste.smurf.noris.de>
+References: <20050510075227.GA8176@lug-owl.de> <20050510080445.GB8176@lug-owl.de> <7vis1rpi8a.fsf@assigned-by-dhcp.cox.net> <20050510093212.GD8176@lug-owl.de> <20050510093924.GH11221@kiste.smurf.noris.de> <20050510094538.GE8176@lug-owl.de> <20050510095825.GI11221@kiste.smurf.noris.de> <4281281F.6000101@cobite.com> <20050511052546.GC11192@kiste.smurf.noris.de> <4282797A.5020001@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 09:43:23 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gKMricLos+KVdGMg"
+Cc: David Mansfield <david@cobite.com>,
+	Jan-Benedict Glaw <jbglaw@lug-owl.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 09:49:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW8LK-0002iY-Br
-	for gcvg-git@gmane.org; Thu, 12 May 2005 09:42:50 +0200
+	id 1DW8Qt-0003Th-5m
+	for gcvg-git@gmane.org; Thu, 12 May 2005 09:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261238AbVELHuF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 03:50:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261250AbVELHuF
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 03:50:05 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:29836 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261238AbVELHsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 03:48:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050512074819.CBSB26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 May 2005 03:48:19 -0400
-To: pasky@ucw.cz, Kay Sievers <kay.sievers@vrfy.org>
+	id S261252AbVELH4G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 03:56:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261267AbVELH4G
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 03:56:06 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:3036 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S261252AbVELHzx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 03:55:53 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1DW8WO-0005cY-DY; Thu, 12 May 2005 09:54:47 +0200
+Received: (nullmailer pid 28623 invoked by uid 501);
+	Thu, 12 May 2005 07:54:16 -0000
+To: "H\. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <4282797A.5020001@zytor.com>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-It is kind of surprising that this was missed in the last round,
-but the work tree scanner in git-ls-files is still deliberately
-ignoring symlinks.  This patch fixes it.
 
-This depends on the test suite infrastructure I sent in earlier.
+--gKMricLos+KVdGMg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Hi,
 
-Petr, I am not CCing Linus and you know what I mean by it ;-).
+H. Peter Anvin:
+> How does that mean foo*.c would match foo/bar/quux.c?  That's probably a=
+=20
+> bad thing.
+>=20
+No, of course not -- that was a thinko on my part when I typed the
+examples.  :-/
 
-cache.h             |    1 +
-ls-files.c          |    8 +++++---
-t/t0400-ls-files.sh |   29 +++++++++++++++++++++++++++++
-3 files changed, 35 insertions(+), 3 deletions(-)
-t/t0400-ls-files.sh (. --> 100755)
+> I do like the (sadly, rarely used) convention that ** matches / whereas=
+=20
+> * doesn't.
+>=20
+fnmatch() doesn't support that. Of course, if there's demand for it,
+it should be reasonably easy to have our own extended copy.
 
---- a/cache.h
-+++ b/cache.h
-@@ -27,6 +27,7 @@
- #define DT_UNKNOWN	0
- #define DT_DIR		1
- #define DT_REG		2
-+#define DT_LNK		3
- #define DTYPE(de)	DT_UNKNOWN
- #endif
- 
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -109,8 +109,9 @@
- 
- /*
-  * Read a directory tree. We currently ignore anything but
-- * directories and regular files. That's because git doesn't
-- * handle them at all yet. Maybe that will change some day.
-+ * directories, regular files and symlinks. That's because git
-+ * doesn't handle them at all yet. Maybe that will change some
-+ * day.
-  *
-  * Also, we currently ignore all names starting with a dot.
-  * That likely will not change.
-@@ -141,7 +142,7 @@
- 			case DT_UNKNOWN:
- 				if (lstat(fullname, &st))
- 					continue;
--				if (S_ISREG(st.st_mode))
-+				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode))
- 					break;
- 				if (!S_ISDIR(st.st_mode))
- 					continue;
-@@ -152,6 +153,7 @@
- 					       baselen + len + 1);
- 				continue;
- 			case DT_REG:
-+			case DT_LNK:
- 				break;
- 			}
- 			add_name(fullname, baselen + len);
---- a/t/t0400-ls-files.sh
-+++ b/t/t0400-ls-files.sh
-@@ -0,0 +1,29 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Junio C Hamano
-+#
-+
-+. ./test-lib.sh
-+test_description "$@" 'git-ls-files test.
-+
-+This test runs git-ls-files --others with the following on the
-+filesystem.
-+
-+    path0       - a file
-+    path1	- a symlink
-+    path2/file2 - a file in a directory
-+'
-+
-+date >path0
-+ln -s xyzzy path1
-+mkdir path2
-+date >path2/file2
-+git-ls-files --others >.output
-+cat >.expected <<EOF
-+path0
-+path1
-+path2/file2
-+EOF
-+
-+test_expect_success 'diff .output .expected'
-+test_done
-------------------------------------------------
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
 
-Compilation finished at Thu May 12 00:43:56
+--gKMricLos+KVdGMg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQFCgwun8+hUANcKr/kRApTEAJ93LN10xiI2+4QxoseIOUQMietn/ACfe1qu
+2Tdmr9hH8taZ+O7Xd6rz8k4=
+=WpcO
+-----END PGP SIGNATURE-----
+
+--gKMricLos+KVdGMg--
