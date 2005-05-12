@@ -1,75 +1,89 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [RFC] Support projects including other projects
-Date: Thu, 12 May 2005 00:23:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505112350420.30848-100000@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] improved delta support for git
+Date: Wed, 11 May 2005 21:36:54 -0700
+Message-ID: <7voebhkql5.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 12 06:17:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 06:30:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW57p-0001OX-6I
-	for gcvg-git@gmane.org; Thu, 12 May 2005 06:16:42 +0200
+	id 1DW5KY-0002Fj-D5
+	for gcvg-git@gmane.org; Thu, 12 May 2005 06:29:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261163AbVELEYH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 00:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261272AbVELEYH
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 00:24:07 -0400
-Received: from iabervon.org ([66.92.72.58]:43524 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261163AbVELEYC (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 00:24:02 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DW5Ea-0006RK-00; Thu, 12 May 2005 00:23:40 -0400
-To: git@vger.kernel.org
+	id S261283AbVELEhK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 00:37:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261330AbVELEhK
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 00:37:10 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:26612 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261283AbVELEhA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 00:37:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512043656.XFOB7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 00:36:56 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain> (Nicolas
+ Pitre's message of "Wed, 11 May 2005 23:51:07 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I've come up with a way to handle projects like cogito which are based on
-other projects. I think that it actually solves the real problem with such
-projects, and it is actually very simple.
+The changes to sha1_file interface seems to be contained to
+read_sha1_file() only; which is a very good sign.  You have
+already expressed that you are aware that fsck-cache needs to be
+taught about the delta objects, so I'd trust that would be what
+you will be tackling next.
 
-The problem that such projects run into, especially while both the core
-and the non-core projects are in a state of substantial flux and when the 
-non-core developer(s) contribute needed changes to the core, is that the
-two projects not only have to be tracked, they have to be kept in 
-sync. That is, a particular version of cogito requires a particular
-version of git. There is a bit of convenience to having the tools
-magically do the right thing when you check out the child project, but the
-thing that really requires tool support is that you need to be able to
-find the version of git-pb which matches the version of cogito you're
-trying to build (and you might be searching the history for where a bug
-was introduced, so you may not be able to use the latest of either).
+I started wondering how the delta chains would affect pull.c,
+the engine that decides which files under GIT_OBJECT_DIRECTORY
+need to be pulled from the remote side in order to construct the
+set of objects needed by the given commit ID, under various
+combinations of cut-off criteria given with -c, -t, and -a
+options.
 
-The solution is to add a header to commits: "include {hash}", which simply
-says that the given hash, which is from the core project, is the commit
-needed to build this commit of the non-core project. This comes from an
-argument to commit-tree ("-I", perhaps), and the parsing code needs to
-identify the reference so that fsck-cache stays happy.
+It appears to me that changes to the make_sure_we_have_it()
+routine along the following lines (completely untested) would
+suffice.  Instead of just returning success, we first fetch the
+named object from the remote side, read it to see if it is
+really the object we have asked, or just a delta, and if it is a
+delta call itself again on the underlying object that delta
+object depends upon.
 
-Git doesn't do anything more; wrapping layers would be able to take care
-of the rest. When the wrapping layer determines that you are checking out
-a commit with an include header, it also checks out the included commit,
-using a different index file. The core treats everything as if you had a
-bunch of non-tracked files in the directory (those being the things in the
-other project). When you commit, it first commits any includes (if
-needed), identifies the resulting core head, and passes that to the
-include for the final result.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+# - git-pb: Fixed a leak in read-tree
+# + (working tree)
+--- a/pull.c
++++ b/pull.c
+@@ -32,11 +32,23 @@ static void report_missing(const char *w
+ static int make_sure_we_have_it(const char *what, unsigned char *sha1)
+ {
+ 	int status;
++	unsigned long mapsize;
++	void *map, *buf;
++
+ 	if (has_sha1_file(sha1))
+ 		return 0;
+ 	status = fetch(sha1);
+ 	if (status && what)
+ 		report_missing(what, sha1);
++
++	map = map_sha1_file(sha1, &mapsize);
++	if (map) {
++		buf = unpack_sha1_file(map, mapsize, type, size);
++		munmap(map, mapsize);
++		if (buf && !strcmp(type, "delta"))
++			status = make_sure_we_have_it(what, buf);
++		free(buf);
++	}
+ 	return status;
+ }
+ 
 
-It seems to me like this should work perfectly. The one weakness is that
-it's quite annoying to do by hand, since you have to simultaneously track
-two index files and remember to pass the argument to commit-tree each
-time. (Also, it means that you'd ideally pull git-pb from the cogito
-repository with a client that ignores things not reachable from your head,
-although Petr could still just copy and prune to match the current
-situation).
-
-I've written up the git changes needed, if people are interested in the
-patch.
-
-	-Daniel
-*This .sig left intentionally blank*
 
