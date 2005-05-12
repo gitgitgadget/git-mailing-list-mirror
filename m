@@ -1,118 +1,101 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Support projects including other projects
-Date: Thu, 12 May 2005 12:51:29 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505121218280.30848-100000@iabervon.org>
-References: <7v8y2lj6u9.fsf@assigned-by-dhcp.cox.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
+Date: Fri, 13 May 2005 03:09:54 +1000
+Message-ID: <2cfc403205051210093e1a396d@mail.gmail.com>
+References: <1895.10.10.10.24.1115890333.squirrel@linux1>
+	 <3656.10.10.10.24.1115891188.squirrel@linux1>
+	 <1115896713.22180.314.camel@tglx>
+	 <3745.10.10.10.24.1115897090.squirrel@linux1>
+	 <1115898230.11872.8.camel@tglx>
+	 <20050512132922.GB20785@delft.aura.cs.cmu.edu>
+	 <2cfc4032050512084426ea3d4d@mail.gmail.com>
+	 <2cfc403205051208483132921@mail.gmail.com>
+	 <2cfc403205051208506249c9aa@mail.gmail.com>
+	 <20050512162023.GA14010@delft.aura.cs.cmu.edu>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 12 18:45:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu May 12 19:03:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWGnR-0002yj-07
-	for gcvg-git@gmane.org; Thu, 12 May 2005 18:44:25 +0200
+	id 1DWH4p-0005pU-Ck
+	for gcvg-git@gmane.org; Thu, 12 May 2005 19:02:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262077AbVELQv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 12:51:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262078AbVELQv7
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 12:51:59 -0400
-Received: from iabervon.org ([66.92.72.58]:22022 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262077AbVELQvz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 12:51:55 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DWGuH-000157-00; Thu, 12 May 2005 12:51:29 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8y2lj6u9.fsf@assigned-by-dhcp.cox.net>
+	id S262080AbVELRKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 13:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262081AbVELRKA
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 13:10:00 -0400
+Received: from rproxy.gmail.com ([64.233.170.203]:16952 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262080AbVELRJ4 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 13:09:56 -0400
+Received: by rproxy.gmail.com with SMTP id i8so85684rne
+        for <git@vger.kernel.org>; Thu, 12 May 2005 10:09:56 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Gk/U2Rtn5qFsF9QDht/L3fukaNmM0OYLUTLN5ozY+8gCgFhxnluR8QmYeIiyu+gHC510tFWQuTZ9tFB2uEFg7+d57YjwPiHO83u+9D+1OCmlPDc3G3itW6XeFDdIqfKpMgDy4HTNqTxPiwcnexHbYvMmUxFhTWz5mCbXB48cyRQ=
+Received: by 10.38.208.40 with SMTP id f40mr289958rng;
+        Thu, 12 May 2005 10:09:54 -0700 (PDT)
+Received: by 10.38.104.37 with HTTP; Thu, 12 May 2005 10:09:54 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <20050512162023.GA14010@delft.aura.cs.cmu.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 11 May 2005, Junio C Hamano wrote:
-
-> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+On 5/13/05, Jan Harkes <jaharkes@cs.cmu.edu> wrote:
+> >
+> > Ln
+> > |     \
+> > Ln-1  Fn
+> > |         |
+> > Ln-2  Fn-1
+> > |       /
+> > Ln-3
 > 
-> DB> My reasons for having it in the core are as follows:
+> It breaks when Fn was a pull from Ln-1, and Ln was a fast-forward to Fn.
+> Now the first parent is going to be Fn-1 and the history of the local
+> repository after the fast forward warps to
 > 
-> DB>  - All of the porcelain layers have to, at least, agree as
-> DB>  to how this is represented in order for repositories to be
-> DB>  portable; since the representation is common, it might as
-> DB>  well be core.
+>     Fn (== Ln)
+>     Ln-1
+>     Ln-2
+>     Fn-1
+>     Ln-3
 > 
-> That is weak.  .git/refs/heads/master is not core, but something
-> Porcelain need to agree on [*1*].
 
-I think it is a defect of the current core that it fails to completely
-specify a portable repository format. Obviously, it is not necessary to
-have things in the core for this reason, but it's also not necessary to
-have anything at all in the core. We could eliminate commits entirely in
-favor of putting the information in special files in trees, and it would
-still be as complete as it is, although it would also be unmaintainable.
+Yep, you are right.
 
-> DB>  - There are currently no special files which are tracked for cogito (et 
-> DB>    al) to put the information in.
+> Which I believe is exactly what Thomas wants to see in this case. I
+> don't see how repoid's can be useful for this. It is a porcelain thing
+> where you need to track what you have seen before. Anything else doesn't
+> matter because most permutations of the history are perfectly valid
+> since the Fn and Ln changes in reality occured in parallel and as a
+> result can be arbitrarily interleaved.
 > 
-> I am somewhat sympathetic to this, but then there are probably
-> lot other things that are more relevant than this "required
-> version" thing.  One thing that immediately comes to mind is the
-> dontdiff list.
 
-The dontdiff list isn't expected to change with every commit, however.
+I may be wrong, but I don't think Thomas is interested in his own
+repository. I think he is interested in the history of commits found
+in any public repository. Therefore, he needs an algorithm that
+doesn't rely on locally cached information.
 
-> Also, if you consider Cogito and GIT independent projects as you said,
-> you would probably need to have "require {project-name} {commit-id}",
-> not "include {commit-id}".
+In otherwords, at each point in the commit graph, what did the
+committer consider as "foreign" changes that needed to be merged into
+the "local" repository to progress the repository forward. He wants to
+derive that order only from the information in the repository itself -
+everyone given the same commit graph should reach the same conclusion
+as to what the committer saw as local and foreign at the time of the
+commit.
 
-I *don't* consider Cogito and GIT to be independant projects. GIT is
-independant of Cogito, but Cogito includes GIT as part of it.
-
-If you don't like the structure of Cogito, I have a set of projects at
-work, where I have a bunch of microcontroller programs and a library of
-common code. Traditionally, there are two possible arrangements: either
-they are all separate projects, in which case the user has to figure out
-what versions match, or they are the same project, in which case everybody
-has to get everything. What I would like is to have the library consider
-itself a separate project, but each program consider itself, in some
-sense, the same project as the library (but not as other programs).
-
-> Things start smelling much more like the traditional package version 
-> matching issue which is outside of SCM (let alone core GIT).
-
-Once the core portion matures to the point where it gets used without
-program-specific patches, it can be done outside of SCM. But it doesn't
-make sense to have an SCM require that the projects are really mature in
-order to work well, since active development is supposed to be what an SCM
-is for.
-
-> DB>  - Ideally, the dependancy would only be per-commit, not
-> DB>  per-tree; if Petr releases a new cogito which only merges a
-> DB>  new mainline with the git-pb, the cogito tree object should
-> DB>  be the same (since the cogito content didn't change). This
-> DB>  means that it can't be anywhere other than the commit.
-> 
-> As I already said, I consider the current "overlayed" directory
-> structure broken and not worth considering the toolset support
-
-You missed my point here entirely. I think that the cogito tree including
-any non-source files in it (if there are such) should be the same. So the
-dependancy can't be tracked in the tree.
-
-> DB>  - If the solution to the issue of finding the necessary
-> DB>  git-pb is to store it with cogito, then the programs that
-> DB>  pull from this repository need to know that they need to
-> DB>  pull the git-pb portion, and fsck-cache needs to know that
-> DB>  the cogito references the git-pb.
-> 
-> I do not think this is necessary for the same reason as I
-> dismissed the third point above.
-
-Do you have some solution to the problem of having the porcelain
-layer (or the end user) find the version of git that a version of cogito
-needs, in some way such that if I'm working on the project and make a
-change to cogito and a matching change to git, Petr can get them.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+My previous algorithm was incorrect, but I suspect it could probably
+be fixed with a 2-pass algorithm that marked any nodes in the path
+between the merge base and the merge head as local and then ensured
+that nodes marked that way are sorted after any nodes reached via
+"foreign" paths.
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
