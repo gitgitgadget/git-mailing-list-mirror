@@ -1,45 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb wishlist
-Date: Thu, 12 May 2005 13:07:40 -0700
-Message-ID: <7v3bssfbsj.fsf@assigned-by-dhcp.cox.net>
-References: <20050511012626.GL26384@pasky.ji.cz>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: Mercurial 0.4e vs git network pull
+Date: Thu, 12 May 2005 13:11:16 -0700
+Message-ID: <20050512201116.GC5914@waste.org>
+References: <20050512094406.GZ5914@waste.org> <20050512182340.GA324@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 22:01:11 2005
+Cc: linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	mercurial@selenic.com, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 12 22:04:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWJrZ-00030I-UO
-	for gcvg-git@gmane.org; Thu, 12 May 2005 22:00:54 +0200
+	id 1DWJuM-0003Qx-I8
+	for gcvg-git@gmane.org; Thu, 12 May 2005 22:03:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262059AbVELUIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 16:08:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262073AbVELUIP
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 16:08:15 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54970 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S262059AbVELUIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 16:08:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050512200740.SLHP16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 May 2005 16:07:40 -0400
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050511012626.GL26384@pasky.ji.cz> (Petr Baudis's message of
- "Wed, 11 May 2005 03:26:26 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262077AbVELUL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 16:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262076AbVELUL1
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 16:11:27 -0400
+Received: from waste.org ([216.27.176.166]:2965 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S262074AbVELULV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 16:11:21 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j4CKBG0f030752
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 12 May 2005 15:11:16 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j4CKBG6B030749;
+	Thu, 12 May 2005 15:11:16 -0500
+To: Petr Baudis <pasky@ucw.cz>
+Content-Disposition: inline
+In-Reply-To: <20050512182340.GA324@pasky.ji.cz>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* [Previous page] [Next page] would be nice in addition to last
-  10, day, week, etc.
+On Thu, May 12, 2005 at 08:23:41PM +0200, Petr Baudis wrote:
+> Dear diary, on Thu, May 12, 2005 at 11:44:06AM CEST, I got a letter
+> where Matt Mackall <mpm@selenic.com> told me that...
+> > Mercurial is more than 10 times as bandwidth efficient and
+> > considerably more I/O efficient. On the server side, rsync uses about
+> > twice as much CPU time as the Mercurial server and has about 10 times
+> > the I/O and pagecache footprint as well.
+> > 
+> > Mercurial is also much smarter than rsync at determining what
+> > outstanding changesets exist. Here's an empty pull as a demonstration:
+> > 
+> >  $ time hg merge hg://selenic.com/linux-hg/
+> >  retrieving changegroup
+> > 
+> >  real    0m0.363s
+> >  user    0m0.083s
+> >  sys     0m0.007s
+> > 
+> > That's a single http request and a one line response.
+> 
+> So, what about comparing it with something comparable, say git pull over
+> HTTP? :-)
 
-* Putting the commit headline and "X hour"s ago in a separate
-  div or span next to each other, so that a long commit headline
-  wraps properly and does not start the second line just under
-  the "X hours ago" timestamp would be nicer (you can see what I
-  mean easily by narrowing the browser window).
+..because I get a headache every time I try to figure out how to use git? :-P
 
+Seriously, have a pointer to how this works?
+
+-- 
+Mathematics is the supreme nostalgia of our time.
