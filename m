@@ -1,98 +1,58 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: Adapting scripts to work in current (not top) directory
-Date: Thu, 12 May 2005 17:58:10 +0400
-Message-ID: <200505121758.10971.snake@penza-gsm.ru>
+From: Chris Mason <mason@suse.com>
+Subject: Re: [PATCH] improved delta support for git
+Date: Thu, 12 May 2005 10:27:00 -0400
+Message-ID: <200505121027.01964.mason@suse.com>
+References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain> <7voebhkql5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu May 12 15:55:55 2005
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 16:20:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWE5L-0005n4-4Y
-	for gcvg-git@gmane.org; Thu, 12 May 2005 15:50:44 +0200
+	id 1DWEXJ-0007fM-Kq
+	for gcvg-git@gmane.org; Thu, 12 May 2005 16:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261931AbVELN6W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 09:58:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261953AbVELN6W
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 09:58:22 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:54667
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261931AbVELN6P
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 09:58:15 -0400
-Received: (qmail 4166 invoked from network); 12 May 2005 13:58:13 -0000
-Received: from unknown (HELO snake) (192.168.0.20)
-  by fileserver.penza-gsm.ru with SMTP; 12 May 2005 13:58:12 -0000
-To: GIT Mailing List <git@vger.kernel.org>
-User-Agent: KMail/1.7.2
+	id S261953AbVELO1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 10:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261960AbVELO1K
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 10:27:10 -0400
+Received: from ns2.suse.de ([195.135.220.15]:49093 "EHLO mx2.suse.de")
+	by vger.kernel.org with ESMTP id S261953AbVELO1H (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 10:27:07 -0400
+Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(No client certificate requested)
+	by mx2.suse.de (Postfix) with ESMTP id B27DAA26C;
+	Thu, 12 May 2005 16:27:06 +0200 (CEST)
+Received: from watt.suse.com (cpe-66-66-175-36.rochester.res.rr.com [66.66.175.36])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(Client did not present a certificate)
+	by extimap.suse.de (Postfix) with ESMTP
+	id 01A5D5628B; Thu, 12 May 2005 16:27:05 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+User-Agent: KMail/1.8
+In-Reply-To: <7voebhkql5.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
-X-Spam-Level: 
-X-Spam-Status: No, score=-105.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	USER_IN_WHITELIST autolearn=ham version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-All git and cogito scripts wants .git subdirectory. If I'm in a subdirectory 
-that have no .git direcory in it I'm out of luck.
-I have wrote an example script that determines the lowest possible .git 
-directory position and changes to it to satisfy user request.
+On Thursday 12 May 2005 00:36, Junio C Hamano wrote:
+> It appears to me that changes to the make_sure_we_have_it()
+> routine along the following lines (completely untested) would
+> suffice.  Instead of just returning success, we first fetch the
+> named object from the remote side, read it to see if it is
+> really the object we have asked, or just a delta, and if it is a
+> delta call itself again on the underlying object that delta
+> object depends upon.
 
-Problems with script:
-1) May be I misunderstood the git ideology and it needs not this at all.
+If we fetch the named object and it is a delta, the delta will either depend 
+on an object we already have or an object that we don't have.  If we don't 
+have it, the pull should find it while pulling other commits we don't have.
 
-if point (1) is false then there are couple of other problems:
-2) Script is extremelly ugly. I'm a week bash programmer so please criticize.
-3) This logic shold be somehow embedded to all git- and cg- scripts. I can not 
-figure how to do it non-intruisively.
-4) files and patch with spaces not supported. Probably fixable but first I 
-want to resolve points (1), (2) and (3)
+-chris
 
-===========================
-#!/bin/bash
-#
-# Add new file to a GIT repository.
-# Copyright (c) Petr Baudis, 2005
-#
-# Takes a list of file names at the command line, and schedules them
-# for addition to the GIT repository at the next commit.
-
-. ${COGITO_LIB:-/home/snake/lib/cogito/}cg-Xlib
-
-[ "$1" ] || die "usage: cg-add FILE..."
-
-gitpath=
-subpath=
-curpath=`pwd`
-for ((i=2;i<9999;i=i+1)) ; do {
-        path1=`echo $curpath | cut -d / -f 0-$i`
-        path2=`echo $curpath | cut -d / -f $((i+1))-`
-        [ -d "$path1"/.git ] && gitpath=$path1 && subpath=$path2
-        [ "$path1" == "$curpath" ] && break
-}; done
-
-for file in "$@"; do
-        if [ -f "$file" ]; then
-                echo "Adding file $file"
-        else
-                die "$file does not exist"
-        fi
-done
-
-cd "$gitpath"
-
-files=
-
-for file in "$@"; do
-        files="$files $subpath/$file"
-done
-
-git-update-cache --add -- $files
-===========================
-
--- 
-Respectfully
-Alexey Nezhdanov
 
