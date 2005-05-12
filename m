@@ -1,60 +1,45 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [ANNOUNCE] git tracker online
-Date: Thu, 12 May 2005 21:58:25 +0200
-Organization: linutronix
-Message-ID: <1115927905.11872.48.camel@tglx>
-References: <1115794878.22180.27.camel@tglx>
-	 <20050512190433.GB8176@lug-owl.de>
-Reply-To: tglx@linutronix.de
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb wishlist
+Date: Thu, 12 May 2005 13:07:40 -0700
+Message-ID: <7v3bssfbsj.fsf@assigned-by-dhcp.cox.net>
+References: <20050511012626.GL26384@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 21:51:36 2005
+X-From: git-owner@vger.kernel.org Thu May 12 22:01:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWJhB-0000wp-AO
-	for gcvg-git@gmane.org; Thu, 12 May 2005 21:50:09 +0200
+	id 1DWJrZ-00030I-UO
+	for gcvg-git@gmane.org; Thu, 12 May 2005 22:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261368AbVELT5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 15:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262047AbVELT5p
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:57:45 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:21900
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261368AbVELT5g
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 15:57:36 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 5B2E265C065;
-	Thu, 12 May 2005 21:57:31 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 88BD22829A;
-	Thu, 12 May 2005 21:57:30 +0200 (CEST)
-To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
-In-Reply-To: <20050512190433.GB8176@lug-owl.de>
-X-Mailer: Evolution 2.2.2 
+	id S262059AbVELUIP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 16:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262073AbVELUIP
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 16:08:15 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:54970 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S262059AbVELUIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 16:08:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512200740.SLHP16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 16:07:40 -0400
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050511012626.GL26384@pasky.ji.cz> (Petr Baudis's message of
+ "Wed, 11 May 2005 03:26:26 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-05-12 at 21:04 +0200, Jan-Benedict Glaw wrote:
+* [Previous page] [Next page] would be nice in addition to last
+  10, day, week, etc.
 
-> 	- Browsing the Cogito repository doesn't work. Could you fix
-> 	  that?
-
-Sure
-
-> 	- When the {repository,diff against} drop-down box is changed,
-> 	  it would be nice to fire off a onchange="submit()" so that (if
-> 	  your browser is wacked with JavaScript) you don't need to
-> 	  press the submit button.
-> 
-
-I thought about that already. I'm currently cleaning up the code and fix
-the heuristic guessing a bit and then I will put the code online, so you
-can fix yourself if I have not managed to do it until then :)
-
-tglx
-
+* Putting the commit headline and "X hour"s ago in a separate
+  div or span next to each other, so that a long commit headline
+  wraps properly and does not start the second line just under
+  the "X hours ago" timestamp would be nicer (you can see what I
+  mean easily by narrowing the browser window).
 
