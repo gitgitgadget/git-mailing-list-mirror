@@ -1,102 +1,181 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 07:57:17 +0000
-Organization: linutronix
-Message-ID: <1115884637.22180.277.camel@tglx>
-References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com>
-	 <1115854733.22180.202.camel@tglx> <428297DB.8030905@zytor.com>
-	 <1115858022.22180.256.camel@tglx> <7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
-Reply-To: tglx@linutronix.de
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Tests for env variable rename and update-cache f/d
+ conflicts.
+Date: Thu, 12 May 2005 01:06:56 -0700
+Message-ID: <7vu0l8j2an.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 09:49:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 10:01:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW8RJ-0003X5-8a
-	for gcvg-git@gmane.org; Thu, 12 May 2005 09:49:01 +0200
+	id 1DW8cg-00059n-67
+	for gcvg-git@gmane.org; Thu, 12 May 2005 10:00:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261267AbVELH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 03:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261289AbVELH4g
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 03:56:36 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:34438
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261267AbVELH4Z
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 03:56:25 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 7CDA565C003;
-	Thu, 12 May 2005 09:56:22 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 3AF0B28284;
-	Thu, 12 May 2005 09:56:25 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.2.2 
+	id S261304AbVELIIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 04:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261301AbVELIIM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 04:08:12 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:64163 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261304AbVELIHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 04:07:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512080656.EYHZ20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 04:06:56 -0400
+To: pasky@ucw.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-05-11 at 18:46 -0700, Junio C Hamano wrote:
-> >>>>> "TG" == Thomas Gleixner <tglx@linutronix.de> writes:
-> So I am having a hard time understanding what problem repo-id
-> solves.
+These are test cases to prevent regression from happening for
+the recent two changes we made.  They depend on the test suite
+infrastructure I have sent in earlier.
 
-Rn   o
-     | \
-Rn-1 o  |
-     |  o Mn
-     |  o Mn-1
-Rn-2 o /
-Rn-3 o
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-rev-tree shows you 
+t/t0100-environment-names.sh |   82 +++++++++++++++++++++++++++++++++++++++++++
+t/t0200-update-cache.sh      |   46 ++++++++++++++++++++++++
+2 files changed, 128 insertions(+)
 
-Rn
-Rn-1
-Mn
-Mn-1
-Rn-2
-Rn-3
-
-Which is wrong. 
-
-After syncing M to Rn you see the same thing in M
-
-Rn
-Rn-1
-Mn
-Mn-1
-Rn-2
-Rn-3
-
-which is also wrong. 
-
-The correct display looking at R is
-
-Rn
- Mn
- Mn-1
-Rn-1
-Rn-2
-Rn-3
-
-Looking from M it is
-
-Rn
- Rn-1
- Rn-2
-Mn
-Mn-2
-Rn-3
-
-tglx
-
-
-
-
-
-
+Created: t/t0100-environment-names.sh (mode:100755)
+--- /dev/null
++++ b/t/t0100-environment-names.sh
+@@ -0,0 +1,82 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++. ./test-lib.sh
++test_description "$@" 'general environment name warning test.
++
++This test makes sure that use of deprecated environment variables
++trigger the warnings from gitenv().'
++
++env_vars='GIT_AUTHOR_DATE:AUTHOR_DATE
++GIT_AUTHOR_EMAIL:AUTHOR_EMAIL
++GIT_AUTHOR_NAME:AUTHOR_NAME
++GIT_COMMITTER_EMAIL:COMMIT_AUTHOR_EMAIL
++GIT_COMMITTER_NAME:COMMIT_AUTHOR_NAME
++GIT_ALTERNATE_OBJECT_DIRECTORIES:SHA1_FILE_DIRECTORIES
++GIT_OBJECT_DIRECTORY:SHA1_FILE_DIRECTORY'
++
++export_them () {
++	for ev in $env_vars
++	do
++		new=$(expr "$ev" : '\(.*\):')
++		old=$(expr "$ev" : '.*:\(.*\)')
++		# Build and eval the following:
++		# case "${VAR+set}" in set) export VAR;; esac
++		evstr='case "${'$new'+set}" in set) export '$new';; esac'
++		eval "$evstr"
++		evstr='case "${'$old'+set}" in set) export '$old';; esac'
++		eval "$evstr"
++	done
++}
++
++date >path0
++git-update-cache --add path0
++tree=$(git-write-tree)
++
++AUTHOR_DATE='Wed May 11 23:55:18 2005'
++AUTHOR_EMAIL='author@example.xz'
++AUTHOR_NAME='A U Thor'
++COMMIT_AUTHOR_EMAIL='author@example.xz'
++COMMIT_AUTHOR_NAME='A U Thor'
++SHA1_FILE_DIRECTORY=.git/objects
++
++export_them
++
++test_debug 'echo with only old variables exported.'
++
++echo 'foo' | git-commit-tree $tree >/dev/null 2>errmsg
++cat >expected-err <<\EOF
++warning: Attempting to use SHA1_FILE_DIRECTORY
++warning: GIT environment variables have been renamed.
++warning: Please adjust your scripts and environment.
++warning: old AUTHOR_DATE => new GIT_AUTHOR_DATE
++warning: old AUTHOR_EMAIL => new GIT_AUTHOR_EMAIL
++warning: old AUTHOR_NAME => new GIT_AUTHOR_NAME
++warning: old COMMIT_AUTHOR_EMAIL => new GIT_COMMITTER_EMAIL
++warning: old COMMIT_AUTHOR_NAME => new GIT_COMMITTER_NAME
++warning: old SHA1_FILE_DIRECTORY => new GIT_OBJECT_DIRECTORY
++EOF
++sed -ne '/^warning: /p' <errmsg >generated-err
++test_debug 'cat errmsg'
++test_expect_success 'cmp generated-err expected-err'
++
++test_debug 'echo with new variables exported.'
++
++for ev in $env_vars
++do
++	new=$(expr "$ev" : '\(.*\):')
++	old=$(expr "$ev" : '.*:\(.*\)')
++	# Build and eval the following:
++	# NEWENV=$OLDENV
++	evstr="$new=\$$old"
++	eval "$evstr"
++done
++export_them
++echo 'foo' | git-commit-tree $tree >/dev/null 2>errmsg
++sed -ne '/^warning: /p' <errmsg >generated-err
++test_debug 'cat errmsg'
++test_expect_success 'cmp generated-err /dev/null'
++
++test_done
+Created: t/t0200-update-cache.sh (mode:100755)
+--- /dev/null
++++ b/t/t0200-update-cache.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++. ./test-lib.sh
++test_description "$@" 'git-update-cache nonsense-path test.
++
++This test creates the following structure in the cache:
++
++    path0       - a file
++    path1       - a symlink
++    path2/file2 - a file in a directory
++    path3/file3 - a file in a directory
++
++and tries to git-update-cache --add the following:
++
++    path0/file0 - a file in a directory
++    path1/file1 - a file in a directory
++    path2       - a file
++    path3       - a symlink
++
++All of the attempts should fail.
++'
++
++mkdir path2 path3
++date >path0
++ln -s xyzzy path1
++date >path2/file2
++date >path3/file3
++
++git-update-cache --add -- path0 path1 path2/file2 path3/file3
++
++rm -fr path?
++
++mkdir path0 path1
++date >path2
++ln -s frotz path3
++date >path0/file0
++date >path1/file1
++
++for p in path0/file0 path1/file1 path2 path3
++do
++	test_expect_failure "git-update-cache --add -- $p"
++done
++test_done
 
