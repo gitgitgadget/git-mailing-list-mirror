@@ -1,66 +1,67 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [RFC] Support projects including other projects
-Date: Thu, 12 May 2005 01:46:34 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505120137200.30848-100000@iabervon.org>
-References: <1115876231.3085.4.camel@kryten>
+Date: Thu, 12 May 2005 02:04:43 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505120147100.30848-100000@iabervon.org>
+References: <7v8y2lknsp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 12 07:39:50 2005
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 12 07:58:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW6Q8-0007el-B5
-	for gcvg-git@gmane.org; Thu, 12 May 2005 07:39:40 +0200
+	id 1DW6hu-0000fJ-8q
+	for gcvg-git@gmane.org; Thu, 12 May 2005 07:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261175AbVELFrM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 01:47:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261176AbVELFrM
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 01:47:12 -0400
-Received: from iabervon.org ([66.92.72.58]:45061 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261175AbVELFrB (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 01:47:01 -0400
+	id S261173AbVELGFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 02:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261178AbVELGFQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 02:05:16 -0400
+Received: from iabervon.org ([66.92.72.58]:54277 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261173AbVELGFI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 02:05:08 -0400
 Received: from barkalow (helo=localhost)
 	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DW6Wo-0001Me-00; Thu, 12 May 2005 01:46:34 -0400
-To: James Purser <purserj@ksit.dynalias.com>
-In-Reply-To: <1115876231.3085.4.camel@kryten>
+	id 1DW6oN-0001w6-00; Thu, 12 May 2005 02:04:43 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8y2lknsp.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 12 May 2005, James Purser wrote:
+On Wed, 11 May 2005, Junio C Hamano wrote:
 
-> On Thu, 2005-05-12 at 15:19, Daniel Barkalow wrote:
-> > If you think about it as git and cogito being entirely separate projects,
-> > where users would be expected to have the right version of git most of the
-> > time (or ever), this is true. But I think that cogito is as closely tied
-> > to git as the kernel is to kbuild or kconfig; the difference is that git
-> > is not solely available with cogito, like kbuild is solely available with
-> > the kernel.
-> I tend to disagree with you on this point. Cogito and Git share
-> arelationship more akin to xorg and gnome and this is something I think
-> Linus intended so that it would be very easy to build a layer on top of
-> the git toolset. Cogito is great and it fills a need but give it time
-> and other implementations and tool sets will come along that may
-> supersede it.
+> I do not think the issues you are raising are solved by having
+> that "include {hash}" thing in the commit like you propose here,
+> instead of keeping it outside of the commit like I suggested.
+> 
+> What I meant to say was just I do not think having this "version
+> dependency" in the core or outside of the core would make any
+> difference.
 
-The point of this feature is to support other implementations and tool
-sets. If there weren't other things using the git core, there would be no
-reason to leave the current situation where cogito simply includes the
-complete contents of git-pb. The relationship between cogito and git is,
-however, not at all like that between Gnome and x.org; gnome could not be
-started until X was essentially completely stable for several years (after
-which X could be reimplemented and extended, so long as it retained the
-same API). Cogito, on the other hand, is being developed concurrently with
-git, and substantially informs git development. The current cogito doesn't
-work completely correctly with any mainline git, whereas the current Gnome
-works with every x.org release as well as any XFree86 or most other X
-servers since the mid 90's.
+I was primarily responding to your idea of it being outside the scope of
+cogito as well as outside the core.
 
-Also, any particular user is probably only going to use one git-based
-system, but will almost certainly use many different X clients.
+My reasons for having it in the core are as follows:
+
+ - All of the porcelain layers have to, at least, agree as to how this is
+   represented in order for repositories to be portable; since the
+   representation is common, it might as well be core.
+
+ - There are currently no special files which are tracked for cogito (et 
+   al) to put the information in.
+
+ - Ideally, the dependancy would only be per-commit, not per-tree; if Petr
+   releases a new cogito which only merges a new mainline with the git-pb,
+   the cogito tree object should be the same (since the cogito content
+   didn't change). This means that it can't be anywhere other than the
+   commit.
+
+ - If the solution to the issue of finding the necessary git-pb is to
+   store it with cogito, then the programs that pull from this repository
+   need to know that they need to pull the git-pb portion, and fsck-cache
+   needs to know that the cogito references the git-pb.
 
 	-Daniel
 *This .sig left intentionally blank*
