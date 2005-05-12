@@ -1,68 +1,74 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC] Support projects including other projects
-Date: Thu, 12 May 2005 02:04:43 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505120147100.30848-100000@iabervon.org>
-References: <7v8y2lknsp.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 11 May 2005 23:14:03 -0700
+Message-ID: <7vvf5pj7is.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0505120057250.30848-100000@iabervon.org>
+	<7v8y2lknsp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
 	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 12 07:58:23 2005
+X-From: git-owner@vger.kernel.org Thu May 12 08:06:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DW6hu-0000fJ-8q
-	for gcvg-git@gmane.org; Thu, 12 May 2005 07:58:02 +0200
+	id 1DW6qC-0001Fr-Py
+	for gcvg-git@gmane.org; Thu, 12 May 2005 08:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261173AbVELGFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 02:05:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261178AbVELGFQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 02:05:16 -0400
-Received: from iabervon.org ([66.92.72.58]:54277 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261173AbVELGFI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 02:05:08 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DW6oN-0001w6-00; Thu, 12 May 2005 02:04:43 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8y2lknsp.fsf@assigned-by-dhcp.cox.net>
+	id S261184AbVELGOK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 02:14:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261178AbVELGOK
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 02:14:10 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:20198 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261184AbVELGOF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 02:14:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050512061404.YERX26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 12 May 2005 02:14:04 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <7v8y2lknsp.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Wed, 11 May 2005 22:37:10 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 11 May 2005, Junio C Hamano wrote:
+>>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
 
-> I do not think the issues you are raising are solved by having
-> that "include {hash}" thing in the commit like you propose here,
-> instead of keeping it outside of the commit like I suggested.
-> 
-> What I meant to say was just I do not think having this "version
-> dependency" in the core or outside of the core would make any
-> difference.
+Daniel, I am sorry but I realize I completely misunderstood what
+you meant by "projects including other projects".  What you are
+trying to solve is the problem of feeding core GIT changes and
+pure Cogito changes separately to the upstream _within_ _the_
+_current_ _source_ _tree_ _structure_ of Cogito, isn't it?
+That's where your juggling index files and other complexity
+comes from, and I did not realize that was what you were talking
+about.  I should have realized it when you mentioned kbuild.
 
-I was primarily responding to your idea of it being outside the scope of
-cogito as well as outside the core.
+Well, personally I do not think such project _overlays_ are
+worth supporting because it happens rarely, and to a certain
+extent it is simply an undisciplined way to organize the source
+tree.  Kbuild case may be justified, but I vaguely recall
+something very similar build infrastructure was used by busybox
+folks---it could be using just their own copy of kbuild for that
+matter.
 
-My reasons for having it in the core are as follows:
+But as you said in a separate message, I agree that core GIT
+layer is meant to be independent from what Porcelain you put on
+it.  The relationship between Cogito and core GIT is not similar
+to kbuild and the kernel.  It is more like a random X11
+application and Xlib.  Having them in the same source tree,
+intermixed, is less than optimal.
 
- - All of the porcelain layers have to, at least, agree as to how this is
-   represented in order for repositories to be portable; since the
-   representation is common, it might as well be core.
+I would not be surprised when future, if not the next, Cogito
+release has source tree organized more like JIT sources,
+shipping git-pb and cogito in separate directories, managed by
+separate GIT_DIR.  That would make Pasky's life a lot simpler.
 
- - There are currently no special files which are tracked for cogito (et 
-   al) to put the information in.
-
- - Ideally, the dependancy would only be per-commit, not per-tree; if Petr
-   releases a new cogito which only merges a new mainline with the git-pb,
-   the cogito tree object should be the same (since the cogito content
-   didn't change). This means that it can't be anywhere other than the
-   commit.
-
- - If the solution to the issue of finding the necessary git-pb is to
-   store it with cogito, then the programs that pull from this repository
-   need to know that they need to pull the git-pb portion, and fsck-cache
-   needs to know that the cogito references the git-pb.
-
-	-Daniel
-*This .sig left intentionally blank*
+And once the separation happens, the issue becomes just a simple
+package version matching every distribution does (e.g. Debian's
+binary package and library dependencies, or source Build-Depends
+dependencies), which is something already has been solved.
 
