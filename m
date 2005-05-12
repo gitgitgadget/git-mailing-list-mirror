@@ -1,59 +1,55 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Support projects including other projects
-Date: Thu, 12 May 2005 15:12:11 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505121449370.30848-100000@iabervon.org>
-References: <7vll6kgu21.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Adapting scripts to work in current (not top) directory
+Date: Thu, 12 May 2005 12:15:52 -0700
+Message-ID: <4283AB68.1090003@zytor.com>
+References: <200505121758.10971.snake@penza-gsm.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu May 12 21:06:18 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 12 21:10:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWIzQ-0000nL-PD
-	for gcvg-git@gmane.org; Thu, 12 May 2005 21:04:57 +0200
+	id 1DWJ3I-0001Mt-CK
+	for gcvg-git@gmane.org; Thu, 12 May 2005 21:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261379AbVELTMj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 15:12:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261386AbVELTMj
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:12:39 -0400
-Received: from iabervon.org ([66.92.72.58]:59911 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261379AbVELTMh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 15:12:37 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DWJ6R-0006ph-00; Thu, 12 May 2005 15:12:11 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll6kgu21.fsf@assigned-by-dhcp.cox.net>
+	id S261417AbVELTQ1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 15:16:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261386AbVELTQ1
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:16:27 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:29408 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261417AbVELTQI
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 15:16:08 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4CJFqsB011383
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 12 May 2005 12:15:54 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Alexey Nezhdanov <snake@penza-gsm.ru>
+In-Reply-To: <200505121758.10971.snake@penza-gsm.ru>
+X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 12 May 2005, Junio C Hamano wrote:
+Alexey Nezhdanov wrote:
+> All git and cogito scripts wants .git subdirectory. If I'm in a subdirectory 
+> that have no .git direcory in it I'm out of luck.
+> I have wrote an example script that determines the lowest possible .git 
+> directory position and changes to it to satisfy user request.
+> 
+> Problems with script:
+> 1) May be I misunderstood the git ideology and it needs not this at all.
+> 
 
-> I have to think about this a bit but let me understand the
-> problem first.  Let's say it is a couple of weeks ago when there
-> were not cg-status.  You write cg-status, by adding -t flag to
-> ls-files.c  You commit the addition of -t flag to git-pb
-> repository and note the commit id.  You then commit addition of
-> cg-status to cogito repository and when you do so you want the
-> party that pulls the latter commit to know it needs the former
-> commit in the git-pb tree.  Is it what you are solving here?
+Linus has explicitly said he doesn't want that.
 
-Right; and I'm not Petr, so the place that has the -t flag in ls-files
-isn't his git-pb repository, and I'm not going to remember to tell him
-about two places to pull from or two heads to pull.
-
-Probably my biggest concern here is that it has to not make anything more
-difficult for Cogito hackers (or people working on similarly arranged
-projects) to have the other project demarcated as separate, or they'd tend
-to be lazy and the upstream core will suffer. I believe that this is why
-people in practice tend not to bother making projects clean and modular
-with current tools. Having it streamlined and automatic would mean that
-people in the position that Petr was in when he started would do it by
-default.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+	-hpa
