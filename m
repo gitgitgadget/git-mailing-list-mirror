@@ -1,75 +1,224 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 12:24:19 -0700
-Message-ID: <7vy8akfdss.fsf@assigned-by-dhcp.cox.net>
-References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com>
-	<1115854733.22180.202.camel@tglx> <428297DB.8030905@zytor.com>
-	<1115858022.22180.256.camel@tglx>
-	<7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
-	<1115884637.22180.277.camel@tglx>
-	<7vvf5ogxdu.fsf@assigned-by-dhcp.cox.net>
-	<1234.10.10.10.24.1115921886.squirrel@linux1>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] Test suite
+Date: Thu, 12 May 2005 21:29:41 +0200
+Message-ID: <20050512192941.GC324@pasky.ji.cz>
+References: <118833cc05050911255e601fc@mail.gmail.com> <7vr7gewuxt.fsf@assigned-by-dhcp.cox.net> <20050510230357.GF26384@pasky.ji.cz> <7vsm0us5p5.fsf@assigned-by-dhcp.cox.net> <118833cc050511113122e2d17d@mail.gmail.com> <7vpsvxqwab.fsf@assigned-by-dhcp.cox.net> <7vd5rxquo5.fsf@assigned-by-dhcp.cox.net> <20050511224044.GI22686@pasky.ji.cz> <7vu0l9nwgx.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, tglx@linutronix.de,
-	"H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 21:17:43 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 12 21:22:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWJBS-00037j-2l
-	for gcvg-git@gmane.org; Thu, 12 May 2005 21:17:22 +0200
+	id 1DWJG4-00042I-Rr
+	for gcvg-git@gmane.org; Thu, 12 May 2005 21:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261421AbVELTYj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 15:24:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261504AbVELTYd
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:24:33 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:32465 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261420AbVELTYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 15:24:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050512192420.IMNG8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 12 May 2005 15:24:20 -0400
-To: "Sean" <seanlkml@sympatico.ca>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261420AbVELT3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 15:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261467AbVELT3x
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 15:29:53 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:21977 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261420AbVELT3n (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 15:29:43 -0400
+Received: (qmail 8798 invoked by uid 2001); 12 May 2005 19:29:41 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vu0l9nwgx.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "S" == Sean  <seanlkml@sympatico.ca> writes:
+Dear diary, on Thu, May 12, 2005 at 02:01:34AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Commit    1da683e1247046796a094c4917bc0c4591530272
+> Author    Junio C Hamano <junkio@cox.net>, Wed May 11 16:59:35 2005 -0700
+> Committer Junio C Hamano <junkio@cox.net>, Wed May 11 16:59:35 2005 -0700
+> 
+> Test suite: infrastructure and examples.
+> 
+> This adds the test suite infrastructure with two example tests.
+> The current git-checkout-cache the example tests would fail this
+> test and will be corrected in a separate patch.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-S> On Thu, May 12, 2005 1:35 pm, Junio C Hamano said:
->> If that is not needed, then you can record in an auxiliary file
->> that is local to each tree the timestamp of when merge happened
->> in that tree along with set of foreign commit objects, and teach
->> rev-tree or rev-list to read from that auxiliary file and use
->> that timestamp for foreign commit objects instead of commit time
->> recorded in them when sorting by time is needed.
+Admittely, I'm not happy with this. From the design standpoint it looks
+mostly fine now, but the code is rather crude. I wanted to go over it at
+first and fix the obvious stuff, but it appeared to be overall quite
+broken, so I decided to return it to you for another iteration. I don't
+mind if you just fix the broken code for now, we can fix the semantics
+and design stuff later - what is in the patch is already good enough for
+the start.
 
-S> The time is already recorded.  Ie. the commit object is a
-S> separate file with a modification time which can be used as a
-S> "local commit timestamp".  If you want to protect those time
-S> stamps by also recording them in a separate file, that's a
-S> bonus I guess but shouldn't really be needed.
+I'll drop the testcases from your other patches for now so that we don't
+get long stalls.
 
-That would not work if (1) you are using SHA1_FILE_DIRECTORY
-mechanism to share object pool for multiple trees, or (2) you
-git-*-pull'ed but did not merge for some time.  The file
-timestamps are the time of download but we want the time of
-merge for this applicaton.  Also, that approach captures only
-half the information necessary.  The other half you missed is
-"which ones are foreign commits from this tree's point of view",
-and as you described that is something you cannot tell just by
-looking at the order of parents in commit objects.
+> --- /dev/null
+> +++ b/t/test-lib.sh
+> +# For repeatability, reset the environment to known value.
+> +export LANG C
+> +export TZ UTC
 
-S> So it seems, that rather than a repository identifier, we
-S> need each repository to record the time of each local commit.
-S> Either in a separate file or just using the object file
-S> timestamps directly.
+Dunno about *your* shell but this just exports variables $LANG, $C, $TZ
+and $UTC here. You probably wanted assignments there?
 
-I think we are in agreement here, except that object file
-timestamps is not something you can use.
+> +# Each test should start with something like this, after copyright notices:
+> +#
+> +# . ./testlib.sh
 
+test-lib.sh
+
+> +# test_description "$@" 'Description of this test...
+> +# This test checks if command xyzzy does the right thing...
+> +# '
+
+I think this usage is pretty weird. Why not just
+
+test_description='Description, blah blah.'
+. ./testlib.sh
+
+I think it would be quite less confusing than test_description, which
+actually does effectively something different anyway.
+
+> +
+> +test_description () {
+> +	while case "$#" in 0) break;; esac
+
+Duh. This looks mysterious - why not a simple test?
+
+> +	do
+> +		case "$1" in
+> +		-d|--d|--de|--deb|--debu|--debug)
+> +			debug=t; shift ;;
+> +		-h|--h|--he|--hel|--help)
+> +			eval echo '"$'$#'"'
+> +			exit 0
+> +			;;
+> +		*)
+> +			break ;;
+
+This branch makes no sense, I think.
+
+> +		esac
+> +	done
+> +	test_failure=0
+> +}
+> +
+> +say () {
+> +	echo "* $*"
+> +}
+> +
+> +test_debug () {
+> +	case "$debug" in '') ;; ?*) eval "$*" ;; esac
+
+Again, why not a simple test?
+
+[ "$debug" ] && eval "$*"
+
+(Actually, eval will do the wrong thing here - it just concatenates the
+arguments. Just "$@" would do, I guess.)
+
+> +}
+> +
+> +test_ok () {
+> +	echo "* $*";
+> +}
+> +
+> +test_failure () {
+> +	echo "* $*";
+> +	test_failure=1;
+> +}
+> +
+> +test_expect_failure () {
+> +	say "expecting failure: $1"
+> +	eval "$1"
+> +	case $? in
+> +	0)	test_failure "did not fail as expected" ;;
+> +	*) 	test_ok "failed as expected" ;;
+> +	esac
+> +}
+> +
+> +test_expect_success () {
+> +	say "expecting success: $1"
+> +	eval "$1"
+> +	case $? in
+> +	0) 	test_ok "succeeded as expected" ;;
+> +	*)	test_failure "did not succeed as expected" ;;
+> +	esac
+> +}
+> +
+> +test_done () {
+> +	case "$test_failure" in
+> +	0)	exit 0 ;;
+
+Please clean up after yourself in this case.
+
+> +	'')	echo "*** test script did not start with test_description";
+> +		exit 2 ;;
+> +	*)	exit 1 ;;
+> +	esac
+> +}
+> +
+> +# Test the binaries we have just built.  The tests are kept in
+> +# t/ subdirectory and are run in test-repo subdirectory.
+> +PATH=$(pwd)/..:$PATH
+> +
+> +# Test repository
+> +test=test-repo
+> +rm -fr "$test"
+> +mkdir "$test"
+> +cd "$test"
+> +git-init-db 2>/dev/null || error "cannot run git-init-db"
+
+But there's no 'error' thing.
+
+> --- /dev/null
+> +++ b/t/t1000-checkout-cache.sh
+> +git-update-cache --add path0 path1/file1
+
+You should make sure even those preparations calls actually succeed.
+
+> --- /dev/null
+> +++ b/t/t1001-checkout-cache.sh
+> +git-update-cache --add path0/file0
+> +tree1=$(git-write-tree)
+
+Here too.
+
+
+The testcases currently utterly fail, which is not good sign - either
+they are ahead of the current code, or they are broken. This is the main
+hurdle making me not accept it yet - it does not work for me. If you fix
+this and the nits above, it can go in, I think.
+
+
+* expecting failure: git-checkout-cache -a
+checkout-cache: path0 already exists
+error: checkout-cache: unable to create file path1/file1 (Not a directory)
+* did not fail as expected
+* expecting success: git-checkout-cache -f -a
+error: checkout-cache: unable to create file path0 (Is a directory)
+* succeeded as expected
+* checkout failed
+
+I consider this output... well, totally confusing. checkout-cache fails
+but testcase thinks it does not, then it fails again but testcase thinks
+it succeeded as expected but dies anyway.
+
+I think it's too messy. I would much more appreciate output like this:
+
+* checkout-cache test [1/3]: git-checkout-cache -a... passed
+* checkout-cache test [2/3]: git-checkout-cache -f -a... NOT PASSED
+Expected success, but the command failed. Output:
+error: checkout-cache: unable to create file path0 (Is a directory)
+* checkout-cache test [3/3]: git-checkout-cache foobar... NOT PASSED
+Expected failure, but the command succeeded.
+
+Much less cluttered, it is clear what went wrong etc.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
