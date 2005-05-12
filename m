@@ -1,79 +1,57 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 23:21:12 +0200
-Organization: linutronix
-Message-ID: <1115932872.11872.86.camel@tglx>
-References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com>
-	 <1115854733.22180.202.camel@tglx> <428297DB.8030905@zytor.com>
-	 <1115858022.22180.256.camel@tglx> <7vekcdmd16.fsf@assigned-by-dhcp.cox.net>
-	 <1115884637.22180.277.camel@tglx> <7vvf5ogxdu.fsf@assigned-by-dhcp.cox.net>
-	 <1115930845.11872.79.camel@tglx>
-	 <4776.10.10.10.24.1115932163.squirrel@linux1>
-Reply-To: tglx@linutronix.de
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Mercurial 0.4e vs git network pull
+Date: Thu, 12 May 2005 17:24:27 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505121709250.30848-100000@iabervon.org>
+References: <20050512205735.GE5914@waste.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 23:14:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>,
+	linux-kernel <linux-kernel@vger.kernel.org>, git@vger.kernel.org,
+	mercurial@selenic.com, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 12 23:20:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWKzf-0005oi-Ru
-	for gcvg-git@gmane.org; Thu, 12 May 2005 23:13:20 +0200
+	id 1DWL5b-0006ix-B2
+	for gcvg-git@gmane.org; Thu, 12 May 2005 23:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262126AbVELVUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 17:20:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262128AbVELVUa
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 17:20:30 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:141
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S262126AbVELVUV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 17:20:21 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 7C88A65C003;
-	Thu, 12 May 2005 23:20:17 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id E5A3528204;
-	Thu, 12 May 2005 23:20:16 +0200 (CEST)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <4776.10.10.10.24.1115932163.squirrel@linux1>
-X-Mailer: Evolution 2.2.2 
+	id S262135AbVELV0u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 17:26:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262132AbVELV0u
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 17:26:50 -0400
+Received: from iabervon.org ([66.92.72.58]:43013 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262130AbVELVYy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 May 2005 17:24:54 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DWLAR-0002xr-00; Thu, 12 May 2005 17:24:27 -0400
+To: Matt Mackall <mpm@selenic.com>
+In-Reply-To: <20050512205735.GE5914@waste.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2005-05-12 at 17:09 -0400, Sean wrote:
-> On Thu, May 12, 2005 4:47 pm, Thomas Gleixner said:
-> 
-> > As I said before timestamps can be a horrid source of information. Also
-> > if you keep a list of commits merges and head forwards in timed order it
-> > is simple to read the repository history, but in case of corruption you
-> > have to reconstruct it manually. There is no way to do so with the
-> > information available.
-> >
-> > Repository id's can be lost, but are simple to replace as they are
-> > recorded in the commit blob.
-> 
-> And the time is recorded on the commit blob too. 
+On Thu, 12 May 2005, Matt Mackall wrote:
 
-How do you enforce correct timestamps  ? 
+> Does this need an HTTP request (and round trip) per object? It appears
+> to. That's 2200 requests/round trips for my 800 patch benchmark.
 
-tglx
+It requires a request per object, but it should be possible (with
+somewhat more complicated code) to overlap them such that it doesn't
+require a serial round trip for each. Since the server is sending static
+files, the overhead for each should be minimal.
 
+> How does git find the outstanding changesets?
 
-Received: from simmts5-srv.bellnexxia.net (simmts5.bellnexxia.net
-[206.47.199.163]) by mail.tglx.de (Postfix) with ESMTP id 623FE65C003
-for <tglx@linutronix.de>; Thu, 12 May 2005 23:09:21 +0200 (CEST)
-Received: from linux1 ([69.156.111.46]) by simmts5-srv.bellnexxia.net
-(InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP id
-<20050512210923.CCQN11606.simmts5-srv.bellnexxia.net@linux1>; Thu, 12
-May 2005 17:09:23 -0400
+In the present mainline, you first have to find the head commit you
+want. I have a patch which does this for you over the same
+connection. Starting from that point, it tracks reachability on the
+receiving end, and requests anything it doesn't have.
 
+For the case of having nothing to do, it should be a single one-line
+request/response for a static file (after which the local end determines
+that it has everything it needs without talking to the server).
 
-
-
-
-
-
+	-Daniel
+*This .sig left intentionally blank*
 
