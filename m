@@ -1,7 +1,7 @@
 From: "Sean" <seanlkml@sympatico.ca>
 Subject: Re: [PATCH] [RFD] Add repoid identifier to commit
-Date: Thu, 12 May 2005 06:18:40 -0400 (EDT)
-Message-ID: <3203.10.10.10.24.1115893120.squirrel@linux1>
+Date: Thu, 12 May 2005 06:39:46 -0400 (EDT)
+Message-ID: <3019.10.10.10.24.1115894386.squirrel@linux1>
 References: <1115847510.22180.108.camel@tglx> 
     <2780.10.10.10.24.1115848852.squirrel@linux1> 
     <1115849141.22180.123.camel@tglx> 
@@ -21,32 +21,32 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: tglx@linutronix.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 12 12:11:25 2005
+X-From: git-owner@vger.kernel.org Thu May 12 12:33:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWAes-0002Am-Iu
-	for gcvg-git@gmane.org; Thu, 12 May 2005 12:11:10 +0200
+	id 1DWAzH-00054s-R0
+	for gcvg-git@gmane.org; Thu, 12 May 2005 12:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261398AbVELKSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 May 2005 06:18:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261396AbVELKSt
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 06:18:49 -0400
-Received: from simmts7.bellnexxia.net ([206.47.199.165]:35740 "EHLO
-	simmts7-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261398AbVELKSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 May 2005 06:18:41 -0400
-Received: from linux1 ([69.156.111.46]) by simmts7-srv.bellnexxia.net
+	id S261417AbVELKj4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 May 2005 06:39:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261409AbVELKj4
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 May 2005 06:39:56 -0400
+Received: from simmts12.bellnexxia.net ([206.47.199.141]:19913 "EHLO
+	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261417AbVELKjr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 May 2005 06:39:47 -0400
+Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
           (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050512101840.RCTX23474.simmts7-srv.bellnexxia.net@linux1>;
-          Thu, 12 May 2005 06:18:40 -0400
+          id <20050512103946.VFOD19200.simmts12-srv.bellnexxia.net@linux1>;
+          Thu, 12 May 2005 06:39:46 -0400
 Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j4CAIeep010693;
-	Thu, 12 May 2005 06:18:40 -0400
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4CAdjQ0010862;
+	Thu, 12 May 2005 06:39:45 -0400
 Received: from 10.10.10.24
         (SquirrelMail authenticated user sean)
         by linux1 with HTTP;
-        Thu, 12 May 2005 06:18:40 -0400 (EDT)
+        Thu, 12 May 2005 06:39:46 -0400 (EDT)
 In-Reply-To: <1115892451.16187.561.camel@hades.cambridge.redhat.com>
 To: "David Woodhouse" <dwmw2@infradead.org>
 User-Agent: SquirrelMail/1.4.4-2
@@ -83,10 +83,12 @@ On Thu, May 12, 2005 6:07 am, David Woodhouse said:
 > ordering out of BitKeeper.
 >
 
-Does BK use a repo ID ?  If not, can you not apply the same process to
-git?   Seems the fast forward heads might complicate things slightly....
+Actually, here is one very simple idea, just use the times from the object
+files themselves.  Now as you descend the hierarchy you can simply stat
+the object file to get the "local commit time".  Just simply stop
+descending down each branch when you find a commit with a time stamp that
+is outside the range you're interested in.
 
 Sean
-
 
 
