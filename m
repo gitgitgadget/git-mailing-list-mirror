@@ -1,91 +1,40 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 2/2] update cg-* to use cg-Xignore
-Date: Sat, 14 May 2005 00:55:17 +0200
-Message-ID: <20050513225516.GG32232@pasky.ji.cz>
-References: <E1DWihi-0007DQ-SD@ash.dgreaves.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Resurrect diff-tree-helper -R
+Date: Fri, 13 May 2005 15:50:23 -0700
+Message-ID: <7vpsvu91w0.fsf@assigned-by-dhcp.cox.net>
+References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org>
+	<20050513224529.GF32232@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 01:01:00 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 01:03:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWj91-0005Iz-Ox
-	for gcvg-git@gmane.org; Sat, 14 May 2005 01:00:36 +0200
+	id 1DWjB4-0005Uy-4P
+	for gcvg-git@gmane.org; Sat, 14 May 2005 01:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262620AbVEMW7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 18:59:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262611AbVEMW6E
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 18:58:04 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33673 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262615AbVEMWzW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 18:55:22 -0400
-Received: (qmail 8016 invoked by uid 2001); 13 May 2005 22:55:17 -0000
-To: David Greaves <david@dgreaves.com>
-Content-Disposition: inline
-In-Reply-To: <E1DWihi-0007DQ-SD@ash.dgreaves.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262613AbVEMXAH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 19:00:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262575AbVEMWvA
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 18:51:00 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:7402 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262590AbVEMWuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2005 18:50:35 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050513225025.FHDR7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 13 May 2005 18:50:25 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050513224529.GF32232@pasky.ji.cz> (Petr Baudis's message of
+ "Sat, 14 May 2005 00:45:29 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 12:32:22AM CEST, I got a letter
-where David Greaves <david@dgreaves.com> told me that...
-> Updated
->     cg-add
->     cg-commit
+Have you checked what the current one does?
 
-I consider this Bad Thing (tm). Or could you please point a situation
-where this would be actually useful? If you explicitly cg-add, you
-likely know what are you doing, and same thing with cg-commit - if it's
-already added, it should be watches, no matter what ignore patterns, I
-think.
-> --- d2490ad0bc8b38647c6baff9da3e72c0f25e9f35/cg-commit  (mode:100755)
-> +++ 03662df7d089d4a84987ef9edb50a017b8b42439/cg-commit  (mode:100755)
-> @@ -65,6 +65,15 @@
->  	[ -s $_git/merging ] && merging=$(cat $_git/merging | sed 's/^/-p /')
->  fi
->  
-> +# strip ignored files - *1 at a time* - any attempt to stream from 1
-> +# while loop to another uses a subprocess and can't pass the variable
-> +# back
-> +# Also I don't know if this can be put in a shell function
-> +for file in ${commitfiles[@]}
-> +  do
-> +  commitfiles[$i]=`echo $file | cg-Xignore`
-> +  ((i++))
-> +done
->  
->  LOGMSG=$(mktemp -t gitci.XXXXXX)
->  LOGMSG2=$(mktemp -t gitci.XXXXXX)
-
-The variable? What variable?
-
-> Index: cg-status
-> ===================================================================
-> --- d2490ad0bc8b38647c6baff9da3e72c0f25e9f35/cg-status  (mode:100755)
-> +++ 03662df7d089d4a84987ef9edb50a017b8b42439/cg-status  (mode:100755)
-> @@ -15,21 +15,11 @@
->  
->  {
->  	git-ls-files -z -t --others --deleted --unmerged $EXCLUDE
-> -} | sort -z -k 2 | xargs -0 sh -c '
-> -while [ "$1" ]; do
-> -	tag=${1% *};
-> -	filename=${1#* };
-> -	case "$filename" in
-> -	*.[ao] | tags | ,,merge*) ;;
-> -	*)   echo "$tag $filename";;
-> -	esac
-> -	shift
-> -done
-> -' padding
-> +} | sort -z -k 2 | cg-Xignore -0 -t | tr "\000" "\n"
-
-So you have two ignores now - exclude and Xignore.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
