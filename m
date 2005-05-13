@@ -1,49 +1,48 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 1/3] Introduce "rev-list --stop-at=<commit>".
-Date: Fri, 13 May 2005 07:29:02 +0200
-Message-ID: <20050513052901.GB16464@pasky.ji.cz>
-References: <7v3bssc770.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH Cogito] Improve option parsing for cg-log
+Date: Fri, 13 May 2005 07:41:40 +0200
+Message-ID: <20050513054140.GF16464@pasky.ji.cz>
+References: <1115931114.18499.66.camel@pegasus> <20050512211315.GP324@pasky.ji.cz> <1115934586.18499.70.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 13 07:21:33 2005
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 13 07:34:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWSbw-0000F9-V7
-	for gcvg-git@gmane.org; Fri, 13 May 2005 07:21:21 +0200
+	id 1DWSo9-00019X-DP
+	for gcvg-git@gmane.org; Fri, 13 May 2005 07:33:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262244AbVEMF3G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 01:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262245AbVEMF3G
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 01:29:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:1253 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262244AbVEMF3D (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 01:29:03 -0400
-Received: (qmail 17127 invoked by uid 2001); 13 May 2005 05:29:02 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S262247AbVEMFln (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 01:41:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262248AbVEMFln
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 01:41:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:17637 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262247AbVEMFlm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 01:41:42 -0400
+Received: (qmail 23447 invoked by uid 2001); 13 May 2005 05:41:40 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
 Content-Disposition: inline
-In-Reply-To: <7v3bssc770.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <1115934586.18499.70.camel@pegasus>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, May 13, 2005 at 02:15:15AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Additional option, --stop-at=<commit>, is introduced.  The
-> git-rev-list output stops just before showing the named commit.
+Dear diary, on Thu, May 12, 2005 at 11:49:46PM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> Hi Petr,
 > 
-> This is based on Thoms Gleixner's patch but slightly reworked.
+> > > the attached patch changes the option parsing, because otherwise we are
+> > > stuck to a specific order.
+> > 
+> > thanks, applied. However, you didn't include the -r options parsing in
+> > there yet.
 > 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> what do you mean by that?
 
-Won't apply for now - as I already said in the relevant thread, this
-makes no sense with the current git-rev-list output order, and even
-encourages using it in wrong way. It is ok when the merges are reported
-in a different way, but that's impossible without some repoid (I yet
-have to catch up with that thread :-).
+The -r option still must be after all the other options.
 
 -- 
 				Petr "Pasky" Baudis
