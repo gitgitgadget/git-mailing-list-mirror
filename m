@@ -1,78 +1,63 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: [PATCH] Ignore file filter
-Date: Fri, 13 May 2005 09:50:07 +0100
-Message-ID: <42846A3F.4030706@dgreaves.com>
-References: <4283CAF8.3050304@dgreaves.com> <7v64xodshs.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: Re: [PATCH Cogito] Improve option parsing for cg-log
+Date: Fri, 13 May 2005 11:05:34 +0200
+Message-ID: <1115975134.18499.94.camel@pegasus>
+References: <1115931114.18499.66.camel@pegasus>
+	 <20050512211315.GP324@pasky.ji.cz> <1115934586.18499.70.camel@pegasus>
+	 <20050513054140.GF16464@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 13 10:43:06 2005
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 13 10:58:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWVke-0003Gt-W3
-	for gcvg-git@gmane.org; Fri, 13 May 2005 10:42:33 +0200
+	id 1DWVz8-0004qq-Qj
+	for gcvg-git@gmane.org; Fri, 13 May 2005 10:57:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262303AbVEMIuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 04:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262306AbVEMIuQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 04:50:16 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:1705 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262303AbVEMIuJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 04:50:09 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id A601DE6E16; Fri, 13 May 2005 09:48:43 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 19935-13; Fri, 13 May 2005 09:48:43 +0100 (BST)
-Received: from oak.dgreaves.com (modem-2344.lemur.dialup.pol.co.uk [217.135.137.40])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 0C8B4E6E12; Fri, 13 May 2005 09:48:43 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DWVrz-0005qk-KZ; Fri, 13 May 2005 09:50:07 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64xodshs.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.91.0.0
+	id S262313AbVEMJFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 05:05:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262316AbVEMJFO
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 05:05:14 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:28337 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S262313AbVEMJFJ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2005 05:05:09 -0400
+Received: from pegasus (p5487CC4D.dip.t-dialin.net [84.135.204.77])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j4D96XWX023364
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Fri, 13 May 2005 11:06:34 +0200
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050513054140.GF16464@pasky.ji.cz>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV 0.83/875/Tue May 10 13:27:59 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Hi Petr,
 
->Just a half theoretical question.  How well does this perform
->when your filenames have:
->
->    - ' '  (ASCII 0x20)
->    - '\t' (ASCII 0x09)
->    - '\n' (ASCII 0x0a)
->    - '`'  (ASCII 0x60) backtick
->    - '$'  (ASCII 0x24) dollar sign
->
->in them?  Or is it the case that the rest of the Cogito is not
->careful enough and it does not matter to be careful only in this
->script?
->  
->
-That's what the:
-zerosep=$'-d "\0"'
-is for.
-It looks like the shell 'read' doesn't honour it though - I couldn't
-make it work.
+> > > > the attached patch changes the option parsing, because otherwise we are
+> > > > stuck to a specific order.
+> > > 
+> > > thanks, applied. However, you didn't include the -r options parsing in
+> > > there yet.
+> > 
+> > what do you mean by that?
+> 
+> The -r option still must be after all the other options.
 
-However, thanks, after I fixed the quotes I missed in:
--o \( $pass_files -eq 1 -a -f "$file" \) \
--o \( $pass_dirs -eq 1 -a -d "$file" \) \
--o \( $pass_links -eq 1 -a -h "$file" \) \
+I see what you mean and it seems that I missed that option. Must be
+because you put the list_commit_files() between them and I assumed that
+there is no further option parsing.
 
-it handles all cases above except \n (of course)
+Do you really wanna keep the double meaning of -r. Depending on a
+previous -r it is $log_start or $log_end.
 
-Frankly I think we're beyond shell programming and we should be using
-perl (IMHO as the 'best' and most portable text handler)
-It also has a *fantastic* test harness available.
+Regards
 
-David
+Marcel
+
+
