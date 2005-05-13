@@ -1,55 +1,53 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 0/4] Pulling refs files
-Date: Sat, 14 May 2005 00:19:35 +0200
-Message-ID: <20050513221935.GC32232@pasky.ji.cz>
-References: <Pine.LNX.4.21.0505130245260.30848-100000@iabervon.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit [its a workspace
+ id, isn't it?]
+Date: Fri, 13 May 2005 15:26:53 -0700
+Message-ID: <428529AD.5000401@zytor.com>
+References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com> <2cfc4032050512183788e01fc@mail.gmail.com> <20050513222502.GD32232@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat May 14 00:15:52 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jon Seymour <jon.seymour@gmail.com>, tglx@linutronix.de,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 00:30:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWiQz-0001oT-IZ
-	for gcvg-git@gmane.org; Sat, 14 May 2005 00:15:05 +0200
+	id 1DWifd-0002Yk-GD
+	for gcvg-git@gmane.org; Sat, 14 May 2005 00:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262573AbVEMWWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 18:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262593AbVEMWWT
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 18:22:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:56968 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262573AbVEMWTh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 18:19:37 -0400
-Received: (qmail 4981 invoked by uid 2001); 13 May 2005 22:19:35 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0505130245260.30848-100000@iabervon.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262594AbVEMW3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 18:29:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262600AbVEMW3X
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 18:29:23 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:6305 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S262594AbVEMW1V
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2005 18:27:21 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4DMR3Vw012818
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 13 May 2005 15:27:03 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050513222502.GD32232@pasky.ji.cz>
+X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.1 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, May 13, 2005 at 08:49:25AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> This series makes the following changes:
+Petr Baudis wrote:
 > 
->  1: Adds support for having the C code know about the general existance of
->     .git/refs, and functions for writing these files.
->  2: Adds support in the generic pull code for fetching refs (and dummy
->     implementations).
->  3: Adds support in the HTTP pull code for fetching refs
->  4: Adds support in the rsh pull code for fetching refs; this requires
->     changes to the protocol. These changes should be sufficient to support
->     any future extension, however.
+> Why not just call the thing "branch"? It's as well eligible for that
+> term as anything. :-)
+> 
 
-Hmm, I've honestly expected something different - a generic way to
-specify any file in the repository to be pulled along, instead of a
-introducing refs awareness at this level of git. What would be the
-advantages of that approach against just specifying list of other files
-to pull along?
+Because cogito already calls too many things "branches"?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+	-hpa
