@@ -1,78 +1,65 @@
-From: Chris Mason <mason@suse.com>
-Subject: Re: [PATCH] improved delta support for git
-Date: Fri, 13 May 2005 07:44:26 -0400
-Message-ID: <200505130744.28544.mason@suse.com>
-References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain> <Pine.LNX.4.62.0505121110490.5426@localhost.localdomain> <7vbr7gicv8.fsf@assigned-by-dhcp.cox.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: gitweb wishlist
+Date: Fri, 13 May 2005 14:06:18 +0200
+Message-ID: <20050513120618.GA26263@diku.dk>
+References: <20050511012626.GL26384@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, jon@blackcubes.dyndns.org,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 13 13:37:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 13 13:59:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWYTI-0004tF-5s
-	for gcvg-git@gmane.org; Fri, 13 May 2005 13:36:48 +0200
+	id 1DWYol-0007Di-QI
+	for gcvg-git@gmane.org; Fri, 13 May 2005 13:59:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262331AbVEMLoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 07:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262340AbVEMLoi
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 07:44:38 -0400
-Received: from cantor.suse.de ([195.135.220.2]:8862 "EHLO mx1.suse.de")
-	by vger.kernel.org with ESMTP id S262331AbVEMLoc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 07:44:32 -0400
-Received: from extimap.suse.de (extimap.suse.de [195.135.220.6])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 106441196;
-	Fri, 13 May 2005 13:44:32 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.8
-In-Reply-To: <7vbr7gicv8.fsf@assigned-by-dhcp.cox.net>
+	id S262346AbVEMMGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 08:06:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262344AbVEMMGf
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 08:06:35 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:5832 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S262343AbVEMMGU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 08:06:20 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id E7E016DFAFC; Fri, 13 May 2005 14:06:11 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id A92AA6DF8AC; Fri, 13 May 2005 14:06:11 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 8E96E61FDE; Fri, 13 May 2005 14:06:18 +0200 (CEST)
+To: Kay Sievers <kay.sievers@vrfy.org>
 Content-Disposition: inline
+In-Reply-To: <20050511012626.GL26384@pasky.ji.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 12 May 2005 13:16, Junio C Hamano wrote:
-> >>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
-> >>
-> >> On 5/13/05, Chris Mason <mason@suse.com> wrote:
-> >> > On Thursday 12 May 2005 00:36, Junio C Hamano wrote:
-> >> > > It appears to me that changes to the make_sure_we_have_it() ...
-> >> >
-> >> > If we fetch the named object and it is a delta, the delta will either
-> >> > depend on an object we already have or an object that we don't have. 
-> >> > If we don't have it, the pull should find it while pulling other
-> >> > commits we don't have.
->
-> NP> 1) If you happen to already have the referenced object in your local
-> NP>    repository then you're done.
->
-> Yes.
->
-> NP> 2) If not you pull the referenced object from the remote repository,
-> NP>    repeat with #1 if it happens to be another delta object.
->
-> Yes, that is the outline of what my (untested) patch does.
->
-> Unless I am grossly mistaken, what Chris says is true only when
-> we are pulling with -a flag to the git-*-pull family.  If we are
-> pulling "partially near the tip", we do not necessarily pull
-> "other commits we don't have", hence detecting delta's
-> requirement at per-object level and pulling the dependent
-> becomes necessary, which is essentially what you wrote in (2)
-> above.
->
-Yes, my post does assume that you're pulling everything and the repo you're 
-pulling from has a sane state.  This should be the common case though, so I 
-would suggest optimizing things to build a list of the delta objects and 
-check them at the end to see if we didn't pull any.
+I don't know if this is intentional, but it looks like gitweb discards
+everything after the first line starting with 'Signed-off-by:' on the
+log page. This will in some cases remove valuable log information when
+a second author or the committer adds additional comments to a commit:
 
-We want the list of delta objects regardless, this way we can warn the user 
-that they have pulled in deltas and give them the chance to convert them into 
-full files.
+        <log message by author>
 
--chris
+        Signed-off-by: <author>
+
+        <log message by committer>
+
+        Signed-off-by: <committer>
+
+The commit page gets it right, which is why I suspect it might just be a
+way to trim the amount of text on the log page.
+
+I also noticed that there is a 'faulty' signed-off-by line in commit
+14ebb908e10f068dc1901d35f4b716bc69143d19 in case the above is
+intentional. Dunno if that should be matched by relaxing the regexp a
+little.
+
+-- 
+Jonas Fonseca
