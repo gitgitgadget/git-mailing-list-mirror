@@ -1,33 +1,33 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Resurrect diff-tree-helper -R
-Date: Fri, 13 May 2005 16:05:57 -0700
-Message-ID: <7vbr7e9162.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 13 May 2005 15:59:31 -0700
+Message-ID: <7vhdh691gs.fsf@assigned-by-dhcp.cox.net>
 References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org>
 	<20050513224529.GF32232@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 01:09:40 2005
+X-From: git-owner@vger.kernel.org Sat May 14 01:14:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWjHL-00066r-1m
-	for gcvg-git@gmane.org; Sat, 14 May 2005 01:09:11 +0200
+	id 1DWjM2-0006ZE-UT
+	for gcvg-git@gmane.org; Sat, 14 May 2005 01:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262612AbVEMXGk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 19:06:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262590AbVEMXGc
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 19:06:32 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:62714 "EHLO
+	id S262452AbVEMXNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 19:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262438AbVEMXMl
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 19:12:41 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:51190 "EHLO
 	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S262612AbVEMXGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 May 2005 19:06:03 -0400
+	id S262611AbVEMW7d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 May 2005 18:59:33 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
           by fed1rmmtao03.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050513230558.FOZK26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 13 May 2005 19:05:58 -0400
+          id <20050513225932.FKML26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 13 May 2005 18:59:32 -0400
 To: Petr Baudis <pasky@ucw.cz>
 In-Reply-To: <20050513224529.GF32232@pasky.ji.cz> (Petr Baudis's message of
  "Sat, 14 May 2005 00:45:29 +0200")
@@ -36,26 +36,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
-
-PB> that is, using a '@.' prefix for those. It seems to be unique enough and
-PB> '@' is one of the four magic characters prefixing diff lines. Just using
-PB> the plain string seems too volatile, and I need to grep all the
-PB> interesting bits out of the diff file. This is because patch can
-PB> otherwise complain "only garbage found in the patch" when processing the
-PB> diff, which confuses my users greatly.
+PB> Sorry for replying after so much time, it looks like I missed this and
+PB> got here only after checking what change removed the mode: bits...
 
 PB> What do you think?
 
-Personally what I think is that grepping in the diff, especially
-if the diff is something you are generating (I am assuming that
-you are taling about cg-diff fed to cg-patch to port work tree
-changes forward), is a wrong way to do things.
+FYI, here is a demonsrtation of what you have right now.
+Temporarily slurp in the test framework patch you hate so much
+to get t/test-lib.sh ;-), apply this to get t/t2000-diff.sh, cd
+to t and say sh ./t2000-diff.sh
 
-The way JIT does the equivalent is via git-apply-patch-script.
-You run git-diff-{files,cache,tree}, setting GIT_EXTERNAL_DIFF
-environment variable to git-apply-patch-script, and have the
-apply-patch-script to take care of the mode changes, creation,
-etc.  See the implementation of the jit-patch command if you are
-interested.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+jit-diff 1: t/t2000-diff.sh
+# - HEAD: Fix git-diff-files for symlinks.
+# + (working tree)
+Created: t/t2000-diff.sh (mode:100755)
+--- /dev/null
++++ b/t/t2000-diff.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++test_description='Test built-in diff output engine.
++
++'
++. ./test-lib.sh
++
++echo >path0 'Line 1
++Line 2
++line 3'
++cat path0 >path1
++chmod +x path1
++git-update-cache --add path0 path1
++mv path0 path0-
++sed -e 's/line/Line/' <path0- >path0
++chmod +x path0
++rm -f path1
++git-diff-files -p >current
++cat >expected <<\EOF
++Mode changed: path0 (100644->100755)
++--- a/path0
+++++ b/path0
++@@ -1,3 +1,3 @@
++ Line 1
++ Line 2
++-line 3
+++Line 3
++Deleted: path1
++--- a/path1
+++++ /dev/null
++@@ -1,3 +0,0 @@
++-Line 1
++-Line 2
++-line 3
++EOF
++
++test_expect_success 'cmp -s current expected'
++test_done
+
 
