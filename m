@@ -1,63 +1,48 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 0/4] Pulling refs files
-Date: Sat, 14 May 2005 01:37:39 +0200
-Message-ID: <20050513233738.GL32232@pasky.ji.cz>
-References: <20050513221935.GC32232@pasky.ji.cz> <Pine.LNX.4.21.0505131853020.30848-100000@iabervon.org>
+Subject: Re: [PATCH] [RFD] Add repoid identifier to commit [its a workspace id, isn't it?]
+Date: Sat, 14 May 2005 01:39:37 +0200
+Message-ID: <20050513233937.GM32232@pasky.ji.cz>
+References: <1115847510.22180.108.camel@tglx> <428291CD.7010701@zytor.com> <2cfc4032050512183788e01fc@mail.gmail.com> <20050513222502.GD32232@pasky.ji.cz> <428529AD.5000401@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sat May 14 01:40:41 2005
+Cc: Jon Seymour <jon.seymour@gmail.com>, tglx@linutronix.de,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 01:44:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWjle-0000IM-Ol
-	for gcvg-git@gmane.org; Sat, 14 May 2005 01:40:31 +0200
+	id 1DWjp6-0000Yj-Oa
+	for gcvg-git@gmane.org; Sat, 14 May 2005 01:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262481AbVEMXiq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 May 2005 19:38:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262638AbVEMXiU
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 19:38:20 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14218 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262577AbVEMXho (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 19:37:44 -0400
-Received: (qmail 12102 invoked by uid 2001); 13 May 2005 23:37:39 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S262601AbVEMXnf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 May 2005 19:43:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262630AbVEMXmo
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 May 2005 19:42:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:16266 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262638AbVEMXji (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 May 2005 19:39:38 -0400
+Received: (qmail 12270 invoked by uid 2001); 13 May 2005 23:39:37 -0000
+To: "H. Peter Anvin" <hpa@zytor.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0505131853020.30848-100000@iabervon.org>
+In-Reply-To: <428529AD.5000401@zytor.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 01:14:22AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> On Sat, 14 May 2005, Petr Baudis wrote:
+Dear diary, on Sat, May 14, 2005 at 12:26:53AM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> Petr Baudis wrote:
+> >
+> >Why not just call the thing "branch"? It's as well eligible for that
+> >term as anything. :-)
+> >
 > 
-> > Hmm, I've honestly expected something different - a generic way to
-> > specify any file in the repository to be pulled along, instead of a
-> > introducing refs awareness at this level of git. What would be the
-> > advantages of that approach against just specifying list of other files
-> > to pull along?
-> 
-> The point is to specify the commit to pull by fetching a file from the
-> other side, not just to move a file. So you need to be specifying that the
-> file is a hex encoding of the sha1 hash of the starting point of the pull,
-> and the refs/ area is where these are expected to be. (Note that it still
-> doesn't have any knowledge about the meanings of files in refs/; you tell
-> it which one you want to use, and optionally which one you want to write
-> to, and it will use the names you provide).
-> 
-> It wouldn't help much to download the head file if you had to know the
-> contents of that file already in order to do everything as a single
-> transfer.
+> Because cogito already calls too many things "branches"?
 
-So what about just something like
-
-	git-wormhole-pull remote:refs/head/master wormhole://localhost/
-
-That is, you could just specify remote:path_relative_to_url instead of
-SHA1 id as the commit.
+Well, I know of one thing cogito calls "branch", and incidentally the
+meaning if effectively same as this "branch" would have.
 
 -- 
 				Petr "Pasky" Baudis
