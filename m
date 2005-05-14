@@ -1,66 +1,47 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Test scripts naming
-Date: Sat, 14 May 2005 18:53:21 +0200
-Message-ID: <20050514165321.GX3905@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Test scripts naming
+Date: Sat, 14 May 2005 10:18:02 -0700
+Message-ID: <7v3bspzpyt.fsf@assigned-by-dhcp.cox.net>
+References: <20050514165321.GX3905@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 18:53:45 2005
+Cc: junkio@cox.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 19:18:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWztM-00059Q-Nu
-	for gcvg-git@gmane.org; Sat, 14 May 2005 18:53:33 +0200
+	id 1DX0HF-0007Xl-Nj
+	for gcvg-git@gmane.org; Sat, 14 May 2005 19:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262796AbVENQx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 12:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262799AbVENQx1
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 12:53:27 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19356 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262796AbVENQxW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 12:53:22 -0400
-Received: (qmail 25582 invoked by uid 2001); 14 May 2005 16:53:21 -0000
-To: junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262804AbVENRSH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 13:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262806AbVENRSH
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 13:18:07 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60612 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S262804AbVENRSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 13:18:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050514171802.TTXR20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 14 May 2005 13:18:02 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050514165321.GX3905@pasky.ji.cz> (Petr Baudis's message of
+ "Sat, 14 May 2005 18:53:21 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  Hello,
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-  I think we should do something about the test script names. Currently
-it appears almost like the scripts are basically unordered, and the
-digit you increment is chosen mostly randomly. Also, the "freeform"
-field after the test number is not as informative as it could be. What
-are the rules you use for naming the testcases? Could you please
-document it in the README?
+PB>   I'd propose:
+PB> ...
+PB> t0500-ls-files.sh       -> t3010-ls-files-killed.sh
 
-  I'd propose:
+Agreed to all of the above.  I will not be online most of today
+so if you feel like it, I'd really appreciate it if you do the
+renames and documentation yourself without waiting for me.
 
-  First digit: "family", e.g. the absolute basics and global stuff (0),
-the basic db-side commands (read-tree, write-tree, commit-tree), the
-basic working-tree-side commands (checkout-cache, update-cache), the
-other basic commands (ls-files), the diff commands, the pull commands,
-exporting commands, revision tree commands...
 
-  Second digit: the particular command we are testing
-
-  Third digit: (optionally) the particular switch or group of switches
-we are testing
-
-  Freeform part: commandname-details
-
-  How would I rename the current scripts?
-
-t1000-checkout-cache.sh -> t2000-checkout-cache-clash.sh
-t1001-checkout-cache.sh -> t2001-checkout-cache-clash.sh
-t0200-update-cache.sh   -> t2010-update-cache-badpath.sh
-t0400-ls-files.sh       -> t3000-ls-files-others.sh
-t0500-ls-files.sh       -> t3010-ls-files-killed.sh
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
