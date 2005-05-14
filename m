@@ -1,106 +1,72 @@
 From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: [PATCH] Resurrect diff-tree-helper -R
-Date: Sat, 14 May 2005 17:02:00 +0200
-Message-ID: <20050514150200.GJ3905@pasky.ji.cz>
-References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org> <20050513224529.GF32232@pasky.ji.cz> <7vhdh691gs.fsf@assigned-by-dhcp.cox.net> <20050513233354.GK32232@pasky.ji.cz> <7vmzqy7k47.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 14 May 2005 17:03:56 +0200
+Message-ID: <20050514150356.GK3905@pasky.ji.cz>
+References: <7v7jij3htp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0504301805300.2296@ppc970.osdl.org> <20050513224529.GF32232@pasky.ji.cz> <7vhdh691gs.fsf@assigned-by-dhcp.cox.net> <20050513233354.GK32232@pasky.ji.cz> <7vmzqy7k47.fsf@assigned-by-dhcp.cox.net> <7voebe63zs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 17:02:30 2005
+X-From: git-owner@vger.kernel.org Sat May 14 17:04:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWy9f-0002bF-J2
-	for gcvg-git@gmane.org; Sat, 14 May 2005 17:02:15 +0200
+	id 1DWyBP-0002mT-Jz
+	for gcvg-git@gmane.org; Sat, 14 May 2005 17:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262776AbVENPCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 11:02:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262778AbVENPCK
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:02:10 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:64409 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262776AbVENPCB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 11:02:01 -0400
-Received: (qmail 9440 invoked by uid 2001); 14 May 2005 15:02:00 -0000
+	id S262778AbVENPEB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 11:04:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262779AbVENPEB
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:04:01 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2458 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262778AbVENPD5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 11:03:57 -0400
+Received: (qmail 9993 invoked by uid 2001); 14 May 2005 15:03:56 -0000
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vmzqy7k47.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7voebe63zs.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 01:59:36AM CEST, I got a letter
+Dear diary, on Sat, May 14, 2005 at 02:33:11AM CEST, I got a letter
 where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+> Another possibility.  How about generating the following _only_
+> when mode changes (including create and delete), even for human
+> consumption?  There will be _no_ such line when mode or type
+> does not change.
 > 
-> PB> Dear diary, on Sat, May 14, 2005 at 12:59:31AM CEST, I got a letter
-> PB> where Junio C Hamano <junkio@cox.net> told me that...
-> >> Created: t/t2000-diff.sh (mode:100755)
-> >> +Mode changed: path0 (100644->100755)
+> # mode: 100644 100755 path/to/a/file/that/changed/mode
+> # mode: 100644 120000 path/to/a/file/that/changed/to/symlink
+> # mode: 100644 100644 path/to/a/file/with/no/mode/change
+> # mode: . 100644 path/to/a/new/file
+> # mode: 100644 . path/to/a/deleted/file
 > 
-> PB> Great, so it's even worse than before. :/
+> This is not "something like this", but a proposal for the exact
+> output format specification (I am going to code immediately).
+> Each token above is separated with exactly one ' ' (ASCII 0x20)
+> each, and such a line comes immediately before the patch for the
+> file.  Showing both mode bits is to prepare for the case you
+> would want to apply the patch in reverse.
 > 
-> Depends on the definition of "before".  At the beginning, we did
-> not do anything special and always said l/foo k/foo even when
-> create/delete was involved.  Then we did a misguided attempt to
-> minimally be cg-diff compatible, which Linus complained that it
-> was too distracting for human consumption.  The current one is
-> something in between, a lot more human side.
-
-By "before" I meant the Linus proposal I was originally replying too.
-It seems I'm still missing part of the history. :-)
-
-> You have seen what the current "something in between" does.
-> What I think is that in order not to distract human (read:
-> Linus) who reads patches, they should not share the same special
-> characters like "@".  Which unfortunately completely contradicts
-> what you are attempting to do.
-
-I don't think it discards humans, actually. I'd rather say it makes them
-aware that this is something special. And if you show it only when the
-mode changes, it will always be a special thing, not only something
-which clutters the view.
-
-So I'd say it's better for humans too, since it is clear for them that
-this is not part of the commit message, and it carries special meaning
-for the tool they will feed it to.
-
-> Another thing we did while you were looking other way ;-) was that we
-> say mode changed only when things change, so in that sense it is
-> "inconsistent" from the scripting point of view.
-
-I have no issue with that.
-
-> I do not think nobody uses that current textual "comment"
-> information in automated tools (I do not), so changing them
-> should not be a problem.  How about we do something like this:
+> This is for machine consumption and there is no need to force
+> them to parse out -> and (), so I dropped them.  And mode or
+> type change happens so rarely, it would be OK for human
+> consumption if we show these garbage (from human point of view)
+> only when things change.  Can you parse this, or do you always
+> want to have them even if nothing changes?
 > 
->   1. Invent an environment variable you can define.  Let's say
->      GIT_DIFF_SHOW_MODES.  It could alternatively a flag you
->      pass from git-diff-{files,cache,tree,tree-helper} to the
->      internal diff engine but then you need to add the necessary
->      command line parameter for all these commands.  I can be
->      persuaded in either way.
+> Let's see how this would look like to humans.
 
-I think this completely misses the point. You are viewing what I'm
-suggesting as trying to just aid Cogito's internals using cg-diff |
-cg-patch, but that's actually not my major reason for doing this at all.
-I view that as a hack anyway and it should eventually do a three-way
-merge too at those places.
+For humans I'd say "Mode change" instead of "mode" would be better, and
+for machines I still think "@" would be better than "#". "#" can occur
+quite naturally in some code snippets or whatever pasted to the commit
+message, which is extremely unlikely for "@". What are the advantages
+of "#"?
 
-What I'm trying to do is to figure out a good encapsulation for mode
-changes which can be put in *all* the patches. So when you are sending
-me some new testcases, I don't have to chmod them manually. That's the
-main point of doing this. I could deal with mode changes completely
-separately if it was only about Cogito's internal stuff.
-
-> BTW, what do you think about renaming git-diff-tree-helper to
-> just git-diff-helper?  It used to be for grokking diff-tree's
-> output but now the family have the same raw output format it
-> does not make much sense to keep "tree" in its name.
-
-No issue with that.
+I like the rest. That's basically what I've imagined, and without the
+arrows it's even better. :-)
 
 -- 
 				Petr "Pasky" Baudis
