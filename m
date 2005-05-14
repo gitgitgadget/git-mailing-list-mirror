@@ -1,150 +1,138 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: speeding up cg-log -u
-Date: Sat, 14 May 2005 01:13:16 -0700
-Message-ID: <7vhdh6444j.fsf@assigned-by-dhcp.cox.net>
-References: <20050514061914.GB14353@tumblerings.org>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [PATCH 2/2] update cg-* to use cg-Xignore
+Date: Sat, 14 May 2005 09:24:42 +0100
+Message-ID: <4285B5CA.8060106@dgreaves.com>
+References: <E1DWihi-0007DQ-SD@ash.dgreaves.com> <20050513225516.GG32232@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 10:13:42 2005
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 14 10:25:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWrmI-0006Ae-1o
-	for gcvg-git@gmane.org; Sat, 14 May 2005 10:13:42 +0200
+	id 1DWrxm-0006y1-2q
+	for gcvg-git@gmane.org; Sat, 14 May 2005 10:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262704AbVENINf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 04:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262705AbVENINf
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 04:13:35 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:24557 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262704AbVENINX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2005 04:13:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050514081317.DVBX1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 May 2005 04:13:17 -0400
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20050514061914.GB14353@tumblerings.org> (Zack Brown's message
- of "Fri, 13 May 2005 23:19:14 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262705AbVENIZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 04:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262706AbVENIZP
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 04:25:15 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:10915 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262705AbVENIZA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 04:25:00 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id C3D13E6D9A; Sat, 14 May 2005 09:23:25 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 03092-01; Sat, 14 May 2005 09:23:25 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.155.138])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 81EB6E6D69; Sat, 14 May 2005 09:23:24 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DWrwz-0007dp-2W; Sat, 14 May 2005 09:24:45 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050513225516.GG32232@pasky.ji.cz>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "ZB" == Zack Brown <zbrown@tumblerings.org> writes:
+Petr Baudis wrote:
 
-ZB> Would it be faster to handle this on the git side, telling git to only
-ZB> retrieve the logs that match the specified query? If feasible, this might
-ZB> speed up various web interfaces into git repositories.
+>Dear diary, on Sat, May 14, 2005 at 12:32:22AM CEST, I got a letter
+>where David Greaves <david@dgreaves.com> told me that...
+>  
+>
+>>Updated
+>>    cg-add
+>>    cg-commit
+>>    
+>>
+>
+>I consider this Bad Thing (tm). Or could you please point a situation
+>where this would be actually useful? If you explicitly cg-add, you
+>likely know what are you doing, and same thing with cg-commit - if it's
+>already added, it should be watches, no matter what ignore patterns, I
+>think.
+>  
+>
+OK, lets say I'm clever and know what an ignore pattern is.
+I can
+find * | xargs cg-add
+my laziness something my hubris acknowledges :)
 
-Here are two places you can add a simple hook.  Implementation
-of author_match() function is left as an exercise for you ;-).
-Let us know if you get speed improvements, please.
+And in fact this has come up a few times on the list already - it was
+that code snippet in cg-init that caused me to create cg-Xignore because
+as someone pointed out, even finding files/links would still cause probs
+with files beginning with '.'
+does that sway you?
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-$ jit-diff
-# - 9: (Anonymous snapshot)
-# + (working tree)
---- a/cache.h
-+++ b/cache.h
-@@ -178,6 +178,7 @@ extern void *read_object_with_reference(
- const char *show_date(unsigned long time, int timezone);
- void parse_date(char *date, char *buf, int bufsize);
- void datestamp(char *buf, int bufsize);
-+int author_match(struct commit *, const char *);
- 
- static inline void *xmalloc(int size)
- {
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -11,6 +11,7 @@ int main(int argc, char **argv)
- 	unsigned long max_age = -1;
- 	unsigned long min_age = -1;
- 	int max_count = -1;
-+	const char *author = NULL;
- 
- 	for (i = 1 ; i < argc; i++) {
- 		char *arg = argv[i];
-@@ -21,6 +22,8 @@ int main(int argc, char **argv)
- 			max_age = atoi(arg + 10);
- 		} else if (!strncmp(arg, "--min-age=", 10)) {
- 			min_age = atoi(arg + 10);
-+		} else if (!strncmp(arg, "--author=", 9)) {
-+			author = arg + 9;
- 		} else {
- 			commit_arg = arg;
- 		}
-@@ -28,6 +31,7 @@ int main(int argc, char **argv)
- 
- 	if (!commit_arg || get_sha1(commit_arg, sha1))
- 		usage("usage: rev-list [OPTION] commit-id\n"
-+		      "  --author=author\n"
- 		      "  --max-count=nr\n"
- 		      "  --max-age=epoch\n"
- 		      "  --min-age=epoch\n");
-@@ -44,6 +48,8 @@ int main(int argc, char **argv)
- 			continue;
- 		if (max_age != -1 && (commit->date < max_age))
- 			break;
-+		if (!author_match(commit, author))
-+			continue;
- 		if (max_count != -1 && !max_count--)
- 			break;
- 		printf("%s\n", sha1_to_hex(commit->object.sha1));
---- a/rev-tree.c
-+++ b/rev-tree.c
-@@ -64,7 +64,7 @@ void process_commit(unsigned char *sha1)
- }
- 
- /*
-- * Usage: rev-tree [--edges] [--cache <cache-file>] <commit-id> [<commit-id2>]
-+ * Usage: rev-tree [--edges] [--author <author>] [--cache <cache-file>] <commit-id> [<commit-id2>]
-  *
-  * The cache-file can be quite important for big trees. This is an
-  * expensive operation if you have to walk the whole chain of
-@@ -75,6 +75,7 @@ int main(int argc, char **argv)
- 	int i;
- 	int nr = 0;
- 	unsigned char sha1[MAX_COMMITS][20];
-+	const char *author = NULL; 
- 
- 	/*
- 	 * First - pick up all the revisions we can (both from
-@@ -83,6 +84,11 @@ int main(int argc, char **argv)
- 	for (i = 1; i < argc ; i++) {
- 		char *arg = argv[i];
- 
-+		if (!strcmp(arg, "--author")) {
-+			author = argv[++i];
-+			continue;
-+		}
-+
- 		if (!strcmp(arg, "--cache")) {
- 			read_cache_file(argv[++i]);
- 			continue;
-@@ -98,7 +104,7 @@ int main(int argc, char **argv)
- 			basemask |= 1<<nr;
- 		}
- 		if (nr >= MAX_COMMITS || get_sha1(arg, sha1[nr]))
--			usage("rev-tree [--edges] [--cache <cache-file>] <commit-id> [<commit-id>]");
-+			usage("rev-tree [--edges] [--author <author>] [--cache <cache-file>] <commit-id> [<commit-id>]");
- 		process_commit(sha1[nr]);
- 		nr++;
- 	}
-@@ -125,6 +131,9 @@ int main(int argc, char **argv)
- 		if (!interesting(commit))
- 			continue;
- 
-+		if (!author_match(commit, author))
-+			continue;
-+
- 		printf("%lu %s:%d", commit->date, sha1_to_hex(obj->sha1), 
- 		       obj->flags);
- 		p = commit->parents;
+>>--- d2490ad0bc8b38647c6baff9da3e72c0f25e9f35/cg-commit  (mode:100755)
+>>+++ 03662df7d089d4a84987ef9edb50a017b8b42439/cg-commit  (mode:100755)
+>>@@ -65,6 +65,15 @@
+>> 	[ -s $_git/merging ] && merging=$(cat $_git/merging | sed 's/^/-p /')
+>> fi
+>> 
+>>+# strip ignored files - *1 at a time* - any attempt to stream from 1
+>>+# while loop to another uses a subprocess and can't pass the variable
+>>+# back
+>>+# Also I don't know if this can be put in a shell function
+>>+for file in ${commitfiles[@]}
+>>+  do
+>>+  commitfiles[$i]=`echo $file | cg-Xignore`
+>>+  ((i++))
+>>+done
+>> 
+>> LOGMSG=$(mktemp -t gitci.XXXXXX)
+>> LOGMSG2=$(mktemp -t gitci.XXXXXX)
+>>    
+>>
+>
+>The variable? What variable?
+>  
+>
+well basically we want to edit the commitfiles variable - perl map()
+a more efficient method in shell appears to be:
+foreach file in commitfiles; echo file | filter | read into commitfiles
+I spent ages trying not to exec a cg-Ignore process per file comparison
+
+>>Index: cg-status
+>>===================================================================
+>>--- d2490ad0bc8b38647c6baff9da3e72c0f25e9f35/cg-status  (mode:100755)
+>>+++ 03662df7d089d4a84987ef9edb50a017b8b42439/cg-status  (mode:100755)
+>>@@ -15,21 +15,11 @@
+>> 
+>> {
+>> 	git-ls-files -z -t --others --deleted --unmerged $EXCLUDE
+>>-} | sort -z -k 2 | xargs -0 sh -c '
+>>-while [ "$1" ]; do
+>>-	tag=${1% *};
+>>-	filename=${1#* };
+>>-	case "$filename" in
+>>-	*.[ao] | tags | ,,merge*) ;;
+>>-	*)   echo "$tag $filename";;
+>>-	esac
+>>-	shift
+>>-done
+>>-' padding
+>>+} | sort -z -k 2 | cg-Xignore -0 -t | tr "\000" "\n"
+>>    
+>>
+>
+>So you have two ignores now - exclude and Xignore.
+>  
+>
+No, cogito has an ignore.
+git has a less powerful exclude.
+cogito users won't need exclude but power-users aren't barred from it.
 
 
+David
+
+-- 
 
