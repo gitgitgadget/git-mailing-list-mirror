@@ -1,98 +1,77 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 2/2] update cg-* to use cg-Xignore
-Date: Sat, 14 May 2005 14:18:46 +0200
-Message-ID: <20050514121846.GE3905@pasky.ji.cz>
-References: <E1DWihi-0007DQ-SD@ash.dgreaves.com> <20050513225516.GG32232@pasky.ji.cz> <4285B5CA.8060106@dgreaves.com>
+Subject: Re: [PATCH] Ignore file filter
+Date: Sat, 14 May 2005 14:21:34 +0200
+Message-ID: <20050514122134.GF3905@pasky.ji.cz>
+References: <4283CAF8.3050304@dgreaves.com> <20050513231229.GI32232@pasky.ji.cz> <4285B6A8.4080309@dgreaves.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 14:19:10 2005
+X-From: git-owner@vger.kernel.org Sat May 14 14:21:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWvbW-0006L1-67
-	for gcvg-git@gmane.org; Sat, 14 May 2005 14:18:50 +0200
+	id 1DWveC-0006Ys-4v
+	for gcvg-git@gmane.org; Sat, 14 May 2005 14:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262750AbVENMSw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 08:18:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262752AbVENMSv
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 08:18:51 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:50326 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262750AbVENMSr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 08:18:47 -0400
-Received: (qmail 645 invoked by uid 2001); 14 May 2005 12:18:46 -0000
+	id S262752AbVENMVi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 08:21:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262753AbVENMVi
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 08:21:38 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54166 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262752AbVENMVf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 08:21:35 -0400
+Received: (qmail 1088 invoked by uid 2001); 14 May 2005 12:21:34 -0000
 To: David Greaves <david@dgreaves.com>
 Content-Disposition: inline
-In-Reply-To: <4285B5CA.8060106@dgreaves.com>
+In-Reply-To: <4285B6A8.4080309@dgreaves.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 10:24:42AM CEST, I got a letter
+Dear diary, on Sat, May 14, 2005 at 10:28:24AM CEST, I got a letter
 where David Greaves <david@dgreaves.com> told me that...
-> Petr Baudis wrote:
-> 
-> >Dear diary, on Sat, May 14, 2005 at 12:32:22AM CEST, I got a letter
-> >where David Greaves <david@dgreaves.com> told me that...
-> >  
-> >
-> >>Updated
-> >>    cg-add
-> >>    cg-commit
+> >>#. ${COGITO_LIB}cg-Xlib
+> >>_git=${GIT_DIR:-.git}
 > >>    
 > >>
 > >
-> >I consider this Bad Thing (tm). Or could you please point a situation
-> >where this would be actually useful? If you explicitly cg-add, you
-> >likely know what are you doing, and same thing with cg-commit - if it's
-> >already added, it should be watches, no matter what ignore patterns, I
-> >think.
+> >...but it makes no sense anyway I think to reinclude this stuff from a
+> >cg-Xfile you are including from other scripts anyway.
 > >  
 > >
-> OK, lets say I'm clever and know what an ignore pattern is.
-> I can
-> find * | xargs cg-add
-> my laziness something my hubris acknowledges :)
+> cg-Xignore isn't included - only called.
 
-Makes sense, ok.
+Oh yes, I'm stupid.
 
-What about cg-commit? You already even added it.
+> it's also just a library program.
+> Also I don't think cg-Xlib should be doing arg handling.
+> As an include it should provide an arg handling function that the
+> scripts call.
 
-> >>Index: cg-status
-> >>===================================================================
-> >>--- d2490ad0bc8b38647c6baff9da3e72c0f25e9f35/cg-status  (mode:100755)
-> >>+++ 03662df7d089d4a84987ef9edb50a017b8b42439/cg-status  (mode:100755)
-> >>@@ -15,21 +15,11 @@
-> >> 
-> >> {
-> >> 	git-ls-files -z -t --others --deleted --unmerged $EXCLUDE
-> >>-} | sort -z -k 2 | xargs -0 sh -c '
-> >>-while [ "$1" ]; do
-> >>-	tag=${1% *};
-> >>-	filename=${1#* };
-> >>-	case "$filename" in
-> >>-	*.[ao] | tags | ,,merge*) ;;
-> >>-	*)   echo "$tag $filename";;
-> >>-	esac
-> >>-	shift
-> >>-done
-> >>-' padding
-> >>+} | sort -z -k 2 | cg-Xignore -0 -t | tr "\000" "\n"
+I'd prefer the few and scattered users which don't want arg handling to
+explicitly set some magic variable before calling cg-Xlib rather than
+adding the arg parser function call everywhere else.
+
+> >>	    if [[ $file =~ $patt ]]; then
 > >>    
 > >>
 > >
-> >So you have two ignores now - exclude and Xignore.
+> >I'm sorry but this is really nothing my bash-2.05.0(1)-release supports.
+> >We're already bash-only, but further reducing that to bash3 really won't
+> >work. I *might* get convinced to add some bash2+-only feature, but only
+> >if you'll be really good at explaining that it makes sense.
 > >  
 > >
-> No, cogito has an ignore.
-> git has a less powerful exclude.
-> cogito users won't need exclude but power-users aren't barred from it.
+> Ah
+> OK
+> I don't know how to do that.
+> I was actually aiming for glob matching when I came upon this in the
+> manpage.
 
-I think having two essentially redundant things is useless. But you'll
-be able to use the --exclude powers now since you have to fall back to
-good ol' globs.
+Ok, so what's the outcome? Are you going to stop at this point, or will
+you change the scripts so that they use the glob list?
 
 -- 
 				Petr "Pasky" Baudis
