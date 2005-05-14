@@ -1,76 +1,55 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: cg-log gives error on old tags
-Date: Sat, 14 May 2005 08:53:26 -0700
-Message-ID: <20050514155326.GE14184@tumblerings.org>
-References: <20050514151157.GB14184@tumblerings.org> <20050514151922.GC14184@tumblerings.org> <20050514153158.GO3905@pasky.ji.cz> <20050514154121.GD14184@tumblerings.org> <20050514155134.GQ3905@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Rename tracking
+Date: Sat, 14 May 2005 09:05:30 -0700
+Message-ID: <7v4qd523p1.fsf@assigned-by-dhcp.cox.net>
+References: <7vk6m260xf.fsf@assigned-by-dhcp.cox.net>
+	<20050514151159.GL3905@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 17:58:38 2005
+Cc: torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 18:06:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWz28-0007hD-EE
-	for gcvg-git@gmane.org; Sat, 14 May 2005 17:58:32 +0200
+	id 1DWz95-0008TB-Is
+	for gcvg-git@gmane.org; Sat, 14 May 2005 18:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261425AbVENP6Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 11:58:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262790AbVENP6Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:58:24 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:13203 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S261425AbVENP6T
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2005 11:58:19 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.50)
-	id 1DWyxC-0003OV-ID; Sat, 14 May 2005 08:53:26 -0700
+	id S261433AbVENQFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 12:05:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261440AbVENQFj
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 12:05:39 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:34299 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261433AbVENQFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 12:05:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050514160531.KZIR22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 14 May 2005 12:05:31 -0400
 To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050514155134.GQ3905@pasky.ji.cz>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20050514151159.GL3905@pasky.ji.cz> (Petr Baudis's message of
+ "Sat, 14 May 2005 17:11:59 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 14, 2005 at 05:51:34PM +0200, Petr Baudis wrote:
-> Dear diary, on Sat, May 14, 2005 at 05:41:21PM CEST, I got a letter
-> where Zack Brown <zbrown@tumblerings.org> told me that...
-> > On Sat, May 14, 2005 at 05:31:58PM +0200, Petr Baudis wrote:
-> > > Dear diary, on Sat, May 14, 2005 at 05:19:22PM CEST, I got a letter
-> > > where Zack Brown <zbrown@tumblerings.org> told me that...
-> > > > I should add, I'm fully current with the cogito origin, with Junio's --author
-> > > > patch on top.
-> > > 
-> > > Hmm, works here. I forgot to update the tags immediately after the big
-> > > rehashing, so you could get them from that time and rsync wouldn't
-> > > overwrite them. Try deleting them from .git/refs/tags/ and re-pull.
-> > 
-> > Well, I did a fresh clone of cogito, and the problem went away. Weird.
-> 
-> Yes, so you did an equivalent of removing the old tags and re-pulling.
-> What's weird on it?
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-Nothing really.
+PB> I'll postpone it for another while since there is still some discussion
+PB> about tuning the output.
 
-> 
-> > But now I notice that some files from the broken tree are not in the new tree:
-> 
-> Those are old git executables from before the big renaming to use git-
-> prefix for those. Harmless.
+What discussion did I miss???
 
-That's what I figured. But I thought one of the cg-updates would have been
-a cg-rm to get rid of them.
+PB> I'm thinking about using "\n---\n\n" in commit message to separate some
+PB> "internal data" like this. cg-log (and web interfaces and other
+PB> toolkits, if we get to agree on something common) could then by default
+PB> hide it. Below it would contain something which we could hopefully embed
+PB> in patches too (actually less work for extracting patches by cg-mkpatch
+PB> or similar tools). What do you think?
 
-Z
+Since I have not been particularly interested in rename tracking
+(because I myself personally have not felt the need for it), I
+do not offhand have much idea worth to offer.  Sorry.
 
-> 
-> -- 
-> 			Petr "Pasky the avid GIT Traffic reader" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
--- 
-Zack Brown
