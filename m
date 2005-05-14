@@ -1,77 +1,106 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Rename tracking
-Date: Sat, 14 May 2005 17:11:59 +0200
-Message-ID: <20050514151159.GL3905@pasky.ji.cz>
-References: <7vk6m260xf.fsf@assigned-by-dhcp.cox.net>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: [PATCH] Ignore file filter
+Date: Sat, 14 May 2005 16:13:08 +0100
+Message-ID: <42861584.6020601@dgreaves.com>
+References: <4283CAF8.3050304@dgreaves.com> <20050513231229.GI32232@pasky.ji.cz> <4285B6A8.4080309@dgreaves.com> <7vy8ai2nb6.fsf@assigned-by-dhcp.cox.net> <20050514142421.GG3905@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 17:12:20 2005
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing Lists <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 14 17:13:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWyJC-0003Yk-Px
-	for gcvg-git@gmane.org; Sat, 14 May 2005 17:12:07 +0200
+	id 1DWyKW-0003fd-Ku
+	for gcvg-git@gmane.org; Sat, 14 May 2005 17:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262780AbVENPMG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 11:12:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262781AbVENPMG
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:12:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:13466 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262780AbVENPMB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 11:12:01 -0400
-Received: (qmail 11161 invoked by uid 2001); 14 May 2005 15:11:59 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vk6m260xf.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262781AbVENPN2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 11:13:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262783AbVENPN2
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:13:28 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:27607 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S262781AbVENPNU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 11:13:20 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id DE33AE6DAD; Sat, 14 May 2005 16:11:46 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 24385-02; Sat, 14 May 2005 16:11:46 +0100 (BST)
+Received: from oak.dgreaves.com (unknown [217.135.156.197])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id ECF8BE6D9E; Sat, 14 May 2005 16:11:45 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DWyKC-0008CT-8k; Sat, 14 May 2005 16:13:08 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050514142421.GG3905@pasky.ji.cz>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 03:39:24AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Here are three patches to update diff we discussed earlier.
-> 
->   [PATCH 1/3] Update mode-change strings in diff output.
->   [PATCH 2/3] Rename git-diff-tree-helper to git-diff-helper.
->   [PATCH 3/3] Rename git-diff-tree-helper to git-diff-helper (part 2).
-> 
-> The first one is to normalize the mode bits output to be more
-> machine friendly, which we discussed.
+Petr Baudis wrote:
 
-I'll postpone it for another while since there is still some discussion
-about tuning the output.
+>Dear diary, on Sat, May 14, 2005 at 11:01:49AM CEST, I got a letter
+>where Junio C Hamano <junkio@cox.net> told me that...
+>  
+>
+>>>>>>>"DG" == David Greaves <david@dgreaves.com> writes:
+>>>>>>>              
+>>>>>>>
+>>>>>if [[ $file =~ $patt ]]; then
+>>>>>          
+>>>>>
+>>>>I'm sorry but this is really nothing my bash-2.05.0(1)-release supports.
+>>>>        
+>>>>
+>>DG> OK
+>>DG> I don't know how to do that.
+>>
+>>Is that regexp or shell glob?  If regexp, expr is your friend,
+>>like this:
+>>
+>>    if expr "$file" : "$patt" >/dev/null; then
+>>    
+>>
+>
+>Oh, this looks nice. I didn't know expr can do that. :-)
+>
+>Still, I'd prefer the old-fashioned globs as primary matching mechanism.
+>  
+>
+OK
+I was wondering about supporting _both_ globs and re's
+right now my ignore file has a # to precede comment lines
+maybe re: precedes regexp lines and unadorned lines are globs.
 
-> The second commit records only renames for two files and there
-> is no content change.  The third one is to change the Makefiles,
-> documentation, and also usage string in git-diff-helper itself.
-> 
-> I am deliverately doing the 2 and 3 in separate steps for two
-> reasons.  (1) to reduce the possibility of mistakes during the
-> rename for myself; (2) people doing the git repository browser
-> can use the commit trail for practicing their rename detection
-> logic.  So please keep these two steps separate when you commit.
+However the re's provided by regex(7) are too weedy to be worth
+bothering with.
+If however, there is a serious plan to go to perl, it may be worth
+providing for this now in the ignore syntax.
 
-I buy that it is nice for now to keep the changes to the renamed files
-separate, but I don't see why should I withhold changing other files
-in parallel with the rename.
+Additionally this causes problems with sharing the same exclude file as
+used by git.
+However...
+I really think git's exclude file capability and cogito's are different.
+Cogito is aiming to provide full-blown SCM capabilities - git isn't
 
-But I think we really need explicit rename tracking, since this really
-sucks. And even if someone would written a hyperintelligent content
-moves heuristic tracker, it would be horribly slow on longer distances,
-and more importantly it could still be confused when renaming several
-similar or same files in parallel.
+I am also concerned that a centralised ignore file is not flexible enough.
+Certainly limiting if we support globs only.
+It may be that you want different rules in different trees - someone on
+lkml mentioned that excludes vary in different parts of the source.
+Eg .s files may be generally ignored - but not in the asm parts of the tree.
 
-I'm thinking about using "\n---\n\n" in commit message to separate some
-"internal data" like this. cg-log (and web interfaces and other
-toolkits, if we get to agree on something common) could then by default
-hide it. Below it would contain something which we could hopefully embed
-in patches too (actually less work for extracting patches by cg-mkpatch
-or similar tools). What do you think?
+Also... you haven't mentioned perl for a while - can you give us an update?
+I personally think we're making life needlessly unpleasant by sticking
+with shell.
+
+
+David
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+
