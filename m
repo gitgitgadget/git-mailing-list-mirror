@@ -1,99 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Summary of core GIT while you are away.
-Date: Sat, 14 May 2005 03:51:14 -0700
-Message-ID: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: gitweb wishlist
+Date: Sat, 14 May 2005 12:54:57 +0200
+Message-ID: <20050514105457.GA21705@diku.dk>
+References: <20050511012626.GL26384@pasky.ji.cz> <1116038598.9317.22.camel@dhcp-188.off.vrfy.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: pasky@ucw.cz, <braddr@puremagic.com>, <nico@cam.org>,
-	<david@dgreaves.com>
-X-From: git-owner@vger.kernel.org Sat May 14 12:51:58 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 12:56:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWuFB-0000Iu-FG
-	for gcvg-git@gmane.org; Sat, 14 May 2005 12:51:41 +0200
+	id 1DWuJ5-0000aV-9e
+	for gcvg-git@gmane.org; Sat, 14 May 2005 12:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262486AbVENKvm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 06:51:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262715AbVENKvm
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 06:51:42 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:15760 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262486AbVENKvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2005 06:51:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050514105115.FDOC1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 May 2005 06:51:15 -0400
-To: torvalds@osdl.org
-cc: git@vger.kernel.org
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262716AbVENKzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 06:55:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262730AbVENKzO
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 06:55:14 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:20945 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S262716AbVENKzB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 06:55:01 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 67E236E182E; Sat, 14 May 2005 12:54:49 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 2D4C56E1809; Sat, 14 May 2005 12:54:49 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 7792C61FDE; Sat, 14 May 2005 12:54:57 +0200 (CEST)
+To: Kay Sievers <kay.sievers@vrfy.org>
+Content-Disposition: inline
+In-Reply-To: <1116038598.9317.22.camel@dhcp-188.off.vrfy.org>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hoping that you had a good time during your vacation, and at the
-same time also hoping to help you catch up with GIT traffic,
-here is my version of the summary of things that happened in the
-GIT community around core GIT [*1*].
+Kay Sievers <kay.sievers@vrfy.org> wrote Sat, May 14, 2005:
+> On Wed, 2005-05-11 at 03:26 +0200, Petr Baudis wrote:
+> >   I would be very happy if you could extend the gitweb scripts a little.
+> > Basically, what I need is to have ability to create a permanent link to
+> > a given file in the repository, which stays same across revisions (as
+> > long as the file stays with the given name, obviously).
+> > 
+> >   E.g. I would like to have something like
+> > 
+> > 	http://www.kernel.org/git/gitweb.cgi?p=cogito%2Fcogito.git;n=contrib/ciabot.pl
+> > 
+> > for file contrib/ciabot.pl in the latest Cogito tree, and
+> 
+> http://www.kernel.org/git/gitweb.cgi?p=cogito/cogito.git;a=blob;f=contrib/ciabot.pl
 
- - Just when I was forced to discontinue git-jc tree because my
-   ISP webspace was running out, Petr Baudis started git-pb tree
-   hosted at kernel.org next to his cogito repository, promising
-   to pick up and keep good bits from the mailing list traffic.
+How about support for getting the 'raw' files and diffs without all the
+HTML markup?
 
-   He's been doing quite a good job at it and if you pull from
-   his tree, you will not miss anything worth keeping.  I can
-   personally vouch for the crap-free-ness of his tree up to
-   commit 95649d6cf9ec68f05d1dc57ec1b989b8d263a7ae (not that I
-   suspect Petr will put crap in the tree after that, but that
-   is the head as of this writing).  They consist of half
-   bugfixes and half enhancements; all of them help Porcelain
-   layers and end users.  Old git-jc tree has all been sucked
-   into git-pb before being shut down, so we did not lose
-   anything from there either.
-
- - A notable change you need to adjust your scripts and .profile
-   to is that GIT environment variable names have changed.  All
-   of them now have GIT_ as prefix.  Old names continue to work
-   for now, though.
-
- - Nicolas Pitre's deltification patch is still cooking and in
-   its latest incarnation it looked quite promising to me (the
-   impact to the core is kept reasonably small and cleanly
-   isolated).  Once fsck is made aware of it in the next round,
-   I expect it to be ready to merge.
-
- - Brad Roberts has been working on libification to remove the
-   assumption of having a single active_cache array.  I have
-   minor qualms about it (I think it should also be tied with
-   the index.lock handling for updates), but other than that, it
-   looked admirably cleanly done.  I expect it to be in a
-   mergeable state in the next round if/when he catches up with
-   the tip of git-pb tree.
-
- - David Greaves has done all the heavy lifting for core GIT
-   documentation.  It now is hosted at kernel.org with a nice
-   web interface.
-
- - I have sent out about a dozen patches Petr has not caught up,
-   mostly because we work in different timezones.  Other than
-   that I have not seen anything immediately mergeable to the
-   core GIT in the mailing list traffic.
-
- - Also you see names of many people in the git-pb log who
-   contributed bugfixes and enhancements.  I am not belittling
-   their contributions, but just not going to repeat what you
-   can get from the log yourself.
-
-That's about it.  Now please start pulling from 
-
-	rsync://rsync.kernel.org/pub/scm/cogito/git-pb.git/
-
-[Footnote]
-
-*1* Porcelain layer seems to have had many more interesting
-discussions, but I am not qualified to comment on them (I was
-not following most of them).
-
+-- 
+Jonas Fonseca
