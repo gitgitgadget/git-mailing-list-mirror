@@ -1,84 +1,56 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 2/2] update cg-* to use cg-Xignore
-Date: Sat, 14 May 2005 17:14:28 +0200
-Message-ID: <20050514151428.GM3905@pasky.ji.cz>
-References: <E1DWihi-0007DQ-SD@ash.dgreaves.com> <20050513225516.GG32232@pasky.ji.cz> <4285B5CA.8060106@dgreaves.com> <20050514121846.GE3905@pasky.ji.cz> <42860EB0.9000105@dgreaves.com>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: cg-log gives error on old tags
+Date: Sat, 14 May 2005 08:11:57 -0700
+Message-ID: <20050514151157.GB14184@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 17:14:46 2005
+Cc: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat May 14 17:16:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWyLi-0003lo-Cp
-	for gcvg-git@gmane.org; Sat, 14 May 2005 17:14:42 +0200
+	id 1DWyNk-0003w5-PB
+	for gcvg-git@gmane.org; Sat, 14 May 2005 17:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262783AbVENPOp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 11:14:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262785AbVENPOp
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:14:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:17050 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262783AbVENPOa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 11:14:30 -0400
-Received: (qmail 11624 invoked by uid 2001); 14 May 2005 15:14:28 -0000
-To: David Greaves <david@dgreaves.com>
+	id S262785AbVENPQv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 11:16:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262786AbVENPQv
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 11:16:51 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:53906 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S262785AbVENPQt
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 11:16:49 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1DWyJ3-0007ki-IO; Sat, 14 May 2005 08:11:57 -0700
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <42860EB0.9000105@dgreaves.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 04:44:00PM CEST, I got a letter
-where David Greaves <david@dgreaves.com> told me that...
-> Petr Baudis wrote:
-> 
-> >Dear diary, on Sat, May 14, 2005 at 10:24:42AM CEST, I got a letter
-> >where David Greaves <david@dgreaves.com> told me that...
-> >  
-> >
-> >>Petr Baudis wrote:
-> >>    
-> >>
-> >Makes sense, ok.
-> >
-> >What about cg-commit? You already even added it.
-> >  
-> >
-> 
-> I'd use the same argument - you want to commit files changed in a directory:
-> find src | xargs cg-commit
-> find Documentation | xargs cg-commit
-> I agree it's less compelling.
-> I admit I was primarily just making sure that all cg-* commands behaved
-> the same way.
+I'm seeing the following:
 
-Thinking about it, I think we can actually live with it. I agree that
-it's more consistent.
-
-> I also don't have an ignore-override - do you think we need one?
-
-I'd prefer CVS-like format. That is, lines starting with ! are
-exceptions to previous ignore rules.
-
-> >>No, cogito has an ignore.
-> >>git has a less powerful exclude.
-> >>cogito users won't need exclude but power-users aren't barred from it.
-> >>    
-> >>
-> >
-> >I think having two essentially redundant things is useless. But you'll
-> >be able to use the --exclude powers now since you have to fall back to
-> >good ol' globs.
-> >  
-> >
-> unless...
-
-See my other mail that I'd prefer globs as the main ignoring mechanism
-anyway. ;-)
+08:10:03 [zbrown] ~/git/cogito$ cg-tag-ls
+cogito-0.10     4ed293bc0a5ffca9683e139cad499b69a4c4d569
+cogito-0.8      f9f0459b5b39cf83143c91ae39b4eaf187cf678a
+cogito-0.9      cc5517b4ea4134c296d4ce2b1d82700c44200c1e
+git-pasky-0.1   6bd145ee46a0be6c2ae618379054647121078d8e
+git-pasky-0.2   b56ce0c70dbd8d74e63f437555f15aa1462c2075
+git-pasky-0.3   2538cadf3e22d768b8eb0d0824ab1e11ac035234
+git-pasky-0.4   fba83970090ef54c6eb86dcc2c2d5087af5ac637
+git-pasky-0.5   cb18faf513e3903cd57f4c3a5b3547b3ffe3292f
+git-pasky-0.6   0605614328f3c150a3dac85904afed5686959335
+git-pasky-0.6.1 8a49796121aef48d3030bb1d812cff1491f850fd
+git-pasky-0.6.2 55f9d5042603fff4ddfaf4e5f004d2995286d6d3
+git-pasky-0.6.3 dd69ca5f806c8b10bb29ecb8d77c88be007c981c
+git-pasky-0.7   c83b95297c2a6336c2007548f909769e0862b509
+pull_from_pasky 11ed64c1b141c9ba397a1ca76aef2cd250976007
+08:10:07 [zbrown] ~/git/cogito$ cg-log -r git-pasky-0.1:git-pasky-0.2
+error: cannot map sha1 file 6bd145ee46a0be6c2ae618379054647121078d8e
+fatal: git-cat-file 6bd145ee46a0be6c2ae618379054647121078d8e: bad file
+Invalid id: 6bd145ee46a0be6c2ae618379054647121078d8e
+08:10:14 [zbrown] ~/git/cogito$ 
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Zack Brown
