@@ -1,62 +1,162 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: gitweb wishlist
-Date: Sat, 14 May 2005 12:54:57 +0200
-Message-ID: <20050514105457.GA21705@diku.dk>
-References: <20050511012626.GL26384@pasky.ji.cz> <1116038598.9317.22.camel@dhcp-188.off.vrfy.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH cogito] "cg-whatsnew" command
+Date: Sat, 14 May 2005 11:58:04 +0100
+Message-ID: <tnx64xm5b2b.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 12:56:00 2005
+Content-Type: multipart/mixed; boundary="=-=-="
+X-From: git-owner@vger.kernel.org Sat May 14 12:59:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWuJ5-0000aV-9e
-	for gcvg-git@gmane.org; Sat, 14 May 2005 12:55:43 +0200
+	id 1DWuM4-0000my-Fn
+	for gcvg-git@gmane.org; Sat, 14 May 2005 12:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262716AbVENKzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 06:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262730AbVENKzO
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 06:55:14 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:20945 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S262716AbVENKzB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 06:55:01 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 67E236E182E; Sat, 14 May 2005 12:54:49 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 2D4C56E1809; Sat, 14 May 2005 12:54:49 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 7792C61FDE; Sat, 14 May 2005 12:54:57 +0200 (CEST)
-To: Kay Sievers <kay.sievers@vrfy.org>
-Content-Disposition: inline
-In-Reply-To: <1116038598.9317.22.camel@dhcp-188.off.vrfy.org>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S262730AbVENK6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 06:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262735AbVENK6o
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 06:58:44 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:19620 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S262730AbVENK6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 06:58:16 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j4EAwAfj019701
+	for <git@vger.kernel.org>; Sat, 14 May 2005 11:58:10 +0100 (BST)
+Received: from localhost.localdomain (cmarinas@pc1117.cambridge.arm.com [10.1.69.144])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id LAA22577
+	for <git@vger.kernel.org>; Sat, 14 May 2005 11:58:14 +0100 (BST)
+To: git@vger.kernel.org
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Kay Sievers <kay.sievers@vrfy.org> wrote Sat, May 14, 2005:
-> On Wed, 2005-05-11 at 03:26 +0200, Petr Baudis wrote:
-> >   I would be very happy if you could extend the gitweb scripts a little.
-> > Basically, what I need is to have ability to create a permanent link to
-> > a given file in the repository, which stays same across revisions (as
-> > long as the file stays with the given name, obviously).
-> > 
-> >   E.g. I would like to have something like
-> > 
-> > 	http://www.kernel.org/git/gitweb.cgi?p=cogito%2Fcogito.git;n=contrib/ciabot.pl
-> > 
-> > for file contrib/ciabot.pl in the latest Cogito tree, and
-> 
-> http://www.kernel.org/git/gitweb.cgi?p=cogito/cogito.git;a=blob;f=contrib/ciabot.pl
+--=-=-=
 
-How about support for getting the 'raw' files and diffs without all the
-HTML markup?
+This patch adds a simple command that shows the unmerged changes on a
+branch. I find it quite useful to be able to see the diff or the log
+before merging (gnuarch has something similar with "missing").
 
--- 
-Jonas Fonseca
+Catalin
+
+
+--=-=-=
+Content-Type: text/x-patch
+Content-Disposition: inline; filename=patch-cg-whatsnew
+
+Added the "cg-whatsnew" command
+
+The command shows the unmerged changes on a branch (defaulting to 
+"origin") as either a diff, log or patch.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+
+---
+commit e396c64c7f84c45a1360d34bcb6092b62183df7d
+tree c143a31ed694000b705c5019bb10ec3b3f911344
+parent fa6e9eb368e949e78c4e66217461cf624b52b0a2
+author Catalin Marinas <cmarinas@pc1117.cambridge.arm.com> Sat, 14 May 2005 11:47:52 +0100
+committer Catalin Marinas <cmarinas@pc1117.cambridge.arm.com> Sat, 14 May 2005 11:47:52 +0100
+
+ Makefile    |    3 +-
+ cg-help     |    1 
+ cg-whatsnew |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 66 insertions(+), 1 deletion(-)
+
+Index: Makefile
+===================================================================
+--- de641904363cd3759f132ee7c0dfaf8a2ee58388/Makefile  (mode:100644)
++++ c143a31ed694000b705c5019bb10ec3b3f911344/Makefile  (mode:100644)
+@@ -49,7 +49,8 @@
+ SCRIPT=	commit-id tree-id parent-id cg-add cg-admin-lsobj cg-admin-uncommit \
+ 	cg-branch-add cg-branch-ls cg-cancel cg-clone cg-commit cg-diff \
+ 	cg-export cg-help cg-init cg-log cg-ls cg-merge cg-mkpatch cg-patch \
+-	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update
++	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update \
++	cg-whatsnew
+ 
+ LIB_SCRIPT=cg-Xlib cg-Xdiffdo cg-Xmergefile
+ 
+Index: cg-help
+===================================================================
+--- de641904363cd3759f132ee7c0dfaf8a2ee58388/cg-help  (mode:100755)
++++ c143a31ed694000b705c5019bb10ec3b3f911344/cg-help  (mode:100755)
+@@ -44,6 +44,7 @@
+ 	cg-tag-ls
+ 	cg-update	[BNAME]
+ 	cg-version
++	cg-whatsnew	[-n] [-l | -m] [BNAME]
+ 
+ Advanced (low-level or dangerous) commands:
+ 	cg-admin-lsobj	[OBJTYPE]
+Index: cg-whatsnew
+===================================================================
+--- /dev/null  (tree:de641904363cd3759f132ee7c0dfaf8a2ee58388)
++++ c143a31ed694000b705c5019bb10ec3b3f911344/cg-whatsnew  (mode:100755)
+@@ -0,0 +1,63 @@
++#!/usr/bin/env bash
++#
++# Shows the unmerged changes on a branch
++# Copyright (c) Catalin Marinas, 2005
++#
++# Takes a parameter identifying the branch (defaulting to "origin").
++# Optional "-n" parameter specifies not to pull the changes from the branch.
++#
++# By default, shows the unmerged diff of the branch.
++# Optional "-l" parameter specifies to show the log instead of the diff
++# Optional "-m" parameter specifies to show the mkpatch instead of the diff
++
++. ${COGITO_LIB:-/home/cmarinas/lib/cogito/}cg-Xlib
++
++head=$(commit-id)
++show_cmd=cg-diff
++
++do_not_pull=
++if [ "$1" = "-n" ]; then
++	shift
++	do_not_pull=1
++fi
++
++while [ "$1" ]; do
++	case "$1" in
++	-n)
++		do_not_pull=1
++		shift
++		;;
++	-l)
++		show_cmd=cg-log
++		shift
++		;;
++	-m)
++		show_cmd=cg-mkpatch
++		shift
++		;;
++	-*)
++		die "Unknown option: $1"
++		;;
++	*)
++		break
++		;;
++	esac
++done
++
++if [ "$1" ]; then
++	branchname="$1"
++else
++	branchname=origin
++fi
++
++[ "$do_not_pull" ] || cg-pull $branchname
++
++branch=$(commit-id "$branchname") || exit 1
++base=$(git-merge-base "$head" "$branch")
++[ "$base" ] || die "Unable to determine the merge base"
++
++if [ "$base" = "$branch" ]; then
++	echo "Branch already fully merged" >&2
++else
++	$show_cmd -r $base:$branch
++fi
+
+--=-=-=--
+
