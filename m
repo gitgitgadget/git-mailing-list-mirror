@@ -1,73 +1,224 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] Ignore rules
-Date: Sat, 14 May 2005 11:12:16 -0700
-Message-ID: <7vsm0py8vz.fsf@assigned-by-dhcp.cox.net>
-References: <4283CAF8.3050304@dgreaves.com>
-	<20050513231229.GI32232@pasky.ji.cz> <4285B6A8.4080309@dgreaves.com>
-	<7vy8ai2nb6.fsf@assigned-by-dhcp.cox.net>
-	<20050514142421.GG3905@pasky.ji.cz> <42861584.6020601@dgreaves.com>
-	<20050514153027.GN3905@pasky.ji.cz>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: git-rev-list  in local commit order
+Date: Sat, 14 May 2005 17:44:06 -0400 (EDT)
+Message-ID: <4127.10.10.10.24.1116107046.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Greaves <david@dgreaves.com>, torvalds@osdl.org,
-	GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 20:12:55 2005
+Content-Type: multipart/mixed;boundary="----=_20050514174406_69847"
+X-From: git-owner@vger.kernel.org Sat May 14 23:45:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DX17l-0004Ac-Ih
-	for gcvg-git@gmane.org; Sat, 14 May 2005 20:12:29 +0200
+	id 1DX4S4-0005pE-P6
+	for gcvg-git@gmane.org; Sat, 14 May 2005 23:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261451AbVENSMX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 14:12:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261452AbVENSMX
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 14:12:23 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51954 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261451AbVENSMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2005 14:12:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050514181218.VJFB16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 May 2005 14:12:18 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050514153027.GN3905@pasky.ji.cz> (Petr Baudis's message of
- "Sat, 14 May 2005 17:30:27 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261511AbVENVpT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 17:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261513AbVENVom
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 17:44:42 -0400
+Received: from simmts6.bellnexxia.net ([206.47.199.164]:63183 "EHLO
+	simmts6-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261511AbVENVoL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 17:44:11 -0400
+Received: from linux1 ([69.156.111.46]) by simmts6-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050514214406.DJLC11463.simmts6-srv.bellnexxia.net@linux1>
+          for <git@vger.kernel.org>; Sat, 14 May 2005 17:44:06 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4ELi6Q5009615
+	for <git@vger.kernel.org>; Sat, 14 May 2005 17:44:06 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Sat, 14 May 2005 17:44:06 -0400 (EDT)
+To: git@vger.kernel.org
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
+References: 
+In-Reply-To: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+------=_20050514174406_69847
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8bit
 
-PB> Here, I would like more people to speak up, plaese, especially the
-PB> authors of other layers over git than Cogito, since I think it'd be
-PB> great if we could agree on common ignore rules format and we could just
-PB> call the files ".gitignore" instead of ".cgignore", ".jitignore" etc.
+Attached is a preliminary hackish patch to sort git-rev-list in local
+commit order.   While I don't know how useful this really is, it's
+presented as an alternative to the repo-id proposal.  This will work even
+if the branch happens to be from a single repository, where repo-id will
+not.  However, shared commit objects can cause problems so for best
+results use private commit objects for each repository.
 
-Purely off the top of my head, without even regurgitating what
-you wrote in the message I am responding to (sorry, I am about
-to leave for the day).
+For purposes of testing, this patch changes the Cogito default of linking
+objects to copying, for local repository pull operations.   This patch
+will work with _existing_ repositories where local commit times have been
+maintained.
 
- * Two lists, one propagated with merges and another repository
-   private one.
+Also attached, is a little test script that demonstrates the local commit
+time order.  After running the test script, you can use the cg-log command
+in each of the M and R directories to see the difference even though the
+two repositories share a head commit.
 
- * GIT_DIR/info/ignore is the one propagated with merge but it
-   is not a list itself.  It records the name of a file that is
-   GIT tracked.  GIT_DIR/ignore is the repository private one.
+This patch is not nearly ready for inclusion anywhere just meant for
+comment.  It is based off Petr's cogito tree (commit
+fa6e9eb368e949e78c4e66217461cf624b52b0a2).
 
- * Repository private one and then merge propagated one are read
-   in order, one line at a time.  The first hit determines
-   whether it is taken or ignored.
+ cache.h     |    1
+ cg-pull     |    4 -
+ commit.c    |  121
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ commit.h    |    6 ++
+ rev-list.c  |    2
+ sha1_file.c |    8 +++
+ 6 files changed, 137 insertions(+), 5 deletions(-)
 
- * Each entry in the list is not a shell glob but a regexp.  The
-   ignore list rarely changes, so more expressiveness with a bit
-   higher learning curve and a bit more typing would not hurt
-   much.  The entry is implicitly anchored at the left and
-   matched against the path relative to what is recorded in
-   GIT_INDEX_FILE (so 'Makefile' matches "Makefile" in
-   linux-2.6.git/ but not "fs/Makefile").  The regexp can
-   optionally prefixed with a '!' to mean negation.  A line that
-   starts with a '#' is a comment.
+Sean
+
+
+------=_20050514174406_69847
+Content-Type: application/octet-stream; name="local-rev-list-v1.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="local-rev-list-v1.patch"
+
+SW5kZXg6IGNhY2hlLmgKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PQotLS0gYS9jYWNoZS5oICAobW9kZToxMDA2NDQpCisr
+KyBiL2NhY2hlLmggIChtb2RlOjEwMDY0NCkKQEAgLTE1Nyw2ICsxNTcsNyBAQAogZXh0ZXJuIGlu
+dCB3cml0ZV9zaGExX2Zyb21fZmQoY29uc3QgdW5zaWduZWQgY2hhciAqc2hhMSwgaW50IGZkKTsK
+IAogZXh0ZXJuIGludCBoYXNfc2hhMV9maWxlKGNvbnN0IHVuc2lnbmVkIGNoYXIgKnNoYTEpOwor
+ZXh0ZXJuIHVuc2lnbmVkIGxvbmcgc2hhMV9sb2NhbF9kYXRlKGNvbnN0IHVuc2lnbmVkIGNoYXIg
+KnNoYTEpOwogCiAvKiBDb252ZXJ0IHRvL2Zyb20gaGV4L3NoYTEgcmVwcmVzZW50YXRpb24gKi8K
+IGV4dGVybiBpbnQgZ2V0X3NoYTEoY29uc3QgY2hhciAqc3RyLCB1bnNpZ25lZCBjaGFyICpzaGEx
+KTsKSW5kZXg6IGNnLXB1bGwKPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PQotLS0gYS9jZy1wdWxsICAobW9kZToxMDA3NTUp
+CisrKyBiL2NnLXB1bGwgIChtb2RlOjEwMDc1NSkKQEAgLTE0Myw3ICsxNDMsNyBAQAogCVsgIiQx
+IiA9ICItaSIgXSAmJiBzaGlmdAogCVsgIiQxIiA9ICItcyIgXSAmJiBzaGlmdAogCi0JY3BfZmxh
+Z3NfbD0iLXZhIgorCWNwX2ZsYWdzX2w9Ii12ZFIiCiAJaWYgWyAiJDEiID0gIi11IiBdOyB0aGVu
+CiAJCWNwX2ZsYWdzX2w9IiRjcF9mbGFnc19sIC1sdSIKIAkJc2hpZnQKQEAgLTE2Myw3ICsxNjMs
+NyBAQAogfQogCiBwdWxsX2xvY2FsICgpIHsKLQlnaXQtbG9jYWwtcHVsbCAtYSAtbCAtdiAiJChj
+YXQgIiRfZ2l0L3JlZnMvaGVhZHMvJDEiKSIgIiQyIgorCWdpdC1sb2NhbC1wdWxsIC1hIC12ICIk
+KGNhdCAiJF9naXQvcmVmcy9oZWFkcy8kMSIpIiAiJDIiCiB9CiAKIGlmIGVjaG8gIiR1cmkiIHwg
+Z3JlcCAtcSAiXmh0dHA6Ly8iOyB0aGVuCkluZGV4OiBjb21taXQuYwo9PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Ci0tLSBh
+L2NvbW1pdC5jICAobW9kZToxMDA2NDQpCisrKyBiL2NvbW1pdC5jICAobW9kZToxMDA2NDQpCkBA
+IC0yLDYgKzIsNyBAQAogI2luY2x1ZGUgImNhY2hlLmgiCiAjaW5jbHVkZSA8c3RyaW5nLmg+CiAj
+aW5jbHVkZSA8bGltaXRzLmg+CisjaW5jbHVkZSA8c3RkbGliLmg+CiAKIGNvbnN0IGNoYXIgKmNv
+bW1pdF90eXBlID0gImNvbW1pdCI7CiAKQEAgLTEzLDYgKzE0LDcgQEAKIAkJbWVtc2V0KHJldCwg
+MCwgc2l6ZW9mKHN0cnVjdCBjb21taXQpKTsKIAkJY3JlYXRlZF9vYmplY3Qoc2hhMSwgJnJldC0+
+b2JqZWN0KTsKIAkJcmV0LT5vYmplY3QudHlwZSA9IGNvbW1pdF90eXBlOworCQlyZXQtPmxvY2Fs
+X2RhdGUgPSBzaGExX2xvY2FsX2RhdGUoc2hhMSk7CiAJCXJldHVybiByZXQ7CiAJfQogCWlmIChv
+YmotPnR5cGUgIT0gY29tbWl0X3R5cGUpIHsKQEAgLTQxLDYgKzQzLDE4IEBACiAJcmV0dXJuIGRh
+dGU7CiB9CiAKK3N0YXRpYyB2b2lkIGluc2VydF9ieV9sb2NhbF9kYXRlKHN0cnVjdCBjb21taXRf
+bGlzdCAqKmxpc3QsIHN0cnVjdCBjb21taXQgKml0ZW0pCit7CisJc3RydWN0IGNvbW1pdF9saXN0
+ICoqcHAgPSBsaXN0OworCXN0cnVjdCBjb21taXRfbGlzdCAqcDsKKwl3aGlsZSAoKHAgPSAqcHAp
+ICE9IE5VTEwpIHsKKwkJaWYgKHAtPml0ZW0tPmxvY2FsX2RhdGUgPiBpdGVtLT5sb2NhbF9kYXRl
+KSAKKwkJCWJyZWFrOworCQlwcCA9ICZwLT5uZXh0OworCX0KKwljb21taXRfbGlzdF9pbnNlcnQo
+aXRlbSwgcHApOworfQorCiBpbnQgcGFyc2VfY29tbWl0X2J1ZmZlcihzdHJ1Y3QgY29tbWl0ICpp
+dGVtLCB2b2lkICpidWZmZXIsIHVuc2lnbmVkIGxvbmcgc2l6ZSkKIHsKIAl2b2lkICpidWZwdHIg
+PSBidWZmZXI7CkBAIC01OCwxMiArNzIsMTMgQEAKIAkgICAgICAgIWdldF9zaGExX2hleChidWZw
+dHIgKyA3LCBwYXJlbnQpKSB7CiAJCXN0cnVjdCBjb21taXQgKm5ld19wYXJlbnQgPSBsb29rdXBf
+Y29tbWl0KHBhcmVudCk7CiAJCWlmIChuZXdfcGFyZW50KSB7Ci0JCQljb21taXRfbGlzdF9pbnNl
+cnQobmV3X3BhcmVudCwgJml0ZW0tPnBhcmVudHMpOworIAkJCWluc2VydF9ieV9sb2NhbF9kYXRl
+KCZpdGVtLT5wYXJlbnRzLCBuZXdfcGFyZW50KTsKIAkJCWFkZF9yZWYoJml0ZW0tPm9iamVjdCwg
+Jm5ld19wYXJlbnQtPm9iamVjdCk7CiAJCX0KIAkJYnVmcHRyICs9IDQ4OwogCX0KIAlpdGVtLT5k
+YXRlID0gcGFyc2VfY29tbWl0X2RhdGUoYnVmcHRyKTsKKwlpdGVtLT5tZXJnZV9ub2RlcyA9IE5V
+TEw7CiAJcmV0dXJuIDA7CiB9CiAKQEAgLTE1MiwzICsxNjcsMTA3IEBACiAJfQogCXJldHVybiBy
+ZXQ7CiB9CisKK3N0cnVjdCBjb21taXRfbGlzdCAqY29weV9jb21taXRfbGlzdChzdHJ1Y3QgY29t
+bWl0X2xpc3QgKmxpc3QpCit7CisJc3RydWN0IGNvbW1pdF9saXN0ICpjb3B5ID0gTlVMTDsKKwl3
+aGlsZSAobGlzdCkgeworCQljb21taXRfbGlzdF9pbnNlcnQobGlzdC0+aXRlbSwgJmNvcHkpOyAK
+KwkJbGlzdCA9IGxpc3QtPm5leHQ7CisJfQorCXJldHVybiBjb3B5OworfQorCitpbnQgZm91bmRf
+b25fbGlzdChzdHJ1Y3QgY29tbWl0ICppdGVtLCBzdHJ1Y3QgY29tbWl0X2xpc3QgKmxpc3QpCit7
+CisJd2hpbGUgKGxpc3QpIHsKKwkJaWYgKGxpc3QtPml0ZW0gPT0gaXRlbSkKKwkJCXJldHVybiAx
+OworCQlsaXN0ID0gbGlzdC0+bmV4dDsKKwl9CisJcmV0dXJuIDA7Cit9CisKK3N0YXRpYyBzdHJ1
+Y3QgY29tbWl0ICpwcm9jZXNzX2xvY2FsX2xpc3Qoc3RydWN0IGNvbW1pdF9saXN0ICoqbGlzdF9w
+LCAKKwkJCQkJaW50IHRoaXNfbWFyaywgaW50IG90aGVyX21hcmspCit7CisJc3RydWN0IGNvbW1p
+dCAqaXRlbSA9ICgqbGlzdF9wKS0+aXRlbTsKKworCWlmIChpdGVtLT5vYmplY3QuZmxhZ3MgJiBv
+dGhlcl9tYXJrKSB7CisJCXJldHVybiBpdGVtOworCX0gZWxzZSB7CisJCXBvcF9tb3N0X3JlY2Vu
+dF9jb21taXQobGlzdF9wLCB0aGlzX21hcmspOworCX0KKwlyZXR1cm4gTlVMTDsKK30KKworc3Ry
+dWN0IGNvbW1pdCAqY29tbW9uX2xvY2FsX2FuY2VzdG9yKHN0cnVjdCBjb21taXQgKnJldjEsIHN0
+cnVjdCBjb21taXQgKnJldjIpCit7CisJc3RydWN0IGNvbW1pdF9saXN0ICpyZXYxbGlzdCA9IE5V
+TEw7CisJc3RydWN0IGNvbW1pdF9saXN0ICpyZXYybGlzdCA9IE5VTEw7CisKKwljb21taXRfbGlz
+dF9pbnNlcnQocmV2MSwgJnJldjFsaXN0KTsgcmV2MS0+b2JqZWN0LmZsYWdzIHw9IDB4MTsKKwlj
+b21taXRfbGlzdF9pbnNlcnQocmV2MiwgJnJldjJsaXN0KTsgcmV2Mi0+b2JqZWN0LmZsYWdzIHw9
+IDB4MjsKKwlwYXJzZV9jb21taXQocmV2MSk7IHBhcnNlX2NvbW1pdChyZXYyKTsKKworCXdoaWxl
+IChyZXYxbGlzdCB8fCByZXYybGlzdCkgeworCQlzdHJ1Y3QgY29tbWl0ICpyZXQ7CisJCWlmICgh
+cmV2MWxpc3QpIHsKKwkJCS8vIHByb2Nlc3MgMgorCQkJcmV0ID0gcHJvY2Vzc19sb2NhbF9saXN0
+KCZyZXYybGlzdCwgMHgyLCAweDEpOworCQl9IGVsc2UgaWYgKCFyZXYybGlzdCkgeworCQkJLy8g
+cHJvY2VzcyAxCisJCQlyZXQgPSBwcm9jZXNzX2xvY2FsX2xpc3QoJnJldjFsaXN0LCAweDEsIDB4
+Mik7CisJCX0gZWxzZSBpZiAocmV2MWxpc3QtPml0ZW0tPmxvY2FsX2RhdGUgCisJCQkJPCByZXYy
+bGlzdC0+aXRlbS0+bG9jYWxfZGF0ZSkgeworCQkJLy8gcHJvY2VzcyAyCisJCQlyZXQgPSBwcm9j
+ZXNzX2xvY2FsX2xpc3QoJnJldjJsaXN0LCAweDIsIDB4MSk7CisJCX0gZWxzZSB7CisJCQkvLyBw
+cm9jZXNzIDEKKwkJCXJldCA9IHByb2Nlc3NfbG9jYWxfbGlzdCgmcmV2MWxpc3QsIDB4MSwgMHgy
+KTsKKwkJfQorCQlpZiAocmV0KSB7CisJCQlmcmVlX2NvbW1pdF9saXN0KHJldjFsaXN0KTsKKwkJ
+CWZyZWVfY29tbWl0X2xpc3QocmV2Mmxpc3QpOworCQkJcmV0dXJuIHJldDsKKwkJfQorCX0KKwly
+ZXR1cm4gTlVMTDsKK30KKwordm9pZCBpbnNlcnRfbWVyZ2Vfbm9kZXMoc3RydWN0IGNvbW1pdF9s
+aXN0ICpwbGlzdCwKKwkJCXN0cnVjdCBjb21taXRfbGlzdCAqc3RvcCwKKwkJCXN0cnVjdCBjb21t
+aXQgKm5vZGUpCit7CisJc3RydWN0IGNvbW1pdF9saXN0ICpwOworCWZvciAocD1wbGlzdDsgcCAh
+PSBzdG9wOyBwPXAtPm5leHQpCisJCWNvbW1pdF9saXN0X2luc2VydCgJY29tbW9uX2xvY2FsX2Fu
+Y2VzdG9yKG5vZGUsIHAtPml0ZW0pLAorCQkJCQkmbm9kZS0+bWVyZ2Vfbm9kZXMpOworfQorCitz
+dHJ1Y3QgY29tbWl0ICpwb3BfbmV3ZXN0X2xvY2FsX2NvbW1pdCgJc3RydWN0IGNvbW1pdF9saXN0
+ICoqbGlzdCwKKwkJCQkJdW5zaWduZWQgaW50IG1hcmspCit7CisJc3RydWN0IGNvbW1pdCAqcmV0
+ID0gKCpsaXN0KS0+aXRlbTsKKwlzdHJ1Y3QgY29tbWl0X2xpc3QgKnBhcmVudHMgPSByZXQtPnBh
+cmVudHM7CisJc3RydWN0IGNvbW1pdF9saXN0ICpvbGQgPSAqbGlzdDsKKwlzdHJ1Y3QgY29tbWl0
+X2xpc3QgKnByZXYgPSByZXQtPm1lcmdlX25vZGVzOworCisJKmxpc3QgPSAoKmxpc3QpLT5uZXh0
+OworCWZyZWUob2xkKTsKKworCS8qIExvb3AgZXhwZWN0cyBwYXJlbnRzIHRvIGJlIG9yZGVyZWQg
+b2xkZXN0IHRvIG5ld2VzdCBvbiBsb2NhbCB0aW1lICovCisJd2hpbGUgKHBhcmVudHMpIHsKKwkJ
+c3RydWN0IGNvbW1pdCAqY29tbWl0ID0gcGFyZW50cy0+aXRlbTsKKwkJcGFyc2VfY29tbWl0KGNv
+bW1pdCk7CisJCWlmICghKChjb21taXQtPm9iamVjdC5mbGFncyAmIG1hcmspIHwgCisgICAgICAg
+ICAgICAgICAgICAgICAgIGZvdW5kX29uX2xpc3QoY29tbWl0LCByZXQtPm1lcmdlX25vZGVzKSkp
+IHsKKwkJCWNvbW1pdC0+b2JqZWN0LmZsYWdzIHw9IG1hcms7CisJCQlwcmV2ID0gY29tbWl0LT5t
+ZXJnZV9ub2RlcyA9IGNvcHlfY29tbWl0X2xpc3QocHJldik7CisJCQlpbnNlcnRfbWVyZ2Vfbm9k
+ZXMocmV0LT5wYXJlbnRzLCBwYXJlbnRzLCBjb21taXQpOworCQkJY29tbWl0X2xpc3RfaW5zZXJ0
+KGNvbW1pdCwgbGlzdCk7CisJCX0KKwkJcGFyZW50cyA9IHBhcmVudHMtPm5leHQ7CisJfQorCXJl
+dHVybiByZXQ7Cit9CkluZGV4OiBjb21taXQuaAo9PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Ci0tLSBhL2NvbW1pdC5oICAo
+bW9kZToxMDA2NDQpCisrKyBiL2NvbW1pdC5oICAobW9kZToxMDA2NDQpCkBAIC0xMSw4ICsxMSw5
+IEBACiAKIHN0cnVjdCBjb21taXQgewogCXN0cnVjdCBvYmplY3Qgb2JqZWN0OwotCXVuc2lnbmVk
+IGxvbmcgZGF0ZTsKKwl1bnNpZ25lZCBsb25nIGRhdGUsIGxvY2FsX2RhdGU7CiAJc3RydWN0IGNv
+bW1pdF9saXN0ICpwYXJlbnRzOworCXN0cnVjdCBjb21taXRfbGlzdCAqbWVyZ2Vfbm9kZXM7CiAJ
+c3RydWN0IHRyZWUgKnRyZWU7CiB9OwogCkBAIC0zNiw0ICszNyw3IEBACiBzdHJ1Y3QgY29tbWl0
+ICpwb3BfbW9zdF9yZWNlbnRfY29tbWl0KHN0cnVjdCBjb21taXRfbGlzdCAqKmxpc3QsIAogCQkJ
+CSAgICAgIHVuc2lnbmVkIGludCBtYXJrKTsKIAorc3RydWN0IGNvbW1pdCAqcG9wX25ld2VzdF9s
+b2NhbF9jb21taXQoCXN0cnVjdCBjb21taXRfbGlzdCAqKmxpc3QsCisJCQkJCXVuc2lnbmVkIGlu
+dCBtYXJrKTsKKwogI2VuZGlmIC8qIENPTU1JVF9IICovCkluZGV4OiByZXYtbGlzdC5jCj09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT0KLS0tIGEvcmV2LWxpc3QuYyAgKG1vZGU6MTAwNjQ0KQorKysgYi9yZXYtbGlzdC5jICAo
+bW9kZToxMDA2NDQpCkBAIC0zOCw3ICszOCw3IEBACiAKIAljb21taXRfbGlzdF9pbnNlcnQoY29t
+bWl0LCAmbGlzdCk7CiAJZG8gewotCQlzdHJ1Y3QgY29tbWl0ICpjb21taXQgPSBwb3BfbW9zdF9y
+ZWNlbnRfY29tbWl0KCZsaXN0LCAweDEpOworCQlzdHJ1Y3QgY29tbWl0ICpjb21taXQgPSBwb3Bf
+bmV3ZXN0X2xvY2FsX2NvbW1pdCgmbGlzdCwgMHg0KTsKIAogCQlpZiAobWluX2FnZSAhPSAtMSAm
+JiAoY29tbWl0LT5kYXRlID4gbWluX2FnZSkpCiAJCQljb250aW51ZTsKSW5kZXg6IHNoYTFfZmls
+ZS5jCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT0KLS0tIGEvc2hhMV9maWxlLmMgIChtb2RlOjEwMDY0NCkKKysrIGIvc2hh
+MV9maWxlLmMgIChtb2RlOjEwMDY0NCkKQEAgLTU3Nyw2ICs1NzcsMTQgQEAKIAlyZXR1cm4gISFm
+aW5kX3NoYTFfZmlsZShzaGExLCAmc3QpOwogfQogCit1bnNpZ25lZCBsb25nIHNoYTFfbG9jYWxf
+ZGF0ZShjb25zdCB1bnNpZ25lZCBjaGFyICpzaGExKQoreworCXN0cnVjdCBzdGF0IHN0OworCWlm
+IChmaW5kX3NoYTFfZmlsZShzaGExLCAmc3QpKQorCQlyZXR1cm4gc3Quc3RfbXRpbWU7CisJcmV0
+dXJuIDA7Cit9CisKIGludCBpbmRleF9mZCh1bnNpZ25lZCBjaGFyICpzaGExLCBpbnQgZmQsIHN0
+cnVjdCBzdGF0ICpzdCkKIHsKIAl1bnNpZ25lZCBsb25nIHNpemUgPSBzdC0+c3Rfc2l6ZTsK
+------=_20050514174406_69847
+Content-Type: application/octet-stream; name="test-local-rev-list-v1.sh"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="test-local-rev-list-v1.sh"
+
+IyEvYmluL2Jhc2gKZGllKCkgeyBlY2hvICJkZWF0aDogJCoiIDsgZXhpdCAxOyB9Cm1rZGlyIFIg
+JiYgY2QgUiB8fCBkaWUgIm9uIG1rZGlyIFIiCmNnLWluaXQgPCAvZGV2L251bGwgfHwgZGllICJS
+IGluaXQiCgp0b3VjaCBvbmUgOyBjZy1hZGQgb25lIHx8IGRpZSAiYWRkaW5nIFJuLTMiCmVjaG8g
+IlJuLTMiIHwgY2ctY29tbWl0IHx8IGRpZSAiY29tbWl0dGluZyBSbi0zIgoKY2QgLi4gfHwgZGll
+ICJjZCBiYXNlIgpjZy1jbG9uZSBSIE0gfHwgZGllICJjbG9uaW5nIgoKY2QgTSB8fCBkaWUgImNk
+IE0iCnRvdWNoIHR3bzsgY2ctYWRkIHR3byB8fCBkaWUgImFkZGluZyBNbi0xIgplY2hvICJNbi0x
+IiB8IGNnLWNvbW1pdCB8fCBkaWUgImNvbW1pdHRpbmcgTW4tMSIKCmNkIC4uL1IgfHwgZGllICJj
+ZCAuLi9SIgp0b3VjaCB0aHJlZTsgY2ctYWRkIHRocmVlIHx8IGRpZSAiYWRkaW5nIFJuLTIiCmVj
+aG8gIlJuLTIiIHwgY2ctY29tbWl0IHx8IGRpZSAiY29tbWl0dGluZyBSbi0yIgoKY2QgLi4vTSB8
+fCBkaWUgImNkIC4uL00iCnRvdWNoIGZvdXI7IGNnLWFkZCBmb3VyIHx8IGRpZSAiYWRkaW5nIE1u
+IgplY2hvICJNbiIgfCBjZy1jb21taXQgfHwgZGllICJjb21taXR0aW5nIE1uIgoKY2QgLi4vUiB8
+fCBkaWUgImNkIC4uL1IiCnRvdWNoIGZpdmU7IGNnLWFkZCBmaXZlIHx8IGRpZSAiYWRkaW5nIFJu
+LTEiCmVjaG8gIlJuLTEiIHwgY2ctY29tbWl0IHx8IGRpZSAiY29tbWl0dGluZyBSbi0xIgoKc2xl
+ZXAgMQpjZy1icmFuY2gtYWRkIE0gLi4vTS8uZ2l0IHx8IGRpZSAiYWRkaW5nIE0gYnJhbmNoIgpl
+Y2hvICJSbiIgfCBjZy11cGRhdGUgTSB8fCBkaWUgIm1lcmdpbmcgTSIKCnNsZWVwIDEKY2QgLi4v
+TSB8fCBkaWUgImNkIC4uL00iCmNnLXVwZGF0ZSBvcmlnaW4gfHwgZGllICJmYXN0IGZvcndhcmRp
+bmcgdG8gUiIK
+------=_20050514174406_69847--
+
 
