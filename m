@@ -1,56 +1,59 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Ignore file filter
-Date: Sat, 14 May 2005 16:24:22 +0200
-Message-ID: <20050514142421.GG3905@pasky.ji.cz>
-References: <4283CAF8.3050304@dgreaves.com> <20050513231229.GI32232@pasky.ji.cz> <4285B6A8.4080309@dgreaves.com> <7vy8ai2nb6.fsf@assigned-by-dhcp.cox.net>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: Re: speeding up cg-log -u
+Date: Sat, 14 May 2005 07:23:25 -0700
+Message-ID: <20050514142325.GC14353@tumblerings.org>
+References: <20050514061914.GB14353@tumblerings.org> <7vu0l62l27.fsf@assigned-by-dhcp.cox.net> <20050514061914.GB14353@tumblerings.org> <20050514103937.GA3905@pasky.ji.cz> <7vk6m212g7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Greaves <david@dgreaves.com>,
-	GIT Mailing Lists <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 14 16:25:08 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sat May 14 16:28:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWxZF-0007l8-6T
-	for gcvg-git@gmane.org; Sat, 14 May 2005 16:24:37 +0200
+	id 1DWxdC-00083L-Lw
+	for gcvg-git@gmane.org; Sat, 14 May 2005 16:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262761AbVENOYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 10:24:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262665AbVENOYb
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 10:24:31 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19353 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262765AbVENOY2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 10:24:28 -0400
-Received: (qmail 3352 invoked by uid 2001); 14 May 2005 14:24:22 -0000
+	id S262772AbVENO2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 10:28:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262774AbVENO2g
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 10:28:36 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:36498 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S262772AbVENO2U
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 May 2005 10:28:20 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1DWxY5-0003fV-Ay; Sat, 14 May 2005 07:23:25 -0700
 To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vy8ai2nb6.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7vk6m212g7.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, May 14, 2005 at 11:01:49AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "DG" == David Greaves <david@dgreaves.com> writes:
-> 
-> >>> if [[ $file =~ $patt ]]; then
-> >> 
-> >> I'm sorry but this is really nothing my bash-2.05.0(1)-release supports.
-> DG> OK
-> DG> I don't know how to do that.
-> 
-> Is that regexp or shell glob?  If regexp, expr is your friend,
-> like this:
-> 
->     if expr "$file" : "$patt" >/dev/null; then
+On Sat, May 14, 2005 at 04:17:44AM -0700, Junio C Hamano wrote:
+> Not wanting to keep the whole object because of their size is
+> understandable since the users of "struct object" derivatives
+> rarely if ever seem to free them once they get hold of them.
+> And not wanting to think ahead about what is worth keeping (like
+> names for tree entries back then, or commit author names) is
+> also understandable, but it still is frustrating.
 
-Oh, this looks nice. I didn't know expr can do that. :-)
+So if this design is changed to suit -u, would a further redesign be needed
+to support an option to filter on keywords in the body of the changelog
+entry? Perhaps this will result in a net slowdown for the usual case of just
+grabbing all log entries.
 
-Still, I'd prefer the old-fashioned globs as primary matching mechanism.
+Be well,
+Zack
+
+>  Not that I
+> would want to solve this myself ...
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Zack Brown
