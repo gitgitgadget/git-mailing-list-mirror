@@ -1,73 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Rename tracking
-Date: Sat, 14 May 2005 09:36:22 -0700
-Message-ID: <7vfywpzrw9.fsf@assigned-by-dhcp.cox.net>
-References: <7vk6m260xf.fsf@assigned-by-dhcp.cox.net>
-	<20050514151159.GL3905@pasky.ji.cz>
-	<7v4qd523p1.fsf@assigned-by-dhcp.cox.net>
-	<20050514162133.GW3905@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Test scripts naming
+Date: Sat, 14 May 2005 18:53:21 +0200
+Message-ID: <20050514165321.GX3905@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 14 18:37:25 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 14 18:53:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DWzdU-0003GA-3C
-	for gcvg-git@gmane.org; Sat, 14 May 2005 18:37:08 +0200
+	id 1DWztM-00059Q-Nu
+	for gcvg-git@gmane.org; Sat, 14 May 2005 18:53:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262801AbVENQgt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 May 2005 12:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262800AbVENQgt
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 12:36:49 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:14725 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S262799AbVENQg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 May 2005 12:36:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050514163622.BVSY550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 14 May 2005 12:36:22 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050514162133.GW3905@pasky.ji.cz> (Petr Baudis's message of
- "Sat, 14 May 2005 18:21:33 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262796AbVENQx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 May 2005 12:53:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262799AbVENQx1
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 May 2005 12:53:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:19356 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262796AbVENQxW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 May 2005 12:53:22 -0400
+Received: (qmail 25582 invoked by uid 2001); 14 May 2005 16:53:21 -0000
+To: junkio@cox.net
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+  Hello,
 
-PB> Well, I'd say that with those renaming patches we are feeling the need
-PB> for it?
+  I think we should do something about the test script names. Currently
+it appears almost like the scripts are basically unordered, and the
+digit you increment is chosen mostly randomly. Also, the "freeform"
+field after the test number is not as informative as it could be. What
+are the rules you use for naming the testcases? Could you please
+document it in the README?
 
-Again, not me.  What I did (and asked you to do) was to help
-_others_ who are interested in rename tracking, not me.  Find
-the following message in the archive if you want to know why I
-am not in urgent need for rename tracking.
+  I'd propose:
 
-    To:	Linus Torvalds <torvalds@osdl.org>
-    Cc:	David Greaves <david@dgreaves.com>, git@vger.kernel.org
-    Subject: GIT blame (was Re: Quick command reference)
-    From:	Junio C Hamano <junkio@cox.net>
-    Date:	Fri, 06 May 2005 02:32:30 -0700
-    X-Mailing-List:	git@vger.kernel.org
+  First digit: "family", e.g. the absolute basics and global stuff (0),
+the basic db-side commands (read-tree, write-tree, commit-tree), the
+basic working-tree-side commands (checkout-cache, update-cache), the
+other basic commands (ls-files), the diff commands, the pull commands,
+exporting commands, revision tree commands...
 
-    >>>>> I == Junio C Hamano <junkio@cox.net> said:
+  Second digit: the particular command we are testing
 
-    JCH> Linus, please pull from git-jc.git archive at:
-    JCH>     http://members.cox.net/junkio/git-jc.git/
+  Third digit: (optionally) the particular switch or group of switches
+we are testing
 
-    Since that message I have added a couple more commits there.
-    One of the things is a backport of -t (tag) flag to git-ls-files
-    from Cogito fork.
+  Freeform part: commandname-details
 
-    The reason I am writing this message is not because I am excited
-    about the backport [*1*], but because I find it quite cool the
-    way I found out which commit in Pasky's development line
-    introduced the change.  It demonstrates your previous "renames
-    does not matter when doing CVS blame" argument actually works.
+  How would I rename the current scripts?
 
-    Here is what I did: ... (the rest omitted) ...
+t1000-checkout-cache.sh -> t2000-checkout-cache-clash.sh
+t1001-checkout-cache.sh -> t2001-checkout-cache-clash.sh
+t0200-update-cache.sh   -> t2010-update-cache-badpath.sh
+t0400-ls-files.sh       -> t3000-ls-files-others.sh
+t0500-ls-files.sh       -> t3010-ls-files-killed.sh
 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
