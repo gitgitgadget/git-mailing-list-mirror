@@ -1,91 +1,633 @@
-From: Thomas Gleixner <tglx@linutronix.de>
-Subject: Re: git-rev-list  in local commit order
-Date: Sun, 15 May 2005 23:13:56 +0200
-Organization: linutronix
-Message-ID: <1116191636.11872.195.camel@tglx>
-References: <4127.10.10.10.24.1116107046.squirrel@linux1>
-	 <1116186533.11872.152.camel@tglx>
-	 <4971.10.10.10.24.1116187076.squirrel@linux1>
-	 <1116189873.11872.171.camel@tglx>
-	 <1102.10.10.10.24.1116189916.squirrel@linux1>
-Reply-To: tglx@linutronix.de
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 1/4] Add --author and --committer match to git-rev-list and
+ git-rev-tree.
+Date: Sun, 15 May 2005 14:18:36 -0700
+Message-ID: <7vy8agqjbn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 23:13:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun May 15 23:20:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXQQ7-0007QQ-9o
-	for gcvg-git@gmane.org; Sun, 15 May 2005 23:13:07 +0200
+	id 1DXQXB-0008Qa-2B
+	for gcvg-git@gmane.org; Sun, 15 May 2005 23:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261242AbVEOVNO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 17:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261245AbVEOVNO
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 17:13:14 -0400
-Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:48802
-	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261242AbVEOVMy
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2005 17:12:54 -0400
-Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
-	by mail.tglx.de (Postfix) with ESMTP id 7A20065C003;
-	Sun, 15 May 2005 23:12:34 +0200 (CEST)
-Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
-	by mail.tec.linutronix.de (Postfix) with ESMTP id 999312829A;
-	Sun, 15 May 2005 23:12:47 +0200 (CEST)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <1102.10.10.10.24.1116189916.squirrel@linux1>
-X-Mailer: Evolution 2.2.2 
+	id S261255AbVEOVUD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 17:20:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261254AbVEOVTw
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 17:19:52 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:6534 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261245AbVEOVSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2005 17:18:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050515211838.RLGR16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 15 May 2005 17:18:38 -0400
+To: pasky@ucw.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-05-15 at 16:45 -0400, Sean wrote:
+Zack Brown wondered if handling author match at core GIT level
+would make cg-log -u go faster (JIT also can use this in jit-log
+--author).  Later Peter Baudis wanted to have --committer match
+similar to it.
 
-> You can continue the personal attacks or you can simply explain to the
-> list what you are trying to accomplish and why it is important and why any
-> other proposal besides yours isn't worthy.
+This version is improved from the one I posted to GIT list
+earlier in that:
 
-I did never say, that my proposal is the world formula, but I have more
-than once explained, why time is the worst source of information.
+ (1) I bit the bullet and added author and committer names to
+     the commit object, so there is no double unpacking anymore.
+     The strings are shared across multiple commits so consider
+     them intern'ed and do not free them.
 
-You keep beating on time as a reliable source of information and tell me
-that most people are completely happy with it. You must have access to a
-quite good opinion survey.
+ (2) Determination of if author and committer names are
+     "interesting" is done only once per name, not per commit.
+     This version uses simple "substring" logic, but it is
+     easily extendable for more interesting match such as
+     regexps.
 
+This also fixes documentation of git-rev-list which did not
+describe its already existing options.
 
-Time of files or time in commit blobs is not a reliable information to
-keep track of
- - workflows
- - history
-Thats all I'm talking about and it is the concern of others too.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-In "git" repositories the only reliable source of information is the
-parent child relationship. This information is only partially reliable
-due to the head forward scenario. I think we agreed on this, right ?
-You have no other reliable source of information due to the fact that
-committer names are not unique.
+Documentation/git-rev-list.txt    |   19 +++++
+Documentation/git-rev-tree.txt    |    8 +-
+commit.c                          |  135 +++++++++++++++++++++++++++++++++-----
+commit.h                          |   18 ++++-
+rev-list.c                        |   18 ++++-
+rev-tree.c                        |   27 +++++++
+t/t6010-rev-tree-author-commit.sh |   98 +++++++++++++++++++++++++++
+t/t6110-rev-list-author-commit.sh |   97 +++++++++++++++++++++++++++
+8 files changed, 396 insertions(+), 24 deletions(-)
+t/t6010-rev-tree-author-commit.sh (. --> 100755)
+t/t6110-rev-list-author-commit.sh (. --> 100755)
 
-> I disagree that they're inherently error prone, 
-> steps can be taken to make them as secure as you desire.
-
-You continue to propose stuff which is not viable. Can you enforce 
-- NTP syncronisation
-- the correct usage of rsync options 
-- timestamp aware backups 
-
-No, you can't.
-
-Why did the mail people resort to "In-Reply-To", "Message-ID" and
-"References" ? Because time turned out to be an inreliable source of
-information. Please read the related discussions before you argue that
-time based solutions are sufficient.
-
-Time is illusion. 
-
-
-tglx
-
-
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -9,7 +9,7 @@
+ 
+ SYNOPSIS
+ --------
+-'git-rev-list' <commit>
++'git-rev-list' [--author=author] [--committer=committer] [--max-count=count] [--max-age=unixtime] [--min-age=unixtime] <commit>
+ 
+ DESCRIPTION
+ -----------
+@@ -18,6 +18,23 @@
+ useful to produce human-readable log output.
+ 
+ 
++OPTIONS
++-------
++--author::
++	Limit the final output to commits written by the author.
++
++--committer::
++	Limit the final output to commits committed by the author.
++
++--max-count::
++	Stop after showing the specified number of commits.
++
++--max-age::
++	Stop before showing the commits older than specified time.
++
++--min-age::
++	Do not show the commits newer than specified time.
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+--- a/Documentation/git-rev-tree.txt
++++ b/Documentation/git-rev-tree.txt
+@@ -9,7 +9,7 @@
+ 
+ SYNOPSIS
+ --------
+-'git-rev-tree' [--edges] [--cache <cache-file>] [^]<commit> [[^]<commit>]
++'git-rev-tree' [--author author] [--committer committer] [--edges] [--cache <cache-file>] [^]<commit> [[^]<commit>]
+ 
+ DESCRIPTION
+ -----------
+@@ -17,6 +17,12 @@
+ 
+ OPTIONS
+ -------
++--author::
++	Limit the final output to commits written by the author.
++
++--committer::
++	Limit the final output to commits committed by the author.
++
+ --edges::
+ 	Show edges (ie places where the marking changes between parent
+ 	and child)
+--- a/commit.c
++++ b/commit.c
+@@ -23,22 +23,111 @@
+ 	return (struct commit *) obj;
+ }
+ 
+-static unsigned long parse_commit_date(const char *buf)
+-{
+-	unsigned long date;
++static struct person_name **person_name;
++static int person_nr;
++static int person_alloc;
++
++static const char *interesting_author = NULL;
++static const char *interesting_committer = NULL;
++
++void commit_author_committer_match_initialize(const char *author,
++					      const char *committer)
++{
++	interesting_author = author;
++	interesting_committer = committer;
++}
++
++static int person_name_pos(const char *name)
++{
++	int first, last;
++
++	first = 0;
++	last = person_nr;
++	while (last > first) {
++		int next = (last + first) >> 1;
++		struct person_name *pn = person_name[next];
++		int cmp = strcmp(name, pn->name);
++		if (!cmp)
++			return next;
++		if (cmp < 0) {
++			last = next;
++			continue;
++		}
++		first = next+1;
++	}
++	return -first-1;
++}
+ 
+-	if (memcmp(buf, "author", 6))
+-		return 0;
+-	while (*buf++ != '\n')
+-		/* nada */;
+-	if (memcmp(buf, "committer", 9))
+-		return 0;
+-	while (*buf++ != '>')
+-		/* nada */;
+-	date = strtoul(buf, NULL, 10);
+-	if (date == ULONG_MAX)
+-		date = 0;
+-	return date;
++#define INTERESTING_AUTHOR    01
++#define INTERESTING_COMMITTER 02
++
++static struct person_name *person_name_lookup(const char *name)
++{
++	int pos = person_name_pos(name);
++	struct person_name *pn; 
++	if (0 <= pos)
++		return person_name[pos];
++	pos = -pos-1;
++	pn = xmalloc(sizeof(*pn) + strlen(name) + 1);
++	strcpy(pn->name, name);
++	pn->mark = 0;
++
++	/*
++	 * When we decide we want to go fancier, strstr() below
++	 * can be replaced with something like regexp match to
++	 * pick up more than one author or committer.  For now
++	 * let's try simple substring find and see what happens.
++	 * Note that not specifying anybody means we are interested
++	 * in everybody.
++	 */
++	if (!interesting_author || strstr(name, interesting_author))
++		pn->mark |= INTERESTING_AUTHOR;
++	if (!interesting_committer || strstr(name, interesting_committer))
++		pn->mark |= INTERESTING_COMMITTER;
++
++	if (person_nr == person_alloc) {
++		person_alloc = alloc_nr(person_alloc);
++		person_name = xrealloc(person_name, person_alloc *
++				       sizeof(struct person_name *));
++	}
++	person_nr++;
++	if (pos < person_nr)
++		memmove(person_name + pos + 1, person_name + pos,
++			(person_nr - pos - 1) * sizeof(pn));
++	person_name[pos] = pn;
++	return pn;
++}
++
++static void *parse_commit_nametime(char *ptr, const char *ep,
++				   const char *field,
++				   unsigned long *date,
++				   struct person_name **name)
++{
++	unsigned long d;
++	char *cp;
++	int fldlen = strlen(field);
++	if (ptr == NULL || memcmp(ptr, field, fldlen) || ptr[fldlen] != ' ') {
++		*date = 0;
++		*name = NULL;
++		return NULL; /* malformed commit */
++	}
++	for (cp = ptr + fldlen + 1; cp < ep && *cp != '>'; cp++)
++		; /* skip */
++	if (*cp != '>' || *++cp != ' ') {
++		*date = 0;
++		*name = NULL;
++		return NULL; /* malformed commit */
++	}
++	*cp = 0;
++	*name = person_name_lookup(ptr + fldlen + 1);
++	*cp++ = ' ';
++	d = strtoul(cp, NULL, 10);
++	if (d == ULONG_MAX)
++		d = 0;
++	*date = d;
++	while (cp < ep && *cp++ != '\n')
++		; /* skip */
++	return cp;
+ }
+ 
+ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+@@ -63,7 +152,13 @@
+ 		}
+ 		bufptr += 48;
+ 	}
+-	item->date = parse_commit_date(bufptr);
++	
++	bufptr = parse_commit_nametime(bufptr, (char *)buffer + size,
++				       "author", &item->author_date,
++				       &item->author);
++	parse_commit_nametime(bufptr, (char *)buffer + size,
++			      "committer", &item->date,
++			      &item->committer);
+ 	return 0;
+ }
+ 
+@@ -152,3 +247,11 @@
+ 	}
+ 	return ret;
+ }
++
++int commit_author_committer_match(struct commit *item)
++{
++	return ( ((item->author != NULL) &&
++		  (item->author->mark & INTERESTING_AUTHOR)) &&
++		 ((item->committer != NULL) &&
++		  (item->committer->mark & INTERESTING_COMMITTER)) );
++}
+--- a/commit.h
++++ b/commit.h
+@@ -11,8 +11,9 @@
+ 
+ struct commit {
+ 	struct object object;
+-	unsigned long date;
++	unsigned long author_date, date;
+ 	struct commit_list *parents;
++	struct person_name *author, *committer; 
+ 	struct tree *tree;
+ };
+ 
+@@ -36,4 +37,19 @@
+ struct commit *pop_most_recent_commit(struct commit_list **list, 
+ 				      unsigned int mark);
+ 
++struct person_name {
++	char mark;
++	char name[0];
++};
++
++/* This function must be called before fetching any commit object
++ * if commit-author-committer-match function is to be used to filter
++ * commits for output.  Passing NULL is permitted, which makes all
++ * authors (or committers) "interesting".
++ */
++void commit_author_committer_match_initialize(const char *, const char *);
++
++/* Returns true only if author and committer are "interesting". */
++int commit_author_committer_match(struct commit *);
++
+ #endif /* COMMIT_H */
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -11,6 +11,8 @@
+ 	unsigned long max_age = -1;
+ 	unsigned long min_age = -1;
+ 	int max_count = -1;
++	const char *author = NULL;
++	const char *committer = NULL;
+ 
+ 	for (i = 1 ; i < argc; i++) {
+ 		char *arg = argv[i];
+@@ -21,6 +23,10 @@
+ 			max_age = atoi(arg + 10);
+ 		} else if (!strncmp(arg, "--min-age=", 10)) {
+ 			min_age = atoi(arg + 10);
++		} else if (!strncmp(arg, "--author=", 9)) {
++			author = arg + 9;
++		} else if (!strncmp(arg, "--committer=", 12)) {
++			committer = arg + 12;
+ 		} else {
+ 			commit_arg = arg;
+ 		}
+@@ -28,9 +34,13 @@
+ 
+ 	if (!commit_arg || get_sha1(commit_arg, sha1))
+ 		usage("usage: rev-list [OPTION] commit-id\n"
+-		      "  --max-count=nr\n"
+-		      "  --max-age=epoch\n"
+-		      "  --min-age=epoch\n");
++		      "  --author=author\n"
++		      "  --committer=committer\n"
++		      "  --max-count=number\n"
++		      "  --max-age=unixtime\n"
++		      "  --min-age=unixtime\n");
++
++	commit_author_committer_match_initialize(author, committer);
+ 
+ 	commit = lookup_commit(sha1);
+ 	if (!commit || parse_commit(commit) < 0)
+@@ -44,6 +54,8 @@
+ 			continue;
+ 		if (max_age != -1 && (commit->date < max_age))
+ 			break;
++		if (!commit_author_committer_match(commit))
++			continue;
+ 		if (max_count != -1 && !max_count--)
+ 			break;
+ 		printf("%s\n", sha1_to_hex(commit->object.sha1));
+--- a/rev-tree.c
++++ b/rev-tree.c
+@@ -64,7 +64,7 @@
+ }
+ 
+ /*
+- * Usage: rev-tree [--edges] [--cache <cache-file>] <commit-id> [<commit-id2>]
++ * Usage: rev-tree [--edges] [--author <author>] [--cache <cache-file>] <commit-id> [<commit-id2>]
+  *
+  * The cache-file can be quite important for big trees. This is an
+  * expensive operation if you have to walk the whole chain of
+@@ -75,6 +75,9 @@
+ 	int i;
+ 	int nr = 0;
+ 	unsigned char sha1[MAX_COMMITS][20];
++	const char *author = NULL; 
++	const char *committer = NULL;
++	int initialized_author_commiter = 0;
+ 
+ 	/*
+ 	 * First - pick up all the revisions we can (both from
+@@ -83,6 +86,16 @@
+ 	for (i = 1; i < argc ; i++) {
+ 		char *arg = argv[i];
+ 
++		if (!strcmp(arg, "--author")) {
++			author = argv[++i];
++			continue;
++		}
++
++		if (!strcmp(arg, "--committer")) {
++			committer = argv[++i];
++			continue;
++		}
++
+ 		if (!strcmp(arg, "--cache")) {
+ 			read_cache_file(argv[++i]);
+ 			continue;
+@@ -98,7 +111,14 @@
+ 			basemask |= 1<<nr;
+ 		}
+ 		if (nr >= MAX_COMMITS || get_sha1(arg, sha1[nr]))
+-			usage("rev-tree [--edges] [--cache <cache-file>] <commit-id> [<commit-id>]");
++			usage("rev-tree [--edges] [--author <author>] [--committer <committer>] [--cache <cache-file>] <commit-id> [<commit-id>]");
++
++		if (!initialized_author_commiter) {
++			commit_author_committer_match_initialize(author,
++								 committer);
++			initialized_author_commiter = 1;
++		}
++
+ 		process_commit(sha1[nr]);
+ 		nr++;
+ 	}
+@@ -125,6 +145,9 @@
+ 		if (!interesting(commit))
+ 			continue;
+ 
++		if (!commit_author_committer_match(commit))
++			continue;
++
+ 		printf("%lu %s:%d", commit->date, sha1_to_hex(obj->sha1), 
+ 		       obj->flags);
+ 		p = commit->parents;
+--- a/t/t6010-rev-tree-author-commit.sh
++++ b/t/t6010-rev-tree-author-commit.sh
+@@ -0,0 +1,98 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++test_description='git-rev-tree --author and --committer flags.
++'
++
++. ./test-lib.sh
++
++export_them () {
++export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
++}
++
++set_author_zero () {
++    GIT_AUTHOR_NAME="A U Thor" &&
++    GIT_AUTHOR_EMAIL="<author@example.xz>"
++}
++set_author_one () {
++    GIT_AUTHOR_NAME="R O Htua" &&
++    GIT_AUTHOR_EMAIL="<rohtua@example.xz>"
++}
++set_committer_zero () {
++    GIT_COMMITTER_NAME="C O Mmitter" &&
++    GIT_COMMITTER_EMAIL="<committer@example.xz>"
++}
++set_committer_one () {
++    GIT_COMMITTER_NAME="R E Ttimmoc" &&
++    GIT_COMMITTER_EMAIL="<rettimmoc@example.xz>"
++}
++
++# read rev-tree output, and find the author|committer of commit object
++pick_actor () {
++    sed -e 's/^[^ ]* //;s/:.*//' |
++    xargs -r -n1 git-cat-file commit |
++    sed -ne 's/^\('"$1"'\) \([^>]*>\).*/\2/p'
++}
++
++test_expect_success \
++    'preparation' '
++echo frotz >path0 &&
++git-update-cache --add path0 &&
++tree0=$(git-write-tree) &&
++
++set_author_zero &&
++set_committer_zero &&
++export_them &&
++commit0=$(echo frotz | git-commit-tree $tree0) &&
++
++set_author_zero &&
++set_committer_one &&
++export_them &&
++commit1=$(echo frotz | git-commit-tree $tree0 -p $commit0) &&
++
++set_author_one &&
++set_committer_zero &&
++export_them &&
++commit2=$(echo frotz | git-commit-tree $tree0 -p $commit1) &&
++
++set_author_one &&
++set_committer_one &&
++export_them &&
++commit3=$(echo frotz | git-commit-tree $tree0 -p $commit2)'
++
++test_expect_success \
++    'without restriction git-rev-tree should report all four commits.' \
++    'test $(git-rev-tree $commit3 | wc -l) == 4'
++
++test_expect_success \
++    'limiting to A U Thor (two commits)' '
++    case "$(git-rev-tree --author "A U Thor" $commit3 |
++          pick_actor "author" | sort -u)" in
++    "A U Thor <author@example.xz>") : ;;
++    *) (exit 1) ;;
++    esac'
++
++test_expect_success \
++    'limiting to R E Ttimmoc (two commits)' '
++    case "$(git-rev-tree --committer "R E Ttimmoc" $commit3 |
++          pick_actor "committer" | sort -u)" in
++    "R E Ttimmoc <rettimmoc@example.xz>") : ;;
++    *) (exit 1) ;;
++    esac'
++
++LF='
++'
++
++test_expect_success \
++    'limiting to A U Thor and C O Mmitter (one commit)' '
++    case "$(git-rev-tree --author "A U Thor" --committer "C O Mmitter" \
++            $commit3 | pick_actor "committer\\|author" | sort -u)" in
++    "A U Thor <author@example.xz>${LF}C O Mmitter <committer@example.xz>")
++        : ;;
++    *) (exit 1) ;;
++    esac
++'
++
++test_done
+--- a/t/t6110-rev-list-author-commit.sh
++++ b/t/t6110-rev-list-author-commit.sh
+@@ -0,0 +1,97 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++test_description='git-rev-list --author and --committer flags.
++'
++
++. ./test-lib.sh
++
++export_them () {
++export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
++}
++
++set_author_zero () {
++    GIT_AUTHOR_NAME="A U Thor" &&
++    GIT_AUTHOR_EMAIL="<author@example.xz>"
++}
++set_author_one () {
++    GIT_AUTHOR_NAME="R O Htua" &&
++    GIT_AUTHOR_EMAIL="<rohtua@example.xz>"
++}
++set_committer_zero () {
++    GIT_COMMITTER_NAME="C O Mmitter" &&
++    GIT_COMMITTER_EMAIL="<committer@example.xz>"
++}
++set_committer_one () {
++    GIT_COMMITTER_NAME="R E Ttimmoc" &&
++    GIT_COMMITTER_EMAIL="<rettimmoc@example.xz>"
++}
++
++# read rev-list output, and find the author|committer of commit object
++pick_actor () {
++    xargs -r -n1 git-cat-file commit |
++    sed -ne 's/^\('"$1"'\) \([^>]*>\).*/\2/p'
++}
++
++test_expect_success \
++    'preparation' '
++echo frotz >path0 &&
++git-update-cache --add path0 &&
++tree0=$(git-write-tree) &&
++
++set_author_zero &&
++set_committer_zero &&
++export_them &&
++commit0=$(echo frotz | git-commit-tree $tree0) &&
++
++set_author_zero &&
++set_committer_one &&
++export_them &&
++commit1=$(echo frotz | git-commit-tree $tree0 -p $commit0) &&
++
++set_author_one &&
++set_committer_zero &&
++export_them &&
++commit2=$(echo frotz | git-commit-tree $tree0 -p $commit1) &&
++
++set_author_one &&
++set_committer_one &&
++export_them &&
++commit3=$(echo frotz | git-commit-tree $tree0 -p $commit2)'
++
++test_expect_success \
++    'without restriction git-rev-tree should report all four commits.' \
++    'test $(git-rev-list $commit3 | wc -l) == 4'
++
++test_expect_success \
++    'limiting to A U Thor (two commits)' '
++    case "$(git-rev-list --author="A U Thor" $commit3 |
++          pick_actor "author" | sort -u)" in
++    "A U Thor <author@example.xz>") : ;;
++    *) (exit 1) ;;
++    esac'
++
++test_expect_success \
++    'limiting to R E Ttimmoc (two commits)' '
++    case "$(git-rev-list --committer="R E Ttimmoc" $commit3 |
++          pick_actor "committer" | sort -u)" in
++    "R E Ttimmoc <rettimmoc@example.xz>") : ;;
++    *) (exit 1) ;;
++    esac'
++
++LF='
++'
++
++test_expect_success \
++    'limiting to A U Thor and C O Mmitter (one commit)' '
++    case "$(git-rev-list --author="A U Thor" --committer="C O Mmitter" \
++            $commit3 | pick_actor "committer\\|author" | sort -u)" in
++    "A U Thor <author@example.xz>${LF}C O Mmitter <committer@example.xz>")
++        : ;;
++    *) (exit 1) ;;
++    esac
++'
++
++test_done
+------------------------------------------------
 
