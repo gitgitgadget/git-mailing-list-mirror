@@ -1,74 +1,59 @@
-From: Brad Roberts <braddr@puremagic.com>
-Subject: Re: Darcs-git: a few notes for Git hackers
-Date: Sun, 15 May 2005 13:10:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.44.0505151309030.2136-100000@bellevue.puremagic.com>
-References: <20050515194803.GI13024@pasky.ji.cz>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: git repository for net drivers available
+Date: Sun, 15 May 2005 16:20:50 -0400
+Message-ID: <4287AF22.8090300@pobox.com>
+References: <42841A3F.7020909@pobox.com> <4284C54E.3060907@linux.intel.com> <4284C7DA.1020707@pobox.com> <20050515200514.GA31414@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 15 22:10:46 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: James Ketrenos <jketreno@linux.intel.com>,
+	Netdev <netdev@oss.sgi.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	git@vger.kernel.org, Andrew Morton <akpm@osdl.org>
+X-From: git-owner@vger.kernel.org Sun May 15 22:21:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXPRR-0000G2-0F
-	for gcvg-git@gmane.org; Sun, 15 May 2005 22:10:25 +0200
+	id 1DXPbi-0001Ub-AJ
+	for gcvg-git@gmane.org; Sun, 15 May 2005 22:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261215AbVEOUKd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 16:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261218AbVEOUKd
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 16:10:33 -0400
-Received: from bellevue.puremagic.com ([209.189.198.108]:42423 "EHLO
-	bellevue.puremagic.com") by vger.kernel.org with ESMTP
-	id S261215AbVEOUK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2005 16:10:26 -0400
-Received: from bellevue.puremagic.com (localhost [127.0.0.1])
-	by bellevue.puremagic.com (8.13.4/8.13.4/Debian-1) with ESMTP id j4FKA3u9014644
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 15 May 2005 13:10:04 -0700
-Received: from localhost (braddr@localhost)
-	by bellevue.puremagic.com (8.13.4/8.13.4/Submit) with ESMTP id j4FKA3Ip014640;
-	Sun, 15 May 2005 13:10:03 -0700
-X-Authentication-Warning: bellevue.puremagic.com: braddr owned process doing -bs
+	id S261231AbVEOUVC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 16:21:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261229AbVEOUVC
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 16:21:02 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:51863 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261225AbVEOUU4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 16:20:56 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DXPbY-0004SP-Nm; Sun, 15 May 2005 20:20:53 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
+X-Accept-Language: en-us, en
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050515194803.GI13024@pasky.ji.cz>
-X-Virus-Scanned: by amavisd-new
+In-Reply-To: <20050515200514.GA31414@pasky.ji.cz>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Date: Sun, 15 May 2005 21:48:03 +0200
-> From: Petr Baudis <pasky@ucw.cz>
-> To: Junio C Hamano <junkio@cox.net>
-> Cc: Brad Roberts <braddr@puremagic.com>,
->      Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
->      git@vger.kernel.org
-> Subject: Re: Darcs-git: a few notes for Git hackers
->
-> Dear diary, on Sun, May 15, 2005 at 09:25:06PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
-> > >>>>> "BR" == Brad Roberts <braddr@puremagic.com> writes:
-> >
-> > >> I've merged some of the minor stuff for now.
-> >
-> > BR> Cool, though there appears to have been some objections. :)
-> >
-> > I do not have any problem with what the _patch_ does at all.  I
-> > had more trouble in the process of how the patch appeared in
-> > git-pb tree, and I still do.
-> >
-> > Please consider the revert request retracted.  Request to
-> > forewarn people in the mailing list still stands.
->
-> Well, it isn't like this was some huge large-scale change; the diff is
-> quite small. Do you want me to announce _any_ identifier renames in
-> advance on the mailing list? Or where should be the threshold? These
-> were three renames of not-so-frequently used identifiers.
+Petr Baudis wrote:
+> Dear diary, on Fri, May 13, 2005 at 05:29:30PM CEST, I got a letter
+> where Jeff Garzik <jgarzik@pobox.com> told me that...
+> 
+>>Looks like cogito is using $repo/heads/$branch, whereas my git repo is 
+>>using $repo/branches/$branch.
+> 
+> 
+> Would it be a big problem to use refs/heads/$branch? That's the
+> currently commonly agreed convention about location for storing branch
+> heads, not just some weird Cogito-specific invention. And it'd be very
+> nice to have those locations consistent across git repositories.
 
-Additionally, all of these changes were posted originally on 4/22, this
-was just a bring-forward of them as requested.
+Sure, that's doable.
 
-Later,
-Brad
+I've pushed out this change to kernel.org.
+
+	Jeff
+
+
 
