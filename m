@@ -1,65 +1,66 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: Mercurial 0.4e vs git network pull
-Date: Sun, 15 May 2005 14:23:29 -0400
-Message-ID: <428793A1.5070004@pobox.com>
-References: <200505151122.j4FBMJa01073@adam.yggdrasil.com> <20050515173923.GK5914@waste.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Request reverting some from git-pb
+Date: Sun, 15 May 2005 11:25:02 -0700
+Message-ID: <7vy8agtkht.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Adam J. Richter" <adam@yggdrasil.com>, pasky@ucw.cz,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mercurial@selenic.com, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Sun May 15 20:24:15 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun May 15 20:26:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXNmP-00032l-RX
-	for gcvg-git@gmane.org; Sun, 15 May 2005 20:23:58 +0200
+	id 1DXNoN-0003Kq-DP
+	for gcvg-git@gmane.org; Sun, 15 May 2005 20:25:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261194AbVEOSX4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 14:23:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVEOSX4
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 14:23:56 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:18583 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261189AbVEOSXw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 14:23:52 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DXNm4-0004Pj-AY; Sun, 15 May 2005 18:23:36 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Matt Mackall <mpm@selenic.com>
-In-Reply-To: <20050515173923.GK5914@waste.org>
-X-Spam-Score: 0.0 (/)
+	id S261195AbVEOSZs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 14:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261191AbVEOSZ2
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 14:25:28 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:33507 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261195AbVEOSZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2005 14:25:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050515182504.QITD19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 15 May 2005 14:25:04 -0400
+To: pasky@ucw.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Matt Mackall wrote:
-> On Sun, May 15, 2005 at 04:22:19AM -0700, Adam J. Richter wrote:
-> 
->>On Sun, 15 May 2005 10:54:05 +0200, Petr Baudis wrote:
->>
->>>Dear diary, on Thu, May 12, 2005 at 10:57:35PM CEST, I got a letter
->>>where Matt Mackall <mpm@selenic.com> told me that...
->>>
->>>>Does this need an HTTP request (and round trip) per object? It appears
->>>>to. That's 2200 requests/round trips for my 800 patch benchmark.
->>
->>>Yes it does. On the other side, it needs no server-side CGI. But I guess
->>>it should be pretty easy to write some kind of server-side CGI streamer,
->>>and it would then easily take just a single HTTP request (telling the
->>>server the commit ID and receiving back all the objects).
->>
->>	I don't understand what was wrong with Jeff Garzik's previous
->>suggestion of using http/1.1 pipelining to coalesce the round trips.
-> 
-> 
-> You can't do pipelining if you can't look ahead far enough to fill the pipe.
+Petr, please do not do these name clean-ups yet, _especially_
+without having GIT mailing list discussion about renaming.  This
+kind of change inevitably introduces merge conflicts.
 
-Even if you cannot fill a pipeline, HTTP/1.1 is sufficiently useful 
-simply by removing the per-request connection overhead.
+I suspect this is something you lifted from the larger
+libification patch.  While I think name cleanups are good in the
+long run, I do not see value in lifting only some name cleanups
+from a larger libification patch and having people to adjust for
+the merge conflicts twice.  I would not mind if these renames
+happen as a part of libification as a whole.  Pending patches
+need to be inspected and adjusted when that happens anyway.  But
+not until then, at least please have a courtecy to give people a
+bit of warning and an opportunity to speak out.
 
-	Jeff
+------------------------------------------------
+Rename some more cache-related functions
 
+same_name -> ce_same_name()
+remove_entry_at() -> remove_cache_entry_at()
+
+Signed-off-by: Brad Roberts <braddr@puremagic.com>
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
+------------------------------------------------
+Rename cache_match_stat() to ce_match_stat()
+
+Signed-off-by: Brad Roberts <braddr@puremagic.com>
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
+------------------------------------------------
+Rename cache_match_stat() to ce_match_stat()
+
+Signed-off-by: Brad Roberts <braddr@puremagic.com>
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
+------------------------------------------------
 
