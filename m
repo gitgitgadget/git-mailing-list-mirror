@@ -1,84 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Darcs-git: a few notes for Git hackers
-Date: Sun, 15 May 2005 13:48:47 +0200
-Message-ID: <20050515114847.GD13024@pasky.ji.cz>
-References: <Pine.LNX.4.44.0505100546010.2136-100000@bellevue.puremagic.com> <Pine.LNX.4.44.0505141851340.2136-200000@bellevue.puremagic.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 13:48:58 2005
+From: "Adam J. Richter" <adam@yggdrasil.com>
+Subject: Re: Mercurial 0.4e vs git network pull
+Date: Sun, 15 May 2005 04:22:19 -0700
+Message-ID: <200505151122.j4FBMJa01073@adam.yggdrasil.com>
+Cc: git@vger.kernel.org, jgarzik@pobox.com,
+	linux-kernel@vger.kernel.org, mercurial@selenic.com,
+	torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Sun May 15 14:33:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXHby-0008NL-DU
-	for gcvg-git@gmane.org; Sun, 15 May 2005 13:48:46 +0200
+	id 1DXIJ9-0004Ts-4S
+	for gcvg-git@gmane.org; Sun, 15 May 2005 14:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262769AbVEOLsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 07:48:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262787AbVEOLsw
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 07:48:52 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:55471 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262769AbVEOLst (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 07:48:49 -0400
-Received: (qmail 19677 invoked by uid 2001); 15 May 2005 11:48:47 -0000
-To: Brad Roberts <braddr@puremagic.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.44.0505141851340.2136-200000@bellevue.puremagic.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262825AbVEOMdU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 08:33:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261622AbVEOMdU
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 08:33:20 -0400
+Received: from [61.48.53.251] ([61.48.53.251]:38375 "EHLO adam.yggdrasil.com")
+	by vger.kernel.org with ESMTP id S261618AbVEOMdO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 08:33:14 -0400
+Received: (from adam@localhost)
+	by adam.yggdrasil.com (8.11.7/8.11.7) id j4FBMJa01073;
+	Sun, 15 May 2005 04:22:19 -0700
+To: mpm@selenic.com, pasky@ucw.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 15, 2005 at 04:04:25AM CEST, I got a letter
-where Brad Roberts <braddr@puremagic.com> told me that...
-> > I wasn't able to finish redoing these against linus tip, but I got most of
-> > it done (patches 1-14 of the original 19):
-> >
-> >   http://gameboy2.puremagic.com:8090/
-> >   rsync://gameboy2.puremagic.com/git/
-> >
-> > The second, third, and forth to last changes need a careful review,
-> > they're direct applications of the original patches which were lightly
-> > tested during the first round and nothing other than compile tested in
-> > this round.
-> >
-> > I suspect the remaining parts of the original patch series will go in
-> > fairly smoothly.  If no one gets to them before tonight I'll finish
-> > it up after work.
-> >
-> > Later,
-> > Brad
-> 
-> I've completed the re-merge, and moved to tip of git-pb.git rather than
-> tip of git.git.  Unfortunatly that merge was also somewhat intrusive and
-> my individual diffs along the way are somewhat useless now.  The entire
-> history is available about the above locations still.  Attached is the
-> full diff vs git-pb @ 902b92e00e491a60d55c4b2bce122903b8347f34.
+On Sun, 15 May 2005 10:54:05 +0200, Petr Baudis wrote:
+>Dear diary, on Thu, May 12, 2005 at 10:57:35PM CEST, I got a letter
+>where Matt Mackall <mpm@selenic.com> told me that...
+>> Does this need an HTTP request (and round trip) per object? It appears
+>> to. That's 2200 requests/round trips for my 800 patch benchmark.
 
-I've merged some of the minor stuff for now.
+>Yes it does. On the other side, it needs no server-side CGI. But I guess
+>it should be pretty easy to write some kind of server-side CGI streamer,
+>and it would then easily take just a single HTTP request (telling the
+>server the commit ID and receiving back all the objects).
 
-> 2) Should the index changing areas be constructing a new index instead of
-> shuffling bits within the current index?
+	I don't understand what was wrong with Jeff Garzik's previous
+suggestion of using http/1.1 pipelining to coalesce the round trips.
+If you're worried about queuing too many http/1.1 requests, the client
+could adopt a policy of not having more than a certain number of
+requests outstanding or perhaps even making a new http connection
+after a certain number of requests to avoid starving other clients
+when the number of clients doing one of these transfers exceeds the
+number of threads that the http server uses.
 
-When I have a big cache (the only time it matters), I do usually only
-relatively small changes to it, so...
+	Being able to do without a server side CGI script might
+encourage deployment a bit more, both for security reasons and
+effort of deployment.
 
-> 3) The vocabulary and code is inconsistent between cache and index.
+	In any case, using httpd or ftp makes it easier to deploy
+servers in cases where it might be harder to modify firewall rules,
+so I am glad to see that, even if it is through a CGI script.
 
-Yes...
-
-> 4) read-cache.c does much more than reading.
-
-and yes. And cache.h is full of crap. Perhaps we could move read-cache.c
-to cache.c?
-
-
-I'd imagine the plan of attack to continue by changing active_cache to
-be struct cache, then making it local.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+                    __     ______________
+Adam J. Richter        \ /
+adam@yggdrasil.com      | g g d r a s i l
