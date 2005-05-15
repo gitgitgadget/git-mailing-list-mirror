@@ -1,41 +1,40 @@
 From: Zack Brown <zbrown@tumblerings.org>
-Subject: README rewrite
-Date: Sat, 14 May 2005 21:42:44 -0700
-Message-ID: <20050515044244.GA7391@tumblerings.org>
+Subject: Re: README rewrite
+Date: Sat, 14 May 2005 21:49:41 -0700
+Message-ID: <20050515044941.GB7391@tumblerings.org>
+References: <20050515044244.GA7391@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 06:49:03 2005
+X-From: git-owner@vger.kernel.org Sun May 15 06:56:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXB3d-0002pg-US
-	for gcvg-git@gmane.org; Sun, 15 May 2005 06:48:54 +0200
+	id 1DXBAd-0003Az-TK
+	for gcvg-git@gmane.org; Sun, 15 May 2005 06:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261466AbVEOEss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 00:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261487AbVEOEss
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 00:48:48 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:57237 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S261466AbVEOErp
+	id S261436AbVEOEz6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 00:55:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261469AbVEOEz6
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 00:55:58 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:58517 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S261436AbVEOEyk
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2005 00:47:45 -0400
+	Sun, 15 May 2005 00:54:40 -0400
 Received: from zbrown by tumblerings.org with local (Exim 4.50)
-	id 1DXAxg-0002jo-W1; Sat, 14 May 2005 21:42:45 -0700
+	id 1DXB4P-0002xs-An; Sat, 14 May 2005 21:49:41 -0700
 To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
+In-Reply-To: <20050515044244.GA7391@tumblerings.org>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Petr,
-
-This patch is a complete rewrite of the Cogito section of the README file.
-Commands are explained in detail, with a quickstart section at the top and a
-full command reference below.
+Here's an updated patch with fixes, apply instead of the one I just sent:
 
 Signed-off-by: Zack Brown <zbrown@tumblerings.org>
+
 
 README: needs update
 Index: README
@@ -156,7 +155,7 @@ Index: README
 +first make sure you are in an empty directory. Then give the following
 +command:
 +
-+$ cg-clone -s rsync://rsync.kernel.org/pub/scm/cogito/cogito.git cogitodir
++$ cg-clone -s rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
 +
 +When you get your prompt back, do an ls to see the source tree and .git
 +directory.
@@ -247,7 +246,7 @@ Index: README
 +Cogito currently requires that commands be given from the base directory,
 +the one containing the .git directory. Patches have been submitted to
 +implement the ability to give Cogito commands from subdirectories within the
-+repository, but Linus prefers the current bahavior.
++repository, but Linus prefers the current behavior.
 +
 +        cg-add
 +
@@ -271,7 +270,7 @@ Index: README
 +
 +and the testdir directory and testfile file will both be added to the
 +repository. If you then do a cg-seek to look at an earlier version of the
-+respository, both the file and the directory will be gone.
++repository, both the file and the directory will be gone.
 +
 +        cg-admin-lsobj
 +
@@ -430,7 +429,7 @@ Index: README
 -Note that you can also access the Linus' official branch, just by specifying
 -'linus' instead of 'pasky'. You can of course add more branches by:
 +In the above variables - and in the changelog entries - the author is the
-+person who actually wrote a given patch, and the commiter is the person who
++person who actually wrote a given patch, and the committer is the person who
 +actually gave the command to include this patch in the repository. If you
 +are just working on your own repository, or if you commit your own patches,
 +then the author and committer are both you.
@@ -798,6 +797,3 @@ Index: README
  contents efficiently.
  
 
-
--- 
-Zack Brown
