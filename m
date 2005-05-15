@@ -1,50 +1,62 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: README rewrite
-Date: Sun, 15 May 2005 08:53:15 -0700
-Message-ID: <20050515155315.GE7391@tumblerings.org>
-References: <20050515044244.GA7391@tumblerings.org> <20050515044941.GB7391@tumblerings.org> <4286F146.2090302@saville.com> <42876B30.1070404@saville.com> <20050515154041.GD7391@tumblerings.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: speeding up cg-log -u
+Date: Sun, 15 May 2005 12:09:55 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505151158300.30848-100000@iabervon.org>
+References: <7vk6m212g7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 17:58:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Zack Brown <zbrown@tumblerings.org>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun May 15 18:10:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXLVM-0002WK-SM
-	for gcvg-git@gmane.org; Sun, 15 May 2005 17:58:13 +0200
+	id 1DXLhT-0003xt-VJ
+	for gcvg-git@gmane.org; Sun, 15 May 2005 18:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261676AbVEOP6W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 11:58:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261682AbVEOP6W
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 11:58:22 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:2712 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S261676AbVEOP6T
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2005 11:58:19 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.50)
-	id 1DXLQa-0005RO-0e; Sun, 15 May 2005 08:53:16 -0700
-To: Wink Saville <wink@saville.com>
-Content-Disposition: inline
-In-Reply-To: <20050515154041.GD7391@tumblerings.org>
-User-Agent: Mutt/1.5.9i
+	id S261683AbVEOQKi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 12:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVEOQKi
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 12:10:38 -0400
+Received: from iabervon.org ([66.92.72.58]:24326 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261683AbVEOQKc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 12:10:32 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DXLgh-0003fA-00; Sun, 15 May 2005 12:09:55 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6m212g7.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 15, 2005 at 08:40:41AM -0700, Zack Brown wrote:
-> This much I think I understand. What I don't understand is how to actually use
-> branches. I don't see a Cogito command to create or destroy them.
+On Sat, 14 May 2005, Junio C Hamano wrote:
 
-Or I'm blind. The cg-branch-add command is right there. It also has a long
-comment at the top of the script. Unfortunately the comment only describes how
-to use the command, not what exactly branches are or how to work with them.
+> Whenever I work with those "struct object" derivatives, I get
+> very frustrated by the fact that they are designed to cater only
+> to the need of very narrow immediate users. 
 
-Clearly 'branches' are diverging branches of development. But if I have my
-own tree, with several branches in it, it's unclear to me how to specify
-which branch I'm actually working on at any given moment.
+They aren't designed for the immediate users; they're implemented for the
+immediate users. Feel free to add more fields as you need them. The
+current selection is based on only adding things when there's a user for
+them.
 
-Be well,
-Zack
+> The first round of tree objects did not even have names for each entry
+> because the only thing it cared about was connectivity checking, and for
+> that purpose callers would not care about what each blob or
+> subtree was referred as.  Now when I want to use commit objects
+> I find that it only records the commit date (other than
+> connectivity information).  It really appears that connectivity
+> is the primary thing and everything else is bolted on top.
 
--- 
-Zack Brown
+Existance is the primary thing, and everything else was added as
+needed. (Pure connectivity is a bit special, because it's a property of
+generic objects so that fsck-cache doesn't need to know about particular
+types of objects unless there are particular things to check about them)
+
+If you need more fields, let me know, and I'll figure out how to include
+them.
+
+	-Daniel
+*This .sig left intentionally blank*
+
