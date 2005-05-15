@@ -1,56 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Darcs-git: a few notes for Git hackers
-Date: Sun, 15 May 2005 13:36:54 -0700
-Message-ID: <7voebcrztl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.44.0505151309030.2136-100000@bellevue.puremagic.com>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: git-rev-list  in local commit order
+Date: Sun, 15 May 2005 22:44:33 +0200
+Organization: linutronix
+Message-ID: <1116189873.11872.171.camel@tglx>
+References: <4127.10.10.10.24.1116107046.squirrel@linux1>
+	 <1116186533.11872.152.camel@tglx>
+	 <4971.10.10.10.24.1116187076.squirrel@linux1>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>,
-	Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	<git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 15 22:37:19 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 15 22:43:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXPr1-0003G2-TG
-	for gcvg-git@gmane.org; Sun, 15 May 2005 22:36:52 +0200
+	id 1DXPxe-00046h-Sr
+	for gcvg-git@gmane.org; Sun, 15 May 2005 22:43:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261226AbVEOUg6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 16:36:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261229AbVEOUg6
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 16:36:58 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:29945 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261226AbVEOUg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 May 2005 16:36:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050515203654.JZSF20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 15 May 2005 16:36:54 -0400
-To: Brad Roberts <braddr@puremagic.com>
-In-Reply-To: <Pine.LNX.4.44.0505151309030.2136-100000@bellevue.puremagic.com> (Brad
- Roberts's message of "Sun, 15 May 2005 13:10:02 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261229AbVEOUni (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 16:43:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261239AbVEOUni
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 16:43:38 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:34466
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261229AbVEOUnZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 May 2005 16:43:25 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 1644E65C003;
+	Sun, 15 May 2005 22:43:11 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 30B36282BF;
+	Sun, 15 May 2005 22:43:24 +0200 (CEST)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <4971.10.10.10.24.1116187076.squirrel@linux1>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "BR" == Brad Roberts <braddr@puremagic.com> writes:
+On Sun, 2005-05-15 at 15:57 -0400, Sean wrote:
+> Afterall, most people using git are getting by
+> just fine without such a facility today.
 
-BR> Additionally, all of these changes were posted originally on 4/22, this
-BR> was just a bring-forward of them as requested.
 
-I admit I overreacted without first seeing the extent of damage.
-Sorry I made too big a fuss about this.
+Axiom 1:
+Sean knows exactly what people care about
 
-The 4/22 one I found very good and expected it to be in good
-shape when finished.  I simply did not expect that to be taken
-piecemeal like Petr did.  I overreacted, thinking he did so
-_without_ considering much about possible conflicts.
+Axiom 2:
+Time is a reliable source of information.
 
-The request to _continue_ using good judgements when to forewarn
-people still stands ;-).  In this case, Petr used good
-judgement.  My apologies to both of you if my knee-jerk reaction
-caused you bad feelings.
+Axiom 3:
+All information except X can be derived from time.
+
+Axiom 4:
+Most people dont care about X, therefor X is irrelevant.
+
+Axiom 5:
+If doubts, see Axiom 1
+
+tglx
+
 
