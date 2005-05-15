@@ -1,76 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
+From: Matthias Urlichs <smurf@smurf.noris.de>
 Subject: Re: README rewrite
-Date: Sun, 15 May 2005 19:28:03 +0200
-Message-ID: <20050515172802.GH13024@pasky.ji.cz>
+Date: Sun, 15 May 2005 19:33:34 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.05.15.17.33.33.721750@smurf.noris.de>
 References: <20050515044244.GA7391@tumblerings.org> <20050515044941.GB7391@tumblerings.org> <4286F146.2090302@saville.com> <42876B30.1070404@saville.com> <20050515154041.GD7391@tumblerings.org> <20050515155315.GE7391@tumblerings.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wink Saville <wink@saville.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 15 19:28:17 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sun May 15 19:34:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXMuK-00046E-8D
-	for gcvg-git@gmane.org; Sun, 15 May 2005 19:28:04 +0200
+	id 1DXN0e-0004wt-MR
+	for gcvg-git@gmane.org; Sun, 15 May 2005 19:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261161AbVEOR2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 13:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261162AbVEOR2N
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 13:28:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:15285 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261161AbVEOR2I (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 13:28:08 -0400
-Received: (qmail 12810 invoked by uid 2001); 15 May 2005 17:28:03 -0000
-To: Zack Brown <zbrown@tumblerings.org>
-Content-Disposition: inline
-In-Reply-To: <20050515155315.GE7391@tumblerings.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261166AbVEORet (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 May 2005 13:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261168AbVEORet
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 13:34:49 -0400
+Received: from main.gmane.org ([80.91.229.2]:23455 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261166AbVEOReo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 13:34:44 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DXN0K-0004v6-Hq
+	for git@vger.kernel.org; Sun, 15 May 2005 19:34:16 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 May 2005 19:34:16 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 15 May 2005 19:34:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 15, 2005 at 05:53:15PM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> On Sun, May 15, 2005 at 08:40:41AM -0700, Zack Brown wrote:
-> > This much I think I understand. What I don't understand is how to actually use
-> > branches. I don't see a Cogito command to create or destroy them.
-> 
-> Or I'm blind. The cg-branch-add command is right there. It also has a long
-> comment at the top of the script. Unfortunately the comment only describes how
-> to use the command, not what exactly branches are or how to work with them.
-> 
+Hi, Zack Brown wrote:
+
 > Clearly 'branches' are diverging branches of development. But if I have my
 > own tree, with several branches in it, it's unclear to me how to specify
 > which branch I'm actually working on at any given moment.
+> 
+Branches == multiple source directories. You work on the branch whose
+directory you're in. This is why there's no cg-branch-switch command.
 
-I think it's actually very BKish. Each repository has its own "master"
-branch, which always corresponds with your current branch of
-development. That is, your working tree is always represented by the
-"master" branch.
-
-The rest of branches are "remote", that is they just point at the other
-repositories. When you want to get the new changes from them, you
-cg-pull, or cg-update to merge them to your branch too.
-
-So if you want to create a new branch, you cg-clone the original branch.
-And if you want to refer to the new branch in any other branch, you
-cg-branch-add it in the other branch.
-
-So the local branch is the "master" branch, the rest are "remote"
-branches. Note that there is a theoretical support for multiple local
-branches, but I decided not to make things even more confusing and there
-is no Cogito interface for managing them now.
-
-I will add cg-switch which will switch the master branch to some other
-branch (e.g. cg-switch linus will rename your current master to
-master-1234 or something, update your "origin" branch to point to the
-"linus" branch, and make your "master" branch to point at the same
-commit as the "origin" branch). I might also do something like
-cg-branch-add --local, which will add a local branch and you could then
-cg-switch to it too.
+cg-branch-add doesn't actually add or create a branch. It just tells
+cogito your name for one other branch, plus its location so that you may
+pull the branch's data from there.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+
+
