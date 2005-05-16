@@ -1,37 +1,36 @@
 From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Mercurial 0.4e vs git network pull
-Date: Mon, 16 May 2005 11:29:10 +0200
+Subject: Re: [RFD] Ignore rules
+Date: Mon, 16 May 2005 11:35:22 +0200
 Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.05.16.09.29.09.407174@smurf.noris.de>
-References: <200505151122.j4FBMJa01073@adam.yggdrasil.com>
+Message-ID: <pan.2005.05.16.09.35.22.73817@smurf.noris.de>
+References: <4283CAF8.3050304@dgreaves.com> <20050513231229.GI32232@pasky.ji.cz> <4285B6A8.4080309@dgreaves.com> <7vy8ai2nb6.fsf@assigned-by-dhcp.cox.net> <20050514142421.GG3905@pasky.ji.cz> <42861584.6020601@dgreaves.com> <20050514153027.GN3905@pasky.ji.cz> <7vsm0py8vz.fsf@assigned-by-dhcp.cox.net> <2cfc4032050514181127c02e43@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 11:30:43 2005
+X-From: git-owner@vger.kernel.org Mon May 16 11:44:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXbuo-0003pf-GB
-	for gcvg-git@gmane.org; Mon, 16 May 2005 11:29:35 +0200
+	id 1DXc9A-0005W4-9x
+	for gcvg-git@gmane.org; Mon, 16 May 2005 11:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261506AbVEPJ3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 May 2005 05:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261507AbVEPJ3x
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 05:29:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:45477 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261506AbVEPJ3o (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 05:29:44 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DXbuC-0003k9-Jn
-	for git@vger.kernel.org; Mon, 16 May 2005 11:28:56 +0200
+	id S261536AbVEPJoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 May 2005 05:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261540AbVEPJmE
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 05:42:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:8107 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261523AbVEPJlW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 05:41:22 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DXc5e-00054b-7b
+	for git@vger.kernel.org; Mon, 16 May 2005 11:40:46 +0200
 Received: from run.smurf.noris.de ([192.109.102.41])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 May 2005 11:28:56 +0200
+        for <git@vger.kernel.org>; Mon, 16 May 2005 11:40:46 +0200
 Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 16 May 2005 11:28:56 +0200
+        for <git@vger.kernel.org>; Mon, 16 May 2005 11:40:46 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -42,19 +41,24 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Adam J. Richter wrote:
+Hi, Jon Seymour wrote:
 
-> 	Being able to do without a server side CGI script might
-> encourage deployment a bit more, both for security reasons and
-> effort of deployment.
+> a. pushing the ignore logic into the core git tools such as git-ls-files
+> 
+> b. including the current ignore .* rule as a default ignore rule that
+> can be overridden by a .gitignore file
 
-A simple server-side CGI would be a "send me all changeset SHA-1s,
-starting at HEAD until you reach FOO" operation (FOO being the SHA1 of
-the previous head you've pulled before). This operation is simple enough
-that it people should have no problem installing such a CGI.
+I'd say YES to both.
 
-You could then stream-pull the actual contents over HTTP/1.1 without
-further CGI interaction.
+My preferred ignore file logic would be:
+
+- stop at first match (that's more efficient)
+- !pattern prevents exclusion of matching files
+- bash-style shell globs, except that ...
+  - a pattern that starts with / is a regexp
+  - * doesn't cross directory boundaries, but ** does
+- I don't need a per-repository (i.e. non-checked-in/propagated)
+  ignore file.
 
 -- 
 Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
