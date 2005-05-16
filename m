@@ -1,86 +1,50 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: Mercurial 0.4e vs git network pull
-Date: Sun, 15 May 2005 18:12:09 -0700
-Message-ID: <20050516011209.GM5914@waste.org>
-References: <200505151122.j4FBMJa01073@adam.yggdrasil.com> <20050515173923.GK5914@waste.org> <428793A1.5070004@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 0/2] Introducing git-run-with-user-path program.
+Date: Sun, 15 May 2005 23:04:19 -0700
+Message-ID: <7vu0l3puzg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Adam J. Richter" <adam@yggdrasil.com>, pasky@ucw.cz,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mercurial@selenic.com, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon May 16 03:12:24 2005
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Mon May 16 08:04:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXU9a-0007ko-DX
-	for gcvg-git@gmane.org; Mon, 16 May 2005 03:12:18 +0200
+	id 1DXYi9-0000F6-9z
+	for gcvg-git@gmane.org; Mon, 16 May 2005 08:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261230AbVEPBM0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 May 2005 21:12:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261215AbVEPBM0
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 May 2005 21:12:26 -0400
-Received: from waste.org ([216.27.176.166]:61313 "EHLO waste.org")
-	by vger.kernel.org with ESMTP id S261211AbVEPBMQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 May 2005 21:12:16 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j4G1CAf8019751
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 15 May 2005 20:12:10 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j4G1C9o1019748;
-	Sun, 15 May 2005 20:12:09 -0500
-To: Jeff Garzik <jgarzik@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <428793A1.5070004@pobox.com>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new
+	id S261230AbVEPGE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 May 2005 02:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261285AbVEPGE2
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 02:04:28 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:47068 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261230AbVEPGEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 May 2005 02:04:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050516060421.HRIL12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 16 May 2005 02:04:21 -0400
+To: pasky@ucw.cz
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 15, 2005 at 02:23:29PM -0400, Jeff Garzik wrote:
-> Matt Mackall wrote:
-> >On Sun, May 15, 2005 at 04:22:19AM -0700, Adam J. Richter wrote:
-> >
-> >>On Sun, 15 May 2005 10:54:05 +0200, Petr Baudis wrote:
-> >>
-> >>>Dear diary, on Thu, May 12, 2005 at 10:57:35PM CEST, I got a letter
-> >>>where Matt Mackall <mpm@selenic.com> told me that...
-> >>>
-> >>>>Does this need an HTTP request (and round trip) per object? It appears
-> >>>>to. That's 2200 requests/round trips for my 800 patch benchmark.
-> >>
-> >>>Yes it does. On the other side, it needs no server-side CGI. But I guess
-> >>>it should be pretty easy to write some kind of server-side CGI streamer,
-> >>>and it would then easily take just a single HTTP request (telling the
-> >>>server the commit ID and receiving back all the objects).
-> >>
-> >>	I don't understand what was wrong with Jeff Garzik's previous
-> >>suggestion of using http/1.1 pipelining to coalesce the round trips.
-> >
-> >
-> >You can't do pipelining if you can't look ahead far enough to fill the 
-> >pipe.
-> 
-> Even if you cannot fill a pipeline, HTTP/1.1 is sufficiently useful 
-> simply by removing the per-request connection overhead.
+This is a new series I've mentioned earlier today.
 
-Sure. It cuts round trips by a factor of 2. But that's just about all
-it does.
+ [PATCH 1/2] Introduce git-run-with-user-path helper program.
+ [PATCH 2/2] Add sample ignore logic to git-run-with-user-path command.
 
-Mercurial already does:
-  - approximately O(log(new changesets)) requests/data to find new changesets
-  - one request to get an entire changegroup (set of all new
-    changesets), which comes back all nicely pipelined and sorted by file
-  - delta transfer
+The first one adds a path canonicalization helper with path
+ignore hooks but no ignore logic implementation (it passes
+everything that passes verify_path()).  The second one adds a
+sample ignore logic implementation using PCRE.
 
-In "dumb http" mode, ie what's been there since about day three, it
-can do:
-  - one request (size proportional to total number of changesets) to
-    find new changesets
-  - approximately two requests per changed file to pull all deltas
-    (vs request per file revision)
-  - delta transfer
+Although the second one is done primarily as an example and to
+start a mailing list discussion, it should be also safe to merge
+if you decide to take patch 1, because the logic is used only by
+git-run-with-user-path which is a new program. no Porcelain uses
+right now.
 
--- 
-Mathematics is the supreme nostalgia of our time.
+
