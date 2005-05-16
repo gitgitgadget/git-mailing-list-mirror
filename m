@@ -1,66 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/4] Implement git-checkout-cache -u to update stat
- information in the cache.
-Date: Mon, 16 May 2005 15:32:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505161530230.18337@ppc970.osdl.org>
-References: <7vll6gqj3z.fsf@assigned-by-dhcp.cox.net> <20050516220153.GA8609@pasky.ji.cz>
+From: Tristan Wibberley <maihem@maihem.org>
+Subject: Re: Mercurial 0.4e vs git network pull
+Date: Mon, 16 May 2005 23:22:11 +0100
+Message-ID: <1116282131.6141.8.camel__31554.9111379825$1116283578$gmane$org@localhost.localdomain>
+References: <200505151122.j4FBMJa01073@adam.yggdrasil.com>
+	 <20050515124042.GE13024@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 17 00:46:09 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue May 17 00:46:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXoLE-00088Q-IV
-	for gcvg-git@gmane.org; Tue, 17 May 2005 00:45:40 +0200
+	id 1DXoLD-00088Q-CG
+	for gcvg-git@gmane.org; Tue, 17 May 2005 00:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261994AbVEPWo7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 May 2005 18:44:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261986AbVEPWl3
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 18:41:29 -0400
-Received: from fire.osdl.org ([65.172.181.4]:39639 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261976AbVEPWa3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 18:30:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4GMULU3025065
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 May 2005 15:30:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4GMUKeG032533;
-	Mon, 16 May 2005 15:30:20 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050516220153.GA8609@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.39__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261971AbVEPWpe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 May 2005 18:45:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261956AbVEPWpd
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 18:45:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:30139 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261977AbVEPWmI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 18:42:08 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DXoGJ-0007Yq-UZ
+	for git@vger.kernel.org; Tue, 17 May 2005 00:40:36 +0200
+Received: from host81-156-255-228.range81-156.btcentralplus.com ([81.156.255.228])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 May 2005 00:40:35 +0200
+Received: from maihem by host81-156-255-228.range81-156.btcentralplus.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 May 2005 00:40:35 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host81-156-255-228.range81-156.btcentralplus.com
+In-Reply-To: <20050515124042.GE13024@pasky.ji.cz>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 17 May 2005, Petr Baudis wrote:
->
-> Dear diary, on Sun, May 15, 2005 at 11:23:12PM CEST, I got a letter
-> where Junio C Hamano <junkio@cox.net> told me that...
-> > With -u flag, git-checkout-cache picks up the stat information
-> > from newly created file and updates the cache.  This removes the
-> > need to run git-update-cache --refresh immediately after running
-> > git-checkout-cache.
+On Sun, 2005-05-15 at 14:40 +0200, Petr Baudis wrote:
+> Dear diary, on Sun, May 15, 2005 at 01:22:19PM CEST, I got a letter
+> where "Adam J. Richter" <adam@yggdrasil.com> told me that...
+> > 
+> > 	I don't understand what was wrong with Jeff Garzik's previous
+> > suggestion of using http/1.1 pipelining to coalesce the round trips.
+> > If you're worried about queuing too many http/1.1 requests, the client
+> > could adopt a policy of not having more than a certain number of
+> > requests outstanding or perhaps even making a new http connection
+> > after a certain number of requests to avoid starving other clients
+> > when the number of clients doing one of these transfers exceeds the
+> > number of threads that the http server uses.
 > 
-> I actually feel ok with this, but I wonder about Linus' opinion about
-> it.  :-)
+> The problem is that to fetch a revision tree, you have to
+> 
+> 	send request for commit A
+> 	receive commit A
+> 	look at commit A for list of its parents
+> 	send request for the parents
+> 	receive the parents
+> 	look inside for list of its parents
+> 	...
 
-I don't think I mind any more.
+What about IMAP? You could ask for just the parents for several messages
+(via a message header), then start asking for message bodies (with the
+juicy stuff in). You could also ask for a list of the new commits then
+ask for each of the bodies (several at a time). Not as good as a "Just
+give me all new data", but an *awful* lot more efficient than HTTP. And
+very flexible. You just need to map changesets to IMAP messages (if such
+a mapping can actually make sense :)
 
-My initial reluctance to do this was based on the fact that I wanted to 
-avoid having something that updates things "both ways" (ie updates both 
-the index file _and_ the checked-out stuff), and the largest reason for 
-that was just worrying about stability.
+Prolly a bit more work though.
 
-However, it's not like we've been having major stability issues, afaik, 
-and as long as the index file locking is honoured (which the patch seemed 
-to do), I don't have any real issues with it.
+--
+Tristan Wibberley
 
-		Linus
+The opinions expressed in this message are my own opinions and not those
+of my employer.
+
+
