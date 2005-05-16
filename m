@@ -1,109 +1,85 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: README rewrite
-Date: Mon, 16 May 2005 08:16:04 -0700
-Message-ID: <20050516151604.GF7391@tumblerings.org>
-References: <20050515044244.GA7391@tumblerings.org> <20050515044941.GB7391@tumblerings.org> <4286F146.2090302@saville.com> <42876B30.1070404@saville.com> <20050515154041.GD7391@tumblerings.org> <20050515155315.GE7391@tumblerings.org> <20050515172802.GH13024@pasky.ji.cz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: speeding up cg-log -u
+Date: Mon, 16 May 2005 11:38:58 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505161115010.30848-100000@iabervon.org>
+References: <7voebboafy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wink Saville <wink@saville.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 16 17:28:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, Zack Brown <zbrown@tumblerings.org>,
+	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon May 16 17:47:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXhVA-0002SC-5N
-	for gcvg-git@gmane.org; Mon, 16 May 2005 17:27:28 +0200
+	id 1DXhmt-00066v-0h
+	for gcvg-git@gmane.org; Mon, 16 May 2005 17:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261714AbVEPP00 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 May 2005 11:26:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVEPPXm
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 11:23:42 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:6301 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S261690AbVEPPVV
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 May 2005 11:21:21 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.50)
-	id 1DXhK8-0001LM-D0; Mon, 16 May 2005 08:16:04 -0700
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050515172802.GH13024@pasky.ji.cz>
-User-Agent: Mutt/1.5.9i
+	id S261712AbVEPPoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 May 2005 11:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261717AbVEPPlg
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 11:41:36 -0400
+Received: from iabervon.org ([66.92.72.58]:5383 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261723AbVEPPjm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 11:39:42 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DXhgJ-000726-00; Mon, 16 May 2005 11:38:59 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voebboafy.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, May 15, 2005 at 07:28:03PM +0200, Petr Baudis wrote:
-> Dear diary, on Sun, May 15, 2005 at 05:53:15PM CEST, I got a letter
-> where Zack Brown <zbrown@tumblerings.org> told me that...
-> > On Sun, May 15, 2005 at 08:40:41AM -0700, Zack Brown wrote:
-> > > This much I think I understand. What I don't understand is how to actually use
-> > > branches. I don't see a Cogito command to create or destroy them.
-> > 
-> > Or I'm blind. The cg-branch-add command is right there. It also has a long
-> > comment at the top of the script. Unfortunately the comment only describes how
-> > to use the command, not what exactly branches are or how to work with them.
-> > 
-> > Clearly 'branches' are diverging branches of development. But if I have my
-> > own tree, with several branches in it, it's unclear to me how to specify
-> > which branch I'm actually working on at any given moment.
+On Mon, 16 May 2005, Junio C Hamano wrote:
+
+> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 > 
-> I think it's actually very BKish. Each repository has its own "master"
-> branch, which always corresponds with your current branch of
-> development. That is, your working tree is always represented by the
-> "master" branch.
+> DB> Existance is the primary thing, and everything else was added as
+> DB> needed. (Pure connectivity is a bit special, because it's a property of
+> DB> generic objects so that fsck-cache doesn't need to know about particular
+> DB> types of objects unless there are particular things to check about them)
 > 
-> The rest of branches are "remote", that is they just point at the other
-> repositories. When you want to get the new changes from them, you
-> cg-pull, or cg-update to merge them to your branch too.
+> DB> If you need more fields, let me know, and I'll figure out how to include
+> DB> them.
 > 
-> So if you want to create a new branch, you cg-clone the original branch.
-> And if you want to refer to the new branch in any other branch, you
-> cg-branch-add it in the other branch.
-
-So a branch is just a name for a cloned tree somewhere, the same as a tag is
-just a name for a revision some time in the past?
-
+> Could you take a look at the latest round of the patch and see
+> what I did there makes sense?
 > 
-> So the local branch is the "master" branch, the rest are "remote"
-> branches. Note that there is a theoretical support for multiple local
-> branches, but I decided not to make things even more confusing and there
-> is no Cogito interface for managing them now.
+>     From: Junio C Hamano <junkio@cox.net>
+>     Date: Sun, 15 May 2005 14:18:36 -0700
+>     Message-ID: <7vy8agqjbn.fsf@assigned-by-dhcp.cox.net>
+>     Subject: [PATCH 1/4] Add --author and --committer match
+>              to git-rev-list and git-rev-tree.
 
-Is there anything about the repository that 'knows' which is the master branch,
-or is this just a matter of which person is in charge? So, if I have a project,
-and I have a Cogito repository, so far it's just me, and just one branch.
+It seems generally good to me.
 
-Then another person joins the project, and they clone my repository onto their
-local system, and give it their own branch name.
+I think it would fit stylistically a bit better if the "mark" field on the
+person names were left for programs to use however they wanted, and the
+"interesting" determination were done in the programs (or, since there are
+two with the same characteristics, a new file they both link against).
 
-Now here is the question:
+Alternatively, put the used bit definitions in the header file and have a
+mask for unused flags.
 
-We decide that the other person is a better project leader, and we decide to use
-their branch as the master branch, and mine as just a remote branch.
+> Another thing I wanted to ask you about was lifetime rules.
+> When we "lookup" these objects (and then "parse" them, which
+> causes more memory to be used), who is responsible for freeing
+> them?  When my program thinks it is done with a commit, is it
+> allowed to free it?  Or does the lookup machinery own all of the
+> objects that have ever been looked up, and the program should
+> not worry about freeing them to begin with?
 
-Would that be normal Cogito behavior? i.e. there is nothing to distinguish a
-'master' branch from any other except that it is the one everyone says is the
-master branch?
+The lookup machinery owns all of the objects that have been looked up. The
+thing is that the program can never effectively tell if it's really done
+with a commit, because some other branch it's following could have
+incorrect dates and suddenly turn out to be descended from a commit that
+it freed, and things would likely misbehave if the object were looked up
+again, since the flags would be reset.
 
-Be well,
-Zack
+We could have something that causes them to be reset to unparsed, if the
+program thinks that, even if it references the same object again, it won't
+need the contents.
 
-> 
-> I will add cg-switch which will switch the master branch to some other
-> branch (e.g. cg-switch linus will rename your current master to
-> master-1234 or something, update your "origin" branch to point to the
-> "linus" branch, and make your "master" branch to point at the same
-> commit as the "origin" branch). I might also do something like
-> cg-branch-add --local, which will add a local branch and you could then
-> cg-switch to it too.
-> 
-> -- 
-> 				Petr "Pasky" Baudis
-> Stuff: http://pasky.or.cz/
-> C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+	-Daniel
+*This .sig left intentionally blank*
 
--- 
-Zack Brown
