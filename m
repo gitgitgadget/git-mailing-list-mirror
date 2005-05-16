@@ -1,85 +1,93 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: speeding up cg-log -u
-Date: Mon, 16 May 2005 11:38:58 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505161115010.30848-100000@iabervon.org>
-References: <7voebboafy.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Summary of core GIT while you are away.
+Date: Mon, 16 May 2005 09:10:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org>
+References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@ucw.cz>, Zack Brown <zbrown@tumblerings.org>,
-	git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Mon May 16 17:47:21 2005
+Cc: pasky@ucw.cz, braddr@puremagic.com, nico@cam.org,
+	david@dgreaves.com, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 16 18:09:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DXhmt-00066v-0h
-	for gcvg-git@gmane.org; Mon, 16 May 2005 17:45:47 +0200
+	id 1DXi8q-0001Ca-5R
+	for gcvg-git@gmane.org; Mon, 16 May 2005 18:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261712AbVEPPoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 May 2005 11:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261717AbVEPPlg
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 11:41:36 -0400
-Received: from iabervon.org ([66.92.72.58]:5383 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261723AbVEPPjm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 11:39:42 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DXhgJ-000726-00; Mon, 16 May 2005 11:38:59 -0400
+	id S261724AbVEPQIo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 May 2005 12:08:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261727AbVEPQIo
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 May 2005 12:08:44 -0400
+Received: from fire.osdl.org ([65.172.181.4]:52690 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261724AbVEPQId (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 May 2005 12:08:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4GG87U3026205
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 16 May 2005 09:08:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4GG85qa008837;
+	Mon, 16 May 2005 09:08:06 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voebboafy.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.39__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 16 May 2005, Junio C Hamano wrote:
 
-> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> DB> Existance is the primary thing, and everything else was added as
-> DB> needed. (Pure connectivity is a bit special, because it's a property of
-> DB> generic objects so that fsck-cache doesn't need to know about particular
-> DB> types of objects unless there are particular things to check about them)
-> 
-> DB> If you need more fields, let me know, and I'll figure out how to include
-> DB> them.
-> 
-> Could you take a look at the latest round of the patch and see
-> what I did there makes sense?
-> 
->     From: Junio C Hamano <junkio@cox.net>
->     Date: Sun, 15 May 2005 14:18:36 -0700
->     Message-ID: <7vy8agqjbn.fsf@assigned-by-dhcp.cox.net>
->     Subject: [PATCH 1/4] Add --author and --committer match
->              to git-rev-list and git-rev-tree.
 
-It seems generally good to me.
 
-I think it would fit stylistically a bit better if the "mark" field on the
-person names were left for programs to use however they wanted, and the
-"interesting" determination were done in the programs (or, since there are
-two with the same characteristics, a new file they both link against).
+On Sat, 14 May 2005, Junio C Hamano wrote:
+>
+> Hoping that you had a good time during your vacation, and at the
+> same time also hoping to help you catch up with GIT traffic,
+> here is my version of the summary of things that happened in the
+> GIT community around core GIT [*1*].
 
-Alternatively, put the used bit definitions in the header file and have a
-mask for unused flags.
+Thanks. I'm back and reading email, but have by no means caught up yet.
 
-> Another thing I wanted to ask you about was lifetime rules.
-> When we "lookup" these objects (and then "parse" them, which
-> causes more memory to be used), who is responsible for freeing
-> them?  When my program thinks it is done with a commit, is it
-> allowed to free it?  Or does the lookup machinery own all of the
-> objects that have ever been looked up, and the program should
-> not worry about freeing them to begin with?
+Anyway, everythign I've read so far makes sense, and it might make sense
+to continue git development using just git-pb. The only thing I personally
+think sucks is the author/committer matching of git-rev-list/tree, since
+it would seem like somebody might well like to match on an arbitrary part
+of a commit, and special-casing author/committer seems somewhat broken. 
+But that's a fairly minor nit.
 
-The lookup machinery owns all of the objects that have been looked up. The
-thing is that the program can never effectively tell if it's really done
-with a commit, because some other branch it's following could have
-incorrect dates and suddenly turn out to be descended from a commit that
-it freed, and things would likely misbehave if the object were looked up
-again, since the flags would be reset.
+I personally suspect that both git-rev-list and git-rev-tree should have
+an alternate output format that could be more easily grepped by subsequent
+commands. For example, right now git-rev-list just outputs a list of
+commit ID's, and it might make sense to have a flag to just append the
+commit message to the output, and zero-terminate it (and if the commit
+message has a NUL byte in it, just truncate it at that point).
 
-We could have something that causes them to be reset to unparsed, if the
-program thinks that, even if it references the same object again, it won't
-need the contents.
+Then you could just do
 
-	-Daniel
-*This .sig left intentionally blank*
+	git-rev-list -v --header HEAD | grep -z 'author[^\n]*Linus'
 
+to tell it to do the "verbose" thing (only showing the header of the 
+commit, not the whole message), and grep for "Linus" in the author line.
+
+Or, if you want to see all commits that are signed off by so-and-so, do:
+
+	git-rev-list -v HEAD | grep -zi 'signed-off-by:[^\n]*so-and-so'
+
+and it would still be pretty efficient, and a _lot_ more generic and 
+flexible than the "--author" and "--committer" flags.
+
+I also suspect that a lot of uses if git-rev-{tree|list} actually want to 
+see the commit stuff anyway, ie things like gitweb etc currently likely 
+end up doing a separate "git-cat-file commit <sha1>" to get the whole 
+commit information, which the "-v" flag would just give directly.
+
+The only question is whether you want to have it be human-readable by
+default (indent the message lines with a <tab>, and nonheaders with
+<tab>+4*<space> or something), and then have a "-z" flag to do the
+machine-readable version described above.
+
+Hmm?
+
+		Linus
