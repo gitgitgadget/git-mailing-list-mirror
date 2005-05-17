@@ -1,91 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make object contents optionally available
-Date: Tue, 17 May 2005 10:12:50 -0700
-Message-ID: <7vfywlhj3h.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.21.0505171130460.30848-100000@iabervon.org>
+From: Thomas Gleixner <tglx@linutronix.de>
+Subject: Re: git-rev-list  in local commit order
+Date: Tue, 17 May 2005 17:05:07 +0000
+Organization: linutronix
+Message-ID: <1116349507.17296.31.camel@tglx.tec.linutronix.de>
+References: <4127.10.10.10.24.1116107046.squirrel@linux1>
+	 <1116186533.11872.152.camel@tglx>
+	 <4971.10.10.10.24.1116187076.squirrel@linux1>
+	 <1116189873.11872.171.camel@tglx>
+	 <1102.10.10.10.24.1116189916.squirrel@linux1>
+	 <1116191636.11872.195.camel@tglx>
+	 <1273.10.10.10.24.1116192097.squirrel@linux1>
+	 <1116192629.11872.201.camel@tglx>
+	 <1392.10.10.10.24.1116193437.squirrel@linux1>
+	 <1116195235.11872.213.camel@tglx>
+	 <1629.10.10.10.24.1116278725.squirrel@linux1>
+	 <Pine.LNX.4.58.0505161638090.18337@ppc970.osdl.org>
+	 <1116323520.17296.12.camel@tglx.tec.linutronix.de>
+	 <Pine.LNX.4.58.0505170833330.18337@ppc970.osdl.org>
+Reply-To: tglx@linutronix.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue May 17 19:21:55 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 19:36:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY5iy-000618-4Y
-	for gcvg-git@gmane.org; Tue, 17 May 2005 19:19:20 +0200
+	id 1DY5we-0007vj-IT
+	for gcvg-git@gmane.org; Tue, 17 May 2005 19:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261918AbVEQRTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 13:19:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261931AbVEQRP6
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 13:15:58 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:9935 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261894AbVEQRMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2005 13:12:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050517171252.EGBW550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 17 May 2005 13:12:52 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0505171130460.30848-100000@iabervon.org> (Daniel
- Barkalow's message of "Tue, 17 May 2005 11:52:17 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261854AbVEQRdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 13:33:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261909AbVEQRap
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 13:30:45 -0400
+Received: from 213-239-205-147.clients.your-server.de ([213.239.205.147]:21939
+	"EHLO mail.tglx.de") by vger.kernel.org with ESMTP id S261827AbVEQR32
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2005 13:29:28 -0400
+Received: from mail.tec.linutronix.de (unknown [192.168.0.1])
+	by mail.tglx.de (Postfix) with ESMTP id 3A5AD65C003;
+	Tue, 17 May 2005 19:29:09 +0200 (CEST)
+Received: from tglx.tec.linutronix.de (tglx.tec.linutronix.de [192.168.0.68])
+	by mail.tec.linutronix.de (Postfix) with ESMTP id 866BA282C9;
+	Tue, 17 May 2005 19:05:04 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505170833330.18337@ppc970.osdl.org>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+On Tue, 2005-05-17 at 08:43 -0700, Linus Torvalds wrote:
+> > My idea of repository id was not the notion of workspace seperation. I
+> > dont care in which directory and on which machine you or who ever
+> > commits a line of code. I care where the change appears in a public
+> > repository, which is unique.
+> 
+> You seem to think that the repository on master.kernel.org is more 
+> important than the one on my private machine, and you're _wrong_.
 
-DB> I'm already going to add a per-type global to have the parse functions
-DB> also unpack the object contents user-visibly, for the case that Junio
-DB> pointed out. (Making it: parse_* doesn't change whether the contents are
-DB> unpacked, unless you tell it to unpack objects.)
+For me yes, as I have no access to your private ones and I can only rely
+on the integrity of the public accessible ones.
 
-That sounds better than the patch you sent last night, but are
-we sure that callers would be satisfied if you just make some
-_types_ more special than others?
+For the individual developer the private workspaces are surely more
+important. I never doubted that, but I do not care whether you use one
+or ten workspaces and which one of them you blow away or use for
+updating of master.kernel.org. 
 
-Parse functions need to unpack anyway, so it might make more
-sense to add an optional callback just after where unpacking
-happens to ask the main program if it wants the unpacked raw
-data to be kept.  So you would do something like:
+tglx
 
-    struct object *parse_object(unsigned char *sha1)
-    {
-   ...
-                    unsigned long size;
-                    void *buffer = unpack_sha1_file(map, mapsize, type, &size);
-                    munmap(map, mapsize);
-                    if (!buffer)
-                            return NULL;
-   ...             
-                    } else {
-                            obj = NULL;
-                    }
-+		    if (obj && keep_object_raw_data(sha1, type, size, buffer)) {
-+                           obj.raw_data = buffer;
-+                           obj.raw_size = size;
-+                   } else 
-                            free(buffer);
-                    return obj;
-            }
-            return NULL;
-    }
-
-And put a dummy implementation of keep_object_raw_data() that
-says "I do not want anything to be kept" in the libgit.a.  Main
-programs that _care_ about raw data can implement their own
-keep_object_raw_data() callback that is more intelligent.
-In addition you give them the interface to free raw data you
-already have.
-
-DB> I think the only likely bug would be unpacking objects after parsing
-DB> them, instead of before, which is correct but inefficient. It should be
-DB> clear to a user whether the raw contents are available at any point in the
-DB> user code.
-
-Another possibility is not to make double unpacking too costly
-by having an LRU of unpack_sha1_file(), but I am not sure how
-effective that would be.
 
