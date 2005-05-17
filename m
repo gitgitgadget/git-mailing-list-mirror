@@ -1,82 +1,99 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Make object contents optionally available
-Date: Tue, 17 May 2005 13:55:51 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505171325150.30848-100000@iabervon.org>
-References: <7vfywlhj3h.fsf@assigned-by-dhcp.cox.net>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: [PATCH] improved delta support for git
+Date: Tue, 17 May 2005 20:22:32 +0200
+Message-ID: <20050517182232.GM13508@cip.informatik.uni-erlangen.de>
+References: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue May 17 19:58:57 2005
+Content-Type: multipart/mixed; boundary="R+My9LyyhiUvIEro"
+X-From: git-owner@vger.kernel.org Tue May 17 20:25:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY6It-0003J3-A8
-	for gcvg-git@gmane.org; Tue, 17 May 2005 19:56:27 +0200
+	id 1DY6i2-0007GV-PG
+	for gcvg-git@gmane.org; Tue, 17 May 2005 20:22:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261815AbVEQR4p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 13:56:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261935AbVEQR4p
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 13:56:45 -0400
-Received: from iabervon.org ([66.92.72.58]:44551 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261815AbVEQR4a (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 13:56:30 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DY6IK-0000ac-00; Tue, 17 May 2005 13:55:52 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfywlhj3h.fsf@assigned-by-dhcp.cox.net>
+	id S261265AbVEQSWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 14:22:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261308AbVEQSWu
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 14:22:50 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:42646 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261265AbVEQSWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2005 14:22:33 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4HIMWS8002061
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 17 May 2005 18:22:32 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4HIMW0D002057
+	for git@vger.kernel.org; Tue, 17 May 2005 20:22:32 +0200 (CEST)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.62.0505112309480.5426@localhost.localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 17 May 2005, Junio C Hamano wrote:
 
-> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> DB> I'm already going to add a per-type global to have the parse functions
-> DB> also unpack the object contents user-visibly, for the case that Junio
-> DB> pointed out. (Making it: parse_* doesn't change whether the contents are
-> DB> unpacked, unless you tell it to unpack objects.)
-> 
-> That sounds better than the patch you sent last night, but are
-> we sure that callers would be satisfied if you just make some
-> _types_ more special than others?
+--R+My9LyyhiUvIEro
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-It wouldn't make any types special; the caller can just control each type
-individually, so that code that only cares about commits could get commits
-unpacked, but not get trees unpacked even if it has them parsed.
+Hello Nicolas,
+I just tried it against Linus git-HEAD. It worked like a charm so far. I
+imported mutt-1.5 CVS branch using cvsps (1103 patches).
 
-> Parse functions need to unpack anyway, so it might make more
-> sense to add an optional callback just after where unpacking
-> happens to ask the main program if it wants the unpacked raw
-> data to be kept.
+(medion) [/scratch/mutt/mutt-cvs] git-rev-tree HEAD | wc -l
+1103
+(medion) [/scratch/mutt/mutt-cvs] du -sh .git/objects/
+63M     .git/objects/
+(medion) [/scratch/mutt/mutt-cvs] git-deltafy-script -d 2000
+...
+(medion) [/scratch/mutt/mutt-cvs] du -sh .git/objects/
+35M     .git/objects/
 
-I think that a callback is a bit excessive, and it wouldn't get the useful
-information anyway, which is really: "what is supposed to happen to this
-object, which you haven't seen before, after it's parsed?" 
+Maybe you should add git-deltafy-script and git-mkdelta to the installation
+targets (patch attached).
 
-> So you would do something like:
->     struct object *parse_object(unsigned char *sha1)
->     {
+And I wonder why the mutt CVS Repository is still smaller than the
+zdelta compressed mutt git repository. And with mutt CVS Repository I
+mean every commit since mutt-0.9x not only mutt-1.5 branch?
 
-That reminds me that I should also fix the parse_object path, which can
-now be simplified substantially.
+(faui03) [~] du -sh work/mutt/cvsrepository
+34M     work/mutt/cvsrepository
 
-Note that parse_object calls parse_<type>, rather than the reverse,
-because parse_<type> can skip the step of figuring out what routine to
-use. The parse_<type> version also has lookup_<type>, which can return the
-struct which will be filled out later; this isn't possible for an object
-of unknown type, since it can't tell what struct type to allocate.
+Greetings,
+	Thomas
 
-> Another possibility is not to make double unpacking too costly
-> by having an LRU of unpack_sha1_file(), but I am not sure how
-> effective that would be.
+--R+My9LyyhiUvIEro
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=diff
 
-It would work for pop_most_recent_commit, which parses the thing it's
-about to return, but I don't think it's a particularly good solution in
-general.
+[PATCH] Install git-mkdelta and git-deltafy-script
 
-	-Daniel
-*This .sig left intentionally blank*
+Signed-off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
 
+--- a/Makefile
++++ b/Makefile
+@@ -19,7 +19,7 @@
+ INSTALL=install
+ 
+ SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
+-	git-pull-script git-tag-script git-resolve-script
++	git-pull-script git-tag-script git-resolve-script git-deltafy-script
+ 
+ PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
+ 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
+@@ -28,7 +28,7 @@
+ 	git-unpack-file git-export git-diff-cache git-convert-cache \
+ 	git-http-pull git-rpush git-rpull git-rev-list git-mktag \
+ 	git-diff-helper git-tar-tree git-local-pull git-write-blob \
+-	git-get-tar-commit-id
++	git-get-tar-commit-id git-mkdelta
+ 
+ all: $(PROG)
+ 
+
+--R+My9LyyhiUvIEro--
