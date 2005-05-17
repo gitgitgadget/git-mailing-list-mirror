@@ -1,87 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/4] Pulling refs files
-Date: Tue, 17 May 2005 18:20:40 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505171802570.30848-100000@iabervon.org>
-References: <20050517214533.GP7136@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/4] Tweak diff output further to make it a bit less
+ distracting.
+Date: Tue, 17 May 2005 15:25:08 -0700
+Message-ID: <7vsm0lqym3.fsf@assigned-by-dhcp.cox.net>
+References: <7vvf5kqj9l.fsf@assigned-by-dhcp.cox.net>
+	<20050516220559.GC8609@pasky.ji.cz>
+	<7vsm0mn5s1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505161556260.18337@ppc970.osdl.org>
+	<20050517070158.GA10031@pasky.ji.cz>
+	<Pine.LNX.4.58.0505170812060.18337@ppc970.osdl.org>
+	<7vu0l1fz6p.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505171227260.18337@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed May 18 00:29:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 18 00:37:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYAX2-0001ch-6s
-	for gcvg-git@gmane.org; Wed, 18 May 2005 00:27:20 +0200
+	id 1DYAfz-0002nG-Lq
+	for gcvg-git@gmane.org; Wed, 18 May 2005 00:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262017AbVEQW0s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 18:26:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262039AbVEQWXH
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 18:23:07 -0400
-Received: from iabervon.org ([66.92.72.58]:49158 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262038AbVEQWVQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 18:21:16 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DYAQa-0002Ft-00; Tue, 17 May 2005 18:20:40 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050517214533.GP7136@pasky.ji.cz>
+	id S262030AbVEQW1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 18:27:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262010AbVEQW0w
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 18:26:52 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:12475 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S262034AbVEQWZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 May 2005 18:25:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050517222509.ZQCF1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 17 May 2005 18:25:09 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505171227260.18337@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 17 May 2005 12:32:52 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 17 May 2005, Petr Baudis wrote:
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-> Dear diary, on Tue, May 17, 2005 at 11:20:54PM CEST, I got a letter
-> where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> > Hmm... maybe the right thing is to make the implementation-provided
-> > transfer code handle arbitrary things in GIT_DIR, but have code for
-> > updating reference files atomically and using a reference file to start
-> > from use "refs/"? Certainly, there's nothing special about reference files
-> > in transit.
-> > 
-> > Certainly the things in the info/ directory shouldn't be treated a head
-> > that you're going to pull, so that has to be different above the protocol
-> > level anyway.
-> 
-> *confused* :) I'm sorry, I have trouble understanding this. Could you
-> rephrase, please?
+LT> So I'd really suggest having just a flag that says "pure old diff format"  
+LT> or "new diff format with renames", and if the latter is selected, then do
+LT> _just_ the changes, ie the rename+change case would really boil down to
+LT> getting just
 
-If you want to get info/ignore, you want to get it and save it, not
-download a set of objects it refers to. So it's different from specifying
-that you want to use refs/heads/master as the starting point for a pull.
+That is sensible.  So the with --detect-rename flag, we do
+rename detection and show only the changes, otherwise we do not
+do rename detection and give pure old diff (two diffs against
+/dev/null, that is).  I do not personally think --detect-rename
+with --output-old-style-diff is useful.
 
-There would be a separation between transfering whatever file you specify
-and treating the specified (remote) file from refs/ as the starting point
-for pulling objects.
+Now, in the new diff format, if the rename is really a pure
+rename, then we would have:
 
-Also, you don't need to do the same kind of careful update, since the
-desired value of info/ignore isn't going to depend on the previous
-value.
+     diff -git a/nitfol b/nitfol
+     rename old frotz
+     rename new nitfol
+     diff -git a/rezrov b/rezrov
+     --- a/rezrov
+     +++ b/rezrov
+     @@ ...
 
-> > So the remote receiver should get an instruction: change X from OLD to NEW
-> > and pull NEW. It should:
-> > 
-> >  - lock the file against further updates
-> >  - check that the current value is the provided OLD
-> >  - pull the necessary objects
-> >  - write NEW to the file
-> - unlock the file ;-))
-
-The way I'm actually doing things is to write NEW into the lock file at
-some arbitrary point, and "writing to the file" is actually renaming the
-lock file to the normal filename. So writing unlocks the file
-automatically.
-
-> >  - report success
-> > 
-> > On failure of any step, it should unlock the file without changing it.
-> 
-> Sounds right.
-
-I think I'll get to implementing it Wednesday night. I might be able to
-get the first step done tonight (my previous patch, except with the
-transfer applying to arbitrary files).
-
-	-Daniel
-*This .sig left intentionally blank*
+that is, nothing until the patch for the next file or EOF.  Is
+this acceptable?
 
