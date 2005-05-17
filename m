@@ -1,65 +1,57 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Make object contents optionally available
-Date: Tue, 17 May 2005 11:52:17 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505171130460.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0505170826061.18337@ppc970.osdl.org>
+From: Ed L Cashin <ecashin@coraid.com>
+Subject: Re: [RFH] Janitor projects around core GIT
+Date: Tue, 17 May 2005 11:49:10 -0400
+Message-ID: <8764xh26q1.fsf@coraid.com>
+References: <7vpsvqihkh.fsf@assigned-by-dhcp.cox.net>
+	<4289799A.3040204@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue May 17 17:56:59 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue May 17 17:58:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY4QI-0002X1-OX
-	for gcvg-git@gmane.org; Tue, 17 May 2005 17:55:59 +0200
+	id 1DY4PV-0002PV-32
+	for gcvg-git@gmane.org; Tue, 17 May 2005 17:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261746AbVEQPzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S261724AbVEQPzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Tue, 17 May 2005 11:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261811AbVEQPyn
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 11:54:43 -0400
-Received: from iabervon.org ([66.92.72.58]:16902 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261806AbVEQPwt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 11:52:49 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DY4Mj-0003zx-00; Tue, 17 May 2005 11:52:17 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505170826061.18337@ppc970.osdl.org>
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261808AbVEQPyN
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 11:54:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:9432 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261800AbVEQPxb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 11:53:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DY4M5-0001tI-Cq
+	for git@vger.kernel.org; Tue, 17 May 2005 17:51:37 +0200
+Received: from adsl-19-26-213.asm.bellsouth.net ([68.19.26.213])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 May 2005 17:51:37 +0200
+Received: from ecashin by adsl-19-26-213.asm.bellsouth.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 May 2005 17:51:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-19-26-213.asm.bellsouth.net
+User-Agent: Gnus/5.110002 (No Gnus v0.2) Emacs/21.3 (gnu/linux)
+Cancel-Lock: sha1:9eFbpKJkaBEYi9ugIa4XKJEQAB4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 17 May 2005, Linus Torvalds wrote:
+Jeff Garzik <jgarzik@pobox.com> writes:
 
-> 
-> 
-> On Tue, 17 May 2005, Daniel Barkalow wrote:
-> >
-> > This adds contents and size fields to struct object. If unpack_object is
-> > called on an object, it will fill in the contents field with the complete
-> > raw contents of the object. If free_object_contents is called on an
-> > object, the contents will be freed. If contents is filled when an object
-> > is parsed, it is not unpacked an extra time, but the contents are not
-> > retained if they were not unpacked before parsing.
-> 
-> I really hate magic interfaces like that. It's just a bug waiting to 
-> happen.
+> Junio C Hamano wrote:
+>>  * Rewrite command line parsing code, probably using GNU getopt.
+>>    I have three gripes about option parsing in the current code:
+>
+>
+> Use argp.  It supports short and long options, and is highly
+> flexible. "info argp" should work on most Linux boxes.
 
-I think I described it with too many cases above. parse_*() doesn't change
-whether the contents are unpacked. The obvious optimization is performed 
-if possible.
+Or "info libc argp" (on my debian sarge system).
 
-I'm already going to add a per-type global to have the parse functions
-also unpack the object contents user-visibly, for the case that Junio
-pointed out. (Making it: parse_* doesn't change whether the contents are
-unpacked, unless you tell it to unpack objects.)
-
-I think the only likely bug would be unpacking objects after parsing
-them, instead of before, which is correct but inefficient. It should be
-clear to a user whether the raw contents are available at any point in the
-user code.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+  Ed L Cashin <ecashin@coraid.com>
 
