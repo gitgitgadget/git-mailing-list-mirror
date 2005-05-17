@@ -1,69 +1,56 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 0/4] Pulling refs files
-Date: Tue, 17 May 2005 22:14:36 +0200
-Message-ID: <20050517201436.GC7136@pasky.ji.cz>
-References: <20050513233738.GL32232@pasky.ji.cz> <Pine.LNX.4.21.0505142306021.30848-100000@iabervon.org>
+Subject: Re: [PATCH Cogito] Improve option parsing for cg-log
+Date: Tue, 17 May 2005 22:16:58 +0200
+Message-ID: <20050517201658.GD7136@pasky.ji.cz>
+References: <1115931114.18499.66.camel@pegasus> <20050512211315.GP324@pasky.ji.cz> <1115934586.18499.70.camel@pegasus> <20050513054140.GF16464@pasky.ji.cz> <1115975134.18499.94.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue May 17 22:19:29 2005
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 17 22:21:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY8Sq-0007fe-4R
-	for gcvg-git@gmane.org; Tue, 17 May 2005 22:14:52 +0200
+	id 1DY8UU-0007wc-KF
+	for gcvg-git@gmane.org; Tue, 17 May 2005 22:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261724AbVEQUO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 16:14:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261827AbVEQUO6
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 16:14:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:12259 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261724AbVEQUOp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 16:14:45 -0400
-Received: (qmail 18775 invoked by uid 2001); 17 May 2005 20:14:36 -0000
-To: Daniel Barkalow <barkalow@iabervon.org>
+	id S261827AbVEQURE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 16:17:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261861AbVEQURE
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 16:17:04 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14819 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261827AbVEQURA (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 16:17:00 -0400
+Received: (qmail 19213 invoked by uid 2001); 17 May 2005 20:16:58 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.21.0505142306021.30848-100000@iabervon.org>
+In-Reply-To: <1115975134.18499.94.camel@pegasus>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 15, 2005 at 05:23:18AM CEST, I got a letter
-where Daniel Barkalow <barkalow@iabervon.org> told me that...
-> On Sat, 14 May 2005, Petr Baudis wrote:
+Dear diary, on Fri, May 13, 2005 at 11:05:34AM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> Hi Petr,
+
+Hi,
+
+> > The -r option still must be after all the other options.
 > 
-> > So what about just something like
-> > 
-> > 	git-wormhole-pull remote:refs/head/master wormhole://localhost/
-> > 
-> > That is, you could just specify remote:path_relative_to_url instead of
-> > SHA1 id as the commit.
-> 
-> Do you have any sensible alternatives to "remote:refs/<something>" in
-> mind? I suppose that "remote:HEAD" would also work. How are you thinking
-> of having the value get written locally?
+> I see what you mean and it seems that I missed that option. Must be
+> because you put the list_commit_files() between them and I assumed that
+> there is no further option parsing.
 
-Anything that gets eventually wound up in the info/ directory. (The name
-of the ignore file saved in info/ignore is the current hit.)
+Uhm, I know. :-) It sorta evolved like that. We didn't yet settle down
+on where to actually put the functions. I'd say right after . cg-Xlib.
 
-> Do you also have some idea for user-invoked rpush? It has to call
-> something that writes the value on the other side (and I'd ideally like it
-> to do the update atomically and locked against other clients). This series
-> uses the same mechanism to write it that it uses to write hashes fetched
-> from remote machines.
+> Do you really wanna keep the double meaning of -r. Depending on a
+> previous -r it is $log_start or $log_end.
 
-Well, it'd be again nice to have some generic mechanism for this so that
-the user could theoretically push over rsync too or something (although
-that'll be even more racy, it is fine for single-user repository).
-
-I think the remote file to write the value inside should be porcelain
-business. What you should always check though is that before the pull
-(and after the locking) the value in that file is the same as the "push
-base". This way you make sure that you are still following a single
-branch and in case of multiuser repositories that you were fully merged
-before pushing.
+Yes, by all means. On one side I like the colon notation, on the other
+side this was always my biggest usability problem with SVN. And it costs
+us nothing and does what the user would after all expect, I think.
 
 -- 
 				Petr "Pasky" Baudis
