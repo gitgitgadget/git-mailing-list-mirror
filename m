@@ -1,106 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Introduce git-run-with-user-path helper program.
-Date: Tue, 17 May 2005 12:27:03 -0700
-Message-ID: <7vk6lxfybc.fsf@assigned-by-dhcp.cox.net>
-References: <7voebbpuxs.fsf@assigned-by-dhcp.cox.net>
-	<20050517190355.GA7136@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/4] Tweak diff output further to make it a bit less
+ distracting.
+Date: Tue, 17 May 2005 12:32:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505171227260.18337@ppc970.osdl.org>
+References: <7vvf5kqj9l.fsf@assigned-by-dhcp.cox.net> <20050516220559.GC8609@pasky.ji.cz>
+ <7vsm0mn5s1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505161556260.18337@ppc970.osdl.org>
+ <20050517070158.GA10031@pasky.ji.cz> <Pine.LNX.4.58.0505170812060.18337@ppc970.osdl.org>
+ <7vu0l1fz6p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Tue May 17 21:30:22 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 17 21:33:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY7jB-0000BW-J6
-	for gcvg-git@gmane.org; Tue, 17 May 2005 21:27:41 +0200
+	id 1DY7mq-0000nS-9g
+	for gcvg-git@gmane.org; Tue, 17 May 2005 21:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261347AbVEQT1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 15:27:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261312AbVEQT1d
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 15:27:33 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:42465 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261347AbVEQT1F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 May 2005 15:27:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050517192704.KPKD7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 17 May 2005 15:27:04 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050517190355.GA7136@pasky.ji.cz> (Petr Baudis's message of
- "Tue, 17 May 2005 21:03:55 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261724AbVEQTbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 15:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261631AbVEQTbk
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 15:31:40 -0400
+Received: from fire.osdl.org ([65.172.181.4]:18049 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261724AbVEQTa5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 15:30:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4HJUmU3022752
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 May 2005 12:30:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4HJUlxl017312;
+	Tue, 17 May 2005 12:30:48 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vu0l1fz6p.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.39__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
->> +int path_ignored(const char *path)
->> +{
->> +	if (!verify_path(path))
->> +		return 1;
->> +
->> +	/* Put the Porcelain layer ignore logic here.
->> +	 * Return non-zero if path is to be ignored.
->> +	 */
->> +	return 0;
->> +}
 
-PB> I actually think you shouldn't. All the Porcelain layers should
-PB> hopefully use the same git toolkit layer, not each one shipping own due
-PB> to differences in things like this.
+On Tue, 17 May 2005, Junio C Hamano wrote:
+> 
+> I've been thinking about doing some rename detection in
+> diff-helper for some time.  Here is what that would produce in
+> your proposed file format (BTW, wouldn't the earlier patch ready
+> for merge already?), if you move file frotz to file nitfol and
+> at the same time do some edits:
 
-What you said above _is_ exactly my intention.  I phrased that
-comment very badly.  It should have said:
+This has the advantage of working with any old "patch" version, but it has 
+the disadvantage of being human-unreadable, and big. 
 
-    /* We _will_ put the "ignore logic Porcelain layers agree upon"
-     * here, once we have a concensus.
-     *
-     * The code should return non-zero if path is to be ignored.
-     */
+To me, there really are only two reasons to do rename diffs:
+ - smaller diffs
+ - human readability (you can actually see what changed)
 
-I did not put any implementation there because I do not think we
-have agreed upon anything yet.  This patch is to establish
-the framework.  
+and if you want to have compatibility with a "patch" program that doesn't
+support the feature (like your example), you basically lose both of those
+advantages. You have _some_ human-readability, but it basically boils down
+to "ignore all those deletes/creates".
 
-The second patch is separate, because it is _my_ version of the
-ignore logic proposal, to serve as a sample.  Whatever ignore
-logic is agreed upon, that _will_ be in the place you pointed
-out and there will be no choice.  Everybody _will_ use the
-ignore logic.
+So I'd really suggest having just a flag that says "pure old diff format"  
+or "new diff format with renames", and if the latter is selected, then do
+_just_ the changes, ie the rename+change case would really boil down to
+getting just
 
->> +/****************************************************************/
->> +
->> +/* Path canonicalization part */
+>     diff -git a/nitfol b/nitfol
+>     rename old frotz
+>     rename new nitfol
+>     --- a/nitfol
+>     +++ b/nitfol
+>     @@ -1,2 +1,3 @@
+>      xyzzy
+>      rezrov
+>     +gnusto
 
-PB> And why is this in the library?
+(except I think it would be nice to have the renamed names show up in the 
+"diff" and "---/+++" lines too)
 
-Why not?  It is something other programs would eventually find
-useful.
-
-Also the second patch, a sample implementation of ignore logic I
-proposed, wants to know GIT_PROJECT_TOP to figure out the file
-pointed at by GIT_DIR/.git/info/ignore-file.
-
-Also it would not hurt if you are always running from the
-project top and give only verify_path() approved paths.  Then
-canon_path would become identity function.
-
-git-run-with-user-path is useful both in implementing
-porcelain-add if the porcelain's policy is to take filesystem
-paths not GIT paths, like this:
-
-    #!/bin/sh
-    # porcelain-add
-    exec git-run-with-user-path git-update-cache --add -- -- "$@"
-
-Also if the porcelain's policy is to take GIT paths not
-filesystem paths, then users can say:
-
-    $ find . ! -type d -print0 |
-      xargs -0 git-run-with-user-path cg-add --
-
-You cannot use both for obvious reasons.
-
+		Linus
