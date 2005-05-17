@@ -1,64 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Make object contents optionally available
-Date: Tue, 17 May 2005 15:59:53 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0505171535510.30848-100000@iabervon.org>
-References: <7vbr79fy22.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH 0/4] Pulling refs files
+Date: Tue, 17 May 2005 22:14:36 +0200
+Message-ID: <20050517201436.GC7136@pasky.ji.cz>
+References: <20050513233738.GL32232@pasky.ji.cz> <Pine.LNX.4.21.0505142306021.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue May 17 22:02:41 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 17 22:19:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DY8Ef-0005HC-0w
-	for gcvg-git@gmane.org; Tue, 17 May 2005 22:00:13 +0200
+	id 1DY8Sq-0007fe-4R
+	for gcvg-git@gmane.org; Tue, 17 May 2005 22:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261891AbVEQUAj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 May 2005 16:00:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261861AbVEQUAi
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 16:00:38 -0400
-Received: from iabervon.org ([66.92.72.58]:42500 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261815AbVEQUAa (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 16:00:30 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DY8EL-0005S1-00; Tue, 17 May 2005 15:59:53 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr79fy22.fsf@assigned-by-dhcp.cox.net>
+	id S261724AbVEQUO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 May 2005 16:14:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261827AbVEQUO6
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 May 2005 16:14:58 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:12259 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261724AbVEQUOp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 May 2005 16:14:45 -0400
+Received: (qmail 18775 invoked by uid 2001); 17 May 2005 20:14:36 -0000
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0505142306021.30848-100000@iabervon.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 17 May 2005, Junio C Hamano wrote:
+Dear diary, on Sun, May 15, 2005 at 05:23:18AM CEST, I got a letter
+where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> On Sat, 14 May 2005, Petr Baudis wrote:
+> 
+> > So what about just something like
+> > 
+> > 	git-wormhole-pull remote:refs/head/master wormhole://localhost/
+> > 
+> > That is, you could just specify remote:path_relative_to_url instead of
+> > SHA1 id as the commit.
+> 
+> Do you have any sensible alternatives to "remote:refs/<something>" in
+> mind? I suppose that "remote:HEAD" would also work. How are you thinking
+> of having the value get written locally?
 
-> That's what I meant to say by "types are special" but I phrased it so
-> badly.
+Anything that gets eventually wound up in the info/ directory. (The name
+of the ignore file saved in info/ignore is the current hit.)
 
-Ah, okay. I'm not convinced that discriminating at all at the point where
-parse is deciding whether to free the contents is that useful; doing it
-based on type is just sufficiently easy that it could be worthwhile.
+> Do you also have some idea for user-invoked rpush? It has to call
+> something that writes the value on the other side (and I'd ideally like it
+> to do the update atomically and locked against other clients). This series
+> uses the same mechanism to write it that it uses to write hashes fetched
+> from remote machines.
 
-> And the callback would solve that naturally.  Or you can
-> additionally give the callback the result of the parse_xxx(),
-> which would be even more useful.  The callback can then throw
-> commit raw-data away based on the date, for example.
+Well, it'd be again nice to have some generic mechanism for this so that
+the user could theoretically push over rsync too or something (although
+that'll be even more racy, it is fine for single-user repository).
 
-I don't think a callback has any advantage over turning on a flag to
-provide all unpacked objects, and having the program free them when it
-wants to, either right after whatever caused them to be parsed returns
-or later. I suspect that the main relevant thing is going to be the stack,
-not the data.
+I think the remote file to write the value inside should be porcelain
+business. What you should always check though is that before the pull
+(and after the locking) the value in that file is the same as the "push
+base". This way you make sure that you are still following a single
+branch and in case of multiuser repositories that you were fully merged
+before pushing.
 
-I have another idea, which is almost certainly too magical, but which
-would work: have library functions that parse objects return them unpacked
-if the objects they are given are unpacked. So, for example,
-pop_most_recent_commit() would unpack parents of a commit if the commit
-was unpacked. This would make everything work the way you'd expect if you
-didn't think about it, although it would probably be really surprising if
-you were thinking about it. I'm just mentioning this because it might make
-someone think of something similar but sane.
-
-	-Daniel
-*This .sig left intentionally blank*
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
