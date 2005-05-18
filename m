@@ -1,55 +1,63 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/1] Diff-helper update
-Date: Wed, 18 May 2005 16:54:17 -0700
-Message-ID: <7vacmsnl92.fsf@assigned-by-dhcp.cox.net>
-References: <7v3bslqc94.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505180821470.18337@ppc970.osdl.org>
-	<7v64xgpgb0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505181110480.18337@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505181134470.18337@ppc970.osdl.org>
-	<7vll6cnup4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505181338270.18337@ppc970.osdl.org>
+Subject: Re: [PATCH 1/2] Introduce git-run-with-user-path helper program.
+Date: Wed, 18 May 2005 16:56:38 -0700
+Message-ID: <7v64xgnl55.fsf@assigned-by-dhcp.cox.net>
+References: <7voebbpuxs.fsf@assigned-by-dhcp.cox.net>
+	<20050517190355.GA7136@pasky.ji.cz>
+	<7vk6lxfybc.fsf@assigned-by-dhcp.cox.net>
+	<20050517203500.GH7136@pasky.ji.cz>
+	<7v4qd1tuud.fsf@assigned-by-dhcp.cox.net>
+	<20050517213752.GO7136@pasky.ji.cz>
+	<7vzmutqz5f.fsf@assigned-by-dhcp.cox.net>
+	<20050518213309.GD10358@pasky.ji.cz>
+	<7vekc4nom5.fsf@assigned-by-dhcp.cox.net>
+	<20050518232408.GA18281@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Thu May 19 01:56:32 2005
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Thu May 19 01:57:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYYOL-0002by-9T
-	for gcvg-git@gmane.org; Thu, 19 May 2005 01:55:57 +0200
+	id 1DYYOi-0002eB-6g
+	for gcvg-git@gmane.org; Thu, 19 May 2005 01:56:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262429AbVERXzh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 19:55:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262425AbVERXyd
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 19:54:33 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:4861 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262424AbVERXyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2005 19:54:24 -0400
+	id S262411AbVERX44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 19:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262414AbVERX44
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 19:56:56 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:27624 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262411AbVERX4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2005 19:56:43 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050518235416.WOLT19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 18 May 2005 19:54:16 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505181338270.18337@ppc970.osdl.org> (Linus
- Torvalds's message of "Wed, 18 May 2005 13:39:21 -0700 (PDT)")
+          id <20050518235637.MOIL7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 18 May 2005 19:56:37 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050518232408.GA18281@pasky.ji.cz> (Petr Baudis's message of
+ "Thu, 19 May 2005 01:24:08 +0200")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-LT> On Wed, 18 May 2005, Junio C Hamano wrote:
->> 
->> I suspect doing something like this might be saner instead,
->> assuming non raw-diffs come at the end.  
+PB> Yes. My point is that sometimes the Cogito commands have
+PB> directory-specific functionality even when called without any arguments.
 
-LT> It won't ever trigger, since we only exit the loop once we see EOF.
+PB> $ pwd
+PB> /usr/src/linux
+PB> $ date >>README
+PB> $ cd fs
+PB> $ date >>Makefile
+PB> $ cg-commit
 
-I was not talking about correctness, but the readability of the
-code.  Breaking out from the loop to process raw-diff and
-switching to straight copy would make our intent more explicit.
+PB> will commit only the fs/Makefile change.
+
+Ah, thanks.  That what I missed.
+
+
 
