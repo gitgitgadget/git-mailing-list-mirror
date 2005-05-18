@@ -1,71 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-diff-tree updates..
-Date: Wed, 18 May 2005 13:28:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505181316330.18337@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/1] Diff-helper update
+Date: Wed, 18 May 2005 13:30:15 -0700
+Message-ID: <7vll6cnup4.fsf@assigned-by-dhcp.cox.net>
+References: <7v3bslqc94.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505180821470.18337@ppc970.osdl.org>
+	<7v64xgpgb0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505181110480.18337@ppc970.osdl.org>
+	<Pine.LNX.4.58.0505181134470.18337@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed May 18 22:27:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Wed May 18 22:31:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYV6n-0000kP-TT
-	for gcvg-git@gmane.org; Wed, 18 May 2005 22:25:38 +0200
+	id 1DYVAv-0001Po-JW
+	for gcvg-git@gmane.org; Wed, 18 May 2005 22:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262341AbVERU0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 16:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262349AbVERU0N
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 16:26:13 -0400
-Received: from fire.osdl.org ([65.172.181.4]:26242 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262341AbVERU0C (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 16:26:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4IKQ1U3006927
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Wed, 18 May 2005 13:26:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4IKPw8s016943
-	for <git@vger.kernel.org>; Wed, 18 May 2005 13:26:00 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262345AbVERUa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 16:30:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262353AbVERUa3
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 16:30:29 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37786 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S262352AbVERUaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2005 16:30:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050518203016.VOFV1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 18 May 2005 16:30:16 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505181134470.18337@ppc970.osdl.org> (Linus
+ Torvalds's message of "Wed, 18 May 2005 11:38:46 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-I've just fixed two annoyances of mine with git-diff-tree, which sadly 
-caused me to break some syntax.
+LT> I took the liberty of doing just that. The only subtle issue was that 
+LT> the strbuf functions would consider an empty line to be EOF, which looked 
+LT> wrong and unintentional. Fixing that made the actual diff-helper changes 
+LT> totally trivial, and I can now do
+LT> 	git-rev-list HEAD | git-diff-tree -r -v --stdin | ./git-diff-helper -r | less -S
+LT> and it does the right thing for me.
 
-In particular, diff-tree for some unfathomable reason (probably incipient 
-braindamage in yours truly) used a single dash "-" to mark the end of 
-command line arguments, rather than the "--" that everybody else uses.
+Thanks for fixing up strbuf.
 
-I hope nobody depended on it, because I fixed it.
+@@ -136,8 +268,12 @@ int main(int ac, const char **av) {
+ 		if (sb.eof)
+ 			break;
+ 		status = parse_diff_raw_output(sb.buf, av+1, ac-1, reverse);
+-		if (status)
+-			fprintf(stderr, "cannot parse %s\n", sb.buf);
++		if (status) {
++			flush_renames(av+1, ac-1, reverse);
++			printf("%s%c", sb.buf, line_termination);
++		}
+ 	}
++
++	flush_renames(av+1, ac-1, reverse);
+ 	return 0;
+ }
 
-The other thing I did was to allow a single SHA1, and then consider that 
-to be equivalent to a one-line "--stdin" thing. Ie you can now do
+I suspect doing something like this might be saner instead,
+assuming non raw-diffs come at the end.  
 
-	git-diff-tree -v -p HEAD
+		if (status)
+			break;
+	}
+	flush_renames(av+1, ac-1, reverse);
+	if (!sb.eof) {
+        	spit out what we have in sb.eof, sendfile ;-) the
+                rest of the input to the output.
+	}
+	return 0;
 
-and it will do what you'd expect it to do, ie it should be equivalent to
-
-	cat .git/HEAD | git-diff-tree -v -p --stdin
-
-(apart from a silly bug which I'll fix shortly).
-
-The latter means that if you actually want to track a _file_ named HEAD
-(or anything else that might trigger as a reference), you'd need to do
-
-	git-rev-list HEAD | git-diff-tree -v -p --stdin -- HEAD
-
-but I'm considering making the single-dash thing be equivalent to 
-the combination "--stdin", and not allow SHA1 naming after it, so that 
-this could be shortened to just be
-
-	git-rev-list HEAD | git-diff-tree -v -p - HEAD
-
-(but I wanted to make the "-" semantics change be a two-phase thing).
-
-		Linus
