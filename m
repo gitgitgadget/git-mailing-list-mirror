@@ -1,113 +1,77 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git-rev-list in local commit order
-Date: Wed, 18 May 2005 15:16:58 +1000
-Message-ID: <2cfc403205051722163296144@mail.gmail.com>
-References: <4127.10.10.10.24.1116107046.squirrel@linux1>
-	 <1116192629.11872.201.camel@tglx>
-	 <1392.10.10.10.24.1116193437.squirrel@linux1>
-	 <1116195235.11872.213.camel@tglx>
-	 <1629.10.10.10.24.1116278725.squirrel@linux1>
-	 <Pine.LNX.4.58.0505161638090.18337@ppc970.osdl.org>
-	 <1116323520.17296.12.camel@tglx.tec.linutronix.de>
-	 <Pine.LNX.4.58.0505170833330.18337@ppc970.osdl.org>
-	 <1116349507.17296.31.camel@tglx.tec.linutronix.de>
-	 <Pine.LNX.4.58.0505171035570.18337@ppc970.osdl.org>
-Reply-To: jon@blackcubes.dyndns.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 0/1] Diff-helper update
+Date: Tue, 17 May 2005 23:28:07 -0700
+Message-ID: <7v3bslqc94.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Thomas Gleixner <tglx@linutronix.de>, Sean <seanlkml@sympatico.ca>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 07:17:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Wed May 18 08:28:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYGvI-0007zR-LG
-	for gcvg-git@gmane.org; Wed, 18 May 2005 07:16:48 +0200
+	id 1DYI21-0005me-VT
+	for gcvg-git@gmane.org; Wed, 18 May 2005 08:27:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262092AbVERFRL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 01:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262095AbVERFRL
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 01:17:11 -0400
-Received: from rproxy.gmail.com ([64.233.170.194]:25453 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262092AbVERFQ6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2005 01:16:58 -0400
-Received: by rproxy.gmail.com with SMTP id i8so11828rne
-        for <git@vger.kernel.org>; Tue, 17 May 2005 22:16:58 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XEg+6ZsxmLHIlLSaL8/yyIyyQPv0FAtLFBLbsoHe7N0T1KPTZssk49+o5VOtluv+u9IlP5yAw0mXATWNOBeVfWTgIDKr4W4KD3Vceggl6g2a6HqjkPuylYqkZigCoqvfwnt4l9dUwnUfVpQIh5Y/mrmkYwlm8MT0jQDAcPdrDoA=
-Received: by 10.38.75.64 with SMTP id x64mr71298rna;
-        Tue, 17 May 2005 22:16:58 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Tue, 17 May 2005 22:16:58 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505171035570.18337@ppc970.osdl.org>
-Content-Disposition: inline
+	id S262108AbVERG2Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 02:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262105AbVERG2Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 02:28:16 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:22766 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261979AbVERG2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2005 02:28:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050518062808.EALT26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 18 May 2005 02:28:08 -0400
+To: torvalds@osdl.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 5/18/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> 
-> 
-> On Tue, 17 May 2005, Thomas Gleixner wrote:
-> >
-> > On Tue, 2005-05-17 at 08:43 -0700, Linus Torvalds wrote:
-> > > > My idea of repository id was not the notion of workspace seperation. I
-> > > > dont care in which directory and on which machine you or who ever
-> > > > commits a line of code. I care where the change appears in a public
-> > > > repository, which is unique.
-> > >
-> > > You seem to think that the repository on master.kernel.org is more
-> > > important than the one on my private machine, and you're _wrong_.
-> >
-> > For me yes, as I have no access to your private ones and I can only rely
-> > on the integrity of the public accessible ones.
-> >
-> > For the individual developer the private workspaces are surely more
-> > important. I never doubted that, but I do not care whether you use one
-> > or ten workspaces and which one of them you blow away or use for
-> > updating of master.kernel.org.
-> 
-> But how would you track "repositoryness", when the repository you care
-> about has absolutely nothing to do with the repositories that any of the
-> developers who created it in the first place care about?
-> 
-> See the problem? You can't. You seem to want to track information that
-> simply does not _exist_.
-> 
-> Put another way: the repository ID of the eventual public "target"
-> repository only becomes available once the information has been pushed
-> there, not before. So a "commit" cannot contain that information, because
-> at commit time, you fundamentally cannot know what the eventual public
-> repository (if any) will be.
+This is just a cover letter but the next patch implements the
+rename detection I told you about.
 
-Earlier in a related thread, I argued that what everyone else has been
-calling a repo-id is actually a workspace id. Your GIT_COMMITER_EMAIL
-idea would have the same practical effect as a separate workspace id,
-though it does pollute the interpretation of the e-mail id's since
-they are no longer pure e-mail id's...
+The output from the patched version is attached at the end of
+this message as a demonstration.
 
-Would you be amenable to a patch that allowed tools to put attributes
-of the form:
+My plan is to get the documentation and the framework in place
+with this patch first.  The basic strategy is to hold created
+and deleted files while we parse the incoming diff-tree output,
+and match them up at the end, looking for usefully similar pair.
 
-   x-"some-attribute" (' ' [^\0]*)+ '\0'
+The similarity evaluator included in this round of patch detects
+exact renames only, which is not very useful in practice, but
+that would be improved in the later round.  It will probably be
+done with the same deltify code Nico is using.
 
-into a commit header?
+$ git-diff-tree -r \
+    13ab4462d2aefb252d7c916bd537151856b7c967 \
+    99665af5c0be0fe4319b39183e84917993153576 | ./git-diff-helper -r
+diff -git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+--- a/Documentation/diff-format.txt
++++ b/Documentation/diff-format.txt
+@@ -45,7 +45,7 @@ with a '-p' option, they do not produce 
+ instead they produce a patch file.
+ ...
+diff -git a/diff.h b/diff.h
+--- a/diff.h
++++ b/diff.h
+@@ -17,7 +17,7 @@ extern void diff_change(unsigned mode1, 
+ 
+ extern void diff_unmerge(const char *path);
+ 
+-/* These are for diff-tree-helper */
++/* These are for diff-helper */
+ 
+ struct diff_spec {
+ 	unsigned char blob_sha1[20];
+diff -git a/diff-tree-helper.c b/diff-helper.c
+rename old diff-tree-helper.c
+rename new diff-helper.c
+diff -git a/Documentation/git-diff-tree-helper.txt b/Documentation/git-diff-helper.txt
+rename old Documentation/git-diff-tree-helper.txt
+rename new Documentation/git-diff-helper.txt
 
-If, over time, x-"some-attribute" became unversially accepted as
-useful, a new release of git could bless it as official and the 'x-'
-prefix could be dropped.
 
-In the meantime, tools could experiment with additional commit markers
-as they see fit without affecting the interoperability of other tools
-which use only the blessed markers.
-
-Of course, a constraint on the semantics of an x-* attribute would
-ideally be that it's value must be fixed for all time once the commit
-happens since there is no way to change it without creating a new
-commit.
-
-jon.
