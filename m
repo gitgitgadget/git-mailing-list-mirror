@@ -1,63 +1,59 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Re: Core and Not-So Core
-Date: Wed, 18 May 2005 20:35:16 +0200
-Message-ID: <7i8y2cz8kb.fsf@lanthane.pps.jussieu.fr>
-References: <2cfc40320505100800426d38ca@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 0/1] Diff-helper update
+Date: Wed, 18 May 2005 11:38:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505181134470.18337@ppc970.osdl.org>
+References: <7v3bslqc94.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505180821470.18337@ppc970.osdl.org> <7v64xgpgb0.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505181110480.18337@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 18 20:43:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Wed May 18 20:43:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYTU5-0002kh-Hw
+	id 1DYTU5-0002kh-5g
 	for gcvg-git@gmane.org; Wed, 18 May 2005 20:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262283AbVERShV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 14:37:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVERSgq
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 14:36:46 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:48841 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S262349AbVERSfX (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 14:35:23 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j4IIZKVJ000405
-          for <git@vger.kernel.org>; Wed, 18 May 2005 20:35:21 +0200 (CEST)
-X-Ids: 165
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j4IIZJ8R019227
-          for <git@vger.kernel.org>; Wed, 18 May 2005 20:35:19 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
-	id 1DYTO2-0000Iy-Qt
-	for git@vger.kernel.org; Wed, 18 May 2005 20:35:18 +0200
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <2cfc40320505100800426d38ca@mail.gmail.com> (Jon Seymour's
- message of "Wed, 11 May 2005 01:00:33 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.165]); Wed, 18 May 2005 20:35:21 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 428B8AE8.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S262342AbVERSlW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 14:41:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVERShp
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 14:37:45 -0400
+Received: from fire.osdl.org ([65.172.181.4]:20688 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262285AbVERSgy (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 14:36:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4IIahU3030788
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 May 2005 11:36:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4IIag84011969;
+	Wed, 18 May 2005 11:36:42 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.58.0505181110480.18337@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> To give a concrete example: the cache currently contains most of the
-> posix stat structure primarily to allow quick change detection. In the
-> Java world, most of the posix stat structure is not directly
-> accessible via the pure-Java file system abstractions. However, for
-> most purposes detecting changes to files modification time and file
-> size would be enough.
 
-I've got exactly this problem in Darcs-git; and I ignore all of the
-cached data except the file size, mtime and sha1.  I don't currently
-ever write to the cache.
 
-> I think it would be worthwhile if care was taken to draw a distinction
-> between the repository and the cache aspects of the git core, perhaps
-> even going to the extreme of moving all knowledge of the  cache into
-> cogito itself.
+On Wed, 18 May 2005, Linus Torvalds wrote:
+> 
+> If diff-helper just passes the lines it doesn't understand through
+> unmodified (_after_ having handled any pending rename logic), it will 
+> automatically do the right thing.
 
-There's nothing that prevents you from ignoring the Git cache and
-using your own cache instead.
+I took the liberty of doing just that. The only subtle issue was that 
+the strbuf functions would consider an empty line to be EOF, which looked 
+wrong and unintentional. Fixing that made the actual diff-helper changes 
+totally trivial, and I can now do
 
-                                        Juliusz
+	git-rev-list HEAD | git-diff-tree -r -v --stdin | ./git-diff-helper -r | less -S
 
+and it does the right thing for me.
+
+		Linus
