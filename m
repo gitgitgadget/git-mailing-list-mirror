@@ -1,50 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix show_date() for positive timezones
-Date: Wed, 18 May 2005 17:11:07 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0505181709150.20274@localhost.localdomain>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH 1/2] Introduce git-run-with-user-path helper program.
+Date: Wed, 18 May 2005 23:33:09 +0200
+Message-ID: <20050518213309.GD10358@pasky.ji.cz>
+References: <7voebbpuxs.fsf@assigned-by-dhcp.cox.net> <20050517190355.GA7136@pasky.ji.cz> <7vk6lxfybc.fsf@assigned-by-dhcp.cox.net> <20050517203500.GH7136@pasky.ji.cz> <7v4qd1tuud.fsf@assigned-by-dhcp.cox.net> <20050517213752.GO7136@pasky.ji.cz> <7vzmutqz5f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 23:14:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Wed May 18 23:33:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYVqZ-00084w-2g
-	for gcvg-git@gmane.org; Wed, 18 May 2005 23:12:55 +0200
+	id 1DYW9o-0002yr-0R
+	for gcvg-git@gmane.org; Wed, 18 May 2005 23:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262379AbVERVM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 17:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262380AbVERVM5
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 17:12:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:27870 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S262379AbVERVMm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 May 2005 17:12:42 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR011.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IGP0008PEUJ77@VL-MO-MR011.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 May 2005 17:11:07 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S262384AbVERVdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 17:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262380AbVERVdX
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 17:33:23 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34444 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262384AbVERVdL (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 17:33:11 -0400
+Received: (qmail 7330 invoked by uid 2001); 18 May 2005 21:33:09 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vzmutqz5f.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Wed, May 18, 2005 at 12:13:32AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+> 
+> PB> But that won't work good enough for me. E.g. when committing in a
+> PB> subdirectory, I want to commit only changes made in the subdirectory,
+> PB> etc.
+> 
+> Assuming that you have something that lets you commit selected
+> files when you are at the top level (say cg-commit), and further
+> assuming that today it only works from the toplevel, that is:
+> 
+>     $ pwd
+>     /usr/src/linux
+>     $ cg-commit fs/ext?/Makefile
+> 
+> works today, what I am saying is:
+> 
+>     $ pwd
+>     /usr/src/linux/fs
+>     $ git-run-with-user-path cg-commit -- ext?/Makefile
+> 
+> would work.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Yes. But if you do just cg-commit in the subdirectory, it won't work.
+You could pass the original directory in some environment variable or
+whatever, but I think that's just not worth the trouble for Cogito -
+it's much easier for it when you just stay in the directory you are in
+and instead set the environment variables so that the git toolkit DTRT.
+(I like this acronym. :-)
 
---- a/date.c
-+++ b/date.c
-@@ -51,9 +51,9 @@ const char *show_date(unsigned long time
- 	int minutes;
- 
- 	minutes = tz < 0 ? -tz : tz;
--	minutes = (tz / 100)*60 + (tz % 100);
-+	minutes = (minutes / 100)*60 + (minutes % 100);
- 	minutes = tz < 0 ? -minutes : minutes;
--	t = time - minutes * 60;
-+	t = time + minutes * 60;
- 	tm = gmtime(&t);
- 	if (!tm)
- 		return NULL;
+> BTW, I am wondering if your choice of cg-commit as an example
+> (as opposed to something else like diff or add) is a flamebait
+> or just an innocent random example ;-)?
+
+It was completely innocent. :-) How would it be a flamebait?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
