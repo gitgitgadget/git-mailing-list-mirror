@@ -1,50 +1,63 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Cogito updates?
-Date: Wed, 18 May 2005 20:26:18 +0200
-Message-ID: <20050518182618.GA10358@pasky.ji.cz>
-References: <20050518145325.GG7391@tumblerings.org>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Re: Core and Not-So Core
+Date: Wed, 18 May 2005 20:35:16 +0200
+Message-ID: <7i8y2cz8kb.fsf@lanthane.pps.jussieu.fr>
+References: <2cfc40320505100800426d38ca@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 18 20:38:40 2005
+X-From: git-owner@vger.kernel.org Wed May 18 20:43:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYTOt-0001yg-Tt
-	for gcvg-git@gmane.org; Wed, 18 May 2005 20:36:12 +0200
+	id 1DYTU5-0002kh-Hw
+	for gcvg-git@gmane.org; Wed, 18 May 2005 20:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262326AbVERSbJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 14:31:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262303AbVERS3U
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 14:29:20 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:61576 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262273AbVERS00 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 14:26:26 -0400
-Received: (qmail 26095 invoked by uid 2001); 18 May 2005 18:26:18 -0000
-To: Zack Brown <zbrown@tumblerings.org>
-Content-Disposition: inline
-In-Reply-To: <20050518145325.GG7391@tumblerings.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262283AbVERShV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 14:37:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVERSgq
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 14:36:46 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129]:48841 "EHLO shiva.jussieu.fr")
+	by vger.kernel.org with ESMTP id S262349AbVERSfX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 14:35:23 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
+          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j4IIZKVJ000405
+          for <git@vger.kernel.org>; Wed, 18 May 2005 20:35:21 +0200 (CEST)
+X-Ids: 165
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
+          by hydrogene.pps.jussieu.fr (8.13.3/jtpda-5.4) with ESMTP id j4IIZJ8R019227
+          for <git@vger.kernel.org>; Wed, 18 May 2005 20:35:19 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.34)
+	id 1DYTO2-0000Iy-Qt
+	for git@vger.kernel.org; Wed, 18 May 2005 20:35:18 +0200
+To: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <2cfc40320505100800426d38ca@mail.gmail.com> (Jon Seymour's
+ message of "Wed, 11 May 2005 01:00:33 +1000")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.165]); Wed, 18 May 2005 20:35:21 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 428B8AE8.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, May 18, 2005 at 04:53:25PM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> Hi Petr,
+> To give a concrete example: the cache currently contains most of the
+> posix stat structure primarily to allow quick change detection. In the
+> Java world, most of the posix stat structure is not directly
+> accessible via the pure-Java file system abstractions. However, for
+> most purposes detecting changes to files modification time and file
+> size would be enough.
 
-Hello,
+I've got exactly this problem in Darcs-git; and I ignore all of the
+cached data except the file size, mtime and sha1.  I don't currently
+ever write to the cache.
 
-> I'm tracking rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
-> 
-> I see no updates since May 15, but tons before that. Is my repo broken? From the
-> list traffic, it seems there are a lot of patches going in.
+> I think it would be worthwhile if care was taken to draw a distinction
+> between the repository and the cache aspects of the git core, perhaps
+> even going to the extreme of moving all knowledge of the  cache into
+> cogito itself.
 
-those patches are mostly going to git-pb. Cogito will get its turn on
-Friday afternoon.
+There's nothing that prevents you from ignoring the Git cache and
+using your own cache instead.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+                                        Juliusz
+
