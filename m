@@ -1,78 +1,52 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 1/2] Introduce git-run-with-user-path helper program.
-Date: Thu, 19 May 2005 01:24:08 +0200
-Message-ID: <20050518232408.GA18281@pasky.ji.cz>
-References: <7voebbpuxs.fsf@assigned-by-dhcp.cox.net> <20050517190355.GA7136@pasky.ji.cz> <7vk6lxfybc.fsf@assigned-by-dhcp.cox.net> <20050517203500.GH7136@pasky.ji.cz> <7v4qd1tuud.fsf@assigned-by-dhcp.cox.net> <20050517213752.GO7136@pasky.ji.cz> <7vzmutqz5f.fsf@assigned-by-dhcp.cox.net> <20050518213309.GD10358@pasky.ji.cz> <7vekc4nom5.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH cogito] "cg-whatsnew" command
+Date: Thu, 19 May 2005 01:50:38 +0200
+Message-ID: <20050518235038.GA31191@kiste.smurf.noris.de>
+References: <tnx64xm5b2b.fsf@arm.com> <20050514110941.GB3905@pasky.ji.cz> <tnx3bsoki2j.fsf@arm.com> <pan.2005.05.15.17.36.37.623874@smurf.noris.de> <tnxis1jk1sn.fsf@arm.com> <20050518223034.GH10358@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Thu May 19 01:24:21 2005
+Cc: Catalin Marinas <catalin.marinas@arm.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 01:51:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYXt8-0007pA-1I
-	for gcvg-git@gmane.org; Thu, 19 May 2005 01:23:42 +0200
+	id 1DYYJl-00027r-Uk
+	for gcvg-git@gmane.org; Thu, 19 May 2005 01:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262370AbVERXYV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 May 2005 19:24:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262283AbVERXYV
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 19:24:21 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33422 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262370AbVERXYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 May 2005 19:24:15 -0400
-Received: (qmail 18730 invoked by uid 2001); 18 May 2005 23:24:09 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S262409AbVERXvj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 May 2005 19:51:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262420AbVERXvh
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 May 2005 19:51:37 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:25808 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S262409AbVERXvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 May 2005 19:51:25 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1DYYJC-0003dD-I6; Thu, 19 May 2005 01:50:57 +0200
+Received: (nullmailer pid 6315 invoked by uid 501);
+	Wed, 18 May 2005 23:50:38 -0000
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <7vekc4nom5.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20050518223034.GH10358@pasky.ji.cz>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 19, 2005 at 12:41:38AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
-> 
-> >> $ pwd
-> >> /usr/src/linux/fs
-> >> $ git-run-with-user-path cg-commit -- ext?/Makefile
-> >> 
-> >> would work.
-> 
-> PB> Yes. But if you do just cg-commit in the subdirectory, it won't work.
-> 
-> The point of git-run-with-user-path is that it canonicalizes and
-> filters the paths, chdir(2)'s to GIT_PROJECT_TOP before running
-> cg-commit.  So when cg-commit starts in the above example,
-> 
->     (1) its $cwd is /usr/src/linux and your .git subdirectory is
->         right there in ./.git/
->     (2) it gets fs/ext2/Makefile and fs/ext3/Makefile as arguments.
+Hi,
 
-Yes. My point is that sometimes the Cogito commands have
-directory-specific functionality even when called without any arguments.
+Petr Baudis:
+> Unfortunately I can't comment on it well when it's not either in the
+> body or as text/plain attachment.
 
-$ pwd
-/usr/src/linux
-$ date >>README
-$ cd fs
-$ date >>Makefile
-$ cg-commit
+It was a text/x-patch attachment. What's the problem?
+If nothing else: save it, read it in, s/^/> /.  *shrug*
 
-will commit only the fs/Makefile change.
-
-> >> BTW, I am wondering if your choice of cg-commit as an example
-> >> (as opposed to something else like diff or add) is a flamebait
-> >> or just an innocent random example ;-)?
-> 
-> PB> It was completely innocent. :-) How would it be a flamebait?
-> 
-> <http://members.cox.net/junkio/per-file-commit.txt> ;-).
-
-JIT's snapshotting makes up for it, I think. It has some beauty. :-)
+At least, this way there won't be any word-wrapping by
+overzealous email programs ...
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
