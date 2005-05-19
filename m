@@ -1,54 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Deltification library work by Nicolas Pitre.
-Date: Thu, 19 May 2005 13:39:20 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0505191338210.20274@localhost.localdomain>
-References: <7vwtpv1pd4.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.62.0505191019180.20274@localhost.localdomain>
- <Pine.LNX.4.58.0505190736020.2322@ppc970.osdl.org>
- <Pine.LNX.4.62.0505191104410.20274@localhost.localdomain>
- <7vekc3178w.fsf@assigned-by-dhcp.cox.net>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [PATCH] Detect renames in diff family.
+Date: Thu, 19 May 2005 10:46:06 -0700
+Message-ID: <20050519174606.GF22946@ca-server1.us.oracle.com>
+References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 19:43:28 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 19:49:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYp1b-0000Fi-DR
-	for gcvg-git@gmane.org; Thu, 19 May 2005 19:41:35 +0200
+	id 1DYp7g-0001HT-Gj
+	for gcvg-git@gmane.org; Thu, 19 May 2005 19:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261191AbVESRlf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 13:41:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261184AbVESRjh
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 13:39:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14258 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261189AbVESRjZ
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2005 13:39:25 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IGQ006PRZPKU3@VL-MO-MR007.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 19 May 2005 13:39:20 -0400 (EDT)
-In-reply-to: <7vekc3178w.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S261195AbVESRsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 13:48:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261194AbVESRsX
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 13:48:23 -0400
+Received: from rgminet01.oracle.com ([148.87.122.30]:14425 "EHLO
+	rgminet01.oracle.com") by vger.kernel.org with ESMTP
+	id S261195AbVESRqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2005 13:46:23 -0400
+Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.191.10])
+	by rgminet01.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id j4JHk7Yw015375;
+	Thu, 19 May 2005 11:46:07 -0600
+Received: from rgmgw1.us.oracle.com (localhost [127.0.0.1])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j4JHk7nU026625;
+	Thu, 19 May 2005 11:46:07 -0600
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j4JHk63u026612;
+	Thu, 19 May 2005 11:46:07 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.50)
+	id 1DYp5y-0001P6-NW; Thu, 19 May 2005 10:46:06 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.9i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 19 May 2005, Junio C Hamano wrote:
+On Thu, May 19, 2005 at 09:19:28AM -0700, Linus Torvalds wrote:
+> In other words, let's say that we create a new architecture or a new 
+> filesystem, and we have tons of _new_ files, but not a lot of removed 
+> files. It would literally be very cool to see that the new files are based 
+> on contents of old files, and that it would thus potentially be very 
+> interesting to see a diff like
 
-> >>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
-> 
-> NP> In fact I think the code in that file might be simplified even further 
-> NP> eventually, at which point there  might not be much of the original code 
-> NP> left anymore and the license switched to GPL v2.
-> 
-> I am afraid that kind of code transformation would not change
-> the copyright issues.
+	Subversion encourages exactly this with the 'svn cp' command.
+Just as knowing when a file was renamed allows you to track the history
+past its first appearance under the current name, 'cp' allows you to
+follow the history even if the original name still exists.  I have found
+this useful more than once.
+	Now, whether you track this up front with an expensive commit or
+use tools to discover the relationship at query time (ala your
+why-rename-tracking-isnt-needed argument) is a different question.  As
+we all know, most tools ask the user to explicitly declare the
+relationship at the time it happens with 'svn rename' and 'svn cp' or
+the analog.  But git could do the comparisons, with appropriate
+heuristics, at the time someone asks.
 
-Maybe you're right.  Anyway it is a non issue now.
+Joel
 
+-- 
 
-Nicolas
+Life's Little Instruction Book #335
+
+	"Every so often, push your luck."
+
+Joel Becker
+Senior Member of Technical Staff
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
