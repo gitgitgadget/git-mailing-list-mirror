@@ -1,49 +1,48 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: manpage name conflict
-Date: Thu, 19 May 2005 09:57:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505190956330.2322@ppc970.osdl.org>
-References: <E1DYmy8-0003YB-JW@highlab.com> <20050519155804.GB4513@pasky.ji.cz>
- <E1DYnpO-0003cF-I6@highlab.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Deltification library work by Nicolas Pitre.
+Date: Thu, 19 May 2005 09:59:59 -0700
+Message-ID: <7vekc3178w.fsf@assigned-by-dhcp.cox.net>
+References: <7vwtpv1pd4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.62.0505191019180.20274@localhost.localdomain>
+	<Pine.LNX.4.58.0505190736020.2322@ppc970.osdl.org>
+	<Pine.LNX.4.62.0505191104410.20274@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 18:55:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 19:01:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYoI6-0001tV-UG
-	for gcvg-git@gmane.org; Thu, 19 May 2005 18:54:35 +0200
+	id 1DYoMi-0002dB-W6
+	for gcvg-git@gmane.org; Thu, 19 May 2005 18:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261170AbVESQzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 12:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261165AbVESQzG
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 12:55:06 -0400
-Received: from fire.osdl.org ([65.172.181.4]:1501 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261158AbVESQzD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2005 12:55:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4JGt1U3030271
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 19 May 2005 09:55:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4JGsxVx030098;
-	Thu, 19 May 2005 09:55:00 -0700
-To: Sebastian Kuzminsky <seb@highlab.com>
-In-Reply-To: <E1DYnpO-0003cF-I6@highlab.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261153AbVESRAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 13:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVESRAF
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 13:00:05 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:51140 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261153AbVESRAB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2005 13:00:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050519170001.XSCF23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 May 2005 13:00:01 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.62.0505191104410.20274@localhost.localdomain> (Nicolas
+ Pitre's message of "Thu, 19 May 2005 11:14:04 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
+NP> In fact I think the code in that file might be simplified even further 
+NP> eventually, at which point there  might not be much of the original code 
+NP> left anymore and the license switched to GPL v2.
 
-On Thu, 19 May 2005, Sebastian Kuzminsky wrote:
-> 
-> Anyway, here's the documentation patch:
+I am afraid that kind of code transformation would not change
+the copyright issues.
 
-It's whitespace-corrupted, with tabs turned into spaces..
-
-		Linus
