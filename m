@@ -1,64 +1,68 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: manpage name conflict
-Date: Thu, 19 May 2005 17:58:05 +0200
-Message-ID: <20050519155804.GB4513@pasky.ji.cz>
-References: <E1DYmy8-0003YB-JW@highlab.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/4] Pulling refs files
+Date: Thu, 19 May 2005 12:00:43 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0505191147480.30848-100000@iabervon.org>
+References: <20050519065207.GB18281@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 17:59:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu May 19 18:01:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYnP2-0001nK-Ly
-	for gcvg-git@gmane.org; Thu, 19 May 2005 17:57:40 +0200
+	id 1DYnRy-0002Hp-3k
+	for gcvg-git@gmane.org; Thu, 19 May 2005 18:00:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262540AbVESP6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 11:58:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262542AbVESP6O
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 11:58:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:11166 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262540AbVESP6H (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2005 11:58:07 -0400
-Received: (qmail 5620 invoked by uid 2001); 19 May 2005 15:58:05 -0000
-To: Sebastian Kuzminsky <seb@highlab.com>
-Content-Disposition: inline
-In-Reply-To: <E1DYmy8-0003YB-JW@highlab.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261418AbVESQBc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 12:01:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262501AbVESQBc
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 12:01:32 -0400
+Received: from iabervon.org ([66.92.72.58]:61703 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261418AbVESQB0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 May 2005 12:01:26 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DYnRz-0006cc-00; Thu, 19 May 2005 12:00:43 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050519065207.GB18281@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, May 19, 2005 at 05:29:52PM CEST, I got a letter
-where Sebastian Kuzminsky <seb@highlab.com> told me that...
-> Hi folks, I maintain a Debian package for Cogito (it just went into "Sid"
-> aka "unstable"), and I just got a bug report from a user that I'd like
-> your input on.
+On Thu, 19 May 2005, Petr Baudis wrote:
+
+> Dear diary, on Thu, May 19, 2005 at 05:19:01AM CEST, I got a letter
+> where Daniel Barkalow <barkalow@iabervon.org> told me that...
+> >  2) fetching reference files by name, and making them available to the
+> >     local program without writing them to disk at all.
+> >  3) fetching other files by name and writing them to either the
+> >     corresponding filename or a provided replacement.
+> > 
+> > I had thought that (2) could be done as a special case of (3), but I think
+> > that it has to be separate, because (2) just returns the value, while
+> > (3) can't just return the contents, but has to write it somewhere, since
+> > it isn't constrained to be exactly 20 bytes.
 > 
-> 
-> The problem is that Cogito wants to install a git(1) manpage, and so does
-> the GNU Interactive Tools.  The GNU Interactive Tools actually have a
-> program called "git", so it seems only fair that they get to call their
-> manpage by the same name.  The GIT-as-in-Cogito git(1) manpage gives
-> an overview of the GIT-as-in-Cogito core, so maybe we could install it
-> as git-core(1)?
+> Huh. How would (2) be useful and why can't you just still write it e.g.
+> to some user-supplied temporary file? I think that'd be still actually
+> much less trouble for the scripts to handle.
 
-Does this manpage actually belong to man1? What about git(7) or
-something? It's not an actual command.
+(2) is what is needed if the user just requests downloading objects
+starting with a reference stored remotely, and doesn't request that the
+reference be written anywhere. It is also useful because the system wants
+to verify that it has actually downloaded the objects successfully before
+writing the reference.
 
+Note that the scripts see a higher-level interface; these are the
+operations that (e.g.) http-pull.c has to provide for pull.c, which builds
+a larger operation (determine the target hash, download the objects, write
+the specified ref file) out of them. It would be inconvenient for pull.c 
+to download to a temporary file and then read the temporary file, which
+shouldn't normally be visible yet, to figure out what it's doing. It wants
+to have a function that takes a string and returns a hash, getting the
+value from the remote host, and it's inconvenient to deal with the disk in
+the middle.
 
-Not directly related to this problem, but just FYI - git isn't staying
-as part of Cogito forever, actually I think its time in Cogito
-distribution is running over soon (now that I've pushed all the interesting
-local changes to git-pb, consequently to git-linus).
+	-Daniel
+*This .sig left intentionally blank*
 
-So you will have to either bundle it manually in the distribution
-packages, or provide a separate git package for cogito to depend on
-(when the unbundling really happens).  Either way, this is git issue,
-not cogito. :-)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
