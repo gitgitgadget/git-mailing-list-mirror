@@ -1,66 +1,52 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/2] Introduce git-run-with-user-path helper program.
-Date: Thu, 19 May 2005 13:35:29 -0700
-Message-ID: <7v7jhvymwe.fsf@assigned-by-dhcp.cox.net>
-References: <7voebbpuxs.fsf@assigned-by-dhcp.cox.net>
-	<20050517190355.GA7136@pasky.ji.cz>
-	<7vk6lxfybc.fsf@assigned-by-dhcp.cox.net>
-	<20050517203500.GH7136@pasky.ji.cz>
-	<7v4qd1tuud.fsf@assigned-by-dhcp.cox.net>
-	<20050517213752.GO7136@pasky.ji.cz>
-	<7vzmutqz5f.fsf@assigned-by-dhcp.cox.net>
-	<20050518213309.GD10358@pasky.ji.cz>
-	<7vekc4nom5.fsf@assigned-by-dhcp.cox.net>
-	<20050518232408.GA18281@pasky.ji.cz>
-	<7v64xgnl55.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505181731450.18337@ppc970.osdl.org>
+Subject: Re: [PATCH] Detect renames in diff family.
+Date: Thu, 19 May 2005 13:36:05 -0700
+Message-ID: <7vy8abx8ay.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
+	<7v4qcz16n6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.62.0505191426000.20274@localhost.localdomain>
+	<7vsm0jyryf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.62.0505191456040.20274@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 22:35:35 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 19 22:37:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYrjI-00084d-52
-	for gcvg-git@gmane.org; Thu, 19 May 2005 22:34:53 +0200
+	id 1DYrjp-00089h-9g
+	for gcvg-git@gmane.org; Thu, 19 May 2005 22:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261246AbVESUfh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 16:35:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261245AbVESUfh
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 16:35:37 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:22977 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261246AbVESUfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2005 16:35:31 -0400
+	id S261247AbVESUgL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 16:36:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261248AbVESUgL
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 16:36:11 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:27885 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261247AbVESUgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2005 16:36:07 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050519203529.MGSO550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 19 May 2005 16:35:29 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+          id <20050519203604.CZMV23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 19 May 2005 16:36:04 -0400
+To: Nicolas Pitre <nico@cam.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
-LT> ... I do believe that git-run-with-user-path _could_ be a
-LT> good way to abstract out the "where the heck in the tree am
-LT> I?" issues.
+NP> Yes, but 0-9 is putting a bound on the accuracy.  What if someone wants 
+NP> not more than 2% difference?
 
-Yes, I am still in search of a good way to abstract that issue
-out and I myself is not yet convinced that the command in its
-current form _is_ a good enough way yet.
+That statement is correct, but I think you are looking at it
+from a developer perspective.
 
-What I am most unhappy about with it lies elsewhere, though.
-There needs to be a better way to tell it how the underlying
-command handles non-paths arguments, so that I can just say
-
-    git-run-with-user-path <some option spec for the command> \
-        command arg1 arg2 arg3 ...
-
-and if arg1 through argO is non-path options then have it
-canonicalize and filter only starting from argO+1.  That would
-alleviate one issue I have with the current implementation.
+I suspect people would not want to pay the price of having
+always to type many digits for the benefit of being able to
+specify differences of 2% and 5%.  Would you also complain gzip
+only lets you say -1 .. -9 and not -1.63 ;-)?
 
