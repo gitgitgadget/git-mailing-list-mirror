@@ -1,118 +1,141 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Detect renames in diff family.
-Date: Thu, 19 May 2005 09:19:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
-References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 18:20:48 2005
+From: Sebastian Kuzminsky <seb@highlab.com>
+Subject: Re: manpage name conflict
+Date: Thu, 19 May 2005 10:24:54 -0600
+Message-ID: <E1DYnpO-0003cF-I6@highlab.com>
+References: <E1DYmy8-0003YB-JW@highlab.com> <20050519155804.GB4513@pasky.ji.cz>
+X-From: git-owner@vger.kernel.org Thu May 19 18:27:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYniK-0004gE-Jj
-	for gcvg-git@gmane.org; Thu, 19 May 2005 18:17:36 +0200
+	id 1DYnqV-00064e-S3
+	for gcvg-git@gmane.org; Thu, 19 May 2005 18:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262561AbVESQSS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 12:18:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262560AbVESQSS
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 12:18:18 -0400
-Received: from fire.osdl.org ([65.172.181.4]:49107 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262561AbVESQRb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 May 2005 12:17:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4JGHNU3027582
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 19 May 2005 09:17:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4JGHMe1028361;
-	Thu, 19 May 2005 09:17:23 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261154AbVESQY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 12:24:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261168AbVESQYl
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 12:24:41 -0400
+Received: from sccrmhc11.comcast.net ([204.127.202.55]:51076 "EHLO
+	sccrmhc11.comcast.net") by vger.kernel.org with ESMTP
+	id S261161AbVESQXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2005 12:23:51 -0400
+Received: from highlab.com ([24.8.179.27])
+          by comcast.net (sccrmhc11) with ESMTP
+          id <2005051916234801100itos3e>; Thu, 19 May 2005 16:23:48 +0000
+Received: from seb (helo=highlab.com)
+	by highlab.com with local-esmtp (Exim 4.50)
+	id 1DYnpO-0003cF-I6
+	for git@vger.kernel.org; Thu, 19 May 2005 10:24:54 -0600
+To: git@vger.kernel.org
+In-reply-to: <20050519155804.GB4513@pasky.ji.cz> 
+Comments: In-reply-to Petr Baudis <pasky@ucw.cz>
+   message dated "Thu, 19 May 2005 17:58:05 +0200."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Petr Baudis <pasky@ucw.cz> wrote:
+> Does this manpage actually belong to man1? What about git(7) or
+> something? It's not an actual command.
 
 
-On Thu, 19 May 2005, Junio C Hamano wrote:
+Good point.
+
+
+Ok, I've appended a patch (against the top of git-pb) that moves the
+git manpage to man7.  It also does two other things:
+
+    * Sort of works around the asciidoc 6.0.3 bug where the manpages all
+      get called "git.1".  It just renames them to what they should have
+      been called.
+
+    * Fixes a cut-n-paste bug in git-diff-helper.txt that was making
+      asciidoc choke.
+
+
+
+
+> Not directly related to this problem, but just FYI - git isn't staying
+> as part of Cogito forever, actually I think its time in Cogito
+> distribution is running over soon (now that I've pushed all the interesting
+> local changes to git-pb, consequently to git-linus).
 > 
-> Special request for Linus is to check if I did not screw up the
-> various calls into the diff core from diff-tree.  Essentially
-> the idea is to start one patchset session with diff_setup() and
-> close it with diff_flush() before you start another patchset
-> session.
+> So you will have to either bundle it manually in the distribution
+> packages, or provide a separate git package for cogito to depend on
+> (when the unbundling really happens).  Either way, this is git issue,
+> not cogito. :-)
 
-It all looks ok from a quick setup, and with this I can now do
 
-	git-whatchanged -M
+Right.  Hm.  It's no problem to have git be it's own separate package
+with all the appropriate relationships (cogito Requires git, and git
+suggests cogito).
 
-in the kernel, and searching for renames I find:
 
-	diff --git a/arch/um/kernel/sys_call_table.c b/arch/um/sys-x86_64/sys_call_table.c
-	rename old arch/um/kernel/sys_call_table.c
-	rename new arch/um/sys-x86_64/sys_call_table.c
-	--- a/arch/um/kernel/sys_call_table.c
-	+++ b/arch/um/sys-x86_64/sys_call_table.c
-	@@ -1,4 +1,4 @@
-	-/* 
-	+/*
-	  * Copyright (C) 2000 Jeff Dike (jdike@karaya.com)
-	  * Copyright 2003 PathScale, Inc.
-	  * Licensed under the GPL
-	@@ -14,6 +14,12 @@
-	 #include "sysdep/syscalls.h"
-	 #include "kern_util.h"
-	 
-	+#ifdef CONFIG_NFSD
-	....
+But what is going to be the name of the git package?  Let's please
+not make it "git", because that's taken by the GNU Interactive Tools.
+How about "git-core" or "git-plumbing" or "linus-is-a-git"?
 
-which looks quite correct.
 
-I notice that you left some debugging output in there ("**score **" 
-stuff), and I'll remove it, but it's merged and pushed out and passed my 
-trivial tests. 
+;)
 
-[ rambling mode on: ]
 
-One thing that struck me is that there is nothing wrong with having the 
-same old file marked twice for a rename, or considering new files to be 
-copies of old files. So if we ever allow that, then "rename" may be the 
-wrong name for this, since the logic certainly allows the old file to 
-still exist (or be removed and show up multiple times in a new guise).
 
-In other words, let's say that we create a new architecture or a new 
-filesystem, and we have tons of _new_ files, but not a lot of removed 
-files. It would literally be very cool to see that the new files are based 
-on contents of old files, and that it would thus potentially be very 
-interesting to see a diff like
 
-	diff --git a/arch/i386/kernel/irq.c b/arch/x86-64/kernel/irq.c
-	based-on old arch/i386/kernel/irq.c
-	creates new arch/x86-64/kernel/irq.c
-	--- arch/i386/kernel/irq.c
-	+++ arch/x86_64/kernel/irq.c
-	@@ -1,205 +1,31 @@
-	 /*
-	- *     linux/arch/i386/kernel/irq.c
-	+ *     linux/arch/x86_64/kernel/irq.c
-	  *
-	  *     Copyright (C) 1992, 1998 Linus Torvalds, Ingo Molnar
-	  *
-	...
+Anyway, here's the documentation patch:
 
-(the above is a made-up example, but it's at least _half-way_ valid).
 
-I'm not suggesting you actually do this, if only because it's quite
-expensive: it means that any newly added file would have to be compared
-with _all_ files in the previous archive, which is just too damn
-expensive. But I'd like people to kind of keep this in mind as a
-possibility, because maybe wasting CPU time in a big way might actually be
-acceptable in some cases, and having a separate flag to enable this kind 
-of thing might be interesting, no?
+Index: Documentation/Makefile
+===================================================================
+--- 75b95bec390d6728b9b1b4572056af8cee34ea7d/Documentation/Makefile  (mode:100644)
++++ uncommitted/Documentation/Makefile  (mode:100644)
+@@ -1,6 +1,6 @@
+ DOC_SRC=$(wildcard git*.txt)
+ DOC_HTML=$(patsubst %.txt,%.html,$(DOC_SRC))
+-DOC_MAN=$(patsubst %.txt,%.1,$(DOC_SRC))
++DOC_MAN=$(patsubst %.txt,%.1,$(wildcard git-*.txt)) git.7
 
-		Linus
+ all: $(DOC_HTML) $(DOC_MAN)
+
+@@ -13,13 +13,15 @@
+        touch $@
+
+ clean:
+-       rm -f *.xml *.html *.1
++       rm -f *.xml *.html *.1 *.7
+
+ %.html : %.txt
+        asciidoc -b css-embedded -d manpage $<
+
+-%.1 : %.xml
++%.1 %.7 : %.xml
+        xmlto man $<
++       # FIXME: this next line works around an output filename bug in asciidoc 6.0.3
++       [ "$@" = "git.7" ] || mv git.1 $@
+
+ %.xml : %.txt
+        asciidoc -b docbook -d manpage $<
+Index: Documentation/git-diff-helper.txt
+===================================================================
+--- 75b95bec390d6728b9b1b4572056af8cee34ea7d/Documentation/git-diff-helper.txt  (mode:100644)
++++ uncommitted/Documentation/git-diff-helper.txt  (mode:100644)
+@@ -1,5 +1,5 @@
+ git-diff-helper(1)
+-=======================
++==================
+ v0.1, May 2005
+
+ NAME
+Index: Documentation/git.txt
+===================================================================
+--- 75b95bec390d6728b9b1b4572056af8cee34ea7d/Documentation/git.txt  (mode:100644)
++++ uncommitted/Documentation/git.txt  (mode:100644)
+@@ -1,4 +1,4 @@
+-git(1)
++git(7)
+ ======
+ v0.1, May 2005
+
+
+-- 
+Sebastian Kuzminsky
+"Marie will know I'm headed south, so's to meet me by and by"
+-Townes Van Zandt
