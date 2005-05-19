@@ -1,50 +1,44 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] packed delta git
-Date: Thu, 19 May 2005 15:30:06 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0505191529290.20274@localhost.localdomain>
-References: <200505171857.46370.mason@suse.com>
- <200505191428.52238.mason@suse.com>
- <20050519183810.GF8105@cip.informatik.uni-erlangen.de>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: git-diff-tree for the first commit
+Date: Thu, 19 May 2005 21:51:10 +0200
+Message-ID: <20050519195110.GG8105@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 19 21:32:12 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu May 19 21:51:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYqiE-000716-N6
-	for gcvg-git@gmane.org; Thu, 19 May 2005 21:29:43 +0200
+	id 1DYr2K-0001mr-Jd
+	for gcvg-git@gmane.org; Thu, 19 May 2005 21:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261231AbVESTaR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 19 May 2005 15:30:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261228AbVESTaR
-	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 15:30:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14569 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261229AbVESTaN
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 May 2005 15:30:13 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IGR00L694U6SB@VL-MO-MR010.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 19 May 2005 15:30:07 -0400 (EDT)
-In-reply-to: <20050519183810.GF8105@cip.informatik.uni-erlangen.de>
-X-X-Sender: nico@localhost.localdomain
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+	id S261235AbVESTvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 19 May 2005 15:51:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261238AbVESTvP
+	(ORCPT <rfc822;git-outgoing>); Thu, 19 May 2005 15:51:15 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:48541 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261237AbVESTvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 May 2005 15:51:12 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4JJpAS8026955
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Thu, 19 May 2005 19:51:10 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4JJpA4U026954
+	for git@vger.kernel.org; Thu, 19 May 2005 21:51:10 +0200 (CEST)
+To: GIT <git@vger.kernel.org>
+Mail-Followup-To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 19 May 2005, Thomas Glanzmann wrote:
+Hello,
+I would like to see output for the first commit (initial import) in:
 
-> Hello Chris,
-> 
-> > size (du -sh .git)              2.5G                  227M
-> 
-> wow that beats bitkeeper in size. What is missing to actual use such a
-> approach in a distributed environment?
+	git-rev-list HEAD | git-diff-tree -r --stdin
 
-Me completing fsck-cache support for delta objects.
+is it supposed to just be empty or is that a bug?
 
-
-Nicolas
+	Thomas
