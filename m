@@ -1,71 +1,64 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [cogito] paged output for cg-diff
-Date: Fri, 20 May 2005 06:50:57 -0700
-Message-ID: <7vu0kyuhtq.fsf@assigned-by-dhcp.cox.net>
-References: <200505201517.05995.michal@rokos.info>
+Subject: Re: [PATCH] Fix git-fsck-cache segfault on invalid tag
+Date: Fri, 20 May 2005 06:58:07 -0700
+Message-ID: <7voeb6uhhs.fsf@assigned-by-dhcp.cox.net>
+References: <428D8B19.4070605@tuxrocks.com>
+	<20050520085047.GA27787@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 15:53:28 2005
+Cc: Frank Sorenson <frank@tuxrocks.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri May 20 15:59:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ7tM-0003YU-DA
-	for gcvg-git@gmane.org; Fri, 20 May 2005 15:50:22 +0200
+	id 1DZ80C-0004Vh-5B
+	for gcvg-git@gmane.org; Fri, 20 May 2005 15:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261430AbVETNvK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 09:51:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261435AbVETNvK
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 09:51:10 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:1203 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261430AbVETNu7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2005 09:50:59 -0400
+	id S261468AbVETN6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 09:58:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261470AbVETN6Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 09:58:16 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33462 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261468AbVETN6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2005 09:58:09 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050520135058.RLOI7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 20 May 2005 09:50:58 -0400
-To: Michal Rokos <michal@rokos.info>
-In-Reply-To: <200505201517.05995.michal@rokos.info> (Michal Rokos's message
- of "Fri, 20 May 2005 15:17:05 +0200")
+          id <20050520135809.RDRW23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 20 May 2005 09:58:09 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050520085047.GA27787@pasky.ji.cz> (Petr Baudis's message of
+ "Fri, 20 May 2005 10:50:47 +0200")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "MR" == Michal Rokos <michal@rokos.info> writes:
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-MR> Junio is right, following is sufficent. Tested with 'more' too.
-MR> Idea-from: Junio C Hamano <junkio@cox.net>
+>> obj = lookup_object(sha1);
+>> +	if (!obj) {
+>> +		fprintf(stderr, "invalid tag %s - %s\n", path, hexname);
+>> +		return;
+>> +	}
+>> ...
 
-I appreciate the credit, but that is probably not needed in this
-case, since this is quite commonly used pattern.  I've seen many
-people do just this:
+PB> My error message is
+PB> 	error("%s: invalid sha1 pointer %.40s", path, hexname);
+PB> I'd prefer that (at least use the error() call).
 
-          command | ${PAGER:-less}
+Ack.
 
-And if you think about it, you would realize that the above is
-good enough, and probably is a lot better than what you are
-doing.
+I was about to say "doesn't lookup_object() give its own error
+message before you say that, though?" because I remembered a
+comment to that effect around ll 410 that gets the heads from
+the command line argument, and then looked at lookup_object()
+implementation to find that it does _not_ give error message.
 
-Your PAGER shell function gives "-R" indiscriminately when
-$PAGER_FLAGS is not set (or set to empty, which is even worse
-because you are not giving the user to override this _bad_
-choice) without even checking if the $PAGER is something that
-understands "-R" (namely, "less").  I do not think users with
-their PAGER set to "more" or "cat" (I do the latter when I am
-working in Emacs) would appreciate that behaviour.
-
-On the other hand, if your user is a "less" user, and if the
-user wants it to honor ANSI "color" escape sequences, it would
-be more helpful to the user if you educate/encourage the user to
-have "LESS=R" in the environment and make that in effect
-everywhere less is used not just in Cogito.  Giving that support
-silently just in Cogito at the first thought may seem to be more
-helpful but in reality it is not.
-
-So I would suggest to use the above form without defining your
-own PAGER shell function, and add a tip for "less" users to have
-"LESS=R" in their environment somewhere in the documentation.
+So if you are going to do this, would you mind giving similar
+error message to that command line heads stuff while you are at
+it, please?
 
