@@ -1,124 +1,70 @@
-From: Michal Rokos <michal.rokos@nextsoft.cz>
-Subject: [cogito] paged output for cg-diff
-Date: Fri, 20 May 2005 11:05:08 +0200
-Organization: NextSoft
-Message-ID: <200505201105.08711.michal.rokos@nextsoft.cz>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: gitk-1.0 released
+Date: Fri, 20 May 2005 13:22:29 +0200
+Message-ID: <20050520112229.GA5606@elte.hu>
+References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com> <20050519132411.GA29111@elte.hu> <17037.5109.556362.904185@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri May 20 11:05:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 13:22:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ3R0-0001Bm-Ix
-	for gcvg-git@gmane.org; Fri, 20 May 2005 11:04:46 +0200
+	id 1DZ5Ze-0000ex-2b
+	for gcvg-git@gmane.org; Fri, 20 May 2005 13:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261390AbVETJFk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 May 2005 05:05:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261386AbVETJFj
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 05:05:39 -0400
-Received: from black.click.cz ([62.141.0.10]:10944 "EHLO click.cz")
-	by vger.kernel.org with ESMTP id S261390AbVETJFY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2005 05:05:24 -0400
-Received: from rokos.ack-prg.csas.cz (gprsh1.isp.t-mobile.cz [62.141.24.1])
-	by click.cz (8.12.9/8.12.9) with ESMTP id j4K95691027775
-	for <git@vger.kernel.org>; Fri, 20 May 2005 11:05:17 +0200 (MET DST)
-Received: from ip6-localhost (ip6-localhost [IPv6:::1])
-	by rokos.ack-prg.csas.cz (Postfix) with ESMTP id 2CA80F9000
-	for <git@vger.kernel.org>; Fri, 20 May 2005 11:05:10 +0200 (CEST)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8
+	id S261417AbVETLWo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 07:22:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261412AbVETLWo
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 07:22:44 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:18620 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261417AbVETLWl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 07:22:41 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id ABF1031C8C8;
+	Fri, 20 May 2005 13:20:33 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 1D9711FC2; Fri, 20 May 2005 13:22:36 +0200 (CEST)
+To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
+In-Reply-To: <17037.5109.556362.904185@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-I'm a bit curious what is going on in development so I'm using cg-diff
-often. Usually I pipe it to the less. So for me it would be very nice
-when cg-diff behaves as cg-log that pipes output to pager.
+* Paul Mackerras <paulus@samba.org> wrote:
 
-So I changed cg-diff to do so.
+> > (and the biggest missing feature of GIT right now is author + 
+> > last-commit annotated file viewing which could be integrated into gitk 
+> > a'ka BK's revtool: selecting a given line of the file would bring one to 
+> > that commit, etc.)
+> 
+> Yes, indeed.  I'll have to think about how to do it in a responsive 
+> fashion, since getting the necessary information involves reading all 
+> the commits and all the tree objects back to the beginning of time, 
+> AFAICS. [...]
 
-New function PAGER() determines whether output is terminal and uses
-PAGER in that case.
+i guess so. A possible solution seems to be to read every object 
+starting at the oldest one (assuming it's possible to get a list of 
+object IDs that are predecessors), and to split the oldest object up 
+into 'line' objects, attaching the (same) object ID to every line. Then 
+the algorithm would go forward in time and would process every diff from 
+that point on, and would add/remove line objects, attaching the new 
+object IDs as new lines get added. The resulting set of lines then 
+contain all the metadata needed (== object ID they originate from).
 
-Do you like it?
+i dont think other SCMs can do this much faster: you need to go back to 
+the last (still relevant) version and have to process the deltas from 
+that point on. Delta-based formats would be somewhat faster and easier 
+to process, but probably not that much faster in terms of IO overhead.
 
- Michal
-
-Signed-off-by: Michal Rokos <michal@rokos.info>
-
-Index: cg-Xlib
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-Xlib  (mode:100755)
-+++ uncommitted/cg-Xlib  (mode:100755)
-@@ -91,3 +91,12 @@
-=20
- export BROKEN_MKTEMP=3D1
- del=3D$($(which mktemp) -t 2>/dev/null) && { rm $del; export BROKEN_MK=
-TEMP=3D; }
-+
-+PAGER () {
-+ if [ -t 1 ]; then
-+  ${PAGER:-less} ${PAGER_FLAGS:--R}
-+ else
-+  cat
-+ fi
-+}
-+
-Index: cg-diff
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-diff  (mode:100755)
-+++ uncommitted/cg-diff  (mode:100755)
-@@ -71,7 +71,7 @@
-  # FIXME: Update ret based on what did we match. And take "$@"
-  # to account after all.
-  ret=3D
-- git-diff-cache -r -z $tree | xargs -0 ${COGITO_LIB}cg-Xdiffdo "$tree"=
- uncommitted "$filter"
-+ git-diff-cache -r -z $tree | xargs -0 ${COGITO_LIB}cg-Xdiffdo "$tree"=
- uncommitted "$filter" | PAGER
-=20
-  [ "$filter" ] && rm $filter
-=20
-@@ -85,7 +85,7 @@
-=20
- [ "$id1" =3D "$id2" ] && die "trying to diff $id1 against itself"
-=20
--git-diff-tree -r -z $id1 $id2 | xargs -0 ${COGITO_LIB}cg-Xdiffdo $id1 =
-$id2 "$filter"
-+git-diff-tree -r -z $id1 $id2 | xargs -0 ${COGITO_LIB}cg-Xdiffdo $id1 =
-$id2 "$filter" | PAGER
-=20
- [ "$filter" ] && rm $filter
- exit 0
-Index: cg-log
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-log  (mode:100755)
-+++ uncommitted/cg-log  (mode:100755)
-@@ -181,4 +181,4 @@
-=20
-   done
-  echo
--done | ${PAGER:-less} ${PAGER_FLAGS:--R}
-+done | PAGER
-
---=20
-Michal Rokos
-
-NextSoft s.r.o.
-Vysko=C4=8Dilova 1/1410
-140 21 Praha 4
-tel: +420 267 224 311
-fax: +420 267 224 307
-mobil: +420 736 646 591
-e-mail: michal.rokos@nextsoft.cz
+	Ingo
