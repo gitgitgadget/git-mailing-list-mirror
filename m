@@ -1,72 +1,78 @@
-From: Raja R Harinath <rharinath@novell.com>
-Subject: Re: [PATCH] Fix and clean up man page building
-Date: Fri, 20 May 2005 19:38:01 +0530
-Organization: Linux Private Site
-Message-ID: <m37jhu56ta.fsf@harinath.blr.novell.com>
-References: <E1DYmy8-0003YB-JW@highlab.com>
-	<20050519155804.GB4513@pasky.ji.cz> <E1DYnpO-0003cF-I6@highlab.com>
-	<Pine.LNX.4.58.0505190956330.2322@ppc970.osdl.org>
-	<E1DYpbT-0003jv-JY@highlab.com> <20050520133533.GA27395@diku.dk>
+From: Frank Sorenson <frank@tuxrocks.com>
+Subject: Re: [PATCH] Fix git-fsck-cache segfault on invalid tag
+Date: Fri, 20 May 2005 08:36:16 -0600
+Message-ID: <428DF5E0.6030106@tuxrocks.com>
+References: <428D8B19.4070605@tuxrocks.com> <20050520085047.GA27787@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri May 20 16:36:49 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri May 20 16:38:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ8Zu-0001kY-6Y
-	for gcvg-git@gmane.org; Fri, 20 May 2005 16:34:19 +0200
+	id 1DZ8b8-0001xA-FV
+	for gcvg-git@gmane.org; Fri, 20 May 2005 16:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261324AbVETOfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 10:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261365AbVETOfO
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 10:35:14 -0400
-Received: from main.gmane.org ([80.91.229.2]:36782 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261324AbVETOfK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 10:35:10 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DZ8WR-0001AE-U3
-	for git@vger.kernel.org; Fri, 20 May 2005 16:30:44 +0200
-Received: from 202.144.86.147 ([202.144.86.147])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2005 16:30:43 +0200
-Received: from rharinath by 202.144.86.147 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2005 16:30:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 202.144.86.147
-User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.3 (gnu/linux)
-Cancel-Lock: sha1:5Pap8E0/Odf91jk25k8dYQ0aK8k=
+	id S261347AbVETOgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 10:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261382AbVETOgb
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 10:36:31 -0400
+Received: from www.tuxrocks.com ([64.62.190.123]:26378 "EHLO tuxrocks.com")
+	by vger.kernel.org with ESMTP id S261347AbVETOgZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 10:36:25 -0400
+Received: from [10.0.0.10] (sorenson.dsl.csolutions.net [216.190.206.130])
+	(authenticated bits=0)
+	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j4KEaHBt030139
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 20 May 2005 08:36:19 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050520085047.GA27787@pasky.ji.cz>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Jonas Fonseca <fonseca@diku.dk> writes:
+Petr Baudis wrote:
+> Dear diary, on Fri, May 20, 2005 at 09:00:41AM CEST, I got a letter
+> where Frank Sorenson <frank@tuxrocks.com> told me that...
+> 
+>>git-fsck-cache will segfault if a tag contains a non-existent sha1.  This
+>>patch fixes fsck-cache to report the invalid tag and not die.
+> 
+> 
+> Oh. I've fixed this too but didn't even get to commit it yet. :-)
 
-> +%.7 : %.1
-> +	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
-> +	if [ -f "$<" ]; then mv $< $@; fi
-> +
->  %.1 %.7 : %.xml
->  	xmlto man $<
-> -	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
-> -	[ "$@" = "git.7" ] || mv git.1 $@
->  
->  %.xml : %.txt
->  	asciidoc -b docbook -d manpage $<
+Okay.  At least we fixed the same bug.  It was a good exercise for me to
+track it down anyway :)
 
-That doesn't look right.  I think you want
+> My error message is
+> 
+> 	error("%s: invalid sha1 pointer %.40s", path, hexname);
+> 
+> I'd prefer that (at least use the error() call). The .40 is there since
+> it has a newline on its own.
 
-  %.7: %.xml
-      xmlto man %<
+Great.  Your message looks fine.  It looks like error() should work fine
+as well.
 
-  %.1: %.xml
-       xmlto man $<
-       [ test -f $@ ] || mv git.1 $@
+Frank
+- --
+Frank Sorenson - KD7TZK
+Systems Manager, Computer Science Department
+Brigham Young University
+frank@tuxrocks.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-- Hari
-
+iD8DBQFCjfXgaI0dwg4A47wRAikrAKCvPmZBQK34sdnnY61/meuewu2jzQCfT7Qf
+TDSNgfp3WBJOTvWG5uhwX4s=
+=CUF2
+-----END PGP SIGNATURE-----
