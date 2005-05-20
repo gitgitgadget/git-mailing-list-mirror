@@ -1,76 +1,66 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Fix and clean up man page building
-Date: Fri, 20 May 2005 16:52:12 +0200
-Message-ID: <20050520145211.GB27395@diku.dk>
-References: <E1DYmy8-0003YB-JW@highlab.com> <20050519155804.GB4513@pasky.ji.cz> <E1DYnpO-0003cF-I6@highlab.com> <Pine.LNX.4.58.0505190956330.2322@ppc970.osdl.org> <E1DYpbT-0003jv-JY@highlab.com> <20050520133533.GA27395@diku.dk> <m37jhu56ta.fsf@harinath.blr.novell.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: "git-diff-tree -R A B == git-diff-tree B A"?
+Date: Fri, 20 May 2005 07:56:08 -0700
+Message-ID: <7vacmquet3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 16:52:56 2005
+X-From: git-owner@vger.kernel.org Fri May 20 16:56:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ8qR-0004Ho-7Y
-	for gcvg-git@gmane.org; Fri, 20 May 2005 16:51:23 +0200
+	id 1DZ8uO-0004rp-Go
+	for gcvg-git@gmane.org; Fri, 20 May 2005 16:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261403AbVETOwS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 10:52:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261397AbVETOwS
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 10:52:18 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:60637 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261403AbVETOwN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 10:52:13 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id D92BF6E2012; Fri, 20 May 2005 16:51:54 +0200 (CEST)
-Received: from brok.diku.dk (brok.diku.dk [130.225.96.163])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 9A8536E200A; Fri, 20 May 2005 16:51:54 +0200 (CEST)
-Received: by brok.diku.dk (Postfix, from userid 3873)
-	id 4F49961DDD; Fri, 20 May 2005 16:52:12 +0200 (CEST)
-To: Raja R Harinath <rharinath@novell.com>
-Content-Disposition: inline
-In-Reply-To: <m37jhu56ta.fsf@harinath.blr.novell.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261417AbVETO4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 10:56:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261397AbVETO4T
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 10:56:19 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:53931 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261417AbVETO4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2005 10:56:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050520145610.DLOV550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 20 May 2005 10:56:10 -0400
+To: torvalds@osdl.org
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Raja R Harinath <rharinath@novell.com> wrote Fri, May 20, 2005:
-> Hi,
-> 
-> Jonas Fonseca <fonseca@diku.dk> writes:
-> 
-> > +%.7 : %.1
-> > +	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
-> > +	if [ -f "$<" ]; then mv $< $@; fi
-> > +
-> >  %.1 %.7 : %.xml
-> >  	xmlto man $<
-> > -	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
-> > -	[ "$@" = "git.7" ] || mv git.1 $@
-> >  
-> >  %.xml : %.txt
-> >  	asciidoc -b docbook -d manpage $<
-> 
-> That doesn't look right.  I think you want
-> 
->   %.7: %.xml
->       xmlto man %<
->
->   %.1: %.xml
->        xmlto man $<
->        [ test -f $@ ] || mv git.1 $@
+I was preparing a set of tests for diff family because I wanted
+to have something that catches screwups I am going to inflict
+upon them during the coming couple of days.  One of the tests
+accidentally found out that the above is not true in the current
+implementation.  Just an excerpt of relevant lines [*1*]:
 
-[ Looks like you mixed up %.1 and %.7 ]
+$ git-diff-tree -r $tree_B $tree_A
 
-Yes, separating the rule for %.1 and %.7 might be clearer. But it would
-be great if it would work for any man page in section 7 not just git.7.
-Since I hope to add cogito.7 soon.
++100644 blob 7e426fb079479fd67f6d81f984e4ec649a44bc25 AN
++100644 blob 68a6d8b91da11045cf4aa3a5ab9f2a781c701249 DF/DF
+-100644 blob 71420ab81e254145d26d6fc0cddee64c1acd4787 DF
+-100644 blob 3c4d8de5fbad08572bab8e10eef8dbb264cf0231 DM
 
--- 
-Jonas Fonseca
+$ git-diff-tree -R $tree_A $tree_B
+
++100644 blob 7e426fb079479fd67f6d81f984e4ec649a44bc25 AN
+-100644 blob 71420ab81e254145d26d6fc0cddee64c1acd4787 DF
++100644 blob 68a6d8b91da11045cf4aa3a5ab9f2a781c701249 DF/DF
+-100644 blob 3c4d8de5fbad08572bab8e10eef8dbb264cf0231 DM
+
+I personally don't care about the difference of the order these
+are output, but it affects the stability of the test, and also
+is inconsistent --- everybody else sorts the entries in the
+cache order.
+
+Although I do not see practical problems in this inconsistency,
+I am asking you just in case if you care about it.  If there is
+a downstream consumer that relies on the ordering of the entries
+this may cause problems (diff-helper is OK).
+
+[Footnote]
+*1* The trees are taken from t1000-read-tree-m-3way.sh test.
+
