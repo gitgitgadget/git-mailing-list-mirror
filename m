@@ -1,53 +1,57 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitweb wishlist
-Date: Fri, 20 May 2005 10:21:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505201019460.2206@ppc970.osdl.org>
-References: <20050511012626.GL26384@pasky.ji.cz> <1116384951.5094.83.camel@dhcp-188.off.vrfy.org>
- <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org> <7vbr75u8vw.fsf@assigned-by-dhcp.cox.net>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: gitweb and kernel.org
+Date: Fri, 20 May 2005 13:48:32 -0400
+Message-ID: <428E22F0.3050007@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 19:23:38 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: FTP Admin <ftpadmin@kernel.org>, Kay Sievers <kay.sievers@vrfy.org>
+X-From: git-owner@vger.kernel.org Fri May 20 19:49:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZBBT-0002A8-TX
-	for gcvg-git@gmane.org; Fri, 20 May 2005 19:21:16 +0200
+	id 1DZBb5-0005yM-Sm
+	for gcvg-git@gmane.org; Fri, 20 May 2005 19:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261491AbVETRVg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 13:21:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261488AbVETRTx
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 13:19:53 -0400
-Received: from fire.osdl.org ([65.172.181.4]:18399 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261491AbVETRT0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 13:19:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4KHJIQT003735
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 20 May 2005 10:19:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4KHJHtK022322;
-	Fri, 20 May 2005 10:19:17 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr75u8vw.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261162AbVETRso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 13:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261491AbVETRso
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 13:48:44 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:17848 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261162AbVETRsm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 13:48:42 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DZBbw-0008Uy-0W; Fri, 20 May 2005 17:48:38 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+No sure who maintains http://www.kernel.org/git/ so...
 
-On Fri, 20 May 2005, Junio C Hamano wrote:
-> 
-> Or abbreviate the first names.  L Torvalds, JC Hamano, etc.
+I have a request for the above URL:  provide access to branches in 
+refs/heads/* somehow.  -All- my work occurs in a branch, with the main 
+branch containing nothing but "vanilla Linus" tree.
 
-Technically, yes. Except I end up at least personally going by either
-first names (or _possibly_ email addresses), not by last name. Maybe Linux
-is fairly unique in that, but dammit, I'm not "Torvalds", I'm "Linus". And
-like it or not, you're either Junio or junkio at least to me ;)
+My jgarzik/libata-dev.git repository contains a large number of branches:
+> [jgarzik@pretzel libata-dev]$ ls .git/refs/heads/
+> adma        atapi-enable        iomap        new-ids   promise-sata-pata
+> adma-mwi    bridge-detect       iomap-step1  passthru  sil24
+> ahci-atapi  chs-support         master       pdc2027x
+> ahci-msi    ioctl-get-identity  misc-fixes   pdc20619
 
-		Linus
+and ditto for jgarzik/netdev-2.6.git:
+> [jgarzik@pretzel netdev-2.6]$ ls .git/refs/heads/
+> 8139cp         e100         janitor      pcnet32          skge           we18
+> 8139too-iomap  e1000        master       ppp              smc91x         wifi
+> airo           forcedeth    misc-fixes   qeth             smc91x-eeprom
+> amd8111        hdlc         natsemi      r8169            starfire
+> atmel          ieee80211    ns83820      register-netdev  tlan
+> chelsio        iff-running  orinoco      remove-drivers   veth
+> dm9000         ixgb         orinoco-hch  sis900           viro
+
