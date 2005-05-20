@@ -1,57 +1,72 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: gitweb and kernel.org
-Date: Fri, 20 May 2005 13:48:32 -0400
-Message-ID: <428E22F0.3050007@pobox.com>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb wishlist
+Date: Fri, 20 May 2005 19:58:52 +0200
+Message-ID: <1116611932.12975.22.camel@dhcp-188>
+References: <20050511012626.GL26384@pasky.ji.cz>
+	 <1116384951.5094.83.camel@dhcp-188.off.vrfy.org>
+	 <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: FTP Admin <ftpadmin@kernel.org>, Kay Sievers <kay.sievers@vrfy.org>
-X-From: git-owner@vger.kernel.org Fri May 20 19:49:32 2005
+Cc: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 20:01:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZBb5-0005yM-Sm
-	for gcvg-git@gmane.org; Fri, 20 May 2005 19:47:44 +0200
+	id 1DZBm2-0007KS-C0
+	for gcvg-git@gmane.org; Fri, 20 May 2005 19:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261162AbVETRso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 13:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261491AbVETRso
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 13:48:44 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:17848 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261162AbVETRsm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 13:48:42 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DZBbw-0008Uy-0W; Fri, 20 May 2005 17:48:38 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S261527AbVETR7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 13:59:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261526AbVETR70
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 13:59:26 -0400
+Received: from soundwarez.org ([217.160.171.123]:56025 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261524AbVETR7L (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 13:59:11 -0400
+Received: from dhcp-188.off.vrfy.org (d027239.adsl.hansenet.de [80.171.27.239])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id 67CC66835;
+	Fri, 20 May 2005 19:59:06 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org>
+X-Mailer: Evolution 2.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 2005-05-20 at 09:54 -0700, Linus Torvalds wrote:
+> 
+> On Wed, 18 May 2005, Kay Sievers wrote:
+> > 
+> > I did this now. The top-link shows now the repository listing with a
+> > nice "last change" field. The default link points to an overview page
+> > which also list the tags.
+> 
+> In the summary page, could we get authorship information too? Right now it 
+> looks like
+> 
+> 	recent commits
+> 
+> 	15 minutes ago	[PATCH] Add tests for diff-tree
+> 	31 minutes ago	diff-tree: use new base_name_compare() helper function
+> 	34 minutes ago	Introduce "base_name_compare()" helper function 
+> 	...
+> 
+> and wouldn't it be nice if it told you who had written these things, like
+> 
+> 	recent commits
+> 
+> 	15 minutes ago	Junio C Hamano	[PATCH] Add tests for diff-tree
+> 	31 minutes ago	Linus Torvalds	diff-tree: use new base_name_compare() helper function
+> 	34 minutes ago	Linus Torvalds	Introduce "base_name_compare()" helper function 
+> 	...
+> 
+> (limit the name to the first 20 characters or something to make things 
+> line up).
 
-No sure who maintains http://www.kernel.org/git/ so...
+Something like that: :)
+  http://www.kernel.org/git/?p=cogito/cogito.git;a=summary
 
-I have a request for the above URL:  provide access to branches in 
-refs/heads/* somehow.  -All- my work occurs in a branch, with the main 
-branch containing nothing but "vanilla Linus" tree.
-
-My jgarzik/libata-dev.git repository contains a large number of branches:
-> [jgarzik@pretzel libata-dev]$ ls .git/refs/heads/
-> adma        atapi-enable        iomap        new-ids   promise-sata-pata
-> adma-mwi    bridge-detect       iomap-step1  passthru  sil24
-> ahci-atapi  chs-support         master       pdc2027x
-> ahci-msi    ioctl-get-identity  misc-fixes   pdc20619
-
-and ditto for jgarzik/netdev-2.6.git:
-> [jgarzik@pretzel netdev-2.6]$ ls .git/refs/heads/
-> 8139cp         e100         janitor      pcnet32          skge           we18
-> 8139too-iomap  e1000        master       ppp              smc91x         wifi
-> airo           forcedeth    misc-fixes   qeth             smc91x-eeprom
-> amd8111        hdlc         natsemi      r8169            starfire
-> atmel          ieee80211    ns83820      register-netdev  tlan
-> chelsio        iff-running  orinoco      remove-drivers   veth
-> dm9000         ixgb         orinoco-hch  sis900           viro
+Kay
 
