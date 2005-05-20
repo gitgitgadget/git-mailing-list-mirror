@@ -1,64 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git-fsck-cache segfault on invalid tag
-Date: Fri, 20 May 2005 06:58:07 -0700
-Message-ID: <7voeb6uhhs.fsf@assigned-by-dhcp.cox.net>
-References: <428D8B19.4070605@tuxrocks.com>
-	<20050520085047.GA27787@pasky.ji.cz>
+From: Raja R Harinath <rharinath@novell.com>
+Subject: Re: [PATCH] Fix and clean up man page building
+Date: Fri, 20 May 2005 19:38:01 +0530
+Organization: Linux Private Site
+Message-ID: <m37jhu56ta.fsf@harinath.blr.novell.com>
+References: <E1DYmy8-0003YB-JW@highlab.com>
+	<20050519155804.GB4513@pasky.ji.cz> <E1DYnpO-0003cF-I6@highlab.com>
+	<Pine.LNX.4.58.0505190956330.2322@ppc970.osdl.org>
+	<E1DYpbT-0003jv-JY@highlab.com> <20050520133533.GA27395@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Frank Sorenson <frank@tuxrocks.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri May 20 15:59:52 2005
+X-From: git-owner@vger.kernel.org Fri May 20 16:36:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ80C-0004Vh-5B
-	for gcvg-git@gmane.org; Fri, 20 May 2005 15:57:24 +0200
+	id 1DZ8Zu-0001kY-6Y
+	for gcvg-git@gmane.org; Fri, 20 May 2005 16:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261468AbVETN6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 09:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261470AbVETN6Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 09:58:16 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33462 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261468AbVETN6J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2005 09:58:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050520135809.RDRW23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 20 May 2005 09:58:09 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050520085047.GA27787@pasky.ji.cz> (Petr Baudis's message of
- "Fri, 20 May 2005 10:50:47 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261324AbVETOfO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 10:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261365AbVETOfO
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 10:35:14 -0400
+Received: from main.gmane.org ([80.91.229.2]:36782 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261324AbVETOfK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 10:35:10 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1DZ8WR-0001AE-U3
+	for git@vger.kernel.org; Fri, 20 May 2005 16:30:44 +0200
+Received: from 202.144.86.147 ([202.144.86.147])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2005 16:30:43 +0200
+Received: from rharinath by 202.144.86.147 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 20 May 2005 16:30:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 202.144.86.147
+User-Agent: Gnus/5.110003 (No Gnus v0.3) Emacs/21.3 (gnu/linux)
+Cancel-Lock: sha1:5Pap8E0/Odf91jk25k8dYQ0aK8k=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+Hi,
 
->> obj = lookup_object(sha1);
->> +	if (!obj) {
->> +		fprintf(stderr, "invalid tag %s - %s\n", path, hexname);
->> +		return;
->> +	}
->> ...
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-PB> My error message is
-PB> 	error("%s: invalid sha1 pointer %.40s", path, hexname);
-PB> I'd prefer that (at least use the error() call).
+> +%.7 : %.1
+> +	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
+> +	if [ -f "$<" ]; then mv $< $@; fi
+> +
+>  %.1 %.7 : %.xml
+>  	xmlto man $<
+> -	# FIXME: this next line works around an output filename bug in asciidoc 6.0.3
+> -	[ "$@" = "git.7" ] || mv git.1 $@
+>  
+>  %.xml : %.txt
+>  	asciidoc -b docbook -d manpage $<
 
-Ack.
+That doesn't look right.  I think you want
 
-I was about to say "doesn't lookup_object() give its own error
-message before you say that, though?" because I remembered a
-comment to that effect around ll 410 that gets the heads from
-the command line argument, and then looked at lookup_object()
-implementation to find that it does _not_ give error message.
+  %.7: %.xml
+      xmlto man %<
 
-So if you are going to do this, would you mind giving similar
-error message to that command line heads stuff while you are at
-it, please?
+  %.1: %.xml
+       xmlto man $<
+       [ test -f $@ ] || mv git.1 $@
+
+- Hari
 
