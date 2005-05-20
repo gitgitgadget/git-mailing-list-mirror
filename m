@@ -1,89 +1,141 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: checkout-cache -f: a better way?
-Date: Fri, 20 May 2005 17:05:06 -0400
-Message-ID: <428E5102.60003@pobox.com>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: gitweb wishlist
+Date: Fri, 20 May 2005 23:16:34 +0200
+Message-ID: <20050520211634.GA20003@cip.informatik.uni-erlangen.de>
+References: <1116384951.5094.83.camel@dhcp-188.off.vrfy.org> <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org> <1116611932.12975.22.camel@dhcp-188> <Pine.LNX.4.58.0505201111090.2206@ppc970.osdl.org> <Pine.LNX.4.58.0505201123550.2206@ppc970.osdl.org> <1116615600.12975.33.camel@dhcp-188> <Pine.LNX.4.58.0505201219420.2206@ppc970.osdl.org> <428E49DD.406@zytor.com> <Pine.LNX.4.58.0505201346330.2206@ppc970.osdl.org> <428E4D8C.3020606@zytor.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030400040304000103080201"
-X-From: git-owner@vger.kernel.org Fri May 20 23:06:20 2005
+Content-Type: multipart/mixed; boundary="5I6of5zJg18YgZEa"
+X-From: git-owner@vger.kernel.org Fri May 20 23:17:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZEfT-0006dG-CZ
-	for gcvg-git@gmane.org; Fri, 20 May 2005 23:04:28 +0200
+	id 1DZEqo-00085s-Mk
+	for gcvg-git@gmane.org; Fri, 20 May 2005 23:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261584AbVETVFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 17:05:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261588AbVETVFW
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 17:05:22 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:44729 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261584AbVETVFL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 17:05:11 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DZEg8-0000Gw-Qw
-	for git@vger.kernel.org; Fri, 20 May 2005 21:05:09 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
+	id S261279AbVETVRF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 17:17:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261582AbVETVRF
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 17:17:05 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:4812 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261279AbVETVQg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 May 2005 17:16:36 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4KLGYS8023432
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 20 May 2005 21:16:34 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4KLGY83023431
+	for git@vger.kernel.org; Fri, 20 May 2005 23:16:34 +0200 (CEST)
 To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <428E4D8C.3020606@zytor.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030400040304000103080201
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
 
+--5I6of5zJg18YgZEa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Being a weirdo, I don't use cogito for kernel development, just git 
-itself.  I store branches in .git/refs/heads/ per the defacto standard, 
-and use the attached script to switch the working directory from one 
-branch to another.
+Hello,
+I imported the mutt-cvs for the 1.5 branch into GIT using the following
+script. But it is a hack. I also think that I will use something like
+that to build a CVS->GIT vendortracking.
 
-Problem is, 'git-checkout-cache -q -f -a' really pounds the disk, and 
-takes quite a while.
+cvsps -x -z 10 -b HEAD -g -p ../../patches/
 
-Is there any way to avoid -f, while ensuring that the working directory 
-truly represents the new branch?
+And using the attached script to import the patches in GIT. It works
+quiet well.
 
-BitKeeper has a secret checkout arg '-S', which will leave files 
-untouched if the mtime/size information is unchanged.
+See also msgid: 1115080139.21105.18.camel@localhost.localdomain there
+are the scripts which he used to convert the CVS to GIT for HPA. My
+scripts are based on his work.
 
-	Jeff
+	Thomas
 
+--5I6of5zJg18YgZEa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="cvsps-import.pl"
 
+#!/usr/bin/perl
 
+use strict;
+use warnings;
+use File::Temp qw/ tempfile tempdir /;
 
---------------030400040304000103080201
-Content-Type: text/plain;
- name="git-switch-tree"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-switch-tree"
+# ---------------------
+# PatchSet 1 
+# Date: 2002/07/23 07:41:30
+# Author: hpa
+# Branch: HEAD
+# Tag: (none) 
+# Log:
+# Initial revision
+# 
+# Members: 
+# 	klibc.cvsroot/snprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/vsnprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/Makefile:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/snprintf.c:INITIAL->1.1 
+# 	klibc.cvsroot/klibc/vsnprintf.c:INITIAL->1.1 
+# 
+# --- /dev/null	2005-04-30 18:00:24.840397008 +0200
+# +++ klibc/klibc.cvsroot/snprintf.c	2005-05-02 19:57:42.879913000 +0200
+# @@ -0,0 +1,19 @@
+# +/*
 
-#!/bin/sh
+my $patch = $ARGV[0];
 
-if [ "x$1" != "x" ]
-then
-	if [ "$1" == "master" ]
-	then
-		( cd .git && rm -f HEAD && ln -s refs/heads/master HEAD )
-	else
-		if [ ! -f .git/refs/heads/$1 ]
-		then
-			echo Branch $1 not found.
-			exit 1
-		fi
+my %committer = (
+	brendan  => [ 'Brendan Cully',   'brendan@kublai.com' ],
+	me       => [ 'Michael Elkins',  'me@sigpipe.org' ],
+	roessler => [ 'Thomas Roessler', 'roessler@does-not-exist.org' ]
+);
 
-		( cd .git && rm -f HEAD && ln -s refs/heads/$1 HEAD )
-	fi
-fi
+my @log = ();
 
-git-read-tree $(cat .git/HEAD) && \
-	git-checkout-cache -q -f -a && \
-	git-update-cache --refresh
+$ENV{GIT_AUTHOR_EMAIL} = "";
+$ENV{GIT_COMMITTER_EMAIL} = "";
 
+open (my $fd, $patch);
+while (my $line = <$fd>) {
+	if ($line =~ m/^Date: (.*)/) {
+		$ENV{GIT_AUTHOR_DATE} = $1;
 
---------------030400040304000103080201--
+	} elsif ($line =~ m/^Author: (.*)/) {
+		if (defined($committer{$1})) {
+			$ENV{GIT_COMMITTER_NAME}  = @{$committer{$1}}[0];
+			$ENV{GIT_COMMITTER_EMAIL} = @{$committer{$1}}[1];
+			$ENV{GIT_AUTHOR_NAME}         = @{$committer{$1}}[0];
+			$ENV{GIT_AUTHOR_EMAIL}        = @{$committer{$1}}[1];
+		} else {
+			$ENV{GIT_COMMITTER_NAME} = $1;
+			$ENV{GIT_AUTHOR_NAME}        = $1;
+		}
+
+	} elsif ($line =~ m/^Log:/) {
+		while (my $line = <$fd>) {
+			if ($line =~ m/^Members: $/) {
+				pop(@log);
+				last;
+			} elsif ($line =~ /^From: (.+) <([^>]+@[^>]+)>$/) {
+				$ENV{GIT_AUTHOR_NAME}  = $1;
+				$ENV{GIT_AUTHOR_EMAIL} = $2;
+			}
+			push @log, $line;
+		}
+	}
+}
+
+close($fd);
+
+my ($fh, $logfile) = tempfile(CLEANUP => 1);
+print $fh @log;
+system("git patch $patch < $logfile");
+close($fh);
+
+--5I6of5zJg18YgZEa--
