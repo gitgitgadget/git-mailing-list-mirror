@@ -1,57 +1,110 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: gitweb wishlist
-Date: Fri, 20 May 2005 13:50:20 -0700
-Message-ID: <428E4D8C.3020606@zytor.com>
-References: <20050511012626.GL26384@pasky.ji.cz>  <1116384951.5094.83.camel@dhcp-188.off.vrfy.org>  <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org>  <1116611932.12975.22.camel@dhcp-188>  <Pine.LNX.4.58.0505201111090.2206@ppc970.osdl.org>  <Pine.LNX.4.58.0505201123550.2206@ppc970.osdl.org> <1116615600.12975.33.camel@dhcp-188> <Pine.LNX.4.58.0505201219420.2206@ppc970.osdl.org> <428E49DD.406@zytor.com> <Pine.LNX.4.58.0505201346330.2206@ppc970.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 1/3] delta read
+Date: Fri, 20 May 2005 16:57:28 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505201655000.4397@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 20 22:51:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 22:57:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZERM-0004Wd-O3
-	for gcvg-git@gmane.org; Fri, 20 May 2005 22:49:53 +0200
+	id 1DZEY0-0005YT-Ui
+	for gcvg-git@gmane.org; Fri, 20 May 2005 22:56:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261583AbVETUur (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 16:50:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261582AbVETUur
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 16:50:47 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:33453 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261583AbVETUum
+	id S261587AbVETU5n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 16:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261590AbVETU5n
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 16:57:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:14149 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261589AbVETU5d
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2005 16:50:42 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4KKoQhA015188
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 20 May 2005 13:50:26 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
+	Fri, 20 May 2005 16:57:33 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IGT001AW3JSRF@VL-MO-MR007.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 20 May 2005 16:57:28 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505201346330.2206@ppc970.osdl.org>
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=ham 
-	version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> Oh, btw, I notice that you moved klibc over to git - care to share your
-> cvs->git script (I assume you scripted it ;)? That would seem to be an 
-> obvious addition to the core stuff..
-> 
+This patch makes the core code aware of delta objects and undeltafy
+them as needed.  The convention is to use read_sha1_file() to have
+undeltafication done automatically (most users do that already so
+this is transparent).
 
-Actually, Kay did the conversion... the scripts are clearly very 
-cantankerous, because if *I* run them -- I tried -- they don't work! 
-Since it's Kay's work, I'll leave them to him, but I would definitely 
-love to move more of my CVS repos over to git, especially syslinux.
+If the delta object itself has to be accessed then it must be done
+through map_sha1_file() and unpack_sha1_file().
 
-	-hpa
+In that context mktag.c has been switched to read_sha1_file() as there
+is no reason to do the full map+unpack manually.
 
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+Index: git/sha1_file.c
+===================================================================
+--- git.orig/sha1_file.c
++++ git/sha1_file.c
+@@ -9,6 +9,7 @@
+ #include <stdarg.h>
+ #include <limits.h>
+ #include "cache.h"
++#include "delta.h"
+ 
+ #ifndef O_NOATIME
+ #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+@@ -353,6 +354,19 @@
+ 	if (map) {
+ 		buf = unpack_sha1_file(map, mapsize, type, size);
+ 		munmap(map, mapsize);
++		if (buf && !strcmp(type, "delta")) {
++			void *ref = NULL, *delta = buf;
++			unsigned long ref_size, delta_size = *size;
++			buf = NULL;
++			if (delta_size > 20)
++				ref = read_sha1_file(delta, type, &ref_size);
++			if (ref)
++				buf = patch_delta(ref, ref_size,
++						  delta+20, delta_size-20, 
++						  size);
++			free(delta);
++			free(ref);
++		}
+ 		return buf;
+ 	}
+ 	return NULL;
+Index: git/mktag.c
+===================================================================
+--- git.orig/mktag.c
++++ git/mktag.c
+@@ -25,20 +25,14 @@
+ static int verify_object(unsigned char *sha1, const char *expected_type)
+ {
+ 	int ret = -1;
+-	unsigned long mapsize;
+-	void *map = map_sha1_file(sha1, &mapsize);
++	char type[100];
++	unsigned long size;
++	void *buffer = read_sha1_file(sha1, type, &size);
+ 
+-	if (map) {
+-		char type[100];
+-		unsigned long size;
+-		void *buffer = unpack_sha1_file(map, mapsize, type, &size);
+-
+-		if (buffer) {
+-			if (!strcmp(type, expected_type))
+-				ret = check_sha1_signature(sha1, buffer, size, type);
+-			free(buffer);
+-		}
+-		munmap(map, mapsize);
++	if (buffer) {
++		if (!strcmp(type, expected_type))
++			ret = check_sha1_signature(sha1, buffer, size, type);
++		free(buffer);
+ 	}
+ 	return ret;
+ }
