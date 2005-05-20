@@ -1,30 +1,30 @@
 From: Ingo Molnar <mingo@elte.hu>
 Subject: Re: gitk-1.0 released
-Date: Fri, 20 May 2005 13:22:29 +0200
-Message-ID: <20050520112229.GA5606@elte.hu>
+Date: Fri, 20 May 2005 13:33:34 +0200
+Message-ID: <20050520113334.GA19810@elte.hu>
 References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com> <20050519132411.GA29111@elte.hu> <17037.5109.556362.904185@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 13:22:59 2005
+X-From: git-owner@vger.kernel.org Fri May 20 13:36:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ5Ze-0000ex-2b
-	for gcvg-git@gmane.org; Fri, 20 May 2005 13:21:50 +0200
+	id 1DZ5l4-0002DM-0T
+	for gcvg-git@gmane.org; Fri, 20 May 2005 13:33:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261417AbVETLWo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 07:22:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261412AbVETLWo
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 07:22:44 -0400
-Received: from mx2.elte.hu ([157.181.151.9]:18620 "EHLO mx2.elte.hu")
-	by vger.kernel.org with ESMTP id S261417AbVETLWl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 07:22:41 -0400
+	id S261423AbVETLeN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 07:34:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261427AbVETLeN
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 07:34:13 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:20926 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261423AbVETLds (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 07:33:48 -0400
 Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx2.elte.hu (Postfix) with ESMTP id ABF1031C8C8;
-	Fri, 20 May 2005 13:20:33 +0200 (CEST)
+	by mx2.elte.hu (Postfix) with ESMTP id 240DE31C856;
+	Fri, 20 May 2005 13:31:38 +0200 (CEST)
 Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id 1D9711FC2; Fri, 20 May 2005 13:22:36 +0200 (CEST)
+	id 11B461FC2; Fri, 20 May 2005 13:33:42 +0200 (CEST)
 To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
 In-Reply-To: <17037.5109.556362.904185@cargo.ozlabs.ibm.com>
@@ -43,28 +43,28 @@ X-Mailing-List: git@vger.kernel.org
 
 * Paul Mackerras <paulus@samba.org> wrote:
 
-> > (and the biggest missing feature of GIT right now is author + 
-> > last-commit annotated file viewing which could be integrated into gitk 
-> > a'ka BK's revtool: selecting a given line of the file would bring one to 
-> > that commit, etc.)
+> > - first window appearance on an uncached repository can be pretty slow 
+> >   due to disk seeks - so it might make sense to display something (an 
+> >   hourglass?) sooner - when i first started it i thought it hung. On 
+> >   already cached repositories the window comes up immediately, and the 
+> >   list of commits is updated dynamically.
 > 
-> Yes, indeed.  I'll have to think about how to do it in a responsive 
-> fashion, since getting the necessary information involves reading all 
-> the commits and all the tree objects back to the beginning of time, 
-> AFAICS. [...]
+> The problem is that git-rev-tree HEAD doesn't output anything until it 
+> has read all the relevant commits, which can involve a lot of disk 
+> seeks.  I put the "Reading commits..." message in to indicate that 
+> something was happening, but your hourglass cursor suggestion is a 
+> good one.  It looks like git-rev-list might be better suited to what I 
+> want, actually.
 
-i guess so. A possible solution seems to be to read every object 
-starting at the oldest one (assuming it's possible to get a list of 
-object IDs that are predecessors), and to split the oldest object up 
-into 'line' objects, attaching the (same) object ID to every line. Then 
-the algorithm would go forward in time and would process every diff from 
-that point on, and would add/remove line objects, attaching the new 
-object IDs as new lines get added. The resulting set of lines then 
-contain all the metadata needed (== object ID they originate from).
+it was quite a couple of seconds to get the empty windows with the 
+'Reading commits...' message. It was this first period of time (5-10 
+seconds?) which i mistook for a hang. Perhaps this is some Tk startup 
+slowness, not a genuine gitk issue?
 
-i dont think other SCMs can do this much faster: you need to go back to 
-the last (still relevant) version and have to process the deltas from 
-that point on. Delta-based formats would be somewhat faster and easier 
-to process, but probably not that much faster in terms of IO overhead.
+> +	if {$nparents($id) > 2} {
+> +	    set xt [expr {$xt + ($nparents($id) - 2) * $linespc}]
+> +	}
+
+thanks, this fix did the trick.
 
 	Ingo
