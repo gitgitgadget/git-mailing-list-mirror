@@ -1,61 +1,64 @@
-From: Kari Hameenaho <khaho@kolumbus.fi>
-Subject: Re: gitk-1.0 released
-Date: Fri, 20 May 2005 21:18:59 +0300
-Message-ID: <d6l9l1$ttd$1@sea.gmane.org>
-References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com> <20050519132411.GA29111@elte.hu> <17037.5109.556362.904185@cargo.ozlabs.ibm.com>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb and kernel.org
+Date: Fri, 20 May 2005 20:58:21 +0200
+Message-ID: <1116615502.12975.29.camel@dhcp-188>
+References: <428E22F0.3050007@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Fri May 20 20:44:14 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	FTP Admin <ftpadmin@kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 20 20:58:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZCSQ-0004sY-Bo
-	for gcvg-git@gmane.org; Fri, 20 May 2005 20:42:50 +0200
+	id 1DZCgm-00077h-Vh
+	for gcvg-git@gmane.org; Fri, 20 May 2005 20:57:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261533AbVETSnv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 20 May 2005 14:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261543AbVETSnu
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 14:43:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:59857 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261533AbVETSnt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 14:43:49 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DZCQB-0004Yu-3R
-	for git@vger.kernel.org; Fri, 20 May 2005 20:40:31 +0200
-Received: from a81-197-60-61.elisa-laajakaista.fi ([81.197.60.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2005 20:40:31 +0200
-Received: from khaho by a81-197-60-61.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 20 May 2005 20:40:31 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-60-61.elisa-laajakaista.fi
-User-Agent: KNode/0.9.0
+	id S261548AbVETS6l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 14:58:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261547AbVETS6l
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 14:58:41 -0400
+Received: from soundwarez.org ([217.160.171.123]:21212 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261548AbVETS6i (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 14:58:38 -0400
+Received: from dhcp-188.off.vrfy.org (d027239.adsl.hansenet.de [80.171.27.239])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by soundwarez.org (Postfix) with ESMTP id 3DF0A5C61;
+	Fri, 20 May 2005 20:58:36 +0200 (CEST)
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <428E22F0.3050007@pobox.com>
+X-Mailer: Evolution 2.2.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Paul Mackerras wrote:
+On Fri, 2005-05-20 at 13:48 -0400, Jeff Garzik wrote:
+> No sure who maintains http://www.kernel.org/git/ so...
+> 
+> I have a request for the above URL:  provide access to branches in 
+> refs/heads/* somehow.  -All- my work occurs in a branch, with the main 
+> branch containing nothing but "vanilla Linus" tree.
+> 
+> My jgarzik/libata-dev.git repository contains a large number of branches:
+> > [jgarzik@pretzel libata-dev]$ ls .git/refs/heads/
+> > adma        atapi-enable        iomap        new-ids   promise-sata-pata
+> > adma-mwi    bridge-detect       iomap-step1  passthru  sil24
+> > ahci-atapi  chs-support         master       pdc2027x
+> > ahci-msi    ioctl-get-identity  misc-fixes   pdc20619
+> 
+> and ditto for jgarzik/netdev-2.6.git:
+> > [jgarzik@pretzel netdev-2.6]$ ls .git/refs/heads/
+> > 8139cp         e100         janitor      pcnet32          skge           we18
+> > 8139too-iomap  e1000        master       ppp              smc91x         wifi
+> > airo           forcedeth    misc-fixes   qeth             smc91x-eeprom
+> > amd8111        hdlc         natsemi      r8169            starfire
+> > atmel          ieee80211    ns83820      register-netdev  tlan
+> > chelsio        iff-running  orinoco      remove-drivers   veth
+> > dm9000         ixgb         orinoco-hch  sis900           viro
 
->=20
-> Yes, indeed.  I'll have to think about how to do it in a responsive
-> fashion, since getting the necessary information involves reading all
-> the commits and all the tree objects back to the beginning of time,
-> AFAICS. =20
+Initial support for branches added! :)
 
-Maybe its not necessary to go back all the way. It is possible to look =
-only
-commits between 2.6.12-rc4 and 2.6.12-rc3, like follows (needs just a f=
-ew
-fixes to gitk):
-
-gitk -d $(commit-id v2.6.12-rc4) ^$(parent-id $(commit-id v2.6.12-rc3))
-
---=20
-Kari H=E4meenaho
-
+Kay
 
