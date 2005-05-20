@@ -1,66 +1,53 @@
-From: Frank Sorenson <frank@tuxrocks.com>
-Subject: Re: gitk-1.0 released
-Date: Thu, 19 May 2005 22:55:14 -0600
-Message-ID: <428D6DB2.2050602@tuxrocks.com>
-References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com> <1116544421.5153.46.camel@gaston>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] diff overhaul
+Date: Thu, 19 May 2005 22:30:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505192229540.2206@ppc970.osdl.org>
+References: <7vll6awta3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 06:55:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 20 07:27:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DYzXD-0000JF-TI
-	for gcvg-git@gmane.org; Fri, 20 May 2005 06:54:56 +0200
+	id 1DZ02y-00035v-Oo
+	for gcvg-git@gmane.org; Fri, 20 May 2005 07:27:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261324AbVETEzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 00:55:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261323AbVETEzb
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 00:55:31 -0400
-Received: from www.tuxrocks.com ([64.62.190.123]:52232 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S261324AbVETEzY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 00:55:24 -0400
-Received: from [10.0.0.10] (byu-gw.customer.csolutions.net [216.190.206.130])
-	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j4K4tFa0023734
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 19 May 2005 22:55:16 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-In-Reply-To: <1116544421.5153.46.camel@gaston>
-X-Enigmail-Version: 0.91.0.0
+	id S261347AbVETF2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 01:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261351AbVETF2g
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 01:28:36 -0400
+Received: from fire.osdl.org ([65.172.181.4]:1199 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261347AbVETF2e (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 01:28:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4K5SSU3019433
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 19 May 2005 22:28:29 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4K5SRUO028981;
+	Thu, 19 May 2005 22:28:28 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll6awta3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Benjamin Herrenschmidt wrote:
-> Cool !
+
+On Thu, 19 May 2005, Junio C Hamano wrote:
 > 
-> Here's a feature request though: beeing able to type/paste a SHA1 in the
-> SHA1 ID field to "jump" to that commit :)
+> This also allowed diff-cache and diff-files to acquire -R
+> (reverse) option to generate diff in reverse.  Users of
+> diff-tree can swap two trees easily so I did not add -R there.
 
-Very nice.  I really like gitk as well.  In addition to pasting an sha1
-in, how about pasting a tag?
+Actually, diff-tree would want it too.
 
-Also, what about identifying tagged commits with a different color, a
-star instead of just the round bullet, or some other identifier?
+You can only swap the trees easily if you give two trees, not if you give 
+a commit.
 
-Frank
-- --
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFCjW2yaI0dwg4A47wRArsEAKCdkTBQEPD7yyb8ABiBg20nhdmKgACg2D2Y
-W0ZxoOGTOspvrRczeEYN9mg=
-=y2Z0
------END PGP SIGNATURE-----
+		Linus
