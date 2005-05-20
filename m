@@ -1,54 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Michal Rokos <michal@rokos.info>
 Subject: Re: [cogito] paged output for cg-diff
-Date: Fri, 20 May 2005 05:53:58 -0700
-Message-ID: <7v64xevz15.fsf@assigned-by-dhcp.cox.net>
-References: <200505201105.08711.michal.rokos@nextsoft.cz>
+Date: Fri, 20 May 2005 15:17:05 +0200
+Message-ID: <200505201517.05995.michal@rokos.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 20 14:55:43 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri May 20 15:19:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZ707-0004i8-03
-	for gcvg-git@gmane.org; Fri, 20 May 2005 14:53:15 +0200
+	id 1DZ7Ni-0007im-4m
+	for gcvg-git@gmane.org; Fri, 20 May 2005 15:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261450AbVETMyC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 20 May 2005 08:54:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261452AbVETMyC
-	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 08:54:02 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:61692 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261450AbVETMx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 May 2005 08:53:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050520125359.BSUV1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 20 May 2005 08:53:59 -0400
-To: Michal Rokos <michal.rokos@nextsoft.cz>
-In-Reply-To: <200505201105.08711.michal.rokos@nextsoft.cz> (Michal Rokos's
- message of "Fri, 20 May 2005 11:05:08 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261464AbVETNSX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 20 May 2005 09:18:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261466AbVETNSX
+	(ORCPT <rfc822;git-outgoing>); Fri, 20 May 2005 09:18:23 -0400
+Received: from black.click.cz ([62.141.0.10]:28833 "EHLO click.cz")
+	by vger.kernel.org with ESMTP id S261462AbVETNR4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 May 2005 09:17:56 -0400
+Received: from rokos.ack-prg.csas.cz (gprsh1.isp.t-mobile.cz [62.141.24.1])
+	by click.cz (8.12.9/8.12.9) with ESMTP id j4KDH091025239
+	for <git@vger.kernel.org>; Fri, 20 May 2005 15:17:05 +0200 (MET DST)
+Received: from ip6-localhost (ip6-localhost [IPv6:::1])
+	by rokos.ack-prg.csas.cz (Postfix) with ESMTP id 99C76F9000
+	for <git@vger.kernel.org>; Fri, 20 May 2005 15:17:07 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "MR" == Michal Rokos <michal.rokos@nextsoft.cz> writes:
+Hello,
 
-MR> I'm a bit curious what is going on in development so I'm using cg-diff
-MR> often. Usually I pipe it to the less. So for me it would be very nice
-MR> when cg-diff behaves as cg-log that pipes output to pager.
+Junio is right, following is sufficent. Tested with 'more' too.
 
-I think that is a sensible thing to do.  But doesn't "less"
-already do this part without being told?
+ Michal
 
-MR> +PAGER () {
-MR> + if [ -t 1 ]; then
-MR> +  ${PAGER:-less} ${PAGER_FLAGS:--R}
-MR> + else
-MR> +  cat
-MR> + fi
-MR> +}
+PS: I'm off the list, so please CC me.
 
+Signed-off-by: Michal Rokos <michal@rokos.info>
+Idea-from: Junio C Hamano <junkio@cox.net>
 
+Index: cg-Xlib
+===================================================================
+--- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-Xlib  (mode:100755)
++++ uncommitted/cg-Xlib  (mode:100755)
+@@ -91,3 +91,8 @@
+
+ export BROKEN_MKTEMP=1
+ del=$($(which mktemp) -t 2>/dev/null) && { rm $del; export BROKEN_MKTEMP=; }
++
++PAGER () {
++       ${PAGER:-less} ${PAGER_FLAGS:--R}
++}
++
+Index: cg-diff
+===================================================================
+--- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-diff  (mode:100755)
++++ uncommitted/cg-diff  (mode:100755)
+@@ -71,7 +71,7 @@
+        # FIXME: Update ret based on what did we match. And take "$@"
+        # to account after all.
+        ret=
+-       git-diff-cache -r -z $tree | xargs -0 ${COGITO_LIB}cg-Xdiffdo "$tree" uncommitted "$filter"
++       git-diff-cache -r -z $tree | xargs -0 ${COGITO_LIB}cg-Xdiffdo "$tree" uncommitted "$filter" | PAGER
+
+        [ "$filter" ] && rm $filter
+
+@@ -85,7 +85,7 @@
+
+ [ "$id1" = "$id2" ] && die "trying to diff $id1 against itself"
+
+-git-diff-tree -r -z $id1 $id2 | xargs -0 ${COGITO_LIB}cg-Xdiffdo $id1 $id2 "$filter"
++git-diff-tree -r -z $id1 $id2 | xargs -0 ${COGITO_LIB}cg-Xdiffdo $id1 $id2 "$filter" | PAGER
+
+ [ "$filter" ] && rm $filter
+ exit 0
+Index: cg-log
+===================================================================
+--- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-log  (mode:100755)
++++ uncommitted/cg-log  (mode:100755)
+@@ -181,4 +181,4 @@
+
+                done
+        echo
+-done | ${PAGER:-less} ${PAGER_FLAGS:--R}
++done | PAGER
