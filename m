@@ -1,84 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: cogito - how do I ???
-Date: Sat, 21 May 2005 16:41:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505211635440.2206@ppc970.osdl.org>
-References: <20050521214700.GA18676@mars.ravnborg.org>
- <2765.10.10.10.24.1116713164.squirrel@linux1>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: [RFC] git-fsck-cache argument processing
+Date: Sat, 21 May 2005 19:53:48 -0400
+Message-ID: <428FCA0C.1080704@pobox.com>
+References: <4870.10.10.10.24.1116646732.squirrel@linux1> <20050521150926.GA96606@dspnet.fr.eu.org> <2015.10.10.10.24.1116696150.squirrel@linux1> <20050521184909.GA1729@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 22 01:39:01 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sean <seanlkml@sympatico.ca>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 22 01:53:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZdYN-0005XY-Ho
-	for gcvg-git@gmane.org; Sun, 22 May 2005 01:38:47 +0200
+	id 1DZdm6-0006Vw-0e
+	for gcvg-git@gmane.org; Sun, 22 May 2005 01:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261693AbVEUXjo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 19:39:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261692AbVEUXjo
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 19:39:44 -0400
-Received: from fire.osdl.org ([65.172.181.4]:6877 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261697AbVEUXj0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 19:39:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LNdJjA029123
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 21 May 2005 16:39:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LNdIKp018833;
-	Sat, 21 May 2005 16:39:19 -0700
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <2765.10.10.10.24.1116713164.squirrel@linux1>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261688AbVEUXx7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 19:53:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261697AbVEUXx7
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 19:53:59 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:49600 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261688AbVEUXx6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 19:53:58 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DZdmx-00011H-PQ; Sat, 21 May 2005 23:53:53 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
+X-Accept-Language: en-us, en
+To: Olivier Galibert <galibert@pobox.com>
+In-Reply-To: <20050521184909.GA1729@dspnet.fr.eu.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sat, 21 May 2005, Sean wrote:
-
-> On Sat, May 21, 2005 5:47 pm, Sam Ravnborg said:
-> > Hi all.
-> >
-> > While trying to get up to speed on cogito/git I stumbled across
-> > a few things that I at least did not find available in cogito.
-> >
-> > 1) Something similar to "bk changes -R". I use this to see what has
-> > happened upstream - to see if I really want to merge stuff.
+Olivier Galibert wrote:
+> On Sat, May 21, 2005 at 01:22:30PM -0400, Sean wrote:
 > 
-> Not sure what bk did here, but you can do something like:
+>>Both of these options are generated automatically by argp.
 > 
-> cg-pull origin
-> cg-log -c -r origin
-
-In the raw git interfaces, you'd basically have to do the same thing that
-"git-pull-script" does, except that _instead_ of calling the
-git-resolve-script thing, you'd do
-
-	git-rev-tree MERGE_HEAD ^HEAD | git-diff-tree -v -m -s --stdin
-
-to show what is in the downloaded MERGE_HEAD but not in HEAD.
-
-> > 2) Export of individual patches. "bk export -tpatch -r1.2345"
-> > I have nu public git repository yet so I have to feed changes as
-> > plain patches. Browsing cg-* I did not find the command to do this.
 > 
-> cg-diff -p -r SHA1
+> I see.  Then I'll guess I'll have to put argp in the "crap" pile next
+> to libtool and automake.
 
-And again, without the porcelain this is:
+It's called "consistency with most other Linux apps."
 
-	git-diff-tree -v -p <name>
+Consistency and predictability are good things.
 
-(Basically, you can do _anything_ with "git-diff-tree". For example, you 
-want "cg log"? Do
+	Jeff
 
-	git-rev-list HEAD | git-diff-tree --stdin -v -m -s
 
-which is basically what "git-whatchanged" does).
-
-		Linus
