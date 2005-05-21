@@ -1,114 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: updated design for the diff-raw format.
-Date: Sat, 21 May 2005 16:19:30 -0700
-Message-ID: <7vd5rkdv5p.fsf@assigned-by-dhcp.cox.net>
-References: <7vwtpsdvgm.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: cogito - how do I ???
+Date: Sat, 21 May 2005 16:41:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505211635440.2206@ppc970.osdl.org>
+References: <20050521214700.GA18676@mars.ravnborg.org>
+ <2765.10.10.10.24.1116713164.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 22 01:18:56 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 22 01:39:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZdEo-0004Ca-Sl
-	for gcvg-git@gmane.org; Sun, 22 May 2005 01:18:35 +0200
+	id 1DZdYN-0005XY-Ho
+	for gcvg-git@gmane.org; Sun, 22 May 2005 01:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261662AbVEUXTq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 19:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261669AbVEUXTq
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 19:19:46 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37254 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261662AbVEUXTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 19:19:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050521231931.IBDB1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 21 May 2005 19:19:31 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7vwtpsdvgm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sat, 21 May 2005 16:12:57 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261693AbVEUXjo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 19:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261692AbVEUXjo
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 19:39:44 -0400
+Received: from fire.osdl.org ([65.172.181.4]:6877 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261697AbVEUXj0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 19:39:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LNdJjA029123
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 21 May 2005 16:39:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LNdIKp018833;
+	Sat, 21 May 2005 16:39:19 -0700
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <2765.10.10.10.24.1116713164.squirrel@linux1>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(fourth of the replayed messages)
 
-Date: Sat, 21 May 2005 15:03:06 -0700 (PDT)
-From: Linus Torvalds <torvalds@osdl.org>
-To: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] Diff overhaul, adding the other half of copy detection.
-Message-ID: <Pine.LNX.4.58.0505211452180.2206@ppc970.osdl.org>
 
-On Sat, 21 May 2005, Junio C Hamano wrote:
+On Sat, 21 May 2005, Sean wrote:
+
+> On Sat, May 21, 2005 5:47 pm, Sam Ravnborg said:
+> > Hi all.
+> >
+> > While trying to get up to speed on cogito/git I stumbled across
+> > a few things that I at least did not find available in cogito.
+> >
+> > 1) Something similar to "bk changes -R". I use this to see what has
+> > happened upstream - to see if I really want to merge stuff.
 > 
->      - omit the inter_name_termination and second path if both
->        paths are the same, only when doing human-readable
->        (i.e. inter_name_termination != line_termination).
+> Not sure what bk did here, but you can do something like:
+> 
+> cg-pull origin
+> cg-log -c -r origin
 
-Hmm. I guess that's fair enough, since it's still easily parseable even if
-you don't want to use the -z version in scripts (as many tools are better
-at handling line-terminated stuff than handling zero-terminations).
+In the raw git interfaces, you'd basically have to do the same thing that
+"git-pull-script" does, except that _instead_ of calling the
+git-resolve-script thing, you'd do
 
-It might become another flag too, if somebody ends up caring.
+	git-rev-tree MERGE_HEAD ^HEAD | git-diff-tree -v -m -s --stdin
 
-> Somehow I failed to CC the GIT list the message you are
-> responding to.  Discussing a change with an impact of this scale
-> needs to be taken public before going further, so with your
-> permission I would like to repost both my original ("Once we
-> start to think of it this way...")  and your response to the GIT
-> list first.  At least I feel that Petr needs to be in the loop
-> about this one.
+to show what is in the downloaded MERGE_HEAD but not in HEAD.
 
-Sure. Although I doube people use the raw diff output except to (a) feed 
-to diff-helper or (b) check that it's non-empty.
+> > 2) Export of individual patches. "bk export -tpatch -r1.2345"
+> > I have nu public git repository yet so I have to feed changes as
+> > plain patches. Browsing cg-* I did not find the command to do this.
+> 
+> cg-diff -p -r SHA1
 
-But absolutely, post the previous (and this) one.
+And again, without the porcelain this is:
 
-> Another reason is that, as I said, I still have problems about the
-> diffcore interface, namely the lack of interface for the applications to
-> ask diffcore what the final outcome is.  The "diff-tree not being to
-> omit its header output when pickaxe says the result is empty" problem is
-> primarily what bothers me, but I think we want a more generic interface
-> for the application to inspect the result (not just emptiness check),
-> probably before starting to feed the resulting diff list to the external
-> diff.
+	git-diff-tree -v -p <name>
 
-Why not just have a "is there anything pending" query before doing the 
-flush? And always put _everything_ in the pending category, regardless of 
-whether detect_rename/copy is in effect (but if it's not in effect, then 
-flushing the pending queue is obviously just a "go through it and flush 
-it" without any other complexity).
+(Basically, you can do _anything_ with "git-diff-tree". For example, you 
+want "cg log"? Do
 
-In other words, there would be four clear stages to this:
+	git-rev-list HEAD | git-diff-tree --stdin -v -m -s
 
- 1) diff_setup()
-	remove "detect_rename" and "diff_score_opt" and "reverse_diff" 
-	from this, since they are irrelevant until you _show_ the diffs
-
- 2) diff_queue() *n
-	tell diff-core about the files we are going to diff
-
- 3) diff_detect_rename()
-	this is what takes the "detect_rename" flag and "diff_score_opt", 
-	and walks the list of diffs and potentially changes them into 
-	"rename" and "copy" diffs.
-
- 4) diff_flush()
-	this just prints out the result (either as a raw diff or as 
-	patches). This takes the "reverse_diff" flag that was removed from 
-	diff_setup().
-
-and then you can always query the state of the diff tree before stage 3 or 
-before stage 4.
-
-In fact, there's no reason not to even _change_ the diff-queue in magic 
-ways before (3) or (4) depending on what you want to do. For example, your 
-"-S" thing might want to do it's thing between stages (3) and (4).
+which is basically what "git-whatchanged" does).
 
 		Linus
-
-
-
-
