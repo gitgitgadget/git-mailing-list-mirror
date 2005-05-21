@@ -1,71 +1,72 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb wishlist
-Date: Sat, 21 May 2005 19:14:09 +0200
-Message-ID: <1116695650.19541.12.camel@dhcp-188.off.vrfy.org>
-References: <20050511012626.GL26384@pasky.ji.cz>
-	 <1116384951.5094.83.camel@dhcp-188.off.vrfy.org>
-	 <Pine.LNX.4.58.0505200948150.2206@ppc970.osdl.org>
-	 <1116611932.12975.22.camel@dhcp-188>
-	 <pan.2005.05.21.07.29.14.58375@smurf.noris.de>
+From: "Sean" <seanlkml@sympatico.ca>
+Subject: Re: [RFC] git-fsck-cache argument processing
+Date: Sat, 21 May 2005 13:22:30 -0400 (EDT)
+Message-ID: <2015.10.10.10.24.1116696150.squirrel@linux1>
+References: <4870.10.10.10.24.1116646732.squirrel@linux1>
+    <20050521150926.GA96606@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 19:14:01 2005
+X-From: git-owner@vger.kernel.org Sat May 21 19:22:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZXXf-0007CF-Ci
-	for gcvg-git@gmane.org; Sat, 21 May 2005 19:13:39 +0200
+	id 1DZXfM-0007nL-CT
+	for gcvg-git@gmane.org; Sat, 21 May 2005 19:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261748AbVEUROr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 13:14:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261754AbVEUROr
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:14:47 -0400
-Received: from soundwarez.org ([217.160.171.123]:51868 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261748AbVEUROa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 13:14:30 -0400
-Received: from dhcp-188.off.vrfy.org (c225177.adsl.hansenet.de [213.39.225.177])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by soundwarez.org (Postfix) with ESMTP id 39B25866D;
-	Sat, 21 May 2005 19:14:27 +0200 (CEST)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.05.21.07.29.14.58375@smurf.noris.de>
-X-Mailer: Evolution 2.2.1 
+	id S261754AbVEURWi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 13:22:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVEURWi
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:22:38 -0400
+Received: from simmts8.bellnexxia.net ([206.47.199.166]:4760 "EHLO
+	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S261756AbVEURWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2005 13:22:33 -0400
+Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
+          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
+          id <20050521172232.TLGB28065.simmts8-srv.bellnexxia.net@linux1>;
+          Sat, 21 May 2005 13:22:32 -0400
+Received: from linux1 (linux1.attic.local [127.0.0.1])
+	by linux1 (8.12.11/8.12.11) with ESMTP id j4LHMTNr020778;
+	Sat, 21 May 2005 13:22:30 -0400
+Received: from 10.10.10.24
+        (SquirrelMail authenticated user sean)
+        by linux1 with HTTP;
+        Sat, 21 May 2005 13:22:30 -0400 (EDT)
+In-Reply-To: <20050521150926.GA96606@dspnet.fr.eu.org>
+To: "Olivier Galibert" <galibert@pobox.com>
+User-Agent: SquirrelMail/1.4.4-2
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-05-21 at 09:29 +0200, Matthias Urlichs wrote:
-> Hi, Kay Sievers wrote:
-> 
-> > Something like that: :)
-> 
-> Cool.
-> 
-> More feature requests:  ;-)
-> - Alternate white and almost-white backgrounds in the lists (all of them ;-)
->   so that wide-screened people like me don't lose context when their eyes
->   travel the long road from left to right edge of the screen. ;-)
+On Sat, May 21, 2005 11:09 am, Olivier Galibert said:
+> On Fri, May 20, 2005 at 11:38:52PM -0400, Sean wrote:
+>>  -?, --help             Give this help list
+>
+> Could you make that '-h' please ?
+>
+>>  -V, --version          Print program version
+>
+> And that '-v'.  -V traditionally means verbose, -v version.  Yes, I
+> know there are counter-examples, but statistically...
+>
 
-Done!
+Hey Olivier,
 
-> - Merges currently don't have diff links. It'd be nice to have one for
->   each parent.
+Both of these options are generated automatically by argp.  I'm sure there
+is a way to override them, but i'd rather just leave them as given by
+argp.  For the first case, if you try '-h' on the command line you get:
 
-Done! But I'm not sure if that is really useful. It may create a very
-very big diff. :)
+$ git-fsck-cache -h
+git-fsck-cache: invalid option -- h
+Try `git-fsck-cache --help' or `git-fsck-cache --usage' for more information.
 
-> - File diffs have the "diff" link on the *parent*, not on the child.
->   That's counter-intuitive -- if I want to see what the Foo patch changes,
->   I should be able to click on the "diff" link on _that_ line, not the one
->   below it. Example:
-> http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=history;h=9636273dae265b9354b861b373cd43cd76a6d0fe;f=MAINTAINERS
+So it leads to the proper help message.
 
-No, the "diff" link is a diff against the current commit not an
-incremental one from revision to revision. Me may change that, I'm not
-sure what's the best here.
+Sean
 
-Kay
 
