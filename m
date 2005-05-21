@@ -1,75 +1,61 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 3/3] Diff overhaul, adding the other half of copy detection.
-Date: Sat, 21 May 2005 10:25:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505211016140.2206@ppc970.osdl.org>
-References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org> <7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
- <7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix use of wc in t0000-basic
+Date: Sat, 21 May 2005 10:24:57 -0700
+Message-ID: <7vd5rkij9y.fsf@assigned-by-dhcp.cox.net>
+References: <E1DZRMi-00021X-00@gondolin.me.apana.org.au>
+	<7vhdgwj1ed.fsf@assigned-by-dhcp.cox.net>
+	<20050521110129.GA7924@gondor.apana.org.au>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 19:22:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, torvalds@osdl.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 21 19:24:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZXfx-0007ph-TB
-	for gcvg-git@gmane.org; Sat, 21 May 2005 19:22:14 +0200
+	id 1DZXhh-0007xU-DU
+	for gcvg-git@gmane.org; Sat, 21 May 2005 19:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261757AbVEURXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 13:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVEURXN
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:23:13 -0400
-Received: from fire.osdl.org ([65.172.181.4]:14499 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261757AbVEURXH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 13:23:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LHN0jA006212
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 21 May 2005 10:23:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LHMxY1006499;
-	Sat, 21 May 2005 10:23:00 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261755AbVEURZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 13:25:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261760AbVEURZE
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:25:04 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:23258 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261755AbVEURY7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2005 13:24:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050521172458.KSAH7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 May 2005 13:24:58 -0400
+To: Herbert Xu <herbert@gondor.apana.org.au>
+In-Reply-To: <20050521110129.GA7924@gondor.apana.org.au> (Herbert Xu's
+ message of "Sat, 21 May 2005 21:01:29 +1000")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "HX" == Herbert Xu <herbert@gondor.apana.org.au> writes:
 
+HX> Are you sure that it didn't ignore the leading spaces with -eq?
+HX> The code in question just calls strtol.
 
-On Sat, 21 May 2005, Junio C Hamano wrote:
->
-> This patch extends diff-cache and diff-files to report the
-> unmodified files to diff-core as well when -C (copy detection)
-> is in effect, so that the unmodified files can also be used as
-> the source candidates.  The existing test t4003 has been
-> extended to cover this case.
+Sorry, I am not sure whose fault it was, and the recollection
+comes from my distant past.  It could have been that the
+smallish shell in that semi-embedded environment had an
+incompatible built-in "test" command which was burning me, but
+I distinctively remember changing many of the vendor supplied
+shell script that had:
 
-I love how I can just say "oh, keep in mind that we might want to.." and 
-24 hours later you did it.
+    if test " $number" -eq 3
+    then
+        ...
 
-Applied and pushed out, and I enjoyed seeing the output of 
+either stripping dq around it or simply removing the space from
+there, depending on how that $number was generated.
 
-	git-whatchanged -C
+Since I assume we are only talking about portability across
+POSIXy world I do not think this is a big issue.
 
-and doing a "/^copy" that shows it figuring out (correctly) that 
-git-resolve-script was based on git-pull-script. Very cool.
-
-I'm also somewhat surprised by the fact that it even seems to be usable on
-the kernel tree:
-
-	diff --git a/include/asm-um/archparam-i386.h b/include/asm-um/elf-i386.h
-	similarity index 89%
-	copy from include/asm-um/archparam-i386.h
-	copy to include/asm-um/elf-i386.h
-	--- a/include/asm-um/archparam-i386.h
-	+++ b/include/asm-um/elf-i386.h
-	...
-
-cool. 
-
-			Linus
