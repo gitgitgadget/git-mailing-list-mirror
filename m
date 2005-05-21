@@ -1,73 +1,63 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: cogito - how do I ???
-Date: Sat, 21 May 2005 18:06:04 -0400 (EDT)
-Message-ID: <2765.10.10.10.24.1116713164.squirrel@linux1>
-References: <20050521214700.GA18676@mars.ravnborg.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Constness fix for pickaxe option.
+Date: Sat, 21 May 2005 15:16:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505211514360.2206@ppc970.osdl.org>
+References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org> <7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
+ <7voeb4kjda.fsf_-_@assigned-by-dhcp.cox.net> <7v1x80gruc.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 22 00:05:20 2005
+X-From: git-owner@vger.kernel.org Sun May 22 00:13:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZc5d-0005r1-1G
-	for gcvg-git@gmane.org; Sun, 22 May 2005 00:05:01 +0200
+	id 1DZcDQ-0006WR-TR
+	for gcvg-git@gmane.org; Sun, 22 May 2005 00:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261648AbVEUWGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 18:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261652AbVEUWGJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 18:06:09 -0400
-Received: from simmts12.bellnexxia.net ([206.47.199.141]:17406 "EHLO
-	simmts12-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261648AbVEUWGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 18:06:05 -0400
-Received: from linux1 ([69.156.111.46]) by simmts12-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050521220604.SICM1005.simmts12-srv.bellnexxia.net@linux1>;
-          Sat, 21 May 2005 18:06:04 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j4LM64jJ023893;
-	Sat, 21 May 2005 18:06:04 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Sat, 21 May 2005 18:06:04 -0400 (EDT)
-In-Reply-To: <20050521214700.GA18676@mars.ravnborg.org>
-To: "Sam Ravnborg" <sam@ravnborg.org>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S261654AbVEUWOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 18:14:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261658AbVEUWOF
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 18:14:05 -0400
+Received: from fire.osdl.org ([65.172.181.4]:28618 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261654AbVEUWOB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 18:14:01 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LMDujA023319
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 21 May 2005 15:13:57 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LMDtTW015684;
+	Sat, 21 May 2005 15:13:56 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x80gruc.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 21, 2005 5:47 pm, Sam Ravnborg said:
-> Hi all.
+
+
+On Sat, 21 May 2005, Junio C Hamano wrote:
 >
-> While trying to get up to speed on cogito/git I stumbled across
-> a few things that I at least did not find available in cogito.
->
-> 1) Something similar to "bk changes -R". I use this to see what has
-> happened upstream - to see if I really want to merge stuff.
+> Constness fix for pickaxe option.
 
-Not sure what bk did here, but you can do something like:
+Btw, this:
 
-cg-pull origin
-cg-log -c -r origin
+	static const char *pickaxe = 0;
 
-To see what is at the head of the unmerged objects you just pulled down,
-and if you want to merge then "cg-merge origin".  Although as far as I
-know there's no way to have the log stop automatically at the proper spot.
+may be legal C, but that doesn't make it less crap.
 
-> 2) Export of individual patches. "bk export -tpatch -r1.2345"
-> I have nu public git repository yet so I have to feed changes as
-> plain patches. Browsing cg-* I did not find the command to do this.
+It's a pointer. If you want to make it a NULL pointer, make it a NULL 
+pointer:
 
-cg-diff -p -r SHA1
+	static const char *pickaxe = NULL;
 
-Which asks for the diff from the parent (-p) to the revision (-r).
+and don't try to stuff an integer into a pointer. Yeah, yeah, the integer 
+zero is magic and special, but that's a bug in the C language, and we 
+should try to not perpetuate it.
 
-Sean
-
-
+		Linus
