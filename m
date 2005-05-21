@@ -1,72 +1,75 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: [RFC] git-fsck-cache argument processing
-Date: Sat, 21 May 2005 13:22:30 -0400 (EDT)
-Message-ID: <2015.10.10.10.24.1116696150.squirrel@linux1>
-References: <4870.10.10.10.24.1116646732.squirrel@linux1>
-    <20050521150926.GA96606@dspnet.fr.eu.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/3] Diff overhaul, adding the other half of copy detection.
+Date: Sat, 21 May 2005 10:25:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505211016140.2206@ppc970.osdl.org>
+References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org> <7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
+ <7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 19:22:23 2005
+X-From: git-owner@vger.kernel.org Sat May 21 19:22:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZXfM-0007nL-CT
-	for gcvg-git@gmane.org; Sat, 21 May 2005 19:21:36 +0200
+	id 1DZXfx-0007ph-TB
+	for gcvg-git@gmane.org; Sat, 21 May 2005 19:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261754AbVEURWi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 13:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVEURWi
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:22:38 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:4760 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261756AbVEURWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 13:22:33 -0400
-Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050521172232.TLGB28065.simmts8-srv.bellnexxia.net@linux1>;
-          Sat, 21 May 2005 13:22:32 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j4LHMTNr020778;
-	Sat, 21 May 2005 13:22:30 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Sat, 21 May 2005 13:22:30 -0400 (EDT)
-In-Reply-To: <20050521150926.GA96606@dspnet.fr.eu.org>
-To: "Olivier Galibert" <galibert@pobox.com>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S261757AbVEURXN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 13:23:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVEURXN
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 13:23:13 -0400
+Received: from fire.osdl.org ([65.172.181.4]:14499 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261757AbVEURXH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 13:23:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LHN0jA006212
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 21 May 2005 10:23:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LHMxY1006499;
+	Sat, 21 May 2005 10:23:00 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 21, 2005 11:09 am, Olivier Galibert said:
-> On Fri, May 20, 2005 at 11:38:52PM -0400, Sean wrote:
->>  -?, --help             Give this help list
+
+
+On Sat, 21 May 2005, Junio C Hamano wrote:
 >
-> Could you make that '-h' please ?
->
->>  -V, --version          Print program version
->
-> And that '-v'.  -V traditionally means verbose, -v version.  Yes, I
-> know there are counter-examples, but statistically...
->
+> This patch extends diff-cache and diff-files to report the
+> unmodified files to diff-core as well when -C (copy detection)
+> is in effect, so that the unmodified files can also be used as
+> the source candidates.  The existing test t4003 has been
+> extended to cover this case.
 
-Hey Olivier,
+I love how I can just say "oh, keep in mind that we might want to.." and 
+24 hours later you did it.
 
-Both of these options are generated automatically by argp.  I'm sure there
-is a way to override them, but i'd rather just leave them as given by
-argp.  For the first case, if you try '-h' on the command line you get:
+Applied and pushed out, and I enjoyed seeing the output of 
 
-$ git-fsck-cache -h
-git-fsck-cache: invalid option -- h
-Try `git-fsck-cache --help' or `git-fsck-cache --usage' for more information.
+	git-whatchanged -C
 
-So it leads to the proper help message.
+and doing a "/^copy" that shows it figuring out (correctly) that 
+git-resolve-script was based on git-pull-script. Very cool.
 
-Sean
+I'm also somewhat surprised by the fact that it even seems to be usable on
+the kernel tree:
 
+	diff --git a/include/asm-um/archparam-i386.h b/include/asm-um/elf-i386.h
+	similarity index 89%
+	copy from include/asm-um/archparam-i386.h
+	copy to include/asm-um/elf-i386.h
+	--- a/include/asm-um/archparam-i386.h
+	+++ b/include/asm-um/elf-i386.h
+	...
 
+cool. 
+
+			Linus
