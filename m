@@ -1,69 +1,57 @@
-From: "Sean" <seanlkml@sympatico.ca>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [RFC] git-fsck-cache argument processing
-Date: Sat, 21 May 2005 15:00:37 -0400 (EDT)
-Message-ID: <2329.10.10.10.24.1116702037.squirrel@linux1>
+Date: Sat, 21 May 2005 12:47:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505211245580.2206@ppc970.osdl.org>
 References: <4870.10.10.10.24.1116646732.squirrel@linux1>
-    <20050521150926.GA96606@dspnet.fr.eu.org>
-    <2015.10.10.10.24.1116696150.squirrel@linux1>
-    <20050521184909.GA1729@dspnet.fr.eu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 21:00:19 2005
+X-From: git-owner@vger.kernel.org Sat May 21 21:45:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZZCU-0007ss-Ae
-	for gcvg-git@gmane.org; Sat, 21 May 2005 20:59:54 +0200
+	id 1DZZu5-0002cy-H9
+	for gcvg-git@gmane.org; Sat, 21 May 2005 21:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261772AbVEUTAp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 15:00:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261767AbVEUTAp
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 15:00:45 -0400
-Received: from simmts8.bellnexxia.net ([206.47.199.166]:172 "EHLO
-	simmts8-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S261776AbVEUTAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 15:00:38 -0400
-Received: from linux1 ([69.156.111.46]) by simmts8-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050521190038.TTBM28065.simmts8-srv.bellnexxia.net@linux1>;
-          Sat, 21 May 2005 15:00:38 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j4LJ0bph021841;
-	Sat, 21 May 2005 15:00:37 -0400
-Received: from 10.10.10.24
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Sat, 21 May 2005 15:00:37 -0400 (EDT)
-In-Reply-To: <20050521184909.GA1729@dspnet.fr.eu.org>
-To: "Olivier Galibert" <galibert@pobox.com>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S261739AbVEUTp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 15:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261773AbVEUTp7
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 15:45:59 -0400
+Received: from fire.osdl.org ([65.172.181.4]:37301 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261739AbVEUTpx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 15:45:53 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4LJjojA014176
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 21 May 2005 12:45:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4LJjnLP010952;
+	Sat, 21 May 2005 12:45:49 -0700
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <4870.10.10.10.24.1116646732.squirrel@linux1>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, May 21, 2005 2:49 pm, Olivier Galibert said:
-> On Sat, May 21, 2005 at 01:22:30PM -0400, Sean wrote:
->> Both of these options are generated automatically by argp.
+
+
+On Fri, 20 May 2005, Sean wrote:
 >
-> I see.  Then I'll guess I'll have to put argp in the "crap" pile next
-> to libtool and automake.
+>  -u, --unreachable      Show missing objects or deltas
 
-Okay now don't go saying things you can't take back <g>.
+That's the wrong description.
 
-> How neat.  Of course using the right option under (t)csh gives:
->
-> galibert@m62:~ #201 >git-fsck-cache -?
-> git-fsck-cache: No match.
->
-> Importing this windowism is beyond stupid.
+fsck always shows missing objects, but "--unreachable" makes it also show
+objects that cannot be reached from any of the references (either passed
+in on the command line, or the implicit references we take if no explicit
+reference is given).
 
-Hmmm, that kinda sucks, but the --help should still work fine.  I suppose
-we could figure out how to use -h instead.
+So in many ways, "--unreachable" is about the _reverse_ of showing missing 
+objects: it's about showing _extraneous_ objects that aren't needed by the 
+ref that was passed in.
 
-Sean
-
-
+		Linus
