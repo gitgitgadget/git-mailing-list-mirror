@@ -1,46 +1,37 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jeff Garzik <jgarzik@pobox.com>
 Subject: Re: [RFC] git-fsck-cache argument processing
-Date: Fri, 20 May 2005 22:08:19 -0700
-Message-ID: <7voeb5np30.fsf@assigned-by-dhcp.cox.net>
-References: <4870.10.10.10.24.1116646732.squirrel@linux1>
+Date: Sat, 21 May 2005 01:09:52 -0400
+Message-ID: <428EC2A0.7030407@pobox.com>
+References: <4870.10.10.10.24.1116646732.squirrel@linux1>    <428EB444.7010200@pobox.com> <4966.10.10.10.24.1116650175.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 21 07:07:50 2005
+X-From: git-owner@vger.kernel.org Sat May 21 07:09:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZMCl-0001ig-IH
-	for gcvg-git@gmane.org; Sat, 21 May 2005 07:07:19 +0200
+	id 1DZMEZ-0001q6-TF
+	for gcvg-git@gmane.org; Sat, 21 May 2005 07:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261661AbVEUFIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 01:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261663AbVEUFIV
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 01:08:21 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37117 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261661AbVEUFIU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 01:08:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050521050818.KXPQ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 21 May 2005 01:08:18 -0400
-To: "Sean" <seanlkml@sympatico.ca>
-In-Reply-To: <4870.10.10.10.24.1116646732.squirrel@linux1> (seanlkml@sympatico.ca's
- message of "Fri, 20 May 2005 23:38:52 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261662AbVEUFKD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 01:10:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261665AbVEUFKD
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 01:10:03 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:55483 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261663AbVEUFKA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 21 May 2005 01:10:00 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DZMFI-0000am-B4; Sat, 21 May 2005 05:09:56 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
+X-Accept-Language: en-us, en
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <4966.10.10.10.24.1116650175.squirrel@linux1>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The patch looks good.  Before you proceed to convert the rest,
-could I ask you to first let us see the list of new set of
-options and semantics changes, if any ("checkout-cache -f -a" vs
-"checkout-cache -a -f" immediately comes to mind)?
-
-Presumably you would be doing the Documentation updates as well,
-so starting from the documentaiton updates before writing the
-actual code may be a good way for us to understand and ack on
-what is going to happen.
+Patch looks good to me...
 
