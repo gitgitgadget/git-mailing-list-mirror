@@ -1,52 +1,55 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: [PATCH] Adding limits.h to cache.h in order to compile under Solaris
-Date: Sat, 21 May 2005 11:13:55 +0200
-Message-ID: <20050521091355.GA11436@cip.informatik.uni-erlangen.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Detect renames in diff family.
+Date: Sat, 21 May 2005 02:37:31 -0700
+Message-ID: <7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat May 21 11:12:59 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 21 11:36:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZQ2P-0002Nm-Nl
-	for gcvg-git@gmane.org; Sat, 21 May 2005 11:12:54 +0200
+	id 1DZQPc-00045S-CR
+	for gcvg-git@gmane.org; Sat, 21 May 2005 11:36:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261706AbVEUJN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 21 May 2005 05:13:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261700AbVEUJN6
-	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 05:13:58 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:32685 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261706AbVEUJN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 May 2005 05:13:56 -0400
-Received: from faui04a.informatik.uni-erlangen.de (faui04a.informatik.uni-erlangen.de [131.188.30.117])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4L9DtS7011190
-	for <git@vger.kernel.org>; Sat, 21 May 2005 09:13:55 GMT
-Received: (from sithglan@localhost)
-	by faui04a.informatik.uni-erlangen.de (8.12.10+Sun/8.12.5/Submit) id j4L9DtW4011467
-	for git@vger.kernel.org; Sat, 21 May 2005 11:13:55 +0200 (CEST)
-To: GIT <git@vger.kernel.org>
-Mail-Followup-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S261489AbVEUJhi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 21 May 2005 05:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261715AbVEUJhi
+	(ORCPT <rfc822;git-outgoing>); Sat, 21 May 2005 05:37:38 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:37762 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261489AbVEUJhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 May 2005 05:37:33 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050521093732.YXSL1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 21 May 2005 05:37:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org> (Linus
+ Torvalds's message of "Thu, 19 May 2005 09:19:28 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-diff-tree 1ede81fa79aa5bd656f2b2aae3541719d306698d (from 559967c6d4fa3bab269d4a22d2db23f70e0156b7)
-Author: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Date:   Sat May 21 10:50:22 2005 +0200
-    
-    Adding limits.h to cache.h in order to compile under Solaris
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -2,6 +2,7 @@
- #define CACHE_H
- 
- #include <unistd.h>
-+#include <limits.h>
- #include <stdio.h>
- #include <sys/stat.h>
- #include <fcntl.h>
+LT> [ rambling mode on: ]
+
+LT> One thing that struck me is that there is nothing wrong with having the 
+LT> same old file marked twice for a rename, or considering new files to be 
+LT> copies of old files. So if we ever allow that, then "rename" may be the 
+LT> wrong name for this, since the logic certainly allows the old file to 
+LT> still exist (or be removed and show up multiple times in a new guise).
+
+People say be careful what you wish and for a reason.  You may
+get it ;-).  I am sending the following:
+
+ [PATCH 1/3] Diff overhaul, adding half of copy detection.
+ [PATCH 2/3] Introducing software archaeologist's tool "pickaxe".
+ [PATCH 3/3] Diff overhaul, adding the other half of copy detection.
+
+
