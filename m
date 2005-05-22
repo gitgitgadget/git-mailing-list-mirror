@@ -1,121 +1,83 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: running git-update-cache --refresh on different machines on a NFS share always ends up in a lot of io/cpu/time waste
-Date: Sun, 22 May 2005 21:27:34 +0200
-Message-ID: <20050522192734.GB23388@cip.informatik.uni-erlangen.de>
-References: <20050522122849.GJ15178@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505221205580.2307@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] The diff-raw format updates.
+Date: Sun, 22 May 2005 12:35:16 -0700
+Message-ID: <7vy8a7cavf.fsf@assigned-by-dhcp.cox.net>
+References: <7vwtpsdvgm.fsf@assigned-by-dhcp.cox.net>
+	<7v1x80dluj.fsf@assigned-by-dhcp.cox.net>
+	<7vvf5cc779.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505221108000.2307@ppc970.osdl.org>
+	<20050522184237.GG18500@cip.informatik.uni-erlangen.de>
+	<Pine.LNX.4.58.0505221203410.2307@ppc970.osdl.org>
+	<7v64xbdq4y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 22 21:27:07 2005
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 22 21:35:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZw5m-0006Sx-7s
-	for gcvg-git@gmane.org; Sun, 22 May 2005 21:26:30 +0200
+	id 1DZwDW-0007Nk-43
+	for gcvg-git@gmane.org; Sun, 22 May 2005 21:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261339AbVEVT1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 May 2005 15:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261275AbVEVT1r
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 15:27:47 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:17120 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261339AbVEVT1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2005 15:27:41 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4MJRZS8026300
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 22 May 2005 19:27:35 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4MJRYO0026297;
-	Sun, 22 May 2005 21:27:34 +0200 (CEST)
+	id S261275AbVEVTfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 May 2005 15:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261556AbVEVTfb
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 15:35:31 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:49571 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261275AbVEVTfW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2005 15:35:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050522193520.BEXD550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 22 May 2005 15:35:20 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	GIT <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505221205580.2307@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7v64xbdq4y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sun, 22 May 2005 12:20:13 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+>>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+LT> The machine readable format has the same issue: it needs to be able to 
+LT> distinguish between a "copy" (where the source remains) and a "rename" 
+LT> (where the source is removed).
 
-> It does?
+JCH> Why?  If the same path appears later as the left hand side then
+JCH> it is a copy otherwise it is a rename.  Please see what
+JCH> diffcore-rename does when assigning to dp->xfrm_msg.  
 
-Not for me at the moment:
+JCH> What I've been trying hard so far was to keep diff_filepair not
+JCH> to be too specific to rename/copy.  What I do not like about
+JCH> what is being proposed is that it would force me to introduce
+JCH> this "is this a copy or a rename" flag to that structure.
 
-faui03  -> NFS Server (Solaris 2.9)
-faui04a -> NFS Client (Solaris 2.9)
-faui01  -> NFS Client (Linux 2.4.30)
+Linus, another way of saying the above is this.
 
-(faui03) [~/work/blastwave] date; time git-update-cache --refresh
-Sun May 22 21:09:33 CEST 2005
+Think about the example in test that munge COPYING file.  What
+was recorded in the two trees as the result of
 
-real    1m6.362s
-user    0m12.550s
-sys     0m9.200s
+    sed $munge_1 <COPYING >COPYING.1
+    sed $munge_2 <COPYING COPYING.2
+    rm COPYING
 
-(faui04a) [~/work/blastwave] date; time git-update-cache --refresh
-Sun May 22 21:10:56 CEST 2005
+will be expressed as copy-edit of COPYING.1 and rename-edit of
+COPYING.2 (both from COPYING).  But that is just _one_
+interpretation diffcore-rename _arbitrarily_ makes.
 
-real    1m20.097s
-user    0m12.270s
-sys     0m8.930s
+It could have been copy-edit of COPYING.2 and rename-edit of
+COPYING.1 (both from COPYING).  If you make the change you are
+proposing to diff-raw format, reordering diff-raw entries stops
+making sense, while the current format allows us to.  
 
-(faui01) [~/work/blastwave] date; time git-update-cache --refresh;
-Sun May 22 21:17:22 CEST 2005
+It is similar to your argument of not _recording_ renames on
+commit but _tracking_ it upon inspection.  I deliberatly chose
+not to record rename/copy distinction in diff-raw --- it is to
+be inferred from which entry touches the src _last_.  Everything
+but the last one to touch the same path is copy, and the last
+one is rename.
 
-real    0m30.617s
-user    0m2.340s
-sys     0m7.970s
-
-> Can you check what 
-
-> 	ls -li --time=atime
-
-> shows on the different clients? Also, try "ctime".
-
-atime is different of course different.
-
-(faui01) [~/work/blastwave] (ls -Rli --time=atime; ls -lRi --time=ctime) > ~/faui01
-(faui03) [~/work/blastwave] (ls -Rli --time=atime; ls -lRi --time=ctime) > ~/faui03
-(faui04a) [~/work/blastwave] (ls -Rli --time=atime; ls -lRi --time=ctime) > ~/faui04a
-
-(faui01) [~/work/blastwave] md5sum ~/faui0{1,3,4a}
-a2c2cdb38537a54fb74613d1cf6537f0  /home/cip/adm/sithglan/faui01
-67aee985bfb7514900a0a1d2c629cec9  /home/cip/adm/sithglan/faui03
-67aee985bfb7514900a0a1d2c629cec9  /home/cip/adm/sithglan/faui04a
-(faui01) [~/work/blastwave] diff -b -u ~/faui01 ~/faui03
---- /home/cip/adm/sithglan/faui01       2005-05-22 21:24:02.000000000 +0200
-+++ /home/cip/adm/sithglan/faui03       2005-05-22 21:23:54.000000000 +0200
-@@ -1,11 +1,11 @@
- .:
- total 15
- 5483033 -rw-r--r--  1 sithglan icipguru  391 May 22 21:14 Makefile
--1842682 drwxr-xr-x  2 sithglan icipguru  512 May 22 21:23 packages/
--5541351 drwxr-xr-x  2 sithglan icipguru  512 May 22 21:23 public_html/
--5541339 drwxr-xr-x  2 sithglan icipguru  512 May 22 21:23 scripts/
--5482949 drwxr-xr-x  2 sithglan icipguru 8704 May 22 21:23 sources/
--5482985 drwxr-xr-x  2 sithglan icipguru 2048 May 22 21:23 specs/
-+1842682 drwxr-xr-x    2 sithglan icipguru      512 May 22 21:19 packages/
-+5541351 drwxr-xr-x    2 sithglan icipguru      512 May 22 21:19 public_html/
-+5541339 drwxr-xr-x    2 sithglan icipguru      512 May 22 21:19 scripts/
-+5482949 drwxr-xr-x    2 sithglan icipguru     8704 May 22 21:19 sources/
-+5482985 drwxr-xr-x    2 sithglan icipguru     2048 May 22 21:19 specs/
-
- ./packages:
- total 0
-
-If you need the files:
-
-http://wwwcip.informatik.uni-erlangen.de/~sithglan/faui01  (58k)
-http://wwwcip.informatik.uni-erlangen.de/~sithglan/faui03  (61k)
-http://wwwcip.informatik.uni-erlangen.de/~sithglan/faui04a (61k)
-
-> It _should_ be safe. It does the old lockfile thing, with a "link()" that
-> should guarantee atomicity. No fcntl locking or similar that can have
-> problems with networked filesystems and different UNIXes.
-
-Is link() NFS safe? I thought only mkdir() for nfs?
-
-	Thomas
