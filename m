@@ -1,52 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] The diff-raw format updates.
-Date: Sat, 21 May 2005 23:57:39 -0700
-Message-ID: <7vis1bd9y4.fsf@assigned-by-dhcp.cox.net>
-References: <7vwtpsdvgm.fsf@assigned-by-dhcp.cox.net>
-	<7v1x80dluj.fsf@assigned-by-dhcp.cox.net>
-	<7vvf5cc779.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505212253350.2206@ppc970.osdl.org>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: seek request
+Date: Sun, 22 May 2005 00:11:06 -0700
+Message-ID: <20050522071106.GA8060@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 22 08:56:42 2005
+X-From: git-owner@vger.kernel.org Sun May 22 09:10:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZkO1-0000rA-R5
-	for gcvg-git@gmane.org; Sun, 22 May 2005 08:56:34 +0200
+	id 1DZkb3-0001gh-0W
+	for gcvg-git@gmane.org; Sun, 22 May 2005 09:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261754AbVEVG5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 May 2005 02:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261755AbVEVG5q
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 02:57:46 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:27345 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261754AbVEVG5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 May 2005 02:57:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050522065739.LCRZ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 22 May 2005 02:57:39 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505212253350.2206@ppc970.osdl.org> (Linus
- Torvalds's message of "Sat, 21 May 2005 23:01:27 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261755AbVEVHLN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 May 2005 03:11:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261757AbVEVHLN
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 03:11:13 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:26838 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S261755AbVEVHLK
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 May 2005 03:11:10 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1DZkc6-0002Jg-Or
+	for git@vger.kernel.org; Sun, 22 May 2005 00:11:06 -0700
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Hi folks,
 
-LT> Doing "-C50" to ask for at least 50% similarity makes it ok (and it finds
-LT> the "git-pull-script" -> "git-resolve-script" thing), but there's
-LT> something strange going on, becuase -C10 and -C90 don't work, even if -C40
-LT> and -C50 _do_ work.
+In Cogito, it would be nice to have a
 
-Plain -C (or -M) not working was a bug I now understand why,
-and I would not be surprised that -C10 may give ridiculous
-or hilarious results (false hits), but I am having trouble
-reproducing the -C90 case.  Will do some more digging later.
+cg-seek +
 
+that would seek to the next archive state. This way, I could start off seeking
+back to the beginning of an archive, and quickly step forward, looking at files
+as I went, to the present.
 
+A corresponding
+cg-seek -
+would go the reverse direction, back toward the beginning of a project.
+
+I'm not sure how useful this would be for actual source code - I suspect any
+benefit would be minimal - but the benefit for documentation and text files,
+where the only way to test improvements is to read them by eye, would be
+significant.
+
+Be well,
+Zack
+
+-- 
+Zack Brown
