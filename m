@@ -1,780 +1,213 @@
 From: David Greaves <david@dgreaves.com>
-Subject: [PATCH 2/5] Docs - asciidoc changes
-Date: Sun, 22 May 2005 18:44:16 +0100
-Message-ID: <E1DZuUq-0008DR-6Z@ash.dgreaves.com>
+Subject: [PATCH 5/5] Docs - delta object
+Date: Sun, 22 May 2005 18:44:17 +0100
+Message-ID: <E1DZuUr-0008N8-SC@ash.dgreaves.com>
 Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 22 19:47:58 2005
+X-From: git-owner@vger.kernel.org Sun May 22 19:48:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DZuXc-00048N-V5
-	for gcvg-git@gmane.org; Sun, 22 May 2005 19:47:09 +0200
+	id 1DZuYH-0004Cg-99
+	for gcvg-git@gmane.org; Sun, 22 May 2005 19:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261275AbVEVRrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 22 May 2005 13:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261328AbVEVRrm
-	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 13:47:42 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:37094 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261275AbVEVRo0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 May 2005 13:44:26 -0400
+	id S261339AbVEVRs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 22 May 2005 13:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261597AbVEVRs4
+	(ORCPT <rfc822;git-outgoing>); Sun, 22 May 2005 13:48:56 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:38630 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261339AbVEVRo1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 22 May 2005 13:44:27 -0400
 Received: from localhost (lucy.ukfsn.org [127.0.0.1])
 	by mail.ukfsn.org (Postfix) with ESMTP
-	id 84377E6D6F; Sun, 22 May 2005 18:43:39 +0100 (BST)
+	id 7B32FE6DAB; Sun, 22 May 2005 18:43:40 +0100 (BST)
 Received: from mail.ukfsn.org ([127.0.0.1])
  by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 11321-10; Sun, 22 May 2005 18:43:39 +0100 (BST)
+ with ESMTP id 10517-18; Sun, 22 May 2005 18:43:40 +0100 (BST)
 Received: from oak.dgreaves.com (modem-1750.lemur.dialup.pol.co.uk [217.135.134.214])
 	by mail.ukfsn.org (Postfix) with ESMTP
-	id 2BDA5E6DAB; Sun, 22 May 2005 18:43:31 +0100 (BST)
+	id B54D1E6DB9; Sun, 22 May 2005 18:43:37 +0100 (BST)
 Received: from [10.0.0.90] (helo=ash.dgreaves.com)
 	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DZuUu-00016A-Ly; Sun, 22 May 2005 18:44:20 +0100
+	id 1DZuUw-00016S-Bf; Sun, 22 May 2005 18:44:22 +0100
 Received: from david by ash.dgreaves.com with local (Exim 4.50)
-	id 1DZuUq-0008DR-6Z; Sun, 22 May 2005 18:44:16 +0100
+	id 1DZuUr-0008N8-SC; Sun, 22 May 2005 18:44:17 +0100
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Whitespace and asciidoc formatting changes only in preparation for
-content changes.
+Added delta documentation
 
 Signed-off-by: David Greaves <david@dgreaves.com>
 
 ---
-commit 6f657e57d7a5b941ed401365e23d78ff77f5ebcf
-tree c081754f951815c43bdd973ddc7e23365793e75e
-parent 4a137fb4f4d7e04ae0fb72b3f4910dc487f39c8a
-author David Greaves <david@dgreaves.com> Sat, 21 May 2005 21:26:22 +0100
-committer David Greaves <david@dgreaves.com> Sat, 21 May 2005 21:26:22 +0100
+commit e45371bf4e895f1ff0343c2f1e3cafbdf44dd3e4
+tree e07586b3428cb3c605ddfb9c09919bbf0039a473
+parent 702d4ba4f44643b77f3eadbec62b0dd0c22053fd
+author David Greaves <david@dgreaves.com> Sun, 22 May 2005 18:39:11 +0100
+committer David Greaves <david@dgreaves.com> Sun, 22 May 2005 18:39:11 +0100
 
- README |  606 ++++++++++++++++++++++++++++++++---------------------------------
- 1 files changed, 304 insertions(+), 302 deletions(-)
+ Documentation/git-fsck-cache.txt |    5 +++-
+ Documentation/git-mkdelta.txt    |   45 ++++++++++++++++++++++++++++++++++++++
+ Documentation/git.txt            |    3 ++
+ README                           |   46 +++++++++++++++++++++++++++++++--------
+ 4 files changed, 89 insertions(+), 10 deletions(-)
 
+Index: Documentation/git-fsck-cache.txt
+===================================================================
+--- d25a34a8599fec7c11f9ba515b8338cad5837292/Documentation/git-fsck-cache.txt  (mode:100644)
++++ e07586b3428cb3c605ddfb9c09919bbf0039a473/Documentation/git-fsck-cache.txt  (mode:100644)
+@@ -9,7 +9,7 @@
+ 
+ SYNOPSIS
+ --------
+-'git-fsck-cache' [--tags] [--root] [[--unreachable] [--cache] <object>\*]
++'git-fsck-cache' [--tags] [--root] [--delta-depth] [[--unreachable] [--cache] <object>\*]
+ 
+ DESCRIPTION
+ -----------
+@@ -34,6 +34,9 @@
+ 	Consider any object recorded in the cache also as a head node for
+ 	an unreachability trace.
+ 
++--delta-depth::
++	Report back the length of the longest delta chain found.
++
+ It tests SHA1 and general object sanity, and it does full tracking of
+ the resulting reachability and everything else. It prints out any
+ corruption it finds (missing or bad objects), and if you use the
+Index: Documentation/git-mkdelta.txt
+===================================================================
+--- /dev/null  (tree:d25a34a8599fec7c11f9ba515b8338cad5837292)
++++ e07586b3428cb3c605ddfb9c09919bbf0039a473/Documentation/git-mkdelta.txt  (mode:100644)
+@@ -0,0 +1,45 @@
++git-mkdelta(1)
++==============
++May 2005
++
++NAME
++----
++git-mkdelta - Creates a delta object
++
++
++SYNOPSIS
++--------
++'git-mkdelta' [-v] [-d N | --max-depth=N ] <reference_object> <target_object> [ <next_object> ... ]
++
++DESCRIPTION
++-----------
++Creates a delta object to replace <reference_object> by using an
++ordered list of potential objects to deltafy against earlier objects
++in the list.
++
++A cap on the depth of delta references can be provided as well,
++otherwise the default is to not have any limit.  A limit of 0 will
++also undeltafy a given object.
++
++
++OPTIONS
++-------
++-v::
++	Verbose
++
++-d|--max-depth::
++	limit the number of delta references in a chain
++	If 0 then all objects are undeltafied.
++	
++Author
++------
++Git is written by Linus Torvalds <torvalds@osdl.org> and the git-list <git@vger.kernel.org>.
++
++Documentation
++--------------
++Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
++
++GIT
++---
++Part of the link:git.html[git] suite
++
+Index: Documentation/git.txt
+===================================================================
+--- d25a34a8599fec7c11f9ba515b8338cad5837292/Documentation/git.txt  (mode:100644)
++++ e07586b3428cb3c605ddfb9c09919bbf0039a473/Documentation/git.txt  (mode:100644)
+@@ -51,6 +51,9 @@
+ link:git-merge-base.html[git-merge-base]::
+ 	Finds as good a common ancestor as possible for a merge
+ 
++link:git-mkdelta.html[git-mkdelta]::
++	Creates a delta object
++
+ link:git-mktag.html[git-mktag]::
+ 	Creates a tag object
+ 
 Index: README
 ===================================================================
---- 72336a9478877b0708833f0e61cfd27574f24417/README  (mode:100644)
-+++ c081754f951815c43bdd973ddc7e23365793e75e/README  (mode:100644)
-@@ -1,9 +1,8 @@
--
--
-+////////////////////////////////////////////////////////////////
- 
- 	GIT - the stupid content tracker
- 
--
-+////////////////////////////////////////////////////////////////
- "git" can mean anything, depending on your mood.
- 
-  - random three-letter combination that is pronounceable, and not
-@@ -22,16 +21,13 @@
- There are two object abstractions: the "object database", and the
- "current directory cache" aka "index".
- 
--
--
--	The Object Database (GIT_OBJECT_DIRECTORY)
--
--
-+The Object Database
-+~~~~~~~~~~~~~~~~~~~
- The object database is literally just a content-addressable collection
- of objects.  All objects are named by their content, which is
- approximated by the SHA1 hash of the object itself.  Objects may refer
--to other objects (by referencing their SHA1 hash), and so you can build
--up a hierarchy of objects. 
-+to other objects (by referencing their SHA1 hash), and so you can
-+build up a hierarchy of objects.
- 
+--- d25a34a8599fec7c11f9ba515b8338cad5837292/README  (mode:100644)
++++ e07586b3428cb3c605ddfb9c09919bbf0039a473/README  (mode:100644)
+@@ -32,8 +32,8 @@
  All objects have a statically determined "type" aka "tag", which is
  determined at object creation time, and which identifies the format of
-@@ -62,12 +58,17 @@
- just going to confuse people.  So aim for the notion of "one root object
- per project", even if git itself does not enforce that. 
+ the object (i.e. how it is used, and how it can refer to other
+-objects).  There are currently four different object types: "blob",
+-"tree", "commit" and "tag".
++objects).  There are currently five different object types: "blob",
++"tree", "commit", "tag" and "delta"
  
-+A "tag" object symbolically identifies and can be used to sign other
-+objects. It contains the identifier and type of another object, a
-+symbolic name (of course!) and, optionally, a signature.
+ A "blob" object cannot refer to any other object, and is, like the tag
+ implies, a pure storage object containing some user data.  It is used to
+@@ -62,13 +62,17 @@
+ objects. It contains the identifier and type of another object, a
+ symbolic name (of course!) and, optionally, a signature.
+ 
+-Regardless of object type, all objects are share the following
+-characteristics: they are all in deflated with zlib, and have a header
+-that not only specifies their tag, but also size information about the
+-data in the object.  It's worth noting that the SHA1 hash that is used
+-to name the object is the hash of the original data (historical note:
+-in the dawn of the age of git this was the sha1 of the _compressed_
+-object)
++A "delta" object is used internally by the object database to minimise
++disk usage. Instead of storing the entire contents of a revision, git
++can behave in a similar manner to RCS et al and simply store a delta.
 +
- Regardless of object type, all objects are share the following
- characteristics: they are all in deflated with zlib, and have a header
- that not only specifies their tag, but also size information about the
- data in the object.  It's worth noting that the SHA1 hash that is used
--to name the object is always the hash of this _compressed_ object, not
--the original data.
-+to name the object is the hash of the original data (historical note:
-+in the dawn of the age of git this was the sha1 of the _compressed_
-+object)
++Regardless of object type, all objects share the following
++characteristics: they are all deflated with zlib, and have a header
++that not only specifies their tag, but also provides size information
++about the data in the object.  It's worth noting that the SHA1 hash
++that is used to name the object is the hash of the original data or
++the delta. (Historical note: in the dawn of the age of git the hash
++was the sha1 of the _compressed_ object)
  
  As a result, the general consistency of an object can always be tested
  independently of the contents or the type of the object: all objects can
-@@ -76,157 +77,162 @@
- forms a sequence of <ascii tag without space> + <space> + <ascii decimal
- size> + <byte\0> + <binary object data>. 
+@@ -215,6 +219,30 @@
+ A tag is created with link:git-mktag.html[git-mktag] and
+ it's data can be accessed by link:git-cat-file.html[git-cat-file]
  
--The structured objects can further have their structure and connectivity
--to other objects verified. This is generally done with the "fsck-cache"
--program, which generates a full dependency graph of all objects, and
--verifies their internal consistency (in addition to just verifying their
--superficial consistency through the hash).
-+The structured objects can further have their structure and
-+connectivity to other objects verified. This is generally done with
-+the "fsck-cache" program, which generates a full dependency graph of
-+all objects, and verifies their internal consistency (in addition to
-+just verifying their superficial consistency through the hash).
- 
- The object types in some more detail:
- 
--  BLOB: A "blob" object is nothing but a binary blob of data, and
--	doesn't refer to anything else.  There is no signature or any
--	other verification of the data, so while the object is
--	consistent (it _is_ indexed by its sha1 hash, so the data itself
--	is certainly correct), it has absolutely no other attributes. 
--	No name associations, no permissions.  It is purely a blob of
--	data (i.e. normally "file contents"). 
--
--	In particular, since the blob is entirely defined by its data,
--	if two files in a directory tree (or in multiple different
--	versions of the repository) have the same contents, they will
--	share the same blob object. The object is totally independent
--	of it's location in the directory tree, and renaming a file does
--	not change the object that file is associated with in any way.
--
--  TREE: The next hierarchical object type is the "tree" object.  A tree
--	object is a list of mode/name/blob data, sorted by name. 
--	Alternatively, the mode data may specify a directory mode, in
--	which case instead of naming a blob, that name is associated
--	with another TREE object. 
--
--	Like the "blob" object, a tree object is uniquely determined by
--	the set contents, and so two separate but identical trees will
--	always share the exact same object. This is true at all levels,
--	i.e. it's true for a "leaf" tree (which does not refer to any
--	other trees, only blobs) as well as for a whole subdirectory.
--
--	For that reason a "tree" object is just a pure data abstraction:
--	it has no history, no signatures, no verification of validity,
--	except that since the contents are again protected by the hash
--	itself, we can trust that the tree is immutable and its contents
--	never change. 
--
--	So you can trust the contents of a tree to be valid, the same
--	way you can trust the contents of a blob, but you don't know
--	where those contents _came_ from.
--
--	Side note on trees: since a "tree" object is a sorted list of
--	"filename+content", you can create a diff between two trees
--	without actually having to unpack two trees.  Just ignore all
--	common parts, and your diff will look right.  In other words,
--	you can effectively (and efficiently) tell the difference
--	between any two random trees by O(n) where "n" is the size of
--	the difference, rather than the size of the tree. 
--
--	Side note 2 on trees: since the name of a "blob" depends
--	entirely and exclusively on its contents (i.e. there are no names
--	or permissions involved), you can see trivial renames or
--	permission changes by noticing that the blob stayed the same. 
--	However, renames with data changes need a smarter "diff" implementation. 
--
--CHANGESET: The "changeset" object is an object that introduces the
--	notion of history into the picture.  In contrast to the other
--	objects, it doesn't just describe the physical state of a tree,
--	it describes how we got there, and why. 
--
--	A "changeset" is defined by the tree-object that it results in,
--	the parent changesets (zero, one or more) that led up to that
--	point, and a comment on what happened.  Again, a changeset is
--	not trusted per se: the contents are well-defined and "safe" due
--	to the cryptographically strong signatures at all levels, but
--	there is no reason to believe that the tree is "good" or that
--	the merge information makes sense.  The parents do not have to
--	actually have any relationship with the result, for example. 
--
--	Note on changesets: unlike real SCM's, changesets do not contain
--	rename information or file mode change information.  All of that
--	is implicit in the trees involved (the result tree, and the
--	result trees of the parents), and describing that makes no sense
--	in this idiotic file manager. 
--
--TRUST: The notion of "trust" is really outside the scope of "git", but
--	it's worth noting a few things.  First off, since everything is
--	hashed with SHA1, you _can_ trust that an object is intact and
--	has not been messed with by external sources.  So the name of an
--	object uniquely identifies a known state - just not a state that
--	you may want to trust. 
--
--	Furthermore, since the SHA1 signature of a changeset refers to
--	the SHA1 signatures of the tree it is associated with and the
--	signatures of the parent, a single named changeset specifies
--	uniquely a whole set of history, with full contents.  You can't
--	later fake any step of the way once you have the name of a
--	changeset. 
--
--	So to introduce some real trust in the system, the only thing
--	you need to do is to digitally sign just _one_ special note,
--	which includes the name of a top-level changeset.  Your digital
--	signature shows others that you trust that changeset, and the
--	immutability of the history of changesets tells others that they
--	can trust the whole history. 
--
--	In other words, you can easily validate a whole archive by just
--	sending out a single email that tells the people the name (SHA1
--	hash) of the top changeset, and digitally sign that email using
--	something like GPG/PGP. 
--
--	In particular, you can also have a separate archive of "trust
--	points" or tags, which document your (and other peoples) trust. 
--	You may, of course, archive these "certificates of trust" using
--	"git" itself, but it's not something "git" does for you. 
--
--Another way of saying the last point: "git" itself only handles content
--integrity, the trust has to come from outside. 
-+Blob Object
-+~~~~~~~~~~~
-+A "blob" object is nothing but a binary blob of data, and doesn't
-+refer to anything else.  There is no signature or any other
-+verification of the data, so while the object is consistent (it _is_
-+indexed by its sha1 hash, so the data itself is certainly correct), it
-+has absolutely no other attributes.  No name associations, no
-+permissions.  It is purely a blob of data (i.e. normally "file
-+contents").
-+
-+In particular, since the blob is entirely defined by its data, if two
-+files in a directory tree (or in multiple different versions of the
-+repository) have the same contents, they will share the same blob
-+object. The object is totally independent of it's location in the
-+directory tree, and renaming a file does not change the object that
-+file is associated with in any way.
-+
-+Tree Object
-+~~~~~~~~~~~
-+The next hierarchical object type is the "tree" object.  A tree object
-+is a list of mode/name/blob data, sorted by name.  Alternatively, the
-+mode data may specify a directory mode, in which case instead of
-+naming a blob, that name is associated with another TREE object.
-+
-+Like the "blob" object, a tree object is uniquely determined by the
-+set contents, and so two separate but identical trees will always
-+share the exact same object. This is true at all levels, i.e. it's
-+true for a "leaf" tree (which does not refer to any other trees, only
-+blobs) as well as for a whole subdirectory.
-+
-+For that reason a "tree" object is just a pure data abstraction: it
-+has no history, no signatures, no verification of validity, except
-+that since the contents are again protected by the hash itself, we can
-+trust that the tree is immutable and its contents never change.
-+
-+So you can trust the contents of a tree to be valid, the same way you
-+can trust the contents of a blob, but you don't know where those
-+contents _came_ from.
-+
-+Side note on trees: since a "tree" object is a sorted list of
-+"filename+content", you can create a diff between two trees without
-+actually having to unpack two trees.  Just ignore all common parts,
-+and your diff will look right.  In other words, you can effectively
-+(and efficiently) tell the difference between any two random trees by
-+O(n) where "n" is the size of the difference, rather than the size of
-+the tree.
-+
-+Side note 2 on trees: since the name of a "blob" depends entirely and
-+exclusively on its contents (i.e. there are no names or permissions
-+involved), you can see trivial renames or permission changes by
-+noticing that the blob stayed the same.  However, renames with data
-+changes need a smarter "diff" implementation.
-+
-+
-+Changeset Object
-+~~~~~~~~~~~~~~~~
-+The "changeset" object is an object that introduces the notion of
-+history into the picture.  In contrast to the other objects, it
-+doesn't just describe the physical state of a tree, it describes how
-+we got there, and why.
-+
-+A "changeset" is defined by the tree-object that it results in, the
-+parent changesets (zero, one or more) that led up to that point, and a
-+comment on what happened.  Again, a changeset is not trusted per se:
-+the contents are well-defined and "safe" due to the cryptographically
-+strong signatures at all levels, but there is no reason to believe
-+that the tree is "good" or that the merge information makes sense.
-+The parents do not have to actually have any relationship with the
-+result, for example.
-+
-+Note on changesets: unlike real SCM's, changesets do not contain
-+rename information or file mode change information.  All of that is
-+implicit in the trees involved (the result tree, and the result trees
-+of the parents), and describing that makes no sense in this idiotic
-+file manager.
-+
-+Trust Object
++Delta Object
 +~~~~~~~~~~~~
-+The notion of "trust" is really outside the scope of "git", but it's
-+worth noting a few things.  First off, since everything is hashed with
-+SHA1, you _can_ trust that an object is intact and has not been messed
-+with by external sources.  So the name of an object uniquely
-+identifies a known state - just not a state that you may want to
-+trust.
 +
-+Furthermore, since the SHA1 signature of a changeset refers to the
-+SHA1 signatures of the tree it is associated with and the signatures
-+of the parent, a single named changeset specifies uniquely a whole set
-+of history, with full contents.  You can't later fake any step of the
-+way once you have the name of a changeset.
++The "delta" object is used internally by the object database to
++minimise storage usage by using xdeltas (byte level diffs). Deltas can
++form chains of arbitrary length as RCS does (although this is
++configureable at creation time). Most operations won't see or even be
++aware of delta objects as they are automatically 'applied' and appear
++as 'real' git objects In other words, if you write your own routines
++to look at the contents of the object database then you need to know
++about this - otherwise you don't. Actually, that's not quite true -
++one important area where deltas are likely to prove very valuable is
++in reducing bandwidth loads - so the more sophisticated network tools
++for git repositories will be aware of them too.
 +
-+So to introduce some real trust in the system, the only thing you need
-+to do is to digitally sign just _one_ special note, which includes the
-+name of a top-level changeset.  Your digital signature shows others
-+that you trust that changeset, and the immutability of the history of
-+changesets tells others that they can trust the whole history.
++Finally, git repositories can (and must) be deltafied in the
++background - the work to calculate the differences does not take place
++automatically at commit time.
 +
-+In other words, you can easily validate a whole archive by just
-+sending out a single email that tells the people the name (SHA1 hash)
-+of the top changeset, and digitally sign that email using something
-+like GPG/PGP.
++A delta can be created (or undeltafied) with
++link:git-mkdelta.html[git-mkdelta] it's raw data cannot be accessed at
++present.
 +
-+In particular, you can also have a separate archive of "trust points"
-+or tags, which document your (and other peoples) trust.  You may, of
-+course, archive these "certificates of trust" using "git" itself, but
-+it's not something "git" does for you.
- 
-+Another way of saying the last point: "git" itself only handles
-+content integrity, the trust has to come from outside.
- 
- 
--	The "index" aka "Current Directory Cache" (".git/index")
- 
- 
-+The "index" aka "Current Directory Cache"
-+-----------------------------------------
++
+ The "index" aka "Current Directory Cache"
+ -----------------------------------------
  The index is a simple binary file, which contains an efficient
- representation of a virtual directory content at some random time.  It
- does so by a simple array that associates a set of names, dates,
- permissions and content (aka "blob") objects together.  The cache is
- always kept ordered by name, and names are unique (with a few very
- specific rules) at any point in time, but the cache has no long-term
--meaning, and can be partially updated at any time. 
-+meaning, and can be partially updated at any time.
- 
- In particular, the index certainly does not need to be consistent with
- the current directory contents (in fact, most operations will depend on
- different ways to make the index _not_ be consistent with the directory
- hierarchy), but it has three very important attributes:
- 
-- (a) it can re-generate the full state it caches (not just the directory
--     structure: it contains pointers to the "blob" objects so that it
--     can regenerate the data too)
--
--     As a special case, there is a clear and unambiguous one-way mapping
--     from a current directory cache to a "tree object", which can be
--     efficiently created from just the current directory cache without
--     actually looking at any other data.  So a directory cache at any
--     one time uniquely specifies one and only one "tree" object (but
--     has additional data to make it easy to match up that tree object
--     with what has happened in the directory)
--
-- (b) it has efficient methods for finding inconsistencies between that
--     cached state ("tree object waiting to be instantiated") and the
--     current state. 
--
-- (c) it can additionally efficiently represent information about merge
--     conflicts between different tree objects, allowing each pathname to
--     be associated with sufficient information about the trees involved
--     that you can create a three-way merge between them.
-+'(a) it can re-generate the full state it caches (not just the
-+directory structure: it contains pointers to the "blob" objects so
-+that it can regenerate the data too)'
-+
-+As a special case, there is a clear and unambiguous one-way mapping
-+from a current directory cache to a "tree object", which can be
-+efficiently created from just the current directory cache without
-+actually looking at any other data.  So a directory cache at any one
-+time uniquely specifies one and only one "tree" object (but has
-+additional data to make it easy to match up that tree object with what
-+has happened in the directory)
-+
-+'(b) it has efficient methods for finding inconsistencies between that
-+cached state ("tree object waiting to be instantiated") and the
-+current state.'
-+
-+'(c) it can additionally efficiently represent information about merge
-+conflicts between different tree objects, allowing each pathname to be
-+associated with sufficient information about the trees involved that
-+you can create a three-way merge between them.'
- 
- Those are the three ONLY things that the directory cache does.  It's a
- cache, and the normal operation is to re-generate it completely from a
-@@ -241,220 +247,216 @@
- the index file can have the representation of an intermediate tree that
- has not yet been instantiated.  So the index can be thought of as a
- write-back cache, which can contain dirty information that has not yet
--been written back to the backing store. 
--
--
-+been written back to the backing store.
- 
--	The Workflow
- 
- 
-+The Workflow
-+------------
- Generally, all "git" operations work on the index file. Some operations
--work _purely_ on the index file (showing the current state of the
-+work *purely* on the index file (showing the current state of the
- index), but most operations move data to and from the index file. Either
- from the database or from the working directory. Thus there are four
- main combinations: 
- 
-- 1) working directory -> index
-+1) working directory -> index
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--	You update the index with information from the working directory
--	with the "update-cache" command.  You generally update the index
--	information by just specifying the filename you want to update,
--	like so:
-+You update the index with information from the working directory with
-+the "update-cache" command.  You generally update the index
-+information by just specifying the filename you want to update, like
-+so:
- 
- 		update-cache filename
- 
--	but to avoid common mistakes with filename globbing etc, the
--	command will not normally add totally new entries or remove old
--	entries, i.e. it will normally just update existing cache entries.
--
--	To tell git that yes, you really do realize that certain files
--	no longer exist in the archive, or that new files should be
--	added, you should use the "--remove" and "--add" flags
--	respectively.
--
--	NOTE! A "--remove" flag does _not_ mean that subsequent
--	filenames will necessarily be removed: if the files still exist
--	in your directory structure, the index will be updated with
--	their new status, not removed. The only thing "--remove" means
--	is that update-cache will be considering a removed file to be a
--	valid thing, and if the file really does not exist any more, it
--	will update the index accordingly. 
--
--	As a special case, you can also do "update-cache --refresh",
--	which will refresh the "stat" information of each index to match
--	the current stat information. It will _not_ update the object
--	status itself, and it will only update the fields that are used
--	to quickly test whether an object still matches its old backing
--	store object.
-+but to avoid common mistakes with filename globbing etc, the command
-+will not normally add totally new entries or remove old entries,
-+i.e. it will normally just update existing cache entries.
-+
-+To tell git that yes, you really do realize that certain files no
-+longer exist in the archive, or that new files should be added, you
-+should use the "--remove" and "--add" flags respectively.
-+
-+NOTE! A "--remove" flag does _not_ mean that subsequent filenames will
-+necessarily be removed: if the files still exist in your directory
-+structure, the index will be updated with their new status, not
-+removed. The only thing "--remove" means is that update-cache will be
-+considering a removed file to be a valid thing, and if the file really
-+does not exist any more, it will update the index accordingly.
-+
-+As a special case, you can also do "update-cache --refresh", which
-+will refresh the "stat" information of each index to match the current
-+stat information. It will _not_ update the object status itself, and
-+it will only update the fields that are used to quickly test whether
-+an object still matches its old backing store object.
- 
-- 2) index -> object database
-+2) index -> object database
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--	You write your current index file to a "tree" object with the
--	program
-+You write your current index file to a "tree" object with the program
- 
- 		write-tree
- 
--	that doesn't come with any options - it will just write out the
--	current index into the set of tree objects that describe that
--	state, and it will return the name of the resulting top-level
--	tree. You can use that tree to re-generate the index at any time
--	by going in the other direction:
--
-- 3) object database -> index
--
--	You read a "tree" file from the object database, and use that to
--	populate (and overwrite - don't do this if your index contains
--	any unsaved state that you might want to restore later!) your
--	current index.  Normal operation is just
-+that doesn't come with any options - it will just write out the
-+current index into the set of tree objects that describe that state,
-+and it will return the name of the resulting top-level tree. You can
-+use that tree to re-generate the index at any time by going in the
-+other direction:
-+
-+3) object database -> index
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+You read a "tree" file from the object database, and use that to
-+populate (and overwrite - don't do this if your index contains any
-+unsaved state that you might want to restore later!) your current
-+index.  Normal operation is just
- 
- 		read-tree <sha1 of tree>
- 
--	and your index file will now be equivalent to the tree that you
--	saved earlier. However, that is only your _index_ file: your
--	working directory contents have not been modified.
--
-- 4) index -> working directory
--
--	You update your working directory from the index by "checking
--	out" files. This is not a very common operation, since normally
--	you'd just keep your files updated, and rather than write to
--	your working directory, you'd tell the index files about the
--	changes in your working directory (i.e. "update-cache").
--
--	However, if you decide to jump to a new version, or check out
--	somebody else's version, or just restore a previous tree, you'd
--	populate your index file with read-tree, and then you need to
--	check out the result with
-+and your index file will now be equivalent to the tree that you saved
-+earlier. However, that is only your _index_ file: your working
-+directory contents have not been modified.
-+
-+4) index -> working directory
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+You update your working directory from the index by "checking out"
-+files. This is not a very common operation, since normally you'd just
-+keep your files updated, and rather than write to your working
-+directory, you'd tell the index files about the changes in your
-+working directory (i.e. "update-cache").
-+
-+However, if you decide to jump to a new version, or check out somebody
-+else's version, or just restore a previous tree, you'd populate your
-+index file with read-tree, and then you need to check out the result
-+with
- 
- 		checkout-cache filename
- 
--	or, if you want to check out all of the index, use "-a".
-+or, if you want to check out all of the index, use "-a".
- 
--	NOTE! checkout-cache normally refuses to overwrite old files, so
--	if you have an old version of the tree already checked out, you
--	will need to use the "-f" flag (_before_ the "-a" flag or the
--	filename) to _force_ the checkout.
-+NOTE! checkout-cache normally refuses to overwrite old files, so if
-+you have an old version of the tree already checked out, you will need
-+to use the "-f" flag (_before_ the "-a" flag or the filename) to
-+_force_ the checkout.
- 
- 
--Finally, there are a few odds and ends which are not purely moving from
--one representation to the other:
-+Finally, there are a few odds and ends which are not purely moving
-+from one representation to the other:
- 
-- 5) Tying it all together
-+5) Tying it all together
-+~~~~~~~~~~~~~~~~~~~~~~~~
- 
--	To commit a tree you have instantiated with "write-tree", you'd
--	create a "commit" object that refers to that tree and the
--	history behind it - most notably the "parent" commits that
--	preceded it in history. 
-+To commit a tree you have instantiated with "write-tree", you'd create
-+a "commit" object that refers to that tree and the history behind it -
-+most notably the "parent" commits that preceded it in history.
- 
--	Normally a "commit" has one parent: the previous state of the
--	tree before a certain change was made. However, sometimes it can
--	have two or more parent commits, in which case we call it a
--	"merge", due to the fact that such a commit brings together
--	("merges") two or more previous states represented by other
--	commits. 
-+Normally a "commit" has one parent: the previous state of the tree
-+before a certain change was made. However, sometimes it can have two
-+or more parent commits, in which case we call it a "merge", due to the
-+fact that such a commit brings together ("merges") two or more
-+previous states represented by other commits.
- 
--	In other words, while a "tree" represents a particular directory
--	state of a working directory, a "commit" represents that state
--	in "time", and explains how we got there. 
-+In other words, while a "tree" represents a particular directory state
-+of a working directory, a "commit" represents that state in "time",
-+and explains how we got there.
- 
--	You create a commit object by giving it the tree that describes
--	the state at the time of the commit, and a list of parents:
-+You create a commit object by giving it the tree that describes the
-+state at the time of the commit, and a list of parents:
- 
- 		commit-tree <tree> -p <parent> [-p <parent2> ..]
- 
--	and then giving the reason for the commit on stdin (either
--	through redirection from a pipe or file, or by just typing it at
--	the tty). 
--
--	commit-tree will return the name of the object that represents
--	that commit, and you should save it away for later use.
--	Normally, you'd commit a new "HEAD" state, and while git doesn't
--	care where you save the note about that state, in practice we
--	tend to just write the result to the file ".git/HEAD", so that
--	we can always see what the last committed state was.
--
-- 6) Examining the data
--
--	You can examine the data represented in the object database and
--	the index with various helper tools. For every object, you can
--	use "cat-file" to examine details about the object:
-+and then giving the reason for the commit on stdin (either through
-+redirection from a pipe or file, or by just typing it at the tty).
-+
-+commit-tree will return the name of the object that represents that
-+commit, and you should save it away for later use. Normally, you'd
-+commit a new "HEAD" state, and while git doesn't care where you save
-+the note about that state, in practice we tend to just write the
-+result to the file ".git/HEAD", so that we can always see what the
-+last committed state was.
-+
-+6) Examining the data
-+~~~~~~~~~~~~~~~~~~~~~
-+
-+You can examine the data represented in the object database and the
-+index with various helper tools. For every object, you can use
-+"cat-file" to examine details about the object:
- 
- 		cat-file -t <objectname>
- 
--	shows the type of the object, and once you have the type (which
--	is usually implicit in where you find the object), you can use
-+shows the type of the object, and once you have the type (which is
-+usually implicit in where you find the object), you can use
- 
- 		cat-file blob|tree|commit <objectname>
- 
--	to show its contents. NOTE! Trees have binary content, and as a
--	result there is a special helper for showing that content,
--	called "ls-tree", which turns the binary content into a more
--	easily readable form.
--
--	It's especially instructive to look at "commit" objects, since
--	those tend to be small and fairly self-explanatory. In
--	particular, if you follow the convention of having the top
--	commit name in ".git/HEAD", you can do
-+to show its contents. NOTE! Trees have binary content, and as a result
-+there is a special helper for showing that content, called "ls-tree",
-+which turns the binary content into a more easily readable form.
-+
-+It's especially instructive to look at "commit" objects, since those
-+tend to be small and fairly self-explanatory. In particular, if you
-+follow the convention of having the top commit name in ".git/HEAD",
-+you can do
- 
- 		cat-file commit $(cat .git/HEAD)
- 
--	to see what the top commit was.
-+to see what the top commit was.
- 
-- 7) Merging multiple trees
-+7) Merging multiple trees
-+~~~~~~~~~~~~~~~~~~~~~~~~~
- 
--	Git helps you do a three-way merge, which you can expand to
--	n-way by repeating the merge procedure arbitrary times until you
--	finally "commit" the state.  The normal situation is that you'd
--	only do one three-way merge (two parents), and commit it, but if
--	you like to, you can do multiple parents in one go.
--
--	To do a three-way merge, you need the two sets of "commit"
--	objects that you want to merge, use those to find the closest
--	common parent (a third "commit" object), and then use those
--	commit objects to find the state of the directory ("tree"
--	object) at these points. 
-+Git helps you do a three-way merge, which you can expand to n-way by
-+repeating the merge procedure arbitrary times until you finally
-+"commit" the state.  The normal situation is that you'd only do one
-+three-way merge (two parents), and commit it, but if you like to, you
-+can do multiple parents in one go.
-+
-+To do a three-way merge, you need the two sets of "commit" objects
-+that you want to merge, use those to find the closest common parent (a
-+third "commit" object), and then use those commit objects to find the
-+state of the directory ("tree" object) at these points.
- 
--	To get the "base" for the merge, you first look up the common
--	parent of two commits with
-+To get the "base" for the merge, you first look up the common parent
-+of two commits with
- 
- 		merge-base <commit1> <commit2>
- 
--	which will return you the commit they are both based on.  You
--	should now look up the "tree" objects of those commits, which
--	you can easily do with (for example)
-+which will return you the commit they are both based on.  You should
-+now look up the "tree" objects of those commits, which you can easily
-+do with (for example)
- 
- 		cat-file commit <commitname> | head -1
- 
--	since the tree object information is always the first line in a
--	commit object. 
-+since the tree object information is always the first line in a commit
-+object.
-+
-+Once you know the three trees you are going to merge (the one
-+"original" tree, aka the common case, and the two "result" trees, aka
-+the branches you want to merge), you do a "merge" read into the
-+index. This will throw away your old index contents, so you should
-+make sure that you've committed those - in fact you would normally
-+always do a merge against your last commit (which should thus match
-+what you have in your current index anyway).
- 
--	Once you know the three trees you are going to merge (the one
--	"original" tree, aka the common case, and the two "result" trees,
--	aka the branches you want to merge), you do a "merge" read into
--	the index. This will throw away your old index contents, so you
--	should make sure that you've committed those - in fact you would
--	normally always do a merge against your last commit (which
--	should thus match what you have in your current index anyway).
--	To do the merge, do
-+To do the merge, do
- 
- 		read-tree -m <origtree> <target1tree> <target2tree>
- 
--	which will do all trivial merge operations for you directly in
--	the index file, and you can just write the result out with
--	"write-tree". 
--
--	NOTE! Because the merge is done in the index file, and not in
--	your working directory, your working directory will no longer
--	match your index. You can use "checkout-cache -f -a" to make the
--	effect of the merge be seen in your working directory.
--
--	NOTE2! Sadly, many merges aren't trivial. If there are files
--	that have been added.moved or removed, or if both branches have
--	modified the same file, you will be left with an index tree that
--	contains "merge entries" in it. Such an index tree can _NOT_ be
--	written out to a tree object, and you will have to resolve any
--	such merge clashes using other tools before you can write out
--	the result.
-+which will do all trivial merge operations for you directly in the
-+index file, and you can just write the result out with "write-tree".
-+
-+NOTE! Because the merge is done in the index file, and not in your
-+working directory, your working directory will no longer match your
-+index. You can use "checkout-cache -f -a" to make the effect of the
-+merge be seen in your working directory.
-+
-+NOTE2! Sadly, many merges aren't trivial. If there are files that have
-+been added.moved or removed, or if both branches have modified the
-+same file, you will be left with an index tree that contains "merge
-+entries" in it. Such an index tree can _NOT_ be written out to a tree
-+object, and you will have to resolve any such merge clashes using
-+other tools before you can write out the result.
- 
--	[ fixme: talk about resolving merges here ]
- 
-+[ fixme: talk about resolving merges here ]
