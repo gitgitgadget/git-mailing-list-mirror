@@ -1,66 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-diff-tree -z HEAD | git-diff-helper -z fails for me
-Date: Mon, 23 May 2005 11:21:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505231119570.2307@ppc970.osdl.org>
-References: <20050523090206.GJ23388@cip.informatik.uni-erlangen.de>
- <7vwtpp6goy.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make sure diff-helper can tell rename/copy in the new
+ diff-raw format.
+Date: Mon, 23 May 2005 11:43:01 -0700
+Message-ID: <7vwtpp3hsa.fsf@assigned-by-dhcp.cox.net>
+References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 23 20:21:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 20:44:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaHVz-0005Go-3n
-	for gcvg-git@gmane.org; Mon, 23 May 2005 20:18:59 +0200
+	id 1DaHs2-0008CA-5a
+	for gcvg-git@gmane.org; Mon, 23 May 2005 20:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261922AbVEWSUL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 14:20:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261929AbVEWSUL
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 14:20:11 -0400
-Received: from fire.osdl.org ([65.172.181.4]:23180 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261922AbVEWSUF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 14:20:05 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4NIJtjA005928
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 May 2005 11:19:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4NIJs3K011478;
-	Mon, 23 May 2005 11:19:55 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtpp6goy.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261899AbVEWSnL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 14:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261911AbVEWSnL
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 14:43:11 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:31914 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261899AbVEWSnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 14:43:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050523184302.FNRR22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 23 May 2005 14:43:02 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org> (Linus
+ Torvalds's message of "Mon, 23 May 2005 07:49:01 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+LT> Btw, I still disagree with this notion that the order of the
+LT> use of the names makes a difference.
 
-On Mon, 23 May 2005, Junio C Hamano wrote:
-> 
-> Tg> 	(faui00u) [~/work/git/yagf] git-diff-tree -z HEAD | git-diff-helper -z
-> Tg> 	03c70739ae572ea9832b97dfcf9ca2594702efe8 (from 30e756ea8569bb429b7073b304acd8a960f77e4b)
-> Tg> 	:100755 100755 f2e04c3b45b2a5ab5cf53228025158902c9de5be b93fd0310e51eea4d48d42c6ad83399cff8ab56egitgit(faui00u) [~/work/git/yagf]
-> 
-> Tg> What I am doing wrong here?
-> 
-> Nothing.  I'm an idiot.
-> 
-> Linus, do you mind if I say with "-z" git-diff-tree should not
-> do _any_ header thing?
+Having slept over it, I think I tend to agree.  I do not mind
+annotating diff-raw output with "is this copy or is this rename"
+bit anymore.  While we are at it, I would also want to either
+(1) add similarity index field to diff-raw output, or (2) drop
+similarity index output from the built-in patch output.  I am
+inclined to vote for the former right now (if only it is more
+fun to watch), but I can easily be dissuaded.
 
-How about instead making sure that any "extra" text be NUL-terminated and
-never start with ':' after a NUL (which will automatically be true, since
-it's either "diff-tree " + ascii for the verbose case, or just the tree
-name).
+The proposed diff-raw format, in its fully expended form, is this:
 
-That way git-diff-helper automatically does the right thing when it just 
-passes lines (where "lines" is defined as being NUL-terminated) that it 
-doesn't understand through unmodified.
+in-place edit  :100644 100644 bcd1234... 0123456... file0 file0 . 0
+copy-edit      :100644 100644 abcd123... 1234567... file1 file2 C 68
+rename-edit    :100644 100644 abcd123... 1234567... file1 file3 R 86
+create         :000000 100644 0000000... 1234567... file4 file4 . 0
+delete         :100644 000000 1234567... 0000000... file5 file5 . 0
+unmerged       :000000 000000 0000000... 0000000... file6 file6 . 0
 
-		Linus
+The two columns added are rename/copy bit and similarity index.
+When one->path and two->path are the same, they do not mean
+anything but for parser simplicity's sake I'd like to have 0 in
+the similarity index field and a dot in copy/rename bit field.
+
+Human readable form should omit two->path and later fields
+altogether if one->path == two->path, so the above becomes:
+
+in-place edit  :100644 100644 bcd1234... 0123456... file0
+copy-edit      :100644 100644 abcd123... 1234567... file1 file2 C 68
+rename-edit    :100644 100644 abcd123... 1234567... file1 file3 R 86
+create         :000000 100644 0000000... 1234567... file4
+delete         :100644 000000 1234567... 0000000... file5
+unmerged       :000000 000000 0000000... 0000000... file6
+
+This has a nice property that diff-helper, aside from its
+diff-raw parsing part, can become quite simplified.  It should
+lose rename/copy related flags (-M, -C) because they are already
+detected by the tool in the upstream of the pipe; and because
+rename-copy is an asymmetric operation, it should also lose the
+-R flag.  I think it already does a wrong thing when you use
+diff-tree brothers with -M or -C and feed diff-helper -R with
+the output that contains already matched rename/copy.
+
+The only thing diff-helper _will_ continue to do is to take a
+diff-raw output prepared by diff-tree brothers, and generate
+what the upstream tool would have generated if it were given
+'-p' (and that should have been the case from the beginning).  
+
+Although I think diffcore transformers other than rename/copy
+may still be useful (like pickaxe) in diff-helper, that also can
+be handled upstream.
+
