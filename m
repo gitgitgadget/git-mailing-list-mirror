@@ -1,97 +1,49 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Make sure diff-helper can tell rename/copy in the new
- diff-raw format.
-Date: Mon, 23 May 2005 07:49:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
-References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: cogito - how do I ???
+Date: Mon, 23 May 2005 09:34:55 -0700
+Message-ID: <7v1x7x7vf4.fsf@assigned-by-dhcp.cox.net>
+References: <20050521214700.GA18676@mars.ravnborg.org>
+	<2765.10.10.10.24.1116713164.squirrel@linux1>
+	<Pine.LNX.4.58.0505211635440.2206@ppc970.osdl.org>
+	<20050523071919.GG23388@cip.informatik.uni-erlangen.de>
+	<Pine.LNX.4.58.0505230731430.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 16:47:43 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	Sean <seanlkml@sympatico.ca>, Sam Ravnborg <sam@ravnborg.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 18:35:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaECE-0007NF-SM
-	for gcvg-git@gmane.org; Mon, 23 May 2005 16:46:23 +0200
+	id 1DaFs7-0008MN-BU
+	for gcvg-git@gmane.org; Mon, 23 May 2005 18:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261756AbVEWOrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 10:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261884AbVEWOrn
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 10:47:43 -0400
-Received: from fire.osdl.org ([65.172.181.4]:8377 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261886AbVEWOrE (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 10:47:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4NEkujA022071
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 May 2005 07:46:57 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4NEkuDe001095;
-	Mon, 23 May 2005 07:46:56 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261906AbVEWQe6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 12:34:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261903AbVEWQe6
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 12:34:58 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:38608 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261906AbVEWQe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 12:34:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050523163454.ZQVQ12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 23 May 2005 12:34:54 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505230731430.2307@ppc970.osdl.org> (Linus
+ Torvalds's message of "Mon, 23 May 2005 07:35:47 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+LT> ..., and we can (and probably should) order rev-tree output 
+LT> with some topological sort based on the commit tree.
 
-On Mon, 23 May 2005, Junio C Hamano wrote:
->
-> This adds tests to make sure that diff-helper can tell renames
-> from copies using the same "everything but the last one are
-> copies and the last one is either rename or stay" logic.
+Seconded.
 
-Btw, I still disagree with this notion that the order of the use of the 
-names makes a difference.
-
-I think that when we generate a diff, we should always have the _option_
-to make sure that we generate it in a format where you can apply it
-"incrementally". But I disagree with the notion that it's something
-fundamental, and in fact, I even think that it's not necessarily a good
-default.
-
-For example, let's say that you have modified "fileA" _and_ you have 
-created a "fileB" that is a copy of the original "fileA" with some _other_ 
-slight modifications. We'll call the SHA1's involved "sha_A", "sha_A'" and 
-"sha_B"
-
-I think it's perfectly valid to say
-
-	:100644 100644 <sha_A> <sha_A'> M	fileA	fileA
-	:100644 100644 <sha_A> <sha_B> C89	fileA	fileB
-
-which says "fileA" was modified from orig-A to new-A, and "fileB" is a 
-copy based on orig-A.
-
-(I've used a new syntax just to confuse the issue, with the extra field 
-for "what happened", aka "M" for "modify", "C89" for "copy a 89% similar 
-file").
-
-Now, when the above is turned into a "diff", that diff is no longer
-something you can apply "incrementally" - you have to apply it as if
-you're applying all differences to the "original tree". But the thing is,
-that's actually what I _want_, because I was planning on writing a tool
-that applies patches that applies them all-or-nothing.
-
-Also, it turns out that this kind of "non-incremental" diff is the kind
-that I personally want to see as a _human_, because quite frankly, my
-brain-capacity is that of a demented ocelot, and I can't _remember_ what
-happened in other parts of the diff. I much prefer the stateless "oh, this
-file X is in that relation Y to the previous version of file Z".
-
-I do that partly because I actually routinely edit patches. If you have 
-the incremental format, that's practically impossible, while the stateless 
-version is fine.
-
-See?
-
-So I think all the clever "don't re-use files we have modified" etc is 
-actually wrong. If you want to make a traditional diff that can be applied 
-with normal "patch", you just don't use the -M or -C flags.
-
-		Linus
