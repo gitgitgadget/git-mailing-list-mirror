@@ -1,37 +1,35 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: cogito - how do I ???
-Date: Mon, 23 May 2005 07:35:47 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505230731430.2307@ppc970.osdl.org>
-References: <20050521214700.GA18676@mars.ravnborg.org>
- <2765.10.10.10.24.1116713164.squirrel@linux1> <Pine.LNX.4.58.0505211635440.2206@ppc970.osdl.org>
- <20050523071919.GG23388@cip.informatik.uni-erlangen.de>
+Subject: Re: [PATCH] Make sure diff-helper can tell rename/copy in the new
+ diff-raw format.
+Date: Mon, 23 May 2005 07:49:01 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
+References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sean <seanlkml@sympatico.ca>, Sam Ravnborg <sam@ravnborg.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 16:36:35 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 16:47:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaE1N-0005d0-9S
-	for gcvg-git@gmane.org; Mon, 23 May 2005 16:35:09 +0200
+	id 1DaECE-0007NF-SM
+	for gcvg-git@gmane.org; Mon, 23 May 2005 16:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261744AbVEWOg2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 10:36:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261737AbVEWOg1
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 10:36:27 -0400
-Received: from fire.osdl.org ([65.172.181.4]:57783 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261733AbVEWOgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 10:36:18 -0400
+	id S261756AbVEWOrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 10:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261884AbVEWOrn
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 10:47:43 -0400
+Received: from fire.osdl.org ([65.172.181.4]:8377 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261886AbVEWOrE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 10:47:04 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4NEXijA021276
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4NEkujA022071
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 May 2005 07:33:44 -0700
+	Mon, 23 May 2005 07:46:57 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4NEXfKH032630;
-	Mon, 23 May 2005 07:33:43 -0700
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050523071919.GG23388@cip.informatik.uni-erlangen.de>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4NEkuDe001095;
+	Mon, 23 May 2005 07:46:56 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -42,30 +40,58 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Mon, 23 May 2005, Thomas Glanzmann wrote:
-> 
-> > 	git-rev-tree MERGE_HEAD ^HEAD | git-diff-tree -v -m -s --stdin
-> 
-> This doesn't work for me:
+On Mon, 23 May 2005, Junio C Hamano wrote:
+>
+> This adds tests to make sure that diff-helper can tell renames
+> from copies using the same "everything but the last one are
+> copies and the last one is either rename or stay" logic.
 
-Yeah, I'm an idiot.
+Btw, I still disagree with this notion that the order of the use of the 
+names makes a difference.
 
-> Bit this does:
-> 
-> (faui00u) [~/work/git/git] git-rev-tree 2cb45e95438c113871fbbea5b4f629f9463034e7 ^09d74b3b5ac634495e17b92b2b785fa996ffce97 | awk '{print $2'} | sed 's#:.*##' | git-diff-tree -v -m -s --stdin
-> 
-> was that a typo or is git-diff-tree supposed to handle the output of
-> git-rev-tree as well and it is a bug?
+I think that when we generate a diff, we should always have the _option_
+to make sure that we generate it in a format where you can apply it
+"incrementally". But I disagree with the notion that it's something
+fundamental, and in fact, I even think that it's not necessarily a good
+default.
 
-It was me just forgetting about the time thing in rev-tree, forcing you to
-have a second phase there (I usually use just "cut -d' ' -f2" - the input
-_can_ have the ":n" flag thing that rev-tree outputs, and git-diff-tree
-will just ignore it).
+For example, let's say that you have modified "fileA" _and_ you have 
+created a "fileB" that is a copy of the original "fileA" with some _other_ 
+slight modifications. We'll call the SHA1's involved "sha_A", "sha_A'" and 
+"sha_B"
 
-I actually suspect that whole time thing was a mistake, it seemed sensible 
-back when we didn't have any other way of ordering the changesets well, 
-but it's really a bad ordering anyway to do it by time (ie add a "sort 
--rn" in there), and we can (and probably should) order rev-tree output 
-with some topological sort based on the commit tree.
+I think it's perfectly valid to say
+
+	:100644 100644 <sha_A> <sha_A'> M	fileA	fileA
+	:100644 100644 <sha_A> <sha_B> C89	fileA	fileB
+
+which says "fileA" was modified from orig-A to new-A, and "fileB" is a 
+copy based on orig-A.
+
+(I've used a new syntax just to confuse the issue, with the extra field 
+for "what happened", aka "M" for "modify", "C89" for "copy a 89% similar 
+file").
+
+Now, when the above is turned into a "diff", that diff is no longer
+something you can apply "incrementally" - you have to apply it as if
+you're applying all differences to the "original tree". But the thing is,
+that's actually what I _want_, because I was planning on writing a tool
+that applies patches that applies them all-or-nothing.
+
+Also, it turns out that this kind of "non-incremental" diff is the kind
+that I personally want to see as a _human_, because quite frankly, my
+brain-capacity is that of a demented ocelot, and I can't _remember_ what
+happened in other parts of the diff. I much prefer the stateless "oh, this
+file X is in that relation Y to the previous version of file Z".
+
+I do that partly because I actually routinely edit patches. If you have 
+the incremental format, that's practically impossible, while the stateless 
+version is fine.
+
+See?
+
+So I think all the clever "don't re-use files we have modified" etc is 
+actually wrong. If you want to make a traditional diff that can be applied 
+with normal "patch", you just don't use the -M or -C flags.
 
 		Linus
