@@ -1,73 +1,56 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: git-switch-tree script
-Date: Mon, 23 May 2005 03:24:22 -0400
-Message-ID: <42918526.1060406@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Performance fix for pickaxe.
+Date: Mon, 23 May 2005 00:25:15 -0700
+Message-ID: <7vis1a76as.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040907090901080000080103"
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 23 09:24:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 09:24:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Da7Hk-0002PJ-Lj
-	for gcvg-git@gmane.org; Mon, 23 May 2005 09:23:36 +0200
+	id 1Da7IQ-0002UL-T0
+	for gcvg-git@gmane.org; Mon, 23 May 2005 09:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261853AbVEWHYu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 03:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261857AbVEWHYf
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 03:24:35 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:10693 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261853AbVEWHY3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 03:24:29 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1Da7IY-0000Xf-H6; Mon, 23 May 2005 07:24:27 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: david@gibson.dropbear.id.au
-X-Spam-Score: 0.0 (/)
+	id S261854AbVEWHZ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 03:25:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261860AbVEWHZ2
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 03:25:28 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61895 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261854AbVEWHZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 03:25:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050523072515.IDRZ8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 23 May 2005 03:25:15 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------040907090901080000080103
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+The pickaxe was expanding the blobs and searching in them even
+when it should have already known that both sides are the same.
 
-This is what I use to switch between branches, in my kernel trees.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-	Jeff
+diffcore-pickaxe.c |    3 ++-
+1 files changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+--- a/diffcore-pickaxe.c
++++ b/diffcore-pickaxe.c
+@@ -44,7 +44,8 @@ void diffcore_pickaxe(const char *needle
+ 			if (contains(p->one, needle, len))
+ 				diff_q(&outq, p);
+ 		}
+-		else if (contains(p->one, needle, len) !=
++		else if (!diff_unmodified_pair(p) &&
++			 contains(p->one, needle, len) !=
+ 			 contains(p->two, needle, len))
+ 			diff_q(&outq, p);
+ 		if (onum == outq.nr)
+------------------------------------------------
 
-
---------------040907090901080000080103
-Content-Type: text/plain;
- name="git-switch-tree"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-switch-tree"
-
-#!/bin/sh
-
-if [ "x$1" != "x" ]
-then
-	if [ "$1" == "master" ]
-	then
-		( cd .git && rm -f HEAD && ln -s refs/heads/master HEAD )
-	else
-		if [ ! -f .git/refs/heads/$1 ]
-		then
-			echo Branch $1 not found.
-			exit 1
-		fi
-
-		( cd .git && rm -f HEAD && ln -s refs/heads/$1 HEAD )
-	fi
-fi
-
-git-read-tree -m HEAD && git-checkout-cache -q -f -u -a
-
-
---------------040907090901080000080103--
