@@ -1,63 +1,93 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Make sure diff-helper can tell rename/copy in the new
- diff-raw format.
-Date: Mon, 23 May 2005 12:16:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505231210420.2307@ppc970.osdl.org>
-References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org> <7vwtpp3hsa.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0505231156210.2307@ppc970.osdl.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] show changed tree objects with recursive git-diff-tree
+Date: Mon, 23 May 2005 17:49:27 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505231724270.16151@localhost.localdomain>
+References: <Pine.LNX.4.62.0505202131520.4397@localhost.localdomain>
+ <7vsm0hpbub.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505202025480.2206@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 21:13:31 2005
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 23 23:49:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaILx-0003of-Fo
-	for gcvg-git@gmane.org; Mon, 23 May 2005 21:12:41 +0200
+	id 1DaKmm-0000cD-Cm
+	for gcvg-git@gmane.org; Mon, 23 May 2005 23:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261939AbVEWTOG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 15:14:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261938AbVEWTOG
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 15:14:06 -0400
-Received: from fire.osdl.org ([65.172.181.4]:13722 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261939AbVEWTOC (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 15:14:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4NJDvjA009999
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 May 2005 12:13:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4NJDuf7014041;
-	Mon, 23 May 2005 12:13:57 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0505231156210.2307@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261976AbVEWVt7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 17:49:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261981AbVEWVt7
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 17:49:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:58028 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261976AbVEWVtx
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 17:49:53 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IGY00LMCPYFRA@VL-MO-MR010.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 23 May 2005 17:49:28 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.58.0505202025480.2206@ppc970.osdl.org>
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+[catching up after a weekind away -- you guys have not been standing still]
 
-On Mon, 23 May 2005, Linus Torvalds wrote:
+On Fri, 20 May 2005, Linus Torvalds wrote:
+
+> On Fri, 20 May 2005, Junio C Hamano wrote:
+> >
+> > Although I do not have immediate objections to what it tries to
+> > do, I have to think about the intent of the patch and its
+> > ramifications.
 > 
-> because having it there makes it just easier to parse, and means that we 
-> can add "reasons" later without having to worry about ambiguities with 
-> filenames.
+> I really think it should be a totally separate flag to enable showing the
+> sub-trees if the tree-blobification wants this.
+> 
+> In fact, I can pretty much _guarantee_ that the patch as posted is the
+> wrong thing to do: it will do horribly wrong things for things like
+> 
+> 	git-whatchanged arch/i386/kernel/head.S
+> 
+> (but I haven't tried it - try it yourself. The correct output for the 
+> kernel archive is just a single commit, and a single blob change in that 
+> commit).
 
-Btw, putting the "what happened" into the fixed-format stuff before the
-filenames allows you to have more thana fixed number of filenames even in
-the machine-readable format. For example, it would allow the
-machine-readable format to have just a single NUL character at the end of
-the line for the "modified" case, since now it's unambigious where the
-line ends (thanks to the fact that "M" always has only one file).
+OK.  What about the following patch?  It outputs changed tree objects 
+only if -p nor -v nor -s is specified, i.e. whenever what is really 
+wanted is output of what changed at the object level.  This makes it 
+more coherent with the non-recursive output as well.  Checked that 
+git-diff-helper doesn't get confused.
 
-Similarly, it allows us to later add a "combine" reason (take two files, 
-combine them into a third), which needs three filenames. That would 
-becomes very messy if the "reason" part is after the filenames, because it 
-gets easily ambigious.
+If a separate flag is really needed, then consistency dictates that the 
+non recursive output should provide output for tree objects only when 
+that flag is given as well, which makes the non recursive output rather 
+useless in most cases.  And IMHO this is just too much burden for little 
+benefit (the extra flag not the recursive tree object output).
 
-		Linus
+=====
+
+This patch includes output of modified tree objects to recursive output, 
+just like non recursive output already does.  When -v, -s or -p  is 
+specified then the recursive output supresses modified tree objects 
+since they don't make much sense in that case.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+diff --git a/diff-tree.c b/diff-tree.c
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -127,6 +127,8 @@ static int compare_tree_entry(void *tree
+ 	if (recursive && S_ISDIR(mode1)) {
+ 		int retval;
+ 		char *newbase = malloc_base(base, path1, pathlen1);
++		if (!silent && !verbose_header && !show_root_diff)
++			diff_change(mode1, mode2, sha1, sha2, base, path1);
+ 		retval = diff_tree_sha1(sha1, sha2, newbase);
+ 		free(newbase);
+ 		return retval;
