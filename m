@@ -1,56 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cogito - how do I ???
-Date: Mon, 23 May 2005 00:40:40 -0700
-Message-ID: <7v64xa75l3.fsf@assigned-by-dhcp.cox.net>
-References: <20050521214700.GA18676@mars.ravnborg.org>
-	<2765.10.10.10.24.1116713164.squirrel@linux1>
-	<Pine.LNX.4.58.0505211635440.2206@ppc970.osdl.org>
-	<20050523071919.GG23388@cip.informatik.uni-erlangen.de>
+From: Michal Rokos <michal@rokos.info>
+Subject: [cogito] Sync objects only when needed...
+Date: Mon, 23 May 2005 09:48:29 +0200
+Message-ID: <200505230948.29944.michal@rokos.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 23 09:40:26 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon May 23 09:48:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Da7XP-0004Hm-E5
-	for gcvg-git@gmane.org; Mon, 23 May 2005 09:39:47 +0200
+	id 1Da7eu-00050f-1V
+	for gcvg-git@gmane.org; Mon, 23 May 2005 09:47:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261865AbVEWHks (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 03:40:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261861AbVEWHks
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 03:40:48 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:46588 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261863AbVEWHkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2005 03:40:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050523074040.TPBH23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 23 May 2005 03:40:40 -0400
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050523071919.GG23388@cip.informatik.uni-erlangen.de> (Thomas
- Glanzmann's message of "Mon, 23 May 2005 09:19:19 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261864AbVEWHsx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 03:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261863AbVEWHsx
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 03:48:53 -0400
+Received: from black.click.cz ([62.141.0.10]:35539 "EHLO click.cz")
+	by vger.kernel.org with ESMTP id S261864AbVEWHss (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 03:48:48 -0400
+Received: from rokos.ack-prg.csas.cz (gprsh1.isp.t-mobile.cz [62.141.24.1])
+	by click.cz (8.12.9/8.12.9) with ESMTP id j4N7mf91002321
+	for <git@vger.kernel.org>; Mon, 23 May 2005 09:48:45 +0200 (MET DST)
+Received: from ip6-localhost (ip6-localhost [IPv6:::1])
+	by rokos.ack-prg.csas.cz (Postfix) with ESMTP id 37102F9004
+	for <git@vger.kernel.org>; Mon, 23 May 2005 09:48:31 +0200 (CEST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "TG" == Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+Hello,
 
->> git-rev-tree MERGE_HEAD ^HEAD | git-diff-tree -v -m -s --stdin
+during the day I'm usually connected via modem so syncing all the objects via rsync is painful.
 
-TG> This doesn't work for me:
+So, is there any reason to sync them even if remote and and local origin head are the same?
 
-It should not.  "diff-tree --stdin" expects the line to begin
-with an SHA1 and it either takes (1) one SHA1 followed by one
-space followed by another SHA1 potentially followed by garbage
-til the newline, or (2) one SHA1 potentially followed by garbage
-til the newline.  rev-tree has the timestamp at the beginning
-which does not match either of them.  What you are doing with
-awk should work, so should this:
+ Michal
 
-  git-rev-tree MH ^H | sed -e 's/^[0-9]* //' | git-diff-tree --stdin ...
+PS: I'm off the list, so please CC me.
 
+Signed-off-by: Michal Rokos <michal@rokos.info>
 
+Index: cg-pull
+===================================================================
+--- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/cg-pull  (mode:100755)
++++ uncommitted/cg-pull  (mode:100755)
+@@ -9,8 +9,14 @@
+ 
+ . ${COGITO_LIB}cg-Xlib
+ 
+-name=$1
++force=
+ 
++if [ "$1" == "-f" ]; then
++ force=1
++ shift
++fi
++
++name=$1
+ 
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=origin; }
+ [ "$name" ] || die "where to pull from?"
+@@ -199,6 +205,22 @@
+ fi
+ [ "$rsyncerr" ] && die "unable to get the head pointer of branch $rembranch"
+ 
++new_head=$(cat "$_git/refs/heads/$name")
++
++if [ ! "$orig_head" ]; then
++ echo "New branch: $new_head"
++
++elif [ "$orig_head" != "$new_head" ]; then
++ echo "Tree change: $orig_head:$new_head"
++
++elif [ -n "$force" ]; then
++ echo "Update forced..."
++
++else
++ echo "Up to date."
++ exit
++fi
++
+ [ -d $_git_objects ] || mkdir -p $_git_objects
+ $pull "$name" "$uri" || die "objects pull failed"
+ 
+@@ -215,8 +237,6 @@
+ [ "$rsyncerr" ] && echo "unable to get tags list (non-fatal)" >&2
+ 
+ 
+-new_head=$(cat "$_git/refs/heads/$name")
+-
+ if [ ! "$orig_head" ]; then
+  echo "New branch: $new_head"
+ 
