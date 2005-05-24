@@ -1,54 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] adjust git-deltafy-script to the new diff-tree output format
-Date: Mon, 23 May 2005 21:58:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0505232122390.16151@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 03:57:01 2005
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: cogito - how do I ???
+Date: Tue, 24 May 2005 12:26:28 +1000
+Organization: Core
+Message-ID: <E1DaP7k-0007ar-00@gondolin.me.apana.org.au>
+References: <Pine.LNX.4.58.0505230731430.2307@ppc970.osdl.org>
+Cc: sithglan@stud.uni-erlangen.de, seanlkml@sympatico.ca,
+	sam@ravnborg.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 04:27:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaOf8-00008E-Vz
-	for gcvg-git@gmane.org; Tue, 24 May 2005 03:56:55 +0200
+	id 1DaP8D-0002z6-0f
+	for gcvg-git@gmane.org; Tue, 24 May 2005 04:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261302AbVEXB6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 21:58:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVEXB6P
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 21:58:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14239 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261302AbVEXB6C
+	id S261332AbVEXC2U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 22:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261329AbVEXC2U
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 22:28:20 -0400
+Received: from arnor.apana.org.au ([203.14.152.115]:53002 "EHLO
+	arnor.apana.org.au") by vger.kernel.org with ESMTP id S261332AbVEXC2Q
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2005 21:58:02 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IGZ00DZ11GOLE@VL-MO-MR010.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 23 May 2005 21:58:00 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	Mon, 23 May 2005 22:28:16 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 3.35 #1 (Debian))
+	id 1DaP7x-0002jN-00; Tue, 24 May 2005 12:26:41 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1DaP7k-0007ar-00; Tue, 24 May 2005 12:26:28 +1000
+To: torvalds@osdl.org (Linus Torvalds)
+In-Reply-To: <Pine.LNX.4.58.0505230731430.2307@ppc970.osdl.org>
+X-Newsgroups: apana.lists.os.linux.git
+User-Agent: tin/1.7.4-20040225 ("Benbecula") (UNIX) (Linux/2.4.27-hx-1-686-smp (i686))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> I actually suspect that whole time thing was a mistake, it seemed sensible 
+> back when we didn't have any other way of ordering the changesets well, 
+> but it's really a bad ordering anyway to do it by time (ie add a "sort 
+> -rn" in there), and we can (and probably should) order rev-tree output 
+> with some topological sort based on the commit tree.
 
-Also prevent 'sort' from sorting on the sha1 which was screwing the 
-history listing.
+Yes please.  Can we also have a rev-* command that outputs parent
+relations instead of a simple list? That is,
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+<tree-1> <parent-1>
+<tree-1> <parent-2>
+<tree-2> <parent-3>
+...
 
-diff --git a/git-deltafy-script b/git-deltafy-script
---- a/git-deltafy-script
-+++ b/git-deltafy-script
-@@ -23,8 +23,9 @@ curr_file=""
- 
- git-rev-list HEAD |
- git-diff-tree -r --stdin |
--sed -n '/^\*/ s/^.*->\(.\{41\}\)\(.*\)$/\2 \1/p' | sort | uniq |
--while read file sha1; do
-+awk '/^:/ { if ($5 == "M" || $5 == "N") print $4, $6 }' |
-+LC_ALL=C sort -s -k 2 | uniq |
-+while read sha1 file; do
- 	if [ "$file" == "$curr_file" ]; then
- 		list="$list $sha1"
- 	else
+Then you could just run tsort for rev-tree, plus you could use this
+for other things like finding merges.
+
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
