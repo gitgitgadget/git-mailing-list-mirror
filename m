@@ -1,83 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH 3/3] Diff overhaul, adding the other half...
-Date: Mon, 23 May 2005 22:37:46 -0700
-Message-ID: <7vbr71xjyt.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 23 May 2005 23:19:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505232314510.2307@ppc970.osdl.org>
 References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
-	<7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
-	<7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505211016140.2206@ppc970.osdl.org>
-	<7vzmuoh2ma.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505211124440.2206@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505211128570.2206@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505211137250.2206@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org> <7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
+ <7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505211016140.2206@ppc970.osdl.org>
+ <7vzmuoh2ma.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505211124440.2206@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505211128570.2206@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505211137250.2206@ppc970.osdl.org> <7vbr71xjyt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 07:37:08 2005
+X-From: git-owner@vger.kernel.org Tue May 24 08:16:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaS60-0007zj-5H
-	for gcvg-git@gmane.org; Tue, 24 May 2005 07:36:52 +0200
+	id 1DaSiB-0001zj-7H
+	for gcvg-git@gmane.org; Tue, 24 May 2005 08:16:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261302AbVEXFiA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 May 2005 01:38:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261310AbVEXFh7
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 01:37:59 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:58310 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261302AbVEXFhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2005 01:37:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050524053747.IQRM26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 24 May 2005 01:37:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505211137250.2206@ppc970.osdl.org> (Linus
- Torvalds's message of "Sat, 21 May 2005 11:45:30 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261158AbVEXGRw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 02:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261166AbVEXGRw
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 02:17:52 -0400
+Received: from fire.osdl.org ([65.172.181.4]:32233 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261158AbVEXGRt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 02:17:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4O6HjjA024020
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 May 2005 23:17:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4O6HiBp011525;
+	Mon, 23 May 2005 23:17:44 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbr71xjyt.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
-
-LT> Hmm.. It's not working well. Not only does it take a lot of CPU time (do 
-LT> an fsck first to make sure you're not seekign the disk all over the 
-LT> place), but it "finds" lots of things like this:
-
-The "finds logs of funny things" problem should have been fixed
-by now, and I am fixing a big screwup now as I reported. I have
-two ideas on speeding up diff-tree -C I want to run by you.
-
-I have not measured things yet, but I think the big CPU waste is
-coming from either expanding all the blobs and/or running the
-diff-delta on many file pairs.  If that is indeed the cause,
-then helping the upfront check in the similarity estimator that
-refuses to consider a file pair whose file size change is too
-big may be a good way to resolve this problem.
-
-One approach, which I think is an unacceptable change at this
-stage (but I would seriously consider if this _were_ a week and
-half old project), is to record the blob size as part of the
-object ID.  We say object size is "unsigned long" everywhere, so
-I am talking about making the object ID from 20-byte SHA1 to
-24-byte SHA1 plus 4-byte integer in the network byte order.
-
-Since I think the above is inpractical, the second best approach
-would be to piggy-back on the optimization used in uncached
-diff-cache, which avoids blob expansion if cache says what we
-have in the work tree already matches the object we are
-interested in.
-
-When -C is in effect, we would make diff-tree read the current
-cache first, so that diff_populate_filespec() can borrow from
-the current work tree when a path in the tree we are looking at
-has not changed.  This would obviously be effective only when we
-are talking about recent history.
-
-Thoughts?
 
 
+On Mon, 23 May 2005, Junio C Hamano wrote:
+> 
+> I have not measured things yet, but I think the big CPU waste is
+> coming from either expanding all the blobs and/or running the
+> diff-delta on many file pairs.  If that is indeed the cause,
+> then helping the upfront check in the similarity estimator that
+> refuses to consider a file pair whose file size change is too
+> big may be a good way to resolve this problem.
+
+Since pretty much all the blobs will be expanded in the working directory
+anyway, it sounds like that would be the way to go. 
+
+> One approach, which I think is an unacceptable change at this
+> stage (but I would seriously consider if this _were_ a week and
+> half old project), is to record the blob size as part of the
+> object ID.  We say object size is "unsigned long" everywhere, so
+> I am talking about making the object ID from 20-byte SHA1 to
+> 24-byte SHA1 plus 4-byte integer in the network byte order.
+
+You can actually get the blob size fairly easily for non-delta objects, by 
+just unpacking the beginning of it. But since we have the files..
+
+That said, I don't think -C is that important. I personally don't see it
+as a thing I'd run normally - it's more of a thing I might do between
+releases rather than for something like git-whatchanged that looks at
+every commit. It's an interesting thing to have _available_, but I don't
+think it's a huge problem if it is a lot more expensive than the more
+normal "-M".
+
+		Linus
