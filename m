@@ -1,62 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
 Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 14:43:59 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505241443400.2307@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org>
- <20050524161745.GA9537@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>
- <20050524184612.GA23637@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
- <20050524202846.GC25606@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505241410380.2307@ppc970.osdl.org> <20050524213102.GB19180@vrfy.org>
+Date: Tue, 24 May 2005 23:52:38 +0200
+Message-ID: <20050524215238.GG25606@cip.informatik.uni-erlangen.de>
+References: <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org> <20050524161745.GA9537@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org> <20050524184612.GA23637@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org> <20050524202846.GC25606@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241345280.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	David Mansfield <david@cobite.com>,
-	"H. Peter Anvin" <hpa@zytor.com>, Petr Baudis <pasky@ucw.cz>,
+Content-Type: text/plain; charset=us-ascii
+Cc: David Mansfield <david@cobite.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 23:42:25 2005
+X-From: git-owner@vger.kernel.org Tue May 24 23:53:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dah91-0002Xi-Te
-	for gcvg-git@gmane.org; Tue, 24 May 2005 23:41:01 +0200
+	id 1DahJO-0003tK-LZ
+	for gcvg-git@gmane.org; Tue, 24 May 2005 23:51:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261349AbVEXVmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 May 2005 17:42:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262202AbVEXVmH
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 17:42:07 -0400
-Received: from fire.osdl.org ([65.172.181.4]:5248 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261349AbVEXVmC (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 17:42:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4OLftjA026102
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 24 May 2005 14:41:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4OLfrlv019395;
-	Tue, 24 May 2005 14:41:54 -0700
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050524213102.GB19180@vrfy.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262206AbVEXVw4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 17:52:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262202AbVEXVw4
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 17:52:56 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:42926 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S262206AbVEXVwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2005 17:52:47 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4OLqdS8006808
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 24 May 2005 21:52:39 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4OLqcui006807;
+	Tue, 24 May 2005 23:52:39 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	David Mansfield <david@cobite.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0505241345280.2307@ppc970.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
+> Ahh, the mutt people really use something else for development, and this 
+> is just an export into CVS (like the Linux bkcvs tree)? Or do they just 
+> have fast machines and no networking? Or are there good versions of CVS 
+> around that re-use the same time across one whole commit?
 
-On Tue, 24 May 2005, Kay Sievers wrote:
-> 
-> What about allowing to put some file inside of .git/ under revision-control
-> too? Wouldn't it be nice to have something like an "ignore" file or other
-> repository meta-data managed by git itself.
+I did one sampling and though it would be representative which it isn't.
+What I don't understand why noone ever fixed this? cvs has its own rcs
+implementation anyway to speed things up, hasn't it?
 
-Put them into ".git-ignore" if so..
-
-		Linus
+	Thomas
