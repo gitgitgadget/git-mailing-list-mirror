@@ -1,80 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: David Mansfield <david@cobite.com>
 Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 15:11:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505241502160.2307@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org>
- <20050524161745.GA9537@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>
- <20050524184612.GA23637@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
- <20050524202846.GC25606@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0505241345280.2307@ppc970.osdl.org>
- <20050524215238.GG25606@cip.informatik.uni-erlangen.de>
+Date: Tue, 24 May 2005 18:25:08 -0400
+Message-ID: <4293A9C4.3000408@cobite.com>
+References: <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org> <20050524161745.GA9537@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org> <20050524184612.GA23637@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org> <20050524202846.GC25606@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241345280.2307@ppc970.osdl.org> <20050524215238.GG25606@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241502160.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Mansfield <david@cobite.com>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 25 00:09:48 2005
+X-From: git-owner@vger.kernel.org Wed May 25 00:28:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DahZJ-0005rN-OO
-	for gcvg-git@gmane.org; Wed, 25 May 2005 00:08:10 +0200
+	id 1Dahrb-00084Y-7J
+	for gcvg-git@gmane.org; Wed, 25 May 2005 00:27:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262207AbVEXWJl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 May 2005 18:09:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262208AbVEXWJl
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 18:09:41 -0400
-Received: from fire.osdl.org ([65.172.181.4]:38281 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262207AbVEXWJg (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 18:09:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4OM9SjA028009
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 24 May 2005 15:09:28 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4OM9QAL020823;
-	Tue, 24 May 2005 15:09:27 -0700
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050524215238.GG25606@cip.informatik.uni-erlangen.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262033AbVEXW2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 18:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261357AbVEXW04
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 18:26:56 -0400
+Received: from iris.cobite.com ([208.222.83.2]:62854 "EHLO
+	email-pri.cobite.com") by vger.kernel.org with ESMTP
+	id S262150AbVEXWZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2005 18:25:11 -0400
+Received: from localhost (iris.cobite.com [127.0.0.1])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 3204598502; Tue, 24 May 2005 18:25:04 -0400 (EDT)
+Received: from email-pri.cobite.com ([127.0.0.1])
+ by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 16174-03; Tue, 24 May 2005 18:25:04 -0400 (EDT)
+Received: by email-pri.cobite.com (Postfix, from userid 45000)
+	id E0C5B987BB; Tue, 24 May 2005 18:25:03 -0400 (EDT)
+Received: from [208.222.80.105] (gandalf.cobite.com [208.222.80.105])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 7CF3D98502; Tue, 24 May 2005 18:25:02 -0400 (EDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505241502160.2307@ppc970.osdl.org>
+X-Virus-Scanned: by amavisd-new at cobite.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 24 May 2005, Thomas Glanzmann wrote:
+>Linus Saith,
 > 
-> I did one sampling and though it would be representative which it isn't.
-> What I don't understand why noone ever fixed this? cvs has its own rcs
-> implementation anyway to speed things up, hasn't it?
+> Anyway, what worries me more is that cvsps might have re-ordered other 
+> changesets than just the first two. It probably doesn't _matter_, but 
+> still...
+> 
 
-CVS has so many warts, that people can't even be bothered to fix things
-like this. It's file-based, and that's that.
+I think I have an idea to prevent this incorrect ordering of patchsets. 
+  We'll see in the morning how it works out.
 
-Using "-z 1" with cvsps doesn't seem to work well for me, but "-z 5" seems
-ok, and together with the new git that allows .cvsignore, it doesn't
-generate any warnings, nor any unreachable blobs. It does generate 300 new
-changesets, and how many of those are required, I dunno. Clearly 102 of
-them were, to disambiguate those changelog things.
-
-Maybe "-z 10" would have generated a better thing with fewer changes yet
-still unique changesets without dup files.
-
-That's a bit irritating, that there's this magic tweakable that generates
-different trees. Oh, well.
-
-Anyway, what worries me more is that cvsps might have re-ordered other 
-changesets than just the first two. It probably doesn't _matter_, but 
-still...
-
-		Linus
+David
