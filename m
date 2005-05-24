@@ -1,7 +1,7 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 13:33:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505241316490.2307@ppc970.osdl.org>
+Date: Tue, 24 May 2005 13:44:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505241334530.2307@ppc970.osdl.org>
 References: <Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org>
  <428E745C.30304@zytor.com> <Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org>
  <4292A08A.5050108@cobite.com> <Pine.LNX.4.58.0505232048190.2307@ppc970.osdl.org>
@@ -12,37 +12,36 @@ References: <Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org>
  <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>
  <20050524184612.GA23637@cip.informatik.uni-erlangen.de>
  <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>
- <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org> <42938C5B.4000906@cobite.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Mansfield <david@cobite.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 22:31:10 2005
+X-From: git-owner@vger.kernel.org Tue May 24 22:42:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dag2j-0001Gd-7H
-	for gcvg-git@gmane.org; Tue, 24 May 2005 22:30:25 +0200
+	id 1DagDE-0002Sn-4H
+	for gcvg-git@gmane.org; Tue, 24 May 2005 22:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262017AbVEXUb4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 24 May 2005 16:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262040AbVEXUb4
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 16:31:56 -0400
-Received: from fire.osdl.org ([65.172.181.4]:19923 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262017AbVEXUbp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 16:31:45 -0400
+	id S262071AbVEXUmg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 16:42:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262063AbVEXUmf
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 16:42:35 -0400
+Received: from fire.osdl.org ([65.172.181.4]:42455 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261392AbVEXUm1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 16:42:27 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4OKVbjA020856
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4OKgJjA021676
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 24 May 2005 13:31:38 -0700
+	Tue, 24 May 2005 13:42:20 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4OKVa7w015434;
-	Tue, 24 May 2005 13:31:37 -0700
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4OKgHRi015979;
+	Tue, 24 May 2005 13:42:18 -0700
+To: David Mansfield <david@cobite.com>
+In-Reply-To: <42938C5B.4000906@cobite.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -53,75 +52,32 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Tue, 24 May 2005, Linus Torvalds wrote:
->=20
-> Exactly because it's only blobs, it really does smell like a cvsps is=
-sue.=20
-> My scripts always use "git-update-cache --add -- filename", so it nev=
-er=20
-> creates any blobs _except_ when it adds them to the index (and thus=20
-> write-tree should always pick them up, unless we update the index aga=
-in=20
-> before the next write-tree happens).
+On Tue, 24 May 2005, David Mansfield wrote:
+> 
+> Sounds possible.  Unfortunately, the 'uniqueness' of a commit actually 
+> doesn't exist.  It's all smoke-and-mirrors.  In order to disallow this 
+> (which I think need to do) I'd need to use some commit member 
+> information, and add some heuristic: if this file is already in the 
+> commit, then this MUST be a different commit.  Unfortunately, it's 
+> possible that the 'member' already in the commit is the wrong one and 
+> this is the right one, which just sounds horribly ugly to me.
+> 
+> I'll think on it.
 
-Looking at the contents of these files, all but one of them are changel=
-og=20
-files, which would be consistent with this theory - if gitps ends up=20
-"smushing together" two separate commits (and mutt seems to have the ba=
-d=20
-habit of having just a simple "# changelog commit" as the commit messag=
-e,=20
-so it would likely trigger the "same commit message" logic), you'd get=20
-exactly this.
+I think it's a fundamentally hard problem to fix, but it may be that the 
+fix is to give hints about command line options and in particular the time 
+fuzz thing to try.
 
-The one non-changelog file looks like some kind of message translation
-thing:
+So maybe just _detection_ logic in cvsps, along with a warning like
 
-	# This file was prepared by (in alphabetical order):
-	#
-	#   Alexey Vyskubov (alexey@pepper.spb.ru)
-	#   Andrew W. Nosenko (awn@bcs.zp.ua)
-	#   Michael Sobolev (mss@transas.com)
-	#   Vsevolod Volkov (vvv@mutt.org.ua)
-	#
-	# To contact translators, please use mutt-ru mailing list:
-	#   http://woe.spb.ru/mailman/listinfo/mutt-ru
-	#
-	msgid ""
-	msgstr ""
-	"Project-Id-Version: mutt-1.4i\n"
-	"POT-Creation-Date: 2002-05-02 01:08+0200\n"
-	"PO-Revision-Date: 2002-05-03 22:53+0300\n"
+	"time fuzz is 600 seconds, and the time difference between the two
+	 commits of this file was 431 seconds. You may want to try a lower
+	 -z argument"
 
-	...
+or something.
 
-	#: alias.c:280
-	#, c-format
-	msgid "[%s =3D %s] Accept?"
-	msgstr "[%s =3D %s] =F0=D2=C9=CE=D1=D4=D8?"
-
-	...
-
-and it looks like it is "po/ru.po". Indeed, that's a big clue:
-
-	---------------------
-	PatchSet 2869=20
-	Date: 2002/05/13 21:17:48
-	Author: roessler
-	Branch: mutt-1-4-stable
-	Tag: (none)=20
-	Log:
-	From: Vsevolod Volkov <vvv@mutt.org.ua>
-=09
-	update
-=09
-	Members:=20
-	        po/ru.po:1.129.2.5->1.129.2.6=20
-	        po/ru.po:1.129.2.4->1.129.2.5=20
-=09
-	---------------------
-
-and I thus rest my case. cvs2git is doing the right thing, and this is=20
-something that needs to be fixed in cvsps in case anybody cares.
+It might also be possible to try to sort all the names by date of commit
+first, and see if they "bunch up" into groups of low fuzz with much bigger 
+fuzz in between groups..
 
 		Linus
