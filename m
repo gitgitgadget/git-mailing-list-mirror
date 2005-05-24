@@ -1,63 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] diff-raw format update take #2.
-Date: Mon, 23 May 2005 18:50:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505231847260.2307@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505231758350.2307@ppc970.osdl.org>
- <Pine.LNX.4.62.0505231827430.4200@qynat.qvtvafvgr.pbz>
- <211e617258d9d993810f3c88bace255e.IBX@taniwha.stupidest.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] adjust git-deltafy-script to the new diff-tree output format
+Date: Mon, 23 May 2005 21:58:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505232122390.16151@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: David Lang <david.lang@digitalinsight.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 03:49:16 2005
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 03:57:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaOW4-00073R-Bc
-	for gcvg-git@gmane.org; Tue, 24 May 2005 03:47:32 +0200
+	id 1DaOf8-00008E-Vz
+	for gcvg-git@gmane.org; Tue, 24 May 2005 03:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261286AbVEXBs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 21:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261300AbVEXBs7
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 21:48:59 -0400
-Received: from fire.osdl.org ([65.172.181.4]:53157 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261286AbVEXBsy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 21:48:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4O1mljA006460
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 23 May 2005 18:48:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4O1mkTq000672;
-	Mon, 23 May 2005 18:48:47 -0700
-To: Chris Wedgwood <cw@f00f.org>
-In-Reply-To: <211e617258d9d993810f3c88bace255e.IBX@taniwha.stupidest.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261302AbVEXB6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 21:58:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261306AbVEXB6P
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 21:58:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:14239 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261302AbVEXB6C
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 21:58:02 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IGZ00DZ11GOLE@VL-MO-MR010.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 23 May 2005 21:58:00 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+Also prevent 'sort' from sorting on the sha1 which was screwing the 
+history listing.
 
-On Mon, 23 May 2005, Chris Wedgwood wrote:
-> 
-> diff doesn't do this, so i'm not sure it's useful:
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-Indeed.
-
-A few weeks ago (for the previous round of "what should the diff format 
-be" discussions) I looked at what "diffstat" does to figure out what the 
-name should be, and it's quite disgusting.
-
-The sad part is that if it wasn't for the date that GNU diff puts out, 
-we'd be ok (since only GNU diff historically did unified diffs). Then we'd 
-just know that the filename ends at the newline, and screw people who use 
-newlines in filenames.
-
-Now, we can fix this for git-diffs, and make sure that we don't make that 
-mistake, but that just covers git users.
-
-		Linus
+diff --git a/git-deltafy-script b/git-deltafy-script
+--- a/git-deltafy-script
++++ b/git-deltafy-script
+@@ -23,8 +23,9 @@ curr_file=""
+ 
+ git-rev-list HEAD |
+ git-diff-tree -r --stdin |
+-sed -n '/^\*/ s/^.*->\(.\{41\}\)\(.*\)$/\2 \1/p' | sort | uniq |
+-while read file sha1; do
++awk '/^:/ { if ($5 == "M" || $5 == "N") print $4, $6 }' |
++LC_ALL=C sort -s -k 2 | uniq |
++while read sha1 file; do
+ 	if [ "$file" == "$curr_file" ]; then
+ 		list="$list $sha1"
+ 	else
