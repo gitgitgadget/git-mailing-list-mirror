@@ -1,89 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 12:44:50 -0700
-Message-ID: <7voeb0tnm5.fsf@assigned-by-dhcp.cox.net>
-References: <1116626652.12975.118.camel@dhcp-188>
-	<Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org>
-	<428E745C.30304@zytor.com>
-	<Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org>
-	<4292A08A.5050108@cobite.com>
-	<Pine.LNX.4.58.0505232048190.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org>
-	<20050524161745.GA9537@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>
-	<20050524182951.GB9537@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505241146500.2307@ppc970.osdl.org>
-	<7vu0kstojw.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 24 May 2005 12:47:58 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org>
+ <428E745C.30304@zytor.com> <Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org>
+ <4292A08A.5050108@cobite.com> <Pine.LNX.4.58.0505232048190.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org>
+ <20050524161745.GA9537@cip.informatik.uni-erlangen.de>
+ <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>
+ <20050524184612.GA23637@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Mansfield <david@cobite.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 21:44:34 2005
+X-From: git-owner@vger.kernel.org Tue May 24 21:45:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DafJ8-0003MS-Kh
-	for gcvg-git@gmane.org; Tue, 24 May 2005 21:43:18 +0200
+	id 1DafKO-0003Y6-NV
+	for gcvg-git@gmane.org; Tue, 24 May 2005 21:44:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261234AbVEXTo4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 May 2005 15:44:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261984AbVEXToz
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 15:44:55 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:39132 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261974AbVEXTow (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2005 15:44:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050524194450.IKUT550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 24 May 2005 15:44:50 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vu0kstojw.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 24 May 2005 12:24:35 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261982AbVEXTqK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 15:46:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261974AbVEXTqK
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 15:46:10 -0400
+Received: from fire.osdl.org ([65.172.181.4]:25013 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261982AbVEXTqC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 May 2005 15:46:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4OJjsjA017069
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 24 May 2005 12:45:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4OJjr9q013607;
+	Tue, 24 May 2005 12:45:54 -0700
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+In-Reply-To: <20050524184612.GA23637@cip.informatik.uni-erlangen.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
 
-JCH> What _all_ Porcelain layer implementation would benefit from is
-JCH> if we had a common output format routine that is similar to the
-JCH> spirit of show_date() function.  Have format_commit_fancy()
-JCH> function that takes a commit object and have it do the mapping.
 
-Here is a small script called "whodunnit.sh", and its output can
-be cleaned up if we had a git-format-commit command that used
-format_commit_fancy(), that massages author/committer names (and
-probably some other prettyprinting), instead of plain old
-"git-cat-file commit".
+On Tue, 24 May 2005, Thomas Glanzmann wrote:
+> 
+> [1] To make it reproducable for you:
+> 
+> I used the attached patch against cvsps-2.0rc1 which fixes date
+> covnersion problems and of course includes the ancestor thing.
+> 
+> rsync -r rsync://cvs.gnupg.org/mutt-cvs-rep mutt-cvs-rep
 
-#!/bin/sh
-git-rev-list ${1:-HEAD} |
-while read commit
-do
-	git-cat-file commit $commit |
-	sed -ne '/^author \([^>]*>\).*/{s//\1/p;q;}'
-done | sort | uniq -c | sort -n
+Ok, that's a lot bigger and slower than syslinux. It seems to be importing 
+about 9.5 changesets per second, and there's 3757 patchsets, so it looks 
+like about 6 minutes.
 
-The lines it currently spits out looks like this:
+Oh, done.
 
-      6 ...
-      8 Linus Torvalds <torvalds@ppc970.osdl.org.(none)>
-        ...
-    155 ...
-    229 Linus Torvalds <torvalds@ppc970.osdl.org>
+And yes, there's a few problems. It seems to be the fault of a frowning
+"smiley" - the '\' followed by newline in this:
 
-My suggestion for Thomas is not to volunteer changing
-cvsps-to-git to munge names at conversion time, but instead to
-volunteer doing the format_commit_fancy() on the core-ish side.
-It would read from $GIT_DIR/author-names which would be a plain
-text file that is a sequence of:
+	[unstable] Re-add in-reply-to.  This time with a suitable default. #-\
 
-    "bogus name" TAB "good name" LF
+and one back-tick.
 
-where you would put ".(none)" version to "bogus" side and the
-corrected one on the "good" side.
+Will fix. This will take another six minutes of testing ;)
 
+		Linus
