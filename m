@@ -1,80 +1,86 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+From: David Mansfield <david@cobite.com>
 Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 22:16:15 +0200
-Message-ID: <20050524201615.GB25606@cip.informatik.uni-erlangen.de>
-References: <Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org> <4292A08A.5050108@cobite.com> <Pine.LNX.4.58.0505232048190.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org> <20050524161745.GA9537@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org> <20050524184612.GA23637@cip.informatik.uni-erlangen.de> <429383D6.6010908@cobite.com>
+Date: Tue, 24 May 2005 16:19:39 -0400
+Message-ID: <42938C5B.4000906@cobite.com>
+References: <Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org> <428E745C.30304@zytor.com> <Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org> <4292A08A.5050108@cobite.com> <Pine.LNX.4.58.0505232048190.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org> <20050524161745.GA9537@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org> <20050524184612.GA23637@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	"H. Peter Anvin" <hpa@zytor.com>,
 	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 24 22:16:12 2005
+X-From: git-owner@vger.kernel.org Tue May 24 22:19:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dafni-0007nh-Hi
-	for gcvg-git@gmane.org; Tue, 24 May 2005 22:14:54 +0200
+	id 1DafrJ-0008DO-EA
+	for gcvg-git@gmane.org; Tue, 24 May 2005 22:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262003AbVEXUQ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 24 May 2005 16:16:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261992AbVEXUQ2
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 16:16:28 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:19359 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262003AbVEXUQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 May 2005 16:16:25 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4OKGFS8000389
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 24 May 2005 20:16:16 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4OKGFVk000388;
-	Tue, 24 May 2005 22:16:15 +0200 (CEST)
-To: David Mansfield <david@cobite.com>
-Mail-Followup-To: David Mansfield <david@cobite.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Kay Sievers <kay.sievers@vrfy.org>, Petr Baudis <pasky@ucw.cz>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <429383D6.6010908@cobite.com>
-User-Agent: Mutt/1.5.9i
+	id S262023AbVEXUUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 24 May 2005 16:20:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262033AbVEXUUA
+	(ORCPT <rfc822;git-outgoing>); Tue, 24 May 2005 16:20:00 -0400
+Received: from iris.cobite.com ([208.222.83.2]:26755 "EHLO
+	email-pri.cobite.com") by vger.kernel.org with ESMTP
+	id S262010AbVEXUTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 May 2005 16:19:42 -0400
+Received: from localhost (iris.cobite.com [127.0.0.1])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id B75DC9855B; Tue, 24 May 2005 16:19:35 -0400 (EDT)
+Received: from email-pri.cobite.com ([127.0.0.1])
+ by localhost (iris.cobite.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 10857-10; Tue, 24 May 2005 16:19:35 -0400 (EDT)
+Received: by email-pri.cobite.com (Postfix, from userid 45000)
+	id E780F988A1; Tue, 24 May 2005 16:19:34 -0400 (EDT)
+Received: from [208.222.80.105] (gandalf.cobite.com [208.222.80.105])
+	by email-pri.cobite.com (Postfix) with ESMTP
+	id 8B0759855B; Tue, 24 May 2005 16:19:33 -0400 (EDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
+X-Virus-Scanned: by amavisd-new at cobite.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Linus Torvalds wrote:
+> 
+> On Tue, 24 May 2005, Linus Torvalds wrote:
+> 
+>>Will fix. This will take another six minutes of testing ;)
+> 
+> 
+> Almost eight minutes. Still, the final average was 8 changesets per
+> second, which sounds pretty damn good to me, actually.
+> 
+> Anyway, I've checked in the fix for the quoting, and I now get the right 
+> number of revisions, ie
+> 
+> 	git-rev-tree $(ls .git/refs/heads/) | wc -l
+> 
+> returns the same "3757" that cvsps reports. 
+> 
+> However, "git-fsck-cache --unreachable" reports 102 unreachable blobs,
+> which worries me. It's really blobs only, which is strange: it implies
+> that we did the "git-update-cache" but not a "git-write-tree" (or that the
+> git-write-tree failed for some reason, but that sounds even stranger,
+> since we did successfully do all the commits)
+> 
+> The only way I can see the unreachable blobs happening is if one of he
+> ChangeSet entries in cvsps mentions the _same_ pathname twice for a single
+> ChangeSet. David, is that possible?
+>
 
-> There is something strange about 'cvs import' I believe which causes 
-> various bizarre things to happen to the first cvsps patchset.  I haven't 
-> looked at mutt cvs yet, but this could be the cause.  If you see a lot 
-> of version numbers 1.1.1.1 then this is indeed the problem.
+Sounds possible.  Unfortunately, the 'uniqueness' of a commit actually 
+doesn't exist.  It's all smoke-and-mirrors.  In order to disallow this 
+(which I think need to do) I'd need to use some commit member 
+information, and add some heuristic: if this file is already in the 
+commit, then this MUST be a different commit.  Unfortunately, it's 
+possible that the 'member' already in the commit is the wrong one and 
+this is the right one, which just sounds horribly ugly to me.
 
-yes, that is happening. But it should be fairly easy to fix that.
-Because the second one says INITIAL->1.1 and the first says 1.1->1.1.1.1
-a lot.
+I'll think on it.
 
-> I'll look at taking these patches upstream.  The 'MT' fix is already in 
-> my cvs of cvsps, and the rest looks pretty good.
-
-Good. :-)
-
-> Do you know where I can get attribution information for these changes? 
-> Are they all from you? (I'm not familiar with debian at all)
-
-none of them is from me, they're all from Debian. Here are a few URLs
-how to get the attribution:
-
-http://packages.qa.debian.org/c/cvsps.html
-	-> You can get the source files from there: DSC are
-	metainformation, ORIG is your upstream version and DIFF are the
-	debian changes against your upstream version as patch. There is
-	also a Changelog in the diff for the package. You should find in
-	there everything you need.
-
-http://bugs.debian.org/cgi-bin/pkgreport.cgi?pkg=cvsps
-	-> The bug tracking system of debian could also be of help.
-
-
-	Thomas
+David
