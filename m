@@ -1,79 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Update git-diff-cache documentation.
-Date: Mon, 23 May 2005 18:20:39 -0700
-Message-ID: <7vu0ktzafs.fsf@assigned-by-dhcp.cox.net>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH] diff-raw format update take #2.
+Date: Mon, 23 May 2005 18:29:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0505231827430.4200@qynat.qvtvafvgr.pbz>
+References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net><Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
+ <7vwtpp3hsa.fsf@assigned-by-dhcp.cox.net><Pine.LNX.4.58.0505231156210.2307@ppc970.osdl.org>
+ <7vy8a51uay.fsf_-_@assigned-by-dhcp.cox.net><87bcada447378d0173a3c5f165c70b38.ANY@taniwha.stupidest.org><7vhdgt1ncz.fsf@assigned-by-dhcp.cox.net>
+ <046ec1d00820537103092ed264f81f65.IBX@taniwha.stupidest.org><7v64x91mfb.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505231758350.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 03:20:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, Chris Wedgwood <cw@f00f.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 03:28:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaO4z-0004i2-GO
-	for gcvg-git@gmane.org; Tue, 24 May 2005 03:19:33 +0200
+	id 1DaODU-0005HG-DH
+	for gcvg-git@gmane.org; Tue, 24 May 2005 03:28:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261257AbVEXBU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 21:20:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261278AbVEXBU4
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 21:20:56 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37300 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261257AbVEXBUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2005 21:20:41 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050524012039.MUSV23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 23 May 2005 21:20:39 -0400
-To: torvalds@osdl.org
+	id S261266AbVEXB3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 21:29:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261204AbVEXB3r
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 21:29:47 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:16101 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S261270AbVEXB3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 May 2005 21:29:37 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Mon, 23 May 2005 18:24:31 -0700
+Received: by atlexc02.diginsite.com with Internet Mail Service (5.5.2653.19)
+	id <LN11NY7C>; Mon, 23 May 2005 21:29:25 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id LNM34Z30; Mon, 23 May 2005 18:29:07 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.58.0505231758350.2307@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The recent diff updates gave diff-cache the same ability to
-filter paths, which was not properly documented.
+On Mon, 23 May 2005, Linus Torvalds wrote:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> On Mon, 23 May 2005, Junio C Hamano wrote:
+>>
+>> Embedded spaces in path is _always_ safe.
+>
+> For raw-diff yes, but since you'd normally end up using that name in the
+> diff, it won't be safe any more.
+>
+> Imagine a name like "this is a file", and think about how the diff ends up
+> looking:
+>
+> 	diff --git a/this is a file b/this is a file
+>
+> and realize that that can't be parsed sanely by anybody who uses the diff.
 
-Documentation/git-diff-cache.txt |   10 ++++++----
-diff-cache.c                     |    2 +-
-2 files changed, 7 insertions(+), 5 deletions(-)
+hmm, personally I would have expected it to do shell escapeing of the name
 
-diff --git a/Documentation/git-diff-cache.txt b/Documentation/git-diff-cache.txt
---- a/Documentation/git-diff-cache.txt
-+++ b/Documentation/git-diff-cache.txt
-@@ -9,13 +9,15 @@ git-diff-cache - Compares content and mo
- 
- SYNOPSIS
- --------
--'git-diff-cache' [-p] [-r] [-z] [-m] [-M] [-R] [-C] [-S<string>] [--cached] <tree-ish>
-+'git-diff-cache' [-p] [-r] [-z] [-m] [-M] [-R] [-C] [-S<string>] [--cached] <tree-ish> [<path>...]
- 
- DESCRIPTION
- -----------
--Compares the content and mode of the blobs found via a tree object
--with the content of the current cache and, optionally ignoring the
--stat state of the file on disk.
-+Compares the content and mode of the blobs found via a tree
-+object with the content of the current cache and, optionally
-+ignoring the stat state of the file on disk.  When paths are
-+specified, compares only those named paths.  Otherwise all
-+entries in the cache are compared.
- 
- OPTIONS
- -------
-diff --git a/diff-cache.c b/diff-cache.c
---- a/diff-cache.c
-+++ b/diff-cache.c
-@@ -154,7 +154,7 @@ static void mark_merge_entries(void)
- }
- 
- static char *diff_cache_usage =
--"git-diff-cache [-p] [-r] [-z] [-m] [-M] [-C] [-R] [-S<string>] [--cached] <tree-ish>";
-+"git-diff-cache [-p] [-r] [-z] [-m] [-M] [-C] [-R] [-S<string>] [--cached] <tree-ish> [<path>...]";
- 
- int main(int argc, const char **argv)
- {
-------------------------------------------------
+diff --git a/this\ is\ a \ file b/this\ is\ a\ file
 
+given that diff is trying to record how it was called.
+
+David Lang
+
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
