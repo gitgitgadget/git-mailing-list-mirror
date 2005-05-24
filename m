@@ -1,81 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] diff-raw format update take #2.
-Date: Mon, 23 May 2005 17:45:44 -0700
-Message-ID: <7v64x91mfb.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 23 May 2005 17:51:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505231747300.2307@ppc970.osdl.org>
 References: <7vfywe769d.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org>
-	<7vwtpp3hsa.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505231156210.2307@ppc970.osdl.org>
-	<7vy8a51uay.fsf_-_@assigned-by-dhcp.cox.net>
-	<87bcada447378d0173a3c5f165c70b38.ANY@taniwha.stupidest.org>
-	<7vhdgt1ncz.fsf@assigned-by-dhcp.cox.net>
-	<046ec1d00820537103092ed264f81f65.IBX@taniwha.stupidest.org>
+ <Pine.LNX.4.58.0505230736180.2307@ppc970.osdl.org> <7vwtpp3hsa.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505231156210.2307@ppc970.osdl.org> <7vy8a51uay.fsf_-_@assigned-by-dhcp.cox.net>
+ <87bcada447378d0173a3c5f165c70b38.ANY@taniwha.stupidest.org>
+ <7vhdgt1ncz.fsf@assigned-by-dhcp.cox.net> <046ec1d00820537103092ed264f81f65.IBX@taniwha.stupidest.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 24 02:46:49 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 24 02:49:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DaNYd-0001Wz-6U
-	for gcvg-git@gmane.org; Tue, 24 May 2005 02:46:07 +0200
+	id 1DaNbE-0001ln-2q
+	for gcvg-git@gmane.org; Tue, 24 May 2005 02:48:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261251AbVEXAqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 23 May 2005 20:46:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261299AbVEXAqi
-	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 20:46:38 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:412 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261251AbVEXApu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 May 2005 20:45:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050524004544.MDYC23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 23 May 2005 20:45:44 -0400
+	id S261265AbVEXAuG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 23 May 2005 20:50:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVEXAuG
+	(ORCPT <rfc822;git-outgoing>); Mon, 23 May 2005 20:50:06 -0400
+Received: from fire.osdl.org ([65.172.181.4]:2456 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261265AbVEXAty (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 May 2005 20:49:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4O0njjA002790
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 23 May 2005 17:49:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4O0nfgB030658;
+	Mon, 23 May 2005 17:49:42 -0700
 To: Chris Wedgwood <cw@f00f.org>
-In-Reply-To: <046ec1d00820537103092ed264f81f65.IBX@taniwha.stupidest.org> (Chris
- Wedgwood's message of "Mon, 23 May 2005 17:31:02 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <046ec1d00820537103092ed264f81f65.IBX@taniwha.stupidest.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "CW" == Chris Wedgwood <cw@f00f.org> writes:
 
-CW> On Mon, May 23, 2005 at 05:25:32PM -0700, Junio C Hamano wrote:
->> Then you would use '-z'.  (10) becomes NUL which your path
->> cannot have inside.  So do (12) and (14).
 
-CW> Sure, I guess I meant to what would happen when not using '-z'?  Will
-CW> something notice this early on barf and tell me to use '-z' or will
-CW> BadThings(tm) just come bite me at some (possibly) later stage?
+On Mon, 23 May 2005, Chris Wedgwood wrote:
+> 
+> Sure, I guess I meant to what would happen when not using '-z'?  Will
+> something notice this early on barf and tell me to use '-z' or will
+> BadThings(tm) just come bite me at some (possibly) later stage?
 
-Embedded spaces in path is _always_ safe.  And I think with the
-current code unless you are using rename detection, your path
-with embedded TABs are also OK (but do not depend on it).
+Well, normally you'd not use the faw format, and the worst that can happen 
+is likely that the pathnames in the diff are screwed up.
 
-If you are using rename detetion, your rename source path is
-truncated at the first TAB and your rename destination path has
-the remainder of the source path, with an extra TAB, prepended
-to it.  Nothing as far as I know would detect and warn that
-situation.  If you have an embedded LF, then you are SOL,
-period.  Just do not do it.
+Side note: files with spaces/tabs in the names have serious problems in
+diffs anyway, because parsing the name ends up becoming largely random at
+that point. Sad. The problem there is that the format for filenames in
+diffs is not very well-specified.
 
-I _could_ add a code to diff-helper to barf if your path have an
-embedded TAB in it, but I am not sure if that is worth it.  Also
-I _could_ add a code to diff-raw output routine to barf if your
-path have these problematic characters in it and you are not
-using '-z'.  I think the latter makes quite a lot of sense.
+THAT is a much bigger problem than the raw diff format, since that 
+actually ends up interfering with interoperability.
 
-The design comes from this reasoning (third point of "a few
-results"); please look in your archive if you care about the
-details.
+The same goes for broken DOS CR-NL text-files, btw. If anybody ever ports
+git to the crap that is DOS/Windows (and I assume NT does it too), they'll
+have endless problems with interoperating with sane systems.
 
-    To:	git@vger.kernel.org
-    Subject: Re: updated design for the diff-raw format.
-    Date:	Sat, 21 May 2005 16:17:33 -0700
-    Message-ID: <7vll68dv8y.fsf@assigned-by-dhcp.cox.net>
-
-    (second of the replayed message, with blessing from Linus)
-
+		Linus
