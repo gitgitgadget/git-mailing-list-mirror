@@ -1,66 +1,54 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb wishlist
-Date: Tue, 24 May 2005 22:09:05 -0700
-Message-ID: <7voeazopse.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505240110580.2307@ppc970.osdl.org>
-	<20050524161745.GA9537@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>
-	<20050524184612.GA23637@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>
-	<20050524202846.GC25606@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505241410380.2307@ppc970.osdl.org>
-	<20050524213102.GB19180@vrfy.org>
-	<7vu0ksoxg4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505242153150.2307@ppc970.osdl.org>
+Subject: Re: [PATCH] Make tests more portable
+Date: Tue, 24 May 2005 22:11:44 -0700
+Message-ID: <7vis17opnz.fsf@assigned-by-dhcp.cox.net>
+References: <20050525045229.29706.qmail@web41205.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 25 07:08:15 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 25 07:10:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dao7C-0001ap-Ug
-	for gcvg-git@gmane.org; Wed, 25 May 2005 07:07:35 +0200
+	id 1Dao9p-0001mJ-Vs
+	for gcvg-git@gmane.org; Wed, 25 May 2005 07:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262267AbVEYFJL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 01:09:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262271AbVEYFJL
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 01:09:11 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38041 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262270AbVEYFJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 01:09:07 -0400
+	id S262304AbVEYFLx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 01:11:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262311AbVEYFLx
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 01:11:53 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40918 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S262304AbVEYFLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2005 01:11:46 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050525050906.ZGHI1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 May 2005 01:09:06 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505242153150.2307@ppc970.osdl.org> (Linus
- Torvalds's message of "Tue, 24 May 2005 21:55:17 -0700 (PDT)")
+          id <20050525051144.LZRQ16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 25 May 2005 01:11:44 -0400
+To: Mark Allen <mrallen1@yahoo.com>
+In-Reply-To: <20050525045229.29706.qmail@web41205.mail.yahoo.com> (Mark
+ Allen's message of "Tue, 24 May 2005 21:52:28 -0700 (PDT)")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+>>>>> "MA" == Mark Allen <mrallen1@yahoo.com> writes:
 
-LT> The only sane interface I can think of is to expose the subdirectory 
-LT> history and then pick from that. Otherwise you'd have to actually type in 
-LT> the name, which is a bit against the notion of a graphical browsing 
-LT> interface.
+MA> I made some minor changes to the test suite to make the
+MA> tests more portable.  The sed on Darwin doesn't understand
+MA> extended regex, cmp won't read from '-', and xargs doesn't
+MA> have an '-r' command line flag.
 
-Knowing to type "merge-tree.c" you need to be an old timer ;-).
+Thank you for doing this.
 
-Since I asked that question I found out that each commit has a
-link to the diff and the tree, so if I know when merge-tree.c
-disappeared, I can go backwards from there.
+MA> The t3000 test was broken because it wasn't updated when
+MA> Linus merged Junio's patch to make git-ls-files show
+MA> filenames with leading dots.  I fixed that with a trivial
+MA> addition.
 
-I think what is useful, from software archaeologist point of
-view, would be to give a way to the web users to use pickaxe.
-Type piece of code in the textbox and have the CGI run "rev-log
-| diff-tree -S'<that piece of the code>'".
+Not updating the tests to match code was my fault, not Linus.
+Thanks again for the fix.
+
 
