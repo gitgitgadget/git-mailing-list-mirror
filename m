@@ -1,46 +1,49 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH] diff-cache path restriction fix.
-Date: Wed, 25 May 2005 21:17:21 +0200
-Message-ID: <20050525191721.GC22213@cip.informatik.uni-erlangen.de>
-References: <7vu0ksrv1v.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505241757280.2307@ppc970.osdl.org> <7vekbwru6x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505241814220.2307@ppc970.osdl.org> <7v3bscqdlr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505242002340.2307@ppc970.osdl.org> <20050525090616.GB27025@elte.hu> <7vpsvfktiw.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] show changed tree objects with recursive git-diff-tree
+Date: Wed, 25 May 2005 12:18:27 -0700
+Message-ID: <7vd5rfktbw.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0505202131520.4397@localhost.localdomain>
+	<7vsm0hpbub.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505202025480.2206@ppc970.osdl.org>
+	<Pine.LNX.4.62.0505231724270.16151@localhost.localdomain>
+	<7vmzqjn7qh.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.62.0505250934040.16151@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed May 25 21:17:49 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 25 21:20:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db1Ly-0001zu-VR
-	for gcvg-git@gmane.org; Wed, 25 May 2005 21:15:43 +0200
+	id 1Db1NL-0002BA-3X
+	for gcvg-git@gmane.org; Wed, 25 May 2005 21:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261532AbVEYTRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 15:17:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261535AbVEYTRZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 15:17:25 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:32429 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261532AbVEYTRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 15:17:22 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4PJHLS8008817
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 25 May 2005 19:17:21 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4PJHLYo008816
-	for git@vger.kernel.org; Wed, 25 May 2005 21:17:21 +0200 (CEST)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vpsvfktiw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S261535AbVEYTSi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 15:18:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261539AbVEYTSi
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 15:18:38 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5800 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261535AbVEYTSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2005 15:18:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050525191827.FLGZ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 25 May 2005 15:18:27 -0400
+To: Nicolas Pitre <nico@cam.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
->     return !!some_function();
+NP> Now there is only the minor inconsistency that the recursive output 
+NP> without -t doesn't display tree objects while the non recursive output 
+NP> does output tree objects regardless.  Do we care?
 
-I actually wanted to send a diff to get rid of this thing from
-sha_file.c :-)
+Hmph.  I agree, although I do not care about that much myself
+enough to start coding right now.  With luck I may have
+something by tomorrow morning US Pacific time though.
 
-	Thomas
