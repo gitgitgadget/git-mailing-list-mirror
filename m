@@ -1,61 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: change of git-diff-tree and symlinks
-Date: Wed, 25 May 2005 12:40:51 -0700
-Message-ID: <7vzmujjdq4.fsf@assigned-by-dhcp.cox.net>
-References: <20050525111711.GA27492@vrfy.org>
-	<Pine.LNX.4.58.0505251054110.2307@ppc970.osdl.org>
-	<20050525183546.GA4241@vrfy.org>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: gitweb wishlist
+Date: Wed, 25 May 2005 21:14:12 +0100
+Message-ID: <4294DC94.80308@dgreaves.com>
+References: <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org>	<Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org>	<Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org>	<20050524184612.GA23637@cip.informatik.uni-erlangen.de>	<Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org>	<Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org>	<20050524202846.GC25606@cip.informatik.uni-erlangen.de>	<Pine.LNX.4.58.0505241410380.2307@ppc970.osdl.org>	<20050524213102.GB19180@vrfy.org>	<7vu0ksoxg4.fsf@assigned-by-dhcp.cox.net>	<20050525094841.GA24172@vrfy.org> <42945961.8060708@dgreaves.com> <7vll63ktfc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kay Sievers <kay.sievers@vrfy.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 25 21:42:20 2005
+X-From: git-owner@vger.kernel.org Wed May 25 22:14:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db1iq-000597-8D
-	for gcvg-git@gmane.org; Wed, 25 May 2005 21:39:20 +0200
+	id 1Db2Fg-0001H1-06
+	for gcvg-git@gmane.org; Wed, 25 May 2005 22:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261206AbVEYTk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 15:40:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261541AbVEYTk6
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 15:40:58 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61083 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261206AbVEYTkx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 15:40:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050525194050.DRHZ19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 May 2005 15:40:50 -0400
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050525183546.GA4241@vrfy.org> (Kay Sievers's message of
- "Wed, 25 May 2005 20:35:46 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261548AbVEYUOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 16:14:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261549AbVEYUOa
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 16:14:30 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:52648 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261548AbVEYUOR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2005 16:14:17 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 4FFC8E6DCE; Wed, 25 May 2005 21:13:09 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 06177-11; Wed, 25 May 2005 21:13:09 +0100 (BST)
+Received: from oak.dgreaves.com (modem-856.alligator.dialup.pol.co.uk [81.78.3.88])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id A0BA0E6DCD; Wed, 25 May 2005 21:13:08 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1Db2Gg-0006x3-UG; Wed, 25 May 2005 21:14:18 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll63ktfc.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
+Junio C Hamano wrote:
 
-KS> Ok, works again. Any reason not to mark it as 'M'? It's easyly to
-KS> distinguish between a content change and a mode change by looking if
-KS> the sha has changed.
+>>>>>>"DG" == David Greaves <david@dgreaves.com> writes:
+>>>>>>            
+>>>>>>
+>
+>DG> Anyway, done now, give it time to replicate.
+>
+>Thanks.  Would something like the following (1) easy to arrange
+>and (2) make your life easier?
+>
+>    - make index.html symlink to git.html
+>    - have cron job to build and install those pages at
+>      www.kernel.org
+>  
+>
+Hmm - sounds complicated ;)
 
-I'd need some time to think about this in the evening (I'm at
-work now) but I think Linus did '?' as an interim measure.  I
-suspect 'M' would work just as well without introducing a new
-class 'T', but on the other hand having them distinct would be
-easier for people who read diff-raw format, so my knee-jerk
-reaction is that we should use 'T'.  It's the same reasoning to
-have N, D, and U --- they can be gleaned by looking at mode and
-sha fields and there is no need to mark them any differently but
-surely marking them the way we do now is much nicer.
 
-More importantly I need to double check that diffcore stuff
-including rename/copy are doing the right thing about type
-changes.  If some of them are throwing type-change pair away
-under certain obscure conditions, then tweaking the part Linus
-added the '?' is too late to remedy the situation.
+
+-- 
 
