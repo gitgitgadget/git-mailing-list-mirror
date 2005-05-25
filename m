@@ -1,49 +1,126 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] show changed tree objects with recursive git-diff-tree
-Date: Wed, 25 May 2005 12:18:27 -0700
-Message-ID: <7vd5rfktbw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.62.0505202131520.4397@localhost.localdomain>
-	<7vsm0hpbub.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505202025480.2206@ppc970.osdl.org>
-	<Pine.LNX.4.62.0505231724270.16151@localhost.localdomain>
-	<7vmzqjn7qh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.62.0505250934040.16151@localhost.localdomain>
+From: "McMullan, Jason" <jason.mcmullan@timesys.com>
+Subject: [PATCH] update cogito cg-diff to use new git diff format
+Date: Wed, 25 May 2005 15:38:26 -0400
+Message-ID: <1117049907.11542.9.camel@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 25 21:20:44 2005
+Content-Type: multipart/signed;
+	protocol="application/pgp-signature";
+	boundary="=-Jg5AGqnWvBes9/c+wP1w";
+	micalg=pgp-sha1
+X-From: git-owner@vger.kernel.org Wed May 25 21:37:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db1NL-0002BA-3X
-	for gcvg-git@gmane.org; Wed, 25 May 2005 21:17:07 +0200
+	id 1Db1gT-0004wV-VO
+	for gcvg-git@gmane.org; Wed, 25 May 2005 21:36:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261535AbVEYTSi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 15:18:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261539AbVEYTSi
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 15:18:38 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:5800 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261535AbVEYTSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 15:18:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050525191827.FLGZ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 May 2005 15:18:27 -0400
-To: Nicolas Pitre <nico@cam.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261539AbVEYTii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 15:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261541AbVEYTii
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 15:38:38 -0400
+Received: from mail.timesys.com ([65.117.135.102]:11888 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261539AbVEYTib (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2005 15:38:31 -0400
+Received: from jmcmullan by owa.timesys.com; 25 May 2005 15:38:27 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
+X-Mailer: Evolution 2.0.4-3mdk 
+Content-Class: urn:content-classes:message
+Date: Wed, 25 May 2005 15:32:01 -0400
+Message-ID: <1117049907.11542.9.camel@jmcmullan.timesys>
+X-Mailer: Evolution 2.0.4-3mdk 
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] update cogito cg-diff to use new git diff format
+thread-index: AcVhYGy0lBRyABV6SLOmHRdYPJhX5g==
+To: <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
-NP> Now there is only the minor inconsistency that the recursive output 
-NP> without -t doesn't display tree objects while the non recursive output 
-NP> does output tree objects regardless.  Do we care?
+--=-Jg5AGqnWvBes9/c+wP1w
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Hmph.  I agree, although I do not care about that much myself
-enough to start coding right now.  With luck I may have
-something by tomorrow morning US Pacific time though.
+Updates cg-Xdiffdo to handle the new cg-diff-* output format
 
+(Not strictly necessary, since git-diff-* -p is better anyway, but if
+someone is relying on cg-* Porcelain....)
+
+Signed-Off-By: Jason McMullan <jason.mcmullan@timesys.com>
+
+Index: cg-Xdiffdo
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--- be7e79d03a25ad69405c8e17c024f0c83a9d16cd/cg-Xdiffdo  (mode:100755)
++++ uncommitted/cg-Xdiffdo  (mode:100755)
+@@ -48,13 +48,13 @@
+=20
+ while [ "$1" ]; do
+ 	declare -a param
+-	param=3D($1);
+-	op=3D${param[0]:0:1}
+-	mode=3D${param[0]:1}
+-	type=3D${param[1]}
+-	sha=3D${param[2]}
+-	name=3D${param[3]}
++	param=3D($1 $2);
++	mode=3D${param[0]:1}"->"${param[1]}
++	sha=3D${param[2]}"->"${param[3]}
++	op=3D${param[4]}
++	name=3D${param[5]}
+=20
++	type=3D`git-cat-file -t $sha`
+ 	if [ "$filter" ] && (echo "$name" | grep -vqxFf $filter); then
+ 		shift; continue
+ 	fi
+@@ -72,15 +72,15 @@
+ 	([ -d "$dir1" ] && [ -d "$dir2" ]) || mkdir -p "$dir1" "$dir2"
+=20
+ 	case $op in
+-	"+")
++	"A")
+ 		mkbanner "$loc2" $id2 "$name" $mode $sha
+ 		diff -L "/dev/null  (tree:$id1)" -L "$label" -u /dev/null "$loc2"
+ 		;;
+-	"-")
++	"D")
+ 		mkbanner "$loc1" $id1 "$name" $mode $sha
+ 		diff -L "$label" -L "/dev/null  (tree:$id2)" -u "$loc1" /dev/null
+ 		;;
+-	"*")
++	"M")
+ 		modes=3D(${mode/->/ });
+ 		mode1=3D${modes[0]}; mode2=3D${modes[1]}
+ 		shas=3D(${sha/->/ });
+@@ -94,7 +94,7 @@
+ 	esac
+=20
+ 	#rm -f "$loc1" "$loc2"
+-	shift
++	shift 2
+ done
+=20
+ rm -rf "$diffdir"
+
+
+--=20
+Jason McMullan <jason.mcmullan@timesys.com>
+TimeSys Corporation
+
+
+--=-Jg5AGqnWvBes9/c+wP1w
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQBClNQy8/0vJ5szK6kRAg+XAJ9kPfoExQMo+RiE1+PjARSYNZQwtgCgsy5A
+1EZmwQFMn+LECqrYF9gtBFI=
+=wYOh
+-----END PGP SIGNATURE-----
+
+--=-Jg5AGqnWvBes9/c+wP1w--
