@@ -1,75 +1,52 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: gitweb wishlist
-Date: Wed, 25 May 2005 11:54:25 +0100
-Message-ID: <42945961.8060708@dgreaves.com>
-References: <Pine.LNX.4.58.0505240929051.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505240943080.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241017510.2307@ppc970.osdl.org> <20050524184612.GA23637@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241236020.2307@ppc970.osdl.org> <Pine.LNX.4.58.0505241259250.2307@ppc970.osdl.org> <20050524202846.GC25606@cip.informatik.uni-erlangen.de> <Pine.LNX.4.58.0505241410380.2307@ppc970.osdl.org> <20050524213102.GB19180@vrfy.org> <7vu0ksoxg4.fsf@assigned-by-dhcp.cox.net> <20050525094841.GA24172@vrfy.org>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: change of git-diff-tree and symlinks
+Date: Wed, 25 May 2005 13:17:11 +0200
+Message-ID: <20050525111711.GA27492@vrfy.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 25 12:53:40 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 25 13:16:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DatVR-0000bo-2z
-	for gcvg-git@gmane.org; Wed, 25 May 2005 12:52:57 +0200
+	id 1DatrY-0002kk-9b
+	for gcvg-git@gmane.org; Wed, 25 May 2005 13:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262153AbVEYKyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 06:54:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262150AbVEYKyf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 06:54:35 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:18365 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262144AbVEYKy2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2005 06:54:28 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 86895E6DA5; Wed, 25 May 2005 11:53:24 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 06637-12; Wed, 25 May 2005 11:53:24 +0100 (BST)
-Received: from oak.dgreaves.com (modem-4032.leopard.dialup.pol.co.uk [217.135.159.192])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id D02DCE6DB0; Wed, 25 May 2005 11:53:23 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DatWx-0006CK-41; Wed, 25 May 2005 11:54:31 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050525094841.GA24172@vrfy.org>
-X-Enigmail-Version: 0.91.0.0
+	id S262156AbVEYLRZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 07:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262158AbVEYLRZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 07:17:25 -0400
+Received: from soundwarez.org ([217.160.171.123]:57240 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S262156AbVEYLRP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2005 07:17:15 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 034DB393E2; Wed, 25 May 2005 13:17:11 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
+I'm catching up with gitweb.cgi to parse the changed output. Works fine
+so far and is really much easier to parse. Here is something that does
+not work anymore. See the difference between:
 
->>On probably a bit different topic (but I do not know who is
->>updating the copy on www.kernel.org, sorry).  Could somebody
->>update http://www.kernel.org/pub/software/scm/git/docs/ to
->>rename git-diff-tree-helper to git-diff-helper please?
->>git.git/Documentation/git.txt has been corrected quite some
->>time ago [*1*] and I do not know how the updates are propagated
->>to the web version of the documentation; is it a manual process?
->>    
->>
->
->David Greaves can write to that directory. David?
->  
->
-Yep.
-It is a manual rsync process.
+   http://www.kernel.org/git/?p=linux/hotplug/udev.git;a=commit;h=49cedafaf893bfe348eb7598227f1a11ae24bfd6
+   http://ehlo.org/~kay/gitweb.cgi?p=linux/hotplug/udev.git;a=commit;h=49cedafaf893bfe348eb7598227f1a11ae24bfd6
 
-I last ran it on the 22nd as soon as Linus committed my latest doc patches.
+On my box is the lates git with the adapted gitweb.cgi. Here is the raw
+output of the old git-diff-tree:
+  kay@dhcp-188:~/src/udev> /home/kay/src/cogito/git-diff-tree -r 49cedafaf893bfe348eb7598227f1a11ae24bfd6 17f2b1a7e0d10334af7f9622848788add125dea8
+  *120000->100644 blob 2d78258b1a0fe49afabc8c16a352117df5dc338a->2d78258b1a0fe49afabc8c16a352117df5dc338a test/sys/block/cciss!c0d0/device
+  *120000->100644 blob 2d78258b1a0fe49afabc8c16a352117df5dc338a->2d78258b1a0fe49afabc8c16a352117df5dc338a test/sys/block/rd!c0d0/device
+  *120000->100644 blob 2d78258b1a0fe49afabc8c16a352117df5dc338a->2d78258b1a0fe49afabc8c16a352117df5dc338a test/sys/block/sda/device
+  *120000->100644 blob 1c776568bdc9dc750addd0885dded6b008a44460->1c776568bdc9dc750addd0885dded6b008a44460 test/sys/bus/pci/devices/0000:00:09.0
+  *120000->100644 blob e000c77614a23ad57fed284bd007ed7c1cb7872e->e000c77614a23ad57fed284bd007ed7c1cb7872e test/sys/bus/pci/devices/0000:00:1e.0
+  ...
 
-It's my bad though - I didn't update index.html which should be a copy
-of git.html
+The new one shows simply nothing.
+Shouldn't it print the mode changes like the old one?
 
- http://www.kernel.org/pub/software/scm/git/docs/git.html
-is correct.
-
-Anyway, done now, give it time to replicate.
-
-David
-
-
+Kay
