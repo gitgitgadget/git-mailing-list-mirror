@@ -1,71 +1,59 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Re: [PATCH Cogito] Fix cg-log -f behavior
-Date: Thu, 26 May 2005 23:25:40 +0200
-Message-ID: <1117142741.12036.66.camel@pegasus>
-References: <1117137826.12036.57.camel@pegasus>
-	 <7vk6llbv1j.fsf@assigned-by-dhcp.cox.net>
-	 <1117139740.12036.59.camel@pegasus>
-	 <7voeaxae0r.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git full diff output issues..
+Date: Thu, 26 May 2005 14:33:40 -0700
+Message-ID: <7vis15aczv.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505261214140.2307@ppc970.osdl.org>
+	<Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org>
+	<Pine.LNX.4.60.0505262036500.16829@hermes-1.csi.cam.ac.uk>
+	<Pine.LNX.4.58.0505261316250.2307@ppc970.osdl.org>
+	<7v64x5bt9n.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505261402470.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 23:27:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Anton Altaparmakov <aia21@cam.ac.uk>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 26 23:38:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbPs8-0001il-Jn
-	for gcvg-git@gmane.org; Thu, 26 May 2005 23:26:32 +0200
+	id 1DbQ2y-0003D8-88
+	for gcvg-git@gmane.org; Thu, 26 May 2005 23:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261806AbVEZV1q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 17:27:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261796AbVEZV1q
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 17:27:46 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:3513 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S261806AbVEZV1Q
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 17:27:16 -0400
-Received: from pegasus (p5487D46C.dip.t-dialin.net [84.135.212.108])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j4QLReId020157
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Thu, 26 May 2005 23:28:26 +0200
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voeaxae0r.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.2.2 
+	id S261767AbVEZVi2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 17:38:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261801AbVEZVgF
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 17:36:05 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:42659 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261796AbVEZVdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 17:33:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050526213340.VHCJ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 26 May 2005 17:33:40 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505261402470.2307@ppc970.osdl.org> (Linus
+ Torvalds's message of "Thu, 26 May 2005 14:09:31 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-> MH> I am not sure, because I never tried it. Does it use a different format?
-> 
-> I am not a Cogito user, but I am a bit wondering if you have
-> read what is around what you are modifying.
-> 
-> 	# List all files for for the initial commit
-> 	if [ -z $tree2 ]; then
-> 		list_cmd="git-ls-tree $tree1"
-> 	else
-> 		list_cmd="git-diff-tree -r $tree1 $tree2"
-> 	fi
-> 	echo
-> 	$list_cmd | while read modes type sha1s file; do
-> 
-> The code you changed is fed by either git-ls-tree or
-> git-diff-tree, depending on whether you are talking about
-> initial commit.  git-ls-tree gives "mode type sha1 file".
+LT> On Thu, 26 May 2005, Junio C Hamano wrote:
+>> 
+>> So what do you want from me at this point?  Nothing?
 
-I assumed that both have the same output format.
+LT> Yeah, I'm happy. Sorry for the false alarm.
 
-> This is why I asked Linus about a slight format change for
-> git-ls-tree (and git-ls-files) this morning.
+No problem.  I still kinda like Anton's proposal for conceptual
+cleanness, but if the tool can cope with what we already have
+then less cluttering in the output is better for human eyes.
 
-To what is it changing?
-
-Regards
-
-Marcel
-
+Let me again remind you about git-external-diff-script patch.
+When you encounter more gotcha in the built-in diff output
+format in the future, it would be a valuable tool to experiment
+and express what you would like to have git-apply to parse.
 
