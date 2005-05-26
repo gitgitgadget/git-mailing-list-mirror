@@ -1,66 +1,82 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: Summary of core GIT while you are away.
-Date: Thu, 26 May 2005 22:27:12 +0200
-Message-ID: <20050526202712.GA6024@vrfy.org>
-References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org> <20050526004411.GA12360@vrfy.org> <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git full diff output issues..
+Date: Thu, 26 May 2005 13:33:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505261316250.2307@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505261214140.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org>
+ <Pine.LNX.4.60.0505262036500.16829@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, pasky@ucw.cz,
-	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 22:26:28 2005
+X-From: git-owner@vger.kernel.org Thu May 26 22:32:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbOv2-0001ts-D5
-	for gcvg-git@gmane.org; Thu, 26 May 2005 22:25:30 +0200
+	id 1DbOzb-0002Ws-8J
+	for gcvg-git@gmane.org; Thu, 26 May 2005 22:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261632AbVEZU1U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 16:27:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261653AbVEZU1U
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 16:27:20 -0400
-Received: from soundwarez.org ([217.160.171.123]:45261 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261632AbVEZU1Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 16:27:16 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 1CF693A36D; Thu, 26 May 2005 22:27:12 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+	id S261722AbVEZUb6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 16:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261725AbVEZUb6
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 16:31:58 -0400
+Received: from fire.osdl.org ([65.172.181.4]:23240 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261722AbVEZUbj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 16:31:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4QKVOjA032684
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 26 May 2005 13:31:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4QKVL7q011551;
+	Thu, 26 May 2005 13:31:23 -0700
+To: Anton Altaparmakov <aia21@cam.ac.uk>
+In-Reply-To: <Pine.LNX.4.60.0505262036500.16829@hermes-1.csi.cam.ac.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 25, 2005 at 06:45:14PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Thu, 26 May 2005, Kay Sievers wrote:
-> >
-> > On Mon, May 16, 2005 at 09:10:10AM -0700, Linus Torvalds wrote:
-> > > 
-> > > Then you could just do
-> > > 
-> > > 	git-rev-list -v --header HEAD | grep -z 'author[^\n]*Linus'
-> > > 
-> > > to tell it to do the "verbose" thing (only showing the header of the 
-> > > commit, not the whole message), and grep for "Linus" in the author line.
-> > 
-> > What happened to that idea? That's not already working in some other way I
-> > missed, right? The pickaxe stuff is nice and was easy to call from the cgi,
-> > but searching in commit messages would be nice too.
-> > If it's not going to happen in the git-binaries, I may do it just in the
-> > cgi itself.
-> 
-> Ok, you twisted my arm. Checked in.
-> 
-> 	git-rev-list --header HEAD | grep -z 'author[\n]*Linus'
 
-Nice, thanks. Here is a very first try. It searches the commit messages
-and uses pickaxe to search in the file content:
-  http://ehlo.org/~kay/gitweb.cgi?p=git/git.git;a=search;s=symlink
 
-Before someone asks: kernel.org needs to wait until cogito has catched up and
-released a new version and it is installed on the machines.
+On Thu, 26 May 2005, Anton Altaparmakov wrote:
+> 
+> Given that git already has the metadata lines in the diff ("old mode", 
+> "deleted file mode", etc) why not simply add another metadata line "name" 
+> and what follows that is the name until an end of line character (or a NUL 
+> if you want file names with embedded new lines).  You can then only emit 
+> the "name" metadata line when no actual diff is present and hence the name 
+> is uncertain.
 
-Kay
+Yes, that would work. 
+
+However, I ended up just validating the name parsing by making sure that 
+when I parse the "git --diff" line, I only take the name if I can see it 
+being the same for both the old and the new. IOW, if I see
+
+	diff --git a/hi b/hello
+
+then I won't take it, but if I see
+
+	diff --git hi there/I am/being difficult   oopsie dir/I am/being difficult
+
+then I get "I am/being difficult" by virtue of checking the two names 
+against each other.
+
+This means, btw, that the "git --diff" format must _not_ do
+
+	diff --git a/file /dev/null
+	deleted file mode 100644
+
+because in that case I don't trust the filename enough. Of course, this
+all only happens when deleting empty files, if the file had any contents,
+then I will see the unambiguos filename on the '---' line, and again be
+happy.
+
+IOW, git-apply is being pretty anal about things, but it looks like that
+works out well.
+
+			Linus
