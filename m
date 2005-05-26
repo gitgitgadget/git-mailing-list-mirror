@@ -1,37 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Test case portability fix.
-Date: Wed, 25 May 2005 19:36:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505251935210.2307@ppc970.osdl.org>
-References: <20050525111711.GA27492@vrfy.org> <Pine.LNX.4.58.0505251054110.2307@ppc970.osdl.org>
- <20050525183546.GA4241@vrfy.org> <7vzmujjdq4.fsf@assigned-by-dhcp.cox.net>
- <20050525222622.GA8552@vrfy.org> <Pine.LNX.4.58.0505251544250.2307@ppc970.osdl.org>
- <7v1x7uj4i3.fsf_-_@assigned-by-dhcp.cox.net> <7vr7fug2i4.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Make cvs2git support remote CVS repos
+Date: Wed, 25 May 2005 19:42:06 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505251938580.2307@ppc970.osdl.org>
+References: <20050525181132.75705.qmail@web41204.mail.yahoo.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 04:33:15 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 04:38:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db8B0-0006W1-IN
-	for gcvg-git@gmane.org; Thu, 26 May 2005 04:32:51 +0200
+	id 1Db8GO-0006wq-TE
+	for gcvg-git@gmane.org; Thu, 26 May 2005 04:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261153AbVEZCeW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 22:34:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVEZCeV
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 22:34:21 -0400
-Received: from fire.osdl.org ([65.172.181.4]:55245 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261153AbVEZCeS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 May 2005 22:34:18 -0400
+	id S261160AbVEZCkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 22:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261159AbVEZCkI
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 22:40:08 -0400
+Received: from fire.osdl.org ([65.172.181.4]:6095 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261151AbVEZCkD (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 May 2005 22:40:03 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4Q2YCjA016713
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4Q2e2jA017021
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 25 May 2005 19:34:13 -0700
+	Wed, 25 May 2005 19:40:02 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4Q2YBAK030257;
-	Wed, 25 May 2005 19:34:12 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vr7fug2i4.fsf@assigned-by-dhcp.cox.net>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4Q2e1Pu030458;
+	Wed, 25 May 2005 19:40:01 -0700
+To: Mark Allen <mrallen1@yahoo.com>
+In-Reply-To: <20050525181132.75705.qmail@web41204.mail.yahoo.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -42,25 +39,20 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Wed, 25 May 2005, Junio C Hamano wrote:
+On Wed, 25 May 2005, Mark Allen wrote:
 >
-> This is the remainder of testcase fix by Mark Allen to make them
-> work on his Darwin box.  I was using "xargs -r" (GNU) where it
-> was not needed, sed -ne '/^\(author\|committer\)/s|>.*|>|p'
-> where some sed does not know what to do with '\|', and also
-> "cmp - file" to compare standard input with a file, which his
-> cmp does not support.
-> 
-> Author: Mark Allen <mrallen1@yahoo.com>
-> Author-Date: 
+> Added a "--module=cvsmodule" command line option and (since we're going to process argv
+> anyway) made "-v" for verbose mode a command line option too, instead of a compile time
+> option.
 
-Btw, do this as
+Ahh.. You found out how to get CVS to check out individual files. 
 
-	From: Mark Allen <mrallen1@yahoo.com>
+The reason I use RCS "co" directly is because I couldn't figure out how
+CVS can be made to do it. Of course, the raw RCS possibly also performs
+better, but somebody should check that. If the overhead of using CVS to do
+this is low enough, we should drop the raw RCS access, which should
+simplify your patch and get rid of the need for "RCSDIR".
 
-at the top of the email body, and my patch-application scripts will
-automatically do the right thing.
+Anybody up for some performance testing?
 
-The Author-date thing you might as well drop for now..
-
-		Linus
+			Linus
