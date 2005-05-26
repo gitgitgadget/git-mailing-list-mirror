@@ -1,52 +1,45 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: Summary of core GIT while you are away.
-Date: Fri, 27 May 2005 01:29:53 +0200
-Message-ID: <20050526232953.GA6215@vrfy.org>
-References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org> <20050526004411.GA12360@vrfy.org> <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org> <20050526202712.GA6024@vrfy.org> <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: git full diff output issues..
+Date: Thu, 26 May 2005 16:34:43 -0700
+Message-ID: <faf0d98cb35ad4b51c55d23d851093b5.ANY@taniwha.stupidest.org>
+References: <Pine.LNX.4.58.0505261214140.2307@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, pasky@ucw.cz,
-	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
+Cc: Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 01:29:22 2005
+X-From: git-owner@vger.kernel.org Fri May 27 01:33:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbRlk-0007Cm-6J
-	for gcvg-git@gmane.org; Fri, 27 May 2005 01:28:04 +0200
+	id 1DbRqI-0007i4-M5
+	for gcvg-git@gmane.org; Fri, 27 May 2005 01:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261657AbVEZX37 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 19:29:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261846AbVEZX37
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 19:29:59 -0400
-Received: from soundwarez.org ([217.160.171.123]:32718 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261657AbVEZX35 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 19:29:57 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 04FE13A3C8; Fri, 27 May 2005 01:29:54 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
+	id S261848AbVEZXeq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 19:34:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261849AbVEZXeq
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 19:34:46 -0400
+Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:15336 "EHLO
+	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S261848AbVEZXep
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 19:34:45 -0400
+Received: from pimout2-ext.prodigy.net (pimout2-int.prodigy.net [207.115.4.217])
+	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j4QNYqKh017658
+	for <git@vger.kernel.org>; Thu, 26 May 2005 19:34:52 -0400
+X-ORBL: [63.202.173.158]
+Received: from taniwha.stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
+	by pimout2-ext.prodigy.net (8.12.10 milter /8.12.10) with ESMTP id j4QNYhM3430408;
+	Thu, 26 May 2005 19:34:43 -0400
+Received: by taniwha.stupidest.org (Postfix, from userid 38689)
+	id 3DDB8528F22; Thu, 26 May 2005 16:34:43 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <Pine.LNX.4.58.0505261214140.2307@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 26, 2005 at 01:51:36PM -0700, Junio C Hamano wrote:
-> >>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
-> 
-> KS> Before someone asks: kernel.org needs to wait until cogito has catched up and
-> KS> released a new version and it is installed on the machines.
-> 
-> Just from curiosity, does anybody runs (need to run) Cogito on
-> kernel.org machine(s)?  Or is it that gitweb depends on Cogito,
-> not running directly on top of Plumbing?
+On Thu, May 26, 2005 at 12:19:21PM -0700, Linus Torvalds wrote:
 
-The cgi doesn't need it. Cogito has the spec file and the Mekefile
-with support for it - that was the reason the RPM made it on the machines
-there.
-Splitting the git-core stuff completely out of Cogito and install
-Cogito with a dependency on the git package is the only sane option I
-think.
+> 	deleted file mode 100644 arch/um/kernel/checksum.c
 
-Kay
+why do we care about the mode here?
