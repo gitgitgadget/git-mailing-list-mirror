@@ -1,157 +1,177 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFC/PATCH] Detect copies harder in diff-tree.
-Date: Wed, 25 May 2005 20:17:22 -0700
-Message-ID: <7vzmuiekvx.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vu0kz1p6k.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505190901340.2322@ppc970.osdl.org>
-	<7vzmuokjhg.fsf@assigned-by-dhcp.cox.net>
-	<7vfywgkj90.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505211016140.2206@ppc970.osdl.org>
-	<7vzmuoh2ma.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505211124440.2206@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505211128570.2206@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505211137250.2206@ppc970.osdl.org>
-	<7vbr71xjyt.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505232314510.2307@ppc970.osdl.org>
+From: Jason McMullan <jason.mcmullan@timesys.com>
+Subject: [PATCH] ls-tree matching a prefix
+Date: Wed, 25 May 2005 23:47:56 -0400
+Message-ID: <20050526034756.GA1488@port.evillabs.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 26 05:16:12 2005
+X-From: git-owner@vger.kernel.org Thu May 26 05:46:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db8qi-00012W-Qg
-	for gcvg-git@gmane.org; Thu, 26 May 2005 05:15:57 +0200
+	id 1Db9KA-0004YJ-RQ
+	for gcvg-git@gmane.org; Thu, 26 May 2005 05:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261159AbVEZDRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 23:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVEZDRf
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 23:17:35 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:62162 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261159AbVEZDRY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 23:17:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050526031721.MBYF19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 25 May 2005 23:17:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505232314510.2307@ppc970.osdl.org> (Linus
- Torvalds's message of "Mon, 23 May 2005 23:19:49 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261172AbVEZDsL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 23:48:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261174AbVEZDsL
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 23:48:11 -0400
+Received: from c-67-163-246-116.hsd1.pa.comcast.net ([67.163.246.116]:62697
+	"EHLO port.evillabs.net") by vger.kernel.org with ESMTP
+	id S261172AbVEZDr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2005 23:47:57 -0400
+Received: by port.evillabs.net (Postfix, from userid 500)
+	id 8CDF3405D5; Wed, 25 May 2005 23:47:56 -0400 (EDT)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+In the Porcelain I've been working on, I have found it useful
+to retrieve a single file's SHA1 out of a tree when I don't 
+want to create an index.
 
-LT> That said, I don't think -C is that important.
+For this purpose, I've enhanced git-ls-tree to allow the
+specification of an optional 'match path' that restricts
+that output of git-ls-tree to just the path requested.
 
-By now, you know I won't listen ;-).
+If the patch has a '/' in it, it implies -r.
 
-I've done preliminary --detect-copies-harder (that is to feed all
-the unmodified files to diffcore when doing -C) and --use-cache
-(this is to allow diffcore to avoid expanding blob when there is
-a already matching file in the work tree) changes to diff-tree.
+ie:
 
-This example is from the linux-2.6 tree, with the tip of the
-tree in the work tree and the cache, and looking at the commit
-when include/asm-um was cleaned up (May 5th).  The first one
-does not detect copies from "unmodified" files, but the latter
-two do.  In this commit there isn't any copy that "harder"
-version finds but ordinary one doesn't.
+$ git-ls-tree HEAD Makefile
+100644  blob    92d0e87535ecaa5e52a6503c43dd30dd546ea6b7        Makefile
 
-: siamese; time ../git.junio/git-diff-tree -r \
-  -C dbc35cc73f2edd6e39d7e814dbb6eddad6294665 >/dev/null
-real    0m0.010s
-user    0m0.010s
-sys     0m0.000s
-: siamese; time ../git.junio/git-diff-tree -r --detect-copies-harder \
-  -C dbc35cc73f2edd6e39d7e814dbb6eddad6294665 >/dev/null
-real    0m19.938s
-user    0m11.520s
-sys     0m1.240s
-: siamese; time ../git.junio/git-diff-tree -r \
-  --detect-copies-harder --use-cache -C \
-  dbc35cc73f2edd6e39d7e814dbb6eddad6294665 >/dev/null
-real    0m5.858s
-user    0m5.110s
-sys     0m0.710s
+$ git-ls-tree HEAD t
+040000  tree    33ce2f3201c99d5da785bb777639c1e2374c44d2        t
 
-------------
-Add --detect-copies-harder and --use-cache to diff-tree.
+$ git-ls-tree HEAD t/test-lib.sh 
+100755  blob    d3f71d1932310197219155b426687d155bf63c5b	t/test-lib.sh
 
-This adds two new options to diff-tree.  Even when -C is used,
-diff-tree does not normally feed "unmodified" filepair to the
-diffcore, so copy detection is done only among the files that
-have changed.  With --detect-copies-harder, it can also detect
-copies made from an unmodified file (this behavior is the
-default for diff-files and diff-cache).  When this option is
-used, it is recommended to also give --use-cache, which lets
-diffcore to avoid expanding blob when the work tree has the same
-file unmodified.
+Signed-Off-By: Jason McMullan <jason.mcmullan@timesys.com>
 
-Signed-off-by: Junio C Hamano <junkio@cox.net> 
----
-cd /opt/packrat/playpen/public/in-place/git/git.junio/
-jit-diff
-# - linus: git-rev-list: add "end" commit and "--header" flag
-# + (working tree)
-diff --git a/diff-tree.c b/diff-tree.c
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -6,6 +6,8 @@ static int show_root_diff = 0;
- static int verbose_header = 0;
- static int ignore_merges = 1;
- static int recursive = 0;
-+static int use_cache = 0;
-+static int detect_copies_harder = 0;
- static int show_tree_entry_in_recursive = 0;
- static int read_stdin = 0;
- static int diff_output_format = DIFF_FORMAT_HUMAN;
-@@ -108,7 +110,8 @@ static int compare_tree_entry(void *tree
- 		show_file("+", tree2, size2, base);
- 		return 1;
- 	}
--	if (!memcmp(sha1, sha2, 20) && mode1 == mode2)
-+	if (!memcmp(sha1, sha2, 20) && mode1 == mode2 &&
-+	    (detect_rename != DIFF_DETECT_COPY || !detect_copies_harder))
- 		return 0;
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -27,6 +27,10 @@ OPTIONS
+ -z::
+ 	\0 line termination on output
  
- 	/*
-@@ -549,6 +552,14 @@ int main(int argc, const char **argv)
- 			read_stdin = 1;
++[path]::
++	Only return items that match the specified path, relative to the
++	root of the tree. If a patch has a '/' in it, implies -r
++
+ Output Format
+ -------------
+         <mode>\t	<type>\t	<object>\t	<file>
+diff --git a/ls-tree.c b/ls-tree.c
+--- a/ls-tree.c
++++ b/ls-tree.c
+@@ -26,10 +26,32 @@ static void print_path_prefix(struct pat
+ static void list_recursive(void *buffer,
+ 			   const char *type,
+ 			   unsigned long size,
+-			   struct path_prefix *prefix)
++			   struct path_prefix *prefix,
++			   const char *match_path)
+ {
+ 	struct path_prefix this_prefix;
+ 	this_prefix.prev = prefix;
++	char mpref[PATH_MAX];
++	size_t mlen = 0;
++	char *cp = NULL;
++	if (match_path != NULL) {
++		if (*match_path == 0)
++			return;
++		cp = strchr(match_path,'/');
++		if (cp == NULL) {
++			strcpy(mpref,match_path);
++			match_path = NULL;
++		} else {
++			recursive = 1;
++			strncpy(mpref,match_path,cp-match_path);
++			mpref[cp-match_path]=0;
++			cp++;
++			match_path = cp;
++			if (*cp == 0)
++				cp = NULL;
++		}
++		mlen = strlen(mpref);
++	}
+ 
+ 	if (strcmp(type, "tree"))
+ 		die("expected a 'tree' node");
+@@ -48,27 +70,35 @@ static void list_recursive(void *buffer,
+ 		buffer = sha1 + 20;
+ 		size -= namelen + 20;
+ 
+-		printf("%06o\t%s\t%s\t", mode,
+-		       S_ISDIR(mode) ? "tree" : "blob",
+-		       sha1_to_hex(sha1));
+-		print_path_prefix(prefix);
+-		fputs(path, stdout);
+-		putchar(line_termination);
++		if (mlen && strcmp(mpref, path) != 0)
++			continue;
++
++		if (cp == NULL) {
++			printf("%06o\t%s\t%s\t", mode,
++			       S_ISDIR(mode) ? "tree" : "blob",
++			       sha1_to_hex(sha1));
++			print_path_prefix(prefix);
++			fputs(path, stdout);
++			putchar(line_termination);
++		}
+ 
+ 		if (! recursive || ! S_ISDIR(mode))
+ 			continue;
+ 
++		if (mlen && cp == NULL)
++			continue;
++
+ 		if (! (eltbuf = read_sha1_file(sha1, elttype, &eltsize)) ) {
+ 			error("cannot read %s", sha1_to_hex(sha1));
  			continue;
  		}
-+		if (!strcmp(arg, "--use-cache")) {
-+			use_cache = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--detect-copies-harder")) {
-+			detect_copies_harder = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--root")) {
- 			show_root_diff = 1;
- 			continue;
-@@ -566,6 +577,16 @@ int main(int argc, const char **argv)
- 			pathlens[i] = strlen(paths[i]);
+ 		this_prefix.name = path;
+-		list_recursive(eltbuf, elttype, eltsize, &this_prefix);
++		list_recursive(eltbuf, elttype, eltsize, &this_prefix, match_path);
+ 		free(eltbuf);
+ 	}
+ }
+ 
+-static int list(unsigned char *sha1)
++static int list(unsigned char *sha1, const char *match_path)
+ {
+ 	void *buffer;
+ 	unsigned long size;
+@@ -76,12 +106,12 @@ static int list(unsigned char *sha1)
+ 	buffer = read_object_with_reference(sha1, "tree", &size, NULL);
+ 	if (!buffer)
+ 		die("unable to read sha1 file");
+-	list_recursive(buffer, "tree", size, NULL);
++	list_recursive(buffer, "tree", size, NULL, match_path);
+ 	free(buffer);
+ 	return 0;
+ }
+ 
+-static const char *ls_tree_usage = "git-ls-tree [-r] [-z] <key>";
++static const char *ls_tree_usage = "git-ls-tree [-r] [-z] <key> [path]";
+ 
+ int main(int argc, char **argv)
+ {
+@@ -101,11 +131,11 @@ int main(int argc, char **argv)
+ 		argc--; argv++;
  	}
  
-+	if (detect_rename && use_cache && !active_cache) {
-+		/* read-cache does not die even when it fails
-+		 * so it is safe for us to do this here.  Also
-+		 * it does not smudge active_cache or active_nr
-+		 * when it fails, so we do not have to worry about
-+		 * cleaning it up oufselves either.
-+		 */
-+		read_cache();
-+	}
-+
- 	switch (nr_sha1) {
- 	case 0:
- 		if (!read_stdin)
-
-Compilation finished at Wed May 25 19:59:09
-
+-	if (argc != 2)
++	if (argc != 2 && argc != 3)
+ 		usage(ls_tree_usage);
+ 	if (get_sha1(argv[1], sha1) < 0)
+ 		usage(ls_tree_usage);
+-	if (list(sha1) < 0)
++	if (list(sha1, argc==3 ? argv[2] : NULL) < 0)
+ 		die("list failed");
+ 	return 0;
+ }
