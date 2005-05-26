@@ -1,109 +1,52 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] fix and testcase for git-commit-tree option
-Date: Fri, 27 May 2005 01:03:26 +0200
-Message-ID: <20050526230326.GA14736@lsrfire.ath.cx>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: Summary of core GIT while you are away.
+Date: Fri, 27 May 2005 01:29:53 +0200
+Message-ID: <20050526232953.GA6215@vrfy.org>
+References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org> <20050526004411.GA12360@vrfy.org> <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org> <20050526202712.GA6024@vrfy.org> <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 01:02:16 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, pasky@ucw.cz,
+	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 01:29:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbRMD-0004Dz-EO
-	for gcvg-git@gmane.org; Fri, 27 May 2005 01:01:41 +0200
+	id 1DbRlk-0007Cm-6J
+	for gcvg-git@gmane.org; Fri, 27 May 2005 01:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261800AbVEZXDg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 19:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVEZXDg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 19:03:36 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:41886 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S261800AbVEZXD2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 19:03:28 -0400
-Received: by neapel230.server4you.de (Postfix, from userid 1000)
-	id D468F261; Fri, 27 May 2005 01:03:26 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261657AbVEZX37 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 19:29:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261846AbVEZX37
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 19:29:59 -0400
+Received: from soundwarez.org ([217.160.171.123]:32718 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261657AbVEZX35 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 19:29:57 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 04FE13A3C8; Fri, 27 May 2005 01:29:54 +0200 (CEST)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Actually use GIT_COMMITTER_DATE in git-commit-tree.
+On Thu, May 26, 2005 at 01:51:36PM -0700, Junio C Hamano wrote:
+> >>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
+> 
+> KS> Before someone asks: kernel.org needs to wait until cogito has catched up and
+> KS> released a new version and it is installed on the machines.
+> 
+> Just from curiosity, does anybody runs (need to run) Cogito on
+> kernel.org machine(s)?  Or is it that gitweb depends on Cogito,
+> not running directly on top of Plumbing?
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+The cgi doesn't need it. Cogito has the spec file and the Mekefile
+with support for it - that was the reason the RPM made it on the machines
+there.
+Splitting the git-core stuff completely out of Cogito and install
+Cogito with a dependency on the git package is the only sane option I
+think.
 
----
-commit 00a2437bb75c5c3521f199faa044481783de45aa
-tree 97976f550804169368e1e30cd26ead9980461a84
-parent 2eab945e865317cb7d390aec214303f1d931b53a
-author lsr <lsr@linux> Fri, 27 May 2005 00:53:30 +0200
-committer lsr <lsr@linux> Fri, 27 May 2005 00:53:30 +0200
-
- commit-tree.c                  |    2 -
- t/t1100-commit-tree-options.sh |   45 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+), 1 deletion(-)
-
-Index: commit-tree.c
-===================================================================
---- dbec0de73e52d5b6d0740dd2e226d3ce8e2e51fd/commit-tree.c  (mode:100644)
-+++ 97976f550804169368e1e30cd26ead9980461a84/commit-tree.c  (mode:100644)
-@@ -153,7 +153,7 @@
- 		parse_date(audate, date, sizeof(date));
- 	cmdate = gitenv("GIT_COMMITTER_DATE");
- 	if (cmdate)
--		parse_date(audate, realdate, sizeof(realdate));
-+		parse_date(cmdate, realdate, sizeof(realdate));
- 
- 	remove_special(gecos); remove_special(realgecos); remove_special(commitgecos);
- 	remove_special(email); remove_special(realemail); remove_special(commitemail);
-Index: t/t1100-commit-tree-options.sh
-===================================================================
---- /dev/null  (tree:dbec0de73e52d5b6d0740dd2e226d3ce8e2e51fd)
-+++ 97976f550804169368e1e30cd26ead9980461a84/t/t1100-commit-tree-options.sh  (mode:100755)
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+#
-+# Copyright (C) 2005 Rene Scharfe
-+#
-+
-+test_description='git-commit-tree options test
-+
-+This test checks that git-commit-tree can create a specific commit
-+object by defining all environment variables that it understands.
-+'
-+
-+. ./test-lib.sh
-+
-+cat >expected <<EOF
-+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+author Author Name <author@email> 1117148400 +0000
-+committer Committer Name <committer@email> 1117150200 +0000
-+
-+comment text
-+EOF
-+
-+test_expect_success \
-+    'test preparation: write empty tree' \
-+    'git-write-tree >treeid'
-+
-+test_expect_success \
-+    'construct commit' \
-+    'echo comment text |
-+     GIT_AUTHOR_NAME="Author Name" \
-+     GIT_AUTHOR_EMAIL="author@email" \
-+     GIT_AUTHOR_DATE="2005-05-26 23:00" \
-+     GIT_COMMITTER_NAME="Committer Name" \
-+     GIT_COMMITTER_EMAIL="committer@email" \
-+     GIT_COMMITTER_DATE="2005-05-26 23:30" \
-+     TZ= git-commit-tree `cat treeid` >commitid 2>/dev/null'
-+
-+test_expect_success \
-+    'read commit' \
-+    'git-cat-file commit `cat commitid` >commit'
-+
-+test_expect_success \
-+    'compare commit' \
-+    'diff expected commit'
-+
-+test_done
+Kay
