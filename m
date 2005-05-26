@@ -1,65 +1,50 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: seek request
-Date: Thu, 26 May 2005 10:29:41 +0200
-Message-ID: <20050526082941.GC22262@pasky.ji.cz>
-References: <20050522071106.GA8060@tumblerings.org>
+Subject: Re: git-update-cache: allow dot-files
+Date: Thu, 26 May 2005 10:37:45 +0200
+Message-ID: <20050526083745.GD22262@pasky.ji.cz>
+References: <7vhdgstb7x.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505241723060.2307@ppc970.osdl.org> <7v8y24taai.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505241748520.2307@ppc970.osdl.org> <7v3bscrtwx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 10:32:19 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 26 10:37:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbDm1-0003Y4-By
-	for gcvg-git@gmane.org; Thu, 26 May 2005 10:31:25 +0200
+	id 1DbDqc-00040O-6r
+	for gcvg-git@gmane.org; Thu, 26 May 2005 10:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261293AbVEZIc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 04:32:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261285AbVEZIc0
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 04:32:26 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:28589 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261289AbVEZI3n (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 04:29:43 -0400
-Received: (qmail 29190 invoked by uid 2001); 26 May 2005 08:29:41 -0000
-To: Zack Brown <zbrown@tumblerings.org>
+	id S261278AbVEZIhy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 04:37:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261279AbVEZIhy
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 04:37:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35501 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261278AbVEZIhq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 04:37:46 -0400
+Received: (qmail 29679 invoked by uid 2001); 26 May 2005 08:37:45 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20050522071106.GA8060@tumblerings.org>
+In-Reply-To: <7v3bscrtwx.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 22, 2005 at 09:11:06AM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> Hi folks,
+Dear diary, on Wed, May 25, 2005 at 03:11:42AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> >>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 > 
-> In Cogito, it would be nice to have a
+> LT> Heh. There's a difference between being anal, and allowing people to shoot 
+> LT> themselves in the foot.
 > 
-> cg-seek +
+> How about we do something like this:
 > 
-> that would seek to the next archive state. This way, I could start off seeking
-> back to the beginning of an archive, and quickly step forward, looking at files
-> as I went, to the present.
-> 
-> A corresponding
-> cg-seek -
-> would go the reverse direction, back toward the beginning of a project.
-> 
-> I'm not sure how useful this would be for actual source code - I suspect any
-> benefit would be minimal - but the benefit for documentation and text files,
-> where the only way to test improvements is to read them by eye, would be
-> significant.
+>  (1) we keep hardcoded .git refusing as you did;
+>  (2) we forbid GIT_DIR to be set to anything other than what
+>      ends with "/.git", unless it is literally ".git";
 
-Well, and what if the commit has multiple parents? Or - even much more
-interestingly - multiple children?
-
-If we keep applying the first parent rule, we could just traverse the
-graph from heads/master to HEAD following this rule, and then just take
-a step back to where we came from for cg-seek +. It wouldn't be exactly
-cheap, but it'd probably work.
-
-Patch welcomed. ;-)
+That doesn't make any sense. When I'm working on kernel.org, why
+would you prohibit me to set GIT_DIR to /pub/scm/cogito/cogito.git ?
 
 -- 
 				Petr "Pasky" Baudis
