@@ -1,172 +1,125 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Diff updates to express type changes
-Date: Thu, 26 May 2005 02:24:30 -0700
-Message-ID: <7vu0kqcpbl.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Add git-external-diff-script
+Date: Thu, 26 May 2005 02:31:05 -0700
+Message-ID: <7vll62cp0m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 11:23:26 2005
+X-From: git-owner@vger.kernel.org Thu May 26 11:30:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbEZt-0000O2-Aa
-	for gcvg-git@gmane.org; Thu, 26 May 2005 11:22:57 +0200
+	id 1DbEgJ-0001F2-0h
+	for gcvg-git@gmane.org; Thu, 26 May 2005 11:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261225AbVEZJYp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 05:24:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261235AbVEZJYp
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 05:24:45 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:6528 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261225AbVEZJYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 05:24:36 -0400
+	id S261235AbVEZJbR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 05:31:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261239AbVEZJbR
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 05:31:17 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:44195 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261235AbVEZJbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 05:31:07 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050526092431.LIQN7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 26 May 2005 05:24:31 -0400
+          id <20050526093106.QWLD8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 26 May 2005 05:31:06 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-With the introduction of type 'T' in the diff-raw output, and
-the "apply-patch" program Linus has been quietly working on
-without much advertisement, it started to make sense to emit
-usable information in the "diff --git" patch output format as
-well.  Earlier built-in diff driver punted and did not say
-anything about a symbolic link changing into a file or vice
-versa, but this version represents it as a pair of deletion
-and creation.
+This is a demonstration of GIT_EXTERNAL_DIFF mechanism, and a
+testbed for tweaking and enhancing what the built-in diff should
+do.  This script is designed to output exactly the same output
+as what the built-in diff driver produces when used as the
+GIT_EXTERNAL_DIFF command.
 
-It also fixes a minor problem dealing with old archive created
-with ancient git.  The earlier code was reporting file mode
-change between 100664 and 100644 (we shouldn't).  The linux-2.6
-git tree has a good example that exposes this problem.  A good
-test case is commit ce1dc02f76432a46db149241e015a4f782974623.
+I've run this and updated built-in diff on the entire history of
+linux-2.6 git repository, and JG's udev.git repository which has
+interesting symlink cases to make sure it is equivalent to the
+built-in diff driver.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-diff.c     |   45 ++++++++++++++++++++++++++++++++++++---------
-diffcore.h |    6 ++++++
-2 files changed, 42 insertions(+), 9 deletions(-)
+git-external-diff-script |   67 +++++++++++++++++++++++++++++++++++++++++++++++
+1 files changed, 67 insertions(+)
+new file (100755): git-external-diff-script
 
-diff --git a/diff.c b/diff.c
---- a/diff.c
-+++ b/diff.c
-@@ -171,8 +171,8 @@ struct diff_filespec *alloc_filespec(con
- void fill_filespec(struct diff_filespec *spec, const unsigned char *sha1,
- 		   unsigned short mode)
- {
--	if (mode) { /* just playing defensive */
--		spec->mode = mode;
-+	if (mode) {
-+		spec->mode = DIFF_FILE_CANON_MODE(mode);
- 		memcpy(spec->sha1, sha1, 20);
- 		spec->sha1_valid = !!memcmp(sha1, null_sha1, 20);
- 	}
-@@ -390,7 +390,8 @@ static void remove_tempfile_on_signal(in
-  *               infile2 infile2-sha1 infile2-mode [ rename-to ]
-  *
-  */
--static void run_external_diff(const char *name,
-+static void run_external_diff(const char *pgm,
-+			      const char *name,
- 			      const char *other,
- 			      struct diff_filespec *one,
- 			      struct diff_filespec *two,
-@@ -418,7 +419,6 @@ static void run_external_diff(const char
- 	if (pid < 0)
- 		die("unable to fork");
- 	if (!pid) {
--		const char *pgm = external_diff();
- 		if (pgm) {
- 			if (one && two) {
- 				const char *exec_arg[10];
-@@ -468,6 +468,30 @@ static void run_external_diff(const char
- 	remove_tempfile();
- }
- 
-+static void run_diff(const char *name,
-+		     const char *other,
-+		     struct diff_filespec *one,
-+		     struct diff_filespec *two,
-+		     const char *xfrm_msg)
-+{
-+	const char *pgm = external_diff();
-+	if (!pgm &&
-+	    DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
-+	    (S_IFMT & one->mode) != (S_IFMT & two->mode)) {
-+		/* a filepair that changes between file and symlink
-+		 * needs to be split into deletion and creation.
-+		 */
-+		struct diff_filespec *null = alloc_filespec(two->path);
-+		run_external_diff(NULL, name, other, one, null, xfrm_msg);
-+		free(null);
-+		null = alloc_filespec(one->path);
-+		run_external_diff(NULL, name, other, null, two, xfrm_msg);
-+		free(null);
-+	}
-+	else
-+		run_external_diff(pgm, name, other, one, two, xfrm_msg);
+diff --git a/git-external-diff-script b/git-external-diff-script
+new file mode 100755
+--- /dev/null
++++ b/git-external-diff-script
+@@ -0,0 +1,67 @@
++#!/bin/sh
++# Copyright (C) 2005 Junio C Hamano
++#
++# This script is designed to emulate what the built-in diff driver
++# does when set as GIT_EXTERNAL_SCRIPT.
++
++case "$#" in
++1)
++    echo "* Unmerged path $1"
++    exit 0 ;;
++*)
++    name1="$1" tmp1="$2" hex1="$3" mode1="$4" tmp2="$5" hex2="$6" mode2="$7"
++    case "$#" in
++    7)
++	name2="$name1" ;;
++    9)
++	name2="$8" xfrm_msg="$9" ;;
++    esac ;;	
++esac
++
++show_create () {
++    name_="$1" tmp_="$2" hex_="$3" mode_="$4"
++    echo "diff --git a/$name_ b/$name_"
++    echo "new file mode $mode_"
++    diff ${GIT_DIFF_OPTS-'-pu'} -L /dev/null -L "b/$name_" /dev/null "$tmp_"
 +}
 +
- void diff_setup(int reverse_diff_)
- {
- 	reverse_diff = reverse_diff_;
-@@ -553,9 +577,11 @@ int diff_unmodified_pair(struct diff_fil
- 	one = p->one;
- 	two = p->two;
- 
--	/* deletion, addition, mode change and renames are all interesting. */
-+	/* deletion, addition, mode or type change
-+	 * and rename are all interesting.
-+	 */
- 	if (DIFF_FILE_VALID(one) != DIFF_FILE_VALID(two) ||
--	    (one->mode != two->mode) ||
-+	    DIFF_PAIR_MODE_CHANGED(p) ||
- 	    strcmp(one->path, two->path))
- 		return 0;
- 
-@@ -608,9 +634,9 @@ static void diff_flush_patch(struct diff
- 	}
- 
- 	if (DIFF_PAIR_UNMERGED(p))
--		run_external_diff(name, NULL, NULL, NULL, NULL);
-+		run_diff(name, NULL, NULL, NULL, NULL);
- 	else
--		run_external_diff(name, other, p->one, p->two, msg);
-+		run_diff(name, other, p->one, p->two, msg);
- }
- 
- int diff_needs_to_stay(struct diff_queue_struct *q, int i,
-@@ -775,7 +801,8 @@ void diff_flush(int diff_output_style, i
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
--		if (p->status == 'X')
-+		if ((diff_output_style == DIFF_FORMAT_NO_OUTPUT) ||
-+		    (p->status == 'X'))
- 			continue;
- 		if (p->status == 0)
- 			die("internal error in diff-resolve-rename-copy");
-diff --git a/diffcore.h b/diffcore.h
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -48,6 +48,12 @@ struct diff_filepair {
- #define DIFF_PAIR_TYPE_CHANGED(p) \
- 	((S_IFMT & (p)->one->mode) != (S_IFMT & (p)->two->mode))
- 
-+#define DIFF_PAIR_MODE_CHANGED(p) ((p)->one->mode != (p)->two->mode)
++show_delete () {
++    name_="$1" tmp_="$2" hex_="$3" mode_="$4"
++    echo "diff --git a/$name_ b/$name_"
++    echo "deleted file mode $mode_"
++    diff ${GIT_DIFF_OPTS-'-pu'} -L "a/$name_" -L /dev/null "$tmp_" /dev/null
++}
 +
-+#define DIFF_FILE_CANON_MODE(mode) \
-+	(S_ISREG(mode) ? (S_IFREG | ce_permissions(mode)) : \
-+	S_ISLNK(mode) ? S_IFLNK : S_IFDIR)
++case "$mode1" in
++120*) type1=l ;;
++100*) type1=f ;;
++.)    show_create "$name2" "$tmp2" "$hex2" "$mode2"
++      exit 0 ;;
++esac
++case "$mode2" in
++120*) type2=l ;;
++100*) type2=f ;;
++.)    show_delete "$name1" "$tmp1" "$hex1" "$mode1"
++      exit 0 ;;
++esac
 +
- extern int diff_unmodified_pair(struct diff_filepair *);
- 
- struct diff_queue_struct {
++if test "$type1" != "$type2"
++then
++	show_delete "$name1" "$tmp1" "$hex1" "$mode1"
++	show_create "$name2" "$tmp2" "$hex2" "$mode2"
++	exit 0
++fi
++
++echo diff --git "a/$name1" "b/$name2"
++if test "$mode1" != "$mode2"
++then
++    echo "old mode $mode1"
++    echo "new mode $mode2"
++    if test "$xfrm_msg" != ""
++    then
++	echo -n $xfrm_msg
++    fi
++fi
++diff ${GIT_DIFF_OPTS-'-pu'} -L "a/$name1" -L "b/$name2" "$tmp1" "$tmp2"
++exit 0
++
 ------------------------------------------------
 
