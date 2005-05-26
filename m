@@ -1,70 +1,49 @@
-From: David Mansfield <david@cobite.com>
-Subject: Re: gitweb wishlist
-Date: Wed, 25 May 2005 22:51:44 -0400
-Message-ID: <429539C0.8050609@cobite.com>
-References: <Pine.LNX.4.58.0505201123550.2206@ppc970.osdl.org> <1116615600.12975.33.camel@dhcp-188> <Pine.LNX.4.58.0505201219420.2206@ppc970.osdl.org> <428E49DD.406@zytor.com> <Pine.LNX.4.58.0505201346330.2206@ppc970.osdl.org> <428E4D8C.3020606@zytor.com> <1116626652.12975.118.camel@dhcp-188> <Pine.LNX.4.58.0505201604460.2206@ppc970.osdl.org> <428E745C.30304@zytor.com> <Pine.LNX.4.58.0505201702170.2206@ppc970.osdl.org> <20050524045840.GI12141@cip.informatik.uni-erlangen.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Test case portability fix.
+Date: Wed, 25 May 2005 19:55:59 -0700
+Message-ID: <7vll62g0g0.fsf@assigned-by-dhcp.cox.net>
+References: <20050525111711.GA27492@vrfy.org>
+	<Pine.LNX.4.58.0505251054110.2307@ppc970.osdl.org>
+	<20050525183546.GA4241@vrfy.org>
+	<7vzmujjdq4.fsf@assigned-by-dhcp.cox.net>
+	<20050525222622.GA8552@vrfy.org>
+	<Pine.LNX.4.58.0505251544250.2307@ppc970.osdl.org>
+	<7v1x7uj4i3.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vr7fug2i4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505251935210.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 04:50:33 2005
+X-From: git-owner@vger.kernel.org Thu May 26 04:55:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Db8Rp-0007m1-L8
-	for gcvg-git@gmane.org; Thu, 26 May 2005 04:50:13 +0200
+	id 1Db8Vu-00084H-0U
+	for gcvg-git@gmane.org; Thu, 26 May 2005 04:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261163AbVEZCv5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 25 May 2005 22:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261164AbVEZCv5
-	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 22:51:57 -0400
-Received: from ms-smtp-02-smtplb.rdc-nyc.rr.com ([24.29.109.6]:27522 "EHLO
-	ms-smtp-02.rdc-nyc.rr.com") by vger.kernel.org with ESMTP
-	id S261163AbVEZCvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 May 2005 22:51:54 -0400
-Received: from [192.168.0.101] (cpe-66-65-159-236.nyc.res.rr.com [66.65.159.236])
-	by ms-smtp-02.rdc-nyc.rr.com (8.12.10/8.12.7) with ESMTP id j4Q2pmId011184;
-	Wed, 25 May 2005 22:51:48 -0400 (EDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-In-Reply-To: <20050524045840.GI12141@cip.informatik.uni-erlangen.de>
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S261169AbVEZC4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 25 May 2005 22:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVEZC4H
+	(ORCPT <rfc822;git-outgoing>); Wed, 25 May 2005 22:56:07 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:48825 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261169AbVEZC4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 May 2005 22:56:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050526025559.YGKI550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 25 May 2005 22:55:59 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505251935210.2307@ppc970.osdl.org> (Linus
+ Torvalds's message of "Wed, 25 May 2005 19:36:16 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Sorry, I think I sent an stale copy from my draft box by
+accident and you already have the exactly same patch.
 
+About the "From: " thing, I understood.
 
-Thomas Glanzmann wrote:
-> Hello,
-> 
-> 
->>	WARNING: Invalid PatchSet 775, Tag syslinux-2_12-pre7:
->>	    memdisk/init32.asm:1.3=after, memdisk/Makefile:1.26=before. Treated as 'before'
->>	WARNING: Invalid PatchSet 775, Tag syslinux-2_12-pre7:
->>	    memdisk/init32.asm:1.3=after, memdisk/e820test.c:1.7=before. Treated as 'before'
->>	...
-> 
-> 
-> actually I think this is the broken upstream version. It can't parse
-> dates right. Just look at the exported patches and see if them all from
-> 1970. However the debian package has a patch in which solves it:
-> 
-> maybe you should try with the attached patch or with the version that
-> comes with debian sarge. I also reported this problem a while back to
-> the original author.
-> 
-
-I was about to apply this and I already had in it my cvs tree!  Funny 
-how these things go.  I must have gotten it before, applied it and never 
-released a new version.  Funny that this one hase the tm.tm_isdst = 0 
-that is missing from the version I applied (and fixes an important bug).
-
-Anyway, I'm about to release a new version cumulative with all this, a 
-fixed ancestor version, correct ordering for those pesky import commits, 
-and a couple other annoying fixes.
-
-BTW: the above warnings are actually legit in this case.
-
-David
