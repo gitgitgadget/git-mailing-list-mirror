@@ -1,69 +1,109 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Summary of core GIT while you are away.
-Date: Thu, 26 May 2005 15:25:17 -0700
-Message-ID: <7vy8a18w1e.fsf@assigned-by-dhcp.cox.net>
-References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org>
-	<20050526004411.GA12360@vrfy.org>
-	<Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org>
-	<20050526202712.GA6024@vrfy.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] fix and testcase for git-commit-tree option
+Date: Fri, 27 May 2005 01:03:26 +0200
+Message-ID: <20050526230326.GA14736@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, pasky@ucw.cz,
-	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 00:29:39 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 27 01:02:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbQm2-0008SE-FG
-	for gcvg-git@gmane.org; Fri, 27 May 2005 00:24:18 +0200
+	id 1DbRMD-0004Dz-EO
+	for gcvg-git@gmane.org; Fri, 27 May 2005 01:01:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261835AbVEZWZx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 18:25:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261838AbVEZWZx
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 18:25:53 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:6024 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261835AbVEZWZY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 18:25:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050526222519.PUMC26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 26 May 2005 18:25:19 -0400
-To: Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <20050526202712.GA6024@vrfy.org> (Kay Sievers's message of
- "Thu, 26 May 2005 22:27:12 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261800AbVEZXDg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 19:03:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVEZXDg
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 19:03:36 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:41886 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261800AbVEZXD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 19:03:28 -0400
+Received: by neapel230.server4you.de (Postfix, from userid 1000)
+	id D468F261; Fri, 27 May 2005 01:03:26 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
+Actually use GIT_COMMITTER_DATE in git-commit-tree.
 
-KS> Nice, thanks. Here is a very first try. It searches the commit messages
-KS> and uses pickaxe to search in the file content:
-KS>   http://ehlo.org/~kay/gitweb.cgi?p=git/git.git;a=search;s=symlink
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 
-Nice, thanks for using pickaxe ;-).  One request, knowing well
-that what you have on ehlo is your first cut.
+---
+commit 00a2437bb75c5c3521f199faa044481783de45aa
+tree 97976f550804169368e1e30cd26ead9980461a84
+parent 2eab945e865317cb7d390aec214303f1d931b53a
+author lsr <lsr@linux> Fri, 27 May 2005 00:53:30 +0200
+committer lsr <lsr@linux> Fri, 27 May 2005 00:53:30 +0200
 
-The pickaxe really shines when you can paste a couple of lines
-of code in the version you are having trouble with (or just you
-are curious about) in order to see where they came from.  For
-example, I did an equivalent of the following command back to
-figure out which patch and author to give credit to when I stole
-the tagged output format for git-ls-files from Cogito branch:
+ commit-tree.c                  |    2 -
+ t/t1100-commit-tree-options.sh |   45 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 1 deletion(-)
 
-git-rev-list pasky |
-git-diff-tree -v -p --stdin \
--S'static const char *tag_cached = "";
-static const char *tag_unmerged = "";
-static const char *tag_removed = "";'
-
-Since this is primarily about program code, forbidding '*' is
-rather nasty, and not being able to do multiple lines makes it
-quite less useful than it could be.
-
-
+Index: commit-tree.c
+===================================================================
+--- dbec0de73e52d5b6d0740dd2e226d3ce8e2e51fd/commit-tree.c  (mode:100644)
++++ 97976f550804169368e1e30cd26ead9980461a84/commit-tree.c  (mode:100644)
+@@ -153,7 +153,7 @@
+ 		parse_date(audate, date, sizeof(date));
+ 	cmdate = gitenv("GIT_COMMITTER_DATE");
+ 	if (cmdate)
+-		parse_date(audate, realdate, sizeof(realdate));
++		parse_date(cmdate, realdate, sizeof(realdate));
+ 
+ 	remove_special(gecos); remove_special(realgecos); remove_special(commitgecos);
+ 	remove_special(email); remove_special(realemail); remove_special(commitemail);
+Index: t/t1100-commit-tree-options.sh
+===================================================================
+--- /dev/null  (tree:dbec0de73e52d5b6d0740dd2e226d3ce8e2e51fd)
++++ 97976f550804169368e1e30cd26ead9980461a84/t/t1100-commit-tree-options.sh  (mode:100755)
+@@ -0,0 +1,45 @@
++#!/bin/sh
++#
++# Copyright (C) 2005 Rene Scharfe
++#
++
++test_description='git-commit-tree options test
++
++This test checks that git-commit-tree can create a specific commit
++object by defining all environment variables that it understands.
++'
++
++. ./test-lib.sh
++
++cat >expected <<EOF
++tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
++author Author Name <author@email> 1117148400 +0000
++committer Committer Name <committer@email> 1117150200 +0000
++
++comment text
++EOF
++
++test_expect_success \
++    'test preparation: write empty tree' \
++    'git-write-tree >treeid'
++
++test_expect_success \
++    'construct commit' \
++    'echo comment text |
++     GIT_AUTHOR_NAME="Author Name" \
++     GIT_AUTHOR_EMAIL="author@email" \
++     GIT_AUTHOR_DATE="2005-05-26 23:00" \
++     GIT_COMMITTER_NAME="Committer Name" \
++     GIT_COMMITTER_EMAIL="committer@email" \
++     GIT_COMMITTER_DATE="2005-05-26 23:30" \
++     TZ= git-commit-tree `cat treeid` >commitid 2>/dev/null'
++
++test_expect_success \
++    'read commit' \
++    'git-cat-file commit `cat commitid` >commit'
++
++test_expect_success \
++    'compare commit' \
++    'diff expected commit'
++
++test_done
