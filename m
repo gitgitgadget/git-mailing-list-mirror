@@ -1,62 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Anton Altaparmakov <aia21@cam.ac.uk>
 Subject: Re: git full diff output issues..
-Date: Thu, 26 May 2005 12:46:22 -0700
-Message-ID: <7vpsvdbwj5.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 26 May 2005 20:53:31 +0100 (BST)
+Message-ID: <Pine.LNX.4.60.0505262036500.16829@hermes-1.csi.cam.ac.uk>
 References: <Pine.LNX.4.58.0505261214140.2307@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 26 21:46:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 26 21:52:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbOHj-0004nL-I7
-	for gcvg-git@gmane.org; Thu, 26 May 2005 21:44:51 +0200
+	id 1DbOOe-0005ix-VN
+	for gcvg-git@gmane.org; Thu, 26 May 2005 21:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261713AbVEZTqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 15:46:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261714AbVEZTqf
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 15:46:35 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:13214 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261713AbVEZTqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 15:46:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050526194621.SXNP16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 26 May 2005 15:46:21 -0400
+	id S261557AbVEZTxz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 15:53:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261725AbVEZTxz
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 15:53:55 -0400
+Received: from ppsw-7.csi.cam.ac.uk ([131.111.8.137]:25014 "EHLO
+	ppsw-7.csi.cam.ac.uk") by vger.kernel.org with ESMTP
+	id S261557AbVEZTxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 15:53:37 -0400
+X-Cam-SpamDetails: Not scanned
+X-Cam-AntiVirus: No virus found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:56559)
+	by ppsw-7.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:aia21) id 1DbOQ7-0007cu-Nm (Exim 4.51)
+	(return-path <aia21@hermes.cam.ac.uk>); Thu, 26 May 2005 20:53:31 +0100
+Received: from aia21 (helo=localhost) by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1DbOQ7-0003Mo-81 (Exim 4.43)
+	(return-path <aia21@hermes.cam.ac.uk>); Thu, 26 May 2005 20:53:31 +0100
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org> (Linus
- Torvalds's message of "Thu, 26 May 2005 12:25:15 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.58.0505261223240.2307@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'd appreciate it if you take these two patches I sent last
-night.
+On Thu, 26 May 2005, Linus Torvalds wrote:
+> On Thu, 26 May 2005, Linus Torvalds wrote:
+> > 
+> > So we'd change it from
+> > 
+> > 	deleted file mode 100644
+> > 
+> > to
+> > 
+> > 	deleted file mode 100644 arch/um/kernel/checksum.c
+> > 
+> > in this case..
+> 
+> I just realized that this same thing is equally true of just plain mode 
+> changes, where wif we don't have any content we just get
+> 
+> 	diff --git a/name b/name
+> 	old mode xxxx
+> 	new mode yyyy
+> 
+> so I might as well parse the diff header here (I don't want to repeat the 
+> name twice for mode changes). Oh well.
 
-    * Add git-external-diff-script
+Given that git already has the metadata lines in the diff ("old mode", 
+"deleted file mode", etc) why not simply add another metadata line "name" 
+and what follows that is the name until an end of line character (or a NUL 
+if you want file names with embedded new lines).  You can then only emit 
+the "name" metadata line when no actual diff is present and hence the name 
+is uncertain.
 
-    This is a demonstration of GIT_EXTERNAL_DIFF mechanism, and a
-    testbed for tweaking and enhancing what the built-in diff should
-    be.  This script is designed to output exactly the same output
-    as the built-in diff driver produces when set as GIT_EXTERNAL_DIFF.
+Best regards,
 
-    * Diff updates.
-
-    With the introduction of 'T', and the "apply-patch" Linus has
-    been quietly working on without much advertisement, it started
-    to make sense to emit usable information in the "diff --git"
-    patch output format.  Earlier built-in diff driver punted and
-    did not say anything about a symbolic link changing into a file
-    or vice versa, but this version represents that as a pair of
-    deletion and creation.
-
-After that, you can experiment to flush out issues with the
-current built-in using git-external-diff-script for quick
-turnaround.  When you have a concrete "ok this is good" format
-we can port that to C in diff.c:builtin_diff().
-
+	Anton
+-- 
+Anton Altaparmakov <aia21 at cam.ac.uk> (replace at with @)
+Unix Support, Computing Service, University of Cambridge, CB2 3QH, UK
+Linux NTFS maintainer / IRC: #ntfs on irc.freenode.net
+WWW: http://linux-ntfs.sf.net/ & http://www-stu.christs.cam.ac.uk/~aia21/
