@@ -1,72 +1,68 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: [PATCH] git-tar-tree: small doc update
-Date: Fri, 27 May 2005 22:32:51 +0100
-Message-ID: <42979203.7030703@dgreaves.com>
-References: <20050527212032.GB17478@lsrfire.ath.cx>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: More gitweb queries..
+Date: Fri, 27 May 2005 15:00:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505271457480.17402@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
+ <20050527192941.GE7068@cip.informatik.uni-erlangen.de>
+ <Pine.LNX.4.58.0505271248450.17402@ppc970.osdl.org>
+ <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
+ <20050527192941.GE7068@cip.informatik.uni-erlangen.de>
+ <7vhdgoxx8c.fsf@assigned-by-dhcp.cox.net> <20050527195552.GA6541@cip.informatik.uni-erlangen.de>
+ <7vu0kowho9.fsf@assigned-by-dhcp.cox.net> <20050527203227.GA11139@cip.informatik.uni-erlangen.de>
+ <7vk6lkwgfl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 27 23:31:39 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 23:57:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbmPm-0001qb-U8
-	for gcvg-git@gmane.org; Fri, 27 May 2005 23:30:47 +0200
+	id 1Dbmoe-0004lz-GB
+	for gcvg-git@gmane.org; Fri, 27 May 2005 23:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262603AbVE0Vcw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 17:32:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262607AbVE0Vcw
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 17:32:52 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:58531 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S262603AbVE0Vcu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 17:32:50 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 5014EE6E1B; Fri, 27 May 2005 22:31:32 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 02313-06; Fri, 27 May 2005 22:31:32 +0100 (BST)
-Received: from oak.dgreaves.com (modem-4010.lemur.dialup.pol.co.uk [217.135.143.170])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id B55CFE6E19; Fri, 27 May 2005 22:31:31 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DbmRr-0002FB-4A; Fri, 27 May 2005 22:32:55 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <20050527212032.GB17478@lsrfire.ath.cx>
-X-Enigmail-Version: 0.91.0.0
+	id S262614AbVE0V6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 17:58:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262616AbVE0V6f
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 17:58:35 -0400
+Received: from fire.osdl.org ([65.172.181.4]:64918 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262614AbVE0V6d (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 17:58:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4RLwOjA010611
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 27 May 2005 14:58:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4RLwNHX011660;
+	Fri, 27 May 2005 14:58:23 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6lkwgfl.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Rene Scharfe wrote:
 
->I'll take the blame for
->that contraption, if you don't mind.  ;) 
+
+On Fri, 27 May 2005, Junio C Hamano wrote:
 >
-<snip>
+> >>>>> "TG" == Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+> 
+> TG> But I guess 8 is the limit, isn't it? Did you thought to make this 8 a
+> TG> 'n' or is 8 just enough? :-)
+> 
+> Built-in limit of commit object is 16, not 8.
 
->Author
-> ------
->-Written by Linus Torvalds <torvalds@osdl.org>
->+Written by Rene Scharfe.
->  
->
-Good - this was what I intended to have happen all along :)
+Actually, even that is not actually built into the commit object itself, 
+that's just a #define in commit-tree.c.
 
-Also Junio suggested a more general attribution - which I have now put
-into eg git-mkdelta.txt
+Change the MAXPARENT design from 16 to 1024, and nobody will notice any 
+difference at all, except "git-commit-tree.c" will use 20kB more memory ;)
 
-Git is written by Linus Torvalds <torvalds@osdl.org> and the git-list
-<git@vger.kernel.org>.
+There's no limit in the data structures, although there clearly is a 
+"sanity" limit (and I personally suspect it comes before you hit 16 ;)
 
-I'll generalise the rest of the files at some point and respect any more
-specific atributions.
-
-David
-
--- 
-
+		Linus
