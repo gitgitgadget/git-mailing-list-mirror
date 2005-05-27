@@ -1,71 +1,212 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Suggestion: superceded tags
-Date: Fri, 27 May 2005 09:10:10 -0700
-Message-ID: <42974662.3040106@zytor.com>
-References: <4296B051.10603@zytor.com> <1117193179.1957.28.camel@sisko.sctweedie.blueyonder.co.uk>
+From: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Subject: GIT and COGITO individual scripts hidding from PATH
+Date: Fri, 27 May 2005 18:24:04 +0200
+Message-ID: <200505271824.05105.pisa@cmp.felk.cvut.cz>
+References: <200504132249.16848.pisa@cmp.felk.cvut.cz> <200505241235.02597.pisa@cmp.felk.cvut.cz> <20050524111333.GA11223@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 18:11:34 2005
+X-From: git-owner@vger.kernel.org Fri May 27 18:22:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbhOR-0007Rw-D1
-	for gcvg-git@gmane.org; Fri, 27 May 2005 18:09:03 +0200
+	id 1DbhZQ-0000tL-JQ
+	for gcvg-git@gmane.org; Fri, 27 May 2005 18:20:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262491AbVE0QKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 12:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262490AbVE0QKs
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 12:10:48 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:15775 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S262488AbVE0QK2
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2005 12:10:28 -0400
-Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4RGAAXD030772
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 May 2005 09:10:11 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
-X-Accept-Language: en-us, en
-To: "Stephen C. Tweedie" <sct@redhat.com>
-In-Reply-To: <1117193179.1957.28.camel@sisko.sctweedie.blueyonder.co.uk>
-X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.3 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261863AbVE0QWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 12:22:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262482AbVE0QWW
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 12:22:22 -0400
+Received: from av1.karneval.cz ([81.27.192.107]:38004 "EHLO av1.karneval.cz")
+	by vger.kernel.org with ESMTP id S261863AbVE0QWE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 12:22:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by av1.karneval.cz (Postfix) with ESMTP id D6B6470BA7;
+	Fri, 27 May 2005 18:48:39 +0200 (CEST)
+Received: from av1.karneval.cz ([127.0.0.1])
+ by localhost (av1 [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23487-05; Fri, 27 May 2005 18:48:39 +0200 (CEST)
+Received: from mail.karneval.cz (mx1.karneval.cz [81.27.192.53])
+	by av1.karneval.cz (Postfix) with ESMTP id 2EA4C70BA6;
+	Fri, 27 May 2005 18:48:39 +0200 (CEST)
+Received: from [10.5.150.25] (unknown [10.5.150.25])
+	by mail.karneval.cz (Postfix) with ESMTP id 06B304FC62B;
+	Fri, 27 May 2005 18:21:55 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>, git@vger.kernel.org
+User-Agent: KMail/1.8
+In-Reply-To: <20050524111333.GA11223@pasky.ji.cz>
+Content-Disposition: inline
+X-Virus-Scanned: by karneval.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Stephen C. Tweedie wrote:
-> Hi,
-> 
-> On Fri, 2005-05-27 at 06:29, H. Peter Anvin wrote:
-> 
-> 
->>When a tag is moved, a new tag object is created.  This tag object will 
->>have a "supercedes" header which references the old tag object.
-> 
-> Strictly speaking, don't you need to allow multiple "supercedes" lines
-> to cover all the cases?  The pathological case is when you've got
-> multiple trees all with different variants of the same tag name, and you
-> try to merge them all at once with a multi-parent commit.  
-> 
-> Sure, tags refer to trees, not commits, so you don't necessarily have to
-> do this tag resolution at commit time (indeed, since commits don't refer
-> to tags, you *can't* do that resolution atomically on commit.)
-> 
-> But if you do pull tags into the local .git/refs/tags on merge, then you
-> will want to either resolve the conflict or supercede those tags, and at
-> that point you've got multiple equally valid tags in the histories that
-> are being superceded.  Doing so is a porcelain issue, but the core will
-> still need to understand tags with multiple supercedes: lines.
-> 
+Hello All,
 
-Indeed, multiple supercedes lines are useful to conver the resolution of 
-a tag conflict.
+I prefer to have as small number of executables in /usr/bin
+and /user/local/bin as possible. I have tried to push original
+Peter's git script to this direction for my strange personal taste.
+COGITO has taken different direction than. I have hidden cogito and git
+under wrapper to make me happy again. I thing that it is against good
+opensource habits to keep changes secret even if I do not expect
+interrest in this version. But may it be, that it can make
+happy somebody with same taste as I have.
 
-	-hpa
+The "cgt" is wrapper for all cogito programs. If cogito is
+build and installed to any prefix directory (/opt/git-cogito in my case)
+and script is copied to bin subdirectory (/opt/git-cogito/bin),
+then only single symbolic link from some searchable directory on PATH
+is enough to call all cogito commands
+  cgt pull
+  cgt update
+so usage is more convenient for my fingers learned to type cvs up, etc.
+I think, that addition of intelligent bash completion could be done easier
+if number of the first level commands to cover is smaller.
+
+Best wishes
+
+        Pavel Pisa
+
+"cgt" script
+--------------------------------------------------------------------------------
+#!/usr/bin/env bash
+#
+# The GIT scripted toolkit.
+# Copyright (c) Petr Baudis, 2005
+#
+# Script to automatically wrap individual GIT commands under one script
+# for those, who prefer only one or two links in /usr/local/bin
+# This script added by Pavel Pisa <pisa@cmp.felk.cvut.cz>
+#
+# This command mostly only multiplexes to the individual scripts based
+# on the first argument.
+
+error () {
+	echo cgt: $@ >&2
+}
+die () {
+	error $@
+	exit 1
+}
+
+if [ -z "$GIT_TOOLS_DIR" ] ; then
+	GIT_MUXBINARY_DIR="$(dirname "$0")"
+	if [ -h "$0" ]; then
+		#GIT_TOOLS_DIR="$(ls -l "$0" | sed 's/^.*-> *\(.*\) *$/\1/')"
+		GIT_TOOLS_DIR="$(readlink -f -n $0)"
+	        GIT_TOOLS_DIR="$(dirname "$GIT_TOOLS_DIR")"
+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; cd "$GIT_TOOLS_DIR" ; pwd )"
+	else
+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; pwd )"
+	fi
+
+	if [ -z "$(echo :$PATH: | sed -n -e 's#:'"$GIT_TOOLS_DIR"':#yes#p' )" ] ; 
+then
+		export PATH="$GIT_TOOLS_DIR:$PATH"
+	fi
+
+	export GIT_TOOLS_DIR
+fi
+
+#echo =$GIT_TOOLS_DIR
+#echo PATH=$PATH
+#echo CWD=$(pwd)
+#exit 
+
+help () {
+	echo "cgt recognizes next commands:" >&2 
+	(cd $GIT_TOOLS_DIR ; ls cg-* ) | sed -n -e 's/\<cg-\([^ ]*\)\>/\1/pg' >&2 
+}
+
+
+cmd=$1; shift
+
+if [ ! "$cmd" ]; then
+	error "missing command"
+	help
+	exit 1
+fi
+
+cgt_cmd_exe="${GIT_TOOLS_DIR}/cg-$cmd"
+
+if [ ! -e "$cgt_cmd_exe" ]; then
+	error "unrecognized command ${cmd}"
+	help
+	exit 1
+fi
+
+"$cgt_cmd_exe" "$@"
+--------------------------------------------------------------------------------
+
+"git" script
+--------------------------------------------------------------------------------
+#!/usr/bin/env bash
+#
+# The GIT scripted toolkit.
+# Copyright (c) Petr Baudis, 2005
+#
+# Script to automatically wrap individual GIT commands under one script
+# for those, who prefer only one or two links in /usr/local/bin
+# This script added by Pavel Pisa <pisa@cmp.felk.cvut.cz>
+#
+# This command mostly only multiplexes to the individual scripts based
+# on the first argument.
+
+error () {
+	echo git: $@ >&2
+}
+die () {
+	error $@
+	exit 1
+}
+
+if [ -z "$GIT_TOOLS_DIR" ] ; then
+	GIT_MUXBINARY_DIR="$(dirname "$0")"
+	if [ -h "$0" ]; then
+		#GIT_TOOLS_DIR="$(ls -l "$0" | sed 's/^.*-> *\(.*\) *$/\1/')"
+		GIT_TOOLS_DIR="$(readlink -f -n $0)"
+	        GIT_TOOLS_DIR="$(dirname "$GIT_TOOLS_DIR")"
+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; cd "$GIT_TOOLS_DIR" ; pwd )"
+	else
+		GIT_TOOLS_DIR="$(cd "$GIT_MUXBINARY_DIR" ; pwd )"
+	fi
+
+	if [ -z "$(echo :$PATH: | sed -n -e 's#:'"$GIT_TOOLS_DIR"':#yes#p' )" ] ; 
+then
+		export PATH="$GIT_TOOLS_DIR:$PATH"
+	fi
+
+	export GIT_TOOLS_DIR
+fi
+
+#echo =$GIT_TOOLS_DIR
+#echo PATH=$PATH
+#echo CWD=$(pwd)
+#exit 
+
+help () {
+	echo "git recognizes next commands:" >&2 
+	(cd $GIT_TOOLS_DIR ; ls git-* ) | sed -n -e 's/\<git-\([^ ]*\)\>/\1/pg' >&2 
+}
+
+
+cmd=$1; shift
+
+if [ ! "$cmd" ]; then
+	error "missing command"
+	help
+	exit 1
+fi
+
+git_cmd_exe="${GIT_TOOLS_DIR}/git-$cmd"
+
+if [ ! -e "$git_cmd_exe" ]; then
+	error "unrecognized command ${cmd}"
+	help
+	exit 1
+fi
+
+"$git_cmd_exe" "$@"
+--------------------------------------------------------------------------------
+
