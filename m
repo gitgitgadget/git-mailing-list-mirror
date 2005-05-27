@@ -1,61 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Summary of core GIT while you are away.
-Date: Thu, 26 May 2005 21:31:33 -0700
-Message-ID: <7vy8a11e8q.fsf@assigned-by-dhcp.cox.net>
-References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org>
-	<20050526004411.GA12360@vrfy.org>
-	<Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org>
-	<20050526202712.GA6024@vrfy.org>
-	<7vd5rdbtif.fsf@assigned-by-dhcp.cox.net>
-	<20050526232953.GA6215@vrfy.org>
-	<7vll618rnw.fsf@assigned-by-dhcp.cox.net> <42967CFE.7030007@zytor.com>
-	<7vk6ll2vde.fsf@assigned-by-dhcp.cox.net> <42969B98.7070701@zytor.com>
-	<7v4qcp2tp1.fsf@assigned-by-dhcp.cox.net> <42969E6E.5080606@zytor.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: resolving merge conflicts?
+Date: Thu, 26 May 2005 22:15:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505262202050.17402@ppc970.osdl.org>
+References: <429698A0.1020008@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Linus Torvalds <torvalds@osdl.org>, pasky@ucw.cz,
-	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 06:30:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 07:12:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbWTc-0001ua-IN
-	for gcvg-git@gmane.org; Fri, 27 May 2005 06:29:42 +0200
+	id 1DbX8P-0005aI-KV
+	for gcvg-git@gmane.org; Fri, 27 May 2005 07:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261681AbVE0Ebi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 00:31:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261735AbVE0Ebi
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 00:31:38 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:405 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261681AbVE0Ebh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2005 00:31:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050527043134.FBPB19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 27 May 2005 00:31:34 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42969E6E.5080606@zytor.com> (H. Peter Anvin's message of "Thu,
- 26 May 2005 21:13:34 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261649AbVE0FNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 01:13:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261761AbVE0FNp
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 01:13:45 -0400
+Received: from fire.osdl.org ([65.172.181.4]:45270 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261649AbVE0FNm (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 01:13:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4R5DdjA004703
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 26 May 2005 22:13:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4R5Dccg002773;
+	Thu, 26 May 2005 22:13:38 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <429698A0.1020008@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "HPA" == H Peter Anvin <hpa@zytor.com> writes:
-
-HPA> Junio C Hamano wrote:
->>>>>>> "HPA" == H Peter Anvin <hpa@zytor.com> writes:
-HPA> I, for one, use Cogito on the kernel.org machines.
->> I see.  I see cogito.git catching up to the Linus core, so this
->> would not be much of a problem anymore.
-
-HPA> It would still be a lot nicer to have them decoupled.
-
-No question about it.  Let's give Petr some time.
 
 
+On Thu, 26 May 2005, Jeff Garzik wrote:
+> 
+> So is there a doc or something that describes how to resolve merge 
+> conflicts?
+
+Dang. Not really. I've always done them just by hand.
+
+> Presumably I look at .merge_file_*, and make sure that all necessary 
+> changes make it into the copy of the file in the working directory... 
+> then what?  How to continue the merge?
+
+Start from that, and when you're happy with it, just do "git-update-cache"  
+when the file is to your liking, and re-do
+
+	git-merge-cache git-merge-one-file-script -a
+
+if you forget where you were and what other files you need to do by hand
+(which I always do, not that I've seen a lot of merge problems).
+
+Also, I assume that this is something cogito does better. But even the 
+git-merge-one-script could probably be nicer. 
+
+Quite frankly, a more friendly git-resolve-script would probably do
+
+	git-merge-cache -o git-merge-one-file-script -a
+
+(the "-o" flag causes it to merge as much as it can automatically, instead 
+of exiting at the first one), and git-merge-one-file-script should 
+probably on failure do
+
+	echo "ERROR: Leaving conflict merge in $4."
+	mv "$src2" "$4"
+	exit 1
+
+instead of leaving it in the temporary file. The temp-file is good for a
+graphical thing (which was kind of what I was hoping for), though, so it
+probably depends on how you continue with the merge.
+
+(I also like the temp-file just because _if_ you have dirty data in your 
+tree, overwriting it with the failed merge is pretty damn impolite, but of 
+course, you shouldn't try to merge with dirty data, and you may prefer the 
+one that is _practically_ more friendly even if it's a bit unsafe. It's a 
+trade-off)
+
+		Linus
