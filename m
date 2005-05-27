@@ -1,74 +1,98 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Summary of core GIT while you are away.
-Date: Thu, 26 May 2005 22:21:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505262216190.17402@ppc970.osdl.org>
-References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org> <20050526004411.GA12360@vrfy.org>
- <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org> <20050526202712.GA6024@vrfy.org>
- <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net> <20050526232953.GA6215@vrfy.org>
- <7vll618rnw.fsf@assigned-by-dhcp.cox.net> <42967CFE.7030007@zytor.com>
- <7vk6ll2vde.fsf@assigned-by-dhcp.cox.net> <42969B98.7070701@zytor.com>
- <7v4qcp2tp1.fsf@assigned-by-dhcp.cox.net> <42969E6E.5080606@zytor.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Suggestion: superceded tags
+Date: Thu, 26 May 2005 22:29:53 -0700
+Message-ID: <4296B051.10603@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Kay Sievers <kay.sievers@vrfy.org>, pasky@ucw.cz,
-	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 07:18:36 2005
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri May 27 07:28:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbXEB-0005zF-CC
-	for gcvg-git@gmane.org; Fri, 27 May 2005 07:17:47 +0200
+	id 1DbXOG-0006lH-3K
+	for gcvg-git@gmane.org; Fri, 27 May 2005 07:28:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261814AbVE0FTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 01:19:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261823AbVE0FTr
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 01:19:47 -0400
-Received: from fire.osdl.org ([65.172.181.4]:46553 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261814AbVE0FTp (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 01:19:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4R5JQjA005171
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 26 May 2005 22:19:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4R5JOVH002964;
-	Thu, 26 May 2005 22:19:25 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42969E6E.5080606@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261823AbVE0FaI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 01:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261824AbVE0FaI
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 01:30:08 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:37038 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261823AbVE0F37
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2005 01:29:59 -0400
+Received: from [172.27.0.18] (c-67-169-23-106.hsd1.ca.comcast.net [67.169.23.106])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j4R5TrmQ016068
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 May 2005 22:29:54 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.2 (X11/20050324)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.3 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+It's a pretty fundamental concept in git that objects in the object 
+repository live forever.  This is key to distribution, and is a good thing.
 
+However, for tag objects, this is somewhat awkward.  It is occationally 
+necessary to move a tag (restarted release processes, being one reason); 
+purists tend to frown on it but it's reality.
 
-On Thu, 26 May 2005, H. Peter Anvin wrote:
-> 
-> It would still be a lot nicer to have them decoupled.
+It would be nice to maintain that all tag information exists in the 
+object database and loss of the .git/refs directory will not harm that. 
+  Thus, I'd like to suggest the following protocol:
 
-Yes, but git has been changing so much that I think it has made sense to 
-have it together with cogito, so that you don't have version skew.
+When a tag is moved, a new tag object is created.  This tag object will 
+have a "supercedes" header which references the old tag object.
 
-Have we gotten to the point where git is calming down? Judging by the raw
-diff etc changes, I'd say no, but on the other hand, those are largely
-over, and maybe we don't have any serious real incompatibilities pending
-any mroe...
+Say, for example, that tag "klibc-1.0.14", object 
+4695b4d163b62f6a9860b9bbe06ff30edb6e02be, exists with the following 
+contents:
 
-The object data structures have been pretty stable (thank the Gods!), but 
-command line switches and some data output formats certainly have not.
+object fdb8a185ef261568f01140989745b8636212db71
+type commit
+tag klibc-1.0.14
 
-The one big change I see coming is that I really want to make
-"git-rev-list HEAD TAIL" work right (ie do a real reachabilty thing rather
-than the date-based thing), at which point you'd _usually_ not need to use
-the full logic of git-rev-tree that can do multiple parents etc. But that
-change should be compatible, I hope (ie old scripts will continue to use
-git-rev-tree and play games with the output, because they'd not know any
-better).
+Now "klibc-1.0.14" needs to be moved to new commit 
+088c166af39b1ca2712667c44dccd3c7af99a8fb.
 
-			Linus
+The new tag object should thus look like:
+
+object 088c166af39b1ca2712667c44dccd3c7af99a8fb
+type commit
+supercedes 4695b4d163b62f6a9860b9bbe06ff30edb6e02be
+tag klibc-1.0.14
+
+(I put "supercedes" before "tag", because unfortunately the tag header 
+terminates immediately after the "tag" line without having an 
+intervening blank line.)
+
+This will make it possible to move the tag, but still to recreate all 
+tag information from the object database alone.
+
+None of this can of course help the conflict if the same tag is created 
+in different places by different people, and then they are trying to be 
+merged.  The above at least makes it possible to distinguish the case of 
+a tag conflict with the case of a moved tag, and in the case of the 
+moved tag, will stand out.
+
+On the other hand, it makes it possible for more than one tag to exist 
+with the same name pointing to the same object:
+
+User 1 creates tag X referring to object A	-> T1
+User 1 moves tag X to object B			-> T2
+User 2 creates tag X referring to object B	-> T3
+
+There is no conflict here, but T2 and T3 will be different objects (one 
+will supercede T1, and the other won't.)  An object-database-scanning 
+program should observe that T2 and T3 are consistent, and T1 is 
+superceded, therefore tag X is well-defined; it can arbitrarily use 
+either instance T2 or T3.
+
+	-hpa
