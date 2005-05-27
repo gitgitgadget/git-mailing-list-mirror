@@ -1,80 +1,88 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Broken directory pathname pruning..
-Date: Thu, 26 May 2005 17:41:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Summary of core GIT while you are away.
+Date: Thu, 26 May 2005 17:40:54 -0700
+Message-ID: <7vsm097b6x.fsf@assigned-by-dhcp.cox.net>
+References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org>
+	<20050526004411.GA12360@vrfy.org>
+	<Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org>
+	<20050526202712.GA6024@vrfy.org>
+	<7vy8a18w1e.fsf@assigned-by-dhcp.cox.net>
+	<20050526235944.GB6215@vrfy.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Fri May 27 02:39:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, pasky@ucw.cz,
+	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 02:40:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbSrU-0006Pm-6o
-	for gcvg-git@gmane.org; Fri, 27 May 2005 02:38:05 +0200
+	id 1DbSsp-0006aF-56
+	for gcvg-git@gmane.org; Fri, 27 May 2005 02:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261446AbVE0Aji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 20:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261364AbVE0Aj3
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 20:39:29 -0400
-Received: from fire.osdl.org ([65.172.181.4]:43681 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261331AbVE0AjW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 May 2005 20:39:22 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4R0d6jA019285
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 26 May 2005 17:39:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4R0d6BJ024170;
-	Thu, 26 May 2005 17:39:06 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261418AbVE0AlO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 20:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261414AbVE0AlN
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 20:41:13 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:61439 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261418AbVE0Ak5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 20:40:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050527004055.XXEJ16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 26 May 2005 20:40:55 -0400
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050526235944.GB6215@vrfy.org> (Kay Sievers's message of
+ "Fri, 27 May 2005 01:59:44 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "KS" == Kay Sievers <kay.sievers@vrfy.org> writes:
 
-The directory-based pathname pruning doesn't work any more.
+KS> I see what you mean, but allow to pass any charater through a cgi to a
+KS> invoked shell as a command-line option is a nightmare without being very
+KS> carful.
 
-I used to just say
+You are absolutely right that you must be careful.  But being
+careful is not that hard.
 
-	git-whatchanged -v -p drivers/usb/
+I do not know what you are using to parse the data coming from
+the browser (presumably application/x-www-form-urlencoded or
+somesuch), but once you got the raw data out of it in a variable
+in your host language (sorry I do not know what language you are
+writing in, either), quoting that value safely for shell command
+line is very simple and easy.  You can emulate what sq_expand()
+in diff.c does.
 
-and I just noticed that it doesn't work any more.
+Essentially you take advantage of single quote quoting which
+lets you pass anything other than single quotes as literals, and
+deal with single quotes by stepping out temporarily of the
+single quote environment every time you see a single quote,
+quote that single quote with a backslash, and immediately after
+that you go back into single quote environment again and continue.
 
-It _does_ work if I leave the final '/' off the thing.
+  original     sq_expand     result
+  name     ==> name      ==> 'name'
+  a b      ==> a b       ==> 'a b'
+  a'b      ==> a'\''b    ==> 'a'\''b'
 
-diff-tree itself does this right: that's shown by the fact that with the
-slash in place, we still do get the right _changelog_ that is restricted
-to drivers/usb changes, but the diffs themselves are missing.
+So in shell, using sed, you would do something like this:
 
-So it seems to be purely "diffcore_pathspec()" that is broken.
+------------
+#!/bin/sh
 
-Btw, I don't think we should call "diffcore_pathspec()" at all in
-diff-tree, because diff-tree already handles "interesting" paths correctly
-(and has to do so for performance reasons, since it's not acceptable to
-expand all the trees and diff them).
+orig="foo '"'\bar	b
+az'
 
-So in the "git-whatchanged"  case the fix is as simple as just removing
-those two lines, but the bug then continues to exist in the other *diff* 
-programs..
+script="s/'/'\\\\\\''/g" ;# change (') to ('\'')
 
-Junio?
+sq_inside=`echo "$orig" | sed "$script"`
 
-		Linus
-
-diff --git a/diff-tree.c b/diff-tree.c
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -268,8 +268,6 @@ static int call_diff_flush(void)
- 		diff_flush(DIFF_FORMAT_NO_OUTPUT, 0);
- 		return 0;
- 	}
--	if (nr_paths)
--		diffcore_pathspec(paths);
- 	if (header) {
- 		if (diff_output_format == DIFF_FORMAT_MACHINE) {
- 			const char *ep, *cp;
+echo "'$sq_inside'" ;# and enclose the whole thing in sq pair
+------------
 
