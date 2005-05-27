@@ -1,61 +1,52 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: More gitweb queries..
-Date: Fri, 27 May 2005 12:48:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505271247320.17402@ppc970.osdl.org>
+Date: Fri, 27 May 2005 12:52:35 -0700
+Message-ID: <7vhdgoxx8c.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
- <7voeawxy53.fsf@assigned-by-dhcp.cox.net>
+	<20050527192941.GE7068@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-2022-jp-2
+Content-Type: text/plain; charset=us-ascii
 Cc: Kay Sievers <kay.sievers@vrfy.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 21:45:06 2005
+X-From: git-owner@vger.kernel.org Fri May 27 21:51:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dbkku-0006ol-2E
-	for gcvg-git@gmane.org; Fri, 27 May 2005 21:44:28 +0200
+	id 1Dbkqq-0007g7-4L
+	for gcvg-git@gmane.org; Fri, 27 May 2005 21:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261556AbVE0Tqa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 15:46:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262559AbVE0Tq3
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 15:46:29 -0400
-Received: from fire.osdl.org ([65.172.181.4]:60115 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261556AbVE0Tq0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 15:46:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4RJkCjA000771
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 27 May 2005 12:46:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4RJkB2p005651;
-	Fri, 27 May 2005 12:46:11 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voeawxy53.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261900AbVE0Twj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 15:52:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262559AbVE0Twj
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 15:52:39 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:45782 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S261900AbVE0Twh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2005 15:52:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050527195237.WFCQ23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 27 May 2005 15:52:37 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <20050527192941.GE7068@cip.informatik.uni-erlangen.de> (Thomas
+ Glanzmann's message of "Fri, 27 May 2005 21:29:41 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "TG" == Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
 
+TG> talking about octopus-merges ... I don't understand how they work. What
+TG> happens if one file is touched in every of the 8 trees. How can that be
+TG> handled?
 
-On Fri, 27 May 2005, Junio C Hamano wrote:
->
-> >>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> LT>   Combining some of the features of the two (that .AN|ber-cool revision 
-> LT>   history graph from gitk rules, for example) might be cool. I get the 
-> LT>   urge to do octopus-merges in the kernel just because of how good they
-> LT>   look in gitk ;) ]
-> 
-> Hey, Octopus is what you explicitly told me not to do ;-).
+You merge by hand and resolve if they have conflicts, just like
+what you already do in two head merge case.
 
-I know, I know. I said "I get urges", I didn't say I'll do it.
+Octopus is only about how you record the results.  Instead of
+making 7 consecutive "merge from A" "merge from B" to record two
+head merges, you just say "I merged these 8 heads" in a single
+commit.
 
-I'll try to control myself.
-
-Maybe.
-
-		Linus
