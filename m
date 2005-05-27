@@ -1,34 +1,43 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: resolving merge conflicts?
-Date: Thu, 26 May 2005 22:15:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505262202050.17402@ppc970.osdl.org>
-References: <429698A0.1020008@pobox.com>
+Subject: Re: Summary of core GIT while you are away.
+Date: Thu, 26 May 2005 22:21:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505262216190.17402@ppc970.osdl.org>
+References: <7vzmuy13od.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0505160837080.28162@ppc970.osdl.org> <20050526004411.GA12360@vrfy.org>
+ <Pine.LNX.4.58.0505251826460.2307@ppc970.osdl.org> <20050526202712.GA6024@vrfy.org>
+ <7vd5rdbtif.fsf@assigned-by-dhcp.cox.net> <20050526232953.GA6215@vrfy.org>
+ <7vll618rnw.fsf@assigned-by-dhcp.cox.net> <42967CFE.7030007@zytor.com>
+ <7vk6ll2vde.fsf@assigned-by-dhcp.cox.net> <42969B98.7070701@zytor.com>
+ <7v4qcp2tp1.fsf@assigned-by-dhcp.cox.net> <42969E6E.5080606@zytor.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 07:12:04 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Kay Sievers <kay.sievers@vrfy.org>, pasky@ucw.cz,
+	braddr@puremagic.com, nico@cam.org, david@dgreaves.com,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 27 07:18:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbX8P-0005aI-KV
-	for gcvg-git@gmane.org; Fri, 27 May 2005 07:11:49 +0200
+	id 1DbXEB-0005zF-CC
+	for gcvg-git@gmane.org; Fri, 27 May 2005 07:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261649AbVE0FNp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 01:13:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261761AbVE0FNp
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 01:13:45 -0400
-Received: from fire.osdl.org ([65.172.181.4]:45270 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261649AbVE0FNm (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 01:13:42 -0400
+	id S261814AbVE0FTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 01:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261823AbVE0FTr
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 01:19:47 -0400
+Received: from fire.osdl.org ([65.172.181.4]:46553 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261814AbVE0FTp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 01:19:45 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4R5DdjA004703
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4R5JQjA005171
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 26 May 2005 22:13:39 -0700
+	Thu, 26 May 2005 22:19:26 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4R5Dccg002773;
-	Thu, 26 May 2005 22:13:38 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <429698A0.1020008@pobox.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4R5JOVH002964;
+	Thu, 26 May 2005 22:19:25 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42969E6E.5080606@zytor.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -39,48 +48,27 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Thu, 26 May 2005, Jeff Garzik wrote:
+On Thu, 26 May 2005, H. Peter Anvin wrote:
 > 
-> So is there a doc or something that describes how to resolve merge 
-> conflicts?
+> It would still be a lot nicer to have them decoupled.
 
-Dang. Not really. I've always done them just by hand.
+Yes, but git has been changing so much that I think it has made sense to 
+have it together with cogito, so that you don't have version skew.
 
-> Presumably I look at .merge_file_*, and make sure that all necessary 
-> changes make it into the copy of the file in the working directory... 
-> then what?  How to continue the merge?
+Have we gotten to the point where git is calming down? Judging by the raw
+diff etc changes, I'd say no, but on the other hand, those are largely
+over, and maybe we don't have any serious real incompatibilities pending
+any mroe...
 
-Start from that, and when you're happy with it, just do "git-update-cache"  
-when the file is to your liking, and re-do
+The object data structures have been pretty stable (thank the Gods!), but 
+command line switches and some data output formats certainly have not.
 
-	git-merge-cache git-merge-one-file-script -a
+The one big change I see coming is that I really want to make
+"git-rev-list HEAD TAIL" work right (ie do a real reachabilty thing rather
+than the date-based thing), at which point you'd _usually_ not need to use
+the full logic of git-rev-tree that can do multiple parents etc. But that
+change should be compatible, I hope (ie old scripts will continue to use
+git-rev-tree and play games with the output, because they'd not know any
+better).
 
-if you forget where you were and what other files you need to do by hand
-(which I always do, not that I've seen a lot of merge problems).
-
-Also, I assume that this is something cogito does better. But even the 
-git-merge-one-script could probably be nicer. 
-
-Quite frankly, a more friendly git-resolve-script would probably do
-
-	git-merge-cache -o git-merge-one-file-script -a
-
-(the "-o" flag causes it to merge as much as it can automatically, instead 
-of exiting at the first one), and git-merge-one-file-script should 
-probably on failure do
-
-	echo "ERROR: Leaving conflict merge in $4."
-	mv "$src2" "$4"
-	exit 1
-
-instead of leaving it in the temporary file. The temp-file is good for a
-graphical thing (which was kind of what I was hoping for), though, so it
-probably depends on how you continue with the merge.
-
-(I also like the temp-file just because _if_ you have dirty data in your 
-tree, overwriting it with the failed merge is pretty damn impolite, but of 
-course, you shouldn't try to merge with dirty data, and you may prefer the 
-one that is _practically_ more friendly even if it's a bit unsafe. It's a 
-trade-off)
-
-		Linus
+			Linus
