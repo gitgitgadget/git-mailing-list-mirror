@@ -1,73 +1,44 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] allow pathspec to end with a slash (take #2)
-Date: Thu, 26 May 2005 17:52:43 -0700
-Message-ID: <7v7jhl7an8.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
-	<7vis157ate.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: BEWARE: mkdelta is broken
+Date: Thu, 26 May 2005 21:32:19 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505262125050.16151@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 27 02:51:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri May 27 03:42:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbT3o-0007Xx-Iu
-	for gcvg-git@gmane.org; Fri, 27 May 2005 02:50:49 +0200
+	id 1DbTrI-0006vn-LW
+	for gcvg-git@gmane.org; Fri, 27 May 2005 03:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261257AbVE0Aws (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 20:52:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261350AbVE0Aws
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 20:52:48 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4268 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261257AbVE0Awp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 20:52:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050527005243.JGXE23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 26 May 2005 20:52:43 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vis157ate.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Thu, 26 May 2005 17:49:01 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261422AbVE0BnT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 21:43:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261440AbVE0Bfm
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 21:35:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:43332 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261407AbVE0BcU
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 21:32:20 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR011.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IH400BASK9VZI@VL-MO-MR011.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 26 May 2005 21:32:19 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Oops, wrong patch; I am an idiot.
+Please don't use mkdelta on a valuable repository for the time being.
 
-------------
-Recent rewrite broke "git-whatchanged -v -p drivers/usb/" but 
-"git-whatchanged -v -p drivers/usb" still works.  Just strip out
-the trailing slashes internally to make it work again.
+The current delta loop detection logic is broken.  So if you have 
+multiple merged branches or you have a changeset that revert things then 
+you might end up with a delta loop and fsck-cache will effectively 
+complain about unresolved deltas and assorted dangling/broken object 
+links.
 
-It uses compare-thing-with-number comparison order instead of
-visual comparison order ;-).
+I'm working on a fix right now.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-cd /opt/packrat/playpen/public/in-place/git/git.junio/
-jit-diff 1: diffcore-pathspec.c
-# - linus: [PATCH] Make ls-* output consistent with diff-* output format.
-# + (working tree)
-diff --git a/diffcore-pathspec.c b/diffcore-pathspec.c
---- a/diffcore-pathspec.c
-+++ b/diffcore-pathspec.c
-@@ -45,8 +45,12 @@ void diffcore_pathspec(const char **path
- 	speccnt = i;
- 	spec = xmalloc(sizeof(*spec) * speccnt);
- 	for (i = 0; pathspec[i]; i++) {
-+		int l;
- 		spec[i].spec = pathspec[i];
--		spec[i].len = strlen(pathspec[i]);
-+		l = strlen(pathspec[i]);
-+		while (l > 0 && pathspec[i][l-1] == '/')
-+			l--;
-+		spec[i].len = l;
- 	}
- 
- 	for (i = 0; i < q->nr; i++) {
 
-Compilation finished at Thu May 26 17:50:40
-
+Nicolas
