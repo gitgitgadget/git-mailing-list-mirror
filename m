@@ -1,134 +1,72 @@
-From: Michael Frank <msfrank@syntaxjockey.com>
-Subject: [PATCH cogito] adds cg-mirror-add and cg-mirror-sync
-Date: Thu, 26 May 2005 19:17:39 -0700
-Message-ID: <1117160259.13298.12.camel@localhost.localdomain>
+From: David Meybohm <dmeybohmlkml@bellsouth.net>
+Subject: [PATCH] check_file_directory_conflict path fix
+Date: Thu, 26 May 2005 22:59:10 -0400
+Message-ID: <20050527025910.GA4836@localhost>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-L6iMOnIImPR95xhw8Xw5"
-X-From: git-owner@vger.kernel.org Fri May 27 04:19:39 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Fri May 27 04:57:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbUQT-0004oP-ER
-	for gcvg-git@gmane.org; Fri, 27 May 2005 04:18:17 +0200
+	id 1DbV1W-000108-So
+	for gcvg-git@gmane.org; Fri, 27 May 2005 04:56:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261457AbVE0CTu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 26 May 2005 22:19:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261440AbVE0CTg
-	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 22:19:36 -0400
-Received: from Yonetim.Ayvam.Net ([65.19.178.178]:16391 "EHLO
-	secure.syntaxjockey.com") by vger.kernel.org with ESMTP
-	id S261453AbVE0CTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 May 2005 22:19:14 -0400
-Received: from [192.168.1.100] (207-224-29-220.ptld.qwest.net [207.224.29.220])
-	by secure.syntaxjockey.com (Postfix) with ESMTP id 7F8F797B5
-	for <git@vger.kernel.org>; Thu, 26 May 2005 22:19:10 -0400 (EDT)
+	id S261494AbVE0C63 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 26 May 2005 22:58:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261515AbVE0C63
+	(ORCPT <rfc822;git-outgoing>); Thu, 26 May 2005 22:58:29 -0400
+Received: from imf22aec.mail.bellsouth.net ([205.152.59.70]:41967 "EHLO
+	imf22aec.mail.bellsouth.net") by vger.kernel.org with ESMTP
+	id S261494AbVE0C6Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 May 2005 22:58:24 -0400
+Received: from ibm67aec.bellsouth.net ([65.10.215.177])
+          by imf22aec.mail.bellsouth.net
+          (InterMail vM.5.01.06.11 201-253-122-130-111-20040605) with ESMTP
+          id <20050527025822.INHD2086.imf22aec.mail.bellsouth.net@ibm67aec.bellsouth.net>
+          for <git@vger.kernel.org>; Thu, 26 May 2005 22:58:22 -0400
+Received: from localhost ([65.10.215.177]) by ibm67aec.bellsouth.net
+          (InterMail vG.1.02.00.01 201-2136-104-101-20040929) with ESMTP
+          id <20050527025821.XCWZ8829.ibm67aec.bellsouth.net@localhost>
+          for <git@vger.kernel.org>; Thu, 26 May 2005 22:58:21 -0400
 To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.1.1 
+Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.5) Gecko/20030927
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+check_file_directory_conflict can give the wrong answers. This is
+because the wrong length is passed to cache_name_pos. The length
+passed should be the length of the whole path from the root, not
+the length of each path subcomponent.
 
---=-L6iMOnIImPR95xhw8Xw5
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+	$ git-init-db
+	defaulting to local storage area
+	$ mkdir path && touch path/file
+	$ git-update-cache --add path/file
+	$ rm path/file
+	$ mkdir path/file && touch path/file/f
+	$ git-update-cache --add path/file/f  <-- Conflict ignored
+	$
 
-The attached patch adds the two programs cg-mirror-add and
-cg-mirror-sync.  Say you do all of your work on your laptop and you want
-to make a mirror of your repository available to the public.  You
-specify the location of the mirror with cg-mirror-add:
-
-$ cg-mirror-add scp://my.server:/var/www/repos/project.git
-
-which locally creates the file .git/mirrors.  When you want to upload
-your changes, you run cg-mirror-sync.
-
-Michael
-
-
-Signed-Off-By: Michael Frank <msfrank@syntaxjockey.com>
-
--- 
-
-Michael Frank               .~.
-msfrank@syntaxjockey.com    /v\
-                           // \\
-                          /(   )\
-                           ^`-'^
-
---=-L6iMOnIImPR95xhw8Xw5
-Content-Disposition: attachment; filename=mirror.patch
-Content-Type: text/x-patch; name=mirror.patch; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-diff -pruN cogito.old/cg-mirror-add cogito.new/cg-mirror-add
---- cogito.old/cg-mirror-add	1969-12-31 16:00:00.000000000 -0800
-+++ cogito.new/cg-mirror-add	2005-05-26 18:46:16.357489808 -0700
-@@ -0,0 +1,22 @@
-+#!/usr/bin/env bash
-+#
-+# Add new mirror to the GIT repository.
-+# Copyright (c) Michael Frank, 2005
-+#
-+# Takes the mirror location as parameter.  Location can be
-+# an rsync URI, as in:
-+#     $ cg-mirror add rsync://your.server:/path/to/project.git
-+#
-+# or an scp URI (rsync is still used to copy the files):
-+#     $ cg-mirror add scp://user@your.server:/project/path.git
-+#
-+
-+. ${COGITO_LIB}cg-Xlib
-+
-+location=$1
-+
-+([ "$location" ]) || die "usage: cg-mirror-add MIRROR_LOC"
-+if [ -e $_git/mirrors ]; then
-+    grep -xq $location $_git/mirrors && die "mirror already exists"
-+fi
-+echo "$location" >> $_git/mirrors
-diff -pruN cogito.old/cg-mirror-sync cogito.new/cg-mirror-sync
---- cogito.old/cg-mirror-sync	1969-12-31 16:00:00.000000000 -0800
-+++ cogito.new/cg-mirror-sync	2005-05-26 18:37:35.408686064 -0700
-@@ -0,0 +1,25 @@
-+#!/usr/bin/env bash
-+#
-+# Pushes changes from the local GIT repository to mirrors.
-+# Copyright (c) Michael Frank, 2005
-+#
-+
-+. ${COGITO_LIB}cg-Xlib
-+
-+[ -r $_git/mirrors ] || die "No mirrors to sync!"
-+
-+uri=
-+for mirror in `cat $_git/mirrors`; do
-+    if echo $mirror | grep -q "^scp://"; then
-+        uri=`echo $mirror | sed -e "s/^scp:\/\///"`
-+        echo "syncing $mirror ..."
-+        rsync -a -v -z --exclude=mirrors $_git/* $uri
-+        echo ""
-+    elif echo $mirror | grep -q "^rsync://"; then
-+        echo "syncing $mirror ..."
-+        rsync -a -v -z --exclude=mirrors $_git/* $mirror
-+        echo ""
-+    else
-+        echo "skipping $mirror; mirror uses unknown transport"
-+    fi
-+done
-diff -pruN cogito.old/Makefile cogito.new/Makefile
---- cogito.old/Makefile	2005-05-26 19:15:25.412593016 -0700
-+++ cogito.new/Makefile	2005-05-26 17:44:43.348912448 -0700
-@@ -55,7 +55,8 @@ PROG=   git-update-cache git-diff-files 
- SCRIPT=	commit-id tree-id parent-id cg-add cg-admin-lsobj cg-admin-uncommit \
- 	cg-branch-add cg-branch-ls cg-cancel cg-clone cg-commit cg-diff \
- 	cg-export cg-help cg-init cg-log cg-ls cg-merge cg-mkpatch cg-patch \
--	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update
-+	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update \
-+	cg-mirror-add cg-mirror-sync
- 
- LIB_SCRIPT=cg-Xlib cg-Xdiffdo cg-Xmergefile
- 
-
---=-L6iMOnIImPR95xhw8Xw5--
-
+Signed-off-by: David Meybohm <dmeybohmlkml@bellsouth.net>
+---
+Index: read-cache.c
+===================================================================
+--- ca5fef50fb68a3afbb35e1a48ac622f7a964f021/read-cache.c  (mode:100644)
++++ uncommitted/read-cache.c  (mode:100644)
+@@ -172,11 +172,13 @@
+ 	cp = pathbuf;
+ 	while (1) {
+ 		char *ep = strchr(cp, '/');
++		int len;
+ 		if (!ep)
+ 			break;
+ 		*ep = 0;    /* first cut it at slash */
++		len = ep - pathbuf;
+ 		pos = cache_name_pos(pathbuf,
+-				     htons(create_ce_flags(ep-cp, stage)));
++				     htons(create_ce_flags(len, stage)));
+ 		if (0 <= pos) {
+ 			/* Our leading path component is registered as a file,
+ 			 * and we are trying to make it a directory.  This is
