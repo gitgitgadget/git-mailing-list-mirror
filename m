@@ -1,182 +1,88 @@
-From: Jason McMullan <jason.mcmullan@timesys.com>
-Subject: [PATCH] ls-tree path restriction semantics fixes
-Date: Fri, 27 May 2005 08:08:51 -0400
-Message-ID: <20050527120851.GA11823@port.evillabs.net>
+From: "Markus F.X.J. Oberhumer" <markus@oberhumer.com>
+Subject: [PATCH] Fix ptrdiff_t vs. int
+Date: Fri, 27 May 2005 15:20:52 +0200
+Organization: oberhumer.com
+Message-ID: <42971EB4.2050403@oberhumer.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri May 27 14:08:28 2005
+Content-Type: multipart/mixed;
+ boundary="------------070601020809050200000006"
+X-From: git-owner@vger.kernel.org Fri May 27 15:20:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbdcK-0007zJ-EG
-	for gcvg-git@gmane.org; Fri, 27 May 2005 14:07:08 +0200
+	id 1Dbejg-0001qy-Hq
+	for gcvg-git@gmane.org; Fri, 27 May 2005 15:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262439AbVE0MJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 08:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262440AbVE0MJA
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 08:09:00 -0400
-Received: from c-67-163-246-116.hsd1.pa.comcast.net ([67.163.246.116]:51145
-	"EHLO port.evillabs.net") by vger.kernel.org with ESMTP
-	id S262439AbVE0MIw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2005 08:08:52 -0400
-Received: by port.evillabs.net (Postfix, from userid 500)
-	id 6317A3048F; Fri, 27 May 2005 08:08:51 -0400 (EDT)
+	id S262463AbVE0NUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 09:20:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262470AbVE0NUW
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 09:20:22 -0400
+Received: from mail.servus.at ([193.170.194.20]:3597 "EHLO mail.servus.at")
+	by vger.kernel.org with ESMTP id S262463AbVE0NTp (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 09:19:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.servus.at (Postfix) with ESMTP id 934DB1E9607
+	for <git@vger.kernel.org>; Fri, 27 May 2005 15:19:56 +0200 (CEST)
+Received: from mail.servus.at ([127.0.0.1])
+ by localhost (aarh.servus.at [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 73089-04 for <git@vger.kernel.org>;
+ Fri, 27 May 2005 15:19:54 +0200 (CEST)
+Received: from [83.164.47.228] (unknown [83.164.47.228])
+	by mail.servus.at (Postfix) with ESMTP id 6D8001E961B
+	for <git@vger.kernel.org>; Fri, 27 May 2005 15:19:54 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2-1.4.1.centos4 (X11/20050323)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+X-no-Archive: yes
+X-Oberhumer-Conspiracy: There is no conspiracy. Trust us.
+X-Virus-Scanned: amavisd-new at servus.at
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+X-Gmane-Expiry: 2005-06-10
 
-This patch fixes the git-ls-tree semantics to be less stupid, namely:
-	
-	* ls of a 'tree' path should just return the SHA1 of the tree
-	* ls of a 'tree' path with a trailing '/' should work properly
-	* ls of two identical paths should have the same output as ls of
-	  a single path. (I consider ls-tree's output to be a hash dictionary)
+This is a multi-part message in MIME format.
+--------------070601020809050200000006
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Also, I added test cases to verify that these issues are fixed.
+This trivial patch fixes an obvious ptrdiff_t vs. int mismatch. Which
+makes we wonder why Linus isn't hitting this on his ppc64 - maybe it's
+time to start using -Werror...
 
-Old Results:
+Signed-off-by: Markus F.X.J. Oberhumer <markus@oberhumer.com>
 
-	$ git-ls-tree t
-	040000 tree 4eeb3990955b8badc4c14712b89d8cd9fff02f15    t
-	100644 blob 6882e23be568ccf14f3adb0c766139086f2ee952    t/Makefile
-	100644 blob 2a94fdb0b83ab5fcbf1a2c6edaf36c2dbe765ec6    t/README
-	100644 blob d920c6b3a3bfbb5994244a78d1ad99ce02748122    t/lib-read-tree-m-3way.sh
-	...
+-- 
+Markus Oberhumer, <markus@oberhumer.com>, http://www.oberhumer.com/
 
-	$ git-ls-tree t/
-	(no output)
 
-	$ git-ls-tree t t
-	040000 tree 4eeb3990955b8badc4c14712b89d8cd9fff02f15    t
 
-New Results:
 
-	$ git-ls-tree f
-	040000 tree 4eeb3990955b8badc4c14712b89d8cd9fff02f15    t
 
-	$ git-ls-tree t/
-	040000 tree 4eeb3990955b8badc4c14712b89d8cd9fff02f15    t
 
-	$ git-ls-tree t t
-	040000 tree 4eeb3990955b8badc4c14712b89d8cd9fff02f15    t
+--------------070601020809050200000006
+Content-Type: text/x-patch;
+ name="diff-tree.c.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="diff-tree.c.patch"
 
-Signed-Off-By: Jason McMullan <jason.mcmullan@timesys.com>
+This trivial patch fixes an obvious ptrdiff_t vs. int mismatch.
 
-diff --git a/ls-tree.c b/ls-tree.c
---- a/ls-tree.c
-+++ b/ls-tree.c
-@@ -13,8 +13,6 @@ struct path_prefix {
- 	const char *name;
- };
- 
--#define DEBUG(fmt, ...)	
--
- static int string_path_prefix(char *buff, size_t blen, struct path_prefix *prefix)
- {
- 	int len = 0;
-@@ -118,6 +116,8 @@ static void list_recursive(void *buffer,
- 			mtype = pathcmp(match[mindex],&this_prefix);
- 			if (mtype >= 0) {
- 				matched = match[mindex];
-+				/* Skip over any duplicates */
-+				for (; mindex+1 < matches && strcmp(match[mindex+1],matched)==0; mindex++);
- 				break;
+Signed-off-by: Markus F.X.J. Oberhumer <markus@oberhumer.com>
+
+Index: diff-tree.c
+===================================================================
+--- 1348af9952a1d26b2ad14ec8f433322fd79510f3/diff-tree.c  (mode:100644)
++++ 61dcf68d605a8d9204c24278dbdc73b4cf7ccc90/diff-tree.c  (mode:100644)
+@@ -274,7 +274,7 @@
+ 			for (cp = header; *cp; cp = ep) {
+ 				ep = strchr(cp, '\n');
+ 				if (ep == 0) ep = cp + strlen(cp);
+-				printf("%.*s%c", ep-cp, cp, 0);
++				printf("%.*s%c", (int) (ep-cp), cp, 0);
+ 				if (*ep) ep++;
  			}
  		}
-@@ -140,19 +140,22 @@ static void list_recursive(void *buffer,
- 		if (matches && ! matched)
- 			continue;
- 
--		if (! (eltbuf = read_sha1_file(sha1, elttype, &eltsize)) ) {
--			error("cannot read %s", sha1_to_hex(sha1));
--			continue;
--		}
--
- 		/* If this is an exact directory match, we may have
- 		 * directory files following this path. Match on them.
--		 * Otherwise, we're at a pach subcomponent, and we need
-+		 * Otherwise, we're at a path subcomponent, and we need
- 		 * to try to match again.
- 		 */
- 		if (mtype == 0)
- 			mindex++;
- 
-+		if (matched && matches-mindex==0)
-+			continue;
-+
-+		if (! (eltbuf = read_sha1_file(sha1, elttype, &eltsize)) ) {
-+			error("cannot read %s", sha1_to_hex(sha1));
-+			continue;
-+		}
-+
- 		list_recursive(eltbuf, elttype, eltsize, &this_prefix, &match[mindex], matches-mindex);
- 		free(eltbuf);
- 	}
-@@ -169,9 +172,14 @@ static int list(unsigned char *sha1,char
- 	unsigned long size;
- 	int npaths;
- 
--	for (npaths = 0; path[npaths] != NULL; npaths++)
--		;
-+	/* Count the paths, and any trailling '/' */
-+	for (npaths = 0; path[npaths] != NULL; npaths++) {
-+		char *cp = strrchr(path[npaths],'/');
-+		if (cp != NULL && *(cp+1) == 0)
-+			*cp=0;
-+	}	
- 
-+	/* Sort the paths */
- 	qsort(path,npaths,sizeof(char *),qcmp);
- 
- 	buffer = read_object_with_reference(sha1, "tree", &size, NULL);
-diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
---- a/t/t3100-ls-tree-restrict.sh
-+++ b/t/t3100-ls-tree-restrict.sh
-@@ -84,10 +84,22 @@ test_expect_success \
-     'git-ls-tree $tree path2 >current &&
-      cat >expected <<\EOF &&
- 040000 tree X	path2
--040000 tree X	path2/baz
--100644 blob X	path2/baz/b
--120000 blob X	path2/bazbo
--100644 blob X	path2/foo
-+EOF
-+     test_output'
-+
-+test_expect_success \
-+    'ls-tree filtered' \
-+    'git-ls-tree $tree path2/ >current &&
-+     cat >expected <<\EOF &&
-+040000 tree X	path2
-+EOF
-+     test_output'
-+
-+test_expect_success \
-+    'ls-tree filtered' \
-+    'git-ls-tree $tree path2 path2 >current &&
-+     cat >expected <<\EOF &&
-+040000 tree X	path2
- EOF
-      test_output'
- 
-@@ -96,7 +108,16 @@ test_expect_success \
-     'git-ls-tree $tree path2/baz >current &&
-      cat >expected <<\EOF &&
- 040000 tree X	path2/baz
--100644 blob X	path2/baz/b
-+EOF
-+     test_output'
-+
-+test_expect_success \
-+    'ls-tree filtered' \
-+    'git-ls-tree $tree path2 path2/bazbo path2/baz >current &&
-+     cat >expected <<\EOF &&
-+040000 tree X	path2
-+040000 tree X	path2/baz
-+120000 blob X	path2/bazbo
- EOF
-      test_output'
- 
+
+--------------070601020809050200000006--
