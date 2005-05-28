@@ -1,52 +1,57 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH] Pickaxe fixes.
-Date: Sat, 28 May 2005 18:22:57 +0200
-Message-ID: <20050528162257.GE4881@cip.informatik.uni-erlangen.de>
-References: <7vzmufwu8w.fsf@assigned-by-dhcp.cox.net> <7v7jhjy8uw.fsf@assigned-by-dhcp.cox.net> <20050528105914.GA8467@cip.informatik.uni-erlangen.de> <7vpsvbuxzb.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Fix leak in diffcore-order.c
+Date: Sat, 28 May 2005 09:44:57 -0700
+Message-ID: <7vekbruwom.fsf@assigned-by-dhcp.cox.net>
+References: <7vzmufwu8w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 18:35:44 2005
+X-From: git-owner@vger.kernel.org Sat May 28 18:45:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1Dc43T-0004u2-00
-	for <gcvg-git@gmane.org>; Sat, 28 May 2005 18:20:55 +0200
+	by ciao.gmane.org with esmtp (Exim 4.43)
+	id 1Dc4Oz-0003cE-D6
+	for gcvg-git@gmane.org; Sat, 28 May 2005 18:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261160AbVE1QXG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 12:23:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261161AbVE1QXG
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 12:23:06 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:24275 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261160AbVE1QXE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2005 12:23:04 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4SGMwS8008910
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 28 May 2005 16:22:58 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4SGMvhI008909;
-	Sat, 28 May 2005 18:22:58 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpsvbuxzb.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S261151AbVE1QpF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 May 2005 12:45:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261167AbVE1QpF
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 12:45:05 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:30120 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261151AbVE1QpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2005 12:45:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050528164458.DOTG7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 28 May 2005 12:44:58 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vzmufwu8w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sat, 28 May 2005 02:54:39 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+A temporary array used for sorting the filepairs were not freed
+after use.
 
-> I agree with Linus that the latter is the semantics we usually
-> want.  If we make diffcore filters stackable (I mean, the order
-> of applications controllable by the program and the user), we
-> could also have the older semantics when the user wants it, but
-> I would do that after this series stabilizes.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-thanks for the elaboration on this topic. However at the moment I don't
-have an opinion on this, I have to use it a bit longer. But it is a good
-thing that I know by now that it limits its view to the subdirectory
-after your patch-train is applied.
+diffcore-order.c |    1 +
+1 files changed, 1 insertion(+)
 
-	Thomas
+diff --git a/diffcore-order.c b/diffcore-order.c
+--- a/diffcore-order.c
++++ b/diffcore-order.c
+@@ -117,5 +117,6 @@ void diffcore_order(const char *orderfil
+ 	qsort(o, q->nr, sizeof(*o), compare_pair_order);
+ 	for (i = 0; i < q->nr; i++)
+ 		q->queue[i] = o[i].pair;
++	free(o);
+ 	return;
+ }
+------------------------------------------------
+
