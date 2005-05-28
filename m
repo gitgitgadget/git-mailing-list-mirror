@@ -1,140 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Do not show empty diff in diff-cache uncached.
-Date: Sat, 28 May 2005 03:11:19 -0700
-Message-ID: <7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
-	<7vsm091887.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
-	<7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net>
-	<7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: More gitweb queries..
+Date: Sat, 28 May 2005 12:56:22 +0200
+Message-ID: <20050528105622.GB32614@vrfy.org>
+References: <f0796bb705052718035cd5dbe2@mail.gmail.com> <Pine.LNX.4.62.0505271949480.15585@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 28 12:10:03 2005
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Serpell <daniel.serpell@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 28 12:54:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbyFx-0003RM-Ii
-	for gcvg-git@gmane.org; Sat, 28 May 2005 12:09:25 +0200
+	id 1DbyxQ-0005zG-1s
+	for gcvg-git@gmane.org; Sat, 28 May 2005 12:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262678AbVE1KLc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 06:11:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262464AbVE1KLc
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 06:11:32 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:25846 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262678AbVE1KLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2005 06:11:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050528101120.XKQP19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 28 May 2005 06:11:20 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7v3bs82rwh.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Fri, 27 May 2005 16:03:26 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262689AbVE1K4a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 28 May 2005 06:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262696AbVE1K4a
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 06:56:30 -0400
+Received: from soundwarez.org ([217.160.171.123]:35295 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S262689AbVE1K41 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 May 2005 06:56:27 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id D7BDA50F5; Sat, 28 May 2005 12:56:22 +0200 (CEST)
+To: David Lang <dlang@digitalinsight.com>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.62.0505271949480.15585@qynat.qvtvafvgr.pbz>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Pre- "diff --git" built-in diff did not add any extended header
-on its own, so it did not show anything for unmodified but
-stat-dirty file from diff-cache command without --cached flag.
+On Fri, May 27, 2005 at 07:51:39PM -0700, David Lang wrote:
+> >Hi!
+> >
+> >On 5/27/05, Kay Sievers <kay.sievers@vrfy.org> wrote:
+> >>On Fri, May 27, 2005 at 12:24:20PM -0700, Linus Torvalds wrote:
+> >>>  Combining some of the features of the two (that =C3=BCber-cool r=
+evision
+> >>>  history graph from gitk rules, for example) might be cool. I get=
+ the
+> >>>  urge to do octopus-merges in the kernel just because of how good=
+ they
+> >>>  look in gitk ;) ]
+> >>
+> >>I would like to show something like the graph too, but I don't real=
+ly know
+> >>how to do this in html. Seems slippery if not impossible.
+> >>If anybody has a nice idea how to represent that, I will give it a =
+try.
+> >
+> >Well, you could draw them in javascript, using
+> >http://www.walterzorn.com/jsgraphics/jsgraphics_e.htm :-)
+> >
+> >Alternatively, you could use a fixed set of little images, a bar "|"=
+, a
+> >dot "o" and branches like "Y", "7" and "\". Obviously, octopus-merge=
+s
+> >are very difficult to draw using only those.
+>=20
+> you could look into SVG (scaleable vector graphics or some such thing=
+)=20
+> that are supposed to be in the newest browsers (or soon to be added, =
+I'm=20
+> not sure). this should let you do all the drawing nessasary reasonabl=
+y=20
+> easily (if you are willing to limit users to that, which is probably =
+not=20
+> that big of a problem for git)
 
-Recent diff-cache produces "diff --git" header internally before
-calling the "diff" command, which results in an empty diff for
-such a file, cluttering the output.  This patch fixes this.
+Well, technology that is "soon to be added" since years is probably not
+my favorite thing to base my work on. SVG could be nice, sure, but near=
+ly
+noone is able to see it today and I expect, I will need to wait wait fo=
+r
+another few years. :)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-
-diff.c            |   26 ++++++++++++++++++++++++++
-diffcore-rename.c |   17 -----------------
-diffcore.h        |    2 ++
-3 files changed, 28 insertions(+), 17 deletions(-)
-
-diff --git a/diff.c b/diff.c
---- a/diff.c
-+++ b/diff.c
-@@ -684,6 +684,23 @@ int diff_unmodified_pair(struct diff_fil
- 	return 0;
- }
- 
-+int is_exact_match(struct diff_filespec *src, struct diff_filespec *dst)
-+{
-+	if (src->sha1_valid && dst->sha1_valid &&
-+	    !memcmp(src->sha1, dst->sha1, 20))
-+		return 1;
-+	if (diff_populate_filespec(src, 1) || diff_populate_filespec(dst, 1))
-+		return 0;
-+	if (src->size != dst->size)
-+		return 0;
-+	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
-+		return 0;
-+	if (src->size == dst->size &&
-+	    !memcmp(src->data, dst->data, src->size))
-+		return 1;
-+	return 0;
-+}
-+
- static void diff_flush_patch(struct diff_filepair *p)
- {
- 	const char *name, *other;
-@@ -692,6 +709,15 @@ static void diff_flush_patch(struct diff
- 	if (diff_unmodified_pair(p))
- 		return;
- 
-+	/* When diff-raw would have said "look at the filesystem", we
-+	 * need to see if the two are the same and if so not to emit
-+	 * anything at all.  Avoid is_exact_match() comparison when it
-+	 * does not matter.
-+	 */
-+	if ((DIFF_FILE_VALID(p->two) && !p->two->sha1_valid) &&
-+	    is_exact_match(p->one, p->two))
-+		return;
-+
- 	name = p->one->path;
- 	other = (strcmp(name, p->two->path) ? p->two->path : NULL);
- 	if ((DIFF_FILE_VALID(p->one) && S_ISDIR(p->one->mode)) ||
-diff --git a/diffcore-rename.c b/diffcore-rename.c
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -94,23 +94,6 @@ static struct diff_rename_src *register_
- 	return &(rename_src[first]);
- }
- 
--static int is_exact_match(struct diff_filespec *src, struct diff_filespec *dst)
--{
--	if (src->sha1_valid && dst->sha1_valid &&
--	    !memcmp(src->sha1, dst->sha1, 20))
--		return 1;
--	if (diff_populate_filespec(src, 1) || diff_populate_filespec(dst, 1))
--		return 0;
--	if (src->size != dst->size)
--		return 0;
--	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
--		return 0;
--	if (src->size == dst->size &&
--	    !memcmp(src->data, dst->data, src->size))
--		return 1;
--	return 0;
--}
--
- struct diff_score {
- 	int src; /* index in rename_src */
- 	int dst; /* index in rename_dst */
-diff --git a/diffcore.h b/diffcore.h
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -29,6 +29,8 @@ struct diff_filespec {
- 	unsigned should_munmap : 1; /* data should be munmap()'ed */
- };
- 
-+extern int is_exact_match(struct diff_filespec *, struct diff_filespec *);
-+
- extern struct diff_filespec *alloc_filespec(const char *);
- extern void fill_filespec(struct diff_filespec *, const unsigned char *,
- 			  unsigned short);
-------------------------------------------------
-
+Kay
