@@ -1,85 +1,65 @@
-From: Jason McMullan <jason.mcmullan@timesys.com>
-Subject: Re: [PATCH-RFC] Rewrite ls-tree to behave more like "/bin/ls -a"
-Date: Sat, 28 May 2005 18:02:08 -0400
-Message-ID: <1117317729.11542.32.camel@jmcmullan.timesys>
-References: <20050527120851.GA11823@port.evillabs.net>
-	 <7vmzqgzg8a.fsf@assigned-by-dhcp.cox.net>
-	 <1117221986.11542.29.camel@jmcmullan.timesys>
-	 <7v1x7syqkm.fsf@assigned-by-dhcp.cox.net>
-	 <7vll5zygn1.fsf_-_@assigned-by-dhcp.cox.net>
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: Re: More gitweb queries..
+Date: Sun, 29 May 2005 08:43:48 +1000
+Message-ID: <1117320229.5228.18.camel@gaston>
+References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
+	 <20050527235924.GB19491@vrfy.org>
+	 <f0796bb705052718035cd5dbe2@mail.gmail.com>
+	 <20050528084255.GA32614@vrfy.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-Do8dqdJ7jTUiCivXQdUP"
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 00:01:11 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Serpell <daniel.serpell@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 29 00:47:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dc9Lm-0005Lh-AF
-	for gcvg-git@gmane.org; Sun, 29 May 2005 00:00:10 +0200
+	id 1DcA4k-0000MV-If
+	for gcvg-git@gmane.org; Sun, 29 May 2005 00:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261185AbVE1WCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 18:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261186AbVE1WCQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 18:02:16 -0400
-Received: from mail.timesys.com ([65.117.135.102]:56435 "EHLO
-	exchange.timesys.com") by vger.kernel.org with ESMTP
-	id S261185AbVE1WCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2005 18:02:10 -0400
-Received: from jmcmullan by owa.timesys.com; 28 May 2005 18:02:09 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll5zygn1.fsf_-_@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.0.4-3mdk 
+	id S261183AbVE1Wsy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 May 2005 18:48:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261188AbVE1Wsy
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 18:48:54 -0400
+Received: from gate.crashing.org ([63.228.1.57]:21401 "EHLO gate.crashing.org")
+	by vger.kernel.org with ESMTP id S261183AbVE1Wsw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 May 2005 18:48:52 -0400
+Received: from gaston (localhost [127.0.0.1])
+	by gate.crashing.org (8.12.8/8.12.8) with ESMTP id j4SMf9Zn000927;
+	Sat, 28 May 2005 17:41:10 -0500
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050528084255.GA32614@vrfy.org>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, 2005-05-28 at 10:42 +0200, Kay Sievers wrote:
 
---=-Do8dqdJ7jTUiCivXQdUP
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> You know how that stuff works? :) It is a very nice idea for
+> small stuff, but it uses a <div> for every pixel/line you draw and
+> places this in the background and I expect it to kill your browser if
+> you try to draw things like gitk does.
+> 
+> > Alternatively, you could use a fixed set of little images, a bar "|", a
+> > dot "o" and branches like "Y", "7" and "\". Obviously, octopus-merges
+> > are very difficult to draw using only those.
+> 
+> Did you look at gitk? With a all the crossing and long lines, you definitely
+> need to draw the lines with colors. Otherwise you will see _nothing_, but
+> random characters. :)
+> 
+> > BTW, I tried searching on gitweb, and I think that found a problem, see:
+> > http://ehlo.org/~kay/gitweb.cgi?p=git/git.git;a=search;s=check
+> > At the bottom of the page, highlighting of the search term stops and the
+> > commits are all the same color.
+> 
+> Well, you see a list of files which contain the text, not the text
+> itself. I can print the filename in red. :)
 
-On Sat, 2005-05-28 at 00:05 -0700, Junio C Hamano wrote:
->  - Unlike the old ls-tree behaviour that used paths arguments to
->    restrict output (not that it worked as intended---as pointed
->    out in the mailing list discussion, it was quite incoherent),
->    this rewrite uses paths arguments to specify what to show.
->=20
->  - Without arguments, it implicitly uses the root level as its
->    sole argument ("/bin/ls -a" behaves as if "." is given
->    without argument).
->=20
->  - Without -r (recursive) flag, it shows the named blob (either
->    file or symlink), or the named tree and its immediate
->    children.
->=20
->  - With -r flag, it shows the named path, and recursively
->    descends into it if it is a tree.
->=20
->  - With -d flag, it shows the named path and does not show its
->    children even if the path is a tree, nor descends into it
->    recursively.
+Best may be to have the server generate a picture ... ?
 
-This behavior pattern is very agreeable. I'll take it!
-
-Consider your patch:
-
-Signed-Off-By: Jason McMullan <jason.mcmullan@timesys.com>
-
---=20
-Jason McMullan <jason.mcmullan@timesys.com>
-TimeSys Corporation
+Ben.
 
 
---=-Do8dqdJ7jTUiCivXQdUP
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
-
-iD8DBQBCmOpg8/0vJ5szK6kRAm0ZAJ4+PXooPyMMAyvdw61exsiY9LWQcgCgp/U5
-kD28kzyiaELblfgfxlgZheM=
-=LIhi
------END PGP SIGNATURE-----
-
---=-Do8dqdJ7jTUiCivXQdUP--
