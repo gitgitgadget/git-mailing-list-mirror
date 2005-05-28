@@ -1,48 +1,61 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: gitk-1.0 released
-Date: Sat, 28 May 2005 13:47:27 +0200
-Message-ID: <20050528114727.GA1812@elte.hu>
-References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: (unknown)
+Date: Sat, 28 May 2005 16:15:09 +0200
+Message-ID: <20050528141509.GA20127@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 13:46:14 2005
+X-From: git-owner@vger.kernel.org Sat May 28 16:13:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbzlB-0001Ok-Gf
-	for gcvg-git@gmane.org; Sat, 28 May 2005 13:45:45 +0200
+	id 1Dc24A-0004MY-1R
+	for gcvg-git@gmane.org; Sat, 28 May 2005 16:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262709AbVE1Lry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 07:47:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262711AbVE1Lry
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 07:47:54 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:18360 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S262709AbVE1Lrx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 May 2005 07:47:53 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id AC298323721;
-	Sat, 28 May 2005 13:46:04 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id EE2A31FC2; Sat, 28 May 2005 13:47:43 +0200 (CEST)
-To: Paul Mackerras <paulus@samba.org>
+	id S262728AbVE1OPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 May 2005 10:15:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262730AbVE1OPW
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 10:15:22 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:29123 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S262728AbVE1OPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 May 2005 10:15:16 -0400
+Received: from faui00u.informatik.uni-erlangen.de (sithglan@faui00u.informatik.uni-erlangen.de [131.188.30.59])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4SEFAS8024174
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 28 May 2005 14:15:10 GMT
+Received: (from sithglan@localhost)
+	by faui00u.informatik.uni-erlangen.de (8.13.4/8.12.3/Debian-8) id j4SEF9HW020139;
+	Sat, 28 May 2005 16:15:09 +0200
+To: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <17036.36624.911071.810357@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+diff-tree fb94d3e7fbe8e22201d8d015ed444d46485a3f76 (from 8310c2c0b585d3ac35a275f795e15fd9887e8b7d)
+Author: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Date:   Sat May 28 16:13:22 2005 +0200
+    
+    [PATCH] Document the --root switch of git-diff-tree
+    
+    Signed-off-by: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
 
-another small bug: if you click into the main window _before_ the commit 
-list has been fully generated (i.e. into the empty window) then all 
-sorts of error messages pop up. ("Cant use empty string ...")
 
-	Ingo
+fb94d3e7fbe8e22201d8d015ed444d46485a3f76 (from 8310c2c0b585d3ac35a275f795e15fd9887e8b7d)
+
+diff --git a/Documentation/git-diff-tree.txt b/Documentation/git-diff-tree.txt
+--- a/Documentation/git-diff-tree.txt
++++ b/Documentation/git-diff-tree.txt
+@@ -54,6 +54,11 @@ OPTIONS
+ -z::
+ 	\0 line termination on output
+ 
++--root::
++	When '--root' is specified the initial commit of a new file
++	will be showed as a big creation event. This is equivalent to
++	a diff against NULL.
++
+ --stdin::
+ 	When '--stdin' is specified, the command does not take
+ 	<tree-ish> arguments from the command line.  Instead, it
