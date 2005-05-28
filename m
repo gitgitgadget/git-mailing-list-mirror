@@ -1,50 +1,48 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH] Add -O<orderfile> option to diff-* brothers.
-Date: Sat, 28 May 2005 13:19:59 +0200
-Message-ID: <20050528111959.GA28780@cip.informatik.uni-erlangen.de>
-References: <7vzmufwu8w.fsf@assigned-by-dhcp.cox.net> <20050528111238.GA1036@pasky.ji.cz>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: gitk-1.0 released
+Date: Sat, 28 May 2005 13:47:27 +0200
+Message-ID: <20050528114727.GA1812@elte.hu>
+References: <17036.36624.911071.810357@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 28 13:19:12 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 28 13:46:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbzL3-0007px-Ey
-	for gcvg-git@gmane.org; Sat, 28 May 2005 13:18:45 +0200
+	id 1DbzlB-0001Ok-Gf
+	for gcvg-git@gmane.org; Sat, 28 May 2005 13:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262704AbVE1LUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 07:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262703AbVE1LUm
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 07:20:42 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:42406 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S262705AbVE1LUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2005 07:20:05 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4SBJxS8001425
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 28 May 2005 11:20:00 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4SBJxeH001424;
-	Sat, 28 May 2005 13:19:59 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
+	id S262709AbVE1Lry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 28 May 2005 07:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262711AbVE1Lry
+	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 07:47:54 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:18360 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S262709AbVE1Lrx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 May 2005 07:47:53 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id AC298323721;
+	Sat, 28 May 2005 13:46:04 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id EE2A31FC2; Sat, 28 May 2005 13:47:43 +0200 (CEST)
+To: Paul Mackerras <paulus@samba.org>
 Content-Disposition: inline
-In-Reply-To: <20050528111238.GA1036@pasky.ji.cz>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <17036.36624.911071.810357@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-> Hmm, is this really useful in practice? diff itself doesn't appear to
-> have it either, and I haven't seen something like this before. So is it
-> worth the code?
+another small bug: if you click into the main window _before_ the commit 
+list has been fully generated (i.e. into the empty window) then all 
+sorts of error messages pop up. ("Cant use empty string ...")
 
-I think it is. For example on git development it is nice to see the
-Documentation first. So you know what it is supposed to do and later you
-see the actual implementation. I think Junio requested this exactly
-before.
-
-	Thoms
+	Ingo
