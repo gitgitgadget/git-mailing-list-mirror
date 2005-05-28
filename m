@@ -1,81 +1,92 @@
-From: David Lang <dlang@digitalinsight.com>
-Subject: Re: More gitweb queries..
-Date: Fri, 27 May 2005 19:51:39 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0505271949480.15585@qynat.qvtvafvgr.pbz>
-References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org><20050527235924.GB19491@vrfy.org>
- <f0796bb705052718035cd5dbe2@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] ls-tree path restriction semantics fixes
+Date: Fri, 27 May 2005 20:31:05 -0700
+Message-ID: <7v1x7syqkm.fsf@assigned-by-dhcp.cox.net>
+References: <20050527120851.GA11823@port.evillabs.net>
+	<7vmzqgzg8a.fsf@assigned-by-dhcp.cox.net>
+	<1117221986.11542.29.camel@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 28 04:50:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 28 05:29:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DbrOT-0003XZ-VH
-	for gcvg-git@gmane.org; Sat, 28 May 2005 04:49:46 +0200
+	id 1Dbs0U-0005OA-3Z
+	for gcvg-git@gmane.org; Sat, 28 May 2005 05:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262429AbVE1Cvy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 27 May 2005 22:51:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262430AbVE1Cvy
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 22:51:54 -0400
-Received: from warden2-p.diginsite.com ([209.195.52.120]:60378 "HELO
-	warden2.diginsite.com") by vger.kernel.org with SMTP
-	id S262429AbVE1Cvw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 22:51:52 -0400
-Received: from atlims01.diginsite.com by warden2.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Fri, 27 May 2005 19:46:47 -0700
-Received: by atlexc01.digitalinsight.com with Internet Mail Service (5.5.2657.72)
-	id <LN1B3PMX>; Fri, 27 May 2005 22:49:10 -0400
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id LNM38CPA; Fri, 27 May 2005 19:51:38 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-To: Daniel Serpell <daniel.serpell@gmail.com>
-In-Reply-To: <f0796bb705052718035cd5dbe2@mail.gmail.com>
+	id S261700AbVE1DbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 27 May 2005 23:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261748AbVE1DbK
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 23:31:10 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:29695 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261700AbVE1DbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 May 2005 23:31:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050528033104.VLUY8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 27 May 2005 23:31:04 -0400
+To: Jason McMullan <jason.mcmullan@timesys.com>
+In-Reply-To: <1117221986.11542.29.camel@jmcmullan.timesys> (Jason McMullan's
+ message of "Fri, 27 May 2005 15:26:25 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Hi!
->
-> On 5/27/05, Kay Sievers <kay.sievers@vrfy.org> wrote:
->> On Fri, May 27, 2005 at 12:24:20PM -0700, Linus Torvalds wrote:
->>>   Combining some of the features of the two (that =FCber-cool revis=
-ion
->>>   history graph from gitk rules, for example) might be cool. I get =
-the
->>>   urge to do octopus-merges in the kernel just because of how good =
-they
->>>   look in gitk ;) ]
->>
->> I would like to show something like the graph too, but I don't reall=
-y know
->> how to do this in html. Seems slippery if not impossible.
->> If anybody has a nice idea how to represent that, I will give it a t=
-ry.
->
-> Well, you could draw them in javascript, using
-> http://www.walterzorn.com/jsgraphics/jsgraphics_e.htm :-)
->
-> Alternatively, you could use a fixed set of little images, a bar "|",=
- a
-> dot "o" and branches like "Y", "7" and "\". Obviously, octopus-merges
-> are very difficult to draw using only those.
+>>>>> "JM" == Jason McMullan <jason.mcmullan@timesys.com> writes:
 
-you could look into SVG (scaleable vector graphics or some such thing)=20
-that are supposed to be in the newest browsers (or soon to be added, I'=
-m=20
-not sure). this should let you do all the drawing nessasary reasonably=20
-easily (if you are willing to limit users to that, which is probably no=
-t=20
-that big of a problem for git)
+JM>   git-ls-tree reporting just the tree's hash is valid, because if
+JM> you want everything in that tree, you can just do:
 
-David Lang
+JM> git-ls-tree `git-ls-tree HEAD path/dir | (read m t h n; echo $h)`
 
---=20
-There are two ways of constructing a software design. One way is to mak=
-e it so simple that there are obviously no deficiencies. And the other =
-way is to make it so complicated that there are no obvious deficiencies=
-=2E
-  -- C.A.R. Hoare
+JM>   I don't see the problem there.
+
+I do not see the problem either in Turing sense, but that is
+like saying you could code anything given an assembler.  There
+is a difference between being possible and being practical.
+
+I do think the current behaviour is broken, so I think we are in
+half agreement.  What I think is the cleanest would be to make
+"git-ls-tree $tree" behave similarly to what "/bin/ls -a" does.
+Then we have various combination of options, and also path
+arguments, to think about.  How about doing something like this?
+
+ - Running without any paths.
+
+   "git-ls-tree $tree" shows everything first level, just like
+   "/bin/ls -a" shows everything in cwd.  There is nothing to
+   fix here.
+
+ - Running with paths.
+
+   "git-ls-tree $tree path1 path2..." should show path$n if
+   path$n is not a tree and everything under path$n including
+   path$n itself if path$n is a tree, just like the way "/bin/ls
+   -a path1 path2..." works.  There is major breakage here as
+   you pointed out with your "git-ls-tree $tree t" vs
+   "git-ls-tree $tree t t" example.
+
+ - Recursive behaviour without paths.
+
+   "git-ls-tree -r $tree" should show everything recursively,
+   just like what "/bin/ls -a -R" does.  There is nothing to
+   fix.
+
+ - Recursive behaviour with paths.
+
+   "git-ls-tree -r $tree path1 path2..." should show everything
+   recursively under path$n, just like what "/bin/ls -a -R path1
+   path2..." does.  Again this is not how it currently works as
+   you pointed out.
+
+ - With paths but not descending into them.
+
+   "git-ls-tree -d $tree path1 path2..." should show only the
+   named path$n even when path$n is a tree, just like what
+   "/bin/ls -a -R -d path1 path2..." does.  This is what is
+   missing from today's git-ls-tree.
+
