@@ -1,63 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
+From: David Lang <dlang@digitalinsight.com>
 Subject: Re: More gitweb queries..
-Date: Fri, 27 May 2005 19:26:35 -0700
-Message-ID: <7vwtpkytk4.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
-	<20050527192941.GE7068@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0505271248450.17402@ppc970.osdl.org>
-	<Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
-	<20050527192941.GE7068@cip.informatik.uni-erlangen.de>
-	<7vhdgoxx8c.fsf@assigned-by-dhcp.cox.net>
-	<20050527195552.GA6541@cip.informatik.uni-erlangen.de>
-	<7vu0kowho9.fsf@assigned-by-dhcp.cox.net>
-	<20050527203227.GA11139@cip.informatik.uni-erlangen.de>
-	<7vk6lkwgfl.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505271457480.17402@ppc970.osdl.org>
+Date: Fri, 27 May 2005 19:51:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0505271949480.15585@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org><20050527235924.GB19491@vrfy.org>
+ <f0796bb705052718035cd5dbe2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 28 04:25:01 2005
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 28 04:50:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dbr0F-0002C5-2B
-	for gcvg-git@gmane.org; Sat, 28 May 2005 04:24:43 +0200
+	id 1DbrOT-0003XZ-VH
+	for gcvg-git@gmane.org; Sat, 28 May 2005 04:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262158AbVE1C0q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 27 May 2005 22:26:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262670AbVE1C0q
-	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 22:26:46 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:33493 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262158AbVE1C0h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 May 2005 22:26:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050528022636.UBVI19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 27 May 2005 22:26:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505271457480.17402@ppc970.osdl.org> (Linus
- Torvalds's message of "Fri, 27 May 2005 15:00:28 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262429AbVE1Cvy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 27 May 2005 22:51:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262430AbVE1Cvy
+	(ORCPT <rfc822;git-outgoing>); Fri, 27 May 2005 22:51:54 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:60378 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S262429AbVE1Cvw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 May 2005 22:51:52 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Fri, 27 May 2005 19:46:47 -0700
+Received: by atlexc01.digitalinsight.com with Internet Mail Service (5.5.2657.72)
+	id <LN1B3PMX>; Fri, 27 May 2005 22:49:10 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id LNM38CPA; Fri, 27 May 2005 19:51:38 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+To: Daniel Serpell <daniel.serpell@gmail.com>
+In-Reply-To: <f0796bb705052718035cd5dbe2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+> Hi!
+>
+> On 5/27/05, Kay Sievers <kay.sievers@vrfy.org> wrote:
+>> On Fri, May 27, 2005 at 12:24:20PM -0700, Linus Torvalds wrote:
+>>>   Combining some of the features of the two (that =FCber-cool revis=
+ion
+>>>   history graph from gitk rules, for example) might be cool. I get =
+the
+>>>   urge to do octopus-merges in the kernel just because of how good =
+they
+>>>   look in gitk ;) ]
+>>
+>> I would like to show something like the graph too, but I don't reall=
+y know
+>> how to do this in html. Seems slippery if not impossible.
+>> If anybody has a nice idea how to represent that, I will give it a t=
+ry.
+>
+> Well, you could draw them in javascript, using
+> http://www.walterzorn.com/jsgraphics/jsgraphics_e.htm :-)
+>
+> Alternatively, you could use a fixed set of little images, a bar "|",=
+ a
+> dot "o" and branches like "Y", "7" and "\". Obviously, octopus-merges
+> are very difficult to draw using only those.
 
-LT> There's no limit in the data structures, although there clearly is a 
-LT> "sanity" limit (and I personally suspect it comes before you hit 16 ;)
+you could look into SVG (scaleable vector graphics or some such thing)=20
+that are supposed to be in the newest browsers (or soon to be added, I'=
+m=20
+not sure). this should let you do all the drawing nessasary reasonably=20
+easily (if you are willing to limit users to that, which is probably no=
+t=20
+that big of a problem for git)
 
-I know that my head would start hurting way before I hit 16.
+David Lang
 
-I probably shouldn't have coined the word Octopus in the first
-place, giving people a false impression that somehow 8 is a
-magic number.  To begin with, what I inflicted on you was not
-even an Octopus but a Pentapus, merge of 5 IIRC.
-
-Also we are counting heads, not legs.  Should have said Hydra,
-but I do not offhand know how many heads it has --- I've never
-met one.  I know King Ghidorah has 3 heads ;-).
-
+--=20
+There are two ways of constructing a software design. One way is to mak=
+e it so simple that there are obviously no deficiencies. And the other =
+way is to make it so complicated that there are no obvious deficiencies=
+=2E
+  -- C.A.R. Hoare
