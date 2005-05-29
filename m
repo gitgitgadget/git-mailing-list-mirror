@@ -1,87 +1,62 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [COGITO PATCH] Fix cg-log and cg-status for non-GNU sed/sort
-Date: Mon, 30 May 2005 01:49:11 +0200
-Message-ID: <20050529234911.GZ1036@pasky.ji.cz>
-References: <20050529231652.GX1036@pasky.ji.cz> <20050529234326.12407.qmail@web41203.mail.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add -B flag to diff-* brothers.
+Date: Sun, 29 May 2005 16:51:17 -0700
+Message-ID: <7vpsv9h9qi.fsf@assigned-by-dhcp.cox.net>
+References: <7vbr6vrvqf.fsf@assigned-by-dhcp.cox.net>
+	<20050529215617.GT1036@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 01:47:45 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 01:49:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcXUc-0001Vk-Po
-	for gcvg-git@gmane.org; Mon, 30 May 2005 01:46:55 +0200
+	id 1DcXWX-0001nh-6T
+	for gcvg-git@gmane.org; Mon, 30 May 2005 01:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261438AbVE2XtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 19:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261464AbVE2XtT
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:49:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37253 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261438AbVE2XtN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 19:49:13 -0400
-Received: (qmail 32666 invoked by uid 2001); 29 May 2005 23:49:11 -0000
-To: Mark Allen <mrallen1@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20050529234326.12407.qmail@web41203.mail.yahoo.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261465AbVE2XvU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 19:51:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261466AbVE2XvU
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:51:20 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:51363 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261465AbVE2XvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 19:51:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050529235116.RTVH550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 May 2005 19:51:16 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050529215617.GT1036@pasky.ji.cz> (Petr Baudis's message of
+ "Sun, 29 May 2005 23:56:17 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 30, 2005 at 01:43:26AM CEST, I got a letter
-where Mark Allen <mrallen1@yahoo.com> told me that...
-> --- Petr Baudis <pasky@ucw.cz> wrote:
-> > Dear diary, on Mon, May 30, 2005 at 01:00:10AM CEST, I got a letter
-> > where Mark Allen <mrallen1@yahoo.com> told me that...
-> > > -                               pdate="$(showdate $date)"
-> > > +                               pdate="$(date -u -r $date)"
-> > 
-> > Hmm, coudlnt' showdate be fixed instead then? And $date is not a file so
-> > -r $date makes no sense to me - what am I missing?
-> 
-> There is no showdate(1) command on Darwin.  On Darwin, the date(1) command flags are
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-There's probably no showdate command at all. This is internal function
-defined in cg-Xlib. ;-)
+PB> Actually, I like this one - contrary to -O I can see how this could be
+PB> quite useful - I have wished for this many times when people would send
+PB> me some "complete rewrite" patches which I actually wanted to review.
 
-> -u (show UTC)
-> -r seconds 
-> 
-> So `date -u -r $date` gives output like "Sun May 29 12:07:55 GMT 2005" instead of
-> 1117336545
+PB> Please don't give up on it. :-)
 
-GNU date:
+Well, although I do not do Porcelain ;-), I do want to have -O
+to help my use pattern.  I envision that Porcelain noticing the
+existence of ${GIT-.git}/patch-order file and adding -O to its
+diff-* argument would make the world a better place.
 
-  -r, --reference=FILE      display the last modification time of FILE
+And I am not giving up on -B yet, but as you can imagine, it has
+interesting interaction with -M/-C, since rename detection code
+must be prepared to deal with broken pairs (earlier it did not
+have to worry about the same path that is a regular file
+appearing twice in its input).  Since I have tested -B only in
+the context of full set of patches I sent out, and have not
+tested it with only the subset Linus decided to swallow, I would
+recommend against applying it on top of the Linus tip as is.
+I'll be rebasing it to his tip, test it again and then resubmit
+later.  I'll do the same for -O changes.
 
-> > > -                               echo; sed -re '
-> > > -                                       /
-> > *Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
-> > > -                                       /
-> > *Acked-by:.*/Is//'$colsignoff'&'$coldefault'/
-> > > -                                       s/./    &/
-> > > -                               '
-> > > +                               echo; sed -e "/ *Signed-off-by:.*/s/
-> > *Signed-off-by:.*/$colsignoff&$coldefault/" -e"/
-> > > +*Acked-by:.*/s/ *Acked-by:.*/$colsignoff&$coldefault/" -e "s/./    &/"
-> > > +
-> > 
-> > Is it necessary to take away the newlines? What is the real problem,
-> > actually? Just the I flag?
-> 
-> Is it strictly necessary to take away the newlines? I don't know. To be honest, I didn't 
-> experiment too much with alternate implementations. But the I flag in the sed script, 
-> yes that is not understood by non-GNU sed. And the "-r" to sed itself is also
-> problematic.
-
-I think we don't really need -r anyway. Could you please try with the
-'i' flag instead of 'I'? (The manpage is somewhat unclear on the
-difference and portability.) Also, could you try if it works with the
-newlines?
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
