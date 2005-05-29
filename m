@@ -1,47 +1,52 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: -p diff output and the 'Index:' line
-Date: Sun, 29 May 2005 09:15:20 +0200
-Message-ID: <20050529071520.GC1036@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: -p diff output and the 'Index:' line
+Date: Sun, 29 May 2005 00:41:03 -0700
+Message-ID: <7vd5raqy28.fsf@assigned-by-dhcp.cox.net>
+References: <20050529071520.GC1036@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun May 29 09:13:25 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 09:39:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcHyx-00068O-GX
-	for gcvg-git@gmane.org; Sun, 29 May 2005 09:13:11 +0200
+	id 1DcINy-0007E9-Gd
+	for gcvg-git@gmane.org; Sun, 29 May 2005 09:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261261AbVE2HP0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 03:15:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261263AbVE2HP0
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 03:15:26 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:36581 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261261AbVE2HPW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 03:15:22 -0400
-Received: (qmail 5736 invoked by uid 2001); 29 May 2005 07:15:20 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261267AbVE2HlM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 03:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261270AbVE2HlM
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 03:41:12 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:52156 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261267AbVE2HlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 03:41:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050529074104.DMQX22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 May 2005 03:41:04 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050529071520.GC1036@pasky.ji.cz> (Petr Baudis's message of
+ "Sun, 29 May 2005 09:15:20 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  Hello,
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-  so I've tried how would cg-diff output look like if I used the
-git-diff -p argument, and I found that I miss the 'Index:' line.
-Actually, what I really miss is the separator ==== line just below, but
-it'd probably look weird without the 'Index:' line. I became used to the
-separators and they enable me to quickly visually notice the files
-boundary, which is more drudging if you have just the 'diff --git' line.
+PB>   What do you think? Would you hate it to show up in the diffs, or are
+PB> you ok with it?
 
-  What do you think? Would you hate it to show up in the diffs, or are
-you ok with it?
+I cannot tell if you are asking about cg-diff or changing the
+built-in diff-* output.  The Subject: line suggests you are
+talking about the latter, but if that is the case I have to
+admit that I am not that sympathetic to Index: nor separator.
 
-  Thanks,
+Like Linus, I do "/^diff --git .*" in my less sessions, which
+gives a very nice highlighted separator line without wasting a
+single line on the terminal.  If any of the readers on the list
+didn't know about this trick (especially the trailing .* part),
+please try it.  I'm certain everybody would love it.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
