@@ -1,85 +1,66 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: Problem with cg-merge
-Date: Sun, 29 May 2005 23:15:24 +0200
-Message-ID: <20050529211524.GB32141@diku.dk>
-References: <1117379092.7072.90.camel@pegasus> <20050529180742.GA31388@diku.dk> <1117390650.7072.100.camel@pegasus> <20050529184830.GM1036@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: change of git-diff-tree and symlinks
+Date: Sun, 29 May 2005 23:32:06 +0200
+Message-ID: <20050529213206.GR1036@pasky.ji.cz>
+References: <20050525111711.GA27492@vrfy.org> <4299CED5.5070508@roemling.net> <20050529150656.GA27127@vrfy.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 29 23:13:31 2005
+Cc: Jochen Roemling <jochen@roemling.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 29 23:30:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcV6A-0002wh-Ap
-	for gcvg-git@gmane.org; Sun, 29 May 2005 23:13:30 +0200
+	id 1DcVM6-0005ox-My
+	for gcvg-git@gmane.org; Sun, 29 May 2005 23:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261442AbVE2VPg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 17:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261443AbVE2VPd
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 17:15:33 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:51177 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261442AbVE2VPZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 17:15:25 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 3E7246E26FD; Sun, 29 May 2005 23:14:53 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id CACA56E234E; Sun, 29 May 2005 23:14:52 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 4F2A961FE0; Sun, 29 May 2005 23:15:24 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
+	id S261441AbVE2VcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 17:32:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261447AbVE2VcN
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 17:32:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46211 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261441AbVE2VcI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 17:32:08 -0400
+Received: (qmail 30237 invoked by uid 2001); 29 May 2005 21:32:06 -0000
+To: Kay Sievers <kay.sievers@vrfy.org>
 Content-Disposition: inline
-In-Reply-To: <20050529184830.GM1036@pasky.ji.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+In-Reply-To: <20050529150656.GA27127@vrfy.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@ucw.cz> wrote Sun, May 29, 2005:
-> Dear diary, on Sun, May 29, 2005 at 08:17:30PM CEST, I got a letter
-> where Marcel Holtmann <marcel@holtmann.org> told me that...
-> > > --- 0ca4ae56fa7bbd8d10e2c2791e389bc19977e460/cg-Xlib  (mode:100755)
-> > > +++ uncommitted/cg-Xlib  (mode:100755)
-> > > @@ -66,7 +66,7 @@
-> > >  		# XXX: This may be suboptimal, but it is also non-trivial to keep
-> > >  		# the adds/removes properly.  So this is just a quick hack to get it
-> > >  		# working without much fuss.
-> > > -		cg-diff -r $branch >$patchfile
-> > > +		cg-diff >$patchfile
-> > >  	fi
-> > >  
-> > >  	git-read-tree -m "$branch" || die "$branch: bad commit"
+Dear diary, on Sun, May 29, 2005 at 05:06:56PM CEST, I got a letter
+where Kay Sievers <kay.sievers@vrfy.org> told me that...
+> On Sun, May 29, 2005 at 04:16:53PM +0200, Jochen Roemling wrote:
+> > I'm planning to use cogito/git for tracking development of my (PHP 
+> > based) website. Although this is the first time in my life I'm using 
+> > something that smells like a SCM, it seems to work great. The only thing 
+> > lacking is a working gitweb installation.
+> > I downloaded the gitweb.cgi script from 
+> > kernel.org/pub/software/scm/gitweb, but it dates already May 23rd.
 > > 
-> > this looks better now. Petr, please apply this patch.
+> > In your mail below from May 25 you state that there have been quite some 
+> > changes to git-diff-tree:
+> > 
+> > Kay Sievers wrote:
+> > >
+> > >The new one shows simply nothing.
+> > >Shouldn't it print the mode changes like the old one?
+> > >
+> > and that might be the reason why I'm getting "nothing" when I'm clicking 
+> > on a "commitdiff" link.
 > 
-> Bah. Well if your imaginary friend in your head told you this is
-> obviously just a no-go workaround, (s)he was right for once. You just
-> broke cg-admin-uncommit with this one, the real fix is to tell
-> tree_timewarp to rollback the tree (or rather rollforth here ;-). This
-> way the right branch of this if will be invoked.
+> The kernel.org servers use Cogito which needs a new release. So the
+> version on kernel.org is always a working version with the current
+> release of Cogito as long as we don't get a git-core to provide the
+> binaries.
 
-Ok, I should have mentioned it was an ugly workaround.
-
-There is another problem I've noticed in the work on the cogito
-manpages. To make it easier to update the ``external'' patch I maintain
-I have added the files Documentation/make-cg-asciidoc and
-Documentation/make-cogito-asciidoc but not actually committed them.
-That way cg-diff will include them (diffed against /dev/null) which I
-like very much. However, when I cg-update from my local cogito origin
-cg-merge will fast-forward using cg-diff which results in rejects when
-patching the local changes due to the files already existing.
-
-One possibility would be to revert all local changes with the patch
-generated by cg-diff since most of them will be overwritten anyway.
-This would remove uncommitted added files but it would probably require
-use of the GIT metadata to get the fast-forwarding right with modes
-intact.
+Tomorrow evening. I'd even do it now but I feel the changes need a bit
+of testing yet.
 
 -- 
-Jonas Fonseca
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
