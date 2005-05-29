@@ -1,65 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Do not show empty diff in diff-cache uncached.
-Date: Sun, 29 May 2005 11:53:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505291151250.10545@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
- <7vsm091887.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
- <7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net> <7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
- <7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: [GIT PATCH] Fix git-mktag to take the object input spliced arbitrarily
+Date: Sun, 29 May 2005 20:52:30 +0200
+Message-ID: <20050529185230.GN1036@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 29 20:49:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 20:51:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcSqv-00031T-V8
-	for gcvg-git@gmane.org; Sun, 29 May 2005 20:49:38 +0200
+	id 1DcSrR-00039T-3u
+	for gcvg-git@gmane.org; Sun, 29 May 2005 20:50:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261401AbVE2SwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 14:52:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261402AbVE2SwA
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 14:52:00 -0400
-Received: from fire.osdl.org ([65.172.181.4]:3728 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261401AbVE2Sv4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 14:51:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4TIpqjA017338
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 29 May 2005 11:51:52 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4TIppcL027633;
-	Sun, 29 May 2005 11:51:51 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261402AbVE2Swf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 14:52:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261403AbVE2Swf
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 14:52:35 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34944 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261402AbVE2Swb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 14:52:31 -0400
+Received: (qmail 14999 invoked by uid 2001); 29 May 2005 18:52:30 -0000
+To: torvalds@osdl.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Before, git-mktag would just try to get all the input through a single
+read(), which is obviously broken, since the I/O layer may give you
+only part of the input through such a read(). This made it basically
+impossible to type the input in manually, for example.
+
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
+
+---
+commit f67b8ea0f157813d50371bed494452160c47744d
+tree e29e13f259279737dd62ca1b10ede1f8d5e2adb8
+parent bf36ee6ccc0dae5725edd7f5d56844a0eae158ad
+author Petr Baudis <pasky@ucw.cz> Sun, 29 May 2005 01:39:04 +0200
+committer Petr Baudis <xpasky@machine.sinus.cz> Sun, 29 May 2005 01:39:04 +0200
+
+ mktag.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+Index: mktag.c
+===================================================================
+--- 01d01f6cebf110348cfa23c86d521118a00336ba/mktag.c  (mode:100644)
++++ e29e13f259279737dd62ca1b10ede1f8d5e2adb8/mktag.c  (mode:100644)
+@@ -98,7 +98,7 @@
+ 
+ int main(int argc, char **argv)
+ {
+-	unsigned long size;
++	unsigned long size, readsize;
+ 	char buffer[MAXSIZE];
+ 	unsigned char result_sha1[20];
+ 
+@@ -106,7 +106,11 @@
+ 		usage("cat <signaturefile> | git-mktag");
+ 
+ 	// Read the signature
+-	size = read(0, buffer, MAXSIZE);
++	size = 0;
++	do {
++		readsize = read(0, buffer + size, MAXSIZE - size);
++		size += readsize;
++	} while (readsize);
+ 
+ 	// Verify it for some basic sanity: it needs to start with "object <sha1>\ntype "
+ 	if (verify_tag(buffer, size) < 0)
 
 
-On Sat, 28 May 2005, Junio C Hamano wrote:
->
-> Pre- "diff --git" built-in diff did not add any extended header
-> on its own, so it did not show anything for unmodified but
-> stat-dirty file from diff-cache command without --cached flag.
-> 
-> Recent diff-cache produces "diff --git" header internally before
-> calling the "diff" command, which results in an empty diff for
-> such a file, cluttering the output.  This patch fixes this.
-
-I'm not sure I like this.
-
-I actually _expect_ that "git-diff-files" will show files that don't match 
-the index, even if they happen to have the exact content that the index 
-points to. It's how I know whether the index is up-to-date or not.
-
-The exact same thing is trye of git-diff-cache. If something isn't 
-up-to-date in the cache, you should show it, since certain operations 
-depend on the cache being updated.
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
