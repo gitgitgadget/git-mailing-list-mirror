@@ -1,59 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Adjust diff-helper to diff-tree -v -z changes.
-Date: Sun, 29 May 2005 11:31:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505291129520.10545@ppc970.osdl.org>
-References: <42971EB4.2050403@oberhumer.com> <Pine.LNX.4.58.0505271013260.17402@ppc970.osdl.org>
- <Pine.LNX.4.58.0505271024280.17402@ppc970.osdl.org> <7vfyw8zg1w.fsf@assigned-by-dhcp.cox.net>
- <7vvf54xael.fsf_-_@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH-RFC] Rewrite ls-tree to behave more like "/bin/ls -a"
+Date: Sun, 29 May 2005 11:44:22 -0700
+Message-ID: <7vhdgloos9.fsf@assigned-by-dhcp.cox.net>
+References: <20050527120851.GA11823@port.evillabs.net>
+	<7vmzqgzg8a.fsf@assigned-by-dhcp.cox.net>
+	<1117221986.11542.29.camel@jmcmullan.timesys>
+	<7v1x7syqkm.fsf@assigned-by-dhcp.cox.net>
+	<7vll5zygn1.fsf_-_@assigned-by-dhcp.cox.net>
+	<1117317729.11542.32.camel@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 20:28:35 2005
+X-From: git-owner@vger.kernel.org Sun May 29 20:43:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcSVF-0008UK-9s
-	for gcvg-git@gmane.org; Sun, 29 May 2005 20:27:13 +0200
+	id 1DcSjk-00020N-7Z
+	for gcvg-git@gmane.org; Sun, 29 May 2005 20:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261386AbVE2S3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 14:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261388AbVE2S3J
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 14:29:09 -0400
-Received: from fire.osdl.org ([65.172.181.4]:36749 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261386AbVE2S3G (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 14:29:06 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4TIT0jA015902
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 29 May 2005 11:29:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4TIT0U7026826;
-	Sun, 29 May 2005 11:29:00 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf54xael.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261320AbVE2Soe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 14:44:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261394AbVE2Soe
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 14:44:34 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:28858 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261320AbVE2SoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 14:44:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050529184422.OLCZ550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 May 2005 14:44:22 -0400
+To: Jason McMullan <jason.mcmullan@timesys.com>
+In-Reply-To: <1117317729.11542.32.camel@jmcmullan.timesys> (Jason McMullan's
+ message of "Sat, 28 May 2005 18:02:08 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "JM" == Jason McMullan <jason.mcmullan@timesys.com> writes:
 
+JM> On Sat, 2005-05-28 at 00:05 -0700, Junio C Hamano wrote:
 
-On Fri, 27 May 2005, Junio C Hamano wrote:
->
-> The latest change to diff-tree -z output adds an extra line
-> termination after non diff-raw material (the header and the
-> commit message).  To compensate for this change, stop adding the
-> output termination of our own.  "diff-tree -v -z" piped to
-> "diff-helper -z" would give different result from "diff-tree -v"
-> piped to "diff-helper" without this change.
+>> - Unlike the old ls-tree behaviour that used paths arguments to
+>> restrict output (not that it worked as intended---as pointed
+>> out in the mailing list discussion, it was quite incoherent),
+>> this rewrite uses paths arguments to specify what to show.
+>> ...
 
-I think this is really a bug in your "read_line()" interface.
+JM> This behavior pattern is very agreeable. I'll take it!
 
-You should include the terminating character in the line count.
+Glad to know we are in agreement.
 
-This also fixes and simplifies "EOF" handling.
+BTW, long after finishing the rewrite, I realized that all of
+the problems you raised did not exist in the very original
+version of ls-tree, but were bugs in _your_ patch that added the
+paths restriction.  I was merely cleaning up your mess for you
+without knowing what I was doing. ;-) Not that I do not like
+what the resulting code does, though.
 
-		Linus
+I am not going to re-submit this to Linus right now, since he
+seems to be quiet here and spending more time and attention to
+the kernel, which is what I want to see.  When Linus starts
+pulling in update for GIT, and if you see this one not applied
+to his tree, please remind him.
+
