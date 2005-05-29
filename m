@@ -1,60 +1,54 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: -p diff output and the 'Index:' line
-Date: Sun, 29 May 2005 14:02:49 +0200
-Message-ID: <20050529120248.GD1036@pasky.ji.cz>
-References: <20050529071520.GC1036@pasky.ji.cz> <7vd5raqy28.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [COGITO PATCH] fix "cg-Xnormid: command not found" error
+Date: Sun, 29 May 2005 14:06:28 +0200
+Message-ID: <20050529120628.GE1036@pasky.ji.cz>
+References: <20050529.121545.77345008.yoshfuji@linux-ipv6.org> <1117360678.7072.53.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 29 14:00:52 2005
+Cc: YOSHIFUJI Hideaki / ???????????? <yoshfuji@linux-ipv6.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 14:05:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcMT6-0005si-DQ
-	for gcvg-git@gmane.org; Sun, 29 May 2005 14:00:36 +0200
+	id 1DcMWZ-000630-Ds
+	for gcvg-git@gmane.org; Sun, 29 May 2005 14:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261196AbVE2MCx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 08:02:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261205AbVE2MCx
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 08:02:53 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10985 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261196AbVE2MCv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 08:02:51 -0400
-Received: (qmail 17106 invoked by uid 2001); 29 May 2005 12:02:49 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S261205AbVE2MGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 08:06:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261213AbVE2MGc
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 08:06:32 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:16873 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261205AbVE2MG3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 08:06:29 -0400
+Received: (qmail 17610 invoked by uid 2001); 29 May 2005 12:06:28 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
 Content-Disposition: inline
-In-Reply-To: <7vd5raqy28.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <1117360678.7072.53.camel@pegasus>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 29, 2005 at 09:41:03AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> >>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+Dear diary, on Sun, May 29, 2005 at 11:57:57AM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> I made the same patch, but when I used cg-diff to create the patch, I
+> got two extra annoying lines at the top.
 > 
-> PB>   What do you think? Would you hate it to show up in the diffs, or are
-> PB> you ok with it?
+> commit-id: needs update
+> tree-id: needs update
+> Index: commit-id
+> ===================================================================
+> --- c8e987e5e4608c1144293cd3f852210d70b572cb/commit-id  (mode:100755)
+> +++ uncommitted/commit-id  (mode:100755)
 > 
-> I cannot tell if you are asking about cg-diff or changing the
-> built-in diff-* output.  The Subject: line suggests you are
-> talking about the latter, but if that is the case I have to
-> admit that I am not that sympathetic to Index: nor separator.
+> I think the "needs update" lines came from "git-update-cache --refresh"
+> and we don't really want them there. Should we simply direct the output
+> to /dev/null or what?
 
-Yes, I'm talking about the latter.
-
-> Like Linus, I do "/^diff --git .*" in my less sessions, which
-> gives a very nice highlighted separator line without wasting a
-> single line on the terminal.  If any of the readers on the list
-> didn't know about this trick (especially the trailing .* part),
-> please try it.  I'm certain everybody would love it.
-
-When I do just cg-diff to see what I changed I usually do not pipe it to
-less, and typing that / stuff seems insane (although /^d.* could give a
-good approximation). OTOH I think I'll go for the diff output
-colorification (at the Cogito level), so the separator indeed isn't
-strictly necessary. I can live without it. :-)
+Oh yes, this is one of the small things I've long meant to fix but never
+really got to it. Thanks for reminding me, fixed now. :-)
 
 -- 
 				Petr "Pasky" Baudis
