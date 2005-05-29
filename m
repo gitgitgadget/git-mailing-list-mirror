@@ -1,66 +1,126 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: change of git-diff-tree and symlinks
-Date: Sun, 29 May 2005 23:32:06 +0200
-Message-ID: <20050529213206.GR1036@pasky.ji.cz>
-References: <20050525111711.GA27492@vrfy.org> <4299CED5.5070508@roemling.net> <20050529150656.GA27127@vrfy.org>
+From: Michael Frank <msfrank@syntaxjockey.com>
+Subject: [COGITO PATCH] mirroring repositories
+Date: Sun, 29 May 2005 14:41:23 -0700
+Message-ID: <1117402883.8536.5.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jochen Roemling <jochen@roemling.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 29 23:30:16 2005
+Content-Type: multipart/mixed; boundary="=-ehuvnRfC69qlKYZk+DtQ"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 29 23:39:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcVM6-0005ox-My
-	for gcvg-git@gmane.org; Sun, 29 May 2005 23:29:58 +0200
+	id 1DcVVL-0007LF-79
+	for gcvg-git@gmane.org; Sun, 29 May 2005 23:39:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261441AbVE2VcN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 17:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261447AbVE2VcN
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 17:32:13 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46211 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261441AbVE2VcI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 17:32:08 -0400
-Received: (qmail 30237 invoked by uid 2001); 29 May 2005 21:32:06 -0000
-To: Kay Sievers <kay.sievers@vrfy.org>
-Content-Disposition: inline
-In-Reply-To: <20050529150656.GA27127@vrfy.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261448AbVE2Vlu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 17:41:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261450AbVE2Vlu
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 17:41:50 -0400
+Received: from Yonetim.Ayvam.Net ([65.19.178.178]:10 "EHLO
+	secure.syntaxjockey.com") by vger.kernel.org with ESMTP
+	id S261448AbVE2Vl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 17:41:26 -0400
+Received: from [192.168.1.100] (207-224-29-220.ptld.qwest.net [207.224.29.220])
+	by secure.syntaxjockey.com (Postfix) with ESMTP id B650E9824;
+	Sun, 29 May 2005 17:41:24 -0400 (EDT)
+To: Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, May 29, 2005 at 05:06:56PM CEST, I got a letter
-where Kay Sievers <kay.sievers@vrfy.org> told me that...
-> On Sun, May 29, 2005 at 04:16:53PM +0200, Jochen Roemling wrote:
-> > I'm planning to use cogito/git for tracking development of my (PHP 
-> > based) website. Although this is the first time in my life I'm using 
-> > something that smells like a SCM, it seems to work great. The only thing 
-> > lacking is a working gitweb installation.
-> > I downloaded the gitweb.cgi script from 
-> > kernel.org/pub/software/scm/gitweb, but it dates already May 23rd.
-> > 
-> > In your mail below from May 25 you state that there have been quite some 
-> > changes to git-diff-tree:
-> > 
-> > Kay Sievers wrote:
-> > >
-> > >The new one shows simply nothing.
-> > >Shouldn't it print the mode changes like the old one?
-> > >
-> > and that might be the reason why I'm getting "nothing" when I'm clicking 
-> > on a "commitdiff" link.
-> 
-> The kernel.org servers use Cogito which needs a new release. So the
-> version on kernel.org is always a working version with the current
-> release of Cogito as long as we don't get a git-core to provide the
-> binaries.
 
-Tomorrow evening. I'd even do it now but I feel the changes need a bit
-of testing yet.
+--=-ehuvnRfC69qlKYZk+DtQ
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+The attached patch adds the two programs cg-mirror-add and
+cg-mirror-sync.  Say you do all of your work on your laptop and you want
+to make a mirror of your repository available to the public.  You
+specify the location of the mirror with cg-mirror-add:
+
+$ cg-mirror-add scp://my.server:/var/www/repos/project.git
+
+which locally creates the file .git/mirrors.  Whenever you want to
+upload your changes, you run cg-mirror-sync.
+
+Michael
+
+Signed-off-by: Michael Frank <msfrank@syntaxjockey.com>
+
+--=-ehuvnRfC69qlKYZk+DtQ
+Content-Disposition: attachment; filename=mirror.patch
+Content-Type: text/x-patch; name=mirror.patch; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+diff -pruN cogito.old/cg-mirror-add cogito.new/cg-mirror-add
+--- cogito.old/cg-mirror-add	1969-12-31 16:00:00.000000000 -0800
++++ cogito.new/cg-mirror-add	2005-05-26 18:46:16.357489808 -0700
+@@ -0,0 +1,22 @@
++#!/usr/bin/env bash
++#
++# Add new mirror to the GIT repository.
++# Copyright (c) Michael Frank, 2005
++#
++# Takes the mirror location as parameter.  Location can be
++# an rsync URI, as in:
++#     $ cg-mirror add rsync://your.server:/path/to/project.git
++#
++# or an scp URI (rsync is still used to copy the files):
++#     $ cg-mirror add scp://user@your.server:/project/path.git
++#
++
++. ${COGITO_LIB}cg-Xlib
++
++location=$1
++
++([ "$location" ]) || die "usage: cg-mirror-add MIRROR_LOC"
++if [ -e $_git/mirrors ]; then
++    grep -xq $location $_git/mirrors && die "mirror already exists"
++fi
++echo "$location" >> $_git/mirrors
+diff -pruN cogito.old/cg-mirror-sync cogito.new/cg-mirror-sync
+--- cogito.old/cg-mirror-sync	1969-12-31 16:00:00.000000000 -0800
++++ cogito.new/cg-mirror-sync	2005-05-26 18:37:35.408686064 -0700
+@@ -0,0 +1,25 @@
++#!/usr/bin/env bash
++#
++# Pushes changes from the local GIT repository to mirrors.
++# Copyright (c) Michael Frank, 2005
++#
++
++. ${COGITO_LIB}cg-Xlib
++
++[ -r $_git/mirrors ] || die "No mirrors to sync!"
++
++uri=
++for mirror in `cat $_git/mirrors`; do
++    if echo $mirror | grep -q "^scp://"; then
++        uri=`echo $mirror | sed -e "s/^scp:\/\///"`
++        echo "syncing $mirror ..."
++        rsync -a -v -z --exclude=mirrors $_git/* $uri
++        echo ""
++    elif echo $mirror | grep -q "^rsync://"; then
++        echo "syncing $mirror ..."
++        rsync -a -v -z --exclude=mirrors $_git/* $mirror
++        echo ""
++    else
++        echo "skipping $mirror; mirror uses unknown transport"
++    fi
++done
+diff -pruN cogito.old/Makefile cogito.new/Makefile
+--- cogito.old/Makefile	2005-05-26 19:15:25.412593016 -0700
++++ cogito.new/Makefile	2005-05-26 17:44:43.348912448 -0700
+@@ -55,7 +55,8 @@ PROG=   git-update-cache git-diff-files 
+ SCRIPT=	commit-id tree-id parent-id cg-add cg-admin-lsobj cg-admin-uncommit \
+ 	cg-branch-add cg-branch-ls cg-cancel cg-clone cg-commit cg-diff \
+ 	cg-export cg-help cg-init cg-log cg-ls cg-merge cg-mkpatch cg-patch \
+-	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update
++	cg-pull cg-restore cg-rm cg-seek cg-status cg-tag cg-tag-ls cg-update \
++	cg-mirror-add cg-mirror-sync
+ 
+ LIB_SCRIPT=cg-Xlib cg-Xdiffdo cg-Xmergefile
+ 
+
+--=-ehuvnRfC69qlKYZk+DtQ--
+
