@@ -1,136 +1,124 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: More gitweb queries..
-Date: Mon, 30 May 2005 01:56:31 +0200
-Message-ID: <20050529235630.GG12290@cip.informatik.uni-erlangen.de>
-References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org> <20050527192941.GE7068@cip.informatik.uni-erlangen.de> <7vhdgoxx8c.fsf@assigned-by-dhcp.cox.net> <20050527195552.GA6541@cip.informatik.uni-erlangen.de> <7vu0kowho9.fsf@assigned-by-dhcp.cox.net> <20050527203227.GA11139@cip.informatik.uni-erlangen.de> <20050529230240.GB12290@cip.informatik.uni-erlangen.de> <20050529231053.GD12290@cip.informatik.uni-erlangen.de> <20050529231621.GE12290@cip.informatik.uni-erlangen.de> <20050529234606.GF12290@cip.informatik.uni-erlangen.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 3/3] diff: code clean-up and removal of rename hack.
+Date: Sun, 29 May 2005 16:56:48 -0700
+Message-ID: <7v4qclh9hb.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
+	<7vsm091887.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
+	<7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net>
+	<7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
+	<7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505291151250.10545@ppc970.osdl.org>
+	<7vis11n69l.fsf@assigned-by-dhcp.cox.net>
+	<7v3bs5k8d1.fsf@assigned-by-dhcp.cox.net>
+	<7vmzqdiore.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 30 01:54:21 2005
+X-From: git-owner@vger.kernel.org Mon May 30 01:55:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcXbm-0002cd-27
-	for gcvg-git@gmane.org; Mon, 30 May 2005 01:54:18 +0200
+	id 1DcXbw-0002em-MJ
+	for gcvg-git@gmane.org; Mon, 30 May 2005 01:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261466AbVE2X4q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 19:56:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261469AbVE2X4p
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:56:45 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:37821 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261466AbVE2X4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 May 2005 19:56:39 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4TNuVS8006413
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 29 May 2005 23:56:31 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4TNuVWO006412;
-	Mon, 30 May 2005 01:56:31 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>, Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050529234606.GF12290@cip.informatik.uni-erlangen.de>
-User-Agent: Mutt/1.5.9i
+	id S261469AbVE2X44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 19:56:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261470AbVE2X44
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:56:56 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:15573 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261469AbVE2X4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 19:56:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050529235649.PTEZ7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 May 2005 19:56:49 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vmzqdiore.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sun, 29 May 2005 16:41:25 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-here is the actual version of my merge function. However I have a
-question left over: When I do an automatic merge or a threeway merge
-should I set the head for the next round to the remote one or just let
-it be the current one (this is the current behaviour) or maybe make it
-configurable? Note: At the moment the *local* head for the merge-base is only
-modified during the set of the first head *or* on a head forward condition. I
-have no clue. I am going to write the 'more on merging chapter' after I have
-figured this out. ;-)
+A new macro, DIFF_PAIR_RENAME(), is introduced to distinguish a
+filepair that is a rename/copy (the definition of which is src
+and dst are different paths, of course).  This removes the hack
+used in the record_rename_pair() to always put a non-zero value
+in the score field.
 
-sub
-merge
-{
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-	my $message      = undef;
-	my $head         = undef;
-	my $last_tree    = undef;
-	my $fh;
-	my @heads        = ();
+diff.c            |    6 +++---
+diffcore-rename.c |    2 +-
+diffcore.h        |    6 +++---
+3 files changed, 7 insertions(+), 7 deletions(-)
 
-	foreach my $r (@_) {
-		my $current_head = @{$r}[0];
-		my $current_url  = @{$r}[1];
+diff --git a/diff.c b/diff.c
+--- a/diff.c
++++ b/diff.c
+@@ -796,7 +796,7 @@ static void diff_resolve_rename_copy(voi
+ 			for (j = 0; j < q->nr; j++) {
+ 				pp = q->queue[j];
+ 				if (!strcmp(p->one->path, pp->one->path) &&
+-				    pp->score) {
++				    DIFF_PAIR_RENAME(pp)) {
+ 					/* rename/copy are always valid
+ 					 * so we do not say DIFF_FILE_VALID()
+ 					 * on pp->one and pp->two.
+@@ -815,7 +815,7 @@ static void diff_resolve_rename_copy(voi
+ 		 * whose both sides are valid and of the same type, i.e.
+ 		 * either in-place edit or rename/copy edit.
+ 		 */
+-		else if (p->score) {
++		else if (DIFF_PAIR_RENAME(p)) {
+ 			if (p->source_stays) {
+ 				p->status = 'C';
+ 				continue;
+@@ -828,7 +828,7 @@ static void diff_resolve_rename_copy(voi
+ 				pp = q->queue[j];
+ 				if (strcmp(pp->one->path, p->one->path))
+ 					continue; /* not us */
+-				if (!pp->score)
++				if (!DIFF_PAIR_RENAME(pp))
+ 					continue; /* not a rename/copy */
+ 				/* pp is a rename/copy from the same source */
+ 				p->status = 'C';
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -207,7 +207,7 @@ static void record_rename_pair(struct di
+ 	fill_filespec(two, dst->sha1, dst->mode);
+ 
+ 	dp = diff_queue(renq, one, two);
+-	dp->score = score ? : 1; /* make sure it is at least 1 */
++	dp->score = score;
+ 	dp->source_stays = rename_src[src_index].src_stays;
+ 	rename_dst[dst_index].pair = dp;
+ }
+diff --git a/diffcore.h b/diffcore.h
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -39,15 +39,15 @@ extern void diff_free_filespec_data(stru
+ struct diff_filepair {
+ 	struct diff_filespec *one;
+ 	struct diff_filespec *two;
+-	unsigned short int score; /* only valid when one and two are
+-				   * different paths
+-				   */
++	unsigned short int score;
+ 	char source_stays; /* all of R/C are copies */
+ 	char status; /* M C R N D U (see Documentation/diff-format.txt) */
+ };
+ #define DIFF_PAIR_UNMERGED(p) \
+ 	(!DIFF_FILE_VALID((p)->one) && !DIFF_FILE_VALID((p)->two))
+ 
++#define DIFF_PAIR_RENAME(p) (strcmp((p)->one->path, (p)->two->path))
++
+ #define DIFF_PAIR_TYPE_CHANGED(p) \
+ 	((S_IFMT & (p)->one->mode) != (S_IFMT & (p)->two->mode))
+ 
 
-		print "current_head => $current_head\ncurrent_url => $current_url\n";
-
-		push(@heads, '-p', ${current_head});
-
-		if (! defined($last_tree)) {
-			$message    = "=> ${current_url}\n";
-			$head       = $current_head;
-			$last_tree  = $current_head;
-			
-			if (@_ == 1) {
-				head($head);
-				return;
-			}
-
-			next;
-		}
-
-		my $merge_base = gitcmdout('git-merge-base', $head, $current_head)
-				 || die ("no merge-base");
-		chomp($merge_base);
-
-		print "head => $head\nremote => $current_head\nbase => $merge_base\n";
-	
-		if ($merge_base eq $current_head) {
-			$message .= "<= ${current_url} (nothing to merge)\n";
-
-			$#heads -= 2;
-
-			next;
-		}
-
-		if ($merge_base eq $head) {
-			$message   .= "<= ${current_url} (bringing head ahead)\n";
-			$head       = ${current_head};
-			$last_tree  = ${current_head};
-
-			$#heads -= 4;
-			push(@heads, '-p', $current_head);
-
-			next;
-		}
-
-		gitcmd('git-read-tree', '-m', $merge_base, $last_tree, $current_head);
-		if (! defined($last_tree = write_tree())) {
-			system('git-merge-cache', '-o', 'git-merge-one-file-script', '-a');
-			if (! defined($last_tree = write_tree())) {
-				# FIXME: Make manual intervention possible
-				# --tg 23:11 05-05-29
-				die("Couldn't merge automatically: Call 'git resolve'");
-			}
-			$message .= "<= ${current_url} (threeway merge)\n";
-
-		} else {
-			$message .= "<= ${current_url} (automatic merge)\n";
-		}
-	}
-
-	if (@heads == 1) {
-		head(@head[0]);
-		return;
-	}
-
-	open($fh, "+>", undef);
-	print $fh $message;
-	seek($fh, 0, 0);
-	$head = gitcmdinout($fh, 'git-commit-tree', $last_tree, @heads);
-	chomp($head);
-	close $fh;
-
-	head($head);
-	return;
-}
-
-	Thomas
