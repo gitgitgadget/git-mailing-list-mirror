@@ -1,74 +1,83 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: [COGITO PATCH] fix "cg-Xnormid: command not found" error
-Date: Sun, 29 May 2005 12:15:45 +0900 (JST)
-Organization: USAGI Project
-Message-ID: <20050529.121545.77345008.yoshfuji@linux-ipv6.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] diff-helper: fix R/C score parsing under -z flag.
+Date: Sat, 28 May 2005 21:20:42 -0700
+Message-ID: <7v3bs6slwl.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
+	<7vsm091887.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
+	<7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net>
+	<7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
+	<7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
+	<7vr7frrw8x.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun May 29 05:11:08 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 29 06:19:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcEC6-0001Z6-4X
-	for gcvg-git@gmane.org; Sun, 29 May 2005 05:10:30 +0200
+	id 1DcFGD-0004xz-9p
+	for gcvg-git@gmane.org; Sun, 29 May 2005 06:18:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261225AbVE2DMq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 28 May 2005 23:12:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261226AbVE2DMq
-	(ORCPT <rfc822;git-outgoing>); Sat, 28 May 2005 23:12:46 -0400
-Received: from yue.linux-ipv6.org ([203.178.140.15]:7945 "EHLO
-	yue.st-paulia.net") by vger.kernel.org with ESMTP id S261225AbVE2DMn
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 May 2005 23:12:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP id 45D7433CC2
-	for <git@vger.kernel.org>; Sun, 29 May 2005 12:15:46 +0900 (JST)
-To: git@vger.kernel.org
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 2.2 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S261173AbVE2EUw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 00:20:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261228AbVE2EUw
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 00:20:52 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:21135 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261173AbVE2EUo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 May 2005 00:20:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050529042043.SJIU1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 29 May 2005 00:20:43 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vr7frrw8x.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sat, 28 May 2005 12:22:38 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Call cg-Xnormid with ${COGITO_LIB} to fix "cg-Xnormid: command not found"
-error.
+The score number that follows R/C status letter was parsed but
+the parse pointer was not updated, causing the entire line to
+become unrecognized.  This patch fixes this problem.
 
-Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Index: commit-id
-===================================================================
---- c8e987e5e4608c1144293cd3f852210d70b572cb/commit-id  (mode:100755)
-+++ uncommitted/commit-id  (mode:100755)
-@@ -8,7 +8,7 @@
- . ${COGITO_LIB}cg-Xlib
- 
- id="$1"
--normid=$(cg-Xnormid "$id") || exit 1
-+normid=$(${COGITO_LIB}cg-Xnormid "$id") || exit 1
- 
- if [ "$(git-cat-file -t "$normid")" != "commit" ]; then
- 	echo "Invalid commit id: $id" >&2
-Index: tree-id
-===================================================================
---- c8e987e5e4608c1144293cd3f852210d70b572cb/tree-id  (mode:100755)
-+++ uncommitted/tree-id  (mode:100755)
-@@ -6,7 +6,7 @@
- # Takes ID of the appropriate commit, defaults to HEAD.
- 
- id="$1"
--normid=$(cg-Xnormid "$id") || exit 1
-+normid=$(${COGITO_LIB}cg-Xnormid "$id") || exit 1
- type=$(git-cat-file -t "$normid")
- 
- if [ "$type" = "commit" ]; then
+diff-helper.c |   17 ++++++++---------
+1 files changed, 8 insertions(+), 9 deletions(-)
 
+diff --git a/diff-helper.c b/diff-helper.c
+--- a/diff-helper.c
++++ b/diff-helper.c
+@@ -80,17 +80,16 @@ int main(int ac, const char **av) {
+ 			if (!strchr("MCRNDU", status))
+ 				break;
+ 			two_paths = score = 0;
+-			if (status == 'R' || status == 'C') {
++			if (status == 'R' || status == 'C')
+ 				two_paths = 1;
+-				sscanf(cp, "%d", &score);
+-				if (line_termination) {
+-					cp = strchr(cp,
+-						    inter_name_termination);
+-					if (!cp)
+-						break;
+-				}
+-			}
+ 
++			/* pick up score if exists */
++			if (sscanf(cp, "%d", &score) != 1)
++				score = 0;
++			cp = strchr(cp,
++				    inter_name_termination);
++			if (!cp)
++				break;
+ 			if (*cp++ != inter_name_termination)
+ 				break;
+ 
+------------------------------------------------
 
--- 
-YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
-GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
