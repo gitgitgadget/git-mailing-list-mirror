@@ -1,79 +1,53 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [COGITO PATCH] Fix cg-log and cg-status for non-GNU sed/sort
-Date: Mon, 30 May 2005 01:16:52 +0200
-Message-ID: <20050529231652.GX1036@pasky.ji.cz>
-References: <20050529230011.30885.qmail@web41201.mail.yahoo.com>
+Subject: Re: Problem with cg-diff <file>
+Date: Mon, 30 May 2005 01:38:40 +0200
+Message-ID: <20050529233840.GY1036@pasky.ji.cz>
+References: <1117408555.7072.109.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 01:15:24 2005
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 01:37:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcWzL-0004vy-DI
-	for gcvg-git@gmane.org; Mon, 30 May 2005 01:14:35 +0200
+	id 1DcXKN-0008Ca-0I
+	for gcvg-git@gmane.org; Mon, 30 May 2005 01:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261394AbVE2XRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 19:17:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261400AbVE2XRA
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:17:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:10885 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261394AbVE2XQ5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 19:16:57 -0400
-Received: (qmail 19828 invoked by uid 2001); 29 May 2005 23:16:52 -0000
-To: Mark Allen <mrallen1@yahoo.com>
+	id S261401AbVE2Xin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 19:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261402AbVE2Xin
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 19:38:43 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:27781 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261401AbVE2Xil (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 19:38:41 -0400
+Received: (qmail 23511 invoked by uid 2001); 29 May 2005 23:38:40 -0000
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20050529230011.30885.qmail@web41201.mail.yahoo.com>
+In-Reply-To: <1117408555.7072.109.camel@pegasus>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Mon, May 30, 2005 at 01:00:10AM CEST, I got a letter
-where Mark Allen <mrallen1@yahoo.com> told me that...
-> Here're a couple of pretty simple patches against cg-log and cg-status (two cogito
-> commands I use a lot) for the non-GNU (or at least older, forked GNU) tools on Darwin.
+Dear diary, on Mon, May 30, 2005 at 01:15:55AM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> Hi Petr,
 
-> @@ -148,10 +148,10 @@
->                                 fi
-> 
->                                 date=(${rest#*> })
-> -                               pdate="$(showdate $date)"
-> +                               pdate="$(date -u -r $date)"
+Hi,
 
-Hmm, coudlnt' showdate be fixed instead then? And $date is not a file so
--r $date makes no sense to me - what am I missing?
+> your latest changes are breaking the cg-diff <file> functionality. Now
+> cg-diff creates a diff against all local not committed changes.
 
->                                 if [ "$pdate" ]; then
-> -                                       echo -n $color$key $rest | sed "s/>.*/> $pdate/"
-> -                                       echo $coldefault
-> +                                       echo -n $color$key $rest | sed "s/>.*/> $pdate/"
-> +                                       echo -n $coldefault
+oops, thanks for the report. Hopefully fixed and pushed out.
 
-I'm lost on this one too. Why do you introduce the -n?
+Eek, apparently not entirely fixed yet. git-diff-tree (in contrast to
+git-diff-cache) won't take the pathspec as its trailing arguments,
+causing cg-diff -r a:b still not to work 100% correct.
 
->                                 else
->                                         echo $color$key $rest $coldefault
->                                 fi
-> @@ -168,11 +168,8 @@
->                                 if [ -n "$list_files" ]; then
->                                         list_commit_files "$tree1" "$tree2"
->                                 fi
-> -                               echo; sed -re '
-> -                                       / *Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
-> -                                       / *Acked-by:.*/Is//'$colsignoff'&'$coldefault'/
-> -                                       s/./    &/
-> -                               '
-> +                               echo; sed -e "/ *Signed-off-by:.*/s/ *Signed-off-by:.*/$colsignoff&$coldefault/" -e"/
-> +*Acked-by:.*/s/ *Acked-by:.*/$colsignoff&$coldefault/" -e "s/./    &/"
-> +
-
-Is it necessary to take away the newlines? What is the real problem,
-actually? Just the I flag?
-
-Could you please sign the patch off, and send it as text/plain or inline the
-message body?
+Junio, is there any specific reason for that, or is the end of
+git-diff-tree argument list the right spot for the pathspec stuff?
 
 Thanks,
 
