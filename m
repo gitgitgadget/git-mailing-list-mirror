@@ -1,74 +1,85 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: [PATCH]  Don't remove missing files in cg-commit
-Date: Sun, 29 May 2005 22:01:37 +0200
-Message-ID: <d7d6ub$c5b$1@sea.gmane.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: Problem with cg-merge
+Date: Sun, 29 May 2005 23:15:24 +0200
+Message-ID: <20050529211524.GB32141@diku.dk>
+References: <1117379092.7072.90.camel@pegasus> <20050529180742.GA31388@diku.dk> <1117390650.7072.100.camel@pegasus> <20050529184830.GM1036@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------030807040900070900070304"
-X-From: git-owner@vger.kernel.org Sun May 29 22:48:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+	GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 29 23:13:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcUdZ-0005xL-CM
-	for gcvg-git@gmane.org; Sun, 29 May 2005 22:43:57 +0200
+	id 1DcV6A-0002wh-Ap
+	for gcvg-git@gmane.org; Sun, 29 May 2005 23:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261434AbVE2UqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 16:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261435AbVE2UqX
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 16:46:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:53425 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261434AbVE2UqV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 16:46:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DcUQX-0002J1-06
-	for git@vger.kernel.org; Sun, 29 May 2005 22:30:29 +0200
-Received: from 213-64-177-7-o871.telia.com ([213.64.177.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 29 May 2005 22:30:28 +0200
-Received: from holmsand by 213-64-177-7-o871.telia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 29 May 2005 22:30:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 213-64-177-7-o871.telia.com
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
+	id S261442AbVE2VPg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 17:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261443AbVE2VPd
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 17:15:33 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:51177 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261442AbVE2VPZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 17:15:25 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 3E7246E26FD; Sun, 29 May 2005 23:14:53 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id CACA56E234E; Sun, 29 May 2005 23:14:52 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 4F2A961FE0; Sun, 29 May 2005 23:15:24 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
+Content-Disposition: inline
+In-Reply-To: <20050529184830.GM1036@pasky.ji.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------030807040900070900070304
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Petr Baudis <pasky@ucw.cz> wrote Sun, May 29, 2005:
+> Dear diary, on Sun, May 29, 2005 at 08:17:30PM CEST, I got a letter
+> where Marcel Holtmann <marcel@holtmann.org> told me that...
+> > > --- 0ca4ae56fa7bbd8d10e2c2791e389bc19977e460/cg-Xlib  (mode:100755)
+> > > +++ uncommitted/cg-Xlib  (mode:100755)
+> > > @@ -66,7 +66,7 @@
+> > >  		# XXX: This may be suboptimal, but it is also non-trivial to keep
+> > >  		# the adds/removes properly.  So this is just a quick hack to get it
+> > >  		# working without much fuss.
+> > > -		cg-diff -r $branch >$patchfile
+> > > +		cg-diff >$patchfile
+> > >  	fi
+> > >  
+> > >  	git-read-tree -m "$branch" || die "$branch: bad commit"
+> > 
+> > this looks better now. Petr, please apply this patch.
+> 
+> Bah. Well if your imaginary friend in your head told you this is
+> obviously just a no-go workaround, (s)he was right for once. You just
+> broke cg-admin-uncommit with this one, the real fix is to tell
+> tree_timewarp to rollback the tree (or rather rollforth here ;-). This
+> way the right branch of this if will be invoked.
 
-cg-commit presently wants to remove missing files, even if they haven't 
-been cg-rm'd. This is due to a missing "-m" in the call to git-diff-cache.
+Ok, I should have mentioned it was an ugly workaround.
 
-Signed-off-by: Dan Holmsand <holmsand@gmail.com>
+There is another problem I've noticed in the work on the cogito
+manpages. To make it easier to update the ``external'' patch I maintain
+I have added the files Documentation/make-cg-asciidoc and
+Documentation/make-cogito-asciidoc but not actually committed them.
+That way cg-diff will include them (diffed against /dev/null) which I
+like very much. However, when I cg-update from my local cogito origin
+cg-merge will fast-forward using cg-diff which results in rejects when
+patching the local changes due to the files already existing.
 
+One possibility would be to revert all local changes with the patch
+generated by cg-diff since most of them will be overwritten anyway.
+This would remove uncommitted added files but it would probably require
+use of the GIT metadata to get the fast-forwarding right with modes
+intact.
 
---------------030807040900070900070304
-Content-Type: text/plain;
- name="cg-commit.patch.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="cg-commit.patch.txt"
-
-diff --git a/cg-commit b/cg-commit
---- a/cg-commit
-+++ b/cg-commit
-@@ -73,7 +73,7 @@ else
- 	# be committed along automagically as well.
- 
- 	if [ ! "$ignorecache" ]; then
--		eval changedfiles=($(git-diff-cache -r HEAD | cut -f 2 | \
-+		eval changedfiles=($(git-diff-cache -r -m HEAD | cut -f 2 | \
- 			sed -e 's/^/"/' -e 's/$/"/'))
- 		commitfiles=($addedfiles $remfiles "${changedfiles[@]}")
- 	fi
-
---------------030807040900070900070304--
-
+-- 
+Jonas Fonseca
