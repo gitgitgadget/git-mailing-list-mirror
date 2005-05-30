@@ -1,67 +1,90 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Problem with cg-diff <file>
-Date: Mon, 30 May 2005 00:54:13 -0700
-Message-ID: <7vfyw55eu2.fsf@assigned-by-dhcp.cox.net>
-References: <1117408555.7072.109.camel@pegasus>
-	<20050529233840.GY1036@pasky.ji.cz>
-	<7vis11ftvm.fsf@assigned-by-dhcp.cox.net>
-	<20050530003242.GA1036@pasky.ji.cz>
+Subject: Re: More gitweb queries..
+Date: Mon, 30 May 2005 00:57:34 -0700
+Message-ID: <7vmzqd4041.fsf@assigned-by-dhcp.cox.net>
+References: <7vhdgoxx8c.fsf@assigned-by-dhcp.cox.net>
+	<20050527195552.GA6541@cip.informatik.uni-erlangen.de>
+	<7vu0kowho9.fsf@assigned-by-dhcp.cox.net>
+	<20050527203227.GA11139@cip.informatik.uni-erlangen.de>
+	<20050529230240.GB12290@cip.informatik.uni-erlangen.de>
+	<20050529231053.GD12290@cip.informatik.uni-erlangen.de>
+	<20050529231621.GE12290@cip.informatik.uni-erlangen.de>
+	<20050529234606.GF12290@cip.informatik.uni-erlangen.de>
+	<20050529235630.GG12290@cip.informatik.uni-erlangen.de>
+	<7vsm05bkps.fsf@assigned-by-dhcp.cox.net>
+	<20050530013056.GH12290@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 30 09:53:15 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 09:56:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dcf49-0005na-2E
-	for gcvg-git@gmane.org; Mon, 30 May 2005 09:52:05 +0200
+	id 1Dcf7J-0006BP-3T
+	for gcvg-git@gmane.org; Mon, 30 May 2005 09:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261549AbVE3Hy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 03:54:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261550AbVE3Hy2
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 03:54:28 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:7067 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261549AbVE3HyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2005 03:54:15 -0400
+	id S261548AbVE3H5o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 03:57:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261550AbVE3H5o
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 03:57:44 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:30170 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261548AbVE3H5f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2005 03:57:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050530075415.ERZW26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 30 May 2005 03:54:15 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050530003242.GA1036@pasky.ji.cz> (Petr Baudis's message of
- "Mon, 30 May 2005 02:32:42 +0200")
+          id <20050530075733.WZTN20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 30 May 2005 03:57:33 -0400
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+>>>>> "TG" == Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
 
-PB> Ok, so this is what you get when you mix: sleepiness, performing only
-PB> mental experiments not verified in practice, and inattentive reading of
-PB> the code.
+TG> Note: If I pull into an empty tree (no HEAD) there is only one head in
+TG> this array which corresponds to the remote_head. Otherwise the first
+TG> element is *always* the local HEAD.
 
-PB> I'm sorry for bothering. Instruct yourself from my bad example, please.
-PB> :-)
+"An empty tree (no HEAD)"?  Is your definition of "an empty
+tree" the same as "empty" directory after you do "mkdir empty &&
+cd empty && git-init-db", followed by bunch of git-*-pull to get
+the objects and commits from other reposititories being involved
+in the merge but without touching .git/HEAD?  If so, why cannot
+I do the git-*-pull from multiple repositories and merge them
+together?  Why "there is only one head in this array that is
+remote_head"?  Oh, I guess I am missing your definition of
+"remote_head".  Puzzled...
 
-If you forbid people to ask for help when the person who is
-asked might feel the question groundless or based on "only
-mental experiments not verified in practice and inattentive
-reading of the code", the value to have a community diminishes.
+Anyhow I presume that if your ${GIT-.git}/HEAD exists, you
+include it as the first element of MERGE_HEADS.
 
-We ask questions and ask for help because we know others know
-more about things we do not know offhand, not necessarily
-because we would not ever be able to figure them out ourselves.
+TG> I have a function merge which gets a sorted array of heads. Heads can be
+TG> unlimited at the time because some of the heads can be included into
+TG> other heads (they're a subset) and so they don't show up in the commit
+TG> object. I call this array MERGE_HEADS.
 
-If you know somebody else would know the answer immediately for
-something that may take you a day or so to figure out, asking
-for help is the right thing to do --- your time is better spent
-on what you do best (e.g. improving Cogito).  I should not feel
-bothered by your questions, and I am certainly not feeling
-bothered at all (well, at least until seeing the last sentence,
-and wondering what you really meant ;-)).
+Sorry I am not very good at this "thinking" thing, and I need to
+draw pictures.  Please bear with me.
 
-Always glad to be of help.
+    (line of dev C)-------------C    We are here, trying to merge
+    (line of dev B)---(merge)---B    these three lines of devs:
+    (line of dev A)---A/             A, B and C
+
+    MERGE_HEADS = (A B C)
+    A is actually a "subset" of B
+
+Is this what you mean by "subset"?  Are these "subset" HEAD the
+only thing that causes fast forwards?
+
+My gut feeling without thinking much is that it might be easier
+to first cull such fast forward heads by using N-way rev-tree
+before you do anything else.  If only one head survives after
+that, then that head would be your new head and you do not have
+to go through any merges.  Otherwise you merge those independent
+heads without worrying about fast forwards.  How does that
+sound?
 
