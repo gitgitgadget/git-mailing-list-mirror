@@ -1,136 +1,118 @@
-From: Alecs King <alecsk@gmail.com>
-Subject: Re: [COGITO PATCH] Fix cg-log and cg-status for non-GNU sed/sort
-Date: Tue, 31 May 2005 01:00:38 +0800
-Message-ID: <20050530165655.GA1377@alc.bsd.st>
-References: <20050529231652.GX1036@pasky.ji.cz> <20050529234326.12407.qmail@web41203.mail.yahoo.com> <20050529234911.GZ1036@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: More gitweb queries..
+Date: Mon, 30 May 2005 10:54:59 -0700
+Message-ID: <7v3bs438gc.fsf@assigned-by-dhcp.cox.net>
+References: <20050529231053.GD12290@cip.informatik.uni-erlangen.de>
+	<20050529231621.GE12290@cip.informatik.uni-erlangen.de>
+	<20050529234606.GF12290@cip.informatik.uni-erlangen.de>
+	<20050529235630.GG12290@cip.informatik.uni-erlangen.de>
+	<7vsm05bkps.fsf@assigned-by-dhcp.cox.net>
+	<20050530013056.GH12290@cip.informatik.uni-erlangen.de>
+	<7vmzqd4041.fsf@assigned-by-dhcp.cox.net>
+	<20050530083653.GL12290@cip.informatik.uni-erlangen.de>
+	<20050530092140.GQ12290@cip.informatik.uni-erlangen.de>
+	<7vhdgl2ext.fsf@assigned-by-dhcp.cox.net>
+	<20050530121100.GS12290@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon May 30 18:56:00 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 19:53:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcnXX-0001JN-Fm
-	for gcvg-git@gmane.org; Mon, 30 May 2005 18:54:59 +0200
+	id 1DcoRT-0000BB-Fw
+	for gcvg-git@gmane.org; Mon, 30 May 2005 19:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261565AbVE3Q5R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 12:57:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261651AbVE3Q5R
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 12:57:17 -0400
-Received: from wproxy.gmail.com ([64.233.184.199]:7707 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261565AbVE3Q4f (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 12:56:35 -0400
-Received: by wproxy.gmail.com with SMTP id 69so2391471wri
-        for <git@vger.kernel.org>; Mon, 30 May 2005 09:56:35 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=ejhO7MKQgo+3VpozZpCboEQtRnGMVjGrdiInh+I5qVFl4k4YM/BjsQ+1Un+ydQSJ75zBnuG4ZFn4ci/oTLNJTdkFl+XhRlBJXqIJmUdtn+kzUPEtZk7zmxh+AeconMwVOXJUSkgauP7UKHEJZNbqf3SryoW2CobZkN47JbuIUTA=
-Received: by 10.54.27.62 with SMTP id a62mr5701772wra;
-        Mon, 30 May 2005 09:56:35 -0700 (PDT)
-Received: from localhost ([210.77.2.13])
-        by mx.gmail.com with ESMTP id 35sm302586wra.2005.05.30.09.56.33;
-        Mon, 30 May 2005 09:56:35 -0700 (PDT)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050529234911.GZ1036@pasky.ji.cz>
-User-Agent: Mutt/1.5.9i
+	id S261657AbVE3RzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 13:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261658AbVE3RzP
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 13:55:15 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:24806 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261657AbVE3RzB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2005 13:55:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050530175501.PLIK16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 30 May 2005 13:55:01 -0400
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+In-Reply-To: <20050530121100.GS12290@cip.informatik.uni-erlangen.de> (Thomas
+ Glanzmann's message of "Mon, 30 May 2005 14:11:00 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 30, 2005 at 01:49:11AM +0200, Petr Baudis wrote:
-> > > > -                               echo; sed -re '
-> > > > -                                       /
-> > > *Signed-off-by:.*/Is//'$colsignoff'&'$coldefault'/
-> > > > -                                       /
-> > > *Acked-by:.*/Is//'$colsignoff'&'$coldefault'/
-> > > > -                                       s/./    &/
-> > > > -                               '
-> > > > +                               echo; sed -e "/
-> > > > *Signed-off-by:.*/s/
-> > > *Signed-off-by:.*/$colsignoff&$coldefault/" -e"/
-> > > > +*Acked-by:.*/s/ *Acked-by:.*/$colsignoff&$coldefault/" -e "s/./
-> > > > &/"
-> > > > +
-> > > 
-> > > Is it necessary to take away the newlines? What is the real
-> > > problem,
-> > > actually? Just the I flag?
-> > 
-> > Is it strictly necessary to take away the newlines? I don't know. To
-> > be honest, I didn't 
-> > experiment too much with alternate implementations. But the I flag
-> > in the sed script, 
-> > yes that is not understood by non-GNU sed. And the "-r" to sed
-> > itself is also
-> > problematic.
-> 
-> I think we don't really need -r anyway. Could you please try with the
-> 'i' flag instead of 'I'? (The manpage is somewhat unclear on the
-> difference and portability.) Also, could you try if it works with the
-> newlines?
+>>>>> "TG" == Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
 
--r here is for the 'I' (same as 'i') modifier, which means case
-insensitive.  non-GNU sed might not have the '-r' option or the 'I'
-('i') modifier.
+Disregard my last MB(A,A)===A thing.  I really was not thinking,
+but in N-way merge I think rev-tree is your friend.  Unlike
+merge-base which always does two heads at a time, rev-tree works
+N-way.  You should be able to give many heads to it and have it
+help you figure out the ancestory relationship across them.
 
-I dunno about the strict rules of 'Signed-off-by' things but what i have
-seen are all _exactly_ of this form.  I have never seen something like
-'SIGNED-OFF-BY' or 'sIGneD-oFf-bY'.
+TG> But I still don't know how to handle the following scenario:
 
-If only the exact case sensitive form is allowed, then we can safely
-remove the '-r' and 'I'.
+TG>     /----- A
+TG>    /
+TG> -GCA#1---GCA#2--- B
+TG>             \---- C
 
-Also, to Mark, as a quick alternative to work around these sed issues,
-you can install the gsed port.  IIRC, opendarwin has this port.
+TG> MERGES_HEAD = (A B C). I think the best way would be introduce a
+TG> temporary commit object otherwise  C into AB merge would have merge_base
+TG> on the first GCA which is suboptimal and maybe wrong isn't it?
 
-Speaking of other portability issues, i made up a patch to make cogito
-properly work under fbsd (without hurting others hopefully) weeks ago:
+I think you can run the same algorithm for those pairwise
+ancestors and favor the less common ones.  In the above drawing,
+you would first find out the three common pair-wise ancestors.
 
-1) expr would regard a negative $dtz as an option (-xx).
-2) coloring for both terminfo & termcap terminal.
+In your drawing,
 
-Index: cg-Xlib
-===================================================================
---- de641904363cd3759f132ee7c0dfaf8a2ee58388/cg-Xlib  (mode:100755)
-+++ 4e3c899dfa4a74effdb4ae23528785b8f688561d/cg-Xlib  (mode:100755)
-@@ -43,7 +43,7 @@
- 	date="$1"
- 	sec=${date[0]}; tz=${date[1]}
- 	dtz=${tz/+/}
--	lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
-+	lsec=$(expr \( $dtz \) / 100 \* 3600 + \( $dtz \) % 100 \* 60 +
-$sec)
- 	pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
- 
- 	echo "${pdate/+0000/$tz}"
-Index: cg-log
-===================================================================
---- de641904363cd3759f132ee7c0dfaf8a2ee58388/cg-log  (mode:100755)
-+++ 4e3c899dfa4a74effdb4ae23528785b8f688561d/cg-log  (mode:100755)
-@@ -42,13 +42,14 @@
- 	# TODO: Parse -r here too.
- 	case "$1" in
- 	-c)
--		# See terminfo(5), "Color Handling"
--		colheader="$(tput setaf 2)"    # Green
--		colauthor="$(tput setaf 6)"    # Cyan
--		colcommitter="$(tput setaf 5)" # Magenta
--		colfiles="$(tput setaf 4)"     # Blue
--		colsignoff="$(tput setaf 3)"   # Yellow
--		coldefault="$(tput op)"        # Restore default
-+		# ANSI escape seq
-+		esc=$(echo -e '\e')
-+		colheader="${esc}[0;32m"    # Green
-+		colauthor="${esc}[0;36m"    # Cyan
-+		colcommitter="${esc}[0;35m" # Magenta
-+		colfiles="${esc}[0;34m"     # Blue
-+		colsignoff="${esc}[0;33m"   # Yellow
-+		coldefault="${esc}[0m"      # Restore default
- 		shift
- 		;;
- 	-f)
+    GCA(A,B) = GCA#1
+    GCA(B,C) = GCA#2
+    GCA(C,A) = GCA#1
+    GCA(GCA#1,GCA#2) = GCA#1
 
--- 
-Alecs King
+Then you notice that GCA#2 is less common than GCA#1 (indeed
+GCA#1 is contained in GCA#2).  So favoring the GCA#2, you do the
+merge pair that uses it as the merge base, namely B and C,
+first.
+
+You scan the pairwise list again and find the pair that have not
+merged and uses the least common GCA as merge base and keep
+going.  For the definition of less common, in many cases those
+GCA#n would not be related at all and cannot be compared by
+topology only, so you would probably need to come up with a
+heuristics to break such ties.  Off the top of my head, you
+could compare commit timestamps (prefer younger), sum of commit
+chain length from GCA#n to its two head pairs (prefer shorter),
+sum of number of changed files from GCA#n to its two head pairs
+(prefer smaller).
+
+TG>     /----- A -------D---E
+TG>    /               /   /
+TG> -GCA------GCA---- B   /
+TG>             \------- C
+
+TG> Where D is a temporary COMMIT obeject to use the second GCA to merge C
+TG> with D and gets E.
+
+Yes, if you ended up merging A and B first you would have
+something like that.  I think you should not do that in the
+first place, and try to merge the "most recently diverged" pair
+first, like this:
+
+         /----- A -----------Y
+        /                   / 
+     -GCA#1---GCA#2--- B --X
+                 \---- C -/
+
+If we are still talking about Octopus (Tripus in this case), you
+would not want to actually make a commit X.  When you merge B
+and C, you consider that such a resulting tree resides at GCA#2
+(merge base of B and C) for the purposes of further merge
+computation.  Then you merge that resulting tree with A, using
+GCA#1.
+
