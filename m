@@ -1,106 +1,118 @@
-From: David Greaves <david@dgreaves.com>
+From: Dave Jones <davej@redhat.com>
 Subject: Re: I want to release a "git-1.0"
-Date: Mon, 30 May 2005 23:11:44 +0100
-Message-ID: <429B8FA0.1080903@dgreaves.com>
+Date: Mon, 30 May 2005 18:12:14 -0400
+Message-ID: <20050530221214.GA29556@redhat.com>
 References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 00:10:14 2005
+X-From: git-owner@vger.kernel.org Tue May 31 00:10:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcsRX-0004ry-Ng
-	for gcvg-git@gmane.org; Tue, 31 May 2005 00:09:07 +0200
+	id 1DcsST-0004zt-SX
+	for gcvg-git@gmane.org; Tue, 31 May 2005 00:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261711AbVE3WLo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 18:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261782AbVE3WLo
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 18:11:44 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:16350 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261711AbVE3WLk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 18:11:40 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 4D839E6D76; Mon, 30 May 2005 23:11:21 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 32197-08; Mon, 30 May 2005 23:11:21 +0100 (BST)
-Received: from oak.dgreaves.com (modem-3495.lemur.dialup.pol.co.uk [217.135.141.167])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 0F3B7E6DBF; Mon, 30 May 2005 23:11:20 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DcsU2-0000ya-Md; Mon, 30 May 2005 23:11:42 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
+	id S261783AbVE3WMf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 18:12:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261784AbVE3WMf
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 18:12:35 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:17559 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S261783AbVE3WMR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 18:12:17 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j4UMCExI008010;
+	Mon, 30 May 2005 18:12:14 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j4UMCEO10030;
+	Mon, 30 May 2005 18:12:14 -0400
+Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j4UMCEVo031517;
+	Mon, 30 May 2005 18:12:14 -0400
+Received: (from davej@localhost)
+	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j4UMCEs8031515;
+	Mon, 30 May 2005 18:12:14 -0400
+X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
 To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
-X-Enigmail-Version: 0.91.0.0
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+On Mon, May 30, 2005 at 01:00:42PM -0700, Linus Torvalds wrote:
+ > 
+ > Ok, I'm at the point where I really think it's getting close to a 1.0, and
+ > make another tar-ball etc. I obviously feel that it's already way superior
+ > to CVS, but I also realize that somebody who is used to CVS may not 
+ > actually realize that very easily.
+ > 
+ > So before I do a 1.0 release, I want to write some stupid git tutorial for
+ > a complete beginner that has only used CVS before, with a real example of
+ > how to use raw git, and along those lines I actually want the thing to
+ > show how to do something useful.
+ > 
+ > So before I do that, is there something people think is just too hard for
+ > somebody coming from the CVS world to understand? I already realized that
+ > the "git-write-tree" + "git-commit-tree" interfaces were just _too_ hard
+ > to put into a sane tutorial.
+ > 
+ > I was showing off raw git to Steve Chamberlain yesterday, and showing it
+ > to him made some things pretty obvious - one of them being that
+ > "git-init-db" really needed to set up the initial refs etc). So I wrote
+ > this silly "git-commit-script" to make it at least half-way palatable, but
+ > what else do people feel is "too hard"?
 
->So before I do a 1.0 release, I want to write some stupid git tutorial for
->a complete beginner that has only used CVS before, with a real example of
->how to use raw git, and along those lines I actually want the thing to
->show how to do something useful.
->
->So before I do that, is there something people think is just too hard for
->somebody coming from the CVS world to understand? I already realized that
->the "git-write-tree" + "git-commit-tree" interfaces were just _too_ hard
->to put into a sane tutorial.
->
->I was showing off raw git to Steve Chamberlain yesterday, and showing it
->to him made some things pretty obvious - one of them being that
->"git-init-db" really needed to set up the initial refs etc). So I wrote
->this silly "git-commit-script" to make it at least half-way palatable, but
->what else do people feel is "too hard"?
->
->I think I'll move the "cvs2git" script thing to git proper before the 1.0 
->release (again, in order to have the tutorial able to show what to do if 
->you already have an existing CVS tree), what else?
->  
->
+I finally got around to actually trying to use git to maintain the
+cpufreq repository the last few days after reading Jeff Garzik's mini-howto[1]
 
-It seems to me that a tutorial for end users is inappropriate.
-You should be writing a tutorial for porcelain implementors :)
+It's not particularly complicated, but the number one thing that's bugged me is this..
 
-Anyway, a while back I split the commands into manipulation and
-interrogation and then into ancillary commands and scripts. Do you
-actually agree with this grouping?
-http://www.kernel.org/pub/software/scm/git/docs/git.html
-It may help to position who should be doing what.
+# commit changes
+GIT_AUTHOR_NAME="John Doe"		\
+    GIT_AUTHOR_EMAIL="jdoe@foo.com"	\
+    GIT_COMMITTER_NAME="Jeff Garzik"	\
+    GIT_COMMITTER_EMAIL="jgarzik@pobox.com"	\
+    git-commit-tree `git-write-tree`	\
+    -p $(cat .git/HEAD )			\
+    < changelog.txt			\
+    > .git/HEAD
 
-Also, if you're writing a git-init-script, it may be that you're simply
-scripting common processes and could helpfully maintain consistency by
-either pulling some of the really trivial Cogito scripts (cg-init,
-cg-add, cg-rm) into the core 'ancillary' area or suggesting
-modifications to Cogito as the current 'best of breed' implementation of
-the low-level git usage process. Cogito also 'fixes' some useability
-issues such as using "git-update-cache --add" == "cg-add"
-I know you _can_ use git as an end user - but it seems that it's
-designed to be used by plumbers.
+For merging a lot of csets, thats a lot of typing per cset. So my .bashrc
+now sets up GIT_COMMITTER_NAME & GIT_COMMITTER_EMAIL, because I don't
+foresee myself changing either of those anytime soon, which takes it down
+to
+    GIT_AUTHOR_NAME="John Doe"      \
+    GIT_AUTHOR_EMAIL="jdoe@foo.com" \
+    git-commit-tree `git-write-tree`    \
+    -p $(cat .git/HEAD )            \
+    < changelog.txt         \
+    > .git/HEAD
 
-Oh, I'd also like to see something along the lines of my cg-Xignore
-before git hits 1.0
+per-cset.  Maybe I have early on-set dementia, but the number of times
+I've typoed those two remaining environment variables is bizarre.
+I must've hit every known combination possible in my merge of ~30 patches.
 
-On the tutorial side - yesterday I started pulling together stuff from
-the list about merging to complete the README where it says [ fixme:
-talk about resolving merges here ]
+I could make the latter 4 lines of the above a shell alias to save some
+typing, but those shell vars still bug me. Hmm, maybe I could create a
+wrapper that splits a "Dave Jones <davej@redhat.com" style string into two vars.
 
-I haven't done much other than collect some discussion from the list and
-the text from git-read-tree.txt.
-I do think this area needs more explanation as the whole 'stage' thing
-is pretty alien to CVS.
-I also noted a few people asking "so I did this merge - what do I do now?"
+I realise you've got a nifty bunch of tools to apply a whole mbox of
+patches, but that's not ideal if all of my patches aren't in mboxes
+(some I create myself and toss in my spool, some I pull from bugzilla etc..)
 
-The working directory/cache/repository is also confusing sometimes -
-especially when the cache and working-dir unexpectedly don't match.
+Typos aside, the other thing that seems non-intuitive is the splitting up
+of the patch & changelog comment into seperate files during the patch-apply
+stage.
 
-I also see in my notes: "improve the docs around update-cache."
+Maybe your new git-commit-script wonder-tool fixes up all these problems
+already, I'll take a look after food.
 
-David
+Its pretty nifty stuff, but for merging a lot of patches in non-mbox format,
+either I'm doing something wrong, or its, well.. painful.
+
+		Dave
+
+[1] http://lkml.org/lkml/2005/5/26/11/index.html
+
