@@ -1,31 +1,31 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-pull: summarize the number of pulled objects
-Date: Mon, 30 May 2005 03:56:50 +0200
-Message-ID: <20050530015650.GB10715@diku.dk>
+Subject: [PATCH] Cleanup cogito command usage reporting
+Date: Mon, 30 May 2005 04:36:03 +0200
+Message-ID: <20050530023603.GC10715@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 03:54:43 2005
+X-From: git-owner@vger.kernel.org Mon May 30 04:34:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcZU4-0005bn-Rs
-	for gcvg-git@gmane.org; Mon, 30 May 2005 03:54:29 +0200
+	id 1Dca6h-0002IW-GG
+	for gcvg-git@gmane.org; Mon, 30 May 2005 04:34:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261495AbVE3B44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 29 May 2005 21:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261496AbVE3B44
-	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 21:56:56 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:28875 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261495AbVE3B4w (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 21:56:52 -0400
+	id S261501AbVE3Cgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 29 May 2005 22:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261499AbVE3Cge
+	(ORCPT <rfc822;git-outgoing>); Sun, 29 May 2005 22:36:34 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:43473 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261501AbVE3CgE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 May 2005 22:36:04 -0400
 Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 80E826E2644; Mon, 30 May 2005 03:56:19 +0200 (CEST)
+	id 178AC6E2446; Mon, 30 May 2005 04:35:31 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id 3FF926E2608; Mon, 30 May 2005 03:56:19 +0200 (CEST)
+	id 8E6466E2435; Mon, 30 May 2005 04:35:31 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 0A07E61FE0; Mon, 30 May 2005 03:56:50 +0200 (CEST)
+	id 61DA661FE0; Mon, 30 May 2005 04:36:03 +0200 (CEST)
 To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.6i
@@ -38,82 +38,137 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Show cg-pull progress by summarizing the very verbose output of the pull
-backends into a continously updated line specifying the number of
-objects which have already been pulled.
-		     
+Add usage utility function which uses the recently introduced USAGE variables.
+Minor fix and improvement of cg-clone documentation.
+
 Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
 
-Straight from the bloat department, perhaps, but it is nice to not have
-the terminal backlog ruined and the object count is quite nice too. :)
+ cg-Xlib       |    3 +++
+ cg-add        |    2 +-
+ cg-branch-add |    2 +-
+ cg-clone      |    5 +++--
+ cg-export     |    2 +-
+ cg-merge      |    4 ++--
+ cg-rm         |    2 +-
+ cg-tag        |    2 +-
+ 8 files changed, 13 insertions(+), 9 deletions(-)
 
-Interesting, it counts 4950 objects when pulling over rsync and 4454
-objects when pulling locally. Didn't test HTTP pulling other than to see
-if the "got <sha>" lines was matched correctly.
-
- cg-pull |   29 ++++++++++++++++++++++++++---
- 1 files changed, 26 insertions(+), 3 deletions(-)
-
-diff --git a/cg-pull b/cg-pull
---- a/cg-pull
-+++ b/cg-pull
-@@ -29,6 +29,29 @@ if echo "$uri" | grep -q '#'; then
- 	uri=$(echo $uri | cut -d '#' -f 1)
- fi
+diff --git a/cg-Xlib b/cg-Xlib
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -17,6 +17,9 @@ die () {
+ 	exit 1
+ }
  
-+pull_progress() {
-+	objects=0
-+	last_objects=0
-+
-+	while read line; do
-+		case "$line" in
-+		link*| symlink*| \
-+		[a-f0-9][a-f0-9]/[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]*| \
-+		"got "[a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9][a-f0-9]*)
-+			objects=$(($objects + 1));
-+			echo -ne "Pulling objects: $objects\r"
-+			;;
-+		*)
-+			if [ "$last_objects" != "$objecst" ]; then
-+				last_objects=$objects
-+				echo;
-+			fi
-+			echo "$line"
-+			;;
-+		esac 
-+	done;
-+	[ "$last_objects" != "$objecst" ] && echo
++usage() {
++	die "usage: $USAGE"
 +}
  
- fetch_rsync () {
- 	redir=
-@@ -62,7 +85,7 @@ fetch_rsync () {
- }
+ mktemp () {
+ 	if [ ! "$BROKEN_MKTEMP" ]; then
+diff --git a/cg-add b/cg-add
+--- a/cg-add
++++ b/cg-add
+@@ -22,7 +22,7 @@ USAGE="cg-add FILE..."
  
- pull_rsync () {
--	fetch_rsync -s -u -d "$2/objects" "$_git_objects"
-+	fetch_rsync -s -u -d "$2/objects" "$_git_objects" | pull_progress
- }
+ . ${COGITO_LIB}cg-Xlib
  
+-[ "$1" ] || die "usage: cg-add FILE..."
++[ "$1" ] || usage
  
-@@ -107,7 +130,7 @@ fetch_http () {
- }
+ TMPFILE=$(mktemp -t gitadd.XXXXXX)
+ find "$@" -type f > $TMPFILE || die "not all files exist, nothing added"
+diff --git a/cg-branch-add b/cg-branch-add
+--- a/cg-branch-add
++++ b/cg-branch-add
+@@ -42,7 +42,7 @@ USAGE="cg-branch-add BRANCH LOCATION"
+ name=$1
+ location=$2
  
- pull_http () {
--	git-http-pull -a -v "$(cat "$_git/refs/heads/$1")" "$2/"
-+	(git-http-pull -a -v "$(cat "$_git/refs/heads/$1")" "$2/" 2>&1 /dev/null) | pull_progress
- }
+-([ "$name" ] && [ "$location" ]) || die "usage: cg-branch-add NAME SOURCE_LOC"
++([ "$name" ] && [ "$location" ]) || usage
+ (echo $name | egrep -qv '[^a-zA-Z0-9_.@!:-]') || \
+ 	die "name contains invalid characters"
+ if [ "$name" = "this" ] || [ "$name" = "HEAD" ]; then
+diff --git a/cg-clone b/cg-clone
+--- a/cg-clone
++++ b/cg-clone
+@@ -15,11 +15,12 @@
+ # -------
+ # -s::
+ #	Clone in the current directory instead of creating a new one.
++#	Specifying both -s and a desination directory makes no sense.
+ #
+ # -h, --help::
+ #	Print usage help
  
+-USAGE="cg-clone [-s] LOCATION [<directory>]"
++USAGE="cg-clone [-s] LOCATION [DESTINATION]"
  
-@@ -170,7 +193,7 @@ fetch_local () {
- }
+ . ${COGITO_LIB}cg-Xlib
  
- pull_local () {
--	git-local-pull -a -l -v "$(cat "$_git/refs/heads/$1")" "$2"
-+	(git-local-pull -a -l -v "$(cat "$_git/refs/heads/$1")" "$2" 2>&1 /dev/null) | pull_progress
- }
+@@ -30,7 +31,7 @@ if [ "$1" = "-s" ]; then
+ fi
  
- if echo "$uri" | grep -q "^http://"; then
+ location=$1
+-[ "$location" ] || die "usage: cg-clone [-s] SOURCE_LOC [DESTDIR]"
++[ "$location" ] || usage
+ location=${location%/}
+ 
+ destdir=$2
+diff --git a/cg-export b/cg-export
+--- a/cg-export
++++ b/cg-export
+@@ -22,7 +22,7 @@ USAGE="cg-export DESTINATION [TREE]"
+ dest=$1
+ id=$(tree-id $2)
+ 
+-([ "$dest" ] && [ "$id" ]) || die "usage: cg-export DEST [TREE_ID]"
++([ "$dest" ] && [ "$id" ]) || usage
+ 
+ [ -e "$dest" ] && die "$dest already exists."
+ 
+diff --git a/cg-merge b/cg-merge
+--- a/cg-merge
++++ b/cg-merge
+@@ -38,11 +38,11 @@ fi
+ base=
+ if [ "$1" = "-b" ]; then
+ 	shift
+-	[ "$1" ] || die "usage: cg-merge [-c] [-b BASE_ID] FROM_ID"
++	[ "$1" ] || usage
+ 	base=$(commit-id "$1") || exit 1; shift
+ fi
+ 
+-[ "$1" ] || die "usage: cg-merge [-c] [-b BASE_ID] FROM_ID"
++[ "$1" ] || usage
+ branchname="$1"
+ branch=$(commit-id "$branchname") || exit 1
+ 
+diff --git a/cg-rm b/cg-rm
+--- a/cg-rm
++++ b/cg-rm
+@@ -15,7 +15,7 @@ USAGE="cg-rm FILE..."
+ 
+ . ${COGITO_LIB}cg-Xlib
+ 
+-[ "$1" ] || die "usage: cg-rm FILE..."
++[ "$1" ] || usage
+ 
+ rm -f "$@"
+ git-update-cache --remove -- "$@"
+diff --git a/cg-tag b/cg-tag
+--- a/cg-tag
++++ b/cg-tag
+@@ -20,7 +20,7 @@ USAGE="cg-tag TAG [REVISION]"
+ name=$1
+ id=$2
+ 
+-[ "$name" ] || die "usage: cg-tag TNAME [COMMIT_ID]"
++[ "$name" ] || usage
+ [ "$id" ] || id=$(commit-id)
+ 
+ (echo $name | egrep -qv '[^a-zA-Z0-9_.@!:-]') || \
 -- 
 Jonas Fonseca
