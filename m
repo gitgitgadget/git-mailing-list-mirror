@@ -1,63 +1,115 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: More gitweb queries..
-Date: Tue, 31 May 2005 09:03:06 +1000
-Message-ID: <17051.39850.556062.543875@cargo.ozlabs.ibm.com>
-References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: I want to release a "git-1.0"
+Date: Mon, 30 May 2005 16:15:17 -0700
+Message-ID: <7v7jhgz4oq.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+	<20050530221214.GA29556@redhat.com>
+	<200505301755.15371.dtor_core@ameritech.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kay Sievers <kay.sievers@vrfy.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 01:03:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Tue May 31 01:21:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DctH4-000173-1g
-	for gcvg-git@gmane.org; Tue, 31 May 2005 01:02:22 +0200
+	id 1DctZF-0002fm-Bd
+	for gcvg-git@gmane.org; Tue, 31 May 2005 01:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261817AbVE3XDr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 30 May 2005 19:03:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261811AbVE3XDr
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 19:03:47 -0400
-Received: from ozlabs.org ([203.10.76.45]:48768 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S261809AbVE3XDS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2005 19:03:18 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 000A9679F9; Tue, 31 May 2005 09:03:11 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S261831AbVE3XWy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 19:22:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261822AbVE3XVO
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 19:21:14 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:17323 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261826AbVE3XP0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2005 19:15:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050530231518.KWTW26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 30 May 2005 19:15:18 -0400
+To: git@vger.kernel.org
+In-Reply-To: <200505301755.15371.dtor_core@ameritech.net> (Dmitry Torokhov's
+ message of "Mon, 30 May 2005 17:55:14 -0500")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds writes:
+On a related topic of making bare Plumbing a bit easier to use,
+here is what I use to prepare patches, one patch per file, to be
+sent to Linus via e-mail.
 
->   On that small note, I also find "gitk" very cool indeed, too bad ab=
-out=20
->   the fact that tk/tcl seems to always end up looking so _ugly_. Is t=
-here=20
->   any way to get anti-aliased fonts and a less 'Motify' blocky look f=
-rom=20
->   tcl/tk? Every time I see that, I feel like I'm back in the last cen=
-tury =20
->   or something.
+Usage:
 
-Tcl/Tk 8.5 will have anti-aliased fonts (8.5a2 is available on
-sourceforge).  There is apparently some support for widget styling in
-8.4 which I will have to look into.  The Motif look doesn't bother me,
-but it does seem to bother you and Ben H. :)
+  $ git-format-patch-script HEAD linus
 
->   Combining some of the features of the two (that =FCber-cool revisio=
-n=20
->   history graph from gitk rules, for example) might be cool. I get th=
-e=20
->   urge to do octopus-merges in the kernel just because of how good th=
-ey
->   look in gitk ;) ]
+Assuming that "linus" is the tip of the tree from Linus
+(typically stored in .git/branches/linus if you use Cogito), and
+HEAD is your additions on top of it, the above command will
+produce patches in the format you have been seeing on this list
+from me, one file per commit, in .patches/XXXX-patch-title.txt
+file.
 
-Yes, it's nice that a relatively simple algorithm without much
-lookahead produces reasonable results.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+sed -e 's/^X//' >git-format-patch-script <<\EOF
+X#!/bin/sh
+X#
+X# Copyright (c) 2005 Junio C Hamano
+X#
+Xjunio="$1"
+Xlinus="$2"
+X
+Xtmp=.tmp-series$$
+Xtrap 'rm -f $tmp-*' 0 1 2 3 15
+X
+Xseries=$tmp-series
+X
+XtitleScript='
+X	1,/^$/d
+X	: loop
+X	/^$/b loop
+X	s/[^-a-z.A-Z_0-9]/-/g
+X	s/^--*//g
+X	s/--*$//g
+X	s/---*/-/g
+X	s/$/.txt/
+X        s/\.\.\.*/\./g
+X	q
+X'
+XO=
+Xif test -f .git/patch-order
+Xthen
+X	O=-O.git/patch-order
+Xfi
+Xgit-rev-list "$junio" "$linus" >$series
+Xtotal=`wc -l <$series`
+Xi=$total
+Xwhile read commit
+Xdo
+X    title=`git-cat-file commit "$commit" | sed -e "$titleScript"`
+X    num=`printf "%d/%d" $i $total`
+X    file=`printf '%04d-%s' $i "$title"`
+X    i=`expr "$i" - 1`
+X    echo "$file"
+X    {
+X	mailScript='
+X	1,/^$/d
+X	: loop
+X	/^$/b loop
+X	s|^|[PATCH '"$num"'] |
+X	: body
+X	p
+X	n
+X	b body'
+X
+X	git-cat-file commit "$commit" | sed -ne "$mailScript"
+X	echo '---'
+X	git-diff-tree -p $O "$commit" | diffstat -p1
+X	echo
+X	git-diff-tree -p $O "$commit"
+X    } >".patches/$file"
+Xdone <$series
+EOF
 
-Paul.
