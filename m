@@ -1,54 +1,86 @@
-From: jeff millar <wa1hco@adelphia.net>
-Subject: Re: I want to release a "git-1.0"
-Date: Mon, 30 May 2005 16:33:49 -0400
-Message-ID: <429B78AD.3080109@adelphia.net>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] cg-mkpatch: use git-apply --stat
+Date: Mon, 30 May 2005 22:34:37 +0200
+Message-ID: <20050530203437.GA13961@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon May 30 22:32:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 30 22:33:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dcquy-0003M3-Jh
-	for gcvg-git@gmane.org; Mon, 30 May 2005 22:31:24 +0200
+	id 1Dcqvf-0003RJ-DP
+	for gcvg-git@gmane.org; Mon, 30 May 2005 22:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261739AbVE3Udz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 16:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261736AbVE3Udz
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 16:33:55 -0400
-Received: from mta9.adelphia.net ([68.168.78.199]:6386 "EHLO mta9.adelphia.net")
-	by vger.kernel.org with ESMTP id S261744AbVE3Udu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 16:33:50 -0400
-Received: from [192.168.2.4] (really [24.52.167.181]) by mta9.adelphia.net
-          (InterMail vM.6.01.04.01 201-2131-118-101-20041129) with ESMTP
-          id <20050530203349.TIBF8952.mta9.adelphia.net@[192.168.2.4]>;
-          Mon, 30 May 2005 16:33:49 -0400
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.3 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+	id S261736AbVE3Uem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 16:34:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261740AbVE3Uem
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 16:34:42 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:34032 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261736AbVE3Uej (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 16:34:39 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 623F06E0B59; Mon, 30 May 2005 22:34:05 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 2D5DF6E016C; Mon, 30 May 2005 22:34:05 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 1E3C261FE0; Mon, 30 May 2005 22:34:38 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
+Change cg-mkpatch to use git-apply --stat instead of optional diffstat.
 
->So before I do that, is there something people think is just too hard for
->somebody coming from the CVS world to understand? 
->
-I'm a fairly clueless cvs user, trying to use cg/git as a way to track a 
-single
-user project...using cogito, because that's easier, right?
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
 
-The usage pattern that causing me problems right now.
+ cg-mkpatch |   12 ++----------
+ 1 files changed, 2 insertions(+), 10 deletions(-)
 
-cg-init a whole directory tree (trying with /etc and a software project 
-directory)
-note that too many files got included (*.cache, *.backup, *.o, binaries, 
-etc)
-want to stop tracking them, cg-rm also removes the file, don't want that.
-
-What's the best way to stop tracking files?
-
-jeff
+diff --git a/cg-mkpatch b/cg-mkpatch
+--- a/cg-mkpatch
++++ b/cg-mkpatch
+@@ -42,7 +42,6 @@ USAGE="cg-mkpatch [-s] [-r REVISION[:REV
+ . ${COGITO_LIB}cg-Xlib
+ 
+ omit_header=
+-has_diffstat=
+ log_start=
+ log_end=
+ mergebase=
+@@ -71,11 +70,8 @@ showpatch () {
+ 
+ 				echo commit $id
+ 				cat $header
+-
+-				if [ "$has_diffstat" ]; then
+-					echo
+-					cat $patch | diffstat -p1
+-				fi
++				echo
++				cat $patch | git-apply --stat
+ 			fi
+ 			;;
+ 		*)
+@@ -116,10 +112,6 @@ while [ "$1" ]; do
+ 	shift
+ done
+ 
+-if ! [ "$omit_header" ]; then
+-	which diffstat >/dev/null 2>&1 && has_diffstat=1
+-fi
+-
+ if [ "$mergebase" ]; then
+ 	[ "$log_start" ] || log_start="origin"
+ 	[ "$log_end" ] || log_end="master"
+-- 
+Jonas Fonseca
