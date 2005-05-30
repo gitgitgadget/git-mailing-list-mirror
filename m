@@ -1,80 +1,62 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: More gitweb queries..
-Date: Mon, 30 May 2005 14:11:00 +0200
-Message-ID: <20050530121100.GS12290@cip.informatik.uni-erlangen.de>
-References: <20050529231053.GD12290@cip.informatik.uni-erlangen.de> <20050529231621.GE12290@cip.informatik.uni-erlangen.de> <20050529234606.GF12290@cip.informatik.uni-erlangen.de> <20050529235630.GG12290@cip.informatik.uni-erlangen.de> <7vsm05bkps.fsf@assigned-by-dhcp.cox.net> <20050530013056.GH12290@cip.informatik.uni-erlangen.de> <7vmzqd4041.fsf@assigned-by-dhcp.cox.net> <20050530083653.GL12290@cip.informatik.uni-erlangen.de> <20050530092140.GQ12290@cip.informatik.uni-erlangen.de> <7vhdgl2ext.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: cg-update with local uncommitted changes
+Date: Mon, 30 May 2005 16:25:14 +0200
+Message-ID: <1117463114.7072.185.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 30 14:09:57 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 16:23:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dcj50-0002Y6-CG
-	for gcvg-git@gmane.org; Mon, 30 May 2005 14:09:14 +0200
+	id 1DclAI-0004wn-JR
+	for gcvg-git@gmane.org; Mon, 30 May 2005 16:22:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261495AbVE3MLd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 08:11:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261501AbVE3MLd
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 08:11:33 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:1970 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261495AbVE3MLN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2005 08:11:13 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j4UCB0S8002783
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 30 May 2005 12:11:01 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j4UCB0Xa002782;
-	Mon, 30 May 2005 14:11:00 +0200 (CEST)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhdgl2ext.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S261604AbVE3OZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 10:25:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261606AbVE3OZS
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 10:25:18 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:60858 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S261604AbVE3OZM
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2005 10:25:12 -0400
+Received: from pegasus (p5487D5D5.dip.t-dialin.net [84.135.213.213])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j4UEQxSs032611
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Mon, 30 May 2005 16:27:00 +0200
+To: Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV 0.85.1/899/Mon May 30 08:57:01 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Petr,
 
-> I think merge-base between A and A is always A, so the second pass
-> would eliminate the dups anyway...
+when doing a cg-update and I have local uncommitted changes it fails
+with the "... needs update" message. From some previous posts on the
+mailing list I got the impression that it is possible to pull updates
+into the local repository with changed files. At the moment I am using
+the following sequence:
 
-two scenarios come into my mind which could clash (second ommited
-because it would rely that the 'local' HEAD is changes on threeway
-merge)
+	cg-diff > patch
+	cg-cancel
+	cg-update origin
+	cat patch | patch -p1
+	rm patch
 
-consider the follow MERGE_HEADS = (A B B)
+The problem with this sequence is when I have added or removed files
+from my repository. This needs a lot of manual fixing.
 
-    /----- A
-   /
--GCA------ B
+With Bitkeeper it was possible to pull changes as long as they don't
+affect local uncommitted files.
 
-Now B gets twice automatic/threeway/manual merged into A which is just
-stupid and couldn't work out.
+Any ideas on how to implement or if it exists on how to use it?
 
-------------------------------------------------------------------------------
+Regards
 
-But I still don't know how to handle the following scenario:
+Marcel
 
-    /----- A
-   /
--GCA------GCA---- B
-            \---- C
 
-MERGES_HEAD = (A B C). I think the best way would be introduce a
-temporary commit object otherwise  C into AB merge would have merge_base
-on the first GCA which is suboptimal and maybe wrong isn't it?
-
-    /----- A -------D---E
-   /               /   /
--GCA------GCA---- B   /
-            \------- C
-
-Where D is a temporary COMMIT obeject to use the second GCA to merge C
-with D and gets E.
-
-Gruesse,
-	Thomas
