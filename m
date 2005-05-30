@@ -1,86 +1,51 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-mkpatch: use git-apply --stat
-Date: Mon, 30 May 2005 22:34:37 +0200
-Message-ID: <20050530203437.GA13961@diku.dk>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: I want to release a "git-1.0"
+Date: Mon, 30 May 2005 16:49:33 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0505301644430.5330@localhost.localdomain>
+References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 30 22:33:12 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 22:47:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dcqvf-0003RJ-DP
-	for gcvg-git@gmane.org; Mon, 30 May 2005 22:32:08 +0200
+	id 1DcrAB-00058h-A5
+	for gcvg-git@gmane.org; Mon, 30 May 2005 22:47:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261736AbVE3Uem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 16:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261740AbVE3Uem
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 16:34:42 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:34032 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261736AbVE3Uej (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 16:34:39 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 623F06E0B59; Mon, 30 May 2005 22:34:05 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 2D5DF6E016C; Mon, 30 May 2005 22:34:05 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 1E3C261FE0; Mon, 30 May 2005 22:34:38 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261742AbVE3Utl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 16:49:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261743AbVE3Utl
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 16:49:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:29417 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261742AbVE3Utk
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 May 2005 16:49:40 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IHB00AT5LULB0@VL-MO-MR010.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 30 May 2005 16:49:33 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Change cg-mkpatch to use git-apply --stat instead of optional diffstat.
+On Mon, 30 May 2005, Linus Torvalds wrote:
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
+> 
+> Ok, I'm at the point where I really think it's getting close to a 1.0, and
+> make another tar-ball etc.
 
- cg-mkpatch |   12 ++----------
- 1 files changed, 2 insertions(+), 10 deletions(-)
+Any chance you could merge my latest mkdelta patch _please_ ???
 
-diff --git a/cg-mkpatch b/cg-mkpatch
---- a/cg-mkpatch
-+++ b/cg-mkpatch
-@@ -42,7 +42,6 @@ USAGE="cg-mkpatch [-s] [-r REVISION[:REV
- . ${COGITO_LIB}cg-Xlib
- 
- omit_header=
--has_diffstat=
- log_start=
- log_end=
- mergebase=
-@@ -71,11 +70,8 @@ showpatch () {
- 
- 				echo commit $id
- 				cat $header
--
--				if [ "$has_diffstat" ]; then
--					echo
--					cat $patch | diffstat -p1
--				fi
-+				echo
-+				cat $patch | git-apply --stat
- 			fi
- 			;;
- 		*)
-@@ -116,10 +112,6 @@ while [ "$1" ]; do
- 	shift
- done
- 
--if ! [ "$omit_header" ]; then
--	which diffstat >/dev/null 2>&1 && has_diffstat=1
--fi
--
- if [ "$mergebase" ]; then
- 	[ "$log_start" ] || log_start="origin"
- 	[ "$log_end" ] || log_end="master"
--- 
-Jonas Fonseca
+I just posted it twice in the last 4 days and it still didn't appear in 
+your repository.
+
+Again, the current version of mkdelta in your tree has a bug that can 
+screw things up, and it is fixed in the latest patch of course.
+
+
+Nicolas
