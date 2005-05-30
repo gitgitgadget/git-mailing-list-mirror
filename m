@@ -1,63 +1,78 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: Problem with cg-update and deleted files
-Date: Mon, 30 May 2005 17:23:20 +0200
-Message-ID: <1117466600.7072.188.camel@pegasus>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATH] cg-Xlib: Fix problem with cg-update and deleted files
+Date: Mon, 30 May 2005 18:39:57 +0200
+Message-ID: <20050530163957.GC28681@diku.dk>
+References: <1117466600.7072.188.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 30 17:21:07 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@ucw.cz>, GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 30 18:38:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dcm4Y-0005Ot-2F
-	for gcvg-git@gmane.org; Mon, 30 May 2005 17:20:58 +0200
+	id 1DcnGm-0007SO-9a
+	for gcvg-git@gmane.org; Mon, 30 May 2005 18:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261495AbVE3PXZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 11:23:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261532AbVE3PXZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 11:23:25 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:63418 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S261495AbVE3PXS
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2005 11:23:18 -0400
-Received: from pegasus (p5487D5D5.dip.t-dialin.net [84.135.213.213])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j4UFP5Ss000671
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Mon, 30 May 2005 17:25:06 +0200
-To: Petr Baudis <pasky@ucw.cz>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV 0.85.1/899/Mon May 30 08:57:01 2005 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S261644AbVE3QkD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 30 May 2005 12:40:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261646AbVE3QkD
+	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 12:40:03 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:58570 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261644AbVE3Qj6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 May 2005 12:39:58 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 68EA16E1DB6; Mon, 30 May 2005 18:39:25 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 2D5EF6E1CFC; Mon, 30 May 2005 18:39:25 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id D568761FE0; Mon, 30 May 2005 18:39:57 +0200 (CEST)
+To: Marcel Holtmann <marcel@holtmann.org>
+Content-Disposition: inline
+In-Reply-To: <1117466600.7072.188.camel@pegasus>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Petr,
+Marcel Holtmann <marcel@holtmann.org> wrote Mon, May 30, 2005:
+> with the latest cg-update and pulling the linux-2.6 repository I saw
+> problems with deleted files:
 
-with the latest cg-update and pulling the linux-2.6 repository I saw
-problems with deleted files:
+Update tree_timewarp()s git-diff-tree logic to handle the diff-format
+header and file both being NUL separated.
 
-Applying changes...
-Fast-forwarding 37e0915b701281182cea9fc90e894d10addf134a -> 5e485b7975472ba4a408523deb6541e70c451842
-        on top of 37e0915b701281182cea9fc90e894d10addf134a...
-rm: cannot remove `:100644 000000 057cc3f8ff378c0de881482d55b47255e3c5ea72 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 d1352120acd7ef7853041098bf12ae79a8ac1e0a 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 abdb015a4d71036eb7305e18b606151eb35fb810 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 fc568af468b9482b9e09cc618d726ece226cb9db 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 cb90681e151cd510825dd8f7ca555ad8e0be137f 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 c91976274e7b007b78269e40fd8b354a4e888b86 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 57d03d9178f611f73079d6a83af0302f9c33dc3c 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 a7ffd9c45a2c272594a0be593cdaa467ce7abf5e 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 98fa3f7a9eff4721531ca060cee5961f7fba0100 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 5b2aacdefa6cb7db6d3aa87194f210d5fcb87974 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 D': No such file or directory
-rm: cannot remove `:100644 000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 0000000000000000000000000000000000000000 D': No such file or directory
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
 
-Regards
+I've only tested it in a small test script ...
 
-Marcel
-
-
+diff --git a/cg-Xlib b/cg-Xlib
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -73,10 +73,15 @@ tree_timewarp () {
+ 	echo "$branch" > $_git/HEAD
+ 
+ 	# Kill gone files
+-	git-diff-tree -z -r $base $branch | egrep -z '^:([^ ][^ ]* ){4}D' | xargs -0 bash -c '
++	git-diff-tree -r $base $branch | xargs -0 bash -c '
+ 		while [ "$1" ]; do
+-			rm -- "$(echo "$1" | cut -f 2)"
+-			shift
++			header="$1"; shift
++			file="$1"; shift
++
++			# match ":100755 000000 14d43b1abf... 000000000... D"
++			if echo "$header" | egrep "^:([^ ][^ ]* ){4}D" >/dev/null; then
++				rm -- "$file"
++			fi
+ 		done
+ 	' padding
+ 	git-checkout-cache -f -a
+-- 
+Jonas Fonseca
