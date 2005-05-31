@@ -1,50 +1,52 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: I want to release a "git-1.0"
-Date: 31 May 2005 07:45:33 -0600
-Message-ID: <m1psv7bjb6.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: cg-seek messed me up
+Date: Tue, 31 May 2005 07:33:18 -0700
+Message-ID: <20050531143318.GB27047@tumblerings.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 15:50:09 2005
+X-From: git-owner@vger.kernel.org Tue May 31 16:33:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd781-0002eu-4T
-	for gcvg-git@gmane.org; Tue, 31 May 2005 15:49:57 +0200
+	id 1Dd7n3-0001lA-Pp
+	for gcvg-git@gmane.org; Tue, 31 May 2005 16:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261760AbVEaNwb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 09:52:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261876AbVEaNwb
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 09:52:31 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:6310 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261760AbVEaNw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2005 09:52:29 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.12.3/8.12.3/Debian-7.1) with ESMTP id j4VDkY9N032142;
-	Tue, 31 May 2005 07:46:35 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.12.3/8.12.3/Debian-7.1) id j4VDjZGU032133;
-	Tue, 31 May 2005 07:45:35 -0600
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S261674AbVEaOet (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 10:34:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVEaOe3
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 10:34:29 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:8383 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S261674AbVEaOda
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2005 10:33:30 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1Dd7ny-0005jO-Ik
+	for git@vger.kernel.org; Tue, 31 May 2005 07:33:18 -0700
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Hi folks,
 
-> Ok, I'm at the point where I really think it's getting close to a 1.0, and
-> make another tar-ball etc. I obviously feel that it's already way superior
-> to CVS, but I also realize that somebody who is used to CVS may not 
-> actually realize that very easily.
+I'm not positive, but I *think* I shot myself in the foot by doing a cg-seek
+when there were uncommitted changes in my working file set. The patching process
+created duplicate areas in the files, while losing other areas and giving
+patch rejects. Before I figured out the problem, I wasn't even able to seek to a
+known state because of this, so I ended up having to recreate the files as best
+as I could from the mess I was left with in the working directory. I realize I
+could have gotten a clean tree by cloning, but this didn't occur to me at the
+time. It seemed like the whole repository was just corrupt.
 
-I way behind the power curve on learning git at this point but
-one piece of the puzzle that CVS has that I don't believe git does
-are multiple people committing to the same repository, especially
-remotely.  I don't see that as a down side of git but it is a common
-way people CVS so it is worth documenting.
+I think I recovered everything, and I know it was my own mistake, but it
+seems like this will be a common blunder by users. Maybe cg-seek should
+first do a comparison between the working tree and the most recent known
+state. If the two differ, it should exit with an error.
 
-Eric
+Be well,
+Zack
+
+-- 
+Zack Brown
