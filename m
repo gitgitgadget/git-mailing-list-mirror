@@ -1,47 +1,94 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: git-rev-list: proper lazy reachability
-Date: Tue, 31 May 2005 22:15:18 +1000
-Message-ID: <17052.21846.816147.370354@cargo.ozlabs.ibm.com>
-References: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: [gitweb PATCH] Configure encoding
+Date: Tue, 31 May 2005 14:21:30 +0200
+Message-ID: <20050531122130.GA24395@vrfy.org>
+References: <20050531104425.GA23755@vrfy.org> <11399.1117537956@www67.gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 14:13:12 2005
+X-From: git-owner@vger.kernel.org Tue May 31 14:20:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd5c3-0005iW-2U
-	for gcvg-git@gmane.org; Tue, 31 May 2005 14:12:51 +0200
+	id 1Dd5hw-0006W8-Nu
+	for gcvg-git@gmane.org; Tue, 31 May 2005 14:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261880AbVEaMP1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 08:15:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261881AbVEaMP1
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 08:15:27 -0400
-Received: from ozlabs.org ([203.10.76.45]:12946 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S261880AbVEaMPX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 08:15:23 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 06ABF679E6; Tue, 31 May 2005 22:15:22 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S261881AbVEaMVj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 May 2005 08:21:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261882AbVEaMVi
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 08:21:38 -0400
+Received: from soundwarez.org ([217.160.171.123]:33163 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261881AbVEaMVf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 08:21:35 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id B7D133B04A; Tue, 31 May 2005 14:21:30 +0200 (CEST)
+To: Thomas Kolejka <Thomas.Kolejka@gmx.at>
+Content-Disposition: inline
+In-Reply-To: <11399.1117537956@www67.gmx.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds writes:
+On Tue, May 31, 2005 at 01:12:36PM +0200, Thomas Kolejka wrote:
+> > --- Urspr=C3=BCngliche Nachricht ---
+> > Von: Kay Sievers <kay.sievers@vrfy.org>
+> > An: Petr Baudis <pasky@ucw.cz>
+> > Kopie: Thomas Kolejka <Thomas.Kolejka@gmx.at>, Git Mailing List
+> > <git@vger.kernel.org>
+> > Betreff: Re: [gitweb PATCH] Configure encoding
+> > Datum: Tue, 31 May 2005 12:44:25 +0200
+> >=20
+> > On Tue, May 31, 2005 at 12:12:17PM +0200, Petr Baudis wrote:
+> > > Dear diary, on Tue, May 31, 2005 at 11:19:55AM CEST, I got a lett=
+er
+> > > where Kay Sievers <kay.sievers@vrfy.org> told me that...
+> > > > On Tue, May 31, 2005 at 09:55:11AM +0200, Thomas Kolejka wrote:
+> > > > > The following patch makes it easy to change the encoding:
+> > > > >=20
+> > > > >=20
+> > > > > --- gitweb.cgi.177      2005-05-31 09:43:17.000000000 +0200
+> > > > > +++ gitweb.cgi.p        2005-05-31 09:48:46.000000000 +0200
+> > > > > @@ -20,6 +20,9 @@
+> > > > >  my $my_uri =3D           $cgi->url(-absolute =3D> 1);
+> > > > >  my $rss_link =3D "";
+> > > > > =20
+> > > > > +my $encoding =3D "utf-8";
+> > > > > +$encoding =3D "iso-8859-1";
+> > > >=20
+> > > > The upstream version will not support anything but the one and =
+only
+> > > > sane encoding which is utf-8. It will not provide options to sw=
+itch
+> > > > back to the 80's, sorry. :)
+> > >=20
+> > > This matters mainly for commits, right?
+> >=20
+> > Yes. Also the content of the files, but fortunately they are just p=
+lain
+> > ascii most of the time. :)
+>=20
+> I've made this changes becausae the german letters like =C3=A4, =C3=B6=
+, ... are
+> displayed ugly in the browser.
 
-> Ok, I just made git-rev-list DTRT when you pass it a "beginning" and 
-> "end", ie it does proper reachability analysis _without_ parsing the whole 
-> set of commits. 
+So use a sane encoding in your commit-text. We don't store the encoding
+with the commit, so you don't have any sane other option besides using
+utf-8 if you don't use plain ascii.
 
-I have made gitk use git-rev-list instead of git-rev-tree, but it
-still absorbs the whole of git-rev-list's output before drawing
-anything.  I'd like to make it draw the commit graph and list
-incrementally as it gets the output from git-rev-list, but to do that
-I need to know whether git-rev-list could ever print a commit ID
-*after* one of its parents.  If it never does that then I can
-restructure the code to do the drawing incrementally fairly easily.
+> > > Perhaps I should recode from current locale to utf8 in cg-commit?
+> >=20
+> > Everthing else than utf-8 is just a complete mess with data shared
+> > across multiple machines. All modern distributions defaulting to ut=
+f-8
+> > anyway, so I think it is sane to recode that utf-8.
+>=20
+> The patch is to _change_ the encoding easy .. or to leave it unchange=
+d.
 
-Paul.
+Exactly. Change to other encodings is not supported upstream and will
+not be a configuration value, sorry.
+
+Kay
+
