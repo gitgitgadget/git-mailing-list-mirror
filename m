@@ -1,51 +1,52 @@
 From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: [gitweb PATCH] Configure encoding
-Date: Tue, 31 May 2005 11:19:55 +0200
-Message-ID: <20050531091955.GA22706@vrfy.org>
-References: <1839.1117526111@www5.gmx.net>
+Subject: Re: [gitweb PATCH] Kill warnings in Webserver Error Log
+Date: Tue, 31 May 2005 11:48:38 +0200
+Message-ID: <20050531094838.GA22853@vrfy.org>
+References: <429B6AD4.9010107@roemling.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 11:19:00 2005
+X-From: git-owner@vger.kernel.org Tue May 31 11:47:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd2st-0002nE-6x
-	for gcvg-git@gmane.org; Tue, 31 May 2005 11:18:03 +0200
+	id 1Dd3K8-0005pG-33
+	for gcvg-git@gmane.org; Tue, 31 May 2005 11:46:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261491AbVEaJUR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 05:20:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261547AbVEaJUR
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 05:20:17 -0400
-Received: from soundwarez.org ([217.160.171.123]:13960 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261491AbVEaJUC (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 05:20:02 -0400
+	id S261598AbVEaJsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 05:48:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261611AbVEaJsr
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 05:48:47 -0400
+Received: from soundwarez.org ([217.160.171.123]:14985 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S261598AbVEaJsn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 05:48:43 -0400
 Received: by soundwarez.org (Postfix, from userid 2702)
-	id 2E0B53AF65; Tue, 31 May 2005 11:19:55 +0200 (CEST)
-To: Thomas Kolejka <Thomas.Kolejka@gmx.at>
+	id 686693AF50; Tue, 31 May 2005 11:48:38 +0200 (CEST)
+To: Jochen Roemling <jochen@roemling.net>
 Content-Disposition: inline
-In-Reply-To: <1839.1117526111@www5.gmx.net>
+In-Reply-To: <429B6AD4.9010107@roemling.net>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 31, 2005 at 09:55:11AM +0200, Thomas Kolejka wrote:
-> The following patch makes it easy to change the encoding:
+On Mon, May 30, 2005 at 09:34:44PM +0200, Jochen Roemling wrote:
+> The following patch kills two warnings in the Web Server Error Log:
 > 
+> [Mon May 30 21:24:15 2005] gitweb.cgi: "my" variable %co masks earlier 
+> declaration in same scope at /home/www/html/tools/cgi-bin/gitweb.cgi 
+> line 1658.
+> [Mon May 30 21:25:46 2005] gitweb.cgi: "my" variable %co masks earlier 
+> declaration in same scope at /home/www/html/tools/cgi-bin/gitweb.cgi 
+> line 1615.
 > 
-> --- gitweb.cgi.177      2005-05-31 09:43:17.000000000 +0200
-> +++ gitweb.cgi.p        2005-05-31 09:48:46.000000000 +0200
-> @@ -20,6 +20,9 @@
->  my $my_uri =           $cgi->url(-absolute => 1);
->  my $rss_link = "";
->  
-> +my $encoding = "utf-8";
-> +$encoding = "iso-8859-1";
+> There might be a patch offset of few lines because I deleted my local 
+> gitweb settings from the patch.
 
-The upstream version will not support anything but the one and only
-sane encoding which is utf-8. It will not provide options to switch
-back to the 80's, sorry. :)
+Dou you get the version from:
+  ftp://ehlo.org/gitweb.cgi
+
+It seems already fixed.
 
 Thanks,
 Kay
