@@ -1,84 +1,81 @@
-From: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
-Subject: [gitweb PATCH] Configure encoding
-Date: Tue, 31 May 2005 09:55:11 +0200 (MEST)
-Message-ID: <1839.1117526111@www5.gmx.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git-rev-list: proper lazy reachability
+Date: Tue, 31 May 2005 17:58:45 +1000
+Message-ID: <2cfc4032050531005820979ca7@mail.gmail.com>
+References: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 09:53:30 2005
+X-From: git-owner@vger.kernel.org Tue May 31 09:56:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd1YQ-000287-RI
-	for gcvg-git@gmane.org; Tue, 31 May 2005 09:52:51 +0200
+	id 1Dd1bb-0002Sy-Qu
+	for gcvg-git@gmane.org; Tue, 31 May 2005 09:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261331AbVEaHzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 03:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261340AbVEaHzY
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 03:55:24 -0400
-Received: from imap.gmx.net ([213.165.64.20]:1743 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S261331AbVEaHzO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 03:55:14 -0400
-Received: (qmail 22023 invoked by uid 0); 31 May 2005 07:55:11 -0000
-Received: from 141.130.250.71 by www5.gmx.net with HTTP;
-	Tue, 31 May 2005 09:55:11 +0200 (MEST)
-To: Kay Sievers <kay.sievers@vrfy.org>
-X-Priority: 3 (Normal)
-X-Authenticated: #20307258
-X-Mailer: WWW-Mail 1.6 (Global Message Exchange)
-X-Flags: 0001
+	id S261276AbVEaH6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 03:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261340AbVEaH6s
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 03:58:48 -0400
+Received: from rproxy.gmail.com ([64.233.170.199]:15510 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261276AbVEaH6p convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2005 03:58:45 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1694636rne
+        for <git@vger.kernel.org>; Tue, 31 May 2005 00:58:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WkywO6NPngt63Atr/QchLn9YrbRa9fTqu0dUAfPTlMfvgpzmW3qPL9v+Q2Joo2lMJsGaeAg3sVsh2kQ+kveNAN4ky1O0EKSGMyb8ZtqGfU5LZefRSE6OjecCV35+VTmsl6suO16wymQb6ZqiobPnJOE4CEaRmVrVAXKdCpuWrXc=
+Received: by 10.38.11.27 with SMTP id 27mr1804706rnk;
+        Tue, 31 May 2005 00:58:45 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Tue, 31 May 2005 00:58:45 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The following patch makes it easy to change the encoding:
+On 5/31/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> Somebody should probably take a look at my simplistic algorithm, since it
+> can probably be improved upon and/or fixed for corner-cases.
 
+Seems reasonable, though I think that in a graph like this:
 
---- gitweb.cgi.177      2005-05-31 09:43:17.000000000 +0200
-+++ gitweb.cgi.p        2005-05-31 09:48:46.000000000 +0200
-@@ -20,6 +20,9 @@
- my $my_uri =           $cgi->url(-absolute => 1);
- my $rss_link = "";
- 
-+my $encoding = "utf-8";
-+$encoding = "iso-8859-1";
-+
- # absolute fs-path which will be prepended to the project path
- my $projectroot =      "/pub/scm";
- $projectroot = "pub/scm";
-@@ -183,9 +186,9 @@
-                        $title .= "/$action";
-                }
-        }
--       print $cgi->header(-type=>'text/html',  -charset => 'utf-8',
--status=> $status);
-+       print $cgi->header(-type=>'text/html',  -charset => $encoding,
--status=> $status);
-        print <<EOF;
--<?xml version="1.0" encoding="utf-8"?>
-+<?xml version="1.0" encoding="$encoding"?>
- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
- <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
- <!-- git web interface v$version, (C) 2005, Kay Sievers
-<kay.sievers\@vrfy.org>, Christian Gierke <ch\@gierke.de> -->
-@@ -1112,8 +1115,8 @@
-        my (@revlist) = map { chomp; $_ } <$fd>;
-        close $fd || die_error(undef, "Reading rev-list failed.");
- 
--       print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
--       print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
-+       print $cgi->header(-type => 'text/xml', -charset => $encoding);
-+       print "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n".
-              "<rss version=\"0.91\">\n";
-        print "<channel>\n";
-        print "<title>$project</title>\n".
+    A 
+  /  |  \ 
+B  C  D
+|  /   /
+E
+| \ 
+F G
 
+and searching for git-rev-list A ^B
 
+it would actually be better to stop at E (printing A,B,C,D,E), rather
+than B because the contemporaneously parallel edits C and D and the
+common base E are relevant to evaluating B since they got merged with
+B into A from the common starting point E.
 
-Thomas
+In the lingo of my epoch theory, this is searching to the next nearest
+epoch boundary past B.
+
+My merge-order patch to rev-list which incorporates epoch theory is
+still on its way - it turned out that incrementally finding epoch
+boundaries was not quite as simple as I thought it would be. I expect
+I'll have a respectable looking patch available this weekend. The
+patch I have now works quite well for smaller graphs but fails on
+larger graphs because it relies on rational numbers with large
+numerators and denominators and these end up overflowing even 64 bit
+integers. I think I know how to fix it, but it will take me a few more
+days yet.
+
+jon.
 
 -- 
-Weitersagen: GMX DSL-Flatrates mit Tempo-Garantie!
-Ab 4,99 Euro/Monat: http://www.gmx.net/de/go/dsl
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
