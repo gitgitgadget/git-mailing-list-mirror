@@ -1,100 +1,92 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] ls-tree: handle trailing slashes in the pathspec properly.
-Date: Tue, 31 May 2005 16:48:42 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505311636260.1876@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org>
- <7vvf4zvzfw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505311507010.1876@ppc970.osdl.org>
- <7v8y1vvvaa.fsf_-_@assigned-by-dhcp.cox.net>
+From: Stanislav Karchebny <berkus@gmail.com>
+Subject: Re: [ANNOUNCE] qgit, another git GUI viewer
+Date: Wed, 1 Jun 2005 02:48:39 +0300
+Message-ID: <200506010248.45844.berkus@gmail.com>
+References: <20050531170445.38748.qmail@web26305.mail.ukl.yahoo.com> <20050531181109.GH11774@osuosl.org>
+Reply-To: berkus@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 01:44:24 2005
+Content-Type: multipart/signed;
+  boundary="nextPart2532309.P39uI8KB9K";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 01:51:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdGOu-0003aJ-Aj
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 01:44:00 +0200
+	id 1DdGVZ-0004Dd-Pg
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 01:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261202AbVEaXqq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 19:46:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVEaXqq
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 19:46:46 -0400
-Received: from fire.osdl.org ([65.172.181.4]:61883 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261202AbVEaXqn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 19:46:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4VNkcjA016573
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 May 2005 16:46:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4VNkbaA020732;
-	Tue, 31 May 2005 16:46:38 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8y1vvvaa.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261211AbVEaXxG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 19:53:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261220AbVEaXxG
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 19:53:06 -0400
+Received: from wproxy.gmail.com ([64.233.184.201]:28135 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261211AbVEaXvH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 19:51:07 -0400
+Received: by wproxy.gmail.com with SMTP id 68so194584wra
+        for <git@vger.kernel.org>; Tue, 31 May 2005 16:51:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:from:reply-to:to:subject:date:user-agent:references:in-reply-to:x-face:cc:mime-version:content-type:content-transfer-encoding:message-id;
+        b=pZEGYM6g/PaANxQtZN2Uvvg5DwVF5LznSEpLsgcnAWehgLXusoLWKQXJESF2v1WmYowF9mScgWox+H73aaJge6MXUSalWky0vLlC7MGMRrx4zxBZZYFYehHP70eoluo12T9VK1FJDdxhkVKMNBBiZix0srOXGa6XSPj2spyd8yg=
+Received: by 10.54.8.41 with SMTP id 41mr7054154wrh;
+        Tue, 31 May 2005 16:51:07 -0700 (PDT)
+Received: from mindprobe ([195.50.194.24])
+        by mx.gmail.com with ESMTP id d6sm1435366wra.2005.05.31.16.51.06;
+        Tue, 31 May 2005 16:51:07 -0700 (PDT)
+To: Marco Costalba <mcostalba@yahoo.it>
+User-Agent: KMail/1.8.1
+In-Reply-To: <20050531181109.GH11774@osuosl.org>
+X-Face: )=NoCUhB<yQ9E_sf[!%i~Afu{CgA*1R,*{W~6rwab08b!*c.N-)=?koi8-r?q?9!a3=7BL0+=24=3D7N=7CTiA0=24m=0A=09xayEA7A=3Af?=>~s#1u)J=xNTtjj?;R["\Bh%]jy]i9EV$"48!Y*>=?koi8-r?q?+xw=7ET=26=3D5zk=26=3Al9gtUepOS=0A=095dKjn?=>"'=";T3.$WjpRf!9fSns!$8N0J`2,6,hqE"G.#`W@=?koi8-r?q?=27j2v=7Dn8E=27U=60SMThA5R/deaZ=0A=09m=5DTkBY=3FN5e?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+--nextPart2532309.P39uI8KB9K
+Content-Type: text/plain;
+  charset="koi8-r"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
+On Tuesday 31 May 2005 21:11, you wrote:
 
-On Tue, 31 May 2005, Junio C Hamano wrote:
-> 
-> I take it to mean that you took my other patch for diffcore-pathspec.
+> Obligatory screenshot:
+> http://ifup.org/~philips/qgit.png
 
-No, I did my own. Rather than add more code to handle '/' as a special 
-case, I just removed it all, and fixed the compare logic.
+This looks like very bad athena widget set. Not qtish =3D)
 
-> Here is a fixed ls-tree, with a couple of new tests in an
-> existing test script, to catch this bug.
+> Out of the box it wouldn't compile for several reasons on my own
+> computer.  I have attached a diff but the only real solution is to use
+> autotools as my diff will now only work on Gentoo systems.
 
-You seem to think that '/' at the end is a special case, and it really 
-shouldn't be. It should just fall out as a natural special case of a 
-zero-sized name (which is, btw, the same natural special case that the 
-path of "" should have in &root_dir).
+If you could, please do not use autotools. qmake or better scons is the way=
+ to=20
+go. With scons (even if you distribute together with program) overhead does=
+=20
+not exceed 60kb and i guess everyone has python installed these days (if no=
+t=20
+=2D qmake can handle it just right).
 
-For some reason your ls-tree.c logic seems to think that zero-sized names
-means "root entry", when the _natural_ thing to do is to pass in the "base
-directory", and then a zero-sized name is that base.
+If you need a patch for scons, drop me a mail.
 
-IOW, it would make much more sense to have
+=2D-=20
+Best regards,
+Stanislav Karchebny
 
-	list_one(struct tree_entry_list *tree, const char *name)
-	{
-		const char *slash = strchr(name, '/');
-		const char *next;
-		int len;
+Skype name: berkus
+Get skype for free from www.skype.com
 
-		for (;;) {
-			if (!slash) {
-				len = strlen(name);
-				next = NULL;
-			} else {
-				len = slash - name;
-				next = slash+1;
-			}
-			newtree = tree;
-			if (len)
-				newtree = lookup(tree, name, len);
-			if (!next)
-				break;
-			tree = newtree;
-			name = next;
-		}
+--nextPart2532309.P39uI8KB9K
+Content-Type: application/pgp-signature
 
-		/* Ok, "newtree" is the last component */
-		show_entry(newtree);
-	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-and then call it with
+iD8DBQBCnPfd8v4MNv5cuDkRAgj9AJ9G6+lvUogwlEoKhB02HEBkjaU5TgCbBJIZ
+LcX6MGSXKGerVqcANE8nGCo=
+=x2Q7
+-----END PGP SIGNATURE-----
 
-	list_one(&root_entry, full_path)
-
-and notice how the cases of an empty path "" and "xxx//yy" and "xx/"  
-just fall out from the exact same logic - a zero-sized name is the same as
-the directory it is in. No special cases for slashes or empty names.
-
-		Linus
+--nextPart2532309.P39uI8KB9K--
