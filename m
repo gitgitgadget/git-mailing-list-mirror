@@ -1,54 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] allow pathspec to end with a slash
-Date: Tue, 31 May 2005 08:32:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: cg-update with local uncommitted changes
+Date: Tue, 31 May 2005 17:58:25 +0200
+Message-ID: <20050531155825.GA7013@pasky.ji.cz>
+References: <1117463114.7072.185.camel@pegasus> <20050530183932.GB10439@pasky.ji.cz> <1117480796.7072.204.camel@pegasus> <d7g430$1cq$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 17:28:41 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 31 17:57:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd8em-0003J0-M6
-	for gcvg-git@gmane.org; Tue, 31 May 2005 17:27:55 +0200
+	id 1Dd96E-00081a-1E
+	for gcvg-git@gmane.org; Tue, 31 May 2005 17:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261903AbVEaPa3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 11:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261907AbVEaPa3
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 11:30:29 -0400
-Received: from fire.osdl.org ([65.172.181.4]:13194 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261903AbVEaPaZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 11:30:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4VFUBjA007769
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 May 2005 08:30:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4VFUAX0022827;
-	Tue, 31 May 2005 08:30:10 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261923AbVEaP6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 11:58:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261921AbVEaP6p
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 11:58:45 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:11687 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261923AbVEaP63 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 11:58:29 -0400
+Received: (qmail 9415 invoked by uid 2001); 31 May 2005 15:58:25 -0000
+To: Dan Holmsand <holmsand@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <d7g430$1cq$1@sea.gmane.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Tue, May 31, 2005 at 12:31:28AM CEST, I got a letter
+where Dan Holmsand <holmsand@gmail.com> told me that...
+> Marcel Holtmann wrote:
+> >I also think that it would be great if we cancel the merge if the local
+> >changes conflict with the files in the merge. This is how Bitkeeper does
+> >it and I think it is the only safe way, because if something fails or
+> >rejects we may destroy the local changes.
+> 
+> I definitely agree (been bitten by patching gone wild a couple of times...).
+> 
+> This patch would make cg-merge and cg-admin-uncommit refuse to do 
+> anything if there are conflicting uncommitted changes. Note: this only 
+> applies to fast-forward merging, as cg-merge otherwise bails out if 
+> there are *any* uncommitted changes (which is perhaps going to far).
 
-Junio, 
- pathspec is still subtly broken.
+Well, non-fast-forward cg-merge will do cg-commit and it would blend the
+unrelated previously uncommitted changes into that, which is not what
+you want.
 
-Just removing the slash at the end is not the right thing to do, since 
-that means that
+> [PATCH] Make tree_timewarp safe, by refusing to handle conflicts.
+> 
+> Signed-off-by: Dan Holmsand <holmsand@gmail.com>
 
-	git-diff-files drivers/char/
+I don't really think this makes any sense. What do you then do when you
+want to do some merging of the local uncommitted changes and upstream
+update?
 
-will trigger on a _file_ "drivers/char", even though the spec makes it 
-unambiguous that the user only wants to see stuff under that directory.
+How have you been bitten, and how could we destroy the local changes?
+You get rejects and patch will be pretty vocal about it, so then you
+just go and resolve them. The correct direction is to make it do a
+three-way merge, not make it do no merge at all.
 
-Again, git-diff-tree gets this right (not to say that it always did - I
-had to fix "interesting()" several times, exactly because it's not that 
-simple).
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
