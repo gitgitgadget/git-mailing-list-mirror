@@ -1,35 +1,35 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: git-rev-list: proper lazy reachability
-Date: Tue, 31 May 2005 07:35:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505310730010.1876@ppc970.osdl.org>
+Date: Tue, 31 May 2005 07:39:41 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505310735260.1876@ppc970.osdl.org>
 References: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
- <2cfc4032050531005820979ca7@mail.gmail.com>
+ <17052.21846.816147.370354@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 16:33:45 2005
+X-From: git-owner@vger.kernel.org Tue May 31 16:39:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dd7mq-0001ig-Ii
-	for gcvg-git@gmane.org; Tue, 31 May 2005 16:32:08 +0200
+	id 1Dd7sa-0002fS-A5
+	for gcvg-git@gmane.org; Tue, 31 May 2005 16:38:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261733AbVEaOeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 10:34:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVEaOeJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 10:34:09 -0400
-Received: from fire.osdl.org ([65.172.181.4]:9706 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261543AbVEaOdF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 10:33:05 -0400
+	id S261893AbVEaOjL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 10:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVEaOjL
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 10:39:11 -0400
+Received: from fire.osdl.org ([65.172.181.4]:30443 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261893AbVEaOhq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 10:37:46 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4VEWujA003188
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j4VEbbjA003428
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 May 2005 07:32:57 -0700
+	Tue, 31 May 2005 07:37:37 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4VEWtwh019926;
-	Tue, 31 May 2005 07:32:56 -0700
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc4032050531005820979ca7@mail.gmail.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j4VEbaYf020195;
+	Tue, 31 May 2005 07:37:37 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17052.21846.816147.370354@cargo.ozlabs.ibm.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -40,44 +40,24 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Tue, 31 May 2005, Jon Seymour wrote:
->
-> On 5/31/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> > 
-> > Somebody should probably take a look at my simplistic algorithm, since it
-> > can probably be improved upon and/or fixed for corner-cases.
+On Tue, 31 May 2005, Paul Mackerras wrote:
 > 
-> Seems reasonable, though I think that in a graph like this:
-> 
->      A 
->   /  |  \ 
-> B    C   D
-> |  /   /
-> E
-> | \ 
-> F G
-> 
-> and searching for git-rev-list A ^B it would actually be better to stop
-> at E (printing A,B,C,D,E), rather than B because the contemporaneously
-> parallel edits C and D and the common base E are relevant to evaluating
-> B since they got merged with B into A from the common starting point E.
+> I have made gitk use git-rev-list instead of git-rev-tree, but it
+> still absorbs the whole of git-rev-list's output before drawing
+> anything.  I'd like to make it draw the commit graph and list
+> incrementally as it gets the output from git-rev-list, but to do that
+> I need to know whether git-rev-list could ever print a commit ID
+> *after* one of its parents.  If it never does that then I can
+> restructure the code to do the drawing incrementally fairly easily.
 
-You're talking about something else - you worry about showing a graph, for 
-example.
+You should never see a parent before a child from git-rev-list. I may have 
+screwed something up when I move things between the two lists (the 
+before/after thing needs to first do the reachability thing on one list, 
+and then moves them to the "potential output list"), but I don't think so.
 
-What git-rev-list A B does is literally for something like a "changelog" -
-what commits were added in A that weren't in B, and the list is A, C and
-D. Or, more commonly, used for something like
-
-	git-rev-list HEAD v2.6.12-rc5 | git-diff-tree --stdin -v -p drivers/usb
-
-which basically says "what changed since 2.6.12-rc5 in the drivers/usb 
-tree"?
-
-So in that situation, you really do _not_ want to see B and E, even if
-you'd need those two to make all the connections. Because you've seen B
-and E already (they were in v2.6.12-rc5), and if you're looking for a bug
-that didn't happen in that release, you really only want to see the new
-stuff.
+Anyway, at that point it would be a git-rev-list bug, so if you can make
+your code notice and complain ("git-rev-list listed parent before child")  
+rather than silently show crud, that would help debugging it if it ever 
+happened.
 
 		Linus
