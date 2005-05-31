@@ -1,137 +1,134 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] ls-tree: remove trailing slashes properly.
-Date: Tue, 31 May 2005 14:49:07 -0700
-Message-ID: <7vvf4zvzfw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org>
+Subject: [PATCH] Add git-format-patch-script.
+Date: Tue, 31 May 2005 14:50:26 -0700
+Message-ID: <7vpsv7vzdp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 23:52:59 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 31 23:54:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdEco-0000bX-Rl
-	for gcvg-git@gmane.org; Tue, 31 May 2005 23:50:15 +0200
+	id 1DdEg0-00011z-IS
+	for gcvg-git@gmane.org; Tue, 31 May 2005 23:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261564AbVEaVwI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 17:52:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261602AbVEaVvW
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 17:51:22 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:39891 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261564AbVEaVtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2005 17:49:09 -0400
+	id S261523AbVEaVyv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 17:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261602AbVEaVxk
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 17:53:40 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:14011 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261604AbVEaVub (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2005 17:50:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050531214906.JNIX19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 May 2005 17:49:06 -0400
+          id <20050531215026.GHHZ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 May 2005 17:50:26 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org> (Linus
- Torvalds's message of "Tue, 31 May 2005 08:32:15 -0700 (PDT)")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-A typo prevented trailing slashes from being removed properly.
+The script takes two HEADs and optionally one directory name,
+and prepares a patch file for each commit between the named
+HEADS in a separate file in the named directory.  The directory
+defaults to the $cwd.
 
-This fixes the problem that "drivers/char" which is a tree was
-not shown when "drivers/char/" is given.
+This is in the same spirit as the recent additions of helper
+scripts to make core GIT plumbing more comfortable to use.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- t/t3100-ls-tree-restrict.sh |   32 +++++++++++++++++++++++++++-----
- ls-tree.c                   |    2 +-
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ Makefile                |    3 +-
+ git-format-patch-script |   66 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+), 1 deletions(-)
 
-diff --git a/t/t3100-ls-tree-restrict.sh b/t/t3100-ls-tree-restrict.sh
---- a/t/t3100-ls-tree-restrict.sh
-+++ b/t/t3100-ls-tree-restrict.sh
-@@ -14,7 +14,7 @@ This test runs git-ls-tree with the foll
-     path2/baz/b - a file in a directory in a directory
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -22,7 +22,8 @@ INSTALL=install
  
- The new path restriction code should do the right thing for path2 and
--path2/baz
-+path2/baz.  Also path0/ should snow nothing.
- '
- . ./test-lib.sh
+ SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
+ 	git-pull-script git-tag-script git-resolve-script git-whatchanged \
+-	git-deltafy-script git-fetch-script git-status-script git-commit-script
++	git-deltafy-script git-fetch-script git-status-script \
++	git-commit-script git-format-patch-script
  
-@@ -63,7 +63,7 @@ EOF
-      test_output'
- 
- test_expect_success \
--    'ls-tree filtered' \
-+    'ls-tree filtered with path' \
-     'git-ls-tree $tree path >current &&
-      cat >expected <<\EOF &&
- EOF
-@@ -71,7 +71,7 @@ EOF
- 
- 
- test_expect_success \
--    'ls-tree filtered' \
-+    'ls-tree filtered with path1 path0' \
-     'git-ls-tree $tree path1 path0 >current &&
-      cat >expected <<\EOF &&
- 120000 blob X	path1
-@@ -80,7 +80,7 @@ EOF
-      test_output'
- 
- test_expect_success \
--    'ls-tree filtered' \
-+    'ls-tree filtered with path2' \
-     'git-ls-tree $tree path2 >current &&
-      cat >expected <<\EOF &&
- 040000 tree X	path2
-@@ -91,7 +91,7 @@ EOF
-      test_output'
- 
- test_expect_success \
--    'ls-tree filtered' \
-+    'ls-tree filtered with path2/baz' \
-     'git-ls-tree $tree path2/baz >current &&
-      cat >expected <<\EOF &&
- 040000 tree X	path2/baz
-@@ -99,4 +99,26 @@ test_expect_success \
- EOF
-      test_output'
- 
-+test_expect_success \
-+    'ls-tree filtered with path2' \
-+    'git-ls-tree $tree path2 >current &&
-+     cat >expected <<\EOF &&
-+040000 tree X	path2
-+040000 tree X	path2/baz
-+120000 blob X	path2/bazbo
-+100644 blob X	path2/foo
-+EOF
-+     test_output'
+ PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
+ 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
+diff --git a/git-format-patch-script b/git-format-patch-script
+new file mode 100755
+--- /dev/null
++++ b/git-format-patch-script
+@@ -0,0 +1,66 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++junio="$1"
++linus="$2"
++outdir="${3:-./}"
 +
-+test_expect_success \
-+    'ls-tree filtered with path2/' \
-+    'git-ls-tree $tree path2/ >current &&
-+     cat >expected <<\EOF &&
-+040000 tree X	path2
-+040000 tree X	path2/baz
-+120000 blob X	path2/bazbo
-+100644 blob X	path2/foo
-+EOF
-+     test_output'
++tmp=.tmp-series$$
++trap 'rm -f $tmp-*' 0 1 2 3 15
 +
- test_done
-diff --git a/ls-tree.c b/ls-tree.c
---- a/ls-tree.c
-+++ b/ls-tree.c
-@@ -201,7 +201,7 @@ static int list(char **path)
- 	int err = 0;
- 	for (i = 0; path[i]; i++) {
- 		int len = strlen(path[i]);
--		while (0 <= len && path[i][len] == '/')
-+		while (0 < len && path[i][len-1] == '/')
- 			len--;
- 		err = err | list_one(path[i], path[i] + len);
- 	}
++series=$tmp-series
++
++titleScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	s/[^-a-z.A-Z_0-9]/-/g
++	s/^--*//g
++	s/--*$//g
++	s/---*/-/g
++	s/$/.txt/
++        s/\.\.\.*/\./g
++	q
++'
++
++_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
++_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
++stripCommitHead='/^'"$_x40"' (from '"$_x40"')$/d'
++
++O=
++if test -f .git/patch-order
++then
++    O=-O.git/patch-order
++fi
++git-rev-list "$junio" "$linus" >$series
++total=`wc -l <$series`
++i=$total
++while read commit
++do
++    title=`git-cat-file commit "$commit" | sed -e "$titleScript"`
++    num=`printf "%d/%d" $i $total`
++    file=`printf '%04d-%s' $i "$title"`
++    i=`expr "$i" - 1`
++    echo "$file"
++    {
++	mailScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	s|^|[PATCH '"$num"'] |
++	: body
++	p
++	n
++	b body'
++
++	git-cat-file commit "$commit" | sed -ne "$mailScript"
++	echo '---'
++	echo
++	git-diff-tree -p $O "$commit" | git-apply --stat
++	echo
++	git-diff-tree -p $O "$commit" | sed -e "$stripCommitHead"
++	echo '------------'
++    } >"$outdir$file"
++done <$series
++
 ------------
 
