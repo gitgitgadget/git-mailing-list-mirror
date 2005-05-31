@@ -1,96 +1,84 @@
-From: Jeff Epler <jepler@unpythonic.net>
-Subject: Re: More gitweb queries..
-Date: Mon, 30 May 2005 21:27:00 -0500
-Message-ID: <20050531022656.GA3355@unpythonic.net>
-References: <Pine.LNX.4.58.0505271145570.17402@ppc970.osdl.org> <17051.39850.556062.543875@cargo.ozlabs.ibm.com>
+From: "Thomas Kolejka" <Thomas.Kolejka@gmx.at>
+Subject: [gitweb PATCH] Configure encoding
+Date: Tue, 31 May 2005 09:55:11 +0200 (MEST)
+Message-ID: <1839.1117526111@www5.gmx.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Kay Sievers <kay.sievers@vrfy.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 04:26:31 2005
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 31 09:53:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DcwRu-0001ug-W4
-	for gcvg-git@gmane.org; Tue, 31 May 2005 04:25:47 +0200
+	id 1Dd1YQ-000287-RI
+	for gcvg-git@gmane.org; Tue, 31 May 2005 09:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261836AbVEaC1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 30 May 2005 22:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261849AbVEaC1v
-	(ORCPT <rfc822;git-outgoing>); Mon, 30 May 2005 22:27:51 -0400
-Received: from bald.unpythonic.net ([206.222.212.218]:6274 "EHLO
-	sofa.unpythonic.net") by vger.kernel.org with ESMTP id S261836AbVEaC1V
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 May 2005 22:27:21 -0400
-Received: from jepler by sofa.unpythonic.net with local (Exim 4.42)
-	id 1DcwT6-0002Vy-4R; Mon, 30 May 2005 21:27:00 -0500
-To: Paul Mackerras <paulus@samba.org>
-Content-Disposition: inline
-In-Reply-To: <17051.39850.556062.543875@cargo.ozlabs.ibm.com>
-User-Agent: Mutt/1.5.9i
+	id S261331AbVEaHzY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 03:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261340AbVEaHzY
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 03:55:24 -0400
+Received: from imap.gmx.net ([213.165.64.20]:1743 "HELO mail.gmx.net")
+	by vger.kernel.org with SMTP id S261331AbVEaHzO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 03:55:14 -0400
+Received: (qmail 22023 invoked by uid 0); 31 May 2005 07:55:11 -0000
+Received: from 141.130.250.71 by www5.gmx.net with HTTP;
+	Tue, 31 May 2005 09:55:11 +0200 (MEST)
+To: Kay Sievers <kay.sievers@vrfy.org>
+X-Priority: 3 (Normal)
+X-Authenticated: #20307258
+X-Mailer: WWW-Mail 1.6 (Global Message Exchange)
+X-Flags: 0001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+The following patch makes it easy to change the encoding:
 
---5vNYLRcllDrimb99
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, May 31, 2005 at 09:03:06AM +1000, Paul Mackerras wrote:
-> Tcl/Tk 8.5 will have anti-aliased fonts (8.5a2 is available on
-> sourceforge).  There is apparently some support for widget styling in
-> 8.4 which I will have to look into.  The Motif look doesn't bother me,
-> but it does seem to bother you and Ben H. :)
+--- gitweb.cgi.177      2005-05-31 09:43:17.000000000 +0200
++++ gitweb.cgi.p        2005-05-31 09:48:46.000000000 +0200
+@@ -20,6 +20,9 @@
+ my $my_uri =           $cgi->url(-absolute => 1);
+ my $rss_link = "";
+ 
++my $encoding = "utf-8";
++$encoding = "iso-8859-1";
++
+ # absolute fs-path which will be prepended to the project path
+ my $projectroot =      "/pub/scm";
+ $projectroot = "pub/scm";
+@@ -183,9 +186,9 @@
+                        $title .= "/$action";
+                }
+        }
+-       print $cgi->header(-type=>'text/html',  -charset => 'utf-8',
+-status=> $status);
++       print $cgi->header(-type=>'text/html',  -charset => $encoding,
+-status=> $status);
+        print <<EOF;
+-<?xml version="1.0" encoding="utf-8"?>
++<?xml version="1.0" encoding="$encoding"?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+ <!-- git web interface v$version, (C) 2005, Kay Sievers
+<kay.sievers\@vrfy.org>, Christian Gierke <ch\@gierke.de> -->
+@@ -1112,8 +1115,8 @@
+        my (@revlist) = map { chomp; $_ } <$fd>;
+        close $fd || die_error(undef, "Reading rev-list failed.");
+ 
+-       print $cgi->header(-type => 'text/xml', -charset => 'utf-8');
+-       print "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n".
++       print $cgi->header(-type => 'text/xml', -charset => $encoding);
++       print "<?xml version=\"1.0\" encoding=\"$encoding\"?>\n".
+              "<rss version=\"0.91\">\n";
+        print "<channel>\n";
+        print "<title>$project</title>\n".
 
-I have a somewhat stale copy of Tk 8.5 CVS and Tile CVS here.  I tried
-gitk on it.  I added the lines
-    package require tile; namespace import -force ::ttk::*
-    tile::setTheme alt
-near the top, which is a simple way to use the new "tile" theme engine
-with an included, redmond-style theme.
 
-Here's a screenshot:
-    http://emergent.unpy.net/index.cgi-files/sandbox/gitk-tk85+tile.png
 
-I have no idea why the menu is in greek.  The rest of the buttons and
-labels were too, before I switched to Tile for rendering them.
+Thomas
 
-I get an odd traceback that I don't get using the same gitk with
-tcl-8.4.5:
-    number too large to represent as a Posix time
-        while executing
-    "return -options $opts $retval"
-        (procedure "ConvertUTCToLocal" line 20)
-        invoked from within
-    "ConvertUTCToLocal $date[set date {}] $timezone"
-        (procedure "::tcl::clock::format" line 10)
-        invoked from within
-    "clock format $audate -format "%Y-%m-%d %H:%M:%S""
-        (procedure "readcommit" line 37)
-        invoked from within
-    "readcommit $p"
-        (procedure "drawgraph" line 52)
-        invoked from within
-    "drawgraph"
-        ("after" script)
-which stops the graph before it's complete.  Laying out the graph seems
-much slower than with tk8.4.
-
-Jeff
-
---5vNYLRcllDrimb99
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-
-iD8DBQFCm8twJd01MZaTXX0RAlcqAKCjTtxhqKQME5ifAK7fCqJEJlScCwCaA++I
-KrUO6tqwKAC+XbJZ4rfJjAA=
-=htNo
------END PGP SIGNATURE-----
-
---5vNYLRcllDrimb99--
+-- 
+Weitersagen: GMX DSL-Flatrates mit Tempo-Garantie!
+Ab 4,99 Euro/Monat: http://www.gmx.net/de/go/dsl
