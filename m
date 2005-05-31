@@ -1,209 +1,222 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] diff: Fix trailing slash handling.
-Date: Tue, 31 May 2005 14:48:02 -0700
-Message-ID: <7v64wzxe25.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org>
+From: =?utf-8?q?Santi_B=C3=A9jar?= <sbejar@gmmail.es>
+Subject: [COGITO PATCH] Heads and tags in subdirectories
+Date: Wed, 01 Jun 2005 00:00:35 +0200
+Message-ID: <87is0zginw.fsf@ifae.es>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 31 23:55:04 2005
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Wed Jun 01 00:00:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdEf7-0000uQ-Rd
-	for gcvg-git@gmane.org; Tue, 31 May 2005 23:52:38 +0200
+	id 1DdEm0-0001uv-D8
+	for gcvg-git@gmane.org; Tue, 31 May 2005 23:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261626AbVEaVyt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 17:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261523AbVEaVw7
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 17:52:59 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:28858 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261619AbVEaVsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2005 17:48:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050531214804.WIXR7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 31 May 2005 17:48:04 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org> (Linus
- Torvalds's message of "Tue, 31 May 2005 08:32:15 -0700 (PDT)")
+	id S261641AbVEaWCR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 31 May 2005 18:02:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261630AbVEaWCQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 18:02:16 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:37595 "EHLO ifae-s0.ifae.es")
+	by vger.kernel.org with ESMTP id S261655AbVEaWAq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 18:00:46 -0400
+Received: from bela (ifae-s1.ifae.es [192.101.162.148])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id j4VM0YZ21935
+	for <git@vger.kernel.org>; Wed, 1 Jun 2005 00:00:35 +0200
+To: Git Mailing List <git@vger.kernel.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When limiting the world to "drivers/char/", we should not
-consider "drivers/char" which is not a directory.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Keep heads and tags in their respective subtirectoris named as
+the branch. This fixes the case where two repositoris have tags
+with the same name.
 
- t/t4010-diff-pathspec.sh |   65 ++++++++++++++++++++++++++++++++++++++++++++++
- diffcore-pathspec.c      |   60 +++++++++++++++++++++++++++++++++++++------
- 2 files changed, 117 insertions(+), 8 deletions(-)
+Add a "-a" flag to cg-pull to download all the repositories heads,
+so you can now do a "cg-log -r repo#branch" (cg-Xnormid repo#branch
+job).
 
-diff --git a/t/t4010-diff-pathspec.sh b/t/t4010-diff-pathspec.sh
-new file mode 100644
---- /dev/null
-+++ b/t/t4010-diff-pathspec.sh
-@@ -0,0 +1,65 @@
-+#!/bin/sh
+The transition is automatic when you do the first "cg-pull repo".
+
+Signed-off-by: "Santi B=C3=A9jar" <sbejar@gmmail.es>
+
+ cg-Xnormid |   14 ++++++++++-
+ cg-commit  |    7 +++++
+ cg-pull    |   72 +++++++++++++++++++++++++++++++++++++---------------=
+---------
+ 3 files changed, 62 insertions(+), 31 deletions(-)
+
+diff --git a/cg-Xnormid b/cg-Xnormid
+--- a/cg-Xnormid
++++ b/cg-Xnormid
+@@ -16,15 +16,25 @@
+=20
+ id=3D"$1"
+=20
++repo=3D$(echo $id | cut -d '#' -f 1)
++(echo $repo | egrep -qv '[^a-zA-Z0-9_.@!:-]') || \
++	die "name contains invalid characters"
++id=3D$(echo $id | sed 's@#@/@')
++
+ if [ ! "$id" ] || [ "$id" =3D "this" ] || [ "$id" =3D "HEAD" ]; then
+ 	read id < "$_git/HEAD"
+=20
+-elif [ -r "$_git/refs/tags/$id" ]; then
++elif [ -r "$_git/refs/tags/$id" ] && [ ! -d "$_git/refs/tags/$id" ]; t=
+hen
+ 	read id < "$_git/refs/tags/$id"
+=20
+-elif [ -r "$_git/refs/heads/$id" ]; then
++elif [ -r "$_git/refs/heads/$id" ] && [ ! -d "$_git/refs/tags/$id" ]; =
+then
+ 	read id < "$_git/refs/heads/$id"
+=20
++elif [ -r "$_git/branches/$id" ]; then
++	repobranch=3D$(cat "$_git/branches/$id" | cut -d '#' -f 2 -s)
++	repobranch=3D${repobranch:-master}
++	read id < "$_git/refs/heads/$id/$repobranch"
++
+ # Short id's must be lower case and at least 4 digits.
+ elif [[ "$id" =3D=3D [0-9a-z][0-9a-z][0-9a-z][0-9a-z]* ]]; then
+ 	idpref=3D${id:0:2}
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -141,7 +141,12 @@ if [ "$merging" ]; then
+ 	[ "$msgs" ] && echo -n 'Merge with '
+ 	[ -s $_git/merging-sym ] || cp $_git/merging $_git/merging-sym
+ 	for sym in $(cat $_git/merging-sym); do
+-		uri=3D$(cat $_git/branches/$sym)
++		repo=3D$(echo $sym | cut -d '#' -f 1)
++		branch=3D$(echo $sym | cut -d '#' -f 2 -s)
++		uri=3D$(cat $_git/branches/$repo)
++		uribranch=3D$(echo $uri | cut -d '#' -f 2 -s)
++		[ -z "$uribranch" ] && [ -n "$branch" ] &&
++		[ "$branch" !=3D master ] && uri=3D${uri}#$branch
+ 		[ "$uri" ] || uri=3D"$sym"
+ 		echo "$uri" >>$LOGMSG
+ 		[ "$msgs" ] && echo "$uri"
+diff --git a/cg-pull b/cg-pull
+--- a/cg-pull
++++ b/cg-pull
+@@ -6,23 +6,41 @@
+ # Takes the branch name as an argument, defaulting to "origin".
+ #
+ # See `cg-branch-add` for some description.
 +#
-+# Copyright (c) 2005 Junio C Hamano
-+#
++# OPTIONS
++# -------
++# -a::
++#       Pull all the heads from repositori.
+=20
+-USAGE=3D"cg-pull [BRANCH_NAME]"
++USAGE=3D"cg-pull [-a] [BRANCH_NAME]"
+=20
+ . ${COGITO_LIB}cg-Xlib
+=20
+-name=3D$1
+-
++[ "$1" =3D=3D "-a" ] && all=3Dyes && shift
++name=3D$1 && shift
+=20
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=3Dorigin; }
+ [ "$name" ] || die "where to pull from?"
+-uri=3D$(cat "$_git/branches/$name" 2>/dev/null) || die "unknown branch=
+: $name"
+=20
+-rembranch=3Dmaster
++repo=3D$(echo $name | cut -d '#' -f 1)
++repobranch=3D$(echo $name | cut -s -d '#' -f 2)
 +
-+test_description='Pathspec restrictions
++uri=3D$(cat "$_git/branches/$name" 2>/dev/null) || die "unknown branch=
+: $name"
+ if echo "$uri" | grep -q '#'; then
++	[ -z "$repobranch" ] && repobranch=3D$(echo $uri | cut -d '#' -f 2)
+ 	rembranch=3D$(echo $uri | cut -d '#' -f 2)
+ 	uri=3D$(echo $uri | cut -d '#' -f 1)
+ fi
++repobranch=3D${repobranch:-master}
++branch=3D$repo/$repobranch
++[ "$all" ] && repobranch=3D
 +
-+Prepare:
-+        file0
-+        path1/file1
-+'
-+. ./test-lib.sh
-+. ../diff-lib.sh ;# test-lib chdir's into trash
++# So long we have:
++# $repo       =3D name of the repositori
++# $uri        =3D uri of the repositori
++# $repobranch =3D name of the branch in the repositori
++#               empty if we want all the branches
++# $branch     =3D name of the local branch in refs/heads/
+=20
+ pull_progress() {
+ 	percentage=3D""
+@@ -232,39 +250,37 @@ fi
+=20
+=20
+ orig_head=3D
+-[ -s "$_git/refs/heads/$name" ] && orig_head=3D$(cat "$_git/refs/heads=
+/$name")
+-
++[ -s "$_git/refs/heads/$branch" ] && orig_head=3D$(cat "$_git/refs/hea=
+ds/$branch")
+=20
+-mkdir -p $_git/refs/heads
+-rsyncerr=3D
+-$fetch -i "$uri/refs/heads/$rembranch" "$_git/refs/heads/$name" || rsy=
+ncerr=3D1
+-if [ "$rsyncerr" ]; then
+-	rsyncerr=3D
+-	$fetch -s "$uri/heads/$rembranch" "$_git/refs/heads/$name" || rsyncer=
+r=3D1
+-fi
+-if [ "$rsyncerr" ] && [ "$rembranch" =3D "master" ]; then
+-	rsyncerr=3D
+-	$fetch -s "$uri/HEAD" "$_git/refs/heads/$name" || rsyncerr=3D1
++# 2005/05 Convert old layout
++[ -f $_git/refs/heads/$repo ] && orig_head=3D$(cat $_git/refs/heads/$r=
+epo) &&
++rm -f $_git/refs/heads/$repo
 +
-+test_expect_success \
-+    setup \
-+    'echo frotz >file0 &&
-+     mkdir path1 &&
-+     echo rezrov >path1/file1 &&
-+     git-update-cache --add file0 path1/file1 &&
-+     tree=`git-write-tree` &&
-+     echo "$tree" &&
-+     echo nitfol >file0 &&
-+     echo yomin >path1/file1 &&
-+     git-update-cache file0 path1/file1' 
-+
-+cat >expected <<\EOF
-+EOF
-+test_expect_success \
-+    'limit to path should show nothing' \
-+    'git-diff-cache --cached $tree path >current &&
-+     compare_diff_raw current expected'
-+
-+cat >expected <<\EOF
-+:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	path1/file1
-+EOF
-+test_expect_success \
-+    'limit to path1 should show path1/file1' \
-+    'git-diff-cache --cached $tree path1 >current &&
-+     compare_diff_raw current expected'
-+
-+cat >expected <<\EOF
-+:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	path1/file1
-+EOF
-+test_expect_success \
-+    'limit to path1/ should show path1/file1' \
-+    'git-diff-cache --cached $tree path1/ >current &&
-+     compare_diff_raw current expected'
-+
-+cat >expected <<\EOF
-+:100644 100644 766498d93a4b06057a8e49d23f4068f1170ff38f 0a41e115ab61be0328a19b29f18cdcb49338d516 M	file0
-+EOF
-+test_expect_success \
-+    'limit to file0 should show file0' \
-+    'git-diff-cache --cached $tree file0 >current &&
-+     compare_diff_raw current expected'
-+
-+cat >expected <<\EOF
-+EOF
-+test_expect_success \
-+    'limit to file0/ should emit nothing.' \
-+    'git-diff-cache --cached $tree file0/ >current &&
-+     compare_diff_raw current expected'
-+
-+test_done
-diff --git a/diffcore-pathspec.c b/diffcore-pathspec.c
---- a/diffcore-pathspec.c
-+++ b/diffcore-pathspec.c
-@@ -8,9 +8,13 @@
- struct path_spec {
- 	const char *spec;
- 	int len;
-+	int reject_non_tree;
- };
- 
--static int matches_pathspec(const char *name, struct path_spec *s, int cnt)
-+static int matches_pathspec(const char *name,
-+			    int obviously_non_tree,
-+			    struct path_spec *s,
-+			    int cnt)
- {
- 	int i;
- 	int namelen;
-@@ -21,10 +25,25 @@ static int matches_pathspec(const char *
- 	namelen = strlen(name);
- 	for (i = 0; i < cnt; i++) {
- 		int len = s[i].len;
--		if (! strncmp(s[i].spec, name, len) &&
--		    len <= namelen &&
--		    (name[len] == 0 || name[len] == '/'))
--			return 1;
-+		if (!strncmp(s[i].spec, name, len)) {
-+			/* Leading part matches. */
-+			if (len == namelen) {
-+				/* Exact match: spec "drivers/char/"
-+				 * should not match against path
-+				 * "drivers/char".
-+				 */
-+				if (s[i].reject_non_tree && obviously_non_tree)
-+					continue;
-+				return 1;
-+			}
-+			else if ((len < namelen) && name[len] == '/') {
-+				/* Spec is leading path */
-+				return 1;
-+			}
-+			/* otherwise, it is a false match of spec "abc"
-+			 * against path "abcdefg", so we continue.
-+			 */
-+		}
- 	}
- 	return 0;
- }
-@@ -47,14 +66,39 @@ void diffcore_pathspec(const char **path
- 		int l;
- 		spec[i].spec = pathspec[i];
- 		l = strlen(pathspec[i]);
--		while (l > 0 && pathspec[i][l-1] == '/')
--			l--;
-+		if (l > 0 && pathspec[i][l-1] == '/') {
-+			spec[i].reject_non_tree = 1;
-+			while (l > 0 && pathspec[i][l-1] == '/')
-+				l--;
-+		}
- 		spec[i].len = l;
- 	}
- 
- 	for (i = 0; i < q->nr; i++) {
- 		struct diff_filepair *p = q->queue[i];
--		if (matches_pathspec(p->two->path, spec, speccnt))
-+		int obviously_non_tree;
-+#ifndef DIFF_TREE_CALLS_PATHSPEC
-+		/*
-+		 * NOTE: This relies on the current behaviour of
-+		 * diff-tree which does not use diffcore-pathspec
-+		 * and we would not ever see "tree" objects
-+		 * in our input.
-+		 */
-+		obviously_non_tree = 1;
-+#else
-+		if (DIFF_FILE_VALID(p->two))
-+			obviously_non_tree = !S_ISDIR(p->two->mode);
-+		else if (DIFF_FILE_VALID(p->one))
-+			/* path is being deleted.  is it a tree? */
-+			obviously_non_tree = !S_ISDIR(p->one->mode);
-+		else
-+			/* path is unmerged, which comes from cache
-+			 * so it cannot be a tree
-+			 */
-+			obviously_non_tree = 1;
-+#endif
-+		if (matches_pathspec(p->two->path, obviously_non_tree,
-+				     spec, speccnt))
- 			diff_q(&outq, p);
- 		else
- 			diff_free_filepair(p);
-------------
++mkdir -p $_git/refs/heads/$repo
++if [ "$repobranch" ] ; then
++    $fetch -i "$uri/refs/heads/$repobranch" "$_git/refs/heads/$branch"=
+ ||
++    $fetch -s "$uri/heads/$repobranch" "$_git/refs/heads/$branch" ||
++    { [ "$repobranch" =3D "master" ] && $fetch -s "$uri/HEAD" "$_git/r=
+efs/heads/$branch"; } ||
++    rsyncerr=3D1
++else
++    $fetch -i -d "$uri/refs/heads" "$_git/refs/heads/$repo" ||
++    $fetch -s -d "$uri/heads" "$_git/refs/heads/$repo" ||
++    rsyncerr=3D1
+ fi
+-[ "$rsyncerr" ] && die "unable to get the head pointer of branch $remb=
+ranch"
++[ "$rsyncerr" ] && die "unable to get the head pointer of branch $repo=
+branch"
+=20
+ [ -d $_git_objects ] || mkdir -p $_git_objects
+-$pull "$name" "$uri" || die "objects pull failed"
++$pull "$branch" "$uri" || die "objects pull failed"
+=20
+-# FIXME: Warn about conflicting tag names?
+ # XXX: We now throw stderr to /dev/null since not all repositories
+ # may have tags/ and users were confused by the harmless errors.
+-[ -d $_git/refs/tags ] || mkdir -p $_git/refs/tags
++[ -d $_git/refs/tags/$repo ] || mkdir -p $_git/refs/tags/$repo
+ rsyncerr=3D
+-$fetch -i -s -u -d "$uri/refs/tags" "$_git/refs/tags" || rsyncerr=3D1
+-if [ "$rsyncerr" ]; then
+-	rsyncerr=3D
+-	$fetch -i -s -u -d "$uri/tags" "$_git/refs/tags" || rsyncerr=3D1
+-fi
++$fetch -i -s -u -d "$uri/refs/tags" "$_git/refs/tags/$repo" ||
++$fetch -i -s -u -d "$uri/tags" "$_git/refs/tags/$repo" || rsyncerr=3D1
+ [ "$rsyncerr" ] && echo "unable to get tags list (non-fatal)" >&2
+=20
+-
+-new_head=3D$(cat "$_git/refs/heads/$name")
++new_head=3D$(cat "$_git/refs/heads/$branch")
+=20
+ if [ ! "$orig_head" ]; then
+ 	echo "New branch: $new_head"
 
