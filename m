@@ -1,86 +1,56 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: Re: cg-update with local uncommitted changes
-Date: Tue, 31 May 2005 21:11:21 +0200
-Message-ID: <429CB6D9.8060204@gmail.com>
-References: <1117463114.7072.185.camel@pegasus> <20050530183932.GB10439@pasky.ji.cz> <1117480796.7072.204.camel@pegasus> <d7g430$1cq$1@sea.gmane.org> <20050531155825.GA7013@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Make git-update-cache --force-remove regular
+Date: Tue, 31 May 2005 12:52:17 -0700
+Message-ID: <7vpsv7xjf2.fsf@assigned-by-dhcp.cox.net>
+References: <20050531165243.GD7013@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue May 31 21:16:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 31 21:51:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdCCY-00058k-Kv
-	for gcvg-git@gmane.org; Tue, 31 May 2005 21:14:58 +0200
+	id 1DdCkB-0001Ma-7z
+	for gcvg-git@gmane.org; Tue, 31 May 2005 21:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261302AbVEaTRU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 15:17:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261228AbVEaTRU
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 15:17:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:6087 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261339AbVEaTOd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 15:14:33 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DdC7q-0004Yj-FP
-	for git@vger.kernel.org; Tue, 31 May 2005 21:10:06 +0200
-Received: from h65n2fls35o265.telia.com ([217.211.115.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 31 May 2005 21:10:06 +0200
-Received: from holmsand by h65n2fls35o265.telia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 31 May 2005 21:10:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: h65n2fls35o265.telia.com
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-In-Reply-To: <20050531155825.GA7013@pasky.ji.cz>
+	id S261357AbVEaTwX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 15:52:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261365AbVEaTwX
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 15:52:23 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:59055 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261357AbVEaTwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2005 15:52:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050531195218.WXUH26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 31 May 2005 15:52:18 -0400
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050531165243.GD7013@pasky.ji.cz> (Petr Baudis's message of
+ "Tue, 31 May 2005 18:52:43 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
-> Dear diary, on Tue, May 31, 2005 at 12:31:28AM CEST, I got a letter
-> where Dan Holmsand <holmsand@gmail.com> told me that...
->>This patch would make cg-merge and cg-admin-uncommit refuse to do 
->>anything if there are conflicting uncommitted changes. Note: this only 
->>applies to fast-forward merging, as cg-merge otherwise bails out if 
->>there are *any* uncommitted changes (which is perhaps going to far).
-> 
-> 
-> Well, non-fast-forward cg-merge will do cg-commit and it would blend the
-> unrelated previously uncommitted changes into that, which is not what
-> you want.
+>>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
 
-cg-merge should obviously only commit the files touched by the 
-"slow-forward" merge (note: this is not a big deal for me, I have no 
-problem with cogito saying "no" once too often. It's when it tries and 
-fails that trouble starts).
+PB> Make the --force-remove flag behave same as --add, --remove and
+PB> --replace. This means I can do
 
->>[PATCH] Make tree_timewarp safe, by refusing to handle conflicts.
+PB> 	git-update-cache --force-remove -- file1.c file2.c
 
-> I don't really think this makes any sense. What do you then do when you
-> want to do some merging of the local uncommitted changes and upstream
-> update?
+PB> which is probably saner and also makes it easier to use in cg-rm.
 
-I've never really wanted to do that. I commit, then merge.
+I am ambivalent about this.  Although I like the semantic
+clean-up your proposed change makes, at the same time: 
 
-> How have you been bitten, and how could we destroy the local changes?
-> You get rejects and patch will be pretty vocal about it, so then you
-> just go and resolve them. The correct direction is to make it do a
-> three-way merge, not make it do no merge at all.
+  $ git-update-cache --force-remove one --add two
 
-Huh? When I get to the patch rejects, the merge will have happened and 
-the local changes pretty much be gone forever. And it's really easy to 
-miss the .rej files altogether.
-
-I'd much prefer not having to worry before doing cg-merge/update, then 
-to have to salvage old stuff from .rej files. And three-way merges don't 
-really solve this; they may work more often, but when they fail, data is 
-potentially lost. Why take the chance?
-
-/dan
+used to remove "one" and add "two", which has to be now written
+as two separate calls, which is a slight a performance hit of
+having to read the 1.6MB cache twice.  Maybe it does not matter,
+or the new usage's convenience outweighs it; I cannot tell
+offhand.
 
