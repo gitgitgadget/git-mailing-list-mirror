@@ -1,55 +1,53 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: qgit-0.3
-Date: Wed, 1 Jun 2005 13:19:49 +0200 (CEST)
-Message-ID: <20050601111949.90043.qmail@web26303.mail.ukl.yahoo.com>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: gitk-1.1 out
+Date: Wed, 1 Jun 2005 13:19:32 +0200
+Message-ID: <20050601111932.GA29391@elte.hu>
+References: <17053.35147.52729.794561@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: berkus@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 01 13:18:15 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 01 13:25:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdRDs-0008EY-QV
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 13:17:21 +0200
+	id 1DdRKY-0000Pc-7y
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 13:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261266AbVFALT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Jun 2005 07:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261285AbVFALT6
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 07:19:58 -0400
-Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:7553 "HELO
-	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261266AbVFALTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2005 07:19:50 -0400
-Received: (qmail 90045 invoked by uid 60001); 1 Jun 2005 11:19:49 -0000
-Received: from [151.42.53.52] by web26303.mail.ukl.yahoo.com via HTTP; Wed, 01 Jun 2005 13:19:49 CEST
-To: git@vger.kernel.org
+	id S261190AbVFAL0x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 07:26:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261305AbVFAL0x
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 07:26:53 -0400
+Received: from mx2.elte.hu ([157.181.151.9]:35233 "EHLO mx2.elte.hu")
+	by vger.kernel.org with ESMTP id S261190AbVFAL0p (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 07:26:45 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx2.elte.hu (Postfix) with ESMTP id A02CA31DD98;
+	Wed,  1 Jun 2005 13:17:22 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id 089711FC2; Wed,  1 Jun 2005 13:19:50 +0200 (CEST)
+To: Paul Mackerras <paulus@samba.org>
+Content-Disposition: inline
+In-Reply-To: <17053.35147.52729.794561@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-New version of qgit, the QT/C++ git viewer.
 
-Download at:
+* Paul Mackerras <paulus@samba.org> wrote:
 
-http://prdownloads.sourceforge.net/qgit/qgit-0.3.tar.gz?download
+> The latest version of gitk is at:
+> 
+> 	http://ozlabs.org/~paulus/gitk/gitk-1.1.tar.gz
 
-This time we use scons instead of qmake as build system (many thanks to Stanislav Karchebny), I
-hope people have less problems compiling it.
+works very well for me, and all the bugs of the previous version that i 
+could trigger are fixed now.
 
-As before just run make and copy the bin in the path.
-
-New feature is async loading of diff and file blobs, should be much faster navigate the logs with
-secondary windows (double click on logs or file names to show) opened.
-
-Have fun
-Marco
-
-
-
-	
-
-	
-		
-___________________________________ 
-Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
-http://mail.yahoo.it
+	Ingo
