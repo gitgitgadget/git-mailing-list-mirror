@@ -1,47 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: I want to release a "git-1.0"
-Date: Tue, 31 May 2005 23:52:03 -0700
-Message-ID: <7vacmapo18.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
-	<Pine.LNX.4.62.0505301644430.5330@localhost.localdomain>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: [SCRIPT] cg-rpush & locking
+Date: Wed, 1 Jun 2005 08:51:23 +0200
+Message-ID: <20050601065123.GA23358@cip.informatik.uni-erlangen.de>
+References: <20050531190005.GE18723@atomide.com> <Pine.LNX.4.63.0505311914550.6500@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 08:49:55 2005
+Cc: Tony Lindgren <tony@atomide.com>, git@vger.kernel.org,
+	Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Wed Jun 01 08:53:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdN2d-0005D4-Ke
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 08:49:28 +0200
+	id 1DdN6H-0005V1-9R
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 08:53:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261300AbVFAGwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Jun 2005 02:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261304AbVFAGwK
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 02:52:10 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:16855 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261300AbVFAGwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2005 02:52:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050601065203.HIIG550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Jun 2005 02:52:03 -0400
+	id S261303AbVFAGz5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 02:55:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261304AbVFAGz5
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 02:55:57 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:59566 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261303AbVFAGzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2005 02:55:51 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j516pOS8001087
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 1 Jun 2005 06:51:24 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j516pNp0001086;
+	Wed, 1 Jun 2005 08:51:23 +0200 (CEST)
 To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.62.0505301644430.5330@localhost.localdomain> (Nicolas
- Pitre's message of "Mon, 30 May 2005 16:49:33 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0505311914550.6500@localhost.localdomain>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I just remembered that I mentioned potential problems with non
-rsync pulls with delta objects, especially when the git-*-pull
-commands are used in "things only close to the tip" mode,
-i.e. without "-a" option.  Do you think we should do something
-about it before GIT 1.0 happens?  
+Hello,
 
-It may be enough if we just tell people not to deltify their
-public non-rsync repositories in the documentation.
+> Why do you need a lock at all?
 
+> Just update your HEAD reference last when you push and get it first when 
+> you pull.
+
+consider the following scenario: Two people push at the same time. One
+HEAD gets actually written, but both think that their changes got
+upstream. Of course the 'upstream' tree is consitent, but incomplete.
+That is why we need a lock. And the lock should be obtained before the
+remote HEAD is retrieved, I think the following scenario is how to
+handle it:
+
+	1. acquire remote lock
+	2. get remote HEAD
+	3. if remote HEAD is ahead (not included in our history) abort
+	   and free lock.
+	4. push objects
+	5. update remote HEAD with local
+	6. free remote lock.
+
+	Thomas
