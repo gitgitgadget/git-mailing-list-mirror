@@ -1,84 +1,54 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: cogito testsuite failure
-Date: Tue, 31 May 2005 23:47:52 -0400
-Message-ID: <1117597672.13776.17.camel@dv>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] ls-tree: handle trailing slashes in the pathspec properly.
+Date: Tue, 31 May 2005 20:51:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0505312048350.1876@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505310827330.1876@ppc970.osdl.org>
+ <7vvf4zvzfw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505311507010.1876@ppc970.osdl.org>
+ <7v8y1vvvaa.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505311636260.1876@ppc970.osdl.org>
+ <7vy89uu9vc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 01 05:46:59 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 01 05:47:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdKBH-00087I-3b
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 05:46:11 +0200
+	id 1DdKBo-00089y-69
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 05:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261225AbVFADs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 23:48:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261236AbVFADs4
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 23:48:56 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:16852
-	"EHLO dv.roinet.com") by vger.kernel.org with ESMTP id S261225AbVFADsx
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 May 2005 23:48:53 -0400
-Received: from dv.roinet.com (localhost.localdomain [127.0.0.1])
-	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j513lqlq017545;
-	Tue, 31 May 2005 23:47:52 -0400
-Received: (from proski@localhost)
-	by dv.roinet.com (8.13.4/8.13.4/Submit) id j513lqmK017542;
-	Tue, 31 May 2005 23:47:52 -0400
-X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
-To: Junio C Hamano <junio@siamese.dyndns.org>,
-	git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-5) 
+	id S261236AbVFADtV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 23:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261238AbVFADtV
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 23:49:21 -0400
+Received: from fire.osdl.org ([65.172.181.4]:51844 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261236AbVFADtS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 23:49:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j513nDjA002264
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 31 May 2005 20:49:14 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j513nDdg032093;
+	Tue, 31 May 2005 20:49:13 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy89uu9vc.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
 
-"make test" fails for current cogito:
 
-*** t4008-diff-break-rewrite.sh ***
-*   ok 1: setup
-*   ok 2: change file1 with copy-edit of file0 and remove file0
-*   ok 3: run diff with -B
-*   ok 4: validate result of -B (#1)
-*   ok 5: run diff with -B and -M
-*   ok 6: validate result of -B -M (#2)
-*   ok 7: swap file0 and file1
-*   ok 8: run diff with -B
-*   ok 9: validate result of -B (#3)
-*   ok 10: run diff with -B and -M
-*   ok 11: validate result of -B -M (#4)
-*   ok 12: make file0 into something completely different
-*   ok 13: run diff with -B
-* FAIL 14: validate result of -B (#5) compare_diff_raw current expected
-*   ok 15: run diff with -B
-* FAIL 16: validate result of -B -M (#6) compare_diff_raw current expected
-*   ok 17: run diff with -M
-* FAIL 18: validate result of -M (#7) compare_diff_raw current expected
-*   ok 19: file1 edited to look like file0 and file0 rename-edited to file2
-*   ok 20: run diff with -B
-*   ok 21: validate result of -B (#8)
-*   ok 22: run diff with -B -M
-*   ok 23: validate result of -B -M (#9)
-* failed 3 among 23 test(s)
+On Tue, 31 May 2005, Junio C Hamano wrote:
+> 
+> BTW could you limit git-apply --stat output to 79 cols not 80?
 
-The failures happens because the test uses file ../README, which was
-changed recently (and therefore, its checksum changed as well).  Also,
-this and several other tests refer to ../COPYING, which is going to
-change as well (it has an old mailing address of FSF).
+Hmm, I thought I already did, but it turns out it could round up both 
+add/del, causing my 79 to be 80.
 
-I suggest that we use separate test files.  It would be great if those
-files included text in several languages to test support for non-ASCII
-symbols (maybe HELLO from emacs sources).
+I think I fixed it.
 
-Or maybe we could use short files embedded in the scripts.  Or maybe we
-could use sed to take significant portions of GPL that don't include
-Linus' foreword, any mailing addresses or "19" when it's used as two
-first digits of a year.
-
--- 
-Regards,
-Pavel Roskin
-
+		Linus
