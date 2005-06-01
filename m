@@ -1,74 +1,64 @@
-From: David Lang <david.lang@digitalinsight.com>
+From: "C. Scott Ananian" <cscott@cscott.net>
 Subject: Re: I want to release a "git-1.0"
-Date: Wed, 1 Jun 2005 13:06:31 -0700 (PDT)
-Message-ID: <Pine.LNX.4.62.0506011304001.21267@qynat.qvtvafvgr.pbz>
+Date: Wed, 1 Jun 2005 16:16:05 -0400 (EDT)
+Message-ID: <Pine.LNX.4.61.0506011607480.11264@cag.csail.mit.edu>
 References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org><972477.0a6782ba1d3b9f05216ed520ef720fcf.ANY@taniwha.stupidest.org><Pine.LNX.4.58.0505301801520.1876@ppc970.osdl.org><7vu0kiu8pm.fsf@assigned-by-dhcp.cox.net><Pine.LNX.4.62.0505311923240.19864@qynat.qvtvafvgr.pbz>
- <7vhdgismo0.fsf@assigned-by-dhcp.cox.net>
+ <7vhdgismo0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.62.0506011304001.21267@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Chris Wedgwood <cw@f00f.org>, Linus Torvalds <torvalds@osdl.org>,
+Cc: Junio C Hamano <junkio@cox.net>, Chris Wedgwood <cw@f00f.org>,
+	Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 22:05:55 2005
+X-From: git-owner@vger.kernel.org Wed Jun 01 22:18:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdZRV-0000nA-JB
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 22:03:57 +0200
+	id 1DdZcF-0002KH-Ez
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 22:15:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261153AbVFAUGv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Jun 2005 16:06:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261168AbVFAUGv
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 16:06:51 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:25219 "HELO
-	warden.diginsite.com") by vger.kernel.org with SMTP id S261153AbVFAUGt
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 16:06:49 -0400
-Received: from wlvims01.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Wed, 1 Jun 2005 13:06:48 -0700
-Received: by calexc01.diginsite.com with Internet Mail Service (5.5.2657.72)
-	id <L6Z5WM1Q>; Wed, 1 Jun 2005 13:06:37 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
-	id L6Z7L1XF; Wed, 1 Jun 2005 13:06:31 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <7vhdgismo0.fsf@assigned-by-dhcp.cox.net>
+	id S261202AbVFAURZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 16:17:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261204AbVFAURY
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 16:17:24 -0400
+Received: from sincerity-forever.csail.mit.edu ([128.30.67.31]:17565 "EHLO
+	sincerity-forever.csail.mit.edu") by vger.kernel.org with ESMTP
+	id S261202AbVFAUQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2005 16:16:58 -0400
+Received: from catfish.lcs.mit.edu ([128.30.67.25] helo=cag.csail.mit.edu)
+	by sincerity-forever.csail.mit.edu with esmtp (Exim 3.36 #1 (Debian))
+	id 1DdZdj-0004eU-00; Wed, 01 Jun 2005 16:16:35 -0400
+To: David Lang <david.lang@digitalinsight.com>
+In-Reply-To: <Pine.LNX.4.62.0506011304001.21267@qynat.qvtvafvgr.pbz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 31 May 2005, Junio C Hamano wrote:
+On Wed, 1 Jun 2005, David Lang wrote:
 
->>>>>> "DL" == David Lang <david.lang@digitalinsight.com> writes:
+>> *1* David says "deltify" and Nico calls it "deltafy".  I am not
+>> a native speaker so I cannot tell, but which one is correct?
 >
-> DL> Hmm, thinking out loud. would it help to look at the deltify scripts
-> DL> and let them find the major chunks and then look in detail only when
-> DL> that fails?
->
-> It's unclear to me which part you are trying to help with
-> deltify algorithm [*1*].
+> Nico is correct
 
-I was thinking that the speedups (only look for similar sized files, etc) 
-would help narrow the search. Also each chunk that's different should be 
-able to be able to be annotated as a chunk, instead of by individual line
+Au contraire.  The common *pronunciation* may be 'delta-fy', but the 
+correct spelling should be 'deltify'.  The google oracle agrees (1,440 vs 
+54) as does the spelling of the svnadmin command.  (Of course, what google 
+is really measuring is relative frequency of 'git' vs 'svn'.)
 
-> Internally, git-diff-cache -B -C is used which does use the
-> deltify to locate complete rewrites, renames and copies (that's
-> why the script is so slow).  For passing on and assigning blames
-> line by line, parsing "diff --unified=0" output was a lot easier
-> for this script and that was what I did in this quick-and-dirty
-> version.
+$ grep '[^if]fy$' /usr/dict/american-english-large
 
-I was under the impressin that the deltafy stuff was significantly faster 
-then you are suggeting that it is here
+shows that the only vowels other than 'i' which preced the '-fy' morpheme 
+are 'e's, and they only appear in words like 'liquefy' where the root has 
+been substantially altered.  Most sources (eg
+http://www.southampton.liunet.edu/academic/pau/course/websuf.htm#IFYVERB
+) list the morpheme as '-ify'.  See
+     http://m-w.com/cgi-bin/dictionary?book=Dictionary&va=ify
+and compare
+     http://m-w.com/cgi-bin/dictionary?book=Dictionary&va=fy
 
-> [Footnotes]
->
-> *1* David says "deltify" and Nico calls it "deltafy".  I am not
-> a native speaker so I cannot tell, but which one is correct?
+Contrary to David's assertion, David is right.
+  --scott
 
-Nico is correct
-
-David Lang
-
--- 
-There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
-  -- C.A.R. Hoare
+United Nations KMPLEBE AMTHUG AVBRANDY UNIFRUIT chemical agent tonight 
+ZPSEMANTIC ODYOKE struggle PBCABOOSE FJDEFLECT CLOWER MKSEARCH ZRBRIEF
+                          ( http://cscott.net/ )
