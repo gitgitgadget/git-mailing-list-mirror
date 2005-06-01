@@ -1,60 +1,77 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: git-rev-list: proper lazy reachability
-Date: Wed, 01 Jun 2005 18:38:45 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.06.01.16.38.35.273889@smurf.noris.de>
-References: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org> <17052.21846.816147.370354@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0505310735260.1876@ppc970.osdl.org> <Pine.LNX.4.58.0505310813540.1876@ppc970.osdl.org>
+From: Tony Lindgren <tony@atomide.com>
+Subject: Re: [SCRIPT] cg-rpush & locking
+Date: Wed, 1 Jun 2005 09:55:02 -0700
+Message-ID: <20050601165502.GB20936@atomide.com>
+References: <20050531190005.GE18723@atomide.com> <Pine.LNX.4.63.0505311914550.6500@localhost.localdomain> <20050601065123.GA23358@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jun 01 18:41:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Wed Jun 01 18:54:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdWF7-0005sV-3G
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 18:38:57 +0200
+	id 1DdWSV-0007iJ-EV
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 18:52:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261393AbVFAQlt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Jun 2005 12:41:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261461AbVFAQlt
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 12:41:49 -0400
-Received: from main.gmane.org ([80.91.229.2]:3200 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261393AbVFAQlr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 12:41:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DdWDz-0005j3-8n
-	for git@vger.kernel.org; Wed, 01 Jun 2005 18:37:47 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Jun 2005 18:37:47 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Jun 2005 18:37:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261467AbVFAQzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 12:55:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261468AbVFAQzb
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 12:55:31 -0400
+Received: from ylpvm15-ext.prodigy.net ([207.115.57.46]:11205 "EHLO
+	ylpvm15.prodigy.net") by vger.kernel.org with ESMTP id S261467AbVFAQzW
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 12:55:22 -0400
+Received: from pimout7-ext.prodigy.net (pimout7-int.prodigy.net [207.115.4.147])
+	by ylpvm15.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j51GtKO0015535
+	for <git@vger.kernel.org>; Wed, 1 Jun 2005 12:55:26 -0400
+X-ORBL: [67.117.73.34]
+Received: from torttu.muru.com (adsl-67-117-73-34.dsl.sntc01.pacbell.net [67.117.73.34])
+	by pimout7-ext.prodigy.net (8.12.10 milter /8.12.10) with ESMTP id j51Gt8KE408794;
+	Wed, 1 Jun 2005 12:55:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by torttu.muru.com (Postfix) with ESMTP id 58F67BF459;
+	Wed,  1 Jun 2005 09:55:08 -0700 (PDT)
+Received: from torttu.muru.com ([127.0.0.1])
+	by localhost (torttu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 15385-05; Wed, 1 Jun 2005 09:55:04 -0700 (PDT)
+Received: from marenki.muru.com (unknown [192.168.100.15])
+	by torttu.muru.com (Postfix) with ESMTP id 85E7DBF456;
+	Wed,  1 Jun 2005 09:55:03 -0700 (PDT)
+Received: by marenki.muru.com (Postfix, from userid 1000)
+	id 00F343C048B; Wed,  1 Jun 2005 09:55:02 -0700 (PDT)
+To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Content-Disposition: inline
+In-Reply-To: <20050601065123.GA23358@cip.informatik.uni-erlangen.de>
+User-Agent: mutt-ng 1.5.9i (Linux)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at adsl-67-117-73-34.dsl.sntc01.pacbell.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Linus Torvalds wrote:
+* Thomas Glanzmann <sithglan@stud.uni-erlangen.de> [050531 23:56]:
+> Hello,
+> 
+> > Why do you need a lock at all?
+> 
+> > Just update your HEAD reference last when you push and get it first when 
+> > you pull.
+> 
+> consider the following scenario: Two people push at the same time. One
+> HEAD gets actually written, but both think that their changes got
+> upstream. Of course the 'upstream' tree is consitent, but incomplete.
+> That is why we need a lock. And the lock should be obtained before the
+> remote HEAD is retrieved, I think the following scenario is how to
+> handle it:
+> 
+> 	1. acquire remote lock
+> 	2. get remote HEAD
+> 	3. if remote HEAD is ahead (not included in our history) abort
+> 	   and free lock.
+> 	4. push objects
+> 	5. update remote HEAD with local
+> 	6. free remote lock.
 
-> So I guess you'll have to wait for the end and do the toposort after all.
+Yes, that's basically what the script does. We have several people
+committing patches.
 
-We could add a cache file, listing commit nodes which predate one of
-their parents. Hit one of those and you know you need to immediately
-examine their parents instead of waiting for them to come up in date order.
-
-There shouldn't be too many of those in any tree.
-
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Truth is a statue, and you are all just a bunch of pigeons.
-
-
+Tony
