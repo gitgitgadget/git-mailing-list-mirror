@@ -1,61 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: I want to release a "git-1.0"
-Date: Tue, 31 May 2005 21:06:19 -0700
-Message-ID: <7vmzqau3es.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
-	<m1psv7bjb6.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Unused pos[] in apply.c
+Date: Wed, 01 Jun 2005 00:20:06 -0400
+Message-ID: <1117599606.13776.26.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 06:04:10 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jun 01 06:18:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdKSH-00013c-G6
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 06:03:45 +0200
+	id 1DdKfd-0001xn-Np
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 06:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261236AbVFAEG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 1 Jun 2005 00:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261258AbVFAEG1
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 00:06:27 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:61383 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261236AbVFAEGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Jun 2005 00:06:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050601040619.MPDW22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 1 Jun 2005 00:06:19 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org> (Linus
- Torvalds's message of "Tue, 31 May 2005 20:04:11 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261247AbVFAEUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 00:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261248AbVFAEUQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 00:20:16 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:24770
+	"EHLO dv.roinet.com") by vger.kernel.org with ESMTP id S261247AbVFAEUH
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 00:20:07 -0400
+Received: from dv.roinet.com (localhost.localdomain [127.0.0.1])
+	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j514K6qu003323
+	for <git@vger.kernel.org>; Wed, 1 Jun 2005 00:20:06 -0400
+Received: (from proski@localhost)
+	by dv.roinet.com (8.13.4/8.13.4/Submit) id j514K6FA003320
+	for git@vger.kernel.org; Wed, 1 Jun 2005 00:20:06 -0400
+X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.2 (2.2.2-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Hello!
 
-LT> Anyway, I wrote just a _very_ introductory thing in
-LT> Documentation/tutorial.txt, I'll try to update and expand on
-LT> it later. It basically has a really stupid example of "how
-LT> to set up a new project".
+gcc 4.0 complains about current cogito (and current git from Linus):
 
-I've spotted a couple of typos which I will leave others to fix,
-but there is one thing I am to blame.
+apply.c: In function 'apply_patch':
+apply.c:622: warning: 'pos[0]' is used uninitialized in this function
+apply.c:624: warning: 'pos[1]' is used uninitialized in this function
 
-    (Btw, current versions of git will consider the change in question to be
-    so big that it's considered a whole new file, since the diff is actually
-    bigger than the file.  So the helpful comments that git-commit-script
-    tells you for this example will say that you deleted and re-created the
-    file "a".  For a less contrieved example, these things are usually more
-    obvious). 
+Indeed, pos[] is never initialized and never used again.
 
-Do you want me to do something about this with -B (and possibly
--C/-M), like skipping the comparison altogether if the file size
-is smaller than, say, 1k bytes or something silly like that?  Or
-not having special case for this kind of "contrived example"
-preferrable?
+My understanding of the code is that it's trying to figure out whether
+the patch is adding or removing a file.  If the first line for the chunk
+or the line count for the old file is not 0, the old file existed, so
+the patch is not adding the file.  Conversely, non-zero position or line
+count for the new file means we are not deleting it.
+
+Following patch makes the code do what it was meant to do.
+
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+diff --git a/apply.c b/apply.c
+--- a/apply.c
++++ b/apply.c
+@@ -611,7 +611,7 @@ static int parse_fragment(char *line, un
+ {
+ 	int added, deleted;
+ 	int len = linelen(line, size), offset;
+-	unsigned long pos[4], oldlines, newlines;
++	unsigned long oldlines, newlines;
+ 
+ 	offset = parse_fragment_header(line, len, fragment);
+ 	if (offset < 0)
+@@ -619,9 +619,9 @@ static int parse_fragment(char *line, un
+ 	oldlines = fragment->oldlines;
+ 	newlines = fragment->newlines;
+ 
+-	if (patch->is_new < 0 && (pos[0] || oldlines))
++	if (patch->is_new < 0 && (fragment->oldpos || oldlines))
+ 		patch->is_new = 0;
+-	if (patch->is_delete < 0 && (pos[1] || newlines))
++	if (patch->is_delete < 0 && (fragment->newpos || newlines))
+ 		patch->is_delete = 0;
+ 
+ 	/* Parse the thing.. */
+
+
+-- 
+Regards,
+Pavel Roskin
 
