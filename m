@@ -1,74 +1,55 @@
-From: =?utf-8?q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [COGITO PATCH] fetch_local -d behaves different from other fetch_*
-Date: Wed, 01 Jun 2005 12:55:28 +0200
-Message-ID: <87psv6ibxb.fsf@ifae.es>
-References: <87is0zginw.fsf@ifae.es>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.3
+Date: Wed, 1 Jun 2005 13:19:49 +0200 (CEST)
+Message-ID: <20050601111949.90043.qmail@web26303.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Wed Jun 01 12:53:53 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: berkus@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jun 01 13:18:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdQqK-0005n2-Q9
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 12:53:01 +0200
+	id 1DdRDs-0008EY-QV
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 13:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261216AbVFAKzk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 1 Jun 2005 06:55:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261226AbVFAKzj
-	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 06:55:39 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:43652 "EHLO ifae-s0.ifae.es")
-	by vger.kernel.org with ESMTP id S261216AbVFAKz1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Jun 2005 06:55:27 -0400
-Received: from bela (ifae-s1.ifae.es [192.101.162.148])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id j51AtPZ02123
-	for <git@vger.kernel.org>; Wed, 1 Jun 2005 12:55:26 +0200
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <87is0zginw.fsf@ifae.es> (
- =?utf-8?q?Santi_B=C3=A9jar's_message_of?= "Wed, 01 Jun 2005 00:00:35
- +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261266AbVFALT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 1 Jun 2005 07:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261285AbVFALT6
+	(ORCPT <rfc822;git-outgoing>); Wed, 1 Jun 2005 07:19:58 -0400
+Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:7553 "HELO
+	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261266AbVFALTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Jun 2005 07:19:50 -0400
+Received: (qmail 90045 invoked by uid 60001); 1 Jun 2005 11:19:49 -0000
+Received: from [151.42.53.52] by web26303.mail.ukl.yahoo.com via HTTP; Wed, 01 Jun 2005 13:19:49 CEST
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+New version of qgit, the QT/C++ git viewer.
 
-"fetch_local -d src dst" does not respect the dst directory name=20
-if both have different names. So
+Download at:
 
-fetch_local -d /path/to/some/src /path/to/dst
+http://prdownloads.sourceforge.net/qgit/qgit-0.3.tar.gz?download
 
-copies to /path/to/src.
+This time we use scons instead of qmake as build system (many thanks to Stanislav Karchebny), I
+hope people have less problems compiling it.
 
-In fact this way it's never used in the current cogito so it's not
-really affected but it's needed in the case where the heads and tags
-are in directories.
+As before just run make and copy the bin in the path.
 
-Signed-off-by: "Santi B=C3=A9jar" <sbejar@gmail.com>
+New feature is async loading of diff and file blobs, should be much faster navigate the logs with
+secondary windows (double click on logs or file names to show) opened.
 
- cg-pull |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Have fun
+Marco
 
-diff --git a/cg-pull b/cg-pull
---- a/cg-pull
-+++ b/cg-pull
-@@ -223,15 +223,15 @@ fetch_local () {
- 		shift
- 	fi
-=20
--	cut_last=3D
-+	dirs=3D
- 	if [ "$1" =3D "-d" ]; then
--		cut_last=3D1
-+		dirs=3D1
- 		shift
- 	fi
-=20
- 	src=3D"$1"
- 	dest=3D"$2"
--	[ "$cut_last" ] && dest=3D${dest%/*}
-+	[ "$dirs" ] && src=3D"${src%/}/."
-=20
- 	cp $cp_flags_l "$src" "$dest"
- }
 
+
+	
+
+	
+		
+___________________________________ 
+Yahoo! Mail: gratis 1GB per i messaggi e allegati da 10MB 
+http://mail.yahoo.it
