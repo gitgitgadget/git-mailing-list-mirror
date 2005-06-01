@@ -1,60 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: I want to release a "git-1.0"
-Date: Tue, 31 May 2005 20:04:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
- <m1psv7bjb6.fsf@ebiederm.dsl.xmission.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: cogito testsuite failure
+Date: Tue, 31 May 2005 23:47:52 -0400
+Message-ID: <1117597672.13776.17.camel@dv>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 01 05:00:06 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jun 01 05:46:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdJSD-00044L-VZ
-	for gcvg-git@gmane.org; Wed, 01 Jun 2005 04:59:38 +0200
+	id 1DdKBH-00087I-3b
+	for gcvg-git@gmane.org; Wed, 01 Jun 2005 05:46:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261248AbVFADCR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 31 May 2005 23:02:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261246AbVFADCQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 23:02:16 -0400
-Received: from fire.osdl.org ([65.172.181.4]:43756 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261248AbVFADCJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 May 2005 23:02:09 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j51327jA031693
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 31 May 2005 20:02:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j51326FP030075;
-	Tue, 31 May 2005 20:02:07 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1psv7bjb6.fsf@ebiederm.dsl.xmission.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261225AbVFADs4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 31 May 2005 23:48:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261236AbVFADs4
+	(ORCPT <rfc822;git-outgoing>); Tue, 31 May 2005 23:48:56 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:16852
+	"EHLO dv.roinet.com") by vger.kernel.org with ESMTP id S261225AbVFADsx
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 May 2005 23:48:53 -0400
+Received: from dv.roinet.com (localhost.localdomain [127.0.0.1])
+	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j513lqlq017545;
+	Tue, 31 May 2005 23:47:52 -0400
+Received: (from proski@localhost)
+	by dv.roinet.com (8.13.4/8.13.4/Submit) id j513lqmK017542;
+	Tue, 31 May 2005 23:47:52 -0400
+X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
+To: Junio C Hamano <junio@siamese.dyndns.org>,
+	git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.2 (2.2.2-5) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello!
 
+"make test" fails for current cogito:
 
-On Tue, 31 May 2005, Eric W. Biederman wrote:
-> 
-> I way behind the power curve on learning git at this point but
-> one piece of the puzzle that CVS has that I don't believe git does
-> are multiple people committing to the same repository, especially
-> remotely.  I don't see that as a down side of git but it is a common
-> way people CVS so it is worth documenting.
+*** t4008-diff-break-rewrite.sh ***
+*   ok 1: setup
+*   ok 2: change file1 with copy-edit of file0 and remove file0
+*   ok 3: run diff with -B
+*   ok 4: validate result of -B (#1)
+*   ok 5: run diff with -B and -M
+*   ok 6: validate result of -B -M (#2)
+*   ok 7: swap file0 and file1
+*   ok 8: run diff with -B
+*   ok 9: validate result of -B (#3)
+*   ok 10: run diff with -B and -M
+*   ok 11: validate result of -B -M (#4)
+*   ok 12: make file0 into something completely different
+*   ok 13: run diff with -B
+* FAIL 14: validate result of -B (#5) compare_diff_raw current expected
+*   ok 15: run diff with -B
+* FAIL 16: validate result of -B -M (#6) compare_diff_raw current expected
+*   ok 17: run diff with -M
+* FAIL 18: validate result of -M (#7) compare_diff_raw current expected
+*   ok 19: file1 edited to look like file0 and file0 rename-edited to file2
+*   ok 20: run diff with -B
+*   ok 21: validate result of -B (#8)
+*   ok 22: run diff with -B -M
+*   ok 23: validate result of -B -M (#9)
+* failed 3 among 23 test(s)
 
-It's actually one thing git doesn't do per se.
+The failures happens because the test uses file ../README, which was
+changed recently (and therefore, its checksum changed as well).  Also,
+this and several other tests refer to ../COPYING, which is going to
+change as well (it has an old mailing address of FSF).
 
-You have to do a "git-pull-script" from the common repository side, 
-there's no "git-push-script". Ugly.
+I suggest that we use separate test files.  It would be great if those
+files included text in several languages to test support for non-ASCII
+symbols (maybe HELLO from emacs sources).
 
-Anyway, I wrote just a _very_ introductory thing in
-Documentation/tutorial.txt, I'll try to update and expand on it later. It
-basically has a really stupid example of "how to set up a new project".
+Or maybe we could use short files embedded in the scripts.  Or maybe we
+could use sed to take significant portions of GPL that don't include
+Linus' foreword, any mailing addresses or "19" when it's used as two
+first digits of a year.
 
-		Linus
+-- 
+Regards,
+Pavel Roskin
+
