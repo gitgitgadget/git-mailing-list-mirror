@@ -1,75 +1,99 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "McMullan, Jason" <jason.mcmullan@timesys.com>
 Subject: Re: [PATCH] Handle deltified object correctly in git-*-pull family.
-Date: Thu, 2 Jun 2005 10:03:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506020959250.1876@ppc970.osdl.org>
-References: <7vy89ums2l.fsf@assigned-by-dhcp.cox.net> <7vis0xkjn4.fsf@assigned-by-dhcp.cox.net>
- <7v4qcg906f.fsf_-_@assigned-by-dhcp.cox.net>
+Date: Thu, 02 Jun 2005 13:03:49 -0400
+Message-ID: <1117731830.32257.52.camel@jmcmullan.timesys>
+References: <7vy89ums2l.fsf@assigned-by-dhcp.cox.net> <7vis0xkjn4.fsf@assigned-by-dhcp.cox.net> <7v4qcg906f.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 18:59:01 2005
+Content-Type: multipart/signed;
+	boundary="=-ruIil/Mt8pf3nEIXPaVg";
+	micalg=pgp-sha1;
+	protocol="application/pgp-signature"
+Cc: "Linus Torvalds" <torvalds@osdl.org>,
+	"GIT Mailling list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 02 19:02:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ddt1p-0004ne-72
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 18:58:45 +0200
+	id 1Ddt3u-00057q-9l
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 19:00:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261202AbVFBRBk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 13:01:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVFBRBk
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 13:01:40 -0400
-Received: from fire.osdl.org ([65.172.181.4]:63683 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261202AbVFBRBb (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 13:01:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j52H1PjA026144
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 2 Jun 2005 10:01:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j52H1OMg004235;
-	Thu, 2 Jun 2005 10:01:25 -0700
-To: Junio C Hamano <junkio@cox.net>
+	id S261192AbVFBRD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 13:03:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVFBRD4
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 13:03:56 -0400
+Received: from mail.timesys.com ([65.117.135.102]:1913 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261192AbVFBRDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2005 13:03:53 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
+Received: from jmcmullan by owa.timesys.com; 02 Jun 2005 13:03:50 -0400
 In-Reply-To: <7v4qcg906f.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+X-Mailer: Evolution 2.0.4-3mdk 
+Content-Class: urn:content-classes:message
+X-Mailer: Evolution 2.0.4-3mdk 
+Date: Thu, 2 Jun 2005 12:57:02 -0400
+Message-ID: <1117731830.32257.52.camel@jmcmullan.timesys>
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Handle deltified object correctly in git-*-pull family.
+thread-index: AcVnlBkA4Lz/0YpXSy6rQzzxR8lIRQ==
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--=-ruIil/Mt8pf3nEIXPaVg
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2 Jun 2005, Junio C Hamano wrote:
-> 
-> *** Linus, this uses the new helper you wrote.  The interface is
-> *** much more pleasant to use.
+On Thu, 2005-06-02 at 09:46 -0700, Junio C Hamano wrote:
+> When a remote repository is deltified, we need to get the
+> objects that a deltified object we want to obtain is based upon.
+> The initial parts of each retrieved SHA1 file is inflated and
+> inspected to see if it is deltified, and its base object is
+> asked from the remote side when it is.  Since this partial
+> inflation and inspection has a small performance hit, it can
+> optionally be skipped by giving -d flag to git-*-pull commands.
+> This flag should be used only when the remote repository is
+> known to have no deltified objects.
 
-Can you update it for the fact that I split things up even more?
+Eww. Don't you want to attempt to get the referenced sha1 *before*
+you stick the delta blob into the repository?
 
-In particular, see commit 5180cacc202bb20b15981469487eb8d6b0509997: "Split 
-up unpack_sha1_file() some more".
+Otherwise, if a transfer fails, there's no good way to recover your
+database through the git-*pull interfaces, ie:
 
-You should be able to unpack a delta with just something like this:
+Try to pull session 1:
+  pull tree a
+    pull delta b (references blob c)
+    pull blob c -> fails!
 
-	int ret;
-	z_stream stream;
-	char hdr[100], type[10];
-	unsigned long size;
+Try to pull session 2:
+  pull tree a
+    delta b - Found in database!
+    ...
 
-	ret = unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr));
-	if (ret < Z_OK)
-		return NULL;
-	if (parse_sha1_header(hdr, type, &size) < 0)
-		return NULL;
-	if (strcmp("delta", type))
-		return NULL;
-	buffer = unpack_sha1_rest(&stream, hdr, size);
-	if (!buffer)
-		return NULL;
-	.. we now have the delta of size "size" in "buffer" ..
+Or do I not understand your code properly?
 
-ie it now has proper helper functions for every single stage in unpacking
-an object.
+(I'm working on a similar piece of code for my git-daemon protocol,
+ which is why I'm worried about this issue)
+  =20
+--=20
+Jason McMullan <jason.mcmullan@timesys.com>
+TimeSys Corporation
 
-		Linus
+
+--=-ruIil/Mt8pf3nEIXPaVg
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQBCnzv18/0vJ5szK6kRAmdHAKCKozQvPC3yTQorYdKHofRRCvK9OgCfXZz3
+XSDVa9CuzYAzGPIZNSsThYc=
+=GLEs
+-----END PGP SIGNATURE-----
+
+--=-ruIil/Mt8pf3nEIXPaVg--
