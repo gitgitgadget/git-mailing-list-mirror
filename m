@@ -1,56 +1,60 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Handle deltified object correctly in git-*-pull family.
-Date: Thu, 02 Jun 2005 17:36:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0506021733520.17354@localhost.localdomain>
-References: <7vy89ums2l.fsf@assigned-by-dhcp.cox.net>
- <7vis0xkjn4.fsf@assigned-by-dhcp.cox.net>
- <7v4qcg906f.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506020959250.1876@ppc970.osdl.org>
- <7v3bs07fmu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0506021713330.17354@localhost.localdomain>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Find size of SHA1 object without inflating everything.
+Date: Thu, 2 Jun 2005 15:10:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506021508020.1876@ppc970.osdl.org>
+References: <7vy89ums2l.fsf@assigned-by-dhcp.cox.net> <7vis0xkjn4.fsf@assigned-by-dhcp.cox.net>
+ <7v4qcg906f.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506020959250.1876@ppc970.osdl.org>
+ <7vwtpc60z3.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 23:38:13 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 00:08:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdxNS-00055M-8z
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 23:37:22 +0200
+	id 1Ddxpk-00011s-B7
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 00:06:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261332AbVFBVkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 17:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261312AbVFBVkF
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 17:40:05 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35288 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261439AbVFBVgk
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 17:36:40 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR010.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IHH00B47811CR@VL-MO-MR010.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 02 Jun 2005 17:36:37 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.63.0506021713330.17354@localhost.localdomain>
-X-X-Sender: nico@localhost.localdomain
+	id S261432AbVFBWJM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 18:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261429AbVFBWJM
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 18:09:12 -0400
+Received: from fire.osdl.org ([65.172.181.4]:25532 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261351AbVFBWIW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 18:08:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j52M8AjA021962
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Jun 2005 15:08:10 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j52M86xB021234;
+	Thu, 2 Jun 2005 15:08:08 -0700
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtpc60z3.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2 Jun 2005, Nicolas Pitre wrote:
-
-> Here you don't need to call unpack_sha1_rest() at all which would call 
-> xmalloc and another memcpy needlessly.  Instead, just use:
-> 
-> 	memcpy(base_sha1, hdr + strlen(hdr) + 1, 20);
-> 
-> and you're done.  No need to call an extra free() either.
-> 
-> And maybe this function should live in delta.c instead?
-
-Forget about my suggestion of moving it to delta.c.  Since it assumes 
-knowledge of the object header format it better stay close to the other 
-functions in sha1_file.c.
 
 
-Nicolas
+On Thu, 2 Jun 2005, Junio C Hamano wrote:
+>  
+> +int sha1_file_size(const unsigned char *sha1, unsigned long *sizep)
+...
+> +	ret = unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr));
+...
+> +	delta_data_head = unpack_sha1_rest(&stream, hdr, 200);
+
+Why do you do this? You've already unpacked 1024 bytes (including the
+header), now you want to unpack at least 200 bytes past the header (which
+is less than what you already did.
+
+So here "unpack_sha1_rest()" just ends up being a "xmalloc + memcpy", but 
+since you don't actually want the malloc (indeed, you're leaking it, as 
+far as I can tell), it seems to be all bad..
+
+		Linus
