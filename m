@@ -1,64 +1,78 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Subject: Re: Problem with cogito and Linux tree tags
-Date: Fri, 03 Jun 2005 01:14:18 +0200
-Message-ID: <429F92CA.9060908@gorzow.mm.pl>
-References: <429F5FA5.2030306@gorzow.mm.pl> <429F6270.50009@gmail.com> <429F6591.8080005@gorzow.mm.pl> <429F69B6.4030806@gmail.com> <429F73E4.1020502@gorzow.mm.pl>
+From: "Adam Kropelin" <akropel1@rochester.rr.com>
+Subject: Re: I want to release a "git-1.0"
+Date: Thu, 2 Jun 2005 19:40:48 -0400
+Message-ID: <00e101c567cc$80c0de80$03c8a8c0@kroptech.com>
+References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org> <m1psv7bjb6.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 01:17:33 2005
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 01:40:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdyvP-0002TJ-RU
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 01:16:32 +0200
+	id 1DdzHq-000516-PD
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 01:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261634AbVFBXTW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 19:19:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261629AbVFBXPA
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 19:15:00 -0400
-Received: from goliat.kalisz.mm.pl ([217.96.42.226]:31184 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S261538AbVFBXOL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 19:14:11 -0400
-Received: (qmail 24778 invoked from network); 2 Jun 2005 23:14:06 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <holmsand@gmail.com>; 2 Jun 2005 23:14:06 -0000
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by zen.uplink (Postfix) with ESMTP id 3EF455852BF;
-	Fri,  3 Jun 2005 01:14:19 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
-X-Accept-Language: en-us, en
-To: Dan Holmsand <holmsand@gmail.com>
-In-Reply-To: <429F73E4.1020502@gorzow.mm.pl>
+	id S261467AbVFBXmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 19:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261463AbVFBXmO
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 19:42:14 -0400
+Received: from ms-smtp-03.nyroc.rr.com ([24.24.2.57]:17596 "EHLO
+	ms-smtp-03.nyroc.rr.com") by vger.kernel.org with ESMTP
+	id S261477AbVFBXlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Jun 2005 19:41:18 -0400
+Received: from mail.kroptech.com (cpe-24-93-20-125.rochester.res.rr.com [24.93.20.125])
+	by ms-smtp-03.nyroc.rr.com (8.12.10/8.12.10) with ESMTP id j52NemP4013513;
+	Thu, 2 Jun 2005 19:40:48 -0400 (EDT)
+Received: from pia (pia.kroptech.com [192.168.200.3])
+	by mail.kroptech.com (Postfix) with SMTP id A64CA11376E;
+	Thu,  2 Jun 2005 19:56:13 -0400 (EDT)
+To: "Linus Torvalds" <torvalds@osdl.org>
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.2527
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2527
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Radoslaw Szkodzinski wrote:
+Linus Torvalds wrote:
+> Anyway, I wrote just a _very_ introductory thing in
+> Documentation/tutorial.txt, I'll try to update and expand on it later. 
+> It
+> basically has a really stupid example of "how to set up a new 
+> project".
 
->Dan Holmsand wrote:
->
->  
->
->>$ git-cat-file tag 06f6d9e2f140466eeb41e494e14167f90210f89d
->>
->>which tells you that v2.6.12-rc5 is commit
->>2a24ab628aa7b190be32f63dfb6d96f3fb61580a
->>
->>    
->>
->Ok.  This doesn't work too. That cogito version really works fine, but I
->had that branch cloned from a local repository gotten from rsync and
->probably that's the problem.
->The tags weren't propagated, but they should be.
->
->AstralStorm
->  
->
-Well, new cogito-0.11.1 (300ab153620d2492e824cb3561c32debb5e80bf8) has
-this fixed and picked up missing objects automatically.
+I've been working my way thru the tutorial, trying to up my git clue 
+level a bit. One part where things start to go a bit pear-shaped for me 
+is in the description of git-diff-files vs. git-diff-cache. The tutorial 
+takes pains to emphasize the difference between "working directory 
+contents", "index file", and "committed tree", and I'm on board with 
+that. What confuses me is the following:
 
-AstralStorm
+> Unlike "git-diff-files", which showed the difference between the index
+> file and the working directory, "git-diff-cache" shows the differences
+> between a committed _tree_ and the index file.
+> ...
+> [example where git-diff-cache shows difference between working
+> directory and committed tree]
+> ...
+> "git-diff-cache" also has a specific flag "--cached", which is used to
+> tell it to show the differences purely with the index file, and ignore
+> the current working directory state entirely
+
+The example and the description of --cached seem to contradict the first 
+sentence's description the tool's purpose in life. If it shows you 
+differences between a committed tree and the index file, why is it 
+looking in my working directory at all? In order to get the behavior the 
+first sentence describes you actually have to use --cached.
+
+Am I on right track?
+
+--Adam
+
