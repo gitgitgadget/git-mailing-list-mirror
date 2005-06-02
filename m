@@ -1,58 +1,58 @@
-From: Dan Holmsand <holmsand@gmail.com>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
 Subject: Re: Problem with cogito and Linux tree tags
-Date: Thu, 02 Jun 2005 21:48:00 +0200
-Message-ID: <429F6270.50009@gmail.com>
-References: <429F5FA5.2030306@gorzow.mm.pl>
+Date: Thu, 02 Jun 2005 22:01:21 +0200
+Message-ID: <429F6591.8080005@gorzow.mm.pl>
+References: <429F5FA5.2030306@gorzow.mm.pl> <429F6270.50009@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2; format=flowed
+Content-Type: text/plain; charset=ISO-8859-2
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jun 02 21:51:44 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 21:59:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ddvi9-0004VP-9j
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 21:50:37 +0200
+	id 1Ddvq5-0005e8-Fl
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 21:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261301AbVFBTxC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 15:53:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261302AbVFBTxC
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 15:53:02 -0400
-Received: from main.gmane.org ([80.91.229.2]:58241 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261301AbVFBTwr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 15:52:47 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DdveW-0003ys-7g
-	for git@vger.kernel.org; Thu, 02 Jun 2005 21:46:52 +0200
-Received: from h65n2fls35o265.telia.com ([217.211.115.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Jun 2005 21:46:52 +0200
-Received: from holmsand by h65n2fls35o265.telia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Jun 2005 21:46:52 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: h65n2fls35o265.telia.com
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+	id S261297AbVFBUBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 16:01:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261313AbVFBUBe
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 16:01:34 -0400
+Received: from goliat.kalisz.mm.pl ([217.96.42.226]:28044 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S261297AbVFBUBS (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 16:01:18 -0400
+Received: (qmail 18845 invoked from network); 2 Jun 2005 20:01:08 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <holmsand@gmail.com>; 2 Jun 2005 20:01:08 -0000
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by zen.uplink (Postfix) with ESMTP id 2562358389F;
+	Thu,  2 Jun 2005 22:01:21 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
 X-Accept-Language: en-us, en
-In-Reply-To: <429F5FA5.2030306@gorzow.mm.pl>
+To: Dan Holmsand <holmsand@gmail.com>
+In-Reply-To: <429F6270.50009@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Radoslaw Szkodzinski wrote:
-  The v2.6.12-rc5 tag hash isn't a tree or commit hash, it is unusable.
-> I don't know what causes that...
+Dan Holmsand wrote:
 
-It's a tag object. If you cg-pull via http, you won't get any of those, 
-though.
+>
+> Radoslaw Szkodzinski wrote:
+>  The v2.6.12-rc5 tag hash isn't a tree or commit hash, it is unusable.
+>
+>> I don't know what causes that...
+>
+>
+> It's a tag object. If you cg-pull via http, you won't get any of
+> those, though.
+>
+I thought it was one of these. Seems cogito can't handle them yet.
 
-Try rsync instead:
+> Try rsync instead:
+>
+Guess what, I did it by rsync.
 
-$ cg-branch-add kernel 
-rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-$ cg-pull kernel
-
-/dan
-
+AstralStorm
