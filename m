@@ -1,90 +1,78 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
 Subject: Re: [SCRIPT] cg-rpush & locking
-Date: Thu, 2 Jun 2005 02:39:07 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506020223570.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0506011951150.1876@ppc970.osdl.org>
+Date: Thu, 2 Jun 2005 09:14:53 +0200
+Message-ID: <20050602071453.GA16616@kiste.smurf.noris.de>
+References: <Pine.LNX.4.58.0506011951150.1876@ppc970.osdl.org> <Pine.LNX.4.21.0506020223570.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
 	Nicolas Pitre <nico@cam.org>, Tony Lindgren <tony@atomide.com>,
-	git@vger.kernel.org, Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Thu Jun 02 08:39:15 2005
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 09:17:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdjLp-0008Rl-4q
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 08:38:45 +0200
+	id 1DdjwF-0003Bq-26
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 09:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261591AbVFBGlL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 02:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261588AbVFBGlL
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 02:41:11 -0400
-Received: from iabervon.org ([66.92.72.58]:5382 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261591AbVFBGk1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 02:40:27 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DdjMB-0007wU-00; Thu, 2 Jun 2005 02:39:07 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506011951150.1876@ppc970.osdl.org>
+	id S261487AbVFBHTT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 03:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261590AbVFBHTT
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 03:19:19 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:51669 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S261487AbVFBHTO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 03:19:14 -0400
+Received: from server.smurf.noris.de (run.smurf.noris.de [192.109.102.41])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j527JAj1013234
+	for <git@vger.kernel.org>; Thu, 2 Jun 2005 00:19:12 -0700
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1Ddjun-0006Pp-Qp; Thu, 02 Jun 2005 09:15:17 +0200
+Received: (nullmailer pid 25670 invoked by uid 501);
+	Thu, 02 Jun 2005 07:14:53 -0000
+To: Daniel Barkalow <barkalow@iabervon.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.21.0506020223570.30848-100000@iabervon.org>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 1 Jun 2005, Linus Torvalds wrote:
+Hi,
 
+Daniel Barkalow:
+> If the lock is only to protect against someone else modifying HEAD after
+> we've checked that it is our starting point and before we modify it,
+> there's no reason not to hold the lock while pushing; it wouldn't block
+> anything other than someone doing a quick push in the middle of our long
+> one, and thereby causing us to dump a lot of useless objects on the
+> server (which will become obsolete as we will need to do the merge and
+> push a different version).
 > 
-> 
-> On Wed, 1 Jun 2005, Thomas Glanzmann wrote:
-> > 
-> > 	1. acquire remote lock
-> > 	2. get remote HEAD
-> > 	3. if remote HEAD is ahead (not included in our history) abort
-> > 	   and free lock.
-> > 	4. push objects
-> > 	5. update remote HEAD with local
-> > 	6. free remote lock.
-> 
-> You really need a specialized client at the other end, because regardless 
-> of locking, you want to write the objects atomically (ie download them 
-> into a temp-file, and then do the "rename" thing to make them show up 
-> all-or-nothing).
-> 
-> Also, I'd suggest a slight modification to avoid keeping the lock for a 
-> long time, namely to have the lock protect just a quick "compare and 
-> exchange". So the algorithm would become:
-> 
-> 	1. read remote HEAD
-> 	2. if remote HEAD isn't in our history, abort with "remote is 
-> 	   ahead"
-> 	3. calculate the objects needed to push locally
-> 	4. push them (but accept the possibility that the remote may
-> 	   already have them, so have the protocol able to say "got that
-> 	   one already"). Make this use the atomic write on the other end.
-> 	5. do an atomic compare-and-exchange of the remote head with the 
-> 	   new one (ie only switch the remote HEAD if it still matches 
-> 	   what we were expecting it to be)
-> 
-> Hmm?
+The objects we push aren't going to be obsolete. The server needs them
+anyway, because our HEAD refers to them.
 
-If the lock is only to protect against someone else modifying HEAD after
-we've checked that it is our starting point and before we modify it,
-there's no reason not to hold the lock while pushing; it wouldn't block
-anything other than someone doing a quick push in the middle of our long
-one, and thereby causing us to dump a lot of useless objects on the
-server (which will become obsolete as we will need to do the merge and
-push a different version).
+What if the connection dies in the middle of a push? You then sit there
+waiting for it, and the lock, to time out. OTOH, an atomic cmpxchg on
+the server can't block and can't timeout.
 
-The key is that people can still download the old version until the new
-version is there, regardless of the lock; they'll get data about to
-go stale, but they would have anyway had they been a few seconds
-earlier. The main annoyance would be that you'd be blocked from pushing,
-and then have to poll for the other upload to finish before you'd be able
-to pull, do the merge, and then push your changes; you want to have the
-client watch for the resolution of the other transfer one way or the
-other, since you're in the current state precisely because you lost on
-getting the lock and now definitely need the next version.
+> you want to have the
+> client watch for the resolution of the other transfer one way or the
+> other, since you're in the current state precisely because you lost on
+> getting the lock and now definitely need the next version.
+> 
+I disagree. Given that you need to wait for the upload to finish anyway
+(whether you know it or not ;-) it makes sense to spend the time
+actually uploading -- upload speed is frequently lower than download
+for individuals.
 
-	-Daniel
-*This .sig left intentionally blank*
-
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Who was that masked man?
