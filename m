@@ -1,43 +1,64 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] Modify git-rev-list to linearise the commit history in merge order.
-Date: Fri, 3 Jun 2005 01:16:38 +1000
-Message-ID: <2cfc403205060208161bb06662@mail.gmail.com>
+Subject: [PATCH] Modify git-rev-list to linearise the commit history in merge order. [ pox on the house of gmail ]
+Date: Fri, 3 Jun 2005 01:31:03 +1000
+Message-ID: <2cfc4032050602083131c990a6@mail.gmail.com>
 References: <20050602151332.29183.qmail@blackcubes.dyndns.org>
+	 <2cfc403205060208161bb06662@mail.gmail.com>
 Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jun 02 17:17:16 2005
+X-From: git-owner@vger.kernel.org Thu Jun 02 17:32:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdrP7-0005Er-9o
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 17:14:41 +0200
+	id 1Ddrdk-0007l5-EW
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 17:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261152AbVFBPRn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 11:17:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261156AbVFBPRm
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 11:17:42 -0400
-Received: from rproxy.gmail.com ([64.233.170.202]:7402 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261152AbVFBPQj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 11:16:39 -0400
-Received: by rproxy.gmail.com with SMTP id i8so246246rne
-        for <git@vger.kernel.org>; Thu, 02 Jun 2005 08:16:38 -0700 (PDT)
+	id S261152AbVFBPcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 11:32:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261164AbVFBPcj
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 11:32:39 -0400
+Received: from rproxy.gmail.com ([64.233.170.195]:13751 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261152AbVFBPbD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 11:31:03 -0400
+Received: by rproxy.gmail.com with SMTP id i8so252210rne
+        for <git@vger.kernel.org>; Thu, 02 Jun 2005 08:31:03 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=usQjeyyfyiKAi8nSk8R2/iJq1gcxE5+NmAmkM5EWGktUZ4M/n7eJLrnmN+qWQgSNk1a4RC5ovtubAWY5r1ueApvhFNjtBOk2KNQNZJFr37tR04lWrbQ4p/GHOjgFvAOmxHlfjZ+bOCtChyTz/xujyqC4Hj2ii1dg2mfD/wollic=
-Received: by 10.38.186.20 with SMTP id j20mr385084rnf;
-        Thu, 02 Jun 2005 08:16:38 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Thu, 2 Jun 2005 08:16:38 -0700 (PDT)
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N1qJZOj/CrH6YwnKeg3/OpRl8bdqGZcidH5ZnfjDSI0R2ERSUnDxVjywhYGS7AcK1PIqP56Gw0G42XhnUSASQnX1to51Mv5Yx0Y1zCae9uhQ8H/l+GlxWg+HuUbC9q2HwOYwN9WI8x1cxQzroPUcQt5N3I9i1+pqNM5d9Cp03X4=
+Received: by 10.38.88.1 with SMTP id l1mr398882rnb;
+        Thu, 02 Jun 2005 08:31:03 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Thu, 2 Jun 2005 08:31:03 -0700 (PDT)
 To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <20050602151332.29183.qmail@blackcubes.dyndns.org>
+In-Reply-To: <2cfc403205060208161bb06662@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+
+Pox on the house of gmail!
+
+A non-wrapped version of the patch can be downloaded from:
+
+        http://blackcubes.dyndns.org/epoch/epoch.patch
+
+More info about the patch can be read here:
+
+        http://blackcubes.dyndns.org/epoch/
+
+Discussion to the list please.
+
+jon.
+---------- Forwarded message ----------
+From: Jon Seymour <jon.seymour@gmail.com>
+Date: Jun 3, 2005 1:16 AM
+Subject: [PATCH] Modify git-rev-list to linearise the commit history
+in merge order.
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Linus Torvalds <torvalds@osdl.org>, Paul Mackerras <paulus@samba.org>
+
 
 [PATCH] Modify git-rev-list to linearise the commit history in merge order.
 
@@ -413,12 +434,12 @@ new_mass_counter(parent, &distribution);
 +                               } else {
 +                                       if
 (!compare(&parent_node->pending, get_zero())) {
-+                                              
++
 copy(&parent_node->pending, &distribution);
-+                                              
++
 insert_by_date(&pending, parent);
 +                                       } else {
-+                                              
++
 add(&parent_node->pending, &parent_node->pending, &distribution);
 +                                       }
 +                               }
@@ -941,6 +962,11 @@ fewer discontinuities' '[ $merge_order_adjacency_count -le
 $normal_adjacency_count ]'
 +
 +test_done
+
+
+--
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
 
 
 -- 
