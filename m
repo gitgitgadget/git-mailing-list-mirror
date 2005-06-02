@@ -1,118 +1,92 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-log: cleanup line wrapping by using bash internals
-Date: Thu, 2 Jun 2005 16:46:21 +0200
-Message-ID: <20050602144621.GB16143@diku.dk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [SCRIPT] cg-rpush & locking
+Date: Thu, 2 Jun 2005 07:50:27 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506020741480.1876@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0506011951150.1876@ppc970.osdl.org>
+ <Pine.LNX.4.21.0506020223570.30848-100000@iabervon.org>
+ <20050602071453.GA16616@kiste.smurf.noris.de> <20050602073205.GA31482@muru.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 16:46:16 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthias Urlichs <smurf@smurf.noris.de>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 16:48:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ddqww-0000EJ-Tn
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 16:45:35 +0200
+	id 1Ddqxe-0000Ko-Of
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 16:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261151AbVFBOs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 10:48:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261152AbVFBOs1
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 10:48:27 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:22749 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261151AbVFBOru (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 10:47:50 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id CD8C46E135F; Thu,  2 Jun 2005 16:45:44 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 854856E1349; Thu,  2 Jun 2005 16:45:44 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 96D3F61FE0; Thu,  2 Jun 2005 16:46:21 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261152AbVFBOtP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 10:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261156AbVFBOtP
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 10:49:15 -0400
+Received: from fire.osdl.org ([65.172.181.4]:32414 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261152AbVFBOtE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 10:49:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j52EmRjA014980
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 2 Jun 2005 07:48:28 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j52EmMIL029955;
+	Thu, 2 Jun 2005 07:48:23 -0700
+To: Tony Lindgren <tony@atomide.com>
+In-Reply-To: <20050602073205.GA31482@muru.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Use ${#var} instead of echo + wc combo. Additionally also gives
-a minor speedup.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
 
-cg-log -f
+On Thu, 2 Jun 2005, Tony Lindgren wrote:
+> 
+> I don't think locking for the duration of the push really is a problem.
+> It is unlikely that there would be so many people pushing that it would
+> cause inconvenience... Of course it would be nice to optimize it if
+> possible.
 
-new code:
-	real    1m15.462s
-	user    0m27.195s
-	sys     0m40.639s
+I don't think the locking is a _huge_ issue - the only real problem I had
+with locking with BK was that readers could block a writer (ie I couldn't
+push to my public tree if there were people downloading from it), and git
+doesn't have that problem. I only push to trees that are my private ones
+anyway.
 
-old code:
-	real    1m38.222s
-	user    0m32.563s
-	sys     0m56.034s
+The real reason I'd prefer to not do locking is that _if_ the remote tree
+is actually more than just a CVS-like "public repository", ie if somebody
+actually does _development_ in the remote tree (hey, it may be crazy, but
+git makes this usage pattern possible), then we should eventually plan on
+having all of the regular "git-commit-script" and "git-pull-script" etc
+_also_ do locking, since they also change HEAD.
 
-BTW, I noticed the following errors:
+And that's going to be a lot easier if we only do a cmp-xchg and fail at
+the end (this concurrent change and "remote repo" usage is really quite
+wrong, since it basically mean that you consider somebody's development
+tree to be "public", and that's not what git is all about, but whatever..)
 
-	fatal: internal error in diffcore: unmodified entry remains
-	fatal: internal error in diffcore: unmodified entry remains
-	fatal: internal error in diffcore: unmodified entry remains
+But this is not a huge issue. The most important thing is to make sure
+that the new HEAD is written last, regardless, so that at least local
+readers (including things like "fsck" that can take a _loong_ time) always
+see consistent state.
 
-with both current cogito and git.
+> I would assume the biggest problem for most people is how they can push
+> through a firewall. From that point of view it would make sense to do
+> the push as a cgi script rather than something over ssh. And with a
+> cgi script you can of course optimize the locking and use tmp files
+> before renaming which are a bit hard to do with rsync.
 
-To reproduce run either of the following in the cogito repo:
+Me personally, I want ssh as a major option. There are tons of machines 
+(every single of my own ones) that I use that don't let anything but ssh 
+through.
 
-git-diff-tree -r 7c1f9aa894ce91928d982a0b197ab596375825a3 e30dd6c68e576d37bddd011aa7131a6d30297b4c	
-git-diff-tree -r c49cd3e4f1dfe4ccbf2b8d00188beaa251fee028 9fec8b26eff58e1f595e8619abf1e42c07645ff8
+But having alternatives is good. But ssh should be the first and primary 
+one, since it also means that there can't be any new security issues (ie 
+you won't be opening up any new holes by installing git on the remote 
+machine).
 
-The last one also triggers in the git repo.
-The log entries for the two commits are:
-
-commit 6616d1835e81ac0d2304702102d210451c04832a
-tree 7c1f9aa894ce91928d982a0b197ab596375825a3
-parent e30dd6c68e576d37bddd011aa7131a6d30297b4c
-parent e8871e88adca0637eb0299a41d85400beac928bd
-author Petr Baudis <pasky@ucw.cz> Sun, 17 Apr 2005 19:30:32 +0200
-committer Petr Baudis <xpasky@machine> Sun, 17 Apr 2005 19:30:32 +0200
-
-    Merging: d72ff74f5fd172c6ec9630ee8e08895a0525dcfe
-
-    Merge with Linus. Nothing particularily interesting.
-
-commit e44794706eeb57f2ee38ed1604821aa38b8ad9d2
-tree c49cd3e4f1dfe4ccbf2b8d00188beaa251fee028
-parent 9fec8b26eff58e1f595e8619abf1e42c07645ff8
-author Linus Torvalds <torvalds@ppc970.osdl.org> Sat, 16 Apr 2005 22:26:31 -0700
-committer Linus Torvalds <torvalds@ppc970.osdl.org> Sat, 16 Apr 2005 22:26:31 -0700
-
-    Be much more liberal about the file mode bits.
-
-    We only really care about the difference between a file being executable
-    or not (by its owner). Everything else we leave for the user umask to
-    decide.
-
-Any ideas?
-
- cg-log |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/cg-log b/cg-log
---- a/cg-log
-+++ b/cg-log
-@@ -129,8 +129,8 @@ list_commit_files()
- 	$list_cmd | cut -f 2- | while read file; do
- 		echo -n "$sep"
- 		sep=", "
--		if [ $(echo "$line$sep$file" | wc -c) -le 75 ]; then
--			line="$line$sep$file"
-+		line="$line$sep$file"
-+		if [ "${#line}" -le 74 ]; then
- 			echo -n "$file"
- 		else
- 			line="      $file"
--- 
-Jonas Fonseca
+		Linus
