@@ -1,53 +1,102 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Subject: Re: Problem with cogito and Linux tree tags
-Date: Thu, 02 Jun 2005 23:02:28 +0200
-Message-ID: <429F73E4.1020502@gorzow.mm.pl>
-References: <429F5FA5.2030306@gorzow.mm.pl> <429F6270.50009@gmail.com> <429F6591.8080005@gorzow.mm.pl> <429F69B6.4030806@gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: (was Re: Using cvs2git to track an external CVS project)
+Date: Fri, 3 Jun 2005 08:10:07 +1200
+Message-ID: <46a038f905060213104d9ad96f@mail.gmail.com>
+References: <46a038f905060105358e24723@mail.gmail.com>
+	 <1117631266.26067.40.camel@imp.csi.cam.ac.uk>
+Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 02 23:15:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 02 23:15:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ddx0A-00018E-6h
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 23:13:18 +0200
+	id 1Ddx0d-0001DF-8q
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 23:13:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261358AbVFBVPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 17:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261355AbVFBVOu
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 17:14:50 -0400
-Received: from goliat.kalisz.mm.pl ([217.96.42.226]:11176 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S261231AbVFBVCU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 17:02:20 -0400
-Received: (qmail 5468 invoked from network); 2 Jun 2005 21:02:15 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <holmsand@gmail.com>; 2 Jun 2005 21:02:15 -0000
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by zen.uplink (Postfix) with ESMTP id 12665583D71;
-	Thu,  2 Jun 2005 23:02:29 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
-X-Accept-Language: en-us, en
-To: Dan Holmsand <holmsand@gmail.com>
-In-Reply-To: <429F69B6.4030806@gmail.com>
+	id S261351AbVFBVOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 17:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261256AbVFBVCh
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 17:02:37 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:4796 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261289AbVFBUKQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 16:10:16 -0400
+Received: by rproxy.gmail.com with SMTP id i8so366670rne
+        for <git@vger.kernel.org>; Thu, 02 Jun 2005 13:10:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DLSct6uI4XB228c1L7VIeUCDDFOFzZCKhPmVglxmN1hvC22wuJkK+wEaqdVDmOTz1XvqqDmd0kXu1m+evR1ivzXgwxYFv0bGvUVTghZ6RJOWWCi+r6E2KWB7EAgDMjaUC9DXUCaAlOmE0NbufQ9MmtiyFi9xnZKL4qIY8ThrmqU=
+Received: by 10.38.14.39 with SMTP id 39mr531238rnn;
+        Thu, 02 Jun 2005 13:10:07 -0700 (PDT)
+Received: by 10.38.101.46 with HTTP; Thu, 2 Jun 2005 13:10:07 -0700 (PDT)
+To: Anton Altaparmakov <aia21@cam.ac.uk>
+In-Reply-To: <1117631266.26067.40.camel@imp.csi.cam.ac.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dan Holmsand wrote:
+On 6/2/05, Anton Altaparmakov <aia21@cam.ac.uk> wrote:
+> Disregarding anything about cvs2git there is one point you may not be
+> thinking about but you may want to care about:  when you send something
+> upstream to the cvs repository and then get it back via cvs2git you will
+> get a completely different commit to the one your local git repository
+> has.
 
->
-> $ git-cat-file tag 06f6d9e2f140466eeb41e494e14167f90210f89d
->
-> which tells you that v2.6.12-rc5 is commit
-> 2a24ab628aa7b190be32f63dfb6d96f3fb61580a
->
-Ok.  This doesn't work too. That cogito version really works fine, but I
-had that branch cloned from a local repository gotten from rsync and
-probably that's the problem.
-The tags weren't propagated, but they should be.
+If upstream hasn't touched the files I'm patching, and cvs2gig/cvs2ps
+use -kk there is some hope that the objects should be the same...
+right?
 
-AstralStorm
+>  So while the file changes inside those two commits are the same
+> the actual commits are not and you will end up with all those commits in
+> duplicate because of it as well as an automatic merge commit to merge
+> the two commits. 
+
+So, this is the scenario for a situation where the files I'm patching
+have changed upstream, so upstream merges my patch on top of previous
+patches, and I get commit objects echoed back that logically contain
+my patch but git sees as different.
+
+Is it any better if upstream is using git as well? Is there any chance
+for a private branch or tree to survive anything but a "perfect match"
+merge where upstream and the branch are in perfect sync before and
+after?
+
+I understand this is architected to _not_ support cherry picking in
+the darcs/arch sense and I think it's a good idea. But it seems than
+any non-trivial merge ends up being a completely manual process. 
+Anyone having to work on a series of patches for Linux that get
+accepted in stages is going to find himself forced to a potentially
+time-consuming remerge every time Linus does a partial merge. Argh.
+
+So it seems to me that git is well suited for a set of closely related
+HEADs that are very aggressive in synching with each other. Synching
+work is pushed out to the peripheral branches -- a design decision I
+agree with -- but there's very little support to help me keep a
+peripheral branch in sync.
+
+The assumption that those peripheral branches must be short-lived and
+discardable is valid for a limited set of cases -- very circumscribed
+to short-term dev work. As soon as a dev branch has to run a little
+longer, it cannot afford to not sync with the HEAD. Particularly, it
+cannot skip a _single_ patch coming from HEAD.
+
+And if I'm doing development from my branch and pushing to HEAD, and
+the guy doing the merge in HEAD merges my patches in a different order
+I'll have a spurious conflict.
+
+I use peripheral branches to track versions of code in production,
+that may have different sets of patches applied. For that purpose,
+patch-based SCMs are quite helpful (you can ask what patch is applied
+where), but as Linus pointed out, they don't actually help convergence
+at all. Git pulls towards convergence like a demon AFAICS -- yet some
+primitive patch trading smarts would save a lot of effort at the
+borders of the dev network.
+
+cheers,
+
+
+martin
