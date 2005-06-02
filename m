@@ -1,58 +1,65 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: Re: [PATCH] several typos in tutorial
-Date: Thu, 2 Jun 2005 17:00:21 +0400
-Message-ID: <200506021700.21824.snake@penza-gsm.ru>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org> <200506021645.15247.snake@penza-gsm.ru> <20050602125124.GA31680@snarc.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] cg-log: also search the initial commit for files
+Date: Thu, 2 Jun 2005 15:10:00 +0200
+Message-ID: <20050602131000.GA16143@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Vincent Hanquez <tab@snarc.org>
-X-From: git-owner@vger.kernel.org Thu Jun 02 14:58:51 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 02 15:14:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DdpGV-0000Iw-Rd
-	for gcvg-git@gmane.org; Thu, 02 Jun 2005 14:57:40 +0200
+	id 1DdpUy-0002QI-QL
+	for gcvg-git@gmane.org; Thu, 02 Jun 2005 15:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261408AbVFBNAd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 09:00:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261410AbVFBNAd
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 09:00:33 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:52450
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261408AbVFBNAY
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 09:00:24 -0400
-Received: (qmail 24838 invoked from network); 2 Jun 2005 13:00:22 -0000
-Received: from unknown (HELO snake) (192.168.0.20)
-  by fileserver.penza-gsm.ru with SMTP; 2 Jun 2005 13:00:22 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <20050602125124.GA31680@snarc.org>
+	id S261433AbVFBNOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 09:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261415AbVFBNOL
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 09:14:11 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:54987 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261404AbVFBNKE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 09:10:04 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 5ABD16E18A1; Thu,  2 Jun 2005 15:09:24 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 275276E167E; Thu,  2 Jun 2005 15:09:24 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 22C3B61FE0; Thu,  2 Jun 2005 15:10:01 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
 X-Spam-Level: 
-X-Spam-Status: No, score=-105.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	USER_IN_WHITELIST autolearn=ham version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On thursday, 02 June 2005 16:51 Vincent Hanquez wrote:
-> On Thu, Jun 02, 2005 at 04:45:15PM +0400, Alexey Nezhdanov wrote:
-> > On thursday, 02 June 2005 16:41 Vincent Hanquez wrote:
-> > > On Thu, Jun 02, 2005 at 04:02:07PM +0400, Alexey Nezhdanov wrote:
-> > > >  Git arhives are normally totally self-sufficient, and it's worth
-> > > > noting
-> > >
-> > >        ^^^^^^^
-> > > and one more here
-> >
-> > Why? It's ok to speak about many [existing] archives here.
->
-> it's missing a 'c'
-ok :)
+When restricting the log to a set of files pass --root to git-diff-tree if
+no parent is found so the initial commit is also checked.
 
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+
+ cg-log |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/cg-log b/cg-log
+--- a/cg-log
++++ b/cg-log
+@@ -167,7 +167,9 @@ $revls | $revsort | while read time comm
+ 	[ "$revfmt" = "git-rev-list" ] && commit="$time"
+ 	if [ $# -ne 0 ]; then
+ 		parent=$(git-cat-file commit $commit | sed -n '2s/parent //p;2Q')
+-		[ "$parent" ] && [ "$(git-diff-tree -r $commit $parent "$@")" ] || continue
++		diff_ops=
++		[ "$parent" ] || diff_ops=--root
++		[ "$(git-diff-tree -r $diff_ops $commit $parent "$@")" ] || continue
+ 	fi
+ 	if [ "$user" ]; then
+ 		git-cat-file commit $commit | grep -e '^author ' -e '^committer ' | grep -qi "$user" || continue
 -- 
-Respectfully
-Alexey Nezhdanov
-
+Jonas Fonseca
