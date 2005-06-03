@@ -1,112 +1,94 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "McMullan, Jason" <jason.mcmullan@timesys.com>
 Subject: Re: [PATCH] git-daemon server
-Date: Fri, 03 Jun 2005 11:30:48 -0700
-Message-ID: <7vmzq7l2cn.fsf@assigned-by-dhcp.cox.net>
-References: <20050603152212.GA4598@jmcmullan.timesys>
-	<7vk6lbmk01.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 03 Jun 2005 15:30:10 -0400
+Message-ID: <1117827011.8970.2.camel@jmcmullan.timesys>
+References: <20050603152212.GA4598@jmcmullan.timesys> <Pine.LNX.4.58.0506030856490.1876@ppc970.osdl.org> <1117814982.32257.64.camel@jmcmullan.timesys> <Pine.LNX.4.58.0506030929150.1876@ppc970.osdl.org> <1117819137.32257.75.camel@jmcmullan.timesys> <Pine.LNX.4.58.0506031035470.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 20:30:23 2005
+Content-Type: multipart/signed;
+	boundary="=-uY446L2AXgRwkcyleexi";
+	micalg=pgp-sha1;
+	protocol="application/pgp-signature"
+Cc: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 21:30:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeGuR-00006K-D2
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 20:28:43 +0200
+	id 1DeHpu-0001mm-VT
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 21:28:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261488AbVFCSbq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 14:31:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261494AbVFCSbd
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 14:31:33 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:15013 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261488AbVFCSaw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2005 14:30:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050603183050.NVLV550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Jun 2005 14:30:50 -0400
-To: Jason McMullan <jason.mcmullan@timesys.com>
-In-Reply-To: <7vk6lbmk01.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Fri, 03 Jun 2005 10:24:14 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261511AbVFCTaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 15:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261513AbVFCTaw
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 15:30:52 -0400
+Received: from mail.timesys.com ([65.117.135.102]:50849 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261511AbVFCTaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2005 15:30:16 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
+Received: from jmcmullan by owa.timesys.com; 03 Jun 2005 15:30:11 -0400
+In-Reply-To: <Pine.LNX.4.58.0506031035470.1876@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4-3mdk 
+Content-Class: urn:content-classes:message
+X-Mailer: Evolution 2.0.4-3mdk 
+Date: Fri, 3 Jun 2005 15:23:19 -0400
+Message-ID: <1117827011.8970.2.camel@jmcmullan.timesys>
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] git-daemon server
+thread-index: AcVocbMzXDDrqcsUSKyFC46pbGfrfQ==
+To: "Linus Torvalds" <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
 
-JCH> Looks very nice.  Some comments.
+--=-uY446L2AXgRwkcyleexi
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-JCH> This being a dedicated GIT specific sync mechanism, you may want
-JCH> to give more smarts to the server, so that the client can say "I
-JCH> have these commits as HEADs in my forest, here are their SHA1s,
-JCH> now sync me up to the head you said you have whose SHA1 is
-JCH> this", implying he has all their HEADs dependents.  Of course
-JCH> this can come later.
+On Fri, 2005-06-03 at 10:41 -0700, Linus Torvalds wrote:=20
+> Ok. Am I to understand that I could do a push to a remote server with ssh=
+=20
+> using something like
+>=20
+> 	git-server -- send master |
+> 		ssh master.kernel.org git-server --db /pub/scm/linux/kernel/git/torvald=
+s/linux-2.6.git
 
-About the protocol, here is one change you may want to have even
-in the initial version to futureproof yourself, and let you make
-a "low hanging fruit" optimization without bumping the protocol
-version up.
+No, but you could do:
 
-Make "request" capable to optionally have this format:
+$ ssh master.kernel.org -L 7777:localhost:7777 \
+    git-server --tcp --port 7777 \
+               --db /pub/scm/linux/kernel/git/torvalds/linux-2.6.git &
+$ git-server --tcp --port 7777 send master
 
-	request <sha1> <commit-sha1> <ce-path>
 
-Note.  You have to make sure you have some way to quote embedded
-newlines in ce-path since your protocol is mostly line based.
+You could probably play some games with shell redirection to file
+descriptors if you really wanted to use the stdio stuff over ssh,
+but that's a little ugly.
 
-When this optional form is used, the requestor is telling the
-responder the following:
 
-    (1) it wants to retrieve <sha1>; this is the same as a
-        request without the optional two fields.
+> Also, how do I send tags?
 
-    (2) it wants <sha1> because it is trying to complete a tree
-        associated with <commit-sha1>; it already has the commit
-        object itself and knows what the parents of the commit
-        are.
+Tags are on my 'TODO' list, as are the deltafication and
+mulitple-request changes. Also, a verdict on the name
+(daemon vs server vs anything else) would be nice.
 
-    (3) it already has trees and blobs associated with all the
-        parents of <commit-sha1>.
+--=20
+Jason McMullan <jason.mcmullan@timesys.com>
+TimeSys Corporation
 
-    (4) it knows that <sha1> resides at <ce-path> in the tree
-        associated with <commit-sha1>.  As a special case, ""
-        (an empty string) as <ce-path> means "the root level
-        tree object associated with <commit-sha1>".
 
-The initial implementation of a requestor does not even send
-this extended form.  The initial implementation of a responder
-must be able to parse this extended form, but it does not have
-to do anything special about it; just do what your cmd_request()
-currently does.  However, this extended request lets your later
-implementation of the responder create and send delta on the
-fly, by:
+--=-uY446L2AXgRwkcyleexi
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-    (0) Look at <sha1> in the local storage.  If it is already
-        deltified, do not do anything special but just send it
-        out.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
 
-    (1) Look at <commit-sha1> and its parents.  Compare the
-        object (either a blob or a tree) that corresponds to
-        <ce-path> in the trees associated with these commits.
-        Verify <sha1> is indeed what the requestor thinks it is
-        while you are at it.
+iD8DBQBCoK/C8/0vJ5szK6kRApXYAKCDUv7pGESYiwgLJ08ro49ku9m/ggCfdfV+
+azJlD4HghtFESbkzki8dOLE=
+=qyD7
+-----END PGP SIGNATURE-----
 
-    (2) Try to synthesize a reasonable delta to create <sha1>
-        based on the objects you find in step (1).  Upon finding
-        a reasonable delta, send that as a delta object to the
-        requestor.  Optionally you may want to replace the
-        <sha1> found at the local store in step (0) with this
-        delta.  If you have many parents, this "reasonable"
-        delta does not necessarily have to be the minimal delta.
-
-Unlike a full-blown "ihave/sendme" protocol extension, this does
-not require responder side to keep much client state, and should
-give you the ability to create and send a reasonable if not
-minimum delta lazily.
-
-Hmm.
-
+--=-uY446L2AXgRwkcyleexi--
