@@ -1,81 +1,98 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] git-tar-tree: add a test case (resent)
-Date: Fri, 03 Jun 2005 13:25:18 +0200
-Message-ID: <42A03E1E.5060204@lsrfire.ath.cx>
-References: <20050602185046.GA3717@lsrfire.ath.cx> <Pine.LNX.4.58.0506021830340.1876@ppc970.osdl.org>
+From: Konstantin Antselovich <konstantin@antselovich.com>
+Subject: [PATCH] simple one-liner for README file
+Date: Fri, 03 Jun 2005 04:22:44 -0700
+Organization: http://konstantin.antselovich.com
+Message-ID: <42A03D84.4020601@antselovich.com>
+Reply-To: konstantin@antselovich.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jun 03 13:23:40 2005
+Content-Type: multipart/mixed;
+ boundary="------------070406000607090400040301"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 03 14:11:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeAG8-0008Ex-IS
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 13:22:40 +0200
+	id 1DeB13-00061q-Do
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 14:11:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261217AbVFCLZa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 07:25:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261222AbVFCLZa
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 07:25:30 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:394 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S261217AbVFCLZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2005 07:25:21 -0400
-Received: from [10.0.1.3] (p508E770B.dip.t-dialin.net [80.142.119.11])
-	by neapel230.server4you.de (Postfix) with ESMTP id 8ECFD180;
-	Fri,  3 Jun 2005 13:25:19 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
-X-Accept-Language: de-DE, de, en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506021830340.1876@ppc970.osdl.org>
+	id S261236AbVFCMOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 08:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261240AbVFCMOJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 08:14:09 -0400
+Received: from orangecode.net ([69.36.165.200]:14982 "EHLO orangecode.net")
+	by vger.kernel.org with ESMTP id S261236AbVFCMOC (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 08:14:02 -0400
+Received: from proliant.myhome (c-24-130-184-220.hsd1.ca.comcast.net [24.130.184.220])
+	by orangecode.net (8.11.6/8.11.6) with ESMTP id j53BOGF05964;
+	Fri, 3 Jun 2005 05:24:17 -0600
+Received: from [192.168.0.2] (lifebook.myhome [192.168.0.2])
+	(authenticated bits=0)
+	by proliant.myhome (8.13.3/8.12.8) with ESMTP id j53BwnQX026719
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 3 Jun 2005 04:58:50 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.3 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+X-Enigmail-Version: 0.91.0.0
+X-Virus-Scanned: ClamAV 0.85.1/908/Thu Jun  2 13:39:40 2005 on proliant.myhome
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds schrieb:
-> 
-> On Thu, 2 Jun 2005, Rene Scharfe wrote:
-> 
->>git-tar-tree: add a simple test case.
-> 
-> 
-> I get:
-> 
-> 	* FAIL 6: extract tar archive (cd b && tar xf -) <b.tar
-> 	* FAIL 7: validate filenames (cd b/a && find .) | sort >b.lst &&
-> 	* FAIL 8: validate file contents diff -r a b/a
-> 	* FAIL 11: validate filenames with prefix (cd c/prefix/a && find .) | sort >c.lst &&
-> 	* FAIL 12: validate file contents with prefix diff -r a c/prefix/a
+This is a multi-part message in MIME format.
+--------------070406000607090400040301
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Meine Fresse, what a stoopid bug.  Fortunately I introduced it with one
-of the other two patches sent together with the test case patch, namely
-"[PATCH] git-tar-tree: cleanup write_trailer() (resent)".  Of course I
-only wanted to demonstrate how useful those tests really are. ;-)
+Hi Petr,
 
-Btw., I got it right the first time and messed up when resending..
+I noticed a very small error in README file.
+I'm not sure if I should submit is as a patch, as
+it's just a change to one line.  (but I attached a patch anyways)
 
-write_trailer() writes the last 10k (a full block) of the tar archive.
-write_if_needed() writes out a block *if* it is full and then sets
-the offset to 0.  In nine out of ten cases the messed up write_trailer()
-function didn't manage to fill the block thus not writing anything at
-all, truncating the archive.  I was "lucky" to hit the other case and so
-my testing ran OK.
+Regards,
+-Konstantin
 
-Here's a patch.
+-- 
+Konstantin Antselovich
+mailto: konstantin@antselovich.com
+http://konstantin.antselovich.com
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+--------------070406000607090400040301
+Content-Type: text/x-patch;
+ name="readme.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="readme.patch"
 
---- a/tar-tree.c
-+++ b/tar-tree.c
-@@ -77,7 +77,7 @@
- 	write_if_needed();
- 	get_record();
- 	write_if_needed();
--	if (offset) {
-+	while (offset) {
- 		get_record();
- 		write_if_needed();
- 	}
+Simple one-liner for an error in README file.
+Suggested command 
+  'cg-clone -s rsync://rsync.kernel.org/pub/scm/cogito/cogito.git cogitodir'
+leads to: cg-clone: specifying both -s and DESTDIR makes no sense
+So, just delete directory name from the end of line
 
+---
+commit a8f5b28c32978d7b0c996172e15e61f3e63b6ff4
+tree fc5ee658a6fedd886d43c6342e9df184fd751fbd
+parent d140154ad84eb3fc89c4d7cb2019412bcf8e3ed7
+author Konstantin Antselovich <konstantin@antselovich.com> Fri, 03 Jun 2005 04:11:59 -0700
+committer Konstantin Antselovich <konstantin@antselovich.com> Fri, 03 Jun 2005 04:11:59 -0700
+
+ README |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/README b/README
+--- a/README
++++ b/README
+@@ -106,7 +106,7 @@ If, instead, you want to clone the repos
+ first make sure you are in an empty directory. Then give the following
+ command:
+ 
+-	$ cg-clone -s rsync://rsync.kernel.org/pub/scm/cogito/cogito.git cogitodir
++	$ cg-clone -s rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
+ 
+ When you get your prompt back, do an ls to see the source tree and .git
+ directory.
+
+--------------070406000607090400040301--
