@@ -1,72 +1,60 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: Problem with cogito and Linux tree tags
-Date: Fri, 3 Jun 2005 09:28:47 +0200
-Message-ID: <20050603072847.GC16619@pasky.ji.cz>
-References: <429F5FA5.2030306@gorzow.mm.pl> <429F6270.50009@gmail.com> <429F6591.8080005@gorzow.mm.pl> <429F69B6.4030806@gmail.com> <429F73E4.1020502@gorzow.mm.pl> <429F92CA.9060908@gorzow.mm.pl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 0/4] Fix -B "very-different" logic.
+Date: Fri, 03 Jun 2005 01:32:00 -0700
+Message-ID: <7vis0vq1rz.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org>
+	<m1psv7bjb6.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org>
+	<7vmzqau3es.fsf@assigned-by-dhcp.cox.net>
+	<7vll5sz54z.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506021716140.1876@ppc970.osdl.org>
+	<7vis0wusv5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dan Holmsand <holmsand@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 09:27:06 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 10:30:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1De6Yp-0000vM-DQ
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 09:25:44 +0200
+	id 1De7Y3-00071M-Sp
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 10:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261161AbVFCH2v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 03:28:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVFCH2u
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 03:28:50 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:13536 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261161AbVFCH2s (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 03:28:48 -0400
-Received: (qmail 17458 invoked by uid 2001); 3 Jun 2005 07:28:47 -0000
-To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Content-Disposition: inline
-In-Reply-To: <429F92CA.9060908@gorzow.mm.pl>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261178AbVFCIcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 04:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261180AbVFCIcF
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 04:32:05 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:60553 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261178AbVFCIcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Jun 2005 04:32:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050603083200.PBBI20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 3 Jun 2005 04:32:00 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vis0wusv5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 02 Jun 2005 18:33:18 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jun 03, 2005 at 01:14:18AM CEST, I got a letter
-where Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl> told me that...
-> Radoslaw Szkodzinski wrote:
-> 
-> >Dan Holmsand wrote:
-> >
-> >  
-> >
-> >>$ git-cat-file tag 06f6d9e2f140466eeb41e494e14167f90210f89d
-> >>
-> >>which tells you that v2.6.12-rc5 is commit
-> >>2a24ab628aa7b190be32f63dfb6d96f3fb61580a
-> >>
-> >>    
-> >>
-> >Ok.  This doesn't work too. That cogito version really works fine, but I
-> >had that branch cloned from a local repository gotten from rsync and
-> >probably that's the problem.
-> >The tags weren't propagated, but they should be.
-> >
-> >AstralStorm
-> >  
-> >
-> Well, new cogito-0.11.1 (300ab153620d2492e824cb3561c32debb5e80bf8) has
-> this fixed and picked up missing objects automatically.
+I am sending the following four patch series:
 
-Oh yes, I wanted to mention it in this thread but forgot.
+        [PATCH 1/4] Tweak count-delta interface
+        [PATCH 2/4] diff: Fix docs and add -O to diff-helper.
+        [PATCH 3/4] diff: Clean up diff_scoreopt_parse().
+        [PATCH 4/4] diff: Update -B heuristics.
 
-However note that what it does now is awful and it's just a
-quick'n'dirty fix to make it mostly work. I guess a better way would be
-to teach the pull tools to download refs/ files too and do the proper
-dependency things from them too (in addition to the passed commit id).
+The first three are preparations and cleanups I found necessary
+while I was working on the last one, which is the gem of this
+series.  It addresses the concerns you raised in your message
+"Careful." while keeping the semantics I wanted to have "if you
+keep 97 lines out of original 100-line document, it does not
+matter if the end result is a 110-line or 1000-line document.
+You did not do a rewrite."
 
-I will need to go back and look again at the set of Daniel's patches
-which implemented something like that.
+You may have to remove the warning about git-status with this
+change, though.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
