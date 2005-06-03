@@ -1,59 +1,55 @@
-From: "Adam Kropelin" <akropel1@rochester.rr.com>
-Subject: Re: I want to release a "git-1.0"
-Date: Thu, 2 Jun 2005 21:34:05 -0400
-Message-ID: <012a01c567dc$542787b0$03c8a8c0@kroptech.com>
-References: <Pine.LNX.4.58.0505301253070.1876@ppc970.osdl.org> <m1psv7bjb6.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0505312002160.1876@ppc970.osdl.org> <00e101c567cc$80c0de80$03c8a8c0@kroptech.com> <Pine.LNX.4.58.0506021705520.1876@ppc970.osdl.org> <Pine.LNX.4.58.0506021745310.1876@ppc970.osdl.org>
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: Re: qgit-0.3
+Date: Fri, 03 Jun 2005 13:55:09 +1000
+Message-ID: <1117770909.31082.121.camel@gaston>
+References: <20050601111949.90043.qmail@web26303.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 03 03:31:49 2005
+Cc: git@vger.kernel.org, berkus@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jun 03 05:53:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1De121-0001JD-0t
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 03:31:29 +0200
+	id 1De3F4-0003Gh-RH
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 05:53:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261478AbVFCBef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 2 Jun 2005 21:34:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261479AbVFCBef
-	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 21:34:35 -0400
-Received: from ms-smtp-03.nyroc.rr.com ([24.24.2.57]:31982 "EHLO
-	ms-smtp-03.nyroc.rr.com") by vger.kernel.org with ESMTP
-	id S261478AbVFCBea (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Jun 2005 21:34:30 -0400
-Received: from mail.kroptech.com (cpe-24-93-20-125.rochester.res.rr.com [24.93.20.125])
-	by ms-smtp-03.nyroc.rr.com (8.12.10/8.12.10) with ESMTP id j531Y5P4019404;
-	Thu, 2 Jun 2005 21:34:05 -0400 (EDT)
-Received: from pia (pia.kroptech.com [192.168.200.3])
-	by mail.kroptech.com (Postfix) with SMTP id 7189F11376E;
-	Thu,  2 Jun 2005 21:49:31 -0400 (EDT)
-To: "Linus Torvalds" <torvalds@osdl.org>
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.2527
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2527
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S261203AbVFCD4G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 2 Jun 2005 23:56:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261225AbVFCD4G
+	(ORCPT <rfc822;git-outgoing>); Thu, 2 Jun 2005 23:56:06 -0400
+Received: from gate.crashing.org ([63.228.1.57]:1493 "EHLO gate.crashing.org")
+	by vger.kernel.org with ESMTP id S261203AbVFCD4D (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Jun 2005 23:56:03 -0400
+Received: from gaston (localhost [127.0.0.1])
+	by gate.crashing.org (8.12.8/8.12.8) with ESMTP id j533lvZn015500;
+	Thu, 2 Jun 2005 22:47:58 -0500
+To: Marco Costalba <mcostalba@yahoo.it>
+In-Reply-To: <20050601111949.90043.qmail@web26303.mail.ukl.yahoo.com>
+X-Mailer: Evolution 2.2.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> On Thu, 2 Jun 2005, Linus Torvalds wrote:
->>
->> Yeah, I'll try to clarify.
->
-> Adam, do you find the current version a bit more clear on this?
+On Wed, 2005-06-01 at 13:19 +0200, Marco Costalba wrote:
+> New version of qgit, the QT/C++ git viewer.
+> 
+> Download at:
+> 
+> http://prdownloads.sourceforge.net/qgit/qgit-0.3.tar.gz?download
+> 
+> This time we use scons instead of qmake as build system (many thanks to Stanislav Karchebny), I
+> hope people have less problems compiling it.
+> 
+> As before just run make and copy the bin in the path.
+> 
+> New feature is async loading of diff and file blobs, should be much faster navigate the logs with
+> secondary windows (double click on logs or file names to show) opened.
 
-Absolutely. I especially like the new digression explaining that 
-the --cached flag controls where file _content_ is fetched from and 
-reinforcing that the index file always governs which files are involved 
-in the diff.
+I spent 1/2h and never managed to build it. When it doesn't find some
+includes, it doesn't look for some Qt related binaries in the right
+path, or whatever, it's just basically unbuildable.
 
-Thanks!
+Ben.
 
---Adam
 
