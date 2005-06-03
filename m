@@ -1,148 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] git-daemon server
-Date: Fri, 03 Jun 2005 10:24:14 -0700
-Message-ID: <7vk6lbmk01.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 3 Jun 2005 10:41:41 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506031035470.1876@ppc970.osdl.org>
 References: <20050603152212.GA4598@jmcmullan.timesys>
+ <Pine.LNX.4.58.0506030856490.1876@ppc970.osdl.org> <1117814982.32257.64.camel@jmcmullan.timesys>
+ <Pine.LNX.4.58.0506030929150.1876@ppc970.osdl.org> <1117819137.32257.75.camel@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Fri Jun 03 19:23:18 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 03 19:39:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeFrR-00079C-3m
-	for gcvg-git@gmane.org; Fri, 03 Jun 2005 19:21:33 +0200
+	id 1DeG5u-0000qL-21
+	for gcvg-git@gmane.org; Fri, 03 Jun 2005 19:36:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261405AbVFCRYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 13:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261409AbVFCRYk
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 13:24:40 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:24773 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261405AbVFCRYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2005 13:24:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050603172415.JYJC16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Jun 2005 13:24:15 -0400
-To: Jason McMullan <jason.mcmullan@timesys.com>
-In-Reply-To: <20050603152212.GA4598@jmcmullan.timesys> (Jason McMullan's
- message of "Fri, 3 Jun 2005 11:22:12 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261416AbVFCRjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 13:39:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261417AbVFCRjm
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 13:39:42 -0400
+Received: from fire.osdl.org ([65.172.181.4]:5867 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261416AbVFCRjl (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 13:39:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j53HdbjA011846
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 3 Jun 2005 10:39:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j53HdaUD002889;
+	Fri, 3 Jun 2005 10:39:37 -0700
+To: "McMullan, Jason" <jason.mcmullan@timesys.com>
+In-Reply-To: <1117819137.32257.75.camel@jmcmullan.timesys>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Looks very nice.  Some comments.
 
-    diff -u b/daemon.c b/daemon.c
-    --- b/daemon.c
-    +++ b/daemon.c
-------------
-    +
-    +/* Protocol is symmetric, both client and server
-    + * use the same commands.
-    + *
-    + * version\n -> error -- 0 <Version string>\n
-    + *
-    + * head <head-id>\n -> sha1 <head-id> <sha1>\n
-    + *
-    + * head <head-id> <old-sha1> <new-sha1>\n -> sha1 <head-id> <new-sha1>\n
-    + *
-    + * request <sha1>\n -> send <sha1> <hex-bytes>\n<bytes...>
-    + *
-    + * send <sha1> <hex-bytes>\n<bytes...> -> sha1 -- <sha1>\n
-    + *
-    + * exists <sha1>\n -> sha1 -- <sha1>\n
-    + *
-    + * sha1 <any> <sha1>\n -> no-op
-    + *
-    + * error <key> <hex-code> <error string>\n -> no-op
-    + *
-    + */
 
-This is good for the first cut, but I have a latency concern
-about "single request - single send" style of communication.
-This being a dedicated GIT specific sync mechanism, you may want
-to give more smarts to the server, so that the client can say "I
-have these commits as HEADs in my forest, here are their SHA1s,
-now sync me up to the head you said you have whose SHA1 is
-this", implying he has all their HEADs dependents.  Of course
-this can come later.
+On Fri, 3 Jun 2005, McMullan, Jason wrote:
+> 
+> ###### Create a new local git repo
+> 
+> $ GITCONN="--tcp --host 192.168.1.1 --port 7777"
+> $ git-init-db
+> $ git-server $GITCONN -- request master
 
-------------
+Ok. Am I to understand that I could do a push to a remote server with ssh 
+using something like
 
-    +static int verify_file(int fd, unsigned long mapsize, const unsigned char *sha1, char *type)
-    +{
-    +	void *map, *buffer;
-   ~~~ 
-    +		if (buffer && !strcmp(type, "delta")) {
-    +			void *ref = NULL, *delta = buffer;
-    +			unsigned long ref_size, delta_size = size;
-    +			buffer = NULL;
-   ~~~
-    +			buffer = patch_delta(ref, ref_size,
-    +					  delta+20, delta_size-20, 
-    +					  &size);
-    +			free(delta);
-    +			free(ref);
-    +		}
+	git-server -- send master |
+		ssh master.kernel.org git-server --db /pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-A possibility is to chuck the above special case for "delta",
-and instead introduce "delta" subclass in struct object family
-and make the base object of "delta" simply one object on the
-obj->refs list on such a "delta" object.  I would imagine that
-this would let you reuse the sha1_retrieve() loop that you
-already do for "commit", "tree", and "tag".
+or what?
 
-    +		if (!strcmp(type, "blob")) {
-    +			struct blob *blob = lookup_blob(sha1);
-    +			parse_blob_buffer(blob, buffer, size);
-   ~~~
-    +			obj = &tag->object;
-    +		} else {
-    +			obj = NULL;
-    +		}
-    +
-    +		free(buffer);
-    +
-    +		if (obj) {
-    +			struct object_list *refs;
-    +
-    +			for (refs = obj->refs; refs ; refs = refs->next) {
-    +				err = sha1_retrieve(refs->item->sha1);
-    +				if (err < 0)
-    +					return err;
-    +			}
-    +		
-    +			return 0;
-    +		}
-    +
-    +	}
-    +	return -1;
-    +}
+Also, how do I send tags?
 
-------------
-
-    +static int send_send(const unsigned char *sha1, int size, void *data)
-    +{
-   ~~~
-    +}
-   ~~~
-    +static int cmd_request(int argc, char **argv)
-    +{
-    +	int err;
-    +
-    +	if (argc == 2) {
-    +		char sha1[40];
-    +		void *data;
-    +		unsigned long size;
-   ~~~
-    +		err = send_send(sha1, size, data);
-    +		if (err < 0)
-    +			return err;
-
-By definition, size of SHA1 blob is "unsigned long" so
-send_send() should take such not "int".
-
+			Linus
