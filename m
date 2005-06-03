@@ -1,52 +1,48 @@
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: Re: qgit-0.3
-Date: Sat, 04 Jun 2005 08:37:22 +1000
-Message-ID: <1117838242.31082.165.camel@gaston>
-References: <20050601111949.90043.qmail@web26303.mail.ukl.yahoo.com>
-	 <1117770909.31082.121.camel@gaston>  <42A04AAA.4080205@gorzow.mm.pl>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] git-daemon server
+Date: Sat, 4 Jun 2005 00:39:50 +0200
+Message-ID: <20050603223950.GA13093@pasky.ji.cz>
+References: <Pine.LNX.4.21.0506031727400.30848-100000@iabervon.org> <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 00:36:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Jason McMullan <jason.mcmullan@timesys.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 04 00:37:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeKl9-0003IE-SG
-	for gcvg-git@gmane.org; Sat, 04 Jun 2005 00:35:24 +0200
+	id 1DeKmy-0003Sj-MR
+	for gcvg-git@gmane.org; Sat, 04 Jun 2005 00:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261154AbVFCWic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 18:38:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVFCWic
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 18:38:32 -0400
-Received: from gate.crashing.org ([63.228.1.57]:34526 "EHLO gate.crashing.org")
-	by vger.kernel.org with ESMTP id S261154AbVFCWi2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 18:38:28 -0400
-Received: from gaston (localhost [127.0.0.1])
-	by gate.crashing.org (8.12.8/8.12.8) with ESMTP id j53MUGZn031614;
-	Fri, 3 Jun 2005 17:30:17 -0500
-To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-In-Reply-To: <42A04AAA.4080205@gorzow.mm.pl>
-X-Mailer: Evolution 2.2.2 
+	id S261155AbVFCWkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 18:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261158AbVFCWkH
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 18:40:07 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:4076 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261155AbVFCWj6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 18:39:58 -0400
+Received: (qmail 32284 invoked by uid 2001); 3 Jun 2005 22:39:50 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2005-06-03 at 14:18 +0200, Radoslaw Szkodzinski wrote:
+Dear diary, on Fri, Jun 03, 2005 at 11:59:38PM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> Anyway, I have to admit that at least as far as I'm concerned, the 
+> rpull/rpush thing has the same issues as Jason's code - I've not seen the 
+> usage documented anywhere, and that's the only real reason I don't use it 
+> myself.
 
-> It is buildable, but you need to install your own scons in the correct
-> paths, e.g.
-> on Gentoo:
-> 
-> emerge scons
-> And then build it by hand with:
-> ./configure
-> scons
-> 
-> Then you get bin/qgit which is ready to run and/or copy.
+FWIW, Cogito's cg-pull can use rpull/rpush (if your branch URLs use the
+git+ssh scheme), and I've seen people actually using it.
 
-Not on debian. Doesn't work with the disto's scons, says it can't find
-qt (and libqt3-dev is installed)
-
-Ben.
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
