@@ -1,190 +1,78 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH 10/10] Add -s option to show log summary
-Date: Sat, 4 Jun 2005 16:43:34 +0200
-Message-ID: <20050604144334.GN12615@diku.dk>
-References: <20050604143831.GD12615@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-rev-list: proper lazy reachability
+Date: Sat, 04 Jun 2005 08:01:25 -0700
+Message-ID: <7vekbigo8q.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0505301847120.1876@ppc970.osdl.org>
+	<17052.21846.816147.370354@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0505310735260.1876@ppc970.osdl.org>
+	<Pine.LNX.4.58.0505310813540.1876@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 16:41:10 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 04 16:59:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeZp4-0005sB-1H
-	for gcvg-git@gmane.org; Sat, 04 Jun 2005 16:40:26 +0200
+	id 1Dea6M-0007je-Fa
+	for gcvg-git@gmane.org; Sat, 04 Jun 2005 16:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261367AbVFDOnr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Jun 2005 10:43:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261374AbVFDOnr
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 10:43:47 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:36351 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261367AbVFDOng (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 10:43:36 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 2FF696E2115; Sat,  4 Jun 2005 16:42:55 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id BC3316E1E77; Sat,  4 Jun 2005 16:42:54 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id DA3C761FE0; Sat,  4 Jun 2005 16:43:34 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050604143831.GD12615@diku.dk>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261374AbVFDPBc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Jun 2005 11:01:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261375AbVFDPBc
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 11:01:32 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:4484 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261374AbVFDPB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jun 2005 11:01:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050604150126.NALB26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 4 Jun 2005 11:01:26 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0505310813540.1876@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 31 May 2005 08:23:47 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When passing -s to cg-log each log entry is summarized in one line. The line
-carries info about commit date, author, first log line and the commit id. It
-will look something like the following (with only:
+Linus, what do you think rev-list should do given HEADs from two
+forks, like this?
 
-  2005-05-20 11:46 Linus Torvalds   sparse cleanup   e99d59ff0bff349ef20...
+    JC          git-rev-list JC LT ????
+     |
+     |  LT
+     |   |
+      \ /
+       |
+       |
+       |
 
-The result ends up being 130 chars wide however the commit id is placed so
-that it can easily be hidden if line wrapping in the pager is enabled.
+The above is often the shape of my working repository.  I pull
+from you, commit a handful on top of your then-HEAD, and when I
+am about ready to submit, I pull from you again to find your
+HEAD advanced somewhat.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
+For patch-form submission, I need a list of my commits since I
+forked from you.  Also I tend to rebase to your head often,
+instead of merging inside my working repository (which makes
+later e-mail patch-form submission more work for me), so even
+when I am not immediately submitting the changes I have in my
+fork, I need that list to forward port my changes.
 
- cg-Xlib |    4 +++-
- cg-log  |   53 ++++++++++++++++++++++++++++++++++++++++++++---------
- 2 files changed, 47 insertions(+), 10 deletions(-)
+JIT currently uses this to get this list (as a workaround):
 
-diff --git a/cg-Xlib b/cg-Xlib
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -47,10 +47,12 @@ mktemp () {
- 
- showdate () {
- 	date="$1"
-+	format="$2"
-+	[ "$format" ] || format=-R
- 	sec=${date[0]}; tz=${date[1]}
- 	dtz=${tz/+/}
- 	lsec=$(expr $dtz / 100 \* 3600 + $dtz % 100 \* 60 + $sec)
--	pdate="$(date -Rud "1970-01-01 UTC + $lsec sec" 2>/dev/null)"
-+	pdate="$(date -ud "1970-01-01 UTC + $lsec sec" "$format" 2>/dev/null)"
- 
- 	echo "${pdate/+0000/$tz}"
- }
-diff --git a/cg-log b/cg-log
---- a/cg-log
-+++ b/cg-log
-@@ -14,15 +14,21 @@
- # cg-log then displays only changes in those files.
- #
- # -c::
--#	Add color to the output. Currently, the colors are:
--#	- `author`:	'cyan'
--#	- `committer`:	'magenta'
--#	- `header`:	'green'
--#	- `files`:	'blue'
--#	- `signoff`:	'yellow'
-+#	Colorize to the output. When getting log summary the `date` is
-+#	colored 'green', the `author` is colored 'cyan', the `commit ID`
-+#	is colored 'blue' and the special line trimming character (~) is
-+#	colored 'magenta'. +
-+#	+
-+#	When getting the full log the colors are:
-+#		- `author`:	'cyan'
-+#		- `committer`:	'magenta'
-+#		- `header`:	'green'
-+#		- `files`:	'blue'
-+#		- `signoff`:	'yellow'
- #
- # -f::
--#	List affected files.
-+#	List affected files. This option does not make sense when using
-+#	`-s` to get a log summary.
- #
- # -r FROM_ID[:TO_ID]::
- #	Limit the log information to a set of revisions using either
-@@ -36,6 +42,12 @@
- #	End the log listing at the merge base of the -r arguments
- #	(defaulting to master and origin).
- #
-+# -s::
-+#	Show a one line summary for each log entry. The summary contains
-+#	information about the commit date, the author, the first line
-+#	of the commit log and the commit ID. Long author and commit log
-+#	titles are trimmed but marked with an ending tilde (~).
-+#
- # -uUSERNAME::
- #	List only commits where author or committer contains 'USERNAME'.
- #	The search for 'USERNAME' is case-insensitive.
-@@ -55,7 +67,7 @@
- #
- #	$ cg-log -r releasetag-0.9:releasetag-0.10
- 
--USAGE="cg-log [-c] [-f] [m] [-uUSERNAME] [-r FROM_ID[:TO_ID] FILE..."
-+USAGE="cg-log [-c] [-f] [-m] [-s] [-uUSERNAME] [-r FROM_ID[:TO_ID] FILE..."
- 
- . ${COGITO_LIB}cg-Xlib
- # Try to fix the annoying "Broken pipe" output. May not help, but apparently
-@@ -71,6 +83,7 @@ coldefault=
- list_files=
- log_start=
- log_end=
-+summary=
- user=
- mergebase=
- files=()
-@@ -107,6 +120,9 @@ while [ "$1" ]; do
- 	-m)
- 		mergebase=1
- 		;;
-+	-s)
-+		summary=1
-+		;;
- 	*)
- 		files=("$@")
- 		break
-@@ -196,6 +212,8 @@ print_commit_log() {
- 					echo -e "author $author\ncommitter $committer" \
- 						| grep -qi "$user" || return
- 				fi
-+				[ "$summary" ] && continue
-+
- 				echo ${colheader}commit ${commit%:*} $coldefault
- 				echo ${colheader}tree $tree $coldefault
- 
-@@ -222,6 +240,23 @@ print_commit_log() {
- 					s/./    &/
- 				'
- 				;;
-+			*)
-+				# Print summary
-+				author="${author% <*}"
-+				date=(${committer#*> })
-+				date="$(showdate $date '+%F %H:%M')"
-+				title="$key $rest"
-+				if [ "${#title}" -gt 51 ]; then
-+					title="${title:0:50}$colcommitter~"
-+				fi
-+				if [ "${#author}" -gt 20 ]; then
-+					author="${author:0:19}$colcommitter~"
-+				fi
-+
-+				printf "$colheader$date $colauthor%-20s $coldefault%-51s $colfiles${commit%:*}$coldefault\n" \
-+					"$author" "$title"
-+				return
-+				;;
- 			esac
- 		done
- }
-@@ -232,6 +267,6 @@ $revls | $revsort | while read time comm
- 	log="$(print_commit_log $commit)"
- 	if [ "$log" ]; then
- 		echo "$log"
--		echo
-+		[ "$summary" ] || echo
- 	fi
- done | pager
--- 
-Jonas Fonseca
+    git-rev-list JC $(merge-base JC LT)
+
+I am wondering if this "since they forked" is usually what the
+user wants.  If that is the case then it would be great if I did
+not have to do the "merge-base" part outside.
+
+Current "proper lazy reachability" version, btw, does something
+very unexpected for my use pattern.  If you have more than one
+commits between the fork point and LT HEAD in the above picture,
+everything from the beginning of time to JC is given, or
+something silly like that.
+
+
