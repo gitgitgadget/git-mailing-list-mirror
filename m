@@ -1,33 +1,35 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCHSET] cg-log cleanups and enhancements
-Date: Sat, 4 Jun 2005 16:38:31 +0200
-Message-ID: <20050604143831.GD12615@diku.dk>
+Subject: [PATCH 1/10] Cleanup conversion to human readable date
+Date: Sat, 4 Jun 2005 16:39:06 +0200
+Message-ID: <20050604143906.GE12615@diku.dk>
+References: <20050604143831.GD12615@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 16:35:44 2005
+X-From: git-owner@vger.kernel.org Sat Jun 04 16:36:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeZkC-0005K4-N7
-	for gcvg-git@gmane.org; Sat, 04 Jun 2005 16:35:25 +0200
+	id 1DeZkh-0005Mx-A5
+	for gcvg-git@gmane.org; Sat, 04 Jun 2005 16:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261315AbVFDOih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Jun 2005 10:38:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261351AbVFDOih
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 10:38:37 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:57086 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261315AbVFDOic (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 10:38:32 -0400
+	id S261351AbVFDOjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Jun 2005 10:39:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261352AbVFDOjN
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 10:39:13 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:62206 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261351AbVFDOjH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 10:39:07 -0400
 Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id BC7F56E149B; Sat,  4 Jun 2005 16:37:51 +0200 (CEST)
+	id 64E2A6E1DC1; Sat,  4 Jun 2005 16:38:26 +0200 (CEST)
 Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id 8706B6E12DE; Sat,  4 Jun 2005 16:37:51 +0200 (CEST)
+	id 2C54F6E19BA; Sat,  4 Jun 2005 16:38:26 +0200 (CEST)
 Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 9672D61FE0; Sat,  4 Jun 2005 16:38:31 +0200 (CEST)
+	id 491DD61FE0; Sat,  4 Jun 2005 16:39:06 +0200 (CEST)
 To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
+In-Reply-To: <20050604143831.GD12615@diku.dk>
 User-Agent: Mutt/1.5.6i
 X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
 	version=2.60
@@ -38,18 +40,50 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The patchset contains the following 10 patches:
+Simplify the date substitution to reduce code duplication.
 
-  [PATCH 1/10] Cleanup conversion to human readable date
-  [PATCH 2/10] Separate handling of tree and parent in commit headers
-  [PATCH 3/10] Separate handling of author and committer in commit headers
-  [PATCH 4/10] First parse all commit header entries then print them
-  [PATCH 5/10] Move printing of the commit info line inside the loop
-  [PATCH 6/10] Remove the catch all rule
-  [PATCH 7/10] Move log printing to separate function
-  [PATCH 8/10] Move the username matching inside the loop
-  [PATCH 9/10] Move file matching inside the loop.
-  [PATCH 10/10] Add -s option to show log summary
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+
+ cg-log     |    8 ++------
+ cg-mkpatch |    7 ++-----
+ 2 files changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/cg-log b/cg-log
+--- a/cg-log
++++ b/cg-log
+@@ -188,12 +188,8 @@ $revls | $revsort | while read time comm
+ 
+ 				date=(${rest#*> })
+ 				pdate="$(showdate $date)"
+-				if [ "$pdate" ]; then
+-					echo -n $color$key $rest | sed "s/>.*/> $pdate/"
+-					echo $coldefault
+-				else
+-					echo $color$key $rest $coldefault
+-				fi
++				[ "$pdate" ] && rest="${rest%> *}> $pdate"
++				echo $color$key $rest $coldefault
+ 				;;
+ 			"tree"|"parent")
+ 				if [ -z $tree1 ]; then
+diff --git a/cg-mkpatch b/cg-mkpatch
+--- a/cg-mkpatch
++++ b/cg-mkpatch
+@@ -53,11 +53,8 @@ showpatch () {
+ 		"author"|"committer")
+ 			date=(${rest#*> })
+ 			pdate="$(showdate $date)"
+-			if [ "$pdate" ]; then
+-				echo $key $rest | sed "s/>.*/> $pdate/" >>$header
+-			else
+-				echo $key $rest >>$header
+-			fi
++			[ "$pdate" ] && rest="${rest%> *}> $pdate"
++			echo $key $rest >>$header
+ 			;;
+ 		"")
+ 			cat
 
 -- 
 Jonas Fonseca
