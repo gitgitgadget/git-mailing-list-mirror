@@ -1,153 +1,100 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: 'shortlog' script for git
-Date: Sat, 04 Jun 2005 01:49:37 -0400
-Message-ID: <42A140F1.5070707@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] diff.c: locate_size_cache() fix.
+Date: Fri, 03 Jun 2005 23:02:23 -0700
+Message-ID: <7vekbik6c0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090208020504090108090000"
-X-From: git-owner@vger.kernel.org Sat Jun 04 07:47:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 04 08:00:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeRUp-0002wI-9u
-	for gcvg-git@gmane.org; Sat, 04 Jun 2005 07:46:59 +0200
+	id 1DeRhE-0003tY-4X
+	for gcvg-git@gmane.org; Sat, 04 Jun 2005 07:59:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261250AbVFDFt5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Jun 2005 01:49:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261246AbVFDFt5
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 01:49:57 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:30913 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261248AbVFDFtn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 01:49:43 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DeRXQ-0002Jg-JT; Sat, 04 Jun 2005 05:49:43 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S261251AbVFDGCo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Jun 2005 02:02:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261249AbVFDGCo
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 02:02:44 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:19953 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261251AbVFDGC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Jun 2005 02:02:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050604060225.GUVB20235.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 4 Jun 2005 02:02:26 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------090208020504090108090000
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
+This fixes two bugs.
 
+ - declaration of auto variable "cmp" was preceeded by a
+   statement, causing compilation error on real C compilers;
+   noticed and patch given by Yoichi Yuasa.
 
-I've been wanting a shortlog script for summarizing my kernel 
-submissions to Linus for a while.  This is now written, and the results 
-are attached.  Simply use like
+ - the function's calling convention was overloading its size
+   parameter to mean "largest possible value means do not add
+   entry", which was a bad taste.  Brought up during a
+   discussion with Peter Baudis.
 
-	git-shortlog < changes.txt
-		or
-	git-shortlog changes.txt
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-The changeset format the Perl script parses is that of
-http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
+ diff.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-I'll change it to parse the git-whatchanged output format sometime soon; 
-Linus hates it when I use git-changes-script since he thinks its ugly :)
+diff --git a/diff.c b/diff.c
+--- a/diff.c
++++ b/diff.c
+@@ -236,6 +236,7 @@ static struct sha1_size_cache {
+ static int sha1_size_cache_nr, sha1_size_cache_alloc;
+ 
+ static struct sha1_size_cache *locate_size_cache(unsigned char *sha1,
++						 int find_only,
+ 						 unsigned long size)
+ {
+ 	int first, last;
+@@ -244,9 +245,9 @@ static struct sha1_size_cache *locate_si
+ 	first = 0;
+ 	last = sha1_size_cache_nr;
+ 	while (last > first) {
+-		int next = (last + first) >> 1;
++		int cmp, next = (last + first) >> 1;
+ 		e = sha1_size_cache[next];
+-		int cmp = memcmp(e->sha1, sha1, 20);
++		cmp = memcmp(e->sha1, sha1, 20);
+ 		if (!cmp)
+ 			return e;
+ 		if (cmp < 0) {
+@@ -256,7 +257,7 @@ static struct sha1_size_cache *locate_si
+ 		first = next+1;
+ 	}
+ 	/* not found */
+-	if (size == UINT_MAX)
++	if (find_only)
+ 		return NULL;
+ 	/* insert to make it at "first" */
+ 	if (sha1_size_cache_alloc <= sha1_size_cache_nr) {
+@@ -337,13 +338,13 @@ int diff_populate_filespec(struct diff_f
+ 		struct sha1_size_cache *e;
+ 
+ 		if (size_only) {
+-			e = locate_size_cache(s->sha1, UINT_MAX);
++			e = locate_size_cache(s->sha1, 1, 0);
+ 			if (e) {
+ 				s->size = e->size;
+ 				return 0;
+ 			}
+ 			if (!sha1_file_size(s->sha1, &s->size))
+-				locate_size_cache(s->sha1, s->size);
++				locate_size_cache(s->sha1, 0, s->size);
+ 		}
+ 		else {
+ 			s->data = read_sha1_file(s->sha1, type, &s->size);
+------------
 
-	Jeff
-
-
-
-
---------------090208020504090108090000
-Content-Type: text/plain;
- name="git-shortlog"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-shortlog"
-
-#!/usr/bin/perl -w
-
-use strict;
-
-my ($author, $desc, %map);
-my $pstate = 1;
-
-while (<>) {
-	# skip to '^commit '
-	if ($pstate == 1) {
-		next unless /^commit /;
-		$pstate++;
-	}
-
-	# get author
-	elsif ($pstate == 2) {
-		next unless /^author (.*) \S+ \S+ \S+ \S+ \S+ \S+\s*$/;
-		$author = $1;
-		$pstate++;
-	}
-
-	# skip to blank line
-	elsif ($pstate == 3) {
-		next unless /^\s*$/;
-		$pstate++;
-	}
-
-	# skip to non-blank line
-	elsif ($pstate == 4) {
-		next if /^\s*$/;
-		chomp;
-		$desc = $_;
-
-		&shortlog_entry($author, $desc);
-
-		$pstate = 1;
-	}
-
-	else {
-		die "invalid parse state $pstate";
-	}
-}
-
-&shortlog_output;
-exit(0);
-
-
-sub shortlog_entry($$) {
-	my ($tmp_author, $tmp_desc) = @_;
-	my ($obj);
-
-	$tmp_desc =~ s#/pub/scm/linux/kernel/git/#/.../#g;
-	$tmp_desc =~ s/^\[PATCH] //g;
-	$tmp_desc =~ s/^\s+//g;
-
-	if (exists $map{$tmp_author}) {
-		# grab ref
-		$obj = $map{$tmp_author};
-
-		# add desc to array
-		push(@$obj, $tmp_desc);
-	} else {
-		# create ref to new array
-		my @arr = ($tmp_desc);
-		$obj = \@arr;
-
-		# store new entry in author map
-		$map{$tmp_author} = $obj;
-	}
-}
-
-sub shortlog_output {
-	my ($obj);
-
-	foreach $author (sort keys %map) {
-		print "$author:\n";
-
-		$obj = $map{$author};
-		foreach $desc (@$obj) {
-			print "  $desc\n";
-		}
-
-		print "\n";
-	}
-}
-
-
---------------090208020504090108090000--
