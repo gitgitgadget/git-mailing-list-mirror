@@ -1,62 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use correct U*MAX.
-Date: Fri, 03 Jun 2005 17:09:56 -0700
-Message-ID: <7vslzzj82z.fsf@assigned-by-dhcp.cox.net>
-References: <7vy89ums2l.fsf@assigned-by-dhcp.cox.net>
-	<7vis0xkjn4.fsf@assigned-by-dhcp.cox.net>
-	<7vwtpc7lju.fsf_-_@assigned-by-dhcp.cox.net>
-	<20050603230234.GC13093@pasky.ji.cz>
-	<7v4qcfko0q.fsf@assigned-by-dhcp.cox.net>
-	<20050604000042.GG13093@pasky.ji.cz>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] git-daemon server
+Date: Fri, 3 Jun 2005 20:06:51 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506031927000.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 02:09:53 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jason McMullan <jason.mcmullan@timesys.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 04 02:10:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeMEQ-00029t-ES
+	id 1DeMEQ-00029t-20
 	for gcvg-git@gmane.org; Sat, 04 Jun 2005 02:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261192AbVFDAMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 3 Jun 2005 20:12:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261190AbVFDALH
-	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 20:11:07 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:9454 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261193AbVFDAJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Jun 2005 20:09:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050604000958.ICBA12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 3 Jun 2005 20:09:58 -0400
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050604000042.GG13093@pasky.ji.cz> (Petr Baudis's message of
- "Sat, 4 Jun 2005 02:00:42 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261186AbVFDAMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 3 Jun 2005 20:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261188AbVFDAL4
+	(ORCPT <rfc822;git-outgoing>); Fri, 3 Jun 2005 20:11:56 -0400
+Received: from iabervon.org ([66.92.72.58]:55813 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261186AbVFDAH4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Jun 2005 20:07:56 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DeMBf-00080k-00; Fri, 3 Jun 2005 20:06:51 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PB" == Petr Baudis <pasky@ucw.cz> writes:
+On Fri, 3 Jun 2005, Linus Torvalds wrote:
 
->> I'd rather see it use the correct U*MAX.
+> 
+> 
+> On Fri, 3 Jun 2005, Daniel Barkalow wrote:
+> > 
+> > Is this somehow different from rpush/rpull aside from using an
+> > externally-provided socket and having the proper locking for writing refs
+> > (which I posted a while ago, but which hasn't been included anywhere yet)?
+> 
+> Deathmatch! 
+> 
+> Anyway, I have to admit that at least as far as I'm concerned, the 
+> rpull/rpush thing has the same issues as Jason's code - I've not seen the 
+> usage documented anywhere, and that's the only real reason I don't use it 
+> myself.
 
-PB> Care to elaborate? It doesn't make sense to me to use any U*MAX stuff
-PB> there whatsoever. (And how do you define the "correct" U*MAX anyway?)
+See below. I'd foolishly explained http-pull and rpull, but neglected to
+mention that rpush is actually useful in its own right. It is used in
+essentially the same way, but on the other computer. (And I need to fix
+the Documentation/ file, since other people seem to have missed it, too)
 
-It just feels wrong to spell a parameter to the function
-locate_size_cache() "-1" when I know the argument it expects is
-of type unsigned long.  And correct U*MAX for that case is
-obviously ULONG_MAX, _assuming_ that you agree to the function's
-(unwritten) calling convention of "passing the largest possible
-value to me means 'do not create', not 'you are telling me that
-sha1 is such a large file'".
+> Also, just out of interest, do either or both of these things pipeline the
+> transfer?
 
-If you feel strongly about that calling convention, you could
-rewrite it to take the third argument "int do_not_create" and
-pass that information separately, which is conceptually cleaner.
-I just did not think that was worth it for such an internal
-helper when I wrote it.
+Mine doesn't currently. The protocol supports a low level of pipelining
+(you can request all the objects you know you want, and the sending side
+doesn't care that you're sending requests before the previous ones are
+satisfied), but I haven't figured out (or found out from Matt, more
+likely) a good way to negotiate something more clever.
+
+> Me, I want to have a fairly simple script that does the equivalent of what
+> I do now for pushing:
+> 
+> 	rsync -av --delete --exclude-from=.exclude .git/ master.kernel.org:/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> 
+> except I'd want it to do the locking and the "only accept trivial pushes" 
+> stuff (ie no merging, just a pure update).
+
+With patches I have (but have to rebase and such), you could do:
+
+git-rpush -a -w heads/master heads/master //master.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+This would only send the heads/master file and all of the object files it
+references. It would be easy to write a "--old heads/linus" which would
+require that the remote value was the local value of heads/linus (I.e.,
+the public value of your head that you'd been working from).
+
+> Maybe git-rpush does this already, and I just never realized.
+
+It currently does all the objects, but doesn't write the refs file on the
+remote end. That is:
+
+  git-rpush -a heads/master //master.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+Will cause the public tree to contain all the objects reachable from the
+local value of heads/master. Then you need to write the new head by hand
+if you don't have the newer stuff.
+
+	-Daniel
+*This .sig left intentionally blank*
 
