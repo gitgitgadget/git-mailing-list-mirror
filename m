@@ -1,126 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diffcore-break.c: various fixes.
-Date: Fri, 03 Jun 2005 23:05:57 -0700
-Message-ID: <7vwtpairlm.fsf@assigned-by-dhcp.cox.net>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: [PATCH Cogito] Add -f parameter also to cg-update
+Date: Sat, 04 Jun 2005 08:25:08 +0200
+Message-ID: <1117866308.3656.120.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 04 08:03:37 2005
+Content-Type: multipart/mixed; boundary="=-V2Bo62YAlYCKT6hdOL9n"
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 04 08:22:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeRkb-0004Fk-4m
-	for gcvg-git@gmane.org; Sat, 04 Jun 2005 08:03:17 +0200
+	id 1DeS35-0005mG-Ee
+	for gcvg-git@gmane.org; Sat, 04 Jun 2005 08:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261253AbVFDGG2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Jun 2005 02:06:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261254AbVFDGG2
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 02:06:28 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:21462 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261253AbVFDGF7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Jun 2005 02:05:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050604060556.TOSX8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 4 Jun 2005 02:05:56 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261263AbVFDGZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 4 Jun 2005 02:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261266AbVFDGZ3
+	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 02:25:29 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:5823 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S261263AbVFDGZL
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 02:25:11 -0400
+Received: from pegasus (p5487C92A.dip.t-dialin.net [84.135.201.42])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j546R5Ss008255
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sat, 4 Jun 2005 08:27:05 +0200
+To: Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV 0.85.1/910/Fri Jun  3 18:05:05 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This fixes three bugs in the -B heuristics.
 
- - Although it was advertised that the initial break criteria
-   used was the same as what diffcore-rename uses, it was using
-   something different.  Instead of using smaller of src and dst
-   size to compare with "edit" size, (insertion and deletion),
-   it was using larger of src and dst, unlike the rename/copy
-   detection logic.  This caused the parameter to -B to mean
-   something different from the one to -M and -C.  To compensate
-   for this change, the default break score is also changed to
-   match that of the default for rename/copy.
+--=-V2Bo62YAlYCKT6hdOL9n
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
- - The code would have crashed with division by zero when trying
-   to break an originally empty file.
+Hi Petr,
 
- - Contrary to what the comment said, the algorithm was breaking
-   small files, only to later merge them together.
+the attached patch adds the -f parameter to force a full pull also to
+cg-update.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Regards
 
- diffcore.h       |    2 +-
- diffcore-break.c |   22 ++++++++--------------
- 2 files changed, 9 insertions(+), 15 deletions(-)
+Marcel
 
-diff --git a/diffcore.h b/diffcore.h
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -17,7 +17,7 @@
-  */
- #define MAX_SCORE 60000
- #define DEFAULT_RENAME_SCORE 30000 /* rename/copy similarity minimum (50%) */
--#define DEFAULT_BREAK_SCORE  59400 /* minimum for break to happen (99%)*/
-+#define DEFAULT_BREAK_SCORE  30000 /* minimum for break to happen (50%)*/
- #define DEFAULT_MERGE_SCORE  48000 /* maximum for break-merge to happen (80%)*/
+
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+
+
+--=-V2Bo62YAlYCKT6hdOL9n
+Content-Disposition: attachment; filename=patch
+Content-Type: text/x-patch; name=patch; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+diff --git a/cg-update b/cg-update
+--- a/cg-update
++++ b/cg-update
+@@ -7,16 +7,27 @@
+ #
+ # If local changes conflict with those of the branch updated from the
+ # merge will be blocked.
++#
++# OPTIONS
++# -------
++# -f::
++#	Force the complete pull even if the heads are the same.
  
- #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
-diff --git a/diffcore-break.c b/diffcore-break.c
---- a/diffcore-break.c
-+++ b/diffcore-break.c
-@@ -61,14 +61,7 @@ static int should_break(struct diff_file
- 	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
- 		return 0; /* error but caught downstream */
+-USAGE="cg-update [BRANCH_NAME]"
++USAGE="cg-update [-f] [BRANCH_NAME]"
  
--	delta_size = ((src->size < dst->size) ?
--		      (dst->size - src->size) : (src->size - dst->size));
--
--	/* Notice that we use max of src and dst as the base size,
--	 * unlike rename similarity detection.  This is so that we do
--	 * not mistake a large addition as a complete rewrite.
--	 */
--	base_size = ((src->size < dst->size) ? dst->size : src->size);
-+	base_size = ((src->size < dst->size) ? src->size : dst->size);
+ . ${COGITO_LIB}cg-Xlib
  
- 	delta = diff_delta(src->data, src->size,
- 			   dst->data, dst->size,
-@@ -88,10 +81,11 @@ static int should_break(struct diff_file
- 	 * less than the minimum, after rename/copy runs.
- 	 */
- 	if (src->size <= src_copied)
--		delta_size = 0; /* avoid wrapping around */
--	else
-+		; /* all copied, nothing removed */
-+	else {
- 		delta_size = src->size - src_copied;
--	*merge_score_p = delta_size * MAX_SCORE / src->size;
-+		*merge_score_p = delta_size * MAX_SCORE / src->size;
-+	}
- 	
- 	/* Extent of damage, which counts both inserts and
- 	 * deletes.
-@@ -174,7 +168,8 @@ void diffcore_break(int break_score)
- 		    !S_ISDIR(p->one->mode) && !S_ISDIR(p->two->mode) &&
- 		    !strcmp(p->one->path, p->two->path)) {
- 			if (should_break(p->one, p->two,
--					 break_score, &score)) {
-+					 break_score, &score) &&
-+			    MINIMUM_BREAK_SIZE <= p->one->size) {
- 				/* Split this into delete and create */
- 				struct diff_filespec *null_one, *null_two;
- 				struct diff_filepair *dp;
-@@ -185,8 +180,7 @@ void diffcore_break(int break_score)
- 				 * Also we do not want to break very
- 				 * small files.
- 				 */
--				if ((score < merge_score) ||
--				    (p->one->size < MINIMUM_BREAK_SIZE))
-+				if (score < merge_score)
- 					score = 0;
++force=
++if [ "$1" = "-f" ]; then
++	force=$1
++	shift
++fi
++
+ name=$1
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=origin; }
+ [ "$name" ] || die "where to update from?"
  
- 				/* deletion of one */
-------------
+-cg-pull $name || exit 1
++cg-pull $force $name || exit 1
+ echo
+ echo "Applying changes..."
+ cg-merge $name
+
+--=-V2Bo62YAlYCKT6hdOL9n--
 
