@@ -1,65 +1,74 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: cg-init bug
-Date: Sun, 5 Jun 2005 19:28:54 +0200
-Message-ID: <20050605172854.GF17462@pasky.ji.cz>
-References: <20050605153053.GA6890@tumblerings.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pull: gracefully recover from delta retrieval failure.
+Date: Sun, 05 Jun 2005 10:46:24 -0700
+Message-ID: <7vekbg3de7.fsf@assigned-by-dhcp.cox.net>
+References: <7v4qcde3j9.fsf@assigned-by-dhcp.cox.net>
+	<1117989532.10424.7.camel@port.evillabs.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 19:26:16 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 05 19:44:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DeysT-0001z5-9g
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 19:25:37 +0200
+	id 1Dez9Z-0003jy-5W
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 19:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261594AbVFER3G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 13:29:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261588AbVFER3G
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 13:29:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:24990 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261594AbVFER3B (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 13:29:01 -0400
-Received: (qmail 14394 invoked by uid 2001); 5 Jun 2005 17:28:54 -0000
-To: Zack Brown <zbrown@tumblerings.org>
-Content-Disposition: inline
-In-Reply-To: <20050605153053.GA6890@tumblerings.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261594AbVFERql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 13:46:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261595AbVFERql
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 13:46:41 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:25586 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261594AbVFERqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2005 13:46:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050605174626.SVJH7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Jun 2005 13:46:26 -0400
+To: Jason McMullan <jason.mcmullan@timesys.com>
+In-Reply-To: <1117989532.10424.7.camel@port.evillabs.net> (Jason McMullan's
+ message of "Sun, 05 Jun 2005 12:38:52 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Jun 05, 2005 at 05:30:53PM CEST, I got a letter
-where Zack Brown <zbrown@tumblerings.org> told me that...
-> Hi,
+>>>>> "JM" == Jason McMullan <jason.mcmullan@timesys.com> writes:
 
-Hello,
+JM> Sorry about being a pest, but this worries me. Please assuage my fears.
 
-> I've been tracking Cogito. This problem occurred with Cogito version
-> 1e2673d606dd39dc44b4eed2204ba349a448bc4d
-> 
-> I have a directory tree with several layers of subdirectories and about 1700
-> files. I tried to convert it to a git repository with 'cg-init'.
-> 
-> The first thing I noticed was that not all the files and subdirectories had been
-> added. Doing a cg-status listed many files with '?' in front of them.
-> 
-> I tried adding these files with "cg-add */*", "cg-add */*/*" etc, followed by
-> "cg-commit", and this seemed at first glance to work. I was able to reduce
-> the number of files reported by "cg-status". But eventually "cg-add" would
-> say there were no files left to add, while "cg-status" would still list many
-> files unadded. It seemed that "cg-add" would only selectively add files.
-> 
-> At that point I blew away the .git directory and gave up on repo-izing that
-> project for now.
-> 
-> I can reproduce this problem easily. Please let me know if you need any more
-> information.
+Earlier I said I suspected that the original code mishandled
+recovery from a botched tree/commit dependent transfer, but that
+was not the case.  The last test in the new test script I added
+in the patch you are responding to covers that case.
 
-what are the files it would refuse to add?
+JM> (Or, if you'd like, I can rework pull.c to use the
+JM>  verification-before-store technique I used in my git-daemon patch, so
+JM>  all the *-pull mechanisms will be 'safe')
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
+I would appreciate the offer.  I, however, would have to warn
+you that the "problem" lies in the way the current pull
+structure devides responsibility between the pull.c and transfer
+backends.  The pull.c implements the dependency logic, and
+transfer backends are to populate the database while being
+oblivious of that logic.  From the purist point of view (I am
+sympathetic to your "place only the verified objects in the
+database" principle), I am not entirely happy with that
+division, but at the same time I understand why it is done that
+way and even like it from practical standpoint.  Otherwise you
+need to keep a bunch of objects somewhere outside the database
+along with the list of "things to rename to the final database
+name when we are done".  You would somehow need to do clean-up
+when we fail in the middle _anyway_.
+
+In other words, the current structure is optimized for non-
+failure case, as it should be.  The original implementation
+(credit goes to Dan Barkalow) knew how to recover from failed
+transfer (including the case that you first pull with -c or -t
+without using -a to miss some required objects to satisfy -a) by
+simply running pull again, and with the --recover flag, it now
+knows how to recover from failed deltified object transfer as
+well.
+
