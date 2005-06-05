@@ -1,72 +1,51 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: git-shortlog script
-Date: Sat, 04 Jun 2005 20:19:47 -0400
-Message-ID: <42A24523.5010404@pobox.com>
-References: <42A22C20.10002@pobox.com> <Pine.LNX.4.58.0506041642530.1876@ppc970.osdl.org> <42A24274.7040906@pobox.com> <Pine.LNX.4.58.0506041715170.1876@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-daemon server
+Date: Sat, 04 Jun 2005 21:47:36 -0700
+Message-ID: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org> <Pine.LNX.4.21.0506031927000.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 05 02:16:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 05 06:45:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Deiok-0001CU-Sq
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 02:16:43 +0200
+	id 1Demzh-00043t-2c
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 06:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261448AbVFEAT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 4 Jun 2005 20:19:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261453AbVFEAT6
-	(ORCPT <rfc822;git-outgoing>); Sat, 4 Jun 2005 20:19:58 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:9411 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261450AbVFEATv (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Jun 2005 20:19:51 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1Deirl-0002Vo-U3; Sun, 05 Jun 2005 00:19:51 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.6) Gecko/20050328 Fedora/1.7.6-1.2.5
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506041715170.1876@ppc970.osdl.org>
-X-Spam-Score: 0.0 (/)
+	id S261452AbVFEErj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 00:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261455AbVFEErj
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 00:47:39 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63635 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261452AbVFEEri (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2005 00:47:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050605044737.YGZI26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Jun 2005 00:47:37 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0506031927000.30848-100000@iabervon.org> (Daniel
+ Barkalow's message of "Fri, 3 Jun 2005 20:06:51 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Sat, 4 Jun 2005, Jeff Garzik wrote:
-> 
->>I'm surprised git doesn't fall back to GIT_COMMITTER_NAME if 
->>GIT_AUTHOR_NAME doesn't exist, though.
-> 
-> 
-> GIT_AUTHOR_NAME existed first ;)
-> 
-> Btw, what does your /etc/passwd look like, and I'll try to hack it up to 
-> just get that case right by default too..
+>>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-ah, it looks like I forget the name when I was creating the account.
+DB> With patches I have (but have to rebase and such), you could do:
 
-> [jgarzik@pretzel libata-dev]$ grep jgarzik /etc/passwd
-> jgarzik:x:500:500::/g/g:/bin/bash
+DB> git-rpush -a -w heads/master heads/master //master.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-> [jgarzik@pretzel libata-dev]$ chfn
-> Changing finger information for jgarzik.
-> Password: 
-> Name []: Jeff Garzik
-> Office []: 
-> Office Phone []: 
-> Home Phone []: 
-> 
-> Finger information changed.
+I'd like to see your "-w" extention merged into mainline soon
+(both push and pull).
 
-Fixed.  :)
+BTW, don't we want to have them renamed to git-ssh-pull (and
+git-ssh-push) for consistency with other transports, before 1.0
+happens?
 
-In any case, I'll set GIT_AUTHOR_NAME in .bash_profile, to get my proper 
-email addy rather than the local one.
-
-	Jeff
 
 
