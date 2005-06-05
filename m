@@ -1,61 +1,53 @@
 From: Jason McMullan <jason.mcmullan@timesys.com>
-Subject: Re: [PATCH] pull: gracefully recover from delta retrieval failure.
-Date: Sun, 05 Jun 2005 12:38:52 -0400
-Message-ID: <1117989532.10424.7.camel@port.evillabs.net>
-References: <7v4qcde3j9.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] git-daemon server
+Date: Sun, 05 Jun 2005 12:44:37 -0400
+Message-ID: <1117989877.10424.10.camel@port.evillabs.net>
+References: <20050603152212.GA4598@jmcmullan.timesys>
+	 <Pine.LNX.4.58.0506030856490.1876@ppc970.osdl.org>
+	 <1117814982.32257.64.camel@jmcmullan.timesys>
+	 <Pine.LNX.4.58.0506030929150.1876@ppc970.osdl.org>
+	 <1117819137.32257.75.camel@jmcmullan.timesys>
+	 <Pine.LNX.4.58.0506031035470.1876@ppc970.osdl.org>
+	 <1117827011.8970.2.camel@jmcmullan.timesys>
+	 <Pine.LNX.4.58.0506031320190.1876@ppc970.osdl.org>
+	 <1117832172.8970.22.camel@jmcmullan.timesys>
+	 <Pine.LNX.4.58.0506031410560.1876@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 18:36:20 2005
+Cc: GIT Mailling list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 05 18:43:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dey60-0004fi-Sx
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 18:35:33 +0200
+	id 1DeyBT-0005QW-TS
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 18:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261594AbVFEQi5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 12:38:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261595AbVFEQi5
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 12:38:57 -0400
-Received: from c-67-163-246-116.hsd1.pa.comcast.net ([67.163.246.116]:38342
-	"EHLO port.evillabs.net") by vger.kernel.org with ESMTP
-	id S261594AbVFEQiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2005 12:38:55 -0400
+	id S261543AbVFEQoj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 12:44:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261587AbVFEQoj
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 12:44:39 -0400
+Received: from c-67-163-246-116.hsd1.pa.comcast.net ([67.163.246.116]:460 "EHLO
+	port.evillabs.net") by vger.kernel.org with ESMTP id S261543AbVFEQoi
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 12:44:38 -0400
 Received: by port.evillabs.net (Postfix, from userid 500)
-	id AD65740C5A; Sun,  5 Jun 2005 12:38:52 -0400 (EDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4qcde3j9.fsf@assigned-by-dhcp.cox.net>
+	id DDC7740C5A; Sun,  5 Jun 2005 12:44:37 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506031410560.1876@ppc970.osdl.org>
 X-Mailer: Evolution 2.0.4-3mdk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-06-04 at 23:11 -0700, Junio C Hamano wrote:
-> This addresses a concern raised by Jason McMullan in the mailing
-> list discussion.  After retrieving and storing a potentially
-> deltified object, pull logic tries to check and fulfil its delta
-> dependency.  When the pull procedure is killed at this point,
-> however, there was no easy way to recover by re-running pull,
-> since next run would have found that we already have that
-> deltified object and happily reported success, without really
-> checking its delta dependency is satisfied.
+On Fri, 2005-06-03 at 14:38 -0700, Linus Torvalds wrote:
+> Anyway, with _something_ like the above you could do something like
+> 
+> 	git-sync --exec "ssh master.kernel.org git-sync" ....
+> 
+> and it would do the obvious thing.
 
-I still think it would be much better if you didn't place unverified
-objects in the database in the first place. You've taken care of delta
-object recovery, yes, but what about unsatisfied tree objects? Or commit
-objects? Does your algorithm require full depth scanning of the
-entire repository that is descended from the commit head?
+Sounds good. I'll implement that right after I put in tags support, and
+merge by verify-before-write pull mechanism into pull.c, so everyone
+can use it.
 
-I much prefer to always leave the database in a consistent state, that
-way you only have to do O(number-of-retrieved-objects) verifications,
-not O(number-of-commit-tree-ancestors) verifications.
-
-Or am I misunderstanding your technique here? 
-
-Sorry about being a pest, but this worries me. Please assuage my fears.
-
-(Or, if you'd like, I can rework pull.c to use the
- verification-before-store technique I used in my git-daemon patch, so
- all the *-pull mechanisms will be 'safe')
-
+And, it looks like 'git-sync' is the decided name? Excellent!
