@@ -1,56 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Improve git-rev-list --header output
-Date: Sun, 5 Jun 2005 08:17:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506050815130.1876@ppc970.osdl.org>
-References: <20050605132515.GB17462@pasky.ji.cz>
+From: Zack Brown <zbrown@tumblerings.org>
+Subject: cg-init bug
+Date: Sun, 5 Jun 2005 08:30:53 -0700
+Message-ID: <20050605153053.GA6890@tumblerings.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 17:12:40 2005
+X-From: git-owner@vger.kernel.org Sun Jun 05 17:28:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DewnY-00036v-CY
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 17:12:24 +0200
+	id 1Dex2F-0005DZ-1e
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 17:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261587AbVFEPPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 11:15:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261585AbVFEPPs
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 11:15:48 -0400
-Received: from fire.osdl.org ([65.172.181.4]:8379 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261587AbVFEPPo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 11:15:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j55FFejA029404
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 5 Jun 2005 08:15:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j55FFd0S010629;
-	Sun, 5 Jun 2005 08:15:39 -0700
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050605132515.GB17462@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261543AbVFEPbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 11:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261586AbVFEPbD
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 11:31:03 -0400
+Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:19692 "EHLO
+	tumblerings.org") by vger.kernel.org with ESMTP id S261543AbVFEPa7
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 11:30:59 -0400
+Received: from zbrown by tumblerings.org with local (Exim 4.50)
+	id 1Dex5R-00030a-9z; Sun, 05 Jun 2005 08:30:53 -0700
+To: pasky@ucw.cz
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+I've been tracking Cogito. This problem occurred with Cogito version
+1e2673d606dd39dc44b4eed2204ba349a448bc4d
 
-On Sun, 5 Jun 2005, Petr Baudis wrote:
->
-> Indent the commit header by four spaces like in the --pretty output;
-> the commit ID is still shown unaligned. This makes the --header output
-> actually usable for further processing.
+I have a directory tree with several layers of subdirectories and about 1700
+files. I tried to convert it to a git repository with 'cg-init'.
 
-I'm actually going to do a few different "header formats", and have 
-pretty_print_commit() able to switch between them. IOW, this would count 
-as just one form of pretty-printing.
+The first thing I noticed was that not all the files and subdirectories had been
+added. Doing a cg-status listed many files with '?' in front of them.
 
-I want to have the "dense" format, which has only the author and the top
-line(s) of the description (stop at the first empty line), and a "raw"  
-format, which has all the parent information etc (ie this one).
+I tried adding these files with "cg-add */*", "cg-add */*/*" etc, followed by
+"cg-commit", and this seemed at first glance to work. I was able to reduce
+the number of files reported by "cg-status". But eventually "cg-add" would
+say there were no files left to add, while "cg-status" would still list many
+files unadded. It seemed that "cg-add" would only selectively add files.
 
-		Linus
+At that point I blew away the .git directory and gave up on repo-izing that
+project for now.
+
+I can reproduce this problem easily. Please let me know if you need any more
+information.
+
+Be well,
+Zack
+
+-- 
+Zack Brown
