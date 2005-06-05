@@ -1,58 +1,57 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Subject: Re: cg-init bug
-Date: Sun, 05 Jun 2005 18:10:28 +0200
-Message-ID: <42A323F4.2010109@gorzow.mm.pl>
-References: <20050605153053.GA6890@tumblerings.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git-daemon server
+Date: Sun, 5 Jun 2005 09:17:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506050914030.1876@ppc970.osdl.org>
+References: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.21.0506050132590.30848-100000@iabervon.org>
+ <7vzmu5b8o6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: pasky@ucw.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 18:07:37 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 05 18:12:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dexeh-0001Qq-8g
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 18:07:19 +0200
+	id 1DexjD-0001ve-FD
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 18:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261588AbVFEQKp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 12:10:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261590AbVFEQKp
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 12:10:45 -0400
-Received: from goliat.kalisz.mm.pl ([217.96.42.226]:15236 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S261588AbVFEQKk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 12:10:40 -0400
-Received: (qmail 32299 invoked from network); 5 Jun 2005 16:10:37 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <zbrown@tumblerings.org>; 5 Jun 2005 16:10:37 -0000
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by zen.uplink (Postfix) with ESMTP id 5CE105C0449;
-	Sun,  5 Jun 2005 18:10:28 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
-X-Accept-Language: en-us, en
-To: Zack Brown <zbrown@tumblerings.org>
-In-Reply-To: <20050605153053.GA6890@tumblerings.org>
+	id S261592AbVFEQPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 12:15:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261591AbVFEQPW
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 12:15:22 -0400
+Received: from fire.osdl.org ([65.172.181.4]:32193 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261592AbVFEQPQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 12:15:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j55GF9jA001175
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 5 Jun 2005 09:15:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j55GF8Ro012630;
+	Sun, 5 Jun 2005 09:15:08 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmu5b8o6.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Zack Brown wrote:
 
->Hi,
->
->I've been tracking Cogito. This problem occurred with Cogito version
->1e2673d606dd39dc44b4eed2204ba349a448bc4d
->
->I have a directory tree with several layers of subdirectories and about 1700
->files. I tried to convert it to a git repository with 'cg-init'.
->  
->
-I think an ls -l of the repo would be useful... if it's not that big.
-If it is, you may have hit the limitation of the length of command line.
-If it's so, repeat the commands.
 
-However, if I'd want to add everything to the repo, I'd do:
-cg-status | sed "s/? //" | xargs cg-add
+On Sat, 4 Jun 2005, Junio C Hamano wrote:
+> 
+> Linus, can your workflow grok things like this, or do you prefer
+> patch submission to use traditional diff format without renames?
 
-AstralStorm
+I haven't made "git-apply" do the final part yet: it doesn't actually 
+apply anything. So I'm still using standard patch in my workflow.
+
+But that's largely been because I haven't been hugely motivated to fixing 
+it yet. I will now correct that.
+
+Let's see if I can do the last mile now.
+
+		Linus
