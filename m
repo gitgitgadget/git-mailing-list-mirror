@@ -1,51 +1,81 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [COGITO PATCH] Small, simple and obvious cleanups (are they wanted at this stage?)
-Date: Sun, 5 Jun 2005 22:34:22 +0200
-Message-ID: <20050605203422.GP17462@pasky.ji.cz>
-References: <429E0B08.5040603@gkhs.net> <20050605202527.GO17462@pasky.ji.cz>
+Subject: Re: [PATCH] diff.c: locate_size_cache() fix.
+Date: Sun, 5 Jun 2005 22:40:47 +0200
+Message-ID: <20050605204047.GQ17462@pasky.ji.cz>
+References: <7vwtpairlm.fsf@assigned-by-dhcp.cox.net> <7v64wuk694.fsf@assigned-by-dhcp.cox.net> <7vekbik6c0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 22:31:32 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 05 22:38:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Df1lz-0006A3-F3
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 22:31:08 +0200
+	id 1Df1sB-0006tv-Rz
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 22:37:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261608AbVFEUe2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 16:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261609AbVFEUe2
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 16:34:28 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23969 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261608AbVFEUeZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 16:34:25 -0400
-Received: (qmail 25983 invoked by uid 2001); 5 Jun 2005 20:34:22 -0000
-To: "C. Cooke" <ccooke@gkhs.net>
+	id S261610AbVFEUk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 16:40:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261611AbVFEUk7
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 16:40:59 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:32417 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261610AbVFEUkt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 16:40:49 -0400
+Received: (qmail 30816 invoked by uid 2001); 5 Jun 2005 20:40:47 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20050605202527.GO17462@pasky.ji.cz>
+In-Reply-To: <7vwtpairlm.fsf@assigned-by-dhcp.cox.net> <7v64wuk694.fsf@assigned-by-dhcp.cox.net> <7vekbik6c0.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sun, Jun 05, 2005 at 10:25:27PM CEST, I got a letter
-where Petr Baudis <pasky@ucw.cz> told me that...
-> Dear diary, on Wed, Jun 01, 2005 at 09:22:48PM CEST, I got a letter
-> where "C. Cooke" <ccooke@gkhs.net> told me that...
-> > This is a simple example - giving a nice error if you're in the wrong
-> > directory.
-> > 
-> > Is this sort of patch wanted? If so, I'm sure I can spare the time to
-> > look into some polishing.
+> This fixes two bugs.
 > 
-> Of course they are wanted. Thanks, applied.
+>  - declaration of auto variable "cmp" was preceeded by a
+>    statement, causing compilation error on real C compilers;
+>    noticed and patch given by Yoichi Yuasa.
+> 
+>  - the function's calling convention was overloading its size
+>    parameter to mean "largest possible value means do not add
+>    entry", which was a bad taste.  Brought up during a
+>    discussion with Peter Baudis.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-Ok, another thing I forgot to mention - I moved it to cg-Xlib so that
-it's checked everytime you run a command, unless the command says it
-does need a repository in order to run successfully (that's the case for
-cg-clone, cg-init and cg-help).
+> This fixes a bug that was preventing non-default parameter to -B
+> option to be passed correctly; you could not give more than 50%
+> break score.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+> This fixes three bugs in the -B heuristics.
+> 
+>  - Although it was advertised that the initial break criteria
+>    used was the same as what diffcore-rename uses, it was using
+>    something different.  Instead of using smaller of src and dst
+>    size to compare with "edit" size, (insertion and deletion),
+>    it was using larger of src and dst, unlike the rename/copy
+>    detection logic.  This caused the parameter to -B to mean
+>    something different from the one to -M and -C.  To compensate
+>    for this change, the default break score is also changed to
+>    match that of the default for rename/copy.
+> 
+>  - The code would have crashed with division by zero when trying
+>    to break an originally empty file.
+> 
+>  - Contrary to what the comment said, the algorithm was breaking
+>    small files, only to later merge them together.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+  Hello,
+
+  what's up with those three fixes? Were they pointed out to be wrong
+and thrown away in another thread, are they on hold or just dropped?
+Should I just apply them to git-pb?
+
+  Thanks,
 
 -- 
 				Petr "Pasky" Baudis
