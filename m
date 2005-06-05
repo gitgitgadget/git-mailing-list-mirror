@@ -1,32 +1,33 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-daemon server
-Date: Sat, 04 Jun 2005 23:48:57 -0700
-Message-ID: <7vzmu5b8o6.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH-CAREFUL/RENAME] rename git-rpush and git-rpull to
+ git-ssh-push and git-ssh-pull
+Date: Sat, 04 Jun 2005 23:57:41 -0700
+Message-ID: <7vfyvxb89m.fsf_-_@assigned-by-dhcp.cox.net>
 References: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.21.0506050132590.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 08:46:29 2005
+X-From: git-owner@vger.kernel.org Sun Jun 05 08:54:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Deots-0003v5-5D
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 08:46:24 +0200
+	id 1Dep1h-0004bd-HQ
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 08:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261493AbVFEGt2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 02:49:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261488AbVFEGtY
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 02:49:24 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:14979 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261265AbVFEGtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2005 02:49:03 -0400
+	id S261265AbVFEG5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 02:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261268AbVFEG5y
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 02:57:54 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:57755 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261265AbVFEG5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Jun 2005 02:57:42 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050605064857.BUGQ7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 5 Jun 2005 02:48:57 -0400
+          id <20050605065741.HKTD8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 5 Jun 2005 02:57:41 -0400
 To: Daniel Barkalow <barkalow@iabervon.org>
 In-Reply-To: <Pine.LNX.4.21.0506050132590.30848-100000@iabervon.org> (Daniel
  Barkalow's message of "Sun, 5 Jun 2005 01:38:17 -0400 (EDT)")
@@ -35,54 +36,218 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+In preparation for 1.0 release, this make the command names
+consistent with others in git-*-pull family.
 
-DB> On Sat, 4 Jun 2005, Junio C Hamano wrote:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+*** Linus, please be careful with this patch.  This uses
+*** extended git "rename" diff format, and I doubt that
+*** traditional patch -p1 would do the right thing.  I am
+*** sending it because Dan asked me to, and also it may serve as
+*** a good example if your plan is to support git extended diff
+*** format in your "dotest" toolchain.  I'll send the same patch
+*** in the traditional diff format in a separate message.
 
->> BTW, don't we want to have them renamed to git-ssh-pull (and
->> git-ssh-push) for consistency with other transports, before 1.0
->> happens?
+ Documentation/git-ssh-pull.txt |   10 +++++-----
+ Documentation/git-ssh-push.txt |   10 +++++-----
+ Documentation/git.txt          |    6 +++---
+ Makefile                       |    6 +++---
+ ssh-pull.c                     |    4 ++--
+ ssh-push.c                     |   14 +++++++-------
+ 6 files changed, 25 insertions(+), 25 deletions(-)
 
-DB> I think that would be good, but I'm still using a really old version of
-DB> git for my development, so I don't have your diff rename support; could
-DB> you send a patch to do it?
+git-diff-cache -p -B -C HEAD
+diff --git a/Documentation/git-rpull.txt b/Documentation/git-ssh-pull.txt
+similarity index 89%
+rename old Documentation/git-rpull.txt
+rename new Documentation/git-ssh-pull.txt
+--- a/Documentation/git-rpull.txt
++++ b/Documentation/git-ssh-pull.txt
+@@ -1,20 +1,20 @@
+-git-rpull(1)
+-============
++git-ssh-pull(1)
++===============
+ v0.1, May 2005
+ 
+ NAME
+ ----
+-git-rpull - Pulls from a remote repository over ssh connection
++git-ssh-pull - Pulls from a remote repository over ssh connection
+ 
+ 
+ 
+ SYNOPSIS
+ --------
+-'git-rpull' [-c] [-t] [-a] [-d] [-v] commit-id url
++'git-ssh-pull' [-c] [-t] [-a] [-d] [-v] commit-id url
+ 
+ DESCRIPTION
+ -----------
+-Pulls from a remote repository over ssh connection, invoking git-rpush on
++Pulls from a remote repository over ssh connection, invoking git-ssh-push on
+ the other end.
+ 
+ OPTIONS
+diff --git a/Documentation/git-rpush.txt b/Documentation/git-ssh-push.txt
+similarity index 71%
+rename old Documentation/git-rpush.txt
+rename new Documentation/git-ssh-push.txt
+--- a/Documentation/git-rpush.txt
++++ b/Documentation/git-ssh-push.txt
+@@ -1,19 +1,19 @@
+-git-rpush(1)
+-============
++git-ssh-push(1)
++===============
+ v0.1, May 2005
+ 
+ NAME
+ ----
+-git-rpush - Helper "server-side" program used by git-rpull
++git-ssh-push - Helper "server-side" program used by git-ssh-pull
+ 
+ 
+ SYNOPSIS
+ --------
+-'git-rpush'
++'git-ssh-push'
+ 
+ DESCRIPTION
+ -----------
+-Helper "server-side" program used by git-rpull.
++Helper "server-side" program used by git-ssh-pull.
+ 
+ 
+ Author
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -148,7 +148,7 @@ link:git-resolve-script.html[git-resolve
+ link:git-tag-script.html[git-tag-script]::
+ 	An example script to create a tag object signed with GPG
+ 
+-link:git-rpull.html[git-rpull]::
++link:git-ssh-pull.html[git-ssh-pull]::
+ 	Pulls from a remote repository over ssh connection
+ 
+ Interogators:
+@@ -156,8 +156,8 @@ Interogators:
+ link:git-diff-helper.html[git-diff-helper]::
+ 	Generates patch format output for git-diff-*
+ 
+-link:git-rpush.html[git-rpush]::
+-	Helper "server-side" program used by git-rpull
++link:git-ssh-push.html[git-ssh-push]::
++	Helper "server-side" program used by git-ssh-pull
+ 
+ 
+ 
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -30,7 +30,7 @@ PROG=   git-update-cache git-diff-files 
+ 	git-checkout-cache git-diff-tree git-rev-tree git-ls-files \
+ 	git-check-files git-ls-tree git-merge-base git-merge-cache \
+ 	git-unpack-file git-export git-diff-cache git-convert-cache \
+-	git-http-pull git-rpush git-rpull git-rev-list git-mktag \
++	git-http-pull git-ssh-push git-ssh-pull git-rev-list git-mktag \
+ 	git-diff-helper git-tar-tree git-local-pull git-write-blob \
+ 	git-get-tar-commit-id git-mkdelta git-apply git-stripspace
+ 
+@@ -105,8 +105,8 @@ git-diff-cache: diff-cache.c
+ git-convert-cache: convert-cache.c
+ git-http-pull: http-pull.c pull.c
+ git-local-pull: local-pull.c pull.c
+-git-rpush: rsh.c
+-git-rpull: rsh.c pull.c
++git-ssh-push: rsh.c
++git-ssh-pull: rsh.c pull.c
+ git-rev-list: rev-list.c
+ git-mktag: mktag.c
+ git-diff-helper: diff-helper.c
+diff --git a/rpull.c b/ssh-pull.c
+similarity index 97%
+rename old rpull.c
+rename new ssh-pull.c
+--- a/rpull.c
++++ b/ssh-pull.c
+@@ -62,13 +62,13 @@ int main(int argc, char **argv)
+ 		arg++;
+ 	}
+ 	if (argc < arg + 2) {
+-		usage("git-rpull [-c] [-t] [-a] [-v] [-d] commit-id url");
++		usage("git-ssh-pull [-c] [-t] [-a] [-v] [-d] commit-id url");
+ 		return 1;
+ 	}
+ 	commit_id = argv[arg];
+ 	url = argv[arg + 1];
+ 
+-	if (setup_connection(&fd_in, &fd_out, "git-rpush", url, arg, argv + 1))
++	if (setup_connection(&fd_in, &fd_out, "git-ssh-push", url, arg, argv + 1))
+ 		return 1;
+ 
+ 	if (get_version())
+diff --git a/rpush.c b/ssh-push.c
+similarity index 93%
+rename old rpush.c
+rename new ssh-push.c
+--- a/rpush.c
++++ b/ssh-push.c
+@@ -16,7 +16,7 @@ int serve_object(int fd_in, int fd_out) 
+ 	do {
+ 		size = read(fd_in, sha1 + posn, 20 - posn);
+ 		if (size < 0) {
+-			perror("git-rpush: read ");
++			perror("git-ssh-push: read ");
+ 			return -1;
+ 		}
+ 		if (!size)
+@@ -30,7 +30,7 @@ int serve_object(int fd_in, int fd_out) 
+ 	buf = map_sha1_file(sha1, &objsize);
+ 	
+ 	if (!buf) {
+-		fprintf(stderr, "git-rpush: could not find %s\n", 
++		fprintf(stderr, "git-ssh-push: could not find %s\n", 
+ 			sha1_to_hex(sha1));
+ 		remote = -1;
+ 	}
+@@ -45,9 +45,9 @@ int serve_object(int fd_in, int fd_out) 
+ 		size = write(fd_out, buf + posn, objsize - posn);
+ 		if (size <= 0) {
+ 			if (!size) {
+-				fprintf(stderr, "git-rpush: write closed");
++				fprintf(stderr, "git-ssh-push: write closed");
+ 			} else {
+-				perror("git-rpush: write ");
++				perror("git-ssh-push: write ");
+ 			}
+ 			return -1;
+ 		}
+@@ -71,7 +71,7 @@ void service(int fd_in, int fd_out) {
+ 		retval = read(fd_in, &type, 1);
+ 		if (retval < 1) {
+ 			if (retval < 0)
+-				perror("rpush: read ");
++				perror("ssh-push: read ");
+ 			return;
+ 		}
+ 		if (type == 'v' && serve_version(fd_in, fd_out))
+@@ -91,12 +91,12 @@ int main(int argc, char **argv)
+                 arg++;
+         }
+         if (argc < arg + 2) {
+-		usage("git-rpush [-c] [-t] [-a] commit-id url");
++		usage("git-ssh-push [-c] [-t] [-a] commit-id url");
+                 return 1;
+         }
+ 	commit_id = argv[arg];
+ 	url = argv[arg + 1];
+-	if (setup_connection(&fd_in, &fd_out, "git-rpull", url, arg, argv + 1))
++	if (setup_connection(&fd_in, &fd_out, "git-ssh-pull", url, arg, argv + 1))
+ 		return 1;
+ 
+ 	service(fd_in, fd_out);
 
-I am sorry, but you lost me.  I am afraid that I do not
-understand what you are asking me to send you: a patch to do
-what?  Tell your old git how to do -M/-C?  That would be "the
-tip of Linus repository"...
-
-Ah (lightbulb!), are you asking me to send the patch in the
-git-extended rename diff format, like this?
-
-    $ git-diff-cache -p -B -C HEAD
-    diff --git a/Documentation/git-rpull.txt b/Documentation/git-ssh-pull.txt
-    similarity index 89%
-    rename old Documentation/git-rpull.txt
-    rename new Documentation/git-ssh-pull.txt
-    --- a/Documentation/git-rpull.txt
-    +++ b/Documentation/git-ssh-pull.txt
-    @@ -1,20 +1,20 @@
-    -git-rpull(1)
-    -============
-    +git-ssh-pull(1)
-    +===============
-     v0.1, May 2005
-    ...
-
-I am not sure if this is suitable for patch submission.  I did
-the rename/copy stuff mostly for software archaeology purposes
-(meaning, you examine what is in your repository), not to
-generate patches for submission via e-mail.
-
-It certainly is a good test for the git-apply stuff Linus has
-been working on, and in addition it would have a good amusement
-value to see how well it would work (or how badly it would barf
-;-), but I suspect Linus (or, rather, his "dotest" script) would
-appreciate it more if it came in the traditional diff format
-that does not use the rename stuff.  I dunno.  Let's ask Linus
-first.
-
-Linus, can your workflow grok things like this, or do you prefer
-patch submission to use traditional diff format without renames?
 
