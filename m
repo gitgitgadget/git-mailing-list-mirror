@@ -1,58 +1,74 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] One Git To Rule Them All - Prep 1
-Date: Sun, 5 Jun 2005 22:47:39 +0200
-Message-ID: <20050605204739.GR17462@pasky.ji.cz>
-References: <20050601055949.GA15813@port.evillabs.net>
+Subject: Re: cg-update with local uncommitted changes
+Date: Sun, 5 Jun 2005 22:58:11 +0200
+Message-ID: <20050605205811.GS17462@pasky.ji.cz>
+References: <1117463114.7072.185.camel@pegasus> <20050530183932.GB10439@pasky.ji.cz> <1117480796.7072.204.camel@pegasus> <1117481244.7072.209.camel@pegasus> <20050602211444.GF32189@pasky.ji.cz> <1117747614.3656.2.camel@pegasus>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jason McMullan <jason.mcmullan@timesys.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 22:44:57 2005
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 05 22:55:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Df1yu-0007h4-Qa
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 22:44:29 +0200
+	id 1Df28q-0000An-E3
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 22:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261612AbVFEUrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 16:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261614AbVFEUrr
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 16:47:47 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:37793 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261612AbVFEUrl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 16:47:41 -0400
-Received: (qmail 32704 invoked by uid 2001); 5 Jun 2005 20:47:39 -0000
-To: torvalds@osdl.org
+	id S261618AbVFEU6R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 16:58:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261619AbVFEU6R
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 16:58:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46241 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261618AbVFEU6N (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 16:58:13 -0400
+Received: (qmail 864 invoked by uid 2001); 5 Jun 2005 20:58:11 -0000
+To: Marcel Holtmann <marcel@holtmann.org>
 Content-Disposition: inline
-In-Reply-To: <20050601055949.GA15813@port.evillabs.net>
+In-Reply-To: <1117747614.3656.2.camel@pegasus>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Jun 01, 2005 at 07:59:49AM CEST, I got a letter
-where Jason McMullan <jason.mcmullan@timesys.com> told me that...
-> one-git prep patch 1/2
+Dear diary, on Thu, Jun 02, 2005 at 11:26:54PM CEST, I got a letter
+where Marcel Holtmann <marcel@holtmann.org> told me that...
+> Hi Petr,
 > 
-> Add some missing documentation for git-* commands
+> > > let me be more specific. It only works in the fast forward case. If we
+> > > actually must merge the trees, because I have local committed changes
+> > > and not committed changes, I see this:
+> > > 
+> > > link 74966c42ddd874192c318acfc5f013e56c50606a
+> > > link b27ddcd47e293557e0605b98b2a1e8429035cdc5
+> > > link 568ad7814e266f84b4ac28c15a0cadfb2fdb6c80
+> > > Tree change: f345b0a066572206aac4a4f9a57d746e213b6bff:74966c42ddd874192c318acfc5f013e56c50606a
+> > > :100644 100644 f5deac7be59e7eeab8657fd9ae706fd6a57daed2 568ad7814e266f84b4ac28c15a0cadfb2fdb6c80 M      README
+> > > 
+> > > Applying changes...
+> > > usage.c: needs update
+> > > cg-merge: merge blocked: local changes
+> > > 
+> > > I changed the README in test1 repository and committed it. Then I
+> > > changed Makefile in test2 repository and committed it. After that I
+> > > modified usage.c and left it uncommitted. Then I pulled in the README
+> > > change from test1 repository.
+> > 
+> > yes, and that is all right. If you are actually doing the merge with
+> > commit, you need to have the tree clean before, since any changes you
+> > make to the tree are counted as conflict fixes, and you don't want your
+> > older changes to mix into that.
 > 
-> Signed-off-by: Jason McMullan <jason.mcmullan@timesys.com>
-> 
-> diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-> new file mode 100644
-> --- /dev/null
-> +++ b/Documentation/git-apply.txt
-> diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
-> new file mode 100644
-> --- /dev/null
-> +++ b/Documentation/git-get-tar-commit-id.txt
-> diff --git a/Documentation/git-stripspace.txt b/Documentation/git-stripspace.txt
-> new file mode 100644
-> --- /dev/null
-> +++ b/Documentation/git-stripspace.txt
+> but not if the merge does not conflict with the local changes. This is
+> what Bitkeeper is doing. It lets you pull new stuff as long as it does
+> not conflict with your local uncommitted changes. Actually I liked that
+> feature a lot, because I was able the follow the latest Linux mainline
+> tree and work on my stuff.
 
-Linus? Even if we don't go for the One Git stuff, this would be
-definitively nice to have.
+Well, I guess we could allow this to happen if there are no conflicts
+whatsoever, but as soon as _any_ conflicts appear in the tree, we would
+have to bail out screaming panic, asking you to commit your stuff.
+Actually, if you've already committed something locally, why don't you
+commit everything locally and keep some uncommitted changes on the top?
 
 -- 
 				Petr "Pasky" Baudis
