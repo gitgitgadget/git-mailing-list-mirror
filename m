@@ -1,54 +1,54 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Petr Baudis <pasky@ucw.cz>
 Subject: Re: SSH pull problems
-Date: Sun, 5 Jun 2005 13:47:53 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506051336440.30848-100000@iabervon.org>
+Date: Sun, 5 Jun 2005 19:50:41 +0200
+Message-ID: <20050605175041.GG17462@pasky.ji.cz>
 References: <42A1A716.9030304@gorzow.mm.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 19:46:17 2005
+X-From: git-owner@vger.kernel.org Sun Jun 05 19:47:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DezBl-0004Ab-7J
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 19:45:33 +0200
+	id 1DezDW-0004Vh-2F
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 19:47:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261597AbVFERtB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 13:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261598AbVFERtB
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 13:49:01 -0400
-Received: from iabervon.org ([66.92.72.58]:25094 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261597AbVFERs4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 13:48:56 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DezE2-0008OF-00; Sun, 5 Jun 2005 13:47:54 -0400
+	id S261598AbVFERus (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 13:50:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261599AbVFERus
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 13:50:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:47006 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261598AbVFERuo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 13:50:44 -0400
+Received: (qmail 15385 invoked by uid 2001); 5 Jun 2005 17:50:41 -0000
 To: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Content-Disposition: inline
 In-Reply-To: <42A1A716.9030304@gorzow.mm.pl>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 4 Jun 2005, Radoslaw Szkodzinski wrote:
-
+Dear diary, on Sat, Jun 04, 2005 at 03:05:26PM CEST, I got a letter
+where Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl> told me that...
 > I had some problems today with git+ssh protocol.
 > First, when using cg-clone, it couldn't execute cg-rpush, although it's
 > there in /usr/local.
 > Maybe that has something to do with that being added to the path in
 > /etc/profile.
-
-I haven't used recent Cogito, so I'm not sure, but it might actually want
-git-rpush rather than cg-rpush? Or it might be a permissions issue?
-
+> 
 > Second, I don't know how to specify the port number,
 > the typical notation of git+ssh://xyz:port/repo didn't work.
+> 
+> Anybody knows what to do with these?
+> SSH would be very useful for me if it worked right.
 
-I haven't made it understand port numbers yet; it should be pretty easy,
-though, if you want to do it. You'd probably have a better chance of
-getting it right than I would, if you've got an SSH server on a
-non-default port to test against. Just parse out the part of "host" after
-the : and make it a "-p" option in the execlp in rsh.c.
+If you are staying at the Cogito's tip, there was an incompatible
+protocol change introduced recently, so make sure you have the same
+Cogito version on both sides.
 
-	-Daniel
-*This .sig left intentionally blank*
-
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
