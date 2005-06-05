@@ -1,51 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH] git-daemon server
-Date: Sat, 04 Jun 2005 21:47:36 -0700
-Message-ID: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0506031450190.1876@ppc970.osdl.org> <Pine.LNX.4.21.0506031927000.30848-100000@iabervon.org>
+Date: Sun, 5 Jun 2005 01:38:17 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506050132590.30848-100000@iabervon.org>
+References: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 05 06:45:20 2005
+X-From: git-owner@vger.kernel.org Sun Jun 05 07:36:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Demzh-00043t-2c
-	for gcvg-git@gmane.org; Sun, 05 Jun 2005 06:44:17 +0200
+	id 1Dennt-0006kp-Qw
+	for gcvg-git@gmane.org; Sun, 05 Jun 2005 07:36:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261452AbVFEErj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 00:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261455AbVFEErj
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 00:47:39 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63635 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261452AbVFEEri (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Jun 2005 00:47:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050605044737.YGZI26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 5 Jun 2005 00:47:37 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0506031927000.30848-100000@iabervon.org> (Daniel
- Barkalow's message of "Fri, 3 Jun 2005 20:06:51 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261452AbVFEFjX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 5 Jun 2005 01:39:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261455AbVFEFjX
+	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 01:39:23 -0400
+Received: from iabervon.org ([66.92.72.58]:38663 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261452AbVFEFjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 01:39:20 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Denpy-0003mp-00; Sun, 5 Jun 2005 01:38:18 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6l9flzr.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+On Sat, 4 Jun 2005, Junio C Hamano wrote:
 
-DB> With patches I have (but have to rebase and such), you could do:
+> I'd like to see your "-w" extention merged into mainline soon
+> (both push and pull).
 
-DB> git-rpush -a -w heads/master heads/master //master.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+I have the patches worked out now, and I'm planning to send them on
+Monday.
 
-I'd like to see your "-w" extention merged into mainline soon
-(both push and pull).
+> BTW, don't we want to have them renamed to git-ssh-pull (and
+> git-ssh-push) for consistency with other transports, before 1.0
+> happens?
 
-BTW, don't we want to have them renamed to git-ssh-pull (and
-git-ssh-push) for consistency with other transports, before 1.0
-happens?
+I think that would be good, but I'm still using a really old version of
+git for my development, so I don't have your diff rename support; could
+you send a patch to do it?
 
-
+	-Daniel
+*This .sig left intentionally blank*
 
