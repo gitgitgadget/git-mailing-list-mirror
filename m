@@ -1,48 +1,76 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: 7fb9de4a830dd8969bc17a219c509a76dd3c9aad [ or: the --merge-order patch ]
-Date: Tue, 7 Jun 2005 01:44:41 +1000
-Message-ID: <2cfc4032050606084460ff5ce2@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 7fb9de4a830dd8969bc17a219c509a76dd3c9aad
+Date: Mon, 6 Jun 2005 09:01:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506060858140.1876@ppc970.osdl.org>
 References: <20050606153940.20039.qmail@blackcubes.dyndns.org>
-Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 17:43:28 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jun 06 17:59:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfJit-00035I-04
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 17:41:08 +0200
+	id 1DfJxr-0005SA-Pw
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 17:56:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261500AbVFFPop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 11:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261504AbVFFPop
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 11:44:45 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:29979 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261500AbVFFPoo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 11:44:44 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1991728rne
-        for <git@vger.kernel.org>; Mon, 06 Jun 2005 08:44:41 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y+HFQNfgyjNWoKfyIi5/gG20yAipT/H70E5mcwEzgjxRCg08lGJj/CpKQMMB3GbewtFe6wCSf7oEiXp9c0BMx0rDusO67d1SglOJuVgzD91JGJfJALdVCAZRHir/WrKOwKehexrXRtMQQCHy6xztBxjZPVRgIfZ8jlVEjMG1Zag=
-Received: by 10.38.97.66 with SMTP id u66mr2463614rnb;
-        Mon, 06 Jun 2005 08:44:41 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Mon, 6 Jun 2005 08:44:41 -0700 (PDT)
-To: git@vger.kernel.org
+	id S261207AbVFFP7z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 11:59:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVFFP7y
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 11:59:54 -0400
+Received: from fire.osdl.org ([65.172.181.4]:27021 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261207AbVFFP73 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 11:59:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56FxIjA016736
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 6 Jun 2005 08:59:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56FxHQM000796;
+	Mon, 6 Jun 2005 08:59:18 -0700
+To: jon@blackcubes.dyndns.org
 In-Reply-To: <20050606153940.20039.qmail@blackcubes.dyndns.org>
-Content-Disposition: inline
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Sorry about the Subject: - my patch submission script is obviously a
-little buggy.
 
-Anyway, the referenced e-mail contains the latest --merge-order patch
-which is synced with Linus' head and incorporates my earlier
-rev-list.c patch.
 
-jon.
+On Mon, 6 Jun 2005 jon@blackcubes.dyndns.org wrote:
+>
+> [PATCH] Modify git-rev-list to linearise the commit history in merge order.
+
+Much nicer. Will apply after testing, however, not this part:
+
+> @@ -110,6 +145,8 @@ static enum cmit_fmt get_commit_format(c
+>  	if (!strcmp(arg, "=short"))
+>  		return CMIT_FMT_SHORT;
+>  	usage(rev_list_usage);	
+> +
+> +	return CMIT_FMT_DEFAULT;
+>  }			
+>  
+>  
+
+If you're bothered by a compiler warning (that I don't see, wonder why?),
+please mark usage() and die() with "__attribute__ ((__noreturn__))". Make
+it depend on GCC, ie
+
+	#ifdef __GCC__
+	#define NO_RETURN __attribute__((__noreturn__))
+	#else
+	#define NO_RETURN
+	#endif
+
+and then do
+
+	extern void die(const char *, ...) NO_RETURN;
+
+or something like that.
+
+Anyway, that's indepdendent of this patch, but just fyi.
+
+		Linus
