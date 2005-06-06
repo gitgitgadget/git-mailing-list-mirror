@@ -1,39 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Last mile for 1.0
-Date: Mon, 6 Jun 2005 07:47:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506060738170.1876@ppc970.osdl.org>
-References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org> <7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
- <20050606054356.GB3669@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0506052300350.1876@ppc970.osdl.org> <7vis0sugp7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506052358330.1876@ppc970.osdl.org> <7vacm4ufnl.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: new read-tree questions.
+Date: Mon, 6 Jun 2005 08:04:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506060748390.1876@ppc970.osdl.org>
+References: <7v64wrvpt4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 16:46:17 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 17:01:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfIoc-00084X-Ht
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 16:42:58 +0200
+	id 1DfJ4I-0002fd-Kk
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 16:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVFFOq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 10:46:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261485AbVFFOq2
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 10:46:28 -0400
-Received: from fire.osdl.org ([65.172.181.4]:40422 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261399AbVFFOp7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 10:45:59 -0400
+	id S261494AbVFFPCr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 11:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261497AbVFFPCr
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 11:02:47 -0400
+Received: from fire.osdl.org ([65.172.181.4]:64747 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261494AbVFFPC3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 11:02:29 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56EjljA010576
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56F2IjA012190
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 6 Jun 2005 07:45:48 -0700
+	Mon, 6 Jun 2005 08:02:21 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56EjlR1029516;
-	Mon, 6 Jun 2005 07:45:47 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56F2Hv4030438;
+	Mon, 6 Jun 2005 08:02:18 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vacm4ufnl.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v64wrvpt4.fsf@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -43,52 +38,150 @@ Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-[ git list added back in, since I migth as well explain the thinking here ]
 
 On Mon, 6 Jun 2005, Junio C Hamano wrote:
 >
-> I've sent you a reply in another thread, but I really think you
-> need to make this "new merge world order" a bit more explicit.
-> My understanding of your (earlier) wish was that you wanted the
-> merge not to touch and look at any work tree material, but it
-> appears to me that this round you actually expect the work tree
-> be populated and more-or-less match the first head being merged.
+> I am trying to understand the new git-read-tree, by using
+> git-resolve-script as an example and also reading read-tree.c; I
+> am somewhat confused.
 
-Actually, no. I expect the old _index_ to be at least not _more_ populated 
-than the trees I merge. That's not a working tree issue, that's a "we 
-don't want to drop information from the index".
+It _is_ a confusing piece of code. You don't see it in the revision 
+history, but I threw away a lot of trials that were crapola.
 
-And yes, if you use "-u", it will populate the working tree too, but 
-that's really totally unimportant from the algorithm itself.
+> * two-way merge (git-read-tree -m $H $M)
+> 
+> My understanding is that the current index is allowed to be
+> empty, but if it is not, they are kept at stage0, and each of
+> them must match $H and must be up-to-date if the merge involves
+> them.
 
-But you can very much do everything in-index as before, if you want to. A 
-pure index merge would be done usually in a new temporary index file, 
-something like
+The rule really boils down to: "no information that only existed in the
+old 'stag0' must be lost".
 
-  rm -f .git/tmp_index
-  GIT_INDEX_FILE=.git/tmp_index git-read-tree -m <base> <merge1> <merge2>
+So that means that an empty old stage0 is always fine.
 
-and the new changes don't change that.
+It also means that if the old stage0 exactly matches the result, then 
+that's also always fine (regardless of the state of the actual checked out 
+file: we've not _changed_ anything).
 
-HOWEVER, it's all set up to be very clever indeed. My immediate goal is to 
-make the current git-resolve-script be more easily usable, and that 
-implies that it has to work in the current working directory and resolve 
-conflicts there. I still think that the _long-term_ plan is to make sure 
-that we don't do that, and the new thing actually supports that too.
+But it means that if the old stage0 gets deleted or over-written, then the 
+information that the old stage0 _used_ to have needs to be encoded either 
+in the result _or_ it needs to have been there in the original tree, ie 
+the "loss" of information needs to be in the merge itself.
 
-For example, notice how I lifted all the "checkout" code from the 
-checkout-cache thing? Including very much the code that supports 
-"--prefix"? I didn't add the command line, but imagine just adding that, 
-which updates "state.base_dir", and doing
+See? It's ok to drop information if that drop is encoded in the merge
+itself ("we're merging a delete"), but it's _not_ ok to drop information
+that wasn't part of the merge ("we're merging a delete where the index
+file described something more than what was in the original tree")
 
-	mkdir -p MERGE_DIR/.git
-	cp .git/index MERGE_DIR/.git/index
-	GIT_INDEX_FILE=MERGE_DIR/.git/index git-read-tree -u --prefix=MERGE_DIR/ <base> <merge1> <merge2>
+Does that clarify what I'm aiming for? It may not clarify the code (which 
+may or may not match my aims ;), but at least it hopefully clarifies what 
+the _point_ of the code was supposed to be.
 
-and voila, you're basically now 75% of the way to where I wanted the thing
-to be in a separate directory.
+> To summarize my understanding of what should happen for each
+> path:
+> 
+>   stage0 (index)  stage1 ($H)             stage2 ($M)
+> ------------------------------------------------------------
+>   no such path    no such path            no such path
+>   * this does not happen (the code would not see such thing).
 
-So I've given up on the separate directory for 1.0 - because it's clearly 
-not going to happen - but I've not given up on the basic idea.
+Yeah, I htink I get this right ;)
 
-			Linus
+>   ----------------------------------------------------------
+>   no such path    no such path            exists
+>   * take $M without complaining.
+
+Yes.
+
+>   ----------------------------------------------------------
+>   no such path    exists                  (does not matter)   *0*
+>   * although index does not match $H, we do not reject, so
+>     that a merge can happen on an empty cache.  We take $M.
+
+Right. We didn't lose anything hugely important. 
+
+In theory this could be a delete that we've missed, and we could add a 
+flag to actually reject this case. However, it's always easy to "recover" 
+deletes (just delete it again ;), so the loss of information is absolutely 
+minimal, and it allows starting from an empty index file.
+
+But this is debatable. We could reject it if you prefer that, and if you 
+want to make it a command line flag I'll definitely apply the patch.
+
+>   ----------------------------------------------------------
+>   exists          no such path            no such path
+>   * reject, because index does not match $H.
+
+Exactly. The end result would have dropped the existing data, and the 
+_merge_ didn't contain that drop, so we reject that.
+
+>   ----------------------------------------------------------
+>   exists          no such path            exists (index!=$M)
+>   * reject, because index does not match $H.
+
+Yes.
+
+>   ----------------------------------------------------------
+>   exists          no such path            exists (index=$M)   *1*
+>   * take $M (same as "keep stage0").
+
+This one is questionable. I think it should be accepted simply because 
+there's no point in not accepting it.
+
+>   ----------------------------------------------------------
+>   exists          exists (index!=$H)      (does not matter)
+>   * reject, because index does not match $H.
+
+Yes.
+
+>   ----------------------------------------------------------
+>   exists          exists (index=$H)       no such path        *2*
+>   * path is removed.
+
+Yes. This drops the information, but since the merge contained that 
+_exact_ drop, that's what we want it to do. This one is not questionable 
+at all (except I got it wrong at one stage ;)
+
+>   ----------------------------------------------------------
+>   exists          exists (index=$H)       exists
+>   * take stage2.
+
+Yes. 
+
+> Does the above matrix represent the intended behaviour?
+> 
+> I think I understand why we would want *0*, but this asymmetry
+> feels wrong.
+
+Yup, you got it.
+
+> I am having trouble with the case *1*.
+
+The fact that you're having trouble is good, it means you realize that 
+reversing the merge doesn't get you the original state.
+
+> Also I am not sure if the code does the right thing for case
+> *2*.  If I am reading the code right, for such a path, we will
+> see stage0 and stage1, and at that point say seen_stage1 = 1 and
+> keep stage0 entry in "old".  Then we continue on to the next
+> path.  When it happens to be:
+
+You're right. I messed up. Again. And the test-case I used for this 
+happened to not care (I think it may have been the only file, and as such 
+the next path never happened).
+
+Anyway, you definitely get the idea.
+
+Another way of encoding the rules: we _should_ eventually aim for a
+situation where if a git-read-tree succeeds (even if it leaves crap
+entries in the tree), we should be able to do a
+
+	git-read-tree -u -m <OLDHEAD>
+
+and get back to the old state - or at least "close enough" (right now "-u"  
+doesn't do anything for the single-tree case, and "-m" complains about
+unmerged entries, but the point isn't that it works today, the point is 
+what should be possible at some point ;)
+
+		Linus
