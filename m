@@ -1,80 +1,69 @@
-From: "McMullan, Jason" <jason.mcmullan@timesys.com>
-Subject: Re: Database consistency after a successful pull
-Date: Mon, 06 Jun 2005 14:30:56 -0400
-Message-ID: <1118082657.8970.42.camel@jmcmullan.timesys>
-References: <Pine.LNX.4.21.0506061000531.30848-100000@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: clarifying two tree merge semantics
+Date: Mon, 06 Jun 2005 12:59:58 -0700
+Message-ID: <7voeajp875.fsf@assigned-by-dhcp.cox.net>
+References: <7v64wrvpt4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506060748390.1876@ppc970.osdl.org>
+	<7vbr6jtiqi.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506061210490.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-	boundary="=-T/CAf6lhT7tLaGzfRmg1";
-	micalg=pgp-sha1;
-	protocol="application/pgp-signature"
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Linus Torvalds" <torvalds@osdl.org>,
-	"GIT Mailling list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 06 20:29:28 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 22:00:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfMJv-0006pP-29
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 20:27:31 +0200
+	id 1DfNkF-0004t3-1Q
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 21:58:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261554AbVFFSbG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 14:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261617AbVFFSbG
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 14:31:06 -0400
-Received: from mail.timesys.com ([65.117.135.102]:56167 "EHLO
-	exchange.timesys.com") by vger.kernel.org with ESMTP
-	id S261554AbVFFSa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2005 14:30:58 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
-Received: from jmcmullan by owa.timesys.com; 06 Jun 2005 14:30:57 -0400
-In-Reply-To: <Pine.LNX.4.21.0506061000531.30848-100000@iabervon.org>
-X-Mailer: Evolution 2.0.4-3mdk 
-Content-Class: urn:content-classes:message
-X-Mailer: Evolution 2.0.4-3mdk 
-Date: Mon, 6 Jun 2005 14:23:57 -0400
-Message-ID: <1118082657.8970.42.camel@jmcmullan.timesys>
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-Thread-Topic: Database consistency after a successful pull
-thread-index: AcVqxOcQC16pUCzJTSSTOFK2LyjcSQ==
-To: "Daniel Barkalow" <barkalow@iabervon.org>
+	id S261656AbVFFUBS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 16:01:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261664AbVFFUBL
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 16:01:11 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:16276 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261656AbVFFUA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2005 16:00:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050606200000.WKQH16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 6 Jun 2005 16:00:00 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506061210490.1876@ppc970.osdl.org> (Linus
+ Torvalds's message of "Mon, 6 Jun 2005 12:15:38 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+By the way, there is one case that you need to keep an eye on if
+you are making further fixes to "git-read-tree -m $H $M",
+especially now we are talking about keeping what we slurp from
+stage0 sometimes:
 
---=-T/CAf6lhT7tLaGzfRmg1
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+ (1) index has DF (file)
+ (2) $H has DF (file); the index matches it.
+ (3) $M has DF/DF (file), implicitly making DF a directory.
 
-On Mon, 2005-06-06 at 12:21 -0400, Daniel Barkalow wrote:
-> [snip snip]
->
-> My bias is to call a database consistent with only deltas having the
-> referents; the rest goes towards completeness, since you have and can rea=
-d
-> everything that you have anything for (but may not be able to do some
-> particular operation).
+For path DF, this rule from the earlier matrix applies:
 
-Now, if we had consistent URIs for the .git/branches/* files, we could
-do 'lazy-pull' and really have our cake and eat it too.
+  exists          exists (index=$H)       no such path        *2*
+  * path is removed.
 
---=20
-Jason McMullan <jason.mcmullan@timesys.com>
-TimeSys Corporation
+For path DF/DF, this rule from the earlier matrix applies:
 
+  no such path    no such path            exists
+  * take $M without complaining.
 
---=-T/CAf6lhT7tLaGzfRmg1
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
+Thanks to *2*, the current code gets it right and we do not end
+up with a cache that records both DF and DF/DF at the same time.
+I cannot tell if it is by design or by accident :-).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
+There is a safety valve at the end of write-tree to refuse to
+write out such a nonsensical tree but as Pasky argued back then
+(a similar problem was discussed and resolved when you were
+away, around the beginning of May, involving update-cache), when
+that safety valuve was added, the damage has already been done
+if we allow such a cache entry to be created in the first place.
 
-iD8DBQBCpJZg8/0vJ5szK6kRAsQ4AJwOKdbXXiOW32ASrcBPr+sSR++xFgCdHpAr
-eauZJlnbS6hJSIwvnBTFlqI=
-=/tSn
------END PGP SIGNATURE-----
-
---=-T/CAf6lhT7tLaGzfRmg1--
