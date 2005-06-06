@@ -1,67 +1,61 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: Last mile for 1.0
-Date: Mon, 6 Jun 2005 07:43:56 +0200
-Message-ID: <20050606054356.GB3669@cip.informatik.uni-erlangen.de>
-References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org> <7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
+From: Philip Pokorny <ppokorny@mindspring.com>
+Subject: Problem with Cogito repository?
+Date: Sun, 05 Jun 2005 23:08:24 -0700
+Message-ID: <42A3E858.7070809@mindspring.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 07:41:16 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jun 06 08:05:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfALm-0000lo-8K
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 07:40:38 +0200
+	id 1DfAjQ-00031x-QS
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 08:05:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261180AbVFFFoK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 01:44:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261183AbVFFFoK
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 01:44:10 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:37007 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261180AbVFFFoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2005 01:44:06 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j565huS8010922
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 6 Jun 2005 05:43:57 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j565huaR010921;
-	Mon, 6 Jun 2005 07:43:56 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+	id S261179AbVFFGIb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 02:08:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261182AbVFFGIb
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 02:08:31 -0400
+Received: from smtpauth01.mail.atl.earthlink.net ([209.86.89.61]:23467 "EHLO
+	smtpauth01.mail.atl.earthlink.net") by vger.kernel.org with ESMTP
+	id S261179AbVFFGI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2005 02:08:26 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=dk20050327; d=mindspring.com;
+  b=LUnaxabPTVFq3ZoPKdFu7PAG3n01SydW+beOps1FNSkkvnz+UI/eZ7bR8No8MBx6;
+  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:Subject:Content-Type:Content-Transfer-Encoding:X-ELNK-Trace:X-Originating-IP;
+Received: from [68.164.169.109] (helo=[172.16.1.11])
+	by smtpauth01.mail.atl.earthlink.net with asmtp (TLSv1:AES256-SHA:256)
+	(Exim 4.34)
+	id 1DfAmf-0008Mc-SO
+	for git@vger.kernel.org; Mon, 06 Jun 2005 02:08:26 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.5) Gecko/20041217
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-ELNK-Trace: 662518af21fc89ef9c7f779228e2f6aeda0071232e20db4d952c1ef0985169608e6b6bb22bd501a0350badd9bab72f9c350badd9bab72f9c350badd9bab72f9c
+X-Originating-IP: 68.164.169.109
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+I've just updated my tree with cg-pull from 
+rsync://rsync.kernel.org/pub/scm/cogito/cogito.git
 
-> >  - "What happens when a merge goes wrong" helper script Jeff
-> >    wanted to have in *4*.
+There seems to be a problem with the repository object for tag 
+"pull_from_pasky"
 
-> Does anybody have any suggestions? Preferably with a reasonable 
-> test-case, so that people can try it out.. Maybe just leaving the merge 
-> failures where they are?
+[philip@xray cogito]$ git-fsck-cache
+bad sha1 entry '11ed64c1b141c9ba397a1ca76aef2cd250976007'
+error: .git/refs/tags/pull_from_pasky: invalid sha1 pointer 
+11ed64c1b141c9ba397a1ca76aef2cd250976007
 
-I think the simplest and effectivies way to handle this is the
-following: Add a flag to the current merge script which indicates that
-on conflicts the user will be dropped to a shell per conflict to solve:
+And in fact 11ed64... _is_ bad:
 
-	- Checkout filename.LOCAL, filename.REMOTE, filename.GCA (with
-	  sanitychecks of course (eg not overwriting existing files)
-	- Run merga -A on them and maybe wiggle and write the product in
-	  filename
-	- If the user resolves the conflict drop him a note to
-	  'update-cache' the resolved conflict and exit the subshell.
+[philip@xray cogito]$ ls -l 
+.git/objects/11/ed64c1b141c9ba397a1ca76aef2cd250976007
+-rw-r--r--    1 philip   philip          0 Jun  5 22:58 
+.git/objects/11/ed64c1b141c9ba397a1ca76aef2cd250976007
 
-I also have at the moment a very nice perl merge script which works with
-multiple heads, duplicates and stuff. Maybe I should write this down in
-bash.
+Note the files is 0 bytes in size.
 
-The above approach worked out very good at least for me. I often had to
-resolve 'simple' conflicts when pulling in upstream changes from Linus
-repo.
-
-	Thomas
+Or am I doing something wrong?
