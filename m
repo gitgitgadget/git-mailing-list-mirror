@@ -1,43 +1,113 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 0/4] Writing refs in git-ssh-push
-Date: Mon, 6 Jun 2005 16:27:36 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506061616590.30848-100000@iabervon.org>
+From: Dan Holmsand <holmsand@gmail.com>
+Subject: [PATCH] Make git-diff-tree --pretty
+Date: Mon, 06 Jun 2005 23:16:31 +0200
+Message-ID: <d82e8d$km9$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 22:43:54 2005
+Content-Type: multipart/mixed;
+ boundary="------------040104090004090708040502"
+X-From: git-owner@vger.kernel.org Mon Jun 06 23:17:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfOOD-00033n-Bw
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 22:40:05 +0200
+	id 1DfOx8-0000QB-VW
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 23:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261639AbVFFUdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 16:33:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261666AbVFFUcS
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 16:32:18 -0400
-Received: from iabervon.org ([66.92.72.58]:47876 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261682AbVFFU3P (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 16:29:15 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DfOC8-0006YB-00; Mon, 6 Jun 2005 16:27:36 -0400
-To: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
-	Junio C Hamano <junkio@cox.net>
+	id S261685AbVFFVTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 17:19:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVFFVTn
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 17:19:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:49597 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261685AbVFFVTT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 17:19:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DfOvK-0000CH-CE
+	for git@vger.kernel.org; Mon, 06 Jun 2005 23:14:18 +0200
+Received: from c80-217-52-214.cm-upc.chello.se ([80.217.52.214])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Jun 2005 23:14:18 +0200
+Received: from holmsand by c80-217-52-214.cm-upc.chello.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 06 Jun 2005 23:14:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c80-217-52-214.cm-upc.chello.se
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This series adds -w to git-ssh-push (and git-ssh-pull, which is the same).
+This is a multi-part message in MIME format.
+--------------040104090004090708040502
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
- - Add code for reading and writing ref files
- - Fix the environment variable for the path in rsh.c
- - Add support for transferring references in pull.c
- - Add support for refs in ssh protocol and options to invoke it
+Make git-diff-tree --pretty[=[short|medium|raw]] work as in
+git-rev-list.
 
-I'll send documentation updates in another patch this evening.
+Also suppress duplicate newline in 'git-diff-tree -s' output.
 
-	-Daniel
-*This .sig left intentionally blank*
+Signed-off-by: Dan Holmsand <holmsand@gmail.com>
+---
 
+--------------040104090004090708040502
+Content-Type: text/plain;
+ name="diff-tree.patch.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="diff-tree.patch.txt"
+
+ diff-tree.c |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
+
+diff --git a/diff-tree.c b/diff-tree.c
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -323,7 +323,8 @@ static char *generate_header(const char 
+ 	offset = sprintf(this_header, "%s%s (from %s)\n", header_prefix, commit, parent);
+ 	if (verbose_header) {
+ 		offset += pretty_print_commit(commit_format, msg, len, this_header + offset, sizeof(this_header) - offset);
+-		this_header[offset++] = '\n';
++		if (diff_output_format != DIFF_FORMAT_NO_OUTPUT)
++			this_header[offset++] = '\n';
+ 		this_header[offset++] = 0;
+ 	}
+ 
+@@ -400,6 +401,19 @@ static int diff_tree_stdin(char *line)
+ static char *diff_tree_usage =
+ "git-diff-tree [-p] [-r] [-z] [--stdin] [-M] [-C] [-R] [-S<string>] [-O<orderfile>] [-m] [-s] [-v] [-t] <tree-ish> <tree-ish>";
+ 
++static enum cmit_fmt get_commit_format(const char *arg)
++{
++	if (!*arg)
++		return CMIT_FMT_DEFAULT;
++	if (!strcmp(arg, "=raw"))
++		return CMIT_FMT_RAW;
++	if (!strcmp(arg, "=medium"))
++		return CMIT_FMT_MEDIUM;
++	if (!strcmp(arg, "=short"))
++		return CMIT_FMT_SHORT;
++	usage(diff_tree_usage);	
++}			
++
+ int main(int argc, const char **argv)
+ {
+ 	int nr_sha1;
+@@ -492,6 +506,12 @@ int main(int argc, const char **argv)
+ 			header_prefix = "diff-tree ";
+ 			continue;
+ 		}
++		if (!strncmp(arg, "--pretty", 8)) {
++			commit_format = get_commit_format(arg+8);
++			verbose_header = 1;
++			header_prefix = "diff-tree ";
++			continue;
++		}
+ 		if (!strcmp(arg, "--stdin")) {
+ 			read_stdin = 1;
+ 			continue;
+
+--------------040104090004090708040502--
 
