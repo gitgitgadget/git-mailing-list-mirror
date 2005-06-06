@@ -1,76 +1,86 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: 7fb9de4a830dd8969bc17a219c509a76dd3c9aad
-Date: Mon, 6 Jun 2005 09:01:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506060858140.1876@ppc970.osdl.org>
-References: <20050606153940.20039.qmail@blackcubes.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Database consistency after a successful pull
+Date: Mon, 6 Jun 2005 12:21:19 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506061000531.30848-100000@iabervon.org>
+References: <1118065849.8970.37.camel@jmcmullan.timesys>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Mon Jun 06 17:59:17 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>,
+	GIT Mailling list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 06 18:21:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfJxr-0005SA-Pw
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 17:56:36 +0200
+	id 1DfKJd-0001GS-1E
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 18:19:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261207AbVFFP7z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 11:59:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261206AbVFFP7y
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 11:59:54 -0400
-Received: from fire.osdl.org ([65.172.181.4]:27021 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261207AbVFFP73 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 11:59:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56FxIjA016736
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 6 Jun 2005 08:59:19 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56FxHQM000796;
-	Mon, 6 Jun 2005 08:59:18 -0700
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <20050606153940.20039.qmail@blackcubes.dyndns.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261254AbVFFQWm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 12:22:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261500AbVFFQWm
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 12:22:42 -0400
+Received: from iabervon.org ([66.92.72.58]:58629 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261254AbVFFQWa (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 12:22:30 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DfKLn-0004Ri-00; Mon, 6 Jun 2005 12:21:19 -0400
+To: "McMullan, Jason" <jason.mcmullan@timesys.com>
+In-Reply-To: <1118065849.8970.37.camel@jmcmullan.timesys>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 6 Jun 2005, McMullan, Jason wrote:
+
+> Subject Was: [PATCH] pull: gracefu[PAlly recover from delta retrieval
+> failure.]
+> 
+> [snip lots of really good information about the thinking
+>  behind the design of the pull mechanisms ]
+> 
+> Ok, so would I be correct in the following assumptions
+> about the validity of a 'consistent' .git/objects database:
+> 
+> ============================================================
+> 
+> Commits:
+> 	* May have the tree they refer to in the database
+> 	* Must have their parents in the database
+
+May have their parents in the database; we want to be able to drop ancient
+history from non-archival sites at some point, if nothing else.
+
+> Trees:
+> 	* Must have the blobs they refer to in the database
+> 	* Must have the trees they refer to in the database
+
+It's probably true that there's no point to having a tree available if you
+don't have its contents, although that's a convenient intermediate stage,
+so that you can look up the contents of the tree with the ordinary parsing
+code. On the other hand, I could imagine an ARM developer completely
+ignoring arch/i386 (and just having write-tree use the parent tree's value
+for it).
+
+> Deltas:
+> 	* Must have the referred to object in the database
+
+Yes. Can't unpack without them.
+
+> Blobs:
+> 	* No references to check
+
+Right.
+
+Also, tags reference objects of unknown type; it's probably not vital to
+have the object.
+
+My bias is to call a database consistent with only deltas having the
+referents; the rest goes towards completeness, since you have and can read
+everything that you have anything for (but may not be able to do some
+particular operation).
+
+	-Daniel
+*This .sig left intentionally blank*
 
 
-On Mon, 6 Jun 2005 jon@blackcubes.dyndns.org wrote:
->
-> [PATCH] Modify git-rev-list to linearise the commit history in merge order.
-
-Much nicer. Will apply after testing, however, not this part:
-
-> @@ -110,6 +145,8 @@ static enum cmit_fmt get_commit_format(c
->  	if (!strcmp(arg, "=short"))
->  		return CMIT_FMT_SHORT;
->  	usage(rev_list_usage);	
-> +
-> +	return CMIT_FMT_DEFAULT;
->  }			
->  
->  
-
-If you're bothered by a compiler warning (that I don't see, wonder why?),
-please mark usage() and die() with "__attribute__ ((__noreturn__))". Make
-it depend on GCC, ie
-
-	#ifdef __GCC__
-	#define NO_RETURN __attribute__((__noreturn__))
-	#else
-	#define NO_RETURN
-	#endif
-
-and then do
-
-	extern void die(const char *, ...) NO_RETURN;
-
-or something like that.
-
-Anyway, that's indepdendent of this patch, but just fyi.
-
-		Linus
