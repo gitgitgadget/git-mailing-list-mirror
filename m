@@ -1,41 +1,39 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Last mile for 1.0
-Date: Mon, 6 Jun 2005 07:37:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506060730510.1876@ppc970.osdl.org>
+Date: Mon, 6 Jun 2005 07:47:52 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506060738170.1876@ppc970.osdl.org>
 References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org> <7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net>
  <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
  <20050606054356.GB3669@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0506052300350.1876@ppc970.osdl.org>
- <20050606064456.GC3669@cip.informatik.uni-erlangen.de>
- <Pine.LNX.4.58.0506052351470.1876@ppc970.osdl.org> <7vekbgufra.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0506052300350.1876@ppc970.osdl.org> <7vis0sugp7.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0506052358330.1876@ppc970.osdl.org> <7vacm4ufnl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 16:34:25 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 06 16:46:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfIee-0005uP-JD
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 16:32:41 +0200
+	id 1DfIoc-00084X-Ht
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 16:42:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261448AbVFFOgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 10:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261477AbVFFOgK
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 10:36:10 -0400
-Received: from fire.osdl.org ([65.172.181.4]:18146 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261448AbVFFOgB (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 10:36:01 -0400
+	id S261399AbVFFOq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 10:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261485AbVFFOq2
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 10:46:28 -0400
+Received: from fire.osdl.org ([65.172.181.4]:40422 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261399AbVFFOp7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 10:45:59 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56EZrjA009794
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j56EjljA010576
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 6 Jun 2005 07:35:53 -0700
+	Mon, 6 Jun 2005 07:45:48 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56EZp38028991;
-	Mon, 6 Jun 2005 07:35:52 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j56EjlR1029516;
+	Mon, 6 Jun 2005 07:45:47 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vekbgufra.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7vacm4ufnl.fsf@assigned-by-dhcp.cox.net>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.109 $
@@ -45,36 +43,52 @@ Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+[ git list added back in, since I migth as well explain the thinking here ]
 
 On Mon, 6 Jun 2005, Junio C Hamano wrote:
-> 
-> Yes, this was done from your explicit request not to touch the
-> working directory while it works AFAICR.  At least back then,
-> not touching the working tree was the _requirement_.
+>
+> I've sent you a reply in another thread, but I really think you
+> need to make this "new merge world order" a bit more explicit.
+> My understanding of your (earlier) wish was that you wanted the
+> merge not to touch and look at any work tree material, but it
+> appears to me that this round you actually expect the work tree
+> be populated and more-or-less match the first head being merged.
 
-Yes. Now that read-tree verifies that the working directory is clean (at
-least for any non-identity files), it's a non-issue.
+Actually, no. I expect the old _index_ to be at least not _more_ populated 
+than the trees I merge. That's not a working tree issue, that's a "we 
+don't want to drop information from the index".
 
-> So is "the new merge world order" you mentioned in the log
-> message now require (and assume) the work tree more-or-less
-> matches the first head being merged?
+And yes, if you use "-u", it will populate the working tree too, but 
+that's really totally unimportant from the algorithm itself.
 
-Well, without "-u" you should see the old "order doesn't matter" case, but
-yes, the theory is that the three trees are <base> <current> <merge> for
-the three-way case, and <current> <new> for the two-way one.
+But you can very much do everything in-index as before, if you want to. A 
+pure index merge would be done usually in a new temporary index file, 
+something like
 
-You can get the old behaviour by using
+  rm -f .git/tmp_index
+  GIT_INDEX_FILE=.git/tmp_index git-read-tree -m <base> <merge1> <merge2>
 
-	git-read-tree -m <cur>
-	git-read-tree -m <base> <cur> <merge>
+and the new changes don't change that.
 
-where the first read-tree ends up just makign sure that the index file 
-matches the current head (use "-u" or not as you like).
+HOWEVER, it's all set up to be very clever indeed. My immediate goal is to 
+make the current git-resolve-script be more easily usable, and that 
+implies that it has to work in the current working directory and resolve 
+conflicts there. I still think that the _long-term_ plan is to make sure 
+that we don't do that, and the new thing actually supports that too.
 
-(Side note: the actual read-tree phase should be totally agnostic about 
-whether the current tree is the first, second or third of the trees, since 
-it will happily say "oh, we saw this exact directory entry in _one_ of the 
-trees, so we know it hasn't gotten lost".  So for now, order still is left 
-to the final user, but I don't think you should depend on that).
+For example, notice how I lifted all the "checkout" code from the 
+checkout-cache thing? Including very much the code that supports 
+"--prefix"? I didn't add the command line, but imagine just adding that, 
+which updates "state.base_dir", and doing
 
-		Linus
+	mkdir -p MERGE_DIR/.git
+	cp .git/index MERGE_DIR/.git/index
+	GIT_INDEX_FILE=MERGE_DIR/.git/index git-read-tree -u --prefix=MERGE_DIR/ <base> <merge1> <merge2>
+
+and voila, you're basically now 75% of the way to where I wanted the thing
+to be in a separate directory.
+
+So I've given up on the separate directory for 1.0 - because it's clearly 
+not going to happen - but I've not given up on the basic idea.
+
+			Linus
