@@ -1,112 +1,114 @@
-From: jon@blackcubes.dyndns.org
-Subject: [PATCH] Factor out filtering in rev-list.c
-Date: 6 Jun 2005 07:17:28 -0000
-Message-ID: <20050606071728.30223.qmail@blackcubes.dyndns.org>
-Cc: jon.seymour@gmail.com, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 09:17:57 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: new read-tree questions.
+Date: Mon, 06 Jun 2005 01:43:03 -0700
+Message-ID: <7v64wrvpt4.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 10:40:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfBrE-0001SI-Dm
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 09:17:12 +0200
+	id 1DfD9K-0003Jg-5D
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 10:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261187AbVFFHTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 03:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261179AbVFFHTt
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 03:19:49 -0400
-Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:41857 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261187AbVFFHRa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Jun 2005 03:17:30 -0400
-Received: (qmail 30225 invoked by uid 500); 6 Jun 2005 07:17:28 -0000
-To: git@vger.kernel.org
+	id S261236AbVFFInf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 04:43:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261229AbVFFInf
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 04:43:35 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:49284 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S261236AbVFFIna (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2005 04:43:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050606084303.VGAJ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 6 Jun 2005 04:43:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[PATCH] Factor out filtering in rev-list.c
+I am trying to understand the new git-read-tree, by using
+git-resolve-script as an example and also reading read-tree.c; I
+am somewhat confused.
 
-This patch:
-   * factors out the filtering logic in show_commit_list into filter_commit.
-   * groups calls to filter_commit and show_commit into process_commit.
-   * replaces the body of the show_commit_list while loop with a call to process_commit.
-   * fixes a compiler warning by adding a return statement to get_commit_format.
+* two-way merge (git-read-tree -m $H $M)
 
-The purpose of these changes is to faciliate a future merge with Jon Seymour's --merge-order patch which
-will pass pointer to process_commit to another module.
+My understanding is that the current index is allowed to be
+empty, but if it is not, they are kept at stage0, and each of
+them must match $H and must be up-to-date if the merge involves
+them.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+To summarize my understanding of what should happen for each
+path:
 
-This patch can also be downloaded from: http://blackcubes.dyndns.org/epoch/rev-list.patch .
+  stage0 (index)  stage1 ($H)             stage2 ($M)
+------------------------------------------------------------
+  no such path    no such path            no such path
+  * this does not happen (the code would not see such thing).
+  ----------------------------------------------------------
+  no such path    no such path            exists
+  * take $M without complaining.
+  ----------------------------------------------------------
+  no such path    exists                  (does not matter)   *0*
+  * although index does not match $H, we do not reject, so
+    that a merge can happen on an empty cache.  We take $M.
+  ----------------------------------------------------------
+  exists          no such path            no such path
+  * reject, because index does not match $H.
+  ----------------------------------------------------------
+  exists          no such path            exists (index!=$M)
+  * reject, because index does not match $H.
+  ----------------------------------------------------------
+  exists          no such path            exists (index=$M)   *1*
+  * take $M (same as "keep stage0").
+  ----------------------------------------------------------
+  exists          exists (index!=$H)      (does not matter)
+  * reject, because index does not match $H.
+  ----------------------------------------------------------
+  exists          exists (index=$H)       no such path        *2*
+  * path is removed.
+  ----------------------------------------------------------
+  exists          exists (index=$H)       exists
+  * take stage2.
+  ----------------------------------------------------------
 
-Diverged from 000182eacf99cde27d5916aa415921924b82972c by Linus Torvalds <torvalds@ppc970.osdl.org>
----
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -40,20 +40,48 @@ static void show_commit(struct commit *c
- 	}
- }
- 
-+#define STOP     0
-+#define CONTINUE 1
-+#define DO       2
-+
-+static int filter_commit(struct commit * commit)
-+{
-+	if (commit->object.flags & UNINTERESTING)
-+		return CONTINUE;
-+	if (min_age != -1 && (commit->date > min_age))
-+		return CONTINUE;
-+	if (max_age != -1 && (commit->date < max_age))
-+		return STOP;
-+	if (max_count != -1 && !max_count--)
-+		return STOP;
-+
-+	return DO;
-+}
-+
-+static int process_commit(struct commit * commit)
-+{
-+	int action=filter_commit(commit);
-+
-+	if (action == STOP) {
-+		return STOP;
-+	}
-+
-+	if (action == CONTINUE) {
-+		return CONTINUE;
-+	}
-+
-+	show_commit(commit);
-+
-+	return CONTINUE;
-+}
-+
- static void show_commit_list(struct commit_list *list)
- {
- 	while (list) {
- 		struct commit *commit = pop_most_recent_commit(&list, SEEN);
- 
--		if (commit->object.flags & UNINTERESTING)
--			continue;
--		if (min_age != -1 && (commit->date > min_age))
--			continue;
--		if (max_age != -1 && (commit->date < max_age))
-+		if (process_commit(commit) == STOP)
- 			break;
--		if (max_count != -1 && !max_count--)
--			break;
--		show_commit(commit);
- 	}
- }
- 
-@@ -110,6 +138,8 @@ static enum cmit_fmt get_commit_format(c
- 	if (!strcmp(arg, "=short"))
- 		return CMIT_FMT_SHORT;
- 	usage(rev_list_usage);	
-+
-+	return CMIT_FMT_DEFAULT;
- }			
- 
- 
+Does the above matrix represent the intended behaviour?
+
+I think I understand why we would want *0*, but this asymmetry
+feels wrong.
+
+I am having trouble with the case *1*.  This would call
+twoway_check with !seen_stage1 and it says OK, because the
+merged tree has the same contents as what we started with.  Is
+it to help the case where" the merged tree changes things the
+same way we already have as our local change" case?
+
+Also I am not sure if the code does the right thing for case
+*2*.  If I am reading the code right, for such a path, we will
+see stage0 and stage1, and at that point say seen_stage1 = 1 and
+keep stage0 entry in "old".  Then we continue on to the next
+path.  When it happens to be:
+
+    - stage0: we barf because we still have our "old".
+
+    - stage1: we barf because our "old" does not match the new
+      path; !path_matches(old,ce) triggers.
+
+    - stage2: we barf because our "old" does not match the new
+      path; twoway_check(old, seen_stage1, ce) triggers.
+
+Only when such a "exists-exists-removed" were the last entry,
+the control falls out of the loop and "unmatched with a new
+entry?"  check takes care of it without barfing.  The path is
+removed which is what I understand you want to happen in the
+case *2*.
+
+Maybe my version of intended behaviour for case *2* is wrong,
+but then I do not understand why.
+
+I'll do a similar matrix for three-way merge case later and
+probably ask more questions.
+
