@@ -1,66 +1,60 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] cg-commit: prefix pathspec argument with --
-Date: Mon, 6 Jun 2005 23:32:52 +0200
-Message-ID: <20050606213252.GB3498@diku.dk>
-References: <20050606212700.GA3498@diku.dk>
+From: Timo Hirvonen <tihirvon@ee.oulu.fi>
+Subject: duplicate htons() in check_file_directory_conflict()
+Date: Mon, 06 Jun 2005 23:02:46 +0000
+Message-ID: <1118098966l.5384l.0l@garlic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 23:31:53 2005
+Content-Type: text/plain; charset=us-ascii; DelSp=Yes; Format=Flowed
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Jun 07 01:00:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfP9t-0002Hv-RT
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 23:29:22 +0200
+	id 1DfQZF-0006cy-Tj
+	for gcvg-git@gmane.org; Tue, 07 Jun 2005 00:59:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261269AbVFFVc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 17:32:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVFFVc4
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 17:32:56 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:10691 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261269AbVFFVcx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 17:32:53 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id D50B56E166B; Mon,  6 Jun 2005 23:32:08 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 9DAB96E14C0; Mon,  6 Jun 2005 23:32:08 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 29BFD61FE0; Mon,  6 Jun 2005 23:32:52 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050606212700.GA3498@diku.dk>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261163AbVFFXDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 19:03:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261741AbVFFXDD
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 19:03:03 -0400
+Received: from marski.suomi.net ([212.50.131.142]:58763 "EHLO marski.suomi.net")
+	by vger.kernel.org with ESMTP id S261163AbVFFXCw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 19:02:52 -0400
+Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
+ by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
+ with ESMTP id <0IHO00CATQIO6DE0@marski.suomi.net> for git@vger.kernel.org;
+ Tue, 07 Jun 2005 01:59:12 +0300 (EEST)
+Received: from garlic (addr-82-128-203-168.suomi.net [82.128.203.168])
+	by spam1.suomi.net (Postfix) with ESMTP id 375CC1A20E9	for
+ <git@vger.kernel.org>; Tue, 07 Jun 2005 02:02:47 +0300 (EEST)
+To: git@vger.kernel.org
+X-Mailer: Balsa 2.2.6
+Content-disposition: inline
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Not virus scanned: please contact OPOY for details
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.291,	required 5,
+ autolearn=not spam, AWL 0.81, BAYES_00 -4.90,	UNWANTED_LANGUAGE_BODY 1.80)
+X-MailScanner-From: tihirvon@ee.oulu.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Make cg-commit handle files beginning with dashes.
+Hi,
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
+create_ce_flags() macro calls htons() so the htons()s in  
+check_file_directory_conflict() should be removed or alternatively htons  
+should be removed from the create_ce_flags macro. I noticed the bug when  
+compiling cogito with -Wshadow.
 
-[ Obviously depends on the patch I sent previously. ]
+read-cache.c:208
+        pos = cache_name_pos(pathbuf,
+                             htons(create_ce_flags(len, stage)));
 
- cg-commit |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/cg-commit b/cg-commit
---- a/cg-commit
-+++ b/cg-commit
-@@ -110,7 +110,7 @@ if [ "$1" ]; then
- 	[ "$ignorecache" ] && die "-C and listing files to commit does not make sense"
- 	[ -s $_git/merging ] && die "cannot commit individual files when merging"
- 
--	eval commitfiles=($(git-diff-cache -r -m HEAD "$@" | \
-+	eval commitfiles=($(git-diff-cache -r -m HEAD -- "$@" | \
- 		sed 's/^\([^	]*\)\(.	.*\)\(	.*\)*$/"\2"/'))
- 	customfiles=1
- 
+read-cache.c:232
+        pos = cache_name_pos(path,
+                             htons(create_ce_flags(namelen, stage)));
+
 -- 
-Jonas Fonseca
+http://onion.dynserv.net/~timo/
+
+
