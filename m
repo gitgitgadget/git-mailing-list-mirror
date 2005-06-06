@@ -1,59 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Modify git-rev-list ... in merge order [ repost with
- bug fixes ]
-Date: Sun, 5 Jun 2005 18:43:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506051842310.1876@ppc970.osdl.org>
-References: <20050605134733.3123.qmail@blackcubes.dyndns.org> 
- <Pine.LNX.4.58.0506051741190.1876@ppc970.osdl.org> <2cfc4032050605180958fcf395@mail.gmail.com>
+From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+Subject: Re: Last mile for 1.0
+Date: Mon, 6 Jun 2005 07:43:56 +0200
+Message-ID: <20050606054356.GB3669@cip.informatik.uni-erlangen.de>
+References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org> <7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 06 03:38:37 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 06 07:41:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Df6ZD-0005q9-PN
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 03:38:16 +0200
+	id 1DfALm-0000lo-8K
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 07:40:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261152AbVFFBlp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 5 Jun 2005 21:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261159AbVFFBlp
-	(ORCPT <rfc822;git-outgoing>); Sun, 5 Jun 2005 21:41:45 -0400
-Received: from fire.osdl.org ([65.172.181.4]:2774 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261152AbVFFBln (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Jun 2005 21:41:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j561fejA008633
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 5 Jun 2005 18:41:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j561fdVh000934;
-	Sun, 5 Jun 2005 18:41:39 -0700
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc4032050605180958fcf395@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261180AbVFFFoK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 01:44:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261183AbVFFFoK
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 01:44:10 -0400
+Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:37007 "EHLO
+	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
+	id S261180AbVFFFoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Jun 2005 01:44:06 -0400
+Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j565huS8010922
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 6 Jun 2005 05:43:57 GMT
+Received: (from sithglan@localhost)
+	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j565huaR010921;
+	Mon, 6 Jun 2005 07:43:56 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
+> >  - "What happens when a merge goes wrong" helper script Jeff
+> >    wanted to have in *4*.
 
-On Mon, 6 Jun 2005, Jon Seymour wrote:
-> 
-> My rationale was to re-use both the filtering logic currently in the
-> show_commit_list while loop and the display logic, since I need both
-> in order to maximise compatibility with the standard algorithm.
+> Does anybody have any suggestions? Preferably with a reasonable 
+> test-case, so that people can try it out.. Maybe just leaving the merge 
+> failures where they are?
 
-It's obviously ok to re-use the filtering, I'm just objecting to putting
-it into a function that is really unrelated to filtering..
+I think the simplest and effectivies way to handle this is the
+following: Add a flag to the current merge script which indicates that
+on conflicts the user will be dropped to a shell per conflict to solve:
 
-> My plan, therefore, is to split the filtering logic from
-> show_commit_list's while loop into a separate function and create a
-> third function which calls the filtering logic, then show_commit.
+	- Checkout filename.LOCAL, filename.REMOTE, filename.GCA (with
+	  sanitychecks of course (eg not overwriting existing files)
+	- Run merga -A on them and maybe wiggle and write the product in
+	  filename
+	- If the user resolves the conflict drop him a note to
+	  'update-cache' the resolved conflict and exit the subshell.
 
-Yes.
+I also have at the moment a very nice perl merge script which works with
+multiple heads, duplicates and stuff. Maybe I should write this down in
+bash.
 
-		Linus
+The above approach worked out very good at least for me. I often had to
+resolve 'simple' conflicts when pulling in upstream changes from Linus
+repo.
+
+	Thomas
