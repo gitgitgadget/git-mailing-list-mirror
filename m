@@ -1,113 +1,79 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: [PATCH] Make git-diff-tree --pretty
-Date: Mon, 06 Jun 2005 23:16:31 +0200
-Message-ID: <d82e8d$km9$1@sea.gmane.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] git-diff-cache: handle pathspec beginning with a dash
+Date: Mon, 6 Jun 2005 23:27:00 +0200
+Message-ID: <20050606212700.GA3498@diku.dk>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------040104090004090708040502"
-X-From: git-owner@vger.kernel.org Mon Jun 06 23:17:44 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jun 06 23:24:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfOx8-0000QB-VW
-	for gcvg-git@gmane.org; Mon, 06 Jun 2005 23:16:11 +0200
+	id 1DfP4K-0001Zm-7c
+	for gcvg-git@gmane.org; Mon, 06 Jun 2005 23:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261685AbVFFVTn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 6 Jun 2005 17:19:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVFFVTn
-	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 17:19:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:49597 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261685AbVFFVTT (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 17:19:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DfOvK-0000CH-CE
-	for git@vger.kernel.org; Mon, 06 Jun 2005 23:14:18 +0200
-Received: from c80-217-52-214.cm-upc.chello.se ([80.217.52.214])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Jun 2005 23:14:18 +0200
-Received: from holmsand by c80-217-52-214.cm-upc.chello.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 06 Jun 2005 23:14:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S261639AbVFFV1L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 6 Jun 2005 17:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261690AbVFFV1L
+	(ORCPT <rfc822;git-outgoing>); Mon, 6 Jun 2005 17:27:11 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:47041 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261639AbVFFV1B (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Jun 2005 17:27:01 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 5D1A06E1750; Mon,  6 Jun 2005 23:26:17 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP id 274CF6E16F5
+	for <git@vger.kernel.org>; Mon,  6 Jun 2005 23:26:17 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id A271E61FE0; Mon,  6 Jun 2005 23:27:00 +0200 (CEST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c80-217-52-214.cm-upc.chello.se
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------040104090004090708040502
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Parse everything after '--' as tree name or pathspec.
 
-Make git-diff-tree --pretty[=[short|medium|raw]] work as in
-git-rev-list.
-
-Also suppress duplicate newline in 'git-diff-tree -s' output.
-
-Signed-off-by: Dan Holmsand <holmsand@gmail.com>
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
 
---------------040104090004090708040502
-Content-Type: text/plain;
- name="diff-tree.patch.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="diff-tree.patch.txt"
+ diff-cache.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
- diff-tree.c |   22 +++++++++++++++++++++-
- 1 files changed, 21 insertions(+), 1 deletions(-)
-
-diff --git a/diff-tree.c b/diff-tree.c
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -323,7 +323,8 @@ static char *generate_header(const char 
- 	offset = sprintf(this_header, "%s%s (from %s)\n", header_prefix, commit, parent);
- 	if (verbose_header) {
- 		offset += pretty_print_commit(commit_format, msg, len, this_header + offset, sizeof(this_header) - offset);
--		this_header[offset++] = '\n';
-+		if (diff_output_format != DIFF_FORMAT_NO_OUTPUT)
-+			this_header[offset++] = '\n';
- 		this_header[offset++] = 0;
- 	}
+diff --git a/diff-cache.c b/diff-cache.c
+--- a/diff-cache.c
++++ b/diff-cache.c
+@@ -167,13 +167,14 @@ int main(int argc, const char **argv)
+ 	void *tree;
+ 	unsigned long size;
+ 	int ret;
++	int allow_options = 1;
+ 	int i;
  
-@@ -400,6 +401,19 @@ static int diff_tree_stdin(char *line)
- static char *diff_tree_usage =
- "git-diff-tree [-p] [-r] [-z] [--stdin] [-M] [-C] [-R] [-S<string>] [-O<orderfile>] [-m] [-s] [-v] [-t] <tree-ish> <tree-ish>";
+ 	read_cache();
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
  
-+static enum cmit_fmt get_commit_format(const char *arg)
-+{
-+	if (!*arg)
-+		return CMIT_FMT_DEFAULT;
-+	if (!strcmp(arg, "=raw"))
-+		return CMIT_FMT_RAW;
-+	if (!strcmp(arg, "=medium"))
-+		return CMIT_FMT_MEDIUM;
-+	if (!strcmp(arg, "=short"))
-+		return CMIT_FMT_SHORT;
-+	usage(diff_tree_usage);	
-+}			
-+
- int main(int argc, const char **argv)
- {
- 	int nr_sha1;
-@@ -492,6 +506,12 @@ int main(int argc, const char **argv)
- 			header_prefix = "diff-tree ";
+-		if (*arg != '-') {
++		if (!allow_options || *arg != '-') {
+ 			if (tree_name) {
+ 				pathspec = argv + i;
+ 				break;
+@@ -182,6 +183,10 @@ int main(int argc, const char **argv)
  			continue;
  		}
-+		if (!strncmp(arg, "--pretty", 8)) {
-+			commit_format = get_commit_format(arg+8);
-+			verbose_header = 1;
-+			header_prefix = "diff-tree ";
+ 			
++		if (!strcmp(arg, "--")) {
++			allow_options = 0;
 +			continue;
 +		}
- 		if (!strcmp(arg, "--stdin")) {
- 			read_stdin = 1;
+ 		if (!strcmp(arg, "-r")) {
+ 			/* We accept the -r flag just to look like git-diff-tree */
  			continue;
-
---------------040104090004090708040502--
-
+-- 
+Jonas Fonseca
