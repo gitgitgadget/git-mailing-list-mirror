@@ -1,63 +1,45 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: git bug?
-Date: Thu, 09 Jun 2005 04:01:45 -0400
-Message-ID: <42A7F769.2050800@pobox.com>
-References: <42A7E7AD.5030108@pobox.com>	<7vy89kq96o.fsf@assigned-by-dhcp.cox.net> <7vzmu0otg8.fsf@assigned-by-dhcp.cox.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Question: mode on git-resolve-script - it's intentionally non-executable, right?
+Date: Wed, 8 Jun 2005 02:04:56 +1000
+Message-ID: <2cfc4032050607090420146ee0@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 12:14:16 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Jun 09 12:16:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgHv8-0004hC-7o
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:57:47 +0200
+	id 1DgIcl-00006W-0C
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 10:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262318AbVFIIBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 04:01:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262323AbVFIIBv
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 04:01:51 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:65492 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S262318AbVFIIBt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 04:01:49 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DgHz2-0004bG-Ba; Thu, 09 Jun 2005 08:01:48 +0000
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vzmu0otg8.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.0 (/)
+	id S261540AbVFIIqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 04:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262286AbVFIIqu
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 04:46:50 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:15526 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261540AbVFIIqt convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 04:46:49 -0400
+Received: by rproxy.gmail.com with SMTP id i8so41477rne
+        for <git@vger.kernel.org>; Thu, 09 Jun 2005 01:46:49 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZB85Cbdl4QQEjVbaiv/RccZzkYZcrE2EUPnueyY6WnFJAdIYnIr1x95BbWKapZNh7FjXc8SRWANADbOnTKp63eQRlAZxJhaPVSgc7f9Z4MwGnWyunU3fIhLwMYYClRPB/CpH5j62QysKLXv+vUJ1zFpYLbXeEnjf2yv2Y0vAJ6I=
+Received: by 10.38.203.29 with SMTP id a29mr3189684rng;
+        Tue, 07 Jun 2005 09:04:56 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Tue, 7 Jun 2005 09:04:56 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jeff, I assume you are talking about this part:
-> 
-> 
->>>diff --git a/arch/arm/mm/minicache.c b/arch/arm/mm/minicache.c
->>>deleted file mode 100644
->>>diff --git a/drivers/scsi/libata-core.c b/drivers/scsi/libata-core.c
-> 
-> 
-> that does not have anything between "deleted file..." and the
-> next diff about libata-core.c.
-> 
-> In short, this is not really a "bug", but I am open to
-> suggestions for improvements (but you need to talk Linus into
-> accepting the changes, because changing this would also affect
-> his "git-apply" program as well).
+Can someone confirm that the mode on git-resolve-script is
+intentionally non-executable, so as to prevent glitches when git is
+used to maintain git?
 
-It's a bug and a new behavior.
-
-'git-diff-cache -p HEAD' should not show files that I have not modified.
-
-This screws up
-	git-diff-cache -p HEAD | diffstat -p1 | awk '{print $1}'
-for example.
-
-	Jeff
-
-
+jon.
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
