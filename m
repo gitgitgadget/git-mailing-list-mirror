@@ -1,52 +1,53 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Add support for --wrt-author, --author and --exclude-author switches to git-rev-list
-Date: Wed, 8 Jun 2005 01:58:05 +1000
-Message-ID: <2cfc4032050607085861bea2aa@mail.gmail.com>
-References: <20050607091523.14051.qmail@blackcubes.dyndns.org>
-	 <20050607094947.GC2676@pasky.ji.cz>
-	 <2cfc403205060702594da21fb1@mail.gmail.com>
-	 <2cfc403205060702596dee7341@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 3/4] Generic support for pulling refs
+Date: Tue, 7 Jun 2005 12:45:03 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506071134450.30848-100000@iabervon.org>
+References: <1118150337.8970.49.camel@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Jun 07 17:57:14 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: GIT Mailling list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 07 18:43:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfgPW-0000YC-LS
-	for gcvg-git@gmane.org; Tue, 07 Jun 2005 17:54:38 +0200
+	id 1Dfh9v-0000lm-CU
+	for gcvg-git@gmane.org; Tue, 07 Jun 2005 18:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261919AbVFGP6S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Jun 2005 11:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261918AbVFGP6S
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 11:58:18 -0400
-Received: from rproxy.gmail.com ([64.233.170.207]:44371 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261919AbVFGP6H convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 7 Jun 2005 11:58:07 -0400
-Received: by rproxy.gmail.com with SMTP id i8so247454rne
-        for <git@vger.kernel.org>; Tue, 07 Jun 2005 08:58:05 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LHoyIvlEpod6ymN5WFATRKPIvMZLFFeqJTdAZQQ17nNyNSfQt5gB+jZgipcqywLfY2y9mqbZuhRPQ8QYmz1+wUajfngvfD8ntt6U2gG8FnTGKeZc3P4ara8ghVQcXvjxOgXhrPAQxU5OTytTlR3dyTGum2gl5LmRbiIkRJzSUEM=
-Received: by 10.38.11.34 with SMTP id 34mr3120204rnk;
-        Tue, 07 Jun 2005 08:58:05 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Tue, 7 Jun 2005 08:58:05 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <2cfc403205060702596dee7341@mail.gmail.com>
-Content-Disposition: inline
+	id S261880AbVFGQqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Jun 2005 12:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261931AbVFGQqQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 12:46:16 -0400
+Received: from iabervon.org ([66.92.72.58]:34564 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261880AbVFGQqN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2005 12:46:13 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DfhCJ-00065U-00; Tue, 7 Jun 2005 12:45:03 -0400
+To: "McMullan, Jason" <jason.mcmullan@timesys.com>
+In-Reply-To: <1118150337.8970.49.camel@jmcmullan.timesys>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> --wrt-author helps to reconstruct the merge-history from the
-> perspective of each individual committer.
+On Tue, 7 Jun 2005, McMullan, Jason wrote:
+
+> Well, looks like you beat me to the punch, Daniel!
 > 
+> I hereby concede the Deathmatch to git-ssh-pu{sh,ll}, and withdraw
+> git-sync from consideration.
+> 
+> Way to go Daniel!
+> 
+> "Welcome to Git Thunderdome. Two codes enter, one code leaves."
 
-Correction:
+Of course, my secret is that I actually wrote it all in advance, so I just
+had to polish it up, rebase, and document the program that was already
+in...
 
---wrt-author helps to reconstruct the merge-history from the
-perspective of each individual author.
+Back on topic, are there things you need that git-ssh-* doesn't do? It
+would still be good to get the code to write objects to temporary files
+until they're determined to be valid.
 
-jon.
+	-Daniel
+*This .sig left intentionally blank*
+
