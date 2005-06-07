@@ -1,53 +1,59 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 3/4] Generic support for pulling refs
-Date: Tue, 7 Jun 2005 12:45:03 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506071134450.30848-100000@iabervon.org>
-References: <1118150337.8970.49.camel@jmcmullan.timesys>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add missing Documentation/*
+Date: Tue, 07 Jun 2005 11:50:06 -0700
+Message-ID: <7vvf4qhuht.fsf@assigned-by-dhcp.cox.net>
+References: <20050607141736.GA2157@jmcmullan.timesys>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT Mailling list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 07 18:43:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 07 20:48:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dfh9v-0000lm-CU
-	for gcvg-git@gmane.org; Tue, 07 Jun 2005 18:42:35 +0200
+	id 1Dfj5t-0004B6-8x
+	for gcvg-git@gmane.org; Tue, 07 Jun 2005 20:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261880AbVFGQqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Jun 2005 12:46:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261931AbVFGQqQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 12:46:16 -0400
-Received: from iabervon.org ([66.92.72.58]:34564 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261880AbVFGQqN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Jun 2005 12:46:13 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DfhCJ-00065U-00; Tue, 7 Jun 2005 12:45:03 -0400
-To: "McMullan, Jason" <jason.mcmullan@timesys.com>
-In-Reply-To: <1118150337.8970.49.camel@jmcmullan.timesys>
+	id S261880AbVFGSuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Jun 2005 14:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261953AbVFGSuP
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 14:50:15 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:17881 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261880AbVFGSuI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2005 14:50:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050607185007.HAKC7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Jun 2005 14:50:07 -0400
+To: Jason McMullan <jason.mcmullan@timesys.com>
+In-Reply-To: <20050607141736.GA2157@jmcmullan.timesys> (Jason McMullan's
+ message of "Tue, 7 Jun 2005 10:17:36 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 7 Jun 2005, McMullan, Jason wrote:
 
-> Well, looks like you beat me to the punch, Daniel!
-> 
-> I hereby concede the Deathmatch to git-ssh-pu{sh,ll}, and withdraw
-> git-sync from consideration.
-> 
-> Way to go Daniel!
-> 
-> "Welcome to Git Thunderdome. Two codes enter, one code leaves."
++Documentation
++--------------
++Documentation by Jason McMullan and the git-list <git@vger.kernel.org>.
 
-Of course, my secret is that I actually wrote it all in advance, so I just
-had to polish it up, rebase, and document the program that was already
-in...
+I would suggest dropping "and the git-list" and the rest from
+all the new files.  The doc is by you, at least until somebody
+else mucks on it.
 
-Back on topic, are there things you need that git-ssh-* doesn't do? It
-would still be good to get the code to write objects to temporary files
-until they're determined to be valid.
++++ b/Documentation/git-get-tar-commit-id.txt
+@@ -0,0 +1,29 @@
++DESCRIPTION
++-----------
++This shows the commit ID embedded in a git-tar-tree generated file.
++
++Author
++------
++Written by Linus Torvalds <torvalds@osdl.org>
 
-	-Daniel
-*This .sig left intentionally blank*
+This is by Rene Scharfe.  There is no single line from Linus in
+the source file get-tar-commit-id.c, according to my "surviving
+line counter".
 
