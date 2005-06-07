@@ -1,62 +1,40 @@
-From: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Subject: Re: [PATCH 0/4] Writing refs in git-ssh-push
-Date: Tue, 7 Jun 2005 09:30:45 +0200
-Message-ID: <20050607073045.GZ3669@cip.informatik.uni-erlangen.de>
-References: <Pine.LNX.4.21.0506061616590.30848-100000@iabervon.org> <Pine.LNX.4.58.0506062008560.2286@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Deprecate old environment variable names before 1.0?
+Date: Tue, 07 Jun 2005 00:57:45 -0700
+Message-ID: <7vbr6ilhty.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 07 09:28:09 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 07 09:55:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfYUf-0007Ja-Vy
-	for gcvg-git@gmane.org; Tue, 07 Jun 2005 09:27:26 +0200
+	id 1DfYuU-0001po-0O
+	for gcvg-git@gmane.org; Tue, 07 Jun 2005 09:54:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261629AbVFGHbF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 7 Jun 2005 03:31:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261691AbVFGHbF
-	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 03:31:05 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:19365 "EHLO
-	faui03.informatik.uni-erlangen.de") by vger.kernel.org with ESMTP
-	id S261629AbVFGHa6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Jun 2005 03:30:58 -0400
-Received: from faui03.informatik.uni-erlangen.de (faui03.informatik.uni-erlangen.de [131.188.30.103])
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) with ESMTP id j577UkS8028115
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 7 Jun 2005 07:30:46 GMT
-Received: (from sithglan@localhost)
-	by faui03.informatik.uni-erlangen.de (8.12.9/8.12.9) id j577Ujvn028114;
-	Tue, 7 Jun 2005 09:30:45 +0200 (CEST)
+	id S261589AbVFGH5s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 7 Jun 2005 03:57:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261688AbVFGH5s
+	(ORCPT <rfc822;git-outgoing>); Tue, 7 Jun 2005 03:57:48 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:24802 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261589AbVFGH5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Jun 2005 03:57:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050607075744.UGUN12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 7 Jun 2005 03:57:44 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506062008560.2286@ppc970.osdl.org>
-User-Agent: Mutt/1.5.9i
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+I am wondering if we want to remove support for deprecated
+environment variable names before 1.0.  The big rename happened
+on May 9th and it will be about a month now.
 
-> 	PATH=$PATH:~/bin in my .bashrc,
 
-this should work because ssh executes a *not* login shell when you execute a
-remote command. And bash reads .bashrc always and .bash_profile only for login
-shell. Is bash your login shell?
 
-For me it works:
 
-(excalibur) [~] cat .bashrc
-export PATH=$PATH:~/bin
-(excalibur) [~] ssh localhost env | grep PATH
-PATH=/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/home/cip/adm/sithglan/bin
-
-In university I had to put the following in my .cshrc (because I have tcsh as
-login shell and can't change it) to make bk push and stuff working:
-
-(faui00u) [~] cat .cshrc
-setenv PATH /opt/csw/bin:/usr/X11R6/bin:/sbin:/usr/bin:/usr/sbin:/local/bin:/bin:/local/bitkeeper/bin
-
-	Thomas
