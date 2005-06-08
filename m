@@ -1,52 +1,83 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Add support for --wrt-author, --author and --exclude-author switches to git-rev-list
-Date: Wed, 8 Jun 2005 21:14:19 +1000
-Message-ID: <2cfc40320506080414303d6d7b@mail.gmail.com>
-References: <20050607091523.14051.qmail@blackcubes.dyndns.org>
-	 <20050607094947.GC2676@pasky.ji.cz>
-	 <2cfc403205060702594da21fb1@mail.gmail.com>
-	 <20050608085834.GC7916@pasky.ji.cz>
-	 <2cfc403205060802315ba2433a@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: "McMullan, Jason" <jason.mcmullan@timesys.com>
+Subject: Re: [PATCH] Add missing Documentation/*
+Date: Wed, 08 Jun 2005 08:26:32 -0400
+Message-ID: <1118233592.7564.1.camel@jmcmullan.timesys>
+References: <20050607141736.GA2157@jmcmullan.timesys> <7vvf4qhuht.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 13:12:35 2005
+Content-Type: multipart/signed;
+	boundary="=-Mmg+8QAZinKU5SS5rcCi";
+	micalg=pgp-sha1;
+	protocol="application/pgp-signature"
+Cc: "GIT Mailling list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 08 14:25:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfySc-0007Qa-Qo
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 13:11:03 +0200
+	id 1Dfzb8-00089J-43
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 14:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262173AbVFHLOd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 07:14:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262171AbVFHLOc
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 07:14:32 -0400
-Received: from rproxy.gmail.com ([64.233.170.193]:24157 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262172AbVFHLOW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 07:14:22 -0400
-Received: by rproxy.gmail.com with SMTP id i8so243744rne
-        for <git@vger.kernel.org>; Wed, 08 Jun 2005 04:14:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=N2p1oMIBufDz+zpX9YwXWjIQCIEGdnV64kZAHOWTifwh5BpLJzmT24w3dICsT6dd4luBPGye+02EqDDSVTYdsRcr+iEPgH/AWD9NHFSBx0ksskswolonohV/m/6E3fNcrjOhM1AaMGg7p/vy3IVyqDRorDbcCQClq5223emKgAI=
-Received: by 10.38.97.66 with SMTP id u66mr3619969rnb;
-        Wed, 08 Jun 2005 04:14:19 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Wed, 8 Jun 2005 04:14:19 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <2cfc403205060802315ba2433a@mail.gmail.com>
-Content-Disposition: inline
+	id S262196AbVFHM1b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 08:27:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262195AbVFHM1b
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 08:27:31 -0400
+Received: from mail.timesys.com ([65.117.135.102]:61247 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S262196AbVFHM0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2005 08:26:39 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
+Received: from jmcmullan by owa.timesys.com; 08 Jun 2005 08:26:33 -0400
+In-Reply-To: <7vvf4qhuht.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.0.4-3mdk 
+Content-Class: urn:content-classes:message
+X-Mailer: Evolution 2.0.4-3mdk 
+Date: Wed, 8 Jun 2005 08:19:27 -0400
+Message-ID: <1118233592.7564.1.camel@jmcmullan.timesys>
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Add missing Documentation/*
+thread-index: AcVsJFCmz6mBteGORcaNk/pAlGWTmA==
+To: "Junio C Hamano" <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Pasky,
 
-Hey, I was thinking, instead of stop-at-author, how about we call it
-prune-at-author instead?
+--=-Mmg+8QAZinKU5SS5rcCi
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
+On Tue, 2005-06-07 at 11:50 -0700, Junio C Hamano wrote:
+> I would suggest dropping "and the git-list" and the rest from
+> all the new files.  The doc is by you, at least until somebody
+> else mucks on it.
 
-jon.
+Understood. AFAICT, 'and the git-list' was convention.
+
+
+> +++ b/Documentation/git-get-tar-commit-id.txt
+>
+> This is by Rene Scharfe.  There is no single line from Linus in
+> the source file get-tar-commit-id.c, according to my "surviving
+> line counter".
+
+Oops! I though I had 'de-Linused' all the ones he didn't do. Guess I
+missed one or two. Thanks for the catch!
+
+--=20
+Jason McMullan <jason.mcmullan@timesys.com>
+TimeSys Corporation
+
+
+--=-Mmg+8QAZinKU5SS5rcCi
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
+
+iD8DBQBCpuP48/0vJ5szK6kRArlyAKC8Y7oQH32DDwTXmNZTYX9YntyOVwCgxcto
+AXvp7YES1QpcpgxE6+0WkE4=
+=yWng
+-----END PGP SIGNATURE-----
+
+--=-Mmg+8QAZinKU5SS5rcCi--
