@@ -1,129 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: 3-way read-tree case matrix.
-Date: Tue, 07 Jun 2005 22:32:48 -0700
-Message-ID: <7v7jh5ct1b.fsf@assigned-by-dhcp.cox.net>
-References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org>
-	<7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
-	<20050606054356.GB3669@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0506052300350.1876@ppc970.osdl.org>
-	<20050606064456.GC3669@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0506052351470.1876@ppc970.osdl.org>
-	<7vekbgufra.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506060730510.1876@ppc970.osdl.org>
-	<7vy89ns354.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506061312520.1876@ppc970.osdl.org>
-	<Pine.LNX.4.58.0506061403170.1876@ppc970.osdl.org>
-	<7vekbfnot9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506061453400.1876@ppc970.osdl.org>
-	<7vy89mlmsv.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vis0qk2jo.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506070808180.2286@ppc970.osdl.o
+From: Eugene Surovegin <ebs@ebshome.net>
+Subject: [PATCH] fix cg-commit new file handling
+Date: Tue, 7 Jun 2005 22:59:42 -0700
+Message-ID: <20050608055942.GA7151@gate.ebshome.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 07:29:35 2005
+X-From: git-owner@vger.kernel.org Wed Jun 08 07:56:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dft7k-0004fm-UK
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 07:29:09 +0200
+	id 1DftXa-00076p-J2
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 07:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262108AbVFHFdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 01:33:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262109AbVFHFdA
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 01:33:00 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:43745 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262108AbVFHFcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2005 01:32:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050608053248.JHHN22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Jun 2005 01:32:48 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vzmu1ec7w.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 07 Jun 2005 20:53:07 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262114AbVFHF7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 01:59:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262111AbVFHF7p
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 01:59:45 -0400
+Received: from gate.ebshome.net ([64.81.67.12]:63364 "EHLO gate.ebshome.net")
+	by vger.kernel.org with ESMTP id S262115AbVFHF7n (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 01:59:43 -0400
+Received: (qmail 8453 invoked by uid 1000); 7 Jun 2005 22:59:42 -0700
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-ICQ-UIN: 1193073
+X-Operating-System: Linux i686
+X-PGP-Key: http://www.ebshome.net/pubkey.asc
+User-Agent: Mutt/1.5.5.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I suspect my mailer dropped your response on the floor when it
-polled my ISP at around 21:27 my time.  I found its log
-mentioning your address but no message in my mailbox.
+Hi!
 
-Since the last message I sent you, I updated read-tree.c to
-match the proposed behaviour, and I found a couple of problems
-with it by running the 3-way merge test we already have.  I am
-attaching a revised one.  I have not finished a new test suite
-that runs on a populated index file yet, which is what I plan to
-do next.
+There is a problem with committing new files with the current cogito 
+version.
 
-There is one thing that the proposed table changes from the
-traditional 3-way merge semantics.  I think this is a sensible
-change.
+I got an error like this: 
+  fatal: Unable to add arch/ppc/kernel/dcr.S to database
 
- - #2 and #3 (I botched #3 in the earlier one I sent you);
-   traditionally we left <O,H,M>=<none,none,exists> and
-   <O,H,M>=<none,exists,none> cases to the script policy; we
-   could salvage a (potentially dirty) cache entry if we say we
-   pick the one created in only one branch.
+I think this is caused by the incorrect file list parsing in 
+cg-commit precommit_update(): it expects new files prefixed with "A", 
+while they are prefixed with "N".
 
-Earlier I botched <O,H,M>=<some,H!=O,M!=O> case in the table; we
-should collapse to H/M if H==M; this is now handled differently
-from H!=O,M!=O,H!=M case (case #10) as case #11 in the updated
-table.
+The following trivial patch fixes this.
 
-------------
+Signed-off-by: Eugene Surovegin <ebs@ebshome.net>
 
-"git-diff-tree -m O H M"
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -227,7 +227,7 @@ precommit_update () {
+ 	for file in "$@"; do
+ 		op=${file%% *}
+ 		fname=${file#* }
+-		[ "$op" = "A" ] || [ "$op" = "D" ] || [ "$op" = "M" ] || op=M
++		[ "$op" = "N" ] || [ "$op" = "D" ] || [ "$op" = "M" ] || op=M
+ 		eval "queue$op[\${#queue$op[@]}]=\"\$fname\""
+ 	done
+ 	# XXX: Do we even need to do the --add and --remove update-caches?
 
-    O       H       M         result      index requirements
-------------------------------------------------------------------
-  1 missing missing missing   -           must not exist.
- -----------------------------------------------------------------
-  2 missing missing exists    take M      must match M, if exists.
- -----------------------------------------------------------------
-  3 missing exists  missing   take H      must match H, if exists.
- -----------------------------------------------------------------
-  4 missing exists  exists    no merge    must match H and be
-					  up-to-date, if exists.
- -----------------------------------------------------------------
-  5 exists  missing missing   no merge    must not exist.
- -----------------------------------------------------------------
-  6 exists  missing O==M      remove      must not exist.
- -----------------------------------------------------------------
-  7 exists  missing O!=M      no merge    must not exist.
- -----------------------------------------------------------------
-  8 exists  O==H    missing   remove      must match H and be
-					  up-to-date, if exists.
- -----------------------------------------------------------------
-  9 exists  O!=H    missing   no merge    must match H and be
-					  up-to-date, if exists.
- -----------------------------------------------------------------
- 10 exists  O!=H    O!=M      no merge    must match H and be
-		    M!=H		  up-to-date, if exists.
- -----------------------------------------------------------------
- 11 exists  O!=H    O!=M      take H	  must match H, if exists.
-		    M==H
- -----------------------------------------------------------------
- 12 exists  O!=H    O==M      take H      must match H, if exists.
- -----------------------------------------------------------------
- 13 exists  O==H    O!=M      take M      if exists, must either (1)
-    					  match H and be up-to-date,
-                                          or (2) match M.
- -----------------------------------------------------------------
- 14 exists  O==H    O==M      take M      must match H if exists.
-------------------------------------------------------------------
-
-In all "take H" or "take M" cases, if the original index matches
-what is taken, I would reuse it, and keep it dirty if it is.
-
-The goal is, "(a) do not clobber the current index; (b) arrive
-at the same result as in the case started with an empty index;
-(c) favor success over failure as long as (a) and (b) are
-satisfied."
 
