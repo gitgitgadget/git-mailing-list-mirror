@@ -1,70 +1,57 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Handling merge conflicts a bit more gracefully..
-Date: Wed, 8 Jun 2005 16:35:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
- <7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
+From: Dan Holmsand <holmsand@gmail.com>
+Subject: Re: [ANNOUNCE] Cogito-0.11.2
+Date: Thu, 09 Jun 2005 01:35:03 +0200
+Message-ID: <42A780A7.3060608@gmail.com>
+References: <20050608230725.GR982@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 01:31:03 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 09 01:34:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg9zu-0005D0-JZ
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 01:30:10 +0200
+	id 1DgA33-0005YN-3d
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 01:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261393AbVFHXeG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 19:34:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261527AbVFHXeG
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 19:34:06 -0400
-Received: from fire.osdl.org ([65.172.181.4]:11906 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261393AbVFHXeC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 19:34:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j58NXhjA003214
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 8 Jun 2005 16:33:44 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j58NXgnS024811;
-	Wed, 8 Jun 2005 16:33:43 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261567AbVFHXhN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 19:37:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261541AbVFHXhN
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 19:37:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:65253 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261540AbVFHXg7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 19:36:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DgA16-0005Lj-M2
+	for git@vger.kernel.org; Thu, 09 Jun 2005 01:31:24 +0200
+Received: from 81-224-201-139-no45.tbcn.telia.com ([81.224.201.139])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Jun 2005 01:31:24 +0200
+Received: from holmsand by 81-224-201-139-no45.tbcn.telia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Jun 2005 01:31:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 81-224-201-139-no45.tbcn.telia.com
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
+In-Reply-To: <20050608230725.GR982@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Petr Baudis wrote:
+>   Here's git-rev-list --pretty HEAD ^cogito-0.11.1 | git-shortlog
+> (BTW, Dan, what about another cg-log option for git-shortlog output? ;-):
 
+Well, since I try to use the same output format as git-rev-list --pretty 
+does (most of the time, it *is* just that...), I can actually already do
 
-On Wed, 8 Jun 2005, Junio C Hamano wrote:
->  # Deleted in both.
-> 
-> Making sure that the path does not exist in the work tree with
-> test -f "$4" would be more sensible, before running --remove.
+    cg-log -r:cogito-0.11.1 | git-shortlog
 
-Yeah, my (broken) thinking was that since it wasn't in both, it wasn't in 
-the working directory either, but you're right, that's just crazy talk. 
-There could be a stale file there.
+and get the same thing.
 
-Made it do a
+/dan
 
-	rm -f -- "$4" || exit 1
-
-instead (and changed the other one to do the "|| exit 1" too, since you're 
-also obviously right on the directory issue).
-
->  # Modified in both, but differently.
-> +	merge -p "$src1" "$orig" "$src2" > "$4"
-> 
-> Again, make sure "$4" is not a directory before redirecting into
-> it from merge, so that you can tell merge failures from it?
-
-Hmm.. What's the cleanest way to check for redirection errors, but still
-be able to distinguish those cleanly from "merge" itself returning an
-error?
-
-			Linus
