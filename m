@@ -1,46 +1,61 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] simple one-liner for README file
-Date: Wed, 8 Jun 2005 20:53:36 +0200
-Message-ID: <20050608185336.GH982@pasky.ji.cz>
-References: <42A03D84.4020601@antselovich.com>
+Subject: Re: [RFC] Removing git-*.html references from manpages
+Date: Wed, 8 Jun 2005 20:59:14 +0200
+Message-ID: <20050608185914.GJ982@pasky.ji.cz>
+References: <20050527225850.GA25491@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:51:57 2005
+Cc: David Greaves <david@dgreaves.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 20:57:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg5cg-000194-W0
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 20:49:55 +0200
+	id 1Dg5i0-00026o-7P
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 20:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261527AbVFHSxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 14:53:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261532AbVFHSxo
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 14:53:44 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:46559 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261527AbVFHSxi (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 14:53:38 -0400
-Received: (qmail 6543 invoked by uid 2001); 8 Jun 2005 18:53:36 -0000
-To: Konstantin Antselovich <konstantin@antselovich.com>
+	id S261532AbVFHS7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 14:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261535AbVFHS7U
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 14:59:20 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:52703 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261532AbVFHS7Q (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 14:59:16 -0400
+Received: (qmail 7005 invoked by uid 2001); 8 Jun 2005 18:59:14 -0000
+To: Jonas Fonseca <fonseca@diku.dk>
 Content-Disposition: inline
-In-Reply-To: <42A03D84.4020601@antselovich.com>
+In-Reply-To: <20050527225850.GA25491@diku.dk>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jun 03, 2005 at 01:22:44PM CEST, I got a letter
-where Konstantin Antselovich <konstantin@antselovich.com> told me that...
-> Hi Petr,
+Dear diary, on Sat, May 28, 2005 at 12:58:50AM CEST, I got a letter
+where Jonas Fonseca <fonseca@diku.dk> told me that...
+> Hello,
 
-Hello,
+Hi,
 
-> I noticed a very small error in README file.
-> I'm not sure if I should submit is as a patch, as
-> it's just a change to one line.  (but I attached a patch anyways)
+> What do you think?
 
-thanks, fixed.
+so, what do people think? It sounds as a good thing, but I miss any
+discussion. I assume that means everyone likes it? ;-)
+
+> --- a/Documentation/git.txt  (mode:100644)
+> +++ b/Documentation/git.txt  (mode:100644)
+> @@ -39,34 +39,34 @@
+>  
+>  Manipulation commands
+>  ~~~~~~~~~~~~~~~~~~~~~
+> -link:git-checkout-cache.html[git-checkout-cache]::
+> +gitlink:git-checkout-cache.html[git-checkout-cache]::
+>  	Copy files from the cache to the working directory
+
+So wasn't the point that this would rather be
+
+	+gitlink:git-checkout-cache::
+
+than to what you change it to now?
 
 -- 
 				Petr "Pasky" Baudis
