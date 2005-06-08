@@ -1,43 +1,46 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Anal retentive 'const unsigned char *sha1'
-Date: Wed, 8 Jun 2005 20:52:19 +0200
-Message-ID: <20050608185219.GG982@pasky.ji.cz>
-References: <20050603150539.GA3239@jmcmullan.timesys>
+Subject: Re: [PATCH] simple one-liner for README file
+Date: Wed, 8 Jun 2005 20:53:36 +0200
+Message-ID: <20050608185336.GH982@pasky.ji.cz>
+References: <42A03D84.4020601@antselovich.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jason McMullan <jason.mcmullan@timesys.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 20:50:40 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 20:51:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg5bK-0000mI-QM
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 20:48:31 +0200
+	id 1Dg5cg-000194-W0
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 20:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261520AbVFHSwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 14:52:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261522AbVFHSwY
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 14:52:24 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44767 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261520AbVFHSwU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 14:52:20 -0400
-Received: (qmail 6373 invoked by uid 2001); 8 Jun 2005 18:52:19 -0000
-To: torvalds@osdl.org
+	id S261527AbVFHSxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 14:53:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261532AbVFHSxo
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 14:53:44 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:46559 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261527AbVFHSxi (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 14:53:38 -0400
+Received: (qmail 6543 invoked by uid 2001); 8 Jun 2005 18:53:36 -0000
+To: Konstantin Antselovich <konstantin@antselovich.com>
 Content-Disposition: inline
-In-Reply-To: <20050603150539.GA3239@jmcmullan.timesys>
+In-Reply-To: <42A03D84.4020601@antselovich.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jun 03, 2005 at 05:05:39PM CEST, I got a letter
-where Jason McMullan <jason.mcmullan@timesys.com> told me that...
-> Anal Retentive: make 'sha1' parameters const where possible
-> 
-> Signed-off-by: Jason McMullan <jason.mcmullan@timesys.com>
+Dear diary, on Fri, Jun 03, 2005 at 01:22:44PM CEST, I got a letter
+where Konstantin Antselovich <konstantin@antselovich.com> told me that...
+> Hi Petr,
 
-This seems as a generally Good Thing (tm). const is nice, isn't it?
-Any particular reason for not applying it?
+Hello,
+
+> I noticed a very small error in README file.
+> I'm not sure if I should submit is as a patch, as
+> it's just a change to one line.  (but I attached a patch anyways)
+
+thanks, fixed.
 
 -- 
 				Petr "Pasky" Baudis
