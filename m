@@ -1,228 +1,120 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: [ANNOUNCE] Cogito-0.11.2
-Date: Thu, 9 Jun 2005 01:07:25 +0200
-Message-ID: <20050608230725.GR982@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Handling merge conflicts a bit more gracefully..
+Date: Wed, 08 Jun 2005 16:07:47 -0700
+Message-ID: <7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jun 09 01:06:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 09 01:07:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg9bH-0002V3-Ce
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 01:04:43 +0200
+	id 1Dg9bf-0002Xq-TJ
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 01:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261379AbVFHXId (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 19:08:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261419AbVFHXId
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 19:08:33 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:26596 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261379AbVFHXH2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 19:07:28 -0400
-Received: (qmail 9635 invoked by uid 2001); 8 Jun 2005 23:07:25 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261450AbVFHXJB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 19:09:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261420AbVFHXJB
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 19:09:01 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:57848 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261450AbVFHXHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2005 19:07:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050608230748.SQFN1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 8 Jun 2005 19:07:48 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org> (Linus
+ Torvalds's message of "Wed, 8 Jun 2005 13:55:23 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  Hello,
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-  I'm happy to announce Cogito-0.11.2, next version of my SCMish layer
-over Linus' GIT tree history storage tool. You can get it as usual on
+LT> What happens now in the case of a merge conflict is:
+LT>  - the merge is obviously not committed
+LT>  - we do all the successful merges, and update the index file for them
+LT>  - for the files that conflict, we force the index to contain the old
+LT>    version of the file (ie we remove the merge from the index), and we
+LT>    write the (failed) output of the merge into the working directory, and
+LT>    we complain loudly:
 
-	kernel.org/pub/software/scm/cogito/
+LT> Comments? It would be good to have people test this and maybe even write a 
+LT> few automated tests that it all works as expected..
 
-or by doing cg-update in your cogito.git repository.
+OK, I'll bite.  Other than some minor details, the work tree
+seems to be updated with the result of the merge, either
+successful one or failed one.
 
-  The changes include especially some bugfixes and portability and
-performance enhancements, as well as all the sweet stuff from Linus.
+2a68a8659f7dc55fd285d235ae2d19e7a8116c30 \
+(from f9e7750621ca5e067f58a679caff5ff2f9881c4c)
+diff --git a/git-merge-one-file-script b/git-merge-one-file-script
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -19,22 +19,25 @@ case "${1:-.}${2:-.}${3:-.}" in
+ # Deleted in both.
+ #
+ "$1..")
+-	echo "ERROR: $4 is removed in both branches."
+-	echo "ERROR: This is a potential rename conflict."
+-	exit 1;;
++	echo "WARNING: $4 is removed in both branches."
++	echo "WARNING: This is a potential rename conflict."
++	exec git-update-cache --remove -- "$4" ;;
 
-  Note that I discovered a bug few minutes after releasing (as usual).
-cg-log won't work correctly if ran with some files specified (the
-"cg-log file" usage). I think it actually does not get used like this so
-frequently, so I don't think it's worth another release by itself. But
-expect new release as soon as some non-trivial amount of bugfixes piles
-up (including core git bugfixes), quite soon hopefully.
+Making sure that the path does not exist in the work tree with
+test -f "$4" would be more sensible, before running --remove.
 
+ #
+ # Deleted in one and unchanged in the other.
+ #
+ "$1.." | "$1.$1" | "$1$1.")
+ 	echo "Removing $4"
+-	exec git-update-cache --force-remove "$4" ;;
++	rm -f -- "$4"
++	exec git-update-cache --remove -- "$4" ;;
 
-  Here's git-rev-list --pretty HEAD ^cogito-0.11.1 | git-shortlog
-(BTW, Dan, what about another cg-log option for git-shortlog output? ;-):
+Make sure "$4" is not a directory, perhaps?  At least barf if
+that 'rm -f -- "$4"' fails?
 
+ #
+ # Modified in both, but differently.
+ #
 
-C. Cooke:
-  Check whether the git repository is present before executing the command
+@@ -55,19 +60,21 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	orig=`git-unpack-file $1`
+ 	src1=`git-unpack-file $2`
+ 	src2=`git-unpack-file $3`
+-	merge "$src2" "$orig" "$src1"
++	merge -p "$src1" "$orig" "$src2" > "$4"
+ 	ret=$?
++	rm -f -- "$orig" "$src1" "$src2"
+ 	if [ "$6" != "$7" ]; then
+ 		echo "ERROR: Permissions $5->$6->$7 don't match."
++		ret=1
+ 	fi
+ 	if [ $ret -ne 0 ]; then
+-		echo "ERROR: Leaving conflict merge in $src2."
++		# Reset the index to the first branch, making
++		# git-diff-file useful
++		git-update-cache --add --cacheinfo "$6" "$2" "$4"
++		echo "ERROR: Merge conflict in $4."
+ 		exit 1
+ 	fi
+-	sha1=`git-write-blob "$src2"` || {
+-		echo "ERROR: Leaving conflict merge in $src2."
+-	}
+-	exec git-update-cache --add --cacheinfo "$6" $sha1 "$4" ;;
++	exec git-update-cache --add -- "$4" ;;
+ *)
+ 	echo "ERROR: Not handling case $4: $1 -> $2 -> $3" ;;
+ esac
 
-Catalin Marinas:
-  cg-commit: Fix the log file readin from stdin
-  [PATCH Cogito] Add -f parameter also to cg-update
+Again, make sure "$4" is not a directory before redirecting into
+it from merge, so that you can tell merge failures from it?
 
-Chris Wedgwood:
-  cogitio: sh != bash
-
-Christian Meder:
-  Miniscule correction of diff-format.txt
-
-Dan Holmsand:
-  Make cg-add use xargs -0
-
-Daniel Barkalow:
-  Document git-ssh-pull and git-ssh-push
-  -w support for git-ssh-pull/push
-  Generic support for pulling refs
-  rsh.c environment variable
-  Operations on refs
-  ssh-protocol version, command types, response code
-
-Eugene Surovegin:
-  fix cg-commit new file handling
-
-Jason McMullan:
-  Anal retentive 'const unsigned char *sha1'
-  Modify git-rev-list to linearise the commit history in merge order.
-
-Jon Seymour:
-  three --merge-order bug fixes
-
-Jonas Fonseca:
-  cg-commit: prefix pathspec argument with --
-  git-diff-cache: handle pathspec beginning with a dash
-  git-diff-cache: handle pathspec beginning with a dash
-  cg-log: cleanup line wrapping by using bash internals
-  Documentation improvements
-  Misc cg-log documentation fixes
-  Cleanup commit messages with git-stripspace
-  [PATCH 10/10] Add -s option to show log summary
-  [PATCH 9/10] Move file matching inside the loop.
-  [PATCH 8/10] Move the username matching inside the loop
-  [PATCH 7/10] Move log printing to separate function
-  [PATCH 6/10] Remove the catch all rule
-  [PATCH 5/10] Move printing of the commit info line inside the loop
-  [PATCH 4/10] First parse all commit header entries then print them
-  [PATCH 3/10] Separate handling of author and committer in commit headers
-  [PATCH 2/10] Separate handling of tree and parent in commit headers
-  [PATCH 1/10] Cleanup conversion to human readable date
-  cg-Xnormid: support revision ids specified by date
-
-Junio C Hamano:
-  Tests: read-tree -m test updates.
-  Documentation: describe diff tweaking (fix).
-  Start cvs-migration documentation
-  read-tree: update documentation for 3-way merge.
-  read-tree: save more user hassles during fast-forward.
-  index locking like everybody else
-  3-way merge tests for new "git-read-tree -m"?
-  rename git-rpush and git-rpull to git-ssh-push and git-ssh-pull
-  Documentation: describe git extended diff headers.
-  Documentation: describe diff tweaking.
-  pull: gracefully recover from delta retrieval failure.
-  diffcore-break.c: various fixes.
-  diff.c: -B argument passing fix.
-  diff.c: locate_size_cache() fix.
-  diff: Update -B heuristics.
-  diff: Clean up diff_scoreopt_parse().
-  diff: Fix docs and add -O to diff-helper.
-  Tweak count-delta interface
-  Find size of SHA1 object without inflating everything.
-  Handle deltified object correctly in git-*-pull family.
-
-Linus Torvalds:
-  Remove MERGE_HEAD after committing merge
-  Make "git commit" work correctly in the presense of a manual merge
-  cvs-migration: add more of a header to the "annotate" discussion
-  Leave merge failures in the filesystem
-  Fix SIGSEGV on unmerged files in git-diff-files -p
-  Make default merge messages denser.
-  git-apply: creatign empty files is nonfatal
-  Talk about "git cvsimport" in the cvs migration docs
-  git-read-tree: -u without -m is meaningless. Don't allow it.
-  git-read-tree: make one-way merge also honor the "update" flag
-  Add CVS import scripts and programs
-  git-ssh-push/pull: usability improvements
-  git-resolve-script: stop when the automated merge fails
-  Make fetch/pull scripts terminate cleanly on errors
-  git-resolve-script: don't wait for three seconds any more
-  git-read-tree: some "final" cleanups
-  git-read-tree: simplify merge loops enormously
-  Add "__noreturn__" attribute to die() and usage()
-  git-rev-list: make sure to link with ssl libraries
-  Fix off-by-one in new three-way-merge updates
-  Three-way merge: fix silly bug that made trivial merges not work
-  Fix entry.c dependency and compile problem
-  git-read-tree: fix up two-way merge
-  More work on merging with git-read-tree..
-  Make fiel checkout function available to the git library
-  git-read-tree: fix up three-way merge tests
-  git-read-tree: be a lot more careful about merging dirty trees
-  diff 'rename' format change.
-  git-apply: consider it an error to apply no changes
-  git-apply: fix rename header parsing
-  git-apply: actually apply patches and update the index
-  git-apply: fix apply of a new file
-  git-apply: find offset fragments, and really apply them
-  git-apply: first cut at actually checking fragment data
-  git-fsck-cache: complain if no default references found
-  pretty_print_commit: add different formats
-  git-shortlog: add name translations for 'sparse' repo
-  Add git-shortlog perl script
-  git-rev-list: allow arbitrary head selections, use git-rev-tree syntax
-  Clarify git-diff-cache semantics in the tutorial.
-
-Mark Allen:
-  Modify cg-Xlib for non-GNU date.
-
-Michal Rokos:
-  [cogito] Sync objects only when needed
-  [cogito] paged output for cg-diff
-  Abstracted out $PAGER invocation to a pager() function
-
-Petr Baudis:
-  Fix cg-log called on specified files
-  cogito-0.11.2
-  Added trivial cg wrapper
-  Use portable sed stuff in cg-log Signed-off-by highlighting
-  showdate() now uses $(()) instead of $(expr)
-  Fixed cg-log -u
-  cg-merge now sometimes allows tree merge + local changes
-  Add the t6001 testcase which got missed out at the last merge.
-  Move commit line processing to process_commit_line
-  Improved cg-Xmergefile
-  Fix git-merge-one-file permissions auto-merging
-  Fix cg-patch reverting file removal
-  Reindent print_commit_log() body
-  cg-log is now pure git-rev-list --pretty=raw frontend
-  Fix cg-commit doing shell expansion on -m arguments
-  Fix mismerged git-r* -> git-ssh-* rename in Makefile
-  Move print_commit_log() in cg-log
-  Fix an errorneous cg-clone example in the README
-  Make git-update-cache --force-remove regular
-  Portability sed fix in cg-commit
-  Improve git-rev-list --header output
-  Implement cg-rm -n for untracking files
-  Fixed cg-Xnormid " " call
-  cg-commit now updates cache separately for different change types
-  Pass revisions to commit-id, parent-id, tree-id and cg-Xnormid quoted
-  Do rm -f in make uninstall
-  make dist will now produce tarball with sensible name
-
-Rene Scharfe:
-  git-tar-tree: do only basic tests in t/t5000-git-tar-tree.sh
-  git-tar-tree: fix write_trailer
-  git-tar-tree: add a test case
-  git-tar-tree: small doc update
-  git-tar-tree: cleanup write_trailer()
-
-Sven Verdoolaege:
-  git-cvs2git: create tags
-
-Timo Hirvonen:
-  Use ntohs instead of htons to convert ce_flags to host byte order
-
-
-  Have fun,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-<Espy> be careful, some twit might quote you out of context..
