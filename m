@@ -1,70 +1,98 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: git/cogito usage scenarios for CVS refugee
-Date: Wed, 8 Jun 2005 21:51:17 +1200
-Message-ID: <46a038f9050608025152af4163@mail.gmail.com>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] Add support for --wrt-author, --author and --exclude-author switches to git-rev-list
+Date: Wed, 8 Jun 2005 20:52:49 +1000
+Message-ID: <2cfc40320506080352f50d351@mail.gmail.com>
+References: <20050607091523.14051.qmail@blackcubes.dyndns.org>
+	 <20050607094947.GC2676@pasky.ji.cz>
+	 <2cfc403205060702594da21fb1@mail.gmail.com>
+	 <20050608085834.GC7916@pasky.ji.cz>
+	 <2cfc403205060802315ba2433a@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Jun 08 11:48:56 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 12:49:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dfx9q-0006xK-Qi
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 11:47:35 +0200
+	id 1Dfy7H-0005Dg-4Q
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 12:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262126AbVFHJvV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 05:51:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262149AbVFHJvV
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 05:51:21 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:42256 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262126AbVFHJvR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 05:51:17 -0400
-Received: by rproxy.gmail.com with SMTP id i8so226021rne
-        for <git@vger.kernel.org>; Wed, 08 Jun 2005 02:51:17 -0700 (PDT)
+	id S262156AbVFHKwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 06:52:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262168AbVFHKwz
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 06:52:55 -0400
+Received: from rproxy.gmail.com ([64.233.170.194]:51208 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262156AbVFHKwu convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 06:52:50 -0400
+Received: by rproxy.gmail.com with SMTP id i8so238915rne
+        for <git@vger.kernel.org>; Wed, 08 Jun 2005 03:52:50 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=jN+1FmN1C79mHAoD3nAYnCXmniaOZQzOsq10cT+iCtel5jmhcJ3qqeB0bXUBExgyKFUq453u64Cj/QfP3tLRQy/kG59QSkoHMdA3LujPJKiIAGn+lie0UdfmGWweibmZEI7M0PtBESFAKJaKJ4m5icCfyydZrMWs/7AONpRL5qs=
-Received: by 10.38.104.24 with SMTP id b24mr3585907rnc;
-        Wed, 08 Jun 2005 02:51:17 -0700 (PDT)
-Received: by 10.38.101.46 with HTTP; Wed, 8 Jun 2005 02:51:17 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H9rna+1THGZSqTFZ5V1KZlOuVScL2gfJJEUIfbDAuFVEDVV2o51W6Y0WFqz/CQfD2szZsWgYfEempyx3h9yP9Svi4K0OWCDGiZDDrCxxhhvqlb6/+YzOgnfmZ4uvIICYPd7h/jjAqEHruBubq/oQaQ2JKY+fubZlX/rsvvpLk9g=
+Received: by 10.38.75.73 with SMTP id x73mr197689rna;
+        Wed, 08 Jun 2005 03:52:50 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Wed, 8 Jun 2005 03:52:49 -0700 (PDT)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <2cfc403205060802315ba2433a@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Trying to get my head around what usage patterns the git
-infrastructure supports. I'm interested in exploring more git-centric
-approaches...
+Ok, this is how --wrt-author sorts your example:
 
-For a project that uses CVS with a classic HEAD and FOO_15_STABLE
-approach, where FOO_15_STABLE gets only fixes -- how do I manage HEAD
-and XX_STABLE where some patches that work well in HEAD I may decide
-to merge into XX_STABLE, and some security patch may be applied first
-to XX_STABLE and then to HEAD? I can apply the patch on both branches
--- yep. But does git help me in keeping track of what's been merged?
+(Original example transposed so that variable width fonts don't play
+havoc with the layout)
 
-Does git help in any way to keep track of patches across 2.6.11.12 and
-2.6.12rc5 ?
+a10 b9
+| \  |
+a9  b8
+|    |
+a8  b7
+|    | 
+a7  b6
+| /  |
+a6  b5
+| \  |
+a5  b4
+|    |
+a4  b3
+| \  |
+a3  b2
+|    |
+a2  b1
+| /
+a1
 
-In a git-based project, one developer is about to merge from someone
-else's tree, are there any tools to review the patchlog that is about
-to be applied (or replayed?) against his tree? Is there any way to say
-"of the 20 commits that I'm about to merge, hold off 2" other than
-letting git apply them ... and backing them out right next?
+with respect to a and b respectively
 
-And generally, is there any long-lived branch support? If I am to run
-a "local branch" of the Linux kernel, does git help me at all?
+A         B
 
-So far I think the answer is "no -- you'll need to keep track of your
-damn patches somewhere else" ;-) but there's a lot about the git
-mindset I don't quite understand yet. And I'm sure that the workflow
-of the Linux team must have some ancillary tools & strategies to keep
-track of this.
+| b9      | b9
+^ a10     ^ a10
+| b8      | a9
+| b7      | a8          
+| b6      | a7
+| b5      ^ b8
+^ a9      | b7
+| a8      | b6
+| a7      | a6
+| a6      | a5
+| b4      | a4
+| b3      | a3
+^ a5      | a2
+| a4      ^ b5
+| b2      | b4
+| b1      | b3
+^ a3      | b2
+| a2      | b1
+= a1      = a1
 
-cheers,
+In otherwords, B doesn't see any of A's changes after a1 until b6,
+whereas A sees some of B's changes at a4 and some at a6, then not
+again until a10.
 
-
-martin
+jon.
