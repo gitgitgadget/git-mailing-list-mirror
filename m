@@ -1,79 +1,68 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: git/cogito usage scenarios for CVS refugee
-Date: Thu, 9 Jun 2005 08:26:03 +1200
-Message-ID: <46a038f9050608132625803d@mail.gmail.com>
-References: <46a038f9050608025152af4163@mail.gmail.com>
-	 <20050608183414.GD982@pasky.ji.cz>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: [PATCH] Many new features for cg-diff and cg-log
+Date: Wed, 8 Jun 2005 22:40:13 +0200
+Message-ID: <20050608204012.GN982@pasky.ji.cz>
+References: <20050608144632.A28042@flint.arm.linux.org.uk> <tnxhdg8g6e1.fsf@arm.com> <20050608181747.GA982@pasky.ji.cz> <42A754D5.10705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 08 22:23:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 22:37:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg73z-0000fb-3H
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 22:22:11 +0200
+	id 1Dg7IW-00037L-D3
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 22:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261594AbVFHU0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 16:26:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261598AbVFHU0G
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 16:26:06 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:27681 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261594AbVFHU0D convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 16:26:03 -0400
-Received: by rproxy.gmail.com with SMTP id z35so224079rne
-        for <git@vger.kernel.org>; Wed, 08 Jun 2005 13:26:03 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YcLRzMp7xKd1PGRNQLHBixon4RbOOJjDgs8TiFuCBn+nNXvlf2Yn96/Bk4w/K/BuEEft12ROPpgtVjK+ecYzULohGkzV0TydGbiOD20PEbrZ5oBtBl8uHsD/Q+OsnXm+eljSYLX/OmPj1gpoy82/oFyGWiJBK5n4jAZVcrwVI74=
-Received: by 10.38.11.34 with SMTP id 34mr3859533rnk;
-        Wed, 08 Jun 2005 13:26:03 -0700 (PDT)
-Received: by 10.38.101.46 with HTTP; Wed, 8 Jun 2005 13:26:03 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050608183414.GD982@pasky.ji.cz>
+	id S261604AbVFHUks (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 16:40:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261605AbVFHUks
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 16:40:48 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:40673 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261604AbVFHUkS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 16:40:18 -0400
+Received: (qmail 1919 invoked by uid 2001); 8 Jun 2005 20:40:13 -0000
+To: Dan Holmsand <holmsand@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <42A754D5.10705@gmail.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 6/9/05, Petr Baudis <pasky@ucw.cz> wrote:
-> The answer for all those questions is that git has no support for
-> cherrypicking (that sucks, but is hard to fix right now). git does ok
-> as long as one branch is superset of the other, but it does not help you
-> otherwise.
-
-Agreed -- there's no support for cherry picking. Is there some
-git-specific strategy perhaps?
-
-For example, when using cvs, which doesn't support cherry picking
-either, people running "stable" branches use a "merged" tag that they
-move around to indicate how far the bugfixes on the stable branch have
-been merged into head. It doesn't allow cherry picking, but it works
-and it is a valuable (if hackish) practice.
-
-> > And generally, is there any long-lived branch support? If I am to run
-> > a "local branch" of the Linux kernel, does git help me at all?
+Dear diary, on Wed, Jun 08, 2005 at 10:28:05PM CEST, I got a letter
+where Dan Holmsand <holmsand@gmail.com> told me that...
+> Petr Baudis wrote:
+> >FYI, I plan to release 0.11.2 this evening. I'll try to go through some
+> >more queued patches before and update cg-log to fully use git-rev-list.
 > 
-> I don't understand what do you mean. How does a long-lived branch differ
-> from a short-lived one and what support would you expect/like?
+> In that case, you might want to have a look at this patch. I've been 
+> tinkering with cg-log and cg-diff for some time, and just about got 
+> ready to send you a patch.
+> 
+> Sorry about the monster patch, but I wanted to get it to you quickly...
 
-Something along the lines of what I've mention above. I mean, not
-literally moving a tag around, but to have some basic suport to
-identify what the merge status is. As soon as we are one commit out of
-sync, git stops being useful.
+Well, it can always go to 0.11.3 or something.  I probably wouldn't take
+it to the tree just before release anyway even if you sent it split up,
+since due to the size of the changes, it's bound to have some hidden
+bugs. ;-)
 
-It doesn't need to happen inside git actually -- perhaps there is just
-enough support to add an identifier in each commit msg, so we could
-have ancillary scripts that perform some simple patch tracking for
-simple scenarios.
+> [PATCH] Many new features for cg-diff and cg-log
 
-When an automatic merge succeeds, does git bring in the commitmsg and
-a unique identifier of the commit?
+Ok, this is really too big. Could you please split it up some? Also,
+I've been hacking on cg-log too (and will make it use git-diff-tree -v
+yet this evening), so you'll need to update it to apply to the latest
+version.
 
-cheers,
+I like what's inside (at least from the description), though! (Well,
+mostly. But I'll comment on specific patches. No major objections.)
 
+> - Selection of ranges by date or maximum number of commits to show.
 
-martin
+Ad date, isn't that already supported now? The -r arguments can be a
+date. Ad maximum number of commits, what'd be its use?
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+C++: an octopus made by nailing extra legs onto a dog. -- Steve Taylor
