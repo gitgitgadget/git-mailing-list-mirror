@@ -1,98 +1,69 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: Re: [PATCH] Many new features for cg-diff and cg-log
-Date: Wed, 08 Jun 2005 23:03:24 +0200
-Message-ID: <42A75D1C.1060102@gmail.com>
-References: <20050608144632.A28042@flint.arm.linux.org.uk> <tnxhdg8g6e1.fsf@arm.com> <20050608181747.GA982@pasky.ji.cz> <42A754D5.10705@gmail.com> <20050608204012.GN982@pasky.ji.cz>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: [PATCH] Fix git-merge-one-file permissions auto-merging
+Date: Wed, 8 Jun 2005 23:26:55 +0200
+Message-ID: <20050608212655.GQ982@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Jun 08 23:04:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 08 23:23:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg7h9-0007rt-4B
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 23:02:39 +0200
+	id 1Dg80y-00033O-By
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 23:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261628AbVFHVGk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 17:06:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261633AbVFHVGk
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 17:06:40 -0400
-Received: from main.gmane.org ([80.91.229.2]:7821 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261628AbVFHVGg (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 17:06:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Dg7g5-0007cp-0t
-	for git@vger.kernel.org; Wed, 08 Jun 2005 23:01:33 +0200
-Received: from h65n2fls35o265.telia.com ([217.211.115.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Jun 2005 23:01:33 +0200
-Received: from holmsand by h65n2fls35o265.telia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Jun 2005 23:01:33 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: h65n2fls35o265.telia.com
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-In-Reply-To: <20050608204012.GN982@pasky.ji.cz>
+	id S261799AbVFHV1C (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 17:27:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261902AbVFHV1C
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 17:27:02 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:22498 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261799AbVFHV05 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 17:26:57 -0400
+Received: (qmail 11748 invoked by uid 2001); 8 Jun 2005 21:26:55 -0000
+To: torvalds@osdl.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
-> Dear diary, on Wed, Jun 08, 2005 at 10:28:05PM CEST, I got a letter
-> where Dan Holmsand <holmsand@gmail.com> told me that...
->>Sorry about the monster patch, but I wanted to get it to you quickly...
-> 
-> 
-> Well, it can always go to 0.11.3 or something.  I probably wouldn't take
-> it to the tree just before release anyway even if you sent it split up,
-> since due to the size of the changes, it's bound to have some hidden
-> bugs. ;-)
+In the automerge case, permissions were not restored properly after the
+merge tool was invoked and overwrote the target file.
 
-Nah... Seriously, that's a wise decision. I just saw that you we're 
-working on cg-log, and wanted to save you some potential doublework by 
-sending what I've got in a hurry.
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
 
-I have, however, been using this myself for quite some time, so it's 
-reasonably well tested.
+---
+commit d0a0933d6ed6190a767f6baad6c93aa79b3901b2
+tree 0a278964e7cd15b2f35b00551747c4908d65b244
+parent 9d6694e94c2ff7fc24ecb4124234cef6c6037ad5
+author Petr Baudis <pasky@ucw.cz> Wed, 08 Jun 2005 23:26:23 +0200
+committer Petr Baudis <xpasky@machine.sinus.cz> Wed, 08 Jun 2005 23:26:23 +0200
 
->>[PATCH] Many new features for cg-diff and cg-log
-> 
-> 
-> Ok, this is really too big. Could you please split it up some? Also,
-> I've been hacking on cg-log too (and will make it use git-diff-tree -v
-> yet this evening), so you'll need to update it to apply to the latest
-> version.
+ git-merge-one-file-script |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Sure. I'll try to split it up, somewhat (but the changes *are* pretty 
-inter-related...).
-> 
-> I like what's inside (at least from the description), though! (Well,
-> mostly. But I'll comment on specific patches. No major objections.)
-> 
-> 
->>- Selection of ranges by date or maximum number of commits to show.
-> 
-> 
-> Ad date, isn't that already supported now? The -r arguments can be a
-> date. Ad maximum number of commits, what'd be its use?
-> 
+diff --git a/git-merge-one-file-script b/git-merge-one-file-script
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -63,10 +63,14 @@ case "${1:-.}${2:-.}${3:-.}" in
+ 	merge -p "$src1" "$orig" "$src2" > "$4"
+ 	ret=$?
+ 	rm -f -- "$orig" "$src1" "$src2"
++
+ 	if [ "$6" != "$7" ]; then
+ 		echo "ERROR: Permissions $5->$6->$7 don't match."
+ 		ret=1
+ 	fi
++	case "$6" in *7??) mode=+x;; *) mode=-x;; esac
++	chmod "$mode" "$4"
++
+ 	if [ $ret -ne 0 ]; then
+ 		# Reset the index to the first branch, making
+ 		# git-diff-file useful
 
-The new date thing doesn't work very well for cg-log: it's hardcoded to 
-HEAD. That means that attempts to do, say, "cg-log -rorigin:-1day" will 
-not at all do what you want. Not to mention "cg-log -m -r-1day". And I 
-think it's a little clearer to separate the two: "cg-log -rorigin 
---max-age=-1day" (there's a short option too).
-
-Max number of commits is perhaps not all that useful, unless you want to 
-save cg-log output to file, for example. But it's easy to do :-)
-
-Oh, and I forgot to mention the "pickaxe" support. "cg-log -S foobar" 
-uses git-diff-tree -S to "search in diffs". Really very, very useful.
-
-/dan
-
+|
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
