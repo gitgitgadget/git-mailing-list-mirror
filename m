@@ -1,72 +1,57 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: [RFC] Removing git-*.html references from manpages
-Date: Wed, 08 Jun 2005 20:24:15 +0100
-Message-ID: <42A745DF.70104@dgreaves.com>
-References: <20050527225850.GA25491@diku.dk> <20050608185914.GJ982@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] git-diff-cache: handle pathspec beginning with a dash
+Date: Wed, 8 Jun 2005 13:00:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506081259580.2286@ppc970.osdl.org>
+References: <20050606212700.GA3498@diku.dk> <20050608184709.GE982@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 21:21:16 2005
+X-From: git-owner@vger.kernel.org Wed Jun 08 21:58:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dg662-0006b4-Og
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 21:20:15 +0200
+	id 1Dg6eR-0004KK-Jk
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 21:55:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261556AbVFHTYK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 15:24:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261561AbVFHTYK
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 15:24:10 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:31412 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261556AbVFHTYC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 15:24:02 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 5DCCEE6D9E; Wed,  8 Jun 2005 20:22:50 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 10234-05; Wed,  8 Jun 2005 20:22:50 +0100 (BST)
-Received: from oak.dgreaves.com (modem-2180.lemur.dialup.pol.co.uk [217.135.136.132])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id F2120E6D9F; Wed,  8 Jun 2005 20:22:47 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1Dg69j-0005ia-JR; Wed, 08 Jun 2005 20:24:03 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
+	id S261567AbVFHT7O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 15:59:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261586AbVFHT7O
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 15:59:14 -0400
+Received: from fire.osdl.org ([65.172.181.4]:29352 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261567AbVFHT65 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 15:58:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j58JwhjA015863
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 8 Jun 2005 12:58:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j58Jwg3k008045;
+	Wed, 8 Jun 2005 12:58:42 -0700
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050608185914.GJ982@pasky.ji.cz>
-X-Enigmail-Version: 0.91.0.0
+In-Reply-To: <20050608184709.GE982@pasky.ji.cz>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
 
->Dear diary, on Sat, May 28, 2005 at 12:58:50AM CEST, I got a letter
->where Jonas Fonseca <fonseca@diku.dk> told me that...
->  
->
->>Hello,
->>    
->>
->
->Hi,
->
->  
->
->>What do you think?
->>    
->>
->
->so, what do people think? It sounds as a good thing, but I miss any
->discussion. I assume that means everyone likes it? ;-)
->  
->
 
-I certainly like it :)
+On Wed, 8 Jun 2005, Petr Baudis wrote:
+>
+> Dear diary, on Mon, Jun 06, 2005 at 11:27:00PM CEST, I got a letter
+> where Jonas Fonseca <fonseca@diku.dk> told me that...
+> > Parse everything after '--' as tree name or pathspec.
+> > 
+> > Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> 
+> Thanks, applied to git-pb. Linus, any particular reason for holding this
+> off?
 
-Although I'm moving house at the moment so I'm somewhat behind...
+It seems to have gone only to the mailing list. I only glance through the 
+lists, and assume that if somebody wants me to apply a patch, they'll cc 
+me personally too..
 
-David
+		Linus
