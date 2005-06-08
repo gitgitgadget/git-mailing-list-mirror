@@ -1,83 +1,47 @@
-From: "McMullan, Jason" <jason.mcmullan@timesys.com>
-Subject: Re: [PATCH] Add missing Documentation/*
-Date: Wed, 08 Jun 2005 08:26:32 -0400
-Message-ID: <1118233592.7564.1.camel@jmcmullan.timesys>
-References: <20050607141736.GA2157@jmcmullan.timesys> <7vvf4qhuht.fsf@assigned-by-dhcp.cox.net>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: cogito-0.10 broken for cg-commit < logmessagefile
+Date: Wed, 8 Jun 2005 14:46:32 +0100
+Message-ID: <20050608144632.A28042@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-	boundary="=-Mmg+8QAZinKU5SS5rcCi";
-	micalg=pgp-sha1;
-	protocol="application/pgp-signature"
-Cc: "GIT Mailling list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 08 14:25:39 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Jun 08 15:49:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dfzb8-00089J-43
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 14:23:55 +0200
+	id 1Dg0qK-0002P0-Dj
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 15:43:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262196AbVFHM1b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 08:27:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262195AbVFHM1b
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 08:27:31 -0400
-Received: from mail.timesys.com ([65.117.135.102]:61247 "EHLO
-	exchange.timesys.com") by vger.kernel.org with ESMTP
-	id S262196AbVFHM0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2005 08:26:39 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.0.6375.0
-Received: from jmcmullan by owa.timesys.com; 08 Jun 2005 08:26:33 -0400
-In-Reply-To: <7vvf4qhuht.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.0.4-3mdk 
-Content-Class: urn:content-classes:message
-X-Mailer: Evolution 2.0.4-3mdk 
-Date: Wed, 8 Jun 2005 08:19:27 -0400
-Message-ID: <1118233592.7564.1.camel@jmcmullan.timesys>
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH] Add missing Documentation/*
-thread-index: AcVsJFCmz6mBteGORcaNk/pAlGWTmA==
-To: "Junio C Hamano" <junkio@cox.net>
+	id S261232AbVFHNqy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 09:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261242AbVFHNqy
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 09:46:54 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:30216 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261232AbVFHNqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Jun 2005 09:46:38 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1Dg0t7-00027Y-QJ
+	for git@vger.kernel.org; Wed, 08 Jun 2005 14:46:34 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1Dg0t6-0007pU-IO
+	for git@vger.kernel.org; Wed, 08 Jun 2005 14:46:32 +0100
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+The command in the subject prepends the log message with a blank line.
+This ain't good because it messes up commit messages as per Linus'
+requirements (the first line must be a summary.)
 
---=-Mmg+8QAZinKU5SS5rcCi
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Is this known about / has this been fixed in 0.11 ?
 
-On Tue, 2005-06-07 at 11:50 -0700, Junio C Hamano wrote:
-> I would suggest dropping "and the git-list" and the rest from
-> all the new files.  The doc is by you, at least until somebody
-> else mucks on it.
+(It's presently a blocking bug...)
 
-Understood. AFAICT, 'and the git-list' was convention.
+-- 
+Russell King
 
-
-> +++ b/Documentation/git-get-tar-commit-id.txt
->
-> This is by Rene Scharfe.  There is no single line from Linus in
-> the source file get-tar-commit-id.c, according to my "surviving
-> line counter".
-
-Oops! I though I had 'de-Linused' all the ones he didn't do. Guess I
-missed one or two. Thanks for the catch!
-
---=20
-Jason McMullan <jason.mcmullan@timesys.com>
-TimeSys Corporation
-
-
---=-Mmg+8QAZinKU5SS5rcCi
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.0 (GNU/Linux)
-
-iD8DBQBCpuP48/0vJ5szK6kRArlyAKC8Y7oQH32DDwTXmNZTYX9YntyOVwCgxcto
-AXvp7YES1QpcpgxE6+0WkE4=
-=yWng
------END PGP SIGNATURE-----
-
---=-Mmg+8QAZinKU5SS5rcCi--
