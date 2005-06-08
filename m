@@ -1,164 +1,129 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Tests: read-tree -m test updates.
-Date: Wed, 08 Jun 2005 02:08:54 -0700
-Message-ID: <7vwtp5b4gp.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7voeak1o0q.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506051509490.1876@ppc970.osdl.org>
-	<7vk6l8xue5.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506051658100.1876@ppc970.osdl.org>
-	<20050606054356.GB3669@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0506052300350.1876@ppc970.osdl.org>
-	<20050606064456.GC3669@cip.informatik.uni-erlangen.de>
-	<Pine.LNX.4.58.0506052351470.1876@ppc970.osdl.org>
-	<7vekbgufra.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506060730510.1876@ppc970.osdl.org>
-	<7vy89ns354.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506061312520.1876@ppc970.osdl.org>
-	<Pine.LNX.4.58.0506061403170.1876@ppc970.osdl.org>
-	<7vekbfnot9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506061453400.1876@ppc970.osdl.org>
-	<7vy89mlmsv.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vis0qk2jo.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506070808180.2286@ppc970.osdl.o
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] Add support for --wrt-author, --author and --exclude-author switches to git-rev-list
+Date: Wed, 8 Jun 2005 19:31:19 +1000
+Message-ID: <2cfc403205060802315ba2433a@mail.gmail.com>
+References: <20050607091523.14051.qmail@blackcubes.dyndns.org>
+	 <20050607094947.GC2676@pasky.ji.cz>
+	 <2cfc403205060702594da21fb1@mail.gmail.com>
+	 <20050608085834.GC7916@pasky.ji.cz>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 08 11:06:19 2005
+X-From: git-owner@vger.kernel.org Wed Jun 08 11:28:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DfwV1-0002ZL-3c
-	for gcvg-git@gmane.org; Wed, 08 Jun 2005 11:05:23 +0200
+	id 1Dfwqs-0004jS-93
+	for gcvg-git@gmane.org; Wed, 08 Jun 2005 11:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262147AbVFHJJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 8 Jun 2005 05:09:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262146AbVFHJJI
-	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 05:09:08 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:26586 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S262147AbVFHJIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Jun 2005 05:08:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050608090855.MHWE26972.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 8 Jun 2005 05:08:55 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7v7jh5ct1b.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 07 Jun 2005 22:32:48 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262152AbVFHJbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 8 Jun 2005 05:31:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262144AbVFHJbs
+	(ORCPT <rfc822;git-outgoing>); Wed, 8 Jun 2005 05:31:48 -0400
+Received: from rproxy.gmail.com ([64.233.170.193]:35227 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262152AbVFHJbV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 8 Jun 2005 05:31:21 -0400
+Received: by rproxy.gmail.com with SMTP id i8so221868rne
+        for <git@vger.kernel.org>; Wed, 08 Jun 2005 02:31:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VsxVqkJyBWMq+jnIHq3x5lDUm1pEI18z/5mfCzXqkj07IkP03I/1qv5LQnQ+GCt0Vf5RsA1nK84EbfGeY2R88mglExowUzwhrOZu58yFqd1VsJdoXprFrJyCkh9Zwp3C8R6uLe9OgRMifoZsqBVzcoc4QFhO5MjNSq+AnmOORfo=
+Received: by 10.38.104.24 with SMTP id b24mr3580550rnc;
+        Wed, 08 Jun 2005 02:31:19 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Wed, 8 Jun 2005 02:31:19 -0700 (PDT)
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050608085834.GC7916@pasky.ji.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This updates t1000 (basic 3-way merge test) to check the merge
-results for both successful cases (earlier one checked the
-result for only one of them).  Also fixes typos in t1002 that
-broke '&&' chain, potentially missing a test failure before the
-chain got broken.
+On 6/8/05, Petr Baudis <pasky@ucw.cz> wrote:
+> Dear diary, on Tue, Jun 07, 2005 at 11:59:36AM CEST, I got a letter
+> where Jon Seymour <jon.seymour@gmail.com> told me that...
+> > On 6/7/05, Petr Baudis <pasky@ucw.cz> wrote:
+> > > I'd prefer just --wrt-author and --exclude-author to take an argument on
+> > > their own.
+> >
+> > The reason I don't want to do this is that it doesn't really make
+> > sense in the context of the change to specify one author for
+> > --wrt-author and another for --exclude-author. In normal use --author
+> > defaults to GIT_AUTHOR_EMAIL or the locally derived user@host.domain.
+> > The  intention is simply to override this default derivation.
+> 
+> Hmm, then why not make it --wrt-author[=AUTHOR] ? Similar to the
+> --pretty option. BTW, can it do multiple author excludes now? The
+> commandline would look especially horrifying in that case now, I guess.
+> 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+No, it doesn't. I can see a use for multiple ^ arguments, but the use
+case for multiple --stop-at-author arguments doesn't strike me as
+being particularly useful. Multiple ^'s helps you prune the graph at
+places you already know about --stop-at-author allows you to prune the
+tree with respect to one author. It is particularly useful if you are
+the author concerned because you have some recollection of being of
+what you did last. I am not sure it is that useful to prune the tree
+with respect to multiple authors - the results would be somewhat
+unpredictable, I would think.
 
- t/t1000-read-tree-m-3way.sh   |   58 ++++++++++++++++++++---------------------
- t/t1002-read-tree-m-u-2way.sh |    4 +--
- 2 files changed, 30 insertions(+), 32 deletions(-)
+> I'd prefer --stop-at-author from the choices you offer in your other
+> mail.
+> 
 
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -77,34 +77,6 @@ In addition:
- ################################################################
- # Try merging and showing the various diffs
- 
--# The tree is dirty at this point.
--test_expect_failure \
--    '3-way merge with git-read-tree -m' \
--    "git-read-tree -m $tree_O $tree_A $tree_B"
--
--# This is done on an empty work directory, which is the normal
--# merge person behaviour.
--test_expect_success \
--    '3-way merge with git-read-tree -m' \
--    "rm -fr [NDMALTS][NDMALTSF] Z &&
--     rm .git/index &&
--     git-read-tree -m $tree_O $tree_A $tree_B"
--
--# This starts out with the first head, which is the normal
--# patch submitter behaviour.
--test_expect_success \
--    '3-way merge with git-read-tree -m' \
--    "git-read-tree $tree_A &&
--     git-checkout-cache -f -u -a &&
--     git-read-tree -m $tree_O $tree_A $tree_B"
--
--_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
--test_expect_success \
--    'git-ls-files --stage of the merge result' \
--    'git-ls-files --stage >current- &&
--     sed -e "s/ $_x40 / X /" <current- >current'
--
- cat >expected <<\EOF
- 100644 X 2	AA
- 100644 X 3	AA
-@@ -154,8 +126,34 @@ cat >expected <<\EOF
- 100644 X 0	Z/NN
- EOF
- 
-+_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-+
-+# The tree is dirty at this point.
-+test_expect_failure \
-+    '3-way merge with git-read-tree -m, dirty cache' \
-+    "git-read-tree -m $tree_O $tree_A $tree_B"
-+
-+# This is done on an empty work directory, which is the normal
-+# merge person behaviour.
-+test_expect_success \
-+    '3-way merge with git-read-tree -m, empty cache' \
-+    "rm -fr [NDMALTS][NDMALTSF] Z &&
-+     rm .git/index &&
-+     git-read-tree -m $tree_O $tree_A $tree_B &&
-+     git-ls-files --stage |
-+     sed -e 's/ $_x40 / X /' >current &&
-+     diff -u expected current"
-+
-+# This starts out with the first head, which is the normal
-+# patch submitter behaviour.
- test_expect_success \
--    'validate merge result' \
--    'diff current expected'
-+    '3-way merge with git-read-tree -m, match H' \
-+    "git-read-tree $tree_A &&
-+     git-checkout-cache -f -u -a &&
-+     git-read-tree -m $tree_O $tree_A $tree_B &&
-+     git-ls-files --stage |
-+     sed -e 's/ $_x40 / X /' >current &&
-+     diff -u expected current"
- 
- test_done
-diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
---- a/t/t1002-read-tree-m-u-2way.sh
-+++ b/t/t1002-read-tree-m-u-2way.sh
-@@ -93,7 +93,7 @@ test_expect_success \
-      compare_change 5diff.out expected &&
-      check_cache_at yomin dirty &&
-      sha1sum -c M.sha1 &&
--     : dirty index should have prevented -u from checking it out.
-+     : dirty index should have prevented -u from checking it out. &&
-      echo yomin yomin >yomin1 &&
-      diff yomin yomin1 &&
-      rm -f yomin1'
-@@ -122,7 +122,7 @@ test_expect_success \
-      diff --unified=0 M.out 7.out &&
-      check_cache_at frotz dirty &&
-      if sha1sum -c M.sha1; then false; else :; fi &&
--     : dirty index should have prevented -u from checking it out.
-+     : dirty index should have prevented -u from checking it out. &&
-      echo frotz frotz >frotz1 &&
-      diff frotz frotz1 &&
-      rm -f frotz1'
-------------
+Ok, unless I Linus or the list disagree I will modify my patch to be
+--stop-at-author.
 
+> > > (Note that I don't endorse this patch and the --wrt-author behaviour in
+> > > particular seems strange. I don't have enough time to comment on it
+> > > sensibly now, though. I'm just focusing on style here since I'd like to
+> > > still be able to read git's source code few weeks from now on.)
+> >
+> > The rationale for the change is as follows:
+> >
+> > During parallel development, one is aware of ones own
+> > changes...everyone else changes haven't happened yet as far as you are
+> > concerned. Only when they appear in a future merge that incorporates
+> > one's own changes do the other changes appear in your own workspace.
+> >
+> > As far as you are concerned, these changes occurred after you made
+> > your own - your changes were not dependent on those changes, only on
+> > those that came before. So the linearisation reflects that perceived
+> > ordering of changes.
+> >
+> > --wrt-author helps to reconstruct the merge-history from the
+> > perspective of each individual committer.
+> 
+> Yes, such motivation makes sense. But is the author field the right one?
+> If you are integrating a lot of other people's patches in particular, I
+> think it makes no sense whatsoever - you already reviewed and
+> consciously applied them, but your option will regard them as something
+> alien and merged from outside, right?
+> 
+> And, after all, the other branches might be _quite_ long-lived. I think
+> it would be confusing for the user if the commit graph looked like
+> 
+>   a1 -- a2 -- a3 -- a4 -- a5 -- a6 -- a7 -- a8 -- a9 -- a10
+>      \           /           /     \                 /
+>       - b1 -- b2 -- b3 -- b4 -- b5 -- b6 -- b7 -- b8 -- b9
+> 
+> If your patch first chooses b1, it then shows all of it, completely
+> ignoring a2, right? I can't see how that would be right - the subsequent
+> merges from a should be shown.
+
+No, that's not the intent of --wrt-author when specified without
+--stop-at-author.
+
+--wrt-author doesn't cause any commits to be ignored ... it simply
+changes the order
+in which they are displayed by altering the order in which parents are visited.
+
+I'll get it wrong if I do it by hand so I'll create a test case and
+show you what the default merge order would be, the --wrt-author
+--author=a and the --wrt-author --author=b cases.
+
+Stay tuned...
+
+jon.
