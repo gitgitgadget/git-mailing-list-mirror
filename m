@@ -1,73 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add support for author-oriented git-rev-list switches
- [rev 8]
-Date: Thu, 09 Jun 2005 13:35:42 -0700
-Message-ID: <7vy89jb74x.fsf@assigned-by-dhcp.cox.net>
-References: <20050609090141.21555.qmail@blackcubes.dyndns.org>
-	<2cfc403205060902373e5c284f@mail.gmail.com>
-	<2cfc4032050609085341e46242@mail.gmail.com>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [ANNOUNCE] Cogito-0.11.3
+Date: Thu, 9 Jun 2005 13:55:03 -0700
+Message-ID: <20050609205503.GJ5324@shell0.pdx.osdl.net>
+References: <20050609091909.GF29665@pasky.ji.cz> <42A81584.90605@antselovich.com> <42A83F0C.5020809@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jon.seymour@gmail.com,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Jun 09 22:32:37 2005
+Cc: git@vger.kernel.org,
+	Konstantin Antselovich <konstantin@antselovich.com>,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 09 22:53:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgThS-0006j7-Of
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 22:32:27 +0200
+	id 1DgU01-0001YC-TA
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 22:51:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262462AbVFIUg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 16:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262465AbVFIUg1
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 16:36:27 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:10181 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262462AbVFIUfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2005 16:35:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050609203543.OFDE1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Jun 2005 16:35:43 -0400
-To: jon@blackcubes.dyndns.org
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262464AbVFIUza (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 16:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262465AbVFIUza
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 16:55:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:10976 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262464AbVFIUzX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 16:55:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j59Kt4jA004053
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 9 Jun 2005 13:55:04 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j59Kt3BC021096;
+	Thu, 9 Jun 2005 13:55:03 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j59Kt3dV021095;
+	Thu, 9 Jun 2005 13:55:03 -0700
+To: Dan Holmsand <holmsand@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <42A83F0C.5020809@gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JS" == Jon Seymour <jon.seymour@gmail.com> writes:
+* Dan Holmsand (holmsand@gmail.com) wrote:
+> Konstantin Antselovich wrote:
+> >I have updated to Cogito-0.11.3, it compiles and runs
+> >but make test returns multiple error messages (see below)
+> 
+> There's a typo in rev-list.c. This fixes the tests for me:
 
-JS> test_output_expect_success
-JS> If you like, I'll generalize it and move it into testlib.sh
+This patch is white space damaged.  I fixed it, and added it to the
+cogito-0.11.3 rpm.  Below is the refreshed patch.
 
-Sounds sensible, and yes please I prefer to have it in
-testlib.sh, and you would get bonus points if you converted some
-(I do not demand you do all of them ;-)) existing cat/echo users
-while you are at it.
+thanks,
+-chris
+--
 
-Except for some minor points.
+From: Dan Holmsand <holmsand@gmail.com>
 
-I do not think use of "local" to help readability is absolutely
-necessary in this small function, and if it is a bashism, I
-prefer to see it written in a more portable form.  I was
-thinking about removing bashism from the test scripts, although
-I have not gotten around to actually doing it [*1*, *2*].
+There's a typo in rev-list.c. This fixes the tests for me:
 
-[Footnotes]
-
-*1* Auditing all the shell scripts to look for quoting bugs
-while eradicating bashism would be another good "Janitor"
-sub-project if somebody is interested on the list.
-
-I do not know what happend to other items on the Janitor project
-list.  Personally I liked the one Sean did to redo the command
-line parameters using argp.
-
-*2* Not that I claim what I have already written is bash free.
-I do not have a handy reference that lists which is bashism and
-which is in POSIX.  To stay away from bashism, I just try not to
-use certain things that I did not use when I was introduced to
-shell programming.  That list includes "${parameter#word}",
-"${!parameter}", "function" and "local".
-
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -218,7 +218,7 @@ int main(int argc, char **argv)
+ 			list = limit_list(list);
+ 		show_commit_list(list);
+ 	} else {
+-#ifdef NO_OPENSSL
++#ifndef NO_OPENSSL
+ 		if (sort_list_in_merge_order(list, &process_commit)) {
+ 			  die("merge order sort failed\n");
+ 		}
