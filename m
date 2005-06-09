@@ -1,82 +1,112 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitk-1.1 out
-Date: Thu, 9 Jun 2005 07:58:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506090728280.2286@ppc970.osdl.org>
-References: <17053.35147.52729.794561@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.58.0506080743040.2286@ppc970.osdl.org>
- <17064.15104.847009.390149@cargo.ozlabs.ibm.com>
+From: Dan Holmsand <dan@innehallsbolaget.se>
+Subject: Re: [PATCH 0/6] Bunch of new features for cg-log and cg-diff
+Date: Thu, 09 Jun 2005 17:14:08 +0200
+Message-ID: <42A85CC0.1030608@innehallsbolaget.se>
+References: <42A82211.9060305@gmail.com> <20050609142243.GA26524@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:07:55 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 09 17:20:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgOOY-0006J8-DF
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 16:52:34 +0200
+	id 1DgOgE-0001co-EF
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 17:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261350AbVFIO4j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 10:56:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261795AbVFIO4j
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 10:56:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:59008 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261350AbVFIO4h (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 10:56:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j59EuWjA007900
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 9 Jun 2005 07:56:32 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j59EuUtp005326;
-	Thu, 9 Jun 2005 07:56:31 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17064.15104.847009.390149@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261895AbVFIPOw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 11:14:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261891AbVFIPOj
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 11:14:39 -0400
+Received: from smtp-send.myrealbox.com ([192.108.102.143]:63155 "EHLO
+	smtp-send.myrealbox.com") by vger.kernel.org with ESMTP
+	id S261851AbVFIPOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2005 11:14:24 -0400
+Received: from [192.168.0.4] holmsand [80.217.52.214]
+	by smtp-send.myrealbox.com with NetMail SMTP Agent $Revision: 1.5 $ on Linux
+	via secured & encrypted transport (TLS);
+	Thu, 09 Jun 2005 09:14:13 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
+To: Jonas Fonseca <fonseca@diku.dk>
+In-Reply-To: <20050609142243.GA26524@diku.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Thu, 9 Jun 2005, Paul Mackerras wrote:
+Jonas Fonseca wrote:
+> I tried out your patchset and have a few comments ...
 > 
-> Try this patch against gitk-1.1 and let me know what you think.  I
-> draw the heads as a green rectangle with a black border.
-
-Works for me. My cvs-import testing "syslinux" tree now has the heads of
-the different branches nicely named.
-
-However, I also changed it to allow the "direct" kinds of tags which the 
-cvs2git thing creates, where the tag file contains just a direct pointer 
-to the commit, rather than a pointer to a tag object.
-
-I'm not a TCL weenie, so this is just a very quick hack, and you may want 
-to re-do things properly, but something like the appended works for me..
-
-> I also added a -t option to gitk which makes it use gitk-rev-tree
-> instead of git-rev-list, so that you can do
+> cg-diff:
 > 
-> 	gitk -t $(ls .git/refs/heads)
+>  - The pager is only used when passing -c. Is that intentional?
 
-No need, I think yoy may have an old version of git.
+Yes. The reasoning was that people wanting more features probably will 
+use color as well (and I didn't want to force the pager on people who 
+use cg-diff just to check *if* something changed).
 
-		Linus
+But I'm not 100% convinced I'm doing the right thing. Any suggestions?
 
---- hacky hack hack ---
---- gitk	2005-06-09 07:26:50.000000000 -0700
-+++ gitk	2005-06-09 07:55:00.000000000 -0700
-@@ -151,6 +151,11 @@
- 	    set fd [open $f r]
- 	    set line [read $fd]
- 	    if {[regexp {^[0-9a-f]{40}} $line id]} {
-+		if {[regexp {[^/]*$} $f direct]} {
-+		    set tagids($direct) $id
-+		    lappend idtags($id) $direct
-+		}
-+
- 		set contents [split [exec git-cat-file tag $id] "\n"]
- 		set obj {}
- 		set type {}
+> cg-log:
+> 
+>  - In the non-verbose summary you use the author date. One motivation
+>    for using the commit date is that the summary output makes it easy to
+>    track 'activity' and see if/when your patch made it in. Maybe I've
+>    just become too used to CVS changelogs.
+
+Yeah, maybe :-) Seriously, I think author date carries more information, 
+particularly since the log is already (most of the time) ordered by 
+commit date. So, when you see an old date before a newer one, you 
+immediately know that some old stuff was incorporated into the repository.
+
+Also, git-rev-list --pretty uses author date, and I wanted to be consistent.
+
+Of course, I could always add one more option :-)
+
+>  - Even though the more dense time format in the summary output is a
+>    nice idea the new date information is unfortunately also makes the
+>    summary output less useful, IMO. It can even make the by-date
+>    scanning harder because you have to jump between two significantly
+>    different date formats. With the new verbose distinction there should
+>    be no need for making the date so dense.
+
+This is also a matter of taste, obviously. I actually *like* having two 
+different formats, as it makes the difference between "today" and 
+"earlier" more obvious. And I don't really care what time of day 
+something was written three weeks ago.
+
+Perhaps this should be customisable as well, if it's felt to be 
+important enough?
+
+> I don't much like the inverted colors caused by the searching. Although
+> the quick goto next entry thing is nice the colors can be very
+> intrusive, and having to search for some nonsense string to remove them
+> is terrible.
+
+"export LESS=-G" will do what you want. Maybe that should be the default?
+
+> What about a COGITO_COLORS environment variable for configuring what
+> string setup_colors() will work on. It could maybe take the place of the
+> COGITO_AUTO_COLOR environment variable although this is two different
+> things.
+
+That should already be there. "COGITO_COLORS='header=31' cg-log" should 
+give very red headers, for example.
+
+> With the long help output of cg-log maybe we should consider also
+> displaying it in a pager.
+
+Good idea.
+
+> A minor note about the option parsing. cg-log -sh will give the error
+> 
+> 	cg-log: unrecoginized option `-h'
+> 
+
+Yeah, I know. "-h" and "--help" are the only options not handled by 
+optparse in cg-log. I thought I could rely on the general help-finding 
+logic in cg-Xlib for that.
+
+On the other hand, you really shouldn't say "cg-log -sh" :-)
+
+/dan
