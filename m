@@ -1,62 +1,63 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH] Add support reading default options from conf file
-Date: Thu, 9 Jun 2005 10:32:43 +0200
-Message-ID: <20050609083243.GD29665@pasky.ji.cz>
-References: <20050609010056.GA9084@diku.dk>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: git bug?
+Date: Thu, 09 Jun 2005 04:01:45 -0400
+Message-ID: <42A7F769.2050800@pobox.com>
+References: <42A7E7AD.5030108@pobox.com>	<7vy89kq96o.fsf@assigned-by-dhcp.cox.net> <7vzmu0otg8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dan Holmsand <holmsand@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 12:13:47 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 09 12:14:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgIP3-0007L8-NY
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 10:28:43 +0200
+	id 1DgHv8-0004hC-7o
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:57:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262330AbVFIIcq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 04:32:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262334AbVFIIcq
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 04:32:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:34540 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262330AbVFIIco (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 04:32:44 -0400
-Received: (qmail 7230 invoked by uid 2001); 9 Jun 2005 08:32:43 -0000
-To: Jonas Fonseca <fonseca@diku.dk>
-Content-Disposition: inline
-In-Reply-To: <20050609010056.GA9084@diku.dk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262318AbVFIIBv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 04:01:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262323AbVFIIBv
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 04:01:51 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:65492 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S262318AbVFIIBt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 04:01:49 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DgHz2-0004bG-Ba; Thu, 09 Jun 2005 08:01:48 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmu0otg8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Jun 09, 2005 at 03:00:56AM CEST, I got a letter
-where Jonas Fonseca <fonseca@diku.dk> told me that...
-> Reply-To: 
-> In-Reply-To: <42A754D5.10705@gmail.com>
+Junio C Hamano wrote:
+> Jeff, I assume you are talking about this part:
 > 
-> Dan Holmsand <holmsand@gmail.com> wrote Wed, Jun 08, 2005:
-> > - Automatic color if the COGITO_AUTO_COLOR environment variable is set.
 > 
-> [ This has been discussed before. Default arguments. The 'new' cg
->   wrapper makes this very easy. Not as smart as your env variable
->   handling tho'. ]
+>>>diff --git a/arch/arm/mm/minicache.c b/arch/arm/mm/minicache.c
+>>>deleted file mode 100644
+>>>diff --git a/drivers/scsi/libata-core.c b/drivers/scsi/libata-core.c
 > 
-> The default options are read only for Cogito calls going through the new
-> cg wrapper which makes it trivial to 'overwrite' them by just calling
-> cg-COMMAMD.
 > 
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> that does not have anything between "deleted file..." and the
+> next diff about libata-core.c.
+> 
+> In short, this is not really a "bug", but I am open to
+> suggestions for improvements (but you need to talk Linus into
+> accepting the changes, because changing this would also affect
+> his "git-apply" program as well).
 
-No, this is the wrong way. The 'cg' wrapper must not really do anything
-special on its own. It's not a _replacement_ for direct calling of the
-cg-scripts, it's just an aid for people who don't want to get used to
-it. So please do this in cg-Xlib.
+It's a bug and a new behavior.
 
-Also, I'd prefer the config file to be something like ~/.cgrc. I want to
-reserve the .conf file for something more sophisticated. ;-)
+'git-diff-cache -p HEAD' should not show files that I have not modified.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-<Espy> be careful, some twit might quote you out of context..
+This screws up
+	git-diff-cache -p HEAD | diffstat -p1 | awk '{print $1}'
+for example.
+
+	Jeff
+
+
