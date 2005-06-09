@@ -1,78 +1,100 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: git bug?
-Date: Thu, 09 Jun 2005 02:54:37 -0400
-Message-ID: <42A7E7AD.5030108@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 2/3] read-tree -m 3-way: loosen index requirements that is
+ too strict.
+Date: Thu, 09 Jun 2005 00:05:25 -0700
+Message-ID: <7vbr6growa.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
+	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
+	<7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Jun 09 08:53:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 09 09:03:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgGse-0000a3-KR
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 08:51:08 +0200
+	id 1DgH40-0002TI-4Z
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262297AbVFIGzE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 02:55:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262289AbVFIGzE
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 02:55:04 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:38612 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S262300AbVFIGys (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 02:54:48 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DgGw9-0004Z5-Nu
-	for git@vger.kernel.org; Thu, 09 Jun 2005 06:54:47 +0000
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S262307AbVFIHGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 03:06:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262304AbVFIHGJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 03:06:09 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38073 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S262309AbVFIHF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2005 03:05:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050609070526.CXXJ1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Jun 2005 03:05:26 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 09 Jun 2005 00:02:34 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This patch teaches "read-tree -m O A B" that, when only "the
+other tree" changed a path, and if the work tree already has
+that change, we are not in a situation that would clobber the
+cache and the working tree, and lets the merge succeed; this is
+case #14ALT in t1000 test.
 
-Just upgraded to the latest git, pulled the latest Linux kernel tree, 
-and made a local modification.  Here is the strange git-diff-cache output:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-> [jgarzik@pretzel libata-dev]$ git-diff-cache -p HEAD 
-> diff --git a/arch/arm/mm/minicache.c b/arch/arm/mm/minicache.c
-> deleted file mode 100644
-> diff --git a/drivers/scsi/libata-core.c b/drivers/scsi/libata-core.c
-> --- a/drivers/scsi/libata-core.c
-> +++ b/drivers/scsi/libata-core.c
-> @@ -3059,8 +3059,6 @@ static void __ata_qc_complete(struct ata
->         struct ata_port *ap = qc->ap;
->         unsigned int tag, do_clear = 0;
->  
-> -       WARN_ON(!assert_spin_locked(&ap->host_set->lock));
-> -
->         if (likely(qc->flags & ATA_QCFLAG_ACTIVE)) {
->                 assert(ap->queue_depth);
->                 ap->queue_depth--;
+ read-tree.c                 |   16 ++++++++++++++++
+ t/t1000-read-tree-m-3way.sh |    9 +++++++++
+ 2 files changed, 25 insertions(+), 0 deletions(-)
 
-The libata-core part is correct, the arch/arm/mm part is not.
-
-I pulled using unmodified, upstream git scripts.  No sugar added. 
-Here's what the repo looks like:
-
-> [jgarzik@pretzel libata-dev]$ git-rev-list --pretty HEAD ^master | git-shortlog 
-> Jeff Garzik:
->   Merge /spare/repo/linux-2.6/
->   Automatic merge of /spare/repo/linux-2.6/.git branch HEAD
-> 
-> Jens Axboe:
->   libata: fix spinlock bug introduced by NCQ code
->   libata: ncq support update
->   libata-scsi: better placement of cmd completion on err
->   SATA NCQ support
-
-It's mirroring to kernel.org right now, at 
-rsync.kernel.org://...jgarzik/libata-dev.git if somebody wants to poke 
-at it.  Top of tree is d032ec9048ff82a704b96b93cfd6f2e8e3a06b19 (when 
-fully uploaded and mirrored).
-
-	Jeff
-
-
+diff --git a/read-tree.c b/read-tree.c
+--- a/read-tree.c
++++ b/read-tree.c
+@@ -131,6 +131,22 @@ static int threeway_merge(struct cache_e
+ 	struct cache_entry *merge;
+ 	int count;
+ 
++	/* The case #14ALT is special in that it allows "i" to match
++	 * the "merged branch", aka "b" and even be dirty, as an
++	 * alternative to the usual 'must match "a" and be up-to-date'
++	 * rule.
++	 */
++	if (o && a && b && same(o, a) && !same(o, b)) {
++		if (i) {
++			if (same(i, b))
++				; /* case #14ALT exception */
++			else if (same(i, a))
++				verify_uptodate(i);
++			else
++				return -1;
++		}
++	}
++	else /* otherwise the original rule applies */
+ 	/*
+ 	 * If we have an entry in the index cache ("i"), then we want
+ 	 * to make sure that it matches any entries in stage 2 ("first
+diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
+--- a/t/t1000-read-tree-m-3way.sh
++++ b/t/t1000-read-tree-m-3way.sh
+@@ -455,6 +455,15 @@ test_expect_success \
+      git-read-tree -m $tree_O $tree_A $tree_B &&
+      check_result"
+ 
++test_expect_success \
++    '14ALT - in O && A && B && O==A && O!=B case, matching B is also OK' \
++    "rm -f .git/index NM &&
++     cp .orig-B/NM NM &&
++     git-update-cache --add NM &&
++     echo extra >>NM &&
++     git-read-tree -m $tree_O $tree_A $tree_B &&
++     check_result"
++
+ test_expect_failure \
+     '14 (fail) - must match and be up-to-date in O && A && B && O==A && O!=B case' \
+     "rm -f .git/index NM &&
+------------
 
