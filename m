@@ -1,8 +1,8 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/3] read-tree.c: rename local variables used in 3-way merge
- code.
-Date: Thu, 09 Jun 2005 00:04:49 -0700
-Message-ID: <7vhdg8roxa.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH 3/3] read-tree -m 3-way: handle more trivial merges
+ internally
+Date: Thu, 09 Jun 2005 00:06:29 -0700
+Message-ID: <7v64woroui.fsf_-_@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
 	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
@@ -10,26 +10,26 @@ References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 09:03:24 2005
+X-From: git-owner@vger.kernel.org Thu Jun 09 09:09:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgH31-0002Ej-SS
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:01:52 +0200
+	id 1DgH4k-0002fF-Ei
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:03:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262306AbVFIHFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 03:05:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262304AbVFIHFk
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 03:05:40 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:21245 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262313AbVFIHEv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2005 03:04:51 -0400
+	id S262309AbVFIHHe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 03:07:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261468AbVFIHHe
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 03:07:34 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37520 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262309AbVFIHGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2005 03:06:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050609070449.BNLN22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Jun 2005 03:04:49 -0400
+          id <20050609070629.KYRQ7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Jun 2005 03:06:29 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Thu, 09 Jun 2005 00:02:34 -0700")
@@ -38,101 +38,144 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'd hate to do this, but every time I try to touch this code and
-validate what it does against the case matrix in t1000 test, I
-get confused.  The variable names are renamed to match the case
-matrix.  Now they are named as:
+This patch teaches "read-tree -m O A B" that some more trivial
+cases can be handled internally.  This allows us to loosen
+otherwise too strict index requirements in case #5ALT, where
+both branches create a new file identically --- the previous
+code required index to be up-to-date and aborted the merge when
+it is not, but there is no reason to require it to be up-to-date
+in this case.
 
-    i -- entry from the index file (formerly known as "old")
-    o -- merge base (formerly known as "a")
-    a -- our head (formerly known as "b")
-    b -- merge head (formerly known as "c")
+The test vector has been updated to match the new behaviour as
+well.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- read-tree.c |   40 ++++++++++++++++++++--------------------
- 1 files changed, 20 insertions(+), 20 deletions(-)
+ read-tree.c                 |   16 ++++++++++++++++
+ t/t1000-read-tree-m-3way.sh |   27 +++++++++------------------
+ 2 files changed, 25 insertions(+), 18 deletions(-)
 
 diff --git a/read-tree.c b/read-tree.c
 --- a/read-tree.c
 +++ b/read-tree.c
-@@ -40,9 +40,9 @@ static int same(struct cache_entry *a, s
-  * This removes all trivial merges that don't change the tree
-  * and collapses them to state 0.
-  */
--static struct cache_entry *merge_entries(struct cache_entry *a,
--					 struct cache_entry *b,
--					 struct cache_entry *c)
-+static struct cache_entry *merge_entries(struct cache_entry *o,
-+					 struct cache_entry *a,
-+					 struct cache_entry *b)
- {
- 	/*
- 	 * Ok, all three entries describe the same
-@@ -58,16 +58,16 @@ static struct cache_entry *merge_entries
- 	 * The "all entries exactly the same" case falls out as
- 	 * a special case of any of the "two same" cases.
- 	 *
--	 * Here "a" is "original", and "b" and "c" are the two
-+	 * Here "o" is "original", and "a" and "b" are the two
- 	 * trees we are merging.
- 	 */
--	if (a && b && c) {
--		if (same(b,c))
--			return c;
-+	if (o && a && b) {
- 		if (same(a,b))
--			return c;
--		if (same(a,c))
- 			return b;
-+		if (same(o,a))
-+			return b;
-+		if (same(o,b))
-+			return a;
+@@ -69,6 +69,12 @@ static struct cache_entry *merge_entries
+ 		if (same(o,b))
+ 			return a;
  	}
++	/* #5ALT */
++	if (!o && a && b && same(a,b)) {
++		/* Match what git-merge-one-file-script does */
++		printf("Adding %s\n", a->name);
++		return a;
++	}
  	return NULL;
  }
-@@ -126,29 +126,29 @@ static int merged_entry(struct cache_ent
  
- static int threeway_merge(struct cache_entry *stages[4], struct cache_entry **dst)
- {
--	struct cache_entry *old = stages[0];
--	struct cache_entry *a = stages[1], *b = stages[2], *c = stages[3];
-+	struct cache_entry *i = stages[0];
-+	struct cache_entry *o = stages[1], *a = stages[2], *b = stages[3];
- 	struct cache_entry *merge;
- 	int count;
- 
- 	/*
--	 * If we have an entry in the index cache ("old"), then we want
-+	 * If we have an entry in the index cache ("i"), then we want
- 	 * to make sure that it matches any entries in stage 2 ("first
--	 * branch", aka "b").
-+	 * branch", aka "a").
- 	 */
--	if (old) {
--		if (!b || !same(old, b))
-+	if (i) {
-+		if (!a || !same(i, a))
- 			return -1;
- 	}
--	merge = merge_entries(a, b, c);
-+	merge = merge_entries(o, a, b);
- 	if (merge)
--		return merged_entry(merge, old, dst);
--	if (old)
--		verify_uptodate(old);
-+		return merged_entry(merge, i, dst);
-+	if (i)
-+		verify_uptodate(i);
+@@ -161,6 +167,16 @@ static int threeway_merge(struct cache_e
+ 		return merged_entry(merge, i, dst);
+ 	if (i)
+ 		verify_uptodate(i);
++
++	/* #6ALT, #8ALT, and #10ALT */
++	if ((o && !a && !b) ||
++	    (o && !a && b && same(o, b)) ||
++	    (o && a && !b && same(o, a))) {
++		/* Match what git-merge-one-file-script does */
++		printf("Removing %s\n", o->name); 
++		return 0;
++	}
++
  	count = 0;
-+	if (o) { *dst++ = o; count++; }
+ 	if (o) { *dst++ = o; count++; }
  	if (a) { *dst++ = a; count++; }
- 	if (b) { *dst++ = b; count++; }
--	if (c) { *dst++ = c; count++; }
- 	return count;
- }
+diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
+--- a/t/t1000-read-tree-m-3way.sh
++++ b/t/t1000-read-tree-m-3way.sh
+@@ -75,21 +75,18 @@ In addition:
+ . ../lib-read-tree-m-3way.sh
  
+ ################################################################
+-# This is the "no trivial merge unless all three exists" table.
++# Trivial "majority when 3 stages exist" merge plus #5ALT, #6ALT,
++# #8ALT, #10ALT trivial merges.
+ 
+ cat >expected <<\EOF
+ 100644 X 2	AA
+ 100644 X 3	AA
+ 100644 X 2	AN
+-100644 X 1	DD
+ 100644 X 3	DF
+ 100644 X 2	DF/DF
+ 100644 X 1	DM
+ 100644 X 3	DM
+-100644 X 1	DN
+-100644 X 3	DN
+-100644 X 2	LL
+-100644 X 3	LL
++100644 X 0	LL
+ 100644 X 1	MD
+ 100644 X 2	MD
+ 100644 X 1	MM
+@@ -97,8 +94,6 @@ cat >expected <<\EOF
+ 100644 X 3	MM
+ 100644 X 0	MN
+ 100644 X 3	NA
+-100644 X 1	ND
+-100644 X 2	ND
+ 100644 X 0	NM
+ 100644 X 0	NN
+ 100644 X 0	SS
+@@ -108,11 +103,8 @@ cat >expected <<\EOF
+ 100644 X 2	Z/AA
+ 100644 X 3	Z/AA
+ 100644 X 2	Z/AN
+-100644 X 1	Z/DD
+ 100644 X 1	Z/DM
+ 100644 X 3	Z/DM
+-100644 X 1	Z/DN
+-100644 X 3	Z/DN
+ 100644 X 1	Z/MD
+ 100644 X 2	Z/MD
+ 100644 X 1	Z/MM
+@@ -120,8 +112,6 @@ cat >expected <<\EOF
+ 100644 X 3	Z/MM
+ 100644 X 0	Z/MN
+ 100644 X 3	Z/NA
+-100644 X 1	Z/ND
+-100644 X 2	Z/ND
+ 100644 X 0	Z/NM
+ 100644 X 0	Z/NN
+ EOF
+@@ -289,23 +279,24 @@ test_expect_failure \
+      git-read-tree -m $tree_O $tree_A $tree_B"
+ 
+ test_expect_success \
+-    '5 - must match and be up-to-date in !O && A && B && A==B case.' \
++    '5 - must match in !O && A && B && A==B case.' \
+     "rm -f .git/index LL &&
+      cp .orig-A/LL LL &&
+      git-update-cache --add LL &&
+      git-read-tree -m $tree_O $tree_A $tree_B &&
+      check_result"
+ 
+-test_expect_failure \
+-    '5 (fail) - must match and be up-to-date in !O && A && B && A==B case.' \
++test_expect_success \
++    '5 - must match in !O && A && B && A==B case.' \
+     "rm -f .git/index LL &&
+      cp .orig-A/LL LL &&
+      git-update-cache --add LL &&
+      echo extra >>LL &&
+-     git-read-tree -m $tree_O $tree_A $tree_B"
++     git-read-tree -m $tree_O $tree_A $tree_B &&
++     check_result"
+ 
+ test_expect_failure \
+-    '5 (fail) - must match and be up-to-date in !O && A && B && A==B case.' \
++    '5 (fail) - must match in !O && A && B && A==B case.' \
+     "rm -f .git/index LL &&
+      cp .orig-A/LL LL &&
+      echo extra >>LL &&
 ------------
 
