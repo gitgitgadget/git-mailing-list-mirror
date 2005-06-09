@@ -1,64 +1,88 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: Re: [ANNOUNCE] Cogito-0.11.3
-Date: Thu, 09 Jun 2005 15:07:24 +0200
-Message-ID: <42A83F0C.5020809@gmail.com>
-References: <20050609091909.GF29665@pasky.ji.cz> <42A81584.90605@antselovich.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH 0/6] Bunch of new features for cg-log and cg-diff
+Date: Thu, 9 Jun 2005 16:22:43 +0200
+Message-ID: <20050609142243.GA26524@diku.dk>
+References: <42A82211.9060305@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Konstantin Antselovich <konstantin@antselovich.com>,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Jun 09 15:39:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 09 16:29:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgNAq-0000cr-Sz
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 15:34:21 +0200
+	id 1DgNrp-0007wa-Q6
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 16:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262379AbVFINi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 09:38:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262382AbVFINi0
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 09:38:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:60802 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262379AbVFINiY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 09:38:24 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DgMvg-0006sG-VD
-	for git@vger.kernel.org; Thu, 09 Jun 2005 15:18:41 +0200
-Received: from c80-217-52-214.cm-upc.chello.se ([80.217.52.214])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 09 Jun 2005 15:18:40 +0200
-Received: from holmsand by c80-217-52-214.cm-upc.chello.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 09 Jun 2005 15:18:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c80-217-52-214.cm-upc.chello.se
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-In-Reply-To: <42A81584.90605@antselovich.com>
+	id S261539AbVFIOWu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 10:22:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262385AbVFIOWu
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 10:22:50 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:5834 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261539AbVFIOWo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 10:22:44 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 3B8026E1973; Thu,  9 Jun 2005 16:21:56 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id ED98E6E1A77; Thu,  9 Jun 2005 16:21:55 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 82B5C61FE0; Thu,  9 Jun 2005 16:22:43 +0200 (CEST)
+To: Dan Holmsand <holmsand@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <42A82211.9060305@gmail.com>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Antselovich wrote:
-> I have updated to Cogito-0.11.3, it compiles and runs
-> but make test returns multiple error messages (see below)
+Dan Holmsand <holmsand@gmail.com> wrote Thu, Jun 09, 2005:
+> This series adds optget-style option parsing, support for almost all
+> git-diff-* features, git-apply --stat support, common colorization code, 
+> better performance for cg-log and some other stuff.
 
-There's a typo in rev-list.c. This fixes the tests for me:
+I tried out your patchset and have a few comments ...
 
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -218,7 +218,7 @@ int main(int argc, char **argv)
-                         list = limit_list(list);
-                 show_commit_list(list);
-         } else {
--#ifdef NO_OPENSSL
-+#ifndef NO_OPENSSL
-                 if (sort_list_in_merge_order(list, &process_commit)) {
-                           die("merge order sort failed\n");
-                 }
+cg-diff:
 
+ - The pager is only used when passing -c. Is that intentional?
+
+ - Nice with the diffstat option.
+
+cg-log:
+
+ - In the non-verbose summary you use the author date. One motivation
+   for using the commit date is that the summary output makes it easy to
+   track 'activity' and see if/when your patch made it in. Maybe I've
+   just become too used to CVS changelogs.
+
+ - Even though the more dense time format in the summary output is a
+   nice idea the new date information is unfortunately also makes the
+   summary output less useful, IMO. It can even make the by-date
+   scanning harder because you have to jump between two significantly
+   different date formats. With the new verbose distinction there should
+   be no need for making the date so dense.
+
+I don't much like the inverted colors caused by the searching. Although
+the quick goto next entry thing is nice the colors can be very
+intrusive, and having to search for some nonsense string to remove them
+is terrible.
+
+What about a COGITO_COLORS environment variable for configuring what
+string setup_colors() will work on. It could maybe take the place of the
+COGITO_AUTO_COLOR environment variable although this is two different
+things.
+
+With the long help output of cg-log maybe we should consider also
+displaying it in a pager.
+
+A minor note about the option parsing. cg-log -sh will give the error
+
+	cg-log: unrecoginized option `-h'
+
+-- 
+Jonas Fonseca
