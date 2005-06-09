@@ -1,51 +1,78 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk-1.1 out
-Date: Thu, 9 Jun 2005 14:46:19 +1000
-Message-ID: <17063.51611.467615.685723@cargo.ozlabs.ibm.com>
-References: <17053.35147.52729.794561@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0506080743040.2286@ppc970.osdl.org>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: git bug?
+Date: Thu, 09 Jun 2005 02:54:37 -0400
+Message-ID: <42A7E7AD.5030108@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 07:28:02 2005
+X-From: git-owner@vger.kernel.org Thu Jun 09 08:53:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgFZZ-0002mf-Lm
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 07:27:22 +0200
+	id 1DgGse-0000a3-KR
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 08:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262273AbVFIFbX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 01:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262274AbVFIFbX
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 01:31:23 -0400
-Received: from ozlabs.org ([203.10.76.45]:37533 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S262273AbVFIFbW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 01:31:22 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id E63C967B1D; Thu,  9 Jun 2005 15:31:20 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506080743040.2286@ppc970.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S262297AbVFIGzE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 02:55:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262289AbVFIGzE
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 02:55:04 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:38612 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S262300AbVFIGys (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 02:54:48 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DgGw9-0004Z5-Nu
+	for git@vger.kernel.org; Thu, 09 Jun 2005 06:54:47 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds writes:
 
-> Can you do the same for things in .git/refs/heads? Possibly using another 
-> color?
+Just upgraded to the latest git, pulled the latest Linux kernel tree, 
+and made a local modification.  Here is the strange git-diff-cache output:
 
-Sure - the hardest part is going to be deciding on the shape and color
-to use. :)  Perhaps I'll try just using a green rectangle with black
-on white text inside and see if that stands out enough.
+> [jgarzik@pretzel libata-dev]$ git-diff-cache -p HEAD 
+> diff --git a/arch/arm/mm/minicache.c b/arch/arm/mm/minicache.c
+> deleted file mode 100644
+> diff --git a/drivers/scsi/libata-core.c b/drivers/scsi/libata-core.c
+> --- a/drivers/scsi/libata-core.c
+> +++ b/drivers/scsi/libata-core.c
+> @@ -3059,8 +3059,6 @@ static void __ata_qc_complete(struct ata
+>         struct ata_port *ap = qc->ap;
+>         unsigned int tag, do_clear = 0;
+>  
+> -       WARN_ON(!assert_spin_locked(&ap->host_set->lock));
+> -
+>         if (likely(qc->flags & ATA_QCFLAG_ACTIVE)) {
+>                 assert(ap->queue_depth);
+>                 ap->queue_depth--;
 
-> I realize that that may sound silly, but a tree that has many branches can 
-> validly be used with gitk with something like this:
+The libata-core part is correct, the arch/arm/mm part is not.
+
+I pulled using unmodified, upstream git scripts.  No sugar added. 
+Here's what the repo looks like:
+
+> [jgarzik@pretzel libata-dev]$ git-rev-list --pretty HEAD ^master | git-shortlog 
+> Jeff Garzik:
+>   Merge /spare/repo/linux-2.6/
+>   Automatic merge of /spare/repo/linux-2.6/.git branch HEAD
 > 
-> 	gitk $(ls .git/refs/heads)
+> Jens Axboe:
+>   libata: fix spinlock bug introduced by NCQ code
+>   libata: ncq support update
+>   libata-scsi: better placement of cmd completion on err
+>   SATA NCQ support
 
-Um, did I break that when I changed to using git-rev-list instead of
-git-rev-tree?
+It's mirroring to kernel.org right now, at 
+rsync.kernel.org://...jgarzik/libata-dev.git if somebody wants to poke 
+at it.  Top of tree is d032ec9048ff82a704b96b93cfd6f2e8e3a06b19 (when 
+fully uploaded and mirrored).
 
-Paul.
+	Jeff
+
+
+
