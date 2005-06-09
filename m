@@ -1,8 +1,8 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/3] read-tree -m 3-way: loosen index requirements that is
- too strict.
-Date: Thu, 09 Jun 2005 00:05:25 -0700
-Message-ID: <7vbr6growa.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH 1/3] read-tree.c: rename local variables used in 3-way merge
+ code.
+Date: Thu, 09 Jun 2005 00:04:49 -0700
+Message-ID: <7vhdg8roxa.fsf_-_@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
 	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
@@ -10,26 +10,26 @@ References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 09 09:03:27 2005
+X-From: git-owner@vger.kernel.org Thu Jun 09 09:03:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgH40-0002TI-4Z
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:02:52 +0200
+	id 1DgH31-0002Ej-SS
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 09:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262307AbVFIHGJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 03:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262304AbVFIHGJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 03:06:09 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:38073 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262309AbVFIHF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Jun 2005 03:05:29 -0400
+	id S262306AbVFIHFk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 03:05:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262304AbVFIHFk
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 03:05:40 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:21245 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262313AbVFIHEv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2005 03:04:51 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao02.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050609070526.CXXJ1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 9 Jun 2005 03:05:26 -0400
+          id <20050609070449.BNLN22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Jun 2005 03:04:49 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Thu, 09 Jun 2005 00:02:34 -0700")
@@ -38,63 +38,101 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch teaches "read-tree -m O A B" that, when only "the
-other tree" changed a path, and if the work tree already has
-that change, we are not in a situation that would clobber the
-cache and the working tree, and lets the merge succeed; this is
-case #14ALT in t1000 test.
+I'd hate to do this, but every time I try to touch this code and
+validate what it does against the case matrix in t1000 test, I
+get confused.  The variable names are renamed to match the case
+matrix.  Now they are named as:
+
+    i -- entry from the index file (formerly known as "old")
+    o -- merge base (formerly known as "a")
+    a -- our head (formerly known as "b")
+    b -- merge head (formerly known as "c")
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- read-tree.c                 |   16 ++++++++++++++++
- t/t1000-read-tree-m-3way.sh |    9 +++++++++
- 2 files changed, 25 insertions(+), 0 deletions(-)
+ read-tree.c |   40 ++++++++++++++++++++--------------------
+ 1 files changed, 20 insertions(+), 20 deletions(-)
 
 diff --git a/read-tree.c b/read-tree.c
 --- a/read-tree.c
 +++ b/read-tree.c
-@@ -131,6 +131,22 @@ static int threeway_merge(struct cache_e
+@@ -40,9 +40,9 @@ static int same(struct cache_entry *a, s
+  * This removes all trivial merges that don't change the tree
+  * and collapses them to state 0.
+  */
+-static struct cache_entry *merge_entries(struct cache_entry *a,
+-					 struct cache_entry *b,
+-					 struct cache_entry *c)
++static struct cache_entry *merge_entries(struct cache_entry *o,
++					 struct cache_entry *a,
++					 struct cache_entry *b)
+ {
+ 	/*
+ 	 * Ok, all three entries describe the same
+@@ -58,16 +58,16 @@ static struct cache_entry *merge_entries
+ 	 * The "all entries exactly the same" case falls out as
+ 	 * a special case of any of the "two same" cases.
+ 	 *
+-	 * Here "a" is "original", and "b" and "c" are the two
++	 * Here "o" is "original", and "a" and "b" are the two
+ 	 * trees we are merging.
+ 	 */
+-	if (a && b && c) {
+-		if (same(b,c))
+-			return c;
++	if (o && a && b) {
+ 		if (same(a,b))
+-			return c;
+-		if (same(a,c))
+ 			return b;
++		if (same(o,a))
++			return b;
++		if (same(o,b))
++			return a;
+ 	}
+ 	return NULL;
+ }
+@@ -126,29 +126,29 @@ static int merged_entry(struct cache_ent
+ 
+ static int threeway_merge(struct cache_entry *stages[4], struct cache_entry **dst)
+ {
+-	struct cache_entry *old = stages[0];
+-	struct cache_entry *a = stages[1], *b = stages[2], *c = stages[3];
++	struct cache_entry *i = stages[0];
++	struct cache_entry *o = stages[1], *a = stages[2], *b = stages[3];
  	struct cache_entry *merge;
  	int count;
  
-+	/* The case #14ALT is special in that it allows "i" to match
-+	 * the "merged branch", aka "b" and even be dirty, as an
-+	 * alternative to the usual 'must match "a" and be up-to-date'
-+	 * rule.
-+	 */
-+	if (o && a && b && same(o, a) && !same(o, b)) {
-+		if (i) {
-+			if (same(i, b))
-+				; /* case #14ALT exception */
-+			else if (same(i, a))
-+				verify_uptodate(i);
-+			else
-+				return -1;
-+		}
-+	}
-+	else /* otherwise the original rule applies */
  	/*
- 	 * If we have an entry in the index cache ("i"), then we want
+-	 * If we have an entry in the index cache ("old"), then we want
++	 * If we have an entry in the index cache ("i"), then we want
  	 * to make sure that it matches any entries in stage 2 ("first
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -455,6 +455,15 @@ test_expect_success \
-      git-read-tree -m $tree_O $tree_A $tree_B &&
-      check_result"
+-	 * branch", aka "b").
++	 * branch", aka "a").
+ 	 */
+-	if (old) {
+-		if (!b || !same(old, b))
++	if (i) {
++		if (!a || !same(i, a))
+ 			return -1;
+ 	}
+-	merge = merge_entries(a, b, c);
++	merge = merge_entries(o, a, b);
+ 	if (merge)
+-		return merged_entry(merge, old, dst);
+-	if (old)
+-		verify_uptodate(old);
++		return merged_entry(merge, i, dst);
++	if (i)
++		verify_uptodate(i);
+ 	count = 0;
++	if (o) { *dst++ = o; count++; }
+ 	if (a) { *dst++ = a; count++; }
+ 	if (b) { *dst++ = b; count++; }
+-	if (c) { *dst++ = c; count++; }
+ 	return count;
+ }
  
-+test_expect_success \
-+    '14ALT - in O && A && B && O==A && O!=B case, matching B is also OK' \
-+    "rm -f .git/index NM &&
-+     cp .orig-B/NM NM &&
-+     git-update-cache --add NM &&
-+     echo extra >>NM &&
-+     git-read-tree -m $tree_O $tree_A $tree_B &&
-+     check_result"
-+
- test_expect_failure \
-     '14 (fail) - must match and be up-to-date in O && A && B && O==A && O!=B case' \
-     "rm -f .git/index NM &&
 ------------
 
