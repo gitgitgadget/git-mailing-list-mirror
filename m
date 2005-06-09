@@ -1,59 +1,54 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Add support for author-oriented git-rev-list switches [rev 8]
-Date: Fri, 10 Jun 2005 01:53:45 +1000
-Message-ID: <2cfc4032050609085341e46242@mail.gmail.com>
-References: <20050609090141.21555.qmail@blackcubes.dyndns.org>
-	 <2cfc403205060902373e5c284f@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] read-tree -m 3-way: handle more trivial merges
+ internally
+Date: Thu, 09 Jun 2005 10:26:35 -0700
+Message-ID: <7v7jh3phkk.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
+	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
+	<7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net>
+	<7v64woroui.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506090800580.2286@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: jon.seymour@gmail.com, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Jun 09 17:54:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 09 19:27:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgPI0-000130-9n
-	for gcvg-git@gmane.org; Thu, 09 Jun 2005 17:49:52 +0200
+	id 1DgQjh-0008FB-Hv
+	for gcvg-git@gmane.org; Thu, 09 Jun 2005 19:22:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261973AbVFIPxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 9 Jun 2005 11:53:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262021AbVFIPxy
-	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 11:53:54 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:2901 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261973AbVFIPxs convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Jun 2005 11:53:48 -0400
-Received: by rproxy.gmail.com with SMTP id i8so221930rne
-        for <git@vger.kernel.org>; Thu, 09 Jun 2005 08:53:48 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EJaNUaglhRQChBl+fe1kid8IKEt0JQeOAxp1mouNeW1O3geakG0AdcDwwTvArdzl63PF1lxcihB820RYBGkktajnHSWwbVpzhhuvKTWKPQXwzIpIfuEskI0Ht1aanE71YJqSJ1mQ3tcmD1H8IhWx9IZwLSARJpb/wC8Uo/FmAE4=
-Received: by 10.39.2.70 with SMTP id e70mr284891rni;
-        Thu, 09 Jun 2005 08:53:45 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Thu, 9 Jun 2005 08:53:45 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <2cfc403205060902373e5c284f@mail.gmail.com>
-Content-Disposition: inline
+	id S262416AbVFIR0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 9 Jun 2005 13:26:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVFIR0j
+	(ORCPT <rfc822;git-outgoing>); Thu, 9 Jun 2005 13:26:39 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:25066 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262416AbVFIR0i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Jun 2005 13:26:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050609172637.ZSCS19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 9 Jun 2005 13:26:37 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506090800580.2286@ppc970.osdl.org> (Linus
+ Torvalds's message of "Thu, 9 Jun 2005 08:15:52 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Since no-one had pulled the rev-7 patch to review, I have tweaked and
-simplified the test cases some more. In particular, I removed the need
-for /dev/urandom.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-http://blackcubes.dyndns.org/epoch/wrt-patch-latest.patch
+LT> No, I think this is quite possibly wrong for several reasons.
 
-Junio: you might be interested in a new bash function I wrote in
+I agree with everything you said.
 
-           t/t6001-rev-list-merge-order.sh
+I need to regurgitate other points you raised, but one immediate
+comment on the "lost remove" case.  The current two-way code has
+the same brokenness in that it does not unlink removed files
+under "-u".  We either need the "list of files to be removed",
+or we need to make two-way abort if we see these "remove" cases.
 
-called: test_output_expect_success
-
-If you like, I'll generalize it and move it into testlib.sh
-
-Linus: when you are ready, the URI above contains the latest patch.
-
-jon.
