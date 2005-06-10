@@ -1,113 +1,66 @@
-From: takis@lumumba.luc.ac.be (Panagiotis Issaris)
-Subject: [PATCH] support incremental cvs2git-ing
-Date: Fri, 10 Jun 2005 21:35:19 +0200
-Message-ID: <20050610193519.GA28628@lumumba.luc.ac.be>
+From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
+Subject: Re: qgit-0.4
+Date: Fri, 10 Jun 2005 21:43:24 +0200
+Message-ID: <42A9ED5C.1070604@gorzow.mm.pl>
+References: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 10 21:30:16 2005
+X-From: git-owner@vger.kernel.org Fri Jun 10 21:40:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgpCV-0000ZI-NU
-	for gcvg-git@gmane.org; Fri, 10 Jun 2005 21:29:55 +0200
+	id 1DgpLd-0001xZ-JA
+	for gcvg-git@gmane.org; Fri, 10 Jun 2005 21:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261183AbVFJTeC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 15:34:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261184AbVFJTeC
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 15:34:02 -0400
-Received: from lumumba.uhasselt.be ([193.190.9.252]:48389 "EHLO
-	lumumba.luc.ac.be") by vger.kernel.org with ESMTP id S261183AbVFJTd4
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2005 15:33:56 -0400
-Received: by lumumba.luc.ac.be (Postfix, from userid 1000)
-	id 62183EDB2B; Fri, 10 Jun 2005 21:35:19 +0200 (CEST)
-To: torvalds@osdl.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S261185AbVFJTnl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 10 Jun 2005 15:43:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261187AbVFJTnk
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 15:43:40 -0400
+Received: from goliat.kalisz.mm.pl ([217.96.42.226]:20172 "EHLO kalisz.mm.pl")
+	by vger.kernel.org with ESMTP id S261185AbVFJTnj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 15:43:39 -0400
+Received: (qmail 27463 invoked from network); 10 Jun 2005 19:43:35 -0000
+Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
+          (envelope-sender <astralstorm@gorzow.mm.pl>)
+          by 0 (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 10 Jun 2005 19:43:35 -0000
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by zen.uplink (Postfix) with ESMTP id 38FD35EB670;
+	Fri, 10 Jun 2005 21:43:24 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
+X-Accept-Language: en-us, en
+To: Marco Costalba <mcostalba@yahoo.it>
+In-Reply-To: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Linus,
+Marco Costalba wrote:
 
-I wanted to be able to track CVS repositories in a GIT repository. The
-cvs2git program worked fine with the initial import but needed a tiny
-modification to enable me to resync the GIT repository with the updated
-CVS tree.
+>Here is qgit-0.4, a git GUI viewer
+>
+>New in this version:
+>
+>- file history
+>
+>- command line arguments passed to git-rev-list, eg: qgit v2.6.12-rc6 =
+^v2.6.12-rc4
+>
+>- complete rewrite of start-up thread, should be faster now, expeciall=
+y with warm start
+>
+> =20
+>
+>
+It certainly is faster. However, I have some gripes with it:
+- it doesn't support national characters
+- it doesn't decode dates (author Rados=B3aw Szkodzi=F1ski
+<astralstorm@gorzow.mm.pl> 1118416741 +0200)
+- you could run git-rev-list niced, and maybe with --pretty and
+--merge-order
+- somehow the program is much slower than gitk and I don't think it's
+caused by qt or C++
 
-With friendly regards,
-Takis
-
-Signed-off-by: Panagiotis Issaris <takis@lumumba.luc.ac.be>
----
-
-diff --git a/cvs2git.c b/cvs2git.c
---- a/cvs2git.c
-+++ b/cvs2git.c
-@@ -11,6 +11,7 @@
- #include <unistd.h>
- 
- static int verbose = 0;
-+static int updating = 0;
- 
- /*
-  * This is a really stupid program that takes cvsps output, and
-@@ -28,11 +29,17 @@ static int verbose = 0;
-  * Usage:
-  *
-  *	TZ=UTC cvsps -A |
-- *		cvs2git --cvsroot=[root] --module=[module] > script
-+ *		git-cvs2git --cvsroot=[root] --module=[module] > script
-  *
-  * Creates a shell script that will generate the .git archive of
-  * the names CVS repository.
-  *
-+ *	TZ=UTC cvsps -s 1234- -A |
-+ *		git-cvs2git -u --cvsroot=[root] --module=[module] > script
-+ *
-+ * Creates a shell script that will update the .git archive with
-+ * CVS changes from patchset 1234 until the last one.
-+ *
-  * IMPORTANT NOTE ABOUT "cvsps"! This requires version 2.1 or better,
-  * and the "TZ=UTC" and the "-A" flag is required for sane results!
-  */
-@@ -113,7 +120,7 @@ static void prepare_commit(void)
- 
- static void commit(void)
- {
--	const char *cmit_parent = initial_commit ? "" : "-p HEAD";
-+	const char *cmit_parent = (initial_commit && !updating) ? "" : "-p HEAD";
- 	const char *dst_branch;
- 	char *space;
- 	int i;
-@@ -230,6 +237,10 @@ int main(int argc, char **argv)
- 			verbose = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "-u")) {
-+			updating = 1;
-+			continue;
-+		}
- 	}
- 
- 
-@@ -241,11 +252,13 @@ int main(int argc, char **argv)
- 		exit(1);
- 	}
- 
--	printf("[ -d .git ] && exit 1\n");
--	printf("git-init-db\n");
--	printf("mkdir -p .git/refs/heads\n");
--	printf("mkdir -p .git/refs/tags\n");
--	printf("ln -sf refs/heads/master .git/HEAD\n");
-+    if (!updating) {
-+    	printf("[ -d .git ] && exit 1\n");
-+	    printf("git-init-db\n");
-+    	printf("mkdir -p .git/refs/heads\n");
-+    	printf("mkdir -p .git/refs/tags\n");
-+    	printf("ln -sf refs/heads/master .git/HEAD\n");
-+    }
- 
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int linelen = strlen(line);
+AstralStorm
