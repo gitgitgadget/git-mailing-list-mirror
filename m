@@ -1,66 +1,60 @@
-From: Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl>
-Subject: Re: qgit-0.4
-Date: Fri, 10 Jun 2005 21:43:24 +0200
-Message-ID: <42A9ED5C.1070604@gorzow.mm.pl>
-References: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] read-tree -m 3-way: handle more trivial merges
+ internally
+Date: Fri, 10 Jun 2005 12:59:05 -0700
+Message-ID: <7vekba7zli.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
+	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
+	<7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net>
+	<7v64woroui.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506090800580.2286@ppc970.osdl.org>
+	<7vaclzclqd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 10 21:40:03 2005
+X-From: git-owner@vger.kernel.org Fri Jun 10 21:56:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgpLd-0001xZ-JA
-	for gcvg-git@gmane.org; Fri, 10 Jun 2005 21:39:21 +0200
+	id 1Dgpbi-00047Y-Sx
+	for gcvg-git@gmane.org; Fri, 10 Jun 2005 21:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261185AbVFJTnl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 10 Jun 2005 15:43:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261187AbVFJTnk
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 15:43:40 -0400
-Received: from goliat.kalisz.mm.pl ([217.96.42.226]:20172 "EHLO kalisz.mm.pl")
-	by vger.kernel.org with ESMTP id S261185AbVFJTnj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 15:43:39 -0400
-Received: (qmail 27463 invoked from network); 10 Jun 2005 19:43:35 -0000
-Received: from unknown (HELO zen.uplink) (astralstorm@[81.190.161.223])
-          (envelope-sender <astralstorm@gorzow.mm.pl>)
-          by 0 (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 10 Jun 2005 19:43:35 -0000
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by zen.uplink (Postfix) with ESMTP id 38FD35EB670;
-	Fri, 10 Jun 2005 21:43:24 +0200 (CEST)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050425)
-X-Accept-Language: en-us, en
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
+	id S261196AbVFJT72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 15:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261205AbVFJT72
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 15:59:28 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:25044 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261196AbVFJT7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2005 15:59:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050610195906.CHUD19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Jun 2005 15:59:06 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vaclzclqd.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 09 Jun 2005 13:35:06 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Marco Costalba wrote:
+>>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
 
->Here is qgit-0.4, a git GUI viewer
->
->New in this version:
->
->- file history
->
->- command line arguments passed to git-rev-list, eg: qgit v2.6.12-rc6 =
-^v2.6.12-rc4
->
->- complete rewrite of start-up thread, should be faster now, expeciall=
-y with warm start
->
-> =20
->
->
-It certainly is faster. However, I have some gripes with it:
-- it doesn't support national characters
-- it doesn't decode dates (author Rados=B3aw Szkodzi=F1ski
-<astralstorm@gorzow.mm.pl> 1118416741 +0200)
-- you could run git-rev-list niced, and maybe with --pretty and
---merge-order
-- somehow the program is much slower than gitk and I don't think it's
-caused by qt or C++
+JCH> So, yes I ended up arguing that the intelligent merge logic
+JCH> could and probably needs to look at the trees involved ;-).
 
-AstralStorm
+"Could look at, and probably be better off looking at," would
+have been a better wording.
+
+Linus, please discard the patches from me that you have not
+applied about the "loosening of too strict index requirements"
+(yesterday and the day before).  I think I am finally getting
+somewhere but the solution, if it works, would be somewhat
+different from what I have been sending you.
+
+
+
+
