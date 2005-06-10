@@ -1,51 +1,40 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [COGITO PATCH] Improvements for cg and cg-help
-Date: Sat, 11 Jun 2005 00:36:16 +0200
-Message-ID: <20050610223616.GC22111@pasky.ji.cz>
-References: <1118330242.27441.15.camel@dv>
+Subject: Re: cg-pull fails on ssh repos
+Date: Sat, 11 Jun 2005 00:38:00 +0200
+Message-ID: <20050610223800.GD22111@pasky.ji.cz>
+References: <E1Dgrmf-0003x5-Ik@highlab.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 11 00:32:46 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 11 00:34:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dgs3H-0004mQ-HK
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 00:32:35 +0200
+	id 1Dgs4f-0004vI-Ng
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 00:34:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261303AbVFJWgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 18:36:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261308AbVFJWgY
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 18:36:24 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19358 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261303AbVFJWgS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 18:36:18 -0400
-Received: (qmail 28312 invoked by uid 2001); 10 Jun 2005 22:36:16 -0000
-To: Pavel Roskin <proski@gnu.org>
+	id S261327AbVFJWiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 18:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261308AbVFJWiI
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 18:38:08 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:21406 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261327AbVFJWiB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 18:38:01 -0400
+Received: (qmail 28528 invoked by uid 2001); 10 Jun 2005 22:38:00 -0000
+To: Sebastian Kuzminsky <seb@highlab.com>
 Content-Disposition: inline
-In-Reply-To: <1118330242.27441.15.camel@dv>
+In-Reply-To: <E1Dgrmf-0003x5-Ik@highlab.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Jun 09, 2005 at 05:17:22PM CEST, I got a letter
-where Pavel Roskin <proski@gnu.org> told me that...
-> Hello!
+Dear diary, on Sat, Jun 11, 2005 at 12:15:25AM CEST, I got a letter
+where Sebastian Kuzminsky <seb@highlab.com> told me that...
+> cg-pull's pull_ssh() calls git-rpull, should that be git-ssh-pull?
 
-Hello,
-
-> cg with any option before the command ("cg -foo cmd") should also run
-> cg-help.
-
-it shouldn't.
-
-> cg-help should print help for cg-help if specific help is not available,
-
-it shouldn't, it should report an error.
-
-The rest was applied, thanks.
+Oops, fixed. Thanks for the report.
 
 -- 
 				Petr "Pasky" Baudis
