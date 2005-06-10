@@ -1,53 +1,60 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: Lost uncommitted changes and cogito
-Date: Fri, 10 Jun 2005 09:20:27 -0700
-Message-ID: <059176.ed2e86bb7f91c5a63977e0fe2c7a5cac.ANY@taniwha.stupidest.org>
-References: <9e473391050609122372080863@mail.gmail.com> <9e4733910506091728761275d7@mail.gmail.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.4
+Date: Fri, 10 Jun 2005 11:35:37 -0700 (PDT)
+Message-ID: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 10 18:18:48 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Jun 10 20:32:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgmDQ-00034j-Bf
-	for gcvg-git@gmane.org; Fri, 10 Jun 2005 18:18:40 +0200
+	id 1DgoIA-0000UO-5Q
+	for gcvg-git@gmane.org; Fri, 10 Jun 2005 20:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262598AbVFJQW2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 12:22:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262601AbVFJQW2
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 12:22:28 -0400
-Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:63192 "EHLO
-	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S262598AbVFJQVc
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2005 12:21:32 -0400
-Received: from pimout1-ext.prodigy.net (pimout1-int.prodigy.net [207.115.5.65])
-	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j5AGKcKf003508
-	for <git@vger.kernel.org>; Fri, 10 Jun 2005 12:21:00 -0400
-X-ORBL: [63.202.173.158]
-Received: from taniwha.stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
-	by pimout1-ext.prodigy.net (8.12.10 milter /8.12.10) with ESMTP id j5AGKRsk099608;
-	Fri, 10 Jun 2005 12:20:28 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id 65539528F22; Fri, 10 Jun 2005 09:20:27 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <9e4733910506091728761275d7@mail.gmail.com>
+	id S261165AbVFJSfo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 14:35:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261167AbVFJSfo
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 14:35:44 -0400
+Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:57001 "HELO
+	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261165AbVFJSfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2005 14:35:38 -0400
+Received: (qmail 39110 invoked by uid 60001); 10 Jun 2005 18:35:37 -0000
+Received: from [151.38.74.248] by web26301.mail.ukl.yahoo.com via HTTP; Fri, 10 Jun 2005 11:35:37 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jun 09, 2005 at 08:28:25PM -0400, Jon Smirl wrote:
+Here is qgit-0.4, a git GUI viewer
 
-> After experimenting for a while it looks like any cg update to a
-> branch that the repository wasn't initially cloned from will lose
-> the pending uncomitted changes.
+New in this version:
 
-I've had my current working tree trashed too a few times so I more or
-less backup my tree before doing anything adventurous in case of
-accidents or bugs.
+- file history
 
-I'd actually like to see checked out files being RO and needing some
-kind of explicit "cg-edit <filename>" or similar to frob them to RW so
-that we can use the R/W status in order to determine what files are
-safe to mess with.
+- command line arguments passed to git-rev-list, eg: qgit v2.6.12-rc6 ^v2.6.12-rc4
+
+- complete rewrite of start-up thread, should be faster now, expecially with warm start
+
+You can download from 
+http://prdownloads.sourceforge.net/qgit/qgit-0.4.tar.gz?download
+
+To try qgit:
+
+1) Unpack downloaded tar file
+2) ./configure
+3) make
+4) cd bin
+5) copy qgit file anywhere in your path
+
+There are also some screenshots:
+http://sourceforge.net/project/screenshots.php?group_id=139897&ssid=13524
+
+Have fun
+Marco
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
