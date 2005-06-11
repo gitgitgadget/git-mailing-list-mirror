@@ -1,131 +1,84 @@
-From: Sebastian Kuzminsky <seb@highlab.com>
-Subject: Re: do people use the 'git' command?
-Date: Fri, 10 Jun 2005 23:26:40 -0600
-Message-ID: <E1DgyW0-0004PE-Ct@highlab.com>
-References: <E1DgodI-0003ov-Fl@highlab.com> <7vy89h4m9r.fsf@assigned-by-dhcp.cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 07:21:17 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Heads up on work in progress - was: [PATCH 2/2] Add support ... [rev 11]
+Date: Sat, 11 Jun 2005 15:28:50 +1000
+Message-ID: <2cfc4032050610222853a882b7@mail.gmail.com>
+References: <20050610092343.3935.qmail@blackcubes.dyndns.org>
+Reply-To: jon@blackcubes.dyndns.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, Petr Baudis <pasky@ucw.cz>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jun 11 07:24:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgyQi-0000yX-0a
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 07:21:12 +0200
+	id 1DgyTu-00018f-6N
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 07:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261255AbVFKFZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Jun 2005 01:25:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261273AbVFKFZL
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 01:25:11 -0400
-Received: from sccrmhc12.comcast.net ([204.127.202.56]:59106 "EHLO
-	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
-	id S261255AbVFKFYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2005 01:24:40 -0400
-Received: from highlab.com ([24.8.179.27])
-          by comcast.net (sccrmhc12) with ESMTP
-          id <20050611052439012000tb6me>; Sat, 11 Jun 2005 05:24:39 +0000
-Received: from seb (helo=highlab.com)
-	by highlab.com with local-esmtp (Exim 4.50)
-	id 1DgyW0-0004PE-Ct; Fri, 10 Jun 2005 23:26:40 -0600
-To: Junio C Hamano <junkio@cox.net>
-In-reply-to: <7vy89h4m9r.fsf@assigned-by-dhcp.cox.net> 
-Comments: In-reply-to Junio C Hamano <junkio@cox.net>
-   message dated "Fri, 10 Jun 2005 20:15:12 -0700."
+	id S261267AbVFKF2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Jun 2005 01:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261281AbVFKF2x
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 01:28:53 -0400
+Received: from rproxy.gmail.com ([64.233.170.201]:15264 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261267AbVFKF2u convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2005 01:28:50 -0400
+Received: by rproxy.gmail.com with SMTP id i8so374154rne
+        for <git@vger.kernel.org>; Fri, 10 Jun 2005 22:28:50 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=L9XmxrfbevkmH0fRKYcwtQpA8xivttxM0NvlyMycqL/h3y/9Do1GLg8ZJuPS4bhP83Kv0KlynvrUY506Jrg9zS+d9fMK4OEl7lYdIVH+89QERxdDVPEO6FL6aSrwkE80CNMVsWBswLH+Uc0EpN4DLpIPMqJAIAg66OdYyRvLoGw=
+Received: by 10.38.65.4 with SMTP id n4mr16647rna;
+        Fri, 10 Jun 2005 22:28:50 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Fri, 10 Jun 2005 22:28:50 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20050610092343.3935.qmail@blackcubes.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> >>>>> "SK" == Sebastian Kuzminsky <seb@highlab.com> writes:
-> 
-> SK> Can we drop the "git" program?
-> 
-> No chance, especially with a patch that is not accompanied with
-> necessary changes to Documentation/tutorial.txt that already
-> tells the user to type "git commit" and "git log" ;-).
+Folks,
 
-Of course, you're right.  How about this?  Against Cogito but applies
-cleanly to Linus' git:
+Thought I'd just give you a heads up that I am presently undertaking a
+further substantial re factorisation and generalization of epoch.c.
+The changes in this work we be largely limited to epoch.c and
+epoch.c-related parts of rev-list.c.
 
+The upcoming changes will not substantially change the existing tools
+interfaces, so it would be safe to apply the [rev 11] to the git HEAD
+provided there is agreement that the tools interfaces proposed in [rev
+11] are acceptable.
 
- b/Documentation/cvs-migration.txt |    4 ++--
- b/Documentation/tutorial.txt      |    6 +++---
- b/Makefile                        |    2 +-
- git                               |    4 ----
- 4 files changed, 6 insertions(+), 10 deletions(-)
+However, if you want to perform a detailed review of epoch.c, it might
+be better to hold off until my next batch of changes are ready. That
+said, if you would like to provide feedback on what I have already
+done, please feel welcome to.
 
+In my forthcoming changes I intend to:
 
-diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
---- a/Documentation/cvs-migration.txt
-+++ b/Documentation/cvs-migration.txt
-@@ -63,7 +63,7 @@
- any more familiar with it, but make sure it is in your path. After that,
- the magic command line is
- 
--	git cvsimport <cvsroot> <module>
-+	git-cvsimport-script <cvsroot> <module>
- 
- which will do exactly what you'd think it does: it will create a git
- archive of the named CVS module. The new archive will be created in a
-@@ -90,7 +90,7 @@
- 
- So, something has gone wrong, and you don't know whom to blame, and
- you're an ex-CVS user and used to do "cvs annotate" to see who caused
--the breakage. You're looking for the "git annotate", and it's just
-+the breakage. You're looking for the "git-annotate", and it's just
- claiming not to find such a script. You're annoyed.
- 
- Yes, that's right.  Core git doesn't do "annotate", although it's
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -362,7 +362,7 @@
- for you, and starts up an editor to let you write your commit message
- yourself, so let's just use that:
- 
--	git commit
-+	git-commit-script
- 
- Write whatever message you want, and all the lines that start with '#'
- will be pruned out, and the rest will be used as the commit message for
-@@ -417,7 +417,7 @@
- To see the whole history of our pitiful little git-tutorial project, you
- can do
- 
--	git log
-+	git-log-script
- 
- which shows just the log messages, or if we want to see the log together
- with the associated patches use the more complex (and much more
-@@ -465,7 +465,7 @@
-    history outside of the project you created.
- 
-  - if you want to move or duplicate a git archive, you can do so. There
--   is no "git clone" command: if you want to create a copy of your
-+   is no "git-clone" command: if you want to create a copy of your
-    archive (with all the full history that went along with it), you can
-    do so with a regular "cp -a git-tutorial new-git-tutorial".
- 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -42,7 +42,7 @@
- AR?=ar
- INSTALL?=install
- 
--SCRIPTS=git git-apply-patch-script git-merge-one-file-script git-prune-script \
-+SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
- 	git-pull-script git-tag-script git-resolve-script git-whatchanged \
- 	git-deltafy-script git-fetch-script git-status-script git-commit-script \
- 	git-log-script git-shortlog git-cvsimport-script
-diff --git a/git b/git
-deleted file mode 100755
---- a/git
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh
--cmd="git-$1-script"
--shift
--exec $cmd "$@"
+1. rename epoch.c to commit-graph.c
+2. improve separation of concerns between rev-list.c and commit-graph.c
+   * commit-graph.c will understand everything about incremental graph
+traversals, including merge order search and "localized" perspectives
+   * rev-list.c will be responsible for output limiting [ that is:
+stopping the traversal according to user-defined (e.g. parameterised
+criteria) ]
+3. the epoch_methods structure in [rev11] will be generalized to a
+per-traversal "traversal object" (struct graph_traversal) that will
+have additional methods such as:
+   * visit_edge - called on each edge
+   * visit_commit - called on each visit to a commit
+   * clean_commit - called to clean any resources allocated during a
+call to visit_edge, visit_commit
 
+I'll try to do the right thing and break the changes into a series of
+small patches to rev11.
 
--- 
-Sebastian Kuzminsky
+Please forgive me for my previous practice of submitting large changes
+- I am quite new to the development-by-patch style of development, and
+haven't quite got into the swing of it yet.
+
+jon.
