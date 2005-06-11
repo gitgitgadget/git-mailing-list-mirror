@@ -1,56 +1,62 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 3/6] Make showdate use "Linus format"
-Date: Sat, 11 Jun 2005 00:59:38 +0200
-Message-ID: <20050610225938.GE22111@pasky.ji.cz>
-References: <42A825C2.1060302@gmail.com>
+Subject: Re: [PATCH 5/6] Make cg-diff use optparse, and add features
+Date: Sat, 11 Jun 2005 02:02:55 +0200
+Message-ID: <20050611000255.GI22111@pasky.ji.cz>
+References: <42A8280A.3070607@gmail.com> <42A826D7.1060507@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 00:56:01 2005
+X-From: git-owner@vger.kernel.org Sat Jun 11 01:59:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgsPn-00074U-Mb
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 00:55:52 +0200
+	id 1DgtP2-0004gq-N5
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 01:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261319AbVFJW76 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 18:59:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261378AbVFJW76
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 18:59:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44190 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261319AbVFJW7l (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 18:59:41 -0400
-Received: (qmail 983 invoked by uid 2001); 10 Jun 2005 22:59:38 -0000
+	id S261482AbVFKADO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 20:03:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVFKADO
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 20:03:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:14752 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261482AbVFKAC6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 20:02:58 -0400
+Received: (qmail 12461 invoked by uid 2001); 11 Jun 2005 00:02:55 -0000
 To: Dan Holmsand <holmsand@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <42A825C2.1060302@gmail.com>
+In-Reply-To: <42A8280A.3070607@gmail.com> <42A826D7.1060507@gmail.com>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, applied.
-
-Dear diary, on Thu, Jun 09, 2005 at 01:19:30PM CEST, I got a letter
+Dear diary, on Thu, Jun 09, 2005 at 01:24:07PM CEST, I got a letter
 where Dan Holmsand <holmsand@gmail.com> told me that...
-> This makes showdate use the same date format as
-> git-rev-list --pretty, and gives some speedup. It might also
-> be more portable.
+> This adds some new features to cg-diff:
 
-I dropped the format change bit, because I really think the Linus' date
-format is bad. The current standardized, international and most widely
-used (even your mailer agent used it in your Date: header) date format
-is RFC 822, so please let's stick with it. It's perfect for our use, and
-better human-readable too. The date part isn't split all around but
-concentrated in the first half while the second half is dedicated to
-time.
+Dear diary, on Thu, Jun 09, 2005 at 01:29:14PM CEST, I got a letter
+where Dan Holmsand <holmsand@gmail.com> told me that...
+> This is more or less a rewrite of cg-log, that adds a bunch
+> of new features and gives a substantial speedup.
 
-> Note that this changes the calling convention: the previous
-> version used seconds from $1, but timezone from the global
-> variable $date. cg-mkpatch is modified to the new way.
+I'm sorry, but those two patches are still way too big and therefore
+basically unreviewable. Could you please split them further to a
+per-feature patches?
 
-You forgot to modify cg-log accordingly. (I fixed that.)
+A good place to start would be changing the [PATCH 2/6] color refactor
+to actually _replace_ the color stuff of cg-log and cg-diff with the new
+common cg-Xlib code - but please don't change the default colors in that
+patch yet (that is because you shouldn't assume in your earlier patches
+that later patches will be applied, or applied in the form you send
+them; I don't know about the less search thing yet, since I didn't test
+it, since I don't have a focused patch for it).
+
+Also, if the big changes won't make your further job significantly
+easier, it's probably good idea to first do the smaller changes and then
+the big ones - I'm more likely to change something, well, big, in the
+big patches. ;-)
+
+Thanks,
 
 -- 
 				Petr "Pasky" Baudis
