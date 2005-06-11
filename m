@@ -1,124 +1,131 @@
 From: Sebastian Kuzminsky <seb@highlab.com>
-Subject: minor doc patch for cogito
-Date: Fri, 10 Jun 2005 22:23:51 -0600
-Message-ID: <E1DgxXD-0004Ky-SE@highlab.com>
-X-From: git-owner@vger.kernel.org Sat Jun 11 06:17:38 2005
+Subject: Re: do people use the 'git' command?
+Date: Fri, 10 Jun 2005 23:26:40 -0600
+Message-ID: <E1DgyW0-0004PE-Ct@highlab.com>
+References: <E1DgodI-0003ov-Fl@highlab.com> <7vy89h4m9r.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 11 07:21:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgxR9-0005p4-CG
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 06:17:35 +0200
+	id 1DgyQi-0000yX-0a
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 07:21:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261158AbVFKEV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Jun 2005 00:21:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261227AbVFKEV5
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 00:21:57 -0400
-Received: from sccrmhc14.comcast.net ([204.127.202.59]:52884 "EHLO
-	sccrmhc14.comcast.net") by vger.kernel.org with ESMTP
-	id S261158AbVFKEVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2005 00:21:51 -0400
+	id S261255AbVFKFZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Jun 2005 01:25:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261273AbVFKFZL
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 01:25:11 -0400
+Received: from sccrmhc12.comcast.net ([204.127.202.56]:59106 "EHLO
+	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S261255AbVFKFYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2005 01:24:40 -0400
 Received: from highlab.com ([24.8.179.27])
-          by comcast.net (sccrmhc14) with ESMTP
-          id <2005061104215101400cud0se>; Sat, 11 Jun 2005 04:21:51 +0000
+          by comcast.net (sccrmhc12) with ESMTP
+          id <20050611052439012000tb6me>; Sat, 11 Jun 2005 05:24:39 +0000
 Received: from seb (helo=highlab.com)
 	by highlab.com with local-esmtp (Exim 4.50)
-	id 1DgxXD-0004Ky-SE
-	for git@vger.kernel.org; Fri, 10 Jun 2005 22:23:51 -0600
-To: git@vger.kernel.org
+	id 1DgyW0-0004PE-Ct; Fri, 10 Jun 2005 23:26:40 -0600
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7vy89h4m9r.fsf@assigned-by-dhcp.cox.net> 
+Comments: In-reply-to Junio C Hamano <junkio@cox.net>
+   message dated "Fri, 10 Jun 2005 20:15:12 -0700."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Here are some minor changes to the Cogito docs, to add the manpage
-section to the asciidoc links.  It also adds a 'txt' target to
-Documentation/Makefile, so we can make the Cogito .txt docs if we want.
+Junio C Hamano <junkio@cox.net> wrote:
+> >>>>> "SK" == Sebastian Kuzminsky <seb@highlab.com> writes:
+> 
+> SK> Can we drop the "git" program?
+> 
+> No chance, especially with a patch that is not accompanied with
+> necessary changes to Documentation/tutorial.txt that already
+> tells the user to type "git commit" and "git log" ;-).
+
+Of course, you're right.  How about this?  Against Cogito but applies
+cleanly to Linus' git:
 
 
- Makefile             |    4 +++-
- make-cg-asciidoc     |    4 ++--
- make-cogito-asciidoc |   15 +++++++++++----
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ b/Documentation/cvs-migration.txt |    4 ++--
+ b/Documentation/tutorial.txt      |    6 +++---
+ b/Makefile                        |    2 +-
+ git                               |    4 ----
+ 4 files changed, 6 insertions(+), 10 deletions(-)
 
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -18,7 +18,9 @@ DOC_MAN7=$(patsubst %.txt,%.7,$(MAN7_TXT
- # yourself - yes, all 6 characters of it!
- #
+diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/cvs-migration.txt
+@@ -63,7 +63,7 @@
+ any more familiar with it, but make sure it is in your path. After that,
+ the magic command line is
  
--all: html man
-+all: txt html man
-+
-+txt: $(MAN1_TXT) $(MAN7_TXT)
+-	git cvsimport <cvsroot> <module>
++	git-cvsimport-script <cvsroot> <module>
  
- html: $(DOC_HTML)
+ which will do exactly what you'd think it does: it will create a git
+ archive of the named CVS module. The new archive will be created in a
+@@ -90,7 +90,7 @@
  
-diff --git a/Documentation/make-cg-asciidoc b/Documentation/make-cg-asciidoc
---- a/Documentation/make-cg-asciidoc
-+++ b/Documentation/make-cg-asciidoc
-@@ -40,7 +40,7 @@ CAPTION=$(echo "$HEADER" | head -n 1 | t
- # were referenced as "`cg-command`". This way references from cg-* combos in
- # code listings will be ignored.
- BODY=$(echo "$HEADER" | sed '0,/^$/d' \
--		      | sed 's/`\(cg-[a-z-]\+\)`/link:\1.html[\1]/')
-+		      | sed 's/`\(cg-[a-z-]\+\)`/link:\1.html[\1(1)]/')
+ So, something has gone wrong, and you don't know whom to blame, and
+ you're an ex-CVS user and used to do "cvs annotate" to see who caused
+-the breakage. You're looking for the "git annotate", and it's just
++the breakage. You're looking for the "git-annotate", and it's just
+ claiming not to find such a script. You're annoyed.
  
- DESCRIPTION=
- OPTIONS=
-@@ -109,5 +109,5 @@ $COPYRIGHT
- SEE ALSO
- --------
- $COMMAND command is part of link:cogito.html[cogito(7)],
--a toolkit for managing link:git.html[git(1)] trees.
-+a toolkit for managing link:git.html[git(7)] trees.
- __END__
-diff --git a/Documentation/make-cogito-asciidoc b/Documentation/make-cogito-asciidoc
---- a/Documentation/make-cogito-asciidoc
-+++ b/Documentation/make-cogito-asciidoc
-@@ -11,7 +11,14 @@ HELPER_COMMANDS="$(ls ../cg-X*) $(ls ../
- link()
- {
- 	command="$1"
--	echo "link:$command.html['$command']"
-+
-+        if [ ! -z "$2" ]; then
-+            section="($2)"
-+        else
-+            section=""
-+        fi
-+
-+	echo "link:$command.html['$command$section']"
- }
+ Yes, that's right.  Core git doesn't do "annotate", although it's
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -362,7 +362,7 @@
+ for you, and starts up an editor to let you write your commit message
+ yourself, so let's just use that:
  
- # Print description list entry.
-@@ -62,7 +69,7 @@ storage system. Amongst some of the note
- for branching, tagging and multiple backends for distributing repositories
- (local files, rsync, HTTP, ssh).
+-	git commit
++	git-commit-script
  
--'Cogito' is implemented as a series of 'bash(1)' scripts on top of $(link git)
-+'Cogito' is implemented as a series of 'bash(1)' scripts on top of $(link git 7)
- (a content-tracking filesystem) with the goal of providing an interface for
- working with the 'GIT' database in a manner similar to other SCM tools (like
- 'CVS', 'BitKeeper' or 'Monotone').
-@@ -107,13 +114,13 @@ $(print_command_listing $HELPER_COMMANDS
- Command Identifiers
- -------------------
- BRANCH_NAME::
--	Indicates a branch name added with the $(link cg-branch-add) command.
-+	Indicates a branch name added with the $(link cg-branch-add 1) command.
+ Write whatever message you want, and all the lines that start with '#'
+ will be pruned out, and the rest will be used as the commit message for
+@@ -417,7 +417,7 @@
+ To see the whole history of our pitiful little git-tutorial project, you
+ can do
  
- COMMAND::
- 	Indicates a 'Cogito' command. The \`cg-\` prefix is optional.
+-	git log
++	git-log-script
  
- LOCATION::
--	Indicates a local file path or a URI. See $(link cg-branch-add) for a
-+	Indicates a local file path or a URI. See $(link cg-branch-add 1) for a
- 	list of supported URI schemes.
+ which shows just the log messages, or if we want to see the log together
+ with the associated patches use the more complex (and much more
+@@ -465,7 +465,7 @@
+    history outside of the project you created.
  
- COMMIT_ID, FROM_ID, TO_ID, BASE_COMMIT::
--- 
-Sebastian Kuzminsky
+  - if you want to move or duplicate a git archive, you can do so. There
+-   is no "git clone" command: if you want to create a copy of your
++   is no "git-clone" command: if you want to create a copy of your
+    archive (with all the full history that went along with it), you can
+    do so with a regular "cp -a git-tutorial new-git-tutorial".
+ 
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -42,7 +42,7 @@
+ AR?=ar
+ INSTALL?=install
+ 
+-SCRIPTS=git git-apply-patch-script git-merge-one-file-script git-prune-script \
++SCRIPTS=git-apply-patch-script git-merge-one-file-script git-prune-script \
+ 	git-pull-script git-tag-script git-resolve-script git-whatchanged \
+ 	git-deltafy-script git-fetch-script git-status-script git-commit-script \
+ 	git-log-script git-shortlog git-cvsimport-script
+diff --git a/git b/git
+deleted file mode 100755
+--- a/git
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh
+-cmd="git-$1-script"
+-shift
+-exec $cmd "$@"
+
 
 -- 
 Sebastian Kuzminsky
