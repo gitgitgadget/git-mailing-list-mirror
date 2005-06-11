@@ -1,64 +1,54 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: [PATCH 5/6] Make cg-diff use optparse, and add features
-Date: Sat, 11 Jun 2005 02:02:55 +0200
-Message-ID: <20050611000255.GI22111@pasky.ji.cz>
-References: <42A8280A.3070607@gmail.com> <42A826D7.1060507@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: qgit-0.4
+Date: Sat, 11 Jun 2005 10:33:13 +1000
+Message-ID: <2cfc403205061017334cd01097@mail.gmail.com>
+References: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 01:59:32 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 11 02:29:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DgtP2-0004gq-N5
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 01:59:09 +0200
+	id 1DgtsO-0007I7-Sk
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 02:29:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261482AbVFKADO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 20:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVFKADO
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 20:03:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:14752 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261482AbVFKAC6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 20:02:58 -0400
-Received: (qmail 12461 invoked by uid 2001); 11 Jun 2005 00:02:55 -0000
-To: Dan Holmsand <holmsand@gmail.com>
+	id S261494AbVFKAd1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 20:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261495AbVFKAd1
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 20:33:27 -0400
+Received: from rproxy.gmail.com ([64.233.170.193]:53377 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261494AbVFKAdN convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2005 20:33:13 -0400
+Received: by rproxy.gmail.com with SMTP id y7so285317rne
+        for <git@vger.kernel.org>; Fri, 10 Jun 2005 17:33:13 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Yozj3omMQjaU0VTi2ycjpDxupbNrivi+j2JHN86Sh4il179q9Gc4zt+iphStwuEzq3SCpG4uS5AvPKI8UkITJWhM2x+6R/OVEx6ssHzOswS7HDx2HFWAlXecBj5DxaOTQ356glV3fHv1l1j8MQuhFyoUT2VmQqPsjwoRRYyjlxo=
+Received: by 10.38.101.40 with SMTP id y40mr628050rnb;
+        Fri, 10 Jun 2005 17:33:13 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Fri, 10 Jun 2005 17:33:13 -0700 (PDT)
+To: Marco Costalba <mcostalba@yahoo.it>
+In-Reply-To: <20050610183537.39108.qmail@web26301.mail.ukl.yahoo.com>
 Content-Disposition: inline
-In-Reply-To: <42A8280A.3070607@gmail.com> <42A826D7.1060507@gmail.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Jun 09, 2005 at 01:24:07PM CEST, I got a letter
-where Dan Holmsand <holmsand@gmail.com> told me that...
-> This adds some new features to cg-diff:
+Marco,
 
-Dear diary, on Thu, Jun 09, 2005 at 01:29:14PM CEST, I got a letter
-where Dan Holmsand <holmsand@gmail.com> told me that...
-> This is more or less a rewrite of cg-log, that adds a bunch
-> of new features and gives a substantial speedup.
+Not being tremendously familar with either Python or scons, perhaps
+you could tell me what I need to do to resolve this error message
 
-I'm sorry, but those two patches are still way too big and therefore
-basically unreviewable. Could you please split them further to a
-per-feature patches?
+$> ./configure
++scons was found, that's excellent+
+scons: Reading SConscript files ...
+ 
+scons: *** No tool named 'qt': No module named qt
+File "SConstruct", line 4, in ?
 
-A good place to start would be changing the [PATCH 2/6] color refactor
-to actually _replace_ the color stuff of cg-log and cg-diff with the new
-common cg-Xlib code - but please don't change the default colors in that
-patch yet (that is because you shouldn't assume in your earlier patches
-that later patches will be applied, or applied in the form you send
-them; I don't know about the less search thing yet, since I didn't test
-it, since I don't have a focused patch for it).
-
-Also, if the big changes won't make your further job significantly
-easier, it's probably good idea to first do the smaller changes and then
-the big ones - I'm more likely to change something, well, big, in the
-big patches. ;-)
-
-Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-<Espy> be careful, some twit might quote you out of context..
+jon.
