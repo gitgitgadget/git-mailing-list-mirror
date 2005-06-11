@@ -1,149 +1,266 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] diff-stages: unuglify the too big main() function.
-Date: Fri, 10 Jun 2005 18:44:36 -0700
-Message-ID: <7vu0k56517.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0506081336080.2286@ppc970.osdl.org>
-	<7vis0o30sc.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506081629370.2286@ppc970.osdl.org>
-	<7voeagrp11.fsf_-_@assigned-by-dhcp.cox.net>
-	<7v64woroui.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506090800580.2286@ppc970.osdl.org>
-	<7vaclzclqd.fsf@assigned-by-dhcp.cox.net>
-	<7vekbbb2me.fsf_-_@assigned-by-dhcp.cox.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Convert commands to optparse
+Date: Sat, 11 Jun 2005 03:52:11 +0200
+Message-ID: <20050611015211.GB13272@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 03:40:55 2005
+X-From: git-owner@vger.kernel.org Sat Jun 11 03:48:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DguzM-0004YI-PG
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 03:40:45 +0200
+	id 1Dgv6h-0004xi-8K
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 03:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261518AbVFKBo7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 21:44:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261512AbVFKBo7
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 21:44:59 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:40105 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S261518AbVFKBoj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Jun 2005 21:44:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050611014438.WBQX23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 10 Jun 2005 21:44:38 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vekbbb2me.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Thu, 09 Jun 2005 15:13:13 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261519AbVFKBwi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 21:52:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261521AbVFKBwi
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 21:52:38 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:33507 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S261519AbVFKBwN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 21:52:13 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id B42F46E1800; Sat, 11 Jun 2005 03:51:22 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 699606E136E; Sat, 11 Jun 2005 03:51:22 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 37C6D61FE0; Sat, 11 Jun 2005 03:52:12 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Split the core of the program, diff_stage, from one big "main()"
-function that does it all and leave only the parameter parsing,
-setup and finalize part in the main().
+Convert all remaining commands providing options to optparse.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
 
- diff-stages.c |   75 ++++++++++++++++++++++++++++++---------------------------
- 1 files changed, 40 insertions(+), 35 deletions(-)
+Tested lightly ...
 
-diff --git a/diff-stages.c b/diff-stages.c
---- a/diff-stages.c
-+++ b/diff-stages.c
-@@ -17,9 +17,47 @@ static const char *orderfile = NULL;
- static char *diff_stages_usage =
- "git-diff-stages [-p] [-r] [-z] [-M] [-C] [-R] [-S<string>] [-O<orderfile>] <stage1> <stage2> [<path>...]";
+ cg-admin-ls       |   15 +++++++++------
+ cg-admin-uncommit |   11 +++++++----
+ cg-clone          |   16 ++++++++++------
+ cg-commit         |   30 +++++++++++-------------------
+ cg-merge          |   23 +++++++++++------------
+ cg-pull           |   14 ++++++++------
+ cg-update         |   13 ++++++++-----
+ 7 files changed, 64 insertions(+), 58 deletions(-)
+
+diff --git a/cg-admin-ls b/cg-admin-ls
+--- a/cg-admin-ls
++++ b/cg-admin-ls
+@@ -34,11 +34,14 @@ USAGE="cg-admin-ls [-t TREE_ID] [PATH]"
+ . ${COGITO_LIB}cg-Xlib
  
-+static void diff_stages(int stage1, int stage2)
-+{
-+	int i = 0;
-+	while (i < active_nr) {
-+		struct cache_entry *ce, *stages[4] = { NULL, };
-+		struct cache_entry *one, *two;
-+		const char *name;
-+		int len;
-+		ce = active_cache[i];
-+		len = ce_namelen(ce);
-+		name = ce->name;
-+		for (;;) {
-+			int stage = ce_stage(ce);
-+			stages[stage] = ce;
-+			if (active_nr <= ++i)
-+				break;
-+			ce = active_cache[i];
-+			if (ce_namelen(ce) != len ||
-+			    memcmp(name, ce->name, len))
-+				break;
-+		}
-+		one = stages[stage1];
-+		two = stages[stage2];
-+		if (!one && !two)
-+			continue;
-+		if (!one)
-+			diff_addremove('+', ntohl(two->ce_mode),
-+				       two->sha1, name, NULL);
-+		else if (!two)
-+			diff_addremove('-', ntohl(one->ce_mode),
-+				       one->sha1, name, NULL);
-+		else if (memcmp(one->sha1, two->sha1, 20) ||
-+			 (one->ce_mode != two->ce_mode))
-+			 diff_change(ntohl(one->ce_mode), ntohl(two->ce_mode),
-+				     one->sha1, two->sha1, name, NULL);
-+	}
-+}
+ tree_id=
+-if [ "$1" = "-t" ]; then
+-	shift
+-	tree_id=$1
+-	shift
+-fi
++while optparse; do
++	if optparse -t=; then
++		tree_id="$OPTARG"
++	else
++		optfail
++	fi
++done
 +
- int main(int ac, const char **av)
- {
--	int stage1, stage2, i;
-+	int stage1, stage2;
+ id=$(tree-id $tree_id) || exit 1
  
- 	read_cache();
- 	while (1 < ac && av[1][0] == '-') {
-@@ -67,40 +105,7 @@ int main(int ac, const char **av)
- 	av += 3; /* The rest from av[0] are for paths restriction. */
- 	diff_setup(diff_setup_opt);
+-git-ls-tree "$id" "$@"
++git-ls-tree "$id" "${ARGS[@]}"
+diff --git a/cg-admin-uncommit b/cg-admin-uncommit
+--- a/cg-admin-uncommit
++++ b/cg-admin-uncommit
+@@ -24,10 +24,13 @@ USAGE="cg-admin-uncommit [-t] [COMMIT_ID
+ [ -s $_git/blocked ] && die "uncommitting blocked: $(cat $_git/blocked)"
  
--	i = 0;
--	while (i < active_nr) {
--		struct cache_entry *ce, *stages[4] = { NULL, };
--		struct cache_entry *one, *two;
--		const char *name;
--		int len;
--		ce = active_cache[i];
--		len = ce_namelen(ce);
--		name = ce->name;
--		for (;;) {
--			int stage = ce_stage(ce);
--			stages[stage] = ce;
--			if (active_nr <= ++i)
--				break;
--			ce = active_cache[i];
--			if (ce_namelen(ce) != len ||
--			    memcmp(name, ce->name, len))
--				break;
--		}
--		one = stages[stage1];
--		two = stages[stage2];
--		if (!one && !two)
--			continue;
--		if (!one)
--			diff_addremove('+', ntohl(two->ce_mode),
--				       two->sha1, name, NULL);
--		else if (!two)
--			diff_addremove('-', ntohl(one->ce_mode),
--				       one->sha1, name, NULL);
--		else if (memcmp(one->sha1, two->sha1, 20) ||
--			 (one->ce_mode != two->ce_mode))
--			 diff_change(ntohl(one->ce_mode), ntohl(two->ce_mode),
--				     one->sha1, two->sha1, name, NULL);
--	}
-+	diff_stages(stage1, stage2);
+ rollback_tree=
+-if [ "$1" = "-t" ]; then
+-	shift
+-	rollback_tree=1
+-fi
++while optparse; do
++	if optparse -t; then
++		rollback_tree=1
++	else
++		optfail
++	fi
++done
  
- 	diffcore_std(av,
- 		     detect_rename, diff_score_opt,
-------------
-
+ 
+ base=$(commit-id) || exit 1
+diff --git a/cg-clone b/cg-clone
+--- a/cg-clone
++++ b/cg-clone
+@@ -23,16 +23,20 @@ _git_repo_unneeded=1
+ . ${COGITO_LIB}cg-Xlib
+ 
+ same_dir=
+-if [ "$1" = "-s" ]; then
+-	shift
+-	same_dir=1
+-fi
++while optparse; do
++	if optparse -s; then
++		same_dir=1
++	else
++		optfail
++	fi
++done
++
++location=${ARGS[0]}
+ 
+-location=$1
+ [ "$location" ] || usage
+ location=${location%/}
+ 
+-destdir=$2
++destdir=${ARGS[1]}
+ if [ "$destdir" ]; then
+ 	[ ! "$same_dir" ] || die "specifying both -s and DESTDIR makes no sense"
+ 	dir=$destdir
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -83,34 +83,26 @@ forceeditor=
+ ignorecache=
+ commitalways=
+ msgs=()
+-while [ "$1" ]; do
+-	case "$1" in
+-	-C)
++while optparse; do
++	if optparse -C; then
+ 		ignorecache=1
+-		shift
+-		;;
+-	-e)
++	elif optparse -e; then
+ 		forceeditor=1
+-		shift
+-		;;
+-	-E)
++	elif optparse -E; then
+ 		forceeditor=1
+ 		commitalways=1
+-		shift
+-		;;
+-	-m*)
+-		msgs=("${msgs[@]}" "${1#-m}")
+-		shift
+-		;;
+-	*)	break;;
+-	esac
++	elif optparse -m=; then
++		msgs=("${msgs[@]}" "$OPTARG")
++	else
++		optfail
++	fi
+ done
+ 
+-if [ "$1" ]; then
++if [ "$ARGS" ]; then
+ 	[ "$ignorecache" ] && die "-C and listing files to commit does not make sense"
+ 	[ -s $_git/merging ] && die "cannot commit individual files when merging"
+ 
+-	eval commitfiles=($(git-diff-cache -r -m HEAD -- "$@" | \
++	eval commitfiles=($(git-diff-cache -r -m HEAD -- "${ARGS[@]}" | \
+ 		sed 's/^\([^	]*\)\(.	.*\)\(	.*\)*$/"\2"/'))
+ 	customfiles=1
+ 
+diff --git a/cg-merge b/cg-merge
+--- a/cg-merge
++++ b/cg-merge
+@@ -27,20 +27,19 @@ head=$(commit-id)
+ 
+ 
+ careful=
+-if [ "$1" = "-c" ]; then
+-	shift
+-	careful=1
+-fi
+-
+ base=
+-if [ "$1" = "-b" ]; then
+-	shift
+-	[ "$1" ] || usage
+-	base=$(commit-id "$1") || exit 1; shift
+-fi
++while optparse; do
++	if optparse -c; then
++		careful=1
++	elif optparse -b=; then
++		base=$(commit-id "$OPTARG") || exit 1
++	else
++		optfail
++	fi
++done
+ 
+-[ "$1" ] || usage
+-branchname="$1"
++[ "$ARGS" ] || usage
++branchname="${ARGS[0]}"
+ branch=$(commit-id "$branchname") || exit 1
+ 
+ [ "$base" ] || base=$(git-merge-base "$head" "$branch")
+diff --git a/cg-pull b/cg-pull
+--- a/cg-pull
++++ b/cg-pull
+@@ -17,13 +17,15 @@ USAGE="cg-pull [-f] [BRANCH_NAME]"
+ . ${COGITO_LIB}cg-Xlib
+ 
+ force=
+-if [ "$1" = "-f" ]; then
+-	force=1
+-	shift
+-fi
+-
+-name=$1
++while optparse; do
++	if optparse -f; then
++		force=1
++	else
++		optfail
++	fi
++done
+ 
++name=${ARGS[0]}
+ 
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=origin; }
+ [ "$name" ] || die "where to pull from?"
+diff --git a/cg-update b/cg-update
+--- a/cg-update
++++ b/cg-update
+@@ -18,12 +18,15 @@ USAGE="cg-update [-f] [BRANCH_NAME]"
+ . ${COGITO_LIB}cg-Xlib
+ 
+ force=
+-if [ "$1" = "-f" ]; then
+-	force=$1
+-	shift
+-fi
++while optparse; do
++	if optparse -f; then
++		force=-f
++	else
++		optfail
++	fi
++done
+ 
+-name=$1
++name=${ARGS[0]}
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=origin; }
+ [ "$name" ] || die "where to update from?"
+ 
+-- 
+Jonas Fonseca
