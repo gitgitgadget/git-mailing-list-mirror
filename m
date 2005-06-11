@@ -1,131 +1,111 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Read default options from config file
-Date: Sat, 11 Jun 2005 03:09:31 +0200
-Message-ID: <20050611010931.GA13272@diku.dk>
-References: <20050609010056.GA9084@diku.dk> <20050609083243.GD29665@pasky.ji.cz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] diff-tree: --find-copies-harder
+Date: Fri, 10 Jun 2005 18:31:02 -0700
+Message-ID: <7vpsut7k89.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dan Holmsand <holmsand@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 03:06:19 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 11 03:27:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DguRo-0002Te-Uq
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 03:06:05 +0200
+	id 1Dgum3-0003nK-T3
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 03:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261498AbVFKBKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 10 Jun 2005 21:10:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261500AbVFKBKR
-	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 21:10:17 -0400
-Received: from nhugin.diku.dk ([130.225.96.140]:60384 "EHLO nhugin.diku.dk")
-	by vger.kernel.org with ESMTP id S261498AbVFKBJc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Jun 2005 21:09:32 -0400
-Received: by nhugin.diku.dk (Postfix, from userid 754)
-	id 2F5FD6E2711; Sat, 11 Jun 2005 03:08:42 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id D607B6E270B; Sat, 11 Jun 2005 03:08:41 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 993C161FE0; Sat, 11 Jun 2005 03:09:31 +0200 (CEST)
-To: Petr Baudis <pasky@ucw.cz>
-Content-Disposition: inline
-In-Reply-To: <20050609083243.GD29665@pasky.ji.cz>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
-	version=2.60
-X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
-	nhugin.diku.dk
-X-Spam-Level: 
+	id S261155AbVFKBbL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 10 Jun 2005 21:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261158AbVFKBbL
+	(ORCPT <rfc822;git-outgoing>); Fri, 10 Jun 2005 21:31:11 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:15531 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261155AbVFKBbG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Jun 2005 21:31:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050611013103.MKFI1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 10 Jun 2005 21:31:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@ucw.cz> wrote Thu, Jun 09, 2005:
-> Dear diary, on Thu, Jun 09, 2005 at 03:00:56AM CEST, I got a letter
-> where Jonas Fonseca <fonseca@diku.dk> told me that...
-> > 
-> > Dan Holmsand <holmsand@gmail.com> wrote Wed, Jun 08, 2005:
-> > > - Automatic color if the COGITO_AUTO_COLOR environment variable is set.
-> > 
-> > [ This has been discussed before. Default arguments. The 'new' cg
-> >   wrapper makes this very easy. Not as smart as your env variable
-> >   handling tho'. ]
-> > 
-> > The default options are read only for Cogito calls going through the new
-> > cg wrapper which makes it trivial to 'overwrite' them by just calling
-> > cg-COMMAMD.
-> 
-> No, this is the wrong way. The 'cg' wrapper must not really do anything
-> special on its own. It's not a _replacement_ for direct calling of the
-> cg-scripts, it's just an aid for people who don't want to get used to
-> it. So please do this in cg-Xlib.
-> 
-> Also, I'd prefer the config file to be something like ~/.cgrc. I want to
-> reserve the .conf file for something more sophisticated. ;-)
+Normally, diff-tree does not feed unchanged filepair to diffcore
+for performance reasons, so copies are detected only when the
+source file of the copy happens to be modified in the same
+changeset.  This adds --find-copies-harder flag to tell
+diff-tree to sacrifice the performance in order to find copies
+the same way as other commands in diff-* family.
 
-With the optparse stuff in things got a lot easier. I took the idea to
-check for stole from Dan Holmsands patches to only read it when stdout
-is a terminal. So the file is really only for interactive usage.
-
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-Introduce ~/.cgrc config file. The file is read on startup if stdout is
-a terminal and may contain information about default command line
-options. Each line consists of a command name and a list of options.
-Lines not starting with a 'Cogito' command name are ignored.
+*** Linus I am submitting this one because some patches on
+*** read-tree I am going to send you will need this for
+*** formatting into a form that is easier to review.  Also this
+*** feature came up during the recent discussion on "what to do
+*** with merging rename/copy in the longer term".
 
-To always have cg-log and cg-diff colorize the output put the followig
-in ~/.cgrc:
+ diff-tree.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-	log -c
-	diff -c
-
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
-
- Documentation/make-cogito-asciidoc |   13 +++++++++++++
- cg-Xlib                            |    7 +++++++
- 2 files changed, 20 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/make-cogito-asciidoc b/Documentation/make-cogito-asciidoc
---- a/Documentation/make-cogito-asciidoc
-+++ b/Documentation/make-cogito-asciidoc
-@@ -140,6 +140,19 @@ FILE::
- 	Indicates an already existing filename - always relative to the root
- 	of the repository.
+diff --git a/diff-tree.c b/diff-tree.c
+--- a/diff-tree.c
++++ b/diff-tree.c
+@@ -11,6 +11,7 @@ static int show_tree_entry_in_recursive 
+ static int read_stdin = 0;
+ static int diff_output_format = DIFF_FORMAT_HUMAN;
+ static int detect_rename = 0;
++static int find_copies_harder = 0;
+ static int diff_setup_opt = 0;
+ static int diff_score_opt = 0;
+ static const char *pickaxe = NULL;
+@@ -115,7 +116,7 @@ static int compare_tree_entry(void *tree
+ 		show_file("+", tree2, size2, base);
+ 		return 1;
+ 	}
+-	if (!memcmp(sha1, sha2, 20) && mode1 == mode2)
++	if (!find_copies_harder && !memcmp(sha1, sha2, 20) && mode1 == mode2)
+ 		return 0;
  
-+FILES
-+-----
-+~/.cgrc::
-+	This file is read on startup if \`stdout\` is a terminal and may
-+	contain information about default command line options. Each line
-+	consists of a command name and a list of options. Lines not
-+	starting with a 'Cogito' command name are ignored. To have
-+	\`cg-log\` and \`cg-diff\` colorize the output put the following
-+	in ~/.cgrc:
-+
-+		log -c
-+		diff -c
-+
- COPYRIGHT
- ---------
- Copyright (C) Petr Baudis, 2005.
-diff --git a/cg-Xlib b/cg-Xlib
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -150,6 +150,13 @@ done
- ARGS=("$@")
- ARGPOS=0
+ 	/*
+@@ -199,7 +200,7 @@ static int interesting(void *tree, unsig
+ static void show_tree(const char *prefix, void *tree, unsigned long size, const char *base)
+ {
+ 	while (size) {
+-		if (interesting(tree, size, base))
++		if (find_copies_harder || interesting(tree, size, base))
+ 			show_file(prefix, tree, size, base);
+ 		update_tree_entry(&tree, &size);
+ 	}
+@@ -267,7 +268,7 @@ static void call_diff_setup(void)
  
-+if [ -t 1 -a -e "$HOME/.cgrc" ]; then
-+	_cg_name=${_cg_cmd#cg-}
-+	_cg_defaults="$(sed -n "/^$_cg_name/s/^$_cg_name //p" < $HOME/.cgrc)"
-+	ARGS=($_cg_defaults "${ARGS[@]}")
-+fi
-+
-+
- optshift() {
- 	unset ARGS[$ARGPOS]
- 	ARGS=("${ARGS[@]}")
--- 
-Jonas Fonseca
+ static int call_diff_flush(void)
+ {
+-	diffcore_std(0,
++	diffcore_std(find_copies_harder ? paths : 0,
+ 		     detect_rename, diff_score_opt,
+ 		     pickaxe, pickaxe_opts,
+ 		     diff_break_opt,
+@@ -475,6 +476,10 @@ int main(int argc, const char **argv)
+ 				usage(diff_tree_usage);
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--find-copies-harder")) {
++			find_copies_harder = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "-z")) {
+ 			diff_output_format = DIFF_FORMAT_MACHINE;
+ 			continue;
+@@ -502,6 +507,8 @@ int main(int argc, const char **argv)
+ 		}
+ 		usage(diff_tree_usage);
+ 	}
++	if (find_copies_harder && detect_rename != DIFF_DETECT_COPY)
++		usage(diff_tree_usage);
+ 
+ 	if (argc > 0) {
+ 		int i;
+------------
+
