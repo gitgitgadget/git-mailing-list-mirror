@@ -1,50 +1,48 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: do people use the 'git' command?
-Date: Sat, 11 Jun 2005 02:58:58 -0700
-Message-ID: <7v7jh1xli5.fsf@assigned-by-dhcp.cox.net>
-References: <E1DgodI-0003ov-Fl@highlab.com>
-	<7vy89h4m9r.fsf@assigned-by-dhcp.cox.net>
-	<E1DgyW0-0004PE-Ct@highlab.com>
-	<2cfc403205061023346c03a25b@mail.gmail.com>
-	<87r7f9xsux.fsf@windlord.stanford.edu>
+From: Paul Mackerras <paulus@samba.org>
+Subject: reducing line crossings in gitk
+Date: Sat, 11 Jun 2005 21:47:03 +1000
+Message-ID: <17066.53047.660907.453399@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 11:54:58 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jun 11 13:43:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dh2ha-0001r9-1A
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 11:54:54 +0200
+	id 1Dh4O7-0003Sb-W2
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 13:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261671AbVFKJ7D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Jun 2005 05:59:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261674AbVFKJ7D
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 05:59:03 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:53488 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261671AbVFKJ7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2005 05:59:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050611095859.MKFF550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 11 Jun 2005 05:58:59 -0400
-To: Russ Allbery <rra@stanford.edu>
-In-Reply-To: <87r7f9xsux.fsf@windlord.stanford.edu> (Russ Allbery's message
- of "Sat, 11 Jun 2005 00:20:06 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261688AbVFKLrB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Jun 2005 07:47:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261691AbVFKLrB
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 07:47:01 -0400
+Received: from ozlabs.org ([203.10.76.45]:52924 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261688AbVFKLq6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Jun 2005 07:46:58 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id BE6C067B17; Sat, 11 Jun 2005 21:46:56 +1000 (EST)
+To: git@vger.kernel.org
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "RA" == Russ Allbery <rra@stanford.edu> writes:
+At the moment, the commit graph that gitk draws always displays the
+parents of a merge in left-to-right order as they are listed in the
+commit (provided that none of the parents already has a line, i.e., is
+the parent of an previously drawn commit).  That means that for the
+typical merge, the branch coming out to the right is the stuff that
+was pulled in by the merge.
 
-RA> ... it turns out in discussion on the Debian mailing lists
-RA> that people actually do use GIT.
+That can lead to a later line crossing if an ancestor of the stuff
+being pulled in already has a line that is to the left of the merge.
+For an example of what I mean, look at the kernel repository with gitk
+at around commit 5ea6f2c33f0c8b126136dbf1776ffbc444772cd7 (Automatic
+merge of /spare/repo/netdev-2.6 branch natsemi).
 
-I thought the Debian way to resolve this kind of naming conflict
-was to rename _both_ commands involved.  Sorry if this was a
-misconception, but I think I read that somewhere in the
-developer's guide.
+I could add a heuristic to look for this case and reverse the order of
+the parents, which would reduce the line crossings and make the graph
+look neater.  Would this be worth the slight loss of information (in
+that the stuff pulled in would no longer always be to the right)?
 
+Paul.
