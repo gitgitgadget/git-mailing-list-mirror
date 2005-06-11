@@ -1,79 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: do people use the 'git' command?
-Date: Sat, 11 Jun 2005 00:50:40 -0700
-Message-ID: <7vu0k5xrfz.fsf@assigned-by-dhcp.cox.net>
-References: <E1DgodI-0003ov-Fl@highlab.com>
-	<7vy89h4m9r.fsf@assigned-by-dhcp.cox.net>
-	<E1DgyW0-0004PE-Ct@highlab.com>
-	<2cfc403205061023346c03a25b@mail.gmail.com>
-	<7vpsutz88z.fsf@assigned-by-dhcp.cox.net>
-	<2cfc403205061100204cd43334@mail.gmail.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: qgit-0.4
+Date: Sat, 11 Jun 2005 01:01:51 -0700 (PDT)
+Message-ID: <20050611080151.53794.qmail@web26304.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sebastian Kuzminsky <seb@highlab.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 11 09:51:07 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: berkus@gmail.com
+X-From: git-owner@vger.kernel.org Sat Jun 11 09:58:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dh0lf-00010x-An
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 09:50:59 +0200
+	id 1Dh0ss-0001d2-1a
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 09:58:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261640AbVFKHwa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Jun 2005 03:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261665AbVFKHuy
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 03:50:54 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:54197 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261640AbVFKHun (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Jun 2005 03:50:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050611075042.LZRU19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 11 Jun 2005 03:50:42 -0400
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc403205061100204cd43334@mail.gmail.com> (Jon Seymour's
- message of "Sat, 11 Jun 2005 17:20:46 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261645AbVFKICd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Jun 2005 04:02:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261665AbVFKICc
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 04:02:32 -0400
+Received: from web26304.mail.ukl.yahoo.com ([217.146.176.15]:47550 "HELO
+	web26304.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261645AbVFKIB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2005 04:01:57 -0400
+Received: (qmail 53796 invoked by uid 60001); 11 Jun 2005 08:01:51 -0000
+Received: from [151.38.74.248] by web26304.mail.ukl.yahoo.com via HTTP; Sat, 11 Jun 2005 01:01:51 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JS" == Jon Seymour <jon.seymour@gmail.com> writes:
+Marco Costalba wrote:
 
-JS> Then:
+>Here is qgit-0.4, a git GUI viewer
+>
+>New in this version:
+>
+>- file history
+>
+>- command line arguments passed to git-rev-list, eg: qgit v2.6.12-rc6 ^v2.6.12-rc4
+>
+>- complete rewrite of start-up thread, should be faster now, expecially with warm start
+>
+>You can download from 
+>http://prdownloads.sourceforge.net/qgit/qgit-0.4.tar.gz?download
+>
+>To try qgit:
+>
+>1) Unpack downloaded tar file
+>2) ./configure
+>3) make
+>4) cd bin
+>5) copy qgit file anywhere in your path
+>
+>There are also some screenshots:
+>http://sourceforge.net/project/screenshots.php?group_id=139897&ssid=13524
+>
+>Have fun
+>Marco
+>
 
-JS>     git update-cache 
+thanks to Stanislav Karchebny we have a new scons update, no more
 
-JS> would work as expected.
+scons: *** No tool named 'qt': No module named qt
 
-I'd rather teach the user to say git-update-cache once they
-learned how git works.
 
-Let's stop and think.  Compare lower level binaries and
-git-*-script commands, especially paying attention to the level
-of operation of what they do.  Notice the difference?
+here is the link
 
-The git-*-script commands are already more or less Porcelain
-themselves, and for that reason alone, they deserve to have
-CVS/SVN familiarity wrapper.  They are designed to be usable
-even by people who are still not familiar with the GIT way of
-doing things, and the purpose of the "git" wrapper is to help
-these people try putting their toes in the water.  Once they
-understand how these scripts work, they either care about
-Plumbing because they want to do something existing Porcelain
-layers do not offer (in which case they would write their own
-Porcelain extensions using Plumbing commands).  Or with luck,
-they may not have to worry about Plumbing at all.
+http://prdownloads.sourceforge.net/qgit/qgit-0.41.tar.gz?download
 
-I grant you that what the current "git" wrapper offers is not
-Porcelain enough, and to perform anything meaningful you either
-need to use Porcelain or bare Plumbing commands yourself.  But
-when that day comes, "git update-cache" is not something you
-would want to have anyway.  You would rather want to have things
-like "git add" and "git remove", which are written in terms of
-git-update-cache.
 
-See what I am saying?
+tested by at least one with the previous mentioned problem, confirmed to disappear.
 
+Marco
+
+
+
+
+
+
+
+		
+__________________________________ 
+Discover Yahoo! 
+Use Yahoo! to plan a weekend, have fun online and more. Check it out! 
+http://discover.yahoo.com/
