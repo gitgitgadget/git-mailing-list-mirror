@@ -1,54 +1,64 @@
-From: "Tommy M. McGuire" <mcguire@crsr.net>
+From: Russ Allbery <rra@stanford.edu>
 Subject: Re: do people use the 'git' command?
-Date: Sat, 11 Jun 2005 11:01:35 -0500
-Message-ID: <20050611160135.GA6522@immutable.crsr.net>
-References: <E1DgodI-0003ov-Fl@highlab.com> <7vy89h4m9r.fsf@assigned-by-dhcp.cox.net> <E1DgyW0-0004PE-Ct@highlab.com> <2cfc403205061023346c03a25b@mail.gmail.com> <7vpsutz88z.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 11 Jun 2005 09:45:45 -0700
+Organization: The Eyrie
+Message-ID: <87br6cn8p2.fsf@windlord.stanford.edu>
+References: <E1DgodI-0003ov-Fl@highlab.com>
+	<7vy89h4m9r.fsf@assigned-by-dhcp.cox.net>
+	<E1DgyW0-0004PE-Ct@highlab.com>
+	<2cfc403205061023346c03a25b@mail.gmail.com>
+	<87r7f9xsux.fsf@windlord.stanford.edu>
+	<7v7jh1xli5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: jon@blackcubes.dyndns.org, Sebastian Kuzminsky <seb@highlab.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 11 17:57:46 2005
+X-From: git-owner@vger.kernel.org Sat Jun 11 18:41:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dh8Me-0004Ha-DX
-	for gcvg-git@gmane.org; Sat, 11 Jun 2005 17:57:40 +0200
+	id 1Dh936-0008AP-T7
+	for gcvg-git@gmane.org; Sat, 11 Jun 2005 18:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261553AbVFKQB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 11 Jun 2005 12:01:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261602AbVFKQB6
-	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 12:01:58 -0400
-Received: from [65.98.21.155] ([65.98.21.155]:62478 "EHLO immutable.crsr.net")
-	by vger.kernel.org with ESMTP id S261553AbVFKQBx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Jun 2005 12:01:53 -0400
-Received: from mcguire by immutable.crsr.net with local (Exim 3.35 #1 (Debian))
-	id 1Dh8QS-0001hl-00; Sat, 11 Jun 2005 11:01:36 -0500
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vpsutz88z.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.3.28i
+	id S261734AbVFKQpx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 11 Jun 2005 12:45:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261735AbVFKQpx
+	(ORCPT <rfc822;git-outgoing>); Sat, 11 Jun 2005 12:45:53 -0400
+Received: from smtp3.Stanford.EDU ([171.67.16.138]:52637 "EHLO
+	smtp3.Stanford.EDU") by vger.kernel.org with ESMTP id S261734AbVFKQpr
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Jun 2005 12:45:47 -0400
+Received: from windlord.stanford.edu (windlord.Stanford.EDU [171.64.19.147])
+	by smtp3.Stanford.EDU (8.12.11/8.12.11) with SMTP id j5BGjjwj019353
+	for <git@vger.kernel.org>; Sat, 11 Jun 2005 09:45:46 -0700
+Received: (qmail 23259 invoked by uid 1000); 11 Jun 2005 16:45:45 -0000
+To: git@vger.kernel.org
+In-Reply-To: <7v7jh1xli5.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sat, 11 Jun 2005 02:58:58 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) XEmacs/21.4 (Jumbo Shrimp, linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 11, 2005 at 12:02:20AM -0700, Junio C Hamano wrote:
-> But the real point of "git" wrapper is merely to present CVS and SVN
-> refugees the structure they are familiar with: a single command having
-> a set of subcommands.
+Junio C Hamano <junkio@cox.net> writes:
+>>>>>> "RA" == Russ Allbery <rra@stanford.edu> writes:
 
-CVS and SVN refugees (like me :-)) should probably be pointed to
-porcelain.  Showing them a mixture of relatively unpolished "git
-<subcommand>" and "git-*" commands is not likely to impress them with
-the simplicity and elegance of the tool.  I don't think the surface
-structure of "<command> <subcommand>" is an important factor, and
-the first time they see a 40-hex-digit number, they'll be headed for the
-hills.
+> RA> ... it turns out in discussion on the Debian mailing lists
+> RA> that people actually do use GIT.
 
-> Personally I think removal of "git" script is a bad idea.
+> I thought the Debian way to resolve this kind of naming conflict
+> was to rename _both_ commands involved.  Sorry if this was a
+> misconception, but I think I read that somewhere in the
+> developer's guide.
 
-I'd agree, for the opposite reason: the git script is a decent interface
-for power users who don't want to use anything porcelainish.  It also
-provides a good place to hang custom functionality.
+There are various ways in which you can deal with the problem, but then
+you end up making that distribution different possibly than any other and
+certainly different than the behavior people get when they build the
+package themselves.  Then users ask questions here talking about running
+"cogito-git" or the like and developers go "I've never heard of that
+program," users try to use recipes off the net and the command isn't
+found, etc.
+
+Users of a tool like git are in a better position to figure this sort of
+thing out, but it's still rather annoying and frustrating.
 
 -- 
-Tommy McGuire
+Russ Allbery (rra@stanford.edu)             <http://www.eyrie.org/~eagle/>
