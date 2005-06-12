@@ -1,45 +1,55 @@
-From: Jon Smirl <jonsmirl@gmail.com>
-Subject: cogito and tags propagation
-Date: Sun, 12 Jun 2005 11:50:08 -0400
-Message-ID: <9e4733910506120850f762078@mail.gmail.com>
-Reply-To: Jon Smirl <jonsmirl@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] apply.c: tolerate diff from a dirty but unchanged path
+Date: Sun, 12 Jun 2005 09:14:28 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506120900200.2286@ppc970.osdl.org>
+References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
+ <7vsm091887.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
+ <7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net> <7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
+ <7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505291151250.10545@ppc970.osdl.org>
+ <7vpsusqxsy.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Jun 12 17:46:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 12 18:08:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhUfL-0004fV-KR
-	for gcvg-git@gmane.org; Sun, 12 Jun 2005 17:46:27 +0200
+	id 1DhV0P-0006VH-KU
+	for gcvg-git@gmane.org; Sun, 12 Jun 2005 18:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262630AbVFLPuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Jun 2005 11:50:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262632AbVFLPuq
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 11:50:46 -0400
-Received: from wproxy.gmail.com ([64.233.184.196]:62178 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262630AbVFLPuJ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2005 11:50:09 -0400
-Received: by wproxy.gmail.com with SMTP id 68so1325636wra
-        for <git@vger.kernel.org>; Sun, 12 Jun 2005 08:50:08 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=rFTdB2zk1tCWHiwb5GF7RvouoUZtMsoxis0mBjzkDy9SSvaQ3/7gVmL+gUUFpnKildYHHEVk/8BBPAfyahnoI+jvAcyePggtmQ6WlHwJAQWhQ9H5z1uAwYrjy8rRt6RB1F1CQnO72inDIPNT4Qg6bLKDfE3jUrvFiQWX3ZW6hYg=
-Received: by 10.54.46.47 with SMTP id t47mr2254715wrt;
-        Sun, 12 Jun 2005 08:50:08 -0700 (PDT)
-Received: by 10.54.94.8 with HTTP; Sun, 12 Jun 2005 08:50:08 -0700 (PDT)
-To: git <git@vger.kernel.org>
-Content-Disposition: inline
+	id S262633AbVFLQMf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Jun 2005 12:12:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262634AbVFLQMc
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 12:12:32 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:1737 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262633AbVFLQM3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2005 12:12:29 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5CGCOjA027264
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 12 Jun 2005 09:12:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5CGCNlV004613;
+	Sun, 12 Jun 2005 09:12:23 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpsusqxsy.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-If I add a tag to tree A,  then go to tree B which depends on A and do
-cg update. It says the branch is already fully merged. It's not
-counting the addition of a tag as something that marks the tree dirty.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+
+On Sat, 11 Jun 2005, Junio C Hamano wrote:
+> 
+> Here is a proposed fix.
+
+This is wrong. It will make us reject all patches that don't end the magic 
+sequence of "@@ -", ie it will make us reject pure renames etc.
+
+I'll fix it up,
+
+		Linus
