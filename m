@@ -1,65 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] apply.c: tolerate diff from a dirty but unchanged path
-Date: Sun, 12 Jun 2005 10:05:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506121003450.2286@ppc970.osdl.org>
-References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
- <7vsm091887.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
- <7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net> <7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
- <7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0505291151250.10545@ppc970.osdl.org>
- <7vpsusqxsy.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506120900200.2286@ppc970.osdl.org>
+From: Dan Holmsand <holmsand@gmail.com>
+Subject: Re: [PATCH] cg-Xlib: make showdate show timezone
+Date: Sun, 12 Jun 2005 19:37:06 +0200
+Message-ID: <42AC72C2.8000807@gmail.com>
+References: <42AC1F49.9010808@gmail.com> <20050612115259.GD6620@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 12 19:02:24 2005
+X-From: git-owner@vger.kernel.org Sun Jun 12 19:33:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhVo0-0008Uw-I2
-	for gcvg-git@gmane.org; Sun, 12 Jun 2005 18:59:28 +0200
+	id 1DhWKe-0003p1-7I
+	for gcvg-git@gmane.org; Sun, 12 Jun 2005 19:33:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262649AbVFLREA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Jun 2005 13:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262650AbVFLREA
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 13:04:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:51407 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262649AbVFLRD4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2005 13:03:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5CH3pjA030646
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 12 Jun 2005 10:03:51 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5CH3oJi006237;
-	Sun, 12 Jun 2005 10:03:50 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0506120900200.2286@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262659AbVFLRhU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Jun 2005 13:37:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262660AbVFLRhT
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 13:37:19 -0400
+Received: from wproxy.gmail.com ([64.233.184.201]:63861 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262659AbVFLRhP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Jun 2005 13:37:15 -0400
+Received: by wproxy.gmail.com with SMTP id 68so1358026wra
+        for <git@vger.kernel.org>; Sun, 12 Jun 2005 10:37:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=AFhX4K2TJe2dGpBOKprwe2sVYEP+NUuPCNQkHJU5o0pJeO+1+aX1cHmk3W1E9KE2PDcDkKAC2lHZizAShunJW0pFRXFDeNIOojaNN+lZoqKzVlj9cZVtWY9nevXHz3FlJzO3n1wfkYZrVU/FRCTJ5hUXcnBEsOT4UiJXZZNKwjs=
+Received: by 10.54.25.52 with SMTP id 52mr2297288wry;
+        Sun, 12 Jun 2005 10:37:14 -0700 (PDT)
+Received: from ?213.114.31.152? ([213.114.31.152])
+        by mx.gmail.com with ESMTP id 13sm3344626wrl.2005.06.12.10.37.13;
+        Sun, 12 Jun 2005 10:37:14 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
+To: Petr Baudis <pasky@ucw.cz>
+In-Reply-To: <20050612115259.GD6620@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Petr Baudis wrote:
+> Thanks, applied. But what's the point of calling date with LANG=C? If
+> the user wants his locale to get used, why prevent him?
 
+Because otherwise, you won't get an RFC-2822 date (which is what you 
+explicitly wanted a couple of days ago, and what we had before).
 
-On Sun, 12 Jun 2005, Linus Torvalds wrote:
-> 
-> I'll fix it up,
+Also, it would look pretty awkward to have parts of the output localized 
+  (the date string), and all other parts not ("author", "date", whatnot).
 
-One-liner fix checked in: we should ignore all git headers that are just a 
-single line. A valid git header is _always_ multiple lines: either you 
-have the "---/+++" lines of a diff, or you have the old/new lines of a 
-mode or name change.
-
-So the
-
-	if (git_hdr_len < 0)
-
-test of the return value of "parse_git_header()" was changed into
-
-	if (git_hdr_len <= len)
-
-and that cleanly solves the problem.
-
-		Linus
+/dan
