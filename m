@@ -1,67 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [zooko@zooko.com: [Revctrl] colliding md5 hashes of human-meaningful
-Date: Mon, 13 Jun 2005 13:08:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506131305550.8487@ppc970.osdl.org>
+From: Jason McMullan <jason.mcmullan@timesys.com>
+Subject: Re: [zooko@zooko.com: [Revctrl] colliding md5 hashes of
+	human-meaningful
+Date: Mon, 13 Jun 2005 16:17:01 -0400
+Message-ID: <1118693822.7564.59.camel@jmcmullan.timesys>
 References: <20050613195038.9191.qmail@science.horizon.com>
+	 <Pine.LNX.4.58.0506131305550.8487@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 13 22:07:05 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-JY3U8SyWQULMIDyBB7in"
+X-From: git-owner@vger.kernel.org Mon Jun 13 22:19:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhvCa-0006hF-EU
-	for gcvg-git@gmane.org; Mon, 13 Jun 2005 22:06:32 +0200
+	id 1DhvOc-0000Kd-Bp
+	for gcvg-git@gmane.org; Mon, 13 Jun 2005 22:18:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261284AbVFMUKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Jun 2005 16:10:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261279AbVFMUKO
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 16:10:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8411 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261251AbVFMUGX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 16:06:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5DK6HjA028171
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 13 Jun 2005 13:06:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5DK6Glv004451;
-	Mon, 13 Jun 2005 13:06:16 -0700
-To: linux@horizon.com
-In-Reply-To: <20050613195038.9191.qmail@science.horizon.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261308AbVFMUV6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Jun 2005 16:21:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261299AbVFMUSL
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 16:18:11 -0400
+Received: from mail.timesys.com ([65.117.135.102]:47073 "EHLO
+	exchange.timesys.com") by vger.kernel.org with ESMTP
+	id S261289AbVFMURF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Jun 2005 16:17:05 -0400
+Received: owa.timesys.com 192.168.2.250 from 192.168.2.31 192.168.2.31 via HTTP with MS-WebStorage 6.0.6249
+Received: from jmcmullan by owa.timesys.com; 13 Jun 2005 16:17:02 -0400
+To: GIT Mailling list <git@vger.kernel.org>
+In-Reply-To: <Pine.LNX.4.58.0506131305550.8487@ppc970.osdl.org>
+X-Mailer: Evolution 2.0.4-3mdk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--=-JY3U8SyWQULMIDyBB7in
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 13 Jun 2005 linux@horizon.com wrote:
-> 
-> You are insufficiently paranoid, Grasshopper.
+On Mon, 2005-06-13 at 13:08 -0700, Linus Torvalds wrote:
+> Ok, I have a better plan.
+>=20
+>  - you learn to fly by flapping your arms fast enough
+>  - you then learn to pee burning gasoline
+>  - then, you fly around New York, setting everybody you see on fire,
+> until=20
+>    people make you emperor.
 
-No, I just am not lettign paranoia mean that I sit around shivering all 
-day long.
+Can't... stop... laughing....
 
-> The basic attack goes like this:
-> 
-> - I construct two .c files with identical hashes.
 
-Ok, I have a better plan.
+"Cryptology - It's a comedy goldmine!"
 
- - you learn to fly by flapping your arms fast enough
- - you then learn to pee burning gasoline
- - then, you fly around New York, setting everybody you see on fire, until 
-   people make you emperor.
+--=20
+Jason McMullan <jason.mcmullan@timesys.com>
+TimeSys Corporation
 
-Sounds like a good plan, no?
 
-But perhaps slightly impractical. 
+--=-JY3U8SyWQULMIDyBB7in
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
 
-Now, let's go back to your plan. Why do you think your plan is any better 
-than mine?
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.0 (GNU/Linux)
 
-		Linus
+iD8DBQBCrem98/0vJ5szK6kRAsbWAJ0ZoH2RnZq9yXsbcOXJ46zze+2iCQCgvch8
+MH+hF1/Ok7lf/ADUOXhSu6k=
+=qALS
+-----END PGP SIGNATURE-----
+
+--=-JY3U8SyWQULMIDyBB7in--
