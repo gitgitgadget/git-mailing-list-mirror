@@ -1,55 +1,66 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Fix rename/copy when dealing with temporarily broken pairs.
-Date: Tue, 14 Jun 2005 08:17:17 +1000
-Message-ID: <2cfc403205061315173f8095b8@mail.gmail.com>
-References: <7vfyvpxlqi.fsf@assigned-by-dhcp.cox.net>
-	 <7vwtp0p6tz.fsf@assigned-by-dhcp.cox.net>
-	 <2cfc4032050613092462d3a456@mail.gmail.com>
-	 <7vis0ic6ot.fsf@assigned-by-dhcp.cox.net>
-Reply-To: jon@blackcubes.dyndns.org
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [zooko@zooko.com: [Revctrl] colliding md5 hashes of human-meaningful
+Date: Mon, 13 Jun 2005 14:39:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506131434260.8487@ppc970.osdl.org>
+References: <20050613210318.18965.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Jun 14 01:30:42 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 14 02:30:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhyNw-0007oh-Pm
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 01:30:29 +0200
+	id 1DhzKQ-000528-9u
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 02:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261557AbVFMXel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Jun 2005 19:34:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261516AbVFMWSd
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 18:18:33 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:19180 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261519AbVFMWRT convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Jun 2005 18:17:19 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1329421rne
-        for <git@vger.kernel.org>; Mon, 13 Jun 2005 15:17:17 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=G2FMSEph2PXfUkPoFMFQS7vwAALsoK6bpXQFj6vrWhM+SiH3Sc2YBYIedphSOQv0FkXuPoekBq+KR/EvVDFxgKvf5gDWSnYi1MwlXEqfXS3CJAY2dvMI9sTBiSpcjQ+YS+4uIj95dezZcUMEtZFlcXewEuvN+KxMdhptCneSyEU=
-Received: by 10.38.89.20 with SMTP id m20mr1167493rnb;
-        Mon, 13 Jun 2005 15:17:17 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Mon, 13 Jun 2005 15:17:17 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vis0ic6ot.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S261484AbVFNAf0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Jun 2005 20:35:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261442AbVFMVjO
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 17:39:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49540 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261428AbVFMVhe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 17:37:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5DLbTjA004151
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 13 Jun 2005 14:37:29 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5DLbSGs009829;
+	Mon, 13 Jun 2005 14:37:28 -0700
+To: linux@horizon.com
+In-Reply-To: <20050613210318.18965.qmail@science.horizon.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.109 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 6/14/05, Junio C Hamano <junkio@cox.net> wrote:
-> JS> I wondered if this patch might fix it, but it doesn't seem to.
-> Regular "patch" cannot grok either copy or rename.  If your
-> recipient uses "patch", then you must not use -C nor -M when you
-> are preparing a diff for his consumption.
 
-Ok, there was no problem other than me not understanding what
-git-apply did - thank you Pasky for bringing light to the dark regions
-of my sleep-deprived brain!
 
-jon.
+On Mon, 13 Jun 2005 linux@horizon.com wrote:
+> 
+> > But perhaps slightly impractical.
+> 
+> There are just few laws of physics it violates.
+
+Yeah, yeah. You avoided a few laws of phsyics of your own.
+
+For example, when you say
+
+  "(With an n-bit hash and an automated way to make harmless changes
+   to source files, I can generate 2^(n/2) variants of each and expect to
+   get a match, even in the absence of a better attack.)"
+
+you kind of ignore the fact that "n" here is 160, and so you're going to 
+be searching for quite a few versions of each. Also, you have to compare 
+the sha's of all of those 2**80 versions against each other which is a lot 
+of work in itself.
+
+Finally, you have to make sure that al the versions make sense, and that 
+people will take them 100% unmodified. 
+
+My plan was more interesting, I feel.
+
+		Linus
