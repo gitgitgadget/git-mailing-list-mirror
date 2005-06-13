@@ -1,204 +1,190 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] apply.c: tolerate diff from a dirty but unchanged path
-Date: Sun, 12 Jun 2005 11:34:22 -0700
-Message-ID: <7vll5fl901.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0505261731050.17207@ppc970.osdl.org>
-	<7vsm091887.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505270848220.17402@ppc970.osdl.org>
-	<7vk6lk5lxt.fsf_-_@assigned-by-dhcp.cox.net>
-	<7v3bs82rwh.fsf@assigned-by-dhcp.cox.net>
-	<7vis13wth4.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0505291151250.10545@ppc970.osdl.org>
-	<7vpsusqxsy.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506120900200.2286@ppc970.osdl.org>
-	<Pine.LNX.4.58.0506121003450.2286@ppc970.osdl.org>
+From: Mark Allen <mrallen1@yahoo.com>
+Subject: [PATCH] replace sha1sum with sum in test suite for portability
+Date: Sun, 12 Jun 2005 17:19:44 -0700 (PDT)
+Message-ID: <20050613001944.80334.qmail@web41213.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 12 20:30:38 2005
+Content-Type: multipart/mixed; boundary="0-628009660-1118621984=:80126"
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Jun 13 02:15:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhXED-0000cl-Cw
-	for gcvg-git@gmane.org; Sun, 12 Jun 2005 20:30:37 +0200
+	id 1Dhcc2-0003Jn-Ad
+	for gcvg-git@gmane.org; Mon, 13 Jun 2005 02:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261816AbVFLSew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 12 Jun 2005 14:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261819AbVFLSew
-	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 14:34:52 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:13462 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261816AbVFLSeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Jun 2005 14:34:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050612183421.MOLL7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 12 Jun 2005 14:34:21 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506121003450.2286@ppc970.osdl.org> (Linus
- Torvalds's message of "Sun, 12 Jun 2005 10:05:56 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261282AbVFMAT6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 12 Jun 2005 20:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261285AbVFMAT6
+	(ORCPT <rfc822;git-outgoing>); Sun, 12 Jun 2005 20:19:58 -0400
+Received: from web41213.mail.yahoo.com ([66.218.93.46]:47292 "HELO
+	web41213.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S261282AbVFMATt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Jun 2005 20:19:49 -0400
+Received: (qmail 80336 invoked by uid 60001); 13 Jun 2005 00:19:44 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=O8EbQokPiHA89ZGHx1Z3/dihr/wCgZzEmH/K76ZbK9W5t/e8L4nC3jA6NNrv2pWxiMq+80Bz3eV2t7Z/FjClQtf2XdQd0iD/f6GDFXFyLc8VhXsO1Vb5PK8WaCw/zEz0J63+BS42bdoA4reXajOUKcCfHKujjlBsM0YiB5pjkkg=  ;
+Received: from [66.41.38.150] by web41213.mail.yahoo.com via HTTP; Sun, 12 Jun 2005 17:19:44 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+--0-628009660-1118621984=:80126
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Content-Id: 
+Content-Disposition: inline
 
-LT> One-liner fix checked in: we should ignore all git headers that are just a 
-LT> single line. A valid git header is _always_ multiple lines: either you 
-LT> have the "---/+++" lines of a diff, or you have the old/new lines of a 
-LT> mode or name change.
+Replace sha1sum with sum in t1002 for portability.
 
-Yup.  I was about to say "it always amazes me" but by now I
-should instead say "I am used to see" that your fix to my
-crapola is always cleaner, simpler, and shorter.
+This patch replaces sha1sum because some systems do not have GNU coreutils "out of the
+box" and not having sha1sum will make the test fail.  I chose to replace sha1sum with sum
+(after considering several different checksumming methods) because by default GNU sum
+runs in a "BSD compatibility mode" so it should Just Work across OSes as long as its
+installed.
 
-By the way, just to help you sort the heap of recent patches
-from me, here is the list of patches from me not in your tree
-that I think you _could_ consider.  Other patches I posted to
-the list that have not been merged are mostly earlier attempts
-that I consider you have already discarded; there _could_ be
-something I am forgetting, but if even I myself forget, they
-probably do not matter ;-):
+Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+--0-628009660-1118621984=:80126
+Content-Type: text/plain; name="test-portability.patch.txt"
+Content-Description: 2003972814-test-portability.patch.txt
+Content-Disposition: inline; filename="test-portability.patch.txt"
 
-------------
-This is a fix for a bug that would embarrass me unless fixed.
+diff --git a/t/t1002-read-tree-m-u-2way.sh b/t/t1002-read-tree-m-u-2way.sh
+--- a/t/t1002-read-tree-m-u-2way.sh
++++ b/t/t1002-read-tree-m-u-2way.sh
+@@ -51,7 +51,7 @@ test_expect_success \
+      treeM=`git-write-tree` &&
+      echo treeM $treeM &&
+      git-ls-tree $treeM &&
+-     sha1sum bozbar frotz nitfol >M.sha1 &&
++     sum bozbar frotz nitfol >M.sum &&
+      git-diff-tree $treeH $treeM'
+ 
+ test_expect_success \
+@@ -60,7 +60,8 @@ test_expect_success \
+      git-read-tree -m -u $treeH $treeM &&
+      git-ls-files --stage >1-3.out &&
+      cmp M.out 1-3.out &&
+-     sha1sum -c M.sha1 &&
++     sum bozbar frotz nitfol >actual3.sum &&
++     cmp M.sum actual3.sum &&
+      check_cache_at bozbar clean &&
+      check_cache_at frotz clean &&
+      check_cache_at nitfol clean'
+@@ -76,7 +77,8 @@ test_expect_success \
+      diff --unified=0 M.out 4.out >4diff.out
+      compare_change 4diff.out expected &&
+      check_cache_at yomin clean &&
+-     sha1sum -c M.sha1 &&
++     sum bozbar frotz nitfol >actual4.sum &&
++     cmp M.sum actual4.sum &&
+      echo yomin >yomin1 &&
+      diff yomin yomin1 &&
+      rm -f yomin1'
+@@ -92,7 +94,8 @@ test_expect_success \
+      diff --unified=0 M.out 5.out >5diff.out
+      compare_change 5diff.out expected &&
+      check_cache_at yomin dirty &&
+-     sha1sum -c M.sha1 &&
++     sum bozbar frotz nitfol >actual5.sum &&
++     cmp M.sum actual5.sum &&
+      : dirty index should have prevented -u from checking it out. &&
+      echo yomin yomin >yomin1 &&
+      diff yomin yomin1 &&
+@@ -106,7 +109,8 @@ test_expect_success \
+      git-ls-files --stage >6.out &&
+      diff --unified=0 M.out 6.out &&
+      check_cache_at frotz clean &&
+-     sha1sum -c M.sha1 &&
++     sum bozbar frotz nitfol >actual3.sum &&
++     cmp M.sum actual3.sum &&
+      echo frotz >frotz1 &&
+      diff frotz frotz1 &&
+      rm -f frotz1'
+@@ -121,7 +125,8 @@ test_expect_success \
+      git-ls-files --stage >7.out &&
+      diff --unified=0 M.out 7.out &&
+      check_cache_at frotz dirty &&
+-     if sha1sum -c M.sha1; then false; else :; fi &&
++     sum bozbar frotz nitfol >actual7.sum &&
++     if cmp M.sum actual7.sum; then false; else :; fi &&
+      : dirty index should have prevented -u from checking it out. &&
+      echo frotz frotz >frotz1 &&
+      diff frotz frotz1 &&
+@@ -150,7 +155,8 @@ test_expect_success \
+      git-read-tree -m -u $treeH $treeM &&
+      git-ls-files --stage >10.out &&
+      cmp M.out 10.out &&
+-     sha1sum -c M.sha1'
++     sum bozbar frotz nitfol >actual10.sum &&
++     cmp M.sum actual10.sum'
+ 
+ test_expect_success \
+     '11 - dirty path removed.' \
+@@ -189,9 +195,12 @@ test_expect_success \
+      git-ls-files --stage >14.out || exit
+      diff --unified=0 M.out 14.out >14diff.out
+      compare_change 14diff.out expected &&
++     sum bozbar frotz >actual14.sum &&
++     grep -v nitfol M.sum > expected14.sum &&
++     cmp expected14.sum actual14.sum &&
++     sum bozbar frotz nitfol >actual14a.sum &&
++     if cmp M.sum actual14a.sum; then false; else :; fi &&
+      check_cache_at nitfol clean &&
+-     grep -v nitfol M.sha1 | sha1sum -c &&
+-     if sha1sum -c M.sha1; then false; else :; fi &&
+      echo nitfol nitfol >nitfol1 &&
+      diff nitfol nitfol1 &&
+      rm -f nitfol1'
+@@ -207,8 +216,11 @@ test_expect_success \
+      diff --unified=0 M.out 15.out >15diff.out
+      compare_change 15diff.out expected &&
+      check_cache_at nitfol dirty &&
+-     grep -v nitfol M.sha1 | sha1sum -c &&
+-     if sha1sum -c M.sha1; then false; else :; fi &&
++     sum bozbar frotz >actual15.sum &&
++     grep -v nitfol M.sum > expected15.sum &&
++     cmp expected15.sum actual15.sum &&
++     sum bozbar frotz nitfol >actual15a.sum &&
++     if cmp M.sum actual15a.sum; then false; else :; fi &&
+      echo nitfol nitfol nitfol >nitfol1 &&
+      diff nitfol nitfol1 &&
+      rm -f nitfol1'
+@@ -237,7 +249,8 @@ test_expect_success \
+      git-ls-files --stage >18.out &&
+      diff --unified=0 M.out 18.out &&
+      check_cache_at bozbar clean &&
+-     sha1sum -c M.sha1'
++     sum bozbar frotz nitfol >actual18.sum &&
++     cmp M.sum actual18.sum'
+ 
+ test_expect_success \
+     '19 - local change already having a good result, further modified.' \
+@@ -249,8 +262,11 @@ test_expect_success \
+      git-ls-files --stage >19.out &&
+      diff --unified=0 M.out 19.out &&
+      check_cache_at bozbar dirty &&
+-     grep -v bozbar M.sha1 | sha1sum -c &&
+-     if sha1sum -c M.sha1; then false; else :; fi &&
++     sum frotz nitfol >actual19.sum &&
++     grep -v bozbar  M.sum > expected19.sum &&
++     cmp expected19.sum actual19.sum &&
++     sum bozbar frotz nitfol >actual19a.sum &&
++     if cmp M.sum actual19a.sum; then false; else :; fi &&
+      echo gnusto gnusto >bozbar1 &&
+      diff bozbar bozbar1 &&
+      rm -f bozbar1'
+@@ -264,7 +280,8 @@ test_expect_success \
+      git-ls-files --stage >20.out &&
+      diff --unified=0 M.out 20.out &&
+      check_cache_at bozbar clean &&
+-     sha1sum -c M.sha1'
++     sum bozbar frotz nitfol >actual20.sum &&
++     cmp M.sum actual20.sum'
+ 
+ test_expect_success \
+     '21 - no local change, dirty cache.' \
 
-    Subject: [PATCH] Fix rename/copy when dealing with temporarily broken...
-    Date: Sat, 11 Jun 2005 20:55:20 -0700
-    Message-ID: <7vwtp0p6tz.fsf@assigned-by-dhcp.cox.net>
-
-A good test case is to run and compare these two in the GIT
-repository.  The latter case is mishandled with unpatched code:
-
-    commit=7ef76925d9c19ef74874e1735e2436e56d0c4897
-    git-diff-tree -C $commit
-    git-diff-tree -B -C $commit
-
-------------
-This one adjusts what the tutorial tells the user to expect to
-the reality with the "corrected" -B behaviour we already have in
-your tree.  We must have this before 1.0 in order not to confuse
-the reader.  Unless you drop -B from git-status-script, that is.
-
-    Subject: [PATCH 5/4] Tutorial update to adjust for -B fix
-    Date: Fri, 03 Jun 2005 12:11:07 -0700
-    Message-ID: <7vd5r3l0hg.fsf_-_@assigned-by-dhcp.cox.net>
-
-------------
-These two are enhancements that would help writing the
-ultra-smart three-way merge that would look at not just merge
-base and two heads, but the changes in the ancestry chain:
-
-    Message-ID: <7vpsut7k89.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH] diff-tree: --find-copies-harder
-    Date: Fri, 10 Jun 2005 18:31:02 -0700
-
-    Message-ID: <7vr7f8p6qu.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH] Add --diff-filter= output restriction to diff-* family.
-    Date: Sat, 11 Jun 2005 20:57:13 -0700
-
-I mentioned them in the reply to this message from you:
-
-    Date: Thu, 9 Jun 2005 08:15:52 -0700 (PDT)
-    Subject: Re: [PATCH 3/3] read-tree -m 3-way: handle more trivial merges
-    Message-ID: <Pine.LNX.4.58.0506090800580.2286@ppc970.osdl.org>
-
-    No, I think this is quite possibly wrong for several reasons.
-    ...
-    So I just need a little convincing that this is a good idea.
-
-------------
-These are reworked "help carrying forward local changes in 2-way
-fast forward".
-
-    Message-ID: <7vd5qt7k2d.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH 1/3] Clean up read-tree two-way tests.
-    Date: Fri, 10 Jun 2005 18:34:34 -0700
-
-    Message-ID: <7v7jh17jzr.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH 2/3] read-tree --emu23.
-    Date: Fri, 10 Jun 2005 18:36:08 -0700
-
-    Message-ID: <7v1x797jx0.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH 3/3] read-tree: fix too strong index requirement #5ALT
-    Date: Fri, 10 Jun 2005 18:37:47 -0700
-
-    Message-ID: <7voeadxlvo.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH 4/3] Finish making --emu23 equivalent to pure 2-way merge.
-    Date: Sat, 11 Jun 2005 02:50:51 -0700
-
-    Message-ID: <7vfyvpxlqi.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH 5/3] read-tree: loosen too strict index requirements
-    Date: Sat, 11 Jun 2005 02:53:57 -0700
-
-The first four implement --emu23, a two-tree fast forward
-emulated internally using the three-way mechanism.  This is to
-help cases where the user has local changes since the old head
-by not refusing to run in many cases straight 2-tree fast
-forward would refuse, and letting the user use the usual
-merge-cache three-way merge postprocessing machinery to carry
-local changes forward instead.
-
-The changes these four introduce do affect 3-way in 3 cases,
-which you objected, but this set has smaller impact than my
-earlier attempts.  It only resolves 3 extra cases the original
-3-way refuses to touch (my earlier one made it to resolve 3
-cases that involve removed paths as well, none of which this
-round touches, and leaves stages in the resulting index).  The
-cases new code internally resolves, instead of refusing to run,
-are:
-
- - only "merged head" created a new path, and the index happened
-   to have the same change; we resolve it internally by taking
-   the "merged head" and keep the index dirty if it was (#2ALT).
-
- - only "our head" created a new path, and the cache entry is
-   dirty (i.e. user has local changes in the work tree file); we
-   resolve it internally by taking "our head" and keep the index
-   dirty if it was (#3ALT).
-
- - both "merged head" and "our head" created a new path
-   identically, and the cache entry is dirty; we resolve it
-   internally by taking "our head" and keep the index dirty if
-   it was (#5ALT).
-
-I think your earlier objection of "closing the door to the
-clever merge algorithm" would not apply to these three cases.
-Note that --emu23 does not need 3-way code to resolve the #2ALT
-case, but needs the other two cases not refused; the patch makes
-it resolve #2ALT case only to keep things symmetric with #3ALT
-case --- otherwise users of 3-way merge would get confusing (but
-still correct) results.
-
-The last one [5/3] deals with the case where a path is only
-changed in the merged head in 3-way case, and the index already
-happens to have a version from the merged head (probably the
-user was playing with a patch floating around in the mailing
-list before initiating the merge).  In this case we can make the
-3-way merge succeed instead of refusing to run, and that is what
-this patch is about.  This does not change the outcome of the
-merge, and I think your "closing the door" objection would not
-apply to it.
-
-------------
-This is to enhance the git-*-script suite.  I do not mind too
-much if it stays outside, but I think it would be useful to
-other people as well, not just me.
-
-    Message-ID: <7vll5h7k5t.fsf@assigned-by-dhcp.cox.net>
-    Subject: [PATCH] Add script for patch submission via e-mail.
-    Date: Fri, 10 Jun 2005 18:32:30 -0700
-
-------------
-This attempts to split the "too big main() that does it all"
-which you hated.  Purely cosmetic at this point but as you
-pointed out it is a good discipline to help later maintenance to
-have a set of smaller single-task functions.
-
-    Message-ID: <7vu0k56517.fsf_-_@assigned-by-dhcp.cox.net>
-    Subject: [PATCH] diff-stages: unuglify the too big main() function.
-    Date: Fri, 10 Jun 2005 18:44:36 -0700
-
-
+--0-628009660-1118621984=:80126--
