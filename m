@@ -1,82 +1,116 @@
-From: Mark Allen <mrallen1@yahoo.com>
-Subject: Re: [PATCH] Unset TZ in t5000
-Date: Tue, 14 Jun 2005 06:17:27 -0700 (PDT)
-Message-ID: <20050614131727.23011.qmail@web41211.mail.yahoo.com>
-References: <42ADAC4D.7050408@lsrfire.ath.cx>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Semantics for one step undo/redo
+Date: Tue, 14 Jun 2005 23:50:02 +1000
+Message-ID: <2cfc403205061406507af5a66@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-926892123-1118755047=:20982"
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 15:13:06 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Jun 14 15:47:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiBDg-00042i-Nq
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 15:12:45 +0200
+	id 1DiBji-0001Td-KT
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 15:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261155AbVFNNRe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Jun 2005 09:17:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261172AbVFNNRe
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 09:17:34 -0400
-Received: from web41211.mail.yahoo.com ([66.218.93.44]:54380 "HELO
-	web41211.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S261155AbVFNNRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2005 09:17:31 -0400
-Received: (qmail 23013 invoked by uid 60001); 14 Jun 2005 13:17:27 -0000
+	id S261203AbVFNNuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Jun 2005 09:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261210AbVFNNuV
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 09:50:21 -0400
+Received: from rproxy.gmail.com ([64.233.170.194]:12642 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261203AbVFNNuD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Jun 2005 09:50:03 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1605116rne
+        for <git@vger.kernel.org>; Tue, 14 Jun 2005 06:50:02 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=6PBWlhwl/A3WCjtkNqqWlEQTwCRlYe2jUe6XGSOVyQsQIY3HMmD8Wcp7YYv0+WvsIzHC5QuhslffM0AD2A9Zcb7jUO/VEhhwwChcaApQ7rWxCW8Fxo6glyCG1dKumRcabPxuo8+OH/XJLS+Msob63XZ5JPLGvEwwMGMVERt73tU=  ;
-Received: from [66.41.38.150] by web41211.mail.yahoo.com via HTTP; Tue, 14 Jun 2005 06:17:27 PDT
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <42ADAC4D.7050408@lsrfire.ath.cx>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=MWQep2DonrJUT2E1N8YSD8CU1MzfMC0PdNxZLSrKL51bQ/zHY6/PfkL/igp3ARkrvhOPzwyCZeOk6/Eg+FsQC8tw1vSUiN9jaqlG7CUQeVYuogbRAxdG7Oz3glvZqcomLA+uVfMvIKCNKVTqYzXPnZBZYJYyWceGoXdNJuHvFlI=
+Received: by 10.38.66.68 with SMTP id o68mr1559676rna;
+        Tue, 14 Jun 2005 06:50:02 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Tue, 14 Jun 2005 06:50:02 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---0-926892123-1118755047=:20982
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+Hi.
 
---- Rene Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:> Mark Allen schrieb:
- > The expression
-> 
->    length($5)<7 ? $5":00" : $5
-> 
-> (where $5 is a time value) is there to cope with tars that format the
-> time like hh:mm instead of the expected hh:mm:ss.
+I've implemented some undo/redo scripts which I am testing in my own
+workspace before I unleash them on an wider audience. However, I
+thought it would be useful to discuss the semantics of my approach on
+the list.
 
-I put (escaped) parenthesis around the length function and now it works as expected.
-Here's a new patch. Please ack if you approve. 
+The approach focuses on one-step undo, redo. What I mean by this is
+that a given undo or redo operation can undo or redo exactly one
+commit. Of course, it is possible to compose arbitrary sequences of
+undo and redos with the expected results. I regard multi-commit
+undos/redos to be a special case of the one-step undo/redo and so can
+be neglected for the purposes of discussion.
 
-Thanks,
+UNDO Semantics:
+    When the working tree and cache are synced with a commit, C, then
+undo has the effect of returning the workspace to the state
+immediately prior to the commit C.
 
---Mark
+UNDO Pre-conditions:
+    - the working tree matches the cache (git-update-cache --refresh
+exits with zero)
+    - the cache matches the tree specified by HEAD or UNDONE_HEAD
 
-Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+UNDO Post-conditions
+    - UNDONE_HEAD is set to the value of HEAD
+    - HEAD is replaced by its left-most parent
+    - HEAD's commit message is written to .nextmsg
+    - the workspace tree and cache is unchanged
+    - an entry containing the UNDONE_HEAD head and its parents are
+written to the end git/redo-log
 
+A tweak to the undo implementation would be to allow the user to
+specify which merge branch to undo down.
 
---0-926892123-1118755047=:20982
-Content-Type: text/plain; name="t5000-portability.patch.txt"
-Content-Description: 560000162-t5000-portability.patch.txt
-Content-Disposition: inline; filename="t5000-portability.patch.txt"
+REDO Semantics
+    - redo will replay a previous commit but any or all of the tree,
+the parents, the message may be replaced by edited values.
 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -50,8 +50,9 @@ test_expect_success \
- 
- test_expect_success \
-     'validate file modification time' \
--    'tar tvf b.tar a/a |
--     awk \{print\ \$4,\ length\(\$5\)\<7\ ?\ \$5\":00\"\ :\ \$5\} >b.mtime &&
-+    'TZ= tar tvf b.tar a/a |
-+     awk \{print\ \$4,\ \(length\(\$5\)\<7\)\ ?\ \$5\":00\"\ :\ \$5\} \
-+     >b.mtime &&
-      echo "2005-05-27 22:00:00" >expected.mtime &&
-      diff expected.mtime b.mtime'
- 
+REDO Pre-conditions:
+    - at least one entry exists in the .git/redo-log
+    - the cache matches the working tree
+    - .nextmsg contains the commit message
+    - HEAD contains the commit id of the current predecessor (which
+may differ from the logged value)
 
---0-926892123-1118755047=:20982--
+REDO Post-conditions:
+    - the working tree is committed with .nextmsg as its message, the
+first parent replaced by HEAD and the remaining parents read from .the
+tail of .git/redo-log
+    - .nextmsg is cleared
+    - the last line of .git/redo-log is removed
+
+With the scripts I have written, I can fix a commit message, 4
+messages old with:
+
+undo
+undo
+undo
+undo
+vi .nextmsg
+while redo
+do
+      echo done
+done
+
+I think my approach differs a little from Junio's (but I haven't
+analysed his deeply) in that the redolog is actually just the slightly
+edited output of git-rev-list --merge-order --parents head base [ the
+edits removes from the list the parallel branches that aren't actually
+involved in the undo ]
+
+Comments?
+
+jon.
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
