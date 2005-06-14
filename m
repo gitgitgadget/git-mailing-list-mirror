@@ -1,91 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/1] Add support for an optional .nextmsg file to
- git-commit-script
-Date: Tue, 14 Jun 2005 07:44:43 -0700
-Message-ID: <7v64wh576s.fsf@assigned-by-dhcp.cox.net>
-References: <20050614114243.12267.qmail@blackcubes.dyndns.org>
+From: Yoichi Yuasa <yuasa@hh.iij4u.or.jp>
+Subject: [PATCH] Warning fix in diff.c
+Date: Tue, 14 Jun 2005 23:57:50 +0900
+Message-ID: <20050614235750.3156fd24.yuasa@hh.iij4u.or.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 16:44:52 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: yuasa@hh.iij4u.or.jp
+X-From: git-owner@vger.kernel.org Tue Jun 14 16:53:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiCe9-00049c-KN
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 16:44:09 +0200
+	id 1DiCnY-00069K-Gx
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 16:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261244AbVFNOr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Jun 2005 10:47:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261256AbVFNOqB
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 10:46:01 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:26001 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261244AbVFNOow (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2005 10:44:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050614144445.ORIK7629.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 14 Jun 2005 10:44:45 -0400
-To: Jon Seymour <jon.seymour@gmail.com>
-In-Reply-To: <20050614114243.12267.qmail@blackcubes.dyndns.org> (Jon
- Seymour's message of "Tue, 14 Jun 2005 21:42:43 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261160AbVFNO6T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Jun 2005 10:58:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVFNO6T
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 10:58:19 -0400
+Received: from mo01.iij4u.or.jp ([210.130.0.20]:20477 "EHLO mo01.iij4u.or.jp")
+	by vger.kernel.org with ESMTP id S261160AbVFNO6B (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2005 10:58:01 -0400
+Received: MO(mo01)id j5EEvu7r024568; Tue, 14 Jun 2005 23:57:56 +0900 (JST)
+Received: MDO(mdo00) id j5EEvt7S000564; Tue, 14 Jun 2005 23:57:55 +0900 (JST)
+Received: from stratos (h042.p502.iij4u.or.jp [210.149.246.42])
+	by mbox.iij4u.or.jp (4U-MR/mbox01) id j5EEvsnE026404
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NOT);
+	Tue, 14 Jun 2005 23:57:54 +0900 (JST)
+To: git@vger.kernel.org
+X-Mailer: Sylpheed version 1.0.4 (GTK+ 1.2.10; i386-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JS" == Jon Seymour <jon.seymour@gmail.com> writes:
+This patch had fixed the following warning.
+Please apply.
 
-JS> This change allows a commit message to be prepared prior to git-commit-script being
-JS> invoked. During git commit the user is then given an opportunity to edit the
-JS> existing message, if any, and must confirm the commit by deleting a sentinel
-JS> line from the top of the edit buffer.
+cc -g -O2 -Wall  '-DSHA1_HEADER="mozilla-sha1/sha1.h"'   -c -o diff.o diff.c
+diff.c: In function `parse_num':
+diff.c:606: warning: value computed is not used
 
-JS>  #!/bin/sh
-JS> +SENTINEL="*** delete this line to confirm the commit ***"
-JS> ..
-JS> +egrep -v "^#|$SENTINEL" < .editmsg | git-stripspace > .cmitmsg
+Signed-off-by: Yoichi Yuasa <yuasa@hh.iij4u.or.jp>
 
-A handful comments.
-
-(1) Although it happens to work in this case, I do not like
-    scripts that use grep without quoting metacharacters in a
-    string.  You have two egreps that phrases the above slightly
-    differently.  Make up your mind ;-) and pick one.
-
-(2) What happens if I later want to make a commit with this commit
-    log?
-
-    [PATCH] Reword the sentinel line.
-
-    Instead of saying "*** delete this line to confirm the commit ***",
-    just say "# If you want to abort the commit, make this file empty.".
-
-(3) The original implementation knows that the commit is to be
-    aborted when resulting .cmitmsg is empty.  You may want to
-    tell the user in the comment in the commit template about
-    it, instead of using the sentinel line.
-
-(4) Instead of teaching git-commit-script about the .nextmsg
-    file, it may be cleaner to split it into two parts:
-
-    - one that prepares the .cmitmsg file for editing;
-
-    - the other that invokes the editor on prepared a .cmitmsg
-      file, checks if the message file is edited and asks for
-      confirmation to abort if the file is unchanged, and does the
-      actual commit.
-
-   The new git-commit-script would prepare its .cmitmsg the way it
-   does now and only call the latter half.  Your re-commit script
-   can do the first half differently from what git-commit-script
-   does, and call the same latter half.
-
-P.S. I see you are using "git format-patch"; I'd suggest you
-hand edit " 1/1" out of [PATCH 1/1] subject line for a patch
-like this that is not part of a series.  I did not special case
-1/1 to do it myself because I often have a handful independent
-patches and end up removing 1/7 2/7 ... etc. anyway.
-
-
+diff --git a/diff.c b/diff.c
+--- a/diff.c
++++ b/diff.c
+@@ -603,7 +603,7 @@ static int parse_num(const char **cp_p)
+ 			scale *= 10;
+ 			num = num * 10 + ch - '0';
+ 		}
+-		*cp++;
++		cp++;
+ 	}
+ 	*cp_p = cp;
+ 
