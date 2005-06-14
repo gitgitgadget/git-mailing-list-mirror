@@ -1,69 +1,106 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: porcelain question: state of the art for undo-redo?
-Date: Mon, 13 Jun 2005 21:25:25 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506132056210.30848-100000@iabervon.org>
-References: <2cfc40320506110151624b3ec1@mail.gmail.com>
+From: James Purser <purserj@winnsw.com.au>
+Subject: [PATCH] Adding Correct Useage Notification and -h Help flag
+Date: Tue, 14 Jun 2005 11:47:22 +1000
+Message-ID: <1118713641.8712.10.camel@localhost.localdomain>
+Reply-To: purserj@winnsw.com.au
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 14 03:22:18 2005
+Content-Type: multipart/mixed; boundary="=-1Et/FNabxvo/wJUxW073"
+X-From: git-owner@vger.kernel.org Tue Jun 14 03:44:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Di07t-0002bO-EH
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 03:22:01 +0200
+	id 1Di0Sf-0004VW-Kp
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 03:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261238AbVFNB0o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Jun 2005 21:26:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261296AbVFNB0o
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 21:26:44 -0400
-Received: from iabervon.org ([66.92.72.58]:10757 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261238AbVFNB0l (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 21:26:41 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Di0BB-00084H-00; Mon, 13 Jun 2005 21:25:25 -0400
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc40320506110151624b3ec1@mail.gmail.com>
+	id S261308AbVFNBsH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Jun 2005 21:48:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261298AbVFNBsH
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 21:48:07 -0400
+Received: from [210.9.57.141] ([210.9.57.141]:44701 "EHLO mail.winnsw.com.au")
+	by vger.kernel.org with ESMTP id S261308AbVFNBri (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 21:47:38 -0400
+Received: from RICOHPHOTO ([156.43.201.143])
+        by mail.winnsw.com.au (WIN Server 1) with ESMTP id CPJ38469
+        for <git@vger.kernel.org>; Tue, 14 Jun 2005 11:46:45 +1000
+To: Git Mailing List <git@vger.kernel.org>
+X-Mailer: Ximian Evolution 1.4.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 11 Jun 2005, Jon Seymour wrote:
 
-> What porcelain layer solutions currently exist for effective undo-edit-redo?
-> 
-> For example, if you are working on a series of patches in a series,
-> then realise there is a mistake in a patch early in the series, how
-> does one mod that patch, then reapply all the following patches to
-> produce a slightly modified patch series with as little stuffing
-> around as possible?
+--=-1Et/FNabxvo/wJUxW073
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-I personally commit changes as I make them (essentially, and time I'm
-about to make a change that might not work out, I commit the previous
-state). Once I'm completely satisfied with the results, I redo the whole
-thing as a series of commits from the base as self-contained changes.
+okay this is my first patch so take it easy on me.
 
-To do this, I get a repository which contains the base (as master) and the
-result of my previous work. Then I repeat the following steps:
+I have added both a Correct Useage notification when git is called on
+its own without any other parameters and a -h help flag which lists
+available scripts for the git command.
 
-Diff the work against the head into a temporary file.
-Remove all of the hunks I don't want yet from the file.
-Apply the file.
-Commit.
+Signed-off-by: James Purser <purserj@k-sit.com>
 
-I stop when the diff is either empty or contains only junk I didn't
-actually mean to include.
 
-Then I submit the series thus created.
+-- 
+James Purser
+Winnet Developer
++61 2 4223 4131
+http://www.winnet.com.au
 
-I generally then diff once more, remove anything I actually don't want to
-have (as opposed to wanting to have but not submit), apply and commit to
-form a new work head. Then I throw away the old work head.
+--=-1Et/FNabxvo/wJUxW073
+Content-Disposition: attachment; filename=git_patch
+Content-Type: text/plain; name=git_patch; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-If I screw this up, I just start over, since I have all the actual content
-safe.
+Added a couple of lines to the git wrapper. Includes Correct Useage and available scripts
 
-	-Daniel
-*This .sig left intentionally blank*
+---
+commit bfe72d41d70f9e4c0a6ab0ec6cf49347f980f4de
+tree a8eed80ea2ac00ffee0b4f12ed4c931ca7761000
+parent 940c1bb0181cb20454bf3573134175f86983a0ce
+author James Purser <purserj@k-sit.com> Tue, 14 Jun 2005 11:40:20 +1000
+committer James Purser <purserj@k-sit.com> Tue, 14 Jun 2005 11:40:20 +1000
+
+ git |   31 ++++++++++++++++++++++++++++---
+ 1 files changed, 28 insertions(+), 3 deletions(-)
+
+diff --git a/git b/git
+--- a/git
++++ b/git
+@@ -1,4 +1,29 @@
+ #!/bin/sh
+-cmd="git-$1-script"
+-shift
+-exec $cmd "$@"
++if [ "$1" = "" ]
++then
++	echo "Correct Useage: git [-h] [SCRIPT]";
++else 
++	if [ "$1" = "-h" ]
++	then
++		echo "This is a basic script wrapper for certain git functions. The available commands are:
++
++git apply-patch
++git commit
++git cvsimport
++git deltafy
++git diff
++git fetch
++git log
++git merge-one-file
++git prune
++git pull
++git status
++git tag
++";	
++	else
++		cmd="git-$1-script";
++		shift;
++		exec $cmd "$@";
++	fi
++fi
++
+
+--=-1Et/FNabxvo/wJUxW073--
 
