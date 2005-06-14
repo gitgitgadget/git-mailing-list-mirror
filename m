@@ -1,66 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [zooko@zooko.com: [Revctrl] colliding md5 hashes of human-meaningful
-Date: Mon, 13 Jun 2005 14:39:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506131434260.8487@ppc970.osdl.org>
-References: <20050613210318.18965.qmail@science.horizon.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: porcelain question: state of the art for undo-redo?
+Date: Mon, 13 Jun 2005 21:25:25 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506132056210.30848-100000@iabervon.org>
+References: <2cfc40320506110151624b3ec1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 02:30:58 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 14 03:22:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DhzKQ-000528-9u
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 02:30:54 +0200
+	id 1Di07t-0002bO-EH
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 03:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261484AbVFNAf0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 13 Jun 2005 20:35:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261442AbVFMVjO
-	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 17:39:14 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:49540 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261428AbVFMVhe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 17:37:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5DLbTjA004151
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 13 Jun 2005 14:37:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5DLbSGs009829;
-	Mon, 13 Jun 2005 14:37:28 -0700
-To: linux@horizon.com
-In-Reply-To: <20050613210318.18965.qmail@science.horizon.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.109 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261238AbVFNB0o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 13 Jun 2005 21:26:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261296AbVFNB0o
+	(ORCPT <rfc822;git-outgoing>); Mon, 13 Jun 2005 21:26:44 -0400
+Received: from iabervon.org ([66.92.72.58]:10757 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261238AbVFNB0l (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Jun 2005 21:26:41 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Di0BB-00084H-00; Mon, 13 Jun 2005 21:25:25 -0400
+To: jon@blackcubes.dyndns.org
+In-Reply-To: <2cfc40320506110151624b3ec1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, 11 Jun 2005, Jon Seymour wrote:
 
-
-On Mon, 13 Jun 2005 linux@horizon.com wrote:
+> What porcelain layer solutions currently exist for effective undo-edit-redo?
 > 
-> > But perhaps slightly impractical.
-> 
-> There are just few laws of physics it violates.
+> For example, if you are working on a series of patches in a series,
+> then realise there is a mistake in a patch early in the series, how
+> does one mod that patch, then reapply all the following patches to
+> produce a slightly modified patch series with as little stuffing
+> around as possible?
 
-Yeah, yeah. You avoided a few laws of phsyics of your own.
+I personally commit changes as I make them (essentially, and time I'm
+about to make a change that might not work out, I commit the previous
+state). Once I'm completely satisfied with the results, I redo the whole
+thing as a series of commits from the base as self-contained changes.
 
-For example, when you say
+To do this, I get a repository which contains the base (as master) and the
+result of my previous work. Then I repeat the following steps:
 
-  "(With an n-bit hash and an automated way to make harmless changes
-   to source files, I can generate 2^(n/2) variants of each and expect to
-   get a match, even in the absence of a better attack.)"
+Diff the work against the head into a temporary file.
+Remove all of the hunks I don't want yet from the file.
+Apply the file.
+Commit.
 
-you kind of ignore the fact that "n" here is 160, and so you're going to 
-be searching for quite a few versions of each. Also, you have to compare 
-the sha's of all of those 2**80 versions against each other which is a lot 
-of work in itself.
+I stop when the diff is either empty or contains only junk I didn't
+actually mean to include.
 
-Finally, you have to make sure that al the versions make sense, and that 
-people will take them 100% unmodified. 
+Then I submit the series thus created.
 
-My plan was more interesting, I feel.
+I generally then diff once more, remove anything I actually don't want to
+have (as opposed to wanting to have but not submit), apply and commit to
+form a new work head. Then I throw away the old work head.
 
-		Linus
+If I screw this up, I just start over, since I have all the actual content
+safe.
+
+	-Daniel
+*This .sig left intentionally blank*
+
