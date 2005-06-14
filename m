@@ -1,81 +1,71 @@
-From: Mark Allen <mrallen1@yahoo.com>
-Subject: Re: [PATCH] Unset TZ in t5000
-Date: Tue, 14 Jun 2005 10:09:39 -0700 (PDT)
-Message-ID: <20050614170939.69223.qmail@web41206.mail.yahoo.com>
-References: <42AEF512.5040107@lsrfire.ath.cx>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: hgweb and gitweb: Commit times displayed incorrectly
+Date: Tue, 14 Jun 2005 10:38:31 -0700
+Message-ID: <20050614173831.GR26633@waste.org>
+References: <42AEFB66.80902@gorzow.mm.pl> <20050614162541.GA27165@intevation.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1503095403-1118768979=:67284"
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 14 19:05:11 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Tue Jun 14 19:34:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiEqK-0005or-IS
-	for gcvg-git@gmane.org; Tue, 14 Jun 2005 19:04:52 +0200
+	id 1DiFIw-0004Yz-JJ
+	for gcvg-git@gmane.org; Tue, 14 Jun 2005 19:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261255AbVFNRJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Jun 2005 13:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261259AbVFNRJq
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 13:09:46 -0400
-Received: from web41206.mail.yahoo.com ([66.218.93.39]:3937 "HELO
-	web41206.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S261255AbVFNRJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2005 13:09:43 -0400
-Received: (qmail 69225 invoked by uid 60001); 14 Jun 2005 17:09:39 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Tx4BK2Vd1INd8t23Zno0eiNO0mwkUqpOvbjzlZar0npU7xg3etTb56NwGIId9mUAvax5bmHBDhDjkkrkukftIUzyVRuUdfKWTYbQUhviv0Yrh/a1ViW1zmvwQVDa1nxjvWKeBZQlwN1YtKYy+bfXY9yTVGcz2mbl0rU0G5jJlk4=  ;
-Received: from [65.173.207.2] by web41206.mail.yahoo.com via HTTP; Tue, 14 Jun 2005 10:09:39 PDT
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>, torvalds@osdl.org
-In-Reply-To: <42AEF512.5040107@lsrfire.ath.cx>
+	id S261266AbVFNRil (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Jun 2005 13:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261267AbVFNRil
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 13:38:41 -0400
+Received: from waste.org ([216.27.176.166]:33710 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S261266AbVFNRig (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Jun 2005 13:38:36 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-1) with ESMTP id j5EHcW9H015711
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 14 Jun 2005 12:38:32 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j5EHcVmp015708;
+	Tue, 14 Jun 2005 12:38:31 -0500
+To: mercurial@selenic.com, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050614162541.GA27165@intevation.de>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---0-1503095403-1118768979=:67284
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+On Tue, Jun 14, 2005 at 06:25:41PM +0200, Thomas Arendsen Hein wrote:
+> * Radoslaw Szkodzinski <astralstorm@gorzow.mm.pl> [20050614 17:45]:
+> > Who is wrong there, especially with hours count?
+> > Here it's 17:43 +0200
+> > 
+> > hgweb:
+> > *16 hours ago: *
+> 
+> http://www.kernel.org/hg/?cmd=changelog;rev=30069
+> 
+> > gitweb:
+> > /11 hours ago/
+> 
+> http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=log;h=e2c16499515aa044676a14b97a1b8a35f879152a
+> 
+> > My clone:
+> > author Jon Smirl <jonsmirl@gmail.com> Mon, 13 Jun 2005 15:52:36 -0700
+> > committer Linus Torvalds <torvalds@ppc970.osdl.org> Mon, 13 Jun 2005 20:58:58 -0700
+> 
+> Both are correct.
+> 
+> hgweb uses the timestamp of the "author" line, gitweb uses the
+> timestamp of the "commiter" line. Mercurial (hg) doesn't distinguish
+> author and commiter, therefore it uses the earlier time.
 
-Linus,
+I may change this. One of the goals here is to have enough information
+to generate git-compatible exports. Possibly through an extended
+version of hgweb (hgitweb?).
 
-Please apply this patch to make t5000 more portable.
+So I'm eventually going to preserve both fields. The question is how.
+Do we want separate author and committer fields in Mercurial?
 
-Thanks,
-
---Mark
-
----
-
-Unset TZ to force GMT in test #4 and add a set of parens around
-the length function in the awk script.
-
-Signed-off-by: Mark Allen <mrallen1@yahoo.com>
-Acked-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
- 
-
---0-1503095403-1118768979=:67284
-Content-Type: text/plain; name="t5000-portability.patch.txt"
-Content-Description: 560000162-t5000-portability.patch.txt
-Content-Disposition: inline; filename="t5000-portability.patch.txt"
-
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -50,8 +50,9 @@ test_expect_success \
- 
- test_expect_success \
-     'validate file modification time' \
--    'tar tvf b.tar a/a |
--     awk \{print\ \$4,\ length\(\$5\)\<7\ ?\ \$5\":00\"\ :\ \$5\} >b.mtime &&
-+    'TZ= tar tvf b.tar a/a |
-+     awk \{print\ \$4,\ \(length\(\$5\)\<7\)\ ?\ \$5\":00\"\ :\ \$5\} \
-+     >b.mtime &&
-      echo "2005-05-27 22:00:00" >expected.mtime &&
-      diff expected.mtime b.mtime'
- 
-
---0-1503095403-1118768979=:67284--
+-- 
+Mathematics is the supreme nostalgia of our time.
