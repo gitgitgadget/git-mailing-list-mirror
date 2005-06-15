@@ -1,24 +1,24 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/2] Adds support to git-commit-script for an optional .nextmsg file.
-Date: Wed, 15 Jun 2005 15:45:33 +1000
-Message-ID: <20050615054533.9981.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 2/2] Adds support to git-commit-script for an optional .nextmsg file. [rev 2]
+Date: Wed, 15 Jun 2005 16:07:52 +1000
+Message-ID: <20050615060752.11370.qmail@blackcubes.dyndns.org>
 Cc: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 07:41:46 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 08:03:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiQeN-0003Kb-Gs
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 07:41:19 +0200
+	id 1DiQzX-00051x-Rg
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 08:03:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261502AbVFOFqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 01:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261503AbVFOFqT
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 01:46:19 -0400
-Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:52352 "HELO
+	id S261503AbVFOGIH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 02:08:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261504AbVFOGIH
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 02:08:07 -0400
+Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:52867 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261502AbVFOFpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 01:45:35 -0400
-Received: (qmail 9991 invoked by uid 500); 15 Jun 2005 05:45:33 -0000
+	id S261503AbVFOGHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 02:07:54 -0400
+Received: (qmail 11381 invoked by uid 500); 15 Jun 2005 06:07:52 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -50,6 +50,8 @@ This patch set is a complete replacement for:
 
 I have incorporated most of Junio's feedback, except the prompting
 suggestion and the suggested restructuring is slightly different.
+
+[rev 2] fixed 2 errors with handling of .nextmsg file
 ---
 
  git-commit-script |   34 ++++++++++++++++++++++++++++++++--
@@ -90,11 +92,11 @@ diff --git a/git-commit-script b/git-commit-script
 +{
 +	status=$1
 +	next=$2
++	grep -v "^#" < $status > $next
 +	if grep "^$SENTINEL" < $status >/dev/null; then
 +		:> $status
 +		echo "commit aborted - you must delete the SENTINEL line to confirm the commit"
 +	fi
-+	grep -v "^#" < $status > $next
 +}
 +
  edit_message() {
@@ -118,6 +120,6 @@ diff --git a/git-commit-script b/git-commit-script
  	exec_commit .cmitmsg
  	[ -f .editmsg ] && rm .editmsg
  	[ -f .cmitmsg ] && rm .cmitmsg
-+	[ -f .nextmsg ] && rm .nextmsg
++	[ -f ${GIT_DIR}/.nextmsg ] && rm ${GIT_DIR}/.nextmsg
  fi
 ------------
