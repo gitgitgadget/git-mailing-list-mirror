@@ -1,58 +1,168 @@
-From: Dmitry Torokhov <dtor_core@ameritech.net>
-Subject: git pull problem
-Date: Tue, 14 Jun 2005 23:19:03 -0500
-Message-ID: <200506142319.03537.dtor_core@ameritech.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jun 15 06:14:29 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 1/2] Reorganization of git-commit-script
+Date: Wed, 15 Jun 2005 15:45:30 +1000
+Message-ID: <20050615054530.9963.qmail@blackcubes.dyndns.org>
+Cc: jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jun 15 07:41:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiPIL-0004rA-13
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 06:14:29 +0200
+	id 1DiQe9-0003Jb-8s
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 07:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261486AbVFOETU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 00:19:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261487AbVFOETU
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 00:19:20 -0400
-Received: from smtp821.mail.sc5.yahoo.com ([66.163.171.7]:30067 "HELO
-	smtp821.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S261486AbVFOETQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 00:19:16 -0400
-Received: (qmail 68406 invoked from network); 15 Jun 2005 04:19:12 -0000
-Received: from unknown (HELO mail.corenet.homeip.net) (dtor?core@ameritech.net@68.72.34.173 with login)
-  by smtp821.mail.sc5.yahoo.com with SMTP; 15 Jun 2005 04:19:12 -0000
+	id S261500AbVFOFp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 01:45:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261503AbVFOFp5
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 01:45:57 -0400
+Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:46210 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S261500AbVFOFpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 01:45:33 -0400
+Received: (qmail 9974 invoked by uid 500); 15 Jun 2005 05:45:30 -0000
 To: git@vger.kernel.org
-User-Agent: KMail/1.8.1
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I was trying to do:
+This change re-organizes git-commit-script to break out
+the different phases of execution into separate bash
+functions.
 
-	git-pull-script rsync://www.kernel.org/pub/scm/git/git.git
+The main body is now:
 
-And got the following response:
+if ! print_status > .editmsg; then
+	# error handling
+fi
 
-...
-fe/ca5e9b7c86b1aaa5903f1c2ca3afde09531c7b
+if edit_message .editmsg .cmitmsg; then
+	exec_commit .cmitmsg
+	# cleanup
+fi
 
-sent 3804 bytes  received 468743 bytes  85917.64 bytes/sec
-total size is 4930906  speedup is 10.43
-Updating from 98a96b00b88ee35866cd0b1e94697db76bd5ddf9 to ce30a4b68ac220a2322dfe2a182194910143fafd.
-fatal: git diff header lacks filename information (line 846)
+The subsequent patch in this series adds support for
+an optional .nextmsg file to enable the pre-population
+of commit message text by external tools.
 
-Last time I did a pull and rebuild was on June 9th:
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
 
-[dtor@anvil git]$ ls -la ~/bin/git-pull-script
--rwxr-xr-x  1 dtor dtor 425 Jun  9 01:08 /home/dtor/bin/git-pull-script
+ git-commit-script |  100 ++++++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 65 insertions(+), 35 deletions(-)
 
-Just FYI.
-
--- 
-Dmitry
+diff --git a/git-commit-script b/git-commit-script
+old mode 100644
+new mode 100755
+--- a/git-commit-script
++++ b/git-commit-script
+@@ -1,44 +1,74 @@
+ #!/bin/sh
++
++print_status() {
++	if [ ! -r $GIT_DIR/HEAD ]; then
++		if [ -z "$(git-ls-files)" ]; then
++			echo Nothing to commit 1>&2
++			return 1
++		fi
++cat <<EOF
++#
++# Initial commit
++# 
++$(git-ls-files | sed s/^/# New file: )
++#
++EOF
++	elif [ -f $GIT_DIR/MERGE_HEAD ]; then
++cat <<EOF
++#
++# It looks like your may be committing a MERGE.
++# If this is not correct, please remove the file
++# $GIT_DIR/MERGE_HEAD
++# and try again
++#
++EOF
++	fi
++	git-status-script
++}
++
++edit_message() {
++	status=$1
++	msg=$2
++
++	:> $msg
++	${VISUAL:-${EDITOR:-vi}} "$status"
++	grep -v '^#' < $status | git-stripspace >$msg
++	[ -s $msg ]
++	return $?
++}
++
++commit_parents() {
++	[ -f $GIT_DIR/HEAD ] &&
++	echo -n "-p HEAD" &&
++	[ -f $GIT_DIR/MERGE_HEAD ] &&
++	echo -n "-p MERGE_HEAD"
++	echo ""
++}
++
++exec_commit() {
++	msg=$1
++	tree=$(git-write-tree) || exit 1
++	parents=$(commit_parents) || exit 1
++	commit=$(cat $msg | git-commit-tree $tree $parents) || exit 1
++	echo $commit > $GIT_DIR/HEAD
++	rm -f -- $GIT_DIR/MERGE_HEAD
++}
++
++SENTINEL="#SENTINEL - delete this line to confirm the commit"
+ : ${GIT_DIR=.git}
+ if [ ! -d $GIT_DIR ]; then
+ 	echo Not a git directory 1>&2
+ 	exit 1
+ fi
+-PARENTS="-p HEAD"
+-if [ ! -r $GIT_DIR/HEAD ]; then
+-	if [ -z "$(git-ls-files)" ]; then
+-		echo Nothing to commit 1>&2
+-		exit 1
+-	fi
+-	(
+-		echo "#"
+-		echo "# Initial commit"
+-		echo "#"
+-		git-ls-files | sed 's/^/# New file: /'
+-		echo "#"
+-	) > .editmsg
+-	PARENTS=""
+-else
+-	if [ -f $GIT_DIR/MERGE_HEAD ]; then
+-		echo "#"
+-		echo "# It looks like your may be committing a MERGE."
+-		echo "# If this is not correct, please remove the file"
+-		echo "#	$GIT_DIR/MERGE_HEAD"
+-		echo "# and try again"
+-		echo "#"
+-		PARENTS="-p HEAD -p MERGE_HEAD"
+-	fi > .editmsg
+-	git-status-script >> .editmsg
+-fi
+-if [ "$?" != "0" ]
+-then
++
++if ! print_status > .editmsg; then
+ 	cat .editmsg
++	rm .editmsg
+ 	exit 1
+ fi
+-${VISUAL:-${EDITOR:-vi}} .editmsg
+-grep -v '^#' < .editmsg | git-stripspace > .cmitmsg
+-[ -s .cmitmsg ] || exit 1
+-tree=$(git-write-tree) || exit 1
+-commit=$(cat .cmitmsg | git-commit-tree $tree $PARENTS) || exit 1
+-echo $commit > $GIT_DIR/HEAD
+-rm -f -- $GIT_DIR/MERGE_HEAD
++
++if edit_message .editmsg .cmitmsg; then
++	exec_commit .cmitmsg
++	[ -f .editmsg ] && rm .editmsg
++	[ -f .cmitmsg ] && rm .cmitmsg
++fi
+------------
