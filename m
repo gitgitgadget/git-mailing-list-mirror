@@ -1,168 +1,123 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 1/2] Reorganization of git-commit-script
-Date: Wed, 15 Jun 2005 15:45:30 +1000
-Message-ID: <20050615054530.9963.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 2/2] Adds support to git-commit-script for an optional .nextmsg file.
+Date: Wed, 15 Jun 2005 15:45:33 +1000
+Message-ID: <20050615054533.9981.qmail@blackcubes.dyndns.org>
 Cc: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 07:41:14 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 07:41:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiQe9-0003Jb-8s
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 07:41:05 +0200
+	id 1DiQeN-0003Kb-Gs
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 07:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261500AbVFOFp5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 01:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261503AbVFOFp5
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 01:45:57 -0400
-Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:46210 "HELO
+	id S261502AbVFOFqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 01:46:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261503AbVFOFqT
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 01:46:19 -0400
+Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:52352 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261500AbVFOFpd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 01:45:33 -0400
-Received: (qmail 9974 invoked by uid 500); 15 Jun 2005 05:45:30 -0000
+	id S261502AbVFOFpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 01:45:35 -0400
+Received: (qmail 9991 invoked by uid 500); 15 Jun 2005 05:45:33 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This change re-organizes git-commit-script to break out
-the different phases of execution into separate bash
-functions.
+If ${GIT_DIR}/.nextmsg exists, the text will be copied into the .editmsg file
+together with a sentinel line prior to invoking the editor.
 
-The main body is now:
+After editing, the edited text (but not the status lines) are saved
+back to the ${GIT_DIR}/.nextmsg file.
 
-if ! print_status > .editmsg; then
-	# error handling
-fi
+If the sentinel line still exists in .editmsg after editing, the
+file is truncated, thereby causing the commit to abort (per previous
+behaviour).
 
-if edit_message .editmsg .cmitmsg; then
-	exec_commit .cmitmsg
-	# cleanup
-fi
+The ${GIT_DIR}/.nextmsg file is deleted if, and only if,
+the commit was successful.
 
-The subsequent patch in this series adds support for
-an optional .nextmsg file to enable the pre-population
-of commit message text by external tools.
+The behaviour of git-commit-script is unchanged with respect to the
+previous versions if ${GIT_DIR}/.nextmsg does not exist.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+
+---
+This patch set is a complete replacement for:
+
+     [PATCH 1/1] Add support for an optional .nextmsg file to git-commit-script
+
+I have incorporated most of Junio's feedback, except the prompting
+suggestion and the suggested restructuring is slightly different.
 ---
 
- git-commit-script |  100 ++++++++++++++++++++++++++++++++++-------------------
- 1 files changed, 65 insertions(+), 35 deletions(-)
+ git-commit-script |   34 ++++++++++++++++++++++++++++++++--
+ 1 files changed, 32 insertions(+), 2 deletions(-)
 
 diff --git a/git-commit-script b/git-commit-script
-old mode 100644
-new mode 100755
 --- a/git-commit-script
 +++ b/git-commit-script
-@@ -1,44 +1,74 @@
- #!/bin/sh
-+
-+print_status() {
-+	if [ ! -r $GIT_DIR/HEAD ]; then
-+		if [ -z "$(git-ls-files)" ]; then
-+			echo Nothing to commit 1>&2
-+			return 1
-+		fi
-+cat <<EOF
-+#
-+# Initial commit
-+# 
-+$(git-ls-files | sed s/^/# New file: )
-+#
-+EOF
-+	elif [ -f $GIT_DIR/MERGE_HEAD ]; then
-+cat <<EOF
-+#
-+# It looks like your may be committing a MERGE.
-+# If this is not correct, please remove the file
-+# $GIT_DIR/MERGE_HEAD
-+# and try again
-+#
-+EOF
+@@ -5,7 +5,7 @@ print_status() {
+ 		if [ -z "$(git-ls-files)" ]; then
+ 			echo Nothing to commit 1>&2
+ 			return 1
+-		fi
 +	fi
-+	git-status-script
-+}
-+
-+edit_message() {
+ cat <<EOF
+ #
+ # Initial commit
+@@ -26,12 +26,41 @@ EOF
+ 	git-status-script
+ }
+ 
++merge_next_message()
++{
 +	status=$1
-+	msg=$2
-+
-+	:> $msg
-+	${VISUAL:-${EDITOR:-vi}} "$status"
-+	grep -v '^#' < $status | git-stripspace >$msg
-+	[ -s $msg ]
-+	return $?
++	next=$2
++	mv -f $status .status.$$ || exit 1
++	cat >$status <<EOF
++$SENTINEL
++#---
++$(cat $next)
++#---
++$(cat .status.$$)
++EOF
++	rm .status.$$
 +}
 +
-+commit_parents() {
-+	[ -f $GIT_DIR/HEAD ] &&
-+	echo -n "-p HEAD" &&
-+	[ -f $GIT_DIR/MERGE_HEAD ] &&
-+	echo -n "-p MERGE_HEAD"
-+	echo ""
++save_next_message()
++{
++	status=$1
++	next=$2
++	if grep "^$SENTINEL" < $status >/dev/null; then
++		:> $status
++		echo "commit aborted - you must delete the SENTINEL line to confirm the commit"
++	fi
++	grep -v "^#" < $status > $next
 +}
 +
-+exec_commit() {
-+	msg=$1
-+	tree=$(git-write-tree) || exit 1
-+	parents=$(commit_parents) || exit 1
-+	commit=$(cat $msg | git-commit-tree $tree $parents) || exit 1
-+	echo $commit > $GIT_DIR/HEAD
-+	rm -f -- $GIT_DIR/MERGE_HEAD
-+}
-+
-+SENTINEL="#SENTINEL - delete this line to confirm the commit"
- : ${GIT_DIR=.git}
- if [ ! -d $GIT_DIR ]; then
- 	echo Not a git directory 1>&2
+ edit_message() {
+ 	status=$1
+ 	msg=$2
++	next=$3
+ 
+ 	:> $msg
++	[ -f "$next" ] && merge_next_message "$status" "$next"
+ 	${VISUAL:-${EDITOR:-vi}} "$status"
++	[ -f "$next" ] && save_next_message "$status" "$next"
+ 	grep -v '^#' < $status | git-stripspace >$msg
+ 	[ -s $msg ]
+ 	return $?
+@@ -67,8 +96,9 @@ if ! print_status > .editmsg; then
  	exit 1
  fi
--PARENTS="-p HEAD"
--if [ ! -r $GIT_DIR/HEAD ]; then
--	if [ -z "$(git-ls-files)" ]; then
--		echo Nothing to commit 1>&2
--		exit 1
--	fi
--	(
--		echo "#"
--		echo "# Initial commit"
--		echo "#"
--		git-ls-files | sed 's/^/# New file: /'
--		echo "#"
--	) > .editmsg
--	PARENTS=""
--else
--	if [ -f $GIT_DIR/MERGE_HEAD ]; then
--		echo "#"
--		echo "# It looks like your may be committing a MERGE."
--		echo "# If this is not correct, please remove the file"
--		echo "#	$GIT_DIR/MERGE_HEAD"
--		echo "# and try again"
--		echo "#"
--		PARENTS="-p HEAD -p MERGE_HEAD"
--	fi > .editmsg
--	git-status-script >> .editmsg
--fi
--if [ "$?" != "0" ]
--then
-+
-+if ! print_status > .editmsg; then
- 	cat .editmsg
-+	rm .editmsg
- 	exit 1
+ 
+-if edit_message .editmsg .cmitmsg; then
++if edit_message .editmsg .cmitmsg ${GIT_DIR}/.nextmsg ; then
+ 	exec_commit .cmitmsg
+ 	[ -f .editmsg ] && rm .editmsg
+ 	[ -f .cmitmsg ] && rm .cmitmsg
++	[ -f .nextmsg ] && rm .nextmsg
  fi
--${VISUAL:-${EDITOR:-vi}} .editmsg
--grep -v '^#' < .editmsg | git-stripspace > .cmitmsg
--[ -s .cmitmsg ] || exit 1
--tree=$(git-write-tree) || exit 1
--commit=$(cat .cmitmsg | git-commit-tree $tree $PARENTS) || exit 1
--echo $commit > $GIT_DIR/HEAD
--rm -f -- $GIT_DIR/MERGE_HEAD
-+
-+if edit_message .editmsg .cmitmsg; then
-+	exec_commit .cmitmsg
-+	[ -f .editmsg ] && rm .editmsg
-+	[ -f .cmitmsg ] && rm .cmitmsg
-+fi
 ------------
