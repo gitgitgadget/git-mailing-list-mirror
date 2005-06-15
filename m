@@ -1,176 +1,165 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/3] Reorganization of git-commit-script [rev 4]
-Date: Thu, 16 Jun 2005 00:38:11 +1000
-Message-ID: <20050615143811.27248.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 3/3] Adds support to git-commit-script for an optional .nextmsg file. [rev 4]
+Date: Thu, 16 Jun 2005 00:38:14 +1000
+Message-ID: <20050615143814.27266.qmail@blackcubes.dyndns.org>
 Cc: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 16:35:21 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 16:36:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiYyY-0004au-A2
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 16:34:42 +0200
+	id 1DiYz0-0004la-SZ
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 16:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261525AbVFOOjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 10:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261464AbVFOOjc
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 10:39:32 -0400
-Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:26497 "HELO
+	id S261520AbVFOOkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 10:40:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261519AbVFOOkI
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 10:40:08 -0400
+Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:29313 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261519AbVFOOiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 10:38:13 -0400
-Received: (qmail 27258 invoked by uid 500); 15 Jun 2005 14:38:11 -0000
+	id S261520AbVFOOiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 10:38:17 -0400
+Received: (qmail 27276 invoked by uid 500); 15 Jun 2005 14:38:14 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This change re-organizes git-commit-script to break out
-the different phases of execution into separate bash
-functions.
+If ${GIT_DIR}/.nextmsg exists, the text will be copied into the .editmsg file
+together with a sentinel line prior to invoking the editor.
 
-The main body is now:
+After editing, the edited text (but not the status lines) are saved
+back to the ${GIT_DIR}/.nextmsg file.
 
-if ! print_status > .editmsg; then
-	# error handling
-fi
+If the sentinel line still exists in .editmsg after editing, the
+file is truncated, thereby causing the commit to abort (per previous
+behaviour).
 
-if edit_message .editmsg .cmitmsg; then
-	exec_commit .cmitmsg
-	# cleanup
-fi
+The ${GIT_DIR}/.nextmsg file is deleted if, and only if,
+the commit was successful.
 
-The subsequent patch in this series adds support for
-an optional .nextmsg file to enable the pre-population
-of commit message text by external tools.
+The behaviour of git-commit-script is unchanged with respect to the
+previous versions if ${GIT_DIR}/.nextmsg does not exist.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- git-commit-script |  110 ++++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 75 insertions(+), 35 deletions(-)
+ git-commit-script        |   32 +++++++++++++++++++++++++++++++-
+ t/t1200-commit-script.sh |   41 ++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 69 insertions(+), 4 deletions(-)
 
 diff --git a/git-commit-script b/git-commit-script
 --- a/git-commit-script
 +++ b/git-commit-script
-@@ -1,44 +1,84 @@
- #!/bin/sh
-+
-+initial_commit() {
-+cat <<EOF
-+#
-+# Initial commit:
-+# 
-+$(git-ls-files | sed "s/^/# New file: /")
-+#
+@@ -36,12 +36,41 @@ print_status() {
+ 	fi
+ }
+ 
++merge_next_message()
++{
++	status=$1
++	next=$2
++	mv -f $status .status.$$ || exit 1
++	cat >$status <<EOF
++$SENTINEL
++#---
++$(cat $next)
++#---
++$(cat .status.$$)
 +EOF
++	rm .status.$$
 +}
 +
-+merge_commit() {
-+cat <<EOF
-+#
-+# It looks like your may be committing a MERGE.
-+# If this is not correct, please remove the file
-+# $GIT_DIR/MERGE_HEAD
-+# and try again
-+#
-+EOF
-+}
-+
-+print_status() {
-+	if [ ! -r $GIT_DIR/HEAD ]; then
-+		if [ -z "$(git-ls-files)" ]; then
-+			echo Nothing to commit 1>&2
-+			return 1
-+		fi
-+		initial_commit 
-+	else
-+		if [ -f $GIT_DIR/MERGE_HEAD ]; then
-+			merge_commit
-+		fi
-+		git-status-script
++save_next_message()
++{
++	status=$1
++	next=$2
++	grep -v "^#" < $status > $next
++	if grep "^$SENTINEL" < $status >/dev/null; then
++		:> $status
++		echo "commit aborted - you must delete the SENTINEL line to confirm the commit"
 +	fi
 +}
 +
-+edit_message() {
-+	status=$1
-+	msg=$2
-+
-+	:> $msg
-+	${VISUAL:-${EDITOR:-vi}} "$status"
-+	grep -v '^#' < $status | git-stripspace >$msg
-+	[ -s $msg ] || exit 1
-+}
-+
-+commit_parents() {
-+	[ -f $GIT_DIR/HEAD ] &&
-+	echo -n "-p HEAD" &&
-+	[ -f $GIT_DIR/MERGE_HEAD ] &&
-+	echo -n " -p MERGE_HEAD"
-+	echo ""
-+}
-+
-+exec_commit() {
-+	msg=$1
-+	tree=$(git-write-tree) || exit 1
-+	parents=$(commit_parents) || exit 1
-+	commit=$(cat $msg | git-commit-tree $tree $parents) || exit 1
-+	echo $commit > $GIT_DIR/HEAD
-+	rm -f -- $GIT_DIR/MERGE_HEAD
-+}
-+
-+SENTINEL="#SENTINEL - delete this line to confirm the commit"
- : ${GIT_DIR=.git}
- if [ ! -d $GIT_DIR ]; then
- 	echo Not a git directory 1>&2
+ edit_message() {
+ 	status=$1
+ 	msg=$2
++	next=$3
+ 
+ 	:> $msg
++	[ -f "$next" ] && merge_next_message "$status" "$next"
+ 	${VISUAL:-${EDITOR:-vi}} "$status"
++	[ -f "$next" ] && save_next_message "$status" "$next"
+ 	grep -v '^#' < $status | git-stripspace >$msg
+ 	[ -s $msg ] || exit 1
+ }
+@@ -76,9 +105,10 @@ if ! print_status > .editmsg; then
  	exit 1
  fi
--PARENTS="-p HEAD"
--if [ ! -r $GIT_DIR/HEAD ]; then
--	if [ -z "$(git-ls-files)" ]; then
--		echo Nothing to commit 1>&2
--		exit 1
--	fi
--	(
--		echo "#"
--		echo "# Initial commit"
--		echo "#"
--		git-ls-files | sed 's/^/# New file: /'
--		echo "#"
--	) > .editmsg
--	PARENTS=""
--else
--	if [ -f $GIT_DIR/MERGE_HEAD ]; then
--		echo "#"
--		echo "# It looks like your may be committing a MERGE."
--		echo "# If this is not correct, please remove the file"
--		echo "#	$GIT_DIR/MERGE_HEAD"
--		echo "# and try again"
--		echo "#"
--		PARENTS="-p HEAD -p MERGE_HEAD"
--	fi > .editmsg
--	git-status-script >> .editmsg
--fi
--if [ "$?" != "0" ]
--then
-+
-+if ! print_status > .editmsg; then
- 	cat .editmsg
-+	rm .editmsg
- 	exit 1
+ 
+-if edit_message .editmsg .cmitmsg; then
++if edit_message .editmsg .cmitmsg ${GIT_DIR}/.nextmsg ; then
+ 	exec_commit .cmitmsg
+ 	[ -f .editmsg ] && rm .editmsg
+ 	[ -f .cmitmsg ] && rm .cmitmsg
++	[ -f ${GIT_DIR}/.nextmsg ] && rm ${GIT_DIR}/.nextmsg
+ 	exit 0
  fi
--${VISUAL:-${EDITOR:-vi}} .editmsg
--grep -v '^#' < .editmsg | git-stripspace > .cmitmsg
--[ -s .cmitmsg ] || exit 1
--tree=$(git-write-tree) || exit 1
--commit=$(cat .cmitmsg | git-commit-tree $tree $PARENTS) || exit 1
--echo $commit > $GIT_DIR/HEAD
--rm -f -- $GIT_DIR/MERGE_HEAD
+diff --git a/t/t1200-commit-script.sh b/t/t1200-commit-script.sh
+--- a/t/t1200-commit-script.sh
++++ b/t/t1200-commit-script.sh
+@@ -75,6 +75,15 @@ run_with_vars()
+      TZ= "$@" 2>/dev/null
+ }
+ 
++reset()
++{
++     [ -f .git/HEAD ] && rm .git/HEAD
++     [ -f .git/MERGE_HEAD ] && rm .git/MERGE_HEAD
++     [ -f .git/index ] && rm .git/index
++     [ -f treeid ] && rm treeid
++     [ -f commit ] && rm commit
++}
 +
-+if edit_message .editmsg .cmitmsg; then
-+	exec_commit .cmitmsg
-+	[ -f .editmsg ] && rm .editmsg
-+	[ -f .cmitmsg ] && rm .cmitmsg
-+	exit 0
-+fi
+ test_phase1()
+ {
+      condition=$1
+@@ -146,8 +155,34 @@ test_phase3()
+ 
+ }
+ 
+-test_phase1 "simulated user" ./do_nothing_editor
+-test_phase2 "simulated user" ./add_one_line_editor
+-test_phase3 "simulated used" ./add_one_line_editor
++test_phase1 "without .nextmsg" ./do_nothing_editor
++test_phase2 "without .nextmsg" ./add_one_line_editor
++test_phase3 "without .nextmsg" ./add_one_line_editor
++
++reset
++
++one_line > .git/.nextmsg
++test_phase1 "with .nextmsg" ./do_nothing_editor
++test_expect_success ".nextmsg file kept" "[ -f .git/.nextmsg -a \"$(cat .git/.nextmsg)\" == \"$(one_line)\" ]"
++
++one_line    > .git/.nextmsg
++test_phase2 "with .nextmsg" ./delete_sentinel_editor
++test_expect_success ".nextmsg file deleted" '! [ -f .git/.nextmsg ]'
++
++one_line    > .git/.nextmsg
++test_phase3 "with .nextmsg" ./delete_sentinel_editor
++test_expect_success ".nextmsg file deleted" '! [ -f .git/.nextmsg ]'
++
++reset
++
++: > .git/.nextmsg
++test_phase1 "with .nextmsg, change preserved, sentinel kept" ./add_one_line_editor
++test_expect_success "edit preserved - sentinel not deleted" "[ -f .git/.nextmsg -a \"$(cat .git/.nextmsg | tr -d \\012 )\" == \"$(one_line)\" ]"
++
++reset
++
++: > .git/.nextmsg
++test_phase1 "with .nextmsg, no data, no edit, sentinel kept" ./do_nothing_editor
++test_expect_success "no change - sentinel not deleted" "[ -f .git/.nextmsg -a \"$(cat .git/.nextmsg)\" == \"\" ]"
+ 
+ test_done
 ------------
