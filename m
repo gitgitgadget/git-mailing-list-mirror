@@ -1,119 +1,48 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/2] Adds support to git-commit-script for an optional .nextmsg file. [rev 3]
-Date: Wed, 15 Jun 2005 17:36:00 +1000
-Message-ID: <20050615073600.25144.qmail@blackcubes.dyndns.org>
+Subject: [WITHDRAWN PATCH] Reorganization of git-commit-script [rev 3] etc..
+Date: Wed, 15 Jun 2005 18:05:18 +1000
+Message-ID: <2cfc40320506150105270ad2ce@mail.gmail.com>
+References: <20050615073558.25126.qmail@blackcubes.dyndns.org>
+Reply-To: jon@blackcubes.dyndns.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jun 15 09:32:06 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 10:02:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiSN4-0006WO-O9
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 09:31:35 +0200
+	id 1DiSqq-0001a0-I7
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 10:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261281AbVFOHgd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 03:36:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261294AbVFOHgd
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 03:36:33 -0400
-Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:19843 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261281AbVFOHgC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 03:36:02 -0400
-Received: (qmail 25154 invoked by uid 500); 15 Jun 2005 07:36:00 -0000
+	id S261297AbVFOIHQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 04:07:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261298AbVFOIHP
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 04:07:15 -0400
+Received: from rproxy.gmail.com ([64.233.170.205]:65402 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261297AbVFOIHM convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 04:07:12 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1889359rne
+        for <git@vger.kernel.org>; Wed, 15 Jun 2005 01:07:12 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DAhIE4+DZ29S60l/LRAEK1L9mXqmgRUhLs6oJyOQYIWURXVrzWpU1C0L6V0qzpC9zInxuKDZ944STycsw8lnMPtPlEH9axeK9RWE1Rb4IzD6i5UZ4D00V5h0MhlTybpjHstBG8Fjfu5qr08RbT/I3UeQbzc5049c7ojsM4HINEU=
+Received: by 10.38.150.33 with SMTP id x33mr149145rnd;
+        Wed, 15 Jun 2005 01:05:18 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Wed, 15 Jun 2005 01:05:18 -0700 (PDT)
 To: git@vger.kernel.org
+In-Reply-To: <20050615073558.25126.qmail@blackcubes.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Sorry,
 
-If ${GIT_DIR}/.nextmsg exists, the text will be copied into the .editmsg file
-together with a sentinel line prior to invoking the editor.
+I really didn't test these too well. 
 
-After editing, the edited text (but not the status lines) are saved
-back to the ${GIT_DIR}/.nextmsg file.
+I'll withdrawn them until I have tested them properly (with test cases).
 
-If the sentinel line still exists in .editmsg after editing, the
-file is truncated, thereby causing the commit to abort (per previous
-behaviour).
-
-The ${GIT_DIR}/.nextmsg file is deleted if, and only if,
-the commit was successful.
-
-The behaviour of git-commit-script is unchanged with respect to the
-previous versions if ${GIT_DIR}/.nextmsg does not exist.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
-
----
-This patch set is a complete replacement for:
-
-     [PATCH 1/1] Add support for an optional .nextmsg file to git-commit-script
-
-I have incorporated most of Junio's feedback, except the prompting
-suggestion and the suggested restructuring is slightly different.
-
-[rev 2] fixed 2 errors with handling of .nextmsg file
-[rev 3] whitespace fixups
-
-
----
-
- git-commit-script |   32 +++++++++++++++++++++++++++++++-
- 1 files changed, 31 insertions(+), 1 deletions(-)
-
-diff --git a/git-commit-script b/git-commit-script
---- a/git-commit-script
-+++ b/git-commit-script
-@@ -26,12 +26,41 @@ EOF
- 	git-status-script
- }
- 
-+merge_next_message()
-+{
-+	status=$1
-+	next=$2
-+	mv -f $status .status.$$ || exit 1
-+	cat >$status <<EOF
-+$SENTINEL
-+#---
-+$(cat $next)
-+#---
-+$(cat .status.$$)
-+EOF
-+	rm .status.$$
-+}
-+
-+save_next_message()
-+{
-+	status=$1
-+	next=$2
-+	grep -v "^#" < $status > $next
-+	if grep "^$SENTINEL" < $status >/dev/null; then
-+		:> $status
-+		echo "commit aborted - you must delete the SENTINEL line to confirm the commit"
-+	fi
-+}
-+
- edit_message() {
- 	status=$1
- 	msg=$2
-+	next=$3
- 
- 	:> $msg
-+	[ -f "$next" ] && merge_next_message "$status" "$next"
- 	${VISUAL:-${EDITOR:-vi}} "$status"
-+	[ -f "$next" ] && save_next_message "$status" "$next"
- 	grep -v '^#' < $status | git-stripspace >$msg
- 	[ -s $msg ]
- 	return $?
-@@ -67,8 +96,9 @@ if ! print_status > .editmsg; then
- 	exit 1
- fi
- 
--if edit_message .editmsg .cmitmsg; then
-+if edit_message .editmsg .cmitmsg ${GIT_DIR}/.nextmsg ; then
- 	exec_commit .cmitmsg
- 	[ -f .editmsg ] && rm .editmsg
- 	[ -f .cmitmsg ] && rm .cmitmsg
-+	[ -f ${GIT_DIR}/.nextmsg ] && rm ${GIT_DIR}/.nextmsg
- fi
-------------
+jon.
