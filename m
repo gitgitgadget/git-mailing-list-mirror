@@ -1,87 +1,65 @@
 From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [COGITO PATCH] Optimized print_help()
-Date: Tue, 14 Jun 2005 20:33:03 -0400
-Message-ID: <1118795583.3890.27.camel@dv>
-References: <1118791576.3890.4.camel@dv>  <20050615000001.GB17152@diku.dk>
+Subject: cg-restore - restoring modified files
+Date: Tue, 14 Jun 2005 21:45:21 -0400
+Message-ID: <1118799921.3890.45.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 15 02:28:55 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 03:41:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiLlW-0001Fz-RL
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 02:28:23 +0200
+	id 1DiMtu-0000b9-5p
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 03:41:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261442AbVFOAdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 14 Jun 2005 20:33:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261446AbVFOAdM
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 20:33:12 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:4328 "EHLO
-	dv.roinet.com") by vger.kernel.org with ESMTP id S261442AbVFOAdG
+	id S261477AbVFOBpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 14 Jun 2005 21:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261478AbVFOBpd
+	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jun 2005 21:45:33 -0400
+Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:54969
+	"EHLO dv.roinet.com") by vger.kernel.org with ESMTP id S261477AbVFOBpZ
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jun 2005 20:33:06 -0400
+	Tue, 14 Jun 2005 21:45:25 -0400
 Received: from dv.roinet.com (localhost.localdomain [127.0.0.1])
-	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j5F0X4YI013340;
-	Tue, 14 Jun 2005 20:33:04 -0400
+	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j5F1jMmn014170
+	for <git@vger.kernel.org>; Tue, 14 Jun 2005 21:45:22 -0400
 Received: (from proski@localhost)
-	by dv.roinet.com (8.13.4/8.13.4/Submit) id j5F0X3JK013337;
-	Tue, 14 Jun 2005 20:33:03 -0400
+	by dv.roinet.com (8.13.4/8.13.4/Submit) id j5F1jMiL014167
+	for git@vger.kernel.org; Tue, 14 Jun 2005 21:45:22 -0400
 X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
-To: Jonas Fonseca <fonseca@diku.dk>
-In-Reply-To: <20050615000001.GB17152@diku.dk>
+To: git <git@vger.kernel.org>
 X-Mailer: Evolution 2.2.2 (2.2.2-8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-06-15 at 02:00 +0200, Jonas Fonseca wrote:
-> Shouldn't $toolpath be quoted here to make it safer? Although it seems
-> the make install don't handle irregular toolpaths at the moment.
+Hello!
 
-Sure.
+I believe the documented behavior of cg-restore is inconsistent.
 
-> > +	cat $toolpath | sed -n '3,/^$/s/^# *//p'
-> 
-> What about also removing UUOC from this line ...
+"Restore given files to their original state. Without any parameters, it
+recovers any files removed locally whose removal was not recorded by
+`cg-rm`."
 
-UUOC?  I had too look it up :-)
+I interpret it that cg-restore without arguments restores removed files
+but not modified ones.
 
-It's not just "useless use of cat", but also useless use of redirection
-in both cases.  I guess sed can exit after it finishes processing the
-range (I don't know if it actually does), so feeding it the whole file
-is not need.
+"If passed a set of file names, it restores those files to their state
+as of the last commit (including bringing files removed with cg-rm back
+to life; FIXME: does not do that part yet)."
 
-OK, here's an improved patch.
+I interpret it that cg-restore with arguments restores both removed and
+modified files.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+Maybe we need an option whether to restore modified files?  Or maybe
+they should always be restored (I think it would more consistent)?  Then
+the help text should be more clear about modified files.
 
-diff --git a/cg-Xlib b/cg-Xlib
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -130,10 +130,11 @@ update_index () {
- 
- 
- print_help () {
--	which "cg-$1" >/dev/null 2>&1 || exit 1
--	sed -n '/^USAGE=/,0s/.*"\(.*\)"/Usage: \1/p' < $(which cg-$1) 
-+	local toolpath=$(which cg-$1 2>/dev/null)
-+	[ -z "$toolpath" ] && exit 1
-+	sed -n '/^USAGE=/,0s/.*"\(.*\)"/Usage: \1/p' "$toolpath"
- 	echo
--	cat $(which cg-$1) | sed -n '3,/^$/s/^# *//p'
-+	sed -n '3,/^$/s/^# *//p' "$toolpath"
- 	exit
- }
- 
-
-P.S. Maybe we could use "type" rather than "which" because the former is
-a shell built-in.  Or maybe we should hardcode the prefix on install.
-Anyway, it's out of scope of this patch.
-
-P.P.S. I hope that $toolpath doesn't start with "-".  I could add "--"
-to the sed command line, but I'm not sure if BSD sed would like it.
+The actual behavior is that modified files are never restored.  We need
+"-f" option for git-checkout-cache to overwrite existing files, and it's
+not used whether the filenames are specified or not.  I wanted to send a
+patch, but after reading help I'm not sure what exactly cg-restore is
+supposed to do.
 
 -- 
 Regards,
