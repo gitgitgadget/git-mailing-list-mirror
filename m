@@ -1,71 +1,50 @@
-From: Erik van Konijnenburg <ekonijn@xs4all.nl>
-Subject: [PATCH] link in gitweb rss feed
-Date: Wed, 15 Jun 2005 17:41:48 +0200
-Message-ID: <20050615174148.C3099@banaan.localdomain>
+From: "Art Haas" <ahaas@airmail.net>
+Subject: Converting SVN repository to git
+Date: Wed, 15 Jun 2005 13:47:20 -0500
+Message-ID: <20050615184720.GF31997@artsapartment.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 15 17:37:07 2005
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:42:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiZwf-0006ou-5m
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 17:36:49 +0200
+	id 1DicqC-0002sA-Uq
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 20:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261181AbVFOPlv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 11:41:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261183AbVFOPlv
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 11:41:51 -0400
-Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:15120 "EHLO
-	smtp-vbr10.xs4all.nl") by vger.kernel.org with ESMTP
-	id S261181AbVFOPlt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 11:41:49 -0400
-Received: from banaan.xs4all.nl (banaan.xs4all.nl [80.126.2.237])
-	by smtp-vbr10.xs4all.nl (8.13.3/8.13.3) with ESMTP id j5FFfmks062681;
-	Wed, 15 Jun 2005 17:41:48 +0200 (CEST)
-	(envelope-from konijn@banaan.xs4all.nl)
-Received: (from konijn@localhost)
-	by banaan.xs4all.nl (8.11.6/8.11.6) id j5FFfm403837;
-	Wed, 15 Jun 2005 17:41:48 +0200
-To: Kay Sievers <kay.sievers@vrfy.org>
+	id S261258AbVFOSrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 14:47:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261267AbVFOSrX
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 14:47:23 -0400
+Received: from covert.brown-ring.iadfw.net ([209.196.123.143]:24593 "EHLO
+	covert.brown-ring.iadfw.net") by vger.kernel.org with ESMTP
+	id S261258AbVFOSrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 14:47:21 -0400
+Received: from cable-68-185-230-105.sli.la.charter.com ([68.185.230.105] helo=pcdebian)
+	by covert.iadfw.net with esmtp (Exim 4.24)
+	id 1Dicxx-0004Gm-8a
+	for git@vger.kernel.org; Wed, 15 Jun 2005 13:50:21 -0500
+Received: (qmail 25263 invoked by uid 1000); 15 Jun 2005 18:47:20 -0000
+To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-X-Virus-Scanned: by XS4ALL Virus Scanner
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The following patch makes the site name in an RSS
-feedreader for a gitweb project refer to the summary
-page for the the project, the same place where you picked
-up the feed in the first place.  This seems more consistent
-than linking to the overview of all projects where the
-link used to up.  Changed the link in OPML feed accordingly;
-this used to end up in the full log rather than the summary.
+Hi.
 
-Patch was made against version 220 as shipped in Debian,
-and applies (with offset) to your version 221.
+The utilities for converting CVS repositories to git repos have become
+part of the standard git package, and hopefully they'll be used to
+convert many CVS based projects to git. I've not seen anything, though,
+on switching Subversion repositories to git. Has there been any public
+activity in writing a tool/script to do this? Perhaps some offline
+discussion about doing this?
 
-Regards,
-Erik
+Thanks in advance.
 
---- gitorg.cgi	2005-06-15 17:11:51.000000000 +0200
-+++ gitweb.cgi	2005-06-15 17:16:42.000000000 +0200
-@@ -1227,7 +1227,7 @@
- 	      "<rss version=\"2.0\" xmlns:content=\"http://purl.org/rss/1.0/modules/content/\">\n";
- 	print "<channel>\n";
- 	print "<title>$project</title>\n".
--	      "<link>" . escapeHTML("$my_url/$project/log") . "</link>\n".
-+	      "<link>" . escapeHTML("$my_url?p=$project;a=summary") . "</link>\n".
- 	      "<description>$project log</description>\n".
- 	      "<language>en</language>\n";
- 
-@@ -1280,7 +1280,7 @@
- 
- 		my $path = escapeHTML(chop_str($proj{'path'}, 25, 5));
- 		my $rss =  "$my_url?p=$proj{'path'};a=rss";
--		my $html =  "$my_url?p=$proj{'path'};a=log";
-+		my $html =  "$my_url?p=$proj{'path'};a=summary";
- 		print "<outline type=\"rss\" text=\"$path\" title=\"$path\" xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
- 	}
- 	print "</outline>\n".
+Art Haas
+-- 
+Man once surrendering his reason, has no remaining guard against absurdities
+the most monstrous, and like a ship without rudder, is the sport of every wind.
+
+-Thomas Jefferson to James Smith, 1822
