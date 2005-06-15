@@ -1,96 +1,55 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: [COGITO PATCH] Optimized print_help()
-Date: Wed, 15 Jun 2005 17:14:59 -0400
-Message-ID: <1118870099.21882.16.camel@dv>
-References: <1118791576.3890.4.camel@dv>  <20050615000001.GB17152@diku.dk>
-	 <1118795583.3890.27.camel@dv>  <42B07A6F.3000001@lsrfire.ath.cx>
+From: Adam Mercer <ramercer@gmail.com>
+Subject: Re: Converting SVN repository to git
+Date: Wed, 15 Jun 2005 23:02:15 +0100
+Message-ID: <799406d605061515024f8d1fd6@mail.gmail.com>
+References: <20050615184720.GF31997@artsapartment.org>
+Reply-To: Adam Mercer <ramercer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 15 23:10:51 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Jun 15 23:58:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dif9U-0002pJ-2R
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 23:10:24 +0200
+	id 1Difty-00019T-Qd
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 23:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261571AbVFOVPU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 17:15:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261579AbVFOVPU
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 17:15:20 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:20968
-	"EHLO dv.roinet.com") by vger.kernel.org with ESMTP id S261571AbVFOVPB
+	id S261636AbVFOWDD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 18:03:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261633AbVFOWDC
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 18:03:02 -0400
+Received: from zproxy.gmail.com ([64.233.162.201]:30494 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261668AbVFOWCQ convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 17:15:01 -0400
-Received: from dv.roinet.com (localhost.localdomain [127.0.0.1])
-	by dv.roinet.com (8.13.4/8.13.4) with ESMTP id j5FLExWO022128;
-	Wed, 15 Jun 2005 17:14:59 -0400
-Received: (from proski@localhost)
-	by dv.roinet.com (8.13.4/8.13.4/Submit) id j5FLEx4p022125;
-	Wed, 15 Jun 2005 17:14:59 -0400
-X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-In-Reply-To: <42B07A6F.3000001@lsrfire.ath.cx>
-X-Mailer: Evolution 2.2.2 (2.2.2-8) 
+	Wed, 15 Jun 2005 18:02:16 -0400
+Received: by zproxy.gmail.com with SMTP id 16so69658nzp
+        for <git@vger.kernel.org>; Wed, 15 Jun 2005 15:02:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=M2odxZgolEe4maofi9WZw1Wnn5gQ6fHSPT1trvinakdWX+gIE2kNJ1DqSpulBJdVMgTdgf09c0/XU6X8z8iAe70p8r3fFjyBDgIDhWIvNZW+uLqw2j8Px3CYE0fW27LUOdAKwXqzprYecjdjcjQram6kuRUn4+pCAFqZe3yu6oY=
+Received: by 10.36.89.14 with SMTP id m14mr111999nzb;
+        Wed, 15 Jun 2005 15:02:15 -0700 (PDT)
+Received: by 10.36.109.1 with HTTP; Wed, 15 Jun 2005 15:02:15 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20050615184720.GF31997@artsapartment.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello, Rene!
+On 15/06/05, Art Haas <ahaas@airmail.net> wrote:
 
-On Wed, 2005-06-15 at 20:58 +0200, Rene Scharfe wrote:
-> It doesn't matter if the shell opens the file or if sed does it itself,
-> sed's ability to close the file and quit when done doesn't depend on
-> that.
+> The utilities for converting CVS repositories to git repos have become
+> part of the standard git package, and hopefully they'll be used to
+> convert many CVS based projects to git. I've not seen anything, though,
+> on switching Subversion repositories to git. Has there been any public
+> activity in writing a tool/script to do this? Perhaps some offline
+> discussion about doing this?
 
-I checked sed 4.1.4 and found following:
+You could use something like svn2cvs (http://svn2cvs.tigris.org) and
+then use the cvs2git tools.
 
-1) sed won't close stdin ever, but it will close files specified on the
-command line.
+Cheers
 
-2) sed will exit when told to do so by a command such as "q", and it
-won't read the reminder of the file, whether it's stdin or not.
-
-3) sed has code that makes it exit after it has processed all address
-ranges and the "-n" option is used.  However, this feature is buggy and
-disabled by default (see EXPERIMENTAL_DASH_N_OPTIMIZATION). It may be
-enabled in the future versions.
-
-In other words, you are correct (except the part about closing the
-file).
-
->   So this call is equivalent and has the advantage of being
-> resistant against filenames starting with a "-":
-> 
->    sed -n '3,/^$/s/^# *//p' <"$toolpath"
-
-OK.  Here's the third version of the patch.
-
-Signed-off-by: Pavel Roskin <proski@gnu.org>
-
-diff --git a/cg-Xlib b/cg-Xlib
---- a/cg-Xlib
-+++ b/cg-Xlib
-@@ -130,10 +130,11 @@ update_index () {
- 
- 
- print_help () {
--	which "cg-$1" >/dev/null 2>&1 || exit 1
--	sed -n '/^USAGE=/,0s/.*"\(.*\)"/Usage: \1/p' < $(which cg-$1) 
-+	local toolpath=$(which cg-$1 2>/dev/null)
-+	[ -z "$toolpath" ] && exit 1
-+	sed -n '/^USAGE=/,0s/.*"\(.*\)"/Usage: \1/p' <"$toolpath"
- 	echo
--	cat $(which cg-$1) | sed -n '3,/^$/s/^# *//p'
-+	sed -n '3,/^$/s/^# *//p' <"$toolpath"
- 	exit
- }
- 
-
-
-
--- 
-Regards,
-Pavel Roskin
-
+Adam
