@@ -1,50 +1,56 @@
-From: "Art Haas" <ahaas@airmail.net>
-Subject: Converting SVN repository to git
-Date: Wed, 15 Jun 2005 13:47:20 -0500
-Message-ID: <20050615184720.GF31997@artsapartment.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [COGITO PATCH] Optimized print_help()
+Date: Wed, 15 Jun 2005 20:58:55 +0200
+Message-ID: <42B07A6F.3000001@lsrfire.ath.cx>
+References: <1118791576.3890.4.camel@dv>  <20050615000001.GB17152@diku.dk> <1118795583.3890.27.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jun 15 20:42:38 2005
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 15 20:55:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DicqC-0002sA-Uq
-	for gcvg-git@gmane.org; Wed, 15 Jun 2005 20:42:21 +0200
+	id 1Did1W-0004an-MJ
+	for gcvg-git@gmane.org; Wed, 15 Jun 2005 20:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261258AbVFOSrX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 14:47:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261267AbVFOSrX
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 14:47:23 -0400
-Received: from covert.brown-ring.iadfw.net ([209.196.123.143]:24593 "EHLO
-	covert.brown-ring.iadfw.net") by vger.kernel.org with ESMTP
-	id S261258AbVFOSrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 14:47:21 -0400
-Received: from cable-68-185-230-105.sli.la.charter.com ([68.185.230.105] helo=pcdebian)
-	by covert.iadfw.net with esmtp (Exim 4.24)
-	id 1Dicxx-0004Gm-8a
-	for git@vger.kernel.org; Wed, 15 Jun 2005 13:50:21 -0500
-Received: (qmail 25263 invoked by uid 1000); 15 Jun 2005 18:47:20 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S261276AbVFOS7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 14:59:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261286AbVFOS7G
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 14:59:06 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:36793 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S261276AbVFOS7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 14:59:02 -0400
+Received: from [10.0.1.3] (p508E365A.dip.t-dialin.net [80.142.54.90])
+	by neapel230.server4you.de (Postfix) with ESMTP id 584021A6;
+	Wed, 15 Jun 2005 20:59:00 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: de-DE, de, en-us, en
+To: Pavel Roskin <proski@gnu.org>
+In-Reply-To: <1118795583.3890.27.camel@dv>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi.
+Pavel Roskin schrieb:
+>>> +	cat $toolpath | sed -n '3,/^$/s/^# *//p'
+>> 
+>> What about also removing UUOC from this line ...
+> 
+> 
+> UUOC?  I had too look it up :-)
+> 
+> It's not just "useless use of cat", but also useless use of
+> redirection in both cases.  I guess sed can exit after it finishes
+> processing the range (I don't know if it actually does), so feeding
+> it the whole file is not need.
 
-The utilities for converting CVS repositories to git repos have become
-part of the standard git package, and hopefully they'll be used to
-convert many CVS based projects to git. I've not seen anything, though,
-on switching Subversion repositories to git. Has there been any public
-activity in writing a tool/script to do this? Perhaps some offline
-discussion about doing this?
+It doesn't matter if the shell opens the file or if sed does it itself,
+sed's ability to close the file and quit when done doesn't depend on
+that.  So this call is equivalent and has the advantage of being
+resistant against filenames starting with a "-":
 
-Thanks in advance.
+   sed -n '3,/^$/s/^# *//p' <"$toolpath"
 
-Art Haas
--- 
-Man once surrendering his reason, has no remaining guard against absurdities
-the most monstrous, and like a ship without rudder, is the sport of every wind.
-
--Thomas Jefferson to James Smith, 1822
+Rene
