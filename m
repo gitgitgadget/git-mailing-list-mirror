@@ -1,56 +1,66 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PROPOSAL] Add a module (repo-log.c) to log repository events.
-Date: Thu, 16 Jun 2005 14:09:29 +1000
-Message-ID: <2cfc4032050615210961c4d146@mail.gmail.com>
-References: <20050616035924.31808.qmail@blackcubes.dyndns.org>
+Subject: Semantics of a workspace checkpoint
+Date: Thu, 16 Jun 2005 18:21:28 +1000
+Message-ID: <2cfc4032050616012146948b49@mail.gmail.com>
 Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Jun 16 06:04:33 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Jun 16 10:16:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DilcD-00026F-9w
-	for gcvg-git@gmane.org; Thu, 16 Jun 2005 06:04:29 +0200
+	id 1DipY2-00008d-Sw
+	for gcvg-git@gmane.org; Thu, 16 Jun 2005 10:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261730AbVFPEJi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Jun 2005 00:09:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261731AbVFPEJi
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 00:09:38 -0400
-Received: from rproxy.gmail.com ([64.233.170.195]:58746 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261730AbVFPEJg convert rfc822-to-8bit
+	id S261191AbVFPIVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Jun 2005 04:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261197AbVFPIVb
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 04:21:31 -0400
+Received: from rproxy.gmail.com ([64.233.170.207]:24650 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261191AbVFPIV2 convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2005 00:09:36 -0400
-Received: by rproxy.gmail.com with SMTP id i8so155718rne
-        for <git@vger.kernel.org>; Wed, 15 Jun 2005 21:09:34 -0700 (PDT)
+	Thu, 16 Jun 2005 04:21:28 -0400
+Received: by rproxy.gmail.com with SMTP id i8so225995rne
+        for <git@vger.kernel.org>; Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Jeq9up/+MRu8VDnifKfpFTT2vCgWegA2r5/axboa3KX+F1FoM9MANooHGiR4nk+lky+qcyLyqf6WA0OUyZSl7aOznkHJNMyJfLiA2W3LQKDklw/XuhSD+Va3UIjlhG5dwuaK9mQGzMB2oEpNiRi8MhVKQ8MZbXi7kCakMqaRjmA=
-Received: by 10.38.65.51 with SMTP id n51mr182857rna;
-        Wed, 15 Jun 2005 21:09:30 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Wed, 15 Jun 2005 21:09:29 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <20050616035924.31808.qmail@blackcubes.dyndns.org>
+        h=received:message-id:date:from:reply-to:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=WFneX0NiPMVtpdJN9UNfmvrY49gz2FxcW4ZRrAU5ANJMkC8SyBxJhP75LCpryzsArRr4fL8/E7P5OgKKoEwdEnWn3Fl0V4FlP54s3ib4grsUSmpM7k4Hz3OG3EnfK7Ux3hw3zMUFvncBZ2lFkgOvCJ6p5jpdcspZ2HmXSDDL8xA=
+Received: by 10.38.88.14 with SMTP id l14mr440876rnb;
+        Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-A variety of log formats would be possible but the default log format
-I intend to use is:
+I'd like to propose these as the semantics for the checkpointing of a workspace
 
-for object events:
+On checkpoint, create a file called:
 
-     yy-mm-ddThh:mm:ss(+/-)oooo SP object-type SP sha1  LF
+.git/checkpoint/<treeid>
 
-for label events:
+where the contents of the file are:
+    exactly identical to the index file immediately prior to the
+checkpoint being performed
 
-     yy-mm-ddThh:mm:ss(+/-)oooo SP 'label' SP label LF
+and the treeid is the tree that results from:
 
-The default format uses ASCII text and human readable iso-8601,
-locally zoned timestamps so that the logs are easily perused by both
-humans and machines.
+    git-update-cache $(git-diff-files | cut -f2)
+    git-write-tree
 
-jon.
+To restore from the checkpoint, one does:
+
+    /* magic to remove files that are not in the resulting tree */
+    git-read-tree -m <treeid>
+    git-checkout-cache -u -f -a
+    cp .git/checkpoints/<treeid> .git/index
+
+Comments?
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
