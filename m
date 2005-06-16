@@ -1,125 +1,185 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] fix scalability problems with git-deltafy-script
-Date: Wed, 15 Jun 2005 22:59:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0506152238210.1667@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 16 04:59:00 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 1/1] [PROPOSAL] Add a module (repo-log.c) to log repository events.
+Date: Thu, 16 Jun 2005 13:59:24 +1000
+Message-ID: <20050616035924.31808.qmail@blackcubes.dyndns.org>
+Cc: jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 16 05:55:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DikaN-0005LG-2Z
-	for gcvg-git@gmane.org; Thu, 16 Jun 2005 04:58:31 +0200
+	id 1DilSz-0001Km-1X
+	for gcvg-git@gmane.org; Thu, 16 Jun 2005 05:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261709AbVFPDCr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 15 Jun 2005 23:02:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261713AbVFPDAZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 23:00:25 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9100 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261709AbVFPC7g
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Jun 2005 22:59:36 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0II500J0TPN740@VL-MO-MR007.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 15 Jun 2005 22:59:31 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261727AbVFPD75 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 15 Jun 2005 23:59:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261729AbVFPD75
+	(ORCPT <rfc822;git-outgoing>); Wed, 15 Jun 2005 23:59:57 -0400
+Received: from 203-166-247-224.dyn.iinet.net.au ([203.166.247.224]:22657 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S261727AbVFPD72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Jun 2005 23:59:28 -0400
+Received: (qmail 31818 invoked by uid 500); 16 Jun 2005 03:59:24 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Current version would spin forever  and exhaust memory while 
-attempting to sort all files from all revisions at once, until it
-dies before even doing any real work.  This is especially noticeable 
-when used on a big repository like the imported  bkcvs repo for the
-Linux kernel.
 
-This patch allows for batching the sort to put a bound on needed 
-resources and making progress early, as well as including some small
-cleanups.
+This patch contains a header file that illustrates a proposed
+repository event logging module.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+The motivations for introducing such a module are documented
+in the proposed header. There are probably good reasons for
+taking a similar approach to logging cache events, since
+to do so would provide a robust undo/redo facility that
+is guaranteed to be able to reconstruct the workspace to any
+previous state.
 
-diff --git a/git-deltafy-script b/git-deltafy-script
---- a/git-deltafy-script
-+++ b/git-deltafy-script
-@@ -1,6 +1,6 @@
- #!/bin/bash
- 
--# Example script to deltafy an entire GIT repository based on the commit list.
-+# Example script to deltify an entire GIT repository based on the commit list.
- # The most recent version of a file is the reference and previous versions
- # are made delta against the best earlier version available. And so on for
- # successive versions going back in time.  This way the increasing delta
-@@ -25,37 +25,51 @@
- 
- set -e
- 
--depth=
--[ "$1" == "-d" ] && depth="--max-depth=$2" && shift 2
-+max_depth=
-+[ "$1" == "-d" ] && max_depth="--max-depth=$2" && shift 2
+This patch is posted to the list to solicit feedback that
+I'll try to incorporate as I proceed with the implementation.
+---
+
+ repo-log.h |  135 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 135 insertions(+), 0 deletions(-)
+
+diff --git a/repo-log.h b/repo-log.h
+new file mode 100644
+--- /dev/null
++++ b/repo-log.h
+@@ -0,0 +1,135 @@
++#ifndef REPOLOG_H
++#define REPOLOG_H
++/*
++ * Copyright (c) 2005, Jon Seymour
++ * 
++ * This module provides an API for logging significant 
++ * repository events via a logging API.
++ * 
++ * There are several uses for this feature:
++ * 	* identifying new objects to be pushed "somewhere else". Somewhere else
++ *        could be:
++ *             * another repository (via rsync)
++ * 	       * another kind of representation (e.g. an XML extract, 
++ * 		 a patch extract)
++ * 	       * another view (e.g. a GITK instance)
++ *             * another kind of repository database (e.g. MySQL)
++ *             * another kind of SCM (e.g. CVS)
++ *             * another more compact representation (e.g. an deltification 
++ * 		 process)
++ * 	* helping to locate versions of stuff when the workspace
++ *        (user) gets confused.
++ * 
++ * NOTE: this would probably be even more useful for the index 
++ * allowing a provably correct workspace undo/redo implementation, 
++ * however, let's bite-off one piece at a time.
++ */
 +
-+overlap=30
-+max_behind="--max-behind=$overlap"
- 
- function process_list() {
- 	if [ "$list" ]; then
- 		echo "Processing $curr_file"
--		echo "$head $list" | xargs git-mkdelta $depth --max-behind=30 -v
-+		echo "$list" | xargs git-mkdelta $max_depth $max_behind -v
- 	fi
- }
- 
-+rev_list=""
- curr_file=""
- 
- git-rev-list HEAD |
--git-diff-tree -r -t --stdin |
--awk '/^:/ { if ($5 == "M" || $5 == "N") print $4, $6;
--            if ($5 == "M") print $3, $6 }' |
--LC_ALL=C sort -s -k 2 | uniq |
--while read sha1 file; do
--	if [ "$file" == "$curr_file" ]; then
--		list="$list $sha1"
--	else
--		process_list
--		curr_file="$file"
--		list=""
--		head="$sha1"
--	fi
-+while true; do
-+	# Let's batch revisions into groups of 1000 to give it a chance to
-+	# scale with repositories containing long revision lists.  We also
-+	# overlap with the previous batch the size of mkdelta's look behind
-+	# value in order to account for the processing discontinuity.
-+	rev_list="$(echo -e -n "$rev_list" | tail --lines=$overlap)"
-+	for i in $(seq 1000); do
-+		read rev || break
-+		rev_list="$rev_list$rev\n"
-+	done
-+	echo -e -n "$rev_list" |
-+	git-diff-tree -r -t --stdin |
-+	awk '/^:/ { if ($5 == "M") printf "%s %s\n%s %s\n", $4, $6, $3, $6 }' |
-+	LC_ALL=C sort -s -k 2 | uniq |
-+	while read sha1 file; do
-+		if [ "$file" == "$curr_file" ]; then
-+			list="$list $sha1"
-+		else
-+			process_list
-+			curr_file="$file"
-+			list="$sha1"
-+		fi
-+	done
-+	[ "$rev" ] || break
- done
- process_list
- 
- curr_file="root directory"
--head=""
- list="$(
- 	git-rev-list HEAD |
- 	while read commit; do
++#define REPO_LOG_STOP  (1u << 1)
++#define REPO_LOG_ERROR (1u << 2)
++#define REPO_LOG_FATAL (1u << 4)
++
++struct repo_log_event_data {
++	/**
++	 * Flags set by handlers to communicate actions to the logging API
++	 *     STOP  - the event has been handled and no further dispatch
++	 *             should be performed. Filtering type handlers should
++	 * 	       set this flag.
++	 *     ERROR - a non-fatal error occured, but the logging API
++	 *             should return.
++	 *     FATAL - a fatal event occurred during logging and the logging
++	 * 	       API should die before returning.
++	 */
++	unsigned int flags;
++	
++	/**
++	 * The type of event being logged. It is either an object type
++	 * such as: blob, commit, tree, delta or tag or it is a label.
++	 */
++	char * objtype;
++	
++	/**
++	 * The timestamp of the event being logged.
++	 */
++	struct tm * timestamp;	
++	
++	/**
++	 * The sha1 associated with a repository object event. 
++	 * Set to NULL for label events.
++	 */
++	unsigned char * sha1;
++	
++	/**
++	 * The label associated with the event.
++	 */
++	char * label;
++};
++
++/**
++ * Describes a repository log event handler.
++ * 
++ * Private data associated with the handler can be placed in the 
++ * later parts of a containing data structure.
++ * 
++ * struct private_handler_data {
++ * 	struct repo_log_event_handler handler;
++ * 	char * some_private_data;
++ * 	...
++ * }
++ * repo_log_register_handler(&private_handler_data.handler);
++ * 
++ */
++struct repo_log_event_handler {
++	/**
++	 * This method is called once for each repo log event that occurs.
++	 */	 
++	void (*method)(struct repo_log_event_handler *, struct repo_log_event_data *);
++	
++	/**
++	 * Initialized by repo_log_register_handler. 
++	 * Private to repo-log.c, should not be used or modified elsewhere.
++	 */
++	struct repo_log_event_handler * next;
++}
++
++/*
++ * Answers true if repository logging is enabled.
++ * 
++ * Repository logging is enabled if repo_log_register_handler
++ * has been called or if GIT_REPO_LOG_PATH is set to a 
++ * writeable name.
++ */
++int repo_log_logging_enabled();
++
++/*
++ * Registers a new repo_log_event handler.
++ * 
++ * The method associated with this handler will be invoked
++ * each time a repository event occurs.
++ */
++void repo_log_register_handler(repo_log_event_handler * handler);
++
++/*
++ * Logs a repository event.
++ * 
++ * Returns false if the logging was not successful.
++ */ 
++int repo_log_event(struct tm * tm, char * objtype, unsigned char * sha1);
++
++/*
++ * Writes a label into the repository event log. 
++ * 
++ * The label is validated to ensure it only contains
++ * graphic ASCII characters in the range 0x21 -> 0x7f.
++ * 
++ * Labels are for informational purposes only and need 
++ * not be unique.
++ */ 
++int repo_log_label(char * label);
++
++/*
++ * Logs a repository event, using the timestamp extracted from the (closed) 
++ * file.
++ */
++int repo_log_event_file(char * filename, char * objtype, unsigned char * sha1);
++#endif /* REPOLOG_H */
+------------
