@@ -1,66 +1,71 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Semantics of a workspace checkpoint
-Date: Thu, 16 Jun 2005 18:21:28 +1000
-Message-ID: <2cfc4032050616012146948b49@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Semantics of a workspace checkpoint
+Date: Thu, 16 Jun 2005 10:28:48 +0200
+Message-ID: <20050616082847.GA10116@pasky.ji.cz>
+References: <2cfc4032050616012146948b49@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Jun 16 10:16:34 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jun 16 10:24:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DipY2-00008d-Sw
-	for gcvg-git@gmane.org; Thu, 16 Jun 2005 10:16:27 +0200
+	id 1Dipf8-00014q-Kl
+	for gcvg-git@gmane.org; Thu, 16 Jun 2005 10:23:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261191AbVFPIVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Jun 2005 04:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261197AbVFPIVb
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 04:21:31 -0400
-Received: from rproxy.gmail.com ([64.233.170.207]:24650 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261191AbVFPIV2 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2005 04:21:28 -0400
-Received: by rproxy.gmail.com with SMTP id i8so225995rne
-        for <git@vger.kernel.org>; Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=WFneX0NiPMVtpdJN9UNfmvrY49gz2FxcW4ZRrAU5ANJMkC8SyBxJhP75LCpryzsArRr4fL8/E7P5OgKKoEwdEnWn3Fl0V4FlP54s3ib4grsUSmpM7k4Hz3OG3EnfK7Ux3hw3zMUFvncBZ2lFkgOvCJ6p5jpdcspZ2HmXSDDL8xA=
-Received: by 10.38.88.14 with SMTP id l14mr440876rnb;
-        Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Thu, 16 Jun 2005 01:21:28 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
+	id S261197AbVFPI2y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Jun 2005 04:28:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261199AbVFPI2y
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 04:28:54 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54424 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261197AbVFPI2v (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2005 04:28:51 -0400
+Received: (qmail 30968 invoked by uid 2001); 16 Jun 2005 08:28:48 -0000
+To: Jon Seymour <jon.seymour@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <2cfc4032050616012146948b49@mail.gmail.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'd like to propose these as the semantics for the checkpointing of a workspace
+Dear diary, on Thu, Jun 16, 2005 at 10:21:28AM CEST, I got a letter
+where Jon Seymour <jon.seymour@gmail.com> told me that...
+> I'd like to propose these as the semantics for the checkpointing of a workspace
 
-On checkpoint, create a file called:
+What are you actually trying to achieve? How would you define a
+checkpoint? Why are checkpoints good? Why don't you just commit?
+Why do you name checkpoints by treeids?
 
-.git/checkpoint/<treeid>
+> On checkpoint, create a file called:
+> 
+> .git/checkpoint/<treeid>
+> 
+> where the contents of the file are:
+>     exactly identical to the index file immediately prior to the
+> checkpoint being performed
+> 
+> and the treeid is the tree that results from:
+> 
+>     git-update-cache $(git-diff-files | cut -f2)
+>     git-write-tree
+> 
+> To restore from the checkpoint, one does:
+> 
+>     /* magic to remove files that are not in the resulting tree */
+>     git-read-tree -m <treeid>
+>     git-checkout-cache -u -f -a
+>     cp .git/checkpoints/<treeid> .git/index
 
-where the contents of the file are:
-    exactly identical to the index file immediately prior to the
-checkpoint being performed
+Why do you actually store the index itself? If you did write-tree, can't
+you just work with that alone? You essentially rebuilt the index by
+git-read-tree -m <treeid>, didn't you? (And half-destroyed it by the cp
+since you trashed the stat information.)
 
-and the treeid is the tree that results from:
-
-    git-update-cache $(git-diff-files | cut -f2)
-    git-write-tree
-
-To restore from the checkpoint, one does:
-
-    /* magic to remove files that are not in the resulting tree */
-    git-read-tree -m <treeid>
-    git-checkout-cache -u -f -a
-    cp .git/checkpoints/<treeid> .git/index
-
-Comments?
 -- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
