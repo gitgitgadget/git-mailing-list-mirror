@@ -1,65 +1,53 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PROPOSAL] Add a module (repo-log.c) to log repository events.
-Date: Thu, 16 Jun 2005 19:04:49 +1000
-Message-ID: <2cfc403205061602046ec3f430@mail.gmail.com>
-References: <20050616035924.31808.qmail@blackcubes.dyndns.org>
-	 <2cfc4032050615210961c4d146@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: reducing line crossings in gitk
+Date: Thu, 16 Jun 2005 22:26:35 +1000
+Message-ID: <17073.28667.819809.89026@cargo.ozlabs.ibm.com>
+References: <17066.53047.660907.453399@cargo.ozlabs.ibm.com>
+	<7v8y1gvjfz.fsf@assigned-by-dhcp.cox.net>
+	<17072.3723.242985.824999@cargo.ozlabs.ibm.com>
+	<2cfc40320506150534380bb5f8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Thu Jun 16 11:00:08 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 16 14:35:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DiqDr-0005vQ-I6
-	for gcvg-git@gmane.org; Thu, 16 Jun 2005 10:59:39 +0200
+	id 1Dita2-0006rJ-VG
+	for gcvg-git@gmane.org; Thu, 16 Jun 2005 14:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261220AbVFPJEw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 16 Jun 2005 05:04:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261225AbVFPJEv
-	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 05:04:51 -0400
-Received: from rproxy.gmail.com ([64.233.170.204]:29920 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261220AbVFPJEu convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Jun 2005 05:04:50 -0400
-Received: by rproxy.gmail.com with SMTP id i8so238732rne
-        for <git@vger.kernel.org>; Thu, 16 Jun 2005 02:04:49 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ILy0NEoZe+LRm0VlsGZbEyYXJ3hcaFple2nv/c3ZMCxAi4ugeMDQAm105IIQrs66DQGHdYvI2f1HkZZUnCL5v4dwq277PHKOBivS2cOk1PlOJ3yMZNVyQNEWJsuZ7eODZGx5qaolSwRct4A1c6qdjhvCt769iRtTPAzgs9DzPc4=
-Received: by 10.38.66.4 with SMTP id o4mr452283rna;
-        Thu, 16 Jun 2005 02:04:49 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Thu, 16 Jun 2005 02:04:49 -0700 (PDT)
-To: git@vger.kernel.org
-In-Reply-To: <2cfc4032050615210961c4d146@mail.gmail.com>
-Content-Disposition: inline
+	id S261667AbVFPMjy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 16 Jun 2005 08:39:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261672AbVFPMjy
+	(ORCPT <rfc822;git-outgoing>); Thu, 16 Jun 2005 08:39:54 -0400
+Received: from ozlabs.org ([203.10.76.45]:19900 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261667AbVFPMju (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Jun 2005 08:39:50 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 8B5CA67B8F; Thu, 16 Jun 2005 22:39:48 +1000 (EST)
+To: jon@blackcubes.dyndns.org
+In-Reply-To: <2cfc40320506150534380bb5f8@mail.gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 6/16/05, Jon Seymour <jon.seymour@gmail.com> wrote:
-> A variety of log formats would be possible but the default log format
-> I intend to use is:
-> 
-> for object events:
-> 
->      yy-mm-ddThh:mm:ss(+/-)oooo SP object-type SP sha1  LF
-> 
+Jon Seymour writes:
 
-Further enhancements along these lines:
+> Another feature that would be handy is the ability to be able to
+> create tags by pointing to an item and selecting a "create-tag"
+> action. The effect would be to write the SHA1 id into
+> GIT_DIR/refs/tags in the expected way.
 
-      yy-mm-ddThh:mm:ss(+/-)oooo SP object-type SP sha1 [ SP name ]  LF
+Hmmm, that would create a "direct" tag, not a normal tag, which is
+an object of type "tag" that contains a reference to a commit along
+with some other stuff.
 
-This will require more invasive instrumentation but when a blob is
-written it will allow the name with which the blob was known to be
-logged, if that is known. Of course, this name may not survive over
-time, but it was accurate at the time of the the repo event.
+In general I'd like to keep gitk as purely a viewer.  Ultimately I'll
+probably do a graphical tool for checking stuff in and other
+operations that modify the repository as well, but I think that should
+be a separate tool.
 
-The objective of doing this, of course, is  to allow a git user to
-quickly find a blob or tree that was accidentally "lost", by scanning
-the repo log.
-
-jon.
+Regards,
+Paul.
