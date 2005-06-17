@@ -1,129 +1,87 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] support incremental cvs2git-ing
-Date: Fri, 17 Jun 2005 18:26:57 +0200
-Message-ID: <20050617162657.GG9986MdfPADPa@garage.linux.student.kuleuven.ac.be>
-References: <20050610193519.GA28628@lumumba.luc.ac.be>
-Reply-To: skimo@liacs.nl
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git merging
+Date: Fri, 17 Jun 2005 11:50:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org>
+References: <20050617133440.GI6957@suse.de> <Pine.LNX.4.58.0506170937260.8487@ppc970.osdl.org>
+ <20050617175653.GS6957@suse.de> <Pine.LNX.4.58.0506171101450.2268@ppc970.osdl.org>
+ <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org>
+ <20050617183914.GX6957@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 17 18:33:03 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 17 20:47:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DjJlJ-0000JN-RA
-	for gcvg-git@gmane.org; Fri, 17 Jun 2005 18:32:10 +0200
+	id 1DjLri-00052i-8p
+	for gcvg-git@gmane.org; Fri, 17 Jun 2005 20:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262014AbVFQQhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Jun 2005 12:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262015AbVFQQhX
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jun 2005 12:37:23 -0400
-Received: from nibbel.kulnet.kuleuven.ac.be ([134.58.240.41]:10182 "EHLO
-	nibbel.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S262014AbVFQQgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Jun 2005 12:36:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by nibbel.kulnet.kuleuven.ac.be (Postfix) with ESMTP id EBB444BE7D
-	for <git@vger.kernel.org>; Fri, 17 Jun 2005 18:36:52 +0200 (CEST)
-Received: from antonius.kulnet.kuleuven.ac.be (antonius.kulnet.kuleuven.ac.be [134.58.240.73])
-	by nibbel.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 62C374BE75
-	for <git@vger.kernel.org>; Fri, 17 Jun 2005 18:36:51 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by antonius.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 52A2E4C2C5
-	for <git@vger.kernel.org>; Fri, 17 Jun 2005 18:36:51 +0200 (CEST)
-Received: (qmail 5270 invoked by uid 500); 17 Jun 2005 16:26:57 -0000
-To: Panagiotis Issaris <takis@lumumba.luc.ac.be>
-Mail-Followup-To: Panagiotis Issaris <takis@lumumba.luc.ac.be>,
-	torvalds@osdl.org, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050610193519.GA28628@lumumba.luc.ac.be>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
+	id S262062AbVFQSve (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Jun 2005 14:51:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262061AbVFQSuZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jun 2005 14:50:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:30699 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262057AbVFQSsk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2005 14:48:40 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5HImYjA004584
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 17 Jun 2005 11:48:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5HImXFi017079;
+	Fri, 17 Jun 2005 11:48:34 -0700
+To: Jens Axboe <axboe@suse.de>
+In-Reply-To: <20050617183914.GX6957@suse.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.110 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 10, 2005 at 09:35:19PM +0200, Panagiotis Issaris wrote:
-> Hi Linus,
+
+[ Git mailing list cc'd, since this is a general question that maybe 
+  others have wondered about ]
+
+On Fri, 17 Jun 2005, Jens Axboe wrote:
 > 
-> I wanted to be able to track CVS repositories in a GIT repository. The
-> cvs2git program worked fine with the initial import but needed a tiny
-> modification to enable me to resync the GIT repository with the updated
-> CVS tree.
-> 
+> btw (and forgive me for just asking you), what is the canonical way to
+> kill a branch in case you want to redo it? right now I have a block tree
+> with a bunch of brances, and I would like to redo one of the branches
+> because I forgot to add the signed-off-by entries in there.
 
-The original version of this patch failed to track the correct
-branch on the first new commit.
-Fixed and tested patch below.
+You can just simply remove the .git/refs/heads/branch-name file (obviously 
+after having made sure that ".git/HEAD" points to something else), and 
+then you can run "git prune", which will remove all objects that aren't 
+referenced (directly or indirectly) by anything in ".git/refs/**".
 
-skimo
---
-cvs2git.c: support incremental conversion
+Be very very careful, though. "git prune" is a dangerous script, since it
+will remove objects from the object store. If you had something that you
+don't have a proper reference for, or if you give "git prune" a list of
+references manually and it's not complete, "git prune" will happily remove
+objects that you didn't mean for it to remove.
 
-Add -u option to indicate incremental conversion.
+The "git prune" script is really trivial, you can see for yourself what 
+"git-prune-script" does.
 
-Signed-off-by: Panagiotis Issaris <takis@lumumba.luc.ac.be>
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+NOTE! It's entirely possible to not actually delete the old branch, but 
+just rename it, and use it as a reference while you build up the new 
+branch with the same contents (but maybe different commit log messages, or 
+maybe just re-ordering the commits in the new version). To rename a 
+branch, just rename the ".git/refs/heads/<branch-name>" file to something 
+else.
 
----
-commit 67fcd1648f66d04972c90860b58449f586718653
-tree 698e9c37f91c88c797cab7324d69106b898987a3
-parent 4fd62062eb2d52d32cb771feb05bf1ee29d760f9
-author Panagiotis Issaris <takis@lumumba.luc.ac.be> Fri, 17 Jun 2005 18:30:27 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Fri, 17 Jun 2005 18:30:27 +0200
+So you may decide to remove (and prune) the old branch only after you've 
+re-created a new version of it, for example. That way you can use git 
+itself to extract the contents of the branch you want to re-do, which is 
+often easier.
 
- cvs2git.c |   24 ++++++++++++++++++------
- 1 files changed, 18 insertions(+), 6 deletions(-)
+Btw, if you have a recent version of "gitk" instealled, you can do
 
-diff --git a/cvs2git.c b/cvs2git.c
---- a/cvs2git.c
-+++ b/cvs2git.c
-@@ -28,11 +28,17 @@ static int verbose = 0;
-  * Usage:
-  *
-  *	TZ=UTC cvsps -A |
-- *		cvs2git --cvsroot=[root] --module=[module] > script
-+ *		git-cvs2git --cvsroot=[root] --module=[module] > script
-  *
-  * Creates a shell script that will generate the .git archive of
-  * the names CVS repository.
-  *
-+ *	TZ=UTC cvsps -s 1234- -A |
-+ *		git-cvs2git -u --cvsroot=[root] --module=[module] > script
-+ *
-+ * Creates a shell script that will update the .git archive with
-+ * CVS changes from patchset 1234 until the last one.
-+ *
-  * IMPORTANT NOTE ABOUT "cvsps"! This requires version 2.1 or better,
-  * and the "TZ=UTC" and the "-A" flag is required for sane results!
-  */
-@@ -230,6 +236,10 @@ int main(int argc, char **argv)
- 			verbose = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "-u")) {
-+			initial_commit = 0;
-+			continue;
-+		}
- 	}
- 
- 
-@@ -241,11 +251,13 @@ int main(int argc, char **argv)
- 		exit(1);
- 	}
- 
--	printf("[ -d .git ] && exit 1\n");
--	printf("git-init-db\n");
--	printf("mkdir -p .git/refs/heads\n");
--	printf("mkdir -p .git/refs/tags\n");
--	printf("ln -sf refs/heads/master .git/HEAD\n");
-+	if (initial_commit) {
-+		printf("[ -d .git ] && exit 1\n");
-+		    printf("git-init-db\n");
-+		printf("mkdir -p .git/refs/heads\n");
-+		printf("mkdir -p .git/refs/tags\n");
-+		printf("ln -sf refs/heads/master .git/HEAD\n");
-+	}
- 
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int linelen = strlen(line);
+	gitk $(ls .git/revs/heads)
+
+and you'll get a full graphical view of _all_ your branches, which can be 
+very instructive.
+
+		Linus
