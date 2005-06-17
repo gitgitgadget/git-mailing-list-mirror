@@ -1,70 +1,68 @@
-From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: Re: [PATCH] ssh-push: Don't add '/' to pathname
-Date: Fri, 17 Jun 2005 10:13:18 +0200
-Message-ID: <20050617081318.GA23688@pc117b.liacs.nl>
-References: <20050614103738.GA14483@pc117b.liacs.nl>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Using local trees and cogito
+Date: Fri, 17 Jun 2005 13:57:28 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.06.17.11.57.23.864424@smurf.noris.de>
+References: <9e473391050615193719d81951@mail.gmail.com> <20050616163907.GA26037@delft.aura.cs.cmu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jun 17 10:09:33 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Jun 17 13:54:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DjBuQ-0006sG-Ui
-	for gcvg-git@gmane.org; Fri, 17 Jun 2005 10:09:03 +0200
+	id 1DjFPN-0008Fs-8K
+	for gcvg-git@gmane.org; Fri, 17 Jun 2005 13:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261908AbVFQIOR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Jun 2005 04:14:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261920AbVFQIOR
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jun 2005 04:14:17 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:28121 "EHLO rhodium.liacs.nl")
-	by vger.kernel.org with ESMTP id S261908AbVFQIOJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2005 04:14:09 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id j5H8DIPE000652;
-	Fri, 17 Jun 2005 10:13:23 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 988366FE9; Fri, 17 Jun 2005 10:13:18 +0200 (CEST)
-To: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050614103738.GA14483@pc117b.liacs.nl>
-User-Agent: Mutt/1.5.6i
+	id S261222AbVFQL6b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 17 Jun 2005 07:58:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261233AbVFQL6b
+	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jun 2005 07:58:31 -0400
+Received: from main.gmane.org ([80.91.229.2]:56291 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261222AbVFQL61 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2005 07:58:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DjFOx-0008CD-96
+	for git@vger.kernel.org; Fri, 17 Jun 2005 13:52:47 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Jun 2005 13:52:47 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Jun 2005 13:52:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ok, I'm stupid.
+Hi, Jan Harkes wrote:
 
-This patch has actually been tested.
+> I use,
+> 
+>     git-diff-cache -R -p HEAD | git-apply --index
+> 
+> This simple reverse applies the differences between the previously
+> checked out tree and the branch we just switched to. Ofcourse the
+> cache/index has to be up to date before we switch between branches.
 
-skimo
+... except that this method fails to create intermediate dirctories.
 
---
-ssh-push.c: Fix handling of ssh://host/path URLs
+fatal: unable to create file drivers/media/dvb/dibusb/Kconfig (No such file or directory)
 
-Previous patch to fix host:path notation broke
-handling of ssh://host/path notation.
+Looks like a bug in git-apply.
 
-Signed-off-by: Sven Verdoolaege <skimo@liacs.nl>
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Let us endeavor so to live that when we come to die even the undertaker will be
+sorry.
+		-- Mark Twain, "Pudd'nhead Wilson's Calendar"
 
----
-commit 4fd62062eb2d52d32cb771feb05bf1ee29d760f9
-tree 75ea11a1b6bf7ca17a274b3a8ce2191e7b815e87
-parent 7875b50d1a9928e683299b283bfe94778b6c344e
-author Sven Verdoolaege <skimo@liacs.nl> Fri, 17 Jun 2005 10:08:27 +0200
-committer Sven Verdoolaege <skimo@liacs.nl> Fri, 17 Jun 2005 10:08:27 +0200
 
- rsh.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/rsh.c b/rsh.c
---- a/rsh.c
-+++ b/rsh.c
-@@ -41,6 +41,7 @@ int setup_connection(int *fd_in, int *fd
- 	snprintf(command, COMMAND_SIZE, 
- 		 "%s='%s' %s",
- 		 GIT_DIR_ENVIRONMENT, path, remote_prog);
-+	*path = '\0';
- 	posn = command + strlen(command);
- 	for (i = 0; i < rmt_argc; i++) {
- 		*(posn++) = ' ';
