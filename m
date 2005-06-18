@@ -1,72 +1,114 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: Stacked GIT 0.1 (a.k.a. quilt for git)
-Date: Sat, 18 Jun 2005 22:43:04 +0100
-Message-ID: <tnxekaz1guv.fsf@arm.com>
-References: <tnxy899zzu7.fsf@arm.com>
-	<Pine.LNX.4.21.0506171750180.30848-100000@iabervon.org>
-	<2cfc4032050617152878b75c97@mail.gmail.com>
+From: Sven Verdoolaege <Sven.Verdoolaege@cs.kuleuven.ac.be>
+Subject: Re: cvs2git and file permissions
+Date: Sun, 19 Jun 2005 00:31:15 +0200
+Message-ID: <20050618223115.GA5505@billie.cs.kuleuven.ac.be>
+References: <20050618205208.GA4917@billie.cs.kuleuven.ac.be> <Pine.LNX.4.58.0506181421070.2268@ppc970.osdl.org>
+Reply-To: Sven Verdoolaege <skimo@liacs.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 18 23:38:39 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 19 00:27:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Djl1K-000764-Ch
-	for gcvg-git@gmane.org; Sat, 18 Jun 2005 23:38:30 +0200
+	id 1DjlmU-0002TL-PN
+	for gcvg-git@gmane.org; Sun, 19 Jun 2005 00:27:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262169AbVFRVn6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Jun 2005 17:43:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262171AbVFRVn6
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 17:43:58 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:10149 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S262169AbVFRVn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2005 17:43:56 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j5ILgt6i019149;
-	Sat, 18 Jun 2005 22:42:55 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id WAA12346;
-	Sat, 18 Jun 2005 22:43:19 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Sat, 18 Jun 2005 22:43:19 +0100
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc4032050617152878b75c97@mail.gmail.com> (Jon Seymour's
- message of "Sat, 18 Jun 2005 08:28:58 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 18 Jun 2005 21:43:19.0120 (UTC) FILETIME=[BDD74500:01C5744E]
+	id S262177AbVFRWcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Jun 2005 18:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262179AbVFRWcl
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 18:32:41 -0400
+Received: from hermes2.cs.kuleuven.be ([134.58.40.2]:49809 "EHLO
+	hermes2.cs.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S262177AbVFRWcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2005 18:32:14 -0400
+Received: from dr-zook2.cs.kuleuven.ac.be (dr-zook2.cs.kuleuven.be [134.58.41.21])
+	by hermes2.cs.kuleuven.ac.be  with ESMTP id j5IMW3Y4012057;
+	Sun, 19 Jun 2005 00:32:03 +0200
+Received: from localhost (amavis@localhost [127.0.0.1])
+	by dr-zook2.cs.kuleuven.ac.be (A_Good_MTA/8.13.4/Debian-3) with ESMTP id j5IMW3FB032548;
+	Sun, 19 Jun 2005 00:32:03 +0200
+Received: from dr-zook2.cs.kuleuven.ac.be ([127.0.0.1])
+	by localhost (dr-zook2 [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 32358-02; Sun, 19 Jun 2005 00:32:01 +0200 (CEST)
+Received: from iris.cs.kuleuven.ac.be (pop.cs.kuleuven.ac.be [134.58.41.11])
+	by dr-zook2.cs.kuleuven.ac.be (A_Good_MTA-RX/8.13.4/Debian-3) with ESMTP id j5IMVI5W032520;
+	Sun, 19 Jun 2005 00:31:18 +0200
+Received: from billie.cs.kuleuven.ac.be (billie.cs.kuleuven.ac.be [134.58.41.39])
+	by iris.cs.kuleuven.ac.be (A_Good_MTA/0.6.11) with ESMTP id j5IMVIl18558;
+	Sun, 19 Jun 2005 00:31:18 +0200 (MEST)
+Received: (from sven@localhost)
+	by billie.cs.kuleuven.ac.be (A_Good_MTA/0.6.11) id j5IMVFI05735;
+	Sun, 19 Jun 2005 00:31:15 +0200 (MEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506181421070.2268@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cs.kuleuven.be
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Jon Seymour <jon.seymour@gmail.com> wrote:
-> I also think it would be good if patches extracted from git
-> repositories included some information about exactly where the patch
-> was extracted from...something like...
->
-> signed-off-by: Name <user@host.domain>
-> ---
-> commit: sha1 -> sha1
-> tree: sha1 -> sha1
->
-> The reason for including the commits is to allow the maintainer to
-> track exactly where the a given rev of a patch was from. The reason
-> for including the treeids is to allow appliers to verify that the
-> patch has produced the same result as the patch submitter.
+On Sat, Jun 18, 2005 at 02:23:48PM -0700, Linus Torvalds wrote:
+> On Sat, 18 Jun 2005, Sven Verdoolaege wrote:
+> > 
+> > Let cvs checkout in a temporary directory rather than
+> > using the pipe option to avoid loss of mode information.
+> 
+> Hmm.. Why do you use the "-N" flag?
 
-See my (long) reply to Daniel. A StGIT patch is a collection of git
-commits, mixed in time with commits for other patches. There might not
-be a single author. For example, I create a patch called
-'stabilisation' where I gather different git changesets from different
-authors and commit them one by one.
+I didn't quite know how to interpret the "as short as possible" in
 
-I think what you mean is similar to the cg-mkpatch command. The 'stg
-export' is totally different. While it might be possible to generate a
-set of changesets for a StGIT patch, this is not intended for the near
-future.
+              Use the -d dir option to create a directory  called
+              dir  for  the  working  files, instead of using the
+              module name.  Unless you also  use  -N,  the  paths
+              created under dir will be as short as possible.
 
--- 
-Catalin
+It would appear you do.
 
+> Wouldn't it be much cleaner to _not_ create all those sub-directories 
+> under ".git-tmp", and instead do something like
+> 
+> 	"cvs -q -d %s checkout -d .git-tmp -r%s '%s/%s'" ...
+> 	"mv -f .git-tmp/%s %s\n", dir ? dir+1 : name, name
+> 
+> With that changed (and tested ;), I'll happily take it.
+
+Seems to work.
+
+The rm is still needed though.  Without it, cvs can get confused.
+
+skimo
+--
+git-cvs2git: propagate mode information
+
+Let cvs checkout in a temporary directory rather than
+using the pipe option to avoid loss of mode information.
+
+Signed-off-by: Sven Verdoolaege <skimo@liacs.nl>
+
+---
+commit 188ea2ee70413147fc1b80fedc3fbee02843e590
+tree f122fcf591013aff299a4d072eed47255892d3a1
+parent fdf95bf8d4d1182db579bd25fe5e25811084eaa6
+author Sven Verdoolaege <skimo@kotnet.org> Sat, 18 Jun 2005 23:55:49 +0200
+committer Sven Verdoolaege <skimo@kotnet.org> Sat, 18 Jun 2005 23:55:49 +0200
+
+ cvs2git.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/cvs2git.c b/cvs2git.c
+--- a/cvs2git.c
++++ b/cvs2git.c
+@@ -199,7 +199,10 @@ static void update_file(char *line)
+ 	if (dir)
+ 		printf("mkdir -p %.*s\n", (int)(dir - name), name);
+ 
+-	printf("cvs -q -d %s checkout -r%s -p '%s/%s' > '%s'\n", cvsroot, version, cvsmodule, name, name);
++	printf("cvs -q -d %s checkout -d .git-tmp -r%s '%s/%s'\n", 
++		cvsroot, version, cvsmodule, name);
++	printf("mv -f .git-tmp/%s %s\n", dir ? dir+1 : name, name);
++	printf("rm -rf .git-tmp\n");
+ 	printf("git-update-cache --add -- '%s'\n", name);
+ }
+ 
