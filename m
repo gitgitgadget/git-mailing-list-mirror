@@ -1,75 +1,130 @@
-From: "Seth W. Klein" <sk@sethwklein.net>
-Subject: Re: Converting SVN repository to git
-Date: Fri, 17 Jun 2005 23:26:48 -0400
-Message-ID: <20050618032648.GA23034@bubook.sethwklein.net>
-References: <20050615184720.GF31997@artsapartment.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: git-rev-list: "--bisect" flag
+Date: Fri, 17 Jun 2005 23:31:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506172306210.2268@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 18 05:23:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Sat Jun 18 08:24:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DjTvG-0002ut-N2
-	for gcvg-git@gmane.org; Sat, 18 Jun 2005 05:23:06 +0200
+	id 1DjWkY-0004Qo-0K
+	for gcvg-git@gmane.org; Sat, 18 Jun 2005 08:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261503AbVFRD2d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 17 Jun 2005 23:28:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262028AbVFRD2c
-	(ORCPT <rfc822;git-outgoing>); Fri, 17 Jun 2005 23:28:32 -0400
-Received: from mx2.midmaine.com ([66.252.32.99]:39915 "HELO mail.midmaine.com")
-	by vger.kernel.org with SMTP id S261503AbVFRD23 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Jun 2005 23:28:29 -0400
-Received: (qmail 3217 invoked from network); 18 Jun 2005 03:28:26 -0000
-Received: from 66-252-35-217.da.midmaine.com (HELO bubook.sethwklein.net) (66.252.35.217)
-  by 0 with SMTP; 18 Jun 2005 03:28:26 -0000
-Received: by bubook.sethwklein.net (Postfix, from userid 500)
-	id F16C83E2F; Fri, 17 Jun 2005 23:26:48 -0400 (EDT)
-To: Art Haas <ahaas@airmail.net>
-Content-Disposition: inline
-In-Reply-To: <20050615184720.GF31997@artsapartment.org>
-User-Agent: Mutt/1.4.2.1i
+	id S262099AbVFRG3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Jun 2005 02:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262100AbVFRG3l
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 02:29:41 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:11420 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262099AbVFRG3e (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2005 02:29:34 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5I6TWjA019035
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
+	for <git@vger.kernel.org>; Fri, 17 Jun 2005 23:29:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5I6TVA5013365
+	for <git@vger.kernel.org>; Fri, 17 Jun 2005 23:29:32 -0700
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2005 at 01:47:20PM -0500, Art Haas wrote:
-> 
-> [....] I've not seen anything, though,
-> on switching Subversion repositories to git. Has there been any public
-> activity in writing a tool/script to do this? Perhaps some offline
-> discussion about doing this?
 
-The following script is what I used to convert a simple svn repository.
-It doesn't handle branches or tags and contains buggy use of grep and
-inscrutable uncommented use of sed but it should be a starting place for
-someone with a more complex repository available for testing.
+Ok, I just added a feature to "git-rev-list" that I hereby nominate to be
+the coolest feature ever, namely the "--bisect" flag, which basically
+tries to split the list of revisions in two, and prints out just the "most
+middle" commit.
 
-export GIT_AUTHOR_EMAIL=sk@sethwklein.net
-export GIT_COMMITTER_EMAIL=sk@sethwklein.net
-svn co -r 1 file:///home/sk/rep/oakheart/trunk oakheart
-cd oakheart
-git-init-db
-for REV in `seq 2 692`; do
-    echo -n $REV' '
-    svn update -r $REV > .svnupdate
-    sed -nr 's/^A +//p' .svnupdate \
-    | while read F; do [ -f "$F" ] && echo "$F"; done \
-    | xargs -r git-update-cache --add --
-    sed -nr 's/^D +//p' .svnupdate \ 
-    | while read F; do git-ls-files | grep "^$F"'\(/\|$\)'; done \
-    | xargs -r git-update-cache --remove --
-    sed -nr 's/^U +//p' .svnupdate \
-    | while read F; do [ -f "$F" ] && echo "$F"; done \
-    | xargs -r git-update-cache --
-    PARENT=
-    [ -f .git/HEAD ] &&
-        PARENT='-p '`cat .git/HEAD`
-    svn log -r $REV | sed -n '1,3d;$d;H;/^$/!{s/.*//;x;s/\n//;p}' \
-    | git-commit-tree `git-write-tree` $PARENT > .git/HEAD
-done
+The idea is that you want to do binary-search for a bug, but since the git
+history isn't a nice linear thing, you don't know where the hell the
+mid-point is between two commits, and even if you _do_ know where it is,
+it gets even more complicated when you have 3 points (on different
+branches) that are known good, and one point that is known bad.
 
-Cheers,
-Seth W. Klein
--- 
-sk@sethwklein.net     AIM: sethwklein     http://www.sethwklein.net/
+Now, assuming you have three known-good points, and one known bad point, 
+the way to get all commits in between is
+
+	git-rev-list bad ^good1 ^good2 ^good3
+
+and with the new flag you can now trivially get an estimate for what the 
+mid-point is in this list. So you just do
+
+	git-rev-list --bisect bad ^good1 ^good2 ^good3
+
+and you now have the point to test. If testing shows that mid-way-point 
+was bad, you just continue with that as a "new bad":
+
+	git-rev-list --bisect new-bad ^good1 ^good2 ^good3
+
+but if it shows that that point was still good, you instead just add it to 
+the list of uninteresting commits, and do
+
+	git-rev-list --bisect bad ^good1 ^good2 ^good3 ^new-good
+
+instead. Every iteration you basically cut down the number of commits by 
+half - you're bisecting the set, and binary-searching for the first bad 
+commit.
+
+Note that git also makes resetting to the test-point be really trivial: 
+you just do
+
+	git-read-tree -m -u <prev-point> <test-point>
+
+where "prev-point" was your previous state (ie usually "HEAD" the first 
+time, but the previous test-point otherwise), and "test-point" is the new 
+point you want to test.
+
+I haven't scripted this, but it should basically be pretty easy to add a
+couple of simple scripts to make it very easy to do the binary search be
+totally automated, assuming just a simple "mark test as failed/good"  
+interface. Even without the scripting, it shouldn't be that hard to do
+entirely by hand.
+
+The idea being that if you notice that something doesn't work (usually in 
+HEAD), but you know it used to work in the previous release, you just 
+start the whole thing going with
+
+	# set up initial state
+	cat .git/HEAD > .git/BAD
+	cat .git/HEAD > .git/CURRENT
+	echo "^v2.6.12" > .git/GOOD
+
+and then you just do something like:
+
+	# iterate
+	git-rev-list --bisect BAD $(cat .git/BAD) > .git/HALFWAY
+	if [ ! -s .git/HALFWAY ]; then
+		echo FOUND IT:
+		cat .git/CURRENT
+		exit 1
+	fi
+	git-read-tree -m -u CURRENT HALFWAY
+	cat .git/HALFWAY > .git/CURRENT
+
+	make ..
+
+
+	# if good
+	echo '^'$(cat .git/CURENT) >> .git/GOOD
+	.. iterate ..
+
+	# if bad
+	cat .git/CURRENT > .git/BAD
+	.. iterate ..
+
+until it says "FOUND IT".
+
+(The above is untested, but the --bisect behaviour itself I tested, and it 
+seems to do the right thing).
+
+NOTE! I'm not convinced I actually find a particularly good place to split 
+at, but I think my stupid "halfway point" decision is good enough in 
+practice. So it might not really be a real binary search, but I think it 
+comes pretty close to it unless you have some really odd cases.
+
+			Linus
