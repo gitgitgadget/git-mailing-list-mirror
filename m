@@ -1,130 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-rev-list: "--bisect" flag
-Date: Fri, 17 Jun 2005 23:31:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506172306210.2268@ppc970.osdl.org>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.6
+Date: Sat, 18 Jun 2005 03:38:05 -0700 (PDT)
+Message-ID: <20050618103805.8461.qmail@web26302.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Sat Jun 18 08:24:17 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: berkus@gmail.com
+X-From: git-owner@vger.kernel.org Sat Jun 18 12:33:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DjWkY-0004Qo-0K
-	for gcvg-git@gmane.org; Sat, 18 Jun 2005 08:24:14 +0200
+	id 1Djad3-0003o3-FT
+	for gcvg-git@gmane.org; Sat, 18 Jun 2005 12:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262099AbVFRG3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Jun 2005 02:29:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262100AbVFRG3l
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 02:29:41 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:11420 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262099AbVFRG3e (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2005 02:29:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5I6TWjA019035
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Fri, 17 Jun 2005 23:29:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5I6TVA5013365
-	for <git@vger.kernel.org>; Fri, 17 Jun 2005 23:29:32 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261291AbVFRKiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Jun 2005 06:38:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262062AbVFRKiN
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 06:38:13 -0400
+Received: from web26302.mail.ukl.yahoo.com ([217.146.176.13]:28817 "HELO
+	web26302.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261291AbVFRKiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Jun 2005 06:38:06 -0400
+Received: (qmail 8463 invoked by uid 60001); 18 Jun 2005 10:38:05 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=sv178FF4gmGogXLIWF9+LYtTRa+bhSYEeEg+R1EXOsBakxviC1v/1DhXnlCyarl6SL7lco+UL7B7ClfVNYrCFrcAue1C7z9Wy2k5mDwicW8ppEwNFQkAUfx3PgDJiezv3LGOUzchlhdh0xBvs1P58voP+ziGMebdCSrYNreyG50=  ;
+Received: from [151.42.103.167] by web26302.mail.ukl.yahoo.com via HTTP; Sat, 18 Jun 2005 03:38:05 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Here is qgit-0.6, a git GUI viewer
 
-Ok, I just added a feature to "git-rev-list" that I hereby nominate to be
-the coolest feature ever, namely the "--bisect" flag, which basically
-tries to split the list of revisions in two, and prints out just the "most
-middle" commit.
+New in this version:
 
-The idea is that you want to do binary-search for a bug, but since the git
-history isn't a nice linear thing, you don't know where the hell the
-mid-point is between two commits, and even if you _do_ know where it is,
-it gets even more complicated when you have 3 points (on different
-branches) that are known good, and one point that is known bad.
+- added annotate
 
-Now, assuming you have three known-good points, and one known bad point, 
-the way to get all commits in between is
+- added color highlighting to selected diff target
 
-	git-rev-list bad ^good1 ^good2 ^good3
+- added color to file list: green new file, red removed one
 
-and with the new flag you can now trivially get an estimate for what the 
-mid-point is in this list. So you just do
+- fixed locale visualizations
 
-	git-rev-list --bisect bad ^good1 ^good2 ^good3
+- fixed correct git-rev-list range handling
 
-and you now have the point to test. If testing shows that mid-way-point 
-was bad, you just continue with that as a "new bad":
+- fixed center on deleted files in diff viewer
 
-	git-rev-list --bisect new-bad ^good1 ^good2 ^good3
+- fixed disappearing files when reloading (nasty one)
 
-but if it shows that that point was still good, you instead just add it to 
-the list of uninteresting commits, and do
+- clean up of diff target logic
 
-	git-rev-list --bisect bad ^good1 ^good2 ^good3 ^new-good
+- added README
 
-instead. Every iteration you basically cut down the number of commits by 
-half - you're bisecting the set, and binary-searching for the first bad 
-commit.
+You can download from 
+http://prdownloads.sourceforge.net/qgit/qgit-0.6.tar.bz2?download
 
-Note that git also makes resetting to the test-point be really trivial: 
-you just do
+To try qgit:
 
-	git-read-tree -m -u <prev-point> <test-point>
+1) Unpack downloaded file
+2) make
+3) cd bin
+4) copy qgit bin file anywhere in your path
 
-where "prev-point" was your previous state (ie usually "HEAD" the first 
-time, but the previous test-point otherwise), and "test-point" is the new 
-point you want to test.
+Some (updated) screenshots at:
+http://sourceforge.net/project/screenshots.php?group_id=139897
 
-I haven't scripted this, but it should basically be pretty easy to add a
-couple of simple scripts to make it very easy to do the binary search be
-totally automated, assuming just a simple "mark test as failed/good"  
-interface. Even without the scripting, it shouldn't be that hard to do
-entirely by hand.
-
-The idea being that if you notice that something doesn't work (usually in 
-HEAD), but you know it used to work in the previous release, you just 
-start the whole thing going with
-
-	# set up initial state
-	cat .git/HEAD > .git/BAD
-	cat .git/HEAD > .git/CURRENT
-	echo "^v2.6.12" > .git/GOOD
-
-and then you just do something like:
-
-	# iterate
-	git-rev-list --bisect BAD $(cat .git/BAD) > .git/HALFWAY
-	if [ ! -s .git/HALFWAY ]; then
-		echo FOUND IT:
-		cat .git/CURRENT
-		exit 1
-	fi
-	git-read-tree -m -u CURRENT HALFWAY
-	cat .git/HALFWAY > .git/CURRENT
-
-	make ..
+A word on annotate: In file viewer, after a while :-), the file contents will change to show the
+annotations. Annotations are calculated in background so it may takes some time to show (it
+depends mostly on fetching history patches with git-diff-tree -p ). History is snapshotted to
+actual loaded data so peraphs you need qgit to have loaded an interesting amount of data before
+calling file viewer.
 
 
-	# if good
-	echo '^'$(cat .git/CURENT) >> .git/GOOD
-	.. iterate ..
+I think all known (to me) problems should be fixed now. Apart from the new annotate function, a
+bit experimental, qgit should be quite usable. 
+So if you find some bugs/issues/inconsistencies/ etc.. please drop me a line.
 
-	# if bad
-	cat .git/CURRENT > .git/BAD
-	.. iterate ..
 
-until it says "FOUND IT".
+Marco
 
-(The above is untested, but the --bisect behaviour itself I tested, and it 
-seems to do the right thing).
 
-NOTE! I'm not convinced I actually find a particularly good place to split 
-at, but I think my stupid "halfway point" decision is good enough in 
-practice. So it might not really be a real binary search, but I think it 
-comes pretty close to it unless you have some really odd cases.
 
-			Linus
+
+		
+__________________________________ 
+Do you Yahoo!? 
+Yahoo! Mail - Helps protect you from nasty viruses. 
+http://promotions.yahoo.com/new_mail
