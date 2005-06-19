@@ -1,114 +1,69 @@
-From: Sven Verdoolaege <Sven.Verdoolaege@cs.kuleuven.ac.be>
-Subject: Re: cvs2git and file permissions
-Date: Sun, 19 Jun 2005 00:31:15 +0200
-Message-ID: <20050618223115.GA5505@billie.cs.kuleuven.ac.be>
-References: <20050618205208.GA4917@billie.cs.kuleuven.ac.be> <Pine.LNX.4.58.0506181421070.2268@ppc970.osdl.org>
-Reply-To: Sven Verdoolaege <skimo@liacs.nl>
+From: Frank Sorenson <frank@tuxrocks.com>
+Subject: Kernel git tree problem? gitk problem?
+Date: Sat, 18 Jun 2005 18:12:44 -0600
+Message-ID: <42B4B87C.2000007@tuxrocks.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 19 00:27:39 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sun Jun 19 02:07:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DjlmU-0002TL-PN
-	for gcvg-git@gmane.org; Sun, 19 Jun 2005 00:27:15 +0200
+	id 1DjnLJ-0008S0-Ky
+	for gcvg-git@gmane.org; Sun, 19 Jun 2005 02:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262177AbVFRWcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 18 Jun 2005 18:32:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262179AbVFRWcl
-	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 18:32:41 -0400
-Received: from hermes2.cs.kuleuven.be ([134.58.40.2]:49809 "EHLO
-	hermes2.cs.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S262177AbVFRWcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Jun 2005 18:32:14 -0400
-Received: from dr-zook2.cs.kuleuven.ac.be (dr-zook2.cs.kuleuven.be [134.58.41.21])
-	by hermes2.cs.kuleuven.ac.be  with ESMTP id j5IMW3Y4012057;
-	Sun, 19 Jun 2005 00:32:03 +0200
-Received: from localhost (amavis@localhost [127.0.0.1])
-	by dr-zook2.cs.kuleuven.ac.be (A_Good_MTA/8.13.4/Debian-3) with ESMTP id j5IMW3FB032548;
-	Sun, 19 Jun 2005 00:32:03 +0200
-Received: from dr-zook2.cs.kuleuven.ac.be ([127.0.0.1])
-	by localhost (dr-zook2 [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 32358-02; Sun, 19 Jun 2005 00:32:01 +0200 (CEST)
-Received: from iris.cs.kuleuven.ac.be (pop.cs.kuleuven.ac.be [134.58.41.11])
-	by dr-zook2.cs.kuleuven.ac.be (A_Good_MTA-RX/8.13.4/Debian-3) with ESMTP id j5IMVI5W032520;
-	Sun, 19 Jun 2005 00:31:18 +0200
-Received: from billie.cs.kuleuven.ac.be (billie.cs.kuleuven.ac.be [134.58.41.39])
-	by iris.cs.kuleuven.ac.be (A_Good_MTA/0.6.11) with ESMTP id j5IMVIl18558;
-	Sun, 19 Jun 2005 00:31:18 +0200 (MEST)
-Received: (from sven@localhost)
-	by billie.cs.kuleuven.ac.be (A_Good_MTA/0.6.11) id j5IMVFI05735;
-	Sun, 19 Jun 2005 00:31:15 +0200 (MEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506181421070.2268@ppc970.osdl.org>
-User-Agent: Mutt/1.4i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at cs.kuleuven.be
+	id S262207AbVFSAMt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 18 Jun 2005 20:12:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262209AbVFSAMt
+	(ORCPT <rfc822;git-outgoing>); Sat, 18 Jun 2005 20:12:49 -0400
+Received: from www.tuxrocks.com ([64.62.190.123]:32016 "EHLO tuxrocks.com")
+	by vger.kernel.org with ESMTP id S262207AbVFSAMr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Jun 2005 20:12:47 -0400
+Received: from [10.0.0.10] (byu-gw.customer.csolutions.net [216.190.206.130])
+	(authenticated bits=0)
+	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j5J0Ci5w003397
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Sat, 18 Jun 2005 18:12:45 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jun 18, 2005 at 02:23:48PM -0700, Linus Torvalds wrote:
-> On Sat, 18 Jun 2005, Sven Verdoolaege wrote:
-> > 
-> > Let cvs checkout in a temporary directory rather than
-> > using the pipe option to avoid loss of mode information.
-> 
-> Hmm.. Why do you use the "-N" flag?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I didn't quite know how to interpret the "as short as possible" in
+With the new crop of post-2.6.12 updates, my kernel trees (tested on
+several computers, and even with brand-new tree) now give the following
+error messages when I run gitk:
+ERROR: none of the pending commits can be done yet:
+  bd6ae2f6d61da0f90c6b66e9a4ab6c53ef8c159a
+  2512809255d018744fe6c2f5e996c83769846c07
+  88d7bd8cb9eb8d64bf7997600b0d64f7834047c5
+  b3214970abbe983cd89842ae24ea00e21bba79f6
 
-              Use the -d dir option to create a directory  called
-              dir  for  the  working  files, instead of using the
-              module name.  Unless you also  use  -N,  the  paths
-              created under dir will be as short as possible.
+git-fsck-cache doesn't appear to know about any problems.
 
-It would appear you do.
+Is this a gitk problem, or is there something wrong with the tree?
 
-> Wouldn't it be much cleaner to _not_ create all those sub-directories 
-> under ".git-tmp", and instead do something like
-> 
-> 	"cvs -q -d %s checkout -d .git-tmp -r%s '%s/%s'" ...
-> 	"mv -f .git-tmp/%s %s\n", dir ? dir+1 : name, name
-> 
-> With that changed (and tested ;), I'll happily take it.
+What is a "pending commit?"  Is that a commit that hasn't been
+committed, or something? :)
 
-Seems to work.
+Thanks,
 
-The rm is still needed though.  Without it, cvs can get confused.
+Frank
+- --
+Frank Sorenson - KD7TZK
+Systems Manager, Computer Science Department
+Brigham Young University
+frank@tuxrocks.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.6 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
 
-skimo
---
-git-cvs2git: propagate mode information
-
-Let cvs checkout in a temporary directory rather than
-using the pipe option to avoid loss of mode information.
-
-Signed-off-by: Sven Verdoolaege <skimo@liacs.nl>
-
----
-commit 188ea2ee70413147fc1b80fedc3fbee02843e590
-tree f122fcf591013aff299a4d072eed47255892d3a1
-parent fdf95bf8d4d1182db579bd25fe5e25811084eaa6
-author Sven Verdoolaege <skimo@kotnet.org> Sat, 18 Jun 2005 23:55:49 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Sat, 18 Jun 2005 23:55:49 +0200
-
- cvs2git.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/cvs2git.c b/cvs2git.c
---- a/cvs2git.c
-+++ b/cvs2git.c
-@@ -199,7 +199,10 @@ static void update_file(char *line)
- 	if (dir)
- 		printf("mkdir -p %.*s\n", (int)(dir - name), name);
- 
--	printf("cvs -q -d %s checkout -r%s -p '%s/%s' > '%s'\n", cvsroot, version, cvsmodule, name, name);
-+	printf("cvs -q -d %s checkout -d .git-tmp -r%s '%s/%s'\n", 
-+		cvsroot, version, cvsmodule, name);
-+	printf("mv -f .git-tmp/%s %s\n", dir ? dir+1 : name, name);
-+	printf("rm -rf .git-tmp\n");
- 	printf("git-update-cache --add -- '%s'\n", name);
- }
- 
+iD8DBQFCtLh8aI0dwg4A47wRAscuAJ4ut87UDbYimUbfxmYT06e1AlNpMwCeIGrA
+wgDmnq31zPOcPEZr67BOb4E=
+=rdnC
+-----END PGP SIGNATURE-----
