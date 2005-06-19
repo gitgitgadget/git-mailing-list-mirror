@@ -1,99 +1,107 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: qgit-0.6
-Date: Sun, 19 Jun 2005 12:54:45 -0700 (PDT)
-Message-ID: <20050619195446.4183.qmail@web26302.mail.ukl.yahoo.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git-rev-list: "--bisect" flag
+Date: Mon, 20 Jun 2005 05:55:19 +1000
+Message-ID: <2cfc4032050619125537dee354@mail.gmail.com>
+References: <Pine.LNX.4.58.0506172306210.2268@ppc970.osdl.org>
+	 <2cfc403205061817181e4d6d5e@mail.gmail.com>
+	 <Pine.LNX.4.58.0506182022130.2268@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0506182141400.2268@ppc970.osdl.org>
+	 <2cfc403205061903155a6090db@mail.gmail.com>
+	 <2cfc40320506190741409f3a5@mail.gmail.com>
+	 <Pine.LNX.4.58.0506190951330.2268@ppc970.osdl.org>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 19 21:49:39 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 19 21:49:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dk5n0-0007iM-Ac
-	for gcvg-git@gmane.org; Sun, 19 Jun 2005 21:49:06 +0200
+	id 1Dk5nk-0007qe-JB
+	for gcvg-git@gmane.org; Sun, 19 Jun 2005 21:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261295AbVFSTyu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Jun 2005 15:54:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261296AbVFSTyu
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jun 2005 15:54:50 -0400
-Received: from web26302.mail.ukl.yahoo.com ([217.146.176.13]:49254 "HELO
-	web26302.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261295AbVFSTyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2005 15:54:46 -0400
-Received: (qmail 4185 invoked by uid 60001); 19 Jun 2005 19:54:46 -0000
+	id S261296AbVFSTzb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Jun 2005 15:55:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261301AbVFSTzb
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jun 2005 15:55:31 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:59720 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261296AbVFSTzU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Jun 2005 15:55:20 -0400
+Received: by rproxy.gmail.com with SMTP id i8so491013rne
+        for <git@vger.kernel.org>; Sun, 19 Jun 2005 12:55:19 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=RGoBOjrx5ymuB7hfdh+ljucXTpj/lFn3huHGVsE5KPnyctP9zxU49Da5dma+wOvhKtI2SG7TBihNq/EJhKozTGsXgQqkNsDRA4Iz2hMEM3O2IpTLDjQbupbPz5StN2g7OtejwGZEuYdtv3NpdRRpfIPcDYlorDfHjaN2QJRCfA4=  ;
-Received: from [151.38.101.189] by web26302.mail.ukl.yahoo.com via HTTP; Sun, 19 Jun 2005 12:54:45 PDT
-To: Ingo Molnar <mingo@elte.hu>
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H3tcGuBA+Jx6lV2F+oEx8P+UpjEVTWdFIOwA0t/noyB7625AnJHg83aaG7NYRqPxn9QKq1y0woU/AhIxtmYatUouOma6qsiL9BDdeh974YIQ3Ml9JQz+sTW7qPyjlsOTzArWj5taJpFzP7BIN+WXP9h99R3by1+HDNB5OZ2RNnw=
+Received: by 10.38.65.4 with SMTP id n4mr1904559rna;
+        Sun, 19 Jun 2005 12:55:19 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Sun, 19 Jun 2005 12:55:19 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506190951330.2268@ppc970.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ingo Molnar wrote:
+On 6/20/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> 
+> 
+> On Mon, 20 Jun 2005, Jon Seymour wrote:
+> >
+> > Would I be correct in stating that an intuitive  reason why your
+> > algorithm is better than selecting the linear middle is the following:
+> >
+> > If you concentrate on testing merges, rather than non-merges, the
+> > chances are you are going to eliminate N-times as many possible good
+> > commits as if you pick a random commit, where N is the average fan-out
+> > of the commit graph.
+> 
+> No. You really shouldn't concentrate on merges either.
+> 
+> The thing is, you do _not_ want to test as many commits as possible, or as
+> few commits as possible.
+> 
+> This is _not_ a "try to eliminate as many commits as possible" problem.
+> It's really one of trying to eliminate _half_ the commits. Not more, not
+> less.
+> 
 
-thanks for your feedback
->
->works fine here and is nice and fast, but there are a few minor visual 
->glitches:
->
->- annotated file contents are not properly aligned over each other. E.g.  
->  check commit 7875b50d1a9928e683299b283bfe94778b6c344e in the current 
->  git repository, and select read-tree.c and view it annotated - the 
->  lines start right after the author field ends, not in any aligned way.
->
+Yep, ok, so the node you are looking for is one that can reach as
+close to half of the rest of the graph as possible - that's what you
+mean by half-way reachability. If the graph was N nodes deep (no
+fan-out) that would be the literal middle. If it was N nodes wide
+(e.g. fanout N), there is no good node and you basically have to test
+everything since one test doesn't imply anything about the other N-1
+nodes.
 
-Yes, it depends on variable spaced font, If you note the number of characters of the header of
-each line is always the same and is calculated for each file (the gray color part has always a
-fixed number of chars). I have already switched to a fixed font (courier) in my tree,
-plus others little things like truncation if exceeds a maximum lenght with 
-first name collpasing (Marco Costalba -> M. Costalba).
+A typical commit graph is worse than O(log2 N) by a factor that is
+determined by some measure of the parallel branching in the graph.
 
+> 
+> The reason my algorithm is so horrid (O(3)) is that you can't even cache
+> the dang thing sanely: you can't optimize if by remembering how many
+> interesting commits are reachable from one commit, and then doing "this
+> commit reaches commits X and Y, so I can reach X.count + Y.count commits
+> from it". That's just not true, because often (basically always) there is
+> lots of common commits in X.count and Y.count..
 
->- the tree visualization is hard to follow - gitk's output is much 
->  nicer. As an example of nice rendering check out the octopus merge 
->  around commit 211232bae64bcc60bbf5d1b5e5b2344c22ed767e. One glance at 
->  the gitk output shows what happened - qgit's output is in essence 
->  unreadable.
->
+I presume  you mean O(N^3)?
+ 
+Will you accept a patch that can reduce the worst case cost to some
+lower order? I have a hunch (conceivably wrong, of course) that it can
+be done in O(N).
 
-You are definitely right! The problem is graph is not drawed! I precalculate at startup all
-the diffrents pixmaps and put in a vector, drawing a graph is just correct indexing
-the vector for each lane and do some bitblt. This is because QT has good pixmaps handling in
-QListView ( the main log list) but not line drawings capapility and because this way is very fast.
-But in any case I definitely have to find something better. Suggestions are welcomed :-).
+> > This compares with my naive literal middle algorithm (measurements
+> > only for the first 619 commits):
+> >
+> > average(21), median(16), stdev(10.6), max(49), min(8).
+> 
+> Yes. I really don't believe you can do better than 12, unless you start
+> depending on knowledge of the distribution of bugs.
+> 
 
->and a few requests for enhancements if you dont mind:
->
-more then welcomed.
+Agreed. 
 
-> - in annotated mode, it would be nice to select a particular line 
->   and then double-click would jump to the commit that added that line.  
->   This would nicely round up annotation support.
->
-
-Ok, I'll add this. By the way, now you can select the corresponding commit in the 
-history list above file content (it's the one with the same number) and the
- main view will update. 
-I can make the selection: 'line content number -> line history number' automatic and that
-should be enough.
-
-
-> - plaintext search capability in every window. E.g. in the annotated
->   file window i often would like to search for some code, or to jump to
->   a given line.
-
-Ok. I'll add this.
-
-
-Marco
-
-
-
-		
-__________________________________ 
-Discover Yahoo! 
-Stay in touch with email, IM, photo sharing and more. Check it out! 
-http://discover.yahoo.com/stayintouch.html
+jon.
