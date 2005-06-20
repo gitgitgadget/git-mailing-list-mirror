@@ -1,90 +1,52 @@
-From: Jens Axboe <axboe@suse.de>
-Subject: Re: git merging
-Date: Mon, 20 Jun 2005 22:38:22 +0200
-Message-ID: <20050620203821.GC7712@suse.de>
-References: <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org> <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org> <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org> <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org> <20050620123053.GI15021@suse.de> <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Stacked GIT 0.2
+Date: Mon, 20 Jun 2005 22:00:10 +0100
+Message-ID: <tnxslzc68x1.fsf@arm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 22:46:44 2005
+X-From: git-owner@vger.kernel.org Mon Jun 20 23:00:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkTA6-0005p5-Lu
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 22:46:30 +0200
+	id 1DkTNN-0000WN-QK
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 23:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261581AbVFTUvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 16:51:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261646AbVFTUrv
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 16:47:51 -0400
-Received: from ns.virtualhost.dk ([195.184.98.160]:65469 "EHLO virtualhost.dk")
-	by vger.kernel.org with ESMTP id S261715AbVFTUhP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 16:37:15 -0400
-Received: from [62.242.22.158] (helo=router.home.kernel.dk)
-	by virtualhost.dk with esmtp (Exim 3.36 #1)
-	id 1DkT0w-0005Re-00; Mon, 20 Jun 2005 22:37:02 +0200
-Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
-	by router.home.kernel.dk with esmtp (Exim 4.22)
-	id 1DkT0t-0006ro-5K; Mon, 20 Jun 2005 22:36:59 +0200
-Received: by kernel.dk (Postfix, from userid 1000)
-	id 5F58A70971; Mon, 20 Jun 2005 22:38:22 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org>
+	id S261595AbVFTVFL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 17:05:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261588AbVFTVBN
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 17:01:13 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:9663 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S261575AbVFTVAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2005 17:00:34 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j5KL006i009203
+	for <git@vger.kernel.org>; Mon, 20 Jun 2005 22:00:00 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch1.emea.arm.com [10.1.255.57])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id WAA02646
+	for <git@vger.kernel.org>; Mon, 20 Jun 2005 22:00:26 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 20 Jun 2005 22:00:24 +0100
+To: git@vger.kernel.org
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 20 Jun 2005 21:00:24.0885 (UTC) FILETIME=[144DAE50:01C575DB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 20 2005, Linus Torvalds wrote:
-> 
-> [ Daniel put on the To: list to see if he can confirm or deny my theory ]
-> 
-> On Mon, 20 Jun 2005, Jens Axboe wrote:
-> > 
-> > axboe@nelson:[.]l/git/linux-2.6-block.git $ git prune
-> > error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
-> 
-> That's the 2.6.11 "tree" object.
-> 
-> > bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
-> > axboe@nelson:[.]l/git/linux-2.6-block.git $ git-fsck-cache 
-> > error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
-> > bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
-> > bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
-> > 
-> > Running git prune again gives me the same output. What is wrong?
-> 
-> Very interesting. You have my "v2.6.11-tree" tag file pointing the 2.6.11
-> tree object, but you seem to not have that 2.6.11 tree itself.
-> 
-> Actually, judging from the fact that you got this error _during_ the
-> prune, maybe you never had it in that repository in the first place?
+StGIT 0.2 is now available. See http://www.procode.org/stgit/
 
-I can't tell exactly, but I'm fairly sure this is a new error. I have
-two git trees locally - one which is just an rsync of your kernel.org
-tree, the other which is based off that (with a clone of the fs dir) and
-has multiple branches for developments. The main tree did not have this
-problem, while the development tree does/did.
+The main changes:
 
-> In particular, if you don't use "rsync", but instead use one of the
-> "optimized pull" things to create a repository (ie git-http-pull or
-> git-ssh-pull), I think your newly pulled tree will always miss anything
-> that isn't a head. And the 2.6.11 tree is a special case: it's a pure
-> "tree" object without any commit at all pointing to it, just a single tag
-> that points directly to the tree.
-> 
-> Anyway, the fact that you're missing the original 2.6.11 tree doesn't
-> really matter, so it's not a huge deal per se. You can re-populate it with
-> an "rsync -avz --ignore-existing", but clearly something seems to be
-> wrong.
-
-I pulled with rsync manually from kernel.org, and that did fix things up
-for me. The main tree is rsync'ed, but the development tree gets the
-changes with /opt/kernel/git/linux-2.6/.git/ as the url given to
-git-pull-script.
+- Multiple heads are supported. Each head has its own series (needs
+  separate 'stg init' command for each head). To change between
+  series, simply change the .git/HEAD link (thanks to Daniel Barkalow
+  for suggesting this)
+- top/bottom files for each patch are backed up as a safety measure
+- 'stg push' warns when the patch is empty (i.e. it was already merged
+  upstream)
+- Many bug fixes. The tool is now usable
 
 -- 
-Jens Axboe
+Catalin
 
