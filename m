@@ -1,73 +1,100 @@
-From: Marcel Holtmann <marcel@holtmann.org>
-Subject: [PATCH Cogito] More flexiable colorize for Acked-by statement
-Date: Tue, 21 Jun 2005 00:19:08 +0200
-Message-ID: <1119305948.26772.77.camel@pegasus>
+From: Darrin Thompson <darrint@progeny.com>
+Subject: [PATCH] Add more curl options to git-http-pull
+Date: Mon, 20 Jun 2005 18:48:31 -0500
+Message-ID: <1119311311.3926.26.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-BtBB9deRgyq0yYaYU3kh"
-Cc: GIT Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 21 00:30:38 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jun 21 01:47:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkUmE-0005l9-Ng
-	for gcvg-git@gmane.org; Tue, 21 Jun 2005 00:29:59 +0200
+	id 1DkVyv-00042N-BB
+	for gcvg-git@gmane.org; Tue, 21 Jun 2005 01:47:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262326AbVFTWUi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 18:20:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262319AbVFTWTr
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 18:19:47 -0400
-Received: from coyote.holtmann.net ([217.160.111.169]:2766 "EHLO
-	mail.holtmann.net") by vger.kernel.org with ESMTP id S262310AbVFTWTL
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2005 18:19:11 -0400
-Received: from pegasus (p5487D28A.dip.t-dialin.net [84.135.210.138])
-	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j5KMLKSs013720
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
-	Tue, 21 Jun 2005 00:21:21 +0200
-To: Petr Baudis <pasky@ucw.cz>
-X-Mailer: Evolution 2.2.2 
-X-Virus-Scanned: ClamAV 0.85.1/947/Mon Jun 20 21:39:23 2005 on coyote.holtmann.net
-X-Virus-Status: Clean
+	id S261855AbVFTXvL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 19:51:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261810AbVFTXrN
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 19:47:13 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:31463 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S261850AbVFTXnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2005 19:43:35 -0400
+Received: from dhcp-2-246.progeny.com (dhcp-2-246.progeny.com [192.168.2.246])
+	by morimoto.progeny.com (Postfix) with ESMTP id 4EDA863783
+	for <git@vger.kernel.org>; Mon, 20 Jun 2005 18:43:30 -0500 (EST)
+To: GIT Mailing List <git@vger.kernel.org>
+X-Mailer: Evolution 2.0.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+All,
 
---=-BtBB9deRgyq0yYaYU3kh
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+This patch makes git-http-pull work with basic http auth and ssl when
+you aren't using a real cert.
 
-Hi Petr,
+Also, it makes curl's verbose output available, which is useful for
+debugging.
 
-the attached patch makes the colorize of the Acked-by statement a little
-bit more flexible. It seems like people tend to use various combinations
-of upper and lower case letters.
+Apologies as I expect my mail client is munging this patch slightly.
 
-Regards
+Signed-off-by: Darrin Thompson <darrint at progeny com>
+---
 
-Marcel
+Create option to turn off ssl peer verification.
+Create option to provide username:password to curl.
+Make -v additive.
+When -v is specified twice, turn on CURLOPT_VERBOSE.
+
+diff --git a/http-pull.c b/http-pull.c
+--- a/http-pull.c
++++ b/http-pull.c
+@@ -15,6 +15,8 @@ static z_stream stream;
+
+ static int local;
+ static int zret;
++static int curl_ssl_verify_enabled = 1;
++static char *curl_user_pwd = NULL;
+
+ static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
+                               void *data) {
+@@ -117,12 +119,17 @@ int main(int argc, char **argv)
+                        get_tree = 1;
+                        get_history = 1;
+                } else if (argv[arg][1] == 'v') {
+-                       get_verbosely = 1;
++                       get_verbosely += 1;
++               } else if (argv[arg][1] == 'S') {
++                        curl_ssl_verify_enabled = 0;
++               } else if (argv[arg][1] == 'u') {
++                        arg++;
++                        curl_user_pwd = argv[arg];
+                }
+                arg++;
+        }
+        if (argc < arg + 2) {
+-               usage("git-http-pull [-c] [-t] [-a] [-d] [-v]
+[--recover] commit-id url");
++               usage("git-http-pull [-u] user:passwd [-S] [-c] [-t]
+[-a] [-d] [-v] [--recover] commit-id url");
+                return 1;
+        }
+        commit_id = argv[arg];
+@@ -131,6 +138,13 @@ int main(int argc, char **argv)
+        curl_global_init(CURL_GLOBAL_ALL);
+
+        curl = curl_easy_init();
++        if (curl_user_pwd) {
++                curl_easy_setopt(curl, CURLOPT_USERPWD, curl_user_pwd);
++        }
++        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER,
+curl_ssl_verify_enabled);
++        if (get_verbosely >= 2) {
++                curl_easy_setopt(curl, CURLOPT_VERBOSE, 1);
++        }
+
+        base = url;
 
 
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-
-
---=-BtBB9deRgyq0yYaYU3kh
-Content-Disposition: attachment; filename=patch
-Content-Type: text/x-patch; name=patch; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-
-diff --git a/cg-log b/cg-log
---- a/cg-log
-+++ b/cg-log
-@@ -265,7 +265,7 @@ print_commit_log()
- 	sed -e '
- 		s/^    \(.*\)/% \1/
- 		/^% *[Ss]igned-[Oo]ff-[Bb]y:.*/ s/^% \(.*\)/% '$colsignoff'\1'$coldefault'/
--		/^% *[Aa]cked-[Bb]y:.*/ s/^% \(.*\)/% '$colsignoff'\1'$coldefault'/
-+		/^% *[Aa][Cc][Kk]ed-[Bb]y:.*/ s/^% \(.*\)/% '$colsignoff'\1'$coldefault'/
- 	' | while read key rest; do
- 		trap exit SIGPIPE
- 		process_commit_line
-
---=-BtBB9deRgyq0yYaYU3kh--
 
