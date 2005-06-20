@@ -1,60 +1,126 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git-rev-list: "--bisect" flag
-Date: Mon, 20 Jun 2005 13:30:57 +1000
-Message-ID: <2cfc40320506192030290187af@mail.gmail.com>
-References: <Pine.LNX.4.58.0506172306210.2268@ppc970.osdl.org>
-	 <2cfc403205061817181e4d6d5e@mail.gmail.com>
-	 <Pine.LNX.4.58.0506182022130.2268@ppc970.osdl.org>
-	 <Pine.LNX.4.58.0506182141400.2268@ppc970.osdl.org>
-	 <2cfc403205061903155a6090db@mail.gmail.com>
-	 <2cfc40320506190741409f3a5@mail.gmail.com>
-	 <Pine.LNX.4.58.0506190951330.2268@ppc970.osdl.org>
-	 <2cfc4032050619125537dee354@mail.gmail.com>
-	 <Pine.LNX.4.58.0506192002240.2268@ppc970.osdl.org>
-	 <2cfc403205061920272ee47166@mail.gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix scalability problems with git-deltafy-script
+Date: Mon, 20 Jun 2005 00:37:35 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0506200036210.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 05:25:16 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 20 06:32:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkCuQ-0004eB-I6
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 05:25:14 +0200
+	id 1DkDxL-0004wD-4V
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 06:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261193AbVFTDbA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Jun 2005 23:31:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261411AbVFTDbA
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jun 2005 23:31:00 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:55169 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261193AbVFTDa5 convert rfc822-to-8bit
+	id S261427AbVFTEhv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 00:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261436AbVFTEhv
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 00:37:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:22619 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261427AbVFTEhg
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Jun 2005 23:30:57 -0400
-Received: by rproxy.gmail.com with SMTP id i8so553692rne
-        for <git@vger.kernel.org>; Sun, 19 Jun 2005 20:30:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QDALoxggbU2EPrtfFip3ih0+C7wIMDMgl0h+YThIPirXpomzGYzY45o+rlyHlTGzDOmHhFLN2l1JmpgSowGEUCyrlFNSv5UK4uQBEJXVrXNNEPhOACOYkB7t8iwceQlVj7Eh8RNmaT59jnwT5WsPEDRw3CXiGGxYfb9BLgto958=
-Received: by 10.38.79.33 with SMTP id c33mr2010556rnb;
-        Sun, 19 Jun 2005 20:30:57 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Sun, 19 Jun 2005 20:30:57 -0700 (PDT)
+	Mon, 20 Jun 2005 00:37:36 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR001.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IID00EW88UNY8@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 20 Jun 2005 00:37:36 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <2cfc403205061920272ee47166@mail.gmail.com>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> 1. count all visible nodes [ i.e. nodes that git-rev-list would print
-> ], call this value N
-> 2. at the top node inject N units of mass
-> 3. traverse the visible graph, in topological order
-> 4. at each node, send all the mass received from parents minus 1 unit
-> onto visible parents. Record how much mass you have sent downstream.
-> Keep a record of the nodes that have seen nearest to half of that
-> mass.
 
-Correction - at each node, send all mass received from _children_
+Current version would spin forever  and exhaust memory while 
+attempting to sort all files from all revisions at once, until it
+dies before even doing any real work.  This is especially noticeable 
+when used on a big repository like the imported  bkcvs repo for the
+Linux kernel.
+
+This patch allows for batching the sort to put a bound on needed 
+resources and making progress early, as well as including some small
+cleanups.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+
+diff --git a/git-deltafy-script b/git-deltafy-script
+--- a/git-deltafy-script
++++ b/git-deltafy-script
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ 
+-# Example script to deltafy an entire GIT repository based on the commit list.
++# Example script to deltify an entire GIT repository based on the commit list.
+ # The most recent version of a file is the reference and previous versions
+ # are made delta against the best earlier version available. And so on for
+ # successive versions going back in time.  This way the increasing delta
+@@ -25,37 +25,51 @@
+ 
+ set -e
+ 
+-depth=
+-[ "$1" == "-d" ] && depth="--max-depth=$2" && shift 2
++max_depth=
++[ "$1" == "-d" ] && max_depth="--max-depth=$2" && shift 2
++
++overlap=30
++max_behind="--max-behind=$overlap"
+ 
+ function process_list() {
+ 	if [ "$list" ]; then
+ 		echo "Processing $curr_file"
+-		echo "$head $list" | xargs git-mkdelta $depth --max-behind=30 -v
++		echo "$list" | xargs git-mkdelta $max_depth $max_behind -v
+ 	fi
+ }
+ 
++rev_list=""
+ curr_file=""
+ 
+ git-rev-list HEAD |
+-git-diff-tree -r -t --stdin |
+-awk '/^:/ { if ($5 == "M" || $5 == "N") print $4, $6;
+-            if ($5 == "M") print $3, $6 }' |
+-LC_ALL=C sort -s -k 2 | uniq |
+-while read sha1 file; do
+-	if [ "$file" == "$curr_file" ]; then
+-		list="$list $sha1"
+-	else
+-		process_list
+-		curr_file="$file"
+-		list=""
+-		head="$sha1"
+-	fi
++while true; do
++	# Let's batch revisions into groups of 1000 to give it a chance to
++	# scale with repositories containing long revision lists.  We also
++	# overlap with the previous batch the size of mkdelta's look behind
++	# value in order to account for the processing discontinuity.
++	rev_list="$(echo -e -n "$rev_list" | tail --lines=$overlap)"
++	for i in $(seq 1000); do
++		read rev || break
++		rev_list="$rev_list$rev\n"
++	done
++	echo -e -n "$rev_list" |
++	git-diff-tree -r -t --stdin |
++	awk '/^:/ { if ($5 == "M") printf "%s %s\n%s %s\n", $4, $6, $3, $6 }' |
++	LC_ALL=C sort -s -k 2 | uniq |
++	while read sha1 file; do
++		if [ "$file" == "$curr_file" ]; then
++			list="$list $sha1"
++		else
++			process_list
++			curr_file="$file"
++			list="$sha1"
++		fi
++	done
++	[ "$rev" ] || break
+ done
+ process_list
+ 
+ curr_file="root directory"
+-head=""
+ list="$(
+ 	git-rev-list HEAD |
+ 	while read commit; do
