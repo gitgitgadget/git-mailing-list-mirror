@@ -1,59 +1,55 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Jens Axboe <axboe@suse.de>
 Subject: Re: git merging
-Date: Mon, 20 Jun 2005 15:48:31 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.06.20.13.48.30.2680@smurf.noris.de>
-References: <20050617175653.GS6957@suse.de> <Pine.LNX.4.58.0506171101450.2268@ppc970.osdl.org> <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org> <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org> <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org> <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org> <20050620123053.GI15021@suse.de>
+Date: Mon, 20 Jun 2005 16:13:04 +0200
+Message-ID: <20050620141303.GN15021@suse.de>
+References: <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org> <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org> <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org> <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org> <20050620123053.GI15021@suse.de> <pan.2005.06.20.13.48.30.2680@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Jun 20 15:53:26 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 20 16:07:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkMhx-0002XB-Eq
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 15:53:01 +0200
+	id 1DkMvY-00085n-Rg
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 16:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261252AbVFTN6i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 09:58:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261254AbVFTN5d
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 09:57:33 -0400
-Received: from main.gmane.org ([80.91.229.2]:47835 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261252AbVFTN51 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 09:57:27 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DkMfc-0001bK-LJ
-	for git@vger.kernel.org; Mon, 20 Jun 2005 15:50:36 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Jun 2005 15:50:36 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Jun 2005 15:50:36 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261245AbVFTOMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 10:12:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261256AbVFTOMQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 10:12:16 -0400
+Received: from ns.virtualhost.dk ([195.184.98.160]:2284 "EHLO virtualhost.dk")
+	by vger.kernel.org with ESMTP id S261245AbVFTOL4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 10:11:56 -0400
+Received: from [62.242.22.158] (helo=router.home.kernel.dk)
+	by virtualhost.dk with esmtp (Exim 3.36 #1)
+	id 1DkN05-0005ba-00; Mon, 20 Jun 2005 16:11:45 +0200
+Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
+	by router.home.kernel.dk with esmtp (Exim 4.22)
+	id 1DkN02-0001eP-9Z; Mon, 20 Jun 2005 16:11:42 +0200
+Received: by kernel.dk (Postfix, from userid 1000)
+	id C45F467D73; Mon, 20 Jun 2005 16:13:04 +0200 (CEST)
+To: Matthias Urlichs <smurf@smurf.noris.de>
+Content-Disposition: inline
+In-Reply-To: <pan.2005.06.20.13.48.30.2680@smurf.noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Jens Axboe wrote:
+On Mon, Jun 20 2005, Matthias Urlichs wrote:
+> Hi, Jens Axboe wrote:
+> 
+> > error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
+> > bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
+> 
+> What does "git-cat-file -t" say on these two -- are they botth vald commit
+> objects?
 
-> error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
-> bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
-
-What does "git-cat-file -t" say on these two -- are they botth vald commit
-objects?
+axboe@nelson:[.]l/git/linux-2.6-block.git $ git-cat-file -t c39ae07f393806ccf406ef966e9a15afc43cc36a
+error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
+fatal: git-cat-file c39ae07f393806ccf406ef966e9a15afc43cc36a: bad file
+axboe@nelson:[.]l/git/linux-2.6-block.git $ git-cat-file -t 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
+tag
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-He that is giddy thinks the world turns round.
-		-- William Shakespeare, "The Taming of the Shrew"
-
+Jens Axboe
 
