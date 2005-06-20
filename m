@@ -1,66 +1,90 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Jens Axboe <axboe@suse.de>
 Subject: Re: git merging
-Date: Mon, 20 Jun 2005 21:21:29 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.06.20.19.21.26.676320@smurf.noris.de>
-References: <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org> <Pine.LNX.4.21.0506201156360.30848-100000@iabervon.org>
+Date: Mon, 20 Jun 2005 22:38:22 +0200
+Message-ID: <20050620203821.GC7712@suse.de>
+References: <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org> <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org> <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org> <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org> <20050620123053.GI15021@suse.de> <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Jun 20 21:20:08 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff Garzik <jgarzik@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 20 22:46:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkRoC-00066Y-Ak
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 21:19:48 +0200
+	id 1DkTA6-0005p5-Lu
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 22:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261536AbVFTTYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 15:24:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261532AbVFTTWv
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 15:22:51 -0400
-Received: from main.gmane.org ([80.91.229.2]:57546 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261519AbVFTTW0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 15:22:26 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DkRkb-0005LL-8B
-	for git@vger.kernel.org; Mon, 20 Jun 2005 21:16:05 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Jun 2005 21:16:05 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 20 Jun 2005 21:16:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261581AbVFTUvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 16:51:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261646AbVFTUrv
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 16:47:51 -0400
+Received: from ns.virtualhost.dk ([195.184.98.160]:65469 "EHLO virtualhost.dk")
+	by vger.kernel.org with ESMTP id S261715AbVFTUhP (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 16:37:15 -0400
+Received: from [62.242.22.158] (helo=router.home.kernel.dk)
+	by virtualhost.dk with esmtp (Exim 3.36 #1)
+	id 1DkT0w-0005Re-00; Mon, 20 Jun 2005 22:37:02 +0200
+Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
+	by router.home.kernel.dk with esmtp (Exim 4.22)
+	id 1DkT0t-0006ro-5K; Mon, 20 Jun 2005 22:36:59 +0200
+Received: by kernel.dk (Postfix, from userid 1000)
+	id 5F58A70971; Mon, 20 Jun 2005 22:38:22 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Daniel Barkalow wrote:
+On Mon, Jun 20 2005, Linus Torvalds wrote:
+> 
+> [ Daniel put on the To: list to see if he can confirm or deny my theory ]
+> 
+> On Mon, 20 Jun 2005, Jens Axboe wrote:
+> > 
+> > axboe@nelson:[.]l/git/linux-2.6-block.git $ git prune
+> > error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
+> 
+> That's the 2.6.11 "tree" object.
+> 
+> > bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
+> > axboe@nelson:[.]l/git/linux-2.6-block.git $ git-fsck-cache 
+> > error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
+> > bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
+> > bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
+> > 
+> > Running git prune again gives me the same output. What is wrong?
+> 
+> Very interesting. You have my "v2.6.11-tree" tag file pointing the 2.6.11
+> tree object, but you seem to not have that 2.6.11 tree itself.
+> 
+> Actually, judging from the fact that you got this error _during_ the
+> prune, maybe you never had it in that repository in the first place?
 
-> Basically, it needs a "process_unknown()" which does the
-> appropriate thing, and pull() needs to call that instead of
-> process_commit().
+I can't tell exactly, but I'm fairly sure this is a new error. I have
+two git trees locally - one which is just an rsync of your kernel.org
+tree, the other which is based off that (with a clone of the fs dir) and
+has multiple branches for developments. The main tree did not have this
+problem, while the development tree does/did.
 
-It also needs a request queue.
+> In particular, if you don't use "rsync", but instead use one of the
+> "optimized pull" things to create a repository (ie git-http-pull or
+> git-ssh-pull), I think your newly pulled tree will always miss anything
+> that isn't a head. And the 2.6.11 tree is a special case: it's a pure
+> "tree" object without any commit at all pointing to it, just a single tag
+> that points directly to the tree.
+> 
+> Anyway, the fact that you're missing the original 2.6.11 tree doesn't
+> really matter, so it's not a huge deal per se. You can re-populate it with
+> an "rsync -avz --ignore-existing", but clearly something seems to be
+> wrong.
 
-The beauty of rsync() is that it doesn't depend on a low-latency wire to
-work efficiently. Right now, pull() needs one round trip per object, and
-that's way too much.
-
-I hope to have some free time for that this week, but no promises. :-/
+I pulled with rsync manually from kernel.org, and that did fix things up
+for me. The main tree is rsync'ed, but the development tree gets the
+changes with /opt/kernel/git/linux-2.6/.git/ as the url given to
+git-pull-script.
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Creativity varies inversely with the number of cooks involved with the
-broth.
-					-- Bernice Fitz-Gibbon
-
+Jens Axboe
 
