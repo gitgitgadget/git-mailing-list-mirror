@@ -1,83 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jeff Garzik <jgarzik@pobox.com>
 Subject: Re: 'git commit' duplicates parents?
-Date: Sun, 19 Jun 2005 19:24:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506191921270.2268@ppc970.osdl.org>
-References: <42B59CF7.3080509@pobox.com>
+Date: Sun, 19 Jun 2005 22:28:16 -0400
+Message-ID: <42B629C0.6030008@pobox.com>
+References: <42B59CF7.3080509@pobox.com> <Pine.LNX.4.58.0506191921270.2268@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 04:16:55 2005
+X-From: git-owner@vger.kernel.org Mon Jun 20 04:22:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkBqG-0005qN-J5
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 04:16:52 +0200
+	id 1DkBvl-0006aq-LL
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 04:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261386AbVFTCWj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 19 Jun 2005 22:22:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261388AbVFTCWj
-	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jun 2005 22:22:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:8148 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261386AbVFTCWf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2005 22:22:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5K2MWjA025250
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 19 Jun 2005 19:22:32 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5K2MVoa003958;
-	Sun, 19 Jun 2005 19:22:31 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42B59CF7.3080509@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261164AbVFTC2U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 19 Jun 2005 22:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261393AbVFTC2U
+	(ORCPT <rfc822;git-outgoing>); Sun, 19 Jun 2005 22:28:20 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:58007 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261164AbVFTC2T (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Jun 2005 22:28:19 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DkC1K-0000IM-HX; Mon, 20 Jun 2005 02:28:18 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506191921270.2268@ppc970.osdl.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds wrote:
+> As to why you had a .git/MERGE_HEAD in your tree, it's probably because 
+> your merge scripts haven't kept up with mine.
+
+Nope, I use vanilla latest ones.  FWIW my setup is 100% vanilla git plus 
+two small scripts, 'git-switch-tree' and 'git-new-branch', which switch 
+around .git/HEAD.
+
+Doing some experimenting, it seems that git-pull-script does not remove 
+MERGE_HEAD and ORIG_HEAD after its done.
+
+This is reproducible by updating vanilla linux-2.6.git using vanilla 
+git-pull-script.  Just a standard update-to-latest-kernel, with no 
+conflicts/merges/etc.
+
+	Jeff
 
 
-On Sun, 19 Jun 2005, Jeff Garzik wrote:
-> 
-> I just checked in a change with 'git commit' (no arguments).  Two 
-> strange things occurred:
-> 
-> 1) git-whatchanged does not list the change at all.  However,
-> 	a) I verified that my change is indeed top-of-tree
-> 	b) git-changes-script (attached) does show the change
-
-Your commit is a merge. A corrupted one.
-
-> 2) git-changes-script shows the parents in a readable fashion, and it 
-> shows two duplicate parent entries.  In contrast, other changes do not 
-> have two parents:
-> 
-> my change:
-> > commit 4864989199fa62c7044be2258550ddc561411ab6
-> 		^^^ top of tree aka .git/HEAD
-> > tree b40996c7a0a5446875aa3664045af7e377451bf6
-> > parent 7df551254add79a445d2e47e8f849cef8fee6e38
-> > parent 7df551254add79a445d2e47e8f849cef8fee6e38
-
-Notice: two times the same head.
-
-You had a MERGE_HEAD in your tree, and "git commit" warned you about it in 
-big bold letters and told you what to do, but you ignored it.
-
-"git commit" said:
-
-                echo "#"
-                echo "# It looks like your may be committing a MERGE."
-                echo "# If this is not correct, please remove the file"
-                echo "# $GIT_DIR/MERGE_HEAD"
-                echo "# and try again"
-                echo "#"
-
-and if you had just done as it asked you, you'd have been ok.
-
-As to why you had a .git/MERGE_HEAD in your tree, it's probably because 
-your merge scripts haven't kept up with mine.
-
-		Linus
