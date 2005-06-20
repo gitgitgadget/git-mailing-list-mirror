@@ -1,62 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git merging
-Date: Mon, 20 Jun 2005 14:15:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506201410050.2268@ppc970.osdl.org>
-References: <20050617181156.GT6957@suse.de> <Pine.LNX.4.58.0506171132390.2268@ppc970.osdl.org>
- <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org>
- <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org>
- <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org>
- <20050620123053.GI15021@suse.de> <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org>
- <20050620203821.GC7712@suse.de>
+From: Marcel Holtmann <marcel@holtmann.org>
+Subject: [PATCH Cogito] Prevent '.git/merging: No such file or directory'
+	error message
+Date: Tue, 21 Jun 2005 00:15:14 +0200
+Message-ID: <1119305714.26772.75.camel@pegasus>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 23:30:55 2005
+Content-Type: multipart/mixed; boundary="=-/YMJmA/lNl6DUk11iyL0"
+Cc: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 21 00:15:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkTqQ-0007dj-Kx
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 23:30:14 +0200
+	id 1DkUY0-0001B1-Kq
+	for gcvg-git@gmane.org; Tue, 21 Jun 2005 00:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261623AbVFTVUQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 17:20:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261584AbVFTVPp
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 17:15:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:23693 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261609AbVFTVPR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 17:15:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5KLDrjA006547
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 20 Jun 2005 14:13:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5KLDqhM020175;
-	Mon, 20 Jun 2005 14:13:53 -0700
-To: Jens Axboe <axboe@suse.de>
-In-Reply-To: <20050620203821.GC7712@suse.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261958AbVFTWTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 18:19:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262306AbVFTWTW
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 18:19:22 -0400
+Received: from coyote.holtmann.net ([217.160.111.169]:1998 "EHLO
+	mail.holtmann.net") by vger.kernel.org with ESMTP id S261958AbVFTWPU
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2005 18:15:20 -0400
+Received: from pegasus (p5487D28A.dip.t-dialin.net [84.135.210.138])
+	by mail.holtmann.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j5KMHQSs013674
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Tue, 21 Jun 2005 00:17:27 +0200
+To: Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.2 
+X-Virus-Scanned: ClamAV 0.85.1/947/Mon Jun 20 21:39:23 2005 on coyote.holtmann.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--=-/YMJmA/lNl6DUk11iyL0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Mon, 20 Jun 2005, Jens Axboe wrote:
-> 
-> I pulled with rsync manually from kernel.org, and that did fix things up
-> for me. The main tree is rsync'ed, but the development tree gets the
-> changes with /opt/kernel/git/linux-2.6/.git/ as the url given to
-> git-pull-script.
+Hi Petr,
 
-Ok, that explains it. Since you're using a regular local filename, the
-pull will be using "git-local-pull", which will only fetch the objects
-directly needed. And doesn't understand the tag-to-tree thing, so doesn't 
-fetch the tree (or possibly you just copied the tags by hand totally 
-outside of the regular pull?)
+the attached patch prevent the '.git/merging: No such file or directory'
+error message.
 
-		Linus
+Regards
+
+Marcel
+
+
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
+
+
+--=-/YMJmA/lNl6DUk11iyL0
+Content-Disposition: attachment; filename=patch
+Content-Type: text/x-patch; name=patch; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+diff --git a/cg-merge b/cg-merge
+--- a/cg-merge
++++ b/cg-merge
+@@ -48,7 +48,7 @@ branch=$(commit-id "$branchname") || exi
+ 
+ [ -s $_git/blocked ] && die "merge blocked: $(cat $_git/blocked)"
+ 
+-if grep -q "$branch" $_git/merging; then
++if grep -sq "$branch" $_git/merging; then
+ 	echo "Branch already merged in the working tree." >&2
+ 	echo 0
+ fi
+
+--=-/YMJmA/lNl6DUk11iyL0--
+
