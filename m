@@ -1,123 +1,79 @@
-From: Dan Holmsand <holmsand@gmail.com>
-Subject: Re: 'git commit' duplicates parents?
-Date: Mon, 20 Jun 2005 11:48:26 +0200
-Message-ID: <42B690EA.2080605@gmail.com>
-References: <42B59CF7.3080509@pobox.com> <Pine.LNX.4.58.0506191921270.2268@ppc970.osdl.org> <Pine.LNX.4.58.0506191926530.2268@ppc970.osdl.org> <42B62C85.10701@pobox.com> <Pine.LNX.4.58.0506191958010.2268@ppc970.osdl.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git-rev-list: "--bisect" flag
+Date: Mon, 20 Jun 2005 20:29:56 +1000
+Message-ID: <2cfc403205062003292db2b457@mail.gmail.com>
+References: <Pine.LNX.4.58.0506172306210.2268@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0506182022130.2268@ppc970.osdl.org>
+	 <Pine.LNX.4.58.0506182141400.2268@ppc970.osdl.org>
+	 <2cfc403205061903155a6090db@mail.gmail.com>
+	 <2cfc40320506190741409f3a5@mail.gmail.com>
+	 <Pine.LNX.4.58.0506190951330.2268@ppc970.osdl.org>
+	 <2cfc4032050619125537dee354@mail.gmail.com>
+	 <Pine.LNX.4.58.0506192002240.2268@ppc970.osdl.org>
+	 <2cfc403205061920272ee47166@mail.gmail.com>
+	 <2cfc40320506192030290187af@mail.gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010605060901000101000806"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 20 11:43:21 2005
+X-From: git-owner@vger.kernel.org Mon Jun 20 12:27:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DkIo9-0002DK-8Q
-	for gcvg-git@gmane.org; Mon, 20 Jun 2005 11:43:09 +0200
+	id 1DkJTs-0001Hj-B4
+	for gcvg-git@gmane.org; Mon, 20 Jun 2005 12:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261301AbVFTJso (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 20 Jun 2005 05:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261302AbVFTJso
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 05:48:44 -0400
-Received: from rproxy.gmail.com ([64.233.170.205]:43675 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261301AbVFTJs3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Jun 2005 05:48:29 -0400
-Received: by rproxy.gmail.com with SMTP id r35so837518rna
-        for <git@vger.kernel.org>; Mon, 20 Jun 2005 02:48:29 -0700 (PDT)
+	id S261151AbVFTKbU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 20 Jun 2005 06:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261158AbVFTKbU
+	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 06:31:20 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:52389 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261152AbVFTK34 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Jun 2005 06:29:56 -0400
+Received: by rproxy.gmail.com with SMTP id i8so656028rne
+        for <git@vger.kernel.org>; Mon, 20 Jun 2005 03:29:56 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type;
-        b=QX6ZMYQc6LpV4jOgau4WHQvg9FcYtB6h50snMeDgrrisVI4Ob7FcRuEZYq8VkzqPfJ2mKGn1BpJ9OIqCkiEWybtZm8Sy7GdYCa/wrqjmBHPHX3P6CROISl7fRsz5kjMl0Ke8qF4KguTbycGm4xl5/b0ff3d82yiV6hVuU7TXv34=
-Received: by 10.38.90.78 with SMTP id n78mr1863302rnb;
-        Mon, 20 Jun 2005 02:48:29 -0700 (PDT)
-Received: from ?192.168.0.4? ([80.217.52.214])
-        by mx.gmail.com with ESMTP id c3sm3693233rne.2005.06.20.02.48.28;
-        Mon, 20 Jun 2005 02:48:29 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s8ehHP8SPADbRLK+rTjcAeA8aIAxDNKIyK0bPsAdzlCAgzxyXcvssZkdJFPKS81BlKB0pJF6aooswhs4Z4CbXR5XWiWCBncVpTaqfDGEk1iEtn0gz4tsaYFxCv5RQBB3qwPGMOLP7omNs/6sDvkyJW4mXFalHqZirWT8z58BieI=
+Received: by 10.39.3.25 with SMTP id f25mr2118844rni;
+        Mon, 20 Jun 2005 03:29:56 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Mon, 20 Jun 2005 03:29:56 -0700 (PDT)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506191958010.2268@ppc970.osdl.org>
+In-Reply-To: <2cfc40320506192030290187af@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------010605060901000101000806
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On 6/20/05, Jon Seymour <jon.seymour@gmail.com> wrote:
+> > 1. count all visible nodes [ i.e. nodes that git-rev-list would print
+> > ], call this value N
+> > 2. at the top node inject N units of mass
+> > 3. traverse the visible graph, in topological order
+> > 4. at each node, send all the mass received from parents minus 1 unit
+> > onto visible parents. Record how much mass you have sent downstream.
+> > Keep a record of the nodes that have seen nearest to half of that
+> > mass.
+> 
+> Correction - at each node, send all mass received from _children_
+> 
 
-Linus Torvalds wrote:
-> Keep the complaints coming when something doesn't work the way it should.  
-> I'll continue to try to blame your incompetence as much as I humanly can,
-> but hey, some of it is occasionally mine too... ;(
+This is a little too simple. It would work if the all nodes in the
+visible graph were all connected to the base of an epoch. However, the
+pruning behaviour of known goods effectively installs blockages into
+the network and causes "backflow" which complicates things somewhat -
+a plumbers nightmare!
 
-Well, since it's obviously complaint time :-)
+I am exploring another variation of the idea which is even simpler.
+Experimentally it seems quite similar to your average case
+performance, but doesn't yet approach your low std deviations.
+However, I think I know why that is, so I will, after a few games of
+pool and a similar number of beers, have another crack at it.
 
-git-resolve-script still seems a bit too eager to write MERGE_HEAD and 
-ORIG_HEAD - they only make sense if there's actually been any merging 
-done, don't they?
-
-Patch below shows what I mean.
-
-/dan
-
----
-
-[PATCH] Make git-resolve-script less eager to write MERGE_HEAD
-
-MERGE_HEAD and ORIG_HEAD should only be written if there's actually
-been any merging done.
-
-Signed-off-by: Dan Holmsand <holmsand@gmail.com>
-
---------------010605060901000101000806
-Content-Type: text/plain;
- name="git-resolve-script.patch.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-resolve-script.patch.txt"
-
-diff --git a/git-resolve-script b/git-resolve-script
---- a/git-resolve-script
-+++ b/git-resolve-script
-@@ -12,8 +12,6 @@ merge_repo="$3"
- : ${GIT_OBJECT_DIRECTORY="${SHA1_FILE_DIRECTORY-"$GIT_DIR/objects"}"}
- 
- rm -f "$GIT_DIR"/MERGE_HEAD "$GIT_DIR"/ORIG_HEAD
--echo $head > "$GIT_DIR"/ORIG_HEAD
--echo $merge > "$GIT_DIR"/MERGE_HEAD
- 
- #
- # The remote name is just used for the message,
-@@ -32,15 +30,13 @@ fi
- 
- if [ "$common" == "$merge" ]; then
- 	echo "Already up-to-date. Yeeah!"
--	rm -f -- "$GIT_DIR/ORIG_HEAD" "$GIT_DIR/MERGE_HEAD"
- 	exit 0
- fi
- if [ "$common" == "$head" ]; then
- 	echo "Updating from $head to $merge."
- 	git-read-tree -u -m $head $merge || exit 1
- 	echo $merge > "$GIT_DIR"/HEAD
--	git-diff-tree -p ORIG_HEAD HEAD | git-apply --stat
--	rm -f -- "$GIT_DIR/ORIG_HEAD" "$GIT_DIR/MERGE_HEAD"
-+	git-diff-tree -p $head HEAD | git-apply --stat
- 	exit 0
- fi
- echo "Trying to merge $merge into $head"
-@@ -51,6 +47,8 @@ if [ $? -ne 0 ]; then
- 	echo "Simple merge failed, trying Automatic merge"
- 	git-merge-cache -o git-merge-one-file-script -a
- 	if [ $? -ne 0 ]; then
-+		echo $merge > "$GIT_DIR"/MERGE_HEAD
-+		echo $head > "$GIT_DIR"/ORIG_HEAD
- 		echo "Automatic merge failed, fix up by hand"
- 		exit 1
- 	fi
-@@ -60,4 +58,3 @@ result_commit=$(echo "$merge_msg" | git-
- echo "Committed merge $result_commit"
- echo $result_commit > "$GIT_DIR"/HEAD
- git-diff-tree -p $head $result_commit | git-apply --stat
--rm -f -- "$GIT_DIR/ORIG_HEAD" "$GIT_DIR/MERGE_HEAD"
-
---------------010605060901000101000806--
+jon.
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
