@@ -1,60 +1,128 @@
-From: "David S. Miller" <davem@davemloft.net>
-Subject: ORIG_HEAD
-Date: Mon, 20 Jun 2005 22:10:55 -0700 (PDT)
-Message-ID: <20050620.221055.71088925.davem@davemloft.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix scalability problems with git-deltafy-script (fwd)
+Date: Tue, 21 Jun 2005 10:18:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0506211008380.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jun 21 07:13:03 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 16:20:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dkb4B-0000Ch-23
-	for gcvg-git@gmane.org; Tue, 21 Jun 2005 07:12:55 +0200
+	id 1Dkjbw-0001yK-VM
+	for gcvg-git@gmane.org; Tue, 21 Jun 2005 16:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261895AbVFUFSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Jun 2005 01:18:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261937AbVFUFNF
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jun 2005 01:13:05 -0400
-Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:48281
-	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
-	id S261224AbVFUFLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Jun 2005 01:11:01 -0400
-Received: from localhost ([127.0.0.1] ident=davem)
-	by sunset.davemloft.net with esmtp (Exim 4.50)
-	id 1Dkb2F-0001jw-Iv
-	for git@vger.kernel.org; Mon, 20 Jun 2005 22:10:55 -0700
-To: git@vger.kernel.org
-X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
+	id S262109AbVFUOYh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Jun 2005 10:24:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261610AbVFUOVk
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jun 2005 10:21:40 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:23602 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S262064AbVFUOSM
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2005 10:18:12 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR001.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IIF00A6UUE0E1@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 21 Jun 2005 10:18:01 -0400 (EDT)
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Is there a really good reason why git-pull-script runs are deleting
-that file now?
+[ Third resent... ]
 
-All my scripts use ORIG_HEAD so that I can look at the changelog after
-I pull from someone.  There is now no record left around of what the
-head was before the pull.
+Current version would spin forever  and exhaust memory while 
+attempting to sort all files from all revisions at once, until it
+dies before even doing any real work.  This is especially noticeable 
+when used on a big repository like the imported  bkcvs repo for the
+Linux kernel.
 
-I could take the SHA1 output by the git-pull-script, but it'd be nice
-if it was sitting under .git somewhere in case I forget to record
-that information somewhere.
+This patch allows for batching the sort to put a bound on needed 
+resources and making progress early, as well as including some small
+cleanups.
 
-This is my "git-mklog" script, for example:
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-#/bin/sh
-
-git-rev-tree HEAD ^ORIG_HEAD | sort -n | cut -d' ' -f2 >commit-list
-cat commit-list | git-diff-tree --stdin -p | diffstat -p1 
-echo ''
-for i in $(cat commit-list)
-do
-    git-diff-tree -s -v ${i}
-    git-diff-tree -p ${i} | diffstat -p1
-    echo ''
-done
-
-rm -f commit-list
-
+diff --git a/git-deltafy-script b/git-deltafy-script
+--- a/git-deltafy-script
++++ b/git-deltafy-script
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ 
+-# Example script to deltafy an entire GIT repository based on the commit list.
++# Example script to deltify an entire GIT repository based on the commit list.
+ # The most recent version of a file is the reference and previous versions
+ # are made delta against the best earlier version available. And so on for
+ # successive versions going back in time.  This way the increasing delta
+@@ -25,37 +25,51 @@
+ 
+ set -e
+ 
+-depth=
+-[ "$1" == "-d" ] && depth="--max-depth=$2" && shift 2
++max_depth=
++[ "$1" == "-d" ] && max_depth="--max-depth=$2" && shift 2
++
++overlap=30
++max_behind="--max-behind=$overlap"
+ 
+ function process_list() {
+ 	if [ "$list" ]; then
+ 		echo "Processing $curr_file"
+-		echo "$head $list" | xargs git-mkdelta $depth --max-behind=30 -v
++		echo "$list" | xargs git-mkdelta $max_depth $max_behind -v
+ 	fi
+ }
+ 
++rev_list=""
+ curr_file=""
+ 
+ git-rev-list HEAD |
+-git-diff-tree -r -t --stdin |
+-awk '/^:/ { if ($5 == "M" || $5 == "N") print $4, $6;
+-            if ($5 == "M") print $3, $6 }' |
+-LC_ALL=C sort -s -k 2 | uniq |
+-while read sha1 file; do
+-	if [ "$file" == "$curr_file" ]; then
+-		list="$list $sha1"
+-	else
+-		process_list
+-		curr_file="$file"
+-		list=""
+-		head="$sha1"
+-	fi
++while true; do
++	# Let's batch revisions into groups of 1000 to give it a chance to
++	# scale with repositories containing long revision lists.  We also
++	# overlap with the previous batch the size of mkdelta's look behind
++	# value in order to account for the processing discontinuity.
++	rev_list="$(echo -e -n "$rev_list" | tail --lines=$overlap)"
++	for i in $(seq 1000); do
++		read rev || break
++		rev_list="$rev_list$rev\n"
++	done
++	echo -e -n "$rev_list" |
++	git-diff-tree -r -t --stdin |
++	awk '/^:/ { if ($5 == "M") printf "%s %s\n%s %s\n", $4, $6, $3, $6 }' |
++	LC_ALL=C sort -s -k 2 | uniq |
++	while read sha1 file; do
++		if [ "$file" == "$curr_file" ]; then
++			list="$list $sha1"
++		else
++			process_list
++			curr_file="$file"
++			list="$sha1"
++		fi
++	done
++	[ "$rev" ] || break
+ done
+ process_list
+ 
+ curr_file="root directory"
+-head=""
+ list="$(
+ 	git-rev-list HEAD |
+ 	while read commit; do
