@@ -1,65 +1,82 @@
-From: Jens Axboe <axboe@suse.de>
-Subject: Re: git merging
-Date: Tue, 21 Jun 2005 16:59:20 +0200
-Message-ID: <20050621145919.GB12271@suse.de>
-References: <20050617183914.GX6957@suse.de> <Pine.LNX.4.58.0506171142500.2268@ppc970.osdl.org> <42B357D7.6030302@pobox.com> <Pine.LNX.4.58.0506171629320.2268@ppc970.osdl.org> <42B36207.3020209@pobox.com> <Pine.LNX.4.58.0506171700200.2268@ppc970.osdl.org> <20050620123053.GI15021@suse.de> <Pine.LNX.4.58.0506200844420.2268@ppc970.osdl.org> <20050620203821.GC7712@suse.de> <Pine.LNX.4.58.0506201410050.2268@ppc970.osdl.org>
+From: Sven Verdoolaege <skimo@liacs.nl>
+Subject: [PATCH] git-apply: Don't barf when --stat'ing a diff with no line changes.
+Date: Tue, 21 Jun 2005 17:14:30 +0200
+Message-ID: <20050621151430.GA26628@pc117b.liacs.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 21 16:53:29 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 21 17:17:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dkk6l-0002dZ-C3
-	for gcvg-git@gmane.org; Tue, 21 Jun 2005 16:52:11 +0200
+	id 1DkkUf-0000mL-T7
+	for gcvg-git@gmane.org; Tue, 21 Jun 2005 17:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261980AbVFUO6M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Jun 2005 10:58:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262066AbVFUO6M
-	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jun 2005 10:58:12 -0400
-Received: from ns.virtualhost.dk ([195.184.98.160]:17592 "EHLO virtualhost.dk")
-	by vger.kernel.org with ESMTP id S261980AbVFUO6J (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2005 10:58:09 -0400
-Received: from [62.242.22.158] (helo=router.home.kernel.dk)
-	by virtualhost.dk with esmtp (Exim 3.36 #1)
-	id 1DkkCL-0003gi-00; Tue, 21 Jun 2005 16:57:57 +0200
-Received: from nelson.home.kernel.dk ([192.168.0.33] helo=kernel.dk)
-	by router.home.kernel.dk with esmtp (Exim 4.22)
-	id 1DkkCJ-0007zc-OE; Tue, 21 Jun 2005 16:57:55 +0200
-Received: by kernel.dk (Postfix, from userid 1000)
-	id 0EEF31E0E9; Tue, 21 Jun 2005 16:59:20 +0200 (CEST)
+	id S262112AbVFUPSc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Jun 2005 11:18:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261682AbVFUPRW
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jun 2005 11:17:22 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:64676 "EHLO rhodium.liacs.nl")
+	by vger.kernel.org with ESMTP id S262112AbVFUPOt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Jun 2005 11:14:49 -0400
+Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id j5LFEU6A010595;
+	Tue, 21 Jun 2005 17:14:35 +0200
+Received: by pc117b.liacs.nl (Postfix, from userid 17122)
+	id 7564B6FE9; Tue, 21 Jun 2005 17:14:30 +0200 (CEST)
 To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506201410050.2268@ppc970.osdl.org>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 20 2005, Linus Torvalds wrote:
-> 
-> 
-> On Mon, 20 Jun 2005, Jens Axboe wrote:
-> > 
-> > I pulled with rsync manually from kernel.org, and that did fix things up
-> > for me. The main tree is rsync'ed, but the development tree gets the
-> > changes with /opt/kernel/git/linux-2.6/.git/ as the url given to
-> > git-pull-script.
-> 
-> Ok, that explains it. Since you're using a regular local filename, the
-> pull will be using "git-local-pull", which will only fetch the objects
-> directly needed. And doesn't understand the tag-to-tree thing, so doesn't 
-> fetch the tree (or possibly you just copied the tags by hand totally 
-> outside of the regular pull?)
+Diffs with only mode changes didn't pass through git-apply --stat.
+E.g.,
 
-Isn't that a little 'end user' confusing from a usability point of view,
-that it behaves differently depending on which pull script it ends up
-using in the end?
+sh-3.00$ cg-diff -p | cat
+diff --git a/autogen.sh b/autogen.sh
+old mode 100644
+new mode 100755
+diff --git a/cdd2polylib.pl b/cdd2polylib.pl
+old mode 100644
+new mode 100755
+sh-3.00$ cg-diff -p | git-apply --stat
+Floating point exception
+sh-3.00$ cg-diff -p | ~/src/git-linus/git-apply --stat
+ autogen.sh     |    0 
+ cdd2polylib.pl |    0 
+ 2 files changed, 0 insertions(+), 0 deletions(-)
 
-I guess I can just always use rsync even for local trees. And use it
-directly, so I always have everything :)
+skimo
+--
+git-apply: Don't barf when --stat'ing a diff with no line changes.
 
--- 
-Jens Axboe
+---
+commit 2c796d01298b7e5bb5518927bf85aa461603a5c5
+tree f80d68da66ee8c2ec1d491ef92c95e49db2016cd
+parent 0795495388d703dc84110a9a7917dd6ec9516bb4
+author Sven Verdoolaege <skimo@liacs.nl> Tue, 21 Jun 2005 17:09:27 +0200
+committer Sven Verdoolaege <skimo@liacs.nl> Tue, 21 Jun 2005 17:09:27 +0200
 
+ apply.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/apply.c b/apply.c
+--- a/apply.c
++++ b/apply.c
+@@ -751,9 +751,11 @@ static void show_stats(struct patch *pat
+ 	del = patch->lines_deleted;
+ 	total = add + del;
+ 
+-	total = (total * max + max_change / 2) / max_change;
+-	add = (add * max + max_change / 2) / max_change;
+-	del = total - add;
++	if (max_change > 0) {
++		total = (total * max + max_change / 2) / max_change;
++		add = (add * max + max_change / 2) / max_change;
++		del = total - add;
++	}
+ 	printf(" %-*s |%5d %.*s%.*s\n",
+ 		len, name, patch->lines_added + patch->lines_deleted,
+ 		add, pluses, del, minuses);
