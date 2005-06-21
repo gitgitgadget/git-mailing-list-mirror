@@ -1,50 +1,60 @@
-From: Darrin Thompson <darrint@progeny.com>
-Subject: Re: Patch (apply) vs. Pull
-Date: Mon, 20 Jun 2005 18:01:42 -0500
-Message-ID: <1119308502.3926.18.camel@localhost.localdomain>
-References: <1119284365.3926.15.camel@localhost.localdomain>
-	 <7vbr61j631.fsf@assigned-by-dhcp.cox.net>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: ORIG_HEAD
+Date: Mon, 20 Jun 2005 22:10:55 -0700 (PDT)
+Message-ID: <20050620.221055.71088925.davem@davemloft.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: Text/Plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 21 06:44:41 2005
+X-From: git-owner@vger.kernel.org Tue Jun 21 07:13:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dkaca-0005Gk-4Y
-	for gcvg-git@gmane.org; Tue, 21 Jun 2005 06:44:24 +0200
+	id 1Dkb4B-0000Ch-23
+	for gcvg-git@gmane.org; Tue, 21 Jun 2005 07:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261195AbVFUEpE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 21 Jun 2005 00:45:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261616AbVFTW5T
-	(ORCPT <rfc822;git-outgoing>); Mon, 20 Jun 2005 18:57:19 -0400
-Received: from zealot.progeny.com ([216.37.46.162]:54500 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S261574AbVFTW4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Jun 2005 18:56:45 -0400
-Received: from dhcp-2-246.progeny.com (dhcp-2-246.progeny.com [192.168.2.246])
-	by morimoto.progeny.com (Postfix) with ESMTP
-	id 8788363783; Mon, 20 Jun 2005 17:56:40 -0500 (EST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr61j631.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.0.3 
+	id S261895AbVFUFSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 21 Jun 2005 01:18:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261937AbVFUFNF
+	(ORCPT <rfc822;git-outgoing>); Tue, 21 Jun 2005 01:13:05 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:48281
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S261224AbVFUFLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Jun 2005 01:11:01 -0400
+Received: from localhost ([127.0.0.1] ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.50)
+	id 1Dkb2F-0001jw-Iv
+	for git@vger.kernel.org; Mon, 20 Jun 2005 22:10:55 -0700
+To: git@vger.kernel.org
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2005-06-20 at 10:22 -0700, Junio C Hamano wrote:
->  (6) Throw away my HEAD, making Linus HEAD my HEAD, while
->      preserving changes I have made since I forked from him.  I
->      use "jit-rewind" for this.
 
-When you say it that way it sounds so _bad_. :-)
+Is there a really good reason why git-pull-script runs are deleting
+that file now?
 
-Would it make sense to come up with a way to make an emailed series of
-patches represent a series of commits? Could patches still be
-cherrypicked?
+All my scripts use ORIG_HEAD so that I can look at the changelog after
+I pull from someone.  There is now no record left around of what the
+head was before the pull.
 
---
-Darrin
+I could take the SHA1 output by the git-pull-script, but it'd be nice
+if it was sitting under .git somewhere in case I forget to record
+that information somewhere.
 
+This is my "git-mklog" script, for example:
+
+#/bin/sh
+
+git-rev-tree HEAD ^ORIG_HEAD | sort -n | cut -d' ' -f2 >commit-list
+cat commit-list | git-diff-tree --stdin -p | diffstat -p1 
+echo ''
+for i in $(cat commit-list)
+do
+    git-diff-tree -s -v ${i}
+    git-diff-tree -p ${i} | diffstat -p1
+    echo ''
+done
+
+rm -f commit-list
 
