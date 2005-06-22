@@ -1,59 +1,140 @@
-From: Greg KH <greg@kroah.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Updated git HOWTO for kernel hackers
-Date: Wed, 22 Jun 2005 16:09:05 -0700
-Message-ID: <20050622230905.GA7873@kroah.com>
+Date: Wed, 22 Jun 2005 16:16:00 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506221603120.11175@ppc970.osdl.org>
 References: <42B9E536.60704@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 01:07:53 2005
+X-From: git-owner@vger.kernel.org Thu Jun 23 01:17:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlEJa-0004KT-7C
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 01:07:26 +0200
+	id 1DlESx-0006SS-Cq
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 01:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262572AbVFVXM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 19:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262580AbVFVXMt
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 19:12:49 -0400
-Received: from mail.kroah.org ([69.55.234.183]:60300 "EHLO perch.kroah.org")
-	by vger.kernel.org with ESMTP id S262572AbVFVXJS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 19:09:18 -0400
-Received: from [192.168.0.10] (c-24-22-112-187.hsd1.or.comcast.net [24.22.112.187])
-	(authenticated)
-	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j5MN9Ai12527;
-	Wed, 22 Jun 2005 16:09:10 -0700
-Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
- id 1DlELB-24G-00; Wed, 22 Jun 2005 16:09:05 -0700
-To: Jeff Garzik <jgarzik@pobox.com>, torvalds@osdl.org
-Content-Disposition: inline
+	id S262515AbVFVXWL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 19:22:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262416AbVFVXS5
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 19:18:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:14823 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262580AbVFVXOG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 19:14:06 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5MNDtjA000861
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 22 Jun 2005 16:13:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5MNDsIH011547;
+	Wed, 22 Jun 2005 16:13:55 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
 In-Reply-To: <42B9E536.60704@pobox.com>
-User-Agent: Mutt/1.5.8i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 22, 2005 at 06:24:54PM -0400, Jeff Garzik wrote:
-> 10) don't forget to download tags from time to time.
+
+
+On Wed, 22 Jun 2005, Jeff Garzik wrote:
+>
+> 2) download a linux kernel tree for the very first time
 > 
-> git-pull-script only downloads sha1-indexed object data, and the 
-> requested remote head.  This misses updates to the .git/refs/tags/ and 
-> .git/refs/heads directories.  It is advisable to update your kernel .git 
-> directories periodically with a full rsync command, to make sure you got 
-> everything:
-> 
+> $ mkdir -p linux-2.6/.git
 > $ cd linux-2.6
 > $ rsync -a --delete --verbose --stats --progress \
-> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ 
 > \          <- word-wrapped backslash; sigh
->     .git/
+>      .git/
 
-Ok, this is annoying.  Is there some reason why git doesn't pull the
-tags in properly when doing a merge?  Chris and I just hit this when I
-pulled his 2.6.12.1 tree and and was wondering where the tag went.
+Gaah. I should do a "git-clone-script" or something that does this, and 
+then you could just do
 
-thanks,
+	git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+	
+Anybody?
 
-greg k-h
+> # make some modifications
+> $ patch -sp1 < /tmp/my.patch
+> $ diffstat -p1 < /tmp/my.patch
+> 
+> # NOTE: add '--add' and/or '--remove' if files were added or removed
+> $ git-update-cache <list of all files changed>
+> 
+> # check in changes
+> $ git commit
+
+A few notes on these things:
+
+	git-apply --index /tmp/my.patch
+
+will not only apply the patch (unified patches only!), but will do the
+index updates for you while it's at it, so if the patch contains new files
+(or it deletes files), you don't need to worry about it.
+
+Also, you can do
+
+	git commit <list-of-files-to-commit>
+
+as a shorthand for
+
+	git-update-cache <list-of-files-to-commit>
+	git commit
+
+which some people will probably find more natural.
+
+> 6) List all changes in working dir, in diff format.
+> 
+> $ git-diff-cache -p HEAD
+
+Or, perhaps preferably:
+
+	git diff HEAD
+
+since that is shorter ad will also show renames.
+
+> 8) List all changesets:
+> 
+> $ git-whatchanged
+
+No, if you just want the changesets listed, then
+
+	git log
+
+is a lot better, since it shows merges.
+
+"git-whatchanged" is useful if you actually want to see what the commits 
+_changed_, and then you often want to use the "-p" flag to see it as 
+patches. Also, it's worth pointing out the fact that you can limit it to 
+certain subdirectories (or individual files) etc, ie:
+
+	git-whatchanged -p drivers/net
+
+since that is often what people want.
+
+But if you just want the log, "git log" is faster and simpler and more 
+correct.
+
+> 16) obtain a diff between current branch, and master branch
+> 
+> In most trees WITH BRANCHES, .git/refs/heads/master contains the current 
+> 'vanilla' upstream tree, for easy diffing and merging.  (in trees 
+> without branches, 'master' simply contains your latest changes)
+> 
+> $ git-diff-tree -p master HEAD
+
+Again, I think is possibly more naturally expressed with "git diff":
+
+	git diff master..HEAD
+
+which just says "show the differences from 'master' to 'HEAD'" and will
+also show renames etc.
+
+(A plain "git diff" will show just the difference to the index file, in 
+case you care).
+
+		Linus
