@@ -1,48 +1,68 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: [PATCH] link in gitweb rss feed
-Date: Wed, 22 Jun 2005 11:25:13 +0200
-Message-ID: <20050622092513.GA7629@vrfy.org>
-References: <20050615174148.C3099@banaan.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Patch (apply) vs. Pull
+Date: Wed, 22 Jun 2005 02:08:54 -0700
+Message-ID: <7vmzpihi6x.fsf@assigned-by-dhcp.cox.net>
+References: <1119284365.3926.15.camel@localhost.localdomain>
+	<7vbr61j631.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 22 11:22:05 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 22 11:57:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dl1Q9-0008EN-QC
-	for gcvg-git@gmane.org; Wed, 22 Jun 2005 11:21:22 +0200
+	id 1Dl1yC-0001hc-Mt
+	for gcvg-git@gmane.org; Wed, 22 Jun 2005 11:56:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262774AbVFVJ0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 05:26:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262828AbVFVJ0Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 05:26:16 -0400
-Received: from soundwarez.org ([217.160.171.123]:45484 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S262921AbVFVJZR (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 05:25:17 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 28364423DA; Wed, 22 Jun 2005 11:25:13 +0200 (CEST)
-To: Erik van Konijnenburg <ekonijn@xs4all.nl>
-Content-Disposition: inline
-In-Reply-To: <20050615174148.C3099@banaan.localdomain>
-User-Agent: Mutt/1.5.9i
+	id S262960AbVFVJVv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 05:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262952AbVFVJST
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 05:18:19 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:34763 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S262874AbVFVJJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Jun 2005 05:09:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050622090854.FGYO12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 22 Jun 2005 05:08:54 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org> (Linus
+ Torvalds's message of "Tue, 21 Jun 2005 15:09:13 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 15, 2005 at 05:41:48PM +0200, Erik van Konijnenburg wrote:
-> The following patch makes the site name in an RSS
-> feedreader for a gitweb project refer to the summary
-> page for the the project, the same place where you picked
-> up the feed in the first place.  This seems more consistent
-> than linking to the overview of all projects where the
-> link used to up.  Changed the link in OPML feed accordingly;
-> this used to end up in the full log rather than the summary.
-> 
-> Patch was made against version 220 as shipped in Debian,
-> and applies (with offset) to your version 221.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-Should be installed with the last update on kernel.org.
+LT> and here the "git-cherry-pick" thing is just a script that basically takes
+LT> an old commit ID, and tries to re-apply it as a patch (with author data
+LT> and commit messages, of course) on top of the current head. It would 
+LT> basically be nothing more than a "git-diff-tree $1" followed by tryign to 
+LT> figure out whether it had already been applied or whether it can be 
+LT> applied now.
 
-Thanks,
-Kay
+LT> What do you think?
+
+What you outlined is essentially what I already do by using
+jit-rewind, followed by a repeated use of (jit-patch and
+jit-commit with -m flag).  The reason I have not automated the
+"repeat" part is _not_ because I am lazy, but because typically
+the rejected things really need manual intervention, not for
+mechanical (read: merge conflict) reasons, but for semantic
+reasons, when some patches are accepted while some others are
+not.  Especially if I am not the sole supplier of patches to
+your tree, my older patches usually need not just rebasing but
+_rethinking_, so I myself do not find need for automating things
+further that much from what I already have.
+
+Having said that, one automation I would benefit from is to
+automatically find patches that _have_ been accepted and drop
+them from my snapshot pool --- that part should be very easy to
+automate and I have not done so primarily because I _am_ lazy.
+I could call it git-cherry-drop ;-).
+
+
