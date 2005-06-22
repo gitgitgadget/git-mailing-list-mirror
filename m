@@ -1,145 +1,191 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Patch (apply) vs. Pull
-Date: Wed, 22 Jun 2005 15:21:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506221504370.2353@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506221654550.30848-100000@iabervon.org>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Updated git HOWTO for kernel hackers
+Date: Wed, 22 Jun 2005 18:24:54 -0400
+Message-ID: <42B9E536.60704@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 00:17:56 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 00:23:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlDX0-0001j1-IU
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 00:17:14 +0200
+	id 1DlDcE-0002yb-QA
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 00:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262301AbVFVWW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 18:22:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262460AbVFVWWo
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 18:22:44 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33755 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262301AbVFVWTb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 18:19:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5MMJ9jA028918
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Jun 2005 15:19:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5MMJ8Qu008424;
-	Wed, 22 Jun 2005 15:19:08 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0506221654550.30848-100000@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262538AbVFVW2n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 18:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261175AbVFVW2n
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 18:28:43 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:48560 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S262474AbVFVWZA (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 18:25:00 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DlDeS-0002pQ-Lh; Wed, 22 Jun 2005 22:24:59 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linux Kernel <linux-kernel@vger.kernel.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+Things in git-land are moving at lightning speed, and usability has 
+improved a lot since my post a month ago:  http://lkml.org/lkml/2005/5/26/11
 
-On Wed, 22 Jun 2005, Daniel Barkalow wrote:
-> 
-> Do you actually modify patches before applying them, rather than applying
-> them and the fixing the resulting files? I've never managed to modify
-> content in a patch (aside from dropping hunks) without upsetting patch.
 
-I've been doing unified diffs for a _loong_ time, and I edit patches in my 
-sleep. The rules for line numbers etc are really quite simple, and yes, I 
-do edit patches before I apply them.
 
-The most common form of editing is just removing single fragments, or
-fixing up whitespace. Quite often people send me patches that don't even
-apply, because whitespace got corrupted either because their mailer ate
-it, or simply because they cut-and-pasted the patch. So I end up fixing
-things up, and the end result may not actually match the original one
-byte-for-byte, even if it matches visually.
+1) installing git
 
-Similarly, the "remove patch fragments" is often because somebody mixes up
-two things in a patch, and I decide to take one of them but there's some
-problem with the other.  Sometimes that patch fragment thing means that I
-have to edit even within one fragment, and fix up the patch line-counters
-etc.
+git requires bootstrapping, since you must have git installed in order 
+to check out git.git (git repo), and linux-2.6.git (kernel repo).  I 
+have put together a bootstrap tarball of today's git repository.
 
-NOTE! This is "rare" in the sense that it doesn't happen for most patches,
-but that said, I get a _lot_ of patches, and it's not rare in the sense
-that it doesn't happen weekly.
+Download tarball from:
+http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
 
-So for example, I did one such edit just Monday in the "sparse" project,
-where Peter Jones sent me a patch that added parsing for a lot of new gcc
-attributes (good), but he had also done some other things that weren't
-quite ready yet (bad). And because they were easy to separate out in the
-patch, I just did it right there instead of asking him to do it for me and
-re-sending.
+tarball build-deps:  zlib, libcurl, libcrypto (openssl)
 
-> If you apply them and then fix things, the ID (and for that matter, the
-> hash) will be safely conveyed from my system to yours and available for
-> the commit to mention.
+install tarball:  unpack && make && sudo make prefix=/usr/local install
 
-I don't want crap in my code. I disagree very strongly with people who say
-that "you can just fix it later". That's not how people work, and worst of
-all, not only does it not get fixed up, even _if_ it is fixed up the wrong
-version inevitably ends up showing up somewhere else, just because
-somebody ended up using the original patch.
+jgarzik helper scripts, not in official git distribution:
+http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
+http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
 
-So I want things to be cleaned up before they hit the tree, rather than 
-have a really dirty history. A dirty history just makes it harder to read, 
-and I don't believe in a second that it's "closer to reality" like some 
-people claim.
+After reading the rest of this document, come back and update your copy 
+of git to the latest:
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
 
-I don't believe anybody wants to see the "true" history. If they did, we'd 
-be logging keystrokes, and sending all of that around. Nope, people want 
-(and need, in order to be able to follow it) an "idealized" history.
 
-> I believe there are separate issues here: 
-> 
->  1. pure history rewriting: maintainer merges a developer's
->     intermediate head; developer generates a new history in which
->     everything later is based on the new mainline.
->  2. patches: changes are transferred as diffs over SMTP instead of trees
->     inside git.
->  3. cherry-picking: maintainer applies some set of changes from a
->     developer which is not merging a head the developer created.
-> 
-> I think (1) is easily handled as a merge script that goes through a series
-> of commits and makes a new series out of merging each of them, rather than
-> merging the last of them only.
+2) download a linux kernel tree for the very first time
 
-Yes. And I think (1) is pretty useful on its own, and that git could 
-support that with a nice helper script.
+$ mkdir -p linux-2.6/.git
+$ cd linux-2.6
+$ rsync -a --delete --verbose --stats --progress \
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ 
+\          <- word-wrapped backslash; sigh
+     .git/
 
-> I think (2) should be as transparent as possible, and, in cases where
-> there was no cherry-picking, be equivalent in the system's behavior to the
-> result of pull and merge (with the possibility for various cleanup 
-> happening on top of or along with the merge in either method).
 
-I really see patches as something totally different than merging. I 
-literally see them as a way to move between different systems.
+3) update local kernel tree to latest 2.6.x upstream ("fast-forward merge")
 
-For example, the git model just doesn't work very well for "fluid" 
-development: git ends up setting history entirely in stone, which means 
-that you can't fix up mistakes later. And this is where patches come in: 
-they work as a way to transfer the information, while at the same time 
-totally breaking the connection with the original messy tree.
+$ cd linux-2.6
+$ git-pull-script \
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-So I really think our view on what "patches" are is very fundamentally 
-different. I don't think SMTP is a good medium for merges: BK actually 
-supports that with "bk send" (or something like that) and I refused to use 
-it. It was a "worst of both worlds" thing.
 
-> The tricky part is (3), which is currently only possible by going outside
-> of git. But I think that this is something to tackle separately from
-> (1) and (2) (where (2) does not involve doing (3)).
+4) check out files from the git repository into the working directory
 
-I think the cherry-picking kind of goes hand in hand with 1/2, though. 
-Patches are really the perfect form of cherry-picking, exactly because 
-they do _not_ imply a very strong ordering or even a very strong 
-dependency on the state of the rest of the sources. So patches end up 
-being the perfect medium for cherry-picking, and SMTP ends up being one of 
-the best ways to transport them and let them evolve.
+$ git checkout -f
 
-And then (1) ends up often being the way the patches actually get 
-generated in the first place. So these things are intertwined, I think.
 
-		Linus
+5) check in your own modifications (e.g. do some hacking, or apply a patch)
+
+# go to repo
+$ cd linux-2.6
+
+# make some modifications
+$ patch -sp1 < /tmp/my.patch
+$ diffstat -p1 < /tmp/my.patch
+
+# NOTE: add '--add' and/or '--remove' if files were added or removed
+$ git-update-cache <list of all files changed>
+
+# check in changes
+$ git commit
+
+
+6) List all changes in working dir, in diff format.
+
+$ git-diff-cache -p HEAD
+
+
+7) List all changesets (i.e. show each cset's description text) in local 
+branch of local tree, that are not present in remote tree.
+
+$ cd my-kernel-tree-2.6
+$ git-changes-script -L ../linux-2.6 | less
+
+
+8) List all changesets:
+
+$ git-whatchanged
+
+
+9) apply all patches in a Berkeley mbox-format file
+
+First, download and add to your PATH Linus's git tools:
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git-tools.git
+
+$ cd my-kernel-tree-2.6
+$ dotest /path/to/mbox  # yes, Linus has no taste in naming scripts
+
+
+10) don't forget to download tags from time to time.
+
+git-pull-script only downloads sha1-indexed object data, and the 
+requested remote head.  This misses updates to the .git/refs/tags/ and 
+.git/refs/heads directories.  It is advisable to update your kernel .git 
+directories periodically with a full rsync command, to make sure you got 
+everything:
+
+$ cd linux-2.6
+$ rsync -a --delete --verbose --stats --progress \
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+\          <- word-wrapped backslash; sigh
+     .git/
+
+
+11) list all branches, such as those found in my netdev-2.6 or 
+libata-dev trees.
+
+Download
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6.git
+	or
+rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/libata-dev.git
+
+
+$ cd netdev-2.6
+$ ls .git/refs/heads/
+
+{ these are the current netdev-2.6 branches }
+> 8139cp       forcedeth    master     qeth           smc91x         we18
+> 8139too-iomap  for-linus    natsemi      r8169      smc91x-eeprom  wifi
+> airo           hdlc         ns83820      register-netdev  starfire
+> atmel          ieee80211    orinoco      remove-drivers   tlan
+> chelsio        iff-running  orinoco-hch  sis900           veth
+> dm9000         janitor      ppp          skge             viro
+
+
+12) make desired branch current in working directory
+
+$ git checkout -f $branch
+
+
+13) create a new branch, and make it current
+
+$ cp .git/refs/heads/master .git/refs/heads/my-new-branch-name
+$ git checkout -f my-new-branch-name
+
+
+14) examine which branch is current
+
+$ ls -l .git/HEAD
+
+
+15) undo all local modifications (same as checkout):
+
+$ git checkout -f
+
+
+16) obtain a diff between current branch, and master branch
+
+In most trees WITH BRANCHES, .git/refs/heads/master contains the current 
+'vanilla' upstream tree, for easy diffing and merging.  (in trees 
+without branches, 'master' simply contains your latest changes)
+
+$ git-diff-tree -p master HEAD
+
+
