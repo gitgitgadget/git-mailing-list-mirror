@@ -1,80 +1,59 @@
-From: Dave Jones <davej@redhat.com>
+From: Greg KH <greg@kroah.com>
 Subject: Re: Updated git HOWTO for kernel hackers
-Date: Wed, 22 Jun 2005 18:52:55 -0400
-Message-ID: <20050622225255.GB21298@redhat.com>
-References: <42B9E536.60704@pobox.com> <20050622224003.GA21298@redhat.com> <42B9EA67.1040407@pobox.com>
+Date: Wed, 22 Jun 2005 16:09:05 -0700
+Message-ID: <20050622230905.GA7873@kroah.com>
+References: <42B9E536.60704@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 00:57:34 2005
+X-From: git-owner@vger.kernel.org Thu Jun 23 01:07:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlE9F-00020I-EB
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 00:56:45 +0200
+	id 1DlEJa-0004KT-7C
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 01:07:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262570AbVFVXCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 19:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262501AbVFVW4w
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 18:56:52 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:46024 "EHLO mx1.redhat.com")
-	by vger.kernel.org with ESMTP id S262557AbVFVWxB (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 18:53:01 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j5MMr0ul022962;
-	Wed, 22 Jun 2005 18:53:00 -0400
-Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
-	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j5MMqtu22559;
-	Wed, 22 Jun 2005 18:52:55 -0400
-Received: from devserv.devel.redhat.com (localhost.localdomain [127.0.0.1])
-	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j5MMqt44002944;
-	Wed, 22 Jun 2005 18:52:55 -0400
-Received: (from davej@localhost)
-	by devserv.devel.redhat.com (8.12.11/8.12.11/Submit) id j5MMqt2E002942;
-	Wed, 22 Jun 2005 18:52:55 -0400
-X-Authentication-Warning: devserv.devel.redhat.com: davej set sender to davej@redhat.com using -f
-To: Jeff Garzik <jgarzik@pobox.com>
-Mail-Followup-To: Dave Jones <davej@redhat.com>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
+	id S262572AbVFVXM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 19:12:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262580AbVFVXMt
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 19:12:49 -0400
+Received: from mail.kroah.org ([69.55.234.183]:60300 "EHLO perch.kroah.org")
+	by vger.kernel.org with ESMTP id S262572AbVFVXJS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 19:09:18 -0400
+Received: from [192.168.0.10] (c-24-22-112-187.hsd1.or.comcast.net [24.22.112.187])
+	(authenticated)
+	by perch.kroah.org (8.11.6/8.11.6) with ESMTP id j5MN9Ai12527;
+	Wed, 22 Jun 2005 16:09:10 -0700
+Received: from greg by echidna.kroah.org with local (masqmail 0.2.19)
+ id 1DlELB-24G-00; Wed, 22 Jun 2005 16:09:05 -0700
+To: Jeff Garzik <jgarzik@pobox.com>, torvalds@osdl.org
 Content-Disposition: inline
-In-Reply-To: <42B9EA67.1040407@pobox.com>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <42B9E536.60704@pobox.com>
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 22, 2005 at 06:47:03PM -0400, Jeff Garzik wrote:
+On Wed, Jun 22, 2005 at 06:24:54PM -0400, Jeff Garzik wrote:
+> 10) don't forget to download tags from time to time.
+> 
+> git-pull-script only downloads sha1-indexed object data, and the 
+> requested remote head.  This misses updates to the .git/refs/tags/ and 
+> .git/refs/heads directories.  It is advisable to update your kernel .git 
+> directories periodically with a full rsync command, to make sure you got 
+> everything:
+> 
+> $ cd linux-2.6
+> $ rsync -a --delete --verbose --stats --progress \
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> \          <- word-wrapped backslash; sigh
+>     .git/
 
- > > > install tarball:  unpack && make && sudo make prefix=/usr/local install
- > >
- > >the sudo thing isn't necessary. make install by itself installs it
- > >in ~/bin/ just fine.
- > 
- > Clearly this does not work if installing in /usr/local, as I and others 
- > do (and as the example shows).
+Ok, this is annoying.  Is there some reason why git doesn't pull the
+tags in properly when doing a merge?  Chris and I just hit this when I
+pulled his 2.6.12.1 tree and and was wondering where the tag went.
 
-Sure, it just seemed to imply that it doesn't work with a non-root install,
-which isn't true.
+thanks,
 
- > > > After reading the rest of this document, come back and update your copy 
- > > > of git to the latest:
- > > > rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
- > >
- > >See above, which allows you to skip this step ;)
- > 
- > huh?  Nothing allows you to skip that step.  Regardless of when you suck 
- > the tarball, even from your snapshots, the users should not skip this step.
-
-At worse, users will have tools 59 minutes old.  If a situation arises
-where git from an hour ago isn't new enough to pull from the repository,
-we have bigger problems.
-
-You seem to be proposing that everyone needs the shiniest newest things,
-which clearly isn't true, and suggesting so just complicates things
-further imo.
-
-		Dave
-
+greg k-h
