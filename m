@@ -1,80 +1,129 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/2] Fix to how --merge-order handles multiple roots
-Date: Thu, 23 Jun 2005 12:01:12 +1000
-Message-ID: <20050623020112.16423.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com, paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 03:58:58 2005
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: Updated git HOWTO for kernel hackers
+Date: Wed, 22 Jun 2005 22:04:31 -0400
+Message-ID: <42BA18AF.2070406@pobox.com>
+References: <42B9E536.60704@pobox.com> <Pine.LNX.4.58.0506221603120.11175@ppc970.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 04:02:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlGzI-0004t6-RP
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 03:58:41 +0200
+	id 1DlH2R-0005Wz-DN
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 04:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261994AbVFWCDb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 22:03:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262015AbVFWCDb
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:03:31 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:52608 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261994AbVFWCBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2005 22:01:15 -0400
-Received: (qmail 16433 invoked by uid 500); 23 Jun 2005 02:01:12 -0000
-To: git@vger.kernel.org
+	id S262020AbVFWCHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 22:07:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262003AbVFWCGR
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:06:17 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:36273 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S262014AbVFWCEj (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 22:04:39 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DlH50-0002uo-Ed; Thu, 23 Jun 2005 02:04:35 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506221603120.11175@ppc970.osdl.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds wrote:
+> A few notes on these things:
+> 
+> 	git-apply --index /tmp/my.patch
+> 
+> will not only apply the patch (unified patches only!), but will do the
+> index updates for you while it's at it, so if the patch contains new files
+> (or it deletes files), you don't need to worry about it.
 
-This patch addresses the problem reported by Paul Mackerras such that --merge-order
-did not report the last root of a graph with merge of two independent roots.
+The output isn't terribly helpful:
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
+[jgarzik@pretzel netdev-2.6]$ git apply --index \
+	~/tmp/linux-2.6.12-rc4-cxgb2.1.1.patch
+Fragment applied at offset 11
 
- epoch.c |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+That is worse than no message at all...  fragment?  offset 11?  did it 
+work?  Did it apply only a "fragment" of my patch, not the whole thing? 
+  I'm worried! </mental monologue>
 
-diff --git a/epoch.c b/epoch.c
---- a/epoch.c
-+++ b/epoch.c
-@@ -488,7 +488,7 @@ static void sort_first_epoch(struct comm
-  *
-  * Sets the return value to STOP if no further output should be generated.
-  */
--static int emit_stack(struct commit_list **stack, emitter_func emitter)
-+static int emit_stack(struct commit_list **stack, emitter_func emitter, int include_last)
- {
- 	unsigned int seen = 0;
- 	int action = CONTINUE;
-@@ -496,8 +496,11 @@ static int emit_stack(struct commit_list
- 	while (*stack && (action != STOP)) {
- 		struct commit *next = pop_commit(stack);
- 		seen |= next->object.flags;
--		if (*stack)
-+		if (*stack || include_last) {
-+			if (!*stack) 
-+				next->object.flags |= BOUNDARY;
- 			action = (*emitter) (next);
-+		}
- 	}
- 
- 	if (*stack) {
-@@ -553,7 +556,7 @@ static int sort_in_merge_order(struct co
- 		} else {
- 			struct commit_list *stack = NULL;
- 			sort_first_epoch(next, &stack);
--			action = emit_stack(&stack, emitter);
-+			action = emit_stack(&stack, emitter, (base == NULL));
- 			next = base;
- 		}
- 	}
-@@ -636,7 +639,7 @@ int sort_list_in_merge_order(struct comm
- 			}
- 		}
- 
--		action = emit_stack(&stack, emitter);
-+		action = emit_stack(&stack, emitter, (base==NULL));
- 	}
- 
- 	if (base && (action != STOP)) {
-------------
+Outputting the following (stolen from 'git commit') would be far more 
+useful:
+
+       modified: Documentation/networking/cxgb.txt
+       modified: drivers/net/chelsio/Makefile
+       deleted:  drivers/net/chelsio/ch_ethtool.h
+       modified: drivers/net/chelsio/common.h
+       modified: drivers/net/chelsio/cphy.h
+       modified: drivers/net/chelsio/cpl5_cmd.h
+       modified: drivers/net/chelsio/cxgb2.c
+       deleted:  drivers/net/chelsio/cxgb2.h
+       modified: drivers/net/chelsio/elmer0.h
+       modified: drivers/net/chelsio/espi.c
+       modified: drivers/net/chelsio/espi.h
+       modified: drivers/net/chelsio/gmac.h
+       modified: drivers/net/chelsio/mv88x201x.c
+       deleted:  drivers/net/chelsio/osdep.h
+       modified: drivers/net/chelsio/pm3393.c
+       modified: drivers/net/chelsio/regs.h
+       modified: drivers/net/chelsio/sge.c
+       modified: drivers/net/chelsio/sge.h
+       modified: drivers/net/chelsio/subr.c
+       modified: drivers/net/chelsio/suni1x10gexp_regs.h
+       deleted:  drivers/net/chelsio/tp.c
+       deleted:  drivers/net/chelsio/tp.h
+       modified: include/linux/pci_ids.h
+
+
+> Also, you can do
+> 
+> 	git commit <list-of-files-to-commit>
+> 
+> as a shorthand for
+> 
+> 	git-update-cache <list-of-files-to-commit>
+> 	git commit
+> 
+> which some people will probably find more natural.
+
+It would be natural if it functioned like 'bk citool' ;-)
+
+	git commit --figure-out-for-me-what-files-changed
+
+'git diff' can do this, so it's certainly feasible.
+
+Obviously added/removed files would still require git-update-cache or 
+git-commit<list of files>.
+
+
+> "git-whatchanged" is useful if you actually want to see what the commits 
+> _changed_, and then you often want to use the "-p" flag to see it as 
+> patches. Also, it's worth pointing out the fact that you can limit it to 
+> certain subdirectories (or individual files) etc, ie:
+> 
+> 	git-whatchanged -p drivers/net
+> 
+> since that is often what people want.
+> 
+> But if you just want the log, "git log" is faster and simpler and more 
+> correct.
+
+I usually want just two things:
+
+1) browse the log
+
+2) list changes in local tree that are not in $remote_tree, a la
+	bk changes -L ../linux-2.6
+
+I agree that seeing the merge csets is useful, that is why [being 
+ignorant of 'git log'] I used git-changes-script.
+
+	Jeff
+
+
