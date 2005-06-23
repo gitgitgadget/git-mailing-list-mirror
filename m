@@ -1,58 +1,109 @@
-From: Vojtech Pavlik <vojtech@suse.cz>
-Subject: Re: Updated git HOWTO for kernel hackers
-Date: Thu, 23 Jun 2005 10:30:25 +0200
-Message-ID: <20050623083025.GA5066@ucw.cz>
-References: <42B9FCAE.1000607@pobox.com> <Pine.LNX.4.58.0506221724140.11175@ppc970.osdl.org> <42BA14B8.2020609@pobox.com> <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org> <42BA1B68.9040505@pobox.com> <Pine.LNX.4.58.0506221929430.11175@ppc970.osdl.org> <42BA271F.6080505@pobox.com> <Pine.LNX.4.58.0506222014000.11175@ppc970.osdl.org> <42BA45B1.7060207@pobox.com> <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Patch (apply) vs. Pull
+Date: Thu, 23 Jun 2005 20:36:03 +1200
+Message-ID: <46a038f905062301363c3c1ea8@mail.gmail.com>
+References: <1119284365.3926.15.camel@localhost.localdomain>
+	 <7vbr61j631.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org>
+Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jgarzik@pobox.com>, Greg KH <greg@kroah.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262611AbVFWIsv@vger.kernel.org Thu Jun 23 10:52:47 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262611AbVFWIsv@vger.kernel.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Darrin Thompson <darrint@progeny.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 23 11:08:29 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlNRC-0000ii-8B
-	for glk-linux-kernel@gmane.org; Thu, 23 Jun 2005 10:51:54 +0200
+	id 1DlNgl-0004Sd-12
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 11:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262611AbVFWIsv (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
-	Thu, 23 Jun 2005 04:48:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262613AbVFWIqH
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Thu, 23 Jun 2005 04:46:07 -0400
-Received: from styx.suse.cz ([82.119.242.94]:8898 "EHLO mail.suse.cz")
-	by vger.kernel.org with ESMTP id S263048AbVFWIa0 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 23 Jun 2005 04:30:26 -0400
-Received: from shadow.suse.cz (shadow.suse.cz [10.20.1.74])
-	by mail.suse.cz (SUSE CR ESMTP Mailer) with ESMTP id 4A3BE628321;
-	Thu, 23 Jun 2005 10:30:25 +0200 (CEST)
-Received: by shadow.suse.cz (Postfix, from userid 10002)
-	id 3A71512CC34; Thu, 23 Jun 2005 10:30:25 +0200 (CEST)
+	id S262663AbVFWIs1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 04:48:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262286AbVFWImi
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 04:42:38 -0400
+Received: from rproxy.gmail.com ([64.233.170.207]:41378 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S263065AbVFWIgD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2005 04:36:03 -0400
+Received: by rproxy.gmail.com with SMTP id i8so223880rne
+        for <git@vger.kernel.org>; Thu, 23 Jun 2005 01:36:03 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QdCQAZ20qV7idOywXb63ldgrZMMjVmChJKdqC7YUPAeMSGUn7wkDjnSKMXNOfsbOt1ngCwRckxB47JcHNtspfbjKbOyNWMA/9LkOLJRwoFNZZH6iuiHe6roAuo+ZZ8nQQ8Ue+Dh33Kpyx8HTyKf62HA2XDuK72r0qCR3TSz4H1g=
+Received: by 10.38.65.51 with SMTP id n51mr737495rna;
+        Thu, 23 Jun 2005 01:36:03 -0700 (PDT)
+Received: by 10.38.101.46 with HTTP; Thu, 23 Jun 2005 01:36:03 -0700 (PDT)
 To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
-User-Agent: Mutt/1.5.6i
-Sender: linux-kernel-owner@vger.kernel.org
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
+X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jun 22, 2005 at 10:58:13PM -0700, Linus Torvalds wrote:
-
-> And thinking that "fetching a tree fetches all the tags from that tree"  
-> really _is_ a stupid decision. It's missing the big picture. It's missing
-> the fact that tags _should_ be normal every-day things that you just use
-> as "book-marks", and that the kind of big "synchronization point for many
-> people" tag should actually be the _rare_ case.
+On 6/22/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> Btw, I'd like to help automate the 6-7 stage with a different kind of
+> merge logic.
+(...)
+>  - get the different HEAD info set up, and save the original head in
+>    ORIG_HEAD, the way "git resolve" does for real merges:
 > 
-> The fact that global tags make that private "bookmark" usage impossible
-> should be a big red blinking sign saying "don't do global tags".
+>         : ${GIT_DIR=.git}
+> 
+>         orig=$(git-rev-parse HEAD)
+>         new=$(git-rev-parse FETCH_HEAD)
+>         common=$(git-merge-base $orig $new)
+> 
+>         echo $orig > $GIT_DIR/ORIG_HEAD
+> 
+>  - fast-forward to the new HEAD. We'll want to re-base everything off
+>    that. If that fails, exit out - we've got dirty state
+> 
+>         git-read-tree -m -u $orig $new && exit 1
+> 
+>  - for each commit that we had in our old tree but not in the common part,
+>    try to re-base it:
+> 
+>         > FAILED_TO_CHERRYPICK
+>         for i in $(git-rev-list $orig ^$common)
+>         do
+>                 git-cherry-pick $i ||
+>                         (echo $i >> FAILED_TO_CHERRYPICK)
+>         done
+>         if [ -s FAILED_TO_CHERRYPICK ]; then
+>                 echo Some commits could not be cherry-picked, check by hand:
+>                 cat FAILED_TO_CHERRYPICK
+>         fi
 
-Maybe it'd make sense to differentiate between the two types of tags?
-To have local tags which don't propagate, and global (version) tags
-which do? They could live in different namespaces and thus wouldn't
-interfere.
+Re-base and replay local history is an approach I've been using
+successfully with Arch (though it takes literally ages). Ideally, the
+process should be able to be restarted after one call to
+git-cherry-pick fails. It is usually a handful of patches in a series
+of a few hundred that will break, usually because it's been fed
+upstream. You want to resolve the conflict and resume somehow.
 
--- 
-Vojtech Pavlik
-SuSE Labs, SuSE CR
+> and here the "git-cherry-pick" thing is just a script that basically takes
+> an old commit ID, and tries to re-apply it as a patch (with author data
+> and commit messages, of course) on top of the current head. It would
+> basically be nothing more than a "git-diff-tree $1" followed by tryign to
+> figure out whether it had already been applied or whether it can be
+> applied now.
+> 
+> What do you think?
+
+Sounds great. 
+
+It might be useful to provide it a "skip" list, so that it skips
+applying selected patches (that have presumably made it upstream).
+
+And perhaps --stop-at <commit-sha> so that if a large replay fails or
+yields a broken tree (not at the git level, but at the /does it
+compile and run/ level), I can throw away the temporary repo where I'm
+working and try again in shorter batches, stopping at "strategical"
+points.
+
+cheers,
+
+
+martin
