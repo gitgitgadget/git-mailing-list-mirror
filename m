@@ -1,81 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-prune-script eats data
-Date: Wed, 22 Jun 2005 19:04:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506221857410.11175@ppc970.osdl.org>
-References: <42B8B629.1040208@pobox.com>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Re: Updated git HOWTO for kernel hackers
+Date: Wed, 22 Jun 2005 22:16:08 -0400
+Message-ID: <42BA1B68.9040505@pobox.com>
+References: <42B9E536.60704@pobox.com> <20050622230905.GA7873@kroah.com> <Pine.LNX.4.58.0506221623210.11175@ppc970.osdl.org> <42B9FCAE.1000607@pobox.com> <Pine.LNX.4.58.0506221724140.11175@ppc970.osdl.org> <42BA14B8.2020609@pobox.com> <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 04:07:10 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Greg KH <greg@kroah.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 04:12:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlH7G-0006XQ-6H
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 04:06:54 +0200
+	id 1DlHCd-0007aB-Kv
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 04:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262021AbVFWCJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 22:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261976AbVFWCF2
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:05:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:30364 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262010AbVFWCCw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 22:02:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5N22fjA012716
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Jun 2005 19:02:41 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5N22eg5019857;
-	Wed, 22 Jun 2005 19:02:40 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42B8B629.1040208@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262029AbVFWCRm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 22:17:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262031AbVFWCRe
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:17:34 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:38577 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261977AbVFWCQM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 22:16:12 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DlHGF-0002v1-I0; Thu, 23 Jun 2005 02:16:11 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Tue, 21 Jun 2005, Jeff Garzik wrote:
+Linus Torvalds wrote:
 > 
-> $ git-prune-script
+> On Wed, 22 Jun 2005, Jeff Garzik wrote:
 > 
-> $ git-fsck-cache
-> error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
-> bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
-> bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
+>>With BK, tags came with each pull.  With git, you have to go "outside 
+>>the system" (rsync) just get the new tags.
+> 
+> 
+> You don't have to use rsync, and you don't have to go outside the system. 
+> That was my point: you can use "git-ssh-pull" to pull the tags.
 
-It's exactly the same thing that Jens had. You have a tag object for the 
-v2.6.11-tree thing, but you don't have the reference to the tag.
+OK, understood.
 
-And now I realize what the problem is. It's _not_ that "git prune" has 
-removed too much, like the obvious implication would be: it's that "git 
-prune" has not removed _enough_.
 
-"git prune" normally never removes tag-objects, whether reachable or not. 
-That's because git-fsck-cache was explicitly ignoring them, which was 
-because early on, the way you found tags was you did
+> But yes, you have to explicitly ask for them by name, ie the other side 
+> has to let you know: "Oh, btw, I created a 'xyz' tag for you". And having 
+> another helper script to hide the details of how git-*-pull handles tags 
+> is obviously also a good idea, although it's pretty low on my list of 
+> things to worry about.
 
-	git-fsck-cache --tags
+The problem is still that nothing says "oh, btw, I created 'xyz' tag for 
+you" AFAICS?
 
-and then you created refs to them manually. 
+IMO the user (GregKH and me, at least) just wants to know their set of 
+tags and heads is up-to-date on local disk.  Wants to know what tags are 
+out there.  It's quite annoying when two data sets are out of sync 
+(.git/objects and .git/refs/tags).
 
-But now that special case causes problems (and is no longer needed 
-anyway), because it means that "git prune" will not remove unreachable 
-tags, but it _will_ remove everything that an unreachable tag points to 
-(because that is also unreachable).
+Asking for the tag by name isn't useful at all, in that regard, because 
+that requires that the user already know what tags are available.  To 
+get that info, one must use rsync, gitweb, or a subscription to Psychic 
+Friends Network.
 
-So the trivial fix is to just remove the lines from fsck-cache.c that say
+	Jeff
 
-	/* Don't bother with tag reachability. */
-	if (obj->type == tag_type)
-		continue;
 
-and that will fix it for you.
-
-Will do.
-
-		Linus
