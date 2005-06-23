@@ -1,56 +1,58 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Jeff Garzik <jgarzik@pobox.com>
 Subject: Re: Updated git HOWTO for kernel hackers
-Date: Wed, 22 Jun 2005 16:25:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506221623210.11175@ppc970.osdl.org>
-References: <42B9E536.60704@pobox.com> <20050622230905.GA7873@kroah.com>
+Date: Wed, 22 Jun 2005 20:05:02 -0400
+Message-ID: <42B9FCAE.1000607@pobox.com>
+References: <42B9E536.60704@pobox.com> <20050622230905.GA7873@kroah.com> <Pine.LNX.4.58.0506221623210.11175@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff Garzik <jgarzik@pobox.com>,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Greg KH <greg@kroah.com>,
 	Linux Kernel <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 01:23:29 2005
+X-From: git-owner@vger.kernel.org Thu Jun 23 02:01:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlEYP-0007Uk-ON
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 01:22:46 +0200
+	id 1DlF9H-00076d-Ra
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 02:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262581AbVFVX2P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 19:28:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262151AbVFVXXi
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 19:23:38 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41962 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261486AbVFVXXN (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 19:23:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5MNN3jA001672
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Jun 2005 16:23:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5MNN2QB012294;
-	Wed, 22 Jun 2005 16:23:02 -0700
-To: Greg KH <greg@kroah.com>
-In-Reply-To: <20050622230905.GA7873@kroah.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261841AbVFWAGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 20:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261839AbVFWAGr
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 20:06:47 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:15537 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261843AbVFWAFJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 20:05:09 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DlFDO-0002sH-7U; Thu, 23 Jun 2005 00:05:06 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506221623210.11175@ppc970.osdl.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 22 Jun 2005, Greg KH wrote:
+Linus Torvalds wrote:
 > 
-> Ok, this is annoying.  Is there some reason why git doesn't pull the
-> tags in properly when doing a merge?  Chris and I just hit this when I
-> pulled his 2.6.12.1 tree and and was wondering where the tag went.
+> On Wed, 22 Jun 2005, Greg KH wrote:
+> 
+>>Ok, this is annoying.  Is there some reason why git doesn't pull the
+>>tags in properly when doing a merge?  Chris and I just hit this when I
+>>pulled his 2.6.12.1 tree and and was wondering where the tag went.
+> 
+> 
+> Tags are private in git (the same way branches are), which means that you
+> can have a million of your own tags and never disturb anybody else.
+> 
+> But, like branches, it means that if you want a tag, you need to know the 
+> tag you want, and download it the same way you download a branch.
 
-Tags are private in git (the same way branches are), which means that you
-can have a million of your own tags and never disturb anybody else.
+Still -- that's interesting data that no script currently tracks.  You 
+gotta fall back to rsync.
 
-But, like branches, it means that if you want a tag, you need to know the 
-tag you want, and download it the same way you download a branch.
+	Jeff
 
-		Linus
+
