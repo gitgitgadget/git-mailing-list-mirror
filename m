@@ -1,119 +1,81 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 1/2] A test case that demonstrates a problem with merges with two roots.
-Date: Thu, 23 Jun 2005 12:01:09 +1000
-Message-ID: <20050623020109.16402.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com, paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 04:06:57 2005
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git-prune-script eats data
+Date: Wed, 22 Jun 2005 19:04:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506221857410.11175@ppc970.osdl.org>
+References: <42B8B629.1040208@pobox.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 04:07:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlH7J-0006XQ-D8
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 04:06:57 +0200
+	id 1DlH7G-0006XQ-6H
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 04:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261976AbVFWCJW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 22 Jun 2005 22:09:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261977AbVFWCFB
-	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:05:01 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:54144 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262003AbVFWCBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Jun 2005 22:01:16 -0400
-Received: (qmail 16413 invoked by uid 500); 23 Jun 2005 02:01:09 -0000
-To: git@vger.kernel.org
+	id S262021AbVFWCJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 22 Jun 2005 22:09:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261976AbVFWCF2
+	(ORCPT <rfc822;git-outgoing>); Wed, 22 Jun 2005 22:05:28 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:30364 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262010AbVFWCCw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Jun 2005 22:02:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5N22fjA012716
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 22 Jun 2005 19:02:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5N22eg5019857;
+	Wed, 22 Jun 2005 19:02:40 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <42B8B629.1040208@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-git-rev-list --merge-order is omitting one of the roots when
-displaying a merge containing two distinct roots.
 
-A subsequent patch will fix the problem.
+On Tue, 21 Jun 2005, Jeff Garzik wrote:
+> 
+> $ git-prune-script
+> 
+> $ git-fsck-cache
+> error: cannot map sha1 file c39ae07f393806ccf406ef966e9a15afc43cc36a
+> bad object in tag 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c
+> bad sha1 entry '5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c'
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
+It's exactly the same thing that Jens had. You have a tag object for the 
+v2.6.11-tree thing, but you don't have the reference to the tag.
 
- t/t6001-rev-list-merge-order.sh |   61 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 61 insertions(+), 0 deletions(-)
+And now I realize what the problem is. It's _not_ that "git prune" has 
+removed too much, like the obvious implication would be: it's that "git 
+prune" has not removed _enough_.
 
-diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
-old mode 100644
-new mode 100755
---- a/t/t6001-rev-list-merge-order.sh
-+++ b/t/t6001-rev-list-merge-order.sh
-@@ -172,6 +172,13 @@ on_committer_date "1971-08-16 00:00:17" 
- on_committer_date "1971-08-16 00:00:18" save_tag l5 unique_commit l5 tree -p l4
- on_committer_date "1971-08-16 00:00:19" save_tag m1 unique_commit m1 tree -p a4 -p c3
- on_committer_date "1971-08-16 00:00:20" save_tag m2 unique_commit m2 tree -p c3 -p a4
-+on_committer_date "1971-08-16 00:00:21" hide_error save_tag alt_root unique_commit alt_root tree
-+on_committer_date "1971-08-16 00:00:22" save_tag r0 unique_commit r0 tree -p alt_root
-+on_committer_date "1971-08-16 00:00:23" save_tag r1 unique_commit r1 tree -p r0
-+on_committer_date "1971-08-16 00:00:24" save_tag l5r1 unique_commit l5r1 tree -p l5 -p r1
-+on_committer_date "1971-08-16 00:00:25" save_tag r1l5 unique_commit r1l5 tree -p r1 -p l5
-+
-+
- #
- # note: as of 20/6, it isn't possible to create duplicate parents, so this
- # can't be tested.
-@@ -483,6 +490,60 @@ EOF
- 
- test_expect_success "head ^head no --merge-order" 'git-rev-list a3 ^a3' <<EOF
- EOF
-+
-+test_output_expect_success 'simple merge order (l5r1)' 'git-rev-list --merge-order --show-breaks l5r1' <<EOF
-+= l5r1
-+| r1
-+| r0
-+| alt_root
-+^ l5
-+| l4
-+| l3
-+| a4
-+| c3
-+| c2
-+| c1
-+^ b4
-+| b3
-+| b2
-+| b1
-+^ a3
-+| a2
-+| a1
-+| a0
-+| l2
-+| l1
-+| l0
-+= root
-+EOF
-+
-+test_output_expect_success 'simple merge order (r1l5)' 'git-rev-list --merge-order --show-breaks r1l5' <<EOF
-+= r1l5
-+| l5
-+| l4
-+| l3
-+| a4
-+| c3
-+| c2
-+| c1
-+^ b4
-+| b3
-+| b2
-+| b1
-+^ a3
-+| a2
-+| a1
-+| a0
-+| l2
-+| l1
-+| l0
-+| root
-+^ r1
-+| r0
-+= alt_root
-+EOF
-+
-+
- #
- #
- 
-------------
+"git prune" normally never removes tag-objects, whether reachable or not. 
+That's because git-fsck-cache was explicitly ignoring them, which was 
+because early on, the way you found tags was you did
+
+	git-fsck-cache --tags
+
+and then you created refs to them manually. 
+
+But now that special case causes problems (and is no longer needed 
+anyway), because it means that "git prune" will not remove unreachable 
+tags, but it _will_ remove everything that an unreachable tag points to 
+(because that is also unreachable).
+
+So the trivial fix is to just remove the lines from fsck-cache.c that say
+
+	/* Don't bother with tag reachability. */
+	if (obj->type == tag_type)
+		continue;
+
+and that will fix it for you.
+
+Will do.
+
+		Linus
