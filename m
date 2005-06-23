@@ -1,100 +1,81 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: 'dotest' fails, patch(1) succeeds
-Date: Thu, 23 Jun 2005 03:37:37 -0400
-Message-ID: <42BA66C1.30400@pobox.com>
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: Updated git HOWTO for kernel hackers
+Date: Thu, 23 Jun 2005 09:38:45 +0200
+Message-ID: <20050623073845.GA5204@pasky.ji.cz>
+References: <42B9FCAE.1000607@pobox.com> <Pine.LNX.4.58.0506221724140.11175@ppc970.osdl.org> <42BA14B8.2020609@pobox.com> <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org> <42BA1B68.9040505@pobox.com> <Pine.LNX.4.58.0506221929430.11175@ppc970.osdl.org> <42BA271F.6080505@pobox.com> <Pine.LNX.4.58.0506222014000.11175@ppc970.osdl.org> <42BA45B1.7060207@pobox.com> <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050203000606000308080508"
-X-From: git-owner@vger.kernel.org Thu Jun 23 09:38:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Garzik <jgarzik@pobox.com>, Greg KH <greg@kroah.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 09:39:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlMHm-0007NZ-Kl
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 09:38:06 +0200
+	id 1DlMIr-0007dz-Eg
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 09:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262603AbVFWHnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 03:43:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262618AbVFWHnj
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 03:43:39 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:42674 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S262594AbVFWHho (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 03:37:44 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DlMHM-00038x-3z; Thu, 23 Jun 2005 07:37:40 +0000
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S262559AbVFWHoV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 03:44:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262558AbVFWHoV
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 03:44:21 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:15017 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262574AbVFWHir (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 03:38:47 -0400
+Received: (qmail 7388 invoked by uid 2001); 23 Jun 2005 07:38:45 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------050203000606000308080508
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Dear diary, on Thu, Jun 23, 2005 at 07:58:13AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> Does it help when I scream?
 
+Nope. I still think you are wrong. :-) (BTW, Cogito always fetches all
+the tags now - but it's not that I would have a huge problem with
+changing that to some better behaviour.)
 
-Trying to use git-tools' "dotest" script to merge an mbox into a kernel 
-git repo failed, but patch(1) was OK with it:
+> > Multiple users -- not just me -- would prefer that git-pull-script 
+> > pulled the tags, too.
+> 
+> And multiple users -- clearly including you -- aren't listening to me. 
+> Tags are separate from the source they tag, and they HAVE TO BE. There is 
+> no "you automatically get the tags when you get the tree", because the two 
+> don't have a 1:1 relationship.
+> 
+> And not making them separate breaks a lot of things. As mentioned, it
+> fundamentally breaks the distributed nature, but that also means that it
+> breaks whenever two people use the same name for a tag, for example. You
+> can't "merge" tags. BK had a very strange form of merging, which was (I
+> think) to pick the one last in the BK ChangeSet file, but that didn't make
+> it "right". You just never noticed, because Linux could never use tags at
+> all due to the lack of privacy, except for big releases..
 
-	[jgarzik@pretzel netdev-2.6]$ dotest /g/tmp/mbox
+I think there should simply be two namespaces - public tags and private
+tags. Private tags for stuff like "broken", "merged", or "funnychange".
+Other people don't care about those, and they certainly shouldn't get
+them by default (but they should have a way to get them explicitly, if
+you tell them). But then there are the official tags, like "v2.6.13" or
+even "v2.6.12-ck2" - if you merge with those branches, you should always
+get those precisely for what Jeff says - they are big syncing points for
+a lot of people and you should be always able to refer to v2.6.13 if you
+have the commit in your tree.
 
-	Applying 'e1000: fix spinlock bug'
+Since there should be _few_ of those tags, you might even want to get
+tags only from branches marked "tagtrusted" (Cogito's origin branch
+would be by default), or want to interactively confirm new tag additions
+during a pull. Also, ideally there would be no or only extremely rare
+tag conflicts.
 
-	fatal: corrupt patch at line 10
-	[jgarzik@pretzel netdev-2.6]$ patch -sp1  < /g/tmp/mbox
-	[jgarzik@pretzel netdev-2.6]$
+I think it would be simplest to use a special prefix for the private
+tags. ~ and ! might get touched by shell, so what about %?
 
-
-Ideas?  Full data needed to reproduce is attached.  .git/HEAD is 
-a4936044001694f033fe4ea94d6034d51a6b465c.
-
-	Jeff
-
-
-
-
---------------050203000606000308080508
-Content-Type: application/x-bzip2;
- name="mbox.bz2"
-Content-Transfer-Encoding: base64
-Content-Disposition: inline;
- filename="mbox.bz2"
-
-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
-5EqaObAv6o/rVbuigsDHj/8XckU4UJArmbx2
---------------050203000606000308080508--
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
