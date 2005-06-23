@@ -1,82 +1,90 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: 'dotest' fails, patch(1) succeeds
-Date: Thu, 23 Jun 2005 09:22:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506230915330.11175@ppc970.osdl.org>
-References: <42BA66C1.30400@pobox.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Patch (apply) vs. Pull
+Date: Thu, 23 Jun 2005 12:45:45 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506231149460.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0506222258290.11175@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 18:15:33 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 23 18:41:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlUM5-0006U1-FM
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 18:15:05 +0200
+	id 1DlUle-0004sS-Au
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 18:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262602AbVFWQVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 12:21:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262603AbVFWQVX
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 12:21:23 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12161 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262602AbVFWQUn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 12:20:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5NGKdjA008146
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 23 Jun 2005 09:20:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5NGKc7j027702;
-	Thu, 23 Jun 2005 09:20:39 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42BA66C1.30400@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262623AbVFWQru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 12:47:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262630AbVFWQru
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 12:47:50 -0400
+Received: from iabervon.org ([66.92.72.58]:47622 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262629AbVFWQrc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 12:47:32 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DlUpl-0008TD-00; Thu, 23 Jun 2005 12:45:45 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506222258290.11175@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 22 Jun 2005, Linus Torvalds wrote:
 
-
-On Thu, 23 Jun 2005, Jeff Garzik wrote:
+> On Thu, 23 Jun 2005, Daniel Barkalow wrote:
 > 
-> Trying to use git-tools' "dotest" script to merge an mbox into a kernel 
-> git repo failed, but patch(1) was OK with it:
+> > > In fact, you could probably replace every run of contiguous whitespace
+> > > with a single space, and then you'd not have to worry about whitespace
+> > > differences either. That would be very simple to do, and quite workable: I
+> > > certainly think it sounds more reliable than just hoping that people
+> > > always pass on a "patch ID" in their emails..
+> > 
+> > That's actually quite plausible. The only case it wouldn't handle is when
+> > you actually discard parts, and I'm not sure at this point what other
+> > people should see there.
 > 
-> 	[jgarzik@pretzel netdev-2.6]$ dotest /g/tmp/mbox
+> Yes. One small note of warning: different "diff" algorithms may under some
+> (mostly unlikely) circumstances result in different patches for the
+> difference between the same two files. So when comparin SHA1's of diffs
+> this way, you should also hopefully have the same diff generation
+> algorithm.
+
+I think that, if we care much about the hashes of diffs, we should hash
+the diff that's being applied, not hash a regenerated diff (unless, of
+course, the diff that's being applied has been modified in hash-relevant
+ways, in which case it's not going to match anything anyway).
+
+GNU diff sometimes generates patches which are really terrible to try to
+read, because it finds some line of punctuation from a removed block that
+matches a line in an added block and interleaves unrelated content. It
+would be nice to not have to worry about confusion if there's a mismatch.
+
+Wouldn't the only case where this would be a problem be if we had the
+committer apply the patch, generate a diff, hash it, and stick the hash in
+the commit? The no-cache version has the diffs for hashing done by the
+same person with the same program, and the hash-the-applied-patch version
+has the hashes done on the same patch.
+
+> > > Yeah. It probably works well in 99% of the cases to just do a simple
+> > > "export as patch" + "apply on top with old commit message, author and
+> > > author-date".
+> > 
+> > I think that you'll get better results out of "merge with top" + "commit
+> > with old commit info, but not listing old commit as a parent".
 > 
-> 	Applying 'e1000: fix spinlock bug'
-> 
-> 	fatal: corrupt patch at line 10
+> If I understand you correctly, that assumes that you followed the whole
+> chain, though, and that there was no cherry-picking.
 
-You have a corrupt patch, and "git-apply" not only tells you so, it tells 
-you _exactly_ where it is:
+I think that the whole-chain case is sufficiently common to make special
+and extra smooth; developers will be making their history forwards every
+day, and only cherry-picking on occasion.
 
-In particular, it has whitespace damage at line 10:
+This is also still in the developer's messy history, and I don't think
+those commits are really worth much as history or organization (although
+they're wonderful as checkpointing). The cherry-picking there will
+generally be content-based rather than commit-based, and will mostly be
+picking out hunks to form a clean patch sequence to replace the history.
 
- 1 --- linux-2.6.12-clean/drivers/net/e1000/e1000_main.c	2005-06-17 12:48:29.000000000 -0700
- 2 +++ linux-2.6.12/drivers/net/e1000/e1000_main.c	2005-06-21 10:42:29.000000000 -0700
- 3 @@ -2307,6 +2307,7 @@ e1000_xmit_frame(struct sk_buff *skb, st
- 4  	tso = e1000_tso(adapter, skb);
- 5  	if (tso < 0) {
- 6  		dev_kfree_skb_any(skb);
- 7 +		spin_unlock_irqrestore(&adapter->tx_lock, flags);
- 8  		return NETDEV_TX_OK;
- 9  	}
-10 
+	-Daniel
+*This .sig left intentionally blank*
 
-And take a close look. That line should have _one_ space on it (the space 
-that says "neither new nor old"), and it's totally empty (well, now in my 
-email it has "10 " on it, of course ;)
-
-Btw, you have another problem: you should add a "---" marker to before the 
-patch header, otherwise your commit message will have the "diff -urpN" 
-thing in it. To the "dotest" scripts, "---" is the thing that says "here 
-ends the message and the patch begins".
-
-(The line numbers from "git-apply" will also start at that --- point, so 
-if you add a "---" just above the "diff" line, you'd get "line 12" being 
-the corrupt one)
-
-		Linus
