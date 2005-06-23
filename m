@@ -1,7 +1,8 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/3] git-cherry: find commits not merged upstream.
-Date: Thu, 23 Jun 2005 16:28:27 -0700
-Message-ID: <7vaclgejqc.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: [PATCH 3/3] git-rebase-script: rebase local commits to new upstream
+ head.
+Date: Thu, 23 Jun 2005 16:29:09 -0700
+Message-ID: <7v4qboejp6.fsf_-_@assigned-by-dhcp.cox.net>
 References: <1119284365.3926.15.camel@localhost.localdomain>
 	<7vbr61j631.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org>
@@ -9,26 +10,26 @@ References: <1119284365.3926.15.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 24 01:22:42 2005
+X-From: git-owner@vger.kernel.org Fri Jun 24 01:23:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dlb1r-0004JU-1y
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 01:22:39 +0200
+	id 1Dlb2B-0004MO-JP
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 01:22:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262744AbVFWX3A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 19:29:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262820AbVFWX3A
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 19:29:00 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:15798 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S262744AbVFWX23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2005 19:28:29 -0400
+	id S262820AbVFWX3V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 19:29:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262830AbVFWX3V
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 19:29:21 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5623 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262820AbVFWX3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2005 19:29:11 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao06.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050623232827.VETU16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 23 Jun 2005 19:28:27 -0400
+          id <20050623232909.JSLW19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 23 Jun 2005 19:29:09 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7v4qbofym7.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Thu, 23 Jun 2005 16:21:36 -0700")
@@ -37,16 +38,17 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This script helps the git-rebase script by finding commits that
-have not been merged upstream.
+Using git-cherry, forward port local commits missing from the
+new upstream head.  This depends on "-m" flag support in
+git-commit-script.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- Makefile   |    2 +
- git-cherry |   90 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 91 insertions(+), 1 deletions(-)
- create mode 100755 git-cherry
+ Makefile          |    2 +-
+ git-rebase-script |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 1 deletions(-)
+ create mode 100755 git-rebase-script
 
 diff --git a/Makefile b/Makefile
 --- a/Makefile
@@ -55,16 +57,16 @@ diff --git a/Makefile b/Makefile
  	git-deltafy-script git-fetch-script git-status-script git-commit-script \
  	git-log-script git-shortlog git-cvsimport-script git-diff-script \
  	git-reset-script git-add-script git-checkout-script git-clone-script \
--	gitk
-+	gitk git-cherry
+-	gitk git-cherry
++	gitk git-cherry git-rebase-script
  
  PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
  	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-cherry b/git-cherry
+diff --git a/git-rebase-script b/git-rebase-script
 new file mode 100755
 --- /dev/null
-+++ b/git-cherry
-@@ -0,0 +1,90 @@
++++ b/git-rebase-script
+@@ -0,0 +1,46 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2005 Junio C Hamano.
@@ -72,27 +74,10 @@ new file mode 100755
 +
 +usage="usage: $0 "'<upstream> [<head>]
 +
-+             __*__*__*__*__> <upstream>
-+            /
-+  fork-point
-+            \__+__+__+__+__+__+__+__> <head>
++Uses output from git-cherry to rebase local commits to the new head of
++upstream tree.'
 +
-+Each commit between the fork-point and <head> is examined, and
-+compared against the change each commit between the fork-point and
-+<upstream> introduces.  If the change does not seem to be in the
-+upstream, it is shown on the standard output.
-+
-+The output is intended to be used as:
-+
-+    OLD_HEAD=$(git-rev-parse HEAD)
-+    git-rev-parse linus >${GIT_DIR-.}/HEAD
-+    git-cherry linus OLD_HEAD |
-+    while read commit
-+    do
-+        GIT_EXTERNAL_DIFF=git-apply-patch-script git-diff-tree -p "$commit" &&
-+	git-commit-script -m "$commit"
-+    done
-+'
++: ${GIT_DIR=.git}
 +
 +case "$#" in
 +1) linus=`git-rev-parse "$1"` &&
@@ -104,56 +89,29 @@ new file mode 100755
 +*) echo >&2 "$usage"; exit 1 ;;
 +esac
 +
-+# Note that these list commits in reverse order;
-+# not that the order in inup matters...
-+inup=`git-rev-list ^$junio $linus` &&
-+ours=`git-rev-list $junio ^$linus` || exit
++git-read-tree -m -u $junio $linus &&
++echo "$linus" >"$GIT_DIR/HEAD" || exit
 +
-+tmp=.cherry-tmp$$
-+patch=$tmp-patch
-+diff=$tmp-diff
-+mkdir $patch
++tmp=.rebase-tmp$$
++fail=$tmp-fail
 +trap "rm -rf $tmp-*" 0 1 2 3 15
 +
-+_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
++>$fail
 +
-+for c in $inup $ours
++git-cherry $linus $junio |
++while read commit
 +do
-+	git-diff-tree -p $c |
-+	sed -e "/^$_x40 (from $_x40)\$/d;/^--- /d;/^+++ /d;/^@@ /d" >$patch/$c
-+	git-diff-tree -r $c |
-+	sed -e "/^$_x40 (from $_x40)\$/d;s/ $_x40 $_x40 / X X /" >$patch/$c.s
++	S=`cat "$GIT_DIR/HEAD"` &&
++        GIT_EXTERNAL_DIFF=git-apply-patch-script git-diff-tree -p $commit &&
++	git-commit-script -m "$commit" || {
++		echo $commit >>$fail
++		git-read-tree --reset -u $S
++	}
 +done
-+
-+LF='
-+'
-+O=
-+for c in $ours
-+do
-+	found=
-+	for d in $inup
-+	do
-+		cmp $patch/$c.s $patch/$d.s >/dev/null ||
-+		continue
-+
-+		diff --unified=0 $patch/$c $patch/$d >$diff
-+		cmp /dev/null $diff >/dev/null && {
-+			found=t
-+			break
-+		}
-+	done
-+	case "$found,$O" in
-+	t,*)	;;
-+	,)
-+		O="$c" ;;
-+	,*)
-+		O="$c$LF$O" ;;
-+	esac
-+done
-+case "$O" in
-+'') ;;
-+*)  echo "$O" ;;
-+esac
++if test -s $fail
++then
++	echo Some commits could not be rebased, check by hand:
++	cat $fail
++fi
 ------------
 
