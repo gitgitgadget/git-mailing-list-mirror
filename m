@@ -1,65 +1,66 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Updated git HOWTO for kernel hackers
-Date: Thu, 23 Jun 2005 20:18:22 +1200
-Message-ID: <46a038f9050623011838d6b85f@mail.gmail.com>
-References: <42B9FCAE.1000607@pobox.com> <42BA14B8.2020609@pobox.com>
-	 <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org>
-	 <42BA1B68.9040505@pobox.com>
-	 <Pine.LNX.4.58.0506221929430.11175@ppc970.osdl.org>
-	 <42BA271F.6080505@pobox.com>
-	 <Pine.LNX.4.58.0506222014000.11175@ppc970.osdl.org>
-	 <42BA45B1.7060207@pobox.com>
-	 <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
-	 <20050623073845.GA5204@pasky.ji.cz>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: [RFC] Order of push/pull file transfers
+Date: Thu, 23 Jun 2005 11:12:55 +0100
+Message-ID: <20050623111255.A1162@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Jeff Garzik <jgarzik@pobox.com>, Greg KH <greg@kroah.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 12:02:28 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jun 23 12:22:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlOXI-0000Ju-VB
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 12:02:17 +0200
+	id 1DlOr2-0005T6-Ih
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 12:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262398AbVFWKG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 06:06:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262680AbVFWKEg
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 06:04:36 -0400
-Received: from rproxy.gmail.com ([64.233.170.202]:52235 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S263073AbVFWISW convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2005 04:18:22 -0400
-Received: by rproxy.gmail.com with SMTP id i8so222034rne
-        for <git@vger.kernel.org>; Thu, 23 Jun 2005 01:18:22 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YTFdPXNdpFlruui9qc7rrWbF4U9pMUYZ93b1zHtKgZwGz1GDpUiLy2CPX5gFzdJXG30787XBrC87gW65IT09aynHvwFYwkv7YjHlHJ6ZOlxayNA2XbDTkGL+I3o1nhGqIPTvrHxVB07YsPe1UVsBKCbqBBRWX4zLre6+kZMhNi4=
-Received: by 10.38.78.53 with SMTP id a53mr731561rnb;
-        Thu, 23 Jun 2005 01:18:22 -0700 (PDT)
-Received: by 10.38.101.46 with HTTP; Thu, 23 Jun 2005 01:18:22 -0700 (PDT)
-To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050623073845.GA5204@pasky.ji.cz>
+	id S262449AbVFWKW6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 06:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262631AbVFWKRl
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 06:17:41 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:34062 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S262550AbVFWKNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2005 06:13:00 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DlOhd-000088-Bw
+	for git@vger.kernel.org; Thu, 23 Jun 2005 11:12:57 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DlOhb-0000Nb-TV
+	for git@vger.kernel.org; Thu, 23 Jun 2005 11:12:55 +0100
+To: git@vger.kernel.org
 Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 6/23/05, Petr Baudis <pasky@ucw.cz> wrote:
-> I think there should simply be two namespaces - public tags and private
-> tags. Private tags for stuff like "broken", "merged", or "funnychange".
+Hi,
 
-I guess that public tags would also probably be in a different
-location from the actual tree. With the split Linus advocates, several
-people could be publishing sets of "public" tags, as well as having
-the official tags hosted separately from the .git repo.
+I'd like to start a discussion on the ordering of the various git files
+being transferred.
 
-cheers,
+Last night, I pulled Linus' kernel tree from k.o, but Linus was in the
+middle of pushing an update to it.  The way cogito works, it grabs the
+HEAD first, and then rsyncs the objects.
 
+However, this retrieved the updated HEAD, and only some of the objects.
+cogito happily tried to merge the result, and failed.  A later pull
+and git-fsck-cache confirmed everything was fine _in this instance_.
 
-martin
+Therefore, may I suggest the following two changes in the way git
+works:
+
+1. a push updates HEAD only after the rsync/upload of all objects is
+   complete.  This means that any pull will not try to update to the
+   new head with a partial object tree.
+
+2. a pull only tries to fetch objects if HEAD has been updated since
+   the last pull.
+
+This gives a pull-er an additional safety margin which ensures that
+merges will not be attempted when a simultaneous pull and push occurs
+at the same time.
+
+-- 
+Russell King
+
