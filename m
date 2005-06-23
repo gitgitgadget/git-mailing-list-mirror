@@ -1,41 +1,34 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Updated git HOWTO for kernel hackers
-Date: Wed, 22 Jun 2005 22:58:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506222225010.11175@ppc970.osdl.org>
-References: <42B9E536.60704@pobox.com> <20050622230905.GA7873@kroah.com>
- <Pine.LNX.4.58.0506221623210.11175@ppc970.osdl.org> <42B9FCAE.1000607@pobox.com>
- <Pine.LNX.4.58.0506221724140.11175@ppc970.osdl.org> <42BA14B8.2020609@pobox.com>
- <Pine.LNX.4.58.0506221853280.11175@ppc970.osdl.org> <42BA1B68.9040505@pobox.com>
- <Pine.LNX.4.58.0506221929430.11175@ppc970.osdl.org> <42BA271F.6080505@pobox.com>
- <Pine.LNX.4.58.0506222014000.11175@ppc970.osdl.org> <42BA45B1.7060207@pobox.com>
+Subject: Re: Patch (apply) vs. Pull
+Date: Wed, 22 Jun 2005 23:09:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506222258290.11175@ppc970.osdl.org>
+References: <Pine.LNX.4.21.0506230025420.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Greg KH <greg@kroah.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 07:50:17 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 23 08:02:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlKbQ-0005BC-Cl
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 07:50:16 +0200
+	id 1DlKmg-0007kO-My
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 08:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262128AbVFWF43 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 01:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262085AbVFWF43
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 01:56:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57287 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262124AbVFWF4Q (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 01:56:16 -0400
+	id S262141AbVFWGIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 02:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262151AbVFWGIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 02:08:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:43977 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262141AbVFWGH5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 02:07:57 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5N5u8jA028129
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5N67ijA028961
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Jun 2005 22:56:09 -0700
+	Wed, 22 Jun 2005 23:07:44 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5N5u7Ad029422;
-	Wed, 22 Jun 2005 22:56:08 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42BA45B1.7060207@pobox.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5N67gDV029895;
+	Wed, 22 Jun 2005 23:07:42 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0506230025420.30848-100000@iabervon.org>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.111 $
@@ -46,106 +39,64 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Thu, 23 Jun 2005, Jeff Garzik wrote:
->
-> No complaint with that operation.  The complaint is that it's an 
-> additional operation.  Re-read what Greg said:
+On Thu, 23 Jun 2005, Daniel Barkalow wrote:
+> 
+> I bet I'm misunderstanding fuzz; what I actually mean is that, if a patch
+> applies after moving it, then regenerating it from the result would give
+> the a patch with different line numbers; if these affect the hash, the
+> author's tools will be sad.
 
-Please re-read what I said.
+What GNU patch calls "fuzz" is how badly the context can "not match". A 
+"fuzz factor" of one allows the patch to apply even if the "outermost" of 
+the context lines don't match up. See "man patch".
 
-Pulling a regular head _cannot_ and _must_not_ update tags. Tags are not 
-associated with the tree, and they _cannot_ and _must_not_ be so, exactly 
-because that would make them global instead of private, and it would 
-fundamentally make them not be distributed, and would mean that they'd be 
-pointless as anything but "Linus' official tags".
+What you talk about is what they (and I) call "offset", and yes, you must
+ignore the line numbers when considering two patches identical, exactly
+because other patches may change their offsets.
 
-That's what we had in BK _AND IT DOES NOT WORK_!
+So "git-apply" does apply patches that are offset from where the patch 
+claims (and the "claimed position" is really nothing more than a "start 
+searching here" parameter), but git-apply does not allow any fuzz.
 
-Does it help when I scream?
+> > In fact, you could probably replace every run of contiguous whitespace
+> > with a single space, and then you'd not have to worry about whitespace
+> > differences either. That would be very simple to do, and quite workable: I
+> > certainly think it sounds more reliable than just hoping that people
+> > always pass on a "patch ID" in their emails..
+> 
+> That's actually quite plausible. The only case it wouldn't handle is when
+> you actually discard parts, and I'm not sure at this point what other
+> people should see there.
 
-> > Is there some reason why git doesn't pull the
-> > tags in properly when doing a merge?  Chris and I just hit this when I
-> > pulled his 2.6.12.1 tree and and was wondering where the tag went.
+Yes. One small note of warning: different "diff" algorithms may under some
+(mostly unlikely) circumstances result in different patches for the
+difference between the same two files. So when comparin SHA1's of diffs
+this way, you should also hopefully have the same diff generation
+algorithm.
 
-And I suggested that if you want that, then you pull on the TAG. You take 
-my modification, you test it, and you see if
+That's not likely to be a problem in practice, but it migh be something to 
+keep in mind as a _possible_ source of confusion, where a patch isn't 
+recognized only because it was generated differently from the one that we 
+compare against.
 
-	git fetch tag ..repo.. tagname
+In practice, this can happen today with the "-C" and "-M" flags to diff,
+of course: two patches look different (and get different SHA1 values) just
+because one was generated with "rename logic" turned on and the other
+wasn't..
 
-works.
+> > Yeah. It probably works well in 99% of the cases to just do a simple
+> > "export as patch" + "apply on top with old commit message, author and
+> > author-date".
+> 
+> I think that you'll get better results out of "merge with top" + "commit
+> with old commit info, but not listing old commit as a parent".
 
-That solves exactly the case that Greg is complaining about, and it solves
-it in a _sane_ manner: you tell git that you want a tag, and git fetches
-it for you. It's that simple, and it does not introduce the _BROKEN_
-notion that tags are associated directly with the commit itself and
-somehow visible to all.
+If I understand you correctly, that assumes that you followed the whole
+chain, though, and that there was no cherry-picking.
 
-> Multiple users -- not just me -- would prefer that git-pull-script 
-> pulled the tags, too.
+I'd like to keep the door open here for cherry-picking or other 
+transformations ("recreate tree _without_ that one commit"), because it 
+would seem to also be a potentially good way to clean up history, not 
+just move it forward, no?
 
-And multiple users -- clearly including you -- aren't listening to me. 
-Tags are separate from the source they tag, and they HAVE TO BE. There is 
-no "you automatically get the tags when you get the tree", because the two 
-don't have a 1:1 relationship.
-
-And not making them separate breaks a lot of things. As mentioned, it
-fundamentally breaks the distributed nature, but that also means that it
-breaks whenever two people use the same name for a tag, for example. You
-can't "merge" tags. BK had a very strange form of merging, which was (I
-think) to pick the one last in the BK ChangeSet file, but that didn't make
-it "right". You just never noticed, because Linux could never use tags at
-all due to the lack of privacy, except for big releases..
-
-> Suggested solution:  add '--tags' to git-pull-script 
-> (git-fetch-script?), which calls
-> 	rsync -r --ignore-existing repo/refs/tags/ .git/refs/tags/
-
-How is this AT ALL different from just having a separate script that does
-this? You've introduced nothing but syntactic fluff, and you've made it
-less flexible at the same time. First off, you might want to get new tags
-_without_ fetching anything else, and you might indeed want to get the 
-tags _first_ in order to decide what you want to fetch. In fact, in many 
-cases that's exactly what you want, namely you want to fetch the data 
-based on the tag.
-
-Secondly, if your worry is that you forget, then hell, write a small shell 
-function, and be done with it.
-
-BUT DO NOT MESS UP THINGS FOR OTHER PEOPLE.
-
-When I fetch somebody elses head, I had better not fetch his tags. His
-tags may not even make _sense_ in what I have - he may tag things in other
-branches that I'm not fetching at all. In fact, his tag-namespace might be
-_different_ from mine, ie he might have tagged something "broken" in his
-tree, and I tagged something _else_ "broken" in mine, just because it
-happens to be a very useful tag for when you want to mark "ok, that was a
-broken tree".
-
-It is wrong, wrong, _wrong_ to think that fetching somebody elses tree
-means that you should fetch his tags. The _only_ reason you think it's
-right is because you've only ever seen centralized tags: tags were the one
-thing that BK kept centralized.
-
-But once people realize that they can use tags in their own trees, and 
-nobody else will ever notice, they'll slowly start using them. Maybe it 
-takes a few months or even longer. But it will happen. And I refuse to 
-make stupid decisions that makes it not work.
-
-And thinking that "fetching a tree fetches all the tags from that tree"  
-really _is_ a stupid decision. It's missing the big picture. It's missing
-the fact that tags _should_ be normal every-day things that you just use
-as "book-marks", and that the kind of big "synchronization point for many
-people" tag should actually be the _rare_ case.
-
-The fact that global tags make that private "bookmark" usage impossible
-should be a big red blinking sign saying "don't do global tags".
-
-> Let the kernel hacker say "yes, I really do want to download the tags 
-> Linus publicly posted in linux-2.6.git/refs/tags" because this was a 
-> common operation in the previous workflow, a common operation that we 
-> -made use of-.
-
-And I already suggested a trivial script. Send me the script patch,
-instead of arguing for stupid things.
-
-			Linus
+		Linus
