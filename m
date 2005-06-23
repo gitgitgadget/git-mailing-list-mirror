@@ -1,102 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Patch (apply) vs. Pull
-Date: Wed, 22 Jun 2005 23:09:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506222258290.11175@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506230025420.30848-100000@iabervon.org>
+From: Miles Bader <miles@lsi.nec.co.jp>
+Subject: Re: Updated git HOWTO for kernel hackers
+Date: Thu, 23 Jun 2005 15:07:55 +0900
+Message-ID: <buofyv9wqpw.fsf@mctpc71.ucom.lsi.nec.co.jp>
+References: <42B9E536.60704@pobox.com>
+	<Pine.LNX.4.58.0506221603120.11175@ppc970.osdl.org>
+	<42BA18AF.2070406@pobox.com>
+	<Pine.LNX.4.58.0506221915280.11175@ppc970.osdl.org>
+	<07be01c577a7$05108660$03c8a8c0@kroptech.com>
+	<Pine.LNX.4.58.0506222146460.11175@ppc970.osdl.org>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 23 08:02:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Kropelin <akropel1@rochester.rr.com>,
+	Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 23 08:02:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlKmg-0007kO-My
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 08:01:55 +0200
+	id 1DlKn4-0007pP-6J
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 08:02:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262141AbVFWGIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 02:08:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262151AbVFWGIG
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 02:08:06 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:43977 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262141AbVFWGH5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 02:07:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5N67ijA028961
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 22 Jun 2005 23:07:44 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5N67gDV029895;
-	Wed, 22 Jun 2005 23:07:42 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0506230025420.30848-100000@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262151AbVFWGIa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 02:08:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262166AbVFWGIa
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 02:08:30 -0400
+Received: from TYO202.gate.nec.co.jp ([210.143.35.52]:25993 "EHLO
+	tyo202.gate.nec.co.jp") by vger.kernel.org with ESMTP
+	id S262151AbVFWGIX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Jun 2005 02:08:23 -0400
+Received: from mailgate3.nec.co.jp (mailgate53.nec.co.jp [10.7.69.162] (may be forged))
+	by tyo202.gate.nec.co.jp (8.11.7/3.7W01080315) with ESMTP id j5N681m24407;
+	Thu, 23 Jun 2005 15:08:01 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id j5N681Q16877; Thu, 23 Jun 2005 15:08:01 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.50]) by mailsv.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
+	id j5N680C16699; Thu, 23 Jun 2005 15:08:00 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Thu, 23 Jun 2005 15:08:00 +0900
+Received: from edsgm01.lsi.nec.co.jp ([10.50.208.11] [10.50.208.11]) by relay31.aps.necel.com with ESMTP; Thu, 23 Jun 2005 15:08:00 +0900
+Received: from mcsss2.ucom.lsi.nec.co.jp (localhost [127.0.0.1])
+	by edsgm01.lsi.nec.co.jp (8.12.10/8.12.10) with ESMTP id j5N67ull023832;
+	Thu, 23 Jun 2005 15:07:58 +0900 (JST)
+Received: from mctpc71 (mctpc71.ucom.lsi.nec.co.jp [10.30.118.121])
+	by mcsss2.ucom.lsi.nec.co.jp (8.12.10/8.12.8/EDcg v2.01-mc/1046780839) with ESMTP id j5N67tKt025960;
+	Thu, 23 Jun 2005 15:07:55 +0900 (JST)
+Received: by mctpc71 (Postfix, from userid 31295)
+	id 7A82B406; Thu, 23 Jun 2005 15:07:55 +0900 (JST)
+To: Linus Torvalds <torvalds@osdl.org>
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <Pine.LNX.4.58.0506222146460.11175@ppc970.osdl.org> (Linus Torvalds's message of "Wed, 22 Jun 2005 21:54:23 -0700 (PDT)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
+> And if you have more than a few files dirty in your tree, I really think
+> it's much better to do "git status" and think about it a bit and select
+> the files you do want to commit than it is to just do "git commit" and let
+> it rip.
+>
+> Now, I could well imagine adding an "--all" flag (and not even allow the 
+> shorthane version) to both git-update-cache and "git commit". So that you 
+> could say "commit all the dirty state", but you'd at least have to think 
+> about it before you did so.
 
+I think both modes of operation are useful -- sometimes I want to hack
+in the tree and later decide what to commit, and sometimes I know
+exactly what sequence of commits I want to make and do a series of
+"change-some-files then commit everything" steps.
 
-On Thu, 23 Jun 2005, Daniel Barkalow wrote:
-> 
-> I bet I'm misunderstanding fuzz; what I actually mean is that, if a patch
-> applies after moving it, then regenerating it from the result would give
-> the a patch with different line numbers; if these affect the hash, the
-> author's tools will be sad.
+In the latter case, it's very convenient to have commit just grab
+everything and clear the slate for my next step.  Morever, I use the
+latter style enough that I think even the requirement of a long option
+seems annoying and artificial; a short option would be fine though...
 
-What GNU patch calls "fuzz" is how badly the context can "not match". A 
-"fuzz factor" of one allows the patch to apply even if the "outermost" of 
-the context lines don't match up. See "man patch".
-
-What you talk about is what they (and I) call "offset", and yes, you must
-ignore the line numbers when considering two patches identical, exactly
-because other patches may change their offsets.
-
-So "git-apply" does apply patches that are offset from where the patch 
-claims (and the "claimed position" is really nothing more than a "start 
-searching here" parameter), but git-apply does not allow any fuzz.
-
-> > In fact, you could probably replace every run of contiguous whitespace
-> > with a single space, and then you'd not have to worry about whitespace
-> > differences either. That would be very simple to do, and quite workable: I
-> > certainly think it sounds more reliable than just hoping that people
-> > always pass on a "patch ID" in their emails..
-> 
-> That's actually quite plausible. The only case it wouldn't handle is when
-> you actually discard parts, and I'm not sure at this point what other
-> people should see there.
-
-Yes. One small note of warning: different "diff" algorithms may under some
-(mostly unlikely) circumstances result in different patches for the
-difference between the same two files. So when comparin SHA1's of diffs
-this way, you should also hopefully have the same diff generation
-algorithm.
-
-That's not likely to be a problem in practice, but it migh be something to 
-keep in mind as a _possible_ source of confusion, where a patch isn't 
-recognized only because it was generated differently from the one that we 
-compare against.
-
-In practice, this can happen today with the "-C" and "-M" flags to diff,
-of course: two patches look different (and get different SHA1 values) just
-because one was generated with "rename logic" turned on and the other
-wasn't..
-
-> > Yeah. It probably works well in 99% of the cases to just do a simple
-> > "export as patch" + "apply on top with old commit message, author and
-> > author-date".
-> 
-> I think that you'll get better results out of "merge with top" + "commit
-> with old commit info, but not listing old commit as a parent".
-
-If I understand you correctly, that assumes that you followed the whole
-chain, though, and that there was no cherry-picking.
-
-I'd like to keep the door open here for cherry-picking or other 
-transformations ("recreate tree _without_ that one commit"), because it 
-would seem to also be a potentially good way to clean up history, not 
-just move it forward, no?
-
-		Linus
+-Miles
+-- 
+Any man who is a triangle, has thee right, when in Cartesian Space, to
+have angles, which when summed, come to know more, nor no less, than
+nine score degrees, should he so wish.  [TEMPLE OV THEE LEMUR]
