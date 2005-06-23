@@ -1,117 +1,267 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/3] git-rebase-script: rebase local commits to new upstream
- head.
-Date: Thu, 23 Jun 2005 16:29:09 -0700
-Message-ID: <7v4qboejp6.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1119284365.3926.15.camel@localhost.localdomain>
-	<7vbr61j631.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506211452110.2353@ppc970.osdl.org>
-	<7v4qbofym7.fsf_-_@assigned-by-dhcp.cox.net>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Mercurial vs Updated git HOWTO for kernel hackers
+Date: Thu, 23 Jun 2005 16:56:34 -0700
+Message-ID: <20050623235634.GC14426@waste.org>
+References: <42B9E536.60704@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 24 01:23:07 2005
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
+X-From: git-owner@vger.kernel.org Fri Jun 24 01:54:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dlb2B-0004MO-JP
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 01:22:59 +0200
+	id 1DlbWb-00008b-Kb
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 01:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262820AbVFWX3V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 19:29:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262830AbVFWX3V
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 19:29:21 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:5623 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262820AbVFWX3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2005 19:29:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050623232909.JSLW19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 23 Jun 2005 19:29:09 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7v4qbofym7.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Thu, 23 Jun 2005 16:21:36 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262905AbVFWX7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 19:59:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262881AbVFWX7U
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 19:59:20 -0400
+Received: from waste.org ([216.27.176.166]:50127 "EHLO waste.org")
+	by vger.kernel.org with ESMTP id S262928AbVFWX4h (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 19:56:37 -0400
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5NNuZqV030453
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 23 Jun 2005 18:56:35 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j5NNuYPS030450;
+	Thu, 23 Jun 2005 18:56:34 -0500
+To: Jeff Garzik <jgarzik@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <42B9E536.60704@pobox.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Using git-cherry, forward port local commits missing from the
-new upstream head.  This depends on "-m" flag support in
-git-commit-script.
+On Wed, Jun 22, 2005 at 06:24:54PM -0400, Jeff Garzik wrote:
+> 
+> Things in git-land are moving at lightning speed, and usability has 
+> improved a lot since my post a month ago:  http://lkml.org/lkml/2005/5/26/11
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+And here's a quick comparison with the current state of Mercurial..
 
- Makefile          |    2 +-
- git-rebase-script |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 1 deletions(-)
- create mode 100755 git-rebase-script
+> 1) installing git
+> 
+> git requires bootstrapping, since you must have git installed in order 
+> to check out git.git (git repo), and linux-2.6.git (kernel repo).  I 
+> have put together a bootstrap tarball of today's git repository.
+> 
+> Download tarball from:
+> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
+> 
+> tarball build-deps:  zlib, libcurl, libcrypto (openssl)
+> 
+> install tarball:  unpack && make && sudo make prefix=/usr/local install
+> 
+> jgarzik helper scripts, not in official git distribution:
+> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
+> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
+> 
+> After reading the rest of this document, come back and update your copy 
+> of git to the latest:
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -25,7 +25,7 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-deltafy-script git-fetch-script git-status-script git-commit-script \
- 	git-log-script git-shortlog git-cvsimport-script git-diff-script \
- 	git-reset-script git-add-script git-checkout-script git-clone-script \
--	gitk git-cherry
-+	gitk git-cherry git-rebase-script
+Download from: http://selenic.com/mercurial/mercurial-snapshot.tar.gz
+Build-deps: Python 2.3
+Install: unpack && python setup.py install [--home=/usr/local]
+
+> 2) download a linux kernel tree for the very first time
+> 
+> $ mkdir -p linux-2.6/.git
+> $ cd linux-2.6
+> $ rsync -a --delete --verbose --stats --progress \
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ 
+> \          <- word-wrapped backslash; sigh
+>     .git/
+
+$ mkdir linux-2.6
+$ cd linux-2.6
+$ hg init http://www.kernel.org/hg/    # obviously you can also browse this
+
+This downloads about 125M of data, which include the whole kernel history
+back to 2.4.0 and everything in Linus' git repo as well.
+
+> 3) update local kernel tree to latest 2.6.x upstream ("fast-forward merge")
+> 
+> $ cd linux-2.6
+> $ git-pull-script \
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+$ hg pull        # defaults to where you originally pulled from
+
+It takes about 4M of transfer and well under a minute to pull the
+entire git history, starting from a base of 2.6.12-rc2.
+
+> 4) check out files from the git repository into the working directory
+> 
+> $ git checkout -f
+
+$ hg update      # or up or checkout or co, depending on your SCM habits
+
+> 5) check in your own modifications (e.g. do some hacking, or apply a patch)
+> 
+> # go to repo
+> $ cd linux-2.6
+> 
+> # make some modifications
+> $ patch -sp1 < /tmp/my.patch
+> $ diffstat -p1 < /tmp/my.patch
+> 
+> # NOTE: add '--add' and/or '--remove' if files were added or removed
+> $ git-update-cache <list of all files changed>
+> 
+> # check in changes
+> $ git commit
+
+$ hg commit [files]    # check in everything changed or just the named files
+
+5.1) undo the last commit or pull
+
+$ hg undo
+
+> 6) List all changes in working dir, in diff format.
+> 
+> $ git-diff-cache -p HEAD
+
+$ hg status            # show changed files
+
+> 7) List all changesets (i.e. show each cset's description text) in local 
+> branch of local tree, that are not present in remote tree.
+> 
+> $ cd my-kernel-tree-2.6
+> $ git-changes-script -L ../linux-2.6 | less
+
+$ hg history | less         # How does git know what's not in the
+                            # remote tree? Psychic?
+
+> 8) List all changesets:
+> 
+> $ git-whatchanged
+
+$ hg history | less
+
+> 9) apply all patches in a Berkeley mbox-format file
+> 
+> First, download and add to your PATH Linus's git tools:
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git-tools.git
+> 
+> $ cd my-kernel-tree-2.6
+> $ dotest /path/to/mbox  # yes, Linus has no taste in naming scripts
+
+hg doesn't do mboxes directly, but you can do:
+
+$ cat patch-list | xargs hg import
+
+> 10) don't forget to download tags from time to time.
+> 
+> git-pull-script only downloads sha1-indexed object data, and the 
+> requested remote head.  This misses updates to the .git/refs/tags/ and 
+> .git/refs/heads directories.  It is advisable to update your kernel .git 
+> directories periodically with a full rsync command, to make sure you got 
+> everything:
+>
+> $ cd linux-2.6
+> $ rsync -a --delete --verbose --stats --progress \
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
+> \          <- word-wrapped backslash; sigh
+>     .git/
+
+Tags in mercurial are properly version controlled and come along for
+the ride with pulls. Also, the right thing happens with merges.
  
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-rebase-script b/git-rebase-script
-new file mode 100755
---- /dev/null
-+++ b/git-rebase-script
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Junio C Hamano.
-+#
-+
-+usage="usage: $0 "'<upstream> [<head>]
-+
-+Uses output from git-cherry to rebase local commits to the new head of
-+upstream tree.'
-+
-+: ${GIT_DIR=.git}
-+
-+case "$#" in
-+1) linus=`git-rev-parse "$1"` &&
-+   junio=`git-rev-parse HEAD` || exit
-+   ;;
-+2) linus=`git-rev-parse "$1"` &&
-+   junio=`git-rev-parse "$2"` || exit
-+   ;;
-+*) echo >&2 "$usage"; exit 1 ;;
-+esac
-+
-+git-read-tree -m -u $junio $linus &&
-+echo "$linus" >"$GIT_DIR/HEAD" || exit
-+
-+tmp=.rebase-tmp$$
-+fail=$tmp-fail
-+trap "rm -rf $tmp-*" 0 1 2 3 15
-+
-+>$fail
-+
-+git-cherry $linus $junio |
-+while read commit
-+do
-+	S=`cat "$GIT_DIR/HEAD"` &&
-+        GIT_EXTERNAL_DIFF=git-apply-patch-script git-diff-tree -p $commit &&
-+	git-commit-script -m "$commit" || {
-+		echo $commit >>$fail
-+		git-read-tree --reset -u $S
-+	}
-+done
-+if test -s $fail
-+then
-+	echo Some commits could not be rebased, check by hand:
-+	cat $fail
-+fi
-------------
+> 11) list all branches, such as those found in my netdev-2.6 or 
+> libata-dev trees.
+> 
+> Download
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6.git
+> 	or
+> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/libata-dev.git
+> 
+> 
+> $ cd netdev-2.6
+> $ ls .git/refs/heads/
+> 
+> { these are the current netdev-2.6 branches }
+> >8139cp       forcedeth    master     qeth           smc91x         we18
+> >8139too-iomap  for-linus    natsemi      r8169      smc91x-eeprom  wifi
+> >airo           hdlc         ns83820      register-netdev  starfire
+> >atmel          ieee80211    orinoco      remove-drivers   tlan
+> >chelsio        iff-running  orinoco-hch  sis900           veth
+> >dm9000         janitor      ppp          skge             viro
 
+$ hg heads   # Has Andrew mentioned your git forest gives him a headache?
+
+> 12) make desired branch current in working directory
+> 
+> $ git checkout -f $branch
+
+$ hg update -C <rev or id or tag>
+
+> 13) create a new branch, and make it current
+> 
+> $ cp .git/refs/heads/master .git/refs/heads/my-new-branch-name
+> $ git checkout -f my-new-branch-name
+
+Since the hg repo is lightweight, this is usually done by just having
+different directories. Thus we don't explicitly name branches.
+
+$ mkdir new-branch
+$ cd new-branch
+$ hg init -u ../linux   # makes hardlinks and does a checkout
+
+> 14) examine which branch is current
+> 
+> $ ls -l .git/HEAD
+
+$ echo $PWD
+
+> 15) undo all local modifications (same as checkout):
+> 
+> $ git checkout -f
+
+$ hg update -C
+
+> 16) obtain a diff between current branch, and master branch
+> 
+> In most trees WITH BRANCHES, .git/refs/heads/master contains the current 
+> 'vanilla' upstream tree, for easy diffing and merging.  (in trees 
+> without branches, 'master' simply contains your latest changes)
+> 
+> $ git-diff-tree -p master HEAD
+
+$ hg diff -r <rev> -r <rev> 
+
+17) run a browsable, pullable repo server of the current repo on your
+local machine
+
+$ hg serve
+
+18) push your changes to a remote server
+
+$ hg push ssh://user@host/path/  # aliases and defaults in .hgrc
+
+19) get per-file history
+
+$ hg log <file> | less
+
+20) get annotated file contents
+
+$ hg annotate [file]
+
+21) record that a file has been copied or renamed for the next commit
+
+$ hg copy <source> <dest>
+
+22) get online help
+
+$ hg help [command]
+
+
+More info at http://selenic.com/mercurial/
+
+-- 
+Mathematics is the supreme nostalgia of our time.
