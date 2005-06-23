@@ -1,56 +1,71 @@
-From: Dave Airlie <airlied@gmail.com>
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
 Subject: Re: Updated git HOWTO for kernel hackers
-Date: Thu, 23 Jun 2005 22:25:43 +1000
-Message-ID: <21d7e99705062305255b1ec58e@mail.gmail.com>
-References: <42B9E536.60704@pobox.com>
-Reply-To: Dave Airlie <airlied@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+Date: Thu, 23 Jun 2005 10:31:57 -0400
+Message-ID: <200506231431.j5NEVvpK004472@laptop11.inf.utfsm.cl>
+References: <jgarzik@pobox.com>
+Cc: Linus Torvalds <torvalds@osdl.org>, Greg KH <greg@kroah.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 23 14:20:23 2005
+X-From: git-owner@vger.kernel.org Thu Jun 23 16:27:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlQgH-0006yo-T1
-	for gcvg-git@gmane.org; Thu, 23 Jun 2005 14:19:42 +0200
+	id 1DlSeq-00041C-O3
+	for gcvg-git@gmane.org; Thu, 23 Jun 2005 16:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262286AbVFWMZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 23 Jun 2005 08:25:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262329AbVFWMZv
-	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 08:25:51 -0400
-Received: from rproxy.gmail.com ([64.233.170.207]:65334 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262278AbVFWMZn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Jun 2005 08:25:43 -0400
-Received: by rproxy.gmail.com with SMTP id 1so66258rny
-        for <git@vger.kernel.org>; Thu, 23 Jun 2005 05:25:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bTlhJAW7e2jYu69XBNzCgIRUP3mU6p9JjjschjuM5IbjvA22Nh4iU0E6zbLcTDZ23iT7NWU8plvBZTqrntN/3aVTPi0tTrBgODFSKCia6sOc7O+vLRz8dMbG6mJxd/8u9KejRFV5Je5rSke9CHp6hcwRbofJ7Hk5KrNru0aUTOo=
-Received: by 10.11.119.2 with SMTP id r2mr67931cwc;
-        Thu, 23 Jun 2005 05:25:43 -0700 (PDT)
-Received: by 10.11.117.46 with HTTP; Thu, 23 Jun 2005 05:25:43 -0700 (PDT)
+	id S262559AbVFWOc2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 23 Jun 2005 10:32:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262550AbVFWOc2
+	(ORCPT <rfc822;git-outgoing>); Thu, 23 Jun 2005 10:32:28 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:27806 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S262547AbVFWOcW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Jun 2005 10:32:22 -0400
+Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j5NEVwnd020420
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 23 Jun 2005 10:31:58 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j5NEVvpK004472;
+	Thu, 23 Jun 2005 10:31:57 -0400
 To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42B9E536.60704@pobox.com>
-Content-Disposition: inline
+In-Reply-To: Message from Jeff Garzik <jgarzik@pobox.com> 
+   of "Thu, 23 Jun 2005 01:16:33 -0400." <42BA45B1.7060207@pobox.com> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Thu, 23 Jun 2005 10:31:58 -0400 (CLT)
+X-Virus-Scanned: ClamAV version 0.84, clamav-milter version 0.84e on localhost
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> jgarzik helper scripts, not in official git distribution:
-> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
-> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
+Jeff Garzik <jgarzik@pobox.com> said:
+> Linus Torvalds wrote:
+> > 	rsync -r --ignore-existing repo/refs/tags/ .git/refs/tags/
+> > 
+> > See? What's your complaint with just doing that?
 > 
+> No complaint with that operation.  The complaint is that it's an 
+> additional operation.  Re-read what Greg said:
+> 
+> > Is there some reason why git doesn't pull the
+> > tags in properly when doing a merge?  Chris and I just hit this when I
+> > pulled his 2.6.12.1 tree and and was wondering where the tag went.
+> 
+> Multiple users -- not just me -- would prefer that git-pull-script 
+> pulled the tags, too.
+> 
+> Suggested solution:  add '--tags' to git-pull-script 
+> (git-fetch-script?), which calls
+> 	rsync -r --ignore-existing repo/refs/tags/ .git/refs/tags/
 
-Do you have some sort of magic bk-make-sum type util at all... 
-
-For sending trees to Linus I used to run bk-make-sum and gcapatch and
-then just throw my own stuff in the top of the mail ....
-
-I'm being lazy I probably could write it myself, but bk-make-sum was a
-very useful script for me...
-
-Dave.
+I don't think either is really a solution. IMHO there should be a
+distinction between "official tags" (that get passed around together with
+everything else) and "private tags" for everybodys own home use (that could
+be passed around, but only explicitly). Plus the possibility to erase,
+move, &c private tags, and perhaps upgrade them to official status (thus
+setting them in stone).
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
