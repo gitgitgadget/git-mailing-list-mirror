@@ -1,129 +1,133 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Should "git-read-tree -m -u" delete files?
-Date: Fri, 24 Jun 2005 15:08:44 -0700
-Message-ID: <7v1x6rbe6r.fsf_-_@assigned-by-dhcp.cox.net>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
-	<20050624064101.GB14292@pasky.ji.cz>
-	<pan.2005.06.24.13.16.10.406827@smurf.noris.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: 2.6.12 hangs on boot
+Date: Fri, 24 Jun 2005 15:20:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506241446440.11175@ppc970.osdl.org>
+References: <200506221813.50385.gluk@php4.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 25 00:14:45 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	admin@list.net.ru, Git Mailing List <git@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S263298AbVFXWT4@vger.kernel.org Sat Jun 25 00:17:50 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S263298AbVFXWT4@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlwPO-0008QL-0J
-	for gcvg-git@gmane.org; Sat, 25 Jun 2005 00:12:22 +0200
+	id 1DlwUI-0001r7-Pu
+	for glk-linux-kernel@gmane.org; Sat, 25 Jun 2005 00:17:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263292AbVFXWRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 18:17:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263296AbVFXWOm
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 18:14:42 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:20674 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S263215AbVFXWIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2005 18:08:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050624220845.WXUQ8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 24 Jun 2005 18:08:45 -0400
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.06.24.13.16.10.406827@smurf.noris.de> (Matthias
- Urlichs's message of "Fri, 24 Jun 2005 15:16:13 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
+	id S263298AbVFXWT4 (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
+	Fri, 24 Jun 2005 18:19:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263220AbVFXWT0
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Fri, 24 Jun 2005 18:19:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:9438 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S263316AbVFXWSO (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 24 Jun 2005 18:18:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5OMI1jA007526
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Jun 2005 15:18:02 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5OMHuH2015962;
+	Fri, 24 Jun 2005 15:17:58 -0700
+To: "Alexander Y. Fomichev" <gluk@php4.ru>
+In-Reply-To: <200506221813.50385.gluk@php4.ru>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-
->>>>> "MU" == Matthias Urlichs <smurf@smurf.noris.de> writes:
-
-MU> The only problem I have with it is that "git-read-tree -m -u"
-MU> doesn't delete files yet. To repeat my question from last week:
->>> Would it be safe to add all files for which
->>> read_tree.c:merge_cache:fn() returns zero to a "delete me" list?
-MU> (files on which which then actually get deleted, of course, if g-r-t
-MU> doesn't find any problems.)
-
-As the guilty party for the "read-tree two-way semantics table"
-you quoted in your "question from last week" message, I should
-have replied sooner but could not.  Sorry about that [*1*].
-
-Anyway, here are my answers.
-
- (1) No, merge_function[] returning zero just means "I did not
-     cause anything to change the number of already processed
-     entries".  When it wants to delete an entry, it explicitly
-     marks the entry to be deleted by calling deleted_entry(),
-     and the deletion is processed at the very end by
-     check_updates() function.  Note that we do _not_ return
-     zero in this case.
-
- (2) The part you quoted in your "last week" message is case 10;
-     the current code does delete the path with -u [*2*].
-
- (3) There could be cases where twoway_merge() does not delete a
-     clean path that _should_ be removed.  If that is the case
-     then you have spotted a bug --- I would appreciate it if
-     you can show a reproduction recipe.  I have looked at the
-     function briefly again while writing this reply and did not
-     find suspicious code that would just return 0 without
-     calling deleted_entry(), though.
-
- (4) Using --emu23 (followed by git-merge-cache, of course),
-     instead of doing "git-read-tree -m -u H M", should remove
-     deleted paths as well.
+X-Mailing-List: linux-kernel@vger.kernel.org
 
 
-[Footnote]
 
-*1* I was on a crazy travel schedule, going just for 3 days last
-week and then for another 2 days this week to Japan from US west
-coast, two 10-hour roundtrip flights X-<.  Now I am back and
-hopefully fully functional ;-).
+On Wed, 22 Jun 2005, Alexander Y. Fomichev wrote:
+> 
+> I've been trying to switch from 2.6.12-rc3 to 2.6.12 on Dual EM64T 2.8 GHz
+> [ MoBo: Intel E7520, intel 82801 ]
+> but kernel hangs on boot right after records:
+> 
+> Booting processor 2/1 rip 6000 rsp ffff8100023dbf58
+> Initializing CPU#2
 
-*2* The part you quoted in your previous message was this.  I am
-re-quoting from the original to give it a bit more context:
+Hmm.. Since you seem to be a git user, maybe you could try the git
+"bisect" thing to help narrow down exactly where this happened (and help
+test that thing too ;).
 
-    Two Tree Merge
-    ~~~~~~~~~~~~~~
-    ...
-    In this case, the "git-read-tree -m $H $M" command makes sure
-    that no local change is lost as the result of this "merge".
-    Here are the "carry forward" rules:
+You can basically use git to find the half-way point between a set of
+"known good" points and a "known bad" point ("bisecting" the set of
+commits), and doing just a few of those should give us a much better view
+of where things started going wrong.
 
-            I (index)           H        M        Result
-           -------------------------------------------------------
-         ...
-            clean I==H  I==M
-           ------------------
-         ...
-         10 yes   yes   N/A     exists   nothing  remove path from cache
+For example, since you know that 2.6.12-rc3 is good, and 2.6.12 is bad, 
+you'd do
 
-This case is covered by this test in t1002:
+	git-rev-list --bisect v2.6.12 ^v2.6.12-rc3
 
-    test_expect_success \
-        '10 - path removed.' \
-        'rm -f .git/index &&
-         echo rezrov >rezrov &&
-         git-update-cache --add rezrov &&
-         git-read-tree -m -u $treeH $treeM &&
-         git-ls-files --stage >10.out &&
-         cmp M.out 10.out &&
-         sha1sum -c M.sha1'
+where the "v2.6.12 ^v2.6.12-rc3" thing basically means "everything in 
+v2.6.12 but _not_ in v2.6.12-rc3" (that's what the ^ marks), and the 
+"--bisect" flag just asks git-rev-list to list the middle-most commit, 
+rather than all the commits in between those kernel versions.
 
-Where paths involved are:
+You should get the answer "0e6ef3e02b6f07e37ba1c1abc059f8bee4e0847f", but
+before you go any further, just make sure your git index is all clean:
 
-	path		treeH		treeM
-       -----------------------------------------------------
-        bozbar		exists		modified from treeH
-        frotz		does not exist	added in treeM
-        nitfol		exists		same as in treeH
-        rezrov		exists		deleted in treeM
+	git status
 
-and after this test runs, you can see that the path "rezrov"
-gets removed from your work tree.  Insert "exit" just before the
-next test, run "cd t && sh t1002-*.sh -i -v", and inspect what
-is in the "t/trash" directory.
+should not print anything else than "nothing to commit". If so, then
+you're ready to try the new "mid-point" head:
 
+	git-rev-list --bisect v2.6.12 ^v2.6.12-rc3 > .git/refs/heads/try1
+	git checkout try1
 
+which will create a new branch called "try1", where the head is that 
+"mid-point", and it will switch to that branch (this requires a fairly 
+recent "git", btw, so make sure you update your git first).
+
+Then, compile that kernel, and try it out.
+
+Now, there are two possibilities: either "try1" ends up being good, or it
+still shows the bug. If it is a buggy kernel, then you now have a new
+"bad"  point, and you do
+
+	git-rev-list --bisect try1 ^v2.6.12-rc3 > .git/refs/heads/try2
+	git checkout try2
+
+which is all the same thing as you did before, except now we use "try1" as 
+the known bad one rather than v2.6.12 (and we call the new branch "try2" 
+of course).
+
+However, if that "try1" is _good_, and doesn't show the bug, then you 
+shouldn't replace the other "known good" case, but instead you should add 
+it to the list of good commits (aka commits we don't want to know about):
+
+	git-rev-list --bisect v2.6.12 ^v2.6.12-rc3 ^try1 > .git/refs/heads/try2
+	git checkout try2
+
+ie notice how we now say: want to get the bisection of the commits in 
+v2.6.12 (known bad) but _not_ in either of v2.6.12-rc3 or the 'try1' 
+branch (which are known good).
+
+After compiling and testing a few kernels, you will have narrowed the 
+range down a _lot_, and at some point you can just say
+
+	git-rev-list --pretty try4 ^v2.6.12-rc3 ^try1 ^try3
+
+(or however the "success/failure" pattern ends up being - the above
+example line assumes that "try1" didn't have the bug, but "try2" did, and
+then "try3" was ok again but "try4" was buggy), and you'll get a fairly
+small list of commits that are the potential "bad" ones.
+
+After the above four tries, you'd have limited it down to a list of 95
+changes (from the original 1520), so it would really be best to try six or
+seven different kernels, but at that point you'd have it down to less than
+20 commits and then pinpointing the bug is usually much easier.
+
+And when you're done, you can just do
+
+	git checkout master
+
+and you're back to where you started.
+
+		Linus
