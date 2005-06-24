@@ -1,84 +1,69 @@
-From: Kevin Smith <yarcs@qualitycode.com>
+From: Christopher Li <hg@chrisli.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Fri, 24 Jun 2005 09:57:00 -0400
-Message-ID: <42BC112C.1040009@qualitycode.com>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <20050624130604.GK17715@g5.random>
+Date: Fri, 24 Jun 2005 08:19:25 -0400
+Message-ID: <20050624121925.GB9519@64m.dyndns.org>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <20050624130604.GK17715@g5.random> <20050624133952.GB7445@thunk.org> <4d8e3fd3050624064620a4945e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jun 24 15:53:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Ts'o <tytso@mit.edu>, Andrea Arcangeli <andrea@suse.de>,
+	Petr Baudis <pasky@ucw.cz>, mercurial@selenic.com,
+	Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 24 17:25:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlocU-0000n3-7u
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 15:53:22 +0200
+	id 1Dlq3F-0007yX-2Y
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 17:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262602AbVFXN6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 09:58:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262506AbVFXN6k
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 09:58:40 -0400
-Received: from deuterium.rootr.net ([203.194.209.160]:10289 "EHLO
-	vulcan.rootr.net") by vger.kernel.org with ESMTP id S262734AbVFXN5u
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2005 09:57:50 -0400
-Received: from [10.10.10.101] (653221hfc154.tampabay.res.rr.com [65.32.21.154])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vulcan.rootr.net (Postfix) with ESMTP id D69A13C51;
-	Fri, 24 Jun 2005 13:57:45 +0000 (UTC)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
-In-Reply-To: <20050624130604.GK17715@g5.random>
+	id S262675AbVFXPbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 11:31:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263025AbVFXPbb
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 11:31:31 -0400
+Received: from sccrmhc12.comcast.net ([204.127.202.56]:47492 "EHLO
+	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S262675AbVFXPb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2005 11:31:27 -0400
+Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
+          by comcast.net (sccrmhc12) with ESMTP
+          id <2005062415312601200hi177e>; Fri, 24 Jun 2005 15:31:26 +0000
+Received: by localhost.localdomain (Postfix, from userid 1027)
+	id B21BC3F17F; Fri, 24 Jun 2005 08:19:25 -0400 (EDT)
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4d8e3fd3050624064620a4945e@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Andrea Arcangeli wrote:
- > On Fri, Jun 24, 2005 at 08:41:01AM +0200, Petr Baudis wrote:
- >
- >>Cool. Except where the concepts are just different, Cogito mostly
- >>appears at least equally simple to use as Mercurial. Yes, some
- >>features are missing yet. I hope to fix that soon. :-)
- >
- >
- > The user interface and network protocol isn't the big deal, the
- > big deal is the more efficient on-disk storage format IMHO.
 
-For me, efficient storage is not very important, because I mostly deal 
-with small projects. Likewise, speed isn't a factor for me, since both 
-tools are plenty fast on small repos.
+On Fri, Jun 24, 2005 at 03:46:21PM +0200, Paolo Ciarrocchi wrote:
+> > 
+> > Which do you think is going to be faster to operate from a cold start
+> > using 4200 rpm laptop drives?  :-)
+> > 
+> >                                                - Ted
+> 
+> That's quite intersting, what the rational behind such a difference in
+> terms of disk occupation ?
+>
 
-For me, the big advantage of mercurial is that it is written in python, 
-instead of shell scripts. I know for some people that's a DISadvantage, 
-but I see the following benefits as a result:
+Let me see. Mercurial using delta or full storage for the repository.
+It insert a full node when it detect that delta it need to reach
+certain node is too big. It just like MPEG movies, most of the frame
+is delta to the previous frame.  Once a while you have full frame to
+allow you seek to.
 
-- Can run on (native) MS Windows
-   (necessary for me because I often work on cross-platform projects)
-- Python code can be more clear and expressive (IMHO)
+But git has delta as well right? Another factor is that all file has
+same path in mercurial using the same storage file. So in mercurial
+it has far less file to store in the repository. Each file has two repository
+files, the data storage file and the index file. Remember that file system
+like ext3 is using blocks, if you store very small stuff on a file, it is
+still going to take at least one block on disk. So that will defeat the delta
+compression if the delta is always on a new file.
 
-In the long run, I think the python code base will be easier to maintain 
-and enhance. A rewrite of cogito in python or ruby would be cool.
 
-One advantage that cogito has is that git viewing/browsing tools can 
-operate directly on cogito repos. But a psychological drawback is the 
-ongoing confusion between git and cogito. Questions: Would a git-based 
-tool that writes to the repo (such as StGIT) mess up a cogito repo? Can 
-you switch a repo between git and cogito or back, at any time?
+Chris
 
-Mercurial's tags use a radical approach, whereas cogito's are more 
-conventional. I haven't yet used mercurial's versioned-tags enough yet 
-to judge whether they are better, worse, or just different.
-
-I am impressed with the vibrancy of the development communities of both 
-projects. Both are able to serve repos on a plain http server. Both are 
-easy to use and have decent basic feature sets. Both projects are 
-developing test suites.
-
-Mostly, I'm thrilled with this new wave of lightweight distributed SCM 
-systems. Most of the established tools tended to be too heavy on 
-features and complexity, and have taken a long time to develop. I love 
-that a single developer or small team can now create a simple but usable 
-distributed SCM in a couple months.
-
-Kevin
