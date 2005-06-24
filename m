@@ -1,73 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Order of push/pull file transfers
-Date: Fri, 24 Jun 2005 12:38:43 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506241219140.30848-100000@iabervon.org>
-References: <20050623111255.A1162@flint.arm.linux.org.uk>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: rev-parse, unknown arguments and extended sha1's
+Date: Fri, 24 Jun 2005 10:32:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506241026490.11175@ppc970.osdl.org>
+References: <20050624122436.GA15182@pc117b.liacs.nl>
+ <Pine.LNX.4.58.0506240904240.11175@ppc970.osdl.org> <20050624161718.GA14909@pc117b.liacs.nl>
+ <Pine.LNX.4.58.0506240941520.11175@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 24 18:36:22 2005
+X-From: git-owner@vger.kernel.org Fri Jun 24 19:27:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlrA9-0001DA-G4
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 18:36:17 +0200
+	id 1Dlrx7-0005Aj-TW
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 19:26:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263149AbVFXQmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 12:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263146AbVFXQmD
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 12:42:03 -0400
-Received: from iabervon.org ([66.92.72.58]:38150 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S263135AbVFXQkW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 12:40:22 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DlrCV-0003sj-00; Fri, 24 Jun 2005 12:38:43 -0400
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050623111255.A1162@flint.arm.linux.org.uk>
+	id S263395AbVFXRcq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 13:32:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263389AbVFXRcq
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 13:32:46 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:2718 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S263395AbVFXRaQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 13:30:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5OHU8jA019357
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Jun 2005 10:30:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5OHU756001578;
+	Fri, 24 Jun 2005 10:30:07 -0700
+To: Sven Verdoolaege <skimo@liacs.nl>
+In-Reply-To: <Pine.LNX.4.58.0506240941520.11175@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 23 Jun 2005, Russell King wrote:
 
-> Last night, I pulled Linus' kernel tree from k.o, but Linus was in the
-> middle of pushing an update to it.  The way cogito works, it grabs the
-> HEAD first, and then rsyncs the objects.
 
-It needs to do this, in case HEAD changes after or during the rsync (to
-include objects written after the rsync looked for them).
-
-> However, this retrieved the updated HEAD, and only some of the objects.
-> cogito happily tried to merge the result, and failed.  A later pull
-> and git-fsck-cache confirmed everything was fine _in this instance_.
-
-It should be fine in all instances; it makes no assuptions about the
-presence or absence of objects in the local database before the pull, so
-doing a pull after the previous one didn't work right should be just as
-likely to result in a functional state as any other pull.
-
-> Therefore, may I suggest the following two changes in the way git
-> works:
+On Fri, 24 Jun 2005, Linus Torvalds wrote:
 > 
-> 1. a push updates HEAD only after the rsync/upload of all objects is
->    complete.  This means that any pull will not try to update to the
->    new head with a partial object tree.
+> Anyway, I think I'll make git-rev-parse have some option to "error out if 
+> the result is anything but a single revision number", since this is really 
+> the only reason for git-rev-parse in the first place: to make readable 
+> scripts.
 
-git-ssh-push only updates the HEAD (or, rather, the thing the HEAD is a
-symlink to) afterwards. I'm not sure how Linus was getting things
-there. It's also possible that the mirroring process is failing to
-maintain this constraint.
+How about something like
 
-> 2. a pull only tries to fetch objects if HEAD has been updated since
->    the last pull.
+	rev=$(git-rev-parse --default HEAD --revs-only --verify "$@") || exit 1
 
-That's no good; if the only recent change is a new tag, you want to get 
-the tag object. Also, having it not do this is what let it recover in your
-case on the second try. The only risk is that you'll pick up some objects
-that you don't need yet (but would need if you pulled again when the push
-completes).
+which now should work correctly.
 
-	-Daniel
-*This .sig left intentionally blank*
+In particular, the "--default" field is now expanded properly as a
+revision, instead of just output raw, so the "HEAD" actually gets
+translated into its SHA1 representation (and this also means that you can
+now use SHA1 expressions in "default", ie you don't need to do two
+git-rev-parse phases to do "--default HEAD^" etc).
 
+The "--verify" thing then checks that the end result isn't a revision
+argument (ie "--max-age=.." isn't accepted), and that there's exactly one
+revision in the result (ie no ranges or multiple revisions some other
+way).
+
+So now you shouldn't need to check the result any more. You know that if
+it worked, "rev" will be a nice SHA1 (of course, it might still be an
+_invalid_ SHA1, that's a different issue. But it's at least syntactically
+ok)
+
+		Linus
