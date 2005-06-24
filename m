@@ -1,73 +1,62 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: rev-parse, unknown arguments and extended sha1's
-Date: Fri, 24 Jun 2005 10:32:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506241026490.11175@ppc970.osdl.org>
-References: <20050624122436.GA15182@pc117b.liacs.nl>
- <Pine.LNX.4.58.0506240904240.11175@ppc970.osdl.org> <20050624161718.GA14909@pc117b.liacs.nl>
- <Pine.LNX.4.58.0506240941520.11175@ppc970.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: The coolest merge EVER!
+Date: Fri, 24 Jun 2005 13:49:24 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506241332150.30848-100000@iabervon.org>
+References: <pan.2005.06.24.11.54.51.598627@smurf.noris.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 24 19:27:11 2005
+X-From: git-owner@vger.kernel.org Fri Jun 24 19:47:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dlrx7-0005Aj-TW
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 19:26:54 +0200
+	id 1DlsGy-0001dt-1a
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 19:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263395AbVFXRcq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 13:32:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263389AbVFXRcq
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 13:32:46 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2718 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263395AbVFXRaQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 13:30:16 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5OHU8jA019357
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 24 Jun 2005 10:30:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5OHU756001578;
-	Fri, 24 Jun 2005 10:30:07 -0700
-To: Sven Verdoolaege <skimo@liacs.nl>
-In-Reply-To: <Pine.LNX.4.58.0506240941520.11175@ppc970.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263169AbVFXRxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 13:53:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263376AbVFXRxi
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 13:53:38 -0400
+Received: from iabervon.org ([66.92.72.58]:17927 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S263169AbVFXRvO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 13:51:14 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DlsIu-0007F2-00; Fri, 24 Jun 2005 13:49:24 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <pan.2005.06.24.11.54.51.598627@smurf.noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 24 Jun 2005, Matthias Urlichs wrote:
 
-
-On Fri, 24 Jun 2005, Linus Torvalds wrote:
+> Hi, Junio C Hamano wrote:
 > 
-> Anyway, I think I'll make git-rev-parse have some option to "error out if 
-> the result is anything but a single revision number", since this is really 
-> the only reason for git-rev-parse in the first place: to make readable 
-> scripts.
+> > I suspect there
+> > would be a massive additional support needed if you want to make it easy
+> > for Paul to pull changes made to gitk in your tree.
+> 
+> I don't think that's possible; after all, the trees are now merged, so any
+> pull would fetch all of Linus' tree.
 
-How about something like
+Linus could do:
 
-	rev=$(git-rev-parse --default HEAD --revs-only --verify "$@") || exit 1
+ git-read-tree gitk-head
+ git-update-cache gitk
+ git-commit-tree `write-tree` -p gitk-head > gitk-patched-head
+ git-read-tree HEAD
+ git merge gitk-patched-head
 
-which now should work correctly.
+(or, better, use a separate index file for the gitk index)
 
-In particular, the "--default" field is now expanded properly as a
-revision, instead of just output raw, so the "HEAD" actually gets
-translated into its SHA1 representation (and this also means that you can
-now use SHA1 expressions in "default", ie you don't need to do two
-git-rev-parse phases to do "--default HEAD^" etc).
+(to commit changes to the gitk script made in a git working directory)
 
-The "--verify" thing then checks that the end result isn't a revision
-argument (ie "--max-age=.." isn't accepted), and that there's exactly one
-revision in the result (ie no ranges or multiple revisions some other
-way).
+The change I proposed earlier would be so that the system would know what
+was going on and users wouldn't have to. Then someone who didn't know that
+gitk was (also) a separate project and just committed changes to it would
+still generate gitk commits when appropriate.
 
-So now you shouldn't need to check the result any more. You know that if
-it worked, "rev" will be a nice SHA1 (of course, it might still be an
-_invalid_ SHA1, that's a different issue. But it's at least syntactically
-ok)
+	-Daniel
+*This .sig left intentionally blank*
 
-		Linus
