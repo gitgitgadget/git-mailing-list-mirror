@@ -1,53 +1,55 @@
-From: "John W. Linville" <linville@tuxdriver.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Fri, 24 Jun 2005 15:25:49 -0400
-Message-ID: <20050624192547.GA6736@tuxdriver.com>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <pan.2005.06.24.13.16.10.406827@smurf.noris.de> <Pine.LNX.4.58.0506241153180.11175@ppc970.osdl.org>
+Date: Fri, 24 Jun 2005 17:11:02 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506241659070.30848-100000@iabervon.org>
+References: <pan.2005.06.24.13.16.10.406827@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 24 21:27:48 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 24 23:09:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DltpU-0000yv-QX
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 21:27:09 +0200
+	id 1DlvQ1-0006bB-CJ
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 23:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263209AbVFXT3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 15:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263207AbVFXT3J
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 15:29:09 -0400
-Received: from apollo.tuxdriver.com ([24.172.12.2]:27915 "EHLO
-	apollo.tuxdriver.com") by vger.kernel.org with ESMTP
-	id S263190AbVFXT0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2005 15:26:55 -0400
-Received: from bilbo.tuxdriver.com (azure.tuxdriver.com [24.172.12.5])
-	by apollo.tuxdriver.com (8.12.11/8.12.11) with ESMTP id j5OILkQw026480;
-	Fri, 24 Jun 2005 14:21:46 -0400
-Received: from bilbo.tuxdriver.com (localhost.localdomain [127.0.0.1])
-	by bilbo.tuxdriver.com (8.13.1/8.13.1) with ESMTP id j5OJPoul013194;
-	Fri, 24 Jun 2005 15:25:50 -0400
-Received: (from linville@localhost)
-	by bilbo.tuxdriver.com (8.13.1/8.13.1/Submit) id j5OJPnlY013193;
-	Fri, 24 Jun 2005 15:25:49 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0506241153180.11175@ppc970.osdl.org>
-User-Agent: Mutt/1.4.1i
+	id S263264AbVFXVPA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 17:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263275AbVFXVPA
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 17:15:00 -0400
+Received: from iabervon.org ([66.92.72.58]:29445 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S263277AbVFXVNd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 17:13:33 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DlvS2-0007sH-00; Fri, 24 Jun 2005 17:11:02 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <pan.2005.06.24.13.16.10.406827@smurf.noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 24, 2005 at 12:00:33PM -0700, Linus Torvalds wrote:
+On Fri, 24 Jun 2005, Matthias Urlichs wrote:
 
-> Jeff, do people go "Boy, you've got a big head" the 
-> first time they meet you?)
+> Hi, Petr Baudis wrote:
+> 
+> > Switching branches in place will be supported soon (although I have
+> > doubts about its usefulness).
+> 
+> Well, I don't. Main reason: It's simply a lot faster to create+switch to a
+> branch locally for doing independent work, than to hardlink the whole
+> Linux directory tree into a clone tree.
 
-FWIW, Jeff _does_ have quite the melon riding around on his shoulders...
--- 
-John W. Linville
-linville@tuxdriver.com
+There's another option, which I may be the only person currently
+using: have a repo (.git directory) not in a working directory, and have
+the objects/ and refs/ subdirectories of the .git directories in your
+working directories symlinked to those subdirectories of the repo. Then
+you can have any number of functionally identical working directories,
+each of which is set to some branch. If you have a reasonably small number
+of branches at any time, they can each have a working directory switched
+to them. On the other hand, all of the branches are accessible from any of
+them.
+
+	-Daniel
+*This .sig left intentionally blank*
+
