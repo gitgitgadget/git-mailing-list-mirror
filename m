@@ -1,61 +1,63 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Fri, 24 Jun 2005 09:39:52 -0400
-Message-ID: <20050624133952.GB7445@thunk.org>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <20050624130604.GK17715@g5.random>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: Patch (apply) vs. Pull
+Date: Fri, 24 Jun 2005 14:41:46 +0100
+Message-ID: <tnxvf4350th.fsf@arm.com>
+References: <Pine.LNX.4.21.0506231245560.30848-100000@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@ucw.cz>, mercurial@selenic.com,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 24 15:37:09 2005
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 24 15:37:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DloMe-0004tw-6T
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 15:37:00 +0200
+	id 1DloMo-0004x8-VA
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 15:37:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262423AbVFXNm5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 09:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262505AbVFXNm5
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 09:42:57 -0400
-Received: from thunk.org ([69.25.196.29]:6061 "EHLO thunker.thunk.org")
-	by vger.kernel.org with ESMTP id S262423AbVFXNkM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 09:40:12 -0400
-Received: from root (helo=think.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 3.35 #1 (Debian))
-	id 1DloPR-0000nW-00; Fri, 24 Jun 2005 09:39:53 -0400
-Received: from tytso by think.thunk.org with local (Exim 4.51)
-	id 1DloPQ-0003zU-Th; Fri, 24 Jun 2005 09:39:52 -0400
-To: Andrea Arcangeli <andrea@suse.de>
-Mail-Followup-To: Theodore Ts'o <tytso@mit.edu>,
-	Andrea Arcangeli <andrea@suse.de>, Petr Baudis <pasky@ucw.cz>,
-	mercurial@selenic.com, Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20050624130604.GK17715@g5.random>
-User-Agent: Mutt/1.5.9i
+	id S262632AbVFXNnY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 09:43:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262506AbVFXNnH
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 09:43:07 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:44482 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S262559AbVFXNmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2005 09:42:50 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j5ODfv6i001270;
+	Fri, 24 Jun 2005 14:41:57 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch1.emea.arm.com [10.1.255.57])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id OAA20185;
+	Fri, 24 Jun 2005 14:42:24 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 24 Jun 2005 14:42:01 +0100
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0506231245560.30848-100000@iabervon.org> (Daniel
+ Barkalow's message of "Thu, 23 Jun 2005 13:05:03 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 24 Jun 2005 13:42:01.0695 (UTC) FILETIME=[800866F0:01C578C2]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 24, 2005 at 03:06:04PM +0200, Andrea Arcangeli wrote:
-> On Fri, Jun 24, 2005 at 08:41:01AM +0200, Petr Baudis wrote:
-> > Cool. Except where the concepts are just different, Cogito mostly
-> > appears at least equally simple to use as Mercurial. Yes, some features
-> > are missing yet. I hope to fix that soon. :-)
-> 
-> The user interface and network protocol isn't the big deal, the big deal
-> is the more efficient on-disk storage format IMHO.
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> I think that it's important to avoid having the array of "rebased the
+> patch" commits be reachable from the final series if that series is going
+> to be merged into the mainline at the end.
 
-E2fsprogs with the full revision history imported into git is 100
-megs, and that's with deltas.  E2fsprogs imported into Mercurial is 17
-megs (and actually, the imported repository was just a tad bit smaller
-than e2fsprogs' BK repository).
+True. I will remove that. Any commit will have the new base of the
+patch as a parent.
 
-Which do you think is going to be faster to operate from a cold start
-using 4200 rpm laptop drives?  :-)
+> If you want to keep the history of a patch, you should be able to do it by
+> rebasing that history as well as the latest patch, so you'd get a
+> two-parent commit with two rebased parents when you rebased a two-parent
+> commit.
 
-						- Ted
+I can have two commits, one of them accessible via HEAD and the other
+stored somewhere under .git/patches. The latter is just a normal
+commit where the parent is the current HEAD. This will not be
+generated when the patch is re-based, but only when a patch is
+modified.
+
+-- 
+Catalin
+
