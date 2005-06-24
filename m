@@ -1,69 +1,67 @@
-From: Alecs King <alecsk@gmail.com>
-Subject: Re: Finding what change broke ARM
-Date: Fri, 24 Jun 2005 19:32:13 +0800
-Message-ID: <20050624113213.GA2328@loalhost.H.qngy.gscas>
-References: <20050624101951.B23185@flint.arm.linux.org.uk>
+From: Paul Jackson <pj@sgi.com>
+Subject: Re: Stacked GIT 0.1 (a.k.a. quilt for git)
+Date: Fri, 24 Jun 2005 04:56:27 -0700
+Organization: SGI
+Message-ID: <20050624045627.6e9cbaff.pj@sgi.com>
+References: <tnxy899zzu7.fsf@arm.com>
+	<20050623175848.1cf41a52.pj@sgi.com>
+	<tnxd5qc6s5o.fsf@arm.com>
+	<20050624034743.6c3bdae4.pj@sgi.com>
+	<tnxhdfo56yd.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linux Kernel List <linux-kernel@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Jun 24 13:26:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 24 13:53:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DlmJ9-0007lq-3E
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 13:25:15 +0200
+	id 1Dlmjn-0005Pb-Nz
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 13:52:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263251AbVFXLbf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 07:31:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263255AbVFXLbf
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 07:31:35 -0400
-Received: from wproxy.gmail.com ([64.233.184.192]:60702 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S263251AbVFXLb0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 07:31:26 -0400
-Received: by wproxy.gmail.com with SMTP id 68so310631wra
-        for <git@vger.kernel.org>; Fri, 24 Jun 2005 04:31:25 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=YH3LTTPV7WK9Oijf7Rq2cHmnBbvHI4LOh7VgKvEuEBv0mO8qhMG1+pv0YCogFKRUFaGrLuG1xe3ii+qFJRrXQArp1SiXz5kwrrY8KL9+HsxBexooODtBMWSjDiXC534fGUaS7pVW4mnwam59zHb55KuEVM6H0Yrefw5k50XbHGk=
-Received: by 10.54.53.39 with SMTP id b39mr1733494wra;
-        Fri, 24 Jun 2005 04:31:25 -0700 (PDT)
-Received: from localhost ([210.77.2.149])
-        by mx.gmail.com with ESMTP id 15sm5362560wrl.2005.06.24.04.31.22;
-        Fri, 24 Jun 2005 04:31:25 -0700 (PDT)
-To: git@vger.kernel.org
-Mail-Followup-To: git@vger.kernel.org,
-	Linux Kernel List <linux-kernel@vger.kernel.org>,
-	Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050624101951.B23185@flint.arm.linux.org.uk>
-User-Agent: Mutt/1.5.9i
+	id S263265AbVFXL6v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 07:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263272AbVFXL6h
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 07:58:37 -0400
+Received: from omx3-ext.sgi.com ([192.48.171.20]:58789 "EHLO omx3.sgi.com")
+	by vger.kernel.org with ESMTP id S263267AbVFXLyZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Jun 2005 07:54:25 -0400
+Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
+	by omx3.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j5OCSA6n014468;
+	Fri, 24 Jun 2005 05:28:10 -0700
+Received: from v0 (mtv-vpn-hw-masa-1.corp.sgi.com [134.15.25.210])
+	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j5OBsMdO40590211;
+	Fri, 24 Jun 2005 04:54:22 -0700 (PDT)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <tnxhdfo56yd.fsf@arm.com>
+X-Mailer: Sylpheed version 2.0.0beta3 (GTK+ 2.6.7; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jun 24, 2005 at 10:19:51AM +0100, Russell King wrote:
-> When building current git for ARM, I see:
-> 
->   CC      arch/arm/mm/consistent.o
-> arch/arm/mm/consistent.c: In function `dma_free_coherent':
-> arch/arm/mm/consistent.c:357: error: `mem_map' undeclared (first use in this function)
-> arch/arm/mm/consistent.c:357: error: (Each undeclared identifier is reported only once
-> arch/arm/mm/consistent.c:357: error: for each function it appears in.)
-> make[2]: *** [arch/arm/mm/consistent.o] Error 1
-> 
-> How can I find what change elsewhere in the kernel tree caused this
-> breakage?
-> 
-> With bk, you could ask for a per-file revision history of the likely
-> candidates, and then find the changeset to view the other related
-> changes.
-> 
-> With git... ?  We don't have per-file revision history so...
+> there is no way to modify the log history.
 
-Wouldnt a 'git-whatchanged -p <candidates>' help?
+Aha.  If that means what I think it does, then I suspect I will remain
+with quilt.  The per-patch comment is often about the last thing that
+I put in the patch.
+
+The special thing about quilt is that the patch set in every regard
+is infinitely changeable - the selection and order of the patches,
+the contents of the patches, and the comments and metadata associated
+with the patch can all be edited trivially.
+
+Quilt is not a change management system; it's a patch set composition
+system.
+
+That stgit is layered on git (a persistent data store), and that
+it has something (the log history you mention above) that cannot
+be modified, suggests that stgit is not a 'better quilt for git',
+but some other sort of tool.
+
+Good luck ;).
 
 
 -- 
-Alecs King
+                  I won't rest till it's the best ...
+                  Programmer, Linux Scalability
+                  Paul Jackson <pj@sgi.com> 1.925.600.0401
