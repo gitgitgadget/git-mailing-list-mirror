@@ -1,69 +1,65 @@
 From: Christopher Li <hg@chrisli.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Fri, 24 Jun 2005 08:19:25 -0400
-Message-ID: <20050624121925.GB9519@64m.dyndns.org>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <20050624130604.GK17715@g5.random> <20050624133952.GB7445@thunk.org> <4d8e3fd3050624064620a4945e@mail.gmail.com>
+Date: Fri, 24 Jun 2005 08:38:19 -0400
+Message-ID: <20050624123819.GD9519@64m.dyndns.org>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>, Andrea Arcangeli <andrea@suse.de>,
-	Petr Baudis <pasky@ucw.cz>, mercurial@selenic.com,
-	Jeff Garzik <jgarzik@pobox.com>,
+Cc: Matt Mackall <mpm@selenic.com>, Jeff Garzik <jgarzik@pobox.com>,
 	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 24 17:25:33 2005
+	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
+X-From: git-owner@vger.kernel.org Fri Jun 24 17:48:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dlq3F-0007yX-2Y
-	for gcvg-git@gmane.org; Fri, 24 Jun 2005 17:25:05 +0200
+	id 1DlqPE-0005bv-Np
+	for gcvg-git@gmane.org; Fri, 24 Jun 2005 17:47:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262675AbVFXPbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 24 Jun 2005 11:31:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263025AbVFXPbb
-	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 11:31:31 -0400
-Received: from sccrmhc12.comcast.net ([204.127.202.56]:47492 "EHLO
+	id S263133AbVFXPxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 24 Jun 2005 11:53:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263106AbVFXPxP
+	(ORCPT <rfc822;git-outgoing>); Fri, 24 Jun 2005 11:53:15 -0400
+Received: from sccrmhc12.comcast.net ([204.127.202.56]:34558 "EHLO
 	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
-	id S262675AbVFXPb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Jun 2005 11:31:27 -0400
+	id S263100AbVFXPuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Jun 2005 11:50:23 -0400
 Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
           by comcast.net (sccrmhc12) with ESMTP
-          id <2005062415312601200hi177e>; Fri, 24 Jun 2005 15:31:26 +0000
+          id <2005062415502301200hckmge>; Fri, 24 Jun 2005 15:50:23 +0000
 Received: by localhost.localdomain (Postfix, from userid 1027)
-	id B21BC3F17F; Fri, 24 Jun 2005 08:19:25 -0400 (EDT)
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+	id 289263F17F; Fri, 24 Jun 2005 08:38:19 -0400 (EDT)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <4d8e3fd3050624064620a4945e@mail.gmail.com>
+In-Reply-To: <20050624064101.GB14292@pasky.ji.cz>
 User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Jun 24, 2005 at 03:46:21PM +0200, Paolo Ciarrocchi wrote:
+On Fri, Jun 24, 2005 at 08:41:01AM +0200, Petr Baudis wrote:
+> > 5.1) undo the last commit or pull
 > > 
-> > Which do you think is going to be faster to operate from a cold start
-> > using 4200 rpm laptop drives?  :-)
-> > 
-> >                                                - Ted
+> > $ hg undo
 > 
-> That's quite intersting, what the rational behind such a difference in
-> terms of disk occupation ?
->
+> $ cg-admin-uncommit
+> 
+> Note that you should never do this if you already pushed the changes
+> out, or someone might get them. (That holds for regular Git too.) See
+> 
+> $ cg-help cg-admin-uncommit   # (or cg-admin-uncommit --help)
+> 
+> for details. (That's another Cogito's cool feature. Handy docs! ;-)
+> 
 
-Let me see. Mercurial using delta or full storage for the repository.
-It insert a full node when it detect that delta it need to reach
-certain node is too big. It just like MPEG movies, most of the frame
-is delta to the previous frame.  Once a while you have full frame to
-allow you seek to.
+Does it still works if the last commit was interrupted  or due to error for some
+reason?  Undo pull is pretty cool because you might pull a lot of commit
+in one blow. Get rid of commit one by one is going to be painful. Some times
+the object you pull has more than one chain of history it will be very nasty
+if you want to clean it up.
 
-But git has delta as well right? Another factor is that all file has
-same path in mercurial using the same storage file. So in mercurial
-it has far less file to store in the repository. Each file has two repository
-files, the data storage file and the index file. Remember that file system
-like ext3 is using blocks, if you store very small stuff on a file, it is
-still going to take at least one block on disk. So that will defeat the delta
-compression if the delta is always on a new file.
-
+Mercurial's undo is taking a snapshot of all the changed file's repo file length
+at every commit or pull.  It just truncate the file to original size and undo 
+is done.
 
 Chris
 
