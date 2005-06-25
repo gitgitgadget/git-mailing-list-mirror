@@ -1,83 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: kernel.org and GIT tree rebuilding
-Date: Fri, 24 Jun 2005 22:04:11 -0700
-Message-ID: <7vslz758ok.fsf@assigned-by-dhcp.cox.net>
-References: <20050624.212009.92584730.davem@davemloft.net>
+Date: Fri, 24 Jun 2005 22:23:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org>
+References: <20050624.212009.92584730.davem@davemloft.net> <42BCE026.8050405@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 25 07:00:15 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "David S. Miller" <davem@davemloft.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 25 07:20:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dm2m4-0000bb-IR
-	for gcvg-git@gmane.org; Sat, 25 Jun 2005 07:00:12 +0200
+	id 1Dm35G-0003Ax-Sa
+	for gcvg-git@gmane.org; Sat, 25 Jun 2005 07:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263339AbVFYFET (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Jun 2005 01:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263340AbVFYFET
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 01:04:19 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:58271 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S263339AbVFYFEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2005 01:04:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050625050412.ERSI16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Jun 2005 01:04:12 -0400
-To: "David S. Miller" <davem@davemloft.net>
-In-Reply-To: <20050624.212009.92584730.davem@davemloft.net> (David S.
- Miller's message of "Fri, 24 Jun 2005 21:20:09 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263341AbVFYFYS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Jun 2005 01:24:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263343AbVFYFYS
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 01:24:18 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57781 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S263341AbVFYFYP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Jun 2005 01:24:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5P5L0jA001786
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 24 Jun 2005 22:21:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5P5KxjB000639;
+	Fri, 24 Jun 2005 22:21:00 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <42BCE026.8050405@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "DSM" == David S Miller <davem@davemloft.net> writes:
 
-DSM> To get a clean history to push to Linus, I typically blow
-DSM> away my trees and make fresh ones to stick patches into
-DSM> which I want to merge.
 
-DSM> Should I:
+On Sat, 25 Jun 2005, Jeff Garzik wrote:
+> 
+> This is all due to the rsync sweeps, which have to scan metric tons of 
+> inodes and dentries.  Orders of magnitude over the pre-git days.
 
-DSM> 1) Do a git pull from Linus's tree once he takes my changes, then
-DSM>    ask GIT to prune the tree?  How do I do that and how does it work?
+Well, the real solution is to use a git-aware protocol, not rsync.
 
-DSM> 2) Should I use .git/object/ database symlinking?
+rsync is wonderful for prototyping, and I wanted to make the database 
+rsync'able for that reason, but it clearly doesn't scale.
 
-DSM>    Are there any scripts out there which do this automatically?
-DSM>    Something as simple to run as "git-pull-script" and it takes
-DSM>    care of using links when possible on a local filesystem.
+I think I'll make a "pack"/"unpack" pair that just packs all the necessary
+objects between two commits. Then you can basically sync the object file 
+by doing
 
-git-pull-script internally uses git-fetch-script which knows how
-to do the local tree using hardlinks.  Presumably, the following
-workflow would work:
+	git-pack OLD..NEW | ssh other-end git-unpack
 
- (1) You hack away in your private tree, while you keep a "to be
-     published" clean tree, both on your local machine.
+and you'd basically be done. It looks pretty easy to do, too..
 
- (2) Do a GIT pull, merge in your private tree, to come up with
-     a clean set of changes in your private tree.  This is the
-     tree you "typically blow away".  Reordering the commits to
-     come up with a clean history since you last pulled from
-     Linus would also happen in this tree.
-
- (3) Once you have a commit that you want to publish (i.e. the
-     commit chain between that commit and the point you last
-     pulled from Linus is the "clean history to push to Linus"),
-     you go to your "to be published" clean tree, and run
-     git-fetch-script to fetch the commit you want to publish
-     from your private tree.  When you give an absolute path as
-     the "remote repo", git-local-pull with linking behaviour is
-     used by git-fetch-script; otherwise rsync backend is used
-     so you end up polluted object database.  This way you copy
-     only the clean stuff from your private tree.  Your HEAD in
-     this tree should be set to the commit you wanted to
-     publish.  Running git-prune would be nicer but if your
-     history is truly clean it should not be necessary.
-
- (4) Garbage collecting with git-prune your private tree is your
-     business.
-
+			Linus
