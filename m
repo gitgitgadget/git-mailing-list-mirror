@@ -1,72 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-merge-one-file-script: do not misinterpret rm failure
-Date: Fri, 24 Jun 2005 23:20:33 -0700
-Message-ID: <7vpsub555a.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.61
+Date: Sat, 25 Jun 2005 02:03:02 -0700 (PDT)
+Message-ID: <20050625090302.5601.qmail@web26308.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 25 08:20:45 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: mingo@elte.hu, berkus@gmail.com
+X-From: git-owner@vger.kernel.org Sat Jun 25 10:56:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dm420-0002Mf-CQ
-	for gcvg-git@gmane.org; Sat, 25 Jun 2005 08:20:44 +0200
+	id 1Dm6Sx-0007Pv-Un
+	for gcvg-git@gmane.org; Sat, 25 Jun 2005 10:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263358AbVFYGZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Jun 2005 02:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263352AbVFYGXp
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 02:23:45 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:29621 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S263348AbVFYGUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2005 02:20:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050625062035.FEPO16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 25 Jun 2005 02:20:35 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S263324AbVFYJDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Jun 2005 05:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263368AbVFYJDJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 05:03:09 -0400
+Received: from web26308.mail.ukl.yahoo.com ([217.146.176.19]:52353 "HELO
+	web26308.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S263324AbVFYJDD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2005 05:03:03 -0400
+Received: (qmail 5603 invoked by uid 60001); 25 Jun 2005 09:03:02 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=iWZd1ud/g0ISznqFihacikFq4tGbE39kWbKda476II5PCcZUM72SqJx1FuykmDTEmiqt4yg6RfwnvMN1nMXGAztlox5fEim6JfhyMWzGAWkAxYq+s9dSPEfRLaPSSiSDP9ZTZc9HfB5VlZ/KpmILg7mUDwipqE16fMvsZnefs/c=  ;
+Received: from [151.42.53.104] by web26308.mail.ukl.yahoo.com via HTTP; Sat, 25 Jun 2005 02:03:02 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When a merge adds a file DF and removes a directory there by
-deleting a path DF/DF, git-merge-one-file-script can be called
-for the removal of DF/DF when the path DF is already created by
-"git-read-tree -m -u".  When this happens, we get confused by a
-failure return from 'rm -f -- "$4"' (where $4 is DF/DF); finding
-file DF there the "rm -f" command complains that DF is not a
-directory.
+Here is qgit-0.61
 
-What we want to ensure is that there is no file DF/DF in this
-case. Avoid getting ourselves confused by first checking if
-there is a file, and only then try to remove it (and check for
-failure from the "rm" command). 
+This is mainly a fix release with some work in annotation code.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-cd /opt/packrat/playpen/public/in-place/git/git.junio/
-jit-diff : git-merge-one-file-script
-# - master: Add more tests for read-tree --emu23.
-# + (working tree)
+Changelog from qgit-0.6:
 
-diff --git a/git-merge-one-file-script b/git-merge-one-file-script
---- a/git-merge-one-file-script
-+++ b/git-merge-one-file-script
-@@ -22,8 +22,11 @@ case "${1:-.}${2:-.}${3:-.}" in
- #
- "$1.." | "$1.$1" | "$1$1.")
- 	echo "Removing $4"
--	rm -f -- "$4" &&
--		exec git-update-cache --remove -- "$4"
-+	if test -f "$4"
-+	then
-+		rm -f -- "$4"
-+	fi &&
-+	exec git-update-cache --remove -- "$4"
- 	;;
- 
- #
+- improve annotation algorithm to detect annotations behind merges
+
+- qgit arguments parsing: switch to use git-rev-parse
+
+- added find function in file viewer
+
+- double click in annotate shows revision
+
+- set Monospace font in file and diff viewer (suggested by Radoslaw Szkodzinski)
+
+- added filter on path in main view
+
+- pretty format annotation header
+
+- fixed annotate alignement
+
+- detect also cogito type tags, i.e. tags shown with cg-tag-ls
+
+Download from:
+http://prdownloads.sourceforge.net/qgit/qgit-0.61.tar.bz2?download
+
+Annotation code should be much improved now, but still experimental. 
+I need more time to workout all corner cases ( and there are a lot ;-) )
 
 
+And now a wish:
 
+If may I ask, should be possible to add the object type and name, togheter with sha
+in git-rev-list --objects output?
+This new option looks very promising to speed up my startup loading.
+
+
+Thanks
+Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
