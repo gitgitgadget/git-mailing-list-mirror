@@ -1,80 +1,84 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: qgit-0.61
-Date: Sat, 25 Jun 2005 02:03:02 -0700 (PDT)
-Message-ID: <20050625090302.5601.qmail@web26308.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 0/9] Fix oversimplified optimization for add_cache_entry().
+Date: Sat, 25 Jun 2005 02:16:23 -0700
+Message-ID: <7vmzpe4x08.fsf_-_@assigned-by-dhcp.cox.net>
+References: <7vaclgfynv.fsf@assigned-by-dhcp.cox.net>
+	<7vvf439vdl.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506241755280.11175@ppc970.osdl.org>
+	<7vaclf6tw7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: mingo@elte.hu, berkus@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jun 25 10:56:49 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 25 11:10:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dm6Sx-0007Pv-Un
-	for gcvg-git@gmane.org; Sat, 25 Jun 2005 10:56:44 +0200
+	id 1Dm6gF-0000mn-FE
+	for gcvg-git@gmane.org; Sat, 25 Jun 2005 11:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263324AbVFYJDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 25 Jun 2005 05:03:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263368AbVFYJDJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 05:03:09 -0400
-Received: from web26308.mail.ukl.yahoo.com ([217.146.176.19]:52353 "HELO
-	web26308.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S263324AbVFYJDD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jun 2005 05:03:03 -0400
-Received: (qmail 5603 invoked by uid 60001); 25 Jun 2005 09:03:02 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=iWZd1ud/g0ISznqFihacikFq4tGbE39kWbKda476II5PCcZUM72SqJx1FuykmDTEmiqt4yg6RfwnvMN1nMXGAztlox5fEim6JfhyMWzGAWkAxYq+s9dSPEfRLaPSSiSDP9ZTZc9HfB5VlZ/KpmILg7mUDwipqE16fMvsZnefs/c=  ;
-Received: from [151.42.53.104] by web26308.mail.ukl.yahoo.com via HTTP; Sat, 25 Jun 2005 02:03:02 PDT
-To: git@vger.kernel.org
+	id S263368AbVFYJQ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 25 Jun 2005 05:16:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262637AbVFYJQ6
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jun 2005 05:16:58 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:18940 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S263368AbVFYJQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jun 2005 05:16:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050625091624.FGLV17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 25 Jun 2005 05:16:24 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vaclf6tw7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Fri, 24 Jun 2005 19:40:40 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Here is qgit-0.61
+>>>>> "JCH" == Junio C Hamano <junkio@cox.net> writes:
 
-This is mainly a fix release with some work in annotation code.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+LT> I really don't want to do this. 
+LT> Can you fix the "optimized" one instead?
 
-Changelog from qgit-0.6:
+JCH> Will do.
 
-- improve annotation algorithm to detect annotations behind merges
+I have this list which logically consists of three sets.  I am
+using the new "git rebase" to maintain it and your not taking my
+patch stream gave me a good opportunity to test it ;-).
 
-- qgit arguments parsing: switch to use git-rev-parse
+  [PATCH 1/9] [RFC] fix date parsing for GIT raw commit timestamp format.
+  [PATCH 2/9] git-commit-script: get commit message from an existing one.
+  [PATCH 3/9] git-cherry: find commits not merged upstream.
+  [PATCH 4/9] git-rebase-script: rebase local commits to new upstream head.
 
-- added find function in file viewer
+These four are updated "git rebase" I've written while on-road
+without knowing about your git-patch-id; the updated one uses
+git-patch-id to identify which are merged and which are not.
 
-- double click in annotate shows revision
+To carry earlier commit datetime forward, date.c needs to be
+fixed (PATCH 1/9, which I sent you separately Friday), and
+enhancing git-commit-script to be able to specify an existing
+commit to slurp the commit message (and author & date
+information) was necessary (well, not strictly necessary, but
+that is the way I am used to, which is stolen from JIT), which
+is PATCH 2/9.  PATCH 3/9 and PATCH 4/9 use git-patch-id to
+implement the cherrypick/rebase.
 
-- set Monospace font in file and diff viewer (suggested by Radoslaw Szkodzinski)
+  [PATCH 5/9] Add more tests for read-tree --emu23.
+  [PATCH 6/9] git-merge-one-file-script: do not misinterpret rm failure
+  [PATCH 7/9] Fix oversimplified optimization for add_cache_entry().
 
-- added filter on path in main view
+These three are reworked D/F conflict fix.  PATCH 5/9 is the
+same demonstration of what is broken in the current code.  The
+problem fixed by PATCH 6/9 was discovered while I was trying out
+the fixes.  PATCH 7/9 teaches your "optimized" has_file/has_dir
+implementation to honor stages while they operate.
 
-- pretty format annotation header
+  [PATCH 8/9] http-pull: documentation updates.
+  [PATCH 9/9] Add a bit of developer documentation to pull.h
 
-- fixed annotate alignement
+These are resend.
 
-- detect also cogito type tags, i.e. tags shown with cg-tag-ls
-
-Download from:
-http://prdownloads.sourceforge.net/qgit/qgit-0.61.tar.bz2?download
-
-Annotation code should be much improved now, but still experimental. 
-I need more time to workout all corner cases ( and there are a lot ;-) )
-
-
-And now a wish:
-
-If may I ask, should be possible to add the object type and name, togheter with sha
-in git-rev-list --objects output?
-This new option looks very promising to speed up my startup loading.
-
-
-Thanks
-Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
