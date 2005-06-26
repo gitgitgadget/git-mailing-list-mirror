@@ -1,87 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-relink-script to fix up missing hardlinks
-Date: Sun, 26 Jun 2005 12:07:58 -0700
-Message-ID: <7v7jghq6lt.fsf@assigned-by-dhcp.cox.net>
-References: <20050626181516.GC20369@mythryan2.michonline.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org and GIT tree rebuilding
+Date: Sun, 26 Jun 2005 12:19:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506261206170.19755@ppc970.osdl.org>
+References: <20050624.212009.92584730.davem@davemloft.net> <42BCE026.8050405@pobox.com>
+ <Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org> <42BCF02B.5090706@pobox.com>
+ <Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+ <Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org> <7vzmtdq7wy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Jun 26 21:02:02 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>, Chris Mason <mason@suse.com>
+X-From: git-owner@vger.kernel.org Sun Jun 26 21:11:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DmcNs-0000Ey-Kk
-	for gcvg-git@gmane.org; Sun, 26 Jun 2005 21:01:36 +0200
+	id 1DmcWi-0001Pk-Mz
+	for gcvg-git@gmane.org; Sun, 26 Jun 2005 21:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261567AbVFZTIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Jun 2005 15:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261573AbVFZTIU
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jun 2005 15:08:20 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53380 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261567AbVFZTIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jun 2005 15:08:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050626190757.HCXZ22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 26 Jun 2005 15:07:57 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050626181516.GC20369@mythryan2.michonline.com> (Ryan
- Anderson's message of "Sun, 26 Jun 2005 14:15:16 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261573AbVFZTR0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Jun 2005 15:17:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261575AbVFZTR0
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jun 2005 15:17:26 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51668 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261573AbVFZTRU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2005 15:17:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5QJH2jA011616
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 26 Jun 2005 12:17:03 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5QJH1LU016343;
+	Sun, 26 Jun 2005 12:17:02 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmtdq7wy.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Not that I think it matters that much anymore since I am
-proposing removal of "delta" support and Linus seems to be
-inclined in the same direction, but I said "most of the time" in
-the earlier message on this same topic for a reason:
 
-    Message-ID: <7vy89h36da.fsf@assigned-by-dhcp.cox.net>
-    Subject: Re: RFE: git relink
-    Date: Fri, 10 Jun 2005 20:44:01 -0700
-    References: <42A88C07.5050907@pobox.com>
 
-    Whoever is doing this script needs to be a bit careful.
+On Sun, 26 Jun 2005, Junio C Hamano wrote:
+> 
+> My preference is to do things in this order:
+> 
+>  (0) concatenate pack and idx files;
 
-    ...
+Actually, I was originally planning to do that, but now that I have 
+thought about what read_sha1_file() would actually do, I think it's more 
+efficient to leave the index as a separate file.
 
-    Ryan Anderson code will notice delta vs full object case most of
-    the time because it checks and makes sure the sizes of
-    corresponding files from two repositories match.  The problem
-    with the code is that it dies, instead of just ignoring, when
-    size differs....
+In particular, what you'd normally do is that if you can't look up the
+file in the regular object directory, you start going through the pack
+files. You can do it by having GIT_ALTERNATE_OBJECT_DIRECTORIES point to a
+pack file, but I actually would prefer the notion of just adding a
 
-Your latest version has an option not to die which is very good
-[*1*], but in a very narrow corner case, without comparing the
-file contents, I think the code would still do a wrong thing.
-Two trees can store the same object both in delitified form but
-based on different base objects, and the deltified
-representation still having the same length, no?  And I suspect
-you would end up linking them together, corrupting one of the
-trees.
+	.git/objects/pack
 
-Of course, even when you do not have "delta", if an object in
-one tree is corrupted (but has the correct size), you would end
-up relinking the corrupt one into another tree, nuking a good
-copy, if you do not compare the file contents.
+subdirectory, and having object lookup just automatically open and map all 
+index files in that subdirectory.
 
-If/when/after the proposed removal of "delta" support happens, I
-think the correct way to do git-relink-script would be to keep
-most of your latest version intact, except:
+And the thing is, you really just want to map the index files, the data
+files can be so big that you can't afford to map them (ie a really big
+project might have several pack-files a gig each or something like that).
 
- (1) make it always die when you see differences in size.
-     Without "delta" in the repository, SHA1 files that
-     represent the same object must have the same size.
+And the most efficient way to map just the index file is to keep it 
+separate, because then the "stat()" will just get the information 
+directly, and you then just mmap that. 
 
- (2) make --safe also check on file contents.  You do not need
-     the flag for the "delta" reason anymore, so I am suggesting
-     reusing the flag to detect file corruption, to be extra
-     safe, when the user permits you to spend cycles to be more
-     careful.
+The alternative is to first read the index of the index (to figure out how
+big the index is), and then map the rest. But that just seems a lot
+messier than just mapping the index file directly.
 
-[Footnote]
+And when creating these things, we do need to create the data file (which 
+can be big enough that it doesn't fit in memory) first, so we have to have 
+a separate file for it, we can't just stream it out to stdout.
 
-*1* and other parts of the script all look nicely done.
+Now, when _sending_ the pack-files, linearizing them is easy: you just 
+send the index first, and the data file immediately afterwards. The index 
+tells how big it is, so there's no need to even add any markers: you can 
+do something like 'git-send-script' with something simple like
+
+	git-rev-list ... | git-pack-file tmp-pack &&
+	cat tmp-pack.idx tmp-pack.data | ssh other git-receive-script
+
+So let's just keep the index/data files separate.
+
+		Linus
