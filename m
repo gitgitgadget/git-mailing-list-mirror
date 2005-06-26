@@ -1,86 +1,75 @@
-From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH] git-ssh-pull: commit-id consistency
-Date: Sun, 26 Jun 2005 21:45:47 +0200
-Message-ID: <20050626214547.A29432@tin.liacs.nl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: kernel.org and GIT tree rebuilding
+Date: Sun, 26 Jun 2005 12:45:29 -0700
+Message-ID: <7vll4wq4va.fsf@assigned-by-dhcp.cox.net>
+References: <20050624.212009.92584730.davem@davemloft.net>
+	<42BCE026.8050405@pobox.com>
+	<Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org>
+	<42BCF02B.5090706@pobox.com>
+	<Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+	<Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+	<7vzmtdq7wy.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506261206170.19755@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 26 21:42:51 2005
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@cam.org>, Chris Mason <mason@suse.com>
+X-From: git-owner@vger.kernel.org Sun Jun 26 21:44:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dmd1H-0006D3-8c
-	for gcvg-git@gmane.org; Sun, 26 Jun 2005 21:42:19 +0200
+	id 1Dmd34-0006Rz-L7
+	for gcvg-git@gmane.org; Sun, 26 Jun 2005 21:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261641AbVFZTsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 26 Jun 2005 15:48:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261638AbVFZTsp
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jun 2005 15:48:45 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:11920 "EHLO rhodium.liacs.nl")
-	by vger.kernel.org with ESMTP id S261635AbVFZTqi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jun 2005 15:46:38 -0400
-Received: from tin.liacs.nl (tin.liacs.nl [132.229.44.20])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id j5QJjl8I012807;
-	Sun, 26 Jun 2005 21:45:52 +0200
-Received: (from sverdool@localhost)
-	by tin.liacs.nl (8.11.6/8.9.3) id j5QJjls29493;
-	Sun, 26 Jun 2005 21:45:47 +0200
+	id S261586AbVFZTtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 26 Jun 2005 15:49:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261585AbVFZTtM
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jun 2005 15:49:12 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:61946 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261631AbVFZTpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jun 2005 15:45:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050626194531.LROI12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 26 Jun 2005 15:45:31 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <Pine.LNX.4.58.0506261206170.19755@ppc970.osdl.org> (Linus
+ Torvalds's message of "Sun, 26 Jun 2005 12:19:07 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I thought about keeping the check for a leading dot or slash,
-but then I figured that you'd get an error from the other
-side pretty quickly.
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-skimo
---
-In contrast to other plumbing tools, git-ssh-pu{sh,ll} only
-allow a very restrictive form of commit-id filenames.
-This patch removes this restriction.
+LT> On Sun, 26 Jun 2005, Junio C Hamano wrote:
+>> 
+>> My preference is to do things in this order:
+>> 
+>> (0) concatenate pack and idx files;
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+LT> So let's just keep the index/data files separate.
 
----
-commit 00437f1bafcb710bb809cd2e87cdaeae340a67b8
-tree 480e77cde9afbd0b0abd33e3f272288739b01a7e
-parent 641e1cac73acd67d0b1830dfd7196bca58dffbf2
-author Sven Verdoolaege <skimo@kotnet.org> Sun, 26 Jun 2005 19:41:44 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Sun, 26 Jun 2005 19:41:44 +0200
+Fair enough.  Having thought about it a bit more, if people
+agree, I think it would make more sense to rip out "delta"
+object support first before doing read_sha1_file() and friends
+that uses .git/objects/pack.
 
- pull.c     |    7 ++-----
- ssh-push.c |    2 +-
- 2 files changed, 3 insertions(+), 6 deletions(-)
+My "preferred order" now look like this:
 
-diff --git a/pull.c b/pull.c
---- a/pull.c
-+++ b/pull.c
-@@ -152,11 +152,8 @@ static int interpret_target(char *target
- {
- 	if (!get_sha1_hex(target, sha1))
- 		return 0;
--	if (!check_ref_format(target)) {
--		if (!fetch_ref(target, sha1)) {
--			return 0;
--		}
--	}
-+	if (!fetch_ref(target, sha1))
-+		return 0;
- 	return -1;
- }
- 
-diff --git a/ssh-push.c b/ssh-push.c
---- a/ssh-push.c
-+++ b/ssh-push.c
-@@ -74,7 +74,7 @@ int serve_ref(int fd_in, int fd_out)
- 			return -1;
- 		posn++;
- 	} while (ref[posn - 1]);
--	if (get_ref_sha1(ref, sha1))
-+	if (get_sha1(ref, sha1))
- 		remote = -1;
- 	write(fd_out, &remote, 1);
- 	if (remote)
+ (1) have people with deltified repositories convert them back
+     to undeltified (I think git-pack-objects would barf on such
+     repository);
+
+ (2) drop "delta" objects from GIT_OBJECT_DIRECTORY; this means
+     that git-deltafy-script and git-mkdelta have to go.
+
+ (3) teach read_sha1_file() to read from packed GIT in
+     .git/objects/pack;
+
+ (4) teach fsck-cache about packed GIT;
+
+ (5) tell git-*-pull about packed GIT;
