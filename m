@@ -1,73 +1,106 @@
-From: Kyle Moffett <mrmacman_g4@mac.com>
+From: Matt Mackall <mpm@selenic.com>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Mon, 27 Jun 2005 15:05:47 -0400
-Message-ID: <4DB694DE-E3E8-4F72-8888-9529D2CC16B9@mac.com>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050627183118.GB1415@elf.ucw.cz>
-Mime-Version: 1.0 (Apple Message framework v730)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
-X-From: git-owner@vger.kernel.org Mon Jun 27 21:00:07 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Date: Mon, 27 Jun 2005 12:40:31 -0700
+Message-ID: <20050627194031.GK12006@waste.org>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
+	<20050627183118.GB1415@elf.ucw.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff Garzik <jgarzik@pobox.com>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
+X-From: mercurial-bounces@selenic.com Mon Jun 27 21:34:29 2005
+Return-path: <mercurial-bounces@selenic.com>
+Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dmypu-0000q4-FB
-	for gcvg-git@gmane.org; Mon, 27 Jun 2005 21:00:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261650AbVF0TGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Jun 2005 15:06:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261623AbVF0TGf
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 15:06:35 -0400
-Received: from smtpout.mac.com ([17.250.248.71]:19146 "EHLO smtpout.mac.com")
-	by vger.kernel.org with ESMTP id S261619AbVF0TGN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2005 15:06:13 -0400
-Received: from mac.com (smtpin02-en2 [10.13.10.147])
-	by smtpout.mac.com (Xserve/8.12.11/smtpout14/MantshX 4.0) with ESMTP id j5RJ5pqB025326;
-	Mon, 27 Jun 2005 12:05:52 -0700 (PDT)
-Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin02/MantshX 4.0) with ESMTP id j5RJ5mwk015273
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 27 Jun 2005 12:05:50 -0700 (PDT)
-In-Reply-To: <20050627183118.GB1415@elf.ucw.cz>
+	id 1DmzMX-0000Ho-AO
+	for gcvmd-mercurial@gmane.org; Mon, 27 Jun 2005 21:33:45 +0200
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJeXa7012346;
+	Mon, 27 Jun 2005 14:40:33 -0500
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJeVCl012341
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 27 Jun 2005 14:40:31 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j5RJeVXG012338;
+	Mon, 27 Jun 2005 14:40:31 -0500
 To: Pavel Machek <pavel@ucw.cz>
-X-Mailer: Apple Mail (2.730)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050627183118.GB1415@elf.ucw.cz>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: mercurial.selenic.com
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://www.selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
 
-On Jun 27, 2005, at 14:31:18, Pavel Machek wrote:
-> pavel@Elf:/data/tmp/linux-hg$ hg init http://www.kernel.org/hg/
+On Mon, Jun 27, 2005 at 08:31:18PM +0200, Pavel Machek wrote:
+> Hi!
+> 
+> > > Things in git-land are moving at lightning speed, and usability has 
+> > > improved a lot since my post a month ago:  http://lkml.org/lkml/2005/5/26/11
+> > 
+> > And here's a quick comparison with the current state of Mercurial..
+> > 
+> > > 1) installing git
+> > > 
+> > > git requires bootstrapping, since you must have git installed in order 
+> > > to check out git.git (git repo), and linux-2.6.git (kernel repo).  I 
+> > > have put together a bootstrap tarball of today's git repository.
+> > > 
+> > > Download tarball from:
+> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
+> > > 
+> > > tarball build-deps:  zlib, libcurl, libcrypto (openssl)
+> > > 
+> > > install tarball:  unpack && make && sudo make prefix=/usr/local install
+> > > 
+> > > jgarzik helper scripts, not in official git distribution:
+> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
+> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
+> > > 
+> > > After reading the rest of this document, come back and update your copy 
+> > > of git to the latest:
+> > > rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
+> > 
+> > Download from: http://selenic.com/mercurial/mercurial-snapshot.tar.gz
+> > Build-deps: Python 2.3
+> > Install: unpack && python setup.py install [--home=/usr/local]
+> 
+> Did that... (had to install python2.3-dev, first), but got...
 > Traceback (most recent call last):
 >   File "/usr/local/bin/hg", line 11, in ?
 >     from mercurial import commands
 > ImportError: No module named mercurial
 
-Apparently your Python does not automatically look in /usr/local/lib/ 
-python
-and you don't have PYTHONPATH=/usr/local/lib/python.  Try adding the  
-following
-to your .bash_profile, then logging out and back in again:
+>From the README:
 
-if [ -z "$PYTHONPATH" ]; then
-     PYTHONPATH=/usr/local/lib/python
-else
-     PYTHONPATH="$PYTHONPATH:/usr/local/lib/python"
-fi
-export PYTHONPATH
+ To install system-wide:
 
-Cheers,
-Kyle Moffett
+ $ python setup.py install   # change python to python2.3 if 2.2 is default
 
---
-Somone asked me why I work on this free (http://www.fsf.org/philosophy/)
-software stuff and not get a real job. Charles Shultz had the best  
-answer:
+ To install in your home directory (~/bin and ~/lib, actually), run:
 
-"Why do musicians compose symphonies and poets write poems? They do it
-because life wouldn't have any meaning for them if they didn't.  
-That's why
-I draw cartoons. It's my life."
--- Charles Shultz
+ $ python2.3 setup.py install --home=~
+ $ export PYTHONPATH=${HOME}/lib/python  # add this to your .bashrc
+ $ export PATH=${HOME}/bin:$PATH         # 
+
+ And finally:
+
+ $ hg                                    # test installation, show help
+
+ If you get complaints about missing modules, you probably haven't set
+ PYTHONPATH correctly.
+
+-- 
+Mathematics is the supreme nostalgia of our time.
