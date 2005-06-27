@@ -1,58 +1,48 @@
-From: Matt Mackall <mpm@selenic.com>
+From: Ed Tomlinson <tomlins@cam.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Mon, 27 Jun 2005 13:51:12 -0700
-Message-ID: <20050627205112.GP12006@waste.org>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
-	<20050627183118.GB1415@elf.ucw.cz>
-	<20050627194031.GK12006@waste.org>
-	<20050627195134.GA17107@kvack.org>
+Date: Mon, 27 Jun 2005 17:53:12 -0400
+Organization: me
+Message-ID: <200506271753.13247.tomlins@cam.org>
+References: <42B9E536.60704@pobox.com> <20050627194031.GK12006@waste.org> <20050627195134.GA17107@kvack.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff Garzik <jgarzik@pobox.com>,
-        Linux Kernel <linux-kernel@vger.kernel.org>,
-        Pavel Machek <pavel@ucw.cz>, mercurial@selenic.com
-X-From: mercurial-bounces@selenic.com Mon Jun 27 22:44:41 2005
-Return-path: <mercurial-bounces@selenic.com>
-Received: from waste.org ([216.27.176.166])
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Matt Mackall <mpm@selenic.com>, Pavel Machek <pavel@ucw.cz>,
+	Jeff Garzik <jgarzik@pobox.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
+X-From: git-owner@vger.kernel.org Mon Jun 27 23:46:26 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn0Sx-0006yv-G8
-	for gcvmd-mercurial@gmane.org; Mon, 27 Jun 2005 22:44:27 +0200
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RKpEBr021486;
-	Mon, 27 Jun 2005 15:51:15 -0500
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RKpDeA021480
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 27 Jun 2005 15:51:13 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j5RKpCC0021477;
-	Mon, 27 Jun 2005 15:51:12 -0500
+	id 1Dn1Qk-0001xb-7V
+	for gcvg-git@gmane.org; Mon, 27 Jun 2005 23:46:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261899AbVF0Vwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Jun 2005 17:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261880AbVF0Vwv
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 17:52:51 -0400
+Received: from aeimail.aei.ca ([206.123.6.84]:55498 "EHLO aeimail.aei.ca")
+	by vger.kernel.org with ESMTP id S261841AbVF0Vwk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2005 17:52:40 -0400
+Received: from grover (dsl-146-113.aei.ca [66.36.146.113])
+	by aeimail.aei.ca (8.12.10/8.12.10) with ESMTP id j5RLqOdL005704;
+	Mon, 27 Jun 2005 17:52:25 -0400 (EDT)
 To: Benjamin LaHaise <bcrl@kvack.org>
-Content-Disposition: inline
+User-Agent: KMail/1.8.1
 In-Reply-To: <20050627195134.GA17107@kvack.org>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jun 27, 2005 at 03:51:34PM -0400, Benjamin LaHaise wrote:
+On Monday 27 June 2005 15:51, Benjamin LaHaise wrote:
 > On Mon, Jun 27, 2005 at 12:40:31PM -0700, Matt Mackall wrote:
 > >  $ export PYTHONPATH=${HOME}/lib/python  # add this to your .bashrc
 > 
 > This needs to be ${HOME}/lib64/python on x86-64.
 
-Thanks, I'll add this to the README.
+Be careful.  This is not true on debian.
 
--- 
-Mathematics is the supreme nostalgia of our time.
+Ed Tomlinson
