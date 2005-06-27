@@ -1,48 +1,54 @@
-From: Ed Tomlinson <tomlins@cam.org>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Mon, 27 Jun 2005 17:53:12 -0400
-Organization: me
-Message-ID: <200506271753.13247.tomlins@cam.org>
-References: <42B9E536.60704@pobox.com> <20050627194031.GK12006@waste.org> <20050627195134.GA17107@kvack.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: new features in gitk
+Date: Tue, 28 Jun 2005 08:22:46 +1000
+Message-ID: <17088.31798.17291.605567@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Pavel Machek <pavel@ucw.cz>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
-X-From: git-owner@vger.kernel.org Mon Jun 27 23:46:26 2005
+X-From: git-owner@vger.kernel.org Tue Jun 28 00:16:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn1Qk-0001xb-7V
-	for gcvg-git@gmane.org; Mon, 27 Jun 2005 23:46:14 +0200
+	id 1Dn1tR-00079U-Rz
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 00:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261899AbVF0Vwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Jun 2005 17:52:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261880AbVF0Vwv
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 17:52:51 -0400
-Received: from aeimail.aei.ca ([206.123.6.84]:55498 "EHLO aeimail.aei.ca")
-	by vger.kernel.org with ESMTP id S261841AbVF0Vwk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2005 17:52:40 -0400
-Received: from grover (dsl-146-113.aei.ca [66.36.146.113])
-	by aeimail.aei.ca (8.12.10/8.12.10) with ESMTP id j5RLqOdL005704;
-	Mon, 27 Jun 2005 17:52:25 -0400 (EDT)
-To: Benjamin LaHaise <bcrl@kvack.org>
-User-Agent: KMail/1.8.1
-In-Reply-To: <20050627195134.GA17107@kvack.org>
-Content-Disposition: inline
+	id S261952AbVF0WWy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Jun 2005 18:22:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261953AbVF0WWy
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 18:22:54 -0400
+Received: from ozlabs.org ([203.10.76.45]:37316 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S261952AbVF0WWw (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jun 2005 18:22:52 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4B83F67A79; Tue, 28 Jun 2005 08:22:51 +1000 (EST)
+To: git@vger.kernel.org
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Monday 27 June 2005 15:51, Benjamin LaHaise wrote:
-> On Mon, Jun 27, 2005 at 12:40:31PM -0700, Matt Mackall wrote:
-> >  $ export PYTHONPATH=${HOME}/lib/python  # add this to your .bashrc
-> 
-> This needs to be ${HOME}/lib64/python on x86-64.
+New features that I have added recently to the gitk repository at
 
-Be careful.  This is not true on debian.
+rsync://rsync.kernel.org/pub/scm/gitk/gitk.git
 
-Ed Tomlinson
+include:
+
+* Added a right-click context menu on the headlines displayed in the
+  top-left pane with the following entries:
+  - Display diff between two commits
+  - Generate a patch file containing the diff between two commits
+  - Create a local direct tag for a commit
+
+* Left-click on a graph line now displays the parent and the children
+  connected by that line in the bottom-left pane, with buttons
+  allowing you to jump to the parent or a child.
+
+* Pasting into the SHA1 ID field clears it first if it already
+  contains a SHA1 ID.
+
+* Checks for a .git (or $GIT_DIR) directory at startup.
+
+I'm interested to know if people find the diff/patch generation
+options useful.
+
+Paul.
