@@ -1,34 +1,34 @@
-From: Matt Mackall <mpm@selenic.com>
+From: Benjamin LaHaise <bcrl@kvack.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Mon, 27 Jun 2005 12:40:31 -0700
-Message-ID: <20050627194031.GK12006@waste.org>
+Date: Mon, 27 Jun 2005 15:51:34 -0400
+Message-ID: <20050627195134.GA17107@kvack.org>
 References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
 	<20050627183118.GB1415@elf.ucw.cz>
+	<20050627194031.GK12006@waste.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jgarzik@pobox.com>,
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff Garzik <jgarzik@pobox.com>,
         Linux Kernel <linux-kernel@vger.kernel.org>,
-        Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
-X-From: mercurial-bounces@selenic.com Mon Jun 27 21:34:29 2005
+        Pavel Machek <pavel@ucw.cz>, mercurial@selenic.com
+X-From: mercurial-bounces@selenic.com Mon Jun 27 21:44:07 2005
 Return-path: <mercurial-bounces@selenic.com>
 Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DmzMX-0000Ho-AO
-	for gcvmd-mercurial@gmane.org; Mon, 27 Jun 2005 21:33:45 +0200
+	id 1DmzWO-0002XC-8j
+	for gcvmd-mercurial@gmane.org; Mon, 27 Jun 2005 21:43:56 +0200
 Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJeXa7012346;
-	Mon, 27 Jun 2005 14:40:33 -0500
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJeVCl012341
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 27 Jun 2005 14:40:31 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id j5RJeVXG012338;
-	Mon, 27 Jun 2005 14:40:31 -0500
-To: Pavel Machek <pavel@ucw.cz>
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJo7df013699;
+	Mon, 27 Jun 2005 14:50:11 -0500
+Received: from kanga.kvack.org (kanga.kvack.org [66.96.29.28])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5RJo5qa013685;
+	Mon, 27 Jun 2005 14:50:05 -0500
+Received: (from localhost user: 'bcrl' uid#63042 fake: STDIN
+	(bcrl@kanga.kvack.org)) by kvack.org id <S26622AbVF0Tve>;
+	Mon, 27 Jun 2005 15:51:34 -0400
+To: Matt Mackall <mpm@selenic.com>
 Content-Disposition: inline
-In-Reply-To: <20050627183118.GB1415@elf.ucw.cz>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20050627194031.GK12006@waste.org>
+User-Agent: Mutt/1.4.1i
 X-Virus-Scanned: by amavisd-new
 X-BeenThere: mercurial@selenic.com
 X-Mailman-Version: 2.1.5
@@ -44,63 +44,9 @@ List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
 Sender: mercurial-bounces@selenic.com
 Errors-To: mercurial-bounces@selenic.com
 
-On Mon, Jun 27, 2005 at 08:31:18PM +0200, Pavel Machek wrote:
-> Hi!
-> 
-> > > Things in git-land are moving at lightning speed, and usability has 
-> > > improved a lot since my post a month ago:  http://lkml.org/lkml/2005/5/26/11
-> > 
-> > And here's a quick comparison with the current state of Mercurial..
-> > 
-> > > 1) installing git
-> > > 
-> > > git requires bootstrapping, since you must have git installed in order 
-> > > to check out git.git (git repo), and linux-2.6.git (kernel repo).  I 
-> > > have put together a bootstrap tarball of today's git repository.
-> > > 
-> > > Download tarball from:
-> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
-> > > 
-> > > tarball build-deps:  zlib, libcurl, libcrypto (openssl)
-> > > 
-> > > install tarball:  unpack && make && sudo make prefix=/usr/local install
-> > > 
-> > > jgarzik helper scripts, not in official git distribution:
-> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
-> > > http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
-> > > 
-> > > After reading the rest of this document, come back and update your copy 
-> > > of git to the latest:
-> > > rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
-> > 
-> > Download from: http://selenic.com/mercurial/mercurial-snapshot.tar.gz
-> > Build-deps: Python 2.3
-> > Install: unpack && python setup.py install [--home=/usr/local]
-> 
-> Did that... (had to install python2.3-dev, first), but got...
-> Traceback (most recent call last):
->   File "/usr/local/bin/hg", line 11, in ?
->     from mercurial import commands
-> ImportError: No module named mercurial
+On Mon, Jun 27, 2005 at 12:40:31PM -0700, Matt Mackall wrote:
+>  $ export PYTHONPATH=${HOME}/lib/python  # add this to your .bashrc
 
->From the README:
+This needs to be ${HOME}/lib64/python on x86-64.
 
- To install system-wide:
-
- $ python setup.py install   # change python to python2.3 if 2.2 is default
-
- To install in your home directory (~/bin and ~/lib, actually), run:
-
- $ python2.3 setup.py install --home=~
- $ export PYTHONPATH=${HOME}/lib/python  # add this to your .bashrc
- $ export PATH=${HOME}/bin:$PATH         # 
-
- And finally:
-
- $ hg                                    # test installation, show help
-
- If you get complaints about missing modules, you probably haven't set
- PYTHONPATH correctly.
-
--- 
-Mathematics is the supreme nostalgia of our time.
+		-ben
