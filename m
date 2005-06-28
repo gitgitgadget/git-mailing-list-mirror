@@ -1,70 +1,55 @@
-From: Kyle Moffett <mrmacman_g4@mac.com>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 16:27:53 -0400
-Message-ID: <62CF578B-B9DF-4DEA-8BAD-041F357771FD@mac.com>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
-	<20050624064101.GB14292@pasky.ji.cz>
-	<20050624123819.GD9519@64m.dyndns.org>
-	<20050628150027.GB1275@pasky.ji.cz>
-	<20050628180157.GI12006@waste.org>
-Mime-Version: 1.0 (Apple Message framework v730)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
-        Linux Kernel <linux-kernel@vger.kernel.org>,
-        Jeff Garzik <jgarzik@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Tue Jun 28 22:21:55 2005
-Return-path: <mercurial-bounces@selenic.com>
-Received: from waste.org ([216.27.176.166])
+From: Petr Baudis <pasky@ucw.cz>
+Subject: Re: CAREFUL! No more delta object support!
+Date: Tue, 28 Jun 2005 22:30:04 +0200
+Message-ID: <20050628203004.GH1275@pasky.ji.cz>
+References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org> <20050627235857.GA21533@64m.dyndns.org> <Pine.LNX.4.58.0506272016420.19755@ppc970.osdl.org> <7vekamvmxj.fsf@assigned-by-dhcp.cox.net> <20050628110625.GC21533@64m.dyndns.org> <20050628145256.GA1275@pasky.ji.cz> <20050628163551.GA29410@kvack.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Christopher Li <git@chrisli.org>, Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 22:28:09 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnMaF-0002EN-9Y
-	for gcvmd-mercurial@gmane.org; Tue, 28 Jun 2005 22:21:27 +0200
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SKS4sD002704;
-	Tue, 28 Jun 2005 15:28:09 -0500
-Received: from smtpout.mac.com (smtpout.mac.com [17.250.248.46])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SKRxap002691
-	for <mercurial@selenic.com>; Tue, 28 Jun 2005 15:27:59 -0500
-Received: from mac.com (smtpin08-en2 [10.13.10.153])
-	by smtpout.mac.com (Xserve/8.12.11/smtpout10/MantshX 4.0) with ESMTP id
-	j5SKRwKa007738; Tue, 28 Jun 2005 13:27:58 -0700 (PDT)
-Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin08/MantshX 4.0) with ESMTP id j5SKRshG022232
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 28 Jun 2005 13:27:56 -0700 (PDT)
-In-Reply-To: <20050628180157.GI12006@waste.org>
-To: Matt Mackall <mpm@selenic.com>
-X-Mailer: Apple Mail (2.730)
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
+	id 1DnMfu-0003VL-5K
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 22:27:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261539AbVF1Uda (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 16:33:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261522AbVF1UdC
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 16:33:02 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34213 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261422AbVF1UaJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2005 16:30:09 -0400
+Received: (qmail 22625 invoked by uid 2001); 28 Jun 2005 20:30:04 -0000
+To: Benjamin LaHaise <bcrl@kvack.org>
+Content-Disposition: inline
+In-Reply-To: <20050628163551.GA29410@kvack.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-On Jun 28, 2005, at 14:01:57, Matt Mackall wrote:
-> Everything in Mercurial is an append-only log. A transaction journal
-> records the original length of each log so that it can be restored on
-> failure.
+Dear diary, on Tue, Jun 28, 2005 at 06:35:51PM CEST, I got a letter
+where Benjamin LaHaise <bcrl@kvack.org> told me that...
+> On Tue, Jun 28, 2005 at 04:52:56PM +0200, Petr Baudis wrote:
+> > I think the git-*-pull tools are actually just fine. You will only need
+> > to have some server-side CGI gadget to frontend the file, but we need
+> > that anyway to make the pull reasonably effective.
+> 
+> Not really -- the use of rsync for the objects fails horribly on slow 
+> links when the project scales in the number of commits.  The rsync 
+> protocol has to transfer the names of each file and some information 
+> about it, and that information isn't delta compressed.  This is where 
+> kernel.org is falling over, as well as what makes the kernel tree very 
+> painful to use over a dialup modem link.
 
-Does this mean that (excepting the "undo" feature) one could set the
-ext3 "append-only" attribute on the repository files to avoid losing
-data due to user account compromise?
+Yes. But isn't that what I'm after all saying too? git-*-pull tools
+shouldn't have that problem since they have much less overhead and only
+pull stuff you need.
 
-Cheers,
-Kyle Moffett
-
---
-I lost interest in "blade servers" when I found they didn't throw  
-knives at people who weren't supposed to be in your machine room.
-   -- Anthony de Boer
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
