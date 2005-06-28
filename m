@@ -1,181 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Expose packed_git and alt_odb.
-Date: Tue, 28 Jun 2005 14:56:57 -0700
-Message-ID: <7vmzpataae.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org>
-	<7vslz2x3vg.fsf@assigned-by-dhcp.cox.net>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
+Date: Tue, 28 Jun 2005 15:14:22 -0700
+Message-ID: <20050628221422.GT12006@waste.org>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
+	<20050624064101.GB14292@pasky.ji.cz>
+	<20050624123819.GD9519@64m.dyndns.org>
+	<20050628150027.GB1275@pasky.ji.cz>
+	<20050628180157.GI12006@waste.org>
+	<62CF578B-B9DF-4DEA-8BAD-041F357771FD@mac.com>
+	<3886.10.10.10.24.1119991512.squirrel@linux1>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 00:07:10 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        Kyle Moffett <mrmacman_g4@mac.com>, Jeff Garzik <jgarzik@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+X-From: mercurial-bounces@selenic.com Wed Jun 29 00:08:07 2005
+Return-path: <mercurial-bounces@selenic.com>
+Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnODt-0006H7-BQ
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 00:06:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261511AbVF1WA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 18:00:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261502AbVF1V7w
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 17:59:52 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:26040 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261436AbVF1V47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2005 17:56:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050628215659.WGDM18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 28 Jun 2005 17:56:59 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vslz2x3vg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Tue, 28 Jun 2005 01:49:39 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DnOEu-0006Re-IL
+	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 00:07:33 +0200
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SMEOm4017283;
+	Tue, 28 Jun 2005 17:14:29 -0500
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SMEMhf017276
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 28 Jun 2005 17:14:22 -0500
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id j5SMEMqp017273;
+	Tue, 28 Jun 2005 17:14:22 -0500
+To: Sean <seanlkml@sympatico.ca>
+Content-Disposition: inline
+In-Reply-To: <3886.10.10.10.24.1119991512.squirrel@linux1>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: mercurial.selenic.com
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://www.selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
 
-The commands git-fsck-cache and probably git-*-pull needs to
-have a way to enumerate objects contained in packed GIT archives
-and alternate object pools.  This commit exposes the data
-structure used to keep track of them from sha1_file.c, and adds
-a couple of accessor interface functions for use by the enhanced
-git-fsck-cache command.
+On Tue, Jun 28, 2005 at 04:45:12PM -0400, Sean wrote:
+> On Tue, June 28, 2005 4:27 pm, Kyle Moffett said:
+> > On Jun 28, 2005, at 14:01:57, Matt Mackall wrote:
+> >> Everything in Mercurial is an append-only log. A transaction journal
+> >> records the original length of each log so that it can be restored on
+> >> failure.
+> >
+> > Does this mean that (excepting the "undo" feature) one could set the
+> > ext3 "append-only" attribute on the repository files to avoid losing
+> > data due to user account compromise?
+> >
+> 
+> Probably.  In Git, which is a bit more flexible than Mecurial you can
+> chmod your objects to read-only or use the ext3 immutable setting to
+> protect your existing objects.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+You can do this in Mercurial as well.
 
- cache.h     |   19 +++++++++++++++++++
- sha1_file.c |   43 ++++++++++++++++++++++++-------------------
- 2 files changed, 43 insertions(+), 19 deletions(-)
+> You can even have a setup where objects
+> are archived onto write-once media like DVD and still participate in a
+> live repository, where new objects are written to hard disk, but older
+> object are (automatically) sourced from the DVD.
 
-da37711700d11f8c7f44fcb6819c724978c840b7
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -233,4 +233,23 @@ struct checkout {
- 
- extern int checkout_entry(struct cache_entry *ce, struct checkout *state);
- 
-+extern struct alternate_object_database {
-+	char *base;
-+	char *name;
-+} *alt_odb;
-+extern void prepare_alt_odb(void);
-+
-+extern struct packed_git {
-+	struct packed_git *next;
-+	unsigned long index_size;
-+	unsigned long pack_size;
-+	unsigned int *index_base;
-+	void *pack_base;
-+	unsigned int pack_last_used;
-+	char pack_name[0]; /* something like ".git/objects/pack/xxxxx.pack" */
-+} *packed_git;
-+extern void prepare_packed_git(void);
-+extern int num_packed_objects(const struct packed_git *p);
-+extern int nth_packed_object_sha1(const struct packed_git *, int, unsigned char*);
-+
- #endif /* CACHE_H */
-diff --git a/sha1_file.c b/sha1_file.c
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -184,10 +184,7 @@ char *sha1_file_name(const unsigned char
- 	return base;
- }
- 
--static struct alternate_object_database {
--	char *base;
--	char *name;
--} *alt_odb;
-+struct alternate_object_database *alt_odb;
- 
- /*
-  * Prepare alternate object database registry.
-@@ -205,13 +202,15 @@ static struct alternate_object_database 
-  * pointed by base fields of the array elements with one xmalloc();
-  * the string pool immediately follows the array.
-  */
--static void prepare_alt_odb(void)
-+void prepare_alt_odb(void)
- {
- 	int pass, totlen, i;
- 	const char *cp, *last;
- 	char *op = NULL;
- 	const char *alt = gitenv(ALTERNATE_DB_ENVIRONMENT) ? : "";
- 
-+	if (alt_odb)
-+		return;
- 	/* The first pass counts how large an area to allocate to
- 	 * hold the entire alt_odb structure, including array of
- 	 * structs and path buffers for them.  The second pass fills
-@@ -258,8 +257,7 @@ static char *find_sha1_file(const unsign
- 
- 	if (!stat(name, st))
- 		return name;
--	if (!alt_odb)
--		prepare_alt_odb();
-+	prepare_alt_odb();
- 	for (i = 0; (name = alt_odb[i].name) != NULL; i++) {
- 		fill_sha1_path(name, sha1);
- 		if (!stat(alt_odb[i].base, st))
-@@ -271,15 +269,7 @@ static char *find_sha1_file(const unsign
- #define PACK_MAX_SZ (1<<26)
- static int pack_used_ctr;
- static unsigned long pack_mapped;
--static struct packed_git {
--	struct packed_git *next;
--	unsigned long index_size;
--	unsigned long pack_size;
--	unsigned int *index_base;
--	void *pack_base;
--	unsigned int pack_last_used;
--	char pack_name[0]; /* something like ".git/objects/pack/xxxxx.pack" */
--} *packed_git;
-+struct packed_git *packed_git;
- 
- struct pack_entry {
- 	unsigned int offset;
-@@ -430,7 +420,7 @@ static void prepare_packed_git_one(char 
- 	}
- }
- 
--static void prepare_packed_git(void)
-+void prepare_packed_git(void)
- {
- 	int i;
- 	static int run_once = 0;
-@@ -439,8 +429,7 @@ static void prepare_packed_git(void)
- 		return;
- 
- 	prepare_packed_git_one(get_object_directory());
--	if (!alt_odb)
--		prepare_alt_odb();
-+	prepare_alt_odb();
- 	for (i = 0; alt_odb[i].base != NULL; i++) {
- 		alt_odb[i].name[0] = 0;
- 		prepare_packed_git_one(alt_odb[i].base);
-@@ -750,6 +739,22 @@ static void *unpack_entry(struct pack_en
- 	return unpack_non_delta_entry(pack+5, size, left);
- }
- 
-+int num_packed_objects(const struct packed_git *p)
-+{
-+	/* See check_packed_git_idx and pack-objects.c */
-+	return (p->index_size - 20 - 20 - 4*256) / 24;
-+}
-+
-+int nth_packed_object_sha1(const struct packed_git *p, int n,
-+			   unsigned char* sha1)
-+{
-+	void *index = p->index_base + 256;
-+	if (n < 0 || num_packed_objects(p) <= n)
-+		return -1;
-+	memcpy(sha1, (index + 24 * n + 4), 20);
-+	return 0;
-+}
-+
- static int find_pack_entry_1(const unsigned char *sha1,
- 			     struct pack_entry *e, struct packed_git *p)
- {
-------------
+Have fun with that. It's an excellent way to destroy your DVD drive.
+
+Git's completely structureless filename hashing pretty much guarantees
+that disk layout will degrade to worst-case random access behavior
+over time. Just walking through the 2000 commit blobs in the current
+tree can take minutes cold cache on a fast hard disk. Walking the 1700
+tree blobs in a given version takes quite a while too.
+
+Put that on a DVD and that could easily turn into hours of continuous
+seeking for a simple operation like checking out tip of tree.
+
+And as far as I know, ISO9660 and UDF don't really handle huge
+directories well. So if you try and put the whole kernel history (200k
+files, some huge number of directory blobs, and 30k-60k commit blobs)
+on a DVD, you'll be really hurting.
+
+Meanwhile the whole history (>30k changesets) with Mercurial fits on a
+regular CD, with reasonable directory sizes and I/O patterns.
+
+Not that it's really worth the trouble. It takes longer for me to burn
+an ISO image to disc than to download a complete kernel repo from
+kernel.org.
+
+-- 
+Mathematics is the supreme nostalgia of our time.
