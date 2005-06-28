@@ -1,73 +1,89 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: Stacked GIT 0.1 (a.k.a. quilt for git)
-Date: Tue, 28 Jun 2005 11:03:12 +0100
-Message-ID: <tnxwtoeiysf.fsf@arm.com>
-References: <tnxy899zzu7.fsf@arm.com> <20050623175848.1cf41a52.pj@sgi.com>
-	<tnxd5qc6s5o.fsf@arm.com> <20050624034743.6c3bdae4.pj@sgi.com>
-	<tnxhdfo56yd.fsf@arm.com> <20050624045627.6e9cbaff.pj@sgi.com>
+From: Christopher Li <git@chrisli.org>
+Subject: Re: CAREFUL! No more delta object support!
+Date: Tue, 28 Jun 2005 06:38:52 -0400
+Message-ID: <20050628103852.GB21533@64m.dyndns.org>
+References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org> <20050627235857.GA21533@64m.dyndns.org> <Pine.LNX.4.58.0506272016420.19755@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 11:59:20 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 28 15:57:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnCrU-0001PA-Ql
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 11:58:37 +0200
+	id 1DnGZz-00044S-4m
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 15:56:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261169AbVF1KFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 06:05:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261172AbVF1KFZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 06:05:25 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:7332 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S261169AbVF1KFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2005 06:05:18 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j5SA4f6i010058;
-	Tue, 28 Jun 2005 11:04:41 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch1.emea.arm.com [10.1.255.57])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id LAA06169;
-	Tue, 28 Jun 2005 11:05:08 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Tue, 28 Jun 2005 11:03:27 +0100
-To: Paul Jackson <pj@sgi.com>
-In-Reply-To: <20050624045627.6e9cbaff.pj@sgi.com> (Paul Jackson's message of
- "Fri, 24 Jun 2005 04:56:27 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 28 Jun 2005 10:03:27.0923 (UTC) FILETIME=[A1449830:01C57BC8]
+	id S261549AbVF1N6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 09:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261744AbVF1Nzm
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 09:55:42 -0400
+Received: from rwcrmhc12.comcast.net ([216.148.227.85]:5791 "EHLO
+	rwcrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S262004AbVF1Nvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 09:51:39 -0400
+Received: from localhost.localdomain (c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
+          by comcast.net (rwcrmhc12) with ESMTP
+          id <2005062813513701400r64iee>; Tue, 28 Jun 2005 13:51:37 +0000
+Received: by localhost.localdomain (Postfix, from userid 1027)
+	id 2E9593F17F; Tue, 28 Jun 2005 06:38:53 -0400 (EDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506272016420.19755@ppc970.osdl.org>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Paul Jackson <pj@sgi.com> wrote:
->> there is no way to modify the log history.
->
-> Aha.  If that means what I think it does, then I suspect I will remain
-> with quilt.  The per-patch comment is often about the last thing that
-> I put in the patch.
+That is all nice improvement to address the space usage issue.
 
-OK, you convinced me :-). I will upload a new StGIT version tonight. I
-removed the 'commit' command completely. To add changes into the
-repository, you would use the 'refresh' command. There is only one git
-commit object for each patch and they can be seen with tools like
-cg-log on top of the stack base (i.e. the HEAD of the pulled tree).
+Should people just run repacking once a while or is it automaticly
+add new object to the pack file?
 
-There is no per-patch history anymore. The patch diff and information
-(description, author name etc.) are indefinitely changeable via the
-'refresh' command but only one commit with the latest information is
-seen in the tree log for each patch.
+Chris
 
-To pull new changes from the master repository:
 
-   stg pop -a
-   cg-udpate (or whatever people use to pull and merge)
-   stg push -a
-
-The 'push' command re-bases all the commits corresponding to the StGIT
-patches.
-
-Does this make it closer to quilt in functionality?
-
--- 
-Catalin
+On Mon, Jun 27, 2005 at 08:30:22PM -0700, Linus Torvalds wrote:
+> 
+> Deltas do exist inside pack-files, yes. They just don't exist as 
+> independent objects any more, so you can never get into the situation that 
+> you find a delta but you don't find the delta it points to.
+> 
+> Because in the pack-files, there are only deltas _within_ a pack-file. You 
+> can't have a delta that points to outside the pack.
+> 
+> This means that pack-files with few objects will inevitably be larger than
+> they could otherwise be (ie you can never have a pack file that _only_
+> contains deltas to the outside world), but it's just incredibly reassuring 
+> to me that a pack-file is always self-sufficient. 
+> 
+> So when/if we start using pack-files for doing "git pull" etc, the 
+> pack-file won't actually help pack things for small updates: small updates 
+> will probably contain the whole changed file, unless the update has 
+> several changes to the same file (which is not unusual, of course), in 
+> which case it will only contain one version and then deltas from that.
+> 
+> But the savings get increasingly bigger the more history we have. That's
+> also why the packed git archive is about 1/14th of the size of the fully
+> unpacked disk usage of the git project, but a packed kernel archive "only"  
+> achieves a packing rate of 1/5th of the fully unpacked kernel archive. The
+> git archive is all history, while the kernel archive just "appears", and
+> 2/3 of the files have only one single version and thus don't delta-
+> compress at all.
+> 
+> (Another reason is probably that the kernel has bigger files, which means
+> that it thus has relatively less loss in filesystem block padding).
+> 
+> But not having any outside deltas not only makes me feel safer, it also
+> means that you can fully validate a pack archive consistency without even
+> knowing what project it is from - you can check the SHA1 results of every
+> file in the pack against the index of the pack, and check that the SHA1's
+> of the pack files themselves are valid. Again, this is just a data
+> _consistency_ check, of course - it means that you can validate that it
+> downloaded fine, and that you don't have disk corruption, but it doesn't
+> mean that the data isn't evil and nasty and buggy ;)
+> 
+> 			Linus
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
