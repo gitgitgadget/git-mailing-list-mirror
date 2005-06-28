@@ -1,63 +1,99 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: CAREFUL! No more delta object support!
-Date: Tue, 28 Jun 2005 01:09:15 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506280049090.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0506271910390.19755@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Obtain sha1_file_info() for deltified pack entry properly.
+Date: Mon, 27 Jun 2005 23:56:02 -0700
+Message-ID: <7vpsu7x94t.fsf@assigned-by-dhcp.cox.net>
+References: <20050624.212009.92584730.davem@davemloft.net>
+	<42BCE026.8050405@pobox.com>
+	<Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org>
+	<42BCF02B.5090706@pobox.com>
+	<Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+	<Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+	<7vzmtdq7wy.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506261206170.19755@ppc970.osdl.org>
+	<7vll4wq4va.fsf@assigned-by-dhcp.cox.net>
+	<7v1x6om6o5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506271227160.19755@ppc970.osdl.org>
+	<7v64vzyqyw.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 07:05:04 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 08:52:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn8H0-0002rl-KR
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 07:04:38 +0200
+	id 1Dn9wt-0001zz-QT
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 08:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261746AbVF1FLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 01:11:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262126AbVF1FLY
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 01:11:24 -0400
-Received: from iabervon.org ([66.92.72.58]:34821 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261746AbVF1FLE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2005 01:11:04 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Dn8LT-0001H3-00; Tue, 28 Jun 2005 01:09:15 -0400
+	id S261391AbVF1G6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 02:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261820AbVF1G4v
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 02:56:51 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:14007 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261159AbVF1G4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 02:56:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050628065604.LPMT17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Jun 2005 02:56:04 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506271910390.19755@ppc970.osdl.org>
+In-Reply-To: <7v64vzyqyw.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Mon, 27 Jun 2005 22:45:27 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 27 Jun 2005, Linus Torvalds wrote:
+I will be sending these three patches:
 
-> > > [..  git-ssh-pull hopefully working ..]
-> >
-> > No.  The pull protocol Dan did expects to throw compressed
-> > representation around on the wire (which is valid if you assume
-> > uncompressed transfer) and does not use read-sha1-file --
-> > write-sha1-file pair, so all three do not work.
-> 
-> Fair enough. I'd prefer for the pull/push to push object packs around 
-> anyway, so there's some more work there..
+    [PATCH 1/3] Obtain sha1_file_info() for deltified pack entry properly.
+    [PATCH 2/3] git-cat-file: use sha1_object_info() on '-t'.
+    [PATCH 3/3] git-cat-file: '-s' to find out object size.
 
-It shouldn't be hard to add; the main issue is determining when
-transfering a pack file is a good idea, because it probably doesn't make
-sense to transfer a pack file just because the source side has an object
-that the target side wants in that pack. (If you pull from someone who
-packed up the whole history of everything, which you already have, into a
-file with one new commit, you'd be sad to get the huge thing; you really
-want a little custom (or just limited) pack file.)
+The first one is slightly different from what I sent earlier to
+you privately.  If you have already applied it, please apply the
+4-liner alternate patch attached to this message on top of it
+for the fix included in the one in this series (and drop the
+first one, obviously).
 
-The ideal thing is probably to pick up some tricks from Mercurial in
-figuring out what needs to be transferred, and have the source side write
-a pack file directly to the connection, which the target side would then
-save directly. I never worked out exactly what those tricks were, though.
+The second and third patches fell out as a bonus while I was
+debugging the sha1_file_info().  Especially the third one is in
+"because we can do it so cheaply now", not "because I need to
+have that feature" category, and I do not mind too much if you
+drop it, but I suspect somebody may find it useful.
 
-The next trick would be to put something in place of cleverly-chosen
-objects to specify what pack file they're in, so that the HTTP client
-could find things from a packed repository. (Or we could just have an
-option to unpack post-transfer.)
+The "4-liner alternate patch" follows.
 
-	-Daniel
-*This .sig left intentionally blank*
+------------
+Add missing use_packed_git() call.
+
+The function sha1_object_info() was using packed GIT file
+without making sure it is mapped, which resulted in
+segfaulting.
+
+We would need to introduce unuse_packed_git() call and do proper
+use counting to figure out when it is safe to unmap, but
+currently we do not unmap packed file yet.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+ sha1_file.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -675,6 +675,10 @@ static int packed_object_info(struct pac
+ 	offset = entry->offset;
+ 	if (p->pack_size - 5 < offset)
+ 		die("object offset outside of pack file");
++
++	if (use_packed_git(p))
++		die("cannot map packed file");
++
+ 	pack = p->pack_base + offset;
+ 	size = (pack[1] << 24) + (pack[2] << 16) + (pack[3] << 8) + pack[4];
+ 	left = p->pack_size - offset - 5;
+------------------------------------------------
