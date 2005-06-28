@@ -1,65 +1,60 @@
-From: Mark Allen <mrallen1@yahoo.com>
-Subject: [PATCH] Trivial sed fix up in t/t6001
-Date: Mon, 27 Jun 2005 18:43:37 -0700 (PDT)
-Message-ID: <20050628014337.18986.qmail@web41205.mail.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: CAREFUL! No more delta object support!
+Date: Mon, 27 Jun 2005 19:01:03 -0700
+Message-ID: <7vwtofi6jk.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="0-1282928974-1119923017=:18285"
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Jun 28 03:37:00 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 03:54:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn51v-0002y9-0s
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 03:36:51 +0200
+	id 1Dn5Iq-0004tR-6i
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 03:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262199AbVF1Bnq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Jun 2005 21:43:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262370AbVF1Bnq
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 21:43:46 -0400
-Received: from web41205.mail.yahoo.com ([66.218.93.38]:16256 "HELO
-	web41205.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S262199AbVF1Bni (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2005 21:43:38 -0400
-Received: (qmail 18988 invoked by uid 60001); 28 Jun 2005 01:43:37 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=qob7syOjihzJLf0WVB68Ky9+u9i1zfiaHd6YMHkAmnP16LeiuZvk2BLZmMfb+R0B2rAtoSTFWAqbbBMhFe4Xz35G9pmJ7+PUjJAKIQmbFgp6PXSa4PNWuAL4Mo5BlV8blroRGInEQOI7LHPAPRXJLExlZql/4K/OoizLUtGEy8E=  ;
-Received: from [66.41.38.150] by web41205.mail.yahoo.com via HTTP; Mon, 27 Jun 2005 18:43:37 PDT
-To: git@vger.kernel.org
+	id S262373AbVF1CBN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 27 Jun 2005 22:01:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262374AbVF1CBN
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 22:01:13 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:139 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262373AbVF1CBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jun 2005 22:01:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050628020103.TARP550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 27 Jun 2005 22:01:03 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org> (Linus
+ Torvalds's message of "Mon, 27 Jun 2005 18:14:40 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---0-1282928974-1119923017=:18285
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Content-Id: 
-Content-Disposition: inline
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-This trivial patch fixes up the sed expression used in t/t6001. It removes the semi-colon
-seperator and replaces it with white space which makes the BSD sed(1) much happier.
+LT> Now, there's still a misfeature there, which is that when you create a new
+LT> object, it doesn't check whether that object already exists in the
+LT> pack-file, so you'll end up with a few recent objects that you really
+LT> don't need (notably tree objects), and we'll fix that eventually.
 
-Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+Patch will be sent separately.
 
+LT> ... Also, please note that the pack-file _only_ packs the commits
+LT> and the things reachable from them ...
 
---0-1282928974-1119923017=:18285
-Content-Type: text/plain; name="t6001-sed-fixup.patch.txt"
-Content-Description: 1890562984-t6001-sed-fixup.patch.txt
-Content-Disposition: inline; filename="t6001-sed-fixup.patch.txt"
+Shouldn't feeding "git-rev-list --object" output plus
+handcrafted list of objects in 2.6.11 tree object to
+git-pack-objects just work???
 
-diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
---- a/t/t6001-rev-list-merge-order.sh
-+++ b/t/t6001-rev-list-merge-order.sh
-@@ -40,7 +40,8 @@ save_tag()
- 	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
- 	shift 1
-     	"$@" >.git/refs/tags/$_tag
--    	sed_script="s/$(tag $_tag)/$_tag/g${sed_script+;}$sed_script"
-+    	sed_script="s/$(tag $_tag)/$_tag/g
-+$sed_script"
- }
- 
- # Replace unhelpful sha1 hashses with their symbolic equivalents 
+LT> Maybe you might not want to switch over yet, and as mentioned, rsync then
+LT> ends up not being a good way to sync (nor git-local-pull), but the
+LT> "git-http/ssh-pull" family should hopefully just work.
 
---0-1282928974-1119923017=:18285--
+No.  The pull protocol Dan did expects to throw compressed
+representation around on the wire (which is valid if you assume
+uncompressed transfer) and does not use read-sha1-file --
+write-sha1-file pair, so all three do not work.
