@@ -1,7 +1,8 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/3] git-cat-file: use sha1_object_info() on '-t'.
-Date: Mon, 27 Jun 2005 23:58:45 -0700
-Message-ID: <7vfyv3x90a.fsf_-_@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Obtain sha1_file_info() for deltified pack entry
+ properly.
+Date: Mon, 27 Jun 2005 23:58:08 -0700
+Message-ID: <7vk6kfx91b.fsf@assigned-by-dhcp.cox.net>
 References: <20050624.212009.92584730.davem@davemloft.net>
 	<42BCE026.8050405@pobox.com>
 	<Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org>
@@ -18,26 +19,26 @@ References: <20050624.212009.92584730.davem@davemloft.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 08:55:40 2005
+X-From: git-owner@vger.kernel.org Tue Jun 28 08:55:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn9zN-0002g4-Jw
+	id 1Dn9zM-0002g4-TM
 	for gcvg-git@gmane.org; Tue, 28 Jun 2005 08:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261172AbVF1HA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 03:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261860AbVF1G7s
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 02:59:48 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:58039 "EHLO
+	id S261535AbVF1HBQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 03:01:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261746AbVF1G7f
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 02:59:35 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:51639 "EHLO
 	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261172AbVF1G6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jun 2005 02:58:48 -0400
+	id S261535AbVF1G6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 02:58:12 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
           by fed1rmmtao03.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050628065846.LQBH17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 28 Jun 2005 02:58:46 -0400
+          id <20050628065809.LPYA17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Jun 2005 02:58:09 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 In-Reply-To: <7vpsu7x94t.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
  message of "Mon, 27 Jun 2005 23:56:02 -0700")
@@ -46,35 +47,116 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When trying to find out the type of the object, there is no need
-to uncompress the whole object.  Just use sha1_object_info().
+[PATCH 1/3] Obtain sha1_file_info() for deltified pack entry properly.
+
+The initial one was not doing enough to figure things out
+without uncompressing too much.  It also fixes a potential
+segfault resulting from missing use_packed_git() call.
+
+We would need to introduce unuse_packed_git() call and do proper
+use counting to figure out when it is safe to unmap, but
+currently we do not unmap packed file yet.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- cat-file.c |   10 ++++------
- 1 files changed, 4 insertions(+), 6 deletions(-)
+ sha1_file.c |   73 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 69 insertions(+), 4 deletions(-)
 
-fcfdd3d74d359af32dd30aa9f4fe373cebb3e232
-diff --git a/cat-file.c b/cat-file.c
---- a/cat-file.c
-+++ b/cat-file.c
-@@ -16,13 +16,11 @@ int main(int argc, char **argv)
- 		usage("git-cat-file [-t | tagname] <sha1>");
+d2f58b4aef500835489f30ac5df7985bc21e3c24
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -601,9 +601,70 @@ void * unpack_sha1_file(void *map, unsig
+ 	return unpack_sha1_rest(&stream, hdr, *size);
+ }
  
- 	if (!strcmp("-t", argv[1])) {
--		buf = read_sha1_file(sha1, type, &size);
--		if (buf) {
--			buf = type;
--			size = strlen(type);
--			type[size] = '\n';
--			size++;
-+		if (!sha1_object_info(sha1, type, &size)) {
-+			printf("%s\n", type);
-+			return 0;
- 		}
-+		buf = NULL;
- 	} else {
- 		buf = read_object_with_reference(sha1, argv[1], &size, NULL);
- 	}
+-/* Returns 0 on fast-path success, returns 1 on deltified
+- * and need to unpack to see info.
+- */
++static int packed_delta_info(unsigned char *base_sha1,
++			     unsigned long delta_size,
++			     unsigned long left,
++			     char *type,
++			     unsigned long *sizep)
++{
++	unsigned char *data;
++	unsigned char delta_head[64];
++	int i;
++	unsigned char cmd;
++	unsigned long data_size, result_size, base_size, verify_base_size;
++	z_stream stream;
++	int st;
++
++	if (left < 20)
++		die("truncated pack file");
++	if (sha1_object_info(base_sha1, type, &base_size))
++		die("cannot get info for delta-pack base");
++
++	data = base_sha1 + 20;
++	data_size = left - 20;
++
++	memset(&stream, 0, sizeof(stream));
++
++	stream.next_in = data;
++	stream.avail_in = data_size;
++	stream.next_out = delta_head;
++	stream.avail_out = sizeof(delta_head);
++
++	inflateInit(&stream);
++	st = inflate(&stream, Z_FINISH);
++	inflateEnd(&stream);
++	if ((st != Z_STREAM_END) && stream.total_out != sizeof(delta_head))
++		die("delta data unpack-initial failed");
++
++	/* Examine the initial part of the delta to figure out
++	 * the result size.  Verify the base size while we are at it.
++	 */
++	data = delta_head;
++	verify_base_size = i = 0;
++	cmd = *data++;
++	while (cmd) {
++		if (cmd & 1)
++			verify_base_size |= *data++ << i;
++		i += 8;
++		cmd >>= 1;
++	}
++
++	/* Read the result size */
++	result_size = i = 0;
++	cmd = *data++;
++	while (cmd) {
++		if (cmd & 1)
++			result_size |= *data++ << i;
++		i += 8;
++		cmd >>= 1;
++	}
++	if (verify_base_size != base_size)
++		die("delta base size mismatch");
++
++	*sizep = result_size;
++	return 0;
++}
++
+ static int packed_object_info(struct pack_entry *entry,
+ 			      char *type, unsigned long *sizep)
+ {
+@@ -614,12 +675,16 @@ static int packed_object_info(struct pac
+ 	offset = entry->offset;
+ 	if (p->pack_size - 5 < offset)
+ 		die("object offset outside of pack file");
++
++	if (use_packed_git(p))
++		die("cannot map packed file");
++
+ 	pack = p->pack_base + offset;
+ 	size = (pack[1] << 24) + (pack[2] << 16) + (pack[3] << 8) + pack[4];
+ 	left = p->pack_size - offset - 5;
+ 	switch (*pack) {
+ 	case 'D':
+-		return 1;
++		return packed_delta_info(pack+5, size, left, type, sizep);
+ 		break;
+ 	case 'C':
+ 		strcpy(type, "commit");
 ------------
