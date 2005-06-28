@@ -1,108 +1,81 @@
-From: Andrew Thompson <andrewkt@aktzero.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 11:10:47 -0400
-Message-ID: <42C16877.6000909@aktzero.com>
-References: <42B9E536.60704@pobox.com>
-	<20050623235634.GC14426@waste.org>	<20050624064101.GB14292@pasky.ji.cz>	<20050624123819.GD9519@64m.dyndns.org>
-	<20050628150027.GB1275@pasky.ji.cz>
+Date: Tue, 28 Jun 2005 17:15:22 +0200
+Message-ID: <20050628151522.GO5992MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org> <20050624064101.GB14292@pasky.ji.cz> <20050624130604.GK17715@g5.random> <42BC112C.1040009@qualitycode.com> <20050628150752.GC1275@pasky.ji.cz>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------020209000102070105000101"
-Cc: Jeff Garzik <jgarzik@pobox.com>, mercurial@selenic.com,
-        Git Mailing List <git@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Tue Jun 28 17:04:10 2005
-Return-path: <mercurial-bounces@selenic.com>
-Received: from waste.org ([216.27.176.166])
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Smith <yarcs@qualitycode.com>,
+	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
+X-From: git-owner@vger.kernel.org Tue Jun 28 17:23:42 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnHd5-0007de-Jm
-	for gcvmd-mercurial@gmane.org; Tue, 28 Jun 2005 17:04:04 +0200
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SFAv5f025575;
-	Tue, 28 Jun 2005 10:10:58 -0500
-Received: from octopus.dnsvelocity.com (octopus.dnsvelocity.com [64.21.80.9])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SFAtfi025569
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NOT)
-	for <mercurial@selenic.com>; Tue, 28 Jun 2005 10:10:56 -0500
-Received: from nc-65-40-95-113.sta.sprint-hsd.net ([65.40.95.113]
-	helo=[192.168.0.38])
-	by octopus.dnsvelocity.com with esmtpa (Exim 4.50)
-	id 1DnHjY-0001u5-95; Tue, 28 Jun 2005 15:10:44 +0000
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
-X-Accept-Language: en-us, en
+	id 1DnHvA-0002it-8n
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 17:22:44 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S262054AbVF1P3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 11:29:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261793AbVF1P3u
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 11:29:50 -0400
+Received: from nibbel.kulnet.kuleuven.ac.be ([134.58.240.41]:49811 "EHLO
+	nibbel.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S262061AbVF1P3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 11:29:46 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by nibbel.kulnet.kuleuven.ac.be (Postfix) with ESMTP id ECC8A4BF7B
+	for <git@vger.kernel.org>; Tue, 28 Jun 2005 17:29:44 +0200 (CEST)
+Received: from octavianus.kulnet.kuleuven.ac.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
+	by nibbel.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 799684BF5C
+	for <git@vger.kernel.org>; Tue, 28 Jun 2005 17:29:42 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by octavianus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 64837AED87
+	for <git@vger.kernel.org>; Tue, 28 Jun 2005 17:29:42 +0200 (CEST)
+Received: (qmail 16094 invoked by uid 500); 28 Jun 2005 15:15:22 -0000
 To: Petr Baudis <pasky@ucw.cz>
-In-Reply-To: <20050628150027.GB1275@pasky.ji.cz>
-X-AntiAbuse: This header was added to track abuse,
-	please include it with any abuse report
-X-AntiAbuse: Primary Hostname - octopus.dnsvelocity.com
-X-AntiAbuse: Original Domain - selenic.com
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - aktzero.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-
-This is a multi-part message in MIME format.
---------------020209000102070105000101
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Petr Baudis wrote:
->>Mercurial's undo is taking a snapshot of all the changed file's repo file length
->>at every commit or pull.  It just truncate the file to original size and undo 
->>is done.
-> 
-> "Trunactes"? That sounds very wrong... you mean replace with old
-> version? Anyway, what if the file has same length? It just doesn't make
-> much sense to me.
-
-I believe this works because the files stored in a binary format that 
-appends new changesets onto the end. Thus, truncating the new stuff from 
-the end effectively removes the commit.
-
--- 
-Andrew Thompson
-http://aktzero.com/
-
---------------020209000102070105000101
-Content-Type: text/x-vcard; charset=utf-8;
- name="andrewkt.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="andrewkt.vcf"
-
-begin:vcard
-fn:Andrew Thompson
-n:Thompson;Andrew
-email;internet:andrewkt@aktzero.com
-x-mozilla-html:FALSE
-url:http://aktzero.com/
-version:2.1
-end:vcard
-
-
---------------020209000102070105000101
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Mail-Followup-To: Petr Baudis <pasky@ucw.cz>,
+	Kevin Smith <yarcs@qualitycode.com>,
+	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
 Content-Disposition: inline
+In-Reply-To: <20050628150752.GC1275@pasky.ji.cz>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-_______________________________________________
-Mercurial mailing list
-Mercurial@selenic.com
-http://selenic.com/mailman/listinfo/mercurial
+On Tue, Jun 28, 2005 at 05:07:52PM +0200, Petr Baudis wrote:
+> Dear diary, on Fri, Jun 24, 2005 at 03:57:00PM CEST, I got a letter
+> where Kevin Smith <yarcs@qualitycode.com> told me that...
+> > - Can run on (native) MS Windows
+> >   (necessary for me because I often work on cross-platform projects)
+> 
+> I'd expect everything to work fine with Cygwin (or with only minor
+> problems easy to fix) or just any working bash + GNU coreutils
+> installation. Any issue with that?
 
---------------020209000102070105000101--
+The code is full of Unixisms.  You'd almost think that the authors
+of git have some kind of affinity towards Unix.
+
+i386-mingw32-gcc -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>'   -c -o read-cache.o read-cache.c
+In file included from read-cache.c:6:
+cache.h:14:22: sys/mman.h: No such file or directory
+cache.h:16:24: netinet/in.h: No such file or directory
+In file included from read-cache.c:6:
+cache.h: In function `create_ce_mode':
+cache.h:104: warning: implicit declaration of function `S_ISLNK'
+cache.h:105: warning: implicit declaration of function `htonl'
+cache.h:105: error: `S_IFLNK' undeclared (first use in this function)
+cache.h:105: error: (Each undeclared identifier is reported only once
+cache.h:105: error: for each function it appears in.)
+[..]
+read-cache.c:376: warning: implicit declaration of function `mmap'
+read-cache.c:376: error: `PROT_READ' undeclared (first use in this function)
+read-cache.c:376: error: `PROT_WRITE' undeclared (first use in this function)
+read-cache.c:376: error: `MAP_PRIVATE' undeclared (first use in this function)
+read-cache.c:376: warning: assignment makes pointer from integer without a cast
+read-cache.c:399: warning: implicit declaration of function `munmap'
+[..]
+
+skimo
