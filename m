@@ -1,71 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Skip writing out sha1 files for objects in packed git.
-Date: Mon, 27 Jun 2005 20:33:20 -0700
-Message-ID: <7vekanyx33.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org>
-	<7vwtofi6jk.fsf@assigned-by-dhcp.cox.net>
-	<7vr7eni6fy.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506271935260.19755@ppc970.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: CAREFUL! No more delta object support!
+Date: Tue, 28 Jun 2005 01:09:15 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506280049090.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0506271910390.19755@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 05:27:46 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 07:05:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dn6lG-0008N0-8u
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 05:27:46 +0200
+	id 1Dn8H0-0002rl-KR
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 07:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262492AbVF1Ddx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 27 Jun 2005 23:33:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262498AbVF1Ddx
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jun 2005 23:33:53 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:33745 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S262492AbVF1Dd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jun 2005 23:33:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050628033320.HSWT23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 27 Jun 2005 23:33:20 -0400
+	id S261746AbVF1FLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 01:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262126AbVF1FLY
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 01:11:24 -0400
+Received: from iabervon.org ([66.92.72.58]:34821 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261746AbVF1FLE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2005 01:11:04 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Dn8LT-0001H3-00; Tue, 28 Jun 2005 01:09:15 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506271935260.19755@ppc970.osdl.org> (Linus
- Torvalds's message of "Mon, 27 Jun 2005 19:43:57 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.58.0506271910390.19755@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+On Mon, 27 Jun 2005, Linus Torvalds wrote:
 
-LT> If we want to expand a packed file and really write the objects to the 
-LT> .git/objects directories, we should just not have that packed file in the 
-LT> .git/objects/pack directory.
+> > > [..  git-ssh-pull hopefully working ..]
+> >
+> > No.  The pull protocol Dan did expects to throw compressed
+> > representation around on the wire (which is valid if you assume
+> > uncompressed transfer) and does not use read-sha1-file --
+> > write-sha1-file pair, so all three do not work.
+> 
+> Fair enough. I'd prefer for the pull/push to push object packs around 
+> anyway, so there's some more work there..
 
-What I was aiming for was this:
+It shouldn't be hard to add; the main issue is determining when
+transfering a pack file is a good idea, because it probably doesn't make
+sense to transfer a pack file just because the source side has an object
+that the target side wants in that pack. (If you pull from someone who
+packed up the whole history of everything, which you already have, into a
+file with one new commit, you'd be sad to get the huge thing; you really
+want a little custom (or just limited) pack file.)
 
- (1) Introduce an interface to sha1_file.c that lets you say
-     "use this file as one of the packs, although it is not
-     under .git/objects/pack";
+The ideal thing is probably to pick up some tricks from Mercurial in
+figuring out what needs to be transferred, and have the source side write
+a pack file directly to the connection, which the target side would then
+save directly. I never worked out exactly what those tricks were, though.
 
- (2) Introduce another interface to sha1_file.c that lets you
-     enumerate the index entries for a given pack file.
+The next trick would be to put something in place of cleverly-chosen
+objects to specify what pack file they're in, so that the HTTP client
+could find things from a packed repository. (Or we could just have an
+option to unpack post-transfer.)
 
- (3) Remove the unpacking logic from unpack-object.c; instead
-     call the above interfaces to register the pack and
-     enumerate entries, and call read_sha1_file() followed by
-     write_sha1_file() with do_expand repeatedly.
-
-However, the infrastructure (1) and (2) may end up being a
-special case only to support unpack-object (and removing the
-code duplication for unpacking), in which case what you suggest
-would make more sense.
-
-LT> And if we have a pack-file in .git/objects/ that already has
-LT> the object, that may not be the _same_ pack-file that we're
-LT> expanding at all, so if that pack file already has the
-LT> object, then not writing it out is actually the right thing
-LT> to do.
-
-This I have to think about a bit.
+	-Daniel
+*This .sig left intentionally blank*
