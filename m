@@ -1,73 +1,106 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: CAREFUL! No more delta object support!
-Date: Tue, 28 Jun 2005 11:17:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506281111480.19755@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506281251380.30848-100000@iabervon.org>
- <Pine.LNX.4.58.0506281019450.19755@ppc970.osdl.org>
+From: takis@lumumba.uhasselt.be (Panagiotis Issaris)
+Subject: GIT-CVS sync script
+Date: Tue, 28 Jun 2005 21:14:46 +0200
+Message-ID: <20050628191445.GA27979@lumumba.uhasselt.be>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 20:15:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 21:12:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnKbP-0006IJ-OY
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 20:14:32 +0200
+	id 1DnLR6-0007q5-4K
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 21:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261516AbVF1SVk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 14:21:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262184AbVF1SVk
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 14:21:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57564 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261516AbVF1SVh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2005 14:21:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5SIF6jA005750
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Jun 2005 11:15:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5SIF0fM017967;
-	Tue, 28 Jun 2005 11:15:03 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.58.0506281019450.19755@ppc970.osdl.org>
-X-Spam-Status: No, hits=0.667 required=5 tests=MANY_EXCLAMATIONS
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261153AbVF1TO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 15:14:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261170AbVF1TO6
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 15:14:58 -0400
+Received: from lumumba.uhasselt.be ([193.190.9.252]:28433 "EHLO
+	lumumba.uhasselt.be") by vger.kernel.org with ESMTP id S261153AbVF1TOZ
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 15:14:25 -0400
+Received: by lumumba.uhasselt.be (Postfix, from userid 1000)
+	id B303DEDB20; Tue, 28 Jun 2005 21:14:46 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+I find the included script useful to easily track a CVS repository in
+GIT. You can both call it for the initial import and ofcourse for the
+subsequent resynchronisation with the parent CVS repository (that's what
+the script's about).
 
-On Tue, 28 Jun 2005, Linus Torvalds wrote:
-> 
-> I can certainly add an option to git-pack-file that disables writing of
-> the index file, and just writes the pack-file to stdout.
+Would it be better to provide this as a patch against git-cvsimport-script?
 
-Done.
+It has been tested on the RTAI-Fusion repository.
 
->						 I'm not sure I
-> want to write the "parse incoming pack-file" thing, but git-unpack-objects
-> comes _reasonably_ close (but right now it seeks around using the index
-> file to resolve deltas, instead of keeping them in memory and resolving
-> them when possible).
+With friendly regards,
+Takis
 
-I'm still thinking about this one. I think I'll just do it.
+Signed-off-by: Panagiotis Issaris <takis@gna.org>
 
-One problem here is that since we don't know how big the incoming
-pack-file will be, in a streaming input environment the receiver needs to
-either make the pack-file reception be the last thing it sees, or it will
-have to live with the fact that "git-unpack-objects" will read some more
-than it needs before it notices that it got it all...
+#!/usr/bin/env bash
+#
+# Keep a GIT repository in sync with a CVS repository.
+# 
+# Copyright (c) Panagiotis Issaris, 2005.
+#
 
-We can handle the latter either by padding (make the rule be that
-git-unpack-file will always read in chunks of 4kB max, and pad the output
-with 4kB of zero bytes or something, and then you can execute
-git-unpack-objects and continue reading stdin afterwards, removing any
-zeroes that git-unpack-file didn't eat), or by having git-unpack-objects 
-flush anything after the final SHA1 to _its_ stdout, so that you can get 
-the following data/commands in the stream from the unpack-file thing. 
-Ugly, in any case.
+CVS2GIT_PATCHSETNR=.cvs2git_patchsetnr
+CVS2GIT_UPGRADESCRIPT=.cvs2git_updatescript
+PROJECT_GITDIR=`pwd`
+PROJECT_CVSDIR=$1
+CVSPS_OPTIONS="--no-rlog"
 
-		Linus
+usage () {
+        echo -e "Usage: \n\t$0 /path/to/project/cvsdir"
+        exit 1
+}
+
+if test $# -lt 1 ; then
+usage
+else
+if test ! -d $PROJECT_CVSDIR; then
+usage
+fi
+fi
+
+cd $PROJECT_CVSDIR
+
+if test ! -d $PROJECT_GITDIR/.git; then
+
+TZ=UTC cvsps $CVSPS_OPTIONS -A > $PROJECT_GITDIR/.git-cvsps-result
+git-cvs2git --cvsroot=`cat CVS/Root` --module=`cat CVS/Repository` < $PROJECT_GITDIR/.git-cvsps-result > $PROJECT_GITDIR/.cvs2git_updatescript
+
+else
+
+if test -f $PROJECT_GITDIR/.cvs2git_patchsetnr; then
+PATCHSETNR=`cat $PROJECT_GITDIR/.cvs2git_patchsetnr`;
+else
+PATCHSETNR=`cvsps | grep "^PatchSet " | tail -n1 | cut -f2 -d' '`
+fi
+let PATCHSETNR=$PATCHSETNR+1
+
+# Updating from patchset $PATCHSETNR...
+TZ=UTC cvsps $CVSPS_OPTIONS -x -s $PATCHSETNR- -A > $PROJECT_GITDIR/.git-cvsps-result
+if test ! -s $PROJECT_GITDIR/.git-cvsps-result; then
+echo "No new patchsets available"
+exit 2
+fi
+git-cvs2git -u --cvsroot=`cat CVS/Root` --module=`cat CVS/Repository` < $PROJECT_GITDIR/.git-cvsps-result > $PROJECT_GITDIR/.cvs2git_updatescript
+
+fi
+
+# Storing last patchset number $PATCHSETNR
+PATCHSETNR=`grep "^PatchSet " $PROJECT_GITDIR/.git-cvsps-result | tail -n1 | cut -f2 -d' '`
+echo $PATCHSETNR > $PROJECT_GITDIR/.cvs2git_patchsetnr
+
+# And finally, execute the generated script
+cd $PROJECT_GITDIR
+sh .cvs2git_updatescript
