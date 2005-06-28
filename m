@@ -1,107 +1,72 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 20:25:02 -0400 (EDT)
-Message-ID: <2661.10.10.10.24.1120004702.squirrel@linux1>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
-	<20050624064101.GB14292@pasky.ji.cz>
-	<20050624123819.GD9519@64m.dyndns.org>
-	<20050628150027.GB1275@pasky.ji.cz> <20050628180157.GI12006@waste.org>
-	<62CF578B-B9DF-4DEA-8BAD-041F357771FD@mac.com>
-	<3886.10.10.10.24.1119991512.squirrel@linux1>
-	<20050628221422.GT12006@waste.org>
-	<3993.10.10.10.24.1119997389.squirrel@linux1>
-	<20050628224946.GU12006@waste.org>
-	<4846.10.10.10.24.1119999568.squirrel@linux1>
-	<40A9C7C2-1AFE-45BC-90A5-571628304479@mac.com>
-	<1765.10.10.10.24.1120001856.squirrel@linux1>
-	<40A4071C-ED45-4280-928F-BCFC8761F47E@mac.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Use enhanced diff_delta() in the similarity estimator.
+Date: Tue, 28 Jun 2005 16:58:27 -0700
+Message-ID: <7vr7emrq3g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
-Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
-        Linux Kernel <linux-kernel@vger.kernel.org>,
-        Jeff Garzik <jgarzik@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Wed Jun 29 02:18:34 2005
-Return-path: <mercurial-bounces@selenic.com>
-Received: from waste.org ([216.27.176.166])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 29 02:31:59 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnQHL-0006ym-23
-	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 02:18:11 +0200
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T0P99A002775;
-	Tue, 28 Jun 2005 19:25:10 -0500
-Received: from simmts5-srv.bellnexxia.net (simmts5.bellnexxia.net
-	[206.47.199.163])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T0P8Qj002730;
-	Tue, 28 Jun 2005 19:25:08 -0500
-Received: from linux1 ([69.156.137.160]) by simmts5-srv.bellnexxia.net
-	(InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-	id <20050629002502.PAHR11606.simmts5-srv.bellnexxia.net@linux1>;
-	Tue, 28 Jun 2005 20:25:02 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j5T0P1Ha019002;
-	Tue, 28 Jun 2005 20:25:01 -0400
-Received: from 10.10.10.24 (SquirrelMail authenticated user sean)
-	by linux1 with HTTP; Tue, 28 Jun 2005 20:25:02 -0400 (EDT)
-In-Reply-To: <40A4071C-ED45-4280-928F-BCFC8761F47E@mac.com>
-To: "Kyle Moffett" <mrmacman_g4@mac.com>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
+	id 1DnQUL-0000Ps-2m
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 02:31:37 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S262246AbVF2AhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 20:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262313AbVF1X70
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 19:59:26 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:46031 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S262324AbVF1X6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 19:58:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050628235827.BAZS7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Jun 2005 19:58:27 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-On Tue, June 28, 2005 8:08 pm, Kyle Moffett said:
+The diff_delta() interface has been extended to reject
+generating too big a delta while we were working on the packed
+GIT archive format.  Take advantage of that when generating
+delta in the similarity estimator used in diffcore-rename.c
 
-> Firstly, no need to shout, we can all hear you :-D.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-ok
+ diffcore-rename.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
->
-> Git and Mercurial have all of the same core functionality.  The only
-> significant remaining difference is that Mercurial uses 1/20th the
-> network bandwidth and disk space.  If you happen to be interested in
-> that advantage (as I am, due to my aging equipment and poor internet
-> connection), then there are two options: (1) fix git, or (2) just use
-> Mercurial.  From my point of view, option 2 is much more productive.
-> You may (and probably do) have different priorities and requirements
-> than I do, but in my view, Mercurial is an excellent tool.
-
-well the feature set for both are changing rapidly.  i like the emphasis
-placed on functionality over performance shown by the git developers (not
-that git is slow, it's _way_ faster than bk ever was).  also the web
-interface that i looked at for mecurial (admittedly four or fivve weeks
-back) didn't come close to gitweb.   and the work done by jon seymour and
-others on the history lineralization is just great.   it's something bk
-lacked and was always a thorn in my side.
-
-> Actually, Mercurial solved some of the problems first, before git did;
-> distributed merge is one example that comes to mind.  In any case, I'm
-> not trying to tell you what to use, I'm just pointing out alternatives
-> that are available and explaining why I like them, in case you haven't
-> seen them or tried them before.
-
-there will be a price to pay if the linux community fragments over choice
-of scm.  the good news is that we're no longer locked into the whims of
-some proprietary system.  so it should be straight forward for those who
-choose any tool to work with those who've chosen another.  this is already
-evidenced by the fact that the git repository is pulled and re-exeported
-with mecurial.
-
-anyway, all the best, just wish you guys would spend less time trying to
-convert git users and more time advancing your own tool.
-
-sean
+e4495245cf1ffc1c443df9177c95ce9d1b5052b0
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -136,6 +136,7 @@ static int estimate_similarity(struct di
+ 	 */
+ 	void *delta;
+ 	unsigned long delta_size, base_size, src_copied, literal_added;
++	unsigned long delta_limit;
+ 	int score;
+ 
+ 	/* We deal only with regular files.  Symlink renames are handled
+@@ -163,9 +164,13 @@ static int estimate_similarity(struct di
+ 	if (diff_populate_filespec(src, 0) || diff_populate_filespec(dst, 0))
+ 		return 0; /* error but caught downstream */
+ 
++	delta_limit = base_size * (MAX_SCORE-minimum_score) / MAX_SCORE;
+ 	delta = diff_delta(src->data, src->size,
+ 			   dst->data, dst->size,
+-			   &delta_size, ~0UL);
++			   &delta_size, delta_limit);
++	if (!delta)
++		/* If delta_limit is exceeded, we have too much differences */
++		return 0;
+ 
+ 	/* A delta that has a lot of literal additions would have
+ 	 * big delta_size no matter what else it does.
+------------
