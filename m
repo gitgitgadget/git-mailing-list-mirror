@@ -1,66 +1,91 @@
 From: Petr Baudis <pasky@ucw.cz>
-Subject: Re: CAREFUL! No more delta object support!
-Date: Tue, 28 Jun 2005 16:52:56 +0200
-Message-ID: <20050628145256.GA1275@pasky.ji.cz>
-References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org> <20050627235857.GA21533@64m.dyndns.org> <Pine.LNX.4.58.0506272016420.19755@ppc970.osdl.org> <7vekamvmxj.fsf@assigned-by-dhcp.cox.net> <20050628110625.GC21533@64m.dyndns.org>
+Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
+Date: Tue, 28 Jun 2005 17:00:27 +0200
+Message-ID: <20050628150027.GB1275@pasky.ji.cz>
+References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
+	<20050624064101.GB14292@pasky.ji.cz>
+	<20050624123819.GD9519@64m.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 28 16:47:12 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: mercurial@selenic.com, Jeff Garzik <jgarzik@pobox.com>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        Git Mailing List <git@vger.kernel.org>
+X-From: mercurial-bounces@selenic.com Tue Jun 28 16:54:08 2005
+Return-path: <mercurial-bounces@selenic.com>
+Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnHLv-0004Ki-4W
-	for gcvg-git@gmane.org; Tue, 28 Jun 2005 16:46:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261968AbVF1OxS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 28 Jun 2005 10:53:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261958AbVF1OxS
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 10:53:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:20639 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261968AbVF1Ow7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jun 2005 10:52:59 -0400
-Received: (qmail 2087 invoked by uid 2001); 28 Jun 2005 14:52:56 -0000
-To: Christopher Li <git@chrisli.org>
+	id 1DnHTF-0005qS-QH
+	for gcvmd-mercurial@gmane.org; Tue, 28 Jun 2005 16:53:54 +0200
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SF0gTG024301;
+	Tue, 28 Jun 2005 10:00:42 -0500
+Received: from machine.sinus.cz (qmailr@w241.dkm.cz [62.24.88.241])
+	by waste.org (8.13.4/8.13.4/Debian-3) with SMTP id j5SF0U9S024279
+	for <mercurial@selenic.com>; Tue, 28 Jun 2005 10:00:31 -0500
+Received: (qmail 3033 invoked by uid 2001); 28 Jun 2005 15:00:27 -0000
+To: Christopher Li <hg@chrisli.org>
 Content-Disposition: inline
-In-Reply-To: <20050628110625.GC21533@64m.dyndns.org>
+In-Reply-To: <20050624123819.GD9519@64m.dyndns.org>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: mercurial.selenic.com
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://www.selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
 
-Dear diary, on Tue, Jun 28, 2005 at 01:06:25PM CEST, I got a letter
-where Christopher Li <git@chrisli.org> told me that...
-> On Tue, Jun 28, 2005 at 02:40:56AM -0700, Junio C Hamano wrote:
-> > >>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
-> > Still a good space reduction.  Good job!
+Dear diary, on Fri, Jun 24, 2005 at 02:38:19PM CEST, I got a letter
+where Christopher Li <hg@chrisli.org> told me that...
+> On Fri, Jun 24, 2005 at 08:41:01AM +0200, Petr Baudis wrote:
+> > > 5.1) undo the last commit or pull
+> > > 
+> > > $ hg undo
 > > 
-> > I am now dreaming if we someday would enhance the mechanism with
-> > append-only updates to the *.pack files with complete rewrite of
-> > the *.idx files, and get rid of files under .git/objects totally.
+> > $ cg-admin-uncommit
+> > 
+> > Note that you should never do this if you already pushed the changes
+> > out, or someone might get them. (That holds for regular Git too.) See
+> > 
+> > $ cg-help cg-admin-uncommit   # (or cg-admin-uncommit --help)
+> > 
+> > for details. (That's another Cogito's cool feature. Handy docs! ;-)
+> > 
 > 
-> No offense my friend, this has been done. It's name is mercurial.
-> 
-> > This would make things reasonably friendly to rsync.  The kernel
-> > pack has around 60M pack with 1.1M index, so everyday use would
-> > involve incremental updates to the pack [*1*] and full download
-> > of the index file.
-> 
-> It still have other open issue. Now it would be harder to not sync
-> all the heads. If I just want the clean Linus-2.6 tree, I have to
-> dig it out from the pack file which mixing with other heads. 
-> 
-> You could host different projects with it's own pack file. That
-> will lost the space saving on co-hosting projects.
-> 
-> So I am not convince rsync is the way to go in long run. You need
-> to have your own network syncing method.
+> Does it still works if the last commit was interrupted  or due to error for some
+> reason?
 
-I think the git-*-pull tools are actually just fine. You will only need
-to have some server-side CGI gadget to frontend the file, but we need
-that anyway to make the pull reasonably effective.
+If the last commit was interrupted, it didn't happen, so your tree stays
+in the same state as before doing the commit, as well as the repository.
+You can just try again. If you want to get rid of dirty stuff,
+cg-cancel.
+
+> Undo pull is pretty cool because you might pull a lot of commit
+> in one blow. Get rid of commit one by one is going to be painful. Some times
+> the object you pull has more than one chain of history it will be very nasty
+> if you want to clean it up.
+
+If it was a tree merge, cg-admin-uncommit will undo it. If it was
+fast-forward merge, there is no direct way to uncommit it, but you can
+find the first fast-forwarded commit and pass it as argument to
+cg-admin-uncommit; it will then rewind all the commits up to (including)
+the given commit.
+
+> Mercurial's undo is taking a snapshot of all the changed file's repo file length
+> at every commit or pull.  It just truncate the file to original size and undo 
+> is done.
+
+"Trunactes"? That sounds very wrong... you mean replace with old
+version? Anyway, what if the file has same length? It just doesn't make
+much sense to me.
 
 -- 
 				Petr "Pasky" Baudis
