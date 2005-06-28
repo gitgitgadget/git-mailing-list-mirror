@@ -1,72 +1,228 @@
-From: Christopher Li <hg@chrisli.org>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 14:47:55 -0400
-Message-ID: <20050628184755.GA2255@64m.dyndns.org>
-References: <andrewkt@aktzero.com> <42C16877.6000909@aktzero.com>
-	<200506282154.j5SLsETL010486@laptop11.inf.utfsm.cl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 3/3] Update fsck-cache (take 2)
+Date: Tue, 28 Jun 2005 14:58:33 -0700
+Message-ID: <7vhdfita7q.fsf_-_@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0506271755140.19755@ppc970.osdl.org>
+	<7vslz2x3vg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
-        Linux Kernel <linux-kernel@vger.kernel.org>,
-        Jeff Garzik <jgarzik@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Tue Jun 28 23:54:25 2005
-Return-path: <mercurial-bounces@selenic.com>
-Received: from waste.org ([216.27.176.166])
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 28 23:57:26 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnO2A-0004Fz-5j
-	for gcvmd-mercurial@gmane.org; Tue, 28 Jun 2005 23:54:22 +0200
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SM17gM015955;
-	Tue, 28 Jun 2005 17:01:08 -0500
-Received: from sccrmhc12.comcast.net (sccrmhc12.comcast.net [204.127.202.56])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SM12tV015937
-	for <mercurial@selenic.com>; Tue, 28 Jun 2005 17:01:02 -0500
-Received: from localhost.localdomain
-	(c-24-6-236-77.hsd1.ca.comcast.net[24.6.236.77])
-	by comcast.net (sccrmhc12) with ESMTP
-	id <2005062822004501200hd7dae>; Tue, 28 Jun 2005 22:00:56 +0000
-Received: by localhost.localdomain (Postfix, from userid 1027)
-	id 669F73F17F; Tue, 28 Jun 2005 14:47:55 -0400 (EDT)
-To: Horst von Brand <vonbrand@inf.utfsm.cl>
-Content-Disposition: inline
-In-Reply-To: <200506282154.j5SLsETL010486@laptop11.inf.utfsm.cl>
-User-Agent: Mutt/1.4.1i
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
+	id 1DnO4q-0004kg-W4
+	for gcvg-git@gmane.org; Tue, 28 Jun 2005 23:57:09 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261630AbVF1WDi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 28 Jun 2005 18:03:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261383AbVF1WCV
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jun 2005 18:02:21 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:42629 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261525AbVF1V6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jun 2005 17:58:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050628215834.IBGV1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 28 Jun 2005 17:58:34 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vslz2x3vg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Tue, 28 Jun 2005 01:49:39 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2005 at 05:54:14PM -0400, Horst von Brand wrote:
-> 
-> And is exactly the wrong way around. Even RCS stored the _last_ version and
-> differences to earlier ones (you'll normally want the last one (or
-> something near), and so occasionally having to reconstruct earlier ones by
-> going back isn't a big deal; having to build up the current version by
-> starting from /dev/null and applying each and every patch that ever touched
-> the file each time is expensive given enough history, besides that any
+The fsck-cache complains if objects referred to by files in
+.git/refs/ or objects stored in files under .git/objects/??/ are
+not found as stand-alone SHA1 files (i.e. found in alternate
+object pools GIT_ALTERNATE_OBJECT_DIRECTORIES or packed archives
+stored under .git/objects/pack).
 
-Mercurial store a full text node when it detect the delta gets too long
-to reach certain point. So what you describe here will not happen on
-mercurial. Having it append only is a very nice feature.
+Although this is a good semantics to maintain consistency of a
+single .git/objects directory as a self contained set of
+objects, it sometimes is useful to consider it is OK as long as
+these "outside" objects are available.
 
-> error in the file is guaranteed to destroy the current version, not
-> (hopefully) just making old versions unavailable).  It also means that
-> losing old history (what you'll want to do once in a while, e.g. forget
-> everything before 2.8) is simple: Chop off at the right point.
+This commit introduces a new flag, --standalone, to
+git-fsck-cache.  When it is not specified, connectivity checks
+and .git/refs pointer checks are taught that it is OK when
+expected objects do not exist under .git/objects/?? hierarchy
+but are available from an packed archive or in an alternate
+object pool.
 
-You can still chop of the history before the full node, but rebuilding the
-repositories. Mercurial save some much space that you would wonder why do you
-what to chop the history if you can keep it.
+Another new flag, --full, makes git-fsck-cache to check not only
+the current GIT_OBJECT_DIRECTORY but also objects found in
+alternate object pools and packed GIT archives.a
 
-Chris
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+*** This completes "the other half" the fsck updates I did last
+*** night was missing.  Please discard that one and use this
+*** instead.
+
+ Documentation/git-fsck-cache.txt |   18 +++++++++-
+ fsck-cache.c                     |   71 ++++++++++++++++++++++++++++++++------
+ 2 files changed, 76 insertions(+), 13 deletions(-)
+
+5cae1fa43bfeae6722d916aa764fa75d9ce1839a
+diff --git a/Documentation/git-fsck-cache.txt b/Documentation/git-fsck-cache.txt
+--- a/Documentation/git-fsck-cache.txt
++++ b/Documentation/git-fsck-cache.txt
+@@ -9,7 +9,7 @@ git-fsck-cache - Verifies the connectivi
+ 
+ SYNOPSIS
+ --------
+-'git-fsck-cache' [--tags] [--root] [--unreachable] [--cache] [<object>*]
++'git-fsck-cache' [--tags] [--root] [--unreachable] [--cache] [--standalone | --full] [<object>*]
+ 
+ DESCRIPTION
+ -----------
+@@ -37,6 +37,22 @@ OPTIONS
+ 	Consider any object recorded in the cache also as a head node for
+ 	an unreachability trace.
+ 
++--standalone::
++	Limit checks to the contents of GIT_OBJECT_DIRECTORY
++	(.git/objects), making sure that it is consistent and
++	complete without referring to objects found in alternate
++	object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES,
++	nor packed GIT archives found in .git/objects/pack;
++	cannot be used with --full.
++
++--full::
++	Check not just objects in GIT_OBJECT_DIRECTORY
++	(.git/objects), but also the ones found in alternate
++	object pools listed in GIT_ALTERNATE_OBJECT_DIRECTORIES,
++	and in packed GIT archives found in .git/objects/pack
++	and corresponding pack subdirectories in alternate
++	object pools; cannot be used with --standalone.
++
+ It tests SHA1 and general object sanity, and it does full tracking of
+ the resulting reachability and everything else. It prints out any
+ corruption it finds (missing or bad objects), and if you use the
+diff --git a/fsck-cache.c b/fsck-cache.c
+--- a/fsck-cache.c
++++ b/fsck-cache.c
+@@ -12,6 +12,8 @@
+ static int show_root = 0;
+ static int show_tags = 0;
+ static int show_unreachable = 0;
++static int standalone = 0;
++static int check_full = 0;
+ static int keep_cache_objects = 0; 
+ static unsigned char head_sha1[20];
+ 
+@@ -25,13 +27,17 @@ static void check_connectivity(void)
+ 		struct object_list *refs;
+ 
+ 		if (!obj->parsed) {
+-			printf("missing %s %s\n",
+-			       obj->type, sha1_to_hex(obj->sha1));
++			if (!standalone && has_sha1_file(obj->sha1))
++				; /* it is in pack */
++			else
++				printf("missing %s %s\n",
++				       obj->type, sha1_to_hex(obj->sha1));
+ 			continue;
+ 		}
+ 
+ 		for (refs = obj->refs; refs; refs = refs->next) {
+-			if (refs->item->parsed)
++			if (refs->item->parsed ||
++			    (!standalone && has_sha1_file(refs->item->sha1)))
+ 				continue;
+ 			printf("broken link from %7s %s\n",
+ 			       obj->type, sha1_to_hex(obj->sha1));
+@@ -315,8 +321,11 @@ static int read_sha1_reference(const cha
+ 		return -1;
+ 
+ 	obj = lookup_object(sha1);
+-	if (!obj)
++	if (!obj) {
++		if (!standalone && has_sha1_file(sha1))
++			return 0; /* it is in pack */
+ 		return error("%s: invalid sha1 pointer %.40s", path, hexname);
++	}
+ 
+ 	obj->used = 1;
+ 	mark_reachable(obj, REACHABLE);
+@@ -366,10 +375,20 @@ static void get_default_heads(void)
+ 		die("No default references");
+ }
+ 
++static void fsck_object_dir(const char *path)
++{
++	int i;
++	for (i = 0; i < 256; i++) {
++		static char dir[4096];
++		sprintf(dir, "%s/%02x", path, i);
++		fsck_dir(i, dir);
++	}
++	fsck_sha1_list();
++}
++
+ int main(int argc, char **argv)
+ {
+ 	int i, heads;
+-	char *sha1_dir;
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+@@ -390,17 +409,45 @@ int main(int argc, char **argv)
+ 			keep_cache_objects = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--standalone")) {
++			standalone = 1;
++			continue;
++		}
++		if (!strcmp(arg, "--full")) {
++			check_full = 1;
++			continue;
++		}
+ 		if (*arg == '-')
+-			usage("git-fsck-cache [--tags] [[--unreachable] [--cache] <head-sha1>*]");
++			usage("git-fsck-cache [--tags] [[--unreachable] [--cache] [--standalone | --full] <head-sha1>*]");
+ 	}
+ 
+-	sha1_dir = get_object_directory();
+-	for (i = 0; i < 256; i++) {
+-		static char dir[4096];
+-		sprintf(dir, "%s/%02x", sha1_dir, i);
+-		fsck_dir(i, dir);
++	if (standalone && check_full)
++		die("Only one of --standalone or --full can be used.");
++	if (standalone)
++		unsetenv("GIT_ALTERNATE_OBJECT_DIRECTORIES");
++
++	fsck_object_dir(get_object_directory());
++	if (check_full) {
++		int j;
++		struct packed_git *p;
++		prepare_alt_odb();
++		for (j = 0; alt_odb[j].base; j++) {
++			alt_odb[j].name[-1] = 0; /* was slash */
++			fsck_object_dir(alt_odb[j].base);
++			alt_odb[j].name[-1] = '/';
++		}
++		prepare_packed_git();
++		for (p = packed_git; p; p = p->next) {
++			int num = num_packed_objects(p);
++			for (i = 0; i < num; i++) {
++				unsigned char sha1[20];
++				nth_packed_object_sha1(p, i, sha1);
++				if (fsck_sha1(sha1) < 0)
++					fprintf(stderr, "bad sha1 entry '%s'\n", sha1_to_hex(sha1));
++
++			}
++		}
+ 	}
+-	fsck_sha1_list();
+ 
+ 	heads = 0;
+ 	for (i = 1; i < argc; i++) {
+------------
