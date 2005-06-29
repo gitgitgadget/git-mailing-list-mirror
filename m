@@ -1,54 +1,61 @@
-From: Vojtech Pavlik <vojtech@suse.cz>
-Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Wed, 29 Jun 2005 12:27:46 +0200
-Message-ID: <20050629102746.GA2484@ucw.cz>
-References: <3886.10.10.10.24.1119991512.squirrel@linux1> <20050628221422.GT12006@waste.org> <3993.10.10.10.24.1119997389.squirrel@linux1> <20050628224946.GU12006@waste.org> <4846.10.10.10.24.1119999568.squirrel@linux1> <40A9C7C2-1AFE-45BC-90A5-571628304479@mac.com> <1765.10.10.10.24.1120001856.squirrel@linux1> <40A4071C-ED45-4280-928F-BCFC8761F47E@mac.com> <2661.10.10.10.24.1120004702.squirrel@linux1> <12B6F9A5-81F8-46BD-A05D-B9FA1A70A9FF@mac.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sean <seanlkml@sympatico.ca>, Matt Mackall <mpm@selenic.com>,
-	Petr Baudis <pasky@ucw.cz>, Christopher Li <hg@chrisli.org>,
-	Jeff Garzik <jgarzik@pobox.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>, mercurial@selenic.com
-X-From: git-owner@vger.kernel.org Wed Jun 29 12:21:21 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 1/1] Remove aliasing between COUNTED and UNINTERESTING flags used by rev-list.c
+Date: Thu, 30 Jun 2005 00:16:29 +1000
+Message-ID: <20050629141629.15754.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jun 29 16:11:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnZgZ-0007VF-5F
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 12:20:51 +0200
+	id 1DndI5-0006Op-7I
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 16:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262500AbVF2K1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 06:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262505AbVF2K1u
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 06:27:50 -0400
-Received: from s243.chello.upc.cz ([62.24.84.243]:25564 "EHLO suse.cz")
-	by vger.kernel.org with ESMTP id S262500AbVF2K1f (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 06:27:35 -0400
-Received: by suse.cz (Postfix, from userid 10002)
-	id 0F85E126AC6; Wed, 29 Jun 2005 12:27:46 +0200 (CEST)
-To: Kyle Moffett <mrmacman_g4@mac.com>
-Content-Disposition: inline
-In-Reply-To: <12B6F9A5-81F8-46BD-A05D-B9FA1A70A9FF@mac.com>
-User-Agent: Mutt/1.5.6i
+	id S262587AbVF2OSt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 10:18:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262585AbVF2OSt
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 10:18:49 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:54915 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262588AbVF2OQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 10:16:35 -0400
+Received: (qmail 15765 invoked by uid 500); 29 Jun 2005 14:16:29 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jun 28, 2005 at 11:53:47PM -0400, Kyle Moffett wrote:
 
-> On Jun 28, 2005, at 20:25:02, Sean wrote:
-> >there will be a price to pay if the linux community fragments over
-> >choice of scm.
-> 
-> I don't agree.  With the current set of SCMs, I don't think it will
-> be long before somebody invents a gitweb/Mercurial/whatever gateway,
-> such that I can "hg serve" from my Mercurial repository and have
-> Linus "git pull" from a multiprotocol bridge.
+The COUNTED and UNINTERESTING flags were unintentionally aliased.
 
-I hope this will happen sooner than later, since that way the
-competition between git and mercurial will give us the best tools while
-keeping interoperability.
+This patch makes sure that flags defined in rev-list.c have distinct
+values from from those defined by epoch.h.
 
--- 
-Vojtech Pavlik
-SuSE Labs, SuSE CR
+The aliasing may have caused unexpected behaviour of the git-rev-list
+--bisect flag.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+
+ rev-list.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+fb2676c0c3991666db9a3b0ebe222d8028c12a05
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -4,10 +4,10 @@
+ #include "blob.h"
+ #include "epoch.h"
+ 
+-#define SEEN		(1u << 0)
+-#define INTERESTING	(1u << 1)
+-#define COUNTED		(1u << 2)
+-#define SHOWN		(LAST_EPOCH_FLAG << 2)
++#define SEEN        (LAST_EPOCH_FLAG << 1)
++#define INTERESTING (LAST_EPOCH_FLAG << 2)
++#define COUNTED     (LAST_EPOCH_FLAG << 3)
++#define SHOWN       (LAST_EPOCH_FLAG << 4)
+ 
+ static const char rev_list_usage[] =
+ 	"usage: git-rev-list [OPTION] commit-id <commit-id>\n"
+------------
