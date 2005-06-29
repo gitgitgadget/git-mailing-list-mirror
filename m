@@ -1,59 +1,72 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] denser delta header encoding
-Date: Wed, 29 Jun 2005 01:49:04 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0506290146270.1667@localhost.localdomain>
-References: <Pine.LNX.4.63.0506290021050.1667@localhost.localdomain>
- <7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
- <7virzxk9nd.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0506282244110.19755@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org and GIT tree rebuilding
+Date: Tue, 28 Jun 2005 22:54:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506282252001.14331@ppc970.osdl.org>
+References: <20050624.212009.92584730.davem@davemloft.net> <42BCE026.8050405@pobox.com>
+ <Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org> <42BCF02B.5090706@pobox.com>
+ <Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+ <Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281351150.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281201510.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281655140.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281424420.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506282314320.1667@localhost.localdomain>
+ <Pine.LNX.4.63.0506290111250.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506282243180.19755@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 07:42:06 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 29 07:45:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnVKj-0007ZD-JD
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:42:01 +0200
+	id 1DnVNt-0007v4-DE
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262434AbVF2FtH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 01:49:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262435AbVF2FtH
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:49:07 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:38655 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S262434AbVF2FtE
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 01:49:04 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IIU007JW05S5A@VL-MO-MR007.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 29 Jun 2005 01:49:04 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.58.0506282244110.19755@ppc970.osdl.org>
-X-X-Sender: nico@localhost.localdomain
-To: Linus Torvalds <torvalds@osdl.org>
+	id S262435AbVF2Fw2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 01:52:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262436AbVF2Fw1
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:52:27 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51881 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262435AbVF2FwY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 01:52:24 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5T5qLjA023727
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Jun 2005 22:52:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5T5qKYG022490;
+	Tue, 28 Jun 2005 22:52:20 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.58.0506282243180.19755@ppc970.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+
+
 On Tue, 28 Jun 2005, Linus Torvalds wrote:
-
 > 
-> 
-> On Tue, 28 Jun 2005, Junio C Hamano wrote:
+> On Wed, 29 Jun 2005, Nicolas Pitre wrote:
 > > 
-> > OK, not too much damage done.  I'll fix the rest up.
+> > Of course by the time I sent the above you already rewrote the ting to 
+> > be streamable.
 > 
-> Actually, I already did, and pushed out. And this time I verified it by 
-> doing a "git-cat-file -s" on every object on a packed repo.
+> And by the time you sent me a new version, I'd already taken part of your 
+> old one by hand ;)
 
-Damn!
+Btw, I have the size/type bits reversed from your setup, but please don't 
+change that, since that would be yet another incompatible pack format 
+change, and I'd like to calm things down.
 
-And just when I was about to send a new patch with the thing nicely 
-abstracted to fix the dammage.
+Also, I notice that you decode the sizes really strangely: you have a 
+"while() { }" loop and two separate loads. It's much nicer to do it with a 
+"do { } while()" loop and a single load, since not only is it less code, 
+a do-while loop compiles to better code than a while() loop (unless the 
+compiler is crazy, which it sometimes is).
 
-OK... let me pull again to see what's left then.
-
-
-Nicolas
+		Linus
