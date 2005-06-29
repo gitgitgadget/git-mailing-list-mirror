@@ -1,20 +1,8 @@
 From: Kyle Moffett <mrmacman_g4@mac.com>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 20:08:17 -0400
-Message-ID: <40A4071C-ED45-4280-928F-BCFC8761F47E@mac.com>
-References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
-	<20050624064101.GB14292@pasky.ji.cz>
-	<20050624123819.GD9519@64m.dyndns.org>
-	<20050628150027.GB1275@pasky.ji.cz>
-	<20050628180157.GI12006@waste.org>
-	<62CF578B-B9DF-4DEA-8BAD-041F357771FD@mac.com>
-	<3886.10.10.10.24.1119991512.squirrel@linux1>
-	<20050628221422.GT12006@waste.org>
-	<3993.10.10.10.24.1119997389.squirrel@linux1>
-	<20050628224946.GU12006@waste.org>
-	<4846.10.10.10.24.1119999568.squirrel@linux1>
-	<40A9C7C2-1AFE-45BC-90A5-571628304479@mac.com>
-	<1765.10.10.10.24.1120001856.squirrel@linux1>
+Date: Tue, 28 Jun 2005 20:12:54 -0400
+Message-ID: <A595C063-7F6E-49AD-A797-1133C731E7E3@mac.com>
+References: <200506282154.j5SLsETL010486@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0 (Apple Message framework v730)
 Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
@@ -22,29 +10,28 @@ Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
         Linux Kernel <linux-kernel@vger.kernel.org>,
         Jeff Garzik <jgarzik@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Wed Jun 29 02:01:38 2005
+X-From: mercurial-bounces@selenic.com Wed Jun 29 02:07:07 2005
 Return-path: <mercurial-bounces@selenic.com>
 Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnQ1I-0004qP-0R
-	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 02:01:36 +0200
+	id 1DnQ5u-0005Pd-Np
+	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 02:06:23 +0200
 Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T08Xuw000567;
-	Tue, 28 Jun 2005 19:08:36 -0500
-Received: from smtpout.mac.com (smtpout.mac.com [17.250.248.85])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T08VlV000558;
-	Tue, 28 Jun 2005 19:08:32 -0500
-Received: from mac.com (smtpin01-en2 [10.13.10.146])
-	by smtpout.mac.com (Xserve/8.12.11/smtpout03/MantshX 4.0) with ESMTP id
-	j5T08MEN015862; Tue, 28 Jun 2005 17:08:22 -0700 (PDT)
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T0DJGX001004;
+	Tue, 28 Jun 2005 19:13:22 -0500
+Received: from smtpout.mac.com (smtpout.mac.com [17.250.248.84])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T0DHw2000992
+	for <mercurial@selenic.com>; Tue, 28 Jun 2005 19:13:17 -0500
+Received: from mac.com (smtpin08-en2 [10.13.10.153])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout08/MantshX 4.0) with ESMTP id
+	j5T0D1T7014951; Tue, 28 Jun 2005 17:13:01 -0700 (PDT)
 Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
 	(authenticated bits=0)
-	by mac.com (Xserve/smtpin01/MantshX 4.0) with ESMTP id j5T08I6a026720
+	by mac.com (Xserve/smtpin08/MantshX 4.0) with ESMTP id j5T0CtH5018496
 	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 28 Jun 2005 17:08:20 -0700 (PDT)
-In-Reply-To: <1765.10.10.10.24.1120001856.squirrel@linux1>
-X-Priority: 3 (Normal)
-To: Sean <seanlkml@sympatico.ca>
+	Tue, 28 Jun 2005 17:12:58 -0700 (PDT)
+In-Reply-To: <200506282154.j5SLsETL010486@laptop11.inf.utfsm.cl>
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
 X-Mailer: Apple Mail (2.730)
 X-Virus-Scanned: by amavisd-new
 X-BeenThere: mercurial@selenic.com
@@ -61,45 +48,45 @@ List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
 Sender: mercurial-bounces@selenic.com
 Errors-To: mercurial-bounces@selenic.com
 
-On Jun 28, 2005, at 19:37:36, Sean wrote:
-> No, you seem to miss the point.  Git already does everything Mercurial
-> does, and does it pretty well too.  The _point_ was that if the big
-> "feature" of Mercurial is it's on disk format, Git is perfectly  
-> capable of
-> copying it at any point.   The on disk format just ISN'T CLOSE TO  
-> BEING
-> THE MOST IMPORTANT THING AT THE MOMENT.
+On Jun 28, 2005, at 17:54:14, Horst von Brand wrote:
+> Andrew Thompson <andrewkt@aktzero.com> wrote:
+>> I believe this works because the files stored in a binary format that
+>> appends new changesets onto the end. Thus, truncating the new stuff
+>> from the end effectively removes the commit.
+>
+> And is exactly the wrong way around. Even RCS stored the _last_  
+> version and
+> differences to earlier ones (you'll normally want the last one (or
+> something near), and so occasionally having to reconstruct earlier  
+> ones by
+> going back isn't a big deal; having to build up the current version by
+> starting from /dev/null and applying each and every patch that ever  
+> touched
+> the file each time is expensive given enough history, besides that any
+> error in the file is guaranteed to destroy the current version, not
+> (hopefully) just making old versions unavailable).  It also means that
+> losing old history (what you'll want to do once in a while, e.g.  
+> forget
+> everything before 2.8) is simple: Chop off at the right point.
 
-Firstly, no need to shout, we can all hear you :-D.
-
-Git and Mercurial have all of the same core functionality.  The only
-significant remaining difference is that Mercurial uses 1/20th the
-network bandwidth and disk space.  If you happen to be interested in
-that advantage (as I am, due to my aging equipment and poor internet
-connection), then there are two options: (1) fix git, or (2) just use
-Mercurial.  From my point of view, option 2 is much more productive.
-You may (and probably do) have different priorities and requirements
-than I do, but in my view, Mercurial is an excellent tool.
-
-> Yes, so what's your point?  Mercurial is trying to solve a problem  
-> that is
-> already perfectly well handled for me by Git.   Therefore I have  
-> _zero_
-> motivation to direct my efforts elsewhere.
-
-Actually, Mercurial solved some of the problems first, before git did;
-distributed merge is one example that comes to mind.  In any case, I'm
-not trying to tell you what to use, I'm just pointing out alternatives
-that are available and explaining why I like them, in case you haven't
-seen them or tried them before.
+If we have versions A through A+N, Mercurial will create a new revlog  
+file and
+store a new full version when the total size of the changes between A  
+and A+N
+is greater than a certain amount, effectively ensuring that  
+retrieving the
+latest version of a file is O(size-of-file) instead of O(size-of- 
+file*revisions).
+This is the same speed as RCS for the tip, and significantly faster  
+than RCS
+for non-tip, which is crucial for merges.
 
 Cheers,
 Kyle Moffett
 
------BEGIN GEEK CODE BLOCK-----
-Version: 3.12
-GCM/CS/IT/U d- s++: a18 C++++>$ UB/L/X/*++++(+)>$ P+++(++++)>$
-L++++(+++) E W++(+) N+++(++) o? K? w--- O? M++ V? PS+() PE+(-) Y+
-PGP+++ t+(+++) 5 X R? tv-(--) b++++(++) DI+ D+ G e->++++$ h!*()>++$  
-r  !y?(-)
-------END GEEK CODE BLOCK------
+--
+There are two ways of constructing a software design. One way is to  
+make it so simple that there are obviously no deficiencies. And the  
+other way is to make it so complicated that there are no obvious  
+deficiencies.
+   -- C.A.R. Hoare
