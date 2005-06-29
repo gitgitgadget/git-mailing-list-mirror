@@ -1,51 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] denser delta header encoding
-Date: Tue, 28 Jun 2005 22:44:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506282244110.19755@ppc970.osdl.org>
+Date: Wed, 29 Jun 2005 01:49:04 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0506290146270.1667@localhost.localdomain>
 References: <Pine.LNX.4.63.0506290021050.1667@localhost.localdomain>
- <7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
+ <7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
  <7virzxk9nd.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0506282244110.19755@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 07:36:17 2005
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 29 07:42:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnVEf-0006i3-NK
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:35:46 +0200
+	id 1DnVKj-0007ZD-JD
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:42:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262429AbVF2Fmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 01:42:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262430AbVF2Fmx
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:42:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:25768 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262429AbVF2Fmu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 01:42:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5T5gijA023301
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Jun 2005 22:42:44 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5T5ghQv022053;
-	Tue, 28 Jun 2005 22:42:43 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7virzxk9nd.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262434AbVF2FtH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 01:49:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262435AbVF2FtH
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:49:07 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:38655 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S262434AbVF2FtE
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 01:49:04 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR007.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IIU007JW05S5A@VL-MO-MR007.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 29 Jun 2005 01:49:04 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.58.0506282244110.19755@ppc970.osdl.org>
+X-X-Sender: nico@localhost.localdomain
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 28 Jun 2005, Linus Torvalds wrote:
 
-
-On Tue, 28 Jun 2005, Junio C Hamano wrote:
 > 
-> OK, not too much damage done.  I'll fix the rest up.
+> 
+> On Tue, 28 Jun 2005, Junio C Hamano wrote:
+> > 
+> > OK, not too much damage done.  I'll fix the rest up.
+> 
+> Actually, I already did, and pushed out. And this time I verified it by 
+> doing a "git-cat-file -s" on every object on a packed repo.
 
-Actually, I already did, and pushed out. And this time I verified it by 
-doing a "git-cat-file -s" on every object on a packed repo.
+Damn!
 
-		Linus
+And just when I was about to send a new patch with the thing nicely 
+abstracted to fix the dammage.
+
+OK... let me pull again to see what's left then.
+
+
+Nicolas
