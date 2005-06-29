@@ -1,11 +1,12 @@
-From: "Sean" <seanlkml@sympatico.ca>
+From: Kyle Moffett <mrmacman_g4@mac.com>
 Subject: Re: Mercurial vs Updated git HOWTO for kernel hackers
-Date: Tue, 28 Jun 2005 19:37:36 -0400 (EDT)
-Message-ID: <1765.10.10.10.24.1120001856.squirrel@linux1>
+Date: Tue, 28 Jun 2005 20:08:17 -0400
+Message-ID: <40A4071C-ED45-4280-928F-BCFC8761F47E@mac.com>
 References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
 	<20050624064101.GB14292@pasky.ji.cz>
 	<20050624123819.GD9519@64m.dyndns.org>
-	<20050628150027.GB1275@pasky.ji.cz> <20050628180157.GI12006@waste.org>
+	<20050628150027.GB1275@pasky.ji.cz>
+	<20050628180157.GI12006@waste.org>
 	<62CF578B-B9DF-4DEA-8BAD-041F357771FD@mac.com>
 	<3886.10.10.10.24.1119991512.squirrel@linux1>
 	<20050628221422.GT12006@waste.org>
@@ -13,40 +14,38 @@ References: <42B9E536.60704@pobox.com> <20050623235634.GC14426@waste.org>
 	<20050628224946.GU12006@waste.org>
 	<4846.10.10.10.24.1119999568.squirrel@linux1>
 	<40A9C7C2-1AFE-45BC-90A5-571628304479@mac.com>
-Mime-Version: 1.0
-Content-Type: text/plain;charset=iso-8859-1
-Content-Transfer-Encoding: 8bit
+	<1765.10.10.10.24.1120001856.squirrel@linux1>
+Mime-Version: 1.0 (Apple Message framework v730)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: mercurial@selenic.com, Petr Baudis <pasky@ucw.cz>,
         Linux Kernel <linux-kernel@vger.kernel.org>,
         Jeff Garzik <jgarzik@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
-X-From: mercurial-bounces@selenic.com Wed Jun 29 01:31:13 2005
+X-From: mercurial-bounces@selenic.com Wed Jun 29 02:01:38 2005
 Return-path: <mercurial-bounces@selenic.com>
 Received: from waste.org ([216.27.176.166])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnPXY-0000vM-Gd
-	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 01:30:52 +0200
+	id 1DnQ1I-0004qP-0R
+	for gcvmd-mercurial@gmane.org; Wed, 29 Jun 2005 02:01:36 +0200
 Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SNbpvf029407;
-	Tue, 28 Jun 2005 18:37:54 -0500
-Received: from simmts12-srv.bellnexxia.net (simmts12.bellnexxia.net
-	[206.47.199.141])
-	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5SNbgEj029381;
-	Tue, 28 Jun 2005 18:37:42 -0500
-Received: from linux1 ([69.156.137.160]) by simmts12-srv.bellnexxia.net
-	(InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-	id <20050628233736.JHAJ1005.simmts12-srv.bellnexxia.net@linux1>;
-	Tue, 28 Jun 2005 19:37:36 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j5SNbZX4018286;
-	Tue, 28 Jun 2005 19:37:35 -0400
-Received: from 10.10.10.24 (SquirrelMail authenticated user sean)
-	by linux1 with HTTP; Tue, 28 Jun 2005 19:37:36 -0400 (EDT)
-In-Reply-To: <40A9C7C2-1AFE-45BC-90A5-571628304479@mac.com>
-To: "Kyle Moffett" <mrmacman_g4@mac.com>
-User-Agent: SquirrelMail/1.4.4-2
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T08Xuw000567;
+	Tue, 28 Jun 2005 19:08:36 -0500
+Received: from smtpout.mac.com (smtpout.mac.com [17.250.248.85])
+	by waste.org (8.13.4/8.13.4/Debian-3) with ESMTP id j5T08VlV000558;
+	Tue, 28 Jun 2005 19:08:32 -0500
+Received: from mac.com (smtpin01-en2 [10.13.10.146])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout03/MantshX 4.0) with ESMTP id
+	j5T08MEN015862; Tue, 28 Jun 2005 17:08:22 -0700 (PDT)
+Received: from [10.0.0.2] (ip70-187-212-71.dc.dc.cox.net [70.187.212.71])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin01/MantshX 4.0) with ESMTP id j5T08I6a026720
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
+	Tue, 28 Jun 2005 17:08:20 -0700 (PDT)
+In-Reply-To: <1765.10.10.10.24.1120001856.squirrel@linux1>
 X-Priority: 3 (Normal)
-Importance: Normal
+To: Sean <seanlkml@sympatico.ca>
+X-Mailer: Apple Mail (2.730)
 X-Virus-Scanned: by amavisd-new
 X-BeenThere: mercurial@selenic.com
 X-Mailman-Version: 2.1.5
@@ -62,34 +61,45 @@ List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
 Sender: mercurial-bounces@selenic.com
 Errors-To: mercurial-bounces@selenic.com
 
-On Tue, June 28, 2005 7:25 pm, Kyle Moffett said:
-> On Jun 28, 2005, at 18:59:28, Sean wrote:
->> By the sounds of it, git could just use Mecurial or some variation
->> thereof
->> as a back end.
->
-> Umm, you seem to miss the point, sir.  If you use Mercurial, there is no
-> reason you should layer any part of Git on top of it.  It already does
-> everything that git does anyways.
+On Jun 28, 2005, at 19:37:36, Sean wrote:
+> No, you seem to miss the point.  Git already does everything Mercurial
+> does, and does it pretty well too.  The _point_ was that if the big
+> "feature" of Mercurial is it's on disk format, Git is perfectly  
+> capable of
+> copying it at any point.   The on disk format just ISN'T CLOSE TO  
+> BEING
+> THE MOST IMPORTANT THING AT THE MOMENT.
 
-No, you seem to miss the point.  Git already does everything Mercurial
-does, and does it pretty well too.  The _point_ was that if the big
-"feature" of Mercurial is it's on disk format, Git is perfectly capable of
-copying it at any point.   The on disk format just ISN'T CLOSE TO BEING
-THE MOST IMPORTANT THING AT THE MOMENT.
+Firstly, no need to shout, we can all hear you :-D.
 
->
->> Git is already so much better for the things I do than BK ever was,
->> I'll
->> stick with it.
->
-> This is like saying "Windows 3.1 is already so much better for the
-> things
-> I do than DOS ever was, I'll stick with it."  :-D
+Git and Mercurial have all of the same core functionality.  The only
+significant remaining difference is that Mercurial uses 1/20th the
+network bandwidth and disk space.  If you happen to be interested in
+that advantage (as I am, due to my aging equipment and poor internet
+connection), then there are two options: (1) fix git, or (2) just use
+Mercurial.  From my point of view, option 2 is much more productive.
+You may (and probably do) have different priorities and requirements
+than I do, but in my view, Mercurial is an excellent tool.
 
-Yes, so what's your point?  Mercurial is trying to solve a problem that is
-already perfectly well handled for me by Git.   Therefore I have _zero_
-motivation to direct my efforts elsewhere.
+> Yes, so what's your point?  Mercurial is trying to solve a problem  
+> that is
+> already perfectly well handled for me by Git.   Therefore I have  
+> _zero_
+> motivation to direct my efforts elsewhere.
+
+Actually, Mercurial solved some of the problems first, before git did;
+distributed merge is one example that comes to mind.  In any case, I'm
+not trying to tell you what to use, I'm just pointing out alternatives
+that are available and explaining why I like them, in case you haven't
+seen them or tried them before.
 
 Cheers,
-Sean
+Kyle Moffett
+
+-----BEGIN GEEK CODE BLOCK-----
+Version: 3.12
+GCM/CS/IT/U d- s++: a18 C++++>$ UB/L/X/*++++(+)>$ P+++(++++)>$
+L++++(+++) E W++(+) N+++(++) o? K? w--- O? M++ V? PS+() PE+(-) Y+
+PGP+++ t+(+++) 5 X R? tv-(--) b++++(++) DI+ D+ G e->++++$ h!*()>++$  
+r  !y?(-)
+------END GEEK CODE BLOCK------
