@@ -1,80 +1,44 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] denser delta header encoding
-Date: Tue, 28 Jun 2005 22:21:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
+Date: Tue, 28 Jun 2005 22:35:34 -0700
+Message-ID: <7virzxk9nd.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0506290021050.1667@localhost.localdomain>
- <7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
+	<7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 07:14:15 2005
+X-From: git-owner@vger.kernel.org Wed Jun 29 07:28:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnUtc-000453-Et
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:14:00 +0200
+	id 1DnV7n-0005tF-US
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262425AbVF2FU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 01:20:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262428AbVF2FU1
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:20:27 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12196 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262425AbVF2FTr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 01:19:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5T5JVjA021850
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 28 Jun 2005 22:19:32 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5T5JVgn021123;
-	Tue, 28 Jun 2005 22:19:31 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262427AbVF2Ffj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 01:35:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262428AbVF2Ffj
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:35:39 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37256 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262427AbVF2Ffg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 01:35:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050629053534.HRAD18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 29 Jun 2005 01:35:34 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org> (Linus Torvalds's message of "Tue, 28 Jun 2005 22:21:37 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+LT> Ahh. I see it. "packed_delta_info()". And it looks like "diff" uses it 
+LT> too. Oh, for the copy and rename detection. I don't think I tested that 
+LT> part, nope.
 
-On Tue, 28 Jun 2005, Junio C Hamano wrote:
->
-> Linus, please do not apply this as is.
-
-Argh. Too late.
-
-> There are code other than what Nico updated with this patch in
-> sha1_file.c that also need updating, that count the number of
-> bytes in the delta-patch result by reading from the delta
-> header.
-
-Hmm.. I tested this (along with my change to make the pack object also 
-use the little-endian size encoding) with "gitk" on a packed git archive, 
-and with git-unpack-objects. So it can't break _too_ seriously. Is it the 
-"git-cat-file -s" thing that gets the wrong answer?
-
-Ahh. I see it. "packed_delta_info()". And it looks like "diff" uses it 
-too. Oh, for the copy and rename detection. I don't think I tested that 
-part, nope.
-
-> I wonder if we can have a helper function in delta suite
-> somewhere (maybe in diff-delta.c):
-> 
->     int look_at_delta_header(void **delta_data, ulong delta_size,
->     	                     ulong *src_size, ulong *dst_size)
-> 
-> that:
-> 
->     - checks delta size and barf if it is small;
->     - reads the header and fills src_size and dst_size;
->     - advances *delta_data pointer;
-> 
-> and have count-delta, patch-delta and sha1_file.c users use it
-> consistently.  Nico, what do you think?
-
-Sounds like a good idea.
-
-		Linus
+OK, not too much damage done.  I'll fix the rest up.
