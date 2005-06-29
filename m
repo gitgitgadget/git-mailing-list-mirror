@@ -1,44 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] denser delta header encoding
-Date: Tue, 28 Jun 2005 22:35:34 -0700
-Message-ID: <7virzxk9nd.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0506290021050.1667@localhost.localdomain>
-	<7vmzp9kbcf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: kernel.org and GIT tree rebuilding
+Date: Tue, 28 Jun 2005 22:43:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506282243180.19755@ppc970.osdl.org>
+References: <20050624.212009.92584730.davem@davemloft.net> <42BCE026.8050405@pobox.com>
+ <Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org> <42BCF02B.5090706@pobox.com>
+ <Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+ <Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281351150.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281201510.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281655140.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281424420.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506282314320.1667@localhost.localdomain>
+ <Pine.LNX.4.63.0506290111250.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 07:28:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 29 07:35:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnV7n-0005tF-US
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:28:41 +0200
+	id 1DnVDl-0006ZZ-SS
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 07:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262427AbVF2Ffj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 01:35:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262428AbVF2Ffj
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:35:39 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:37256 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S262427AbVF2Ffg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 01:35:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050629053534.HRAD18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 29 Jun 2005 01:35:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506282217010.19755@ppc970.osdl.org> (Linus Torvalds's message of "Tue, 28 Jun 2005 22:21:37 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262428AbVF2Flu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 01:41:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262429AbVF2Flu
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 01:41:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:2984 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262428AbVF2Fls (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 01:41:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5T5fjjA023202
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 28 Jun 2005 22:41:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5T5fibU022018;
+	Tue, 28 Jun 2005 22:41:44 -0700
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.63.0506290111250.1667@localhost.localdomain>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-LT> Ahh. I see it. "packed_delta_info()". And it looks like "diff" uses it 
-LT> too. Oh, for the copy and rename detection. I don't think I tested that 
-LT> part, nope.
 
-OK, not too much damage done.  I'll fix the rest up.
+On Wed, 29 Jun 2005, Nicolas Pitre wrote:
+> 
+> Of course by the time I sent the above you already rewrote the ting to 
+> be streamable.
+
+And by the time you sent me a new version, I'd already taken part of your 
+old one by hand ;)
+
+		Linus
