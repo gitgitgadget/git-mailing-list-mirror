@@ -1,76 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] cvsimport: rewritten in Perl
-Date: Wed, 29 Jun 2005 11:06:03 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0506291048140.1667@localhost.localdomain>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: gitk and duplicate commits
+Date: Wed, 29 Jun 2005 17:55:23 +0200
+Message-ID: <20050629155523.GS5992MdfPADPa@garage.linux.student.kuleuven.ac.be>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 17:01:22 2005
+X-From: git-owner@vger.kernel.org Wed Jun 29 18:13:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dne3E-00081G-2O
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 17:00:32 +0200
+	id 1DnfAV-0006F7-7E
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 18:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261313AbVF2PHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 11:07:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261324AbVF2PHk
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 11:07:40 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60453 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261313AbVF2PHY
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 11:07:24 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR001.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IIU00EKHPY3RE@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 29 Jun 2005 11:06:03 -0400 (EDT)
-In-reply-to: <pan.2005.06.28.19.23.08.307486@smurf.noris.de>
-X-X-Sender: nico@localhost.localdomain
-To: Matthias Urlichs <smurf@smurf.noris.de>
+	id S262595AbVF2QSy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 12:18:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262599AbVF2QPn
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 12:15:43 -0400
+Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:55271 "EHLO
+	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S262590AbVF2QKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 12:10:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 5E397137B70
+	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:10 +0200 (CEST)
+Received: from octavianus.kulnet.kuleuven.ac.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id A7CEA137AC0
+	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:08 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by octavianus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 904C3AED86
+	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:08 +0200 (CEST)
+Received: (qmail 31460 invoked by uid 500); 29 Jun 2005 15:55:23 -0000
+To: Paul Mackerras <paulus@samba.org>
+Mail-Followup-To: Paul Mackerras <paulus@samba.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 28 Jun 2005, Matthias Urlichs wrote:
+If I pass in the same commit multiple times (possibly
+under different names) to gitk,
+it will echo the warning from git-rev-list
+(sort_list_in_merge_order: duplicate commit 82e3583b9426c193659a4c1315d6a3b3cee11dce ignored)
+and then simply stop.
 
-> I just got my machine blocked from a CVS server which didn't like
-> to get hammered with connections.
-> 
-> That was cvs2git's shell script. Which, by the way, is slow as hell.
-> 
-> Appended: a git-cvsimport script, written in Perl, which directly talks
-> to the CVS server. If the repository is local, it runs a "cvs server"
-> child. It produces the same git repository as Linus' version. It can do
-> incremental imports. And it's 20 times faster (on my system, with a
-> local CVS repository).
+Surely this can be handled more gracefully.
 
-Tried it on the bkcvs repository from 
-ftp.kernel.org/pub/scm/linux/kernel/bkcvs/linux-2.5/
-(it can be retrieved with rsync as well)
+Note that I do want to be able to pass the same commit
+multiple times.  At least, I don't want to check
+whether two "branches" happen to refer to the same commit.
 
-Your script died after about 30 seconds with:
-
-[...]
-New scripts/lxdialog/Makefile: 0 bytes.
-New scripts/lxdialog/checklist.c: 0 bytes.
-New scripts/lxdialog/colors.h: 0 bytes.
-New scripts/lxdialog/dialog.h: 0 bytes.
-New scripts/lxdialog/inputbox.c: 0 bytes.
-New scripts/lxdialog/lxdialog.c: 0 bytes.
-New scripts/lxdialog/menubox.c: 0 bytes.
-New scripts/lxdialog/msgbox.c: 0 bytes.
-New scripts/lxdialog/textbox.c: 0 bytes.
-New scripts/lxdialog/util.c: 0 bytes.
-New scripts/lxdialog/yesno.c: 0 bytes.
-Can't exec "git-update-cache": Argument list too long at /home/nico/bin/git-cvsimport-script line 402, <CVS> line 8254.
-Cannot add files: -1
-
-The original Linus version, although painfully slow, successfully 
-converts the whole thing after a couple hours.
-
-Also aren't those "0 bytes" a bit suspicious?
-
-
-Nicolas
+skimo
