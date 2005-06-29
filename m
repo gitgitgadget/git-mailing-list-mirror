@@ -1,101 +1,136 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] assorted delta code cleanup
-Date: Wed, 29 Jun 2005 09:10:20 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.06.29.07.10.16.473252@smurf.noris.de>
-References: <Pine.LNX.4.63.0506290246130.1667@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Last mile for 1.0 again
+Date: Wed, 29 Jun 2005 00:16:10 -0700
+Message-ID: <7v4qbhfxad.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20050624.212009.92584730.davem@davemloft.net>
+	<42BCE026.8050405@pobox.com>
+	<Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org>
+	<42BCF02B.5090706@pobox.com>
+	<Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+	<Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+	<Pine.LNX.4.63.0506281351150.1667@localhost.localdomain>
+	<Pine.LNX.4.58.0506281201510.19755@ppc970.osdl.org>
+	<Pine.LNX.4.63.0506281655140.1667@localhost.localdomain>
+	<Pine.LNX.4.58.0506281424420.19755@ppc970.osdl.org>
+	<Pine.LNX.4.63.0506282314320.1667@localhost.localdomain>
+	<Pine.LNX.4.63.0506290111250.1667@localhost.localdomain>
+	<Pine.LNX.4.58.0506282243180.19755@ppc970.osdl.org>
+	<Pine.LNX.4.58.0506282252001.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jun 29 09:07:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Jun 29 09:13:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnWfI-0002Ux-FO
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 09:07:20 +0200
+	id 1DnWkp-0003PZ-TB
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 09:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262463AbVF2HOD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 03:14:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262457AbVF2HLo
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 03:11:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:59849 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262469AbVF2HKy (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 03:10:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DnWbc-000203-Jl
-	for git@vger.kernel.org; Wed, 29 Jun 2005 09:03:32 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Jun 2005 09:03:32 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Jun 2005 09:03:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S262498AbVF2HUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 03:20:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262503AbVF2HTd
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 03:19:33 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:64427 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262464AbVF2HQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 03:16:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050629071611.OGZV23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 29 Jun 2005 03:16:11 -0400
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+In-Reply-To: <Pine.LNX.4.58.0506282252001.14331@ppc970.osdl.org> (Linus Torvalds's message of "Tue, 28 Jun 2005 22:54:26 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Nicolas Pitre wrote:
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
-> This is a wrap-up patch including all the cleanups I've done to the
-> delta code and its usage. 
+LT> ..., but please don't 
+LT> change that, since that would be yet another incompatible pack format 
+LT> change, and I'd like to calm things down.
 
-FWIW, I think Linus said he'd prefer a do/while loop. In fact this old
-code ...
+Calming things down is good.  Some stuff we should be looking at
+during calming down period are:
 
-> -static unsigned long parse_delta_size(unsigned char **p)
-> -{
-> -	unsigned char c;
-> -	unsigned long size = 0;
-> -	unsigned shift = 0;
-> -	unsigned char *data = *p;
-> -
-> -	do {
-> -		c = *data++;
-> -		size += (c & 0x7f) << shift;
-> -		shift += 7;
-> -	} while (c & 0x80);
-> -	*p = data;
-> -	return size;
-> -}
-> -
+ - Ask expert help to verify our use of zlib is OK; Linus asked
+   for this in a message tonight.  I am not qualified to do this
+   myself.
 
-... is IMHO much more readable than this ...
+ - There is currently nothing that verifies the SHA1 sums
+   embedded in idx and pack files.  A tool for it is needed
+   [*1*].  I may be doing this myself.
 
-> +static inline unsigned long get_delta_hdr_size(const unsigned char **datap)
-> +{
-> +	const unsigned char *data = *datap;
-> +	unsigned char cmd = *data++;
-> +	unsigned long size = cmd & ~0x80;
-> +	int i = 7;
-> +	while (cmd & 0x80) {
-> +		cmd = *data++;
-> +		size |= (cmd & ~0x80) << i;
-> +		i += 7;
-> +	}
-> +	*datap = data;
-> +	return size;
-> +}
-> +
+ - Although there is a hook in sha1_file() that allows mapping a
+   pack file on demand (and keep track of their uses for LRU
+   eviction), there is currently no code to actually evict a
+   mapped pack file.  We need to add some sort of use-reference
+   counting to lock down a pack file in use, if somebody is
+   inclined to do this.  I will not be doing this myself
+   immediately.
 
-(except that the first += should be |= ).
+ - Think about what to do with the "dumb server" pull protocols
+   regarding packed archive files (think about http-pull).  I
+   will not be doing this myself.
 
-Yeah, I know, it's nitpicking. Regard it as a testimony to the code's
-quality that I didn't see worse. ;-)
+ - Design "smart server" pull/push pair.  This can independently
+   and actively be done without impacting "calming down" period,
+   and I am assuming Dan is already looking into this.  This may
+   result in another "deathmatch" between Dan and Jason
+   Mcmullan, which would be fun to watch ;-).
 
-NB, it might be a good idea to exit with an error if the shift exceeds 31.
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-When it's fall in New York, the air smells as if someone's been frying
-goats in it, and if you are keen to breathe the best plan is to open a
-window and stick your head in a building.
-		-- The Hitch Hiker's Guide to the Galaxy
+Not limited to "calming down the packed GIT", but bigger picture
+pre-release preparation items I think we need to look into are:
+
+ - Update "Last mile for 1.0" list.  I think the only thing that
+   is left from the one I posted on Jun 5th is the tutorials.
+
+   Anybody interested in adding more pages to the tutorials?  If
+   there is no taker, I may start continuing what is already
+   there, stealing example project outline from "Arch meets
+   Hello World" [*2*].
+
+ - Double check the documentation, usage strings in the code and
+   what the code does still match.  Last time I checked, I think
+   some files in Documentation/ directory were not reachable
+   from the main GIT(1) page and were not touched by the build
+   process from Documentation/Makefile.  I will not be doing
+   this myself.
+
+ - Blame/Annotate.  Does anybody have a fast and correct one
+   [*3*]?
+
+ - Publicity.  Somebody may want to start preparing materials to
+   have us included in http://better-scm.berlios.de/comparison/
+
+
+[Footnotes]
+
+*1* One possibility is to add that to fsck-cache when --full is
+used, but I am somewhat reluctant to do it that way.  It would
+require you to place that "suspicious" pack under your
+repository's .git/objects/pack in order to verify it, which can
+spread the damage before you know it.
+
+In general, idx file is relatively small, so we _could_ check
+the SHA1 sum for idx files when we map them at runtime in
+check_packed_git_idx().  However, verifying 1MB (kernel archive
+case) idx file every time we run a single core GIT command may
+be a price we would not want to pay, so I am not too
+enthusiastic about doing it.  We certainly would not want to do
+this for pack files every time a pack is mapped at runtime (60MB
+kernel archive case).
+
+*2* http://regexps.srparish.net/www/tutorial/html/arch.html.
+
+I am not talking about stealing the concepts but just talking
+about stealing the sample project on which example players work
+in the sample sessions.  I think its section on update/replay
+matches closely to merge/rebase, for example.
+
+*3* I have what I wrote in Perl which does rename/copy/rewrite
+and multiple parents correctly, but it is way too slow for
+on-demand use.
