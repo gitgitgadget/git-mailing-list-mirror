@@ -1,57 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: CAREFUL! No more delta object support!
-Date: Wed, 29 Jun 2005 18:24:32 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506291806510.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0506291435310.14331@ppc970.osdl.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: git-rev-list --merge-order bug?
+Date: Thu, 30 Jun 2005 08:40:16 +1000
+Message-ID: <2cfc403205062915406db3a03@mail.gmail.com>
+References: <42C2F30A.7030102@gmail.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 30 00:19:34 2005
+X-From: git-owner@vger.kernel.org Thu Jun 30 00:35:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dnktb-00005x-By
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 00:19:03 +0200
+	id 1Dnl90-0002KX-RM
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 00:34:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262671AbVF2W0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 18:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262691AbVF2W0U
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 18:26:20 -0400
-Received: from iabervon.org ([66.92.72.58]:39172 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262671AbVF2W0S (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 18:26:18 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Dnkyu-0003Rk-00; Wed, 29 Jun 2005 18:24:32 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506291435310.14331@ppc970.osdl.org>
+	id S262700AbVF2Wl6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 18:41:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262707AbVF2Wly
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 18:41:54 -0400
+Received: from rproxy.gmail.com ([64.233.170.198]:3943 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262700AbVF2WkQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 18:40:16 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1417893rne
+        for <git@vger.kernel.org>; Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CmGluA+TALC98I0tkOsN647MUlxc2G5Zxx4zxrwDJIFn4ivFoNq3nWUWBqcoPJ5/4tXPslnQVJGdCFdc4IxPe0fM3MAToAVjZKViYQ3rA052Gm4sd/oM4LBfnLZUJrUysN6HveU7yiGvy1Afn6bDSFiKxEUN60ApCIZpERI5TII=
+Received: by 10.38.89.66 with SMTP id m66mr104063rnb;
+        Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
+To: gitzilla@gmail.com
+In-Reply-To: <42C2F30A.7030102@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 29 Jun 2005, Linus Torvalds wrote:
-
-> On Wed, 29 Jun 2005, Daniel Barkalow wrote:
-> > The one thing I can think of is whether things will blow up if the target
-> > repository has heads that aren't in the source
 > 
-> Right. I think that's a "feature" of pushing: you cannot push to an 
-> archive that has state that you don't know about. Ie you can only push to 
-> something that is a proper subset of what you are (on a per-branch basis, 
-> of course - not necessarily on a "global" stage - so you could push just 
-> _one_ branch, even if another branch was ahead of where you are).
+> git-rev-list ee28152d03f2cf4b5e3ebc25f7f03f9654d3aa0d \
+>         ^aa03413467a2f2ada900817dc2a8e3904549b5fe |wc -l
+> 
+> git-rev-list ee28152d03f2cf4b5e3ebc25f7f03f9654d3aa0d \
+>         ^aa03413467a2f2ada900817dc2a8e3904549b5fe --merge-order |wc -l
+> 
+> The first git-rev-list returns 4 commits and the second returns 304.
+> 
 
-The issue is really distinguishing the "other" branches I don't care about
-from the one that I do care about. With -w, I almost certainly care about
-the ref I'm writing, but that doesn't help for refs that are new (new
-branches or tags), for which I care about some other thing. Also, the
-failure is a bit hard to detect, I think, in that I could find I do
-recognize some ancient thing that's barely useful for exclusion, and miss
-something that should exclude almost everything but it's been updated. In
-any case, when things go wrong we simply send stuff the recipient already
-has, so it's not the end of the world. (And there's probably some clever
-way of dealing with it)
+I'll look at it.
 
-	-Daniel
-*This .sig left intentionally blank*
+It appears to do in cases that look like this:
+
+A
+|   B
+|   |
+|  /
+C 
+
+git-rev-list B ^A --merge-order
+
+jon.
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
