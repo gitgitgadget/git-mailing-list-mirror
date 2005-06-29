@@ -1,52 +1,68 @@
-From: Paul Jackson <pj@sgi.com>
-Subject: Re: Stacked GIT 0.1 (a.k.a. quilt for git)
-Date: Wed, 29 Jun 2005 14:28:29 -0700
-Organization: SGI
-Message-ID: <20050629142829.32208ad8.pj@sgi.com>
-References: <tnxy899zzu7.fsf@arm.com>
-	<20050623175848.1cf41a52.pj@sgi.com>
-	<tnxd5qc6s5o.fsf@arm.com>
-	<20050624034743.6c3bdae4.pj@sgi.com>
-	<tnxhdfo56yd.fsf@arm.com>
-	<20050624045627.6e9cbaff.pj@sgi.com>
-	<tnxwtoeiysf.fsf@arm.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: CAREFUL! No more delta object support!
+Date: Wed, 29 Jun 2005 14:38:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506291435310.14331@ppc970.osdl.org>
+References: <Pine.LNX.4.21.0506291644120.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 23:23:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 29 23:31:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dnk1I-0008MQ-R3
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 23:22:57 +0200
+	id 1Dnk9g-0001EF-CJ
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 23:31:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262648AbVF2V2v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 17:28:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262549AbVF2V2u
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 17:28:50 -0400
-Received: from omx2-ext.sgi.com ([192.48.171.19]:12717 "EHLO omx2.sgi.com")
-	by vger.kernel.org with ESMTP id S262667AbVF2V2g (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 17:28:36 -0400
-Received: from cthulhu.engr.sgi.com (cthulhu.engr.sgi.com [192.26.80.2])
-	by omx2.sgi.com (8.12.11/8.12.9/linux-outbound_gateway-1.1) with ESMTP id j5TNJNWd015452;
-	Wed, 29 Jun 2005 16:19:23 -0700
-Received: from v0 (mtv-vpn-hw-masa-1.corp.sgi.com [134.15.25.210])
-	by cthulhu.engr.sgi.com (SGI-8.12.5/8.12.5) with SMTP id j5TLSTdO42738244;
-	Wed, 29 Jun 2005 14:28:29 -0700 (PDT)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <tnxwtoeiysf.fsf@arm.com>
-X-Mailer: Sylpheed version 2.0.0beta3 (GTK+ 2.6.7; i686-pc-linux-gnu)
+	id S262665AbVF2ViA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 17:38:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262549AbVF2Vh7
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 17:37:59 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:40900 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262665AbVF2Vgw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 17:36:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5TLadjA023984
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 29 Jun 2005 14:36:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5TLackM001661;
+	Wed, 29 Jun 2005 14:36:38 -0700
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0506291644120.30848-100000@iabervon.org>
+X-Spam-Status: No, hits=0.667 required=5 tests=MANY_EXCLAMATIONS
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin wrote:
-> Does this make it closer to quilt in functionality?
 
-It could - right now I'm playing with Matt Mackall's Mercurial.  Sorry.
 
--- 
-                  I won't rest till it's the best ...
-                  Programmer, Linux Scalability
-                  Paul Jackson <pj@sgi.com> 1.925.600.0401
+On Wed, 29 Jun 2005, Daniel Barkalow wrote:
+> 
+> > Of course, you can do this one branch at a time, too, if you want to, but
+> > the above was meant as an example of how you can actually do all the
+> > branches in one single pack-file, which is a lot more efficient (if you do
+> > it one branch at a time, you'll quite possible end up transferring objects
+> > that are reachable in other branches multiple times, while the "all in one
+> > go" thing will pack each object just once).
+> 
+> It should transfer each only once if you recalculate "refs_in_b" after
+> each push, right?
+
+Yes, you can do it that way too. It will possibly not pack as well due to
+giving you fewer opportunities for deltas, but that's likely not a huge 
+issue.
+
+> The one thing I can think of is whether things will blow up if the target
+> repository has heads that aren't in the source
+
+Right. I think that's a "feature" of pushing: you cannot push to an 
+archive that has state that you don't know about. Ie you can only push to 
+something that is a proper subset of what you are (on a per-branch basis, 
+of course - not necessarily on a "global" stage - so you could push just 
+_one_ branch, even if another branch was ahead of where you are).
+
+			Linus
