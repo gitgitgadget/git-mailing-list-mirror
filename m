@@ -1,68 +1,66 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: git-rev-list --merge-order bug?
-Date: Thu, 30 Jun 2005 08:40:16 +1000
-Message-ID: <2cfc403205062915406db3a03@mail.gmail.com>
-References: <42C2F30A.7030102@gmail.com>
-Reply-To: jon@blackcubes.dyndns.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 30 00:35:07 2005
+Subject: [PATCH 1/2] Test case that demonstrates problem with --merge-order ^ processing
+Date: Thu, 30 Jun 2005 09:45:30 +1000
+Message-ID: <20050629234530.28690.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 30 01:38:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dnl90-0002KX-RM
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 00:34:59 +0200
+	id 1Dnm8W-00020E-3s
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 01:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262700AbVF2Wl6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 18:41:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262707AbVF2Wly
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 18:41:54 -0400
-Received: from rproxy.gmail.com ([64.233.170.198]:3943 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262700AbVF2WkQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 18:40:16 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1417893rne
-        for <git@vger.kernel.org>; Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CmGluA+TALC98I0tkOsN647MUlxc2G5Zxx4zxrwDJIFn4ivFoNq3nWUWBqcoPJ5/4tXPslnQVJGdCFdc4IxPe0fM3MAToAVjZKViYQ3rA052Gm4sd/oM4LBfnLZUJrUysN6HveU7yiGvy1Afn6bDSFiKxEUN60ApCIZpERI5TII=
-Received: by 10.38.89.66 with SMTP id m66mr104063rnb;
-        Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Wed, 29 Jun 2005 15:40:16 -0700 (PDT)
-To: gitzilla@gmail.com
-In-Reply-To: <42C2F30A.7030102@gmail.com>
-Content-Disposition: inline
+	id S262724AbVF2Xpo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 19:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262735AbVF2Xpo
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 19:45:44 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:11905 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262724AbVF2Xpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 19:45:33 -0400
+Received: (qmail 28700 invoked by uid 500); 29 Jun 2005 23:45:30 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> 
-> git-rev-list ee28152d03f2cf4b5e3ebc25f7f03f9654d3aa0d \
->         ^aa03413467a2f2ada900817dc2a8e3904549b5fe |wc -l
-> 
-> git-rev-list ee28152d03f2cf4b5e3ebc25f7f03f9654d3aa0d \
->         ^aa03413467a2f2ada900817dc2a8e3904549b5fe --merge-order |wc -l
-> 
-> The first git-rev-list returns 4 commits and the second returns 304.
-> 
 
-I'll look at it.
-
-It appears to do in cases that look like this:
+Added a test case that shows that --merge-order doesn't produce the
+correct result in the following case.
 
 A
-|   B
-|   |
-|  /
-C 
+|
+| B
+|/
+C
+|
+D
 
-git-rev-list B ^A --merge-order
+git-rev-list --merge-order A ^B should produce just A. Instead
+it produces BCD.
 
-jon.
--- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+A subsequent patch will fix this defect.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+
+ t/t6001-rev-list-merge-order.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+444e7b2e2491309cd7101bd48881743a35837a56
+diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
+--- a/t/t6001-rev-list-merge-order.sh
++++ b/t/t6001-rev-list-merge-order.sh
+@@ -543,6 +543,11 @@ test_output_expect_success 'simple merge
+ = alt_root
+ EOF
+ 
++test_output_expect_success "don't print things unreachable from one branch" "git-rev-list a3 ^b3 --merge-order" <<EOF
++a3
++a2
++a1
++EOF
+ 
+ #
+ #
+------------
