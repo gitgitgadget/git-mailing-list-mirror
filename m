@@ -1,56 +1,79 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: gitk and duplicate commits
-Date: Wed, 29 Jun 2005 17:55:23 +0200
-Message-ID: <20050629155523.GS5992MdfPADPa@garage.linux.student.kuleuven.ac.be>
-Reply-To: skimo@liacs.nl
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Add git-verify-pack command.
+Date: Wed, 29 Jun 2005 09:15:48 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506290911590.14331@ppc970.osdl.org>
+References: <20050624.212009.92584730.davem@davemloft.net> <42BCE026.8050405@pobox.com>
+ <Pine.LNX.4.58.0506242208210.11175@ppc970.osdl.org> <42BCF02B.5090706@pobox.com>
+ <Pine.LNX.4.58.0506242257450.11175@ppc970.osdl.org>
+ <Pine.LNX.4.58.0506260905200.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281351150.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281201510.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506281655140.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506281424420.19755@ppc970.osdl.org>
+ <Pine.LNX.4.63.0506282314320.1667@localhost.localdomain>
+ <Pine.LNX.4.63.0506290111250.1667@localhost.localdomain>
+ <Pine.LNX.4.58.0506282243180.19755@ppc970.osdl.org>
+ <Pine.LNX.4.58.0506282252001.14331@ppc970.osdl.org> <7v4qbhfxad.fsf_-_@assigned-by-dhcp.cox.net>
+ <7vvf3xcwyo.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 29 18:13:17 2005
+X-From: git-owner@vger.kernel.org Wed Jun 29 18:14:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DnfAV-0006F7-7E
-	for gcvg-git@gmane.org; Wed, 29 Jun 2005 18:12:07 +0200
+	id 1DnfC8-0006aI-MU
+	for gcvg-git@gmane.org; Wed, 29 Jun 2005 18:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262595AbVF2QSy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 12:18:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262599AbVF2QPn
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 12:15:43 -0400
-Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:55271 "EHLO
-	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S262590AbVF2QKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 12:10:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 5E397137B70
-	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:10 +0200 (CEST)
-Received: from octavianus.kulnet.kuleuven.ac.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
-	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id A7CEA137AC0
-	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:08 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by octavianus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 904C3AED86
-	for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:10:08 +0200 (CEST)
-Received: (qmail 31460 invoked by uid 500); 29 Jun 2005 15:55:23 -0000
-To: Paul Mackerras <paulus@samba.org>
-Mail-Followup-To: Paul Mackerras <paulus@samba.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
+	id S262599AbVF2QS6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 12:18:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262596AbVF2QPU
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 12:15:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57039 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262597AbVF2QNt (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jun 2005 12:13:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5TGDhjA031915
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 29 Jun 2005 09:13:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5TGDged015597;
+	Wed, 29 Jun 2005 09:13:42 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf3xcwyo.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-If I pass in the same commit multiple times (possibly
-under different names) to gitk,
-it will echo the warning from git-rev-list
-(sort_list_in_merge_order: duplicate commit 82e3583b9426c193659a4c1315d6a3b3cee11dce ignored)
-and then simply stop.
 
-Surely this can be handled more gracefully.
 
-Note that I do want to be able to pass the same commit
-multiple times.  At least, I don't want to check
-whether two "branches" happen to refer to the same commit.
+On Wed, 29 Jun 2005, Junio C Hamano wrote:
+> 
+> *** Linus, what would be the practical/recommended/sane limit
+> *** for mmap regions we would want to use?  Currently I start
+> *** throwing away mapped packs when the total size of mapped
+> *** packs exceeds 64MB.
 
-skimo
+Hey, anybody who ever used BK had better have had 1GB of memory for any 
+real development. So 64MB is peanuts, but it sounds like a good guess.
+
+> *** Oh, again, Linus, what is your preferred way to get a
+> *** cover-letter material (like this) for a single patch?
+
+I don't want cover-letters for single patches, or necessarily even for
+short series (1-3 entries). The cover letter is more interesting for large
+series, or even with small series if the early patches don't make much
+sense on their own: then the cover-letter ends up being a useful place to
+explain what the _sequence_ does, and why patch #2 that seems to be
+totally useless and removes a feature is actually good ("we'll
+re-implement it better in #5 after we've cleaned the code up").
+
+So generally commentaries after the three dashes is good, if the 
+commentary is "local", ie related not to a series. Only with non-local 
+explanations does a separate [0/N] thing make sense to me.
+
+		Linus
