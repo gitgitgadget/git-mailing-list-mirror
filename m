@@ -1,69 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 14:42:26 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
- <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com>
- <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com>
+Date: Thu, 30 Jun 2005 14:55:08 -0700
+Message-ID: <42C46A3C.1070104@zytor.com>
+References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 23:35:22 2005
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 23:48:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do6gM-0004ux-Fc
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:34:50 +0200
+	id 1Do6ta-0006fc-3d
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263157AbVF3Vlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 17:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263091AbVF3VlR
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:41:17 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12737 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263094AbVF3Vke (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 17:40:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5ULeLjA029139
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 14:40:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5ULeK36002505;
-	Thu, 30 Jun 2005 14:40:21 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42C462CD.9010909@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263054AbVF3Vzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 17:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263055AbVF3Vzs
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:55:48 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:19409 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S263054AbVF3Vzj
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 17:55:39 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j5ULtDnp020484
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Jun 2005 14:55:13 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+It seems to me that git always defines a DAG of objects, such that if 
+you have a list of terminals (defined as objects not referenced by other 
+objects), you can, given access to the same objects, figure out all 
+intervening objects.
 
+The tricky bit becomes finding the DAG both sides have in common with as 
+little traffic as possible.
 
-On Thu, 30 Jun 2005, H. Peter Anvin wrote:
-> 
-> It does that, but it only have to do that when the actual file has 
-> changed.  That's acceptable, at least for the repository sizes we're 
-> likely to deal with within the medium term.
+For producing minimum network traffic, I think something like this would 
+work:
 
-Well, realize that "incremental packs" deltify a lot worse than a "big
-pack", since pack-files don't do deltas to objects outside the pack-file.
+a) The sender sends a list of its terminals to the receiver.
 
-So we'd get _some_ compression, but not as much as possible. The current
-kernel compresses down to a single 63 MB pack-file (that's with the 2.6.11
-tree too, not just the HEAD history), but without deltas it weights in at
-about 177 MB.
+b) The receiver sends a list of nodes it needs, plus a list of all its 
+own meta-terminals, obtained by pruning its own DAG according to the 
+terminals list of the sender.
 
-So a "sum of incremental packs" should be somewhere in between those two
-values, even today. For a single kernel archive.
+c) This may have to be performed iteratively?  I need to sit down and 
+work out the exact algorithm for all cases, including branch trees and 
+multi-rooted DAGs.
 
-So repository sizes aren't exactly trivial. I don't know how expensive
-that rsync hash thing is, but one thing you lose is the ability to
-hardlink objects, so if you have a few kernel repositories at some point
-it doesn't fit in the cache any more, and then the rsync will have to read
-that much pack object stuff from disk in addition to doing the hash. Ugh.
+d) Once the sender knows the subset of its own DAG available to the 
+receiver, it can transmit either all objects that it has the sender does 
+not, or all objects on the path to one or more specific objects (e.g. HEAD.)
 
-		Linus
+	-hpa
