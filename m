@@ -1,64 +1,46 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 14:27:55 -0400
-Message-ID: <42C439AB.30002@gmail.com>
-References: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org> <42C438CA.3040507@gmail.com>
-Reply-To: gitzilla@gmail.com
+Date: Thu, 30 Jun 2005 14:45:17 -0400
+Message-ID: <20050630184517.GB28841@delft.aura.cs.cmu.edu>
+References: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 30 20:21:32 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 30 20:38:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do3eu-0001II-Px
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 20:21:09 +0200
+	id 1Do3vP-0003kZ-KU
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 20:38:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262839AbVF3S2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 14:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262844AbVF3S2g
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 14:28:36 -0400
-Received: from wproxy.gmail.com ([64.233.184.202]:22416 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262839AbVF3S2e (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 14:28:34 -0400
-Received: by wproxy.gmail.com with SMTP id i11so152923wra
-        for <git@vger.kernel.org>; Thu, 30 Jun 2005 11:28:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=VTJUf94diaFz+rqfv8PAFsOMBJ81CSBj08s90+czTs6YiziATyvP8Yzxqxuf//FmheZWM1LjyCI772nLLhJsabhJo0crRVO+rxHWnpOZLzO8IlouZ32Vlxs81N9vEOf7eEHAIA7wcivY1AtLXe9Mv1KrL+D5nnOh6BG5zLainHo=
-Received: by 10.54.53.25 with SMTP id b25mr593231wra;
-        Thu, 30 Jun 2005 11:27:57 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id g9sm143280wra.2005.06.30.11.27.57;
-        Thu, 30 Jun 2005 11:27:57 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: gitzilla@gmail.com
-In-Reply-To: <42C438CA.3040507@gmail.com>
+	id S262848AbVF3Spa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 14:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262897AbVF3Spa
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 14:45:30 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:719 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S262848AbVF3SpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 14:45:22 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1Do42H-0007ZY-00; Thu, 30 Jun 2005 14:45:17 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Damn! That should have been:
+On Thu, Jun 30, 2005 at 10:54:48AM -0700, Linus Torvalds wrote:
+> Anyway, please do give it a test. I think I'll use this to sync up to
+> kernel.org, except I _really_ would want to solve that ssh issue some 
+> other way than hardcoding the /home/torvalds/bin/ path in my local 
+> copies.. If somebody knows a good solution, pls holler.
 
-ssh torvalds@master.kernel.org \
-	'/bin/sh -c "export PATH=~/tmp/foo:$PATH ; env"'
+I've got a couple of 'export FOO=bar' lines in ~/.bashrc on the
+"remote-side" and it looks like they are set correctly when
+I do something like "ssh remote.host env".
 
-A Large Angry SCM wrote:
-> Have you tried something like the following?
-> 
-> ssh torvalds@master.kernel.org \
->     '/bin/sh -c "export PATH=/tmp/foo:$PATH ; env"'
-> 
-> Linus Torvalds wrote:
->>
-> ...
->  >
->> Anyway, please do give it a test. I think I'll use this to sync up to
->> kernel.org, except I _really_ would want to solve that ssh issue some 
->> other way than hardcoding the /home/torvalds/bin/ path in my local 
->> copies.. If somebody knows a good solution, pls holler.
-> 
+Jan
