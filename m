@@ -1,86 +1,60 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: [PATCH] cvsimport: Limit the log string to 32k
-Date: Thu, 30 Jun 2005 18:38:50 +0200
-Message-ID: <20050630163850.GU10850@kiste.smurf.noris.de>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630145528.GA18553@pc117b.liacs.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] cvsimport: rewritten in Perl
+Date: Thu, 30 Jun 2005 12:48:34 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0506301246170.1667@localhost.localdomain>
+References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de>
+ <Pine.LNX.4.63.0506291048140.1667@localhost.localdomain>
+ <pan.2005.06.29.20.40.37.811830@smurf.noris.de>
+ <pan.2005.06.30.10.30.21.176648@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DCTaD1eAmswIDYF2"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 18:32:48 2005
+X-From: git-owner@vger.kernel.org Thu Jun 30 18:41:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do1y0-0001cC-7H
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 18:32:44 +0200
+	id 1Do26F-0002yk-NL
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 18:41:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262930AbVF3QkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 12:40:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263002AbVF3QkF
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 12:40:05 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:37530 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S262930AbVF3Qj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 12:39:58 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Do23u-0000TL-Ut; Thu, 30 Jun 2005 18:39:03 +0200
-Received: (nullmailer pid 9777 invoked by uid 501);
-	Thu, 30 Jun 2005 16:38:50 -0000
-To: Sven Verdoolaege <skimo@liacs.nl>
-Content-Disposition: inline
-In-Reply-To: <20050630145528.GA18553@pc117b.liacs.nl>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S262386AbVF3Qsk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 12:48:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262774AbVF3Qsk
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 12:48:40 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:4937 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S262386AbVF3Qsj
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 12:48:39 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR001.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IIW0005RPCY3B@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 30 Jun 2005 12:48:35 -0400 (EDT)
+In-reply-to: <pan.2005.06.30.10.30.21.176648@smurf.noris.de>
+X-X-Sender: nico@localhost.localdomain
+To: Matthias Urlichs <smurf@smurf.noris.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, 30 Jun 2005, Matthias Urlichs wrote:
 
---DCTaD1eAmswIDYF2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hi, Matthias Urlichs wrote:
+> 
+> > Hi, Nicolas Pitre wrote:
+> > 
+> >> ftp.kernel.org/pub/scm/linux/kernel/bkcvs/linux-2.5/
+> > 
+> > Oh well, I'll have a look. (I never bothered with bk2cvs; there's a
+> > better tool which does bk2git directly.)
+> > 
+> OK -- pulled, tested.
+> 
+> ... though why you'd want the kernel via CVS instead of by direct
+> BK->GIT import is beyond me. ;-)
 
-Teach the new cvsimport script to chop the log string's trailing whitespace.
+That's just a nice big test case.
 
-Limit the log string to 32k, in order to be compatible with the old
-cvs2git program.
+You could try with, say, the gcc CVS as well for example.
 
-Signed-Off-By: Matthias Urlichs <smurf@smurf.noris.de>
 
----
-
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -468,7 +468,12 @@ my $commit =3D sub {
- 	}
- 	$pw->writer();
- 	$pr->reader();
--	print $pw $logmsg
-+
-+	# compatibility with git2cvs
-+	substr($logmsg,32767) =3D "" if length($logmsg) > 32767;
-+	$logmsg =3D~ s/[\s\n]+\z//;
-+
-+	print $pw "$logmsg\n"
- 		or die "Error writing to git-commit-tree: $!\n";
- 	$pw->close();
-=20
-
---DCTaD1eAmswIDYF2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFCxCAa8+hUANcKr/kRApb4AJ4+si+Z5zg2OdHmA8aK/8yVqo77AACcCU9u
-u7f9l+jFaZilCg/2HCZU58E=
-=mLXL
------END PGP SIGNATURE-----
-
---DCTaD1eAmswIDYF2--
+Nicolas
