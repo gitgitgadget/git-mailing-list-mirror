@@ -1,76 +1,65 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 13:23:14 -0700
-Message-ID: <42C454B2.6090307@zytor.com>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: verify_pack.c vs verify-pack.c
+Date: Thu, 30 Jun 2005 13:29:26 -0700
+Message-ID: <7vy88r1tcp.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0506301336460.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 22:18:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 22:29:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do5UP-0001bC-IP
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:18:25 +0200
+	id 1Do5eD-0003Um-RR
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263101AbVF3UZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 16:25:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263118AbVF3UYf
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:24:35 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:1964 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S263107AbVF3UYF
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 16:24:05 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j5UKNJcM018340
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 30 Jun 2005 13:23:21 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
-X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S263116AbVF3Ufb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 16:35:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263105AbVF3UfA
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:35:00 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:39073 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S263127AbVF3U3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 16:29:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050630202926.VWLI12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 30 Jun 2005 16:29:26 -0400
+To: Nicolas Pitre <nico@cam.org>
+In-Reply-To: <Pine.LNX.4.63.0506301336460.1667@localhost.localdomain> (Nicolas Pitre's message of "Thu, 30 Jun 2005 13:41:12 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> It won't _really_ solve the problem, since the pushed pack objects will
-> grow at a proportional rate to the current objects - it's just a constant
-> factor (admittedly a potentially fairly _big_ constant factor)  
-> improvement both in size and in number of files.
-> 
+>>>>> "NP" == Nicolas Pitre <nico@cam.org> writes:
 
-If I've understood this correctly, it's not a constant factor 
-improvement in the number of files (in the size, yes); it's changing it 
-from O(t*c) to O(t) where t is number of trees and c is number of 
-changesets.  That's key.
+NP> This is confusing.  Isn't possible to rename git-verify-pack to, say, 
+NP> git-fsck-pack instead?
 
-The problem we're having (on kernel.org) right now is that there isn't a 
-hierarchial time stamp in Unix, so we have to compare on a file-by-file 
-level.  rsync is quite good at discovering an invariant beginning of a 
-file, but when it comes to a mass of files it has to compare the stamps 
-on each and every one, each time.  It will only descend into a single 
-file, however, if that file has had its timestamp changed.
+Yes it is possible (I am not attached to the name).  The
+question is what to name it.
 
-For the purposes of rsync, storing the objects in a single append-only 
-file would be a very efficient method, since the rsync algorithm will 
-quickly discover an invariant head and only transmit the tail.  It's not 
-ideal, and having something git-aware would be better, but I think it's 
-really would be nice to have something which also plays well with rsync. 
-  There is a *lot* of infrastructure in rsync which is actually hard to 
-replicate with another tool (including the server architecture); in many 
-ways it would be easier to convince the rsync developers to create a 
-plugin architecture and re-use all that code rather than developing an 
-equivalent tool from scratch.
+git-fsck-cache (which is not about cache, whose name somehow
+implies it is trying to see consistency of the index file, but
+in reality which is about the object database --- it should be
+renamed to git-fsck-objects) does the same verification when the
+pack is placed under objects/pack/, and the way I envision
+git-verify/check/fsck-pack to be used is to run it _before_ you
+place a pack in your object database; it is like running sha1sum
+on a tarball before extracting it.
 
-	-hpa
+Also I would like to add some "info" output options to the
+git-verify/check/fsck-pack program that:
+
+ - lists all the contained SHA1 objects;
+  - with their type and size;
+  - with their delta depth (if deltified);
+  - with the delta-data size for each delta step.
+
+to help optimizing the git-pack-objects.
+
+BTW, is there a filesystem that would house the source to the
+core GIT that do not like names that differ only in underscore
+and dash?
