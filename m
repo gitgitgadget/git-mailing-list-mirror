@@ -1,80 +1,56 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] cvsimport-in-Perl: Limit the number of arguments to git-update-cache
-Date: Thu, 30 Jun 2005 20:02:24 +0200
-Message-ID: <20050630180224.GW10850@kiste.smurf.noris.de>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <pan.2005.06.30.10.34.00.807346@smurf.noris.de> <Pine.LNX.4.63.0506301249550.1667@localhost.localdomain> <Pine.LNX.4.63.0506301314280.1667@localhost.localdomain>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: "git-send-pack"
+Date: Thu, 30 Jun 2005 14:24:10 -0400
+Message-ID: <42C438CA.3040507@gmail.com>
+References: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TnOK8GJR8G8YucN8"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 19:56:37 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 30 20:17:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do3Gu-0005tF-C2
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 19:56:20 +0200
+	id 1Do3b4-0000h7-U0
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 20:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261216AbVF3SDc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 14:03:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262825AbVF3SDc
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 14:03:32 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:31666 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261216AbVF3SDL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 14:03:11 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Do3Mr-0003VE-1v; Thu, 30 Jun 2005 20:02:41 +0200
-Received: (nullmailer pid 11674 invoked by uid 501);
-	Thu, 30 Jun 2005 18:02:24 -0000
-To: Nicolas Pitre <nico@cam.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0506301314280.1667@localhost.localdomain>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S262843AbVF3SYf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 14:24:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262839AbVF3SYf
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 14:24:35 -0400
+Received: from wproxy.gmail.com ([64.233.184.207]:35632 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262836AbVF3SYc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 14:24:32 -0400
+Received: by wproxy.gmail.com with SMTP id i31so144935wra
+        for <git@vger.kernel.org>; Thu, 30 Jun 2005 11:24:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=B3fvTGZcL6Jw4mj74PA/u7QmJOLBmz84UBr0Cko47a+oansZX/AfBd8va55Gm2Xn9WXqaCs9MklCmzBq49xPSvKn5OAtiebqBumbPxdKQtVrkAjVznSujmjhv1Xr2nTtiDohn9TEKrmYQM1VYOCMmzouTrWa2AqI/KZsohdgxBg=
+Received: by 10.54.18.22 with SMTP id 22mr535438wrr;
+        Thu, 30 Jun 2005 11:24:12 -0700 (PDT)
+Received: from ?10.0.0.6? ([70.89.97.97])
+        by mx.gmail.com with ESMTP id 24sm110081wrl.2005.06.30.11.24.12;
+        Thu, 30 Jun 2005 11:24:12 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Have you tried something like the following?
 
---TnOK8GJR8G8YucN8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ssh torvalds@master.kernel.org \
+	'/bin/sh -c "export PATH=/tmp/foo:$PATH ; env"'
 
-Hi,
-
-Nicolas Pitre:
-> That example should be:
->=20
-> 	write( "| xargs git-update-cache --add --", @new)
->=20
-> of course.
->=20
-Actually, 'local $\ =3D "\0";' and 'xargs -0', which is roughly the point
-where doing it all in Perl starts being more readable. ;-)
-
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-The only secure computer is one that's unplugged, locked in a safe,
-and buried 20 feet under the ground in a secret location... and I'm
-not even too sure about that one.
-		-- Dennis Huges, FBI.
-
---TnOK8GJR8G8YucN8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFCxDOw8+hUANcKr/kRAt14AJ4sRX34u8xy7JsYZ8nsWHs1g6cZ2QCdFzG0
-LuNiHSV7DALSutbIKzA9pwQ=
-=WJy8
------END PGP SIGNATURE-----
-
---TnOK8GJR8G8YucN8--
+Linus Torvalds wrote:
+> 
+...
+ >
+> Anyway, please do give it a test. I think I'll use this to sync up to
+> kernel.org, except I _really_ would want to solve that ssh issue some 
+> other way than hardcoding the /home/torvalds/bin/ path in my local 
+> copies.. If somebody knows a good solution, pls holler.
