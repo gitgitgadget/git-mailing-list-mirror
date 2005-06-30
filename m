@@ -1,98 +1,71 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 18:25:43 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0506301731220.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org>
+Date: Thu, 30 Jun 2005 16:40:29 -0700
+Message-ID: <42C482ED.1010306@zytor.com>
+References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org> <42C46A3C.1070104@zytor.com> <Pine.LNX.4.58.0506301514240.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 00:20:51 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 01 01:35:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do7OO-0002Y6-2U
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 00:20:20 +0200
+	id 1Do8Yx-00030U-UR
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 01:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263050AbVF3W1o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 18:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263082AbVF3W1o
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 18:27:44 -0400
-Received: from iabervon.org ([66.92.72.58]:54789 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S263050AbVF3W1c (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 18:27:32 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Do7Tb-0001K9-00; Thu, 30 Jun 2005 18:25:43 -0400
+	id S263117AbVF3Xm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 19:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263124AbVF3Xm1
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 19:42:27 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:37860 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S263117AbVF3XlC
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 19:41:02 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j5UNeYmK022732
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Jun 2005 16:40:34 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301514240.14331@ppc970.osdl.org>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 30 Jun 2005, Linus Torvalds wrote:
-
-> On Thu, 30 Jun 2005, Daniel Barkalow wrote:
-> > 
-> > I suspect that I'll be able to merge send-pack/receive-pack with
-> > ssh-push/ssh-pull this evening, and then it'll have the feature of not
-> > caring too much which side your command line is on.
+Linus Torvalds wrote:
 > 
-> The simple thing to do is to just get one commit at a time, see if you 
-> have it already, parse if it not, and go on to the parents.
+> On Thu, 30 Jun 2005, H. Peter Anvin wrote:
 > 
-> That would fit the current git-pull thing, and may be good enough, but it 
-> has the downside that it can need a _lot_ of back-and-forth fecthing of 
-> commit objects from the other side until you find the one you want. That's 
-> going to be _very_ slow over a high-latency connection.
+>>For producing minimum network traffic, I think something like this would 
+>>work:
 > 
-> So what I'd suggest is:
+> In the "minimum traffic", the thing to look at is number of packets, and 
+> penalize further for anything that requires a synchronous reply.
 > 
-> 1- puller starts by just asking "what's your SHA1 for the ref I want"
+> That's why I'd suggest just letting the client stream out the list of
+> objects it has - it may appear wasteful to stream out even a thousand
+> SHA1's, but hey, that's just 20kB worth of data, and especially if there
+> is no synchronous stuff, that's just 15 ethernet packets.
 > 
->    The puller wants to know this, because a common case may be that it 
->    already has it, in which case it doesn't need to do anything. But more 
->    importantly, the puller will need to know this anyway if it gets an 
->    object-pack, so that the puller can update it's FETCH_HEAD.
 
-Already have this, for the non-pack case.
+In your linux-2.6 tree, there are currently 54,204 objects, and that is 
+after less than one full 2.6.x kernel release cycle.  That's a megabyte 
+of SHA1s.
 
->  - At some point the server sees the first SHA1 it recognizes, and at that 
->    point the server will have to start working. It will just send back an 
->    "ok, got it" message (telling the client to not bother continuing to 
->    send it any more commit ID's), and then does
-> 
-> 	git-rev-list --objects ref-client-wants ^first-common-sha1 |
-> 		git-pack-objects --stdout
+In /pub/scm on kernel.org, there are currently 1,815,573 objects or hard 
+links to objects, which would take a 36.3 MB list to produce.
 
-Right.
+Although this is better than what rsync does, which is it encodes this 
+list into ASCII with pathnames and all and it ends up being closer to 
+200 MB, it isn't fundamentally different.
 
->  - the client just unpacks the objects, and if successful, it puts the new 
->    top ref it got into FETCH_HEAD. It's now done.
-
-Or wherever it's been told to, yes.
-
-> And I do _not_ think that it makes a lot of sense to try to be symmetric.  
-> For one thing, while a "git-send-pack" should update all the refs
-> in-place, a "git-pull-pack" should _not_ update the ref, it should just
-> set FETCH_HEAD instead and the puller can decide what he wants to do with
-> that ref (possibly merge it, but possibly just make it be a new local
-> branch "remote-branch").
-
-My expectation is that the puller will have a ref "remote-branch", and
-will therefore: (1) want to update it, and (2) know the last commit pulled
-from it. In this situation, we can skip figuring out the start (the two
-points I didn't quote), because we saved it from before.
-
-At least, this is how I've always done it; I've got a "linus" branch that
-follows the public repo, and I commit changes to a different branch. I
-suppose one could skip hanging onto this info, but it seems like an
-obviously useful thing to keep, if for no other reason than that I want to
-diff against it. This is essentially promoting FETCH_HEAD to a refs/heads/
-thing, and having separate ones when you pull from separate sources.
-
-I suppose things are different if you do a lot of one-shot pulls, rather
-than tracking branches that you pull from; I'll need to think about this
-case (assuming that's actually what you do).
-
-	-Daniel
-*This .sig left intentionally blank*
+	-hpa
