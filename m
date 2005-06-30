@@ -1,204 +1,194 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] Add a topological sort procedure to commit.c [rev 2]
-Date: Thu, 30 Jun 2005 17:21:28 +1000
-Message-ID: <20050630072128.25225.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jun 30 09:14:45 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-format-patch: Prepare patches for e-mail submission.
+Date: Thu, 30 Jun 2005 00:36:40 -0700
+Message-ID: <7vll4s47p3.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20050630055821.1329.qmail@blackcubes.dyndns.org>
+	<7v1x6k5oau.fsf@assigned-by-dhcp.cox.net>
+	<2cfc403205063000009d149f5@mail.gmail.com>
+	<7vwtoc48rh.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: jon@blackcubes.dyndns.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 09:29:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DntFj-0005BH-Fp
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 09:14:27 +0200
+	id 1DntUK-0006wU-Qw
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 09:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262301AbVF3HVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 03:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262390AbVF3HVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 03:21:45 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:35713 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262301AbVF3HVc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 03:21:32 -0400
-Received: (qmail 25235 invoked by uid 500); 30 Jun 2005 07:21:28 -0000
-To: git@vger.kernel.org
+	id S262537AbVF3Hgw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 03:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262600AbVF3Hgw
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 03:36:52 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:56787 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S262537AbVF3Hgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 03:36:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050630073641.BYJK8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 30 Jun 2005 03:36:41 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vwtoc48rh.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu, 30 Jun 2005 00:13:38 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This is the script I use to prepare patches for e-mail submission.
 
-This patch introduces an in-place topological sort procedure to commit.c
-
-Given a list of commits, sort_in_topological_order() will perform an in-place
-topological sort of that list.
-
-The invariant that applies to the resulting list is:
-
-	a reachable from b => ord(b) < ord(a)
-
-This invariant is weaker than the --merge-order invariant, but is cheaper
-to calculate (assuming the list has been identified) and will serve any
-purpose where only a minimal topological order guarantee is required.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
-Note: this patch currently has no observable consequences since nothing
-in this patch calls it. A future patch will use this algorithm to provide
-an O(n) bisection algorithm as a suggested replacement for the
-existing O(n^2) bisection algorithm.
-
-[rev2] 
-   * incorporates Junio's questions/comments as commentary, 
-   * adds object.util save/restore functionality so that no
-     assumption is made about the pre-existing state of object.util 
-     upon entry to the procedure.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- commit.c |  117 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- commit.h |    5 +++
- 2 files changed, 122 insertions(+), 0 deletions(-)
+*** Jon, I made it by default not to say [PATCH N/M] for any M,
+*** and you can turn it on with --numbered flag.   Even with
+*** --numbered, " N/M" is not shown if M==1.
 
-2e031457909e59ac00c3520206256b75a6e08062
-diff --git a/commit.c b/commit.c
---- a/commit.c
-+++ b/commit.c
-@@ -3,6 +3,27 @@
- #include "commit.h"
- #include "cache.h"
+ Makefile                |    3 +
+ git-format-patch-script |  122 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 124 insertions(+), 1 deletions(-)
+ create mode 100755 git-format-patch-script
+
+16daa73282d5aa1cc7d227945aea193553fdfaad
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -25,7 +25,8 @@ SCRIPTS=git git-apply-patch-script git-m
+ 	git-fetch-script git-status-script git-commit-script \
+ 	git-log-script git-shortlog git-cvsimport-script git-diff-script \
+ 	git-reset-script git-add-script git-checkout-script git-clone-script \
+-	gitk git-cherry git-rebase-script git-relink-script
++	gitk git-cherry git-rebase-script git-relink-script \
++	git-format-patch-script
  
-+struct sort_node
-+{
-+	/*
-+         * the number of children of the associated commit
-+         * that also occur in the list being sorted.
-+         */
-+	unsigned int indegree;
+ PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
+ 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
+diff --git a/git-format-patch-script b/git-format-patch-script
+new file mode 100755
+--- /dev/null
++++ b/git-format-patch-script
+@@ -0,0 +1,122 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
 +
-+	/*
-+         * reference to original list item that we will re-use
-+         * on output.
-+         */
-+	struct commit_list * list_item;
++usage () {
++    echo >&2 "usage: $0"' [-n] [-o dir] [-<diff options>...] upstream [ our-head ]
 +
-+	/*
-+         * copy of original object.util pointer that is saved
-+         * during the topological sort.
-+         */
-+	void * save_util;
-+};
++Prepare each commit with its patch since our-head forked from upstream,
++one file per patch, for e-mail submission.  Each output file is
++numbered sequentially from 1, and uses the first line of the commit
++message (massaged for pathname safety) as the filename.
 +
- const char *commit_type = "commit";
- 
- enum cmit_fmt get_commit_format(const char *arg)
-@@ -346,3 +367,99 @@ int count_parents(struct commit * commit
-         return count;
- }
- 
-+/*
-+ * Performs an in-place topological sort on the list supplied
-+ * 
-+ * Invariant of resulting list is:
-+ *        a reachable from b => ord(b) < ord(a)
-+ */
-+void sort_in_topological_order(struct commit_list ** list)
-+{
-+	struct commit_list * next = *list;
-+	struct commit_list * work = NULL;
-+	struct commit_list ** pptr = list;
-+	struct sort_node * nodes;
-+	struct sort_node * next_nodes;
-+	int count = 0;
++When -o is specified, output files are created in that directory; otherwise in
++the current working directory.
 +
-+	/* determine the size of the list */
-+	while (next) {
-+		next = next->next;
-+		count++;
-+	}
-+	/* allocate an array to help sort the list */
-+	nodes = xcalloc(count, sizeof(*nodes));
-+	/* link the list to the array */
-+	next_nodes = nodes;
-+	next=*list;
-+	while (next) {
-+		next_nodes->list_item = next;
-+		next_nodes->save_util = next->item->object.util;
-+		next->item->object.util = next_nodes;
-+		next_nodes++;
-+		next = next->next;
-+	}
-+	/* update the indegree */
-+	next=*list;
-+	while (next) {
-+		struct commit_list * parents = next->item->parents;
-+		while (parents) {
-+			struct commit * parent=parents->item;
-+			struct sort_node * pn = (struct sort_node *)parent->object.util;
-+			
-+			if (pn)
-+				pn->indegree++;
-+			parents=parents->next;
-+		}
-+		next=next->next;
-+	}
-+	/* 
-+         * find the tips
-+         *
-+         * tips are nodes not reachable from any other node in the list 
-+         * 
-+         * the tips serve as a starting set for the work queue.
-+         */
-+	next=*list;
-+	while (next) {
-+		struct sort_node * node = (struct sort_node *)next->item->object.util;
-+
-+		if (node->indegree == 0) {
-+			commit_list_insert(next->item, &work);
-+		}
-+		next=next->next;
-+	}
-+	/* process the list in topological order */
-+	while (work) {
-+		struct commit * work_item = pop_commit(&work);
-+		struct sort_node * work_node = (struct sort_node *)work_item->object.util;
-+		struct commit_list * parents = work_item->parents;
-+
-+		while (parents) {
-+			struct commit * parent=parents->item;
-+			struct sort_node * pn = (struct sort_node *)parent->object.util;
-+			
-+			if (pn) {
-+				/* 
-+				 * parents are only enqueed for emission 
-+                                 * when all their children have been emitted thereby
-+                                 * guaranteeing topological order.
-+                                 */
-+				pn->indegree--;
-+				if (!pn->indegree) 
-+					commit_list_insert(parent, &work);
-+			}
-+			parents=parents->next;
-+		}
-+		/*
-+                 * work_item is a commit all of whose children
-+                 * have already been emitted. we can emit it now
-+                 * and restore its util pointer.
-+                 */
-+		*pptr = work_node->list_item;
-+		pptr = &(*pptr)->next;
-+		*pptr = NULL;
-+		work_item->object.util = work_node->save_util;
-+	}
-+	free(nodes);
++When -n is specified, instead of "[PATCH] Subject", the first line is formatted
++as "[PATCH N/M] Subject", unless you have only one patch.
++'
++    exit 1
 +}
-diff --git a/commit.h b/commit.h
---- a/commit.h
-+++ b/commit.h
-@@ -55,4 +55,9 @@ struct commit *pop_most_recent_commit(st
- struct commit *pop_commit(struct commit_list **stack);
- 
- int count_parents(struct commit * commit);
 +
-+/*
-+ * Performs an in-place topological sort of list supplied.
-+ */
-+void sort_in_topological_order(struct commit_list ** list);
- #endif /* COMMIT_H */
++diff_opts=
++IFS='
++'
++LF='
++'
++outdir=./
++
++while case "$#" in 0) break;; esac
++do
++    case "$1" in
++    -n|--n|--nu|--num|--numb|--numbe|--number|--numbere|--numbered)
++    numbered=t ;;
++    -o=*|--o=*|--ou=*|--out=*|--outp=*|--outpu=*|--output=*|--output-=*|\
++    --output-d=*|--output-di=*|--output-dir=*|--output-dire=*|\
++    --output-direc=*|--output-direct=*|--output-directo=*|\
++    --output-director=*|--output-directory=*)
++    outdir=`expr "$1" : '-[^=]*=\(.*\)'` ;;
++    -o|--o|--ou|--out|--outp|--outpu|--output|--output-|--output-d|\
++    --output-di|--output-dir|--output-dire|--output-direc|--output-direct|\
++    --output-directo|--output-director|--output-directory)
++    case "$#" in 1) usage ;; esac; shift
++    outdir="$1" ;;
++    -*)	diff_opts="$diff_opts$LF$1" ;;
++    *) break ;;
++    esac
++    shift
++done
++
++case "$#" in
++2)    linus="$1" junio="$2" ;;
++1)    linus="$1" junio=HEAD ;;
++*)    usage ;;
++esac
++
++case "$outdir" in
++*/) ;;
++*) outdir="$outdir/" ;;
++esac
++test -d "$outdir" || mkdir -p "$outdir" || exit
++
++tmp=.tmp-series$$
++trap 'rm -f $tmp-*' 0 1 2 3 15
++
++series=$tmp-series
++
++titleScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	s/[^-a-z.A-Z_0-9]/-/g
++        s/\.\.\.*/\./g
++	s/\.*$//
++	s/--*/-/g
++	s/^-//
++	s/-$//
++	s/$/./
++	q
++'
++
++_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
++_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
++stripCommitHead='/^'"$_x40"' (from '"$_x40"')$/d'
++
++git-rev-list "$junio" "^$linus" >$series
++total=`wc -l <$series`
++i=$total
++while read commit
++do
++    title=`git-cat-file commit "$commit" | sed -e "$titleScript"`
++    case "$numbered" in
++    '') num= ;;
++    *)
++	case $total in
++	1) num= ;;
++	*) num=' '`printf "%d/%d" $i $total` ;;
++	esac
++    esac
++    file=`printf '%04d-%stxt' $i "$title"`
++    i=`expr "$i" - 1`
++    echo "$file"
++    {
++	mailScript='
++	1,/^$/d
++	: loop
++	/^$/b loop
++	s|^|[PATCH'"$num"'] |
++	: body
++	p
++	n
++	b body'
++
++	git-cat-file commit "$commit" | sed -ne "$mailScript"
++	echo '---'
++	echo
++	git-diff-tree -p $diff_opts "$commit" | git-apply --stat --summary
++	echo
++	git-diff-tree -p $diff_opts "$commit" | sed -e "$stripCommitHead"
++	echo '------------'
++    } >"$outdir$file"
++done <$series
 ------------
