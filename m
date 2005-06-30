@@ -1,79 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 13:52:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
- <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com>
+Date: Thu, 30 Jun 2005 16:49:12 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0506301611000.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
+Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 22:49:01 2005
+X-From: git-owner@vger.kernel.org Thu Jun 30 22:52:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do5xo-0006Me-5A
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:48:48 +0200
+	id 1Do61V-0006vJ-RB
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263148AbVF3Uzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 16:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263161AbVF3UvK
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:51:10 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:6839 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263152AbVF3UuU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 16:50:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5UKo6jA025068
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 13:50:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5UKo5oQ031814;
-	Thu, 30 Jun 2005 13:50:05 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42C454B2.6090307@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263161AbVF3U6q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 16:58:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263092AbVF3U4e
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:56:34 -0400
+Received: from iabervon.org ([66.92.72.58]:44804 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S263150AbVF3UvA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 16:51:00 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Do5yC-0005SO-00; Thu, 30 Jun 2005 16:49:12 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, 30 Jun 2005, Linus Torvalds wrote:
 
-
-On Thu, 30 Jun 2005, H. Peter Anvin wrote:
+> On Thu, 30 Jun 2005, Daniel Barkalow wrote:
+> > 
+> > The right solution probably involves getting each pack file you push to
+> > the mirrors as well as to the master. They'll probably update no less
+> > frequently than you push, and they should go through a series of states
+> > which matches the master, so it's not necessary to have anything smart on
+> > master sending them, and they only have to unpack the files they get (and
+> > update the refs afterward).
 > 
-> If I've understood this correctly, it's not a constant factor 
-> improvement in the number of files (in the size, yes); it's changing it 
-> from O(t*c) to O(t) where t is number of trees and c is number of 
-> changesets.  That's key.
+> Hmm, yes. That would work, together with just fetching the heads.
+> 
+> It won't _really_ solve the problem, since the pushed pack objects will
+> grow at a proportional rate to the current objects - it's just a constant
+> factor (admittedly a potentially fairly _big_ constant factor)  
+> improvement both in size and in number of files.
+>
+> So the mirroring ends up getting slowly slower and slower as the number of 
+> pack files go up. In contrast, a git-aware thing can be basically 
+> constant-time, and mirroring expense ends up being relative to the size of 
+> the change rather than the size of the repository.
+> 
+> But mirroring just pack-files might solve the problem for the forseeable 
+> future, so..
 
-No, it _is_ a constant factor even in number of files, if you just keep 
-the pack objects around without re-packing them.
+Whenever it gets slow, you could replace all the old packs with a single
+new pack containing all the old objects; and master could repack whenever
+it has a lot of pack files. That's pretty close to O(n) in change size.
 
-Basically, you'd get one new pack-file every time I push. That's better
-than getting <n> "raw object" files (where <n> can be anything from just a
-couple to several thousand, depending on whether I had pulled things), but
-it's still just a constant factor on both number of files and size of
-files.
+Alternatively, having a reverse-ordered list of pack files would mean that
+mirrors could just go through that list until they found one they already
+had, and stop there, which would really be O(n).
 
-Now, you could re-pack the objects every once in a while: it would force a
-whole new "epoch", of course and then the mirrorers would have to fetch
-the whole repacked file, but that might be fine. Especially if you stop
-re-packing after you've hit a certain size (say, a couple of megs), and
-then start on the next pack.
-
-> For the purposes of rsync, storing the objects in a single append-only 
-> file would be a very efficient method, since the rsync algorithm will 
-> quickly discover an invariant head and only transmit the tail.
-
-Actually, it won't be "quick" - it will have to read the whole file and do 
-it's hash window thing.
-
-You _could_ append the pack-files into one single "superpack" file (since
-you can figure out where the pack boundaries are), but it would be
-extremely big after a while, and rsync would spend all its time doing over
-the hash window. You'd definitely be better off with re-packing.
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
