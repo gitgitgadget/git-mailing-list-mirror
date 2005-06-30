@@ -1,73 +1,70 @@
-From: Dan Holmsand <holmsand@gmail.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 23:10:10 +0200
-Message-ID: <42C45FB2.8030206@gmail.com>
-References: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>	<Pine.LNX.4.58.0506301242470.14331@ppc970.osdl.org> <7vll4r1sxz.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 30 Jun 2005 14:26:55 -0700
+Message-ID: <42C4639F.4040205@zytor.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com> <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@osdl.org>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 23:06:50 2005
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 23:22:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do6ER-0000ZZ-1z
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:05:59 +0200
+	id 1Do6UE-000399-E3
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263083AbVF3VMY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 17:12:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263081AbVF3VMU
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:12:20 -0400
-Received: from wproxy.gmail.com ([64.233.184.207]:20204 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S263127AbVF3VKQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 17:10:16 -0400
-Received: by wproxy.gmail.com with SMTP id i31so180540wra
-        for <git@vger.kernel.org>; Thu, 30 Jun 2005 14:10:13 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=sAJHKc+F7xgGH1oSrByd/eQr3AmppX7NfEoU4qN7Eu0gIRXjsleU9JiI3yDJ2DOTvvCN0XTNjzOqSQnHgPp3zE2BdT1PtSiiEWDuNmA+mB3pUmTqmUgNdXU/LZD+Ernv1UPA7FK+jmvGPu9rW6jGM2p9HZEE+tQCYl4oOXMWQlM=
-Received: by 10.54.26.45 with SMTP id 45mr639130wrz;
-        Thu, 30 Jun 2005 14:10:13 -0700 (PDT)
-Received: from ?192.168.0.5? ([80.217.52.214])
-        by mx.gmail.com with ESMTP id g5sm244470wra.2005.06.30.14.10.12;
-        Thu, 30 Jun 2005 14:10:13 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+	id S263088AbVF3V26 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 17:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263070AbVF3V25
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:28:57 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:62401 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S263088AbVF3V2B
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 17:28:01 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j5ULR19a019808
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Jun 2005 14:27:01 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll4r1sxz.fsf@assigned-by-dhcp.cox.net>
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42C462CD.9010909@zytor.com>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
->>>>>>"LT" == Linus Torvalds <torvalds@osdl.org> writes:
+H. Peter Anvin wrote:
+> Linus Torvalds wrote:
 > 
+>>
+>>> For the purposes of rsync, storing the objects in a single 
+>>> append-only file would be a very efficient method, since the rsync 
+>>> algorithm will quickly discover an invariant head and only transmit 
+>>> the tail.
+>>
+>>
+>> Actually, it won't be "quick" - it will have to read the whole file 
+>> and do it's hash window thing.
+>>
 > 
-> LT> In fact, the most recent push was gone with a
+> It does that, but it only have to do that when the actual file has 
+> changed.  That's acceptable, at least for the repository sizes we're 
+> likely to deal with within the medium term.
 > 
-> LT> 	git-send-pack master.kernel.org:/pub/scm/linux/kernel/git/torvalds/git.git
-> 
-> Congrats for a job well done.
 
-Agree totally. And the whole pack thing is really cool. Git is sooo much
-faster when running from pack-files only on my poor laptop.
+I guess I should clarify a bit here.  I'm concerned with two aspects: 
+the "keeping mirrors in sync" problem, where asking people to use a tool 
+other than rsync is a really tough sell, and the developer usage 
+scenario, in which case something git-aware is obviously the better thing.
 
-> Now is there anything for us poor mortals who would want to have
-> a "pull" support?  Logging in via ssh and run send-pack on the
-> other end is workable but not so pretty ;-).
-
-Agreed again :-)
-
-Even cooler would be pack-pulls via http. That would be a bit hard on 
-the servers with the current git-pack-objects, but it ought to be 
-possible to create something similar that doesn't re-delta anything, but 
-instead just spits out what's in an existing pack-file, and (perhaps) 
-deltifies objects from the file system.
-
-If people then re-pack their repositories occasionally, this should be 
-plenty fast, the number of files for rsync to deal with could be kept 
-down, as could download times for mortal users.
-
-/dan
+	-hpa
