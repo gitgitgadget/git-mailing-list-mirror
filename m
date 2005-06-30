@@ -1,92 +1,125 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 2/2] Fix for git-rev-list --merge-order B ^A (A,B share common base)
-Date: Thu, 30 Jun 2005 11:33:25 +1000
-Message-ID: <2cfc403205062918336a55e8da@mail.gmail.com>
-References: <20050629234533.28709.qmail@blackcubes.dyndns.org>
-	 <7v1x6k1z6c.fsf@assigned-by-dhcp.cox.net>
-Reply-To: jon@blackcubes.dyndns.org
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 03:26:21 2005
+Subject: [PATCH 2/2] Fix for git-rev-list --merge-order B ^A (A,B share common base) [rev 2]
+Date: Thu, 30 Jun 2005 11:51:34 +1000
+Message-ID: <20050630015134.32197.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 30 04:18:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dnnon-0007HJ-06
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 03:26:17 +0200
+	id 1Dnocj-0005YZ-BS
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 04:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262652AbVF3Bdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 29 Jun 2005 21:33:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262679AbVF3Bdc
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 21:33:32 -0400
-Received: from rproxy.gmail.com ([64.233.170.200]:7043 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262652AbVF3Bd0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jun 2005 21:33:26 -0400
-Received: by rproxy.gmail.com with SMTP id i8so21921rne
-        for <git@vger.kernel.org>; Wed, 29 Jun 2005 18:33:25 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=d8fizLtg8CD9C4rNVWFdjaIiOi9o8xC6h4mLSQQxGGyv1HnbXEZrYN3dDPcUPR0XrBAqLxzShQ2hWasKE5lj/gzz9cOQlO0ABLKnDpJNIEJWaC1wfFwAjSZCjhB/bB+jhFL49OypMn0Ti6x8uE09ATFAVOUf8HxsXlYIjwbY+PE=
-Received: by 10.38.208.73 with SMTP id f73mr214134rng;
-        Wed, 29 Jun 2005 18:33:25 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Wed, 29 Jun 2005 18:33:25 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x6k1z6c.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S262793AbVF3CUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 29 Jun 2005 22:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262778AbVF3CTA
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jun 2005 22:19:00 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:20608 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262772AbVF3CSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jun 2005 22:18:21 -0400
+Received: (qmail 32207 invoked by uid 500); 30 Jun 2005 01:51:34 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 6/30/05, Junio C Hamano <junkio@cox.net> wrote:
-> >>>>> "JS" == Jon Seymour <jon.seymour@gmail.com> writes:
-> 
-> I am puzzled about this part.
-> 
-> JS> The unit test changes in this patch remove use of the --show-breaks
-> JS> flags from certain unit tests. The changed --merge-order behaviour
-> JS> changed the annotation that --show-breaks prints for certain test cases.
-> JS> The new behaviour is reasonable and irrelevant to the intent of the tests
-> JS> so that tests have been changed to eliminate the spurious behaviour.
-> 
-> If the behaviour of --show-breaks subtly changes, and if that
-> changed behaviour is something still acceptable, why not update
-> the test to show the new expected results since you are updating
-> the test anyway?
 
-I can do it this way, if you prefer. The issue was that the expected output was:
+This patch makes --merge-order produce the same list as git-rev-list 
+without --merge-order specified.
 
-= l2
-| l1 
-| l0
+In particular, if the graph looks like this:
 
-but became:
+A
+| B
+|/ 
+C
+|
+D
 
-^ l2
-| l1
-| l0
+The both git-rev-list B ^A and git-rev-list --merge-order will produce B.
 
-The annotation changes because there is no longer a single head in the
-start list. There are now multiple heads, it just happens that one of
-the heads is also a prune point.
+The unit tests have been changed to reflect the fact that the prune
+points are now formally part of the start list that is used to perform
+the --merge-order sort.
 
-> 
-> Showing that "subtle" change in the diff may draw people's
-> attention and would help you to verify that the behaviour change
-> is not something that would be unacceptable to them.
+That is: git-rev-list --merge-order A ^D used to produce
 
-Fair enough, I'll resubmit with a less drastic change to the test case.
+= A
+| C
 
-> 
-> Also if you are changing t6001, could you also merge Mark
-> Allen's BSD portability fix while you are at it?
-> 
->     Message-ID: <20050628014337.18986.qmail@web41205.mail.yahoo.com>
-> 
-> 
+It now produces:
 
-Ok.
+^ A
+| C
 
-jon.
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+
+ epoch.c                         |    8 +++-----
+ t/t6001-rev-list-merge-order.sh |   12 ++++++------
+ 2 files changed, 9 insertions(+), 11 deletions(-)
+
+d402f03f56475c30c3b62577c5a42af09f6b95b8
+diff --git a/epoch.c b/epoch.c
+--- a/epoch.c
++++ b/epoch.c
+@@ -585,11 +585,9 @@ int sort_list_in_merge_order(struct comm
+ 	for (; list; list = list->next) {
+ 		struct commit *next = list->item;
+ 
+-		if (!(next->object.flags & UNINTERESTING)) {
+-			if (!(next->object.flags & DUPCHECK)) {
+-				next->object.flags |= DUPCHECK;
+-				commit_list_insert(list->item, &reversed);
+-			}
++		if (!(next->object.flags & DUPCHECK)) {
++			next->object.flags |= DUPCHECK;
++			commit_list_insert(list->item, &reversed);
+ 		}
+ 	}
+ 
+diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
+--- a/t/t6001-rev-list-merge-order.sh
++++ b/t/t6001-rev-list-merge-order.sh
+@@ -367,33 +367,33 @@ test_output_expect_success "three nodes 
+ EOF
+ 
+ test_output_expect_success "linear prune l2 ^root" 'git-rev-list --merge-order --show-breaks l2 ^root' <<EOF
+-= l2
++^ l2
+ | l1
+ | l0
+ EOF
+ 
+ test_output_expect_success "linear prune l2 ^l0" 'git-rev-list --merge-order --show-breaks l2 ^l0' <<EOF
+-= l2
++^ l2
+ | l1
+ EOF
+ 
+ test_output_expect_success "linear prune l2 ^l1" 'git-rev-list --merge-order --show-breaks l2 ^l1' <<EOF
+-= l2
++^ l2
+ EOF
+ 
+ test_output_expect_success "linear prune l5 ^a4" 'git-rev-list --merge-order --show-breaks l5 ^a4' <<EOF
+-= l5
++^ l5
+ | l4
+ | l3
+ EOF
+ 
+ test_output_expect_success "linear prune l5 ^l3" 'git-rev-list --merge-order --show-breaks l5 ^l3' <<EOF
+-= l5
++^ l5
+ | l4
+ EOF
+ 
+ test_output_expect_success "linear prune l5 ^l4" 'git-rev-list --merge-order --show-breaks l5 ^l4' <<EOF
+-= l5
++^ l5
+ EOF
+ 
+ test_output_expect_success "max-count 10 - merge order" 'git-rev-list --merge-order --show-breaks --max-count=10 l5' <<EOF
+------------
