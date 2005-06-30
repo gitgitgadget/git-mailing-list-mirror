@@ -1,34 +1,38 @@
 From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 14:29:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org>
+Date: Thu, 30 Jun 2005 14:42:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+ <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com>
+ <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 23:26:37 2005
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 23:35:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do6Xi-0003gg-39
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:25:55 +0200
+	id 1Do6gM-0004ux-Fc
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 23:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263074AbVF3VcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 17:32:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263073AbVF3V3x
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:29:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:9406 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263074AbVF3V1U (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 17:27:20 -0400
+	id S263157AbVF3Vlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 17:41:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263091AbVF3VlR
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 17:41:17 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12737 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S263094AbVF3Vke (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 17:40:34 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5ULRDjA028080
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5ULeLjA029139
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 14:27:14 -0700
+	Thu, 30 Jun 2005 14:40:22 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5ULRCB6001698;
-	Thu, 30 Jun 2005 14:27:13 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5ULeK36002505;
+	Thu, 30 Jun 2005 14:40:21 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42C462CD.9010909@zytor.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.111 $
@@ -39,67 +43,27 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Thu, 30 Jun 2005, Daniel Barkalow wrote:
+On Thu, 30 Jun 2005, H. Peter Anvin wrote:
 > 
-> I suspect that I'll be able to merge send-pack/receive-pack with
-> ssh-push/ssh-pull this evening, and then it'll have the feature of not
-> caring too much which side your command line is on.
+> It does that, but it only have to do that when the actual file has 
+> changed.  That's acceptable, at least for the repository sizes we're 
+> likely to deal with within the medium term.
 
-The simple thing to do is to just get one commit at a time, see if you 
-have it already, parse if it not, and go on to the parents.
+Well, realize that "incremental packs" deltify a lot worse than a "big
+pack", since pack-files don't do deltas to objects outside the pack-file.
 
-That would fit the current git-pull thing, and may be good enough, but it 
-has the downside that it can need a _lot_ of back-and-forth fecthing of 
-commit objects from the other side until you find the one you want. That's 
-going to be _very_ slow over a high-latency connection.
+So we'd get _some_ compression, but not as much as possible. The current
+kernel compresses down to a single 63 MB pack-file (that's with the 2.6.11
+tree too, not just the HEAD history), but without deltas it weights in at
+about 177 MB.
 
-So what I'd suggest is:
+So a "sum of incremental packs" should be somewhere in between those two
+values, even today. For a single kernel archive.
 
- - puller starts by just asking "what's your SHA1 for the ref I want"
-
-   The puller wants to know this, because a common case may be that it 
-   already has it, in which case it doesn't need to do anything. But more 
-   importantly, the puller will need to know this anyway if it gets an 
-   object-pack, so that the puller can update it's FETCH_HEAD.
-
- - if puller doesn't have it, then the _puller_ does:
-
-	"git-rev-list my-current-refs"
-
-   to generate an in-date-order list of commits it has, and it starts 
-   feeding the result in chunks of 100 entries or something to the other
-   end.
-
- - now, the server sees this stream of SHA1's that the client wants, and 
-   it can very cheaply just test "do I have this SHA1". Now, if the client 
-   hasn't made any changes at all, then the first one will be a hit, and 
-   we already have sufficient knowledge to tell what the difference 
-   between the client and the server is.
-
-   But more importantly, even if the client _has_ made changes, the client 
-   likely has more available CPU than the server has, _and_ the client 
-   likely has a shorter list of changes than the server has, so it's
-   really the client that should do this. We should burden the server as 
-   lightly as possible for this to scale.
-
- - At some point the server sees the first SHA1 it recognizes, and at that 
-   point the server will have to start working. It will just send back an 
-   "ok, got it" message (telling the client to not bother continuing to 
-   send it any more commit ID's), and then does
-
-	git-rev-list --objects ref-client-wants ^first-common-sha1 |
-		git-pack-objects --stdout
-
- - the client just unpacks the objects, and if successful, it puts the new 
-   top ref it got into FETCH_HEAD. It's now done.
-
-And I do _not_ think that it makes a lot of sense to try to be symmetric.  
-For one thing, while a "git-send-pack" should update all the refs
-in-place, a "git-pull-pack" should _not_ update the ref, it should just
-set FETCH_HEAD instead and the puller can decide what he wants to do with
-that ref (possibly merge it, but possibly just make it be a new local
-branch "remote-branch").
-
-So I think sending and receiving are fundamentally non-symmetric.
+So repository sizes aren't exactly trivial. I don't know how expensive
+that rsync hash thing is, but one thing you lose is the ability to
+hardlink objects, so if you have a few kernel repositories at some point
+it doesn't fit in the cache any more, and then the rsync will have to read
+that much pack object stuff from disk in addition to doing the hash. Ugh.
 
 		Linus
