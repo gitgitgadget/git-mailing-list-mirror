@@ -1,107 +1,80 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: "git-send-pack"
-Date: Thu, 30 Jun 2005 10:54:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301025510.14331@ppc970.osdl.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] cvsimport-in-Perl: Limit the number of arguments to git-update-cache
+Date: Thu, 30 Jun 2005 20:02:24 +0200
+Message-ID: <20050630180224.GW10850@kiste.smurf.noris.de>
+References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <pan.2005.06.30.10.34.00.807346@smurf.noris.de> <Pine.LNX.4.63.0506301249550.1667@localhost.localdomain> <Pine.LNX.4.63.0506301314280.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 19:47:04 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TnOK8GJR8G8YucN8"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 30 19:56:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do36b-0004Ls-Io
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 19:45:41 +0200
+	id 1Do3Gu-0005tF-C2
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 19:56:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261212AbVF3Rw7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 13:52:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261216AbVF3Rw7
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 13:52:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38533 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261212AbVF3Rwz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 13:52:55 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5UHqhjA010449
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 10:52:44 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5UHqgfp022014;
-	Thu, 30 Jun 2005 10:52:43 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261216AbVF3SDc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 14:03:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262825AbVF3SDc
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 14:03:32 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:31666 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S261216AbVF3SDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 14:03:11 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1Do3Mr-0003VE-1v; Thu, 30 Jun 2005 20:02:41 +0200
+Received: (nullmailer pid 11674 invoked by uid 501);
+	Thu, 30 Jun 2005 18:02:24 -0000
+To: Nicolas Pitre <nico@cam.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0506301314280.1667@localhost.localdomain>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Ok,
- I'm happy to say that the first cut of my new packed-object-sending thing 
-seems to work. I have successfully sent updates both locally and over ssh, 
-and it seems to work fine, although it has some limitations.
+--TnOK8GJR8G8YucN8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The syntax is very simple indeed:
+Hi,
 
-	git-send-pack destination
+Nicolas Pitre:
+> That example should be:
+>=20
+> 	write( "| xargs git-update-cache --add --", @new)
+>=20
+> of course.
+>=20
+Actually, 'local $\ =3D "\0";' and 'xargs -0', which is roughly the point
+where doing it all in Perl starts being more readable. ;-)
 
-will go to the destination (which can be either a local directory or a
-remote ssh one, with the remote destination format currently being _only_
-the "machine:path" format), and it will go through all the refs in the 
-remote destination, compare them with the local ones, and create a pack 
-that updates from one to the other.
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The only secure computer is one that's unplugged, locked in a safe,
+and buried 20 feet under the ground in a secret location... and I'm
+not even too sure about that one.
+		-- Dennis Huges, FBI.
 
-If the pack/unpack sequence is successful, it then updates the refs at the 
-other end, and is done.
+--TnOK8GJR8G8YucN8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-My quick tests were very successful, in the sense that it even performed
-really well. But I only tested some small updates.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Anyway, what are the limitations? Here's a few obvious ones:
+iD8DBQFCxDOw8+hUANcKr/kRAt14AJ4sRX34u8xy7JsYZ8nsWHs1g6cZ2QCdFzG0
+LuNiHSV7DALSutbIKzA9pwQ=
+=WJy8
+-----END PGP SIGNATURE-----
 
- - the code actually contains support for limiting the refs to be updated
-   on the remote end, but I don't actually pass the arguments to the 
-   remote git-receive-pack binary yet, so this is currently not 
-   functional. Call me lazy.
-
- - the thing currently refuses to create new refs. Again, this is mainly 
-   just me being lazy: it should be easy to add support for creating a new 
-   branch, it just requires some care to make sure that we take the old 
-   branches into account when generating the pack-file so that we don't 
-   send too many objects over. 
-
- - I really hate how "ssh" apparently cannot be told to have alternate 
-   paths. For example, on master.kernel.org, I don't control the setup, so 
-   I can't install my own git binaries anywhere except in my ~/bin
-   directory, but I also cannot get ssh to accept that that is a valid 
-   path. This one really bums me out, and I think it's an ssh deficiency. 
-
-   You apparently have to compile in the paths at compile-time into sshd, 
-   and PermitUserEnvironment is disabled by default (not that it even 
-   seems to work for the PATH environment, but that may have been my 
-   testing that didn't re-start sshd).
-
-   That just sucks.
-
- - It doesn't update the working directory at the other end. This is fine 
-   for what it's intended for (pushing to a central "raw" git archives), 
-   so this could be considered a feature, but it's worth pointing out. 
-   Only a "pull" will update your working directory, and this pack sending 
-   really is meant to be used in a kind of "push to central archive" way.
-
- - this is also (at least once we've tested it a lot more and added the
-   code to allow it to create new refs on the remote side) meant to be a
-   good way to mirror things out, since clearly rsync isn't scaling. 
-
-   However, I don't know what the rules for acceptable mirroring 
-   approaches are, and it's entirely possible (nay, probable) that an ssh
-   connection from the "master" ain't it. It would be good to know what 
-   (of any) would be acceptable solutions..
-
-Anyway, please do give it a test. I think I'll use this to sync up to
-kernel.org, except I _really_ would want to solve that ssh issue some 
-other way than hardcoding the /home/torvalds/bin/ path in my local 
-copies.. If somebody knows a good solution, pls holler.
-
-		Linus
+--TnOK8GJR8G8YucN8--
