@@ -1,73 +1,76 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 13:12:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+Date: Thu, 30 Jun 2005 13:23:14 -0700
+Message-ID: <42C454B2.6090307@zytor.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 22:07:45 2005
+X-From: git-owner@vger.kernel.org Thu Jun 30 22:18:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do5JX-0008BU-82
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:07:11 +0200
+	id 1Do5UP-0001bC-IP
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 22:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263122AbVF3UNo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 16:13:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263101AbVF3UNf
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:13:35 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:61867 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263133AbVF3UKW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 16:10:22 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j5UKA4jA021128
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 13:10:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j5UKA3uL029428;
-	Thu, 30 Jun 2005 13:10:03 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263101AbVF3UZX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 16:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263118AbVF3UYf
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 16:24:35 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:1964 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S263107AbVF3UYF
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 16:24:05 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j5UKNJcM018340
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Jun 2005 13:23:21 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Thu, 30 Jun 2005, Daniel Barkalow wrote:
+Linus Torvalds wrote:
 > 
-> The right solution probably involves getting each pack file you push to
-> the mirrors as well as to the master. They'll probably update no less
-> frequently than you push, and they should go through a series of states
-> which matches the master, so it's not necessary to have anything smart on
-> master sending them, and they only have to unpack the files they get (and
-> update the refs afterward).
+> It won't _really_ solve the problem, since the pushed pack objects will
+> grow at a proportional rate to the current objects - it's just a constant
+> factor (admittedly a potentially fairly _big_ constant factor)  
+> improvement both in size and in number of files.
+> 
 
-Hmm, yes. That would work, together with just fetching the heads.
+If I've understood this correctly, it's not a constant factor 
+improvement in the number of files (in the size, yes); it's changing it 
+from O(t*c) to O(t) where t is number of trees and c is number of 
+changesets.  That's key.
 
-It won't _really_ solve the problem, since the pushed pack objects will
-grow at a proportional rate to the current objects - it's just a constant
-factor (admittedly a potentially fairly _big_ constant factor)  
-improvement both in size and in number of files.
+The problem we're having (on kernel.org) right now is that there isn't a 
+hierarchial time stamp in Unix, so we have to compare on a file-by-file 
+level.  rsync is quite good at discovering an invariant beginning of a 
+file, but when it comes to a mass of files it has to compare the stamps 
+on each and every one, each time.  It will only descend into a single 
+file, however, if that file has had its timestamp changed.
 
-So the mirroring ends up getting slowly slower and slower as the number of 
-pack files go up. In contrast, a git-aware thing can be basically 
-constant-time, and mirroring expense ends up being relative to the size of 
-the change rather than the size of the repository.
+For the purposes of rsync, storing the objects in a single append-only 
+file would be a very efficient method, since the rsync algorithm will 
+quickly discover an invariant head and only transmit the tail.  It's not 
+ideal, and having something git-aware would be better, but I think it's 
+really would be nice to have something which also plays well with rsync. 
+  There is a *lot* of infrastructure in rsync which is actually hard to 
+replicate with another tool (including the server architecture); in many 
+ways it would be easier to convince the rsync developers to create a 
+plugin architecture and re-use all that code rather than developing an 
+equivalent tool from scratch.
 
-But mirroring just pack-files might solve the problem for the forseeable 
-future, so..
-
-"git-receive-pack" would need to take a flag to tell it to instead of
-unpacking just check the object instead (ie call "git-unpack-object" with
-the "-n" flag - it will check that everything looks ok, including the
-embedded protecting SHA1 hash), and write it out to the filesystem (as it
-comes in) and then rename it to the right place.
-
-			Linus
+	-hpa
