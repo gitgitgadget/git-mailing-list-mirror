@@ -1,51 +1,204 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/1] Add a topological sort procedure to commit.c
-Date: Thu, 30 Jun 2005 00:13:38 -0700
-Message-ID: <7vwtoc48rh.fsf@assigned-by-dhcp.cox.net>
-References: <20050630055821.1329.qmail@blackcubes.dyndns.org>
-	<7v1x6k5oau.fsf@assigned-by-dhcp.cox.net>
-	<2cfc403205063000009d149f5@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 30 09:07:20 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] Add a topological sort procedure to commit.c [rev 2]
+Date: Thu, 30 Jun 2005 17:21:28 +1000
+Message-ID: <20050630072128.25225.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 30 09:14:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dnt8L-0004H3-ME
-	for gcvg-git@gmane.org; Thu, 30 Jun 2005 09:06:49 +0200
+	id 1DntFj-0005BH-Fp
+	for gcvg-git@gmane.org; Thu, 30 Jun 2005 09:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262884AbVF3HOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 03:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262885AbVF3HOJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 03:14:09 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:19924 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262884AbVF3HOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 03:14:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050630071339.HXFD22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 30 Jun 2005 03:13:39 -0400
-To: jon@blackcubes.dyndns.org
-In-Reply-To: <2cfc403205063000009d149f5@mail.gmail.com> (Jon Seymour's message of "Thu, 30 Jun 2005 17:00:40 +1000")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262301AbVF3HVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 03:21:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262390AbVF3HVp
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 03:21:45 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:35713 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262301AbVF3HVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 03:21:32 -0400
+Received: (qmail 25235 invoked by uid 500); 30 Jun 2005 07:21:28 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "JS" == Jon Seymour <jon.seymour@gmail.com> writes:
 
->> By the way, you seem to be using "git format-patch".  Do you
->> want to help me pushing it upstream ;-)?
+This patch introduces an in-place topological sort procedure to commit.c
 
-JS> Yep, but can you fix the PATCH 1/1 thing first :-)
+Given a list of commits, sort_in_topological_order() will perform an in-place
+topological sort of that list.
 
-Fix how?  Only special case 1/1?
+The invariant that applies to the resulting list is:
 
-That is easy to do, so I would do it, but on the other hand I
-always end up editing the line anyway (my [PATCH 2/3] is often
-originally [PATCH 4/7] because I have more than one series since
-forked from upstream, and I would need to move it to Subject:
-line), so it would not help very much, at least in my case.
+	a reachable from b => ord(b) < ord(a)
+
+This invariant is weaker than the --merge-order invariant, but is cheaper
+to calculate (assuming the list has been identified) and will serve any
+purpose where only a minimal topological order guarantee is required.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+Note: this patch currently has no observable consequences since nothing
+in this patch calls it. A future patch will use this algorithm to provide
+an O(n) bisection algorithm as a suggested replacement for the
+existing O(n^2) bisection algorithm.
+
+[rev2] 
+   * incorporates Junio's questions/comments as commentary, 
+   * adds object.util save/restore functionality so that no
+     assumption is made about the pre-existing state of object.util 
+     upon entry to the procedure.
+---
+
+ commit.c |  117 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit.h |    5 +++
+ 2 files changed, 122 insertions(+), 0 deletions(-)
+
+2e031457909e59ac00c3520206256b75a6e08062
+diff --git a/commit.c b/commit.c
+--- a/commit.c
++++ b/commit.c
+@@ -3,6 +3,27 @@
+ #include "commit.h"
+ #include "cache.h"
+ 
++struct sort_node
++{
++	/*
++         * the number of children of the associated commit
++         * that also occur in the list being sorted.
++         */
++	unsigned int indegree;
++
++	/*
++         * reference to original list item that we will re-use
++         * on output.
++         */
++	struct commit_list * list_item;
++
++	/*
++         * copy of original object.util pointer that is saved
++         * during the topological sort.
++         */
++	void * save_util;
++};
++
+ const char *commit_type = "commit";
+ 
+ enum cmit_fmt get_commit_format(const char *arg)
+@@ -346,3 +367,99 @@ int count_parents(struct commit * commit
+         return count;
+ }
+ 
++/*
++ * Performs an in-place topological sort on the list supplied
++ * 
++ * Invariant of resulting list is:
++ *        a reachable from b => ord(b) < ord(a)
++ */
++void sort_in_topological_order(struct commit_list ** list)
++{
++	struct commit_list * next = *list;
++	struct commit_list * work = NULL;
++	struct commit_list ** pptr = list;
++	struct sort_node * nodes;
++	struct sort_node * next_nodes;
++	int count = 0;
++
++	/* determine the size of the list */
++	while (next) {
++		next = next->next;
++		count++;
++	}
++	/* allocate an array to help sort the list */
++	nodes = xcalloc(count, sizeof(*nodes));
++	/* link the list to the array */
++	next_nodes = nodes;
++	next=*list;
++	while (next) {
++		next_nodes->list_item = next;
++		next_nodes->save_util = next->item->object.util;
++		next->item->object.util = next_nodes;
++		next_nodes++;
++		next = next->next;
++	}
++	/* update the indegree */
++	next=*list;
++	while (next) {
++		struct commit_list * parents = next->item->parents;
++		while (parents) {
++			struct commit * parent=parents->item;
++			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			
++			if (pn)
++				pn->indegree++;
++			parents=parents->next;
++		}
++		next=next->next;
++	}
++	/* 
++         * find the tips
++         *
++         * tips are nodes not reachable from any other node in the list 
++         * 
++         * the tips serve as a starting set for the work queue.
++         */
++	next=*list;
++	while (next) {
++		struct sort_node * node = (struct sort_node *)next->item->object.util;
++
++		if (node->indegree == 0) {
++			commit_list_insert(next->item, &work);
++		}
++		next=next->next;
++	}
++	/* process the list in topological order */
++	while (work) {
++		struct commit * work_item = pop_commit(&work);
++		struct sort_node * work_node = (struct sort_node *)work_item->object.util;
++		struct commit_list * parents = work_item->parents;
++
++		while (parents) {
++			struct commit * parent=parents->item;
++			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			
++			if (pn) {
++				/* 
++				 * parents are only enqueed for emission 
++                                 * when all their children have been emitted thereby
++                                 * guaranteeing topological order.
++                                 */
++				pn->indegree--;
++				if (!pn->indegree) 
++					commit_list_insert(parent, &work);
++			}
++			parents=parents->next;
++		}
++		/*
++                 * work_item is a commit all of whose children
++                 * have already been emitted. we can emit it now
++                 * and restore its util pointer.
++                 */
++		*pptr = work_node->list_item;
++		pptr = &(*pptr)->next;
++		*pptr = NULL;
++		work_item->object.util = work_node->save_util;
++	}
++	free(nodes);
++}
+diff --git a/commit.h b/commit.h
+--- a/commit.h
++++ b/commit.h
+@@ -55,4 +55,9 @@ struct commit *pop_most_recent_commit(st
+ struct commit *pop_commit(struct commit_list **stack);
+ 
+ int count_parents(struct commit * commit);
++
++/*
++ * Performs an in-place topological sort of list supplied.
++ */
++void sort_in_topological_order(struct commit_list ** list);
+ #endif /* COMMIT_H */
+------------
