@@ -1,48 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] pack-objects: emit base before delta.
-Date: Fri, 01 Jul 2005 08:40:12 -0700
-Message-ID: <7v1x6iilgj.fsf@assigned-by-dhcp.cox.net>
-References: <7vbr5nxe38.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507010821140.14331@ppc970.osdl.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] Trivial sed fix up in t/t6001
+Date: Sat, 2 Jul 2005 01:51:06 +1000
+Message-ID: <2cfc40320507010851259a7e85@mail.gmail.com>
+References: <20050701135516.87892.qmail@web41208.mail.yahoo.com>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 17:34:03 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 01 17:44:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoNVg-0003eZ-SD
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 17:32:57 +0200
+	id 1DoNg4-0005Ey-5t
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 17:43:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263372AbVGAPkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jul 2005 11:40:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263373AbVGAPkR
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 11:40:17 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:27520 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S263372AbVGAPkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2005 11:40:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050701154013.YPAX8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 1 Jul 2005 11:40:13 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507010821140.14331@ppc970.osdl.org> (Linus Torvalds's message of "Fri, 1 Jul 2005 08:28:07 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263375AbVGAPvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 11:51:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263376AbVGAPvM
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 11:51:12 -0400
+Received: from rproxy.gmail.com ([64.233.170.201]:57348 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S263375AbVGAPvJ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Jul 2005 11:51:09 -0400
+Received: by rproxy.gmail.com with SMTP id i8so269229rne
+        for <git@vger.kernel.org>; Fri, 01 Jul 2005 08:51:06 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=J/5rt7xNaLfhdotOEnShL9HhVn1/DlsySzjDIOBBTPHKxQk/Xg6aPNgHssQuDrtS4yWbjH4IZp2+6ExyLr8nNmSv4rzmQro8sQe8fT+oXPZnO+PR1QBH/8/VMqMg4S+Eqenchq7TexT0uDOGaDtaf+CLNAz2UGnadmPJjVJPCgo=
+Received: by 10.38.104.15 with SMTP id b15mr1025187rnc;
+        Fri, 01 Jul 2005 08:51:06 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Fri, 1 Jul 2005 08:51:06 -0700 (PDT)
+To: Mark Allen <mrallen1@yahoo.com>
+In-Reply-To: <20050701135516.87892.qmail@web41208.mail.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+On 7/1/05, Mark Allen <mrallen1@yahoo.com> wrote:
+> Change the sed seperator in t/t6001.
+> 
+> This trivial patch removes the semicolon as the sed seperator in the t/t6001 test script
+> and replaces it with white space.  This makes BSD sed(1) much happier.
+> 
+> Signed-off-by: Mark Allen <mrallen1@yahoo.com>
+> 
+> ===
+> 
+> Jon,
+> 
+> If you could ack this patch or incorporate it into your tree, I'd be very obliged.
+> 
+> Thanks,
+> 
+> --Mark
 
-LT> So I like this from an unpacking standpoint, but at the same
-LT> time I don't actually think it's correct from an access
-LT> pattern standpoint.
+Ack'd. I have also re-applied it to the code I moved into
+t/t6000-lib.sh in my recent patch series, so it is fit to go in one
+way or another!
 
-My faulty logic, when I did the patch, was "we would jump around
-on random access anyway, so forcing the runtime to go backwards
-even when we know that these 40 objects are followed in this
-exact order to resolve delta is also OK."  It is not.
-
-Please drop the patch.
+jon.
