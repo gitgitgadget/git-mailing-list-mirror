@@ -1,89 +1,64 @@
 From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] cvsimport: rewritten in Perl
-Date: Fri, 1 Jul 2005 09:25:19 +0200
-Message-ID: <20050701072519.GF10850@kiste.smurf.noris.de>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630193825.GA17345@pc117b.liacs.nl> <20050630210023.GY10850@kiste.smurf.noris.de> <20050701070108.GA25803@pc117b.liacs.nl>
+Subject: Re: cvsimport: rewritten in Perl
+Date: Fri, 01 Jul 2005 11:43:34 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.01.09.43.24.106822@smurf.noris.de>
+References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630161423.GC26808@pc117b.liacs.nl> <20050630163000.GT10850@kiste.smurf.noris.de> <Pine.LNX.4.63.0506301321350.1667@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bpj97y6y1cZVuO8Q"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 09:18:57 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Jul 01 11:37:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoFnM-0000E1-Cd
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 09:18:40 +0200
+	id 1DoHxM-0001cO-4R
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 11:37:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263252AbVGAH0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jul 2005 03:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263256AbVGAH0J
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 03:26:09 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:16877 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S263252AbVGAH0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2005 03:26:02 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DoFto-0001qS-Cl; Fri, 01 Jul 2005 09:25:37 +0200
-Received: (nullmailer pid 19292 invoked by uid 501);
-	Fri, 01 Jul 2005 07:25:19 -0000
-To: Sven Verdoolaege <skimo@liacs.nl>
-Content-Disposition: inline
-In-Reply-To: <20050701070108.GA25803@pc117b.liacs.nl>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S263295AbVGAJol (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 05:44:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263297AbVGAJol
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 05:44:41 -0400
+Received: from main.gmane.org ([80.91.229.2]:55267 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S263295AbVGAJoj (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2005 05:44:39 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DoHwx-0001a5-62
+	for git@vger.kernel.org; Fri, 01 Jul 2005 11:36:43 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jul 2005 11:36:43 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Jul 2005 11:36:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, Nicolas Pitre wrote:
 
---bpj97y6y1cZVuO8Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Thu, 30 Jun 2005, Matthias Urlichs wrote:
+> 
+>> Duh. Will post an incremental patch shortly.
+> 
+> Until Linus merges it I'd suggest that you post the updated full patch 
+> instead.
 
-Hi,
+Personally, I'd prefer merging.
 
-Sven Verdoolaege:
-> On Thu, Jun 30, 2005 at 11:00:23PM +0200, Matthias Urlichs wrote:
-> > Sven Verdoolaege:
-> > > It would also be nice if the user could pass extra options
-> > > to cvsps (notably '-z').
-> > >=20
-> > Ditto.  ;-)
->=20
-> Actually, do you really have to call cvsps from within your
-> script ?  Why don't you just keep the small shell script
-> that links cvsps to cvs2git (your version) ?
+Linus/everybody_else  :-) : Please pull from
 
-I dislike temporary files, a shell pipe can't catch errors in earlier
-stages without major hackery, Linus didn't have a problem with ripping
-it out, and in an earlier life this script was called cvs2bk and called
-bk directly, so I kept that.
+rsync://netz.smurf.noris.de/git.git#cvs2git
 
-Enough reasons? ;-)  Sure, none of them really prevent me from doing it,
-but OTOH I see no reason to resurrect the shell script either.
-
---=20
+-- 
 Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
 Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
  - -
-Christianity has nothing to offer a happy man
-living in a natural, intelligible universe.
-		-- George H. Smith, "Atheism: The Case Against God"
-
---bpj97y6y1cZVuO8Q
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFCxO/f8+hUANcKr/kRAk4jAJ9oHbZb8XC6xcPi1veJ2snSQ4XwBQCgkW/G
-OwoLYlkj08gBr53246mhVyU=
-=lubW
------END PGP SIGNATURE-----
-
---bpj97y6y1cZVuO8Q--
+We were hungry when we got to Moscow, Soviet.
+					-- Groucho Marx
