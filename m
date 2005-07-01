@@ -1,50 +1,76 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: verify_pack.c vs verify-pack.c
-Date: Fri, 1 Jul 2005 12:01:26 +1000
-Message-ID: <2cfc4032050630190144e86cff@mail.gmail.com>
-References: <Pine.LNX.4.63.0506301336460.1667@localhost.localdomain>
-	 <7vy88r1tcp.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0506301631480.1667@localhost.localdomain>
-Reply-To: jon@blackcubes.dyndns.org
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: "git-send-pack"
+Date: Fri, 1 Jul 2005 01:01:04 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0507010033080.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0506301655310.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 03:55:14 2005
+X-From: git-owner@vger.kernel.org Fri Jul 01 06:57:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoAjQ-0005B7-JG
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 03:54:16 +0200
+	id 1DoDZz-0002RF-GD
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 06:56:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263170AbVGACBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 22:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263171AbVGACBh
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 22:01:37 -0400
-Received: from rproxy.gmail.com ([64.233.170.198]:1565 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S263170AbVGACB3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jun 2005 22:01:29 -0400
-Received: by rproxy.gmail.com with SMTP id i8so196679rne
-        for <git@vger.kernel.org>; Thu, 30 Jun 2005 19:01:27 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ous1WdGKpZ26A7QhEK5SvDaOfoFFOyFgUX8mEtKa7MBXsnIqJXG9fyk5pYw0kwarCIbAFd2TD4euY4IZFWHqoq+XGvGSRWKcuCyFUkNu+wM3JzAXRGGoouf0dlq8Vj6E77hGV8aedlElUXWbjkMMQ3HfOj8Z2U0n8jw/sf3w1g0=
-Received: by 10.38.209.48 with SMTP id h48mr924107rng;
-        Thu, 30 Jun 2005 19:01:26 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Thu, 30 Jun 2005 19:01:26 -0700 (PDT)
-To: Nicolas Pitre <nico@cam.org>
-In-Reply-To: <Pine.LNX.4.63.0506301631480.1667@localhost.localdomain>
-Content-Disposition: inline
+	id S263219AbVGAFDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 01:03:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263220AbVGAFDh
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 01:03:37 -0400
+Received: from iabervon.org ([66.92.72.58]:37380 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S263219AbVGAFDJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2005 01:03:09 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DoDeD-0002VZ-00; Fri, 1 Jul 2005 01:01:05 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0506301655310.14331@ppc970.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I think this is odd too..
+On Thu, 30 Jun 2005, Linus Torvalds wrote:
 
-Why not rename the one containing the main as:
+> On Thu, 30 Jun 2005, Daniel Barkalow wrote:
+> > 
+> > My expectation is that the puller will have a ref "remote-branch", and
+> > will therefore: (1) want to update it, and (2) know the last commit pulled
+> > from it. In this situation, we can skip figuring out the start (the two
+> > points I didn't quote), because we saved it from before.
+> 
+> This is _never_ how I do things, so I think that's a bad expectation. I 
+> have other peoples trees "just show up", since they are actually based on 
+> mine..
 
-verify-pack-main.c
+Okay, so my next task will be to support this case.
 
-jon.
+What I'm doing now is:
+
+ - if the source is using an old version, fall back on individual objects
+
+ - send one (or more) ids to exclude
+
+ - find out if the server recognized any of the ids
+
+ - if not, fall back on transferring individual objects (or we could try
+   another batch)
+
+ - request a pack for the given hash, excluding whatever we've said to
+   exclude
+
+I've implemented this for the case of updating a head, and got it to
+transfer a pack of 11 objects. It took 31s (including connecting) to
+transfer the entire history of git (3973 objects) over a DSL-DSL link with
+a 39ms ping time. I sent the same thing with the old method previously,
+and it took ages (wasn't timing it, though).
+
+It should be possible to notice that we're not updating a ref, send all
+the refs you have instead, see if the source recognized any, try again
+with the next 70 commits, check, and repeat. Does this match what you were
+suggesting?
+
+I can send you the messy version tomorrow if you want to hack on it or
+test it, and I'll have a clean patch series over the weekend.
+
+	-Daniel
+*This .sig left intentionally blank*
