@@ -1,69 +1,175 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "git-send-pack"
-Date: Thu, 30 Jun 2005 17:02:57 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0506301656570.14331@ppc970.osdl.org>
-References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org>
- <Pine.LNX.4.58.0506301412470.14331@ppc970.osdl.org> <42C46A3C.1070104@zytor.com>
- <Pine.LNX.4.58.0506301514240.14331@ppc970.osdl.org> <42C482ED.1010306@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Avoid unnecessarily inflating and interpreting delta
+Date: Thu, 30 Jun 2005 17:13:07 -0700
+Message-ID: <7vwtobz8mk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 01:53:52 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 01 02:06:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Do8qf-0004lq-1O
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 01:53:37 +0200
+	id 1Do92h-0005vB-LV
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 02:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263094AbVGAABE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 30 Jun 2005 20:01:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263127AbVGAABE
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 20:01:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:28641 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263094AbVGAAA6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jun 2005 20:00:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6100qjA007254
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 30 Jun 2005 17:00:52 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6100pHk009902;
-	Thu, 30 Jun 2005 17:00:51 -0700
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42C482ED.1010306@zytor.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263128AbVGAANa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 30 Jun 2005 20:13:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263129AbVGAANa
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jun 2005 20:13:30 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:6126 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S263128AbVGAANO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jun 2005 20:13:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050701001308.QZOJ18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 30 Jun 2005 20:13:08 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This teaches packed_delta_info() that it only needs to look at
+the type of the base object to figure out both type and size of
+a deltified object.  This saves quite a many calls to inflate()
+when dealing with a deep delta chain.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-On Thu, 30 Jun 2005, H. Peter Anvin wrote:
-> 
-> In your linux-2.6 tree, there are currently 54,204 objects, and that is 
-> after less than one full 2.6.x kernel release cycle.  That's a megabyte 
-> of SHA1s.
+ cat-file.c  |    3 ++
+ sha1_file.c |   77 +++++++++++++++++++++++++++++++----------------------------
+ 2 files changed, 43 insertions(+), 37 deletions(-)
 
-But that's _all_ objects. There are "only" 4040 commit objects (which are
-always the starting point for a search). 
-
-So streaming out the commit objects a few hundred at a time is actually 
-a very simple strategy. 
-
-Also, note that the server is usually _more_ ahead than the client is, and 
-the server is the one that potentially has lots of commits that the 
-client doesn't have. Not the other way around. So if the client makes a 
-list of it's top commits, it almost certainly won't have to make a very 
-long list until the server can tell it "ok, stop, I've seen it".
-
-Yeah, maybe we want to limit the "burst" to 70 sha1's, since that will fit 
-in a regular-sized ethernet packet, but whatever - you'd burst out your 
-commits "latest first", so you'd never even get to the current 4040 unless 
-you've literally done the kind of work we've done in the git tree for the 
-last 3 months _and_you've_not_pulled_from_that_server_in_the_whole_time_.
-
-		Linus
+f0792cd64bd42cde6706dc2c039e7b6901547169
+diff --git a/cat-file.c b/cat-file.c
+--- a/cat-file.c
++++ b/cat-file.c
+@@ -16,7 +16,8 @@ int main(int argc, char **argv)
+ 		usage("git-cat-file [-t | -s | tagname] <sha1>");
+ 
+ 	if (!strcmp("-t", argv[1]) || !strcmp("-s", argv[1])) {
+-		if (!sha1_object_info(sha1, type, &size)) {
++		if (!sha1_object_info(sha1, type,
++				      argv[1][1] == 's' ? &size : NULL)) {
+ 			switch (argv[1][1]) {
+ 			case 't':
+ 				printf("%s\n", type);
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -624,41 +624,49 @@ static int packed_delta_info(unsigned ch
+ 			     char *type,
+ 			     unsigned long *sizep)
+ {
+-	const unsigned char *data;
+-	unsigned char delta_head[64];
+-	unsigned long result_size, base_size, verify_base_size;
+-	z_stream stream;
+-	int st;
+-
+ 	if (left < 20)
+ 		die("truncated pack file");
+-	if (sha1_object_info(base_sha1, type, &base_size))
+-		die("cannot get info for delta-pack base");
+ 
+-	memset(&stream, 0, sizeof(stream));
++	/* We choose to only get the type of the base object and
++	 * ignore potentially corrupt pack file that expects the delta
++	 * based on a base with a wrong size.  This saves tons of
++	 * inflate() calls.
++	 */
+ 
+-	data = stream.next_in = base_sha1 + 20;
+-	stream.avail_in = left - 20;
+-	stream.next_out = delta_head;
+-	stream.avail_out = sizeof(delta_head);
++	if (sha1_object_info(base_sha1, type, NULL))
++		die("cannot get info for delta-pack base");
+ 
+-	inflateInit(&stream);
+-	st = inflate(&stream, Z_FINISH);
+-	inflateEnd(&stream);
+-	if ((st != Z_STREAM_END) && stream.total_out != sizeof(delta_head))
+-		die("delta data unpack-initial failed");
++	if (sizep) {
++		const unsigned char *data;
++		unsigned char delta_head[64];
++		unsigned long result_size;
++		z_stream stream;
++		int st;
++
++		memset(&stream, 0, sizeof(stream));
++
++		data = stream.next_in = base_sha1 + 20;
++		stream.avail_in = left - 20;
++		stream.next_out = delta_head;
++		stream.avail_out = sizeof(delta_head);
++
++		inflateInit(&stream);
++		st = inflate(&stream, Z_FINISH);
++		inflateEnd(&stream);
++		if ((st != Z_STREAM_END) &&
++		    stream.total_out != sizeof(delta_head))
++			die("delta data unpack-initial failed");
+ 
+-	/* Examine the initial part of the delta to figure out
+-	 * the result size.  Verify the base size while we are at it.
+-	 */
+-	data = delta_head;
+-	verify_base_size = get_delta_hdr_size(&data);
+-	if (verify_base_size != base_size)
+-		die("delta base size mismatch");
++		/* Examine the initial part of the delta to figure out
++		 * the result size.
++		 */
++		data = delta_head;
++		get_delta_hdr_size(&data); /* ignore base size */
+ 
+-	/* Read the result size */
+-	result_size = get_delta_hdr_size(&data);
+-	*sizep = result_size;
++		/* Read the result size */
++		result_size = get_delta_hdr_size(&data);
++		*sizep = result_size;
++	}
+ 	return 0;
+ }
+ 
+@@ -726,7 +734,8 @@ static int packed_object_info(struct pac
+ 	default:
+ 		die("corrupted pack file");
+ 	}
+-	*sizep = size;
++	if (sizep)
++		*sizep = size;
+ 	unuse_packed_git(p);
+ 	return 0;
+ }
+@@ -915,12 +924,7 @@ int sha1_object_info(const unsigned char
+ 
+ 		if (!find_pack_entry(sha1, &e))
+ 			return error("unable to find %s", sha1_to_hex(sha1));
+-		if (!packed_object_info(&e, type, sizep))
+-			return 0;
+-		/* sheesh */
+-		map = unpack_entry(&e, type, sizep);
+-		free(map);
+-		return (map == NULL) ? 0 : -1;
++		return packed_object_info(&e, type, sizep);
+ 	}
+ 	if (unpack_sha1_header(&stream, map, mapsize, hdr, sizeof(hdr)) < 0)
+ 		status = error("unable to unpack %s header",
+@@ -929,7 +933,8 @@ int sha1_object_info(const unsigned char
+ 		status = error("unable to parse %s header", sha1_to_hex(sha1));
+ 	else {
+ 		status = 0;
+-		*sizep = size;
++		if (sizep)
++			*sizep = size;
+ 	}
+ 	inflateEnd(&stream);
+ 	munmap(map, mapsize);
+------------
