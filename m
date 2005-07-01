@@ -1,69 +1,48 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] pack-objects: emit base before delta.
-Date: Fri, 1 Jul 2005 08:28:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507010821140.14331@ppc970.osdl.org>
+Date: Fri, 01 Jul 2005 08:40:12 -0700
+Message-ID: <7v1x6iilgj.fsf@assigned-by-dhcp.cox.net>
 References: <7vbr5nxe38.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507010821140.14331@ppc970.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 17:19:08 2005
+X-From: git-owner@vger.kernel.org Fri Jul 01 17:34:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoNIB-0001aH-RY
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 17:19:00 +0200
+	id 1DoNVg-0003eZ-SD
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 17:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263367AbVGAP0c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jul 2005 11:26:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263368AbVGAP0c
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 11:26:32 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:6575 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263367AbVGAP02 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2005 11:26:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j61FQ5jA008878
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 1 Jul 2005 08:26:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j61FQ2uu011902;
-	Fri, 1 Jul 2005 08:26:04 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr5nxe38.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263372AbVGAPkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 11:40:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263373AbVGAPkR
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 11:40:17 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:27520 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S263372AbVGAPkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2005 11:40:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050701154013.YPAX8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 1 Jul 2005 11:40:13 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507010821140.14331@ppc970.osdl.org> (Linus Torvalds's message of "Fri, 1 Jul 2005 08:28:07 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+LT> So I like this from an unpacking standpoint, but at the same
+LT> time I don't actually think it's correct from an access
+LT> pattern standpoint.
 
-On Thu, 30 Jun 2005, Junio C Hamano wrote:
->
-> This micro-optimizes the order of objects in a pack.  By
-> emitting base objects before deltified ones, unpack-objects do
-> not keep items on delta_list.
+My faulty logic, when I did the patch, was "we would jump around
+on random access anyway, so forcing the runtime to go backwards
+even when we know that these 40 objects are followed in this
+exact order to resolve delta is also OK."  It is not.
 
-So I like this from an unpacking standpoint, but at the same time I don't 
-actually think it's correct from an access pattern standpoint.
-
-When using a pack file as a run-time object store, the current packing 
-order means that we generally traverse the pack-file in a nice forward 
-direction. We don't jump backwards in the file very much, which should be 
-good both for CPU and disk caches (both of them tend to have prefetch 
-logic that often works better for nice access patterns). So I was actually 
-pretty happy with the fact that we packed "optimally" in this sense: if 
-the object was an important delta (ie an early one), we'd basically end up 
-always walking forward until we hit the object it was a delta against.
-
-I dunno. Maybe it doesn't matter. Our other heuristics to pack recent 
-objects before later one might mean that we tend to have mainly 
-backwards-going deltas (both in history _and_ in pack file layout).
-
-The expense of keeping track of delta objects isn't that high, and the 
-"pending delta" logic in unpack-objects isn't that complicated, so ..
-
-Do you have some other reason you want to do this?
-
-		Linus
+Please drop the patch.
