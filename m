@@ -1,76 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: "git-send-pack"
-Date: Fri, 1 Jul 2005 01:01:04 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507010033080.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0506301655310.14331@ppc970.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] pack-objects: emit base before delta.
+Date: Thu, 30 Jun 2005 22:58:03 -0700
+Message-ID: <7vbr5nxe38.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 01 06:57:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 01 07:50:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoDZz-0002RF-GD
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 06:56:44 +0200
+	id 1DoEQF-0007GH-LI
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 07:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263219AbVGAFDh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jul 2005 01:03:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263220AbVGAFDh
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 01:03:37 -0400
-Received: from iabervon.org ([66.92.72.58]:37380 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S263219AbVGAFDJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Jul 2005 01:03:09 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DoDeD-0002VZ-00; Fri, 1 Jul 2005 01:01:05 -0400
+	id S263226AbVGAF6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 01:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263227AbVGAF6K
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 01:58:10 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:20700 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S263226AbVGAF6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2005 01:58:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050701055803.RSQH8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 1 Jul 2005 01:58:03 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0506301655310.14331@ppc970.osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 30 Jun 2005, Linus Torvalds wrote:
+This micro-optimizes the order of objects in a pack.  By
+emitting base objects before deltified ones, unpack-objects do
+not keep items on delta_list.
 
-> On Thu, 30 Jun 2005, Daniel Barkalow wrote:
-> > 
-> > My expectation is that the puller will have a ref "remote-branch", and
-> > will therefore: (1) want to update it, and (2) know the last commit pulled
-> > from it. In this situation, we can skip figuring out the start (the two
-> > points I didn't quote), because we saved it from before.
-> 
-> This is _never_ how I do things, so I think that's a bad expectation. I 
-> have other peoples trees "just show up", since they are actually based on 
-> mine..
+I think it is prudent to keep the add_delta_to_list() logic in
+unpack-objects, so this commit only changes the packing side.
 
-Okay, so my next task will be to support this case.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-What I'm doing now is:
+ pack-objects.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
- - if the source is using an old version, fall back on individual objects
-
- - send one (or more) ids to exclude
-
- - find out if the server recognized any of the ids
-
- - if not, fall back on transferring individual objects (or we could try
-   another batch)
-
- - request a pack for the given hash, excluding whatever we've said to
-   exclude
-
-I've implemented this for the case of updating a head, and got it to
-transfer a pack of 11 objects. It took 31s (including connecting) to
-transfer the entire history of git (3973 objects) over a DSL-DSL link with
-a 39ms ping time. I sent the same thing with the old method previously,
-and it took ages (wasn't timing it, though).
-
-It should be possible to notice that we're not updating a ref, send all
-the refs you have instead, see if the source recognized any, try again
-with the next 70 commits, check, and repeat. Does this match what you were
-suggesting?
-
-I can send you the messy version tomorrow if you want to hack on it or
-test it, and I'll have a clean patch series over the weekend.
-
-	-Daniel
-*This .sig left intentionally blank*
+9be15981d7038f1d9d0b105f45760987584e60a6
+diff --git a/pack-objects.c b/pack-objects.c
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -114,11 +114,13 @@ static unsigned long write_one(struct sh
+ 		 * if it is written already.
+ 		 */
+ 		return offset;
+-	e->offset = offset;
+-	offset += write_object(f, e);
+-	/* if we are delitified, write out its base object. */
++
++	/* if we are delitified, write out its base objects first */
+ 	if (e->delta)
+ 		offset = write_one(f, e->delta, offset);
++
++	e->offset = offset;
++	offset += write_object(f, e);
+ 	return offset;
+ }
+ 
+------------
