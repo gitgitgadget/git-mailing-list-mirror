@@ -1,124 +1,276 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] Removes DEBUG code from rev-list.c and -DDEBUG from Makefile
-Date: Fri, 01 Jul 2005 16:31:16 +1000
-Message-ID: <20050701063116.1119.qmail@blackcubes.dyndns.org>
+Subject: [PATCH] Factor out useful test case infrastructure from t/t6001... into t/t6000-lib.sh
+Date: Fri, 01 Jul 2005 16:31:15 +1000
+Message-ID: <20050701063115.1039.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jul 01 08:24:26 2005
+X-From: git-owner@vger.kernel.org Fri Jul 01 08:24:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoEwd-0002Oq-Th
-	for gcvg-git@gmane.org; Fri, 01 Jul 2005 08:24:12 +0200
+	id 1DoExH-0002SQ-Jd
+	for gcvg-git@gmane.org; Fri, 01 Jul 2005 08:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263237AbVGAGbl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 1 Jul 2005 02:31:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263240AbVGAGbl
-	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 02:31:41 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:44419 "HELO
+	id S263223AbVGAGcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 1 Jul 2005 02:32:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263239AbVGAGcT
+	(ORCPT <rfc822;git-outgoing>); Fri, 1 Jul 2005 02:32:19 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:36227 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S263237AbVGAGbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Jul 2005 02:31:18 -0400
-Received: (qmail 1129 invoked by uid 500); 1 Jul 2005 06:31:16 -0000
+	id S263223AbVGAGbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Jul 2005 02:31:19 -0400
+Received: (qmail 1049 invoked by uid 500); 1 Jul 2005 06:31:15 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This patch removes DEBUG code and -DDEBUG flag from Makefile.
+Functions that are useful to other t6xxx testcases are moved into t6000-lib.sh
+
+To use these functions in a test case, use a test-case pre-amble like:
+
+. ./test-lib.sh
+. ../t6000-lib.sh # t6xxx specific functions
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- Makefile   |    2 +-
- rev-list.c |   30 ------------------------------
- 2 files changed, 1 insertions(+), 31 deletions(-)
+ t/t6000-lib.sh                  |  105 +++++++++++++++++++++++++++++++++++++
+ t/t6001-rev-list-merge-order.sh |  112 ---------------------------------------
+ 2 files changed, 106 insertions(+), 111 deletions(-)
+ create mode 100644 t/t6000-lib.sh
 
-be52c026e003b9774acc3d0f53ae5ed67d878b03
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -10,7 +10,7 @@
- # break unless your underlying filesystem supports those sub-second times
- # (my ext3 doesn't).
- COPTS=-O2
--CFLAGS=-DDEBUG -g $(COPTS) -Wall
-+CFLAGS=-g $(COPTS) -Wall
+127ff5409fda605196f4a237b1c075f3b5b2a0b6
+diff --git a/t/t6000-lib.sh b/t/t6000-lib.sh
+new file mode 100644
+--- /dev/null
++++ b/t/t6000-lib.sh
+@@ -0,0 +1,105 @@
++[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
++
++sed_script="";
++
++# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
++tag()
++{
++	_tag=$1
++	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
++	cat .git/refs/tags/$_tag
++}
++
++# Generate a commit using the text specified to make it unique and the tree
++# named by the tag specified.
++unique_commit()
++{
++	_text=$1
++        _tree=$2
++	shift 2
++    	echo $_text | git-commit-tree $(tag $_tree) "$@"
++}
++
++# Save the output of a command into the tag specified. Prepend
++# a substitution script for the tag onto the front of $sed_script
++save_tag()
++{
++	_tag=$1	
++	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
++	shift 1
++    	"$@" >.git/refs/tags/$_tag
++    	sed_script="s/$(tag $_tag)/$_tag/g${sed_script+;}$sed_script"
++}
++
++# Replace unhelpful sha1 hashses with their symbolic equivalents 
++entag()
++{
++	sed "$sed_script"
++}
++
++# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
++# tag to a specified value. Restore the original value on return.
++as_author()
++{
++	_author=$1
++	shift 1
++        _save=$GIT_AUTHOR_EMAIL
++
++	export GIT_AUTHOR_EMAIL="$_author"
++	"$@"
++        export GIT_AUTHOR_EMAIL="$_save"
++}
++
++commit_date()
++{
++        _commit=$1
++	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
++}
++
++on_committer_date()
++{
++    _date=$1
++    shift 1
++    GIT_COMMITTER_DATE=$_date "$@"
++}
++
++# Execute a command and suppress any error output.
++hide_error()
++{
++	"$@" 2>/dev/null
++}
++
++check_output()
++{
++	_name=$1
++	shift 1
++	if eval "$*" | entag > $_name.actual
++	then
++		diff $_name.expected $_name.actual
++	else
++		return 1;
++	fi
++}
++
++# Turn a reasonable test description into a reasonable test name.
++# All alphanums translated into -'s which are then compressed and stripped
++# from front and back.
++name_from_description()
++{
++        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
++}
++
++
++# Execute the test described by the first argument, by eval'ing
++# command line specified in the 2nd argument. Check the status code
++# is zero and that the output matches the stream read from 
++# stdin.
++test_output_expect_success()
++{	
++	_description=$1
++        _test=$2
++        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
++        _name=$(echo $_description | name_from_description)
++	cat > $_name.expected
++	test_expect_success "$_description" "check_output $_name \"$_test\"" 
++}
+diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
+--- a/t/t6001-rev-list-merge-order.sh
++++ b/t/t6001-rev-list-merge-order.sh
+@@ -6,117 +6,7 @@
+ test_description='Tests git-rev-list --merge-order functionality'
  
- prefix=$(HOME)
- bin=$(prefix)/bin
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -44,10 +44,6 @@ static int merge_order = 0;
- static int show_breaks = 0;
- static int stop_traversal = 0;
- static int bisect_by_cut_option = 0;
--#ifdef DEBUG
--static int debug = 0;
--static unsigned int complexity = 0;
--#endif
- 
- static void show_commit(struct commit *commit)
- {
-@@ -283,9 +279,6 @@ static int count_distance(struct commit_
- 
- static void clear_distance(struct commit_list *list)
- {
--#ifdef DEBUG
--	complexity++;
--#endif
- 	while (list) {
- 		struct commit *commit = list->item;
- 		commit->object.flags &= ~COUNTED;
-@@ -422,14 +415,6 @@ static inline struct bisect_by_cut_node 
- 	return (struct bisect_by_cut_node *)commit->object.util;
- }
- 
--#ifdef DEBUG
--static void print_bisect_by_cut_node(struct commit * commit, const char * prefix)
--{
--	struct bisect_by_cut_node * node = get_bisect_by_cut_node(commit);
--	fprintf(stderr, "%s%s %u %d\n", prefix, sha1_to_hex(commit->object.sha1), node->flags, node->count);
--}
--#endif
+ . ./test-lib.sh
 -
- /*
-  * Find the best bisection point by cutting a topological order in two then
-  * identifying a set of boundary nodes with a reachability known to be 
-@@ -558,11 +543,6 @@ struct commit * bisect_by_cut(struct com
- 			best = work_item;
- 			fittest = fitness;
- 		}
--#ifdef DEBUG
--		if (debug) {
--			print_bisect_by_cut_node(work_item, "work ");
--		}
--#endif
- 		if (goal_test < goal) {
- 			while (children) {
- 				struct bisect_by_cut_node * cn 
-@@ -666,12 +646,6 @@ int main(int argc, char **argv)
- 			show_breaks = 1;
- 			continue;
- 		}
--#ifdef DEBUG
--		if (!strcmp(arg, "--debug")) {
--			debug = 1;
--			continue;
--		}
--#endif
- 		flags = 0;
- 		if (*arg == '^') {
- 			flags = UNINTERESTING;
-@@ -700,9 +674,5 @@ int main(int argc, char **argv)
- 			  die("merge order sort failed\n");
- 		}
- 	}
--#ifdef DEBUG
--	if (debug) 
--		fprintf(stderr, "complexity=%d\n", complexity);
--#endif
- 	return 0;
- }
+-#
+-# TODO: move the following block (upto --- end ...) into testlib.sh
+-#
+-[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
+-
+-sed_script="";
+-
+-# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
+-tag()
+-{
+-	_tag=$1
+-	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
+-	cat .git/refs/tags/$_tag
+-}
+-
+-# Generate a commit using the text specified to make it unique and the tree
+-# named by the tag specified.
+-unique_commit()
+-{
+-	_text=$1
+-        _tree=$2
+-	shift 2
+-    	echo $_text | git-commit-tree $(tag $_tree) "$@"
+-}
+-
+-# Save the output of a command into the tag specified. Prepend
+-# a substitution script for the tag onto the front of $sed_script
+-save_tag()
+-{
+-	_tag=$1	
+-	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
+-	shift 1
+-    	"$@" >.git/refs/tags/$_tag
+-    	sed_script="s/$(tag $_tag)/$_tag/g${sed_script+;}$sed_script"
+-}
+-
+-# Replace unhelpful sha1 hashses with their symbolic equivalents 
+-entag()
+-{
+-	sed "$sed_script"
+-}
+-
+-# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
+-# tag to a specified value. Restore the original value on return.
+-as_author()
+-{
+-	_author=$1
+-	shift 1
+-        _save=$GIT_AUTHOR_EMAIL
+-
+-	export GIT_AUTHOR_EMAIL="$_author"
+-	"$@"
+-        export GIT_AUTHOR_EMAIL="$_save"
+-}
+-
+-commit_date()
+-{
+-        _commit=$1
+-	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
+-}
+-
+-on_committer_date()
+-{
+-    _date=$1
+-    shift 1
+-    GIT_COMMITTER_DATE=$_date "$@"
+-}
+-
+-# Execute a command and suppress any error output.
+-hide_error()
+-{
+-	"$@" 2>/dev/null
+-}
+-
+-check_output()
+-{
+-	_name=$1
+-	shift 1
+-	if eval "$*" | entag > $_name.actual
+-	then
+-		diff $_name.expected $_name.actual
+-	else
+-		return 1;
+-	fi
+-}
+-
+-# Turn a reasonable test description into a reasonable test name.
+-# All alphanums translated into -'s which are then compressed and stripped
+-# from front and back.
+-name_from_description()
+-{
+-        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
+-}
+-
+-
+-# Execute the test described by the first argument, by eval'ing
+-# command line specified in the 2nd argument. Check the status code
+-# is zero and that the output matches the stream read from 
+-# stdin.
+-test_output_expect_success()
+-{	
+-	_description=$1
+-        _test=$2
+-        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
+-        _name=$(echo $_description | name_from_description)
+-	cat > $_name.expected
+-	test_expect_success "$_description" "check_output $_name \"$_test\"" 
+-}
+-
+-# --- end of stuff to move ---
++. ../t6000-lib.sh # t6xxx specific functions
+ 
+ # test-case specific test function
+ check_adjacency()
 ------------
