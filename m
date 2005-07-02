@@ -1,63 +1,77 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: "git-send-pack"
-Date: Sat, 02 Jul 2005 10:48:29 -0700
-Message-ID: <42C6D36D.4060006@zytor.com>
-References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org>	 <Pine.LNX.4.58.0506301514240.14331@ppc970.osdl.org>	 <42C482ED.1010306@zytor.com>	 <Pine.LNX.4.58.0506301656570.14331@ppc970.osdl.org>	 <42C5D553.80905@timesys.com>	 <Pine.LNX.4.58.0507011831060.2977@ppc970.osdl.org>	 <42C61351.10306@zytor.com>	 <Pine.LNX.4.58.0507012119360.3019@ppc970.osdl.org>	 <42C61818.30109@zytor.com>	 <Pine.LNX.4.58.0507021009580.3019@ppc970.osdl.org> <12c511ca05070210441c0d3a33@mail.gmail.com>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Tags
+Date: Sat, 02 Jul 2005 11:54:39 -0600
+Message-ID: <m1k6k9drfk.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+	<Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
+	<42C454B2.6090307@zytor.com>
+	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
+	<42C462CD.9010909@zytor.com>
+	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
+	<42C46B86.8070006@zytor.com>
+	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>
+	<42C5714A.1020203@zytor.com>
+	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>
+	<42C5C75F.4040100@zytor.com>
+	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>
+	<42C5DA77.4030107@zytor.com>
+	<m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>
+	<42C6D318.8050108@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>,
-	Mike Taht <mike.taht@timesys.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 02 19:49:50 2005
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 02 19:56:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dom7b-0003C1-Ak
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 19:49:43 +0200
+	id 1DomDh-0003dB-U0
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 19:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261246AbVGBRt0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 13:49:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261248AbVGBRt0
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 13:49:26 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:18911 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S261246AbVGBRtM
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 13:49:12 -0400
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j62HmTPQ018895
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 2 Jul 2005 10:48:30 -0700
-User-Agent: Mozilla Thunderbird 1.0.2-1.3.3 (X11/20050513)
-X-Accept-Language: en-us, en
-To: Tony Luck <tony.luck@gmail.com>
-In-Reply-To: <12c511ca05070210441c0d3a33@mail.gmail.com>
-X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
-	RCVD_IN_SORBS_DUL autolearn=no version=3.0.3
-X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
+	id S261240AbVGBRzw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 13:55:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261244AbVGBRzw
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 13:55:52 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:18614 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S261240AbVGBRzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2005 13:55:45 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j62HseaD016162;
+	Sat, 2 Jul 2005 11:54:40 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j62HsdYT016161;
+	Sat, 2 Jul 2005 11:54:39 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42C6D318.8050108@zytor.com> (H. Peter Anvin's message of "Sat,
+ 02 Jul 2005 10:47:04 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Tony Luck wrote:
-> 
-> At least part of the problem for kernel.org is that there around 50 repositories
-> that are tracking the 2.6 kernel.  All of them have 50,000 objects that are
-> duplicates of each other ... and a few hundred 'unique' objects that belong
-> to just one repo, or are minimally shared.
-> 
-> If there was a way to specify an alternate repo, then a large GIT server like
-> kernel.org could set up a "git-history"[1] repo which each of the hosted repos
-> could point to.  Then a cron job could look for duplicates, and move them
-> off to the history area.
-> 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-This is why I've been talking about a global object repository -- 
-including the problems associated with them.  git as it currently stands 
-permit a single global object store, *except* for the issue of duplicate 
-tags.
+> Eric W. Biederman wrote:
+>> However all you have to do for your single system git repository is
+>> to filter tags at creation time.  So for a person to upload something
+>> you need a git aware tool and you need authentication so you are certain
+>> it is the right person creating the tag.
+>
+> That's complicated; it pretty much works out to having to have a PKI and a
+> system of registered IDs, or some such.  That's painful.
 
-	-hpa
+?? Isn't that what ssh is?
+
+To some extent a lot depends on how active you expect people to
+try and forge things.  If there is an expectation of honesty
+you are fine.  
+
+If you want to build one mondo repository with thousands of developers
+having write access you need to be more careful.  But as far as I know
+none of that is specific to tags.
+
+Eric
