@@ -1,96 +1,96 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 1/2] Add --topo-order flag to git-rev-list
-Date: Sat, 02 Jul 2005 16:09:36 +1000
-Message-ID: <20050702060936.13011.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jul 02 08:02:17 2005
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Tags
+Date: Sat, 02 Jul 2005 01:00:29 -0600
+Message-ID: <m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+	<Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
+	<42C454B2.6090307@zytor.com>
+	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
+	<42C462CD.9010909@zytor.com>
+	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
+	<42C46B86.8070006@zytor.com>
+	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>
+	<42C5714A.1020203@zytor.com>
+	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>
+	<42C5C75F.4040100@zytor.com>
+	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>
+	<42C5DA77.4030107@zytor.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 02 08:54:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dob4t-0001dQ-0Y
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 08:02:11 +0200
+	id 1DobtE-0004kO-CI
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 08:54:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261802AbVGBGJn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 02:09:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261828AbVGBGJn
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 02:09:43 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:39554 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261802AbVGBGJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2005 02:09:39 -0400
-Received: (qmail 13021 invoked by uid 500); 2 Jul 2005 06:09:36 -0000
-To: git@vger.kernel.org
+	id S261810AbVGBHBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 03:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261827AbVGBHBr
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 03:01:47 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:51118 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S261810AbVGBHBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2005 03:01:44 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6270XOa003828;
+	Sat, 2 Jul 2005 01:00:33 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6270THl003827;
+	Sat, 2 Jul 2005 01:00:29 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42C5DA77.4030107@zytor.com> (H. Peter Anvin's message of "Fri,
+ 01 Jul 2005 17:06:15 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-Added a --topo-order flag to git-rev-list.
+> Eric W. Biederman wrote:
+>> If I really care what developer xyz tagged I will pull from them,
+>> or a mirror I trust.  And since developer xyz doesn't pull his
+>> own global tags from other repositories that should be sufficient.
+>>
+>
+> You're missing something totally and utterly fundamental here: I'm talking about
+> creating an infrastructure (think sourceforge) where there is only one git
+> repository for the whole system, period, full stop, end of story.
 
-When this flag is specified, git-rev-list sorts its output
-in topological order. That is:
+Could be I'm certainly not up to speed on git yet.
 
-	a is reachable from b ==> ord(b) < ord(a)
+However all you have to do for your single system git repository is
+to filter tags at creation time.  So for a person to upload something
+you need a git aware tool and you need authentication so you are certain
+it is the right person creating the tag.  
 
-This ordering invariant is weaker than the --merge-order invariant
-but should be sufficient for tools just as gitk that only
-need the minimum guarantee provided by --topo-order.
+Since it is a shared repository you probably want rules like you can
+only create tags that belong to yourself or are owned by people 
+who do not have accounts on the system.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
-Note: this patch assumes that my previous patch series that introduces
-sort_in_topological_order() to commit.c has been applied.
+Likewise in a system like sourceforge it is desirable to check all
+of the committer information in commits as well, so you have a reasonable
+audit trail, and it make sense to check little things like the file under
+a sha1 key actually matches the sha1 key.
 
-A subsequent patch to gitk will make gitk use --topo-order instead
-of --merge-order.
----
+Downstream mirrors can happily rsync just fine.  So long as they
+verify the upstream source.
 
- rev-list.c |   16 ++++++++++++----
- 1 files changed, 12 insertions(+), 4 deletions(-)
+Tags that you mirror are of course suspect but they will always be.
+The primary tags created by people with accounts should be reliable
+though.
 
-804e6b585e205ba119a9a43058d69c2ef914dc80
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -32,6 +32,7 @@ static int max_count = -1;
- static enum cmit_fmt commit_format = CMIT_FMT_RAW;
- static int merge_order = 0;
- static int show_breaks = 0;
-+static int topo_order=0;
- static int stop_traversal = 0;
- static int bisect_by_cut_option = 0;
- 
-@@ -373,11 +374,15 @@ int main(int argc, char **argv)
- 			blob_objects = 1;
- 			continue;
- 		}
--		if (!strncmp(arg, "--merge-order", 13)) {
-+		if (!strcmp(arg, "--merge-order")) {
- 		        merge_order = 1;
- 			continue;
- 		}
--		if (!strncmp(arg, "--show-breaks", 13)) {
-+		if (!strcmp(arg, "--topo-order")) {
-+		        topo_order = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--show-breaks")) {
- 			show_breaks = 1;
- 			continue;
- 		}
-@@ -398,9 +403,12 @@ int main(int argc, char **argv)
- 	if (!merge_order) {		
- 	        if (limited)
- 			list = limit_list(list);
--		if (!bisect_by_cut_option) 
-+		if (!bisect_by_cut_option) {
-+			if (topo_order) {
-+				sort_in_topological_order(&list);
-+			}
- 			show_commit_list(list);
--		else {
-+		} else {
- 			sort_in_topological_order(&list);
- 			show_commit(bisect_by_cut(list));
- 		}
-------------
+So in essence I see nothing with my proposal that is any worse than
+any other part of git.
+
+That being said, it sounds like there is a slightly more git 
+knowledgeable/native version suggested having to do with multiple
+heads.
+
+Eric
