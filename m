@@ -1,55 +1,109 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: "git-send-pack"
-Date: Sat, 02 Jul 2005 14:12:03 -0400
-Message-ID: <42C6D8F3.7050204@gmail.com>
-References: <Pine.LNX.4.21.0506301651250.30848-100000@iabervon.org>	 <Pine.LNX.4.58.0506301514240.14331@ppc970.osdl.org>	 <42C482ED.1010306@zytor.com>	 <Pine.LNX.4.58.0506301656570.14331@ppc970.osdl.org>	 <42C5D553.80905@timesys.com>	 <Pine.LNX.4.58.0507011831060.2977@ppc970.osdl.org>	 <42C61351.10306@zytor.com>	 <Pine.LNX.4.58.0507012119360.3019@ppc970.osdl.org>	 <42C61818.30109@zytor.com>	 <Pine.LNX.4.58.0507021009580.3019@ppc970.osdl.org> <12c511ca05070210441c0d3a33@mail.gmail.com> <42C6D36D.4060006@zytor.com>
-Reply-To: gitzilla@gmail.com
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Tags
+Date: Sat, 02 Jul 2005 12:31:31 -0600
+Message-ID: <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+	<Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
+	<42C454B2.6090307@zytor.com>
+	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
+	<42C462CD.9010909@zytor.com>
+	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
+	<42C46B86.8070006@zytor.com>
+	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>
+	<42C5714A.1020203@zytor.com>
+	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>
+	<42C5C75F.4040100@zytor.com>
+	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>
+	<42C5DA77.4030107@zytor.com>
+	<m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>
+	<42C6D318.8050108@zytor.com>
+	<m1k6k9drfk.fsf@ebiederm.dsl.xmission.com>
+	<42C6D5AD.9070304@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 02 20:12:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 02 20:32:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DomTW-0004ta-3w
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 20:12:22 +0200
+	id 1Domn6-0006I0-DD
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 20:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261247AbVGBSMK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 14:12:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261250AbVGBSMK
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 14:12:10 -0400
-Received: from wproxy.gmail.com ([64.233.184.204]:60601 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261247AbVGBSMH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 14:12:07 -0400
-Received: by wproxy.gmail.com with SMTP id i31so499499wra
-        for <git@vger.kernel.org>; Sat, 02 Jul 2005 11:12:05 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=gYdQY7eCQEk5nhMvlOv1XtLIZOa4nD7Lp+G9vAmdcUrkEpfcHO1Enw3FFpl9VBRj6s0aIJYqvw0RqGaF8tQEZfm3fy/A67vcbf/2hNt4eOIGoLu5lgeJsy5qQC8oxpjkbMMR8rItqFgGd+yTA1ld+uqlxXh6H4vNmY06wU16nHU=
-Received: by 10.54.16.30 with SMTP id 30mr2562627wrp;
-        Sat, 02 Jul 2005 11:12:05 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id d8sm2739881wra.2005.07.02.11.12.04;
-        Sat, 02 Jul 2005 11:12:05 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-In-Reply-To: <42C6D36D.4060006@zytor.com>
+	id S261250AbVGBSc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 14:32:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261251AbVGBSc3
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 14:32:29 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:50614 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S261250AbVGBScV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2005 14:32:21 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j62IVW49016412;
+	Sat, 2 Jul 2005 12:31:32 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j62IVV5e016411;
+	Sat, 2 Jul 2005 12:31:31 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <42C6D5AD.9070304@zytor.com> (H. Peter Anvin's message of "Sat,
+ 02 Jul 2005 10:58:05 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-H. Peter Anvin wrote:
-> Tony Luck wrote:
->>
-...
-> 
-> This is why I've been talking about a global object repository -- 
-> including the problems associated with them.  git as it currently stands 
-> permit a single global object store, *except* for the issue of duplicate 
-> tags.
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-So why not store just the git objects in the global repository and keep
-all the things that reference an object (HEAD, branches/*, refs/*/*,
-etc.) in a per project and/or contributor area like it is currently?
+> Eric W. Biederman wrote:
+>> ?? Isn't that what ssh is?
+>> To some extent a lot depends on how active you expect people to
+>> try and forge things.  If there is an expectation of honesty
+>> you are fine.
+>
+> I can't afford to have that.
+
+So you are now your requirements are more stringent then sourceforge?
+Sourcefore limited things by reducing the scope of commits per
+project.  But once you had commit access to a project you could do
+just about anything.
+
+>> If you want to build one mondo repository with thousands of developers
+>> having write access you need to be more careful.  But as far as I know
+>> none of that is specific to tags.
+>
+> Well, you're wrong.  Tags is the only part of git which cannot be protected by
+> git's own self-validation system.
+
+Which is why I suggested having tags in sync with the committer
+information, that way you are as valid as the commit record
+in git.  Although I suspect the multiple head solution is
+probably better, and simply limiting the people who can commit
+to an individual head will achieve what is necessary.  One user
+per head?
+
+One thing arch has shown is that you can sucessfully move
+authentication/permission checking to the underlying environment
+if you structure things carefully.
+
+I guess the problem is really we want to structure things so that
+a user who has downloaded the code can verify they have the
+release/tag is what they are looking for.  You can detect
+a spoofed file in objects by simply verifying the sha1 of the file.
+
+For a file that you can't internally verify that way the traditional
+way to handle that is to create a file with a gpg signature.  So
+is there anything wrong with adding .git/refs/tags/tag-name.sign
+that is a traditional signature file?   That will at least give
+you an end to end consistency check.  (Hmm.  Why didn't I suggest
+this before?)
+
+If you don't want to mirror and propagate data you need to do
+consistency checks earlier in the process, and I have probably had
+some poor suggestions on how to implement those.  But if everything
+is setup so we can verify things once we have the code downloaded,
+where you perform the checks is simply a matter of optimization.
+
+Eric
