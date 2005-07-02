@@ -1,96 +1,49 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: Tags
-Date: Sat, 02 Jul 2005 01:00:29 -0600
-Message-ID: <m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
-	<Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>
-	<42C454B2.6090307@zytor.com>
-	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
-	<42C462CD.9010909@zytor.com>
-	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
-	<42C46B86.8070006@zytor.com>
-	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>
-	<42C5714A.1020203@zytor.com>
-	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>
-	<42C5C75F.4040100@zytor.com>
-	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>
-	<42C5DA77.4030107@zytor.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [WITHDRAWN PATCH 1/2] Add --topo-order flag to git-rev-list
+Date: Sat, 2 Jul 2005 17:56:01 +1000
+Message-ID: <2cfc4032050702005656b389e@mail.gmail.com>
+References: <20050702060936.13011.qmail@blackcubes.dyndns.org>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 02 08:54:12 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: torvalds@osdl.org, jon.seymour@gmail.com,
+	Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Jul 02 09:48:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DobtE-0004kO-CI
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 08:54:12 +0200
+	id 1Docjl-0008C2-U5
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 09:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261810AbVGBHBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 03:01:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261827AbVGBHBr
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 03:01:47 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:51118 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261810AbVGBHBo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2005 03:01:44 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6270XOa003828;
-	Sat, 2 Jul 2005 01:00:33 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6270THl003827;
-	Sat, 2 Jul 2005 01:00:29 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <42C5DA77.4030107@zytor.com> (H. Peter Anvin's message of "Fri,
- 01 Jul 2005 17:06:15 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261474AbVGBH4D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 03:56:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261513AbVGBH4D
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 03:56:03 -0400
+Received: from rproxy.gmail.com ([64.233.170.199]:51092 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261474AbVGBH4B convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 03:56:01 -0400
+Received: by rproxy.gmail.com with SMTP id i8so352379rne
+        for <git@vger.kernel.org>; Sat, 02 Jul 2005 00:56:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=O1ABrCrhpr/Wd2RGoodwkNcfbX38NWL+GqOT3VQjFdFeDz9Im2p5D06AaPgswdg7gDEHnlZHAFj6AqsSUDbpC6Pm+/SxWa3siNsbHAlhM+Ab+33P4L9cXTWJFqdLchL/+gqj2NnpMJV7WGUX7jT2G24NSL0GIL0je0e6mDGrLFc=
+Received: by 10.38.65.5 with SMTP id n5mr1411274rna;
+        Sat, 02 Jul 2005 00:56:01 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Sat, 2 Jul 2005 00:56:01 -0700 (PDT)
+To: git@vger.kernel.org
+In-Reply-To: <20050702060936.13011.qmail@blackcubes.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+Actually, I need to withdraw this patch.
 
-> Eric W. Biederman wrote:
->> If I really care what developer xyz tagged I will pull from them,
->> or a mirror I trust.  And since developer xyz doesn't pull his
->> own global tags from other repositories that should be sufficient.
->>
->
-> You're missing something totally and utterly fundamental here: I'm talking about
-> creating an infrastructure (think sourceforge) where there is only one git
-> repository for the whole system, period, full stop, end of story.
+The way show_commit_list works defeats the approach I was using to
+perform a topological sort - since show_commit_list does more than
+show the list, it also performs a chronological sort on the list,
+thereby undoing the topological sort that is attempted.
 
-Could be I'm certainly not up to speed on git yet.
-
-However all you have to do for your single system git repository is
-to filter tags at creation time.  So for a person to upload something
-you need a git aware tool and you need authentication so you are certain
-it is the right person creating the tag.  
-
-Since it is a shared repository you probably want rules like you can
-only create tags that belong to yourself or are owned by people 
-who do not have accounts on the system.
-
-Likewise in a system like sourceforge it is desirable to check all
-of the committer information in commits as well, so you have a reasonable
-audit trail, and it make sense to check little things like the file under
-a sha1 key actually matches the sha1 key.
-
-Downstream mirrors can happily rsync just fine.  So long as they
-verify the upstream source.
-
-Tags that you mirror are of course suspect but they will always be.
-The primary tags created by people with accounts should be reliable
-though.
-
-So in essence I see nothing with my proposal that is any worse than
-any other part of git.
-
-That being said, it sounds like there is a slightly more git 
-knowledgeable/native version suggested having to do with multiple
-heads.
-
-Eric
+jon.
