@@ -1,59 +1,89 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Jan Harkes <jaharkes@cs.cmu.edu>
 Subject: Re: Tags
-Date: Sat, 02 Jul 2005 21:55:16 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.02.19.55.13.345854@smurf.noris.de>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com> <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com> <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com> <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com> <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com> <m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com> <42C5DA77.4030107@zytor.com> <m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com> <42C6D318.8050108@zytor.com> <m1k6k9drfk.fsf@ebiederm.dsl.xmission.com> <42C6D5AD.9070304@zytor.com> <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com>
+Date: Sat, 2 Jul 2005 16:38:06 -0400
+Message-ID: <20050702203805.GB19206@delft.aura.cs.cmu.edu>
+References: <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com> <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com> <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com> <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com> <m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com> <42C5DA77.4030107@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sat Jul 02 21:56:35 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 02 22:38:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Doo63-0004Fa-Sm
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 21:56:16 +0200
+	id 1DoolD-0007R9-76
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 22:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261268AbVGBT4G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 15:56:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261269AbVGBT4G
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 15:56:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:37566 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261268AbVGBT4C (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 15:56:02 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Doo5d-0004DM-6H
-	for git@vger.kernel.org; Sat, 02 Jul 2005 21:55:49 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Jul 2005 21:55:49 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 02 Jul 2005 21:55:49 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261277AbVGBUii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 16:38:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261278AbVGBUii
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 16:38:38 -0400
+Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:24730 "EHLO
+	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
+	id S261277AbVGBUif (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Jul 2005 16:38:35 -0400
+Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
+	id 1DookY-0005XN-00; Sat, 02 Jul 2005 16:38:06 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+Mail-Followup-To: "H. Peter Anvin" <hpa@zytor.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
+Content-Disposition: inline
+In-Reply-To: <42C5DA77.4030107@zytor.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Eric W. Biederman wrote:
+On Fri, Jul 01, 2005 at 05:06:15PM -0700, H. Peter Anvin wrote:
+> Eric W. Biederman wrote:
+> >
+> >If I really care what developer xyz tagged I will pull from them,
+> >or a mirror I trust.  And since developer xyz doesn't pull his
+> >own global tags from other repositories that should be sufficient.
+> >
+> 
+> You're missing something totally and utterly fundamental here: I'm 
+> talking about creating an infrastructure (think sourceforge) where there 
+> is only one git repository for the whole system, period, full stop, end 
+> of story.
 
-> So
-> is there anything wrong with adding .git/refs/tags/tag-name.sign
-> that is a traditional signature file?
+I'm not entirely sure what you are envisoning, but it is definitely
+doable in a secure way.
 
-The signature is already appended to the tag file itself (or can be).
-See "git-tag-script".
+- Assume that each developer will one or more private trees with one or
+  more branches on kernel.org, lets say all these private repositories
+  are stored under /scm/git/<user>/
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Democracy is that form of government where everybody gets what the majority
-deserves.
-					-- James Dale Davidson
+- Now you create a single 'global repository' which is going to be the
+  publicly visible one that will be mirrored out,
+
+- Then you run the following script (untested)
+  #!/bin/sh
+  GIT_DIR=$global_repo
+  for user in `(cd /scm/git ; ls)`; do
+    for tree in `find /scm/git/$user -name *.git` ; do
+	for ref in `find $tree/refs -type f`  ; do
+	    type=`echo $ref | sed 'sX^.*/refs/\([^/]*\)/.*$X\1X'`
+	    name=`echo $ref | sed 'sX^.*/refs/[^/]*/\(.*\)$X\1X'`
+	    git fetch /scm/git/$tree $branch 
+	    mkdir -p $GIT_DIR/refs/$type/$user/$name
+	    cat $GIT_DIR/FETCH_HEAD > $GIT_DIR/refs/$type/$user/$name
+	done
+    done
+  done
+
+- You can repack the global repository whenever you want.
+- Finally, once a user knows that all his changes are available from the
+  global repository, he can remove any objects from his tree and use
+  GIT_ALTERNATE_OBJECT_DIRECTORIES=$global_repo/objects
+  (maybe there should be a flag for git prune to removes local objects
+  that are already available in the alternate object directories)
+
+Jan
