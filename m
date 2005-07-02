@@ -1,89 +1,66 @@
-From: Jan Harkes <jaharkes@cs.cmu.edu>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: Tags
-Date: Sat, 2 Jul 2005 16:38:06 -0400
-Message-ID: <20050702203805.GB19206@delft.aura.cs.cmu.edu>
-References: <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com> <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com> <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com> <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com> <m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com> <42C5DA77.4030107@zytor.com>
+Date: Sat, 02 Jul 2005 14:16:44 -0700
+Message-ID: <42C7043C.9080904@zytor.com>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>	<Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org>	<42C454B2.6090307@zytor.com>	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>	<42C462CD.9010909@zytor.com>	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>	<42C46B86.8070006@zytor.com>	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>	<42C5714A.1020203@zytor.com>	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>	<42C5C75F.4040100@zytor.com>	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>	<42C5DA77.4030107@zytor.com>	<m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>	<42C6D318.8050108@zytor.com>	<m1k6k9drfk.fsf@ebiederm.dsl.xmission.com>	<42C6D5AD.9070304@zytor.com> <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>,
-	Linus Torvalds <torvalds@osdl.org>,
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 02 22:38:59 2005
+X-From: git-owner@vger.kernel.org Sat Jul 02 23:17:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoolD-0007R9-76
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 22:38:47 +0200
+	id 1DopMg-000282-1w
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 23:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261277AbVGBUii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 16:38:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261278AbVGBUii
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 16:38:38 -0400
-Received: from DELFT.AURA.CS.CMU.EDU ([128.2.206.88]:24730 "EHLO
-	delft.aura.cs.cmu.edu") by vger.kernel.org with ESMTP
-	id S261277AbVGBUif (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2005 16:38:35 -0400
-Received: from jaharkes by delft.aura.cs.cmu.edu with local (Exim 3.36 #1 (Debian))
-	id 1DookY-0005XN-00; Sat, 02 Jul 2005 16:38:06 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-Mail-Followup-To: "H. Peter Anvin" <hpa@zytor.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-Content-Disposition: inline
-In-Reply-To: <42C5DA77.4030107@zytor.com>
-User-Agent: Mutt/1.5.9i
+	id S261279AbVGBVRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 17:17:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261280AbVGBVRT
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 17:17:19 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:14219 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261279AbVGBVRP
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 17:17:15 -0400
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j62LGj9k023112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 2 Jul 2005 14:16:46 -0700
+User-Agent: Mozilla Thunderbird 1.0.2-1.3.3 (X11/20050513)
+X-Accept-Language: en-us, en
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+In-Reply-To: <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com>
+X-Virus-Scanned: ClamAV version 0.85.1, clamav-milter version 0.85 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.9 required=5.0 tests=AWL,BAYES_00,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.0.3
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 01, 2005 at 05:06:15PM -0700, H. Peter Anvin wrote:
-> Eric W. Biederman wrote:
-> >
-> >If I really care what developer xyz tagged I will pull from them,
-> >or a mirror I trust.  And since developer xyz doesn't pull his
-> >own global tags from other repositories that should be sufficient.
-> >
+Eric W. Biederman wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
 > 
-> You're missing something totally and utterly fundamental here: I'm 
-> talking about creating an infrastructure (think sourceforge) where there 
-> is only one git repository for the whole system, period, full stop, end 
-> of story.
+> 
+>>Eric W. Biederman wrote:
+>>
+>>>?? Isn't that what ssh is?
+>>>To some extent a lot depends on how active you expect people to
+>>>try and forge things.  If there is an expectation of honesty
+>>>you are fine.
+>>
+>>I can't afford to have that.
+> 
+> So you are now your requirements are more stringent then sourceforge?
+> Sourcefore limited things by reducing the scope of commits per
+> project.  But once you had commit access to a project you could do
+> just about anything.
+> 
 
-I'm not entirely sure what you are envisoning, but it is definitely
-doable in a secure way.
+They're not using a single global object storage.
 
-- Assume that each developer will one or more private trees with one or
-  more branches on kernel.org, lets say all these private repositories
-  are stored under /scm/git/<user>/
-
-- Now you create a single 'global repository' which is going to be the
-  publicly visible one that will be mirrored out,
-
-- Then you run the following script (untested)
-  #!/bin/sh
-  GIT_DIR=$global_repo
-  for user in `(cd /scm/git ; ls)`; do
-    for tree in `find /scm/git/$user -name *.git` ; do
-	for ref in `find $tree/refs -type f`  ; do
-	    type=`echo $ref | sed 'sX^.*/refs/\([^/]*\)/.*$X\1X'`
-	    name=`echo $ref | sed 'sX^.*/refs/[^/]*/\(.*\)$X\1X'`
-	    git fetch /scm/git/$tree $branch 
-	    mkdir -p $GIT_DIR/refs/$type/$user/$name
-	    cat $GIT_DIR/FETCH_HEAD > $GIT_DIR/refs/$type/$user/$name
-	done
-    done
-  done
-
-- You can repack the global repository whenever you want.
-- Finally, once a user knows that all his changes are available from the
-  global repository, he can remove any objects from his tree and use
-  GIT_ALTERNATE_OBJECT_DIRECTORIES=$global_repo/objects
-  (maybe there should be a flag for git prune to removes local objects
-  that are already available in the alternate object directories)
-
-Jan
+	-hpa
