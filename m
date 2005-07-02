@@ -1,126 +1,59 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [RESUBMITTED PATCH 1/2] Add --topo-order flag to git-rev-list [rev2]
-Date: Sat, 02 Jul 2005 18:39:40 +1000
-Message-ID: <20050702083940.19107.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jul 02 10:32:21 2005
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Tags
+Date: Sat, 02 Jul 2005 18:00:50 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.02.16.00.49.454455@smurf.noris.de>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com> <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com> <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com> <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com> <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Jul 02 18:02:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DodPy-0002hM-3G
-	for gcvg-git@gmane.org; Sat, 02 Jul 2005 10:32:06 +0200
+	id 1DokRB-00039F-7n
+	for gcvg-git@gmane.org; Sat, 02 Jul 2005 18:01:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261761AbVGBIjs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 04:39:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261835AbVGBIjs
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 04:39:48 -0400
-Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:28801 "HELO
-	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S261761AbVGBIjm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Jul 2005 04:39:42 -0400
-Received: (qmail 19117 invoked by uid 500); 2 Jul 2005 08:39:40 -0000
+	id S261191AbVGBQBd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 12:01:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261193AbVGBQBc
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 12:01:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:44672 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261191AbVGBQBY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 12:01:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DokQh-00036i-3E
+	for git@vger.kernel.org; Sat, 02 Jul 2005 18:01:19 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Jul 2005 18:01:19 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 02 Jul 2005 18:01:19 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, H. Peter Anvin wrote:
 
-Added a --topo-order flag to git-rev-list.
+> Doesn't work.  You can trivially generate a key with someone else's 
+> address.  It would require a full PKI.
 
-When this flag is specified, git-rev-list sorts its output
-in topological order. That is:
+So you use the GPG key's fingerprint as the directory name, and add
+a few strategically named symlinks for convenience. *Shrug*
 
-	a is reachable from b ==> ord(b) < ord(a)
+Besides, what's wrong with requiring full PKI? Everybody who has
+a kernel.org account should be in the strongly connected set...
 
-This ordering invariant is weaker than the --merge-order invariant
-but should be sufficient for tools just as gitk that only
-need the minimum guarantee provided by --topo-order.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
-Note: this patch assumes that my previous patch series that introduces
-sort_in_topological_order() to commit.c has been applied.
-
-A subsequent patch to gitk will make gitk use --topo-order instead
-of --merge-order.
-
-[rev2]
-   * this patch rescues the --topo-order patch that I withdrew
-     by recognizing that if limit_list is called, sort_commit_list
-     does not do a chronological sort
-   * ensures limit_list is called whenever a topological sort is
-     is required
-   * removed excess braces
----
-
- rev-list.c |   29 +++++++++++++++++++++--------
- 1 files changed, 21 insertions(+), 8 deletions(-)
-
-de8a7f7120581ae60b7e882b15b9099a6fce55dd
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -16,7 +16,7 @@ static const char rev_list_usage[] =
- 		      "  --min-age=epoch\n"
- 		      "  --header\n"
- 		      "  --pretty\n"
--                      "  --bisect\n"
-+		      "  --bisect\n"
- 		      "  --merge-order [ --show-breaks ]";
- 
- static int tag_objects = 0;
-@@ -32,6 +32,7 @@ static int max_count = -1;
- static enum cmit_fmt commit_format = CMIT_FMT_RAW;
- static int merge_order = 0;
- static int show_breaks = 0;
-+static int topo_order=0;
- static int stop_traversal = 0;
- static int bisect_by_cut_option = 0;
- 
-@@ -373,11 +374,15 @@ int main(int argc, char **argv)
- 			blob_objects = 1;
- 			continue;
- 		}
--		if (!strncmp(arg, "--merge-order", 13)) {
-+		if (!strcmp(arg, "--merge-order")) {
- 		        merge_order = 1;
- 			continue;
- 		}
--		if (!strncmp(arg, "--show-breaks", 13)) {
-+		if (!strcmp(arg, "--topo-order")) {
-+		        topo_order = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--show-breaks")) {
- 			show_breaks = 1;
- 			continue;
- 		}
-@@ -396,14 +401,22 @@ int main(int argc, char **argv)
- 	}
- 
- 	if (!merge_order) {		
--	        if (limited)
-+	        if (limited || topo_order || bisect_by_cut_option) {
-+			/*
-+			 * two expected side effects of calling 
-+			 * limit_list are:
-+			 *    * resulting list contains all the items to process
-+			 *    * show_commit_list won't do a chronological
-+			 *      sort
-+			*/
- 			list = limit_list(list);
--		if (!bisect_by_cut_option) 
--			show_commit_list(list);
--		else {
-+		}
-+		if (bisect_by_cut_option || topo_order)
- 			sort_in_topological_order(&list);
-+		if (bisect_by_cut_option)
- 			show_commit(bisect_by_cut(list));
--		}
-+		else
-+			show_commit_list(list);
- 	} else {
- 		if (sort_list_in_merge_order(list, &process_commit)) {
- 			  die("merge order sort failed\n");
-------------
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+What I want is all of the power and none of the responsibility.
