@@ -1,54 +1,92 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] Cogito: Use git-rev-parse instead of cg-Xnormid.
-Date: Sun, 3 Jul 2005 17:40:49 +0200
-Message-ID: <20050703154049.GD18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-References: <42C77ECE.2080903@didntduck.org> <20050703065920.GA11765@pasky.ji.cz> <42C7D925.2070007@didntduck.org> <20050703154127.GA31848@pasky.ji.cz>
-Reply-To: skimo@liacs.nl
+From: mikukkon@miku.homelinux.net (Mika Kukkonen)
+Subject: [PATCH] git: fix gcc4 warnings
+Date: Sun, 3 Jul 2005 23:32:33 +0300
+Message-ID: <20050703203233.GA19220@miku.homelinux.net>
+Reply-To: mikukkon@iki.fi
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 03 17:58:00 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 03 22:33:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dp6qV-00027q-1L
-	for gcvg-git@gmane.org; Sun, 03 Jul 2005 17:57:27 +0200
+	id 1DpB8x-00013v-Lf
+	for gcvg-git@gmane.org; Sun, 03 Jul 2005 22:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261469AbVGCP5R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jul 2005 11:57:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261470AbVGCP5R
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 11:57:17 -0400
-Received: from spoetnik.kulnet.kuleuven.ac.be ([134.58.240.46]:16576 "EHLO
-	spoetnik.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S261469AbVGCP5O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2005 11:57:14 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 78A3733ED8
-	for <git@vger.kernel.org>; Sun,  3 Jul 2005 17:57:13 +0200 (CEST)
-Received: from antonius.kulnet.kuleuven.ac.be (antonius.kulnet.kuleuven.ac.be [134.58.240.73])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 86B4533EC9
-	for <git@vger.kernel.org>; Sun,  3 Jul 2005 17:57:11 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by antonius.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 6DF4F4C0D1
-	for <git@vger.kernel.org>; Sun,  3 Jul 2005 17:57:11 +0200 (CEST)
-Received: (qmail 10857 invoked by uid 500); 3 Jul 2005 15:40:49 -0000
-To: Petr Baudis <pasky@suse.cz>
-Mail-Followup-To: Petr Baudis <pasky@suse.cz>,
-	Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
+	id S261492AbVGCUcn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jul 2005 16:32:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261526AbVGCUcn
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 16:32:43 -0400
+Received: from tarjoilu.luukku.com ([194.215.205.232]:5349 "EHLO
+	tarjoilu.luukku.com") by vger.kernel.org with ESMTP id S261492AbVGCUcj
+	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 3 Jul 2005 16:32:39 -0400
+Received: from localhost (mta1-o.i.luukku.com [10.0.1.112])
+	by mta1-o.i.luukku.com (Postfix) with ESMTP id 9388215029B;
+	Sun,  3 Jul 2005 23:32:38 +0300 (EEST)
+Received: from srv1-elite-lanp (7781.dsl.mtv3.fi [82.203.129.119])
+	by tarjoilu.luukku.com (Postfix) with ESMTP id 6FED2150013;
+	Sun,  3 Jul 2005 23:32:38 +0300 (EEST)
+Received: by srv1-elite-lanp (Postfix, from userid 1000)
+	id 27FBCC2F7; Sun,  3 Jul 2005 23:32:34 +0300 (EEST)
+To: torvalds@osdl.org
 Content-Disposition: inline
-In-Reply-To: <20050703154127.GA31848@pasky.ji.cz>
 User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jul 03, 2005 at 05:41:27PM +0200, Petr Baudis wrote:
-> That's right. Well, for everything but the short id matching we could
-> just check the ID validity by git-rev-parse instead of peeking into
-> the object store - I just did that. 
+Here is a few trivial fixes to git about things that gcc4 complains about.
 
-Why not use it to actually resolve ids ?
-I really miss the '^' parent notation in cogito.
+Signed-off-by: Mika Kukkonen <mikukkon@iki.fi>
 
-skimo
+diffstat:
+ git/send-pack.c |    2 +-
+ git/sha1_file.c |    4 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+Index: git/send-pack.c
+===================================================================
+--- git.orig/send-pack.c
++++ git/send-pack.c
+@@ -93,7 +93,7 @@ static void rev_list(int fd, struct ref 
+ 	exec_rev_list(refs);
+ }
+ 
+-static int pack_objects(int fd, struct ref *refs)
++static void pack_objects(int fd, struct ref *refs)
+ {
+ 	pid_t rev_list_pid;
+ 
+Index: git/sha1_file.c
+===================================================================
+--- git.orig/sha1_file.c
++++ git/sha1_file.c
+@@ -384,8 +384,8 @@ struct packed_git *add_packed_git(char *
+ {
+ 	struct stat st;
+ 	struct packed_git *p;
+-	unsigned long idx_size;
+-	void *idx_map;
++	unsigned long idx_size = 0;
++	void *idx_map = NULL;
+
+ 	if (check_packed_git_idx(path, &idx_size, &idx_map))
+ 		return NULL;
+@@ -857,7 +857,7 @@ static void *unpack_non_delta_entry(unsi
+ {
+ 	int st;
+ 	z_stream stream;
+-	char *buffer;
++	unsigned char *buffer;
+ 
+ 	buffer = xmalloc(size + 1);
+ 	buffer[size] = 0;
+@@ -949,7 +949,7 @@ int nth_packed_object_sha1(const struct 
+ int find_pack_entry_one(const unsigned char *sha1,
+ 			struct pack_entry *e, struct packed_git *p)
+ {
+-	int *level1_ofs = p->index_base;
++	unsigned int *level1_ofs = p->index_base;
+ 	int hi = ntohl(level1_ofs[*sha1]);
+ 	int lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
+ 	void *index = p->index_base + 256;
