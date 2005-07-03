@@ -1,99 +1,140 @@
-From: Dan Holmsand <holmsand@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Tags
-Date: Sun, 03 Jul 2005 02:04:19 +0200
-Message-ID: <42C72B83.6030904@gmail.com>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org> <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com> <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com> <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com> <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com> <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com> <m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com> <42C5DA77.4030107@zytor.com> <m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com> <42C6D318.8050108@zytor.com> <m1k6k9drfk.fsf@ebiederm.dsl.xmission.com> <42C6D5AD.9070304@zytor.com> <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com> <42C7043C.9080904@zytor.com> <Pine.LNX.4.58.0507021432370.8247@g5.osdl.org> <42C70A5B.9070606@zytor.com> <Pine.LNX.4.58.0507021501450.8247@g5.osdl.org>
+Date: Sat, 2 Jul 2005 17:17:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507021656250.8247@g5.osdl.org>
+References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
+ <Pine.LNX.4.58.0506301302410.14331@ppc970.osdl.org> <42C454B2.6090307@zytor.com>
+ <Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org> <42C462CD.9010909@zytor.com>
+ <Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org> <42C46B86.8070006@zytor.com>
+ <m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com> <42C5714A.1020203@zytor.com>
+ <m1u0jef8z9.fsf@ebiederm.dsl.xmission.com> <42C5C75F.4040100@zytor.com>
+ <m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com> <42C5DA77.4030107@zytor.com>
+ <m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com> <42C6D318.8050108@zytor.com>
+ <m1k6k9drfk.fsf@ebiederm.dsl.xmission.com> <42C6D5AD.9070304@zytor.com>
+ <m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com> <42C7043C.9080904@zytor.com>
+ <Pine.LNX.4.58.0507021432370.8247@g5.osdl.org> <42C70A5B.9070606@zytor.com>
+ <42C70EEF.6050207@gmail.com> <Pine.LNX.4.58.0507021517220.8247@g5.o
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 03 02:04:49 2005
+X-From: git-owner@vger.kernel.org Sun Jul 03 02:18:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DoryV-0005iS-6L
-	for gcvg-git@gmane.org; Sun, 03 Jul 2005 02:04:43 +0200
+	id 1DosBh-0006jM-Pq
+	for gcvg-git@gmane.org; Sun, 03 Jul 2005 02:18:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261333AbVGCAEb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 2 Jul 2005 20:04:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261334AbVGCAEb
-	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 20:04:31 -0400
-Received: from rproxy.gmail.com ([64.233.170.194]:3003 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261333AbVGCAEY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 20:04:24 -0400
-Received: by rproxy.gmail.com with SMTP id r35so434352rna
-        for <git@vger.kernel.org>; Sat, 02 Jul 2005 17:04:24 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=iOpCB78w5sCJm8mPtOHF7B2yuhX0kbNZrRxbIdk6LRhEIW2veLmq6RukI7FbBHNuOOfKboLM5vSeL8+eewwi3umC1iCMfUbsispJiJQzsYpNwEEJ4A+eJ2lEmMwJW/efLSdCFrr0Rej7SZmlkeExmLPgfqNVduRegBIHA4q3hCw=
-Received: by 10.38.151.38 with SMTP id y38mr1932467rnd;
-        Sat, 02 Jul 2005 17:04:24 -0700 (PDT)
-Received: from ?192.168.0.5? ([80.217.52.214])
-        by mx.gmail.com with ESMTP id k21sm823378rnb.2005.07.02.17.04.21;
-        Sat, 02 Jul 2005 17:04:24 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507021501450.8247@g5.osdl.org>
+	id S261335AbVGCASO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 2 Jul 2005 20:18:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261336AbVGCASO
+	(ORCPT <rfc822;git-outgoing>); Sat, 2 Jul 2005 20:18:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:658 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261335AbVGCASD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Jul 2005 20:18:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j630HmjA002811
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 2 Jul 2005 17:17:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j630Hhph015763;
+	Sat, 2 Jul 2005 17:17:45 -0700
+To: A Large Angry SCM <gitzilla@gmail.com>
+In-Reply-To: <42C727FC.3030900@gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> And a "tag ref" thing is really nothing more (and nothing less) than a
-> branch. 
 
-I'm guessing that this is the root of the confusion here. To you, and to 
-git, a tag is just a another branch. And a tag object is pretty much a 
-specialized commit object, that can't have children and only one parent.
 
-But people seem to *expect* tags to be connected somehow to a specific 
-repository. Or, rather, to a specific branch.
+On Sat, 2 Jul 2005, A Large Angry SCM wrote:
+>
+> Linus Torvalds wrote:
+> > 
+> > None of git itself normally has any "trust". The SHA1 means that the 
+> > _integrity_ of the archive is ensured, but for some things (notably 
+> > releases), you want to have something else. That's the "tag object".
+> > 
+> 
+> But can't the commit object do this just as well by signing the commit text?
 
-That's why people want e.g. cogito to get "all the tags" from 
-torvalds/linux-2.6.git when they cg-pull.
+Yes and no.
 
- From git's point of view, that doesn't really make any sense; it's like 
-saying that you should pull all the branches from a specific branch. But 
-from a practical point of view, it *does* make sense if you hold the 
-view that tags are connected to a branch, and that you should be able to 
-diff against v2.6.12 as soon as you've pulled the latest head.
+Technically yes, absolutely, you could add a signature to the commit text.
 
-So why not add tags to the branch itself?
+However, that's just wrong for several reasons:
 
-It should be pretty straightforward: just make git look for tag refs in, 
-say, a .gittags tree in the current HEAD. The whole thing would pretty 
-much as if you've symlinked .git/refs/tags to .gittags in the current 
-working tree, except that tag refs would have to be read directly from 
-the repository.
+First off, the signing is not necessarily done by the person committing
+something. Think of any paperwork: the person that signs the paperwork is 
+not necessarily the same person that _wrote_ the paperwork. A signature is 
+a "witness".
 
-That way, tag refs could be handled pretty much just like any other 
-git-managed file: they can be added, deleted, changed, merged, 
-committed, etc. We could track their history, and see who tagged what 
-and when.
+For an example of this, look at the signatures that we've had for a long 
+time on kernel.org: check out the files like "patch-2.6.8.1.sign". That's 
+a signature, but it's not a signature by _me_. It's kernel.org signing the 
+thing so that downstream people can verify things.
 
-And tags could easily be signed and contain arbitrary text, just like 
-the present day tag objects, as long as they start with a sha1 ref.
+And it would be not only wrong, but literally _impossible_ for me to do it 
+in the commit. I don't have (or want to have) the kernel.org private key. 
+That's not what the signature is about. kernel.org is signing that "this 
+is what I got, and what I passed on". It's not signing that "this is what 
+I wrote".
 
-This way, a git branch could have public, shared tags, with a minimum of 
-hassle. No special-casing needed for storage or transfer.
+In a lot of systems, you tag something good after it has passed a
+regression test. Ie the _tag_ may happen days or even weeks after the
+commit has been done.
 
-And there would be no room for conflicting tag names (but you could 
-easily use the same name in different branches, just as any file can 
-differ in content between two branches).
+So any system that signs commits directly is doing something _wrong_. 
 
-It might be useful, though, to add some syntax for "tag in a specific 
-branch", say <branch-name>@<tag-name>.
+Secondly, you can say that you trust other things. In git, you can tag 
+individual blobs, and you can tag individual trees. For an example of 
+where it makes sense to tag (sign) individual file versions, we've 
+actually had things like ISDN drivers (or firmware) that passed some telco 
+verification suite, and in certain countries it used to be that you 
+weren't legally supposed to use hadrware that hadn't passed that suite. In 
+cases like that, you could sign the particular version of the driver, and 
+say "this one is good".
 
-The present tagging mechanism should be kept. It is useful for private 
-tagging, and may be useful for signalling that "this is a branch that is 
-unlikely to change".
+(Yeah, those laws are happily going away, but I think the ISDN people in 
+germany actually ended up doing exactly that, except they obviously didn't 
+use git signatures. I think they had a list of file+md5sum).
 
-So, am I missing something obvious here?
+Finally, it's a tools issue. It's wrong to mix up the notion of committing 
+and signing in the same thing, because that just complicates a tool that 
+has to be able to do both. Now you can have a nice graphical commit tool, 
+and it doesn't need to know about public keys etc to be useful - you can 
+use another tool to do the signing.
 
-/dan
+Small is beautiful, but "independent" is even more so.
+
+> Your tendency is to use tag objects as a permanent, public label of some 
+> state. Signing the commit text or the email stating that commit 
+> ${COMMIT_SHA} would work just as well for verification purposes.
+
+Well, according to that logic, you'd never need signatures at all - you 
+can always keep them totally outside the system.
+
+But if they are totally outside the system, then you have to have some
+other mechanism to track them, and you can never trust a git archive on
+its own. My goal with the tag objects was that you can just get my git
+archive, and the archive is _inherently_ trustworthy, because if you care,
+you can verify it without any external input at all (except you need to
+know my public key, of course, but that's not a tools issue any more,
+that's about how signatures work).
+
+So by having tag objects, I can just have refs to them, and anything that 
+can fetch a ref (which implies _any_ kind of "pull" functionality) can get 
+it. No special cases. No crap.
+
+Do one thing, and do it well. Git does objects with relationships. That's 
+really what git is all about, and the "tag object" fits very well into 
+that mentality.
+
+		Linus
