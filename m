@@ -1,77 +1,48 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
-Date: Sun, 03 Jul 2005 22:14:29 +0100
-Message-ID: <1120425269.6845.28.camel@localhost.localdomain>
-References: <1119994003.9631.6.camel@localhost.localdomain>
-	 <m3ekagp9mk.fsf@telia.com> <1120385280.6845.12.camel@localhost.localdomain>
-	 <m3oe9k6p40.fsf@telia.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Cogito: Use git-rev-parse instead of cg-Xnormid.
+Date: Mon, 4 Jul 2005 00:31:18 +0200
+Message-ID: <20050703223118.GD13848@pasky.ji.cz>
+References: <42C77ECE.2080903@didntduck.org> <20050703065920.GA11765@pasky.ji.cz> <42C7D925.2070007@didntduck.org> <20050703154127.GA31848@pasky.ji.cz> <20050703154049.GD18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 03 23:15:04 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jul 04 00:31:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpBnT-00053X-7Z
-	for gcvg-git@gmane.org; Sun, 03 Jul 2005 23:14:39 +0200
+	id 1DpCzt-0003kK-EQ
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 00:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261536AbVGCVOe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jul 2005 17:14:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261538AbVGCVOe
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 17:14:34 -0400
-Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:51833 "EHLO
-	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
-	id S261536AbVGCVOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Jul 2005 17:14:31 -0400
-Received: from aamta10-winn.ispmail.ntl.com ([81.103.221.35])
-          by mta09-winn.ispmail.ntl.com with ESMTP
-          id <20050703211430.XTYK11649.mta09-winn.ispmail.ntl.com@aamta10-winn.ispmail.ntl.com>;
-          Sun, 3 Jul 2005 22:14:30 +0100
-Received: from cpc2-cmbg5-3-0-cust212.cmbg.cable.ntl.com ([81.104.193.212])
-          by aamta10-winn.ispmail.ntl.com with ESMTP
-          id <20050703211430.WPFB23101.aamta10-winn.ispmail.ntl.com@cpc2-cmbg5-3-0-cust212.cmbg.cable.ntl.com>;
-          Sun, 3 Jul 2005 22:14:30 +0100
-To: Peter Osterlund <petero2@telia.com>
-In-Reply-To: <m3oe9k6p40.fsf@telia.com>
-X-Mailer: Evolution 2.2.1.1 
+	id S261554AbVGCWbX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jul 2005 18:31:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261553AbVGCWbX
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 18:31:23 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:56221 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261554AbVGCWbU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2005 18:31:20 -0400
+Received: (qmail 28853 invoked by uid 2001); 3 Jul 2005 22:31:18 -0000
+To: Brian Gerst <bgerst@didntduck.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050703154049.GD18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-07-03 at 14:38 +0200, Peter Osterlund wrote:
-> Catalin Marinas <catalin.marinas@gmail.com> writes:
-> > I know that using -A gives a more detailed output in case of a conflict.
-> > The problem is that you will get a conflict even if the changes are
-> > identical, making it impossible to detect when a patch was merged
-> > upstream.
+Dear diary, on Sun, Jul 03, 2005 at 05:40:49PM CEST, I got a letter
+where Sven Verdoolaege <skimo@kotnet.org> told me that...
+> On Sun, Jul 03, 2005 at 05:41:27PM +0200, Petr Baudis wrote:
+> > That's right. Well, for everything but the short id matching we could
+> > just check the ID validity by git-rev-parse instead of peeking into
+> > the object store - I just did that. 
 > 
-> OK, I see. How about using wiggle instead?
-> 
->         http://cgi.cse.unsw.edu.au/~neilb/source/wiggle/
-> 
-> That's what patch-utils uses if you run "pushpatch -m". wiggle is also
-> a lot smarter than diff3, so there will be fewer cases that result in
-> a conflict. Maybe a parameter to "stg push" could enable wiggle mode.
+> Why not use it to actually resolve ids ?
+> I really miss the '^' parent notation in cogito.
 
-I haven't used wiggle before but I will give it a try (though I prefer
-such a tool not to be too smart since it might make mistakes). Anyway, I
-will make this configurable, i.e. you could put something like below in
-the .stgitrc file:
+I've decided to go the less troublesome way and just teach cg-Xnormid
+about the ^ prefix. ;-)
 
-merger = 'diff3 -m -E %(branch1)s %(ancestor)s %(branch2)s'
-
-or
-
-merger = 'wiggle -m %(branch1)s %(ancestor)s %(branch2)s'
-
-> Is there a way in StGIT to undo a push that results in a large mess of
-> conflicts?
-
-Good point. No, there isn't yet. I will think about an undo command. At
-the moment, the old top and bottom ids of a patch are saved so that the
-patch before the merge can be retrieved but there isn't any command to
-make use of them.
-
---
-Catalin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
