@@ -1,63 +1,79 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: cvsimport: rewritten in Perl
-Date: Sun, 03 Jul 2005 15:44:47 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.03.13.44.46.995524@smurf.noris.de>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630161423.GC26808@pc117b.liacs.nl> <20050630163000.GT10850@kiste.smurf.noris.de> <Pine.LNX.4.63.0506301321350.1667@localhost.localdomain> <pan.2005.07.01.09.43.24.106822@smurf.noris.de> <20050703103517.GJ5992MdfPADPa@garage.linux.student.kuleuven.ac.be> <20050703122110.GC18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Cogito: Use git-rev-parse instead of cg-Xnormid.
+Date: Sun, 3 Jul 2005 17:41:27 +0200
+Message-ID: <20050703154127.GA31848@pasky.ji.cz>
+References: <42C77ECE.2080903@didntduck.org> <20050703065920.GA11765@pasky.ji.cz> <42C7D925.2070007@didntduck.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sun Jul 03 15:47:05 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 03 17:42:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dp4nF-0007ao-C0
-	for gcvg-git@gmane.org; Sun, 03 Jul 2005 15:45:57 +0200
+	id 1Dp6bK-0000mS-JS
+	for gcvg-git@gmane.org; Sun, 03 Jul 2005 17:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261440AbVGCNpp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 3 Jul 2005 09:45:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261441AbVGCNpp
-	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 09:45:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:23223 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261440AbVGCNph (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2005 09:45:37 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Dp4mZ-0007WS-Iq
-	for git@vger.kernel.org; Sun, 03 Jul 2005 15:45:15 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jul 2005 15:45:15 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 03 Jul 2005 15:45:15 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261455AbVGCPlg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 3 Jul 2005 11:41:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261456AbVGCPlg
+	(ORCPT <rfc822;git-outgoing>); Sun, 3 Jul 2005 11:41:36 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:2968 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261455AbVGCPld (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Jul 2005 11:41:33 -0400
+Received: (qmail 5023 invoked by uid 2001); 3 Jul 2005 15:41:27 -0000
+To: Brian Gerst <bgerst@didntduck.org>
+Content-Disposition: inline
+In-Reply-To: <42C7D925.2070007@didntduck.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Sven Verdoolaege wrote:
-
->> http://www.liacs.nl/~sverdool/git.git#cvs2git
+Dear diary, on Sun, Jul 03, 2005 at 02:25:09PM CEST, I got a letter
+where Brian Gerst <bgerst@didntduck.org> told me that...
+> Petr Baudis wrote:
+> >Dear diary, on Sun, Jul 03, 2005 at 07:59:42AM CEST, I got a letter
+> >where Brian Gerst <bgerst@didntduck.org> told me that...
+> >
+> >>Use git-rev-parse instead of cg-Xnormid.  This allows Cogito to work 
+> >>properly with packed objects.
+> >>
+> >>Signed off by: Brian Gerst <bgerst@didntduck.org>
+> >
+> >
+> >But git-rev-parse sucks. It won't detect invalid IDs (--revs-only?), and
+> >does not support short object IDs (that's a must, it's tremendously
+> >useful). You need to add that for it to be useful first.
 > 
-> That was a cogito branch, btw.
-> In git you'd say:
-> 
-> git-http-pull -c -v -t -a heads/cvs2git http://www.liacs.nl/~sverdool/git.git/
-> 
-Your patches make sense -- thanks; imported.
+> cg-Xnormid is terminally broken in the presence of packed files, since 
+> it cannot look into them to find objects.
 
-Linus: Please grab http://netz.smurf.noris.de/git/git.git/#cvs2git.
+That's right. Well, for everything but the short id matching we could
+just check the ID validity by git-rev-parse instead of peeking into
+the object store - I just did that. If I'm not missing anything, that
+will just make the short id matching for packed objects impossible, but
+works fine otherwise...?
 
-(A very git-ty URL, that.)
+> Moreover, many uses of commit-id in the scripts can be eliminated because
+> the underlying git commands can already understand tags directly, and will
+> check for invalid ids then.
+
+I feel reserved about that. I want to have custom error handling here to
+give the user less confusing output (no core GIT command name, since
+that confuses users), and as I said, Cogito's rev resolving is more
+powerful than Core Git's.
+
+> The only thing missing is the short id matching.
+
+Yes, but as I said, I think it's very important to have. BTW, another
+cool thing cg-Xnormid does and git-rev-parse does not: time specifiers.
+E.g. you could specify revisions as "2 days ago" or so, very useful for
+cg-log, cg-diff and such.
+
+Thanks for pointing this out, BTW.
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Quantum Mechanics is God's version of "Trust me."
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
