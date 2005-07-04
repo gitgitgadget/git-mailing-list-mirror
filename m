@@ -1,105 +1,99 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] cvsimport: rewritten in Perl
-Date: Mon, 4 Jul 2005 17:52:26 +0200
-Message-ID: <20050704155226.GQ18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-References: <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630193825.GA17345@pc117b.liacs.nl> <20050630210023.GY10850@kiste.smurf.noris.de> <20050704130324.GK18608MdfPADPa@garage.linux.student.kuleuven.ac.be> <20050704135327.GA32098@kiste.smurf.noris.de> <20050704134611.GM18608MdfPADPa@garage.linux.student.kuleuven.ac.be> <20050704143637.GB32098@kiste.smurf.noris.de>
-Reply-To: skimo@liacs.nl
+From: randy_dunlap <rdunlap@xenotime.net>
+Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
+Date: Mon, 4 Jul 2005 10:09:50 -0700
+Organization: YPO4
+Message-ID: <20050704100950.393630e8.rdunlap@xenotime.net>
+References: <1119994003.9631.6.camel@localhost.localdomain>
+	<m3ekagp9mk.fsf@telia.com>
+	<1120385280.6845.12.camel@localhost.localdomain>
+	<m3oe9k6p40.fsf@telia.com>
+	<1120425269.6845.28.camel@localhost.localdomain>
+	<m3y88m21ln.fsf@telia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 04 18:16:50 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: catalin.marinas@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 04 19:13:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpTbw-0000g4-22
-	for gcvg-git@gmane.org; Mon, 04 Jul 2005 18:15:56 +0200
+	id 1DpUUz-0001Ed-Ut
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 19:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261494AbVGDQOt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 12:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261364AbVGDQNi
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 12:13:38 -0400
-Received: from spoetnik.kulnet.kuleuven.ac.be ([134.58.240.46]:12947 "EHLO
-	spoetnik.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S261165AbVGDQJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2005 12:09:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id BD39133E84
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 18:09:14 +0200 (CEST)
-Received: from antonius.kulnet.kuleuven.ac.be (antonius.kulnet.kuleuven.ac.be [134.58.240.73])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id ED2B833E90
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 18:09:12 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by antonius.kulnet.kuleuven.ac.be (Postfix) with ESMTP id D1BC14C2C5
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 18:09:12 +0200 (CEST)
-Received: (qmail 2907 invoked by uid 500); 4 Jul 2005 15:52:26 -0000
-To: Matthias Urlichs <smurf@smurf.noris.de>
-Mail-Followup-To: Matthias Urlichs <smurf@smurf.noris.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050704143637.GB32098@kiste.smurf.noris.de>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
+	id S261488AbVGDRMF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 13:12:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261503AbVGDRMF
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 13:12:05 -0400
+Received: from chretien.genwebhost.com ([209.59.175.22]:39143 "EHLO
+	chretien.genwebhost.com") by vger.kernel.org with ESMTP
+	id S261488AbVGDRJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 13:09:57 -0400
+Received: from pool-71-111-147-75.ptldor.dsl-w.verizon.net ([71.111.147.75]:56592 helo=midway.verizon.net)
+	by chretien.genwebhost.com with esmtpa (Exim 4.51)
+	id 1DpUSF-00072p-JP; Mon, 04 Jul 2005 13:10:00 -0400
+To: Peter Osterlund <petero2@telia.com>
+In-Reply-To: <m3y88m21ln.fsf@telia.com>
+X-Mailer: Sylpheed version 1.0.5 (GTK+ 1.2.10; i686-pc-linux-gnu)
+X-ClamAntiVirus-Scanner: This mail is clean
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - chretien.genwebhost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - xenotime.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 04, 2005 at 04:36:37PM +0200, Matthias Urlichs wrote:
-> Ideally, I'd prefer to recycle standard CVS options as much as possible, 
-> but given that the confusion is already there (worse: cvs' -z wants an
-> argument (compression level), cvsps' -Z doesn't) that may not actually
-> make sense. *Shrug*
-> 
-> I'm too happy when other people improve my tools to get hung up on
-> details like that. ;-)
+On 04 Jul 2005 14:32:36 +0200 Peter Osterlund wrote:
 
-Here it is, then.
+| Catalin Marinas <catalin.marinas@gmail.com> writes:
+| 
+| > On Sun, 2005-07-03 at 14:38 +0200, Peter Osterlund wrote:
+| > > Catalin Marinas <catalin.marinas@gmail.com> writes:
+| > > > I know that using -A gives a more detailed output in case of a conflict.
+| > > > The problem is that you will get a conflict even if the changes are
+| > > > identical, making it impossible to detect when a patch was merged
+| > > > upstream.
+| > > 
+| > > OK, I see. How about using wiggle instead?
+| > > 
+| > >         http://cgi.cse.unsw.edu.au/~neilb/source/wiggle/
+| > > 
+| > > That's what patch-utils uses if you run "pushpatch -m". wiggle is also
+| > > a lot smarter than diff3, so there will be fewer cases that result in
+| > > a conflict. Maybe a parameter to "stg push" could enable wiggle mode.
+| > 
+| > I haven't used wiggle before but I will give it a try (though I prefer
+| > such a tool not to be too smart since it might make mistakes). Anyway, I
+| > will make this configurable, i.e. you could put something like below in
+| > the .stgitrc file:
+| > 
+| > merger = 'diff3 -m -E %(branch1)s %(ancestor)s %(branch2)s'
+| > 
+| > or
+| > 
+| > merger = 'wiggle -m %(branch1)s %(ancestor)s %(branch2)s'
+| > 
+| > > Is there a way in StGIT to undo a push that results in a large mess of
+| > > conflicts?
+| > 
+| > Good point. No, there isn't yet. I will think about an undo command. At
+| > the moment, the old top and bottom ids of a patch are saved so that the
+| > patch before the merge can be retrieved but there isn't any command to
+| > make use of them.
+| 
+| I agree with the other comments, it's probably not wise to rely on
+| wiggle, and wiggle sometimes makes a mess. However, it often does the
+| right thing, and with a configurable merge program and an undo
+| function, this should not be a problem. Just undo and try again if you
+| don't like the result.
 
-skimo
---
-git-cvsimport-script: provide direct support for cvsps -z option
+You could try Chris Mason's 'rej' as well.
+ftp://ftp.oregonstate.edu/pub/suse/people/mason/rej/rej-0.15.tar.gz
+(from one mirror site)
 
 ---
-commit 28537171e7ec23c8677ea6e77c208583f95caa28
-tree ca80ed2fad05b150984c14a5364dac8d3e307120
-parent 6e7e37b0bfc921aa1f0cb30560fc128e87a41966
-author Sven Verdoolaege <skimo@kotnet.org> Mon, 04 Jul 2005 17:10:06 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Mon, 04 Jul 2005 17:10:06 +0200
-
- git-cvsimport-script |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
- $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
--our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C);
-+our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C,$opt_z);
- 
- sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from CVS
--	   [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
--       [ -p opts-for-cvsps ] [ -C GIT_repository ]
-+       [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
-+       [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
-        [ CVS_module ]
- END
- 	exit(1);
- }
- 
--getopts("hqvo:d:p:C:") or usage();
-+getopts("hqvo:d:p:C:z:") or usage();
- usage if $opt_h;
- 
- @ARGV <= 1 or usage();
-@@ -436,6 +436,7 @@ die "Cannot fork: $!\n" unless defined $
- unless($pid) {
- 	my @opt;
- 	@opt = split(/,/,$opt_p) if defined $opt_p;
-+	unshift @opt, '-z', $opt_z if defined $opt_z;
- 	exec("cvsps",@opt,"-u","-A","--cvs-direct",'--root',$opt_d,$cvs_tree);
- 	die "Could not start cvsps: $!\n";
- }
+~Randy
