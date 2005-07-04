@@ -1,142 +1,88 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH] git-cvsimport-script: use private index.
-Date: Mon, 4 Jul 2005 14:13:44 +0200
-Message-ID: <20050704121344.GJ18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630161423.GC26808@pc117b.liacs.nl> <20050630163000.GT10850@kiste.smurf.noris.de> <Pine.LNX.4.63.0506301321350.1667@localhost.localdomain> <pan.2005.07.01.09.43.24.106822@smurf.noris.de> <20050703103517.GJ5992MdfPADPa@garage.linux.student.kuleuven.ac.be>
-Reply-To: skimo@liacs.nl
+From: Peter Osterlund <petero2@telia.com>
+Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
+Date: 04 Jul 2005 14:32:36 +0200
+Message-ID: <m3y88m21ln.fsf@telia.com>
+References: <1119994003.9631.6.camel@localhost.localdomain>
+	<m3ekagp9mk.fsf@telia.com>
+	<1120385280.6845.12.camel@localhost.localdomain>
+	<m3oe9k6p40.fsf@telia.com>
+	<1120425269.6845.28.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Jul 04 14:32:51 2005
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 04 14:36:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpQ7y-0003gv-HR
-	for gcvg-git@gmane.org; Mon, 04 Jul 2005 14:32:46 +0200
+	id 1DpQB0-00046o-RB
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 14:35:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261663AbVGDMc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 08:32:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261659AbVGDMc2
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 08:32:28 -0400
-Received: from rusty.kulnet.kuleuven.ac.be ([134.58.240.42]:55221 "EHLO
-	rusty.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S261663AbVGDMaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2005 08:30:35 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 62C1F1D73BB
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 14:30:29 +0200 (CEST)
-Received: from octavianus.kulnet.kuleuven.ac.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
-	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 587C01D7284
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 14:30:27 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by octavianus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 4A00AAED88
-	for <git@vger.kernel.org>; Mon,  4 Jul 2005 14:30:27 +0200 (CEST)
-Received: (qmail 6413 invoked by uid 500); 4 Jul 2005 12:13:44 -0000
-To: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-Mail-Followup-To: Matthias Urlichs <smurf@smurf.noris.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050703103517.GJ5992MdfPADPa@garage.linux.student.kuleuven.ac.be>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
+	id S261658AbVGDMfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 08:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261659AbVGDMfm
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 08:35:42 -0400
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:7645 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S261658AbVGDMf2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 08:35:28 -0400
+Received: from r3000.localdomain (62.20.229.161) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 42B94E2900223BCB; Mon, 4 Jul 2005 14:35:25 +0200
+Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
+	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j64CZMaS016258;
+	Mon, 4 Jul 2005 14:35:22 +0200
+Received: (from petero@localhost)
+	by r3000.localdomain (8.13.1/8.13.1/Submit) id j64CWcik015928;
+	Mon, 4 Jul 2005 14:32:38 +0200
+X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <1120425269.6845.28.camel@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-git-cvsimport-script: use private index.
+Catalin Marinas <catalin.marinas@gmail.com> writes:
 
----
-commit 79ee456cf222982f7ee3f003440c57b5f7cffa8b
-tree c27c7f8bafa48d81a4d9f7562b851681984a9c7e
-parent 2eb6d82eaa869a1faf4ba3326fd628f76f9f93a8
-author Sven Verdoolaege <skimo@kotnet.org> Mon, 04 Jul 2005 13:36:59 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Mon, 04 Jul 2005 13:36:59 +0200
+> On Sun, 2005-07-03 at 14:38 +0200, Peter Osterlund wrote:
+> > Catalin Marinas <catalin.marinas@gmail.com> writes:
+> > > I know that using -A gives a more detailed output in case of a conflict.
+> > > The problem is that you will get a conflict even if the changes are
+> > > identical, making it impossible to detect when a patch was merged
+> > > upstream.
+> > 
+> > OK, I see. How about using wiggle instead?
+> > 
+> >         http://cgi.cse.unsw.edu.au/~neilb/source/wiggle/
+> > 
+> > That's what patch-utils uses if you run "pushpatch -m". wiggle is also
+> > a lot smarter than diff3, so there will be fewer cases that result in
+> > a conflict. Maybe a parameter to "stg push" could enable wiggle mode.
+> 
+> I haven't used wiggle before but I will give it a try (though I prefer
+> such a tool not to be too smart since it might make mistakes). Anyway, I
+> will make this configurable, i.e. you could put something like below in
+> the .stgitrc file:
+> 
+> merger = 'diff3 -m -E %(branch1)s %(ancestor)s %(branch2)s'
+> 
+> or
+> 
+> merger = 'wiggle -m %(branch1)s %(ancestor)s %(branch2)s'
+> 
+> > Is there a way in StGIT to undo a push that results in a large mess of
+> > conflicts?
+> 
+> Good point. No, there isn't yet. I will think about an undo command. At
+> the moment, the old top and bottom ids of a patch are saved so that the
+> patch before the merge can be retrieved but there isn't any command to
+> make use of them.
 
- git-cvsimport-script |   43 +++++++++++++++++++++++--------------------
- 1 files changed, 23 insertions(+), 20 deletions(-)
+I agree with the other comments, it's probably not wise to rely on
+wiggle, and wiggle sometimes makes a mess. However, it often does the
+right thing, and with a configurable merge program and an undo
+function, this should not be a problem. Just undo and try again if you
+don't like the result.
 
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -16,6 +16,8 @@
- use strict;
- use warnings;
- use Getopt::Std;
-+use File::Spec;
-+use File::Temp qw(tempfile);
- use File::Path qw(mkpath);
- use File::Basename qw(basename dirname);
- use Time::Local;
-@@ -377,6 +379,12 @@ my %branch_date;
- my $git_dir = $ENV{"GIT_DIR"} || ".git";
- $git_dir = getwd()."/".$git_dir unless $git_dir =~ m#^/#;
- $ENV{"GIT_DIR"} = $git_dir;
-+my $orig_git_index;
-+$orig_git_index = $ENV{GIT_INDEX_FILE} if exists $ENV{GIT_INDEX_FILE};
-+my ($git_ih, $git_index) = tempfile('gitXXXXXX', SUFFIX => '.idx',
-+				    DIR => File::Spec->tmpdir());
-+close ($git_ih);
-+$ENV{GIT_INDEX_FILE} = $git_index;
- unless(-d $git_dir) {
- 	system("git-init-db");
- 	die "Cannot init the GIT db at $git_tree: $?\n" if $?;
-@@ -398,6 +406,9 @@ unless(-d $git_dir) {
- 	}
- 	$orig_branch = $last_branch;
- 
-+	# populate index
-+	system('git-read-tree', $last_branch);
-+
- 	# Get the last import timestamps
- 	opendir(D,"$git_dir/refs/heads");
- 	while(defined(my $head = readdir(D))) {
-@@ -643,11 +654,6 @@ while(<CVS>) {
- 			system("git-read-tree","-m","$last_branch","$branch");
- 			die "read-tree failed: $?\n" if $?;
- 		}
--		if($branch ne $last_branch) {
--			unlink("$git_dir/HEAD");
--			symlink("refs/heads/$branch","$git_dir/HEAD");
--			$last_branch = $branch;
--		}
- 		$state = 9;
- 	} elsif($state == 8) {
- 		$logmsg .= "$_\n";
-@@ -686,26 +692,23 @@ while(<CVS>) {
- }
- &$commit() if $branch and $state != 11;
- 
-+unlink($git_index);
-+
- # Now switch back to the branch we were in before all of this happened
- if($orig_branch) {
--	print "DONE; switching back to $orig_branch\n" if $opt_v;
-+	print "DONE\n" if $opt_v;
- } else {
- 	$orig_branch = "master";
- 	print "DONE; creating $orig_branch branch\n" if $opt_v;
- 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
- 		unless -f "$git_dir/refs/heads/master";
-+	unlink("$git_dir/HEAD");
-+	symlink("refs/heads/$orig_branch","$git_dir/HEAD");
-+	if (defined $orig_git_index) {
-+	    $ENV{GIT_INDEX_FILE} = $orig_git_index;
-+	} else {
-+	    delete $ENV{GIT_INDEX_FILE};
-+	}
-+	system('git checkout');
-+	die "checkout failed: $?\n" if $?;
- }
--
--if ($orig_branch) {
--	system("git-read-tree",$last_branch);
--	die "read-tree failed: $?\n" if $?;
--} else {
--	system('git-read-tree', $orig_branch);
--	die "read-tree failed: $?\n" if $?;
--	system('git-checkout-cache', '-a');
--	die "checkout-cache failed: $?\n" if $?;
--}
--
--unlink("$git_dir/HEAD");
--symlink("refs/heads/$orig_branch","$git_dir/HEAD");
--
+-- 
+Peter Osterlund - petero2@telia.com
+http://web.telia.com/~u89404340
