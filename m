@@ -1,64 +1,60 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
-Date: Mon, 4 Jul 2005 18:27:40 +1200
-Message-ID: <46a038f9050703232719a05c9e@mail.gmail.com>
-References: <1119994003.9631.6.camel@localhost.localdomain>
-	 <m3ekagp9mk.fsf@telia.com>
-	 <1120385280.6845.12.camel@localhost.localdomain>
-	 <m3oe9k6p40.fsf@telia.com>
-	 <1120425269.6845.28.camel@localhost.localdomain>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] cvsimport: rewritten in Perl
+Date: Mon, 4 Jul 2005 12:47:39 +0200
+Message-ID: <20050704104739.GH18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050703230326.GF18608MdfPADPa@garage.linux.student.kuleuven.ac.be> <20050704014948.GK29809@kiste.smurf.noris.de>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jul 04 08:28:57 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 04 13:06:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpKRm-00078Q-3G
-	for gcvg-git@gmane.org; Mon, 04 Jul 2005 08:28:50 +0200
+	id 1DpOlw-0001jz-TF
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 13:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261515AbVGDG1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 02:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261516AbVGDG1t
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 02:27:49 -0400
-Received: from rproxy.gmail.com ([64.233.170.207]:62758 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261515AbVGDG1k convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 4 Jul 2005 02:27:40 -0400
-Received: by rproxy.gmail.com with SMTP id i8so624146rne
-        for <git@vger.kernel.org>; Sun, 03 Jul 2005 23:27:40 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R1kp4d5NTQd+4zp2SEU6+5vWd+A9qHzYZcZR6q+LYPCTolbAFpy9XpPERAeAGnZ9FFE1Qazxo/rePYeaduEou3JE5aDYawvCwJvDKnHZGXA1u16zS9szpg2SdY5aPu9eDQMERLq3yHAN4ohv0w39kuvqOvTakTAM2APK57M0/PU=
-Received: by 10.38.209.48 with SMTP id h48mr2735708rng;
-        Sun, 03 Jul 2005 23:27:40 -0700 (PDT)
-Received: by 10.38.101.46 with HTTP; Sun, 3 Jul 2005 23:27:40 -0700 (PDT)
-To: GIT <git@vger.kernel.org>
-In-Reply-To: <1120425269.6845.28.camel@localhost.localdomain>
+	id S261627AbVGDLE4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 07:04:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261650AbVGDLEz
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 07:04:55 -0400
+Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:61070 "EHLO
+	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S261627AbVGDLEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 07:04:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id BE047137A11
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 13:04:22 +0200 (CEST)
+Received: from antonius.kulnet.kuleuven.ac.be (antonius.kulnet.kuleuven.ac.be [134.58.240.73])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id F271F1379B1
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 13:04:20 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by antonius.kulnet.kuleuven.ac.be (Postfix) with ESMTP id D373A4C2C5
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 13:04:20 +0200 (CEST)
+Received: (qmail 26511 invoked by uid 500); 4 Jul 2005 10:47:39 -0000
+To: Matthias Urlichs <smurf@smurf.noris.de>
+Mail-Followup-To: Matthias Urlichs <smurf@smurf.noris.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20050704014948.GK29809@kiste.smurf.noris.de>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> > OK, I see. How about using wiggle instead?
-> >
-> >         http://cgi.cse.unsw.edu.au/~neilb/source/wiggle/
-> >
-> > That's what patch-utils uses if you run "pushpatch -m". wiggle is also
-> > a lot smarter than diff3, so there will be fewer cases that result in
-> > a conflict. Maybe a parameter to "stg push" could enable wiggle mode.
+Hi,
+
+On Mon, Jul 04, 2005 at 03:49:48AM +0200, Matthias Urlichs wrote:
+> Sven Verdoolaege:
+> > Note how the patchsets with the same date have somehow
+> > been reversed.  Any ideas ?
+> > 
+> No. I process the lines from cvsps in the order I get them...
 > 
-> I haven't used wiggle before but I will give it a try (though I prefer
-> such a tool not to be too smart since it might make mistakes). Anyway, I
-> will make this configurable, i.e. you could put something like below in
-> the .stgitrc file:
 
-wiggle is good but it's not safe. You should definitely review the
-results of a wiggle merge with extra care. It sometimes does magic and
-merges the unmergeable, and sometimes it does bad, bad things.
+Ok, I reran cvs2git and now I get the same order as with
+your script.  Something must have changed in the output
+of cvsps.
 
-cheers,
-
-
-martin
+skimo
