@@ -1,51 +1,48 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Last mile for 1.0 again
-Date: Mon, 4 Jul 2005 18:41:19 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507041801040.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0507041459030.3570@g5.osdl.org>
+From: "David S. Miller" <davem@davemloft.net>
+Subject: Re: expensive local git clone
+Date: Mon, 04 Jul 2005 15:49:33 -0700 (PDT)
+Message-ID: <20050704.154933.104033112.davem@davemloft.net>
+References: <20050704204235.GE21128@pasky.ji.cz>
+	<20050704.140043.112609056.davem@davemloft.net>
+	<7v7jg6i72c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 00:43:24 2005
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: torvalds@osdl.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 05 00:50:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpZeu-0005nl-97
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 00:43:24 +0200
+	id 1DpZlK-0006Jl-W2
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 00:50:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261724AbVGDWnR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 18:43:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261725AbVGDWnR
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 18:43:17 -0400
-Received: from iabervon.org ([66.92.72.58]:22790 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261724AbVGDWnN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2005 18:43:13 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DpZct-000219-00; Mon, 4 Jul 2005 18:41:19 -0400
-To: Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0507041459030.3570@g5.osdl.org>
+	id S261728AbVGDWtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 18:49:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261727AbVGDWtm
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 18:49:42 -0400
+Received: from dsl027-180-168.sfo1.dsl.speakeasy.net ([216.27.180.168]:20430
+	"EHLO sunset.davemloft.net") by vger.kernel.org with ESMTP
+	id S261730AbVGDWti (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 18:49:38 -0400
+Received: from localhost ([127.0.0.1] ident=davem)
+	by sunset.davemloft.net with esmtp (Exim 4.50)
+	id 1DpZkr-0000kr-NS; Mon, 04 Jul 2005 15:49:33 -0700
+To: junkio@cox.net
+In-Reply-To: <7v7jg6i72c.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Mew version 4.2 on Emacs 21.4 / Mule 5.0 (SAKAKI)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 4 Jul 2005, Linus Torvalds wrote:
+From: Junio C Hamano <junkio@cox.net>
+Date: Mon, 04 Jul 2005 14:40:11 -0700
 
-> On Mon, 4 Jul 2005, Daniel Barkalow wrote:
-> > 
-> > How about an option to git-rev-list to take a path, and (1) exclude any
-> > branch where the version at that path ends up ignored in a merge and
-> > (2) not list any revision where the version at that path is identical to a
-> > parent?
+> >>>>> "DSM" == David S Miller <davem@davemloft.net> writes:
 > 
-> Hmm. How is that different from "git-whatchanged path", really?
+> DSM> I keep hoping git-clone-script is going to be a good way
+> DSM> to clone two local trees.  Is my hope misguided?  :-)
+> 
+> Something along these lines?
 
-It would short-circuit going up areas of the history which don't
-contribute (i.e., lead up to a merge which took its version from a
-different parent). It could also stop when it ran out of branches that
-have the file at all. Neither of these is all that significant, I guess.
-
-Junio: what's missing from annotate/blame?
-
-	-Daniel
-*This .sig left intentionally blank*
+Looks interesting.  Any particular reason to use "cpio"
+instead of "cp"?
