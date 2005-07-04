@@ -1,76 +1,59 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
 Subject: Re: [PATCH] cvsimport: rewritten in Perl
-Date: Mon, 4 Jul 2005 15:53:27 +0200
-Message-ID: <20050704135327.GA32098@kiste.smurf.noris.de>
-References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630193825.GA17345@pc117b.liacs.nl> <20050630210023.GY10850@kiste.smurf.noris.de> <20050704130324.GK18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+Date: Mon, 4 Jul 2005 15:46:11 +0200
+Message-ID: <20050704134611.GM18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <pan.2005.06.28.19.23.08.307486@smurf.noris.de> <20050630150239.GA20928@pc117b.liacs.nl> <20050630152125.GO10850@kiste.smurf.noris.de> <20050630154453.GA26808@pc117b.liacs.nl> <20050630161043.GR10850@kiste.smurf.noris.de> <20050630193825.GA17345@pc117b.liacs.nl> <20050630210023.GY10850@kiste.smurf.noris.de> <20050704130324.GK18608MdfPADPa@garage.linux.student.kuleuven.ac.be> <20050704135327.GA32098@kiste.smurf.noris.de>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="h31gzZEtNLTqOjlF"
-X-From: git-owner@vger.kernel.org Mon Jul 04 15:55:29 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 04 16:03:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpRPb-0005W4-Bf
-	for gcvg-git@gmane.org; Mon, 04 Jul 2005 15:55:03 +0200
+	id 1DpRXi-0006YT-R0
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 16:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261708AbVGDNyn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 09:54:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261722AbVGDNyn
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 09:54:43 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:10448 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261708AbVGDNyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Jul 2005 09:54:24 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DpRO4-0006vk-Vl
-	for git@vger.kernel.org; Mon, 04 Jul 2005 15:53:42 +0200
-Received: (nullmailer pid 18050 invoked by uid 501);
-	Mon, 04 Jul 2005 13:53:28 -0000
-To: git@vger.kernel.org
+	id S261711AbVGDODI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 10:03:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261713AbVGDODI
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 10:03:08 -0400
+Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:27569 "EHLO
+	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S261711AbVGDOC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 10:02:59 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 904DA137A1F
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 16:02:57 +0200 (CEST)
+Received: from antonius.kulnet.kuleuven.ac.be (antonius.kulnet.kuleuven.ac.be [134.58.240.73])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 97A65137A5A
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 16:02:55 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by antonius.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 7F4714C0D1
+	for <git@vger.kernel.org>; Mon,  4 Jul 2005 16:02:55 +0200 (CEST)
+Received: (qmail 19960 invoked by uid 500); 4 Jul 2005 13:46:11 -0000
+To: Matthias Urlichs <smurf@smurf.noris.de>
+Mail-Followup-To: Matthias Urlichs <smurf@smurf.noris.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20050704130324.GK18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+In-Reply-To: <20050704135327.GA32098@kiste.smurf.noris.de>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jul 04, 2005 at 03:53:27PM +0200, Matthias Urlichs wrote:
+> Hi,
+> 
+> Sven Verdoolaege:
+> > Why not an explicit '-z' option as in the current git-cvsimport-script ?
+> 
+> Because my code doesn't support compressed cvs connections:
+> a -z that doesn't work except for the rlog part would be a lie.
 
---h31gzZEtNLTqOjlF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I was talking about the cvsps '-z' option (see current git-cvsimport-script).
+Are you saying you want to reserve that option to signify compressed
+cvs connections ?
 
-Hi,
-
-Sven Verdoolaege:
-> Why not an explicit '-z' option as in the current git-cvsimport-script ?
-
-Because my code doesn't support compressed cvs connections:
-a -z that doesn't work except for the rlog part would be a lie.
-
-Feel free to add that code. ;-)
-
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Confidence is simply that quiet, assured feeling you have before you
-fall flat on your face.
-
---h31gzZEtNLTqOjlF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFCyT9X8+hUANcKr/kRAuwjAJ4jNy4GFZyzhNev/FfZX+NEbStDqwCdGGcS
-2tgBM8k9wVguD4XM6XuK6SQ=
-=MCyw
------END PGP SIGNATURE-----
-
---h31gzZEtNLTqOjlF--
+skimo
