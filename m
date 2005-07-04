@@ -1,51 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: expensive local git clone
-Date: Mon, 4 Jul 2005 14:44:08 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507041443510.3570@g5.osdl.org>
-References: <20050704.125744.59481768.davem@davemloft.net>
- <Pine.LNX.4.58.0507041327580.3570@g5.osdl.org> <20050704204235.GE21128@pasky.ji.cz>
- <20050704.140043.112609056.davem@davemloft.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Last mile for 1.0 again
+Date: Mon, 04 Jul 2005 14:45:10 -0700
+Message-ID: <7vvf3qgs9l.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0507041635350.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 04 23:44:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Mon Jul 04 23:45:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpYjy-0000UT-Af
-	for gcvg-git@gmane.org; Mon, 04 Jul 2005 23:44:34 +0200
+	id 1DpYl1-0000c2-G9
+	for gcvg-git@gmane.org; Mon, 04 Jul 2005 23:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261701AbVGDVoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 17:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261702AbVGDVoW
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 17:44:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:19425 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261701AbVGDVoR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2005 17:44:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j64LiAjA022876
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 4 Jul 2005 14:44:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j64Li8cO004934;
-	Mon, 4 Jul 2005 14:44:09 -0700
-To: "David S. Miller" <davem@davemloft.net>
-In-Reply-To: <20050704.140043.112609056.davem@davemloft.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261706AbVGDVpW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 17:45:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261702AbVGDVpW
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 17:45:22 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:49094 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261706AbVGDVpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 17:45:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050704214512.UFMB17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 4 Jul 2005 17:45:12 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0507041635350.30848-100000@iabervon.org> (Daniel Barkalow's message of "Mon, 4 Jul 2005 17:40:46 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
+DB> On Wed, 29 Jun 2005, Junio C Hamano wrote:
+>> - Blame/Annotate.  Does anybody have a fast and correct one
 
-On Mon, 4 Jul 2005, David S. Miller wrote:
-> 
-> I keep hoping git-clone-script is going to be a good way
-> to clone two local trees.  Is my hope misguided?  :-)
+DB> How about an option to git-rev-list to take a path, and (1) exclude any
+DB> branch where the version at that path ends up ignored in a merge and
+DB> (2) not list any revision where the version at that path is identical to a
+DB> parent?
 
-Well, I'm not working on it, but tested patches...
+DB> This should give you the list of all commits which are directly
+DB> responsible for the present state of the file, which can then be formatted
+DB> as desired.
 
-		Linus
+Sounds close enough if you do not care about copies and
+complete rewrites.
