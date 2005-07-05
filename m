@@ -1,74 +1,58 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Fixlet for argument parsing in rev-list.
-Date: Tue, 5 Jul 2005 19:14:32 +1000
-Message-ID: <2cfc40320507050214154c0fff@mail.gmail.com>
-References: <7vpstxg02q.fsf@assigned-by-dhcp.cox.net>
-Reply-To: jon@blackcubes.dyndns.org
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Proposed script: cg-info
+Date: Tue, 5 Jul 2005 11:22:28 +0200
+Message-ID: <20050705092228.GC6191@pasky.ji.cz>
+References: <1120542372.17286.7.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 11:15:53 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 05 11:23:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpjWB-00063H-Ke
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 11:15:03 +0200
+	id 1DpjeA-0006vu-Ki
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 11:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261464AbVGEJOk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jul 2005 05:14:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261770AbVGEJOk
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 05:14:40 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:57293 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261464AbVGEJOc convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 05:14:32 -0400
-Received: by rproxy.gmail.com with SMTP id i8so828518rne
-        for <git@vger.kernel.org>; Tue, 05 Jul 2005 02:14:32 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kaBMCPisGOt4WgzcOHcmSFCQExtiTkH5nIWJp61WzAOFR6aK2QNk5Ff+qrvt4NCzla4iqOGhTW5OLParrJliKT3eUOilmwuikd1qrJ3peWFi29Ky2d9kBzJ3VlU86xu7LgjmZA9WQy+zm+JR8exS4hCruKyWtPqfn6IfHFiQ6j8=
-Received: by 10.38.181.12 with SMTP id d12mr3729602rnf;
-        Tue, 05 Jul 2005 02:14:32 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Tue, 5 Jul 2005 02:14:32 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vpstxg02q.fsf@assigned-by-dhcp.cox.net>
+	id S261770AbVGEJWw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jul 2005 05:22:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261774AbVGEJWw
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 05:22:52 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:32441 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261770AbVGEJWa (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 05:22:30 -0400
+Received: (qmail 13976 invoked by uid 2001); 5 Jul 2005 09:22:28 -0000
+To: Pavel Roskin <proski@gnu.org>
 Content-Disposition: inline
+In-Reply-To: <1120542372.17286.7.camel@dv>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I ack the patch, though --show-breaks could use the same treatment.
+Dear diary, on Tue, Jul 05, 2005 at 07:46:12AM CEST, I got a letter
+where Pavel Roskin <proski@gnu.org> told me that...
+> Hello!
 
-jon.
+Hello,
 
-On 7/5/05, Junio C Hamano <junkio@cox.net> wrote:
-> The --merge-order flag does not take parameter so there is no
-> point doing strncmp with the length.
+> It would be useful to have a script to display current status of the
+> repository - branches, current branch and merge status.  Maybe I'm
+> missing something, but I don't see such script.
 > 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
+> I wrote a script that would do that.  I'm still not fully familiar with
+> the concepts of cogito, so maybe wrong terms are used in the script.  I
+> just want to offer this scripts as a base for further work.
 > 
->  rev-list.c |    2 +-
->  1 file changed, 1 insertions(+), 1 deletions(-)
+> cg-info sounds very pretentious, so maybe the script should be renamed
+> to cg-heads-ls or cg-admin-status or something like that.
 > 
-> diff --git a/rev-list.c b/rev-list.c
-> --- a/rev-list.c
-> +++ b/rev-list.c
-> @@ -462,7 +462,7 @@ int main(int argc, char **argv)
->                         limited = 1;
->                         continue;
->                 }
-> -               if (!strncmp(arg, "--merge-order", 13)) {
-> +               if (!strcmp(arg, "--merge-order")) {
->                         merge_order = 1;
->                         continue;
->                 }
-> ------------------------------------------------
-> 
-> 
+> Signed-off-by: Pavel Roskin <proski@gnu.org>
 
+thanks. I've somewhat cleaned it up and added some more information to
+show, and committed it.
 
 -- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
