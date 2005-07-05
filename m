@@ -1,191 +1,127 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Add script for patch submission via e-mail.
-Date: Tue, 05 Jul 2005 13:19:05 -0700
-Message-ID: <7v7jg5dn0m.fsf@assigned-by-dhcp.cox.net>
-References: <7vll5h7k5t.fsf@assigned-by-dhcp.cox.net>
-	<20050705093441.GD6191@pasky.ji.cz>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: git-update-cache:
+Date: Tue, 5 Jul 2005 23:02:56 +0200
+Message-ID: <20050705210256.GA28700@mars.ravnborg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 22:20:24 2005
+X-From: git-owner@vger.kernel.org Tue Jul 05 23:13:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpttV-0002vS-1N
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 22:19:49 +0200
+	id 1Dpuj2-0002w4-5b
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 23:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261739AbVGEUTl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jul 2005 16:19:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261895AbVGEUTl
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 16:19:41 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:19150 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S261739AbVGEUTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2005 16:19:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050705201909.KBBZ18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 5 Jul 2005 16:19:09 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <20050705093441.GD6191@pasky.ji.cz> (Petr Baudis's message of "Tue, 5 Jul 2005 11:34:41 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261921AbVGEVJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jul 2005 17:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261927AbVGEVH3
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 17:07:29 -0400
+Received: from pfepa.post.tele.dk ([195.41.46.235]:51755 "EHLO
+	pfepa.post.tele.dk") by vger.kernel.org with ESMTP id S261949AbVGEVDO
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 17:03:14 -0400
+Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
+	by pfepa.post.tele.dk (Postfix) with ESMTP id 80B3747FEB2
+	for <git@vger.kernel.org>; Tue,  5 Jul 2005 23:03:13 +0200 (CEST)
+Received: by mars.ravnborg.org (Postfix, from userid 1000)
+	id 0BC6B6AC169; Tue,  5 Jul 2005 23:02:56 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[PATCH] git-format-patch: Prepare patches for e-mail submission.
+While trying to execute:
+git-update-cache -- drivers/Kconfig drivers/net/Kconfig net/Kconfig
 
-This is the script I use to prepare patches for e-mail submission.
+I receive the following error:
+git-update-cache: symbol lookup error: git-update-cache: undefined
+symbol: deflateBound
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
 
-*** The latest incarnation.  Uses --merge-order while generating
-*** the list of patches to number them better.
+I have fetched a clean tree from kernel.org, and cloned it using
+cg-clone.
+Modifications are done in the cloned tree and the error is seen when
+trying to do a cg-commit (that does the git-update-cache).
 
- Makefile                |    3 +
- git-format-patch-script |  121 +++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 123 insertions(+), 1 deletions(-)
- create mode 100755 git-format-patch-script
+When this error is seen a file .git/index.lock is left and next
+invocation of git-update-cache faild due to this but deletes the file.
+Third invocation show the same error again.
 
-1a3c4d6335860c7bfd09b997b19c850620c6fb50
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -31,7 +31,8 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-fetch-script git-status-script git-commit-script \
- 	git-log-script git-shortlog git-cvsimport-script git-diff-script \
- 	git-reset-script git-add-script git-checkout-script git-clone-script \
--	gitk git-cherry git-rebase-script git-relink-script git-repack-script
-+	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
-+	git-format-patch-script
- 
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-format-patch-script b/git-format-patch-script
-new file mode 100755
---- /dev/null
-+++ b/git-format-patch-script
-@@ -0,0 +1,121 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Junio C Hamano
-+#
-+
-+usage () {
-+    echo >&2 "usage: $0"' [-n] [-o dir] [-<diff options>...] upstream [ our-head ]
-+
-+Prepare each commit with its patch since our-head forked from upstream,
-+one file per patch, for e-mail submission.  Each output file is
-+numbered sequentially from 1, and uses the first line of the commit
-+message (massaged for pathname safety) as the filename.
-+
-+When -o is specified, output files are created in that directory; otherwise in
-+the current working directory.
-+
-+When -n is specified, instead of "[PATCH] Subject", the first line is formatted
-+as "[PATCH N/M] Subject", unless you have only one patch.
-+'
-+    exit 1
-+}
-+
-+diff_opts=
-+IFS='
-+'
-+LF='
-+'
-+outdir=./
-+
-+while case "$#" in 0) break;; esac
-+do
-+    case "$1" in
-+    -n|--n|--nu|--num|--numb|--numbe|--number|--numbere|--numbered)
-+    numbered=t ;;
-+    -o=*|--o=*|--ou=*|--out=*|--outp=*|--outpu=*|--output=*|--output-=*|\
-+    --output-d=*|--output-di=*|--output-dir=*|--output-dire=*|\
-+    --output-direc=*|--output-direct=*|--output-directo=*|\
-+    --output-director=*|--output-directory=*)
-+    outdir=`expr "$1" : '-[^=]*=\(.*\)'` ;;
-+    -o|--o|--ou|--out|--outp|--outpu|--output|--output-|--output-d|\
-+    --output-di|--output-dir|--output-dire|--output-direc|--output-direct|\
-+    --output-directo|--output-director|--output-directory)
-+    case "$#" in 1) usage ;; esac; shift
-+    outdir="$1" ;;
-+    -*)	diff_opts="$diff_opts$LF$1" ;;
-+    *) break ;;
-+    esac
-+    shift
-+done
-+
-+case "$#" in
-+2)    linus="$1" junio="$2" ;;
-+1)    linus="$1" junio=HEAD ;;
-+*)    usage ;;
-+esac
-+
-+case "$outdir" in
-+*/) ;;
-+*) outdir="$outdir/" ;;
-+esac
-+test -d "$outdir" || mkdir -p "$outdir" || exit
-+
-+tmp=.tmp-series$$
-+trap 'rm -f $tmp-*' 0 1 2 3 15
-+
-+series=$tmp-series
-+
-+titleScript='
-+	1,/^$/d
-+	: loop
-+	/^$/b loop
-+	s/[^-a-z.A-Z_0-9]/-/g
-+        s/\.\.\.*/\./g
-+	s/\.*$//
-+	s/--*/-/g
-+	s/^-//
-+	s/-$//
-+	s/$/./
-+	q
-+'
-+
-+_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
-+stripCommitHead='/^'"$_x40"' (from '"$_x40"')$/d'
-+
-+git-rev-list --merge-order "$junio" "^$linus" >$series
-+total=`wc -l <$series`
-+i=$total
-+while read commit
-+do
-+    title=`git-cat-file commit "$commit" | sed -e "$titleScript"`
-+    case "$numbered" in
-+    '') num= ;;
-+    *)
-+	case $total in
-+	1) num= ;;
-+	*) num=' '`printf "%d/%d" $i $total` ;;
-+	esac
-+    esac
-+    file=`printf '%04d-%stxt' $i "$title"`
-+    i=`expr "$i" - 1`
-+    echo "$file"
-+    {
-+	mailScript='
-+	1,/^$/d
-+	: loop
-+	/^$/b loop
-+	s|^|[PATCH'"$num"'] |
-+	: body
-+	p
-+	n
-+	b body'
-+
-+	git-cat-file commit "$commit" | sed -ne "$mailScript"
-+	echo '---'
-+	echo
-+	git-diff-tree -p $diff_opts "$commit" | git-apply --stat --summary
-+	echo
-+	git-diff-tree -p $diff_opts "$commit" | sed -e "$stripCommitHead"
-+    } >"$outdir$file"
-+done <$series
+To my best knowledge I have a working zlib installed.
+
+Any help really appreciated!
+
+	Sam
+	
+
+strace appended:
+
+sam@mars ~/linux/net-kconfig $ strace git-update-cache -- drivers/Kconfig drivers/net/Kconfig net/Kconfig > ../z
+execve("/home/sam/bin/git-update-cache", ["git-update-cache", "--", "drivers/Kconfig", "drivers/net/Kconfig", "net/Kconfig"], [/* 54 vars */]) = 0
+uname({sys="Linux", node="mars", ...})  = 0
+brk(0)                                  = 0x8054000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=136714, ...}) = 0
+mmap2(NULL, 136714, PROT_READ, MAP_PRIVATE, 3, 0) = 0x40016000
+close(3)                                = 0
+open("/usr/lib/libz.so.1", O_RDONLY)    = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\0\31\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=54416, ...}) = 0
+mmap2(NULL, 56204, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x40038000
+mmap2(0x40044000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xb) = 0x40044000
+close(3)                                = 0
+open("/usr/lib/libcrypto.so.0.9.7", O_RDONLY) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0 \305\2"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0555, st_size=999412, ...}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x40046000
+mmap2(NULL, 974584, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x40047000
+mmap2(0x40120000, 73728, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xd8) = 0x40120000
+mmap2(0x40132000, 12024, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x40132000
+close(3)                                = 0
+open("/lib/libc.so.6", O_RDONLY)        = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\220V\1"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1154496, ...}) = 0
+mmap2(NULL, 1088900, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x40135000
+mprotect(0x40238000, 28036, PROT_NONE)  = 0
+mmap2(0x40239000, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x103) = 0x40239000
+mmap2(0x4023d000, 7556, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x4023d000
+close(3)                                = 0
+open("/lib/libdl.so.2", O_RDONLY)       = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\340\v\0"..., 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=10592, ...}) = 0
+mmap2(NULL, 12392, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x4023f000
+mmap2(0x40241000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1) = 0x40241000
+close(3)                                = 0
+mprotect(0x40239000, 4096, PROT_READ)   = 0
+munmap(0x40016000, 136714)              = 0
+open("/dev/urandom", O_RDONLY)          = 3
+read(3, "1@\353)", 4)                   = 4
+close(3)                                = 0
+brk(0)                                  = 0x8054000
+brk(0x8075000)                          = 0x8075000
+rt_sigaction(SIGINT, {0x804cb30, [INT], SA_RESTART}, {SIG_DFL}, 8) = 0
+open(".git/index.lock", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+open(".git/index", O_RDONLY)            = 4
+fstat64(4, {st_mode=S_IFREG|0600, st_size=1658992, ...}) = 0
+mmap2(NULL, 1658992, PROT_READ|PROT_WRITE, MAP_PRIVATE, 4, 0) = 0x40243000
+close(4)                                = 0
+lstat64("drivers/Kconfig", {st_mode=S_IFREG|0644, st_size=1030, ...}) = 0
+open("drivers/Kconfig", O_RDONLY)       = 4
+mmap2(NULL, 1030, PROT_READ, MAP_PRIVATE, 4, 0) = 0x403d9000
+close(4)                                = 0
+stat64(".git/objects/fb/5c9b2a886518a4bfb0d2e2762fad41a08a5ba7", 0xbf85005c) = -1 ENOENT (No such file or directory)
+open(".git/objects/pack", O_RDONLY|O_NONBLOCK|O_LARGEFILE|O_DIRECTORY) = 4
+fstat64(4, {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+fcntl64(4, F_SETFD, FD_CLOEXEC)         = 0
+getdents64(4, /* 2 entries */, 4096)    = 48
+getdents64(4, /* 0 entries */, 4096)    = 0
+open(".git/objects/fb/5c9b2a886518a4bfb0d2e2762fad41a08a5ba7", O_RDONLY) = -1 ENOENT (No such file or directory)
+gettimeofday({1120596694, 840021}, NULL) = 0
+getpid()                                = 28699
+open(".git/objects/obj_5s6K76", O_RDWR|O_CREAT|O_EXCL, 0600) = 5
+brk(0x80a1000)                          = 0x80a1000
+brk(0x80d1000)                          = 0x80d1000
+writev(2, [{"git-update-cache", 16}, {": ", 2}, {"symbol lookup error", 19}, {": ", 2}, {"git-update-cache", 16}, {": ", 2}, {"undefined symbol: deflateBound", 30}, {"", 0}, {"", 0}, {"\n", 1}], 10git-update-cache: symbol lookup error: git-update-cache: undefined symbol: deflateBound
+) = 88
+exit_group(127)                         = ?
