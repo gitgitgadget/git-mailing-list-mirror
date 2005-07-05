@@ -1,58 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Tags
-Date: Tue, 5 Jul 2005 12:21:09 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507051155580.30848-100000@iabervon.org>
-References: <m1vf3p2yks.fsf@ebiederm.dsl.xmission.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Merging and parents
+Date: Tue, 05 Jul 2005 18:19:33 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.05.16.19.28.957617@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 18:40:30 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Jul 05 18:40:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpqTD-000104-4v
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 18:40:27 +0200
+	id 1DpqTB-000104-2x
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 18:40:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261938AbVGEQi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jul 2005 12:38:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261927AbVGEQi5
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 12:38:57 -0400
-Received: from iabervon.org ([66.92.72.58]:52998 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261932AbVGEQXR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 12:23:17 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DpqAX-0008AF-00; Tue, 5 Jul 2005 12:21:09 -0400
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1vf3p2yks.fsf@ebiederm.dsl.xmission.com>
+	id S261944AbVGEQju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jul 2005 12:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261926AbVGEQjf
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 12:39:35 -0400
+Received: from main.gmane.org ([80.91.229.2]:34223 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261925AbVGEQWd (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 12:22:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DpqAN-0006NT-U3
+	for git@vger.kernel.org; Tue, 05 Jul 2005 18:20:59 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2005 18:20:59 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 05 Jul 2005 18:20:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 5 Jul 2005, Eric W. Biederman wrote:
+I just had this ugly merge situation:
 
-> Could you include the person who generated the tag and the time the
-> tag was generated in the tag object?
-> 
-> For a tag like "latest" it would help quite a bit if you could actually
-> find out which was the latest version of it :)
+ M
+ |\
+ | \
+ A  B
+ |\/|
+ |/\|
+ C  D
+ | /
+ |/
+ E
 
-Actually, what you really want here is to put in refs/tags/latest the hash
-of the tag whose "tag" field is v2.6.13-rc1 (or whatever it is). Having a
-tag with the "tag" field of "latest" would be a bit silly, because the
-object will probably stay in circulation long after it's no longer
-true. And the object itself would tell you that it was the latest version
-when it was created (but isn't every version?). That's why you want the
-_tag_ to say something useful about the version (maybe "v2.6.12", maybe
-just "tested"), and the _ref_ to tell you it's the latest.
+Suppose both the EC and the ED branch add files (not with conflicting
+filenames!) which then get modified somewhere between C/D and M.
 
-The fact that lots of tags get refs named with their contents is just due
-to tags only getting used for a small portion of their possible uses. This
-only happens when the feature you'd look something up under is a feature
-which is persistent.
+No matter which node gets picked as the parent, some files will end
+up as "created on different branches" because the chosen parent doesn't
+have them, even though, strictly speaking, it ain't so.
 
-	-Daniel
-*This .sig left intentionally blank*
+So ... what to do? Generate a list of parents, and for each file pick the
+one parent where it (a) exists and (b) has the smallest diff?
+Or just ignore (umm... OK, document) the problem?
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+I'm thankful I didn't believe in God, because it
+would have been another thing for me to conquer.
+		-- Kim Goldman
