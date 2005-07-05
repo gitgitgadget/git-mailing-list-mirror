@@ -1,106 +1,57 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Proposed script: cg-info
-Date: Tue, 05 Jul 2005 01:46:12 -0400
-Message-ID: <1120542372.17286.7.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Last mile for 1.0 again
+Date: Mon, 04 Jul 2005 23:24:23 -0700
+Message-ID: <7v3bqthiso.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.21.0507042137300.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jul 05 07:46:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 05 08:24:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DpgGH-0000IB-J8
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 07:46:25 +0200
+	id 1DpgrG-0003OI-3S
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 08:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261576AbVGEFqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jul 2005 01:46:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261751AbVGEFqS
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 01:46:18 -0400
-Received: from h-64-105-159-118.phlapafg.covad.net ([64.105.159.118]:62951
-	"HELO roinet.com") by vger.kernel.org with SMTP id S261576AbVGEFqN
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 5 Jul 2005 01:46:13 -0400
-Received: (qmail 15352 invoked from network); 5 Jul 2005 05:46:13 -0000
-Received: from mtproxy.roinet.com (HELO dv) (192.168.1.1)
-  by roinet.com with SMTP; 5 Jul 2005 05:46:13 -0000
-To: git <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-X-Mailer: Evolution 2.2.3 (2.2.3-8) 
+	id S261381AbVGEGY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jul 2005 02:24:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261383AbVGEGY3
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 02:24:29 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:38086 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261381AbVGEGYZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2005 02:24:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050705062425.LALO7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 5 Jul 2005 02:24:25 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0507042137300.30848-100000@iabervon.org> (Daniel Barkalow's message of "Mon, 4 Jul 2005 21:54:07 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+>>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
 
-It would be useful to have a script to display current status of the
-repository - branches, current branch and merge status.  Maybe I'm
-missing something, but I don't see such script.
+DB> [perl script]
 
-I wrote a script that would do that.  I'm still not fully familiar with
-the concepts of cogito, so maybe wrong terms are used in the script.  I
-just want to offer this scripts as a base for further work.
+>> How does this work, and what do we do about merges?
 
-cg-info sounds very pretentious, so maybe the script should be renamed
-to cg-heads-ls or cg-admin-status or something like that.
+DB> I've got that part, but I'm not clear on how the rename/copy and complete
+DB> rewrite stuff works.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+Rename/copy is simply about what files to use when comparing
+between two trees.  If you are tracking file F and find that a
+commit created that file by renaming what was originally G, then
+you compare old G and this F and assign blame for common lines
+to the ancestor of that commit (that had those lines in G), and
+take responsibility of the rest yourself (or assign blame for
+them to other parents).
 
-#!/usr/bin/env bash
-#
-# Show status of the GIT repository.
-# Copyright (c) Pavel Roskin 2005
-#
-# The output includes the list of branches and merge status.
-# Current branch is marked by ">"
-
-USAGE="cg-info"
-
-. ${COGITO_LIB}cg-Xlib
-
-mkdir -p $_git/refs/heads
-[ "$(find $_git/refs/heads -follow -type f)" ] \
-       || die "List of heads is empty."
-
-branch=
-headlink=$(readlink $_git/HEAD)
-if [ "$headlink" ]; then
-	branch=$(basename "$headlink")
-else
-	headsha1=$(cat $_git/HEAD)
-	echo "HEAD: $headsha1"
-fi
-
-echo "Heads:"
-
-for head in $_git/refs/heads/*; do
-	headsha1=$(cat $head)
-	headbase=$(basename $head)
-	if [ "$headbase" = "$branch" ]; then
-		echo ">$headbase $headsha1"
-	else
-		echo " $headbase $headsha1"
-	fi
-done
-
-if [ -s "$_git/blocked" ]; then
-	tmp=$(cat "$_git/blocked")
-	echo "Blocked: $tmp"
-fi
-
-if [ -s "$_git/merging" ]; then
-	tmp=$(cat "$_git/merging")
-	echo "Merging: $tmp"
-fi
-
-if [ -s "$_git/merging-sym" ]; then
-	tmp=$(cat "$_git/merging-sym")
-	echo "Merging-sym: $tmp"
-fi
-
-if [ -s "$_git/merge-base" ]; then
-	tmp=$(cat "$_git/merge-base")
-	echo "Merge-base: $tmp"
-fi
-
-
--- 
-Regards,
-Pavel Roskin
+Rewrite is easier.  If diff-tree -B says it is a complete
+rewrite, instead of assigning blame for lines that you are the
+current suspect to any of your parents, you take blame for all
+of them yourself, without comparing the file with the parent to
+assign blame line-by-line.
