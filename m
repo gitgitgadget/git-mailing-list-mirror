@@ -1,78 +1,221 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: Tags
-Date: Tue, 05 Jul 2005 07:04:51 -0600
-Message-ID: <m1vf3p2yks.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.21.0506301403300.30848-100000@iabervon.org>
-	<42C454B2.6090307@zytor.com>
-	<Pine.LNX.4.58.0506301344070.14331@ppc970.osdl.org>
-	<42C462CD.9010909@zytor.com>
-	<Pine.LNX.4.58.0506301432500.14331@ppc970.osdl.org>
-	<42C46B86.8070006@zytor.com>
-	<m13bqyk4uh.fsf_-_@ebiederm.dsl.xmission.com>
-	<42C5714A.1020203@zytor.com>
-	<m1u0jef8z9.fsf@ebiederm.dsl.xmission.com>
-	<42C5C75F.4040100@zytor.com>
-	<m1ll4qf7mg.fsf@ebiederm.dsl.xmission.com>
-	<42C5DA77.4030107@zytor.com>
-	<m1hdfdg0aa.fsf@ebiederm.dsl.xmission.com>
-	<42C6D318.8050108@zytor.com>
-	<m1k6k9drfk.fsf@ebiederm.dsl.xmission.com>
-	<42C6D5AD.9070304@zytor.com>
-	<m1fyuxdpq4.fsf@ebiederm.dsl.xmission.com>
-	<42C7043C.9080904@zytor.com>
-	<Pine.LNX.4.58.0507021432370.8247@g5.osdl.org>
-	<42C70A5B.9070606@zytor.com>
-	<Pine.LNX.4.58.0507021501450.8247@g5.osdl.org>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: Last mile for 1.0 again
+Date: Tue, 5 Jul 2005 06:34:48 -0700 (PDT)
+Message-ID: <20050705133448.21778.qmail@web26309.mail.ukl.yahoo.com>
+References: <7v3bqthiso.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 05 15:06:57 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 05 15:36:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dpn8P-000143-Aw
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 15:06:45 +0200
+	id 1Dpna6-00059q-1n
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 15:35:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261823AbVGENG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 5 Jul 2005 09:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261844AbVGENG1
-	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 09:06:27 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:16098 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261823AbVGENGO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Jul 2005 09:06:14 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j65D4t40014356;
-	Tue, 5 Jul 2005 07:04:55 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j65D4qYp014247;
-	Tue, 5 Jul 2005 07:04:52 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507021501450.8247@g5.osdl.org> (Linus
- Torvalds's message of "Sat, 2 Jul 2005 15:17:07 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261829AbVGENfA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 5 Jul 2005 09:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261830AbVGENfA
+	(ORCPT <rfc822;git-outgoing>); Tue, 5 Jul 2005 09:35:00 -0400
+Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:28092 "HELO
+	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261829AbVGENet (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Jul 2005 09:34:49 -0400
+Received: (qmail 21780 invoked by uid 60001); 5 Jul 2005 13:34:48 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=4swtR9DB1wfeeVy1nxeOlA5Ei3TGvRRNng+a5XTFu0ONpeCUHSxQSUxTEfG8bZhiYtJGYx3WTAo4X+3dkpDyEfpqQVRRuwNAYE0dlG/YMabpxcBOA9j4tVluDH4zcxdbvJAQdQhajZCronVDkJR4LU6dsDNg5v7NMEcXHsevoEE=  ;
+Received: from [195.103.152.66] by web26309.mail.ukl.yahoo.com via HTTP; Tue, 05 Jul 2005 06:34:48 PDT
+To: Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <7v3bqthiso.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> (And you might also change tag contents occasionally. One reason might be
-> a bug and you decide to re-tag something else. But a more common reason
-> might be because you want to have tags like "latest" that don't actually
-> update with development, but they update with some other event, like a
-> release event or some automated test cycle completion or something like
-> that. So tags aren't _immutable_ even from an expectation standpoint, 
-> it's just that they tend to change _less_).
 
-Could you include the person who generated the tag and the time the
-tag was generated in the tag object?
+--- Junio C Hamano <junkio@cox.net> wrote:
 
-For a tag like "latest" it would help quite a bit if you could actually
-find out which was the latest version of it :)
+> >>>>> "DB" == Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> DB> [perl script]
+> 
+> >> How does this work, and what do we do about merges?
+> 
 
-Eric
+Checking diffs of all the parents can be computational expensive. 
+
+I'am developing a different alghoritm for qgit, where I know,
+before to run annotate all the revs that changed a given file.
+
+The revs are saved in the shaHist list according to git-rev-list --merge-order.
+
+The algoritm operates form the oldest to the newst calculating annotation for each 
+following rev.
+
+This alghoritm takes advantage of the fact that mostly revs belong to 2 categories:
+
+1) revs of the same development-sequence (e.g. connected without merges)
+
+2) empty merges, i.e. merges where the file we are interested in
+ is listed in only one merging branch
+
+If a rev in shaHist does not belong to above categories a reach analisys must be performed
+in order to find the direct ancestor among all the previous revs in the list.
+
+
+So starting from shaHist a ReachList rl is populated by getReachability(): 
+
+
+void Annotate::getReachability(ReachList& rl, const QString& file, const QStringList& shaHist) {
+
+	rl.clear();
+	QStringList::const_iterator it = shaHist.begin();
+	Rev* r = revLookup(*it);
+	rl.append(ReachInfo(*it, r->id, INITIAL));
+	for (it++; it != shaHist.end(); it++) {
+		
+		Rev* r = revLookup(*it);
+
+		// initial revision case
+		if (r->parents.count() == 0) {
+			rl.append(ReachInfo(*it, r->id, INITIAL));
+			continue;
+		}
+		// merge case
+		if (r->parents.count() > 1) { 
+
+			// check empty merges diffing against previous in list
+			QString prevSha = rl.last().sha;
+			QString d = getFileDiff(*it, prevSha, file);
+
+			if (d.isEmpty()) { 
+				rl.append(ReachInfo(*it, r->id, EMPTY_MERGE));
+				rl.last().roots.append(prevSha);
+			} else {
+				// real merge: we need reach test.
+				QStringList roots;
+				roots.clear();
+				for (uint i = 0; i < r->parents.count(); i++) {
+
+					// here tree walking is performed
+					QString root = getRoot(r->parents[i], rl);				
+					if (!root.isEmpty())
+						roots.append(root);
+				}
+				rl.append(ReachInfo(*it, r->id, MERGE));
+				rl.last().roots = roots;
+				}
+			}
+			continue;
+		}
+		// normal case: a revision with a single parent
+		if (r->id == rl.last().id) { // same development sequence
+
+			QString prevSha = rl.last().sha;
+			rl.append(ReachInfo(*it, r->id, SAME_BR)); // same branch
+			rl.last().roots.append(prevSha);
+
+		} else { // different development sequence
+
+			QString root = getRoot(*it, rl); // <-- here tree walking is performed
+			if (!root.isEmpty()) {
+				rl.append(ReachInfo(*it, r->id, DIFF_BR));
+				rl.last().roots.append(root);
+			} else
+				qDebug("ASSERT getReachability: rev %s not reachable",
+					(*it).latin1());
+		}
+	}
+}
+
+
+Then ReachList rl is then used to compute correct annotations:
+
+
+void Annotate::run(const QString& file, const QStringList& shaHist, AnnotateHistory& ah) {
+
+	QString d, diffTarget;
+	QStringList t;
+	int pos;
+	ReachList rl;
+	ah.clear();
+
+	getReachability(rl, file, shaHist);  // <-- here ReachList rl is calculated
+
+	for (uint i = 0; i < rl.count(); i++) {
+
+		switch(rl[i].type) { // <-- here ReachList rl is used to find annotations
+
+		case SAME_BR:
+		case DIFF_BR:
+			diffTarget = rl[i].roots.first();
+			d = getFileDiff(rl[i].sha, diffTarget, file);
+			pos = shaHist.findIndex(diffTarget);
+			ah.append(processDiff(d, ah[pos], getAuthor(rl[i].sha, shaHist)));
+			break;
+		case INITIAL:
+			pos = shaHist.findIndex(rl[i].sha);
+			ah.append(getFirstAnnotation(file, shaHist, pos));
+			break;
+		case EMPTY_MERGE:
+			diffTarget = rl[i].roots.first();
+			pos = shaHist.findIndex(diffTarget);
+			t = ah[pos]; // copy annotation from previous
+			ah.append(t);
+			break;
+		case MERGE:
+			// append annotation calculated on first root
+			diffTarget = rl[i].roots.first();
+			d = getFileDiff(rl[i].sha, diffTarget, file);
+			pos = shaHist.findIndex(diffTarget);
+			ah.append(processDiff(d, ah[pos], "Merge"));
+
+			// update annotation with all the others roots
+			for (uint j = 1; j < rl[i].roots.count(); j++) {
+
+				diffTarget = rl[i].roots[j];
+				d = getFileDiff(rl[i].sha, diffTarget, file);
+				pos = shaHist.findIndex(diffTarget);
+
+				// create an annotation calculated between root[i] and
+				// the merge.
+				QStringList scndAnn = processDiff(d, ah[pos],
+						 getAuthor(diffTarget, shaHist));
+
+				// finally we unify the two annotations, so we catch
+				// also the case of a 3-way merge
+				unify(ah.last(), scndAnn);
+			}
+			break;
+		}
+	}
+}
+
+
+Advantage of this algorithm is that reach analisys, i.e. tree walking, is
+done, statistically, only for a small subset of revs.
+
+Another side benefit is that correct annotation is calculated for each rev and
+not only for newest one.
+
+Of course there are issues:
+
+1) A ordered list of revs (file history) must be known in advance. This is not a problem
+   for qgit because file history is calculated while loading revs.
+
+2) Does not takes in account file renames.
+
+
+Hope this notes can help in ongoing discussion
+
+Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
