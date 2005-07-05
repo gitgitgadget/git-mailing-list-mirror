@@ -1,62 +1,63 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: git-fetch-pack
-Date: Mon, 4 Jul 2005 17:08:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507041702590.3570@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Tue Jul 05 02:09:17 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] Restore expected list order for --merge-order switch
+Date: Tue, 05 Jul 2005 11:06:19 +1000
+Message-ID: <20050705010619.13581.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 05 03:07:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dpazt-0005Au-2K
-	for gcvg-git@gmane.org; Tue, 05 Jul 2005 02:09:09 +0200
+	id 1Dpbtg-0003Zu-Ff
+	for gcvg-git@gmane.org; Tue, 05 Jul 2005 03:06:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261740AbVGEAI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 4 Jul 2005 20:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261739AbVGEAI5
-	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 20:08:57 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38023 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261738AbVGEAIx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Jul 2005 20:08:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6508njA031994
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Mon, 4 Jul 2005 17:08:49 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6508jsi009345
-	for <git@vger.kernel.org>; Mon, 4 Jul 2005 17:08:48 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261737AbVGEBGg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 4 Jul 2005 21:06:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261743AbVGEBGe
+	(ORCPT <rfc822;git-outgoing>); Mon, 4 Jul 2005 21:06:34 -0400
+Received: from 203-173-52-158.dyn.iinet.net.au ([203.173.52.158]:128 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S261737AbVGEBGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Jul 2005 21:06:22 -0400
+Received: (qmail 13592 invoked by uid 500); 5 Jul 2005 01:06:19 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Ok,
- I've written a "git-fetch-pack" along the lines I outlined a few days 
-ago, ie the person doing the fetching ends up listing the commits it has, 
-and then both ends negotiate the missing objects.
+A recent change to rev-list altered the order in which start points
+are presented to the merge-order sort algorithm. This caused
+breaks in the t/t6001 unit tests.
 
-It's probably buggy in many ways, but I actually used it to fetch the last 
-merge with Russell King:
+This change restores the order in which start points are presented to the
+the merge-order sort algorithm (but leaves the order unchanged from
+the immediately preceding behaviour for non --merge-order sorts).
 
-	remote=$(git-fetch-pack $repo master)
-	if [ "$remote" ]; then
-		git resolve $(git-rev-parse HEAD) $remote "Merge $repo"
-	fi
+The order in which arguments are presented to the merge-order
+sort algorithm is significant, since left-most arguments
+are expected to sort last so as to be consistent with
+how left-most parents sort.
 
-ends up doing something sane.
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
 
-In general, the format is to tell git-fetch-pack where to fetch things
-from, and what branch to use (if you give none, or you give multiple, it
-does various magic things, you shouldn't do it). It will then fetch and 
-unpack the pack, and return the SHA1 corresponding to the remote ref if 
-everything was successful.
+ rev-list.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-So the above will fetch a remote ref, and resolve it (ie it's basically a 
-specialized "git pull").
-
-		Linus
+ed4451af196ea31ec0c6c7f663290a9b325482cd
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -482,7 +482,10 @@ int main(int argc, char **argv)
+ 		commit = get_commit_reference(arg, flags);
+ 		if (!commit)
+ 			continue;
+-		insert_by_date(&list, commit);
++		if (!merge_order) 
++			insert_by_date(&list, commit);
++		else
++			commit_list_insert(commit, &list);
+ 	}
+ 
+ 	if (!merge_order) {		
+------------
