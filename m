@@ -1,108 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] clone-pack.c:write_one_ref() - Create leading directories.
-Date: Wed, 06 Jul 2005 01:11:52 -0700
-Message-ID: <7vfyusxsjb.fsf@assigned-by-dhcp.cox.net>
-References: <7voe9gxw7y.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 06 10:14:47 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] Tidy up - slight simplification of rev-list.c
+Date: Wed, 06 Jul 2005 18:12:34 +1000
+Message-ID: <20050706081234.14219.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 06 10:14:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq52p-0006o2-Ur
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 10:14:12 +0200
+	id 1Dq53L-0006qP-7f
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 10:14:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262198AbVGFINh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 04:13:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262203AbVGFINC
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 04:13:02 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:52452 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S262157AbVGFIL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 04:11:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050706081152.GVWY23392.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 6 Jul 2005 04:11:52 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7voe9gxw7y.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Tue, 05 Jul 2005 23:52:17 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261652AbVGFIOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 04:14:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262176AbVGFIOM
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 04:14:12 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:40067 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262201AbVGFIMh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 04:12:37 -0400
+Received: (qmail 14229 invoked by uid 500); 6 Jul 2005 08:12:34 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The function write_one_ref() is passed the list of refs received
-from the other end, which was obtained by directory traversal
-under $GIT_DIR/refs; this can contain paths other than what
-git-init-db prepares and would fail to clone when there is
-such.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+This patch implements a small tidy up of rev-list.c to reduce
+(but not eliminate) the amount of ugliness associated
+with the merge_order flag.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+Linus: I decided not to abstract this out as a function
+as _too_ much abstraction can be a bad thing from a
+readability point of view. Let me know if you disagree.
 ---
 
- cache.h      |    2 ++
- clone-pack.c |    5 ++++-
- sha1_file.c  |   19 +++++++++++++++++++
- 3 files changed, 25 insertions(+), 1 deletions(-)
+ rev-list.c |   10 +++-------
+ 1 files changed, 3 insertions(+), 7 deletions(-)
 
-dfad9e5e585c1c9e1eaf599878f040f7ae519b18
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -161,6 +161,8 @@ extern void rollback_index_file(struct c
- extern char *git_path(const char *fmt, ...);
- extern char *sha1_file_name(const unsigned char *sha1);
+34a034b978c6b946fafdf41b42c5f67ee9c94599
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -78,19 +78,15 @@ static void show_commit(struct commit *c
  
-+int safe_create_leading_directories(char *path);
-+
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern void * map_sha1_file(const unsigned char *sha1, unsigned long *size);
- extern int unpack_sha1_header(z_stream *stream, void *map, unsigned long mapsize, void *buffer, unsigned long size);
-diff --git a/clone-pack.c b/clone-pack.c
---- a/clone-pack.c
-+++ b/clone-pack.c
-@@ -68,9 +68,12 @@ static int is_master(struct ref *ref)
- static void write_one_ref(struct ref *ref)
+ static int filter_commit(struct commit * commit)
  {
- 	char *path = git_path(ref->name);
--	int fd = open(path, O_CREAT | O_EXCL | O_WRONLY, 0666);
-+	int fd;
- 	char *hex;
- 
-+	if (safe_create_leading_directories(path))
-+		die("unable to create leading directory for %s", ref->name);
-+	fd = open(path, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 	if (fd < 0)
- 		die("unable to create ref %s", ref->name);
- 	hex = sha1_to_hex(ref->sha1);
-diff --git a/sha1_file.c b/sha1_file.c
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -130,6 +130,25 @@ char *git_path(const char *fmt, ...)
- 	return ret;
- }
- 
-+int safe_create_leading_directories(char *path)
-+{
-+	char *pos = path;
-+
-+	while (pos) {
-+		pos = strchr(pos, '/');
-+		if (!pos)
-+			break;
-+		*pos = 0;
-+		if (mkdir(path, 0777) < 0)
-+			if (errno != EEXIST) {
-+				*pos = '/';
-+				return -1;
-+			}
-+		*pos++ = '/';
-+	}
-+	return 0;
-+}
-+
- int get_sha1(const char *str, unsigned char *sha1)
- {
- 	static const char *prefix[] = {
+-	if (merge_order && stop_traversal && commit->object.flags & BOUNDARY)
++	if (stop_traversal && (commit->object.flags & BOUNDARY))
+ 		return STOP;
+ 	if (commit->object.flags & (UNINTERESTING|SHOWN))
+ 		return CONTINUE;
+ 	if (min_age != -1 && (commit->date > min_age))
+ 		return CONTINUE;
+ 	if (max_age != -1 && (commit->date < max_age)) {
+-		if (!merge_order)
+-			return STOP;
+-		else {
+-			stop_traversal = 1;
+-			return CONTINUE;
+-		}
++		stop_traversal=1;
++		return merge_order?CONTINUE:STOP;
+ 	}
+ 	if (max_count != -1 && !max_count--)
+ 		return STOP;
+------------
