@@ -1,57 +1,52 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: git-update-cache:
-Date: Wed, 6 Jul 2005 03:11:50 +0200
-Message-ID: <20050706011150.GA9081@mars.ravnborg.org>
-References: <20050705210256.GA28700@mars.ravnborg.org> <20050705224220.GA22219@mars.ravnborg.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] sha1_file.c;prepare_packed_git_one() - fix DIR leak
+Date: Tue, 05 Jul 2005 23:52:17 -0700
+Message-ID: <7voe9gxw7y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jul 06 08:11:49 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 06 08:54:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq38G-0002w0-OE
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 08:11:41 +0200
+	id 1Dq3n5-0006n1-B1
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 08:53:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262127AbVGFGKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 02:10:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262134AbVGFGFy
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 02:05:54 -0400
-Received: from pfepc.post.tele.dk ([195.41.46.237]:44161 "EHLO
-	pfepc.post.tele.dk") by vger.kernel.org with ESMTP id S262127AbVGFGFY
-	(ORCPT <rfc822;git@vger.kernel.org>); Wed, 6 Jul 2005 02:05:24 -0400
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pfepc.post.tele.dk (Postfix) with ESMTP id CDFF4262824
-	for <git@vger.kernel.org>; Wed,  6 Jul 2005 08:05:17 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id 4BECA6AC021; Wed,  6 Jul 2005 03:11:51 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050705224220.GA22219@mars.ravnborg.org>
-User-Agent: Mutt/1.5.8i
+	id S262087AbVGFGxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 02:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262149AbVGFGxY
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 02:53:24 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:34467 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S262087AbVGFGwn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 02:52:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050706065216.DHQF16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 6 Jul 2005 02:52:16 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 06, 2005 at 12:42:20AM +0200, Sam Ravnborg wrote:
-> > 
-> > I receive the following error:
-> > git-update-cache: symbol lookup error: git-update-cache: undefined
-> > symbol: deflateBound
-> > 
-> 	
-> > open("/usr/lib/libz.so.1", O_RDONLY)    = 3
-> 
-> This is the reason.
-> 
-> For a strange reason when git-update-chache was compiled is was linked
-> dynamically towards an older libz.so version.
-> Latest installed is libz.1.2.2 which includes deflateBound.
-> libz.so.1 points at 1.1.4 which does not.
+The function calls opendir() without a matching closedir().
 
-The solution was to let libz.so.1 point to latest libz.so file.
-In my gentoo distribution there seems to be inconsistency
-if /lib or /usr/lib is used. That was the root cause.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Back to do some useful stuff..
+ sha1_file.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-	Sam
+7a47797264a0be7955f3422a6e79e3311ab2775f
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -463,6 +463,7 @@ static void prepare_packed_git_one(char 
+ 		p->next = packed_git;
+ 		packed_git = p;
+ 	}
++	closedir(dir);
+ }
+ 
+ void prepare_packed_git(void)
