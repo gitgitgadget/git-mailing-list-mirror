@@ -1,45 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Short-circuit git-clone-pack while cloning locally.
-Date: Wed, 06 Jul 2005 11:00:09 -0700
-Message-ID: <7vy88jx1au.fsf@assigned-by-dhcp.cox.net>
-References: <20050704.125744.59481768.davem@davemloft.net>
-	<Pine.LNX.4.58.0507041327580.3570@g5.osdl.org>
-	<Pine.LNX.4.58.0507051721450.3570@g5.osdl.org>
-	<7v8y0kxsfq.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507060911510.3570@g5.osdl.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Tags
+Date: Wed, 06 Jul 2005 20:04:03 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.06.18.03.57.445719@smurf.noris.de>
+References: <Pine.LNX.4.21.0507051155580.30848-100000@iabervon.org> <m1br5hywde.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507051132530.3570@g5.osdl.org> <7vy88ldpml.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 06 20:01:23 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Jul 06 20:18:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqECL-0000z9-1q
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 20:00:37 +0200
+	id 1DqESk-0003gU-3j
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 20:17:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261847AbVGFSAR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 14:00:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262313AbVGFSAR
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 14:00:17 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11964 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261847AbVGFSAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 14:00:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050706180009.QGQN12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 6 Jul 2005 14:00:09 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507060911510.3570@g5.osdl.org> (Linus Torvalds's message of "Wed, 6 Jul 2005 09:13:12 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262272AbVGFSQu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 14:16:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262313AbVGFSQc
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 14:16:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:63969 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261807AbVGFSFe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2005 14:05:34 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DqEGO-0001cd-Sj
+	for git@vger.kernel.org; Wed, 06 Jul 2005 20:04:49 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Jul 2005 20:04:48 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 06 Jul 2005 20:04:48 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Hi, Junio C Hamano wrote:
 
-LT> It would seem that you don't do anything at all for the non-local case.
+> I wanted to have something like this in the past for some reason
+> I do not exactly remember anymore, but basically it was to
+> record "here is the list of related objects."
 
-Oops.
+One use I'd have for that is regression testing -- collect all IDs in one
+bag and then say "gitk bad ^good".
+
+OTOH, I dunno whether the core tools really need to understand that.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+If at first you don't succeed, you must be a programmer.
