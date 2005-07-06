@@ -1,153 +1,128 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 3/6] Introduce struct rev_list_fns to rev-list.c to reduce amount of conditional processing.
-Date: Wed, 06 Jul 2005 17:51:16 +1000
-Message-ID: <20050706075116.3989.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 2/6] Swap order of insert_by_date arguments
+Date: Wed, 06 Jul 2005 17:51:14 +1000
+Message-ID: <20050706075114.3970.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 06 09:59:30 2005
+X-From: git-owner@vger.kernel.org Wed Jul 06 10:00:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq4oO-0005Ev-9Z
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:59:16 +0200
+	id 1Dq4p7-0005K5-Vq
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 10:00:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262154AbVGFH6L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 03:58:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262200AbVGFH6I
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:58:08 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:26753 "HELO
+	id S262162AbVGFH72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 03:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262150AbVGFH72
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:59:28 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:25731 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262174AbVGFHvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 03:51:23 -0400
-Received: (qmail 3999 invoked by uid 500); 6 Jul 2005 07:51:16 -0000
+	id S262166AbVGFHvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 03:51:21 -0400
+Received: (qmail 3980 invoked by uid 500); 6 Jul 2005 07:51:14 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Per a suggestion from Linus, I have introduced the rev_list_fns structure into
-rev-list.c
+Swap the order of insert_by_date arguments so that it
+matches the order of commit_list_insert.
 
-The intent of this change is to make use of a strategy pattern to configure 
-the behaviour of git-rev-list and so help limit the ever-increasing 
-proliferation of boolean switches throughout the body of the code.
-
-This change also makes --show-breaks imply --merge-order rather than require
-it as before. There was no advantage to the previous strict argument
-checking.
-
-A subsequent change will take advantage of this pattern to introduce a
-topological sort switch.
+This patch anticipates a future change which will call the
+function via a pointer.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- Documentation/git-rev-list.txt |    2 +
- rev-list.c                     |   54 +++++++++++++++++++++++++++-------------
- 2 files changed, 38 insertions(+), 18 deletions(-)
+ commit.c   |    8 ++++----
+ commit.h   |    6 +++++-
+ epoch.c    |    4 ++--
+ rev-list.c |    2 +-
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-1ecc1f5936fb35d2ea8e7aef2d97643a78fe1069
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -57,7 +57,7 @@ Commits marked with (^) are not parents 
- These "breaks" represent necessary discontinuities implied by trying to
- represent an arbtirary DAG in a linear form.
+486d4dee9772a59b955574951e8d4946b75cf9fa
+diff --git a/commit.c b/commit.c
+--- a/commit.c
++++ b/commit.c
+@@ -147,7 +147,7 @@ void free_commit_list(struct commit_list
+ 	}
+ }
  
--*--show-breaks* is only valid if *--merge-order* is also specified.
-+*--show-breaks* implies **-merge-order*.
+-void insert_by_date(struct commit_list **list, struct commit *item)
++struct commit_list * insert_by_date(struct commit *item, struct commit_list **list)
+ {
+ 	struct commit_list **pp = list;
+ 	struct commit_list *p;
+@@ -157,7 +157,7 @@ void insert_by_date(struct commit_list *
+ 		}
+ 		pp = &p->next;
+ 	}
+-	commit_list_insert(item, pp);
++	return commit_list_insert(item, pp);
+ }
  
- Author
- ------
+ 	
+@@ -165,7 +165,7 @@ void sort_by_date(struct commit_list **l
+ {
+ 	struct commit_list *ret = NULL;
+ 	while (*list) {
+-		insert_by_date(&ret, (*list)->item);
++		insert_by_date((*list)->item, &ret);
+ 		*list = (*list)->next;
+ 	}
+ 	*list = ret;
+@@ -186,7 +186,7 @@ struct commit *pop_most_recent_commit(st
+ 		parse_commit(commit);
+ 		if (!(commit->object.flags & mark)) {
+ 			commit->object.flags |= mark;
+-			insert_by_date(list, commit);
++			insert_by_date(commit, list);
+ 		}
+ 		parents = parents->next;
+ 	}
+diff --git a/commit.h b/commit.h
+--- a/commit.h
++++ b/commit.h
+@@ -44,7 +44,11 @@ enum cmit_fmt {
+ extern enum cmit_fmt get_commit_format(const char *arg);
+ extern unsigned long pretty_print_commit(enum cmit_fmt fmt, const char *msg, unsigned long len, char *buf, unsigned long space);
+ 
+-void insert_by_date(struct commit_list **list, struct commit *item);
++/*
++ * Inserts item into the list specified in most recent commit date first order.
++ * A pointer to the most recently inserted item is returned.
++ */
++struct commit_list * insert_by_date(struct commit *item, struct commit_list **list);
+ 
+ /** Removes the first commit from a list sorted by date, and adds all
+  * of its parents.
+diff --git a/epoch.c b/epoch.c
+--- a/epoch.c
++++ b/epoch.c
+@@ -255,11 +255,11 @@ static int find_base_for_list(struct com
+ 
+ 				if (!parent_node) {
+ 					parent_node = new_mass_counter(parent, &distribution);
+-					insert_by_date(&pending, parent);
++					insert_by_date(parent, &pending);
+ 					commit_list_insert(parent, &cleaner);
+ 				} else {
+ 					if (!compare(&parent_node->pending, get_zero()))
+-						insert_by_date(&pending, parent);
++						insert_by_date(parent, &pending);
+ 					add(&parent_node->pending, &parent_node->pending, &distribution);
+ 				}
+ 			}
 diff --git a/rev-list.c b/rev-list.c
 --- a/rev-list.c
 +++ b/rev-list.c
-@@ -39,6 +39,12 @@ static int merge_order = 0;
- static int show_breaks = 0;
- static int stop_traversal = 0;
- 
-+struct rev_list_fns {
-+	struct commit_list * (*insert)(struct commit *, struct commit_list **);
-+	struct commit_list * (*limit)(struct commit_list *);
-+	void (*process)(struct commit_list *);
-+};
-+
- static void show_commit(struct commit *commit)
- {
- 	commit->object.flags |= SHOWN;
-@@ -410,9 +416,30 @@ static struct commit *get_commit_referen
- 	die("%s is unknown object", name);
- }
- 
-+static void merge_order_sort(struct commit_list * list)
-+{
-+	if (sort_list_in_merge_order(list, &process_commit))
-+		die("commit graph traversal failed");
-+}
-+
-+struct rev_list_fns default_fns = {
-+	&insert_by_date,
-+	&limit_list,
-+        &show_commit_list
-+};
-+
-+struct rev_list_fns merge_order_fns = {
-+	&commit_list_insert,
-+	NULL,
-+	&merge_order_sort
-+};
-+
- int main(int argc, char **argv)
- {
- 	struct commit_list *list = NULL;
-+	struct commit_list *sorted = NULL;
-+	struct commit_list **list_tail = &list;
-+	struct rev_list_fns * fns = &default_fns;
- 	int i, limited = 0;
- 
- 	for (i = 1 ; i < argc; i++) {
-@@ -468,6 +495,7 @@ int main(int argc, char **argv)
- 		}
- 		if (!strcmp(arg, "--show-breaks")) {
- 			show_breaks = 1;
-+			merge_order = 1;
- 			continue;
- 		}
- 
-@@ -477,26 +505,18 @@ int main(int argc, char **argv)
- 			arg++;
- 			limited = 1;
- 		}
--		if (show_breaks && !merge_order)
--			usage(rev_list_usage);
- 		commit = get_commit_reference(arg, flags);
+@@ -483,7 +483,7 @@ int main(int argc, char **argv)
  		if (!commit)
  			continue;
--		if (!merge_order) 
--			insert_by_date(commit, &list);
--		else 
--			commit_list_insert(commit, &list);
-+		list_tail = &commit_list_insert(commit, list_tail)->next;
+ 		if (!merge_order) 
+-			insert_by_date(&list, commit);
++			insert_by_date(commit, &list);
+ 		else 
+ 			commit_list_insert(commit, &list);
  	}
--
--	if (!merge_order) {		
--	        if (limited)
--			list = limit_list(list);
--		show_commit_list(list);
--	} else {
--		if (sort_list_in_merge_order(list, &process_commit)) {
--			  die("merge order sort failed\n");
--		}
--	}
--
-+	if (merge_order)
-+		fns=&merge_order_fns;
-+	while (list)
-+		(*(fns->insert))(pop_commit(&list), &sorted);
-+	list=sorted;
-+	if (limited && fns->limit)
-+		list = (*(fns->limit))(list);
-+	(*(fns->process))(list);
- 	return 0;
- }
 ------------
