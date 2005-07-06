@@ -1,115 +1,290 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: cvsimport: rewritten in Perl
-Date: Wed, 06 Jul 2005 12:24:27 +0200
-Message-ID: <20050706102427.A6B12353A6A@atlas.denx.de>
-References: <20050705230226.0F9F4353A69@atlas.denx.de> <Pine.LNX.4.58.0507051936350.3570@g5.osdl.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed ;
-	boundary="==_Exmh_1120645459_21020"
-X-From: git-owner@vger.kernel.org Wed Jul 06 12:39:19 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 2/3] Introduce unit tests for git-rev-list --bisect
+Date: Wed, 06 Jul 2005 20:11:27 +1000
+Message-ID: <20050706101127.29963.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 06 12:39:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq7IN-00079F-I4
+	id 1Dq7IN-00079F-1V
 	for gcvg-git@gmane.org; Wed, 06 Jul 2005 12:38:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262273AbVGFKem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S262280AbVGFKem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
 	Wed, 6 Jul 2005 06:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262364AbVGFKel
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 06:34:41 -0400
-Received: from mailout07.sul.t-online.com ([194.25.134.83]:21643 "EHLO
-	mailout07.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S262324AbVGFK1J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 06:27:09 -0400
-Received: from fwd25.aul.t-online.de 
-	by mailout07.sul.t-online.com with smtp 
-	id 1Dq77U-0000Ot-00; Wed, 06 Jul 2005 12:27:08 +0200
-Received: from denx.de (EfLmXMZvYeOM0g3mJEUuyom+GiSRPbuyNl+TDuN-bQsatmiGo2F4Qc@[84.150.70.229]) by fwd25.sul.t-online.de
-	with esmtp id 1Dq77B-1K3isq0; Wed, 6 Jul 2005 12:26:49 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP id 1B9BA42950
-	for <git@vger.kernel.org>; Wed,  6 Jul 2005 12:26:48 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id A6B12353A6A
-	for <git@vger.kernel.org>; Wed,  6 Jul 2005 12:24:27 +0200 (MEST)
-X-Mailer: exmh version 2.7.2 01/07/2005 with nmh-1.1
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVGFKdZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 06:33:25 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:36736 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262280AbVGFKLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 06:11:37 -0400
+Received: (qmail 29973 invoked by uid 500); 6 Jul 2005 10:11:27 -0000
 To: git@vger.kernel.org
-In-reply-to: <Pine.LNX.4.58.0507051936350.3570@g5.osdl.org> 
-Comments: In-reply-to Linus Torvalds <torvalds@osdl.org>
-   message dated "Tue, 05 Jul 2005 19:41:30 -0700."
-X-ID: EfLmXMZvYeOM0g3mJEUuyom+GiSRPbuyNl+TDuN-bQsatmiGo2F4Qc@t-dialin.net
-X-TOI-MSGID: 64ce39a2-0469-4eea-b010-dbe9dbc210cc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multipart MIME message.
 
---==_Exmh_1120645459_21020
-Content-Type: text/plain; charset=us-ascii
+This patch introduces some unit tests for the git-rev-list --bisect functionality.
 
-In message <Pine.LNX.4.58.0507051936350.3570@g5.osdl.org> Linus Torvalds wrote:
-> 
-> If you make it print out its <pid> and then pause, you can use 
-> 
-> 	ls -l /proc/<pid>/fd/
-> 
-> to get an idea of what the files may be. Looks like the new perl version 
-> is leaking file descriptors..
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
 
-It does. In case it's still of interest:  log file attached.
+ t/t6002-rev-list-bisect.sh |  247 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 247 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6002-rev-list-bisect.sh
 
-Best regards,
-
-Wolfgang Denk
-
-
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-It seems intuitively obvious to me, which  means  that  it  might  be
-wrong.                                                 -- Chris Torek
-
-
---==_Exmh_1120645459_21020
-Content-Type: application/x-gzip ; name="git-cvsimport-script.log.gz"
-Content-Description: git-cvsimport-script.log.gz
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="git-cvsimport-script.log.gz"
-
-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
---==_Exmh_1120645459_21020--
+98721c0ec0eef1e96c51848c528da0a793fe07a5
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+new file mode 100755
+--- /dev/null
++++ b/t/t6002-rev-list-bisect.sh
+@@ -0,0 +1,247 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Jon Seymour
++#
++test_description='Tests git-rev-list --bisect functionality'
++
++. ./test-lib.sh
++. ../t6000-lib.sh
++
++bc_expr()
++{
++bc <<EOF
++scale=1
++define abs(x) { if (x>=0) { return x; } else { return -x; } }
++define floor(x) { save=scale; scale=0; result=x/1; scale=save; return result; }
++$*
++EOF
++}
++
++# usage: test_bisection max-diff bisect-option head ^prune...
++#
++# e.g. test_bisection 1 --bisect l1 ^l0
++#
++test_bisection_diff()
++{
++	_max_diff=$1
++	_bisect_option=$2
++	shift 2
++	_bisection=$(git-rev-list $_bisect_option "$@")
++	_list_size=$(git-rev-list "$@" | wc -l)
++        _head=$1
++	shift 1
++	_bisection_size=$(git-rev-list $_bisection "$@" | wc -l)
++	[ -n "$_list_size" -a -n "$_bisection_size" ] || error "test_bisection_diff failed"
++	test_expect_success "bisection diff $_bisect_option $_head $* <= $_max_diff" "[ $(bc_expr "floor(abs($_list_size/2)-$_bisection_size)") -le $_max_diff ]"
++}
++
++date >path0
++git-update-cache --add path0
++save_tag tree git-write-tree
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag root unique_commit root tree
++on_committer_date "1971-08-16 00:00:01" save_tag l0 unique_commit l0 tree -p root
++on_committer_date "1971-08-16 00:00:02" save_tag l1 unique_commit l1 tree -p l0
++on_committer_date "1971-08-16 00:00:03" save_tag l2 unique_commit l2 tree -p l1
++on_committer_date "1971-08-16 00:00:04" save_tag a0 unique_commit a0 tree -p l2
++on_committer_date "1971-08-16 00:00:05" save_tag a1 unique_commit a1 tree -p a0
++on_committer_date "1971-08-16 00:00:06" save_tag b1 unique_commit b1 tree -p a0
++on_committer_date "1971-08-16 00:00:07" save_tag c1 unique_commit c1 tree -p b1
++on_committer_date "1971-08-16 00:00:08" save_tag b2 unique_commit b2 tree -p b1
++on_committer_date "1971-08-16 00:00:09" save_tag b3 unique_commit b2 tree -p b2
++on_committer_date "1971-08-16 00:00:10" save_tag c2 unique_commit c2 tree -p c1 -p b2
++on_committer_date "1971-08-16 00:00:11" save_tag c3 unique_commit c3 tree -p c2
++on_committer_date "1971-08-16 00:00:12" save_tag a2 unique_commit a2 tree -p a1
++on_committer_date "1971-08-16 00:00:13" save_tag a3 unique_commit a3 tree -p a2
++on_committer_date "1971-08-16 00:00:14" save_tag b4 unique_commit b4 tree -p b3 -p a3
++on_committer_date "1971-08-16 00:00:15" save_tag a4 unique_commit a4 tree -p a3 -p b4 -p c3
++on_committer_date "1971-08-16 00:00:16" save_tag l3 unique_commit l3 tree -p a4
++on_committer_date "1971-08-16 00:00:17" save_tag l4 unique_commit l4 tree -p l3
++on_committer_date "1971-08-16 00:00:18" save_tag l5 unique_commit l5 tree -p l4
++tag l5 > .git/HEAD
++
++
++#     E
++#    / \
++#   e1  |
++#   |   |
++#   e2  |
++#   |   |
++#   e3  |
++#   |   |
++#   e4  |
++#   |   |
++#   |   f1
++#   |   |
++#   |   f2
++#   |   |
++#   |   f3
++#   |   |
++#   |   f4
++#   |   |
++#   e5  |
++#   |   |
++#   e6  |
++#   |   |
++#   e7  |
++#   |   |
++#   e8  |
++#    \ /
++#     F
++
++
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag F unique_commit F tree
++on_committer_date "1971-08-16 00:00:01" save_tag e8 unique_commit e8 tree -p F
++on_committer_date "1971-08-16 00:00:02" save_tag e7 unique_commit e7 tree -p e8
++on_committer_date "1971-08-16 00:00:03" save_tag e6 unique_commit e6 tree -p e7
++on_committer_date "1971-08-16 00:00:04" save_tag e5 unique_commit e5 tree -p e6
++on_committer_date "1971-08-16 00:00:05" save_tag f4 unique_commit f4 tree -p F
++on_committer_date "1971-08-16 00:00:06" save_tag f3 unique_commit f3 tree -p f4
++on_committer_date "1971-08-16 00:00:07" save_tag f2 unique_commit f2 tree -p f3
++on_committer_date "1971-08-16 00:00:08" save_tag f1 unique_commit f1 tree -p f2
++on_committer_date "1971-08-16 00:00:09" save_tag e4 unique_commit e4 tree -p e5
++on_committer_date "1971-08-16 00:00:10" save_tag e3 unique_commit e3 tree -p e4
++on_committer_date "1971-08-16 00:00:11" save_tag e2 unique_commit e2 tree -p e3
++on_committer_date "1971-08-16 00:00:12" save_tag e1 unique_commit e1 tree -p e2
++on_committer_date "1971-08-16 00:00:13" save_tag E unique_commit E tree -p e1 -p f1
++
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag U unique_commit U tree
++on_committer_date "1971-08-16 00:00:01" save_tag u0 unique_commit u0 tree -p U
++on_committer_date "1971-08-16 00:00:01" save_tag u1 unique_commit u1 tree -p u0
++on_committer_date "1971-08-16 00:00:02" save_tag u2 unique_commit u2 tree -p u0
++on_committer_date "1971-08-16 00:00:03" save_tag u3 unique_commit u3 tree -p u0
++on_committer_date "1971-08-16 00:00:04" save_tag u4 unique_commit u4 tree -p u0
++on_committer_date "1971-08-16 00:00:05" save_tag u5 unique_commit u5 tree -p u0
++on_committer_date "1971-08-16 00:00:06" save_tag V unique_commit V tree -p u1 -p u2 -p u3 -p u4 -p u5
++
++
++#
++# cd to t/trash and use 
++#
++#    git-rev-list ... 2>&1 | sed "$(cat sed.script)" 
++#
++# if you ever want to manually debug the operation of git-rev-list
++#
++echo $sed_script > sed.script
++
++test_sequence()
++{
++	_bisect_option=$1	
++	
++	test_bisection_diff 0 $_bisect_option l0 ^root
++	test_bisection_diff 0 $_bisect_option l1 ^root
++	test_bisection_diff 0 $_bisect_option l2 ^root
++	test_bisection_diff 0 $_bisect_option a0 ^root
++	test_bisection_diff 0 $_bisect_option a1 ^root
++	test_bisection_diff 0 $_bisect_option a2 ^root
++	test_bisection_diff 0 $_bisect_option a3 ^root
++	test_bisection_diff 0 $_bisect_option b1 ^root
++	test_bisection_diff 0 $_bisect_option b2 ^root
++	test_bisection_diff 0 $_bisect_option b3 ^root
++	test_bisection_diff 0 $_bisect_option c1 ^root
++	test_bisection_diff 0 $_bisect_option c2 ^root
++	test_bisection_diff 0 $_bisect_option c3 ^root
++	test_bisection_diff 0 $_bisect_option E ^F
++	test_bisection_diff 0 $_bisect_option e1 ^F
++	test_bisection_diff 0 $_bisect_option e2 ^F
++	test_bisection_diff 0 $_bisect_option e3 ^F
++	test_bisection_diff 0 $_bisect_option e4 ^F
++	test_bisection_diff 0 $_bisect_option e5 ^F
++	test_bisection_diff 0 $_bisect_option e6 ^F
++	test_bisection_diff 0 $_bisect_option e7 ^F
++	test_bisection_diff 0 $_bisect_option f1 ^F
++	test_bisection_diff 0 $_bisect_option f2 ^F
++	test_bisection_diff 0 $_bisect_option f3 ^F
++	test_bisection_diff 0 $_bisect_option f4 ^F
++	test_bisection_diff 0 $_bisect_option E ^F
++
++	test_bisection_diff 1 $_bisect_option V ^U
++	test_bisection_diff 0 $_bisect_option V ^U ^u1 ^u2 ^u3
++	test_bisection_diff 0 $_bisect_option u1 ^U
++	test_bisection_diff 0 $_bisect_option u2 ^U
++	test_bisection_diff 0 $_bisect_option u3 ^U
++	test_bisection_diff 0 $_bisect_option u4 ^U
++	test_bisection_diff 0 $_bisect_option u5 ^U
++	
++#
++# the following illustrate's Linus' binary bug blatt idea. 
++#
++# assume the bug is actually at l3, but you don't know that - all you know is that l3 is broken
++# and it wasn't broken before
++#
++# keep bisecting the list, advancing the "bad" head and accumulating "good" heads until
++# the bisection point is the head - this is the bad point.
++#
++
++test_output_expect_success "--bisect l5 ^root" 'git-rev-list $_bisect_option l5 ^root' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3" 'git-rev-list $_bisect_option l5 ^root ^c3' <<EOF
++b4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3 ^b4" 'git-rev-list $_bisect_option l5 ^c3 ^b4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^root ^c3 ^b4" 'git-rev-list $_bisect_option l3 ^root ^c3 ^b4' <<EOF
++a4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^b3 ^a3 ^b4 ^a4" 'git-rev-list $_bisect_option l3 ^b3 ^a3 ^a4' <<EOF
++l3
++EOF
++
++#
++# if l3 is bad, then l4 is bad too - so advance the bad pointer by making b4 the known bad head
++#
++
++test_output_expect_success "$_bisect_option l4 ^a2 ^a3 ^b ^a4" 'git-rev-list $_bisect_option l4 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^a2 ^a3 ^b ^a4" 'git-rev-list $_bisect_option l3 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++# found!
++
++#
++# as another example, let's consider a4 to be the bad head, in which case
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3' <<EOF
++a4
++EOF
++
++# found!
++
++#
++# or consider c3 to be the bad head
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option c3 ^a2 ^a3 ^b4 ^c2" 'git-rev-list $_bisect_option c3 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++# found!
++
++}
++
++test_sequence "--bisect"
++
++#
++#
++test_done
+------------
