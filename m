@@ -1,49 +1,290 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 13/13] Fixes a problem with --merge-order A B (A is linear descendent of a merge B)
-Date: Thu, 07 Jul 2005 02:39:35 +1000
-Message-ID: <20050706163935.10032.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 10/13] Introduce unit tests for git-rev-list --bisect
+Date: Thu, 07 Jul 2005 02:39:34 +1000
+Message-ID: <20050706163934.9981.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 06 18:48:04 2005
+X-From: git-owner@vger.kernel.org Wed Jul 06 18:48:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqD38-00064h-Hg
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:47:02 +0200
+	id 1DqD3v-00067A-74
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262354AbVGFQqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 12:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262372AbVGFQoQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:44:16 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:4225 "HELO
+	id S262359AbVGFQr2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 12:47:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262365AbVGFQrP
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:47:15 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:57219 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262363AbVGFQjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 12:39:54 -0400
-Received: (qmail 10042 invoked by uid 500); 6 Jul 2005 16:39:35 -0000
+	id S262357AbVGFQjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 12:39:49 -0400
+Received: (qmail 9991 invoked by uid 500); 6 Jul 2005 16:39:34 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This patch passes the test case introduced by the previous patch.
+This patch introduces some unit tests for the git-rev-list --bisect functionality.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- epoch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ t/t6002-rev-list-bisect.sh |  247 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 247 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6002-rev-list-bisect.sh
 
-6f7f90901ec4aafd12ac4179110b78fc426395cd
-diff --git a/epoch.c b/epoch.c
---- a/epoch.c
-+++ b/epoch.c
-@@ -612,7 +612,7 @@ int sort_list_in_merge_order(struct comm
- 		while (reversed) {
- 			struct commit * next = pop_commit(&reversed);
- 
--			if (!(next->object.flags & VISITED)) {
-+			if (!(next->object.flags & VISITED) && next!=base) {
- 				sort_first_epoch(next, &stack);
- 				if (reversed) {
- 					/*
+5c47ce16a5b71238bddd7ae75cc694b9479fd0d9
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+new file mode 100755
+--- /dev/null
++++ b/t/t6002-rev-list-bisect.sh
+@@ -0,0 +1,247 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Jon Seymour
++#
++test_description='Tests git-rev-list --bisect functionality'
++
++. ./test-lib.sh
++. ../t6000-lib.sh
++
++bc_expr()
++{
++bc <<EOF
++scale=1
++define abs(x) { if (x>=0) { return x; } else { return -x; } }
++define floor(x) { save=scale; scale=0; result=x/1; scale=save; return result; }
++$*
++EOF
++}
++
++# usage: test_bisection max-diff bisect-option head ^prune...
++#
++# e.g. test_bisection 1 --bisect l1 ^l0
++#
++test_bisection_diff()
++{
++	_max_diff=$1
++	_bisect_option=$2
++	shift 2
++	_bisection=$(git-rev-list $_bisect_option "$@")
++	_list_size=$(git-rev-list "$@" | wc -l)
++        _head=$1
++	shift 1
++	_bisection_size=$(git-rev-list $_bisection "$@" | wc -l)
++	[ -n "$_list_size" -a -n "$_bisection_size" ] || error "test_bisection_diff failed"
++	test_expect_success "bisection diff $_bisect_option $_head $* <= $_max_diff" "[ $(bc_expr "floor(abs($_list_size/2)-$_bisection_size)") -le $_max_diff ]"
++}
++
++date >path0
++git-update-cache --add path0
++save_tag tree git-write-tree
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag root unique_commit root tree
++on_committer_date "1971-08-16 00:00:01" save_tag l0 unique_commit l0 tree -p root
++on_committer_date "1971-08-16 00:00:02" save_tag l1 unique_commit l1 tree -p l0
++on_committer_date "1971-08-16 00:00:03" save_tag l2 unique_commit l2 tree -p l1
++on_committer_date "1971-08-16 00:00:04" save_tag a0 unique_commit a0 tree -p l2
++on_committer_date "1971-08-16 00:00:05" save_tag a1 unique_commit a1 tree -p a0
++on_committer_date "1971-08-16 00:00:06" save_tag b1 unique_commit b1 tree -p a0
++on_committer_date "1971-08-16 00:00:07" save_tag c1 unique_commit c1 tree -p b1
++on_committer_date "1971-08-16 00:00:08" save_tag b2 unique_commit b2 tree -p b1
++on_committer_date "1971-08-16 00:00:09" save_tag b3 unique_commit b2 tree -p b2
++on_committer_date "1971-08-16 00:00:10" save_tag c2 unique_commit c2 tree -p c1 -p b2
++on_committer_date "1971-08-16 00:00:11" save_tag c3 unique_commit c3 tree -p c2
++on_committer_date "1971-08-16 00:00:12" save_tag a2 unique_commit a2 tree -p a1
++on_committer_date "1971-08-16 00:00:13" save_tag a3 unique_commit a3 tree -p a2
++on_committer_date "1971-08-16 00:00:14" save_tag b4 unique_commit b4 tree -p b3 -p a3
++on_committer_date "1971-08-16 00:00:15" save_tag a4 unique_commit a4 tree -p a3 -p b4 -p c3
++on_committer_date "1971-08-16 00:00:16" save_tag l3 unique_commit l3 tree -p a4
++on_committer_date "1971-08-16 00:00:17" save_tag l4 unique_commit l4 tree -p l3
++on_committer_date "1971-08-16 00:00:18" save_tag l5 unique_commit l5 tree -p l4
++tag l5 > .git/HEAD
++
++
++#     E
++#    / \
++#   e1  |
++#   |   |
++#   e2  |
++#   |   |
++#   e3  |
++#   |   |
++#   e4  |
++#   |   |
++#   |   f1
++#   |   |
++#   |   f2
++#   |   |
++#   |   f3
++#   |   |
++#   |   f4
++#   |   |
++#   e5  |
++#   |   |
++#   e6  |
++#   |   |
++#   e7  |
++#   |   |
++#   e8  |
++#    \ /
++#     F
++
++
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag F unique_commit F tree
++on_committer_date "1971-08-16 00:00:01" save_tag e8 unique_commit e8 tree -p F
++on_committer_date "1971-08-16 00:00:02" save_tag e7 unique_commit e7 tree -p e8
++on_committer_date "1971-08-16 00:00:03" save_tag e6 unique_commit e6 tree -p e7
++on_committer_date "1971-08-16 00:00:04" save_tag e5 unique_commit e5 tree -p e6
++on_committer_date "1971-08-16 00:00:05" save_tag f4 unique_commit f4 tree -p F
++on_committer_date "1971-08-16 00:00:06" save_tag f3 unique_commit f3 tree -p f4
++on_committer_date "1971-08-16 00:00:07" save_tag f2 unique_commit f2 tree -p f3
++on_committer_date "1971-08-16 00:00:08" save_tag f1 unique_commit f1 tree -p f2
++on_committer_date "1971-08-16 00:00:09" save_tag e4 unique_commit e4 tree -p e5
++on_committer_date "1971-08-16 00:00:10" save_tag e3 unique_commit e3 tree -p e4
++on_committer_date "1971-08-16 00:00:11" save_tag e2 unique_commit e2 tree -p e3
++on_committer_date "1971-08-16 00:00:12" save_tag e1 unique_commit e1 tree -p e2
++on_committer_date "1971-08-16 00:00:13" save_tag E unique_commit E tree -p e1 -p f1
++
++on_committer_date "1971-08-16 00:00:00" hide_error save_tag U unique_commit U tree
++on_committer_date "1971-08-16 00:00:01" save_tag u0 unique_commit u0 tree -p U
++on_committer_date "1971-08-16 00:00:01" save_tag u1 unique_commit u1 tree -p u0
++on_committer_date "1971-08-16 00:00:02" save_tag u2 unique_commit u2 tree -p u0
++on_committer_date "1971-08-16 00:00:03" save_tag u3 unique_commit u3 tree -p u0
++on_committer_date "1971-08-16 00:00:04" save_tag u4 unique_commit u4 tree -p u0
++on_committer_date "1971-08-16 00:00:05" save_tag u5 unique_commit u5 tree -p u0
++on_committer_date "1971-08-16 00:00:06" save_tag V unique_commit V tree -p u1 -p u2 -p u3 -p u4 -p u5
++
++
++#
++# cd to t/trash and use 
++#
++#    git-rev-list ... 2>&1 | sed "$(cat sed.script)" 
++#
++# if you ever want to manually debug the operation of git-rev-list
++#
++echo $sed_script > sed.script
++
++test_sequence()
++{
++	_bisect_option=$1	
++	
++	test_bisection_diff 0 $_bisect_option l0 ^root
++	test_bisection_diff 0 $_bisect_option l1 ^root
++	test_bisection_diff 0 $_bisect_option l2 ^root
++	test_bisection_diff 0 $_bisect_option a0 ^root
++	test_bisection_diff 0 $_bisect_option a1 ^root
++	test_bisection_diff 0 $_bisect_option a2 ^root
++	test_bisection_diff 0 $_bisect_option a3 ^root
++	test_bisection_diff 0 $_bisect_option b1 ^root
++	test_bisection_diff 0 $_bisect_option b2 ^root
++	test_bisection_diff 0 $_bisect_option b3 ^root
++	test_bisection_diff 0 $_bisect_option c1 ^root
++	test_bisection_diff 0 $_bisect_option c2 ^root
++	test_bisection_diff 0 $_bisect_option c3 ^root
++	test_bisection_diff 0 $_bisect_option E ^F
++	test_bisection_diff 0 $_bisect_option e1 ^F
++	test_bisection_diff 0 $_bisect_option e2 ^F
++	test_bisection_diff 0 $_bisect_option e3 ^F
++	test_bisection_diff 0 $_bisect_option e4 ^F
++	test_bisection_diff 0 $_bisect_option e5 ^F
++	test_bisection_diff 0 $_bisect_option e6 ^F
++	test_bisection_diff 0 $_bisect_option e7 ^F
++	test_bisection_diff 0 $_bisect_option f1 ^F
++	test_bisection_diff 0 $_bisect_option f2 ^F
++	test_bisection_diff 0 $_bisect_option f3 ^F
++	test_bisection_diff 0 $_bisect_option f4 ^F
++	test_bisection_diff 0 $_bisect_option E ^F
++
++	test_bisection_diff 1 $_bisect_option V ^U
++	test_bisection_diff 0 $_bisect_option V ^U ^u1 ^u2 ^u3
++	test_bisection_diff 0 $_bisect_option u1 ^U
++	test_bisection_diff 0 $_bisect_option u2 ^U
++	test_bisection_diff 0 $_bisect_option u3 ^U
++	test_bisection_diff 0 $_bisect_option u4 ^U
++	test_bisection_diff 0 $_bisect_option u5 ^U
++	
++#
++# the following illustrate's Linus' binary bug blatt idea. 
++#
++# assume the bug is actually at l3, but you don't know that - all you know is that l3 is broken
++# and it wasn't broken before
++#
++# keep bisecting the list, advancing the "bad" head and accumulating "good" heads until
++# the bisection point is the head - this is the bad point.
++#
++
++test_output_expect_success "--bisect l5 ^root" 'git-rev-list $_bisect_option l5 ^root' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3" 'git-rev-list $_bisect_option l5 ^root ^c3' <<EOF
++b4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^root ^c3 ^b4" 'git-rev-list $_bisect_option l5 ^c3 ^b4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^root ^c3 ^b4" 'git-rev-list $_bisect_option l3 ^root ^c3 ^b4' <<EOF
++a4
++EOF
++
++test_output_expect_success "$_bisect_option l5 ^b3 ^a3 ^b4 ^a4" 'git-rev-list $_bisect_option l3 ^b3 ^a3 ^a4' <<EOF
++l3
++EOF
++
++#
++# if l3 is bad, then l4 is bad too - so advance the bad pointer by making b4 the known bad head
++#
++
++test_output_expect_success "$_bisect_option l4 ^a2 ^a3 ^b ^a4" 'git-rev-list $_bisect_option l4 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++test_output_expect_success "$_bisect_option l3 ^a2 ^a3 ^b ^a4" 'git-rev-list $_bisect_option l3 ^a2 ^a3 ^a4' <<EOF
++l3
++EOF
++
++# found!
++
++#
++# as another example, let's consider a4 to be the bad head, in which case
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4 ^c2 ^c3' <<EOF
++a4
++EOF
++
++# found!
++
++#
++# or consider c3 to be the bad head
++#
++
++test_output_expect_success "$_bisect_option a4 ^a2 ^a3 ^b4" 'git-rev-list $_bisect_option a4 ^a2 ^a3 ^b4' <<EOF
++c2
++EOF
++
++test_output_expect_success "$_bisect_option c3 ^a2 ^a3 ^b4 ^c2" 'git-rev-list $_bisect_option c3 ^a2 ^a3 ^b4 ^c2' <<EOF
++c3
++EOF
++
++# found!
++
++}
++
++test_sequence "--bisect"
++
++#
++#
++test_done
 ------------
