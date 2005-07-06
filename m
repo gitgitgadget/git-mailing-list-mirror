@@ -1,162 +1,208 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 5/6] Introduce --topo-order switch to git-rev-list
-Date: Wed, 06 Jul 2005 17:51:21 +1000
-Message-ID: <20050706075121.4027.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 4/6] Add a topological sort procedure to commit.c [rev 4]
+Date: Wed, 06 Jul 2005 17:51:18 +1000
+Message-ID: <20050706075118.4008.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 06 09:58:17 2005
+X-From: git-owner@vger.kernel.org Wed Jul 06 09:58:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq4nQ-00057V-Q5
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:58:17 +0200
+	id 1Dq4nR-00057V-P8
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262186AbVGFH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 03:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262144AbVGFHzZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:55:25 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:47491 "HELO
+	id S262197AbVGFH5Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 03:57:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262192AbVGFH5M
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:57:12 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:62338 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262180AbVGFHv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 03:51:26 -0400
-Received: (qmail 4037 invoked by uid 500); 6 Jul 2005 07:51:21 -0000
+	id S262175AbVGFHvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 03:51:25 -0400
+Received: (qmail 4018 invoked by uid 500); 6 Jul 2005 07:51:18 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This patch introduces a --topo-order switch to git-rev-list.
+This patch introduces an in-place topological sort procedure to commit.c.
 
-When this --switch is specified, a minimal topological sort
-weaker than the --merge-order sort is applied to the output
-list.
+Given a list of commits, sort_in_topological_order() will perform an in-place
+topological sort of that list.
 
-The invariant of the resulting list is:
-	a is reachable from b => ord(b) < ord(a)
+The invariant that applies to the resulting list is:
+
+       a reachable from b => ord(b) < ord(a)
+
+This invariant is weaker than the --merge-order invariant, but is cheaper
+to calculate (assuming the list has been identified) and will serve any
+purpose where only a minimal topological order guarantee is required.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
+Note: this patch currently has no observable consequences since nothing
+in this patch calls it. A future patch will use this algorithm to provide
+support for a --topo-order flag.
 
- Documentation/git-rev-list.txt |    9 +++++++--
- rev-list.c                     |   27 +++++++++++++++++++++++++--
- 2 files changed, 32 insertions(+), 4 deletions(-)
+This patch is a complete replacement for earlier revisions of this patch.
 
-8829e9cd41c15ecc39214d76e117c28cfc8757ce
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -9,13 +9,15 @@ git-rev-list - Lists commit objects in r
+[rev 2]
+  * incorporates Junio's questions/comments as commentary,
+  * adds object.util save/restore functionality so that no
+    assumption is made about the pre-existing state of object.util
+    upon entry to the procedure.
+[rev 3]
+  * removed object.util save/restore
+  * added more documentation to header about pre-conditions
+[rev 4]
+  * re-applied rev 3 to new patch series - no other change
+---
+
+ commit.c |  107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit.h |   13 ++++++++
+ 2 files changed, 120 insertions(+), 0 deletions(-)
+
+f80e897fd36a77425cdec24af48746706d7a2e74
+diff --git a/commit.c b/commit.c
+--- a/commit.c
++++ b/commit.c
+@@ -3,6 +3,22 @@
+ #include "commit.h"
+ #include "cache.h"
  
- SYNOPSIS
- --------
--'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* [ *--show-breaks* ] ] <commit>
-+'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* ] [ *--show-breaks* ] [ *--topo-order* ] <commit>... ^<prune>...
- 
- DESCRIPTION
- -----------
- Lists commit objects in reverse chronological order starting at the
- given commit, taking ancestry relationship into account.  This is
--useful to produce human-readable log output.
-+useful to produce human-readable log output. If prune points are specified
-+with ^<prune>... arguments, the output will not include any commits reachable
-+from (and including) the prune points.
- 
- If *--merge-order* is specified, the commit history is decomposed into a
- unique sequence of minimal, non-linear epochs and maximal, linear epochs.
-@@ -59,6 +61,9 @@ represent an arbtirary DAG in a linear f
- 
- *--show-breaks* implies **-merge-order*.
- 
-+If *--topo-order* is specified, the commit history is sorted in a topological
-+order that is weaker than the topological order generated by *--merge-order*.
++struct sort_node
++{
++	/*
++         * the number of children of the associated commit
++         * that also occur in the list being sorted.
++         */
++	unsigned int indegree;
 +
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -20,6 +20,7 @@ static const char rev_list_usage[] =
- 		      "  --unpacked\n"
- 		      "  --header\n"
- 		      "  --pretty\n"
-+		      "  --topo-order\n"
- 		      "  --merge-order [ --show-breaks ]";
- 
- static int unpacked = 0;
-@@ -38,10 +39,12 @@ static enum cmit_fmt commit_format = CMI
- static int merge_order = 0;
- static int show_breaks = 0;
- static int stop_traversal = 0;
-+static int topo_order = 0;
- 
- struct rev_list_fns {
- 	struct commit_list * (*insert)(struct commit *, struct commit_list **);
- 	struct commit_list * (*limit)(struct commit_list *);
-+	void (*post_limit_sort)(struct commit_list **);
- 	void (*process)(struct commit_list *);
- };
- 
-@@ -425,12 +428,21 @@ static void merge_order_sort(struct comm
- struct rev_list_fns default_fns = {
- 	&insert_by_date,
- 	&limit_list,
--        &show_commit_list
-+	NULL,
-+	&show_commit_list
++	/*
++         * reference to original list item that we will re-use
++         * on output.
++         */
++	struct commit_list * list_item;
++
 +};
 +
-+struct rev_list_fns topo_order_fns = {
-+	&insert_by_date,
-+	&limit_list,
-+	&sort_in_topological_order,
-+	&show_commit_list
- };
+ const char *commit_type = "commit";
  
- struct rev_list_fns merge_order_fns = {
- 	&commit_list_insert,
- 	NULL,
-+	NULL,
- 	&merge_order_sort
- };
- 
-@@ -439,7 +451,7 @@ int main(int argc, char **argv)
- 	struct commit_list *list = NULL;
- 	struct commit_list *sorted = NULL;
- 	struct commit_list **list_tail = &list;
--	struct rev_list_fns * fns = &default_fns;
-+	struct rev_list_fns * fns = NULL;
- 	int i, limited = 0;
- 
- 	for (i = 1 ; i < argc; i++) {
-@@ -498,6 +510,11 @@ int main(int argc, char **argv)
- 			merge_order = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--topo-order")) {
-+		        topo_order = 1;
-+			limited=1;
-+			continue;
-+		}
- 
- 		flags = 0;
- 		if (*arg == '^') {
-@@ -512,11 +529,17 @@ int main(int argc, char **argv)
- 	}
- 	if (merge_order)
- 		fns=&merge_order_fns;
-+	else if (topo_order)
-+		fns=&topo_order_fns;
-+	else
-+		fns=&default_fns;
- 	while (list)
- 		(*(fns->insert))(pop_commit(&list), &sorted);
- 	list=sorted;
- 	if (limited && fns->limit)
- 		list = (*(fns->limit))(list);
-+	if (fns->post_limit_sort)
-+		(*(fns->post_limit_sort))(&list);
- 	(*(fns->process))(list);
- 	return 0;
+ enum cmit_fmt get_commit_format(const char *arg)
+@@ -346,3 +362,94 @@ int count_parents(struct commit * commit
+         return count;
  }
+ 
++/*
++ * Performs an in-place topological sort on the list supplied.
++ */
++void sort_in_topological_order(struct commit_list ** list)
++{
++	struct commit_list * next = *list;
++	struct commit_list * work = NULL;
++	struct commit_list ** pptr = list;
++	struct sort_node * nodes;
++	struct sort_node * next_nodes;
++	int count = 0;
++
++	/* determine the size of the list */
++	while (next) {
++		next = next->next;
++		count++;
++	}
++	/* allocate an array to help sort the list */
++	nodes = xcalloc(count, sizeof(*nodes));
++	/* link the list to the array */
++	next_nodes = nodes;
++	next=*list;
++	while (next) {
++		next_nodes->list_item = next;
++		next->item->object.util = next_nodes;
++		next_nodes++;
++		next = next->next;
++	}
++	/* update the indegree */
++	next=*list;
++	while (next) {
++		struct commit_list * parents = next->item->parents;
++		while (parents) {
++			struct commit * parent=parents->item;
++			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			
++			if (pn)
++				pn->indegree++;
++			parents=parents->next;
++		}
++		next=next->next;
++	}
++	/* 
++         * find the tips
++         *
++         * tips are nodes not reachable from any other node in the list 
++         * 
++         * the tips serve as a starting set for the work queue.
++         */
++	next=*list;
++	while (next) {
++		struct sort_node * node = (struct sort_node *)next->item->object.util;
++
++		if (node->indegree == 0) {
++			commit_list_insert(next->item, &work);
++		}
++		next=next->next;
++	}
++	/* process the list in topological order */
++	while (work) {
++		struct commit * work_item = pop_commit(&work);
++		struct sort_node * work_node = (struct sort_node *)work_item->object.util;
++		struct commit_list * parents = work_item->parents;
++
++		while (parents) {
++			struct commit * parent=parents->item;
++			struct sort_node * pn = (struct sort_node *)parent->object.util;
++			
++			if (pn) {
++				/* 
++				 * parents are only enqueued for emission 
++                                 * when all their children have been emitted thereby
++                                 * guaranteeing topological order.
++                                 */
++				pn->indegree--;
++				if (!pn->indegree) 
++					commit_list_insert(parent, &work);
++			}
++			parents=parents->next;
++		}
++		/*
++                 * work_item is a commit all of whose children
++                 * have already been emitted. we can emit it now.
++                 */
++		*pptr = work_node->list_item;
++		pptr = &(*pptr)->next;
++		*pptr = NULL;
++		work_item->object.util = NULL;
++	}
++	free(nodes);
++}
+diff --git a/commit.h b/commit.h
+--- a/commit.h
++++ b/commit.h
+@@ -59,4 +59,17 @@ struct commit *pop_most_recent_commit(st
+ struct commit *pop_commit(struct commit_list **stack);
+ 
+ int count_parents(struct commit * commit);
++
++/*
++ * Performs an in-place topological sort of list supplied.
++ *
++ * Pre-conditions:
++ *   all commits in input list and all parents of those
++ *   commits must have object.util == NULL
++ *        
++ * Post-conditions: 
++ *   invariant of resulting list is:
++ *      a reachable from b => ord(b) < ord(a)
++ */
++void sort_in_topological_order(struct commit_list ** list);
+ #endif /* COMMIT_H */
 ------------
