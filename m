@@ -1,110 +1,285 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Let umask do its work upon filesystem object creation.
-Date: Wed, 06 Jul 2005 01:21:46 -0700
-Message-ID: <7v3bqsxs2t.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 06 10:25:24 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 1/3] Factor out useful test case infrastructure from t/t6001... into t/t6000-lib.sh
+Date: Wed, 06 Jul 2005 20:11:24 +1000
+Message-ID: <20050706101124.29944.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 06 12:38:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq5Db-00088G-6K
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 10:25:19 +0200
+	id 1Dq7HP-000704-3i
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 12:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262216AbVGFIYg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 04:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262233AbVGFIYe
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 04:24:34 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:61907 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262226AbVGFIVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 04:21:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050706082145.KZGY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 6 Jul 2005 04:21:45 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S262203AbVGFKem (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 06:34:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262340AbVGFKaJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 06:30:09 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:30081 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262277AbVGFKLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 06:11:35 -0400
+Received: (qmail 29954 invoked by uid 500); 6 Jul 2005 10:11:24 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-IIRC our strategy was to let the users' umask take care of the
-final mode bits.  This patch fixes places that deviate from it.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Functions that are useful to other t6xxx testcases are moved into t6000-lib.sh
+
+To use these functions in a test case, use a test-case pre-amble like:
+
+. ./test-lib.sh
+. ../t6000-lib.sh # t6xxx specific functions
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+This patch series introduces tests for the git-rev-list --bisect functionality 
+and includes Mark Allen's sed separator patch.
+
+The patches included are:
+
+[PATCH 1/3] Factor out useful test case infrastructure from t/t6001... into t/t6000-lib.sh
+[PATCH 2/3] Introduce unit tests for git-rev-list --bisect
+[PATCH 3/3] Change the sed seperator in t/t6000-lib.sh.
 ---
 
- apply.c        |    2 +-
- csum-file.c    |    2 +-
- entry.c        |    4 ++--
- init-db.c      |    2 +-
- receive-pack.c |    2 +-
- 5 files changed, 6 insertions(+), 6 deletions(-)
+ t/t6000-lib.sh                  |  105 +++++++++++++++++++++++++++++++++++++
+ t/t6001-rev-list-merge-order.sh |  112 ---------------------------------------
+ 2 files changed, 106 insertions(+), 111 deletions(-)
+ create mode 100644 t/t6000-lib.sh
 
-ccb441ce2e7be11fcab19f385332c530bff132f0
-diff --git a/apply.c b/apply.c
---- a/apply.c
-+++ b/apply.c
-@@ -1237,7 +1237,7 @@ static void create_subdirectories(const 
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
--		if (mkdir(buf, 0755) < 0) {
-+		if (mkdir(buf, 0777) < 0) {
- 			if (errno != EEXIST)
- 				break;
- 		}
-diff --git a/csum-file.c b/csum-file.c
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -86,7 +86,7 @@ struct sha1file *sha1create(const char *
- 		die("you wascally wabbit, you");
- 	f->namelen = len;
+a6686d8335905d55ef6cf996af1d3eb229ad955c
+diff --git a/t/t6000-lib.sh b/t/t6000-lib.sh
+new file mode 100644
+--- /dev/null
++++ b/t/t6000-lib.sh
+@@ -0,0 +1,105 @@
++[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
++
++sed_script="";
++
++# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
++tag()
++{
++	_tag=$1
++	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
++	cat .git/refs/tags/$_tag
++}
++
++# Generate a commit using the text specified to make it unique and the tree
++# named by the tag specified.
++unique_commit()
++{
++	_text=$1
++        _tree=$2
++	shift 2
++    	echo $_text | git-commit-tree $(tag $_tree) "$@"
++}
++
++# Save the output of a command into the tag specified. Prepend
++# a substitution script for the tag onto the front of $sed_script
++save_tag()
++{
++	_tag=$1	
++	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
++	shift 1
++    	"$@" >.git/refs/tags/$_tag
++    	sed_script="s/$(tag $_tag)/$_tag/g${sed_script+;}$sed_script"
++}
++
++# Replace unhelpful sha1 hashses with their symbolic equivalents 
++entag()
++{
++	sed "$sed_script"
++}
++
++# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
++# tag to a specified value. Restore the original value on return.
++as_author()
++{
++	_author=$1
++	shift 1
++        _save=$GIT_AUTHOR_EMAIL
++
++	export GIT_AUTHOR_EMAIL="$_author"
++	"$@"
++        export GIT_AUTHOR_EMAIL="$_save"
++}
++
++commit_date()
++{
++        _commit=$1
++	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
++}
++
++on_committer_date()
++{
++    _date=$1
++    shift 1
++    GIT_COMMITTER_DATE=$_date "$@"
++}
++
++# Execute a command and suppress any error output.
++hide_error()
++{
++	"$@" 2>/dev/null
++}
++
++check_output()
++{
++	_name=$1
++	shift 1
++	if eval "$*" | entag > $_name.actual
++	then
++		diff $_name.expected $_name.actual
++	else
++		return 1;
++	fi
++}
++
++# Turn a reasonable test description into a reasonable test name.
++# All alphanums translated into -'s which are then compressed and stripped
++# from front and back.
++name_from_description()
++{
++        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
++}
++
++
++# Execute the test described by the first argument, by eval'ing
++# command line specified in the 2nd argument. Check the status code
++# is zero and that the output matches the stream read from 
++# stdin.
++test_output_expect_success()
++{	
++	_description=$1
++        _test=$2
++        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
++        _name=$(echo $_description | name_from_description)
++	cat > $_name.expected
++	test_expect_success "$_description" "check_output $_name \"$_test\"" 
++}
+diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
+--- a/t/t6001-rev-list-merge-order.sh
++++ b/t/t6001-rev-list-merge-order.sh
+@@ -6,117 +6,7 @@
+ test_description='Tests git-rev-list --merge-order functionality'
  
--	fd = open(f->name, O_CREAT | O_EXCL | O_WRONLY, 0644);
-+	fd = open(f->name, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 	if (fd < 0)
- 		die("unable to open %s (%s)", f->name, strerror(errno));
- 	f->fd = fd;
-diff --git a/entry.c b/entry.c
---- a/entry.c
-+++ b/entry.c
-@@ -12,10 +12,10 @@ static void create_directories(const cha
- 		len = slash - path;
- 		memcpy(buf, path, len);
- 		buf[len] = 0;
--		if (mkdir(buf, 0755)) {
-+		if (mkdir(buf, 0777)) {
- 			if (errno == EEXIST) {
- 				struct stat st;
--				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0755))
-+				if (len > state->base_dir_len && state->force && !unlink(buf) && !mkdir(buf, 0777))
- 					continue;
- 				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
- 					continue; /* ok */
-diff --git a/init-db.c b/init-db.c
---- a/init-db.c
-+++ b/init-db.c
-@@ -7,7 +7,7 @@
+ . ./test-lib.sh
+-
+-#
+-# TODO: move the following block (upto --- end ...) into testlib.sh
+-#
+-[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
+-
+-sed_script="";
+-
+-# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
+-tag()
+-{
+-	_tag=$1
+-	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
+-	cat .git/refs/tags/$_tag
+-}
+-
+-# Generate a commit using the text specified to make it unique and the tree
+-# named by the tag specified.
+-unique_commit()
+-{
+-	_text=$1
+-        _tree=$2
+-	shift 2
+-    	echo $_text | git-commit-tree $(tag $_tree) "$@"
+-}
+-
+-# Save the output of a command into the tag specified. Prepend
+-# a substitution script for the tag onto the front of $sed_script
+-save_tag()
+-{
+-	_tag=$1	
+-	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
+-	shift 1
+-    	"$@" >.git/refs/tags/$_tag
+-    	sed_script="s/$(tag $_tag)/$_tag/g${sed_script+;}$sed_script"
+-}
+-
+-# Replace unhelpful sha1 hashses with their symbolic equivalents 
+-entag()
+-{
+-	sed "$sed_script"
+-}
+-
+-# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
+-# tag to a specified value. Restore the original value on return.
+-as_author()
+-{
+-	_author=$1
+-	shift 1
+-        _save=$GIT_AUTHOR_EMAIL
+-
+-	export GIT_AUTHOR_EMAIL="$_author"
+-	"$@"
+-        export GIT_AUTHOR_EMAIL="$_save"
+-}
+-
+-commit_date()
+-{
+-        _commit=$1
+-	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
+-}
+-
+-on_committer_date()
+-{
+-    _date=$1
+-    shift 1
+-    GIT_COMMITTER_DATE=$_date "$@"
+-}
+-
+-# Execute a command and suppress any error output.
+-hide_error()
+-{
+-	"$@" 2>/dev/null
+-}
+-
+-check_output()
+-{
+-	_name=$1
+-	shift 1
+-	if eval "$*" | entag > $_name.actual
+-	then
+-		diff $_name.expected $_name.actual
+-	else
+-		return 1;
+-	fi
+-}
+-
+-# Turn a reasonable test description into a reasonable test name.
+-# All alphanums translated into -'s which are then compressed and stripped
+-# from front and back.
+-name_from_description()
+-{
+-        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
+-}
+-
+-
+-# Execute the test described by the first argument, by eval'ing
+-# command line specified in the 2nd argument. Check the status code
+-# is zero and that the output matches the stream read from 
+-# stdin.
+-test_output_expect_success()
+-{	
+-	_description=$1
+-        _test=$2
+-        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
+-        _name=$(echo $_description | name_from_description)
+-	cat > $_name.expected
+-	test_expect_success "$_description" "check_output $_name \"$_test\"" 
+-}
+-
+-# --- end of stuff to move ---
++. ../t6000-lib.sh # t6xxx specific functions
  
- static void safe_create_dir(const char *dir)
- {
--	if (mkdir(dir, 0755) < 0) {
-+	if (mkdir(dir, 0777) < 0) {
- 		if (errno != EEXIST) {
- 			perror(dir);
- 			exit(1);
-diff --git a/receive-pack.c b/receive-pack.c
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -70,7 +70,7 @@ static void update(const char *name, uns
- 	if (!has_sha1_file(new_sha1))
- 		die("unpack should have generated %s, but I can't find it!", new_hex);
- 
--	newfd = open(lock_name, O_CREAT | O_EXCL | O_WRONLY, 0644);
-+	newfd = open(lock_name, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 	if (newfd < 0)
- 		die("unable to create %s (%s)", lock_name, strerror(errno));
- 
+ # test-case specific test function
+ check_adjacency()
+------------
