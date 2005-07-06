@@ -1,73 +1,153 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 6/6] Change gitk so that it uses --topo-order rather than --merge-order
-Date: Wed, 06 Jul 2005 17:51:45 +1000
-Message-ID: <20050706075145.4732.qmail@blackcubes.dyndns.org>
-Cc: torvalds@osdl.org, jon.seymour@gmail.com, paulus@samba.org
-X-From: git-owner@vger.kernel.org Wed Jul 06 09:58:34 2005
+Subject: [PATCH 3/6] Introduce struct rev_list_fns to rev-list.c to reduce amount of conditional processing.
+Date: Wed, 06 Jul 2005 17:51:16 +1000
+Message-ID: <20050706075116.3989.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 06 09:59:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq4nR-00057V-8f
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:58:17 +0200
+	id 1Dq4oO-0005Ev-9Z
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:59:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262089AbVGFH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 03:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262196AbVGFHyC
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:54:02 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:62336 "HELO
+	id S262154AbVGFH6L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 03:58:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262200AbVGFH6I
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:58:08 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:26753 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262189AbVGFHvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 03:51:51 -0400
-Received: (qmail 4742 invoked by uid 500); 6 Jul 2005 07:51:46 -0000
+	id S262174AbVGFHvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 03:51:23 -0400
+Received: (qmail 3999 invoked by uid 500); 6 Jul 2005 07:51:16 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This change is made so that gitk --all produces the same result for
-every user irrespective of whether git-rev-parse --all produces
-the same result for every user. By using --topo-order rather than
---merge-order this can be guaranteed and the existing (non-timestamp dependent)
-behaviour of --merge-order can be maintained.
+Per a suggestion from Linus, I have introduced the rev_list_fns structure into
+rev-list.c
+
+The intent of this change is to make use of a strategy pattern to configure 
+the behaviour of git-rev-list and so help limit the ever-increasing 
+proliferation of boolean switches throughout the body of the code.
+
+This change also makes --show-breaks imply --merge-order rather than require
+it as before. There was no advantage to the previous strict argument
+checking.
+
+A subsequent change will take advantage of this pattern to introduce a
+topological sort switch.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
-Paul, could you review this patch and if you agree, ack it.
 
-The rationale for changing gitk to use --topo-order is that git-rev-list will
-produce the same order for --topo-order irrespective of the order of the
-start list, whereas git-rev-list --merge-order produces an order that is deliberately
-sensitive to the order of the start list.
+ Documentation/git-rev-list.txt |    2 +
+ rev-list.c                     |   54 +++++++++++++++++++++++++++-------------
+ 2 files changed, 38 insertions(+), 18 deletions(-)
 
-Linus wants gitk --all to behave the same way, irrespective of what order
-git-rev-parse --all produces its output. I want --merge-order to keep its
-existing behaviour, so we agreed on this compromise whereby gitk uses
---topo-order rather than --merge-order by default.
-
-My understanding of your code is that you only expect a minimal topological ordering
-guarantee and the ordering produced by --topo-order should be sufficient
-for your needs - that is, you don't rely on the other aspect of the
---merge-order invariant.
-
-I'll leave it to you and Linus to decide how you want to manage the merge between
-your HEAD and Linus'.
----
-
- gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-ff2ca5764029d451f2a728845dad12c4e950fae1
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -37,7 +37,7 @@ proc getcommits {rargs} {
- 	set parsed_args $rargs
-     }
-     if [catch {
--	set commfd [open "|git-rev-list --header --merge-order $parsed_args" r]
-+	set commfd [open "|git-rev-list --header --topo-order $parsed_args" r]
-     } err] {
- 	puts stderr "Error executing git-rev-list: $err"
- 	exit 1
+1ecc1f5936fb35d2ea8e7aef2d97643a78fe1069
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -57,7 +57,7 @@ Commits marked with (^) are not parents 
+ These "breaks" represent necessary discontinuities implied by trying to
+ represent an arbtirary DAG in a linear form.
+ 
+-*--show-breaks* is only valid if *--merge-order* is also specified.
++*--show-breaks* implies **-merge-order*.
+ 
+ Author
+ ------
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -39,6 +39,12 @@ static int merge_order = 0;
+ static int show_breaks = 0;
+ static int stop_traversal = 0;
+ 
++struct rev_list_fns {
++	struct commit_list * (*insert)(struct commit *, struct commit_list **);
++	struct commit_list * (*limit)(struct commit_list *);
++	void (*process)(struct commit_list *);
++};
++
+ static void show_commit(struct commit *commit)
+ {
+ 	commit->object.flags |= SHOWN;
+@@ -410,9 +416,30 @@ static struct commit *get_commit_referen
+ 	die("%s is unknown object", name);
+ }
+ 
++static void merge_order_sort(struct commit_list * list)
++{
++	if (sort_list_in_merge_order(list, &process_commit))
++		die("commit graph traversal failed");
++}
++
++struct rev_list_fns default_fns = {
++	&insert_by_date,
++	&limit_list,
++        &show_commit_list
++};
++
++struct rev_list_fns merge_order_fns = {
++	&commit_list_insert,
++	NULL,
++	&merge_order_sort
++};
++
+ int main(int argc, char **argv)
+ {
+ 	struct commit_list *list = NULL;
++	struct commit_list *sorted = NULL;
++	struct commit_list **list_tail = &list;
++	struct rev_list_fns * fns = &default_fns;
+ 	int i, limited = 0;
+ 
+ 	for (i = 1 ; i < argc; i++) {
+@@ -468,6 +495,7 @@ int main(int argc, char **argv)
+ 		}
+ 		if (!strcmp(arg, "--show-breaks")) {
+ 			show_breaks = 1;
++			merge_order = 1;
+ 			continue;
+ 		}
+ 
+@@ -477,26 +505,18 @@ int main(int argc, char **argv)
+ 			arg++;
+ 			limited = 1;
+ 		}
+-		if (show_breaks && !merge_order)
+-			usage(rev_list_usage);
+ 		commit = get_commit_reference(arg, flags);
+ 		if (!commit)
+ 			continue;
+-		if (!merge_order) 
+-			insert_by_date(commit, &list);
+-		else 
+-			commit_list_insert(commit, &list);
++		list_tail = &commit_list_insert(commit, list_tail)->next;
+ 	}
+-
+-	if (!merge_order) {		
+-	        if (limited)
+-			list = limit_list(list);
+-		show_commit_list(list);
+-	} else {
+-		if (sort_list_in_merge_order(list, &process_commit)) {
+-			  die("merge order sort failed\n");
+-		}
+-	}
+-
++	if (merge_order)
++		fns=&merge_order_fns;
++	while (list)
++		(*(fns->insert))(pop_commit(&list), &sorted);
++	list=sorted;
++	if (limited && fns->limit)
++		list = (*(fns->limit))(list);
++	(*(fns->process))(list);
+ 	return 0;
+ }
 ------------
