@@ -1,73 +1,162 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 6/13] Change gitk so that it uses --topo-order rather than --merge-order
+Subject: [PATCH 5/13] Introduce --topo-order switch to git-rev-list
 Date: Thu, 07 Jul 2005 02:39:34 +1000
-Message-ID: <20050706163934.9908.qmail@blackcubes.dyndns.org>
+Message-ID: <20050706163934.9888.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 06 18:50:33 2005
+X-From: git-owner@vger.kernel.org Wed Jul 06 18:51:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqD66-0006VR-LH
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:50:06 +0200
+	id 1DqD6c-0006Y2-Ht
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262353AbVGFQtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 12:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262365AbVGFQtJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:49:09 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:62848 "HELO
+	id S262351AbVGFQuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 12:50:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262303AbVGFQuU
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:50:20 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:36739 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262353AbVGFQjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 12:39:45 -0400
-Received: (qmail 9918 invoked by uid 500); 6 Jul 2005 16:39:34 -0000
+	id S262351AbVGFQjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 12:39:44 -0400
+Received: (qmail 9901 invoked by uid 500); 6 Jul 2005 16:39:34 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This change is made so that gitk --all produces the same result for
-every user irrespective of whether git-rev-parse --all produces
-the same result for every user. By using --topo-order rather than
---merge-order this can be guaranteed and the existing (non-timestamp dependent)
-behaviour of --merge-order can be maintained.
+This patch introduces a --topo-order switch to git-rev-list.
+
+When this --switch is specified, a minimal topological sort
+weaker than the --merge-order sort is applied to the output
+list.
+
+The invariant of the resulting list is:
+	a is reachable from b => ord(b) < ord(a)
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
-Paul, could you review this patch and if you agree, ack it.
 
-The rationale for changing gitk to use --topo-order is that git-rev-list will
-produce the same order for --topo-order irrespective of the order of the
-start list, whereas git-rev-list --merge-order produces an order that is deliberately
-sensitive to the order of the start list.
+ Documentation/git-rev-list.txt |    9 +++++++--
+ rev-list.c                     |   27 +++++++++++++++++++++++++--
+ 2 files changed, 32 insertions(+), 4 deletions(-)
 
-Linus wants gitk --all to behave the same way, irrespective of what order
-git-rev-parse --all produces its output. I want --merge-order to keep its
-existing behaviour, so we agreed on this compromise whereby gitk uses
---topo-order rather than --merge-order by default.
-
-My understanding of your code is that you only expect a minimal topological ordering
-guarantee and the ordering produced by --topo-order should be sufficient
-for your needs - that is, you don't rely on the other aspect of the
---merge-order invariant.
-
-I'll leave it to you and Linus to decide how you want to manage the merge between
-your HEAD and Linus'.
----
-
- gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-19c9032b06b370511ef1091434df0d1d644fee06
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -37,7 +37,7 @@ proc getcommits {rargs} {
- 	set parsed_args $rargs
-     }
-     if [catch {
--	set commfd [open "|git-rev-list --header --merge-order $parsed_args" r]
-+	set commfd [open "|git-rev-list --header --topo-order $parsed_args" r]
-     } err] {
- 	puts stderr "Error executing git-rev-list: $err"
- 	exit 1
+99d3a2318171f611f1c186a7ed4881b2f34b6b49
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -9,13 +9,15 @@ git-rev-list - Lists commit objects in r
+ 
+ SYNOPSIS
+ --------
+-'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* [ *--show-breaks* ] ] <commit>
++'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* ] [ *--show-breaks* ] [ *--topo-order* ] <commit>... ^<prune>...
+ 
+ DESCRIPTION
+ -----------
+ Lists commit objects in reverse chronological order starting at the
+ given commit, taking ancestry relationship into account.  This is
+-useful to produce human-readable log output.
++useful to produce human-readable log output. If prune points are specified
++with ^<prune>... arguments, the output will not include any commits reachable
++from (and including) the prune points.
+ 
+ If *--merge-order* is specified, the commit history is decomposed into a
+ unique sequence of minimal, non-linear epochs and maximal, linear epochs.
+@@ -59,6 +61,9 @@ represent an arbtirary DAG in a linear f
+ 
+ *--show-breaks* implies **-merge-order*.
+ 
++If *--topo-order* is specified, the commit history is sorted in a topological
++order that is weaker than the topological order generated by *--merge-order*.
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -20,6 +20,7 @@ static const char rev_list_usage[] =
+ 		      "  --unpacked\n"
+ 		      "  --header\n"
+ 		      "  --pretty\n"
++		      "  --topo-order\n"
+ 		      "  --merge-order [ --show-breaks ]";
+ 
+ static int unpacked = 0;
+@@ -38,10 +39,12 @@ static enum cmit_fmt commit_format = CMI
+ static int merge_order = 0;
+ static int show_breaks = 0;
+ static int stop_traversal = 0;
++static int topo_order = 0;
+ 
+ struct rev_list_fns {
+ 	struct commit_list * (*insert)(struct commit *, struct commit_list **);
+ 	struct commit_list * (*limit)(struct commit_list *);
++	void (*sort)(struct commit_list **);
+ 	void (*process)(struct commit_list *);
+ };
+ 
+@@ -425,12 +428,21 @@ static void merge_order_sort(struct comm
+ struct rev_list_fns default_fns = {
+ 	&insert_by_date,
+ 	&limit_list,
+-        &show_commit_list
++	NULL,
++	&show_commit_list
++};
++
++struct rev_list_fns topo_order_fns = {
++	&insert_by_date,
++	&limit_list,
++	&sort_in_topological_order,
++	&show_commit_list
+ };
+ 
+ struct rev_list_fns merge_order_fns = {
+ 	&commit_list_insert,
+ 	NULL,
++	NULL,
+ 	&merge_order_sort
+ };
+ 
+@@ -439,7 +451,7 @@ int main(int argc, char **argv)
+ 	struct commit_list *list = NULL;
+ 	struct commit_list *sorted = NULL;
+ 	struct commit_list **list_tail = &list;
+-	struct rev_list_fns * fns = &default_fns;
++	struct rev_list_fns * fns = NULL;
+ 	int i, limited = 0;
+ 
+ 	for (i = 1 ; i < argc; i++) {
+@@ -498,6 +510,11 @@ int main(int argc, char **argv)
+ 			merge_order = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--topo-order")) {
++		        topo_order = 1;
++			limited=1;
++			continue;
++		}
+ 
+ 		flags = 0;
+ 		if (*arg == '^') {
+@@ -512,11 +529,17 @@ int main(int argc, char **argv)
+ 	}
+ 	if (merge_order)
+ 		fns=&merge_order_fns;
++	else if (topo_order)
++		fns=&topo_order_fns;
++	else
++		fns=&default_fns;
+ 	while (list)
+ 		fns->insert(pop_commit(&list), &sorted);
+ 	list=sorted;
+ 	if (limited && fns->limit)
+ 		list = fns->limit(list);
++	if (fns->sort)
++		fns->sort(&list);
+ 	fns->process(list);
+ 	return 0;
+ }
 ------------
