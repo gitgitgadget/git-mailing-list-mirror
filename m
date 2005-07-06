@@ -1,82 +1,162 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: cvsimport: rewritten in Perl
-Date: Wed, 6 Jul 2005 09:32:37 +0200
-Message-ID: <20050706073237.GE11514@kiste.smurf.noris.de>
-References: <20050705230226.0F9F4353A69@atlas.denx.de> <Pine.LNX.4.58.0507051936350.3570@g5.osdl.org> <20050706063712.GV18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="T7mxYSe680VjQnyC"
-X-From: git-owner@vger.kernel.org Wed Jul 06 09:34:08 2005
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 5/6] Introduce --topo-order switch to git-rev-list
+Date: Wed, 06 Jul 2005 17:51:21 +1000
+Message-ID: <20050706075121.4027.qmail@blackcubes.dyndns.org>
+Cc: torvalds@osdl.org, jon.seymour@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 06 09:58:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq4Pk-0002Nk-U5
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:33:49 +0200
+	id 1Dq4nQ-00057V-Q5
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262133AbVGFHdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 03:33:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262138AbVGFHdd
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:33:33 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:50092 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S262133AbVGFHdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 03:33:15 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Dq4Oc-0005Al-OZ; Wed, 06 Jul 2005 09:32:52 +0200
-Received: (nullmailer pid 13805 invoked by uid 501);
-	Wed, 06 Jul 2005 07:32:37 -0000
-To: Linus Torvalds <torvalds@osdl.org>, Wolfgang Denk <wd@denx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050706063712.GV18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S262186AbVGFH4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 03:56:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262144AbVGFHzZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:55:25 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:47491 "HELO
+	blackcubes.dyndns.org") by vger.kernel.org with SMTP
+	id S262180AbVGFHv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 03:51:26 -0400
+Received: (qmail 4037 invoked by uid 500); 6 Jul 2005 07:51:21 -0000
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---T7mxYSe680VjQnyC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This patch introduces a --topo-order switch to git-rev-list.
 
-Hi,
+When this --switch is specified, a minimal topological sort
+weaker than the --merge-order sort is applied to the output
+list.
 
-Sven Verdoolaege:
-> > to get an idea of what the files may be. Looks like the new perl versio=
-n=20
-> > is leaking file descriptors..
-> >=20
-> > Matthias?
->=20
-> That was my mistake, actually.
-> Thanks for spotting this.
->=20
-Ouch. For me, the main danger of lots of Python programming is that
-I tend not to see this kind of problem any more, because in Python it
-Simply Doesn't Happen.=20
+The invariant of the resulting list is:
+	a is reachable from b => ord(b) < ord(a)
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Conscience is the inner voice that warns us somebody is looking
-					-- H. L. Mencken
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
 
---T7mxYSe680VjQnyC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+ Documentation/git-rev-list.txt |    9 +++++++--
+ rev-list.c                     |   27 +++++++++++++++++++++++++--
+ 2 files changed, 32 insertions(+), 4 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFCy4kV8+hUANcKr/kRAllRAJ9YI/wvqm6Zxa1Zyt9ZGFzlQRRQhQCdFLl1
-LT47WzYDOz9vVz1nYVDyyqw=
-=NFAr
------END PGP SIGNATURE-----
-
---T7mxYSe680VjQnyC--
+8829e9cd41c15ecc39214d76e117c28cfc8757ce
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -9,13 +9,15 @@ git-rev-list - Lists commit objects in r
+ 
+ SYNOPSIS
+ --------
+-'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* [ *--show-breaks* ] ] <commit>
++'git-rev-list' [ *--max-count*=number ] [ *--max-age*=timestamp ] [ *--min-age*=timestamp ] [ *--merge-order* ] [ *--show-breaks* ] [ *--topo-order* ] <commit>... ^<prune>...
+ 
+ DESCRIPTION
+ -----------
+ Lists commit objects in reverse chronological order starting at the
+ given commit, taking ancestry relationship into account.  This is
+-useful to produce human-readable log output.
++useful to produce human-readable log output. If prune points are specified
++with ^<prune>... arguments, the output will not include any commits reachable
++from (and including) the prune points.
+ 
+ If *--merge-order* is specified, the commit history is decomposed into a
+ unique sequence of minimal, non-linear epochs and maximal, linear epochs.
+@@ -59,6 +61,9 @@ represent an arbtirary DAG in a linear f
+ 
+ *--show-breaks* implies **-merge-order*.
+ 
++If *--topo-order* is specified, the commit history is sorted in a topological
++order that is weaker than the topological order generated by *--merge-order*.
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -20,6 +20,7 @@ static const char rev_list_usage[] =
+ 		      "  --unpacked\n"
+ 		      "  --header\n"
+ 		      "  --pretty\n"
++		      "  --topo-order\n"
+ 		      "  --merge-order [ --show-breaks ]";
+ 
+ static int unpacked = 0;
+@@ -38,10 +39,12 @@ static enum cmit_fmt commit_format = CMI
+ static int merge_order = 0;
+ static int show_breaks = 0;
+ static int stop_traversal = 0;
++static int topo_order = 0;
+ 
+ struct rev_list_fns {
+ 	struct commit_list * (*insert)(struct commit *, struct commit_list **);
+ 	struct commit_list * (*limit)(struct commit_list *);
++	void (*post_limit_sort)(struct commit_list **);
+ 	void (*process)(struct commit_list *);
+ };
+ 
+@@ -425,12 +428,21 @@ static void merge_order_sort(struct comm
+ struct rev_list_fns default_fns = {
+ 	&insert_by_date,
+ 	&limit_list,
+-        &show_commit_list
++	NULL,
++	&show_commit_list
++};
++
++struct rev_list_fns topo_order_fns = {
++	&insert_by_date,
++	&limit_list,
++	&sort_in_topological_order,
++	&show_commit_list
+ };
+ 
+ struct rev_list_fns merge_order_fns = {
+ 	&commit_list_insert,
+ 	NULL,
++	NULL,
+ 	&merge_order_sort
+ };
+ 
+@@ -439,7 +451,7 @@ int main(int argc, char **argv)
+ 	struct commit_list *list = NULL;
+ 	struct commit_list *sorted = NULL;
+ 	struct commit_list **list_tail = &list;
+-	struct rev_list_fns * fns = &default_fns;
++	struct rev_list_fns * fns = NULL;
+ 	int i, limited = 0;
+ 
+ 	for (i = 1 ; i < argc; i++) {
+@@ -498,6 +510,11 @@ int main(int argc, char **argv)
+ 			merge_order = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--topo-order")) {
++		        topo_order = 1;
++			limited=1;
++			continue;
++		}
+ 
+ 		flags = 0;
+ 		if (*arg == '^') {
+@@ -512,11 +529,17 @@ int main(int argc, char **argv)
+ 	}
+ 	if (merge_order)
+ 		fns=&merge_order_fns;
++	else if (topo_order)
++		fns=&topo_order_fns;
++	else
++		fns=&default_fns;
+ 	while (list)
+ 		(*(fns->insert))(pop_commit(&list), &sorted);
+ 	list=sorted;
+ 	if (limited && fns->limit)
+ 		list = (*(fns->limit))(list);
++	if (fns->post_limit_sort)
++		(*(fns->post_limit_sort))(&list);
+ 	(*(fns->process))(list);
+ 	return 0;
+ }
+------------
