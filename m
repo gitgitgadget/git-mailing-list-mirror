@@ -1,84 +1,82 @@
-From: Frank Sorenson <frank@tuxrocks.com>
-Subject: [PATCH] Commify numbers in cg-pull
-Date: Wed, 06 Jul 2005 01:04:25 -0600
-Message-ID: <42CB8279.10603@tuxrocks.com>
-References: <42CB81A2.7080405@tuxrocks.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: cvsimport: rewritten in Perl
+Date: Wed, 6 Jul 2005 09:32:37 +0200
+Message-ID: <20050706073237.GE11514@kiste.smurf.noris.de>
+References: <20050705230226.0F9F4353A69@atlas.denx.de> <Pine.LNX.4.58.0507051936350.3570@g5.osdl.org> <20050706063712.GV18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 06 09:10:40 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="T7mxYSe680VjQnyC"
+X-From: git-owner@vger.kernel.org Wed Jul 06 09:34:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dq42t-0008Pi-65
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:10:11 +0200
+	id 1Dq4Pk-0002Nk-U5
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 09:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262159AbVGFHI1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 03:08:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262181AbVGFHH7
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:07:59 -0400
-Received: from www.tuxrocks.com ([64.62.190.123]:52240 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S262159AbVGFHEa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Jul 2005 03:04:30 -0400
-Received: from [10.0.0.10] (216-190-206-130.customer.csolutions.net [216.190.206.130])
-	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j6674PNf021027
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 6 Jul 2005 01:04:26 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>
-In-Reply-To: <42CB81A2.7080405@tuxrocks.com>
-X-Enigmail-Version: 0.91.0.0
+	id S262133AbVGFHdd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 03:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262138AbVGFHdd
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 03:33:33 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:50092 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S262133AbVGFHdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 03:33:15 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1Dq4Oc-0005Al-OZ; Wed, 06 Jul 2005 09:32:52 +0200
+Received: (nullmailer pid 13805 invoked by uid 501);
+	Wed, 06 Jul 2005 07:32:37 -0000
+To: Linus Torvalds <torvalds@osdl.org>, Wolfgang Denk <wd@denx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050706063712.GV18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Here is a patch to commify the number and size of objects pulled
-in cg-pull.  Depends on the previous "Add commify function" patch.
+--T7mxYSe680VjQnyC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Frank Sorenson <frank@tuxrocks.com>
+Hi,
 
-Commify number and size of objects pulled in pull_progress
+Sven Verdoolaege:
+> > to get an idea of what the files may be. Looks like the new perl versio=
+n=20
+> > is leaking file descriptors..
+> >=20
+> > Matthias?
+>=20
+> That was my mistake, actually.
+> Thanks for spotting this.
+>=20
+Ouch. For me, the main danger of lots of Python programming is that
+I tend not to see this kind of problem any more, because in Python it
+Simply Doesn't Happen.=20
 
-- ---
-commit 03fb604eb8c24851096cca14bed19f4eacc79686
-tree 191e8aa3a034e302aa660a9a5b5c0c64e2e88ac9
-parent de4fd646c8307777137b9a4c1b5735f9573167f6
-author Frank Sorenson <frank@tuxrocks.com> Wed, 06 Jul 2005 00:47:56 -0600
-committer Frank Sorenson <frank@tuxrocks.com> Wed, 06 Jul 2005 00:47:56 -0600
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Conscience is the inner voice that warns us somebody is looking
+					-- H. L. Mencken
 
- cg-pull |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+--T7mxYSe680VjQnyC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-diff --git a/cg-pull b/cg-pull
-- --- a/cg-pull
-+++ b/cg-pull
-@@ -82,7 +82,7 @@ pull_progress() {
- 		size=$(($size + $(stat -c '%s' "$object" 2>/dev/null)))
- 		objects=$(($objects + 1));
- 
-- -		echo -ne "progress: $objects objects, $size bytes$percentage\r"
-+		echo -ne "progress: $(commify $objects) objects, $(commify $size) bytes$percentage\r"
- 	done;
- 	[ "$last_objects" != "$objects" ] && echo
- }
-
-
-Frank
-- -- 
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-iD8DBQFCy4J4aI0dwg4A47wRAihxAKCOAioNWvYBDPkOvk/hYUgfUuMdewCgm1ea
-4IGx09Ew6tytbOAyPrUxHZU=
-=YM7f
+iD8DBQFCy4kV8+hUANcKr/kRAllRAJ9YI/wvqm6Zxa1Zyt9ZGFzlQRRQhQCdFLl1
+LT47WzYDOz9vVz1nYVDyyqw=
+=NFAr
 -----END PGP SIGNATURE-----
+
+--T7mxYSe680VjQnyC--
