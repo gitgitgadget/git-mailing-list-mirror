@@ -1,55 +1,128 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 1/13] Temporary fixup to rev-list.c to restore expected order of arguments presented to --merge-order sort.
+Subject: [PATCH 2/13] Swap order of insert_by_date arguments
 Date: Thu, 07 Jul 2005 02:39:34 +1000
-Message-ID: <20050706163934.9811.qmail@blackcubes.dyndns.org>
+Message-ID: <20050706163934.9831.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jul 06 18:57:11 2005
+X-From: git-owner@vger.kernel.org Wed Jul 06 18:57:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqDCR-0007UL-N9
-	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:56:40 +0200
+	id 1DqDCR-0007UL-86
+	for gcvg-git@gmane.org; Wed, 06 Jul 2005 18:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262379AbVGFQzM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 12:55:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262373AbVGFQxA
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:53:00 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:14466 "HELO
+	id S262235AbVGFQyc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 12:54:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262344AbVGFQx7
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 12:53:59 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:55168 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262344AbVGFQjn (ORCPT <rfc822;git@vger.kernel.org>);
+	id S262336AbVGFQjn (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 6 Jul 2005 12:39:43 -0400
-Received: (qmail 9821 invoked by uid 500); 6 Jul 2005 16:39:34 -0000
+Received: (qmail 9841 invoked by uid 500); 6 Jul 2005 16:39:34 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-This patch adds a hacky special case to the rev-list main to restore the order in which
-the --merge-order sort algorithm receives arguments.
+Swap the order of insert_by_date arguments so that it
+matches the order of commit_list_insert.
 
-A subsequent patch will abstract this out more cleanly.
+This patch anticipates a future change which will call the
+function via a pointer.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- rev-list.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ commit.c   |    8 ++++----
+ commit.h   |    6 +++++-
+ epoch.c    |    4 ++--
+ rev-list.c |    2 +-
+ 4 files changed, 12 insertions(+), 8 deletions(-)
 
-c63fe4678d33db15db076606f7a133868e91f1bc
+486d4dee9772a59b955574951e8d4946b75cf9fa
+diff --git a/commit.c b/commit.c
+--- a/commit.c
++++ b/commit.c
+@@ -147,7 +147,7 @@ void free_commit_list(struct commit_list
+ 	}
+ }
+ 
+-void insert_by_date(struct commit_list **list, struct commit *item)
++struct commit_list * insert_by_date(struct commit *item, struct commit_list **list)
+ {
+ 	struct commit_list **pp = list;
+ 	struct commit_list *p;
+@@ -157,7 +157,7 @@ void insert_by_date(struct commit_list *
+ 		}
+ 		pp = &p->next;
+ 	}
+-	commit_list_insert(item, pp);
++	return commit_list_insert(item, pp);
+ }
+ 
+ 	
+@@ -165,7 +165,7 @@ void sort_by_date(struct commit_list **l
+ {
+ 	struct commit_list *ret = NULL;
+ 	while (*list) {
+-		insert_by_date(&ret, (*list)->item);
++		insert_by_date((*list)->item, &ret);
+ 		*list = (*list)->next;
+ 	}
+ 	*list = ret;
+@@ -186,7 +186,7 @@ struct commit *pop_most_recent_commit(st
+ 		parse_commit(commit);
+ 		if (!(commit->object.flags & mark)) {
+ 			commit->object.flags |= mark;
+-			insert_by_date(list, commit);
++			insert_by_date(commit, list);
+ 		}
+ 		parents = parents->next;
+ 	}
+diff --git a/commit.h b/commit.h
+--- a/commit.h
++++ b/commit.h
+@@ -44,7 +44,11 @@ enum cmit_fmt {
+ extern enum cmit_fmt get_commit_format(const char *arg);
+ extern unsigned long pretty_print_commit(enum cmit_fmt fmt, const char *msg, unsigned long len, char *buf, unsigned long space);
+ 
+-void insert_by_date(struct commit_list **list, struct commit *item);
++/*
++ * Inserts item into the list specified in most recent commit date first order.
++ * A pointer to the most recently inserted item is returned.
++ */
++struct commit_list * insert_by_date(struct commit *item, struct commit_list **list);
+ 
+ /** Removes the first commit from a list sorted by date, and adds all
+  * of its parents.
+diff --git a/epoch.c b/epoch.c
+--- a/epoch.c
++++ b/epoch.c
+@@ -255,11 +255,11 @@ static int find_base_for_list(struct com
+ 
+ 				if (!parent_node) {
+ 					parent_node = new_mass_counter(parent, &distribution);
+-					insert_by_date(&pending, parent);
++					insert_by_date(parent, &pending);
+ 					commit_list_insert(parent, &cleaner);
+ 				} else {
+ 					if (!compare(&parent_node->pending, get_zero()))
+-						insert_by_date(&pending, parent);
++						insert_by_date(parent, &pending);
+ 					add(&parent_node->pending, &parent_node->pending, &distribution);
+ 				}
+ 			}
 diff --git a/rev-list.c b/rev-list.c
 --- a/rev-list.c
 +++ b/rev-list.c
-@@ -482,7 +482,10 @@ int main(int argc, char **argv)
- 		commit = get_commit_reference(arg, flags);
+@@ -483,7 +483,7 @@ int main(int argc, char **argv)
  		if (!commit)
  			continue;
--		insert_by_date(&list, commit);
-+		if (!merge_order) 
-+			insert_by_date(&list, commit);
-+		else 
-+			commit_list_insert(commit, &list);
+ 		if (!merge_order) 
+-			insert_by_date(&list, commit);
++			insert_by_date(commit, &list);
+ 		else 
+ 			commit_list_insert(commit, &list);
  	}
- 
- 	if (!merge_order) {		
 ------------
