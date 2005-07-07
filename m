@@ -1,65 +1,44 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Thu, 7 Jul 2005 15:23:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507071520220.25104@g5.osdl.org>
-References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org>
- <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <m1vf3muwxw.fsf@ebiederm.dsl.xmission.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] Prevent t6000 series from dropping useless sed.script in t/
+Date: Fri, 8 Jul 2005 08:40:33 +1000
+Message-ID: <2cfc4032050707154014f30774@mail.gmail.com>
+References: <7vd5pusbox.fsf@assigned-by-dhcp.cox.net>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 00:30:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 08 00:41:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dqerz-0006jw-8G
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:29:23 +0200
+	id 1Dqf3q-0008Ed-1f
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262035AbVGGW04 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 18:26:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261476AbVGGWYe
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:24:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:30408 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262035AbVGGWXX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 18:23:23 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j67MNCjA017620
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 7 Jul 2005 15:23:13 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j67MNBaa029464;
-	Thu, 7 Jul 2005 15:23:11 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1vf3muwxw.fsf@ebiederm.dsl.xmission.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262384AbVGGWlD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 18:41:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262331AbVGGWk6
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:40:58 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:31181 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262316AbVGGWkh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 18:40:37 -0400
+Received: by rproxy.gmail.com with SMTP id c51so256163rne
+        for <git@vger.kernel.org>; Thu, 07 Jul 2005 15:40:33 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Tmxj7LW0YwPNnUr3rDUYQBrZBEUDku3c/+5FhjCKQT1C/Lhhh13O0/wUkrbpzrKyPz86zdRlPTfSIZDexTR+SJ4vl5rWM3mgY8w9WnByACYl29LD8H1k4hHUoLnbFEQxkq/IzKBaoQVYhgXSg+5A1NhAajCqT+dX6mPOXMg09jY=
+Received: by 10.39.3.1 with SMTP id f1mr1211127rni;
+        Thu, 07 Jul 2005 15:40:33 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Thu, 7 Jul 2005 15:40:33 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5pusbox.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Ack - sorry I didn't notice that side effect.
 
-
-On Thu, 7 Jul 2005, Eric W. Biederman wrote:
->
-> For optimizing network bandwidth that sounds like the way to go.  For
-> adhoc development I don't know.  For a central sever you still need
-> an authenticated way to push content, which makes it another dimension
-> of the problem.
-
-I'm convinced that "ssh" is the only sane way for pushing. If you don't 
-trust somebody enough to give him ssh access, you shouldn't trust him with 
-write access to your project in the first place.
-
-git can actually do ssh with a _very_ restricted shell, if people are 
-worried about shell access. In fact, the _only_ think the shell needs to 
-be able to do is execute one of two programs, so you could have something 
-_really_ trivial in your /etc/passwd as the login shell that doesn't allow 
-anything else. But you'd still use ssh as the authentication protocol.
-
-So I don't worry about pushing. I think we've got that covered. It's 
-really the anonymous pulling that needs something.
-
-		Linus
+jon.
