@@ -1,68 +1,136 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] Remove use of SHOWN flag
-Date: Thu, 07 Jul 2005 12:00:24 +1000
-Message-ID: <20050707020024.7874.qmail@blackcubes.dyndns.org>
+Subject: [PATCH] Move SEEN flag into epoch.h, replace use of VISITED flag with SEEN flag
+Date: Thu, 07 Jul 2005 12:11:20 +1000
+Message-ID: <20050707021120.20027.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 07 04:02:12 2005
+X-From: git-owner@vger.kernel.org Thu Jul 07 04:18:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqLi9-00035l-6D
-	for gcvg-git@gmane.org; Thu, 07 Jul 2005 04:01:57 +0200
+	id 1DqLxZ-0004XQ-0Y
+	for gcvg-git@gmane.org; Thu, 07 Jul 2005 04:17:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262391AbVGGCBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 22:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVGGCBZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 22:01:25 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:47746 "HELO
+	id S262402AbVGGCOi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 22:14:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262352AbVGGCNE
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 22:13:04 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:15746 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262391AbVGGCA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 22:00:27 -0400
-Received: (qmail 7884 invoked by uid 500); 7 Jul 2005 02:00:24 -0000
+	id S262412AbVGGCLX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 22:11:23 -0400
+Received: (qmail 20037 invoked by uid 500); 7 Jul 2005 02:11:20 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Now that duplicates are elided early, there is no need for the
-SHOWN flag.
+SEEN and VISITED do the same thing.
 
-This patch removes the SHOWN flag and its uses from rev-list.c
+This change moves the SEEN flag into epoch.h, then replaces
+uses of VISITED with SEEN and removes the definition
+of the VISITED flag.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail>
+The merge-order code needs to clear the SEEN flag
+set by the argument parsing to ensure correct
+operation. So it clears that one and, for completeness,
+BOUNDARY and DISCONTINUITY too.
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- rev-list.c |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ epoch.c    |   14 ++++++++------
+ epoch.h    |    4 +---
+ rev-list.c |    5 ++---
+ 3 files changed, 11 insertions(+), 12 deletions(-)
 
-28294b1e139ea3f7c08814e022246e42f9ab9fa3
+54a391ba7e4f96ce08ecb7da82941519b8a14c30
+diff --git a/epoch.c b/epoch.c
+--- a/epoch.c
++++ b/epoch.c
+@@ -387,7 +387,7 @@ static void push_onto_merge_order_stack(
+ static void mark_ancestors_uninteresting(struct commit *commit)
+ {
+ 	unsigned int flags = commit->object.flags;
+-	int visited = flags & VISITED;
++	int visited = flags & SEEN;
+ 	int boundary = flags & BOUNDARY;
+ 	int uninteresting = flags & UNINTERESTING;
+ 	struct commit_list *next;
+@@ -425,7 +425,7 @@ static void sort_first_epoch(struct comm
+ {
+ 	struct commit_list *parents;
+ 
+-	head->object.flags |= VISITED;
++	head->object.flags |= SEEN;
+ 
+ 	/*
+ 	 * TODO: By sorting the parents in a different order, we can alter the
+@@ -450,14 +450,14 @@ static void sort_first_epoch(struct comm
+ 			mark_ancestors_uninteresting(parent);
+ 		}
+ 
+-		if (!(parent->object.flags & VISITED)) {
++		if (!(parent->object.flags & SEEN)) {
+ 			if (parent->object.flags & BOUNDARY) {
+ 				if (*stack) {
+ 					die("something else is on the stack - %s",
+ 					    sha1_to_hex((*stack)->item->object.sha1));
+ 				}
+ 				push_onto_merge_order_stack(stack, parent);
+-				parent->object.flags |= VISITED;
++				parent->object.flags |= SEEN;
+ 
+ 			} else {
+ 				sort_first_epoch(parent, stack);
+@@ -582,8 +582,10 @@ int sort_list_in_merge_order(struct comm
+ 	int action = CONTINUE;
+ 	struct commit_list *reversed = NULL;
+ 
+-	for (; list; list = list->next)
++	for (; list; list = list->next) {
++		list->item->object.flags &= ~(SEEN|BOUNDARY|DISCONTINUITY);
+ 		commit_list_insert(list->item, &reversed);
++	}
+ 
+ 	if (!reversed)
+ 		return ret;
+@@ -606,7 +608,7 @@ int sort_list_in_merge_order(struct comm
+ 		while (reversed) {
+ 			struct commit * next = pop_commit(&reversed);
+ 
+-			if (!(next->object.flags & VISITED) && next!=base) {
++			if (!(next->object.flags & SEEN) && next!=base) {
+ 				sort_first_epoch(next, &stack);
+ 				if (reversed) {
+ 					/*
+diff --git a/epoch.h b/epoch.h
+--- a/epoch.h
++++ b/epoch.h
+@@ -13,9 +13,7 @@ int sort_list_in_merge_order(struct comm
+ /* Low bits are used by rev-list */
+ #define UNINTERESTING   (1u<<10)
+ #define BOUNDARY        (1u<<11)
+-#define VISITED         (1u<<12)
++#define SEEN            (1u<<12)
+ #define DISCONTINUITY   (1u<<13)
+-#define LAST_EPOCH_FLAG (1u<<14)
+-
+ 
+ #endif	/* EPOCH_H */
 diff --git a/rev-list.c b/rev-list.c
 --- a/rev-list.c
 +++ b/rev-list.c
-@@ -8,7 +8,6 @@
- #define SEEN		(1u << 0)
- #define INTERESTING	(1u << 1)
- #define COUNTED		(1u << 2)
--#define SHOWN		(1u << 3)
+@@ -5,9 +5,8 @@
+ #include "blob.h"
+ #include "epoch.h"
+ 
+-#define SEEN		(1u << 0)
+-#define INTERESTING	(1u << 1)
+-#define COUNTED		(1u << 2)
++#define INTERESTING	(1u << 0)
++#define COUNTED		(1u << 1)
  
  static const char rev_list_usage[] =
  	"usage: git-rev-list [OPTION] commit-id <commit-id>\n"
-@@ -42,7 +41,6 @@ static int topo_order = 0;
- 
- static void show_commit(struct commit *commit)
- {
--	commit->object.flags |= SHOWN;
- 	if (show_breaks) {
- 		prefix = "| ";
- 		if (commit->object.flags & DISCONTINUITY) {
-@@ -72,7 +70,7 @@ static int filter_commit(struct commit *
- {
- 	if (stop_traversal && (commit->object.flags & BOUNDARY))
- 		return STOP;
--	if (commit->object.flags & (UNINTERESTING|SHOWN))
-+	if (commit->object.flags & UNINTERESTING)
- 		return CONTINUE;
- 	if (min_age != -1 && (commit->date > min_age))
- 		return CONTINUE;
 ------------
