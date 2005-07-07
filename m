@@ -1,100 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Thu, 7 Jul 2005 14:58:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507071456570.25104@g5.osdl.org>
-References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org>
- <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <7vbr5ejso2.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 07 Jul 2005 15:10:01 -0700
+Message-ID: <7vslyqp8sm.fsf@assigned-by-dhcp.cox.net>
+References: <20050703234629.GF13848@pasky.ji.cz>
+	<42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz>
+	<7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507071158220.3293@g5.osdl.org>
+	<7vbr5ejso2.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507071456570.25104@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 00:02:07 2005
+X-From: git-owner@vger.kernel.org Fri Jul 08 00:15:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqeRB-0003UT-NQ
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:01:41 +0200
+	id 1Dqeey-0005Go-Pg
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261916AbVGGWBB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 18:01:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261486AbVGGWA7
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:00:59 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:7106 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261916AbVGGV7L (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 17:59:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j67LwwjA015814
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 7 Jul 2005 14:58:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j67LwvjT028069;
-	Thu, 7 Jul 2005 14:58:57 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr5ejso2.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262074AbVGGWNy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 18:13:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261834AbVGGWLI
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:11:08 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:52976 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S262074AbVGGWKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2005 18:10:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050707221000.GOGR1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 7 Jul 2005 18:10:00 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507071456570.25104@g5.osdl.org> (Linus Torvalds's message of "Thu, 7 Jul 2005 14:58:56 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
 
+>> (2) When "showing --objects", it lists the top-level tree node
+>> with no name, which makes it indistinguishable from commit
+>> objects by pack-objects, probably impacting the delta logic.
+>> Would something like the following patch make sense, to name
+>> such node "."; giving full-path not just the basename to
+>> all named nodes would be even better, though.
 
-On Thu, 7 Jul 2005, Junio C Hamano wrote:
-> 
-> (1) Would it make sense to have an extra flag to "rev-list
->     --objects" to make it list all the objects reachable from
->     commits listed in its output, even when some of them are
->     unchanged from UNINTERESTING commits?  Right now, a pack
->     produced from "rev-list --objects A ^B" does not have enough
->     information to reproduce the tree associated with commit A.
+LT> It doesn't impact the delta algorithm, because the objects are sorted by 
+LT> type first, so it never mixes up trees and commits.
 
-Well, that would certainly be possible. Just having a flag that disables 
-"mark_tree_uninteresting()" would do it.
+You are correct.  I forgot that it does sorting by type.
 
-> (2) When "showing --objects", it lists the top-level tree node
->     with no name, which makes it indistinguishable from commit
->     objects by pack-objects, probably impacting the delta logic.
->     Would something like the following patch make sense, to name
->     such node "."; giving full-path not just the basename to
->     all named nodes would be even better, though.
-
-It doesn't impact the delta algorithm, because the objects are sorted by 
-type first, so it never mixes up trees and commits.
-
-But if you wanted to, something like this would be cleaner than your 
-suggestion..
-
-		Linus
-
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -154,7 +154,7 @@ static void show_commit_list(struct comm
- 	while (list) {
- 		struct commit *commit = pop_most_recent_commit(&list, SEEN);
- 
--		p = process_tree(commit->tree, p, "");
-+		p = process_tree(commit->tree, p, "tree");
- 		if (process_commit(commit) == STOP)
- 			break;
- 	}
-@@ -386,7 +386,7 @@ static struct commit *get_commit_referen
- 			mark_tree_uninteresting(tree);
- 			return NULL;
- 		}
--		add_pending_object(object, "");
-+		add_pending_object(object, "tree");
- 		return NULL;
- 	}
- 
-@@ -401,7 +401,7 @@ static struct commit *get_commit_referen
- 			mark_blob_uninteresting(blob);
- 			return NULL;
- 		}
--		add_pending_object(object, "");
-+		add_pending_object(object, "blob");
- 		return NULL;
- 	}
- 	die("%s is unknown object", name);
+What do you think about giving full-path so that Makefiles in
+different directories would get different name hashes?
