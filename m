@@ -1,79 +1,118 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Thu, 7 Jul 2005 15:52:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org>
-References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org>
- <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Cogito-0.12: problem with local clone
+Date: Fri, 08 Jul 2005 01:00:55 +0200
+Message-ID: <20050707230055.25D3B353A8B@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 01:02:25 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 08 01:10:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqfNg-0001sd-Ug
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 01:02:09 +0200
+	id 1DqfV4-0002hI-I7
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 01:09:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262394AbVGGW7L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 18:59:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262103AbVGGWyI
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:54:08 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:46286 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262431AbVGGWwo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 18:52:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j67MqWjA019923
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 7 Jul 2005 15:52:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j67MqS8w031066;
-	Thu, 7 Jul 2005 15:52:31 -0700
+	id S262303AbVGGXJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 19:09:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262103AbVGGXGN
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 19:06:13 -0400
+Received: from mailout06.sul.t-online.com ([194.25.134.19]:36568 "EHLO
+	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S262235AbVGGXDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2005 19:03:54 -0400
+Received: from fwd26.aul.t-online.de 
+	by mailout06.sul.t-online.com with smtp 
+	id 1DqfPG-0008Jk-00; Fri, 08 Jul 2005 01:03:46 +0200
+Received: from denx.de (SOkMx2Zawem9nDNLS-eSpEK7Pivo0tJtiMACohvJfa+iXpSm2eoxoE@[84.150.81.76]) by fwd26.sul.t-online.de
+	with esmtp id 1DqfPF-199XcW0; Fri, 8 Jul 2005 01:03:45 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP
+	id 8EA2F42B02; Fri,  8 Jul 2005 01:03:44 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 25D3B353A8B;
+	Fri,  8 Jul 2005 01:00:55 +0200 (MEST)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050707221443.GB7151@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+X-ID: SOkMx2Zawem9nDNLS-eSpEK7Pivo0tJtiMACohvJfa+iXpSm2eoxoE@t-dialin.net
+X-TOI-MSGID: 2014848d-d8b4-4f49-8a63-a3ca14be287f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
+
+I have problems with Cogito-0.12 when trying to clone a "local" tree:
+
+My "original" tree is in /git/u-boot-denx (imported from CVS); "/git"
+is a directory mounted over NFS; all this is under Fedora Core  4  in
+case it matters:
+
+	-> cd /git/u-boot-denx
+	-> cg-tag-ls
+	/git/u-boot-denx/.git/refs/tags
+	LABEL_2002_11_05_0120   405f4884816e733f8ba3675d2ead1b44fd4a2ad2
+	LABEL_2002_11_05_1735   a21c24faf81d6e2c2cf21bc856b97994a7fb0950
+	LABEL_2002_11_10_2310   90e51a047bc112515e1257077b4c898bedf29e69
+	...
+	U-Boot-1_1_1    eaa609e49846203434aa3b20e7084c79e89ea952
+	U-Boot-1_1_2    3621a36bfb037a47a59b0c02d3686522c8d895bf
+	U_BOOT_0_1_0    dc9791586a71cb80c255a830a38d4a2b092398c3
+	-> cg-tag-ls | wc -l
+	131
+
+When I try to create a local clone I get lots of error messages:
+
+	-> mkdir git-local
+	-> cd git-local
+	-> cg-clone /git/u-boot-denx 
+	/home/wd/git/u-boot-denx
+	defaulting to local storage area
+	`/git/u-boot-denx/.git/refs/heads/master' -> `.git/refs/heads/origin'
+	copy 9f94f652ff7a5be5263ca0ef35a512ac7f29be98
+	copy db88a44625a80f558bcde5aeda291c54c737b573
+	copy 30a7a8a8d49f7069403895f326de4905f63d8855
+	...
+	copy 9c2deccb2acfb1d0d77b733a3f19d12ea9d58ca2
+	copy f548442a0fe39729a11b1d384708c7cc3b6bed20
+	copy 2183da96d548c02bd4f99b05e673395f81212878
+	`/git/u-boot-denx/.git/refs/tags/U_BOOT_0_1_0' -> `.git/refs/tags/U_BOOT_0_1_0'
+	cp: cannot create link `.git/refs/tags/U_BOOT_0_1_0': Invalid cross-device link
+	`/git/u-boot-denx/.git/refs/tags/LABEL_2002_11_05_0120' -> `.git/refs/tags/LABEL_2002_11_05_0120'
+	cp: cannot create link `.git/refs/tags/LABEL_2002_11_05_0120': Invalid cross-device link
+	`/git/u-boot-denx/.git/refs/tags/LABEL_2002_11_05_1735' -> `.git/refs/tags/LABEL_2002_11_05_1735'
+	cp: cannot create link `.git/refs/tags/LABEL_2002_11_05_1735': Invalid cross-device link
+	...
+	`/git/u-boot-denx/.git/refs/tags/LABEL_2005_06_20_2345' -> `.git/refs/tags/LABEL_2005_06_20_2345'
+	cp: cannot create link `.git/refs/tags/LABEL_2005_06_20_2345': Invalid cross-device link
+	`/git/u-boot-denx/.git/refs/tags/LABEL_2005_07_04_0202' -> `.git/refs/tags/LABEL_2005_07_04_0202'
+	cp: cannot create link `.git/refs/tags/LABEL_2005_07_04_0202': Invalid cross-device link
+	unable to get tags list (non-fatal)
+	/home/wd/git/u-boot-denx/.git/refs/tags
+	New branch: 9f94f652ff7a5be5263ca0ef35a512ac7f29be98
+	Cloned (origin /git/u-boot-denx available as branch "origin")
+	Cloned to u-boot-denx/ (origin /git/u-boot-denx available as branch "origin")
+
+And the resulting tree is indeed missing lots of tags:
+
+	-> cg-tag-ls
+	/home/wd/git/u-boot-denx.OLD/.git/refs/tags
+	LABEL_2003_06_28_0050-stable    f50d58228a5be736e6ed0f8dd3202b9ea26169bf
+	LABEL_2003_06_28_0130-stable    d8a9a48da39a79497d752d34d30b5edf3e3162a8
+	LABEL_2003_06_28_1800-stable    b82064a05f9c88a6144dc8f894f9e312e134b6b3
+	U_BOOT_0_1_0    d4e4163d86db0238264b7d06d9f023c16f1e371a
+	-> cg-tag-ls | wc -l
+	5
+	-> 
 
 
-On Fri, 8 Jul 2005, Petr Baudis wrote:
+Am I doing something wrong?
+	
 
-> Let me join the sceptics camp. :-)
-> 
-> Dear diary, on Thu, Jul 07, 2005 at 09:04:58PM CEST, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> told me that...
-> > Note that I just re-packed the kernel archive on kernel.org, and removed 
-> > _all_ unpacked files. Once that percolates to the mirrors, the http 
-> > protocol will be useless without anything like this.
-> 
-> *grumble*
-> 
-> So, what _is_ then the way to pull now, actually? If we use rsync, won't
-> we end up with having the objects we previous had twice now?
+Best regards,
 
-Rsync works fine. You can either unpack the pack you get, or, if you 
-prefer, just run
+Wolfgang Denk
 
-	git-prune-packed
-
-which will remove the stand-alone object that it finds in packs. Now 
-you're no longer duplicating data, and your repository is smaller than it 
-used to be anyway.
-
-Of course, that requires that you trust the packs 100%. It seems to be 
-stable, and I've packed the whole kernel repo, but I actually keep my 
-private tree unpacked still just in case.
-
-> I think it would be actually simplest (for the user) to have a trivial
-> CGI script on the other side which will do the git-upload-pack stuff.
-
-Well, git-upload-pack expects the other end to follow the proper protocol, 
-but yes, you can certainly expose it through a web interface and a 
-specialized client that way.
-
-		Linus
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Include the success of others in your dreams for your own success.
