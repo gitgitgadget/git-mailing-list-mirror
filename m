@@ -1,69 +1,51 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 1/2] Add test case that shows --topo-order, --max-age break
-Date: Thu, 07 Jul 2005 12:38:44 +1000
-Message-ID: <20050707023844.12919.qmail@blackcubes.dyndns.org>
+Subject: [PATCH 2/2] Fix --topo-order, --max-age interaction issue
+Date: Thu, 07 Jul 2005 12:38:47 +1000
+Message-ID: <20050707023847.12938.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 07 04:43:45 2005
+X-From: git-owner@vger.kernel.org Thu Jul 07 04:43:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqMMX-0006ed-Rf
+	id 1DqMMY-0006ed-98
 	for gcvg-git@gmane.org; Thu, 07 Jul 2005 04:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262273AbVGGCnC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 22:43:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262145AbVGGCkh
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 22:40:37 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:39811 "HELO
+	id S262145AbVGGCnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 22:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262248AbVGGCkc
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 22:40:32 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:54400 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262218AbVGGCit (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 22:38:49 -0400
-Received: (qmail 12929 invoked by uid 500); 7 Jul 2005 02:38:44 -0000
+	id S262145AbVGGCiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 22:38:51 -0400
+Received: (qmail 12948 invoked by uid 500); 7 Jul 2005 02:38:47 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Uncommented a test case that shows a --topo-order, --max-age break.
-
-A subsequent patch witll fix this defect
+Applied the --merge-order, --max-age fix to fix
+the --topo-order problem demonstrated by the test
+case in the previous patch.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
 
- t/t6003-rev-list-topo-order.sh |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
+ rev-list.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-9b43fa5416abe653fd900abe491a38c5ec919758
-diff --git a/t/t6003-rev-list-topo-order.sh b/t/t6003-rev-list-topo-order.sh
---- a/t/t6003-rev-list-topo-order.sh
-+++ b/t/t6003-rev-list-topo-order.sh
-@@ -289,16 +289,16 @@ EOF
- #
- # this test fails on --topo-order - a fix is required
- #
--#test_output_expect_success '--max-age=c3, --topo-order' "git-rev-list --topo-order --max-age=$(commit_date c3) l5" <<EOF
--#l5
--#l4
--#l3
--#a4
--#c3
--#b4
--#a3
--#a2
--#EOF
-+test_output_expect_success '--max-age=c3, --topo-order' "git-rev-list --topo-order --max-age=$(commit_date c3) l5" <<EOF
-+l5
-+l4
-+l3
-+a4
-+c3
-+b4
-+a3
-+a2
-+EOF
- 
- test_output_expect_success 'one specified head reachable from another a4, c3, --topo-order' "list_duplicates git-rev-list --topo-order a4 c3" <<EOF
- EOF
+8238686fd422959dae50a908b3761aa545be1c4f
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -75,7 +75,7 @@ static int filter_commit(struct commit *
+ 		return CONTINUE;
+ 	if (max_age != -1 && (commit->date < max_age)) {
+ 		stop_traversal=1;
+-		return merge_order?CONTINUE:STOP;
++		return (merge_order||topo_order)?CONTINUE:STOP;
+ 	}
+ 	if (max_count != -1 && !max_count--)
+ 		return STOP;
 ------------
