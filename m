@@ -1,67 +1,68 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] Tidy up - remove use of (*f)() idiom from epoch.c
-Date: Thu, 07 Jul 2005 11:26:43 +1000
-Message-ID: <20050707012643.17103.qmail@blackcubes.dyndns.org>
+Subject: [PATCH] Remove use of SHOWN flag
+Date: Thu, 07 Jul 2005 12:00:24 +1000
+Message-ID: <20050707020024.7874.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 07 03:29:45 2005
+X-From: git-owner@vger.kernel.org Thu Jul 07 04:02:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqLCc-0007vg-RF
-	for gcvg-git@gmane.org; Thu, 07 Jul 2005 03:29:23 +0200
+	id 1DqLi9-00035l-6D
+	for gcvg-git@gmane.org; Thu, 07 Jul 2005 04:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262279AbVGGB2p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 21:28:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261513AbVGGB0x
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 21:26:53 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:4224 "HELO
+	id S262391AbVGGCBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 22:01:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVGGCBZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 22:01:25 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:47746 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262316AbVGGB0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 21:26:46 -0400
-Received: (qmail 17114 invoked by uid 500); 7 Jul 2005 01:26:43 -0000
+	id S262391AbVGGCA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 22:00:27 -0400
+Received: (qmail 7884 invoked by uid 500); 7 Jul 2005 02:00:24 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Replace (*f)() with f() where the former idiom was used in epoch.c
+Now that duplicates are elided early, there is no need for the
+SHOWN flag.
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+This patch removes the SHOWN flag and its uses from rev-list.c
+
+Signed-off-by: Jon Seymour <jon.seymour@gmail>
 ---
 
- epoch.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ rev-list.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-ce760b162be7463a5648d086bfd7ac324ba66edd
-diff --git a/epoch.c b/epoch.c
---- a/epoch.c
-+++ b/epoch.c
-@@ -499,7 +499,7 @@ static int emit_stack(struct commit_list
- 		if (*stack || include_last) {
- 			if (!*stack) 
- 				next->object.flags |= BOUNDARY;
--			action = (*emitter) (next);
-+			action = emitter(next);
- 		}
- 	}
+28294b1e139ea3f7c08814e022246e42f9ab9fa3
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -8,7 +8,6 @@
+ #define SEEN		(1u << 0)
+ #define INTERESTING	(1u << 1)
+ #define COUNTED		(1u << 2)
+-#define SHOWN		(1u << 3)
  
-@@ -545,7 +545,7 @@ static int sort_in_merge_order(struct co
- 				if (next->object.flags & UNINTERESTING) {
- 					action = STOP;
- 				} else {
--					action = (*emitter) (next);
-+					action = emitter(next);
- 				}
- 				if (action != STOP) {
- 					next = next->parents->item;
-@@ -562,7 +562,7 @@ static int sort_in_merge_order(struct co
- 	}
+ static const char rev_list_usage[] =
+ 	"usage: git-rev-list [OPTION] commit-id <commit-id>\n"
+@@ -42,7 +41,6 @@ static int topo_order = 0;
  
- 	if (next && (action != STOP) && !ret) {
--		(*emitter) (next);
-+		emitter(next);
- 	}
- 
- 	return ret;
+ static void show_commit(struct commit *commit)
+ {
+-	commit->object.flags |= SHOWN;
+ 	if (show_breaks) {
+ 		prefix = "| ";
+ 		if (commit->object.flags & DISCONTINUITY) {
+@@ -72,7 +70,7 @@ static int filter_commit(struct commit *
+ {
+ 	if (stop_traversal && (commit->object.flags & BOUNDARY))
+ 		return STOP;
+-	if (commit->object.flags & (UNINTERESTING|SHOWN))
++	if (commit->object.flags & UNINTERESTING)
+ 		return CONTINUE;
+ 	if (min_age != -1 && (commit->date > min_age))
+ 		return CONTINUE;
 ------------
