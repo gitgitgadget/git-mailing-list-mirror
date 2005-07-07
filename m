@@ -1,339 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Prevent t6000 series from dropping useless sed.script in t/
-Date: Thu, 07 Jul 2005 11:39:10 -0700
-Message-ID: <7vd5pusbox.fsf@assigned-by-dhcp.cox.net>
+From: Peter Osterlund <petero2@telia.com>
+Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
+Date: 07 Jul 2005 21:17:47 +0200
+Message-ID: <m38y0ictno.fsf@telia.com>
+References: <1119994003.9631.6.camel@localhost.localdomain>
+	<m3ekagp9mk.fsf@telia.com>
+	<1120385280.6845.12.camel@localhost.localdomain>
+	<m3oe9k6p40.fsf@telia.com>
+	<1120425269.6845.28.camel@localhost.localdomain>
+	<m3y88m21ln.fsf@telia.com>
+	<1120683255.6881.8.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 07 20:40:26 2005
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 07 21:31:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqbHs-0007U6-0V
-	for gcvg-git@gmane.org; Thu, 07 Jul 2005 20:39:52 +0200
+	id 1Dqc5G-0006Z1-L1
+	for gcvg-git@gmane.org; Thu, 07 Jul 2005 21:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261542AbVGGSjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 14:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261560AbVGGSjk
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 14:39:40 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:39809 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S261542AbVGGSjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2005 14:39:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050707183912.IZGS22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 7 Jul 2005 14:39:12 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262272AbVGGTXB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 15:23:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262022AbVGGTUY
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 15:20:24 -0400
+Received: from pne-smtpout1-sn2.hy.skanova.net ([81.228.8.83]:50936 "EHLO
+	pne-smtpout1-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S262179AbVGGTSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2005 15:18:08 -0400
+Received: from r3000.localdomain (62.20.229.31) by pne-smtpout1-sn2.hy.skanova.net (7.2.060.1)
+        id 42BFBBD200200BC4; Thu, 7 Jul 2005 21:17:58 +0200
+Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
+	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j67JHnTG015207;
+	Thu, 7 Jul 2005 21:17:49 +0200
+Received: (from petero@localhost)
+	by r3000.localdomain (8.13.1/8.13.1/Submit) id j67JHmWI015202;
+	Thu, 7 Jul 2005 21:17:48 +0200
+X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <1120683255.6881.8.camel@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The Makefile in the test suite directory considers any file
-matching t[0-9][0-9][0-9][0-9]-*.sh as the top-level test script
-to be executed.  Unfortunately this was not documented, and the
-common test library, t6000-lib.sh was named to match that
-pattern.  This caused t6000-lib.sh to be called from Makefile as
-the top-level program, causing it to leave t/sed.script file
-behind.  Rename it to t6000lib.sh to prevent this, and document
-the naming convention a bit more clearly.
+Catalin Marinas <catalin.marinas@gmail.com> writes:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> On Mon, 2005-07-04 at 14:32 +0200, Peter Osterlund wrote:
+> > I agree with the other comments, it's probably not wise to rely on
+> > wiggle, and wiggle sometimes makes a mess. However, it often does the
+> > right thing, and with a configurable merge program and an undo
+> > function, this should not be a problem. Just undo and try again if you
+> > don't like the result.
+> 
+> In the today's snapshot you can get the 'stg push --undo' command which
+> reverts the result of a push operation (either failed or not). The patch
+> is reverted to its previous state. It works even if you ran 'refresh'.
 
- t/README                        |    8 +++
- t/t6000-lib.sh                  |  109 ---------------------------------------
- t/t6000lib.sh                   |  109 +++++++++++++++++++++++++++++++++++++++
- t/t6001-rev-list-merge-order.sh |    2 -
- t/t6002-rev-list-bisect.sh      |    2 -
- t/t6003-rev-list-topo-order.sh  |    2 -
- 6 files changed, 120 insertions(+), 112 deletions(-)
- delete mode 100644 t/t6000-lib.sh
- create mode 100644 t/t6000lib.sh
+Thanks, this seems to work as expected.
 
-02e754c481bc5656ccb9b6159c78001d6cf5f552
-diff --git a/t/README b/t/README
---- a/t/README
-+++ b/t/README
-@@ -79,6 +79,14 @@ Second digit tells the particular comman
- Third digit (optionally) tells the particular switch or group of switches
- we are testing.
- 
-+If you create files under t/ directory (i.e. here) that is not
-+the top-level test script, never name the file to match the above
-+pattern.  The Makefile here considers all such files as the
-+top-level test script and tries to run all of them.  A care is
-+especially needed if you are creating a common test library
-+file, similar to test-lib.sh, because such a library file may
-+not be suitable for standalone execution.
-+
- 
- Writing Tests
- -------------
-diff --git a/t/t6000-lib.sh b/t/t6000-lib.sh
-deleted file mode 100644
---- a/t/t6000-lib.sh
-+++ /dev/null
-@@ -1,109 +0,0 @@
--[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
--
--:> sed.script
--
--# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
--tag()
--{
--	_tag=$1
--	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
--	cat .git/refs/tags/$_tag
--}
--
--# Generate a commit using the text specified to make it unique and the tree
--# named by the tag specified.
--unique_commit()
--{
--	_text=$1
--        _tree=$2
--	shift 2
--    	echo $_text | git-commit-tree $(tag $_tree) "$@"
--}
--
--# Save the output of a command into the tag specified. Prepend
--# a substitution script for the tag onto the front of sed.script
--save_tag()
--{
--	_tag=$1	
--	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
--	shift 1
--    	"$@" >.git/refs/tags/$_tag
--
--        echo "s/$(tag $_tag)/$_tag/g" > sed.script.tmp
--	cat sed.script >> sed.script.tmp
--	rm sed.script
--	mv sed.script.tmp sed.script
--}
--
--# Replace unhelpful sha1 hashses with their symbolic equivalents 
--entag()
--{
--	sed -f sed.script
--}
--
--# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
--# tag to a specified value. Restore the original value on return.
--as_author()
--{
--	_author=$1
--	shift 1
--        _save=$GIT_AUTHOR_EMAIL
--
--	export GIT_AUTHOR_EMAIL="$_author"
--	"$@"
--        export GIT_AUTHOR_EMAIL="$_save"
--}
--
--commit_date()
--{
--        _commit=$1
--	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
--}
--
--on_committer_date()
--{
--    _date=$1
--    shift 1
--    GIT_COMMITTER_DATE=$_date "$@"
--}
--
--# Execute a command and suppress any error output.
--hide_error()
--{
--	"$@" 2>/dev/null
--}
--
--check_output()
--{
--	_name=$1
--	shift 1
--	if eval "$*" | entag > $_name.actual
--	then
--		diff $_name.expected $_name.actual
--	else
--		return 1;
--	fi
--}
--
--# Turn a reasonable test description into a reasonable test name.
--# All alphanums translated into -'s which are then compressed and stripped
--# from front and back.
--name_from_description()
--{
--        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
--}
--
--
--# Execute the test described by the first argument, by eval'ing
--# command line specified in the 2nd argument. Check the status code
--# is zero and that the output matches the stream read from 
--# stdin.
--test_output_expect_success()
--{	
--	_description=$1
--        _test=$2
--        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
--        _name=$(echo $_description | name_from_description)
--	cat > $_name.expected
--	test_expect_success "$_description" "check_output $_name \"$_test\"" 
--}
-diff --git a/t/t6000lib.sh b/t/t6000lib.sh
-new file mode 100644
---- /dev/null
-+++ b/t/t6000lib.sh
-@@ -0,0 +1,109 @@
-+[ -d .git/refs/tags ] || mkdir -p .git/refs/tags
-+
-+:> sed.script
-+
-+# Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
-+tag()
-+{
-+	_tag=$1
-+	[ -f .git/refs/tags/$_tag ] || error "tag: \"$_tag\" does not exist"
-+	cat .git/refs/tags/$_tag
-+}
-+
-+# Generate a commit using the text specified to make it unique and the tree
-+# named by the tag specified.
-+unique_commit()
-+{
-+	_text=$1
-+        _tree=$2
-+	shift 2
-+    	echo $_text | git-commit-tree $(tag $_tree) "$@"
-+}
-+
-+# Save the output of a command into the tag specified. Prepend
-+# a substitution script for the tag onto the front of sed.script
-+save_tag()
-+{
-+	_tag=$1	
-+	[ -n "$_tag" ] || error "usage: save_tag tag commit-args ..."
-+	shift 1
-+    	"$@" >.git/refs/tags/$_tag
-+
-+        echo "s/$(tag $_tag)/$_tag/g" > sed.script.tmp
-+	cat sed.script >> sed.script.tmp
-+	rm sed.script
-+	mv sed.script.tmp sed.script
-+}
-+
-+# Replace unhelpful sha1 hashses with their symbolic equivalents 
-+entag()
-+{
-+	sed -f sed.script
-+}
-+
-+# Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
-+# tag to a specified value. Restore the original value on return.
-+as_author()
-+{
-+	_author=$1
-+	shift 1
-+        _save=$GIT_AUTHOR_EMAIL
-+
-+	export GIT_AUTHOR_EMAIL="$_author"
-+	"$@"
-+        export GIT_AUTHOR_EMAIL="$_save"
-+}
-+
-+commit_date()
-+{
-+        _commit=$1
-+	git-cat-file commit $_commit | sed -n "s/^committer .*> \([0-9]*\) .*/\1/p" 
-+}
-+
-+on_committer_date()
-+{
-+    _date=$1
-+    shift 1
-+    GIT_COMMITTER_DATE=$_date "$@"
-+}
-+
-+# Execute a command and suppress any error output.
-+hide_error()
-+{
-+	"$@" 2>/dev/null
-+}
-+
-+check_output()
-+{
-+	_name=$1
-+	shift 1
-+	if eval "$*" | entag > $_name.actual
-+	then
-+		diff $_name.expected $_name.actual
-+	else
-+		return 1;
-+	fi
-+}
-+
-+# Turn a reasonable test description into a reasonable test name.
-+# All alphanums translated into -'s which are then compressed and stripped
-+# from front and back.
-+name_from_description()
-+{
-+        tr "'" '-' | tr '~`!@#$%^&*()_+={}[]|\;:"<>,/? ' '-' | tr -s '-' | tr '[A-Z]' '[a-z]' | sed "s/^-*//;s/-*\$//"
-+}
-+
-+
-+# Execute the test described by the first argument, by eval'ing
-+# command line specified in the 2nd argument. Check the status code
-+# is zero and that the output matches the stream read from 
-+# stdin.
-+test_output_expect_success()
-+{	
-+	_description=$1
-+        _test=$2
-+        [ $# -eq 2 ] || error "usage: test_output_expect_success description test <<EOF ... EOF"
-+        _name=$(echo $_description | name_from_description)
-+	cat > $_name.expected
-+	test_expect_success "$_description" "check_output $_name \"$_test\"" 
-+}
-diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
---- a/t/t6001-rev-list-merge-order.sh
-+++ b/t/t6001-rev-list-merge-order.sh
-@@ -6,7 +6,7 @@
- test_description='Tests git-rev-list --merge-order functionality'
- 
- . ./test-lib.sh
--. ../t6000-lib.sh # t6xxx specific functions
-+. ../t6000lib.sh # t6xxx specific functions
- 
- # test-case specific test function
- check_adjacency()
-diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
---- a/t/t6002-rev-list-bisect.sh
-+++ b/t/t6002-rev-list-bisect.sh
-@@ -5,7 +5,7 @@
- test_description='Tests git-rev-list --bisect functionality'
- 
- . ./test-lib.sh
--. ../t6000-lib.sh
-+. ../t6000lib.sh # t6xxx specific functions
- 
- bc_expr()
- {
-diff --git a/t/t6003-rev-list-topo-order.sh b/t/t6003-rev-list-topo-order.sh
---- a/t/t6003-rev-list-topo-order.sh
-+++ b/t/t6003-rev-list-topo-order.sh
-@@ -6,7 +6,7 @@
- test_description='Tests git-rev-list --topo-order functionality'
- 
- . ./test-lib.sh
--. ../t6000-lib.sh # t6xxx specific functions
-+. ../t6000lib.sh # t6xxx specific functions
- 
- list_duplicates()
- {
-------------
+> The current implementation does not remove the .older/.local/.remote
+> files from the tree when undoing a push. I think I will first implement
+> a 'resolve' command which takes care of these files.
+> 
+> Anyway, once I fully test the current state of stgit, I will make the
+> 0.4 release (probably this weekend).
+
+I've found an unrelated problem. If I export patches with "stg export
+dirname", there are no diffs included in the patches. The patch
+description is all that is generated. If I omit the dirname parameter,
+the export works correctly though.
+
+-- 
+Peter Osterlund - petero2@telia.com
+http://web.telia.com/~u89404340
