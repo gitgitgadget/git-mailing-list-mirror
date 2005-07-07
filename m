@@ -1,83 +1,65 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Thu, 07 Jul 2005 15:29:31 -0600
-Message-ID: <m1vf3muwxw.fsf@ebiederm.dsl.xmission.com>
-References: <20050703234629.GF13848@pasky.ji.cz>
-	<42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz>
-	<7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071158220.3293@g5.osdl.org>
+Date: Thu, 7 Jul 2005 15:23:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507071520220.25104@g5.osdl.org>
+References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org>
+ <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <m1vf3muwxw.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
 	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 00:24:03 2005
+X-From: git-owner@vger.kernel.org Fri Jul 08 00:30:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dqem7-0006Al-5n
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:23:19 +0200
+	id 1Dqerz-0006jw-8G
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 00:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261393AbVGGVdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 17:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262233AbVGGVau
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 17:30:50 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:6049 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S262124AbVGGVaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2005 17:30:22 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j67LTdkA010726;
-	Thu, 7 Jul 2005 15:29:39 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j67LTVD7010722;
-	Thu, 7 Jul 2005 15:29:31 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> (Linus
- Torvalds's message of "Thu, 7 Jul 2005 12:04:58 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262035AbVGGW04 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 18:26:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261476AbVGGWYe
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 18:24:34 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:30408 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262035AbVGGWXX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 18:23:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j67MNCjA017620
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 7 Jul 2005 15:23:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j67MNBaa029464;
+	Thu, 7 Jul 2005 15:23:11 -0700
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+In-Reply-To: <m1vf3muwxw.fsf@ebiederm.dsl.xmission.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> That said, I really think the dumb protocols are useless anyway. No other 
-> system supports pure static object pulling anyway, and as far as I'm 
-> concerned, I want "rsync" to kind of work (but it won't be optimal, since 
-> re-packing will delete all the old objects and replace it with the new 
-> pack that is downloaded anew). But plain http? I'm not convinced.
 
-Have you not looked at tla/arch? tla does supports dumb servers.
-It's job is a little easier as it has one file per atomic commit
-I suspect once packs start working well that should not be an
-issue for git either.
-
-For small projects this is a major benefit, as they can just push
-their files to a convenient http or ftp server.
-
-> I'd much rather have a "stupid server" that just listens to a port, and
-> basically forks off and executes "git-upload-pack" when it's connected to
-> (perhaps reading the directory name first).  Nothing else. Then we can do 
-> a security analysis of upload-pack, which should be fairly easy since it's 
-> not actually ever _writing_ anything.
+On Thu, 7 Jul 2005, Eric W. Biederman wrote:
 >
-> At that point, you can do
->
-> 	git pull git://www.kernel.org/pub/scm/git/..
->
-> and it would just connect to some default "git port", pass off the 
-> directory name, and be done with it - exact same discovery protocol that 
-> now use for ssh. And "git clone" would also automatically work.
+> For optimizing network bandwidth that sounds like the way to go.  For
+> adhoc development I don't know.  For a central sever you still need
+> an authenticated way to push content, which makes it another dimension
+> of the problem.
 
-For optimizing network bandwidth that sounds like the way to go.  For
-adhoc development I don't know.  For a central sever you still need
-an authenticated way to push content, which makes it another dimension
-of the problem.  So it is mostly a question of what is the sanest way
-to mirror/publish data.  http is used a lot for publishing data and
-practically everyone has access to a http server that can host
-content, so I think supporting http makes git a lot more accessible
-to people.  The only thing more accessible seems to be email, and
-email is terrible for publish small projects.
+I'm convinced that "ssh" is the only sane way for pushing. If you don't 
+trust somebody enough to give him ssh access, you shouldn't trust him with 
+write access to your project in the first place.
 
-Eric
+git can actually do ssh with a _very_ restricted shell, if people are 
+worried about shell access. In fact, the _only_ think the shell needs to 
+be able to do is execute one of two programs, so you could have something 
+_really_ trivial in your /etc/passwd as the login shell that doesn't allow 
+anything else. But you'd still use ssh as the authentication protocol.
+
+So I don't worry about pushing. I think we've got that covered. It's 
+really the anonymous pulling that needs something.
+
+		Linus
