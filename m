@@ -1,143 +1,76 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH 2/2] Write sed script directly into temp file, rather than a variable
-Date: Thu, 07 Jul 2005 10:50:07 +1000
-Message-ID: <20050707005007.9224.qmail@blackcubes.dyndns.org>
+Subject: [PATCH] Ensure list insertion method does not depend on position of --merge-order argument
+Date: Thu, 07 Jul 2005 10:59:13 +1000
+Message-ID: <20050707005913.16295.qmail@blackcubes.dyndns.org>
 Cc: torvalds@osdl.org, jon.seymour@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jul 07 02:54:26 2005
+X-From: git-owner@vger.kernel.org Thu Jul 07 03:03:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqKea-0004g0-9X
-	for gcvg-git@gmane.org; Thu, 07 Jul 2005 02:54:12 +0200
+	id 1DqKna-0005gp-Aq
+	for gcvg-git@gmane.org; Thu, 07 Jul 2005 03:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262378AbVGGAxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 6 Jul 2005 20:53:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262421AbVGGAvH
-	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 20:51:07 -0400
-Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:42370 "HELO
+	id S262441AbVGGBDL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 6 Jul 2005 21:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262370AbVGGBAh
+	(ORCPT <rfc822;git-outgoing>); Wed, 6 Jul 2005 21:00:37 -0400
+Received: from 203-217-64-103.dyn.iinet.net.au ([203.217.64.103]:16257 "HELO
 	blackcubes.dyndns.org") by vger.kernel.org with SMTP
-	id S262378AbVGGAuJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Jul 2005 20:50:09 -0400
-Received: (qmail 9234 invoked by uid 500); 7 Jul 2005 00:50:07 -0000
+	id S262420AbVGGA7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Jul 2005 20:59:15 -0400
+Received: (qmail 16305 invoked by uid 500); 7 Jul 2005 00:59:13 -0000
 To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-When sed uses \n rather than ; as a separator (for BSD sed(1) compat),
-it is cleaner to use a file directly, rather than an environment
-variable containing \n characters.
-
-This change changes t/t6000 write to sed.script directly and changes
-the other tests to remove knowledge of sed.script.
+This change ensures that git-rev-list --merge-order produces the same result
+irrespective of what position the --merge-order argument appears in the argument
+list.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
+Linus: if you'd prefer to fix this a different way, that's fine by me!
+---
 
- t/t6000-lib.sh                  |   12 +++++++-----
- t/t6001-rev-list-merge-order.sh |    9 ---------
- t/t6002-rev-list-bisect.sh      |   10 ----------
- t/t6003-rev-list-topo-order.sh  |    9 ---------
- 4 files changed, 7 insertions(+), 33 deletions(-)
+ rev-list.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
 
-8e14d7142551c4eca6718894943e33a2a0a2a14f
-diff --git a/t/t6000-lib.sh b/t/t6000-lib.sh
---- a/t/t6000-lib.sh
-+++ b/t/t6000-lib.sh
-@@ -1,6 +1,6 @@
- [ -d .git/refs/tags ] || mkdir -p .git/refs/tags
- 
--sed_script="";
-+:> sed.script
- 
- # Answer the sha1 has associated with the tag. The tag must exist in .git or .git/refs/tags
- tag()
-@@ -21,7 +21,7 @@ unique_commit()
- }
- 
- # Save the output of a command into the tag specified. Prepend
--# a substitution script for the tag onto the front of $sed_script
-+# a substitution script for the tag onto the front of sed.script
- save_tag()
+8723420366d839123ca4186c60469fd38fd4b798
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -411,10 +411,8 @@ static struct commit *get_commit_referen
+ int main(int argc, char **argv)
  {
- 	_tag=$1	
-@@ -29,14 +29,16 @@ save_tag()
- 	shift 1
-     	"$@" >.git/refs/tags/$_tag
+ 	struct commit_list *list = NULL;
+-	struct commit_list *(*insert)(struct commit *, struct commit_list **);
+ 	int i, limited = 0;
  
--       sed_script="s/$(tag $_tag)/$_tag/g
--$sed_script"
-+        echo "s/$(tag $_tag)/$_tag/g" > sed.script.tmp
-+	cat sed.script >> sed.script.tmp
-+	rm sed.script
-+	mv sed.script.tmp sed.script
- }
+-	insert = insert_by_date;
+ 	for (i = 1 ; i < argc; i++) {
+ 		int flags;
+ 		char *arg = argv[i];
+@@ -464,7 +462,6 @@ int main(int argc, char **argv)
+ 		}
+ 		if (!strcmp(arg, "--merge-order")) {
+ 		        merge_order = 1;
+-		        insert = commit_list_insert;
+ 			continue;
+ 		}
+ 		if (!strcmp(arg, "--show-breaks")) {
+@@ -491,10 +488,11 @@ int main(int argc, char **argv)
+ 		if (commit->object.flags & DUPCHECK)
+ 			continue;
+ 		commit->object.flags |= DUPCHECK;
+-		insert(commit, &list);
++		commit_list_insert(commit, &list);
+ 	}
  
- # Replace unhelpful sha1 hashses with their symbolic equivalents 
- entag()
- {
--	sed "$sed_script"
-+	sed -f sed.script
- }
- 
- # Execute a command after first saving, then setting the GIT_AUTHOR_EMAIL
-diff --git a/t/t6001-rev-list-merge-order.sh b/t/t6001-rev-list-merge-order.sh
---- a/t/t6001-rev-list-merge-order.sh
-+++ b/t/t6001-rev-list-merge-order.sh
-@@ -103,15 +103,6 @@ save_tag g4 unique_commit g6 tree -p g3 
- 
- tag l5 > .git/HEAD
- 
--#
--# cd to t/trash and use 
--#
--#    git-rev-list ... 2>&1 | sed "$(cat sed.script)" 
--#
--# if you ever want to manually debug the operation of git-rev-list
--#
--echo $sed_script > sed.script
--
- test_expect_success 'rev-list has correct number of entries' 'git-rev-list HEAD | wc -l | tr -s " "' <<EOF
- 19
- EOF
-diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
---- a/t/t6002-rev-list-bisect.sh
-+++ b/t/t6002-rev-list-bisect.sh
-@@ -113,16 +113,6 @@ on_committer_date "1971-08-16 00:00:04" 
- on_committer_date "1971-08-16 00:00:05" save_tag u5 unique_commit u5 tree -p u0
- on_committer_date "1971-08-16 00:00:06" save_tag V unique_commit V tree -p u1 -p u2 -p u3 -p u4 -p u5
- 
--
--#
--# cd to t/trash and use 
--#
--#    git-rev-list ... 2>&1 | sed "$(cat sed.script)" 
--#
--# if you ever want to manually debug the operation of git-rev-list
--#
--echo $sed_script > sed.script
--
- test_sequence()
- {
- 	_bisect_option=$1	
-diff --git a/t/t6003-rev-list-topo-order.sh b/t/t6003-rev-list-topo-order.sh
---- a/t/t6003-rev-list-topo-order.sh
-+++ b/t/t6003-rev-list-topo-order.sh
-@@ -79,15 +79,6 @@ save_tag g4 unique_commit g6 tree -p g3 
- 
- tag l5 > .git/HEAD
- 
--#
--# cd to t/trash and use 
--#
--#    git-rev-list ... 2>&1 | sed "$(cat sed.script)" 
--#
--# if you ever want to manually debug the operation of git-rev-list
--#
--echo "$sed_script" | tr ' ' \\012 > sed.script
--
- test_expect_success 'rev-list has correct number of entries' 'git-rev-list HEAD | wc -l | tr -s " "' <<EOF
- 19
- EOF
+ 	if (!merge_order) {		
++		sort_by_date(&list);
+ 	        if (limited)
+ 			list = limit_list(list);
+ 		if (topo_order)
 ------------
