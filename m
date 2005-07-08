@@ -1,104 +1,58 @@
-From: Peter Osterlund <petero2@telia.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
-Date: 08 Jul 2005 03:10:02 +0200
-Message-ID: <m31x6acdcl.fsf@telia.com>
+Date: Thu, 07 Jul 2005 18:24:45 -0700
+Message-ID: <7vk6k2dr8i.fsf@assigned-by-dhcp.cox.net>
 References: <1119994003.9631.6.camel@localhost.localdomain>
+	<m31x6acdcl.fsf@telia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 08 03:11:01 2005
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 08 03:26:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqhNr-0005ut-Am
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:10:27 +0200
+	id 1DqhdU-0007Kz-4C
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262406AbVGHBKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 21:10:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVGHBKP
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:10:15 -0400
-Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:10115 "EHLO
-	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
-	id S262406AbVGHBKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2005 21:10:13 -0400
-Received: from r3000.localdomain (62.20.229.17) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
-        id 42B94E29002D8D68; Fri, 8 Jul 2005 03:10:10 +0200
-Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
-	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j681A41X029222;
-	Fri, 8 Jul 2005 03:10:04 +0200
-Received: (from petero@localhost)
-	by r3000.localdomain (8.13.1/8.13.1/Submit) id j681A3Y5029217;
-	Fri, 8 Jul 2005 03:10:03 +0200
-X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <1119994003.9631.6.camel@localhost.localdomain>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S261393AbVGHB0D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 21:26:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVGHB0D
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:26:03 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:33990 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261393AbVGHBYr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2005 21:24:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050708012445.CRGI8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 7 Jul 2005 21:24:45 -0400
+To: Peter Osterlund <petero2@telia.com>
+In-Reply-To: <m31x6acdcl.fsf@telia.com> (Peter Osterlund's message of "08 Jul 2005 03:10:02 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+>>>>> "PO" == Peter Osterlund <petero2@telia.com> writes:
 
-> A new StGIT release is available from http://procode.org/stgit/
+PO> I think it would be good if it was possible to include diffstat output
+PO> in exported patches, something like this:
 
-I think it would be good if it was possible to include diffstat output
-in exported patches, something like this:
+PO> Added possibility to include diffstat output in exported patches.
 
+And you wuold want to do things similarly to what others have
+already done.  git-resolve-script uses "git-apply --stat" there,
+instead of "diffstat", so people without diffstat installed can
+still get the same information.
 
-Added possibility to include diffstat output in exported patches.
+Even if you want to stick to "diffstat", at least I would
+suggest giving -p1, not -p0, to it; otherwise you would see b/
+like what you have there.
 
-Signed-off-by: Peter Osterlund <petero2@telia.com>
----
+PO>  b/stgit/git.py  |   22 ++++++++++++++++++++++
+PO>  b/stgit/main.py |    2 ++
+PO>  2 files changed, 24 insertions(+)
 
- b/stgit/git.py  |   22 ++++++++++++++++++++++
- b/stgit/main.py |    2 ++
- 2 files changed, 24 insertions(+)
-
-diff --git a/stgit/git.py b/stgit/git.py
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -345,6 +345,28 @@ def diff(files = [], rev1 = 'HEAD', rev2
-                      % (rev1, files_str, extra_args)) != 0:
-             raise GitException, 'git-diff-cache failed'
- 
-+def diffstat(files = [], rev1 = 'HEAD', rev2 = None):
-+    """Return the diffstat between rev1 and rev2
-+    """
-+    files_str = reduce(lambda x, y: x + ' ' + y, files, '')
-+
-+    os.system('git-update-cache --refresh > /dev/null')
-+
-+    if rev2:
-+        f = os.popen('git-diff-tree -p %s %s %s | diffstat -p0'
-+                     % (rev1, rev2, files_str), 'r')
-+        str = f.read()
-+        if f.close():
-+            raise GitException, 'git-diff-tree failed'
-+        return str
-+    else:
-+        f = os.popen('git-diff-cache -p %s %s | diffstat -p0'
-+                     % (rev1, files_str), 'r')
-+        str = f.read()
-+        if f.close():
-+            raise GitException, 'git-diff-cache failed'
-+        return str
-+
- def checkout(files = [], force = False):
-     """Check out the given or all files
-     """
-diff --git a/stgit/main.py b/stgit/main.py
---- a/stgit/main.py
-+++ b/stgit/main.py
-@@ -659,6 +659,8 @@ def export(parser, options, args):
-         patch = crt_series.get_patch(p)
- 
-         tmpl_dict = {'description': patch.get_description().rstrip(),
-+                     'diffstat': git.diffstat(rev1 = __git_id('%s/bottom' % p),
-+                                              rev2 = __git_id('%s/top' % p)),
-                      'authname': patch.get_authname(),
-                      'authemail': patch.get_authemail(),
-                      'authdate': patch.get_authdate(),
-
--- 
-Peter Osterlund - petero2@telia.com
-http://web.telia.com/~u89404340
+Further, using "git-apply --stat --summary" would be nicer; this
+is something you cannot do with plain "diffstat".
