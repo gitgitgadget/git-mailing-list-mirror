@@ -1,63 +1,62 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: Re: New script: cg-clean
-Date: Sat, 09 Jul 2005 00:59:59 +0200
-Message-ID: <20050708225959.5BCA13539FE@atlas.denx.de>
-References: <1120862084.17812.6.camel@dv>
-Cc: git <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Jul 09 01:18:06 2005
+From: Bryan Larsen <bryan.larsen@gmail.com>
+Subject: cogito Mac OS X compatibility
+Date: Fri, 08 Jul 2005 19:34:55 -0400
+Message-ID: <42CF0D9F.8040909@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jul 09 01:37:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dr268-0004TN-LH
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:17:32 +0200
+	id 1Dr2Ox-0006FQ-0y
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262970AbVGHXQw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 19:16:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262918AbVGHXEK
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 19:04:10 -0400
-Received: from mailout06.sul.t-online.com ([194.25.134.19]:5297 "EHLO
-	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S262958AbVGHXDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2005 19:03:30 -0400
-Received: from fwd16.aul.t-online.de 
-	by mailout06.sul.t-online.com with smtp 
-	id 1Dr1sP-00024E-00; Sat, 09 Jul 2005 01:03:21 +0200
-Received: from denx.de (VgwhREZDrerr2IHjLyITEHgdE9IVkpv6pUyNtJwZTTPWvlS-i1DH0Z@[84.150.68.56]) by fwd16.sul.t-online.de
-	with esmtp id 1Dr1sC-0Wb7T60; Sat, 9 Jul 2005 01:03:08 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP
-	id AB13A42FCC; Sat,  9 Jul 2005 01:03:07 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 5BCA13539FE;
-	Sat,  9 Jul 2005 00:59:59 +0200 (MEST)
-To: Pavel Roskin <proski@gnu.org>
-In-reply-to: <1120862084.17812.6.camel@dv> 
-Comments: In-reply-to Pavel Roskin <proski@gnu.org>
-   message dated "Fri, 08 Jul 2005 18:34:44 -0400."
-X-ID: VgwhREZDrerr2IHjLyITEHgdE9IVkpv6pUyNtJwZTTPWvlS-i1DH0Z@t-dialin.net
-X-TOI-MSGID: 81e20480-a717-45d3-b5fd-8c1ebe835975
+	id S262931AbVGHXg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 19:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262969AbVGHXgY
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 19:36:24 -0400
+Received: from zproxy.gmail.com ([64.233.162.206]:58472 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262931AbVGHXe7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 19:34:59 -0400
+Received: by zproxy.gmail.com with SMTP id i28so243543nzi
+        for <git@vger.kernel.org>; Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=X6oPfK7LZcgt5+4o9XlaVjCITImqJGDd8+SO3K+Rj+1Zj5aeM3JfN9+PmxRWJ9Rdlw+Jm0UOFxge2rpMabN8j2GdZhcplJVjL5td89PcaqPsqNx6oHFl/rgMTstZhybaZ5TpOuLxca0muf1LJem7PpXtbTDdtVaSjCkjDZwFlJ4=
+Received: by 10.36.25.19 with SMTP id 19mr779228nzy;
+        Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
+Received: from ?192.168.1.104? ([70.26.43.137])
+        by mx.gmail.com with ESMTP id 24sm881608nzn.2005.07.08.16.34.57;
+        Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-In message <1120862084.17812.6.camel@dv> Pavel Roskin wrote:
-> 
-> Please consider this script for Cogito.
-...
-> # OPTIONS
-> # -------
-> # -i::
-> #	Clean files ignored by cg-status, such as object files.
+On Mac OS X
 
-May I suggest to give "-i" the standard "--interactive" meaning
-(= prompt before removal) like with "rm" etc. ?
+$ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git
+defaulting to local storage area
+19:11:10 
+URL:http://www.kernel.org/pub/scm/cogito/cogito.git/refs/heads/master 
+[41/41] -> "refs/heads/origin" [1]
+/Users/blarsen/bin/cg-pull: line 82: 0 + : syntax error: operand 
+expected (error token is " ")
+cg-pull: objects pull failed
+cg-init: pull failed
 
-Thanks.
+This appears to be some sort of weird shell thing.  I've got bash 3.0 
+compiling in the background to see if that fixes the problem.
 
+Cogito also appears to rely on the gnu tools.  For instance, I've seen 
+the "-a" flag used with cp.  OS X's default installation of cp doesn't 
+support -a.  darwinports coreutils installs gnu cp as "gcp".
 
-Wolfgang Denk
+Myself, I can't live without cp -a, so have linked gcp to cp, but I 
+presume we want to be portable, at least to a certain degree.
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-How come everyone's going so slow if it's called rush hour?
+Bryan
