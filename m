@@ -1,76 +1,48 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Fri, 8 Jul 2005 11:56:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507081139490.30848-100000@iabervon.org>
-References: <20050708081458.GA17022@pasky.ji.cz>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: Linus kernel tree corrupt?
+Date: Fri, 8 Jul 2005 10:06:09 -0700
+Message-ID: <12c511ca05070810065db87043@mail.gmail.com>
+References: <9e473391050708085756bd463e@mail.gmail.com>
+Reply-To: Tony Luck <tony.luck@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Tony Luck <tony.luck@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 17:59:36 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 08 19:06:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqvFq-0004b6-HO
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 17:59:06 +0200
+	id 1DqwIo-0005sx-R7
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 19:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262693AbVGHP67 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 11:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262696AbVGHP67
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 11:58:59 -0400
-Received: from iabervon.org ([66.92.72.58]:52484 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262693AbVGHP66 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 11:58:58 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1DqvDX-0005fH-00; Fri, 8 Jul 2005 11:56:43 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050708081458.GA17022@pasky.ji.cz>
+	id S262720AbVGHRGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 13:06:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262718AbVGHRGK
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 13:06:10 -0400
+Received: from zproxy.gmail.com ([64.233.162.197]:52629 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262720AbVGHRGK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 13:06:10 -0400
+Received: by zproxy.gmail.com with SMTP id 12so214971nzp
+        for <git@vger.kernel.org>; Fri, 08 Jul 2005 10:06:09 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EffDlRoSGCL5OOFFP8Be6uy8VdKFCUCYC2HRFp7JdL+QHxXx7UTNQXN70XCJctWric5dt4R+F0mJcp6b4cplLdFSVhBFLPTUVsDNYNZnjeuqGIy47ZL7WV0RMca7QbVQjOmBhK1OPXD7UHYhyudORaFwtrKVm2Cw/wbcJK/nsds=
+Received: by 10.36.4.14 with SMTP id 14mr727563nzd;
+        Fri, 08 Jul 2005 10:06:09 -0700 (PDT)
+Received: by 10.36.59.4 with HTTP; Fri, 8 Jul 2005 10:06:09 -0700 (PDT)
+To: Jon Smirl <jonsmirl@gmail.com>
+In-Reply-To: <9e473391050708085756bd463e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 8 Jul 2005, Petr Baudis wrote:
+On 7/8/05, Jon Smirl <jonsmirl@gmail.com> wrote:
+> What happened in this session...
 
-> It seems like the whole pull family is totally borked now, and I'm
-> getting desperate. Looks like this evening will be *pull.c fixing for
-> me.
-> 
-> Jul 04 Daniel Barkalow  [PATCH 0/2] Support for transferring pack files in git-ssh-*
-> 
-> is what brings some hope to my life, though. Daniel? Any chance we could
-> get the similar fixes for local-pull? (I didn't actually look at the
-> patch but briefly.)
+Linus has "packed" his GIT tree ... and now http-pull doesn't work. 
+rsync still does (provided
+you have a new enough cogito).
 
-This patch is not actually for transferring objects which are in pack
-files in the source, but for transferring a group of objects as a pack
-file. It does, however, read the source side with git-pack-objects to
-generate the content to send, so it would, I guess, fix the problem for
-the case where it decides to use a pack to transfer.
-
-The real fix is to go through the pull methods (local-pull and
-ssh-pull; http-pull presumably won't be encountering pack files yet) and
-make them do appropriate things with pack files.
-
-One thing that is in the patch is a change to the comment, specifying
-that fetch() could also get other objects in addition to the one
-specified, if there's some reason to think this is a good idea; the fix
-for local-pull is probably to link/symlink/copy the pack file if the
-object is in one.
-
-For ssh-pull, serve_object in ssh-push needs to be taught how to extract
-an object from a pack file and send it.
-
-However, there's a bug in pull.c, covering up a terrible performance
-issue: it doesn't actually make sure you have all the parent of a commit
-that you had when it checked (due to not having a way of caching the
-result of checking this, which would require you to put the entire
-repository through cache each time you pull). This would mean that, if you
-have a pack that references something outside of it, you won't get
-everything with my proposal above.
-
-I should be able to spend some time on these issues over the weekend.
-
-	-Daniel
-*This .sig left intentionally blank*
+-Tony
