@@ -1,97 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Give --full-objects flag to rev-list when preparing a dumb server.
-Date: Thu, 07 Jul 2005 18:03:46 -0700
-Message-ID: <7vpstuds7h.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20050703234629.GF13848@pasky.ji.cz>
-	<42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz>
-	<7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071158220.3293@g5.osdl.org>
-	<20050707221443.GB7151@pasky.ji.cz>
-	<Pine.LNX.4.58.0507071549330.25104@g5.osdl.org>
-	<7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071657140.25104@g5.osdl.org>
+From: Peter Osterlund <petero2@telia.com>
+Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
+Date: 08 Jul 2005 03:10:02 +0200
+Message-ID: <m31x6acdcl.fsf@telia.com>
+References: <1119994003.9631.6.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 03:04:37 2005
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 08 03:11:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqhHy-0005Ol-1n
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:04:22 +0200
+	id 1DqhNr-0005ut-Am
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262425AbVGHBD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 21:03:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262406AbVGHBD5
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:03:57 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:44987 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S262425AbVGHBDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2005 21:03:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050708010347.BAYX17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 7 Jul 2005 21:03:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507071657140.25104@g5.osdl.org> (Linus Torvalds's message of "Thu, 7 Jul 2005 16:58:13 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262406AbVGHBKP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 21:10:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262418AbVGHBKP
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:10:15 -0400
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:10115 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S262406AbVGHBKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Jul 2005 21:10:13 -0400
+Received: from r3000.localdomain (62.20.229.17) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 42B94E29002D8D68; Fri, 8 Jul 2005 03:10:10 +0200
+Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
+	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j681A41X029222;
+	Fri, 8 Jul 2005 03:10:04 +0200
+Received: (from petero@localhost)
+	by r3000.localdomain (8.13.1/8.13.1/Submit) id j681A3Y5029217;
+	Fri, 8 Jul 2005 03:10:03 +0200
+X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <1119994003.9631.6.camel@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "LT" == Linus Torvalds <torvalds@osdl.org> writes:
+Catalin Marinas <catalin.marinas@gmail.com> writes:
 
-LT> This is nasty - if you mis-spell "self-sufficient" (easy enough to do) 
-LT> you'll never know the end result isn't what you expected. It won't warn 
-LT> you in any way, it will just make a non-self-sufficient pack..
+> A new StGIT release is available from http://procode.org/stgit/
 
-To match the change of flag name to --full-objects,...
+I think it would be good if it was possible to include diffstat output
+in exported patches, something like this:
 
-------------
-This adds --full flag to git-repack-script, and uses it when
-preparing the dumb server material.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Added possibility to include diffstat output in exported patches.
+
+Signed-off-by: Peter Osterlund <petero2@telia.com>
 ---
 
- git-repack-script             |   10 +++++++++-
- git-update-dumb-server-script |    2 +-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ b/stgit/git.py  |   22 ++++++++++++++++++++++
+ b/stgit/main.py |    2 ++
+ 2 files changed, 24 insertions(+)
 
-0617ae867e7e27a7b484827f882fe7b396bea004
-diff --git a/git-repack-script b/git-repack-script
---- a/git-repack-script
-+++ b/git-repack-script
-@@ -1,8 +1,16 @@
- #!/bin/sh
- : ${GIT_DIR=.git}
- : ${GIT_OBJECT_DIRECTORY="$GIT_DIR/objects"}
-+
-+case "$1" in
-+--full)
-+	objects=--full-objects ;;
-+*)
-+	objects=--objects ;;
-+esac
-+
- rm -f .tmp-pack-*
--packname=$(git-rev-list --unpacked --objects $(git-rev-parse --all) |
-+packname=$(git-rev-list --unpacked $objects $(git-rev-parse --all) |
- 	git-pack-objects --non-empty --incremental .tmp-pack) ||
- 	exit 1
- if [ -z "$packname" ]; then
-diff --git a/git-update-dumb-server-script b/git-update-dumb-server-script
---- a/git-update-dumb-server-script
-+++ b/git-update-dumb-server-script
-@@ -26,7 +26,7 @@ plain_size=$(
+diff --git a/stgit/git.py b/stgit/git.py
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -345,6 +345,28 @@ def diff(files = [], rev1 = 'HEAD', rev2
+                      % (rev1, files_str, extra_args)) != 0:
+             raise GitException, 'git-diff-cache failed'
  
- if test $max_plain_size -lt $plain_size >/dev/null
- then
--	git-repack-script && git-prune-packed
-+	git-repack-script --full && git-prune-packed
- fi &&
++def diffstat(files = [], rev1 = 'HEAD', rev2 = None):
++    """Return the diffstat between rev1 and rev2
++    """
++    files_str = reduce(lambda x, y: x + ' ' + y, files, '')
++
++    os.system('git-update-cache --refresh > /dev/null')
++
++    if rev2:
++        f = os.popen('git-diff-tree -p %s %s %s | diffstat -p0'
++                     % (rev1, rev2, files_str), 'r')
++        str = f.read()
++        if f.close():
++            raise GitException, 'git-diff-tree failed'
++        return str
++    else:
++        f = os.popen('git-diff-cache -p %s %s | diffstat -p0'
++                     % (rev1, files_str), 'r')
++        str = f.read()
++        if f.close():
++            raise GitException, 'git-diff-cache failed'
++        return str
++
+ def checkout(files = [], force = False):
+     """Check out the given or all files
+     """
+diff --git a/stgit/main.py b/stgit/main.py
+--- a/stgit/main.py
++++ b/stgit/main.py
+@@ -659,6 +659,8 @@ def export(parser, options, args):
+         patch = crt_series.get_patch(p)
  
- git-update-dumb-server &&
-------------
+         tmpl_dict = {'description': patch.get_description().rstrip(),
++                     'diffstat': git.diffstat(rev1 = __git_id('%s/bottom' % p),
++                                              rev2 = __git_id('%s/top' % p)),
+                      'authname': patch.get_authname(),
+                      'authemail': patch.get_authemail(),
+                      'authdate': patch.get_authdate(),
+
+-- 
+Peter Osterlund - petero2@telia.com
+http://web.telia.com/~u89404340
