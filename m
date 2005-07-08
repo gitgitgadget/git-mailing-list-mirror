@@ -1,73 +1,116 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Fri, 8 Jul 2005 10:14:58 +0200
-Message-ID: <20050708081458.GA17022@pasky.ji.cz>
-References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <Pine.LNX.4.58.0507071706090.25104@g5.osdl.org>
+From: Peter Osterlund <petero2@telia.com>
+Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
+Date: 08 Jul 2005 10:14:21 +0200
+Message-ID: <m3d5ptlnoi.fsf@telia.com>
+References: <1119994003.9631.6.camel@localhost.localdomain>
+	<m31x6acdcl.fsf@telia.com> <7vk6k2dr8i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tony Luck <tony.luck@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 10:15:39 2005
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 08 10:16:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dqo1E-0001lC-SM
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 10:15:33 +0200
+	id 1Dqo1R-0001mF-H4
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 10:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262272AbVGHIPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 04:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVGHIPJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 04:15:09 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:7864 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262272AbVGHIPD (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 04:15:03 -0400
-Received: (qmail 21604 invoked by uid 2001); 8 Jul 2005 08:14:58 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507071706090.25104@g5.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262103AbVGHIPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 04:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262234AbVGHIPc
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 04:15:32 -0400
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:2810 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net") by vger.kernel.org with ESMTP
+	id S262103AbVGHIPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2005 04:15:17 -0400
+Received: from r3000.localdomain (62.20.228.225) by pne-smtpout2-sn1.fre.skanova.net (7.2.060.1)
+        id 42B93717002E349C; Fri, 8 Jul 2005 10:15:09 +0200
+Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
+	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j688EZjD008726;
+	Fri, 8 Jul 2005 10:14:35 +0200
+Received: (from petero@localhost)
+	by r3000.localdomain (8.13.1/8.13.1/Submit) id j688EMMS008715;
+	Fri, 8 Jul 2005 10:14:22 +0200
+X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6k2dr8i.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jul 08, 2005 at 02:09:48AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
+Junio C Hamano <junkio@cox.net> writes:
+
+> >>>>> "PO" == Peter Osterlund <petero2@telia.com> writes:
 > 
+> PO> I think it would be good if it was possible to include diffstat output
+> PO> in exported patches, something like this:
 > 
-> On Thu, 7 Jul 2005, Linus Torvalds wrote:
-> > > 
-> > > cg-update from a local repo that contains packs is broken though :-(
-> > 
-> > Is this with cg-0.12? The most recent release should be happy with packs.
+> PO> Added possibility to include diffstat output in exported patches.
 > 
-> Ahh, I see it. It's because it uses "git-local-pull", and yes, 
-> git-local-pull does the old filename assumption. Right?
-> 
-> Ho humm.. That's a bug in local-pull.c, although I'm not sure how to fix
-> it best.
+> And you wuold want to do things similarly to what others have
+> already done.  git-resolve-script uses "git-apply --stat" there,
+> instead of "diffstat", so people without diffstat installed can
+> still get the same information.
 
-It seems like the whole pull family is totally borked now, and I'm
-getting desperate. Looks like this evening will be *pull.c fixing for
-me.
+Thanks for the hint. Here is a replacement patch that uses git-apply
+instead.
 
-Jul 04 Daniel Barkalow  [PATCH 0/2] Support for transferring pack files in git-ssh-*
 
-is what brings some hope to my life, though. Daniel? Any chance we could
-get the similar fixes for local-pull? (I didn't actually look at the
-patch but briefly.) I'll try to review the ssh patchset ASAP - I still
-prefer it much to the fetch-pack things since its protocol is actually
-extensible.
+Added possibility to include diffstat output in exported patches.
 
-> The _simplest_ fix is to use git-fetch-pack. It doesn't give you the 
-> convenient hard-linking, though.
+Signed-off-by: Peter Osterlund <petero2@telia.com>
+---
 
-Hard-linking is an absolute must for local repositories (well, either
-that for people who want safety, or symlinking for the rest who want
-speed - I want to make that one possible in Cogito ASAP but it requires
-some non-trivial changes to some of its assumptions).
+ stgit/git.py  |   23 +++++++++++++++++++++++
+ stgit/main.py |    2 ++
+ 2 files changed, 25 insertions(+), 0 deletions(-)
+
+diff --git a/stgit/git.py b/stgit/git.py
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -345,6 +345,29 @@ def diff(files = [], rev1 = 'HEAD', rev2
+                      % (rev1, files_str, extra_args)) != 0:
+             raise GitException, 'git-diff-cache failed'
+ 
++def diffstat(files = [], rev1 = 'HEAD', rev2 = None):
++    """Return the diffstat between rev1 and rev2
++    """
++    files_str = reduce(lambda x, y: x + ' ' + y, files, '')
++
++    os.system('git-update-cache --refresh > /dev/null')
++    ds_cmd = '| git-apply --stat --summary'
++
++    if rev2:
++        f = os.popen('git-diff-tree -p %s %s %s %s'
++                     % (rev1, rev2, files_str, ds_cmd), 'r')
++        str = f.read()
++        if f.close():
++            raise GitException, 'git-diff-tree failed'
++        return str
++    else:
++        f = os.popen('git-diff-cache -p %s %s %s'
++                     % (rev1, files_str, ds_cmd), 'r')
++        str = f.read()
++        if f.close():
++            raise GitException, 'git-diff-cache failed'
++        return str
++
+ def checkout(files = [], force = False):
+     """Check out the given or all files
+     """
+diff --git a/stgit/main.py b/stgit/main.py
+--- a/stgit/main.py
++++ b/stgit/main.py
+@@ -659,6 +659,8 @@ def export(parser, options, args):
+         patch = crt_series.get_patch(p)
+ 
+         tmpl_dict = {'description': patch.get_description().rstrip(),
++                     'diffstat': git.diffstat(rev1 = __git_id('%s/bottom' % p),
++                                              rev2 = __git_id('%s/top' % p)),
+                      'authname': patch.get_authname(),
+                      'authemail': patch.get_authemail(),
+                      'authdate': patch.get_authdate(),
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-<Espy> be careful, some twit might quote you out of context..
+Peter Osterlund - petero2@telia.com
+http://web.telia.com/~u89404340
