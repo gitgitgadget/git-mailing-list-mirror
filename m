@@ -1,76 +1,165 @@
-From: Bryan Larsen <bryan.larsen@gmail.com>
-Subject: Re: patches to support working without the object database
-Date: Fri, 08 Jul 2005 16:09:45 -0400
-Message-ID: <42CEDD89.6010200@gmail.com>
-References: <42CE5764.9010405@gmail.com> <7vwto16t6h.fsf@assigned-by-dhcp.cox.net>
+From: Pavel Roskin <proski@gnu.org>
+Subject: New script: cg-clean
+Date: Fri, 08 Jul 2005 18:34:44 -0400
+Message-ID: <1120862084.17812.6.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 22:23:30 2005
+X-From: git-owner@vger.kernel.org Sat Jul 09 00:42:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqzNV-0000ky-Je
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 22:23:17 +0200
+	id 1Dr1Y2-0001NT-OK
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 00:42:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262857AbVGHUWd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 16:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262886AbVGHUT5
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 16:19:57 -0400
-Received: from zproxy.gmail.com ([64.233.162.205]:57570 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262872AbVGHUT0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 16:19:26 -0400
-Received: by zproxy.gmail.com with SMTP id i1so237119nzh
-        for <git@vger.kernel.org>; Fri, 08 Jul 2005 13:19:25 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=fwGoqJroM91QdjiuYrwY2C9j/MagyXrFVsJVn4pPnAIC6eMDtjDrL08DekANCtaujMpcGKD925E/kOeOB6UMY4NaXtxPa6F17e3JOXMJzonsj1KWBJWpwyX6qakYPKsPNvxeVOWnX5f82gz+gLvXCZZOsRdgEU6x35LffC+yxKw=
-Received: by 10.36.221.60 with SMTP id t60mr638590nzg;
-        Fri, 08 Jul 2005 13:19:25 -0700 (PDT)
-Received: from ?192.168.1.100? ([70.26.43.137])
-        by mx.gmail.com with ESMTP id 12sm1062843nzn.2005.07.08.13.19.25;
-        Fri, 08 Jul 2005 13:19:25 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwto16t6h.fsf@assigned-by-dhcp.cox.net>
+	id S262948AbVGHWia (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 18:38:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262947AbVGHWfW
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 18:35:22 -0400
+Received: from h-64-105-159-118.noclli.covad.net ([64.105.159.118]:59031 "HELO
+	roinet.com") by vger.kernel.org with SMTP id S262941AbVGHWep (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 18:34:45 -0400
+Received: (qmail 3335 invoked from network); 8 Jul 2005 22:34:44 -0000
+Received: from mtproxy.roinet.com (HELO dv) (192.168.1.1)
+  by roinet.com with SMTP; 8 Jul 2005 22:34:44 -0000
+To: git <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-Mailer: Evolution 2.2.3 (2.2.3-8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
->>>>>>"BL" == Bryan Larsen <bryan.larsen@gmail.com> writes:
-> 
-> 
-> BL> Sometimes you may wish to keep an audit trail of what changed, where,
-> BL> and by whom.  You do not need to know the exact details of the change,
-> BL> and the files are so large that keeping an extra copy of the data in
-> BL> the object database cache is prohibitively expensive.
-> 
-> I am basically OK with this patch series, except I have one
-> minor problem about interface detail, and more seriously, that
-> the patch is whitespace mangled and would not apply.  E.g.
- >
-* SNIP *
-> 
-> Also please make sure that core GIT part patch applies against
-> Linus tip (especially [PATCH 2/7]) as well. I think it does, but
-> please double check.
-> 
-> 
-I had trouble getting tip.  That may be because I'm on OS X: I want to 
-try it on
-a Linux box to narrow down the source of my problems.  Given that it's 
-currently
-4PM on Friday, I don't think the IT staff is going to fix the firewall 
-before Monday.
-So please excuse me while I scrounge up another Linux box or two.
+Hello, Petr!
 
-After that happens, I'll fix up my patches as suggested by you and 
-Linus, get
-myself a real mailer and resubmit.
+Please consider this script for Cogito.
 
-thanks,
-Bryan
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+
+#!/usr/bin/env bash
+#
+# Clean unknown files from the working tree.
+# Copyright (c) Pavel Roskin, 2005
+#
+# Cleans file and directories that are not under version control.
+# Only regular files that are not ignored by cg-status are cleaned
+# by default.
+#
+# OPTIONS
+# -------
+# -i::
+#	Clean files ignored by cg-status, such as object files.
+#
+# -s::
+#	Clean symlinks, fifos, sockets and other special files.
+#
+# -r::
+#	Clean directories.
+#
+# -R::
+#	Clean directories, try harder.  Make directories writeable
+#	recursively before removing.
+#
+# -a::
+#	Clean all the above.
+#
+# If any other arguments are specified, they will be the only files
+# considered for removal.  It will also imply the `-a' option.
+
+USAGE="cg-clean [-i] [-s] [-r] [-R] [-a] [FILE]..."
+
+. ${COGITO_LIB}cg-Xlib
+
+cleanexclude=
+cleanspecial=
+cleandir=
+cleandirhard=
+while optparse; do
+	if optparse -i; then
+		cleanexclude=1
+	elif optparse -s; then
+		cleanspecial=1
+	elif optparse -r; then
+		cleandir=1
+	elif optparse -R; then
+		cleandirhard=1
+	elif optparse -a; then
+		cleanexclude=1
+		cleandirhard=1
+	else
+		optfail
+	fi
+done
+
+if [ "$ARGS" ]; then
+	cleanexclude=1
+	cleandirhard=1
+fi
+
+# Good candidate for cg-Xlib
+# Put exclude options for git-ls-files to EXCLUDE
+set_exclude() {
+	stdignores=('*.[ao]' '.*' tags '*~' '#*' ',,merge*')
+	for ign in "${stdignores[@]}"; do
+		EXCLUDE="$EXCLUDE --exclude=$ign"
+	done
+
+	EXCLUDEFILE=$_git/exclude
+	if [ -f "$EXCLUDEFILE" ]; then
+		EXCLUDE="$EXCLUDE --exclude-from=$EXCLUDEFILE"
+	fi
+}
+
+EXCLUDE=
+if [ -z "$cleanexclude" ]; then
+	set_exclude
+fi	
+
+git-update-cache --refresh > /dev/null
+
+do_clean() {
+	# FIXME - very suboptimal
+	if [ "$ARGS" ]; then
+		local found=
+		for arg in "${ARGS[@]}"; do
+			if [ "$arg" = "$file" ]; then
+				found=1
+				break
+			fi
+		done
+		[ "$found" ] || return
+	fi
+
+	if [ "$cleandirhard" ]; then
+		chmod -R 700 "$file"
+		rm -rf "$file"
+		return
+	fi
+
+	if [ "$cleandir" ]; then
+		rm -rf "$file"
+		return
+	fi
+
+	if [ "$cleanspecial" ]; then
+		[ -d "$file" ] && return
+		rm -f "$file"
+		return
+	fi
+
+	[ -f "$file" ] && rm -f "$file"
+}
+
+# Need to use temporary file so that changing IFS doesn't affect $EXCLUDE
+# expansion.
+filelist=$(mktemp -t gitlsfiles.XXXXXX)
+git-ls-files --others $EXCLUDE >"$filelist"
+IFS=$'\n'
+for file in $(cat "$filelist"); do
+	do_clean "$file"
+done
+
+rm -f "$filelist"
+
+
+-- 
+Regards,
+Pavel Roskin
