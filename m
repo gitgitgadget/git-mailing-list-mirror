@@ -1,48 +1,45 @@
-From: Tony Luck <tony.luck@gmail.com>
-Subject: Re: Linus kernel tree corrupt?
-Date: Fri, 8 Jul 2005 10:06:09 -0700
-Message-ID: <12c511ca05070810065db87043@mail.gmail.com>
-References: <9e473391050708085756bd463e@mail.gmail.com>
-Reply-To: Tony Luck <tony.luck@gmail.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Please rename t/t6000-lib.sh - it gets run as test
+Date: Fri, 08 Jul 2005 14:09:53 -0400
+Message-ID: <1120846193.27711.6.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 08 19:06:38 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jul 08 20:10:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqwIo-0005sx-R7
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 19:06:15 +0200
+	id 1DqxIU-0006XE-DK
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 20:09:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262720AbVGHRGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 13:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262718AbVGHRGK
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 13:06:10 -0400
-Received: from zproxy.gmail.com ([64.233.162.197]:52629 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262720AbVGHRGK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 13:06:10 -0400
-Received: by zproxy.gmail.com with SMTP id 12so214971nzp
-        for <git@vger.kernel.org>; Fri, 08 Jul 2005 10:06:09 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EffDlRoSGCL5OOFFP8Be6uy8VdKFCUCYC2HRFp7JdL+QHxXx7UTNQXN70XCJctWric5dt4R+F0mJcp6b4cplLdFSVhBFLPTUVsDNYNZnjeuqGIy47ZL7WV0RMca7QbVQjOmBhK1OPXD7UHYhyudORaFwtrKVm2Cw/wbcJK/nsds=
-Received: by 10.36.4.14 with SMTP id 14mr727563nzd;
-        Fri, 08 Jul 2005 10:06:09 -0700 (PDT)
-Received: by 10.36.59.4 with HTTP; Fri, 8 Jul 2005 10:06:09 -0700 (PDT)
-To: Jon Smirl <jonsmirl@gmail.com>
-In-Reply-To: <9e473391050708085756bd463e@mail.gmail.com>
-Content-Disposition: inline
+	id S262364AbVGHSJy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 14:09:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262749AbVGHSJy
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 14:09:54 -0400
+Received: from h-64-105-159-118.noclli.covad.net ([64.105.159.118]:40342 "HELO
+	roinet.com") by vger.kernel.org with SMTP id S262364AbVGHSJx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 14:09:53 -0400
+Received: (qmail 490 invoked from network); 8 Jul 2005 18:09:53 -0000
+Received: from mtproxy.roinet.com (HELO dv) (192.168.1.1)
+  by roinet.com with SMTP; 8 Jul 2005 18:09:53 -0000
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 7/8/05, Jon Smirl <jonsmirl@gmail.com> wrote:
-> What happened in this session...
+Hello!
 
-Linus has "packed" his GIT tree ... and now http-pull doesn't work. 
-rsync still does (provided
-you have a new enough cogito).
+t/t6000-lib.sh has a bad name - it matches the wildcard for tests and
+gets run by "make test".  The only side effect is an empty file named
+t/sed.script.  This is pretty benign, but let's fix it.
 
--Tony
+I suggest renaming t6000-lib.sh to t6000.lib.sh but I'll be happy with
+any other name that doesn't match t[0-9][0-9][0-9][0-9]-*.sh
+
+Alternatively, we could filter out *-lib.sh in t/Makefile, but I think
+it would be more error prone.
+
+-- 
+Regards,
+Pavel Roskin
