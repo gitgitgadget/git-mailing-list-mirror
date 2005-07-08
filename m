@@ -1,53 +1,73 @@
-From: Alexey Dobriyan <adobriyan@gmail.com>
-Subject: pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack
-Date: Fri, 8 Jul 2005 11:49:45 +0400
-Message-ID: <200507081149.45344.adobriyan@gmail.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Cogito-0.12
+Date: Fri, 8 Jul 2005 10:14:58 +0200
+Message-ID: <20050708081458.GA17022@pasky.ji.cz>
+References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <Pine.LNX.4.58.0507071706090.25104@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jul 08 09:43:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Tony Luck <tony.luck@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 08 10:15:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqnVt-0006gb-Vj
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 09:43:10 +0200
+	id 1Dqo1E-0001lC-SM
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 10:15:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261476AbVGHHnD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 03:43:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261834AbVGHHnD
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 03:43:03 -0400
-Received: from wproxy.gmail.com ([64.233.184.192]:3528 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261476AbVGHHnB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 03:43:01 -0400
-Received: by wproxy.gmail.com with SMTP id i25so377293wra
-        for <git@vger.kernel.org>; Fri, 08 Jul 2005 00:42:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=CdVDSqIUj0zJMyHY198xddDjo2uZptLDjFsZhhuwZyPR4eFtDwD70tGWuSsDbqsU1lLARk30CWm+M6mRA49oZ5nj+no/yq1fdWc9u38u6sf0unTu7qmQuxUnvtBA0S1SWO4QCCoOmUJ6bfByI9nfS0k1AzzihznC8Gl2q9kkJs4=
-Received: by 10.54.16.77 with SMTP id 77mr415702wrp;
-        Fri, 08 Jul 2005 00:42:59 -0700 (PDT)
-Received: from mipter.zuzino.mipt.ru ([217.10.38.130])
-        by mx.gmail.com with ESMTP id d75sm2229029wra.2005.07.08.00.42.58;
-        Fri, 08 Jul 2005 00:42:59 -0700 (PDT)
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.1
+	id S262272AbVGHIPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 04:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262273AbVGHIPJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 04:15:09 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:7864 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262272AbVGHIPD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 04:15:03 -0400
+Received: (qmail 21604 invoked by uid 2001); 8 Jul 2005 08:14:58 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507071706090.25104@g5.osdl.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Being a happy user of
+Dear diary, on Fri, Jul 08, 2005 at 02:09:48AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> 
+> 
+> On Thu, 7 Jul 2005, Linus Torvalds wrote:
+> > > 
+> > > cg-update from a local repo that contains packs is broken though :-(
+> > 
+> > Is this with cg-0.12? The most recent release should be happy with packs.
+> 
+> Ahh, I see it. It's because it uses "git-local-pull", and yes, 
+> git-local-pull does the old filename assumption. Right?
+> 
+> Ho humm.. That's a bug in local-pull.c, although I'm not sure how to fix
+> it best.
 
-	$ cat ./rsync-linus
-	#!/bin/sh -x
+It seems like the whole pull family is totally borked now, and I'm
+getting desperate. Looks like this evening will be *pull.c fixing for
+me.
 
-	cd linux-linus
-	rsync -avz --progress \
-	        rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
-	        .git/
+Jul 04 Daniel Barkalow  [PATCH 0/2] Support for transferring pack files in git-ssh-*
 
-I'm confused now. This pack file is ~60M in size. Will rsync download
-another 60M next time? What command should I use now to a) get latest and
-greatest and b) be nice with my traffic?
+is what brings some hope to my life, though. Daniel? Any chance we could
+get the similar fixes for local-pull? (I didn't actually look at the
+patch but briefly.) I'll try to review the ssh patchset ASAP - I still
+prefer it much to the fetch-pack things since its protocol is actually
+extensible.
+
+> The _simplest_ fix is to use git-fetch-pack. It doesn't give you the 
+> convenient hard-linking, though.
+
+Hard-linking is an absolute must for local repositories (well, either
+that for people who want safety, or symlinking for the rest who want
+speed - I want to make that one possible in Cogito ASAP but it requires
+some non-trivial changes to some of its assumptions).
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
