@@ -1,62 +1,89 @@
-From: Bryan Larsen <bryan.larsen@gmail.com>
-Subject: cogito Mac OS X compatibility
-Date: Fri, 08 Jul 2005 19:34:55 -0400
-Message-ID: <42CF0D9F.8040909@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: patches to support working without the object database
+Date: Fri, 08 Jul 2005 12:34:40 -0700
+Message-ID: <7vpstt6qi7.fsf@assigned-by-dhcp.cox.net>
+References: <42CE5764.9010405@gmail.com>
+	<7vwto16t6h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 09 01:37:23 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 01:40:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dr2Ox-0006FQ-0y
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:36:59 +0200
+	id 1Dr2Rm-0006SW-9C
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262931AbVGHXg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 19:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262969AbVGHXgY
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 19:36:24 -0400
-Received: from zproxy.gmail.com ([64.233.162.206]:58472 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262931AbVGHXe7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 19:34:59 -0400
-Received: by zproxy.gmail.com with SMTP id i28so243543nzi
-        for <git@vger.kernel.org>; Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=X6oPfK7LZcgt5+4o9XlaVjCITImqJGDd8+SO3K+Rj+1Zj5aeM3JfN9+PmxRWJ9Rdlw+Jm0UOFxge2rpMabN8j2GdZhcplJVjL5td89PcaqPsqNx6oHFl/rgMTstZhybaZ5TpOuLxca0muf1LJem7PpXtbTDdtVaSjCkjDZwFlJ4=
-Received: by 10.36.25.19 with SMTP id 19mr779228nzy;
-        Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
-Received: from ?192.168.1.104? ([70.26.43.137])
-        by mx.gmail.com with ESMTP id 24sm881608nzn.2005.07.08.16.34.57;
-        Fri, 08 Jul 2005 16:34:57 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
+	id S262814AbVGHTim (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 15:38:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262799AbVGHTfk
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 15:35:40 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20432 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262813AbVGHTem (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2005 15:34:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050708193441.BXBC19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 8 Jul 2005 15:34:41 -0400
+To: Bryan Larsen <bryan.larsen@gmail.com>
+In-Reply-To: <7vwto16t6h.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri, 08 Jul 2005 11:36:54 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mac OS X
+Replying to myself...
 
-$ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git
-defaulting to local storage area
-19:11:10 
-URL:http://www.kernel.org/pub/scm/cogito/cogito.git/refs/heads/master 
-[41/41] -> "refs/heads/origin" [1]
-/Users/blarsen/bin/cg-pull: line 82: 0 + : syntax error: operand 
-expected (error token is " ")
-cg-pull: objects pull failed
-cg-init: pull failed
+JCH> While you are at it, you might also want to add an option to
+JCH> write-blob to specify the type of the object you are hashing, so
+JCH> that would make [*1*]:
 
-This appears to be some sort of weird shell thing.  I've got bash 3.0 
-compiling in the background to see if that fixes the problem.
+JCH>     git-write-blob [-n] [-t <type>] <file>...
 
-Cogito also appears to rely on the gnu tools.  For instance, I've seen 
-the "-a" flag used with cp.  OS X's default installation of cp doesn't 
-support -a.  darwinports coreutils installs gnu cp as "gcp".
+JCH> [Footnote]
 
-Myself, I can't live without cp -a, so have linked gcp to cp, but I 
-presume we want to be portable, at least to a certain degree.
+JCH> *1* I considered this instead:
 
-Bryan
+JCH>     git-write-blob [-n | -t <type>] <file>...
+
+JCH> which means that if you specify type then -n is implied.  But
+JCH> making -t independent would let you have inverse of
+JCH> git-cat-file; a silly example:
+
+JCH>     $ git-cat-file -t $FOO
+JCH>     tree
+JCH>     $ git-cat-file tree $FOO >tmp1
+JCH>     $ FOO1=$(git-write-blob -t tree tmp1)
+
+JCH> If we go this route, we may also want to rename it to
+JCH> write-object, but I would want to have it as a separate patch
+JCH> after this series settles down.
+
+Come to think of it, there is only one in-tree user of
+write-blob remaining.  Renaming it to hash-object, changing the
+default behaviour to just hash without storing and instead give
+it --write (or just -w) flag would make more sense.  Without -t,
+the type should default to "blob".
+
+Then, the above stupid example would then become:
+
+    $ git-cat-file -t $FOO
+    tree
+    $ git-cat-file tree $FOO >tmp1
+    $ FOO1=$(git-hash-object -t tree tmp1)
+
+And the only in-tree user git-cvsimport-script would be changed to:
+
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -683,7 +683,7 @@ while(<CVS>) {
+ 		$fn =~ s#^/+##;
+ 		my ($tmpname, $size) = $cvs->file($fn,$rev);
+ 		print "".($init ? "New" : "Update")." $fn: $size bytes.\n" if $opt_v;
+-		open my $F, '-|', "git-write-blob $tmpname"
++		open my $F, '-|', "git-hash-object -w $tmpname"
+ 			or die "Cannot create object: $!\n";
+ 		my $sha = <$F>;
+ 		chomp $sha;
