@@ -1,52 +1,113 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
-Date: Fri, 08 Jul 2005 10:32:24 +0100
-Message-ID: <tnxhdf5bq3b.fsf@arm.com>
-References: <1119994003.9631.6.camel@localhost.localdomain>
-	<m31x6acdcl.fsf@telia.com> <7vk6k2dr8i.fsf@assigned-by-dhcp.cox.net>
-	<m3d5ptlnoi.fsf@telia.com>
+From: Bryan Larsen <bryan.larsen@gmail.com>
+Subject: [PATCH] add --no-check option to git-write-tree
+Date: Fri, 08 Jul 2005 06:37:48 -0400
+Message-ID: <42CE577C.1070404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 11:34:09 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Fri Jul 08 12:56:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqpF4-0002di-U9
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 11:33:55 +0200
+	id 1DqqWZ-0004Hd-Ee
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 12:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262434AbVGHJdZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 05:33:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262433AbVGHJdZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 05:33:25 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:62139 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S262420AbVGHJc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2005 05:32:59 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j689WA7b002884;
-	Fri, 8 Jul 2005 10:32:10 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA05353;
-	Fri, 8 Jul 2005 10:32:43 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 8 Jul 2005 10:32:41 +0100
-To: Peter Osterlund <petero2@telia.com>
-In-Reply-To: <m3d5ptlnoi.fsf@telia.com> (Peter Osterlund's message of "08
- Jul 2005 10:14:21 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 08 Jul 2005 09:32:41.0754 (UTC) FILETIME=[FCFF0FA0:01C5839F]
+	id S262458AbVGHKxR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 06:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262461AbVGHKsG
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 06:48:06 -0400
+Received: from zproxy.gmail.com ([64.233.162.194]:64087 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262494AbVGHKrf (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 06:47:35 -0400
+Received: by zproxy.gmail.com with SMTP id p8so182197nzb
+        for <git@vger.kernel.org>; Fri, 08 Jul 2005 03:47:35 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=iNio1DuX6w4Hrg3JDW53fyS+uyyj6sMyXuHuae0KgGZLysHIWAkBnIXQN2/4xTCPBqG17lwpX7Z/oKevHAVRxdPEbPrNyCLHKvMbatNg4QSGwqr/ndPoyRevifDfNMFRKJc4Bs8fJv5uczqCqY0F9lDn2fq9c/tE5zb8EkjrR1A=
+Received: by 10.36.66.5 with SMTP id o5mr666788nza;
+        Fri, 08 Jul 2005 03:47:35 -0700 (PDT)
+Received: from ?192.168.1.100? ([70.26.43.137])
+        by mx.gmail.com with ESMTP id 17sm936059nzo.2005.07.08.03.47.35;
+        Fri, 08 Jul 2005 03:47:35 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Peter Osterlund <petero2@telia.com> wrote:
-> Added possibility to include diffstat output in exported patches.
+Add --no-check option to git-write-tree.
 
-Great. I had a plan to do this but I was busy with the push and
-resolved commands. I will apply this patch.
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+---
 
-Thanks.
+  Documentation/git-write-tree.txt |    6 ++++++
+  write-tree.c                     |   14 +++++++++++++-
+  2 files changed, 19 insertions(+), 1 deletions(-)
 
--- 
-Catalin
+diff --git a/Documentation/git-write-tree.txt 
+b/Documentation/git-write-tree.txt
+--- a/Documentation/git-write-tree.txt
++++ b/Documentation/git-write-tree.txt
+@@ -10,6 +10,7 @@ git-write-tree - Creates a tree from the
+  SYNOPSIS
+  --------
+  'git-write-tree'
++		[--no-check]
+
+  DESCRIPTION
+  -----------
+@@ -23,6 +24,11 @@ In order to have that match what is actu
+  now, you need to have done a "git-update-cache" phase before you did the
+  "git-write-tree".
+
++OPTIONS
++-------
++--no-check::
++	Normally "git-write-tree" ensures that the objects referenced by the
++	directory exist in the object database.  This option disabled this check.
+
+
+
+diff --git a/write-tree.c b/write-tree.c
+--- a/write-tree.c
++++ b/write-tree.c
+@@ -5,6 +5,8 @@
+   */
+  #include "cache.h"
+
++static int no_check = 0;
++
+  static int check_valid_sha1(unsigned char *sha1)
+  {
+  	int ret;
+@@ -61,7 +63,7 @@ static int write_tree(struct cache_entry
+  			sha1 = subdir_sha1;
+  		}
+
+-		if (check_valid_sha1(sha1) < 0)
++		if (!no_check && check_valid_sha1(sha1) < 0)
+  			exit(1);
+
+  		entrylen = pathlen - baselen;
+@@ -86,6 +88,16 @@ int main(int argc, char **argv)
+  	int i, funny;
+  	int entries = read_cache();
+  	unsigned char sha1[20];
++	
++	if (argc==2) {
++		if (!strcmp(argv[1], "--no-check"))
++			no_check = 1;
++		else
++			die("unknown option %s", argv[1]);
++	}
++	
++	if (argc>2)
++		die("too many options");
+
+  	if (entries < 0)
+  		die("git-write-tree: error reading cache");
+
+
+
