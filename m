@@ -1,63 +1,63 @@
-From: Marc Singer <elf@buici.com>
-Subject: Bootstrapping into git, commit gripes at me
-Date: Fri, 8 Jul 2005 16:07:50 -0700
-Message-ID: <20050708230750.GA23847@buici.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Jul 09 01:14:44 2005
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: New script: cg-clean
+Date: Sat, 09 Jul 2005 00:59:59 +0200
+Message-ID: <20050708225959.5BCA13539FE@atlas.denx.de>
+References: <1120862084.17812.6.camel@dv>
+Cc: git <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Jul 09 01:18:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dr23P-0004G9-HK
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:14:43 +0200
+	id 1Dr268-0004TN-LH
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:17:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262967AbVGHXJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 19:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262958AbVGHXJT
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 19:09:19 -0400
-Received: from florence.buici.com ([206.124.142.26]:25065 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S262960AbVGHXHv
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Jul 2005 19:07:51 -0400
-Received: (qmail 25092 invoked by uid 1000); 8 Jul 2005 23:07:50 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S262970AbVGHXQw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 19:16:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262918AbVGHXEK
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 19:04:10 -0400
+Received: from mailout06.sul.t-online.com ([194.25.134.19]:5297 "EHLO
+	mailout06.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S262958AbVGHXDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2005 19:03:30 -0400
+Received: from fwd16.aul.t-online.de 
+	by mailout06.sul.t-online.com with smtp 
+	id 1Dr1sP-00024E-00; Sat, 09 Jul 2005 01:03:21 +0200
+Received: from denx.de (VgwhREZDrerr2IHjLyITEHgdE9IVkpv6pUyNtJwZTTPWvlS-i1DH0Z@[84.150.68.56]) by fwd16.sul.t-online.de
+	with esmtp id 1Dr1sC-0Wb7T60; Sat, 9 Jul 2005 01:03:08 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP
+	id AB13A42FCC; Sat,  9 Jul 2005 01:03:07 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 5BCA13539FE;
+	Sat,  9 Jul 2005 00:59:59 +0200 (MEST)
+To: Pavel Roskin <proski@gnu.org>
+In-reply-to: <1120862084.17812.6.camel@dv> 
+Comments: In-reply-to Pavel Roskin <proski@gnu.org>
+   message dated "Fri, 08 Jul 2005 18:34:44 -0400."
+X-ID: VgwhREZDrerr2IHjLyITEHgdE9IVkpv6pUyNtJwZTTPWvlS-i1DH0Z@t-dialin.net
+X-TOI-MSGID: 81e20480-a717-45d3-b5fd-8c1ebe835975
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-In working through a usage example on my way to producing bonafide
-patches, I've found that commit is complaining.  Here's what I've done.
+In message <1120862084.17812.6.camel@dv> Pavel Roskin wrote:
+> 
+> Please consider this script for Cogito.
+...
+> # OPTIONS
+> # -------
+> # -i::
+> #	Clean files ignored by cg-status, such as object files.
 
-  o Fetched and built cogito-0.12
-  o Fetched (rsync) Linus' tree
-  o Created a working directory, linux-2.6
-  o linked .git in the working directory to the .git directory fetched
-    from the net.
-  o # git checkout -f v2.6.11
-  o # cat ../old-patch-file | patch -p1
+May I suggest to give "-i" the standard "--interactive" meaning
+(= prompt before removal) like with "rm" etc. ?
 
-Then, according to Jeff's instructions, I have to perform
-get-update-cache with the name of each file I changed.  Is that really
-the way?
+Thanks.
 
-  o # git-update-cache LIST_OF_CHANGED_FILES
 
-Now I commit.
+Wolfgang Denk
 
-  o # git commit
-
-I am presented with an editor session with the list of changed files
-already present.  IfI add a comment and leave the editor, I'm told
-
-   fatal: 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is not a valid 'commit' object
-
-If I don't edit the comment, it doesn't give an error but I don't
-think the changes are committed because I can invoke git commit again.
-
-Am I off track?
-
-Cheers.
-
-P.S.  vger isn't letting me subscribe ATM.  Please copy me with
-      replies.
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+How come everyone's going so slow if it's called rush hour?
