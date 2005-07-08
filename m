@@ -1,58 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Stacked GIT 0.3 (now more Quilt-like)
-Date: Thu, 07 Jul 2005 18:24:45 -0700
-Message-ID: <7vk6k2dr8i.fsf@assigned-by-dhcp.cox.net>
-References: <1119994003.9631.6.camel@localhost.localdomain>
-	<m31x6acdcl.fsf@telia.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] rev-list: add "--full-objects" flag.
+Date: Thu, 7 Jul 2005 18:33:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507071832440.25104@g5.osdl.org>
+References: <20050703234629.GF13848@pasky.ji.cz> <42CBC822.30701@didntduck.org>
+ <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz>
+ <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net>
+ <7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071657140.25104@g5.osdl.org>
+ <7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 08 03:26:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 08 03:34:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DqhdU-0007Kz-4C
-	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:26:36 +0200
+	id 1Dqhku-00082F-VO
+	for gcvg-git@gmane.org; Fri, 08 Jul 2005 03:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261393AbVGHB0D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 7 Jul 2005 21:26:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261438AbVGHB0D
-	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:26:03 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:33990 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261393AbVGHBYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Jul 2005 21:24:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050708012445.CRGI8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 7 Jul 2005 21:24:45 -0400
-To: Peter Osterlund <petero2@telia.com>
-In-Reply-To: <m31x6acdcl.fsf@telia.com> (Peter Osterlund's message of "08 Jul 2005 03:10:02 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261386AbVGHBeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 7 Jul 2005 21:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261387AbVGHBeF
+	(ORCPT <rfc822;git-outgoing>); Thu, 7 Jul 2005 21:34:05 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:27778 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261386AbVGHBeE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Jul 2005 21:34:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j681XtjA032085
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 7 Jul 2005 18:33:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j681Xs7Y006586;
+	Thu, 7 Jul 2005 18:33:55 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "PO" == Peter Osterlund <petero2@telia.com> writes:
 
-PO> I think it would be good if it was possible to include diffstat output
-PO> in exported patches, something like this:
 
-PO> Added possibility to include diffstat output in exported patches.
+On Thu, 7 Jul 2005, Junio C Hamano wrote:
+> 
+> Again you are right.  How about --full-objects instead?
 
-And you wuold want to do things similarly to what others have
-already done.  git-resolve-script uses "git-apply --stat" there,
-instead of "diffstat", so people without diffstat installed can
-still get the same information.
+I don't mind the "--objects=xxx" format per se, but it would need to 
+verify that the "=xxx" was either valid or wasn't there at all. So what I 
+objected to was not that it was easy to mis-spell, but that if misspelled, 
+the program wouldn't point it out as an error, but silently just do the 
+wrong thing.
 
-Even if you want to stick to "diffstat", at least I would
-suggest giving -p1, not -p0, to it; otherwise you would see b/
-like what you have there.
-
-PO>  b/stgit/git.py  |   22 ++++++++++++++++++++++
-PO>  b/stgit/main.py |    2 ++
-PO>  2 files changed, 24 insertions(+)
-
-Further, using "git-apply --stat --summary" would be nicer; this
-is something you cannot do with plain "diffstat".
+		Linus
