@@ -1,107 +1,125 @@
-From: Thomas Lord <lord@emf.net>
-Subject: Re: arch 2.0 first source available (git related)
-Date: Sat, 09 Jul 2005 07:20:13 -0700
-Message-ID: <1120918813.4901.27.camel@dev1.seyza.com>
-References: <1120867947.5882.2.camel@dev1.seyza.com>
-	 <20050709113942.GB26343@pasky.ji.cz>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: qgit-0.7
+Date: Sat, 9 Jul 2005 08:06:21 -0700 (PDT)
+Message-ID: <20050709150621.51442.qmail@web26310.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 09 16:20:39 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 17:07:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrGBZ-0002tw-Gf
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 16:20:05 +0200
+	id 1DrGuY-0006Cx-GG
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 17:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261423AbVGIOT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 10:19:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261426AbVGIOT5
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 10:19:57 -0400
-Received: from smtp103.sbc.mail.mud.yahoo.com ([68.142.198.202]:44960 "HELO
-	smtp103.sbc.mail.mud.yahoo.com") by vger.kernel.org with SMTP
-	id S261423AbVGIOT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2005 10:19:56 -0400
-Received: (qmail 42363 invoked from network); 9 Jul 2005 14:19:52 -0000
-Received: from unknown (HELO adsl-69-236-75-157.dsl.pltn13.pacbell.net) (tom.lord@sbcglobal.net@69.236.75.157 with plain)
-  by smtp103.sbc.mail.mud.yahoo.com with SMTP; 9 Jul 2005 14:19:52 -0000
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050709113942.GB26343@pasky.ji.cz>
-X-Mailer: Evolution 2.0.4 (2.0.4-4) 
+	id S261503AbVGIPG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 11:06:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261517AbVGIPG1
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 11:06:27 -0400
+Received: from web26310.mail.ukl.yahoo.com ([217.146.176.21]:12649 "HELO
+	web26310.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261503AbVGIPGZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 11:06:25 -0400
+Received: (qmail 51444 invoked by uid 60001); 9 Jul 2005 15:06:21 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=2BbR9hHPDlkrIQJcC9I+FWVOCCEiNiIGJO/NVvyB4GYhG2TqpthfhcCeiux2XbjHMieW1CypunUNmtcEzXUt5YPFnTEo4spaWrW5riVJD+U8iU33hf8a+eK2USDhoic02b1Xc8dezz7hNrp6CNFSSTjaJ2sCcRp4BHbn7A7J4Tk=  ;
+Received: from [151.42.108.207] by web26310.mail.ukl.yahoo.com via HTTP; Sat, 09 Jul 2005 08:06:21 PDT
+To: wd@denx.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2005-07-09 at 13:39 +0200, Petr Baudis wrote:
-> Dear diary, on Sat, Jul 09, 2005 at 02:12:27AM CEST, I got a letter
-> where Thomas Lord <lord@emf.net> told me that...
-> > 2.0 is very much git influenced but it brings some (imo significant)
-> >   improvements to the table.
-> 
-> Could you list some of the things interesting for us? What is the
-> benefit of a prereq graph compared to just having a single shared object
-> database? From the documentation, that's the only interesting thing I
-> noticed which is different from git (and things like artificially
-> limiting filename length to 256 characters).
+Wolfgang Denk ha scritto:
 
-Well, partly the statement about improvements was a hint to look
-beyond the docs to the code but...
+>Dear Marco,
+>
+>in message <20050709081512.33503.qmail@web26306.mail.ukl.yahoo.com> you wrote:
+>
+>>Here is qgit-0.7, a GUI git viewer.
+>
+>
+>Sorry, but I cannot compile it on a Fedora Core 4 system:
+>
+>-> ./configure 
+>+scons was found, that's excellent+
+>scons: Reading SConscript files ...
+>-> make
+>scons -Q
+>g++ -DQT_THREAD_SUPPORT -D_REENTRANT -I/usr/lib64/qt-3.3/include -c -o src/annotate.o
+src/annotate.cpp
+>src/annotate.cpp: In member function `QStringList Annotate::processDiff(const 
+>   QString&, QStringList&, const QString&)':
+>src/annotate.cpp:378: error: jump to case label
+>src/annotate.cpp:373: error:   crosses initialization of `int num'
+>src/annotate.cpp:387: error: jump to case label
+>src/annotate.cpp:373: error:   crosses initialization of `int num'
+>src/annotate.cpp:401: error: jump to case label
+>src/annotate.cpp:373: error:   crosses initialization of `int num'
+>scons: *** [src/annotate.o] Error 1
+>make: *** [all] Error 2
+>
+>The following patch solves this problem:
+>
+>--- src/annotate.cpp.ORIG	2005-07-09 07:10:23.000000000 +0200
+>+++ src/annotate.cpp	2005-07-09 16:05:09.556653902 +0200
+>@@ -370,10 +370,12 @@
+> 		char firstChar = line[0].latin1();
+> 		switch (firstChar) {
+> 		case '@':
+>+		    {
+> 			int num = line.section(',', 1, 1). section('+', 1, 1).toInt();
+> 			// diff lines start from 1, 0 is empty file,
+> 			// instead QValueList::at() starts from 0
+> 			cur = (num > 0) ? newAnn.at(num - 1) : newAnn.end();
+>+		    }
+> 			break;
+> 		case '+':
+> 			if (cur != newAnn.end()) {
+>
+>
 
-The prereq graph is, indeed, an improvement.  
+Thanks for your patch, applied.
 
-It:
+What version og gcc you have? 
+Mine is gcc version 4.0.1 and I don't have this compile error (of course ;-) ).
 
-* speeds up and simplifies blob-db GC
-
-* vastly improves the possibilities for archive integrity
-  checking
-
-* can be used for smart, streamy network mirroring of revisions
-
-* allows people to commit the same tree multiple ways: e.g., 
-  once optimizing access for users who frequently read incremental
-  updates and a second time for users who only update at named
-  releases
-
-* helps make the system securable (current code isn't yet) against
-  the possibility of multiple files with identical fingerprints but
-  different contents in the same or related trees
-
-* helps in a variety of ways when it comes time to make `revc'
-  operable over a network -- committing to a remote archive.
-
-Other advantageous (imo) changes from `git' not mentioned in the
-original message:
-
-* blobs do not have header lines
-
-  Git blobs all begin with a line of text declaring the "type"
-  and size of the blob.   That doesn't increase database 
-  verifiability significantly and I found no use for the headers.
-  Having the headers makes it needlessly complicated to translate
-  a file to or from a blob.
-
-  `revc' does not have blob headers.
+I have cc'ed to git@vger.kernel.org in case someone else have the same problem.
 
 
-* `revc' uses portable file formats
+>With this patch, I get a lot of build errors:
+>
+>QSettings: error creating /.qt
+>QSettings: error creating /.qt
+>QSettings: error creating /.qt
+>QSettings: error creating /.qt
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>QSettings: error creating /.qt
+>QSettings::sync: filename is null/empty
+>...
+>
+>It links and seems to run, though.
+>
 
-   In working dirs, `git' stores binary files which are 
-   endian, word-size, and compiler-environment specific.
+It's a known issue, probably due to scons setup, but I am not so familiar with scons
+to find a fix, in any case should be absolutely painless.
 
-   `revc' stores some binary files too (for performance
-   and simplicity reasons) but uses only portable formats.
 
-* `revc' is shaping up into much cleaner and more portable code
+Marco
 
-   (at least compared to the last version of `git' I saw --
-    which was extremely *lucid* code but not terribly
-    clean and not even attempting to be portable.)
 
-The list goes on and I don't promise to be picking the 
-most interesting items from it according to anybody's
-particular metric of "interesting".
-
-revc -- probably "strange yet familiar" to git hackers,
--t
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
