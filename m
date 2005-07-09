@@ -1,106 +1,75 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: qgit-0.7
-Date: Sat, 9 Jul 2005 01:15:12 -0700 (PDT)
-Message-ID: <20050709081512.33503.qmail@web26306.mail.ukl.yahoo.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Stacked GIT 0.4
+Date: Sat, 09 Jul 2005 10:05:39 +0100
+Message-ID: <1120899939.7125.4.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Jul 09 10:15:49 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jul 09 11:05:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrAUx-0003Wz-7T
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 10:15:43 +0200
+	id 1DrBHV-0006vk-4r
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 11:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263166AbVGIIPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 04:15:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263167AbVGIIPR
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 04:15:17 -0400
-Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:39100 "HELO
-	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S263166AbVGIIPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2005 04:15:15 -0400
-Received: (qmail 33506 invoked by uid 60001); 9 Jul 2005 08:15:12 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=c2oec1pSpApwbXmAV89zVVU+oqWc4xLnSrmy/3yXE3dFFqHgqHWUiZLQxD0ToOiKGzr2qv6P1ivlGTFYLKvOowzR2qJhsvzoeHENxIp+DhJMKgOA13X8wXQVyANQDHkyfVypyWXzSX8iFnBdz9Ra4c5Fyaco5kkerSozJ8S/enc=  ;
-Received: from [151.42.108.207] by web26306.mail.ukl.yahoo.com via HTTP; Sat, 09 Jul 2005 01:15:12 PDT
-To: git@vger.kernel.org
+	id S263171AbVGIJFo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 05:05:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263172AbVGIJFo
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 05:05:44 -0400
+Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:42223 "EHLO
+	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S263171AbVGIJFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 05:05:42 -0400
+Received: from aamta09-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta07-winn.ispmail.ntl.com with ESMTP
+          id <20050709090541.DHKW481.mta07-winn.ispmail.ntl.com@aamta09-winn.ispmail.ntl.com>;
+          Sat, 9 Jul 2005 10:05:41 +0100
+Received: from cpc1-cmbg5-3-0-cust179.cmbg.cable.ntl.com ([81.104.192.179])
+          by aamta09-winn.ispmail.ntl.com with ESMTP
+          id <20050709090541.UMPX3667.aamta09-winn.ispmail.ntl.com@cpc1-cmbg5-3-0-cust179.cmbg.cable.ntl.com>;
+          Sat, 9 Jul 2005 10:05:41 +0100
+To: GIT <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Here is qgit-0.7, a GUI git viewer.
+Stacked GIT 0.4 release is available from http://procode.org/stgit/
 
-you can download from:
+StGIT is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of GIT. These
+operations are performed using GIT commands and the patches are stored
+as GIT commit objects, allowing easy merging of the StGIT patches into
+other repositories using standard GIT functionality.
 
-http://prdownloads.sourceforge.net/qgit/qgit-0.7.tar.gz?download
+Note that StGIT is not an SCM interface on top of GIT and it expects a
+previously initialised GIT repository. For standard SCM operations,
+either use plain GIT commands or the Cogito tool.
 
+For more information, see the README file in the archive.
 
-This time a small changelog, but a lot of work ;-)
+What's new in this release:
 
-- rewrite of graph drawing
-- start-up loading: switch to use git-rev-list --topo-order
-- final fixes to annotation
-- cache of file lists to speed-up loading of file names
-- added color background on heads
+      * Support for configuration files (/etc/stgitrc,
+        ~/.stgitrc, .git/stgitrc)
+      * Configurable merge tool ('diff3' by default)
+      * Empty patches are marked with a '0' when listed with
+        'series' (useful for tracking upstream merges)
+      * Support for patch description templates (with variables like
+        author details and diffstats)
+      * 'files' command to show the files modified by a patch (either a
+        simple list or with diffstats)
+      * 'push --undo' option to cancel a push operation
+      * 'push/pop --to' option to perform the operation on a range of
+        patches between the given names
+      * 'push --reverse' option to push patches in reverse order
+      * 'diff --stat' option to show the diffstats instead of the diff
+      * Faster 'pop' - it now switches directly to the bottom of the
+        last patch to be popped
+      * The three files involved in a three-way merge are left in the
+        working tree in case of a conflict for further analysis (can be
+        overwritten with the 'keeporig' option)
+      * Many bug fixes
 
-Graph now uses connected lines and should be better to follow, 
-also the switch from home grown to legacy git-rev-list --topo-order helps in
-clarify revs history.
-
-Annotation now works for me in all cases with the limitation that does not
-follow renames.
-
-When you run qgit for the first time it takes some time to git-rev-list and
-git-diff-tree the repo. Following runs are faster because a persistent
-cache of file names is used, so the speed is the same of just running git-rev-list.
-
-
-Note: because of the use of --topo-order option in git-rev-list you need a very
-recent copy of git.
-
-
-For people who missed previous releases, a brief feature list:
-
-- revisions log with diff and file viewer windows
-
-- graph of development lines
-
-- automatic update of all open views when navigating through lists
-
-- filter by a substring (with wildcards support) in SHA, short log, author or paths
-
-- colored file list window: green new file, red removed one
-
-- patch viewer of diffs against parent, head or a mouse selected (CTRL + PRESS) rev
-
-- file viewer with automatic annotation of content and file history
-
-- file viewer with substring find function and jump to diff with double-click in
-  annotate line
-
-- command line arguments support using git-rev-parse
-
-- highlight on tags and heads
-
-
-As usual, to try qgit:
-
--unpack files
--make
--cd bin
--copy qgit in the path
--run qgit from a git working directory
-
-
-Please refer to README for more information.
-
-
-Marco
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+--
+Catalin
