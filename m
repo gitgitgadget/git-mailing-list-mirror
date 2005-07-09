@@ -1,68 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Converting commits to patch files?  HEAD vs HEAD^
-Date: Fri, 08 Jul 2005 19:41:03 -0700
-Message-ID: <7vvf3k1z28.fsf@assigned-by-dhcp.cox.net>
-References: <20050709013859.GA11947@buici.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.7
+Date: Sat, 9 Jul 2005 01:15:12 -0700 (PDT)
+Message-ID: <20050709081512.33503.qmail@web26306.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 04:42:53 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Jul 09 10:15:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dr5IW-0005PP-1a
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 04:42:32 +0200
+	id 1DrAUx-0003Wz-7T
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 10:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263093AbVGICl6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 22:41:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263090AbVGICly
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 22:41:54 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:39831 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S263086AbVGIClG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2005 22:41:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050709024105.LVOJ15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 8 Jul 2005 22:41:05 -0400
-To: Marc Singer <elf@buici.com>
-In-Reply-To: <20050709013859.GA11947@buici.com> (Marc Singer's message of "Fri, 8 Jul 2005 18:38:59 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263166AbVGIIPR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 04:15:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263167AbVGIIPR
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 04:15:17 -0400
+Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:39100 "HELO
+	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S263166AbVGIIPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 04:15:15 -0400
+Received: (qmail 33506 invoked by uid 60001); 9 Jul 2005 08:15:12 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=c2oec1pSpApwbXmAV89zVVU+oqWc4xLnSrmy/3yXE3dFFqHgqHWUiZLQxD0ToOiKGzr2qv6P1ivlGTFYLKvOowzR2qJhsvzoeHENxIp+DhJMKgOA13X8wXQVyANQDHkyfVypyWXzSX8iFnBdz9Ra4c5Fyaco5kkerSozJ8S/enc=  ;
+Received: from [151.42.108.207] by web26306.mail.ukl.yahoo.com via HTTP; Sat, 09 Jul 2005 01:15:12 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "MS" == Marc Singer <elf@buici.com> writes:
+Here is qgit-0.7, a GUI git viewer.
 
-MS> If I've made several commits, I'd like to be able to gather several
-MS> together and produce a patch file.  Better still, I'd like to be able
-MS> to pick a set of discontiguous commits an bundle them into a single
-MS> patch.  Ought I be using tags?
+you can download from:
 
-    You ought to be using ...
+http://prdownloads.sourceforge.net/qgit/qgit-0.7.tar.gz?download
 
-Oh, I want to say it because the above is what I do all the time
-using my Porcelain on GIT, but on the other hand, officially I
-am _not_ working on any Porcelain, so... I am in a dilemma.  I
-won't talk about that tool I use myself.
 
-Although I have not looked at it myself, you may want to take a
-look at StGIT.
+This time a small changelog, but a lot of work ;-)
 
-"Keeping patches, tracking upstream by primarily updating,
-forward porting and e-mail submitting patches" is often the
-development model taken by "individual developers", while
-"making commits primarily by accepting patches, merging with
-repos of other people who have similar aggregator role" is often
-the model used by "project leads".
+- rewrite of graph drawing
+- start-up loading: switch to use git-rev-list --topo-order
+- final fixes to annotation
+- cache of file lists to speed-up loading of file names
+- added color background on heads
 
-The core GIT (and "git" barebone Porcelain) is geared towards
-"project lead" use, and I suspect Cogito would be so to a
-certain extent.  By judging only from its description, StGIT,
-with its attitude ancestry of quilt, may be more comfortable to
-use with "individual developers" mode of operation.
+Graph now uses connected lines and should be better to follow, 
+also the switch from home grown to legacy git-rev-list --topo-order helps in
+clarify revs history.
 
-Well, I'd say what I use anyway, and quickly duck ;-)
+Annotation now works for me in all cases with the limitation that does not
+follow renames.
 
-    You ought to be using ... JIT.
+When you run qgit for the first time it takes some time to git-rev-list and
+git-diff-tree the repo. Following runs are faster because a persistent
+cache of file names is used, so the speed is the same of just running git-rev-list.
+
+
+Note: because of the use of --topo-order option in git-rev-list you need a very
+recent copy of git.
+
+
+For people who missed previous releases, a brief feature list:
+
+- revisions log with diff and file viewer windows
+
+- graph of development lines
+
+- automatic update of all open views when navigating through lists
+
+- filter by a substring (with wildcards support) in SHA, short log, author or paths
+
+- colored file list window: green new file, red removed one
+
+- patch viewer of diffs against parent, head or a mouse selected (CTRL + PRESS) rev
+
+- file viewer with automatic annotation of content and file history
+
+- file viewer with substring find function and jump to diff with double-click in
+  annotate line
+
+- command line arguments support using git-rev-parse
+
+- highlight on tags and heads
+
+
+As usual, to try qgit:
+
+-unpack files
+-make
+-cd bin
+-copy qgit in the path
+-run qgit from a git working directory
+
+
+Please refer to README for more information.
+
+
+Marco
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
