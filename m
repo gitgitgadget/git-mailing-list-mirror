@@ -1,59 +1,67 @@
-From: Bryan Larsen <bryan.larsen@gmail.com>
-Subject: Re: cogito Mac OS X compatibility
-Date: Sat, 09 Jul 2005 14:38:54 -0400
-Message-ID: <42D019BE.5050000@gmail.com>
-References: <42CF0D9F.8040909@gmail.com> <20050709165028.GY18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Sat, 09 Jul 2005 23:04:37 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.09.21.04.29.263374@smurf.noris.de>
+References: <20050708230750.GA23847@buici.com> <7v4qb46dff.fsf@assigned-by-dhcp.cox.net> <20050709011119.GA10981@buici.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 20:41:01 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Jul 09 23:05:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrKFg-0007mp-Bj
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 20:40:36 +0200
+	id 1DrMVv-0003YD-Uw
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 23:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261694AbVGISkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 14:40:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261684AbVGISj7
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 14:39:59 -0400
-Received: from zproxy.gmail.com ([64.233.162.197]:57405 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261693AbVGISjA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jul 2005 14:39:00 -0400
-Received: by zproxy.gmail.com with SMTP id z31so286035nzd
-        for <git@vger.kernel.org>; Sat, 09 Jul 2005 11:38:59 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=GDwds/t1fKBMvMZ9USCyu+bjodP0aDkgnv4I0b2Y+N1pC1C3UkT2X8Q3WwyPkr2YKwlFmkTGRkQHS3MtnaO3XcWOCTeFe6DSAm6CpITcCCwuSkDolA4Hh2EYMu3Ly+KgGXW/NePstznHABPMI8YIMkUBx8EjE81gGyXAhij9z7Y=
-Received: by 10.36.177.5 with SMTP id z5mr914782nze;
-        Sat, 09 Jul 2005 11:38:59 -0700 (PDT)
-Received: from ?192.168.1.100? ([70.26.43.137])
-        by mx.gmail.com with ESMTP id 34sm1379867nza.2005.07.09.11.38.59;
-        Sat, 09 Jul 2005 11:38:59 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: skimo@liacs.nl
-In-Reply-To: <20050709165028.GY18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+	id S261729AbVGIVFW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 17:05:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261730AbVGIVFW
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 17:05:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:26292 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261729AbVGIVFT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Jul 2005 17:05:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DrMVb-0003Wa-K2
+	for git@vger.kernel.org; Sat, 09 Jul 2005 23:05:11 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Jul 2005 23:05:11 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 09 Jul 2005 23:05:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, Marc Singer wrote:
 
-> Sounds like you're missing "stat" from coreutils.
-> 
-> skimo
-> 
+> Yet, patch does apply. [...]
+>   patching file drivers/ide/ide-io.c
+>   Hunk #1 succeeded at 96 with fuzz 2 (offset -33 lines).
 
-Thanks.  I've got it working to the point where it passes "make test" 
-now.  All I had to do was install coreutils and findutils from 
-darwinports, and then make gcp, gstat and gnuxargs available under their 
-standard names.
+git-apply cowardly (but sensibly) refuses to apply patches with fuzz
+(i.e., ignoring some supplied context lines). 
 
-Do the BSD's or Solaris have the same problem?  Last time I used them 
-they didn't have the gnu options available on their standard utils, but 
-that was ages ago.  If current BSD's have the problem, it might be worth 
-expending some effort to make cogito more portable.  If it's only OS X...
+Fuzz indicates problems.
 
-Bryan
+I'd suggest that you apply the patch to whatever version it is based on...
+
+>  o Is there a way to force git to apply and safe the rejects?
+
+Well, you can use "patch -p1 ..." directly, and manually add the files it
+created to the object cache. Personally I wouldn't, if at all possible.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+I couldn't remember things until I took that Sam Carnegie course.
+		-- Bill Peterson, former Houston Oiler football coach
