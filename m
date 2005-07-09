@@ -1,31 +1,33 @@
 From: Bryan Larsen <bryanlarsen@yahoo.com>
-Subject: [PATCH 1/3] add -N option to cg-add (resent)
-Date: Sat, 9 Jul 2005 06:40:22 -0400
-Message-ID: <20050709104011.26763.37732.sendpatchset@bryan-larsens-ibook-g4.local>
+Subject: [PATCH 2/3] add -N option to cg-commit (resent)
+Date: Sat, 9 Jul 2005 06:40:34 -0400
+Message-ID: <20050709104024.26763.97362.sendpatchset@bryan-larsens-ibook-g4.local>
+References: <20050709104011.26763.37732.sendpatchset@bryan-larsens-ibook-g4.local>
 Cc: Bryan Larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 12:40:38 2005
+X-From: git-owner@vger.kernel.org Sat Jul 09 12:40:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrCl8-0005f6-JF
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 12:40:35 +0200
+	id 1DrClJ-0005fb-Mm
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 12:40:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261240AbVGIKkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 06:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261308AbVGIKkY
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 06:40:24 -0400
-Received: from smtp106.mail.sc5.yahoo.com ([66.163.169.226]:52921 "HELO
-	smtp106.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S261240AbVGIKkW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2005 06:40:22 -0400
-Received: (qmail 23223 invoked from network); 9 Jul 2005 10:40:18 -0000
+	id S261308AbVGIKkg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 06:40:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261323AbVGIKkg
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 06:40:36 -0400
+Received: from smtp109.mail.sc5.yahoo.com ([66.163.170.7]:9338 "HELO
+	smtp109.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S261308AbVGIKke (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 06:40:34 -0400
+Received: (qmail 16332 invoked from network); 9 Jul 2005 10:40:31 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
   s=s1024; d=yahoo.com;
-  h=Received:From:To:Cc:Message-Id:Subject;
-  b=V6ELZ/mytkDE4V2lmQghtohMdCyaWlttg79i1ftKUBb9g0VB55GUZrxbt0BVlVNKaRVmjKzEeDh68hGg6VAKkaZZ8YPRLPWPCgrtX177F0VcoYSMIGoIubvdGqaH8wyhLzgoI21+ovwjK2L0L1gUjA6UBNjVDH3DeXLJWjbfdso=  ;
+  h=Received:From:To:Cc:Message-Id:In-Reply-To:References:Subject;
+  b=0sa1itdIj6qK5MfBU/ivGSZ4S52hrfz5GPgwa3agB7w8TZx3mBCHHpEnNRohWxsqYowVypcljKIdbQSq+dL2rJCdoeJPLEq9eiSa5l+UG5k5mtIOeQ/iYyl7isC65op6neoo5ac0UnwWaurcrXmzITwdrk+TrUfxKnlFyq4lti8=  ;
 Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@70.26.43.137 with plain)
-  by smtp106.mail.sc5.yahoo.com with SMTP; 9 Jul 2005 10:40:17 -0000
+  by smtp109.mail.sc5.yahoo.com with SMTP; 9 Jul 2005 10:40:31 -0000
 To: bryan.larsen@gmail.com
+In-Reply-To: <20050709104011.26763.37732.sendpatchset@bryan-larsens-ibook-g4.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
