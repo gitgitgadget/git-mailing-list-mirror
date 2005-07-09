@@ -1,102 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: tag referring to a commit but not directly?
-Date: Sat, 09 Jul 2005 03:00:44 -0700
-Message-ID: <7v7jg0wb77.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 12:01:16 2005
+From: Bryan Larsen <bryanlarsen@yahoo.com>
+Subject: [PATCH 1/3] add -N option to cg-add (resent)
+Date: Sat, 9 Jul 2005 06:40:22 -0400
+Message-ID: <20050709104011.26763.37732.sendpatchset@bryan-larsens-ibook-g4.local>
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 12:40:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrC8p-0002X8-1P
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 12:00:59 +0200
+	id 1DrCl8-0005f6-JF
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 12:40:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261536AbVGIKAs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 06:00:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261584AbVGIKAs
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 06:00:48 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:38074 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S261536AbVGIKAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2005 06:00:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050709100045.MLRH550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 9 Jul 2005 06:00:45 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261240AbVGIKkY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 06:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261308AbVGIKkY
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 06:40:24 -0400
+Received: from smtp106.mail.sc5.yahoo.com ([66.163.169.226]:52921 "HELO
+	smtp106.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S261240AbVGIKkW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 06:40:22 -0400
+Received: (qmail 23223 invoked from network); 9 Jul 2005 10:40:18 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Received:From:To:Cc:Message-Id:Subject;
+  b=V6ELZ/mytkDE4V2lmQghtohMdCyaWlttg79i1ftKUBb9g0VB55GUZrxbt0BVlVNKaRVmjKzEeDh68hGg6VAKkaZZ8YPRLPWPCgrtX177F0VcoYSMIGoIubvdGqaH8wyhLzgoI21+ovwjK2L0L1gUjA6UBNjVDH3DeXLJWjbfdso=  ;
+Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@70.26.43.137 with plain)
+  by smtp106.mail.sc5.yahoo.com with SMTP; 9 Jul 2005 10:40:17 -0000
+To: bryan.larsen@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I was playing with a tag that refers to another tag which refers
-to a commit, and found out that some things did not work as I
-expected.
+(resending cogito patches)
 
-Is it a PEBCAK on my part to expect tag-to-tag-to-commit to
-behave the same way as a bare commit (or a tag to commit), or is
-this just a bug?  I think the following two would fix what I
-found, but I am not sure if I am using the "struct object" and
-friends the way they are expected to be used.  I am uncertain
-about what the expected behaviour should be either for that
-matter; I admit that tags are new to me.
+Add the -N option to cg-add.
 
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
 ---
 
-*** To find whom to ask about the thing I am butchering, I
-*** used the following pickaxe:
+ cg-add |   21 ++++++++++++++++++---
+ 1 files changed, 18 insertions(+), 3 deletions(-)
 
-git-rev-list linus |
-git-diff-tree --stdin -v -s \
--S'	if (obj->type == tag_type)
-		obj = ((struct tag *)obj)->tagged;'
-
-git-rev-list linus |
-git-diff-tree --stdin -v -s \
--S'	/*
-	 * Tag object? Look what it points to..
-	 */
-	if (object->type == tag_type) {'
-
-------------
-cd /opt/packrat/playpen/public/in-place/git/git.junio/
-jit-diff 0:5
-# - master: format-patch: fix skipping of blank-lines (take 2)
-# + 5: tag deref until we get non tag
-diff --git a/commit.c b/commit.c
---- a/commit.c
-+++ b/commit.c
-@@ -52,8 +52,9 @@ struct commit *lookup_commit_reference(c
+diff --git a/cg-add b/cg-add
+--- a/cg-add
++++ b/cg-add
+@@ -13,20 +13,35 @@
+ # is that 'Cogito' manages content and empty directories have no content.
+ # Instead, directories are added automatically when adding files inside
+ # them.
++#
++# OPTIONS
++# -------
++# -N::
++#   Only update the cache: do not copy the data into the object database.
++#
  
- 	if (!obj)
- 		return NULL;
--	if (obj->type == tag_type)
--		obj = ((struct tag *)obj)->tagged;
-+	while (obj->type == tag_type)
-+		obj = parse_object(((struct tag *)obj)->tagged->sha1);
+-USAGE="cg-add FILE..."
++USAGE="cg-add [-N] FILE..."
+ 
+ . ${COGITO_LIB}cg-Xlib
+ 
+ [ "$1" ] || usage
+ 
++infoonly=
++while optparse; do
++	if optparse -N; then
++		infoonly=--info-only
++	else
++		optfail
++	fi
++done
 +
- 	return check_commit(obj, sha1);
+ TMPFILE=$(mktemp -t gitadd.XXXXXX) || exit 1
+-find "$@" -type f -print0 > $TMPFILE || {
++find "${ARGS[@]}" -type f -print0 > $TMPFILE || {
+ 	die "not all files exist, nothing added"
+ 	rm $TMPFILE
  }
  
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -354,12 +354,12 @@ static struct commit *get_commit_referen
- 	/*
- 	 * Tag object? Look what it points to..
- 	 */
--	if (object->type == tag_type) {
-+	while (object->type == tag_type) {
- 		struct tag *tag = (struct tag *) object;
- 		object->flags |= flags;
- 		if (tag_objects && !(object->flags & UNINTERESTING))
- 			add_pending_object(object, tag->tag);
--		object = tag->tagged;
-+		object = parse_object(tag->tagged->sha1);
- 	}
+ cat $TMPFILE | tr '\0' '\n' | sed 's/^/Adding file /'
+-cat $TMPFILE | xargs -0r git-update-cache --add --
++cat $TMPFILE | xargs -0r git-update-cache --add ${infoonly} --
  
- 	/*
+ rm $TMPFILE
 
-Compilation finished at Sat Jul  9 02:37:16
+
+
