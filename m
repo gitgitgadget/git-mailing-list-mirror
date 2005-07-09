@@ -1,54 +1,107 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: cogito Mac OS X compatibility
-Date: Sun, 10 Jul 2005 01:40:10 +1200
-Message-ID: <46a038f905070906402c6b543e@mail.gmail.com>
-References: <42CF0D9F.8040909@gmail.com>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Thomas Lord <lord@emf.net>
+Subject: Re: arch 2.0 first source available (git related)
+Date: Sat, 09 Jul 2005 07:20:13 -0700
+Message-ID: <1120918813.4901.27.camel@dev1.seyza.com>
+References: <1120867947.5882.2.camel@dev1.seyza.com>
+	 <20050709113942.GB26343@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 15:40:55 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 09 16:20:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrFZ7-0007gb-JI
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 15:40:21 +0200
+	id 1DrGBZ-0002tw-Gf
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 16:20:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261394AbVGINkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 09:40:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVGINkM
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 09:40:12 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:18127 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261394AbVGINkK convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Jul 2005 09:40:10 -0400
-Received: by rproxy.gmail.com with SMTP id i8so538286rne
-        for <git@vger.kernel.org>; Sat, 09 Jul 2005 06:40:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pva+MBA6Fm/pphwuckK/rt5//lhG6UEhSKGtYX7aPHSrJOEJke77jn2lMs7hvZ5syc9BYpBU2WAsw171KWg4w/aL7wk7TEzfSlcSErjXS9HH3544ZOMd9phKbR56HZfaZGR5nt+MiBClxKhXhot55PurRo5JMUKpnnNLrXIZBzQ=
-Received: by 10.38.65.46 with SMTP id n46mr2734209rna;
-        Sat, 09 Jul 2005 06:40:10 -0700 (PDT)
-Received: by 10.38.101.3 with HTTP; Sat, 9 Jul 2005 06:40:10 -0700 (PDT)
-To: Bryan Larsen <bryan.larsen@gmail.com>
-In-Reply-To: <42CF0D9F.8040909@gmail.com>
-Content-Disposition: inline
+	id S261423AbVGIOT5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 10:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261426AbVGIOT5
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 10:19:57 -0400
+Received: from smtp103.sbc.mail.mud.yahoo.com ([68.142.198.202]:44960 "HELO
+	smtp103.sbc.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S261423AbVGIOT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 10:19:56 -0400
+Received: (qmail 42363 invoked from network); 9 Jul 2005 14:19:52 -0000
+Received: from unknown (HELO adsl-69-236-75-157.dsl.pltn13.pacbell.net) (tom.lord@sbcglobal.net@69.236.75.157 with plain)
+  by smtp103.sbc.mail.mud.yahoo.com with SMTP; 9 Jul 2005 14:19:52 -0000
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050709113942.GB26343@pasky.ji.cz>
+X-Mailer: Evolution 2.0.4 (2.0.4-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 7/9/05, Bryan Larsen <bryan.larsen@gmail.com> wrote:
-> On Mac OS X
+On Sat, 2005-07-09 at 13:39 +0200, Petr Baudis wrote:
+> Dear diary, on Sat, Jul 09, 2005 at 02:12:27AM CEST, I got a letter
+> where Thomas Lord <lord@emf.net> told me that...
+> > 2.0 is very much git influenced but it brings some (imo significant)
+> >   improvements to the table.
+> 
+> Could you list some of the things interesting for us? What is the
+> benefit of a prereq graph compared to just having a single shared object
+> database? From the documentation, that's the only interesting thing I
+> noticed which is different from git (and things like artificially
+> limiting filename length to 256 characters).
 
-It also uses on GNU xargs, and the xargs options aren't compatible
-between GNU and BSD xargs.
+Well, partly the statement about improvements was a hint to look
+beyond the docs to the code but...
 
-Sad thing is, some of the dependencies, like xargs, aren't available
-in fink, so you can build your toolchaing or boot into GNU/LinuxPPC.
-Debian actually has git (cogito?) experimental packages.
+The prereq graph is, indeed, an improvement.  
 
-cheers,
+It:
+
+* speeds up and simplifies blob-db GC
+
+* vastly improves the possibilities for archive integrity
+  checking
+
+* can be used for smart, streamy network mirroring of revisions
+
+* allows people to commit the same tree multiple ways: e.g., 
+  once optimizing access for users who frequently read incremental
+  updates and a second time for users who only update at named
+  releases
+
+* helps make the system securable (current code isn't yet) against
+  the possibility of multiple files with identical fingerprints but
+  different contents in the same or related trees
+
+* helps in a variety of ways when it comes time to make `revc'
+  operable over a network -- committing to a remote archive.
+
+Other advantageous (imo) changes from `git' not mentioned in the
+original message:
+
+* blobs do not have header lines
+
+  Git blobs all begin with a line of text declaring the "type"
+  and size of the blob.   That doesn't increase database 
+  verifiability significantly and I found no use for the headers.
+  Having the headers makes it needlessly complicated to translate
+  a file to or from a blob.
+
+  `revc' does not have blob headers.
 
 
-martin
+* `revc' uses portable file formats
+
+   In working dirs, `git' stores binary files which are 
+   endian, word-size, and compiler-environment specific.
+
+   `revc' stores some binary files too (for performance
+   and simplicity reasons) but uses only portable formats.
+
+* `revc' is shaping up into much cleaner and more portable code
+
+   (at least compared to the last version of `git' I saw --
+    which was extremely *lucid* code but not terribly
+    clean and not even attempting to be portable.)
+
+The list goes on and I don't promise to be picking the 
+most interesting items from it according to anybody's
+particular metric of "interesting".
+
+revc -- probably "strange yet familiar" to git hackers,
+-t
