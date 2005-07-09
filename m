@@ -1,115 +1,87 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH] rev-list: add "--full-objects" flag.
-Date: Sat, 09 Jul 2005 15:09:02 -0600
-Message-ID: <m1pstrr8k1.fsf@ebiederm.dsl.xmission.com>
-References: <20050703234629.GF13848@pasky.ji.cz>
-	<42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz>
-	<7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071158220.3293@g5.osdl.org>
-	<20050707221443.GB7151@pasky.ji.cz>
-	<Pine.LNX.4.58.0507071549330.25104@g5.osdl.org>
-	<7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071657140.25104@g5.osdl.org>
-	<7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071841010.25104@g5.osdl.org>
-	<7vy88ica8e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071928220.25104@g5.osdl.org>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: [ANNOUNCE] Cogito-0.12
+Date: Sat, 9 Jul 2005 22:58:18 +0100
+Message-ID: <20050709225818.A31045@flint.arm.linux.org.uk>
+References: <42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 23:09:55 2005
+Cc: Tony Luck <tony.luck@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 23:59:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrMa1-0003vO-EU
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 23:09:45 +0200
+	id 1DrNLX-00084m-94
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 23:58:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261731AbVGIVJl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 17:09:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261732AbVGIVJl
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 17:09:41 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:11455 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261731AbVGIVJk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Jul 2005 17:09:40 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j69L93M3011323;
-	Sat, 9 Jul 2005 15:09:03 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j69L92Hi011322;
-	Sat, 9 Jul 2005 15:09:02 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+	id S261750AbVGIV6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 17:58:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261752AbVGIV6n
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 17:58:43 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:21010 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261750AbVGIV6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Jul 2005 17:58:42 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DrNL2-0000lB-BF; Sat, 09 Jul 2005 22:58:20 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DrNL0-00005F-Ti; Sat, 09 Jul 2005 22:58:18 +0100
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507071928220.25104@g5.osdl.org> (Linus
- Torvalds's message of "Thu, 7 Jul 2005 19:39:23 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org>; from torvalds@osdl.org on Thu, Jul 07, 2005 at 05:23:26PM -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Thu, Jul 07, 2005 at 05:23:26PM -0700, Linus Torvalds wrote:
+> On Thu, 7 Jul 2005, Tony Luck wrote:
+> > This is what happens ("linus" is a local branch just pulled from kernel.org,
+> > so it just contains one pack file and its index).
+> > 
+> > $ cg-update linus
+> > `/home/aegl/GIT/linus/.git/refs/heads/master' -> `.git/refs/heads/linus'
+> > does not exist /home/aegl/GIT/linus/.git/objects/04/3d051615aa5da09a7e44f1edbb69
+> > 798458e067
+> > Cannot obtain needed object 043d051615aa5da09a7e44f1edbb69798458e067
+> > while processing commit 0000000000000000000000000000000000000000.
+> > cg-pull: objects pull failed
+> 
+> Ok. The immediate fix is to just unpack the pack:
+> 
+> 	mv .git/objects/pack/* .git/
+> 	for i in .git/*.pack; do git-unpack-objects < $i; done
+> 
+> (or similar - the above is untested, but I think it should be obvious 
+> enough what I'm trying to do).
 
-> On Thu, 7 Jul 2005, Junio C Hamano wrote:
->> 
->> However it does not automatically mean that the avenue I have
->> been pursuing would not work; the server side preparation needs
->> to be a bit more careful than what I sent, which unconditionally
->> runs "prune-packed".  It instead should leave the files that
->> "--whole-trees" would have packed as plain SHA1 files, so that
->> the bulk is obtained by statically generated packs and the rest
->> can be handled in the commit-chain walker as before.
+This is evil on the bandwidth, since you'll keep refetching the packed
+object (64MB of it) over and over.
 
-> The "fetch one object, parse it, fetch the next one, parse that.." 
-> approach is just horrible.
+However, I've tried the above, and I get:
 
-Agreed.  That does not cover up latency at all and depending on the 
-parsing cost can potentially even keep you from having anything on
-your network connection for a noticeable amount of time.
+$ mv .git/objects/pack/* .git/
+$ for i in .git/*.pack; do git-unpack-objects < $i; done
+Unpacking 55435 objects
+fatal: inflate returned -3
 
-> I ended up preferring the "rsync" thing even though rsync sucked badly on
-> big object stores too, if only because when rsync got working, it at least
-> nicely pipelined the transfers, and would transfer things ten times faster
-> than git-ssh-pull did (maybe I'm exaggerating, but I don't think so, it
-> really felt that way).
+so it seems that the pack is corrupt... or something.
 
-This feels to me like an implementation issue (no pipelining) rather
-than a design issue (pipelining is impossible).
+$ md5sum .git/*.pack
+2be38f2947b99bcd088c1930122aadec  .git/pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack
 
-> And the thing is, if you purely follow one tree (which is likely the
-> common case for a lot of users), then you are actually always likely
-> better off with the "mirror it" model. Which is _not_ a good model for
-> developers (for example, me rsync'ing from Jeff's kernel repository always
-> got me hundreds of useless objects), but it's fine for somebody who
-> actually just wants to track somebody else.
+and git-fsck-cache produces lots and lots of:
 
-I assume the problem with the mirror it model was simply there were
-to many objects?
+dangling tree fae688b62db0b553aae0bf17f0f70e93819dec2b
+broken link from    tree faed7d798b84f107dbb9ff8fa97fb909c9ea5347
+              to    blob 008e19210e66f01fbaef1aba30243850766b8b12
+broken link from    tree faed7d798b84f107dbb9ff8fa97fb909c9ea5347
+              to    blob edae09a4b021e353ab4fbba756e31492fbb8fd2e
+broken link from    tree faed7d798b84f107dbb9ff8fa97fb909c9ea5347
+              to    blob d098b3ba35384fb912989348fd6da59820711ca4
+... etc ...
 
-> And then you really can use just rsync or wget or ncftpget or anything
-> else that has a "fetch recursively, optimizing existing objects" mode.
-
-Sane.  But with an intelligent fetcher and a little extra information
-a dumb server should still be able to not fetch branches we care
-nothing about.  I think that extra information is simply commit
-object graph and which packs those commit objects are in.  I assume
-the commit graph information will be fairly modest.
-
-Once you have that extra information you can generate incremental
-packs whenever you upload to the server, and you can make the
-incremental packs per branch.
-
-That should allow an dumb fetcher to look at the list of commits
-and just fetch those packs it cares about, and since it only has
-to look one place first it should be fairly sane.
-
-The core idea is that if the dumb-server-preparation can anticipate
-common access patterns (mirror a branch) and give enough information
-so that can be done cheaply and pipelined I don't expect it to be much
-worse than an intelligent fetcher.
-
-The current intelligent fetch currently has a problem that it cannot
-be used to bootstrap a repository.  If you don't have an ancestor
-of what you are fetching you can't fetch it.
-
-Eric
+-- 
+Russell King
