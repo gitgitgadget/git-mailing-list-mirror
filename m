@@ -1,45 +1,54 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: What broke snapshots now?
-Date: Sat, 09 Jul 2005 09:37:47 -0400
-Message-ID: <42CFD32B.8060108@pobox.com>
-References: <1120907336.8058.293.camel@baythorne.infradead.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: cogito Mac OS X compatibility
+Date: Sun, 10 Jul 2005 01:40:10 +1200
+Message-ID: <46a038f905070906402c6b543e@mail.gmail.com>
+References: <42CF0D9F.8040909@gmail.com>
+Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 15:39:27 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 09 15:40:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrFXF-0007PX-Jo
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 15:38:25 +0200
+	id 1DrFZ7-0007gb-JI
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 15:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261390AbVGINiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 9 Jul 2005 09:38:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVGINiH
-	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 09:38:07 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:7602 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261390AbVGINiC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Jul 2005 09:38:02 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1DrFWh-0007xf-Hw; Sat, 09 Jul 2005 13:37:53 +0000
-User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
-X-Accept-Language: en-us, en
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1120907336.8058.293.camel@baythorne.infradead.org>
-X-Spam-Score: 0.0 (/)
+	id S261394AbVGINkN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 9 Jul 2005 09:40:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261405AbVGINkM
+	(ORCPT <rfc822;git-outgoing>); Sat, 9 Jul 2005 09:40:12 -0400
+Received: from rproxy.gmail.com ([64.233.170.201]:18127 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261394AbVGINkK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 9 Jul 2005 09:40:10 -0400
+Received: by rproxy.gmail.com with SMTP id i8so538286rne
+        for <git@vger.kernel.org>; Sat, 09 Jul 2005 06:40:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pva+MBA6Fm/pphwuckK/rt5//lhG6UEhSKGtYX7aPHSrJOEJke77jn2lMs7hvZ5syc9BYpBU2WAsw171KWg4w/aL7wk7TEzfSlcSErjXS9HH3544ZOMd9phKbR56HZfaZGR5nt+MiBClxKhXhot55PurRo5JMUKpnnNLrXIZBzQ=
+Received: by 10.38.65.46 with SMTP id n46mr2734209rna;
+        Sat, 09 Jul 2005 06:40:10 -0700 (PDT)
+Received: by 10.38.101.3 with HTTP; Sat, 9 Jul 2005 06:40:10 -0700 (PDT)
+To: Bryan Larsen <bryan.larsen@gmail.com>
+In-Reply-To: <42CF0D9F.8040909@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Woodhouse wrote:
-> Does git on master.kernel.org need to be updated to handle packed
-> objects?
+On 7/9/05, Bryan Larsen <bryan.larsen@gmail.com> wrote:
+> On Mac OS X
 
-Yes.
+It also uses on GNU xargs, and the xargs options aren't compatible
+between GNU and BSD xargs.
 
-It's always fun when the on-disk format of the upstream 2.6.x kernel 
-repo changes without notice :/
+Sad thing is, some of the dependencies, like xargs, aren't available
+in fink, so you can build your toolchaing or boot into GNU/LinuxPPC.
+Debian actually has git (cogito?) experimental packages.
 
-	Jeff
+cheers,
+
+
+martin
