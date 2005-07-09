@@ -1,89 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: patches to support working without the object database
-Date: Fri, 08 Jul 2005 12:34:40 -0700
-Message-ID: <7vpstt6qi7.fsf@assigned-by-dhcp.cox.net>
-References: <42CE5764.9010405@gmail.com>
-	<7vwto16t6h.fsf@assigned-by-dhcp.cox.net>
+From: Thomas Lord <lord@emf.net>
+Subject: arch 2.0 first source available (git related)
+Date: Fri, 08 Jul 2005 17:12:27 -0700
+Message-ID: <1120867947.5882.2.camel@dev1.seyza.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 09 01:40:10 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Sat Jul 09 02:16:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dr2Rm-0006SW-9C
-	for gcvg-git@gmane.org; Sat, 09 Jul 2005 01:39:54 +0200
+	id 1Dr30U-00011h-RX
+	for gcvg-git@gmane.org; Sat, 09 Jul 2005 02:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262814AbVGHTim (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 8 Jul 2005 15:38:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262799AbVGHTfk
-	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 15:35:40 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:20432 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262813AbVGHTem (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Jul 2005 15:34:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050708193441.BXBC19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 8 Jul 2005 15:34:41 -0400
-To: Bryan Larsen <bryan.larsen@gmail.com>
-In-Reply-To: <7vwto16t6h.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri, 08 Jul 2005 11:36:54 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263016AbVGIANJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 8 Jul 2005 20:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263008AbVGIANI
+	(ORCPT <rfc822;git-outgoing>); Fri, 8 Jul 2005 20:13:08 -0400
+Received: from smtp112.sbc.mail.mud.yahoo.com ([68.142.198.211]:30873 "HELO
+	smtp112.sbc.mail.mud.yahoo.com") by vger.kernel.org with SMTP
+	id S263016AbVGIAMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Jul 2005 20:12:10 -0400
+Received: (qmail 45183 invoked from network); 9 Jul 2005 00:12:06 -0000
+Received: from unknown (HELO adsl-69-236-65-185.dsl.pltn13.pacbell.net) (tom.lord@sbcglobal.net@69.236.65.185 with plain)
+  by smtp112.sbc.mail.mud.yahoo.com with SMTP; 9 Jul 2005 00:12:06 -0000
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.0.4 (2.0.4-4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Replying to myself...
 
-JCH> While you are at it, you might also want to add an option to
-JCH> write-blob to specify the type of the object you are hashing, so
-JCH> that would make [*1*]:
+The first source release and some very early documentation for Arch 2.0
+("revc") is now ready!
 
-JCH>     git-write-blob [-n] [-t <type>] <file>...
+        Web page: <http://www.seyza.com/>
 
-JCH> [Footnote]
+        Source: <http://www.seyza.com/releases/revc-0.0x0.tar.gz>
 
-JCH> *1* I considered this instead:
+        Source (tar bundle) SHA1:
+		9c279f78e57a99d517ccf5b983960620ff6f2cf7
 
-JCH>     git-write-blob [-n | -t <type>] <file>...
+        Source (tar bundle) size: 1732018
 
-JCH> which means that if you specify type then -n is implied.  But
-JCH> making -t independent would let you have inverse of
-JCH> git-cat-file; a silly example:
+Some highlights:  revc has only 10 core commands;  there are about 165
+functions; the source code is literally about 14K lines and is closer to
+10K lines if you subtract out non-code boilerplate.
 
-JCH>     $ git-cat-file -t $FOO
-JCH>     tree
-JCH>     $ git-cat-file tree $FOO >tmp1
-JCH>     $ FOO1=$(git-write-blob -t tree tmp1)
+User complaints about tla 1.x being addressed in revc:
 
-JCH> If we go this route, we may also want to rename it to
-JCH> write-object, but I would want to have it as a separate patch
-JCH> after this series settles down.
+inventory is too complicated -- but is drastically simplified (almost
+  eliminated) in 2.0
 
-Come to think of it, there is only one in-tree user of
-write-blob remaining.  Renaming it to hash-object, changing the
-default behaviour to just hash without storing and instead give
-it --write (or just -w) flag would make more sense.  Without -t,
-the type should default to "blob".
+we hate the funny filenames -- 2.0 requires only a single .revc
+  directory and you aren't expected to edit any files there.  No more
+  {arch}, {arch}/=tagging-method, or deeply nested project-tree logs
 
-Then, the above stupid example would then become:
+the namespace blows -- 2.0 allows just about any revision name that
+  doesn't contain a slash character.  There is a moderate limit on the
+  length of a revision name.
 
-    $ git-cat-file -t $FOO
-    tree
-    $ git-cat-file tree $FOO >tmp1
-    $ FOO1=$(git-hash-object -t tree tmp1)
+all this stuff about registering archives and making mirrors is hard to
+learn -- and, in 2.0, it's all gone.  You can use rsync to mirror stuff,
+  for starters.  And all archives are anonymous -- there's no longer any
+  such thing as an archive name.
 
-And the only in-tree user git-cvsimport-script would be changed to:
+too much is too slow -- although the 2.0 code isn't especially optimized
+  yet, it seems to be hella snappy.
 
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -683,7 +683,7 @@ while(<CVS>) {
- 		$fn =~ s#^/+##;
- 		my ($tmpname, $size) = $cvs->file($fn,$rev);
- 		print "".($init ? "New" : "Update")." $fn: $size bytes.\n" if $opt_v;
--		open my $F, '-|', "git-write-blob $tmpname"
-+		open my $F, '-|', "git-hash-object -w $tmpname"
- 			or die "Cannot create object: $!\n";
- 		my $sha = <$F>;
- 		chomp $sha;
+2.0 is very much git influenced but it brings some (imo significant)
+  improvements to the table.
+
+-t
