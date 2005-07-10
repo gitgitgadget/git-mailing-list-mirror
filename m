@@ -1,62 +1,81 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Sun, 10 Jul 2005 09:09:14 +0100
-Message-ID: <20050710090914.B11765@flint.arm.linux.org.uk>
-References: <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org> <20050709225818.A31045@flint.arm.linux.org.uk>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: qgit-0.7
+Date: Sun, 10 Jul 2005 12:01:06 +0200
+Message-ID: <20050710100106.GA18875@elte.hu>
+References: <20050709081512.33503.qmail@web26306.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 10:09:41 2005
+X-From: git-owner@vger.kernel.org Sun Jul 10 12:02:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrWsS-0007p9-51
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 10:09:28 +0200
+	id 1DrYcx-00078c-LF
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 12:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261876AbVGJIJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 04:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261873AbVGJIJU
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 04:09:20 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:24851 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S261872AbVGJIJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2005 04:09:18 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DrWsF-00010W-Tw; Sun, 10 Jul 2005 09:09:16 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DrWsE-0007pw-Ho; Sun, 10 Jul 2005 09:09:14 +0100
-To: Petr Baudis <pasky@suse.cz>
+	id S261878AbVGJKBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 06:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261879AbVGJKBP
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 06:01:15 -0400
+Received: from mx1.elte.hu ([157.181.1.137]:41661 "EHLO mx1.elte.hu")
+	by vger.kernel.org with ESMTP id S261878AbVGJKBO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 06:01:14 -0400
+Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
+	by mx1.elte.hu (Postfix) with ESMTP id 6112232975A;
+	Sun, 10 Jul 2005 12:00:30 +0200 (CEST)
+Received: by chiara.elte.hu (Postfix, from userid 17806)
+	id D80871FC2; Sun, 10 Jul 2005 12:00:57 +0200 (CEST)
+To: Marco Costalba <mcostalba@yahoo.it>
 Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <20050709225818.A31045@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Sat, Jul 09, 2005 at 10:58:18PM +0100
+In-Reply-To: <20050709081512.33503.qmail@web26306.mail.ukl.yahoo.com>
+User-Agent: Mutt/1.4.2.1i
+X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamCheck: no
+X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
+	autolearn=not spam, BAYES_00 -4.90
+X-ELTE-SpamLevel: 
+X-ELTE-SpamScore: -4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 09, 2005 at 10:58:18PM +0100, Russell King wrote:
-> $ mv .git/objects/pack/* .git/
-> $ for i in .git/*.pack; do git-unpack-objects < $i; done
-> Unpacking 55435 objects
-> fatal: inflate returned -3
 
-This morning's cg-update gave these new errors:
+* Marco Costalba <mcostalba@yahoo.it> wrote:
 
-receiving file list ... done
+> Here is qgit-0.7, a GUI git viewer.
+> 
+> you can download from:
+> 
+> http://prdownloads.sourceforge.net/qgit/qgit-0.7.tar.gz?download
+> 
+> 
+> This time a small changelog, but a lot of work ;-)
+> 
+> - rewrite of graph drawing
+> - start-up loading: switch to use git-rev-list --topo-order
+> - final fixes to annotation
+> - cache of file lists to speed-up loading of file names
+> - added color background on heads
 
-wrote 86 bytes  read 192 bytes  556.00 bytes/sec
-total size is 410  speedup is 1.47
-Missing object of tag v2.6.11... different source (obsolete tag?)
-Missing object of tag v2.6.11-tree... different source (obsolete tag?)
-Missing object of tag v2.6.12... different source (obsolete tag?)
-Missing object of tag v2.6.12-rc2... different source (obsolete tag?)
-Missing object of tag v2.6.12-rc3... different source (obsolete tag?)
-Missing object of tag v2.6.12-rc4... different source (obsolete tag?)
-Missing object of tag v2.6.12-rc5... different source (obsolete tag?)
-Missing object of tag v2.6.12-rc6... different source (obsolete tag?)
-Missing object of tag v2.6.13-rc1... different source (obsolete tag?)
-Missing object of tag v2.6.13-rc2... different source (obsolete tag?)
+the good news: it's really fast now and very usable for browsing 
+changes.  Kudos!
 
--- 
-Russell King
+the bad news: except for annotations. I started qgit in the current 
+kernel GIT repository, and clicked on the following commit:
+
+  5bbcfd9000887c0da7d57cc7b3ac869fc0dd5aa9
+
+then i clicked on sched.c to see the annotated file. Firstly, it took 
+roughly 2 minutes (!) for the annotated sched.c to show up. All the qgit 
+windows were fully frozen during that time, no refreshes or anything.  
+My kernel tree was fully cached in RAM, so it was pure CPU overhead 
+(qgit was taking 99% of CPU time). It is clearly not usable in this 
+form.
+
+then the annotations were plain wrong. Almost all lines are attributed 
+to Tony Luck, while much of the file comes from the initial repository.  
+So something's quite fishy here. Also, a number of lines were attributed 
+to 'merge', which isnt very informative.
+
+	Ingo
