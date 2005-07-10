@@ -1,63 +1,109 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Sun, 10 Jul 2005 14:40:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507101438230.17536@g5.osdl.org>
-References: <20050709232955.B31045@flint.arm.linux.org.uk>
- <7vpstrv8z6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507092158290.17536@g5.osdl.org>
- <Pine.LNX.4.58.0507092211470.17536@g5.osdl.org> <20050710075548.A11765@flint.arm.linux.org.uk>
- <7v4qb3uo63.fsf@assigned-by-dhcp.cox.net> <20050710134624.B3279@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0507100942020.17536@g5.osdl.org> <20050710201504.A22477@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0507101228300.17536@g5.osdl.org> <20050710213209.B22477@flint.arm.linux.org.uk>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] rev-list: add "--full-objects" flag.
+Date: Sun, 10 Jul 2005 23:48:50 +0200
+Message-ID: <20050710214849.GA18608MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net> <7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071657140.25104@g5.osdl.org> <7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071841010.25104@g5.osdl.org> <7vy88ica8e.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071928220.25104@g5.osdl.org> <m1pstrr8k1.fsf@ebiederm.dsl.xmission.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 23:45:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 00:16:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrjbV-0000v2-VX
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 23:44:50 +0200
+	id 1Drk5l-0003pY-CN
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 00:16:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261260AbVGJVoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 17:44:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262114AbVGJVmE
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 17:42:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:2949 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261260AbVGJVk3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 17:40:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6ALeCjA016296
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 10 Jul 2005 14:40:13 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6ALeBF6002472;
-	Sun, 10 Jul 2005 14:40:12 -0700
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050710213209.B22477@flint.arm.linux.org.uk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262133AbVGJWNZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 18:13:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262147AbVGJWMf
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 18:12:35 -0400
+Received: from rusty.kulnet.kuleuven.ac.be ([134.58.240.42]:25796 "EHLO
+	rusty.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S262149AbVGJWIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2005 18:08:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id DF8F41D7358
+	for <git@vger.kernel.org>; Mon, 11 Jul 2005 00:08:08 +0200 (CEST)
+Received: from lepidus.kulnet.kuleuven.ac.be (lepidus.kulnet.kuleuven.ac.be [134.58.240.72])
+	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 1C47C1D7399
+	for <git@vger.kernel.org>; Mon, 11 Jul 2005 00:08:07 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by lepidus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id CFEF638007F
+	for <git@vger.kernel.org>; Mon, 11 Jul 2005 00:08:06 +0200 (CEST)
+Received: (qmail 10939 invoked by uid 500); 10 Jul 2005 21:48:50 -0000
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+Mail-Followup-To: "Eric W. Biederman" <ebiederm@xmission.com>,
+	Linus Torvalds <torvalds@osdl.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <m1pstrr8k1.fsf@ebiederm.dsl.xmission.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sun, 10 Jul 2005, Russell King wrote:
->
-> On Sun, Jul 10, 2005 at 01:03:30PM -0700, Linus Torvalds wrote:
-> > Anyway, I pushed out the merge, so don't worry about your tree. But let's 
-> > hold off on this partial thing for a while, ok?
+On Sat, Jul 09, 2005 at 03:09:02PM -0600, Eric W. Biederman wrote:
+> The current intelligent fetch currently has a problem that it cannot
+> be used to bootstrap a repository.  If you don't have an ancestor
+> of what you are fetching you can't fetch it.
 > 
-> Thanks, that's good news.  I was fearing having to reconstruct stuff.
-> 
-> Do you want me to re-populate linux-2.6-arm.git to be fully populated
-> or are you happy for it to just grow the new objects as they become
-> available?
 
-We can try just letting it grow. That way I'll have more reason to try to 
-make the partial-repo thing just work.
+Not sure if this is what you want, but you could use the
+following gitweb patch (to be applied on top of my previous
+patches) to get a git tree snapshot for bootstrapping.
 
-		Linus
+http://www.liacs.nl/~sverdool/gitweb.cgi?p=gitweb.git;a=summary
+http://www.liacs.nl/~sverdool/gitweb.git/
+
+skimo
+--
+Support pack snapshots.
+
+---
+commit f76a442a0e2166b3f17db0e496545a600a33f94c
+tree f8f089ab738864e69e0155b10262dbec832b4a11
+parent 8392280de17a89a451c1f7db4e268f2047d4aa83
+author Sven Verdoolaege <skimo@liacs.nl> Sun, 10 Jul 2005 23:56:42 +0200
+committer Sven Verdoolaege <skimo@liacs.nl> Sun, 10 Jul 2005 23:56:42 +0200
+
+ gitweb.cgi |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/gitweb.cgi b/gitweb.cgi
+--- a/gitweb.cgi
++++ b/gitweb.cgi
+@@ -2058,8 +2058,9 @@ sub git_snapshot {
+ 	      "<th></th>\n" .
+ 	      "</tr>\n";
+ 	my %types = (
+-		'Bzipped tar archive' => 'tar.bz2',
+-		'Gzipped tar archive' => 'tar.gz',
++		'Source tree (bzipped tar archive)' => 'tar.bz2',
++		'Source tree (gzipped tar archive)' => 'tar.gz',
++		'Git tree (pack file)' => 'pack',
+ 	);
+ 	my $alternate = 0;
+ 	for my $type (sort keys %types) {
+@@ -2094,6 +2095,7 @@ sub git_serve_snapshot {
+ 	my %info = (
+ 		'tar.bz2' => [ 'application/x-bzip2', 'bzip2' ],
+ 		'tar.gz' => [ 'application/x-gzip', 'gzip' ],
++		'pack' => [ 'application/x-git-pack' ],
+ 	);
+ 	if (!exists $info{$st}) {
+ 		die_error(undef, "Unknown snapshot type.");
+@@ -2101,7 +2103,10 @@ sub git_serve_snapshot {
+ 	my ($type, $zip) = @{$info{$st}};
+ 	print $cgi->header(-type => $type, 
+ 			   -attachment => "$project-$hash.$st");
+-	open my $fd, "-|", "$gitbin/git-tar-tree $hash '$project-$hash' | $zip" 
++	open my $fd, "-|", ($st eq 'pack' ?
++		"$gitbin/git-rev-list --max-count=1 --objects $hash | ". 
++			"$gitbin/git-pack-objects --stdout" :
++		"$gitbin/git-tar-tree $hash '$project-$hash' | $zip")
+ 		or return;
+ 	undef $/;
+ 	print <$fd>;
