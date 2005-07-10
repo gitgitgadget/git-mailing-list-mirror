@@ -1,69 +1,64 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: What broke snapshots now?
-Date: Sun, 10 Jul 2005 15:39:38 +0100
-Message-ID: <1121006378.23706.65.camel@baythorne.infradead.org>
-References: <1120907336.8058.293.camel@baythorne.infradead.org>
-	 <Pine.LNX.4.58.0507090908490.17536@g5.osdl.org>
-	 <1120952292.23706.49.camel@baythorne.infradead.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [ANNOUNCE] Cogito-0.12
+Date: Sun, 10 Jul 2005 16:59:54 +0200
+Message-ID: <20050710145954.GB24249@pasky.ji.cz>
+References: <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org> <20050709225818.A31045@flint.arm.linux.org.uk> <20050710090914.B11765@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 16:39:59 2005
+X-From: git-owner@vger.kernel.org Sun Jul 10 17:00:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Drcy8-0004YD-OR
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 16:39:45 +0200
+	id 1DrdI5-0006Gg-VC
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 17:00:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261949AbVGJOjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 10:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261950AbVGJOjk
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 10:39:40 -0400
-Received: from baythorne.infradead.org ([81.187.226.107]:4051 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S261949AbVGJOjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2005 10:39:40 -0400
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by baythorne.infradead.org with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
-	id 1Drcy3-0000QX-59; Sun, 10 Jul 2005 15:39:39 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <1120952292.23706.49.camel@baythorne.infradead.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-5) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261948AbVGJPAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 11:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261953AbVGJPAA
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 11:00:00 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:61666 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261948AbVGJO77 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 10:59:59 -0400
+Received: (qmail 32449 invoked by uid 2001); 10 Jul 2005 14:59:54 -0000
+To: Russell King <rmk@arm.linux.org.uk>
+Content-Disposition: inline
+In-Reply-To: <20050710090914.B11765@flint.arm.linux.org.uk>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-07-10 at 00:38 +0100, David Woodhouse wrote:
-> Doh. I thought I'd already done that, but in fact that was for the
-> scripts which feed the mailing list, while the snapshot script kept
-> using my copy. 
+Dear diary, on Sun, Jul 10, 2005 at 10:09:14AM CEST, I got a letter
+where Russell King <rmk@arm.linux.org.uk> told me that...
+> On Sat, Jul 09, 2005 at 10:58:18PM +0100, Russell King wrote:
+> > $ mv .git/objects/pack/* .git/
+> > $ for i in .git/*.pack; do git-unpack-objects < $i; done
+> > Unpacking 55435 objects
+> > fatal: inflate returned -3
+> 
+> This morning's cg-update gave these new errors:
+> 
+> receiving file list ... done
+> 
+> wrote 86 bytes  read 192 bytes  556.00 bytes/sec
+> total size is 410  speedup is 1.47
+> Missing object of tag v2.6.11... different source (obsolete tag?)
+> Missing object of tag v2.6.11-tree... different source (obsolete tag?)
+> Missing object of tag v2.6.12... different source (obsolete tag?)
+> Missing object of tag v2.6.12-rc2... different source (obsolete tag?)
+> Missing object of tag v2.6.12-rc3... different source (obsolete tag?)
+> Missing object of tag v2.6.12-rc4... different source (obsolete tag?)
+> Missing object of tag v2.6.12-rc5... different source (obsolete tag?)
+> Missing object of tag v2.6.12-rc6... different source (obsolete tag?)
+> Missing object of tag v2.6.13-rc1... different source (obsolete tag?)
+> Missing object of tag v2.6.13-rc2... different source (obsolete tag?)
 
-Ok, the snapshot script starts working again if I change a few
-environment variables to match what the tools now expect.
-
-Now the mailing list feed isn't happy though -- it stopped being able to
-pull from your tree at around 0600 UTC (which I think is then the last
-DRM fix was added). I got this when trying to update...
-
-Tree change: 0109fd37046de64e8459f8c4f4706df9ac7cc82c:f179bc77d09b9087bfc559d0368bba350342ac76
-error: cannot read sha1_file for ce68a60e5c503aaef0a98f8d754effb6c7d9ee99
-fatal: unable to read destination tree (ce68a60e5c503aaef0a98f8d754effb6c7d9ee99)
-
-Applying changes...
-Fast-forwarding 0109fd37046de64e8459f8c4f4706df9ac7cc82c -> f179bc77d09b9087bfc559d0368bba350342ac76
-        on top of 0109fd37046de64e8459f8c4f4706df9ac7cc82c...
-error: cannot read sha1_file for ce68a60e5c503aaef0a98f8d754effb6c7d9ee99
-fatal: failed to unpack tree object f179bc77d09b9087bfc559d0368bba350342ac76
-
-Since it's just a fast-forward, I just copied the 'origin' tag into the
-'master' to move it forward. But it's still not happy:
-
-hera /home/dwmw2/git/mail-2.6 $ cg-diff -r 0109fd37046de64e8459f8c4f4706df9ac7cc82c:f179bc77d09b9087bfc559d0368bba350342ac76
-error: cannot read sha1_file for ce68a60e5c503aaef0a98f8d754effb6c7d9ee99
-fatal: unable to read destination tree (ce68a60e5c503aaef0a98f8d754effb6c7d9ee99)
+Ok, cg-pull didn't quite handle this. I've fixed it so that it should
+reasonably handle it now. Hopefully.
 
 -- 
-dwmw2
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
