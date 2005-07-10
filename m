@@ -1,63 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Russell King <rmk@arm.linux.org.uk>
 Subject: Re: [ANNOUNCE] Cogito-0.12
-Date: Sun, 10 Jul 2005 00:15:48 -0700
-Message-ID: <7v4qb3uo63.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org>
-	<12c511ca05070716526954edd@mail.gmail.com>
-	<Pine.LNX.4.58.0507071658460.25104@g5.osdl.org>
-	<12c511ca050707170964a2cc92@mail.gmail.com>
-	<Pine.LNX.4.58.0507071720330.25104@g5.osdl.org>
-	<20050709225818.A31045@flint.arm.linux.org.uk>
-	<20050709232955.B31045@flint.arm.linux.org.uk>
-	<7vpstrv8z6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507092158290.17536@g5.osdl.org>
-	<Pine.LNX.4.58.0507092211470.17536@g5.osdl.org>
-	<20050710075548.A11765@flint.arm.linux.org.uk>
+Date: Sun, 10 Jul 2005 09:09:14 +0100
+Message-ID: <20050710090914.B11765@flint.arm.linux.org.uk>
+References: <20050707144501.GG19781@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org> <20050709225818.A31045@flint.arm.linux.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Tony Luck <tony.luck@gmail.com>, Petr Baudis <pasky@suse.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 09:16:18 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 10 10:09:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrW2q-0003ge-6d
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 09:16:08 +0200
+	id 1DrWsS-0007p9-51
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 10:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261864AbVGJHPw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 03:15:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261866AbVGJHPw
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 03:15:52 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61176 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261864AbVGJHPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2005 03:15:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050710071548.FWWY8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 10 Jul 2005 03:15:48 -0400
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050710075548.A11765@flint.arm.linux.org.uk> (Russell King's message of "Sun, 10 Jul 2005 07:55:48 +0100")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261876AbVGJIJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 04:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261873AbVGJIJU
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 04:09:20 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:24851 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261872AbVGJIJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2005 04:09:18 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DrWsF-00010W-Tw; Sun, 10 Jul 2005 09:09:16 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DrWsE-0007pw-Ho; Sun, 10 Jul 2005 09:09:14 +0100
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <20050709225818.A31045@flint.arm.linux.org.uk>; from rmk@arm.linux.org.uk on Sat, Jul 09, 2005 at 10:58:18PM +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->>>>> "RK" == Russell King <rmk@arm.linux.org.uk> writes:
+On Sat, Jul 09, 2005 at 10:58:18PM +0100, Russell King wrote:
+> $ mv .git/objects/pack/* .git/
+> $ for i in .git/*.pack; do git-unpack-objects < $i; done
+> Unpacking 55435 objects
+> fatal: inflate returned -3
 
-RK> I would if I could, but my workflow involves having an untouched local
-RK> copy of your tree and several trees for each area.
+This morning's cg-update gave these new errors:
 
-RK> This involves updates using relative paths, and as has already been
-RK> found elsewhere, this (with cogito 0.12) doesn't work with packed
-RK> objects yet.
+receiving file list ... done
 
-As a workaround until Cogito gets updated, would it help to have
-the environment variable GIT_ALTERNATE_OBJECT_DIRECTORIES
-pointing at the untouched copy of Linus tree's .git/objects/
-directory?  All your other trees would find the objects in your
-copied-Linus tree (including packed one) available to them
-already and hopefully pull breakage does not even have to touch
-those objects.
+wrote 86 bytes  read 192 bytes  556.00 bytes/sec
+total size is 410  speedup is 1.47
+Missing object of tag v2.6.11... different source (obsolete tag?)
+Missing object of tag v2.6.11-tree... different source (obsolete tag?)
+Missing object of tag v2.6.12... different source (obsolete tag?)
+Missing object of tag v2.6.12-rc2... different source (obsolete tag?)
+Missing object of tag v2.6.12-rc3... different source (obsolete tag?)
+Missing object of tag v2.6.12-rc4... different source (obsolete tag?)
+Missing object of tag v2.6.12-rc5... different source (obsolete tag?)
+Missing object of tag v2.6.12-rc6... different source (obsolete tag?)
+Missing object of tag v2.6.13-rc1... different source (obsolete tag?)
+Missing object of tag v2.6.13-rc2... different source (obsolete tag?)
+
+-- 
+Russell King
