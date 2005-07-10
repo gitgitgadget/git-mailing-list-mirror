@@ -1,129 +1,137 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Make --recover cause pull to trace everything
-Date: Sun, 10 Jul 2005 16:43:14 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507101635160.30848-100000@iabervon.org>
+From: Dan Holmsand <holmsand@gmail.com>
+Subject: Re: [RFC] Design for http-pull on repo with packs
+Date: Sun, 10 Jul 2005 23:39:11 +0200
+Message-ID: <42D1957F.1050609@gmail.com>
+References: <Pine.LNX.4.21.0507101557510.30848-100000@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Jul 10 22:48:57 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 10 23:45:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrijP-0004Z7-Tw
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 22:48:56 +0200
+	id 1DrjbW-0000v2-Bc
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 23:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262086AbVGJUsW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 16:48:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261215AbVGJUqN
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 16:46:13 -0400
-Received: from iabervon.org ([66.92.72.58]:29701 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262108AbVGJUpL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 16:45:11 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Dridu-0001UB-00; Sun, 10 Jul 2005 16:43:14 -0400
-To: git@vger.kernel.org
+	id S262083AbVGJVmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 17:42:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262119AbVGJVjc
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 17:39:32 -0400
+Received: from wproxy.gmail.com ([64.233.184.192]:9912 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261792AbVGJVjS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 17:39:18 -0400
+Received: by wproxy.gmail.com with SMTP id 67so790047wri
+        for <git@vger.kernel.org>; Sun, 10 Jul 2005 14:39:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=nfhUKktFtSbIFIjomDl/n99aP6KhTAhLDmkHs2KtolXcK/FH5YFIkWGdYSOKEkAtN7kSmS8gfl2H87piQNhYbaoeV2v9fpfDY95j5DYZix5pFT/13TyFC7RyKO9aOSgaXhR8cnAFOufHh42SQMxgssUI31xQNHgMO9wHoh07DBs=
+Received: by 10.54.44.7 with SMTP id r7mr3297158wrr;
+        Sun, 10 Jul 2005 14:39:14 -0700 (PDT)
+Received: from ?192.168.0.5? ([80.217.52.214])
+        by mx.gmail.com with ESMTP id 43sm5064777wri.2005.07.10.14.39.13;
+        Sun, 10 Jul 2005 14:39:14 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.21.0507101557510.30848-100000@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Make the --recover flag check the parents of commits which are already
-available. This is needed currently to deal with cases where a parent is
-pulled along with a commit (in a pack, e.g.) and references above that
-parent aren't also pulled together.
+Daniel Barkalow wrote:
+> On Sun, 10 Jul 2005, Dan Holmsand wrote:
+>>Daniel Barkalow wrote:
+>>> If an individual file is not available, figure out what packs are
+>>>  available:
+>>>
+>>>   Get the list of pack files the repository has
+>>>    (currently, I just use "e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135")
+>>>   For any packs we don't have, get the index files.
+>>
+>>This part might be slightly expensive, for large repositories. If one 
+>>assumes that packs are named as by git-repack-script, however, one might 
+>>cache indexes we've already seen (again, see below). Or, if you go for 
+>>the mandatory "pack-index-file", require that it has a reliable order, 
+>>so that you can get the last added index first.
+> 
+> 
+> Nothing bad happens if you have index files for pack files you don't have,
+> as it turns out; the library ignores them. So we can keep the index files
+> around so we can quickly check if they have the objects we want. That way,
+> we don't have to worry about skipping something now (because it's not
+> needed) and then ignoring it when the branch gets merged in.
+> 
+> So what I actually do is make a list of the pack files that aren't already
+> downloaded that are available from the server, and download the index
+> files for any where the index file isn't downloaded, either.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-commit 75e8c1be7a778e0a0fa119fe1bc408341932e7e5
-tree ffbe708117543c356eb2981f1e0540b89b7a95e2
-parent a7336ae514738f159dad314d6674961427f043a6
-author Daniel Barkalow <barkalow@iabervon.org> 1121024019 -0400
-committer Daniel Barkalow <barkalow@silva-tulga.(none)> 1121024019 -0400
+Aah. In other words, you do the caching thing as well. It seems a little 
+ugly, though, to store the index-only index files with the rest of the 
+pack. It might be preferable to introduce something like 
+$GIT_DIR/index-cache or something, so than it can be easily cleaned (and 
+don't follow us around forever when 
+cloning-by-hardlinking-the-entire-object-directory).
 
-Index: http-pull.c
-===================================================================
---- 248f72f3e4dcb40693488b0c06f93d0b38122b8e/http-pull.c  (mode:100644 sha1:1f9d60b9b1d5eed85b24d96c240666bbfc5a22ed)
-+++ ffbe708117543c356eb2981f1e0540b89b7a95e2/http-pull.c  (mode:100644 sha1:3fa56f08b0b8e7316afcaab3a7bfa3f2d26b550f)
-@@ -146,7 +146,10 @@
- 	int arg = 1;
- 
- 	while (arg < argc && argv[arg][0] == '-') {
--		if (argv[arg][1] == 't') {
-+		if (argv[arg][1] == '-') {
-+			if (!strcmp(argv[arg] + 2, "recover"))
-+				careful = 1;
-+		} else if (argv[arg][1] == 't') {
- 			get_tree = 1;
- 		} else if (argv[arg][1] == 'c') {
- 			get_history = 1;
-Index: local-pull.c
-===================================================================
---- 248f72f3e4dcb40693488b0c06f93d0b38122b8e/local-pull.c  (mode:100644 sha1:2f06fbee8b840a7ae642f5a22e2cb993687f3470)
-+++ ffbe708117543c356eb2981f1e0540b89b7a95e2/local-pull.c  (mode:100644 sha1:0d10c07844030bc7cb615cf916dce89592151be7)
-@@ -116,7 +116,10 @@
- 	int arg = 1;
- 
- 	while (arg < argc && argv[arg][0] == '-') {
--		if (argv[arg][1] == 't')
-+		if (argv[arg][1] == '-') {
-+			if (!strcmp(argv[arg] + 2, "recover"))
-+				careful = 1;
-+		} else if (argv[arg][1] == 't')
- 			get_tree = 1;
- 		else if (argv[arg][1] == 'c')
- 			get_history = 1;
-Index: pull.c
-===================================================================
---- 248f72f3e4dcb40693488b0c06f93d0b38122b8e/pull.c  (mode:100644 sha1:ed3078e3b27c62c07558fd94f339801cbd685593)
-+++ ffbe708117543c356eb2981f1e0540b89b7a95e2/pull.c  (mode:100644 sha1:d9763840c7ebcb1e5838c3b960695cafcca3ac73)
-@@ -11,6 +11,7 @@
- 
- const unsigned char *current_ref = NULL;
- 
-+int careful = 0;
- int get_tree = 0;
- int get_history = 0;
- int get_all = 0;
-@@ -91,7 +92,8 @@
- 	if (get_history) {
- 		struct commit_list *parents = obj->parents;
- 		for (; parents; parents = parents->next) {
--			if (has_sha1_file(parents->item->object.sha1))
-+			if (!careful &&
-+			    has_sha1_file(parents->item->object.sha1))
- 				continue;
- 			if (make_sure_we_have_it(NULL,
- 						 parents->item->object.sha1)) {
-Index: pull.h
-===================================================================
---- 248f72f3e4dcb40693488b0c06f93d0b38122b8e/pull.h  (mode:100644 sha1:e173ae3337c4465da87d849f4e5c9da203fdf01d)
-+++ ffbe708117543c356eb2981f1e0540b89b7a95e2/pull.h  (mode:100644 sha1:d1076468b71b31dd5e59ec55d98de830cf9df60e)
-@@ -21,6 +21,12 @@
- /* If set, the hash that the current value of write_ref must be. */
- extern const unsigned char *current_ref;
- 
-+/* 
-+ * Set to check on everything, instead of stopping at points where we think
-+ * we must have everything.
-+ */
-+extern int careful;
-+
- /* Set to fetch the target tree. */
- extern int get_tree;
- 
-Index: ssh-pull.c
-===================================================================
---- 248f72f3e4dcb40693488b0c06f93d0b38122b8e/ssh-pull.c  (mode:100644 sha1:26356dd7d84ea1bc9f7320b18562ed4117d4fac0)
-+++ ffbe708117543c356eb2981f1e0540b89b7a95e2/ssh-pull.c  (mode:100644 sha1:7ca4243f3bd84590e7bb94467fd5acccd7d4d6f9)
-@@ -61,7 +61,10 @@
- 	const char *prog = getenv("GIT_SSH_PUSH") ? : "git-ssh-push";
- 
- 	while (arg < argc && argv[arg][0] == '-') {
--		if (argv[arg][1] == 't') {
-+		if (argv[arg][1] == '-') {
-+			if (!strcmp(argv[arg] + 2, "recover"))
-+				careful = 1;
-+		} else if (argv[arg][1] == 't') {
- 			get_tree = 1;
- 		} else if (argv[arg][1] == 'c') {
- 			get_history = 1;
+You might end up with quite a large number of index files, after a while 
+though, if you pull from several repositories that are regularly repacked.
+
+>>>   Keep a list of the struct packed_gits for the packs the server has
+>>>    (these are not used as places to look for objects)
+>>>
+>>> Each time we need an object, check the list for it. If it is in there,
+>>>  download the corresponding pack and report success.
+>>
+>>Here you will need some strategy to deal with packs that overlap with 
+>>what we've already got. Basically, small and overlapping packs should be 
+>>unpacked, big and non-overlapping ones saved as is (since 
+>>git-unpack-objects is painfully slow and memory-hungry...).
+> 
+> 
+> I don't think there's an issue to having overlapping packs, either with
+> each other or with separate objects. If the user wants, stuff can be
+> repacked outside of the pull operation (note, though, that the index files
+> should be truncated rather than removed, so that the program doesn't fetch
+> them again next time some object can't be found easily).
+
+Well, the only issue is obviously waste of space. If you fetch a lot of 
+branches from independently packed repos, it might mean a lot of waste, 
+though.
+
+About truncating index files: this seems a bit ugly. You get a file that 
+doesn't contain what it says it contains, which may cause trouble if for 
+example the git prune thing is used.
+
+You might be better off with a simple list of index files we know we 
+have all the objects of (and make sure that git-prune-script deletes 
+this file, since it possibly breaks the contract).
+
+>>One could also optimize the pack-download bit, by figuring out the last 
+>>object in the pack that we need (easy enough to do from the index file), 
+>>  and just get the part of the pack file leading up to that object. That 
+>>could be a huge win for independently packed repositories (I don't do 
+>>that in my code below, though).
+> 
+> 
+> That's only possible if you can figure out what you want to have before
+> you get it. My code is walking the reachability graph on the client; it
+> can only figure out what other objects it needs after it's mapped the pack
+> file.
+
+No, but we can find out which objects we *don't* want (i.e. the ones we 
+have). And that may be a lot, e.g. if a repository is fully repacked, or 
+if we track branches on several similar but independently packed 
+repositories. And as far as I understand git-pack-objects, it tries to 
+put recent objects in the front.
+
+I don't have any numbers to back this up with, though. Some testing may 
+be needed, but since the population of packed public repositories is 1, 
+this is tricky...
+
+> I might use that method for listing the available packs, although I'd sort
+> of like to encourage a clean solution first.
+
+Encouraging cleanliness is obviously a good thing :-)
+
+/dan
