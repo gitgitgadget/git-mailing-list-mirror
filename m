@@ -1,125 +1,59 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: qgit-0.7
-Date: Sun, 10 Jul 2005 05:25:30 -0700 (PDT)
-Message-ID: <20050710122531.15175.qmail@web26303.mail.ukl.yahoo.com>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: [ANNOUNCE] Cogito-0.12
+Date: Sun, 10 Jul 2005 13:46:24 +0100
+Message-ID: <20050710134624.B3279@flint.arm.linux.org.uk>
+References: <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org> <20050709225818.A31045@flint.arm.linux.org.uk> <20050709232955.B31045@flint.arm.linux.org.uk> <7vpstrv8z6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507092158290.17536@g5.osdl.org> <Pine.LNX.4.58.0507092211470.17536@g5.osdl.org> <20050710075548.A11765@flint.arm.linux.org.uk> <7v4qb3uo63.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 14:26:02 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Tony Luck <tony.luck@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 10 14:46:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Drasa-0001Q1-OL
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 14:25:53 +0200
+	id 1DrbCk-0002t1-Tr
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 14:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261922AbVGJMZj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 08:25:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261923AbVGJMZi
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 08:25:38 -0400
-Received: from web26303.mail.ukl.yahoo.com ([217.146.176.14]:30068 "HELO
-	web26303.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261922AbVGJMZf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2005 08:25:35 -0400
-Received: (qmail 15177 invoked by uid 60001); 10 Jul 2005 12:25:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=wk8qTu9V/xuhJWNP3jxr7KhOULq0yMQLe5GJGjsACPMcT5dHoghkdUKIsIxrjY9TmX6Ml20+yMvzC1XcfivywP1neuoKsHp73Sl0785DIGklfQe8o+bXXWeEmkfdPOTktqNF7jwumFC0kzxxCySr1mWqPaf0g/ybkHeJ9AsoxI0=  ;
-Received: from [151.42.108.207] by web26303.mail.ukl.yahoo.com via HTTP; Sun, 10 Jul 2005 05:25:30 PDT
-To: mingo@elte.hu
+	id S261927AbVGJMqi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 08:46:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261929AbVGJMqi
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 08:46:38 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:49420 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S261927AbVGJMqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2005 08:46:36 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DrbCT-00017x-Re; Sun, 10 Jul 2005 13:46:26 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DrbCS-00024q-J8; Sun, 10 Jul 2005 13:46:24 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <7v4qb3uo63.fsf@assigned-by-dhcp.cox.net>; from junkio@cox.net on Sun, Jul 10, 2005 at 12:15:48AM -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ingo Molnar wrote:
+On Sun, Jul 10, 2005 at 12:15:48AM -0700, Junio C Hamano wrote:
+> As a workaround until Cogito gets updated, would it help to have
+> the environment variable GIT_ALTERNATE_OBJECT_DIRECTORIES
+> pointing at the untouched copy of Linus tree's .git/objects/
+> directory?  All your other trees would find the objects in your
+> copied-Linus tree (including packed one) available to them
+> already and hopefully pull breakage does not even have to touch
+> those objects.
 
->
->the bad news: except for annotations. I started qgit in the current 
->kernel GIT repository, and clicked on the following commit:
->
->  5bbcfd9000887c0da7d57cc7b3ac869fc0dd5aa9
->
->then i clicked on sched.c to see the annotated file. 
+That seems to work, thanks.  I think this is a good idea anyway -
+it seems to mean that each working tree ends up with an empty set of
+.git/objects/* directories.  When new work is done in a tree, the
+corresponding objects then appear, and only these objects need
+transferring upstream.
 
-Interesting enough sched.c is one of the files I used as my internal test of
-annotate function.
+It means that rsync --delete-after can (in theory) be used when
+making changes available to the upstream maintainer.
 
-I test again annotate with commit 5bbcfd9000887c0da7d57cc7b3ac869fc0dd5aa9 but
- my numbers are:
-
-123 revisions in history list
-
-4 seconds to show file content of rev 5bbcfd9000887c0da7d57cc7b3ac869fc0dd5aa9
-
-16 seconds after annotate is shown
-
-No 'Merge' string found
-
-And no freeze at all on my box also because of some calls
-to main event loop (qApp->processEvents()) scattered along the heaviest routines.
-
-So I cannot reproduce the bug. Please can you be so kind to apply this:
-
---- a/src/annotate.cpp
-+++ b/src/annotate.cpp
-@@ -198,7 +198,7 @@ void Annotate::getReachability(ReachList
- 			}
- 		}
- 	}
--	//printReachList(rl);
-+	printReachList(rl);
- }
- 
- QString Annotate::getRoot(SRef sha, const ReachList& rl) {
-
-
-and send me the output?
-
-
->
->then the annotations were plain wrong. Almost all lines are attributed 
->to Tony Luck, while much of the file comes from the initial repository.  
->So something's quite fishy here. 
-
-This is just a choice, peraphs wrong ;-). Because it is possible to call
-annotate at any time, also while loading, snapshotting the history,
- there is no a univoque meaning of "Inital import" so I choose first rev in list's author
-instead. But anyway, this is the patch (above the first one)
-
---- a/src/annotate.cpp
-+++ b/src/annotate.cpp
-@@ -273,7 +273,7 @@ QStringList Annotate::getFirstAnnotation
- 	QString fileSHA = rf.filesSHA[pos];
- 	git->getFile(fileSHA, NULL, true); // calls mainExec and event loop
- 	int lineNum = git->mainBuffer.contains('\n');
--	QString author = getAuthor(shaHist[idx], shaHist);
-+	QString author = "Initial import";
- 	QStringList first;
- 	first.insert(first.begin(), lineNum, author);
- 	return first;
-
-
-
-Also, a number of lines were attributed 
->to 'merge', which isnt very informative.
->
-
-This is not a choice but a bad behaviour. 'Merge' is used as author name
-as a mark to help unify() routine to join 2 branches annotations and
-should be substituted by second branch author if everything it is ok.
-This is not your case ;-).
-
-
-Marco
-
-
-
-
-
-
-		
-__________________________________ 
-Yahoo! Mail 
-Stay connected, organized, and protected. Take the tour: 
-http://tour.mail.yahoo.com/mailtour.html 
+-- 
+Russell King
