@@ -1,66 +1,55 @@
-From: Ingo Molnar <mingo@elte.hu>
-Subject: Re: qgit-0.7
-Date: Sun, 10 Jul 2005 15:43:09 +0200
-Message-ID: <20050710134309.GA24935@elte.hu>
-References: <20050710122531.15175.qmail@web26303.mail.ukl.yahoo.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cogito Mac OS X compatibility
+Date: Sun, 10 Jul 2005 16:29:16 +0200
+Message-ID: <20050710142916.GA24249@pasky.ji.cz>
+References: <42CF0D9F.8040909@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 10 15:43:47 2005
+X-From: git-owner@vger.kernel.org Sun Jul 10 16:29:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Drc5Z-0007gS-3C
-	for gcvg-git@gmane.org; Sun, 10 Jul 2005 15:43:21 +0200
+	id 1DrcoI-0003jq-93
+	for gcvg-git@gmane.org; Sun, 10 Jul 2005 16:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261931AbVGJNnM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 09:43:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261942AbVGJNnM
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 09:43:12 -0400
-Received: from mx1.elte.hu ([157.181.1.137]:35025 "EHLO mx1.elte.hu")
-	by vger.kernel.org with ESMTP id S261931AbVGJNnK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 09:43:10 -0400
-Received: from chiara.elte.hu (chiara.elte.hu [157.181.150.200])
-	by mx1.elte.hu (Postfix) with ESMTP id EB54C32AAFA;
-	Sun, 10 Jul 2005 15:42:31 +0200 (CEST)
-Received: by chiara.elte.hu (Postfix, from userid 17806)
-	id EB8BE1FC2; Sun, 10 Jul 2005 15:42:59 +0200 (CEST)
-To: Marco Costalba <mcostalba@yahoo.it>
+	id S261947AbVGJO3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 10:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261948AbVGJO3U
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 10:29:20 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:31458 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261947AbVGJO3S (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 10:29:18 -0400
+Received: (qmail 25308 invoked by uid 2001); 10 Jul 2005 14:29:16 -0000
+To: Bryan Larsen <bryan.larsen@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20050710122531.15175.qmail@web26303.mail.ukl.yahoo.com>
-User-Agent: Mutt/1.4.2.1i
-X-ELTE-SpamVersion: MailScanner 4.31.6-itk1 (ELTE 1.2) SpamAssassin 2.63 ClamAV 0.73
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamCheck: no
-X-ELTE-SpamCheck-Details: score=-4.9, required 5.9,
-	autolearn=not spam, BAYES_00 -4.90
-X-ELTE-SpamLevel: 
-X-ELTE-SpamScore: -4
+In-Reply-To: <42CF0D9F.8040909@gmail.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Dear diary, on Sat, Jul 09, 2005 at 01:34:55AM CEST, I got a letter
+where Bryan Larsen <bryan.larsen@gmail.com> told me that...
+> On Mac OS X
+> 
+> $ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git
+> defaulting to local storage area
+> 19:11:10 
+> URL:http://www.kernel.org/pub/scm/cogito/cogito.git/refs/heads/master 
+> [41/41] -> "refs/heads/origin" [1]
+> /Users/blarsen/bin/cg-pull: line 82: 0 + : syntax error: operand 
+> expected (error token is " ")
+> cg-pull: objects pull failed
+> cg-init: pull failed
 
-* Marco Costalba <mcostalba@yahoo.it> wrote:
+That's strange. I assume you don't have the stat utility, but that
+shouldn't matter - Cogito has own stat stub to use in those cases. Could
+you please put some debugging stuff into stat() in cg-Xlib to see what's
+going on? (Beware, cg-pull calls it with 2>/dev/null.) Thanks.
 
-> So I cannot reproduce the bug. [...]
-
-weird - i cannot reproduce it either anymore, and annotate works now as 
-advertised - it's fast and accurate as far as i checked. But i synced to 
-the latest tree meanwhile. Perhaps i had an inconsistent tree?
-
-(i'll keep an eye on this, i've uncommented that printout, so if it ever 
-happens again i'll have the data.)
-
-now that everything is working fine, may i suggest improvements? :-) 
-Firstly, now i'm listed as the author for most portions of sched.c, 
-which is accurate for a fair portion of that, but is only done by qgit 
-because i happened to be the author of the first commit. So it would be 
-more accurate to denote version 1's author as empty (or with some other, 
-nonintrusive string that shows that this file came here due to the 
-initial commit)? We dont know the full history yet, because the current 
-DB's history starts at 2.6.12-rc2, with a full sched.c file. (I think an 
-empty author field would reflect version #1's authorship most 
-accurately, and would be the visually least intrusive.)
-
-	Ingo
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
