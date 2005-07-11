@@ -1,62 +1,54 @@
 From: Marc Singer <elf@buici.com>
-Subject: Re: Bootstrapping into git, commit gripes at me
-Date: Mon, 11 Jul 2005 15:20:46 -0700
-Message-ID: <20050711222046.GA21376@buici.com>
-References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+Subject: Re: git clone rsync:... ?
+Date: Mon, 11 Jul 2005 15:41:45 -0700
+Message-ID: <20050711224144.GA24278@buici.com>
+References: <20050711213050.GA18693@buici.com> <7v4qb1ouwk.fsf@assigned-by-dhcp.cox.net> <20050711222112.GA21248@buici.com> <7vwtnxnf5m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 00:42:05 2005
+X-From: git-owner@vger.kernel.org Tue Jul 12 00:46:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds6xK-0008MA-NM
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 00:40:55 +0200
+	id 1Ds71c-0000VW-KE
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 00:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262943AbVGKW1z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 18:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262757AbVGKWXf
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 18:23:35 -0400
-Received: from florence.buici.com ([206.124.142.26]:12439 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S262943AbVGKWUs
+	id S262200AbVGKWor (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 18:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262065AbVGKWmr
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 18:42:47 -0400
+Received: from florence.buici.com ([206.124.142.26]:25239 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S261638AbVGKWlq
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 18:20:48 -0400
-Received: (qmail 21539 invoked by uid 1000); 11 Jul 2005 22:20:46 -0000
-To: Linus Torvalds <torvalds@osdl.org>
+	Mon, 11 Jul 2005 18:41:46 -0400
+Received: (qmail 27312 invoked by uid 1000); 11 Jul 2005 22:41:45 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+In-Reply-To: <7vwtnxnf5m.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 08, 2005 at 06:43:54PM -0700, Linus Torvalds wrote:
+On Mon, Jul 11, 2005 at 03:36:53PM -0700, Junio C Hamano wrote:
+> Marc Singer <elf@buici.com> writes:
 > 
+> > Looks like something's borked.
 > 
-> On Fri, 8 Jul 2005, Marc Singer wrote:
-> >
-> > In working through a usage example on my way to producing bonafide
-> > patches, I've found that commit is complaining.  Here's what I've done.
-> > 
-> >   o Fetched and built cogito-0.12
-> >   o Fetched (rsync) Linus' tree
-> >   o Created a working directory, linux-2.6
-> >   o linked .git in the working directory to the .git directory fetched
-> >     from the net.
-> >   o # git checkout -f v2.6.11
+> Cogito I slurped about half hour ago has a quite different
+> git-clone-script from your 4-line version.  It is not surprising
+> "git clone -l" would not work with it ;-).
 > 
-> This won't work.
-> 
-> v2.6.11 isn't a commit, it's a tree, and things will go downhill from 
-> there. 
-> 
-> Can you base it on 2.6.12-rc2 or later? That's the earliest with some real 
-> git history.
+> I just checked.  Are you using Cogito 0.12 by any chance?
 
-I picked 2.6.12
+I pulled cogito from the repo.
 
-  # git checkout -f v2.6.12
+> Unfortunately it is ancient in this area.  Selected diffstat
+> between 0.12 and Pasky head I think relevant is this:
+> 
+>  git-clone-script                       |   97 ++++
 
-applied the patch and was greeted with an error about being unable to
-commit telling me that I LONG_HEX_NUMBER is not a valid commit object.
-Isn't 2.6.12 later than 2.6.12-rcX?
+OK.  Let's take another step backward.  There are lots of changes
+being made to all of these tools.  Where should I be getting my git
+programs so that I've got a good chance that they'll work.  Jeff's
+instructions, I believe, are already out-of-date.
