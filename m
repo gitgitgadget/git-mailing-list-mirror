@@ -1,88 +1,40 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
-Date: Mon, 11 Jul 2005 13:30:54 -0700
-Message-ID: <7vy88dqe4h.fsf@assigned-by-dhcp.cox.net>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
-	<20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
-	<7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
-	<42D2CBA2.8060705@yahoo.com> <7virzhrtfy.fsf@assigned-by-dhcp.cox.net>
+From: Marc Singer <elf@buici.com>
+Subject: git clone rsync:... ?
+Date: Mon, 11 Jul 2005 14:30:50 -0700
+Message-ID: <20050711213050.GA18693@buici.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, bryan.larsen@gmail.com,
-	pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 22:40:52 2005
+X-From: git-owner@vger.kernel.org Mon Jul 11 23:35:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds54Q-0008Kc-C6
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 22:40:08 +0200
+	id 1Ds5w1-00082K-Lf
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 23:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262646AbVGKUdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 16:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262586AbVGKUcV
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:32:21 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29111 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S262600AbVGKUa5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 16:30:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050711203052.RAKB550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 11 Jul 2005 16:30:52 -0400
-To: Bryan Larsen <bryanlarsen@yahoo.com>
-In-Reply-To: <7virzhrtfy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon, 11 Jul 2005 13:14:41 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262783AbVGKVes (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 17:34:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262782AbVGKVdc
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 17:33:32 -0400
+Received: from florence.buici.com ([206.124.142.26]:47766 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S262761AbVGKVav
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 17:30:51 -0400
+Received: (qmail 18754 invoked by uid 1000); 11 Jul 2005 21:30:50 -0000
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+  elf@florence /git > git clone rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux-2.6
+  defaulting to local storage area
+  ssh: rsync: Name or service not known
+  fatal: unexpected EOF
 
-> The only user of "cp -l" in the Linus GIT is git-clone-script
-> local optimization.  I could revert it to the version that I
-> originally sent to the list, which uses cpio -pld, if your cpio
-> groks that flag.
-
-Bryan, does this work for you?
-
-------------
-Two changes to git-clone-script local optimization.
-
- - When local optimization is used, the variable repo has
-   already been passed through get_repo_base so there is no need
-   to check for .git subdirectory in there.
-
- - Use cpio -l instead of "cp -l".
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/git-clone-script b/git-clone-script
---- a/git-clone-script
-+++ b/git-clone-script
-@@ -48,11 +48,8 @@ test -d "$D" || usage
- case "$local,$use_local" in
- yes,yes)
- 	( cd "$repo/objects" ) || {
--		repo="$repo/.git"
--		( cd "$repo/objects" ) || {
--		    echo >&2 "-l flag seen but $repo is not local."
--		    exit 1
--		}
-+		echo >&2 "-l flag seen but $repo is not local."
-+		exit 1
- 	}
- 
- 	# See if we can hardlink and drop "l" if not.
-@@ -68,7 +65,9 @@ yes,yes)
- 		l=l
- 	fi &&
- 	rm -f "$D/.git/objects/sample" &&
--	cp -r$l "$repo/objects" "$D/.git/" || exit 1
-+	cd "$repo" &&
-+	find objects -type f -print |
-+	cpio -puamd$l "$D/.git/" || exit 1
- 
- 	# Make a duplicate of refs and HEAD pointer
- 	HEAD=
+I've read several messages that this is changing, but it still isn't
+clear where we should be starting.  Moreover, I'd like to be able to
+keep one repo that is just pulling from the net and then clone it for
+different working directories.  Why?  Sometimes, in my ignorance, I
+break my working repo.  It's handy to have one that I know is OK
+without pulling from the net each time.
