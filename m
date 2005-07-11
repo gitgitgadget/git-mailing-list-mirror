@@ -1,71 +1,88 @@
-From: Chris Wright <chrisw@osdl.org>
-Subject: Re: Trial git RPM's..
-Date: Mon, 11 Jul 2005 13:34:06 -0700
-Message-ID: <20050711203406.GS5324@shell0.pdx.osdl.net>
-References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org> <m1eka574c8.fsf@ebiederm.dsl.xmission.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
+Date: Mon, 11 Jul 2005 13:30:54 -0700
+Message-ID: <7vy88dqe4h.fsf@assigned-by-dhcp.cox.net>
+References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
+	<20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
+	<7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
+	<42D2CBA2.8060705@yahoo.com> <7virzhrtfy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 11 22:40:42 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, bryan.larsen@gmail.com,
+	pasky@suse.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 22:40:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds54P-0008Kc-Vj
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 22:40:06 +0200
+	id 1Ds54Q-0008Kc-C6
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 22:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262692AbVGKUj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 16:39:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262594AbVGKUgv
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:36:51 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62879 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262586AbVGKUeP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 16:34:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6BKY7jA020137
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 11 Jul 2005 13:34:11 -0700
-Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6BKY64b030368;
-	Mon, 11 Jul 2005 13:34:06 -0700
-Received: (from chrisw@localhost)
-	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j6BKY6RC030367;
-	Mon, 11 Jul 2005 13:34:06 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-Content-Disposition: inline
-In-Reply-To: <m1eka574c8.fsf@ebiederm.dsl.xmission.com>
-User-Agent: Mutt/1.5.6i
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262646AbVGKUdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 16:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262586AbVGKUcV
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:32:21 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:29111 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262600AbVGKUa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 16:30:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050711203052.RAKB550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 11 Jul 2005 16:30:52 -0400
+To: Bryan Larsen <bryanlarsen@yahoo.com>
+In-Reply-To: <7virzhrtfy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Mon, 11 Jul 2005 13:14:41 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-* Eric W. Biederman (ebiederm@xmission.com) wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > Ok, I tagged a "v0.99" thing, and pushed it out. I've also made trial 
-> > RPM's of it: src, ppc64 and x86. They're build on whatever random machines 
-> > I had, and on the ppc64 I chose to do it on my FC4 machine that has newer 
-> > libraries than my YDL one. The x86 thing is FC3, I do believe.
-> >
-> > I haven't really verified the RPM's in any other way than a trial 
-> > installation on one machine, and "gitk" seemed to work. Whoop. The idea 
-> > being that this is a good way to check whether the rpm target works, _and_ 
-> > cogito can have something to build against.
-> 
-> A couple of pieces.  The dist target has assumes git-tar-tree is in the
-> path.  Making it so you have to have git installed to build the rpm.
+Junio C Hamano <junkio@cox.net> writes:
 
-Known, and was a reasonable assumption in my environment.  It's simple
-bootstrapping issue.
+> The only user of "cp -l" in the Linus GIT is git-clone-script
+> local optimization.  I could revert it to the version that I
+> originally sent to the list, which uses cpio -pld, if your cpio
+> groks that flag.
 
-> The man pages are not built. The build dependencies do not call out
-> the tools necessary to build the man pages.
+Bryan, does this work for you?
 
-That was rather intentional, because the asciidoc package is not common.
+------------
+Two changes to git-clone-script local optimization.
 
-thanks,
--chris
+ - When local optimization is used, the variable repo has
+   already been passed through get_repo_base so there is no need
+   to check for .git subdirectory in there.
+
+ - Use cpio -l instead of "cp -l".
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/git-clone-script b/git-clone-script
+--- a/git-clone-script
++++ b/git-clone-script
+@@ -48,11 +48,8 @@ test -d "$D" || usage
+ case "$local,$use_local" in
+ yes,yes)
+ 	( cd "$repo/objects" ) || {
+-		repo="$repo/.git"
+-		( cd "$repo/objects" ) || {
+-		    echo >&2 "-l flag seen but $repo is not local."
+-		    exit 1
+-		}
++		echo >&2 "-l flag seen but $repo is not local."
++		exit 1
+ 	}
+ 
+ 	# See if we can hardlink and drop "l" if not.
+@@ -68,7 +65,9 @@ yes,yes)
+ 		l=l
+ 	fi &&
+ 	rm -f "$D/.git/objects/sample" &&
+-	cp -r$l "$repo/objects" "$D/.git/" || exit 1
++	cd "$repo" &&
++	find objects -type f -print |
++	cpio -puamd$l "$D/.git/" || exit 1
+ 
+ 	# Make a duplicate of refs and HEAD pointer
+ 	HEAD=
