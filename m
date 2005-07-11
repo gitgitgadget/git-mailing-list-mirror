@@ -1,133 +1,117 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: [PATCH] git-cvsimport-script: add "import only" option
-Date: Mon, 11 Jul 2005 16:57:49 +0200
-Message-ID: <20050711145749.GF9370MdfPADPa@garage.linux.student.kuleuven.ac.be>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH] Dereference tag repeatedly until we get a non-tag.
+Date: Tue, 12 Jul 2005 01:14:53 +1000
+Message-ID: <2cfc40320507110814256bef25@mail.gmail.com>
+References: <7v7jg0wb77.fsf@assigned-by-dhcp.cox.net>
+	 <7v8y0dx24j.fsf@assigned-by-dhcp.cox.net>
+Reply-To: jon@blackcubes.dyndns.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 20:12:19 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 20:29:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds2kb-00075P-7Z
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 20:11:29 +0200
+	id 1Ds32B-0001g2-2y
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 20:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261996AbVGKSK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 14:10:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261973AbVGKPTL
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:19:11 -0400
-Received: from spoetnik.kulnet.kuleuven.ac.be ([134.58.240.46]:42639 "EHLO
-	spoetnik.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
-	id S261975AbVGKPR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 11:17:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 879D833E8B
-	for <git@vger.kernel.org>; Mon, 11 Jul 2005 17:17:25 +0200 (CEST)
-Received: from octavianus.kulnet.kuleuven.ac.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
-	by spoetnik.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 9450F33E8C
-	for <git@vger.kernel.org>; Mon, 11 Jul 2005 17:17:23 +0200 (CEST)
-Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
-	by octavianus.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 87121AED85
-	for <git@vger.kernel.org>; Mon, 11 Jul 2005 17:17:23 +0200 (CEST)
-Received: (qmail 20017 invoked by uid 500); 11 Jul 2005 14:57:49 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+	id S261961AbVGKPTC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 11:19:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261966AbVGKPQp
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:16:45 -0400
+Received: from rproxy.gmail.com ([64.233.170.192]:41294 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261961AbVGKPOz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 11:14:55 -0400
+Received: by rproxy.gmail.com with SMTP id c51so814972rne
+        for <git@vger.kernel.org>; Mon, 11 Jul 2005 08:14:55 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MZrgBidsbNiJqgYjCm/7eJtj7/tSF14ioe9kCF4GpcVgbMO46kXziJnU26odtAlBgIqdK/CaGjyFd+iCx6uysVMPeKeoeut1RuDnCuMUD9LZCH2/ucjyycK8MbiiiZ7fJXce2YS1LhVMqgCG6oI20hW6DwhGesGKt++zUVhrieI=
+Received: by 10.38.104.15 with SMTP id b15mr2177646rnc;
+        Mon, 11 Jul 2005 08:14:53 -0700 (PDT)
+Received: by 10.38.104.42 with HTTP; Mon, 11 Jul 2005 08:14:53 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8y0dx24j.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-git-cvsimport-script: add "import only" option.
+This seems reasonable to me. I have thought this would be useful on
+several occasions and haven't yet conceived of a counterexample where
+it would break something.
 
-Acked-by: Matthias Urlichs <smurf@smurf.noris.de>
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+On 7/11/05, Junio C Hamano <junkio@cox.net> wrote:
+> When we allow a tag object in place of a commit object, we only
+> dereferenced the given tag once, which causes a tag that points
+> at a tag that points at a commit to be rejected.  Instead,
+> dereference tag repeatedly until we get a non-tag.
+> 
+> This patch makes change to two functions:
+> 
+>  - commit.c::lookup_commit_reference() is used by merge-base,
+>    rev-tree and rev-parse to convert user supplied SHA1 to that of
+>    a commit.
+>  - rev-list uses its own get_commit_reference() to do the same.
+> 
+> Dereferencing tags this way helps both of these uses.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+> *** Whether having a tag pointing at another tag is a separate
+> *** issue, but I do not see a reason to forbid it.  Maybe it
+> *** is used to represent a chain of trust.
+> 
+>  commit.c   |    5 +++--
+>  rev-list.c |    4 ++--
+>  2 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> 0dc9377363ee73c5e3f3711d6f82e49886ce8c6a
+> diff --git a/commit.c b/commit.c
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -52,8 +52,9 @@ struct commit *lookup_commit_reference(c
+> 
+>         if (!obj)
+>                 return NULL;
+> -       if (obj->type == tag_type)
+> -               obj = ((struct tag *)obj)->tagged;
+> +       while (obj->type == tag_type)
+> +               obj = parse_object(((struct tag *)obj)->tagged->sha1);
+> +
+>         return check_commit(obj, sha1);
+>  }
+> 
+> diff --git a/rev-list.c b/rev-list.c
+> --- a/rev-list.c
+> +++ b/rev-list.c
+> @@ -367,12 +367,12 @@ static struct commit *get_commit_referen
+>         /*
+>          * Tag object? Look what it points to..
+>          */
+> -       if (object->type == tag_type) {
+> +       while (object->type == tag_type) {
+>                 struct tag *tag = (struct tag *) object;
+>                 object->flags |= flags;
+>                 if (tag_objects && !(object->flags & UNINTERESTING))
+>                         add_pending_object(object, tag->tag);
+> -               object = tag->tagged;
+> +               object = parse_object(tag->tagged->sha1);
+>         }
+> 
+>         /*
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
 
----
-commit 1be6fbebb010083a083d8e2ee69fced7b6ae1261
-tree a69017b2d10fd0a2655070d177f7cf59ab21882f
-parent a3eb250f996bf5e12376ec88622c4ccaabf20ea8
-author Sven Verdoolaege <skimo@kotnet.org> Mon, 11 Jul 2005 16:17:25 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Mon, 11 Jul 2005 16:17:25 +0200
 
- Documentation/git-cvsimport-script.txt |    7 ++++++-
- git-cvsimport-script                   |   18 +++++++++++-------
- 2 files changed, 17 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
---- a/Documentation/git-cvsimport-script.txt
-+++ b/Documentation/git-cvsimport-script.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- --------
- 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
- 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
--			[ -C <GIT_repository> ] [ <CVS_module> ]
-+			[ -C <GIT_repository> ] [ -i ] [ <CVS_module> ]
- 
- 
- DESCRIPTION
-@@ -29,6 +29,11 @@ OPTIONS
- 	currently, only the :local:, :ext: and :pserver: access methods 
- 	are supported.
- 
-+-i::
-+	Import-only: don't perform a checkout after importing.  This option
-+	ensures the working directory and cache remain untouched and will
-+	not create them if they do not exist.
-+
- -o <branch-for-HEAD>::
- 	The 'HEAD' branch from CVS is imported to the 'origin' branch within
- 	the git repository, as 'HEAD' already has a special meaning for git.
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
- $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
--our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C,$opt_z);
-+our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
- 
- sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from CVS
-        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
-        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
--       [ CVS_module ]
-+       [ -i ] [ CVS_module ]
- END
- 	exit(1);
- }
- 
--getopts("hvo:d:p:C:z:") or usage();
-+getopts("hivo:d:p:C:z:") or usage();
- usage if $opt_h;
- 
- @ARGV <= 1 or usage();
-@@ -723,8 +723,10 @@ if($orig_branch) {
- 	print "DONE\n" if $opt_v;
- 	system("cp","$git_dir/refs/heads/$opt_o","$git_dir/refs/heads/master")
- 		if $forward_master;
--	system('git-read-tree', '-m', '-u', 'CVS2GIT_HEAD', 'HEAD');
--	die "read-tree failed: $?\n" if $?;
-+	unless ($opt_i) {
-+		system('git-read-tree', '-m', '-u', 'CVS2GIT_HEAD', 'HEAD');
-+		die "read-tree failed: $?\n" if $?;
-+	}
- } else {
- 	$orig_branch = "master";
- 	print "DONE; creating $orig_branch branch\n" if $opt_v;
-@@ -732,7 +734,9 @@ if($orig_branch) {
- 		unless -f "$git_dir/refs/heads/master";
- 	unlink("$git_dir/HEAD");
- 	symlink("refs/heads/$orig_branch","$git_dir/HEAD");
--	system('git checkout');
--	die "checkout failed: $?\n" if $?;
-+	unless ($opt_i) {
-+		system('git checkout');
-+		die "checkout failed: $?\n" if $?;
-+	}
- }
- unlink("$git_dir/CVS2GIT_HEAD");
+-- 
+homepage: http://www.zeta.org.au/~jon/
+blog: http://orwelliantremors.blogspot.com/
