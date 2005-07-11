@@ -1,261 +1,85 @@
-From: Amin Azez <azez@ufomechanic.net>
-Subject: Re: Updated git HOWTO for kernel hackers
-Date: Mon, 11 Jul 2005 09:56:58 +0100
-Message-ID: <42D2345A.8040307@ufomechanic.net>
-References: <42B9E536.60704@pobox.com> <42CE9961.3090708@ufomechanic.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jul 11 10:59:17 2005
+From: Bryan Larsen <bryanlarsen@yahoo.com>
+Subject: [PATCH 1/6] git-gnu-progs: parameterize git
+Date: Mon, 11 Jul 2005 06:14:38 -0400
+Message-ID: <20050711101428.10318.90621.sendpatchset@bryan-larsens-ibook-g4.local>
+References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
+Cc: junkio@cox.net, torvalds@osdl.org,
+	Bryan Larsen <bryanlarsen@yahoo.com>, pasky@suse.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 12:15:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dru81-00080T-1g
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 10:59:05 +0200
+	id 1DrvJO-0008Ue-LH
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 12:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261423AbVGKI6n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 04:58:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261474AbVGKI6m
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 04:58:42 -0400
-Received: from main.gmane.org ([80.91.229.2]:17128 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261423AbVGKI5t (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 04:57:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Dru6O-0007qW-Hg
-	for git@vger.kernel.org; Mon, 11 Jul 2005 10:57:24 +0200
-Received: from 82.219.220.170 ([82.219.220.170])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Jul 2005 10:57:24 +0200
-Received: from azez by 82.219.220.170 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 11 Jul 2005 10:57:24 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 82.219.220.170
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
-In-Reply-To: <42CE9961.3090708@ufomechanic.net>
+	id S261584AbVGKKOp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 06:14:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261592AbVGKKOp
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 06:14:45 -0400
+Received: from smtp111.mail.sc5.yahoo.com ([66.163.170.9]:18565 "HELO
+	smtp111.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S261584AbVGKKOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 06:14:38 -0400
+Received: (qmail 19961 invoked from network); 11 Jul 2005 10:14:37 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Received:From:To:Cc:Message-Id:In-Reply-To:References:Subject;
+  b=RvcW1GKLR6UhCTcxvm4ElvDOrtM75MsUyq8fz8kMyorThpuvey7UqAlqu8BgUi4AETRgmALNNYnoFOwb0YZXVXPahDZ7cK2dLRpikl+gjHoD1wU7QVxPjHzo3tphQr8+BeB9zwXXv6rl8cRqDj2oP8jv2opuhhz6iCT7dqdMh88=  ;
+Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@70.26.43.137 with plain)
+  by smtp111.mail.sc5.yahoo.com with SMTP; 11 Jul 2005 10:14:37 -0000
+To: bryan.larsen@gmail.com
+In-Reply-To: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dave Jones daily snapshot of git solved the problem, available from:
-http://www.codemonkey.org.uk/projects/git-snapshots/git/
+Patch git so that the utilities 'cp' 'stat' 'xargs' and 'date' are configurable.  Git requires the gnu versions of these tools, and on some BSD derived systems, the gnu versions of these tools have a different name.
 
-I realise that Jeff's howto suggested updating git using git, but it
-suggested doing this after following the intermediate steps. I also find
-it ironic that the version of git Jeff provides doesn't work with his
-instructions; however, still many thanks to Jeff for his HOWTO and to
-Dave for git.
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+---
 
-Azez
+ git-clone-script |    4 +++-
+ git-prune-script |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-Amin Azez wrote:
-> Thanks for the HOWTO, Jeff, but it gives me problems in step 4.
-> I checked out your latest git source today and "make install"ed it as
-> part of your instructions and at step 4 I get:
-> 
-> $ git checkout -f
-> error: cannot map sha1 file f8640c306db2d583b9a30f2e52f8fb0a4cf624e0
-> fatal: failed to unpack tree object
-> a92b7b80579fe68fe229892815c750f6652eb6a9
-> 
-> $ cat .git/HEAD
-> a92b7b80579fe68fe229892815c750f6652eb6a9
-> 
-> Naturally I have no idea what f8640c306db2d583b9a30f2e52f8fb0a4cf624e0
-> refers to.
-> 
-> Step 3:
-> $ git-pull-script \
-> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> 
-> said I was already up to date.
-> 
-> Variations on step 4:
-> 
-> $ git-read-tree -m HEAD
-> or
-> $ git-read-tree a92b7b80579fe68fe229892815c750f6652eb6a9
-> also fail in the same way.
-> 
-> My linux-2.6 directory only has one entry, .git, containing about 75M of
-> files.
-> 
-> Sam
-> 
-> Jeff Garzik wrote:
-> 
->>
->> Things in git-land are moving at lightning speed, and usability has
->> improved a lot since my post a month ago: 
->> http://lkml.org/lkml/2005/5/26/11
->>
->>
->>
->> 1) installing git
->>
->> git requires bootstrapping, since you must have git installed in order
->> to check out git.git (git repo), and linux-2.6.git (kernel repo).  I
->> have put together a bootstrap tarball of today's git repository.
->>
->> Download tarball from:
->> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
->>
->>
->> tarball build-deps:  zlib, libcurl, libcrypto (openssl)
->>
->> install tarball:  unpack && make && sudo make prefix=/usr/local install
->>
->> jgarzik helper scripts, not in official git distribution:
->> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-new-branch
->> http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-changes-script
->>
->> After reading the rest of this document, come back and update your
->> copy of git to the latest:
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git.git
->>
->>
->> 2) download a linux kernel tree for the very first time
->>
->> $ mkdir -p linux-2.6/.git
->> $ cd linux-2.6
->> $ rsync -a --delete --verbose --stats --progress \
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> \          <- word-wrapped backslash; sigh
->>     .git/
->>
->>
->> 3) update local kernel tree to latest 2.6.x upstream ("fast-forward
->> merge")
->>
->> $ cd linux-2.6
->> $ git-pull-script \
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
->>
->>
->> 4) check out files from the git repository into the working directory
->>
->> $ git checkout -f
->>
->>
->> 5) check in your own modifications (e.g. do some hacking, or apply a
->> patch)
->>
->> # go to repo
->> $ cd linux-2.6
->>
->> # make some modifications
->> $ patch -sp1 < /tmp/my.patch
->> $ diffstat -p1 < /tmp/my.patch
->>
->> # NOTE: add '--add' and/or '--remove' if files were added or removed
->> $ git-update-cache <list of all files changed>
->>
->> # check in changes
->> $ git commit
->>
->>
->> 6) List all changes in working dir, in diff format.
->>
->> $ git-diff-cache -p HEAD
->>
->>
->> 7) List all changesets (i.e. show each cset's description text) in
->> local branch of local tree, that are not present in remote tree.
->>
->> $ cd my-kernel-tree-2.6
->> $ git-changes-script -L ../linux-2.6 | less
->>
->>
->> 8) List all changesets:
->>
->> $ git-whatchanged
->>
->>
->> 9) apply all patches in a Berkeley mbox-format file
->>
->> First, download and add to your PATH Linus's git tools:
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/git-tools.git
->>
->> $ cd my-kernel-tree-2.6
->> $ dotest /path/to/mbox  # yes, Linus has no taste in naming scripts
->>
->>
->> 10) don't forget to download tags from time to time.
->>
->> git-pull-script only downloads sha1-indexed object data, and the
->> requested remote head.  This misses updates to the .git/refs/tags/ and
->> .git/refs/heads directories.  It is advisable to update your kernel
->> .git directories periodically with a full rsync command, to make sure
->> you got everything:
->>
->> $ cd linux-2.6
->> $ rsync -a --delete --verbose --stats --progress \
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
->> \          <- word-wrapped backslash; sigh
->>     .git/
->>
->>
->> 11) list all branches, such as those found in my netdev-2.6 or
->> libata-dev trees.
->>
->> Download
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/netdev-2.6.git
->>     or
->> rsync://rsync.kernel.org/pub/scm/linux/kernel/git/jgarzik/libata-dev.git
->>
->>
->> $ cd netdev-2.6
->> $ ls .git/refs/heads/
->>
->> { these are the current netdev-2.6 branches }
->>
->>> 8139cp       forcedeth    master     qeth           smc91x         we18
->>> 8139too-iomap  for-linus    natsemi      r8169      smc91x-eeprom  wifi
->>> airo           hdlc         ns83820      register-netdev  starfire
->>> atmel          ieee80211    orinoco      remove-drivers   tlan
->>> chelsio        iff-running  orinoco-hch  sis900           veth
->>> dm9000         janitor      ppp          skge             viro
->>
->>
->>
->>
->> 12) make desired branch current in working directory
->>
->> $ git checkout -f $branch
->>
->>
->> 13) create a new branch, and make it current
->>
->> $ cp .git/refs/heads/master .git/refs/heads/my-new-branch-name
->> $ git checkout -f my-new-branch-name
->>
->>
->> 14) examine which branch is current
->>
->> $ ls -l .git/HEAD
->>
->>
->> 15) undo all local modifications (same as checkout):
->>
->> $ git checkout -f
->>
->>
->> 16) obtain a diff between current branch, and master branch
->>
->> In most trees WITH BRANCHES, .git/refs/heads/master contains the
->> current 'vanilla' upstream tree, for easy diffing and merging.  (in
->> trees without branches, 'master' simply contains your latest changes)
->>
->> $ git-diff-tree -p master HEAD
->>
->>
->> -
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
-> 
+diff --git a/git-clone-script b/git-clone-script
+--- a/git-clone-script
++++ b/git-clone-script
+@@ -5,6 +5,8 @@
+ # 
+ # Clone a repository into a different directory that does not yet exist.
+ 
++CP=cp
++
+ usage() {
+ 	echo >&2 "* git clone [-l] <repo> <dir>"
+ 	exit 1
+@@ -68,7 +70,7 @@ yes,yes)
+ 		l=l
+ 	fi &&
+ 	rm -f "$D/.git/objects/sample" &&
+-	cp -r$l "$repo/objects" "$D/.git/" || exit 1
++	${CP} -r$l "$repo/objects" "$D/.git/" || exit 1
+ 
+ 	# Make a duplicate of refs and HEAD pointer
+ 	HEAD=
+diff --git a/git-prune-script b/git-prune-script
+--- a/git-prune-script
++++ b/git-prune-script
+@@ -1,5 +1,7 @@
+ #!/bin/sh
+ 
++XARGS=xargs
++
+ . git-sh-setup-script || die "Not a git archive"
+ 
+ dryrun=
+@@ -20,6 +22,6 @@ sed -ne '/unreachable /{
+     s|\(..\)|\1/|p
+ }' | {
+ 	cd "$GIT_OBJECT_DIRECTORY" || exit
+-	xargs -r $dryrun rm -f
++	${XARGS} -r $dryrun rm -f
+ }
+ 
