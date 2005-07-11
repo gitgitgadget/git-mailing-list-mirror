@@ -1,91 +1,63 @@
-From: Bryan Larsen <bryanlarsen@yahoo.com>
-Subject: [PATCH 5/6] cogito-gnu-progs-Makefile: cogito Makefile update
-Date: Mon, 11 Jul 2005 06:15:25 -0400
-Message-ID: <20050711101517.10318.5359.sendpatchset@bryan-larsens-ibook-g4.local>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
-Cc: junkio@cox.net, torvalds@osdl.org,
-	Bryan Larsen <bryanlarsen@yahoo.com>, pasky@suse.cz,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 12:16:26 2005
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Trial git RPM's..
+Date: Mon, 11 Jul 2005 09:24:55 -0600
+Message-ID: <m1eka574c8.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 11 17:34:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrvK8-0000Al-Od
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 12:15:41 +0200
+	id 1Ds0Hc-0002a0-VY
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 17:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261590AbVGKKPa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 06:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261593AbVGKKPa
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 06:15:30 -0400
-Received: from smtp107.mail.sc5.yahoo.com ([66.163.169.227]:6824 "HELO
-	smtp107.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S261590AbVGKKPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 06:15:25 -0400
-Received: (qmail 60237 invoked from network); 11 Jul 2005 10:15:24 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:From:To:Cc:Message-Id:In-Reply-To:References:Subject;
-  b=mg1PPbGml9y/3ErnvLyuanpkrXVDl3+51TSzl6sbrL4RvOV+Tv0mOkHimVb3+OAbetkgJ+ZjFZ0DqCfrDfVQiLmWICNnX0e+DxfMH4lijwnpYfZ6IzbYHybEaHH+QYl09pW9kPfj3hq2CYen+nnY6CebSKth1NQaG12osEjIZuU=  ;
-Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@70.26.43.137 with plain)
-  by smtp107.mail.sc5.yahoo.com with SMTP; 11 Jul 2005 10:15:22 -0000
-To: bryan.larsen@gmail.com
-In-Reply-To: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
+	id S261994AbVGKP2Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 11:28:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261978AbVGKPZx
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:25:53 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:52619 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S261984AbVGKPZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 11:25:05 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6BFOt84015286;
+	Mon, 11 Jul 2005 09:24:55 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6BFOtm8015285;
+	Mon, 11 Jul 2005 09:24:55 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org> (Linus
+ Torvalds's message of "Sun, 10 Jul 2005 18:18:25 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Update the cogito Makefile to put the results of config.sh into the scripts.  config.sh searches for gnu utilities cp, stat, date and xargs.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
----
+> Ok, I tagged a "v0.99" thing, and pushed it out. I've also made trial 
+> RPM's of it: src, ppc64 and x86. They're build on whatever random machines 
+> I had, and on the ppc64 I chose to do it on my FC4 machine that has newer 
+> libraries than my YDL one. The x86 thing is FC3, I do believe.
+>
+> I haven't really verified the RPM's in any other way than a trial 
+> installation on one machine, and "gitk" seemed to work. Whoop. The idea 
+> being that this is a good way to check whether the rpm target works, _and_ 
+> cogito can have something to build against.
 
- Makefile |   18 ++++++++++++++----
- 1 files changed, 14 insertions(+), 4 deletions(-)
+A couple of pieces.  The dist target has assumes git-tar-tree is in the
+path.  Making it so you have to have git installed to build the rpm.
 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -195,11 +195,20 @@ sedlibdir=$(shell echo $(libdir) | sed '
- .PHONY: install install-git install-cogito
- install: install-git install-cogito
- 
--install-git: $(PROG) $(SCRIPTS)
-+config: config.sh
-+	./config.sh
-+
-+install-git: $(PROG) $(SCRIPTS) config
- 	$(INSTALL) -m755 -d $(DESTDIR)$(bindir)
- 	$(INSTALL) $(PROG) $(SCRIPTS) $(DESTDIR)$(bindir)
-+	. ./config ; \
-+	cd $(DESTDIR)$(bindir) ;\
-+	for file in $(SCRIPTS); do \
-+		sed -e "s/DATE\=date/DATE=$${DATE}/" -e "s/CP\=cp/CP=$${CP}/" -e "s/XARGS\=xargs/XARGS=$${XARGS}/" -e "s/STAT\=stat/STAT=$${STAT}/" $$file > $$file.new; \
-+		cat $$file.new > $$file; rm $$file.new; \
-+	done
- 
--install-cogito: $(SCRIPT) $(LIB_SCRIPT) $(GEN_SCRIPT)
-+install-cogito: $(SCRIPT) $(LIB_SCRIPT) $(GEN_SCRIPT) config
- 	$(INSTALL) -m755 -d $(DESTDIR)$(bindir)
- 	$(INSTALL) $(SCRIPT) $(GEN_SCRIPT) $(DESTDIR)$(bindir)
- 	rm -f $(DESTDIR)$(bindir)/cg-cancel
-@@ -211,9 +220,10 @@ install-cogito: $(SCRIPT) $(LIB_SCRIPT) 
- 		sed -e 's/\$${COGITO_LIB}/\$${COGITO_LIB:-$(sedlibdir)\/}/g' $$file > $$file.new; \
- 		cat $$file.new > $$file; rm $$file.new; \
- 	done
-+	. ./config ; \
- 	cd $(DESTDIR)$(libdir); \
- 	for file in $(LIB_SCRIPT); do \
--		sed -e 's/\$${COGITO_LIB}/\$${COGITO_LIB:-$(sedlibdir)\/}/g' $$file > $$file.new; \
-+		sed -e 's/\$${COGITO_LIB}/\$${COGITO_LIB:-$(sedlibdir)\/}/g' -e "s/DATE\=date/DATE=$${DATE}/" -e "s/CP\=cp/CP=$${CP}/" -e "s/XARGS\=xargs/XARGS=$${XARGS}/" -e "s/STAT\=stat/STAT=$${STAT}/" $$file > $$file.new; \
- 		cat $$file.new > $$file; rm $$file.new; \
- 	done
- 
-@@ -232,7 +242,7 @@ dist: cogito.spec
- 	gzip -9 $(tarname).tar
- 
- clean:
--	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE)
-+	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(GEN_SCRIPT) $(LIB_FILE) config
- 	$(MAKE) -C Documentation/ clean
- 
- backup: clean
+The man pages are not built. The build dependencies do not call out
+the tools necessary to build the man pages.
+
+And it does not pass my torture test of building rpm's on debian,
+but that is not a huge problem.
+
+Are you still up for a patch that records who and when made a tag?
+I sent one but it seems to have been lost.
+
+Eric
