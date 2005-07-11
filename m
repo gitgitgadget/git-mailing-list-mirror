@@ -1,84 +1,114 @@
-From: Bryan Larsen <bryanlarsen@yahoo.com>
-Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
-Date: Mon, 11 Jul 2005 15:42:26 -0400
-Message-ID: <42D2CBA2.8060705@yahoo.com>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local> <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local> <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [ANNOUNCE] Cogito-0.12
+Date: Mon, 11 Jul 2005 13:30:42 -0700
+Message-ID: <20050711203042.GR5324@shell0.pdx.osdl.net>
+References: <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz> <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <12c511ca05070716526954edd@mail.gmail.com> <Pine.LNX.4.58.0507071658460.25104@g5.osdl.org> <12c511ca050707170964a2cc92@mail.gmail.com> <Pine.LNX.4.58.0507071720330.25104@g5.osdl.org> <20050709225818.A31045@flint.arm.linux.org.uk> <20050710090914.B11765@flint.arm.linux.org.uk> <20050710145954.GB24249@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, bryan.larsen@gmail.com,
-	pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 21:46:33 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Russell King <rmk@arm.linux.org.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 22:33:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds4Dg-0007x6-FJ
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 21:45:36 +0200
+	id 1Ds4y7-0007Cu-UR
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 22:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262490AbVGKTnE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 15:43:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262450AbVGKTm7
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 15:42:59 -0400
-Received: from smtp110.mail.sc5.yahoo.com ([66.163.170.8]:40835 "HELO
-	smtp110.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S262255AbVGKTm2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 15:42:28 -0400
-Received: (qmail 64865 invoked from network); 11 Jul 2005 19:42:28 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=b/3NytAuKPe7DxbYlM15XzJ0vYcfBPRHsRzjUe7FOx2Y9dT5mHzAJJLUTPq7d161w4KNisXURNTHPVryCJ8V/wKLYs7CLETrZ6+WX1wfHDcHhuwDPkSrXgOHrQd42aZIw2twnlygh7bPGl3JauQnm7s64EaXWIblA2IsN5owjBA=  ;
-Received: from unknown (HELO ?192.168.2.80?) (bryanlarsen@69.159.204.165 with plain)
-  by smtp110.mail.sc5.yahoo.com with SMTP; 11 Jul 2005 19:42:27 -0000
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
+	id S262604AbVGKUcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 16:32:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262623AbVGKUcO
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:32:14 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29087 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262604AbVGKUbX (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 16:31:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6BKUhjA019904
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 11 Jul 2005 13:30:45 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6BKUgWY030227;
+	Mon, 11 Jul 2005 13:30:42 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j6BKUgS7030226;
+	Mon, 11 Jul 2005 13:30:42 -0700
+To: Petr Baudis <pasky@suse.cz>
+Content-Disposition: inline
+In-Reply-To: <20050710145954.GB24249@pasky.ji.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds wrote:
-> 
-> On Mon, 11 Jul 2005, Junio C Hamano wrote:
-> 
->>I am not yet convinced "one variable per GNU program" is the
->>right way to do (I do agree it is a problem and I appreciate
->>your trying to solving it; an obvious alternative cop-out would
->>be to fix this in the user's environment, but there might be a
->>saner solution)
-> 
-> 
-> Yes. As you say, if we do this (and I think it's so ugly that I'm not
-> convinced we want to), it should be done in git-sh-setup-script _once_
-> instead of editing every single script.
+* Petr Baudis (pasky@suse.cz) wrote:
+> Ok, cg-pull didn't quite handle this. I've fixed it so that it should
+> reasonably handle it now. Hopefully.
 
-Agreed: I was much happier with my cogito implementation where I just 
-put it in cg-Xlib.  Is git-sh-setup-script appropriate?  At first glance 
-it had a specific purpose and was not included in a large number of files.
+Is this plus the zero-sized fix worth making cogito-0.12-2 rpm release?
 
-> 
-> Most everything includes git-sh-setup-script anyway by now.
-> 
-> However, what are the features that break the default apple tools anyway? 
-> Maybe we should avoid using them? OSX clearly comes with "cp" and "xargs" 
-> regardless, what are the flags that don't work with their cruddy versions?
+IOW, these two patches...
 
-xargs -r, cp -l, cp -u, cp -a.  Git uses the first 2, cogito uses all 4.
+diff-tree 291ec0f2d2ce65e5ccb876b46d6468af49ddb82e (from 72347a233e6f3c176059a28f0817de6654ef29c7)
+tree a1d3a4e01516f1d924c407a9e42a6df0d13b43b6
+parent 72347a233e6f3c176059a28f0817de6654ef29c7
+author Linus Torvalds <torvalds@g5.osdl.org> 1120608369 -0700
+committer Linus Torvalds <torvalds@g5.osdl.org> 1120608369 -0700
 
-Last night, I couldn't think of alternatives to these, but I obviously 
-didn't try very hard.  xargs -r can probably happen via a temporary file 
-and cp -u can probably be simulated using rsync.
+    Don't special-case a zero-sized compression.
+    
+    zlib actually writes a header for that case, and while ignoring that
+    header will get us the right data, it will also end up messing up our
+    stream position.  So we actually want zlib to "uncompress" even an empty
+    object.
 
-> 
-> [ Rant mode on: ..and who the hell is the idiot at Apple who includes the
->   old crappy BSD stuff? They already use gcc, so it's totally pointless to
->   have a NIH thing, when the GNU utilities are just _better_. Maybe 
->   somebody can ask Apple to get with the program and not live in the dark 
->   ages any more. ]
-> 
+diff --git a/unpack-objects.c b/unpack-objects.c
+--- a/unpack-objects.c
++++ b/unpack-objects.c
+@@ -55,8 +55,6 @@ static void *get_data(unsigned long size
+ 	z_stream stream;
+ 	void *buf = xmalloc(size);
+ 
+-	if (!size)
+-		return buf;
+ 	memset(&stream, 0, sizeof(stream));
+ 
+ 	stream.next_out = buf;
+diff-tree 7b754d7f0800117cd97afa5e806e50c7fd16d8c1 (from a2503fd85e6bb7f25d134a5634a1d8efc93fee5f)
+Author: Petr Baudis <pasky@suse.cz>
+Date:   Sun Jul 10 16:59:28 2005 +0200
 
-It wasn't long ago that the BSD's and Solaris had the same problems.  If 
-only Apple is in the dark ages, shame on them.
+    Fix cg-pull to handle packed tags properly
+    
+    If the objects referenced by refs/tags/ are packed, it wouldn't detect
+    them properly and instead try to refetch them, but they are likely to
+    be packed on the other side as well and that makes them impossible to
+    be fetched explicitly (which isn't a problem as long as they are the
+    same branch).
+    
+    Also, the fetch failure message was confusing.
+    
+    Reported by Russel King.
 
-Bryan
+diff --git a/cg-pull b/cg-pull
+--- a/cg-pull
++++ b/cg-pull
+@@ -294,13 +294,14 @@ $fetch -i -s -u -d "$uri/refs/tags" "$_g
+ 	for tag in *; do
+ 		[ "$tag" = "*" ] && break
+ 		tagid=$(cat $tag)
+-		tagfile=objects/${tagid:0:2}/${tagid:2}
+-		[ -s "../../$tagfile" ] && continue
++		GIT_DIR=../../../$_git git-cat-file -t "$tagid" >/dev/null 2>&1 && continue
+ 		echo -n "Missing object of tag $tag... "
++		# In case it's not in a packfile...
++		tagfile=objects/${tagid:0:2}/${tagid:2}
+ 		if $fetch -i -s "$uri/$tagfile" "../../$tagfile" 2>/dev/null >&2; then
+ 			echo "retrieved"
+ 		else
+-			echo "different source (obsolete tag?)"
++			echo "unable to retrieve"
+ 		fi
+ 	done
+ )
