@@ -1,75 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Design for http-pull on repo with packs
-Date: Sun, 10 Jul 2005 20:18:56 -0700
-Message-ID: <7v4qb2ni73.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.21.0507101226011.30848-100000@iabervon.org>
-	<42D17D89.9080808@innehallsbolaget.se>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/2] Support for packs in HTTP
+Date: Sun, 10 Jul 2005 23:22:44 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0507102253270.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0507101731330.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@osdl.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 05:19:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 05:25:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DropF-0005mS-6y
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 05:19:21 +0200
+	id 1Drouh-0006BT-UD
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 05:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262198AbVGKDTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 23:19:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262120AbVGKDTH
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 23:19:07 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:19887 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262198AbVGKDTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Jul 2005 23:19:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050711031856.ECOT1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 10 Jul 2005 23:18:56 -0400
-To: Dan Holmsand <dan@innehallsbolaget.se>,
-	Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <42D17D89.9080808@innehallsbolaget.se> (Dan Holmsand's message of "Sun, 10 Jul 2005 21:56:57 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262204AbVGKDYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 23:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262210AbVGKDYw
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 23:24:52 -0400
+Received: from iabervon.org ([66.92.72.58]:23557 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262204AbVGKDYv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 23:24:51 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DrosW-00035X-00; Sun, 10 Jul 2005 23:22:44 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507101731330.17536@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-One very minor problem I have with Holmsand approach [*1*] is
-that the original Barkalow puller allowed a really dumb http
-server by not requiring directory index at all.  For somebody
-like me with a cheap ISP account [*2*], it was great that I did
-not have to update 256 index.html files for objects/??/
-directories.  Admittedly, it would be just one directory
-object/pack/, but still...
+On Sun, 10 Jul 2005, Linus Torvalds wrote:
 
-On the other hand, picking an optimum set of packs from
-overlapping set of packs is indeed a very interesting (and hard
-combinatorial) problem to solve.  I am hoping that in practice
-people would not force clients to do it with "interesting" set
-of packs.  I would hope them to have just a full pack and
-incrementals, never having ovelaps, like Linus plans to do on
-his kernel repo.
+> 
+> 
+> On Sun, 10 Jul 2005, Daniel Barkalow wrote:
+> 
+> > On Sun, 10 Jul 2005, Linus Torvalds wrote:
+> > > 
+> > > Well, regardless, we want to be able to specify which directory to write 
+> > > them to. We don't necessarily want to write them to the current working 
+> > > directory, nor do we want to write them to their eventual destination in 
+> > > .git/objects/pack.
+> > > 
+> > > In fact, the main current user ("git repack") really wants to write them 
+> > > to a temporary file, and one that isn't even called "pack-xxx", since it 
+> > > ends up doing cleanup with 
+> > > 
+> > > 	rm -f .tmp-pack-*
+> > > 
+> > > in case a previous re-pack was interrupted (in which case it simply cannor
+> > > know what the exact name was supposed to be).
+> > > 
+> > > So the "basename" ends up being necessary and meaningful regardless. We do 
+> > > _not_ want to remove that capability.
+> > 
+> > Shouldn't we do the same thing we do with object files? I don't see any
+> > difference in desired behavior.
+> 
+> Well, the main difference is that pack-files can be used for many things.
+> 
+> For example, a web interface for getting a pack-file between two releases: 
+> say you knew you had version xyzzy, and you want to get version xyzzy+1, 
+> you could do that through webgit some way even with a "stupid" interface. 
+> Kay already had some patch to generate pack-files for something.
+> 
+> The point being that pack-files are _not_ like objects. Pack-files are 
+> meant for communication. Having them in .git/objects/pack is just one 
+> special case.
 
-On the other hand, for somebody like Jeff Garzik with 50 heads,
-it might make some sense to have a handful different overlapping
-packs, optimized for different sets of people wanting to pull
-some but not all of his heads.
+Okay, I can see the use for them getting written to arbitrary paths; but I
+think that it's worth having a canonical location for a pack that's being
+used by the system (either not having been sent anywhere, or after having
+been received). Perhaps git-pack-objects should have the base as a
+optional argument, with a default of the filename in $GIT_DIR/objects/pack
+and an option for sending just the pack file to stdout? I think that
+covers everything in order of usefulness, and means that the program deals
+with any filename that the user doesn't know in advance.
 
-Having said that, even if we want to support such a repository,
-we should remember that the server side optimization needs to be
-done only once per push to support many pulls by different
-downstream clients.  Maybe preparing more than "list of pack
-file names" to help clients decide which packs to pull is
-desirable anyway.  Say, "here are the list of packs.  If you want
-to sync with this and that head, I would suggest starting by
-getting this pack."
+> > Why not checksum it in a predictable order, either that of the pack file
+> > or the index? We do care that it's something verifiable, so that people
+> > can't cause intentional collisions (for a DoS) just by naming their packs
+> > after existing packs that users might not have downloaded yet.
+> 
+> We could sha1-sum the "sorted by SHA1" list, I guess.
 
+That'd be good; then git-http-pull can validate the hash on the index and
+be sure that a matching pack file from a different location still has the
+same contents.
 
-[Footnotes]
-
-*1* I was about to type Dan's, but both of you are ;-).
-
-*2* Not having a public, rsync-reachable repository gave me a
-lot of incentive to think about issues to support small/cheap
-projects well ;-).
+	-Daniel
+*This .sig left intentionally blank*
