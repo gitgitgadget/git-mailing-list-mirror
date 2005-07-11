@@ -1,92 +1,104 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: Re: [PATCH] rev-list: add "--full-objects" flag.
-Date: Mon, 11 Jul 2005 09:19:03 -0600
-Message-ID: <m1irzh74m0.fsf@ebiederm.dsl.xmission.com>
-References: <20050703234629.GF13848@pasky.ji.cz>
-	<42CBC822.30701@didntduck.org> <20050707144501.GG19781@pasky.ji.cz>
-	<7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071158220.3293@g5.osdl.org>
-	<20050707221443.GB7151@pasky.ji.cz>
-	<Pine.LNX.4.58.0507071549330.25104@g5.osdl.org>
-	<7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net>
-	<7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071657140.25104@g5.osdl.org>
-	<7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071841010.25104@g5.osdl.org>
-	<7vy88ica8e.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507071928220.25104@g5.osdl.org>
-	<m1pstrr8k1.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507101517370.17536@g5.osdl.org>
+From: Dan Holmsand <holmsand@gmail.com>
+Subject: Re: [RFC] Design for http-pull on repo with packs
+Date: Mon, 11 Jul 2005 17:53:50 +0200
+Message-ID: <42D2960E.3050008@gmail.com>
+References: <Pine.LNX.4.21.0507101226011.30848-100000@iabervon.org>	<42D17D89.9080808@innehallsbolaget.se> <7v4qb2ni73.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 17:39:32 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>, torvalds@osdl.org,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 18:21:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds0N4-0003aF-FM
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 17:39:03 +0200
+	id 1Ds11t-0002xA-54
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 18:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262032AbVGKPXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 11:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261982AbVGKPV0
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:21:26 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:48011 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261975AbVGKPTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 11:19:35 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6BFJ9fW015163;
-	Mon, 11 Jul 2005 09:19:09 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6BFJ3gT015162;
-	Mon, 11 Jul 2005 09:19:03 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507101517370.17536@g5.osdl.org> (Linus
- Torvalds's message of "Sun, 10 Jul 2005 15:36:01 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262064AbVGKP7N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 11:59:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262132AbVGKP5L
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:57:11 -0400
+Received: from wproxy.gmail.com ([64.233.184.195]:22030 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262064AbVGKPyU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 11:54:20 -0400
+Received: by wproxy.gmail.com with SMTP id i3so189075wra
+        for <git@vger.kernel.org>; Mon, 11 Jul 2005 08:54:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=Sld5U4QibkdgbK26XH717VepcF6UX6c3qbvvJt2u/d6L70+bMHSvmKUaOTx3Tz4ee4+1pLBtpo7+FtIAbIfAserhyayUD5QNUJJK/UfhmbYBqTnuRh1JHAhKcfSzYIjkIf6uaUc0FGYyB+oNU8lWpLR8DqDAg553Ybob+r/NVO0=
+Received: by 10.54.27.57 with SMTP id a57mr3920681wra;
+        Mon, 11 Jul 2005 08:53:54 -0700 (PDT)
+Received: from ?192.168.0.35? ([217.211.115.65])
+        by mx.gmail.com with ESMTP id 12sm8237908wrl.2005.07.11.08.53.52;
+        Mon, 11 Jul 2005 08:53:53 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v4qb2ni73.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano wrote:
+> One very minor problem I have with Holmsand approach [*1*] is
+> that the original Barkalow puller allowed a really dumb http
+> server by not requiring directory index at all.  For somebody
+> like me with a cheap ISP account [*2*], it was great that I did
+> not have to update 256 index.html files for objects/??/
+> directories.  Admittedly, it would be just one directory
+> object/pack/, but still...
 
-> On Sat, 9 Jul 2005, Eric W. Biederman wrote:
->> 
->> The current intelligent fetch currently has a problem that it cannot
->> be used to bootstrap a repository.  If you don't have an ancestor
->> of what you are fetching you can't fetch it.
->
-> Sure you can.
->
-> See the current "git clone". It's actually quite good, it's a pleasure to 
-> use now that it gives updates on how much it has done.
->
-> Just do
->
-> 	git clone src dest
+I totally agree that you shouldn't have to do any special kind of 
+prepping to serve a repository thru http. Which was why I thought it was 
+a good thing to use the default directory listing of the web-server, 
+assuming that this feature would be available on most servers... 
+Apparently not yours, though :-(
 
-Sorry, somehow I just missed that, and then I noticed just a little
-before you sent out your email.
+And Cogito already relies on directory listings (to find tags to download).
 
-I'm having the worst time putting together a mental model of how git
-works, and the documentation is spotty enough that it hasn't been
-helpful.  So I am wading through the code.  It seems every time I turn
-a corner there is another rough spot.
+But if git-repack-script generates a "pack index file" automagically, 
+then of course everything is fine.
 
-I guess I was expecting to pull from one tree into another unrelated
-tree.  Getting a tree with two heads and then be able to merge them
-together.
+> On the other hand, picking an optimum set of packs from
+> overlapping set of packs is indeed a very interesting (and hard
+> combinatorial) problem to solve.  I am hoping that in practice
+> people would not force clients to do it with "interesting" set
+> of packs.  I would hope them to have just a full pack and
+> incrementals, never having ovelaps, like Linus plans to do on
+> his kernel repo.
+> 
+> On the other hand, for somebody like Jeff Garzik with 50 heads,
+> it might make some sense to have a handful different overlapping
+> packs, optimized for different sets of people wanting to pull
+> some but not all of his heads.
 
-A couple of questions.
+Well, it is an interresting problem... But I don't think that the 
+solution is to create more pack files. In fact, you'd want as few pack 
+files as possible, for maximum overall efficiency.
 
-1) Does git-clone-script when packed copy the entire repository
-   or just take a couple of slices of the tree where you have
-   references?
+I did a little experiment. I cloned Linus' current tree, and git 
+repacked everything (that's 63M + 3.3M worth of pack files). Then I got 
+something like 25 or so of Jeff's branches. That's 6.9M of object files, 
+and 1.4M packed. Total size: 70M for the entire .git/objects/pack directory.
 
-2) Is there a way for a pack to create deltas against objects
-   that are not in the tree?  For a dumb repository making incremental
-   changes this is ideal.
+Repacking all of that to a single pack file gives, somewhat 
+surprisingly, a pack size of 62M (+ 1.3M index). In other words, the 
+cost of getting all those branches, and all of the new stuff from Linus, 
+turns out to be *negative* (probably due to some strange deltification 
+coincidence).
 
-Eric
+I think that this shows that (at least in this case), having many 
+branches isn't particularly wasteful (1.4M in this case with one 
+incremental pack).
+
+And that fewer packs beats many packs quite handily.
+
+The big problem, however, comes when Jeff (or anyone else) decides to 
+repack. Then, if you fetch both his repo and Linus', you might end up 
+with several really big pack files, that mostly overlap. That could 
+easily mean storing most objects many times, if you don't do some smart 
+selective un/repacking when fetching.
+
+/dan
