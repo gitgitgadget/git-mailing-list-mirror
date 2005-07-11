@@ -1,90 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
-Date: Mon, 11 Jul 2005 13:14:41 -0700
-Message-ID: <7virzhrtfy.fsf@assigned-by-dhcp.cox.net>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
-	<20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
-	<7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
-	<42D2CBA2.8060705@yahoo.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/2] Support for packs in HTTP
+Date: Mon, 11 Jul 2005 16:03:56 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0507111519380.30848-100000@iabervon.org>
+References: <Pine.LNX.4.58.0507111040251.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, bryan.larsen@gmail.com,
-	pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 02:05:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 02:09:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds8H2-0000qg-Ay
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 02:05:20 +0200
+	id 1Ds8Ka-0001Cl-DT
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 02:09:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262576AbVGKUS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 16:18:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262561AbVGKUQR
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:16:17 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:4060 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S262558AbVGKUOq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 16:14:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050711201440.PQSL15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 11 Jul 2005 16:14:40 -0400
-To: Bryan Larsen <bryanlarsen@yahoo.com>
-In-Reply-To: <42D2CBA2.8060705@yahoo.com> (Bryan Larsen's message of "Mon, 11 Jul 2005 15:42:26 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262508AbVGKULp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 16:11:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262502AbVGKUIs
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:08:48 -0400
+Received: from iabervon.org ([66.92.72.58]:58629 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262524AbVGKUGR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 16:06:17 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Ds4VQ-0008HK-00; Mon, 11 Jul 2005 16:03:56 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507111040251.17536@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Larsen <bryanlarsen@yahoo.com> writes:
+On Mon, 11 Jul 2005, Linus Torvalds wrote:
 
-> Last night, I couldn't think of alternatives to these, but I obviously
-> didn't try very hard.  xargs -r can probably happen via a temporary
-> file and cp -u can probably be simulated using rsync.
+> 
+> 
+> On Mon, 11 Jul 2005, Daniel Barkalow wrote:
+> > On Sun, 10 Jul 2005, Linus Torvalds wrote:
+> > 
+> > > 
+> > > You really _mustn't_ try to create the pack directly to the
+> > > $GIT_DIR/objects/pack subdirectory - that would make git itself start
+> > > possibly using that pack before the index is all done, and that would be
+> > > just wrong and nasty.
+> > >
+> > > So you really should _always_ generate the pack somewhere else, and then 
+> > > move it (pack file first, index file second).
+> > 
+> > It's currently fine ignoring index files without corresponding
+> > pack files (sha1_file.c, line 470).
+> 
+> That doesn't help.
 
-The only user of "xargs -r" in the Linus GIT is git-prune-script
-which tries not to run "rm -f" with an empty argument list, like
-this:
+Well, it means that the order you move them doesn't matter, because it
+will ignore the pair if either hasn't been moved.
 
-    git-fsck-cache --cache --unreachable "$@" |
-    sed -ne '/unreachable /{
-        s/unreachable [^ ][^ ]* //
-        s|\(..\)|\1/|p
-    }' | {
-            cd "$GIT_OBJECT_DIRECTORY" || exit
-            xargs -r $dryrun rm -f
-    }
+> Redgardless of which order you write them (and you _will_ write the 
+> pack-file first), you'll find that at some point you have both files, but 
+> one or the other isn't fully written, ie they are unusable.
 
-Not tested on a BSD, and it is probably as ugly as it can get,
-but we could:
+(Off topic: note that git-http-pull writes the _index_ first, because it
+fetches it to determine if it should fetch the pack)
 
-    {
-        echo 'unreachable nosuch/file';
-        git-fsck-cache --cache --unreachable "$@" 
-    } |
-    sed -ne '/unreachable /{
-        s/unreachable [^ ][^ ]* //
-        s|\(..\)|\1/|p
-    }' | {
-            cd "$GIT_OBJECT_DIRECTORY" || exit
-            xargs $dryrun rm -f
-    }
+> And yes, you can handle that by always checking the SHA1 of the files when 
+> you open them, but the fact is, you shouldn't need to, just to use it. 
+> Checking the SHA1 of the pack-file in particular is very expensive (since 
+> it's potentially a huge file, and you don't even want to read all of it).
 
-The only user of "cp -l" in the Linus GIT is git-clone-script
-local optimization.  I could revert it to the version that I
-originally sent to the list, which uses cpio -pld, if your cpio
-groks that flag.
+IIRC, we check the size of the pack file and there are hashes around the
+ends of the two files which have to match; but this is a die() check, not
+an ignore check, so we just crash with a clear error message rather than
+doing crazy stuff (like reading from beyond the end of the mmap).
 
-I do not speak for Pasky, but to me "cp -u" sounds just like an
-optimization, so maybe defining CP_U='cp -u' and detect missing
-support at config time and falling back on the simple "cp" would
-be an option?
+> So that's what I decided the rule is: never ever have a partial file, and 
+> thus you can by definition use them immediately when you see both files.
+> 
+> But that requires that you write them under another name than the final 
+> one. And since you want that _anyway_ for other uses, you don't hide that 
+> inside "git-pack-objects", but you make it an exported interface.
 
-GNU "cp -a" states that is the same as "-dpR" (never follow
-symlinks, preserve link, mode, ownership, and timestamps), so
-that can be rewritten as a shell function in cg-Xlib that is
-called say cg_copy_tree, whose implementation runs two tar
-processes piped together when "cp -a" is not available.  Using a
-tarpipe unconditionally is also fine.
+We should never write anything under the final name, anyway, for just this
+reason; we already use open/write/close/rename for objects, refs, and
+cache (maybe not working directory files, though). I think we're actually
+agreeing on this.
+
+My position is that the temporary location should be something like
+{final-name}.part, such that it doesn't match *.idx or *.pack beforehand
+(so it doesn't look like a complete file that you might want to send to
+someone) and it doesn't have to worry about EXDEV on the rename. Also, I
+would ideally like to be able to resume an interrupted download, which
+means that it would have to find the partial file in a predictable
+location, given what it's supposed to contain.
+
+	-Daniel
+*This .sig left intentionally blank*
