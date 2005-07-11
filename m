@@ -1,54 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Trial git RPM's..
-Date: Sun, 10 Jul 2005 18:18:25 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Commit 7c5977297f07c2a52c8c0f486309076b2a795d33 appears to have broken cg-init
+Date: Sun, 10 Jul 2005 18:58:20 -0700
+Message-ID: <20050711015820.GA16618@ca-server1.us.oracle.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Jul 11 03:18:36 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Jul 11 03:58:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DrmwO-00069L-H0
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 03:18:36 +0200
+	id 1DrnZ5-0000sl-HG
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 03:58:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262170AbVGKBS3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 10 Jul 2005 21:18:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262175AbVGKBS3
-	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 21:18:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:21924 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262170AbVGKBS2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Jul 2005 21:18:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6B1IQjA029949
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Sun, 10 Jul 2005 18:18:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6B1IPmV011264
-	for <git@vger.kernel.org>; Sun, 10 Jul 2005 18:18:26 -0700
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.111 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262184AbVGKB63 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 10 Jul 2005 21:58:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262185AbVGKB63
+	(ORCPT <rfc822;git-outgoing>); Sun, 10 Jul 2005 21:58:29 -0400
+Received: from agminet03.oracle.com ([141.146.126.230]:30408 "EHLO
+	agminet03.oracle.com") by vger.kernel.org with ESMTP
+	id S262184AbVGKB62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Jul 2005 21:58:28 -0400
+Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.191.10])
+	by agminet03.oracle.com (Switch-3.1.7/Switch-3.1.7) with ESMTP id j6B1wLIO028623;
+	Sun, 10 Jul 2005 20:58:21 -0500
+Received: from rgmgw1.us.oracle.com (localhost [127.0.0.1])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j6B1wLEB031351;
+	Sun, 10 Jul 2005 19:58:21 -0600
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j6B1wKoh031344;
+	Sun, 10 Jul 2005 19:58:21 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.52)
+	id 1DrnYq-0005by-4O; Sun, 10 Jul 2005 18:58:20 -0700
+To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
+Content-Disposition: inline
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.9i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Petr,
+	Commit 7c5977297f07c2a52c8c0f486309076b2a795d33 contains the
+chunk:
 
-Ok, I tagged a "v0.99" thing, and pushed it out. I've also made trial 
-RPM's of it: src, ppc64 and x86. They're build on whatever random machines 
-I had, and on the ppc64 I chose to do it on my FC4 machine that has newer 
-libraries than my YDL one. The x86 thing is FC3, I do believe.
+-uri=$1
++
++infoonly=
++while optparse; do
++	if optparse -N; then
++		infoonly=-N
++	else
++		optfail
++	fi
++done
++
++uri=$ARGV
 
-I haven't really verified the RPM's in any other way than a trial 
-installation on one machine, and "gitk" seemed to work. Whoop. The idea 
-being that this is a good way to check whether the rpm target works, _and_ 
-cogito can have something to build against.
+	However, $ARGV is not a variable I've ever seen supported in a
+Bourne-like shell.  Certainly Bash supports BASH_ARGV, but not ARGV.
+	The recent option parsing code adds ARGS in cg-Xlib, but not
+ARGV.
+	The upshot is that a cg-clone/cg-init attempt thinks $uri is
+empty, and always creates an initial commit.  No clone.  I don't know
+how folks have gotten cg-clone rsync://linus to work since this change
+went in.
+	I don't know what the proper solution is with the modern option
+code, but changing it back to 'url=$1' allows me to grab Linus' tree.
 
-They rpm's are at
+Joel
+-- 
 
-	http://www.kernel.org/pub/software/scm/git/
+Life's Little Instruction Book #3
 
-or will be once mirrored.
+	"Watch a sunrise at least once a year."
 
-		Linus
+Joel Becker
+Senior Member of Technical Staff
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
