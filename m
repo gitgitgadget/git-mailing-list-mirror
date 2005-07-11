@@ -1,95 +1,81 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/2] Support for packs in HTTP
-Date: Mon, 11 Jul 2005 16:03:56 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507111519380.30848-100000@iabervon.org>
-References: <Pine.LNX.4.58.0507111040251.17536@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
+Date: Mon, 11 Jul 2005 13:00:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507111252380.17536@g5.osdl.org>
+References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
+ <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
+ <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
+ <42D2CBA2.8060705@yahoo.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Petr Baudis <pasky@ucw.cz>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 02:09:40 2005
+Cc: Junio C Hamano <junkio@cox.net>, bryan.larsen@gmail.com,
+	pasky@suse.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 02:09:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds8Ka-0001Cl-DT
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 02:09:00 +0200
+	id 1Ds8Ka-0001Cl-U8
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 02:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262508AbVGKULp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 16:11:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262502AbVGKUIs
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:08:48 -0400
-Received: from iabervon.org ([66.92.72.58]:58629 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262524AbVGKUGR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 16:06:17 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Ds4VQ-0008HK-00; Mon, 11 Jul 2005 16:03:56 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507111040251.17536@g5.osdl.org>
+	id S262542AbVGKUEC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 16:04:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262515AbVGKUCG
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 16:02:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:15256 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262529AbVGKUBK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 16:01:10 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6BK0fjA017114
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 11 Jul 2005 13:00:42 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6BK0Y04028472;
+	Mon, 11 Jul 2005 13:00:36 -0700
+To: Bryan Larsen <bryanlarsen@yahoo.com>
+In-Reply-To: <42D2CBA2.8060705@yahoo.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 11 Jul 2005, Linus Torvalds wrote:
 
+
+On Mon, 11 Jul 2005, Bryan Larsen wrote:
 > 
-> 
-> On Mon, 11 Jul 2005, Daniel Barkalow wrote:
-> > On Sun, 10 Jul 2005, Linus Torvalds wrote:
 > > 
-> > > 
-> > > You really _mustn't_ try to create the pack directly to the
-> > > $GIT_DIR/objects/pack subdirectory - that would make git itself start
-> > > possibly using that pack before the index is all done, and that would be
-> > > just wrong and nasty.
-> > >
-> > > So you really should _always_ generate the pack somewhere else, and then 
-> > > move it (pack file first, index file second).
+> > Most everything includes git-sh-setup-script anyway by now.
 > > 
-> > It's currently fine ignoring index files without corresponding
-> > pack files (sha1_file.c, line 470).
+> > However, what are the features that break the default apple tools anyway? 
+> > Maybe we should avoid using them? OSX clearly comes with "cp" and "xargs" 
+> > regardless, what are the flags that don't work with their cruddy versions?
 > 
-> That doesn't help.
+> xargs -r, cp -l, cp -u, cp -a.  Git uses the first 2, cogito uses all 4.
 
-Well, it means that the order you move them doesn't matter, because it
-will ignore the pair if either hasn't been moved.
+I think we can replace "xargs -r" with just plain "xargs". It results in 
+an empty "rm -f", but hey, that's ok. If some broken "rm" complains about 
+that (GNU rm doesn't), you can always do
 
-> Redgardless of which order you write them (and you _will_ write the 
-> pack-file first), you'll find that at some point you have both files, but 
-> one or the other isn't fully written, ie they are unusable.
+	find .. | xargs rm -f dummy-file.o
 
-(Off topic: note that git-http-pull writes the _index_ first, because it
-fetches it to determine if it should fetch the pack)
+which makes sure that we have a dummy argument even for an empty list..
 
-> And yes, you can handle that by always checking the SHA1 of the files when 
-> you open them, but the fact is, you shouldn't need to, just to use it. 
-> Checking the SHA1 of the pack-file in particular is very expensive (since 
-> it's potentially a huge file, and you don't even want to read all of it).
+> Last night, I couldn't think of alternatives to these, but I obviously 
+> didn't try very hard.  xargs -r can probably happen via a temporary file 
+> and cp -u can probably be simulated using rsync.
 
-IIRC, we check the size of the pack file and there are hashes around the
-ends of the two files which have to match; but this is a die() check, not
-an ignore check, so we just crash with a clear error message rather than
-doing crazy stuff (like reading from beyond the end of the mmap).
+I don't see a good alternative for "cp -l".
 
-> So that's what I decided the rule is: never ever have a partial file, and 
-> thus you can by definition use them immediately when you see both files.
-> 
-> But that requires that you write them under another name than the final 
-> one. And since you want that _anyway_ for other uses, you don't hide that 
-> inside "git-pack-objects", but you make it an exported interface.
+I also don't see why, if OS-X already _does_ include the GNU tools, they 
+couldn't be under /opt/fsf/bin or something like that, and then you could 
+just do
 
-We should never write anything under the final name, anyway, for just this
-reason; we already use open/write/close/rename for objects, refs, and
-cache (maybe not working directory files, though). I think we're actually
-agreeing on this.
+	PATH=/opt/fsf/bin:$PATH
 
-My position is that the temporary location should be something like
-{final-name}.part, such that it doesn't match *.idx or *.pack beforehand
-(so it doesn't look like a complete file that you might want to send to
-someone) and it doesn't have to worry about EXDEV on the rename. Also, I
-would ideally like to be able to resume an interrupted download, which
-means that it would have to find the partial file in a predictable
-location, given what it's supposed to contain.
+and be done with it.
 
-	-Daniel
-*This .sig left intentionally blank*
+Grumble.
+
+		Linus
