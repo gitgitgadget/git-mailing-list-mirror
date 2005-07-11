@@ -1,65 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
-Date: Mon, 11 Jul 2005 12:02:07 -0700
-Message-ID: <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
-	<20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: arch 2.0 first source available (git related)
+Date: Mon, 11 Jul 2005 21:39:44 +0200
+Message-ID: <20050711193944.GA5981@pasky.ji.cz>
+References: <1120867947.5882.2.camel@dev1.seyza.com> <20050709113942.GB26343@pasky.ji.cz> <1120918813.4901.27.camel@dev1.seyza.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: bryan.larsen@gmail.com, junkio@cox.net, torvalds@osdl.org,
-	pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 21:28:05 2005
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 11 21:42:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds3ua-0004NH-PO
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 21:25:53 +0200
+	id 1Ds49P-0007CJ-79
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 21:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262148AbVGKTIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 15:08:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262295AbVGKTDc
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 15:03:32 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:53926 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262200AbVGKTCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 15:02:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050711190208.EAUX22430.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 11 Jul 2005 15:02:08 -0400
-To: Bryan Larsen <bryanlarsen@yahoo.com>
-In-Reply-To: <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local> (Bryan Larsen's message of "Mon, 11 Jul 2005 06:15:02 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262500AbVGKTkj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 15:40:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261981AbVGKTk0
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 15:40:26 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35724 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262497AbVGKTjq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 15:39:46 -0400
+Received: (qmail 10322 invoked by uid 2001); 11 Jul 2005 19:39:44 -0000
+To: Thomas Lord <lord@emf.net>
+Content-Disposition: inline
+In-Reply-To: <1120918813.4901.27.camel@dev1.seyza.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Larsen <bryanlarsen@yahoo.com> writes:
+Dear diary, on Sat, Jul 09, 2005 at 04:20:13PM CEST, I got a letter
+where Thomas Lord <lord@emf.net> told me that...
+> The prereq graph is, indeed, an improvement.  
+..snip..
 
-> Update the git Makefile to put the results of config.sh into the scripts.  
-> config.sh searches for gnu utilities cp, stat, date and xargs.
->
-> Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+But object retrieval can be potentially as much as linear to the depth
+of the prereq graph, right? I don't think any of the benefits you listed
+are worth the complication, and you can still do the reachability
+analysis pretty easily. (And I think it takes the same number of
+roundtrips when downloading from remote server?)
 
-> +install: $(PROG) $(SCRIPTS) config
->  	$(INSTALL) -m755 -d $(dest)$(bin)
->  	$(INSTALL) $(PROG) $(SCRIPTS) $(dest)$(bin)
-> +	. ./config ; \
-> +	cd $(dest)$(bin) ; \
-> +	for file in $(SCRIPTS); do \
-> +		sed -e "s/DATE\=date/DATE=$${DATE}/" -e "s/CP\=cp/CP=$${CP}/" -e "s/XARGS\=xargs/XARGS=$${XARGS}/" -e "s/STAT\=stat/STAT=$${STAT}/" $$file > $$file.new; \
-> +		cat $$file.new > $$file; rm $$file.new; \
-> +	done
+> Other advantageous (imo) changes from `git' not mentioned in the
+> original message:
+> 
+> * blobs do not have header lines
+> 
+>   Git blobs all begin with a line of text declaring the "type"
+>   and size of the blob.   That doesn't increase database 
+>   verifiability significantly and I found no use for the headers.
+>   Having the headers makes it needlessly complicated to translate
+>   a file to or from a blob.
+> 
+>   `revc' does not have blob headers.
 
-I am not yet convinced "one variable per GNU program" is the
-right way to do (I do agree it is a problem and I appreciate
-your trying to solving it; an obvious alternative cop-out would
-be to fix this in the user's environment, but there might be a
-saner solution).  Assuming that this is the way to go, wouldn't
-it be saner if this sed munging is done in only one place, say
-git-sh-setup-script, and have everybody include that?  If we
-want to have some scripts usable not at the top-level GIT
-directory, then git-sh-setup-script may not be a good place; in
-which case introduce git-sh-compat-script and have everybody
-include _that_ instead?
+In git, this is crucial at least for distinguishing commits and tags.
+I personally consider the verifiability boost useful.
+
+> * `revc' uses portable file formats
+> 
+>    In working dirs, `git' stores binary files which are 
+>    endian, word-size, and compiler-environment specific.
+> 
+>    `revc' stores some binary files too (for performance
+>    and simplicity reasons) but uses only portable formats.
+
+I think they are only word-size specific, and that should be no big
+matter to resolve, shall anyone want to.
+
+> * `revc' is shaping up into much cleaner and more portable code
+> 
+>    (at least compared to the last version of `git' I saw --
+>     which was extremely *lucid* code but not terribly
+>     clean and not even attempting to be portable.)
+
+All right, the portability could be better. ;-)
+
+Kind regards,
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+<Espy> be careful, some twit might quote you out of context..
