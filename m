@@ -1,117 +1,69 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Dereference tag repeatedly until we get a non-tag.
-Date: Tue, 12 Jul 2005 01:14:53 +1000
-Message-ID: <2cfc40320507110814256bef25@mail.gmail.com>
-References: <7v7jg0wb77.fsf@assigned-by-dhcp.cox.net>
-	 <7v8y0dx24j.fsf@assigned-by-dhcp.cox.net>
-Reply-To: jon@blackcubes.dyndns.org
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
+Date: Mon, 11 Jul 2005 12:10:55 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org>
+References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local>
+ <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local>
+ <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 11 20:29:59 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, bryan.larsen@gmail.com,
+	pasky@suse.cz, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 11 21:12:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds32B-0001g2-2y
-	for gcvg-git@gmane.org; Mon, 11 Jul 2005 20:29:39 +0200
+	id 1Ds3gs-0001fI-TF
+	for gcvg-git@gmane.org; Mon, 11 Jul 2005 21:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261961AbVGKPTC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 11:19:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261966AbVGKPQp
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 11:16:45 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:41294 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261961AbVGKPOz convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 11:14:55 -0400
-Received: by rproxy.gmail.com with SMTP id c51so814972rne
-        for <git@vger.kernel.org>; Mon, 11 Jul 2005 08:14:55 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MZrgBidsbNiJqgYjCm/7eJtj7/tSF14ioe9kCF4GpcVgbMO46kXziJnU26odtAlBgIqdK/CaGjyFd+iCx6uysVMPeKeoeut1RuDnCuMUD9LZCH2/ucjyycK8MbiiiZ7fJXce2YS1LhVMqgCG6oI20hW6DwhGesGKt++zUVhrieI=
-Received: by 10.38.104.15 with SMTP id b15mr2177646rnc;
-        Mon, 11 Jul 2005 08:14:53 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Mon, 11 Jul 2005 08:14:53 -0700 (PDT)
+	id S262174AbVGKTL2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 15:11:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262475AbVGKTLZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 15:11:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:23174 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262382AbVGKTLS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 15:11:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6BJAujA012034
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 11 Jul 2005 12:10:56 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6BJAtAl025074;
+	Mon, 11 Jul 2005 12:10:55 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8y0dx24j.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.111 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This seems reasonable to me. I have thought this would be useful on
-several occasions and haven't yet conceived of a counterexample where
-it would break something.
-
-On 7/11/05, Junio C Hamano <junkio@cox.net> wrote:
-> When we allow a tag object in place of a commit object, we only
-> dereferenced the given tag once, which causes a tag that points
-> at a tag that points at a commit to be rejected.  Instead,
-> dereference tag repeatedly until we get a non-tag.
-> 
-> This patch makes change to two functions:
-> 
->  - commit.c::lookup_commit_reference() is used by merge-base,
->    rev-tree and rev-parse to convert user supplied SHA1 to that of
->    a commit.
->  - rev-list uses its own get_commit_reference() to do the same.
-> 
-> Dereferencing tags this way helps both of these uses.
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
-> 
-> *** Whether having a tag pointing at another tag is a separate
-> *** issue, but I do not see a reason to forbid it.  Maybe it
-> *** is used to represent a chain of trust.
-> 
->  commit.c   |    5 +++--
->  rev-list.c |    4 ++--
->  2 files changed, 5 insertions(+), 4 deletions(-)
-> 
-> 0dc9377363ee73c5e3f3711d6f82e49886ce8c6a
-> diff --git a/commit.c b/commit.c
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -52,8 +52,9 @@ struct commit *lookup_commit_reference(c
-> 
->         if (!obj)
->                 return NULL;
-> -       if (obj->type == tag_type)
-> -               obj = ((struct tag *)obj)->tagged;
-> +       while (obj->type == tag_type)
-> +               obj = parse_object(((struct tag *)obj)->tagged->sha1);
-> +
->         return check_commit(obj, sha1);
->  }
-> 
-> diff --git a/rev-list.c b/rev-list.c
-> --- a/rev-list.c
-> +++ b/rev-list.c
-> @@ -367,12 +367,12 @@ static struct commit *get_commit_referen
->         /*
->          * Tag object? Look what it points to..
->          */
-> -       if (object->type == tag_type) {
-> +       while (object->type == tag_type) {
->                 struct tag *tag = (struct tag *) object;
->                 object->flags |= flags;
->                 if (tag_objects && !(object->flags & UNINTERESTING))
->                         add_pending_object(object, tag->tag);
-> -               object = tag->tagged;
-> +               object = parse_object(tag->tagged->sha1);
->         }
-> 
->         /*
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
 
 
--- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+On Mon, 11 Jul 2005, Junio C Hamano wrote:
+> 
+> I am not yet convinced "one variable per GNU program" is the
+> right way to do (I do agree it is a problem and I appreciate
+> your trying to solving it; an obvious alternative cop-out would
+> be to fix this in the user's environment, but there might be a
+> saner solution)
+
+Yes. As you say, if we do this (and I think it's so ugly that I'm not
+convinced we want to), it should be done in git-sh-setup-script _once_
+instead of editing every single script.
+
+Most everything includes git-sh-setup-script anyway by now.
+
+However, what are the features that break the default apple tools anyway? 
+Maybe we should avoid using them? OSX clearly comes with "cp" and "xargs" 
+regardless, what are the flags that don't work with their cruddy versions?
+
+[ Rant mode on: ..and who the hell is the idiot at Apple who includes the
+  old crappy BSD stuff? They already use gcc, so it's totally pointless to
+  have a NIH thing, when the GNU utilities are just _better_. Maybe 
+  somebody can ask Apple to get with the program and not live in the dark 
+  ages any more. ]
+
+			Linus
