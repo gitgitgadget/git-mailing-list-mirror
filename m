@@ -1,50 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] tagger id
-Date: Tue, 12 Jul 2005 17:14:20 +0200
-Message-ID: <20050712151420.GC15794@pasky.ji.cz>
-References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org> <m1eka574c8.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507110958400.17536@g5.osdl.org> <m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507111815180.17536@g5.osdl.org> <m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com> <m18y0c1prv.fsf@ebiederm.dsl.xmission.com> <7veka48lcw.fsf@assigned-by-dhcp.cox.net> <m14qb012x4.fsf@ebiederm.dsl.xmission.com>
+From: Marc Singer <elf@buici.com>
+Subject: Re: Why is there no git-update-cache --modified (aka I give up)
+Date: Tue, 12 Jul 2005 08:53:16 -0700
+Message-ID: <20050712155316.GA5841@buici.com>
+References: <20050712055218.GA18192@buici.com> <7v7jfwbfvj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 17:19:47 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 17:53:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsMWk-0002wk-MQ
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 17:18:30 +0200
+	id 1DsN4c-00011n-MG
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 17:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261601AbVGLPR6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 11:17:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261545AbVGLPPZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 11:15:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:61085 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261516AbVGLPOV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 11:14:21 -0400
-Received: (qmail 31087 invoked by uid 2001); 12 Jul 2005 15:14:20 -0000
-To: "Eric W. Biederman" <ebiederm@xmission.com>
+	id S261465AbVGLPxS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 11:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261472AbVGLPxS
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 11:53:18 -0400
+Received: from florence.buici.com ([206.124.142.26]:39840 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S261465AbVGLPxR
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2005 11:53:17 -0400
+Received: (qmail 6512 invoked by uid 1000); 12 Jul 2005 15:53:16 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <m14qb012x4.fsf@ebiederm.dsl.xmission.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <7v7jfwbfvj.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Jul 12, 2005 at 05:04:23PM CEST, I got a letter
-where "Eric W. Biederman" <ebiederm@xmission.com> told me that...
-> > By the way, I do not particularly like the name "git-id".  There
-> > could be IDs for different kinds (not just people) we would want
-> > later (file IDs, for example).  Naming what you are computing
-> > _the_ "id" feels a bit too generic.  I do not have a better
-> > alternative to suggest, though.
+On Tue, Jul 12, 2005 at 01:14:24AM -0700, Junio C Hamano wrote:
+> Marc Singer <elf@buici.com> writes:
 > 
-> Agreed.  Something like git-author or git-author-stamp is probably
-> better.
+> >   # git-diff-cache HEAD
+> >
+> > is really nice.  But, do I really have to invoke git-update-cache with
+> > every modified file?  I could write a script to cul the filenames from
+> > git-diff-cache, but I'm having a hard time believing that that is how
+> > others are preparing their commits.
+> 
+> Me too.  By the way, I think you mean diff-files not
+> diff-cache.
 
-Since that "infriges" the author/committer distinction, I would prefer
-git-person-id.
+No, I mean git-diff-cache.  I find that this works pretty well, though.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-<Espy> be careful, some twit might quote you out of context..
+  # git-update-cache `git-diff-cache | cut -f2`
+
+It looks like the same thing works for git-diff-files. 
+
+  # git-update-cache `git-diff-files | cut -f2`
+
+This seems to agree with the way you handle things.
+
+Similarly, there is the need to determine which files are new to the
+tree.  This isn't much of a burden when creating files in the tree,
+but can be bothersome when using patch since git-apply is conservative
+about fuzz.
