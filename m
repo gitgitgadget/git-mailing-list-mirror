@@ -1,86 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] tagger id
-Date: Tue, 12 Jul 2005 01:44:15 -0700
-Message-ID: <7veka48lcw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
-	<m1eka574c8.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507110958400.17536@g5.osdl.org>
-	<m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507111815180.17536@g5.osdl.org>
-	<m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com>
-	<m18y0c1prv.fsf@ebiederm.dsl.xmission.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
+Date: Tue, 12 Jul 2005 11:03:59 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.12.09.03.59.181984@smurf.noris.de>
+References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local> <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local> <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org> <42D2CBA2.8060705@yahoo.com> <Pine.LNX.4.58.0507111252380.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 10:48:01 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Jul 12 11:10:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsGQK-0007tX-Qu
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 10:47:29 +0200
+	id 1DsGma-0002TZ-5X
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 11:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261264AbVGLIrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 04:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVGLIoz
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 04:44:55 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:58551 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261273AbVGLIoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2005 04:44:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050712084415.IRWE17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 12 Jul 2005 04:44:15 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m18y0c1prv.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's message of "Tue, 12 Jul 2005 00:50:44 -0600")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261289AbVGLJJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 05:09:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVGLJHX
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 05:07:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:53479 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261277AbVGLJFN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 05:05:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DsGh4-0001kg-RX
+	for git@vger.kernel.org; Tue, 12 Jul 2005 11:04:46 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 11:04:46 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 11:04:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
+Hi, Linus Torvalds wrote:
 
-> Should this default to git_author_ident or git_committer_ident?
-> I'm not really certain how we expect to use the different flavors.
+> I also don't see why, if OS-X already _does_ include the GNU tools, they 
+> couldn't be under /opt/fsf/bin or something like that, and then you could 
+> just do
+> 
+> 	PATH=/opt/fsf/bin:$PATH
 
-The only in-tree user after your patch is applied is the tagger
-stuff, so in that sense committer_ident may make more sense.
-Having said that, for something like this that would not be used
-constantly and interatively by the users, my preference is not
-to have any default at all, and always require --author or
---committer.  You have to type a bit more when doing the script,
-but that needs to be done only once.  You will be sure which one
-you are asking from the command two weeks after you wrote the
-script so it is not a big loss.
+We could prepend /usr/lib/git to $PATH, and symlink them with their "real"
+names there.
 
-I am not seriously suggesting the below as an alternative, but
-have you thought about doing an inverse function of your
-computation for the case when the user has all the environment
-variables, and have script eval its output, like this [*1*]:
-
-    $ git-id
-    GIT_AUTHOR_NAME='Junio C Hamano'
-    GIT_AUTHOR_EMAIL='junkio@cox.net'
-    GIT_COMMITTER_NAME='Junio C Hamano'
-    GIT_COMMITTER_EMAIL='junkio@cox.net'
-    $ eval "`git-id`"
-    $ tagger="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
-
-Having names and emails available separately may turn out to be
-easier to use in other situation.  Just a thought.
-
-By the way, I do not particularly like the name "git-id".  There
-could be IDs for different kinds (not just people) we would want
-later (file IDs, for example).  Naming what you are computing
-_the_ "id" feels a bit too generic.  I do not have a better
-alternative to suggest, though.
-
-[Footnote]
-
-*1* This makes its output syntax a bit too specific to the shell
-and unfriendly to Porcelain written in other languages.  The
-only non-shell Porcelains I am aware of are done in Perl (I do
-not remember hearing its name) and Python (StGIT), both of which
-have reasonable regexp support to grok something like this, so
-it would not be a big issue.
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Go directly to jail.  Do not pass Go, do not collect $200.
