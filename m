@@ -1,49 +1,64 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] remove Obsoletes from cogito.spec.in
-Date: Tue, 12 Jul 2005 09:30:22 +0200
-Message-ID: <20050712073022.GB6363@pasky.ji.cz>
-References: <20050712003345.GO19052@shell0.pdx.osdl.net>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Tue, 12 Jul 2005 09:48:01 +0200
+Message-ID: <20050712074801.GD6363@pasky.ji.cz>
+References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org> <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org> <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org> <20050712021004.GA27576@buici.com> <Pine.LNX.4.58.0507112005540.17536@g5.osdl.org> <Pine.LNX.4.58.0507112045420.17536@g5.osdl.org> <Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 09:31:08 2005
+Cc: Marc Singer <elf@buici.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 09:48:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsFE0-0006LC-HX
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 09:30:40 +0200
+	id 1DsFV0-00009y-6O
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 09:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261241AbVGLHa2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 03:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261223AbVGLHa2
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 03:30:28 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:25238 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261242AbVGLHaY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 03:30:24 -0400
-Received: (qmail 7485 invoked by uid 2001); 12 Jul 2005 07:30:22 -0000
-To: Chris Wright <chrisw@osdl.org>
+	id S261242AbVGLHsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 03:48:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261243AbVGLHsF
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 03:48:05 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:44182 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261242AbVGLHsD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 03:48:03 -0400
+Received: (qmail 9586 invoked by uid 2001); 12 Jul 2005 07:48:01 -0000
+To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20050712003345.GO19052@shell0.pdx.osdl.net>
+In-Reply-To: <Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Jul 12, 2005 at 02:33:45AM CEST, I got a letter
-where Chris Wright <chrisw@osdl.org> told me that...
-> This is leftover from early naming, and is no longer relevant.
+Dear diary, on Tue, Jul 12, 2005 at 06:34:33AM CEST, I got a letter
+where Linus Torvalds <torvalds@osdl.org> told me that...
+> On Mon, 11 Jul 2005, Linus Torvalds wrote:
+> > 
+> >     Of course, if you want to create a new branch "my-branch" and _not_
+> >     check it out, you could have done so with just
+> > 
+> >         git-rev-parse v2.6.12^0 > .git/refs/heads/my-branch
+> > 
+> >     which I think I will codify as "git branch".
 > 
-> Signed-off-by: Chris Wright <chrisw@osdl.org>
+> And now we have that "git branch". It's a trivial one-liner, except with
+> the setup and error checking it's actually more like six lines.
 
-Thanks, applied. BTW, Josh Boyer of Fedora suggested having the
+Could we please have the branch name written to .git/head-name in case
+we switch the branch? The reason is that .git/HEAD may not be always a
+symlink. Specifically, I do this - there's a command cg-seek, which will
+seek your working tree to a given commit, while staying on the branch
+(committing and some other operations are blocked). In that case, I
+remove .git/HEAD and replace it with ID of the commit I'm seeked at, and
+when I'm "unseeking" back to the top, I replace it with the symlink
+again. With some heuristics, I could create .git/head-name at the time
+of seek and hope, but I think it'd be cleaner to just always set it
+(except when we are on the master branch), if you agree.
 
-	Provides: git
-
-line in cogito.spec.in as long as it comes with git bundled (which will
-be so until git stabilizes, doesn't break backwards compatibility once
-in a while, and gets into some regular and reasonably frequent release
-cycle). What do you think?
+Note that even though Cogito won't let you create/change a local branch
+yet, it will understand .git/head-name and hopefully behave properly
+(although it's totally untested, of course).
 
 -- 
 				Petr "Pasky" Baudis
