@@ -1,53 +1,80 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/2] Demo support for packs via HTTP
-Date: Mon, 11 Jul 2005 21:54:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.21.0507112147400.30848-100000@iabervon.org>
-References: <1121118544.3939.6.camel@localhost.localdomain>
+From: Marc Singer <elf@buici.com>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Mon, 11 Jul 2005 19:10:04 -0700
+Message-ID: <20050712021004.GA27576@buici.com>
+References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org> <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org> <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
-	Petr Baudis <pasky@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Jul 12 03:56:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 04:10:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsA0d-0003pa-2D
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 03:56:31 +0200
+	id 1DsAE8-0004vf-JP
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 04:10:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261747AbVGLB4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 21:56:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVGLB4Q
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 21:56:16 -0400
-Received: from iabervon.org ([66.92.72.58]:44294 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S261747AbVGLB4L (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 21:56:11 -0400
-Received: from barkalow (helo=localhost)
-	by iabervon.org with local-esmtp (Exim 2.12 #2)
-	id 1Ds9yC-0007oD-00; Mon, 11 Jul 2005 21:54:00 -0400
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1121118544.3939.6.camel@localhost.localdomain>
+	id S261693AbVGLCKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 22:10:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261754AbVGLCKH
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 22:10:07 -0400
+Received: from florence.buici.com ([206.124.142.26]:14745 "HELO
+	florence.buici.com") by vger.kernel.org with SMTP id S261693AbVGLCKG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 22:10:06 -0400
+Received: (qmail 27807 invoked by uid 1000); 12 Jul 2005 02:10:04 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 11 Jul 2005, Darrin Thompson wrote:
-
-> On Sun, 2005-07-10 at 15:56 -0400, Daniel Barkalow wrote:
-> > +	curl_easy_setopt(curl, CURLOPT_FILE, indexfile);
-> > +	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
-> > +	curl_easy_setopt(curl, CURLOPT_URL, url);
+On Mon, Jul 11, 2005 at 06:43:23PM -0700, Linus Torvalds wrote:
 > 
-> I was hoping to send in a patch which would turn on user auth and turn
-> off ssl peer verification.
 > 
-> Your (preliminary obviously) patch puts curl handling in two places. Is
-> there a place were I can safely start working on adding the needed
-> setopts?
+> On Mon, 11 Jul 2005, Linus Torvalds wrote:
+> >
+> > No, git-checkout-script _shouldn't_ have done that. It will do the 
+> > read-tree on the tag (which will do the right thing), but it won't change 
+> > the HEAD itself.
+> 
+> In preparation of actually updating the HEAD, I just made "git checkout" 
+> verify that it only checks out a commit, not a tree tag or something like 
+> that. Too late for Marc, but next time around a "git checkout v2.6.11" 
 
-If I understand the curl documentation, you should be able to set options 
-on the curl object when it has just been created, if those options aren't
-going to change between requests. Note that I make requests from multiple
-places, but I use the same curl object for all of them.
+:-) 
 
-	-Daniel
-*This .sig left intentionally blank*
+> will result in
+> 
+> 	[torvalds@g5 linux]$ git checkout v2.6.11
+> 	error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
+> 	Needed a single revision
+> 
+> On the other hand, creating a new branch might be a but surprising to 
+> people: "But I just wanted to check it out". But as far as I can see, it's 
+> the only safe thing to do, and it has the advantage that you can then go 
+> back to the old state with a simple "git checkout master".
+> 
+> But what about the branch name? Should we just ask the user? Together with 
+> a flag, like
+> 
+> 	git checkout -b new-branch v2.6.12
+> 
+> for somebody who wants to specify the branch name? Or should we pick a 
+> random name and add a helper function to rename a branch later?
+> 
+> Opinions?
+
+>From my POV, what I want is a branch with the tag v2.6.12 as the basis
+of the branch.  I'm guessing that -b means "make me a branch and call
+it this".
+
+ # git checkout -b BRANCH_NAME [TAG]
+
+If the TAG is omitted, the branch is made from the current HEAD or
+some other reasonable point defined by the current working directory.
+
+Are uncommitted changes present in the working directory maintained?
+Discarded?  I wont't care since I'll never be doing that.  At least,
+not on purpose.
