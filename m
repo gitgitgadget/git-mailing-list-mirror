@@ -1,56 +1,64 @@
-From: Junio C Hamano <junkio@twinsun.com>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Tue, 12 Jul 2005 21:37:00 +0000 (UTC)
-Message-ID: <loom.20050712T233332-364@post.gmane.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Tue, 12 Jul 2005 13:04:01 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0507121240120.2876-100000@iabervon.org>
+References: <7voe98g3ws.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jul 12 23:45:34 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, Marc Singer <elf@buici.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 00:07:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsSYP-0007mr-EK
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 23:44:37 +0200
+	id 1DsStx-0003JM-N6
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 00:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262476AbVGLVn7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 17:43:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262479AbVGLVjW
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 17:39:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:38033 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262373AbVGLVhU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 17:37:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DsSRI-0006UR-OY
-	for git@vger.kernel.org; Tue, 12 Jul 2005 23:37:16 +0200
-Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:37:16 +0200
-Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:37:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4)
+	id S262443AbVGLV72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 17:59:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262401AbVGLUvh
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 16:51:37 -0400
+Received: from iabervon.org ([66.92.72.58]:39941 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262394AbVGLUti (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 16:49:38 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1DsOAr-0003CZ-00; Tue, 12 Jul 2005 13:04:01 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe98g3ws.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Chris Wedgwood <cw <at> f00f.org> writes:
+On Mon, 11 Jul 2005, Junio C Hamano wrote:
 
->  if [ "$newhead" ]; then
->  	echo "Committed as $newhead."
-> -	echo $newhead >$_git/HEAD
-> +	echo_to_file $newhead $_git/HEAD
->  	[ "$merging" ] && rm $_git/merging $_git/merging-sym $_git/merge-base
+> Linus Torvalds <torvalds@osdl.org> writes:
+> 
+> > But what about the branch name? Should we just ask the user? Together with 
+> > a flag, like
+> >
+> > 	git checkout -b new-branch v2.6.12
+> >
+> > for somebody who wants to specify the branch name? Or should we pick a 
+> > random name and add a helper function to rename a branch later?
+> >
+> > Opinions?
+> 
+> How about treating "master" a temporary thing --- "whatever I
+> happen to be working on right now"?
 
-Good intentions, but wouldn't the above clobber symlinked HEAD?
+That conflicts with my usage, where I have a single repository for all of
+my working directories, with .git/refs and .git/objects being symlinks to 
+it, but .git/HEAD being different for each branch. The stuff in objects/
+and refs/ really shouldn't depend on what you're currently doing for this
+reason.
 
-Not a fundamental flaw, though.  You need to see if it is a symlink,
-readlink it (repeatedly until you get a regular file or dangling symlink
-target that does not exist --- immediately after git-init-db has such a
-HEAD) and run your echo_to_file on the link target.
+My way of thinking of "master" is that it's a real branch, which is for
+all of the situations where you aren't using a specially-designated
+branch. For many people, they only do stuff that's not designated
+specially; Jeff only does stuff that is designated specially. But if you
+do both, you'll want master to be left alone while you work on the side
+branch.
+
+	-Daniel
+*This .sig left intentionally blank*
