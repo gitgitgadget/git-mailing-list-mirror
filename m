@@ -1,43 +1,40 @@
 From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] rev-list: add "--full-objects" flag.
-Date: Mon, 11 Jul 2005 21:48:40 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507112141310.17536@g5.osdl.org>
-References: <20050703234629.GF13848@pasky.ji.cz> <7vk6k2sfa4.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0507071158220.3293@g5.osdl.org> <20050707221443.GB7151@pasky.ji.cz>
- <Pine.LNX.4.58.0507071549330.25104@g5.osdl.org> <7vll4ifbq8.fsf_-_@assigned-by-dhcp.cox.net>
- <7vfyuqfa6r.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071657140.25104@g5.osdl.org>
- <7vvf3mds9c.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071841010.25104@g5.osdl.org>
- <7vy88ica8e.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507071928220.25104@g5.osdl.org>
- <m1pstrr8k1.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507101517370.17536@g5.osdl.org>
- <m1irzh74m0.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507110928070.17536@g5.osdl.org>
- <m13bqk26pp.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507111810380.17536@g5.osdl.org>
- <m164vg7nqo.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507112018560.175
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Mon, 11 Jul 2005 21:59:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507112149290.17536@g5.osdl.org>
+References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+ <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org> <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+ <20050712021004.GA27576@buici.com> <Pine.LNX.4.58.0507112005540.17536@g5.osdl.org>
+ <Pine.LNX.4.58.0507112045420.17536@g5.osdl.org> <Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
+ <20050712044352.GA9919@buici.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 06:49:10 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 07:03:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsChQ-0000CZ-CG
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 06:48:52 +0200
+	id 1DsCvZ-0001E5-Cg
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 07:03:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262341AbVGLEsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 00:48:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262357AbVGLEsr
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 00:48:47 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4511 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262341AbVGLEsq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 00:48:46 -0400
+	id S262367AbVGLFDB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 01:03:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262372AbVGLFAi
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 01:00:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:48801 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262364AbVGLE7c (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 00:59:32 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6C4mfjA022561
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6C4xQjA023266
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 11 Jul 2005 21:48:41 -0700
+	Mon, 11 Jul 2005 21:59:26 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6C4mewM022423;
-	Mon, 11 Jul 2005 21:48:41 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1wtnw66cc.fsf@ebiederm.dsl.xmission.com>
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6C4xP0x022803;
+	Mon, 11 Jul 2005 21:59:25 -0700
+To: Marc Singer <elf@buici.com>
+In-Reply-To: <20050712044352.GA9919@buici.com>
 X-Spam-Status: No, hits=0 required=5 tests=
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
 X-MIMEDefang-Filter: osdl$Revision: 1.113 $
@@ -48,29 +45,49 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On Mon, 11 Jul 2005, Eric W. Biederman wrote:
+On Mon, 11 Jul 2005, Marc Singer wrote:
 > 
-> Looking closer it appears that commit_list_insert is recursive
-> and that is what I missed.
+> Does it make sense to think about this branch as an flow of commits?
+> Or is it just a starting point for a line of development?
 
-Actually, it's "pop_most_recent_commit()" that ends up being the
-"recursive" part: it will pop the top-most entry, but as it is popping it 
-it will push the parents of that entry onto the same list.
+It's really a flow of commits. Nothing will ever really remember what the 
+starting point was at some later date if you have done commits, and the 
+branch will always follow the _head_ of development on that branch.
 
-So basically, you can get a list of all history by first inserting the top 
-entry, and then doing "pop_most_recent_commit()" until the list is empty.
+So if you need to remember the starting point as a _static_ entity, you
+need to create a tag pointing to that place. You can do that at any point,
+very much including after you've already done development (but before you
+forget what to tag ;)
 
-Now, git-rev-list ends up being slightly more complex than that, since it
-has support for multiple starting points, and marking commits (and thus
-their parents) uninteresting, and two other sorting methods in addition to 
-the default "by date" thing.
+> If I make a branch, check it out, commit changes to it, and then clobber
+> the working directory, can I later resume that branch of development
+> without creating a new branch?
 
-And then there's all the issues about tags, trees and blobs, and their
-visibility as a function of the commits that are visible and the command
-line arguments..
+Absolutely. You can create a branch, commit to it, switch to another 
+branch, commit to that one, switch back to the branch you created, and 
+just go on. A branch will always follow the development.
 
-In fact, it turns out that git-rev-list is really the real heart of "git".  
-Almost everything else revolves around it. Once you grok git-rev-list, you
-probably really grok git.
+> Do I need to set a tag to mark the last commit on that branch?
 
-			Linus
+No, but as mentioned, _if_ you care about remembering where you _started_ 
+the branch, you may want to tag that.
+
+Of course, most of the time you really really don't care. It will be
+largely obvious from the global commit history, which you can trivially
+visualize with "gitk --all". You'll see where your branch "split off" the
+main branch, and the only case where that is ambiguous is if you started
+your branch at the tip of another branch, and no other development has
+gone on in that other branch - then you don't see a "fork".
+
+Of course, the other reason you usually don't care where you started is
+that you simply don't care.  When you use CVS, you usually need to know
+where the branch was started (and each point it was merged at) just so
+that you can sanely merge it by doing diffs etc. With git, since we have
+all the proper history, that's not necessary at all.
+
+So I _suspect_ that most of the time when you create a branch, you don't 
+need to tag where you started. Others will see what is your development 
+simply by virtue of it being in your tree and not in other peoples tree, 
+whether you created a branch for that or not ;)
+
+		Linus
