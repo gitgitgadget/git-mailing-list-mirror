@@ -1,58 +1,63 @@
-From: Junio C Hamano <junkio@twinsun.com>
-Subject: Re: Why is there no git-update-cache --modified (aka I give up)
-Date: Tue, 12 Jul 2005 20:51:17 +0000 (UTC)
-Message-ID: <loom.20050712T224801-163@post.gmane.org>
-References: <20050712055218.GA18192@buici.com> <7v7jfwbfvj.fsf@assigned-by-dhcp.cox.net> <20050712155316.GA5841@buici.com> <pan.2005.07.12.16.16.45.990714@smurf.noris.de>
+From: Sven Verdoolaege <skimo@liacs.nl>
+Subject: [PATCH] git-cvsimport-script: parse multidigit revisions
+Date: Tue, 12 Jul 2005 23:35:32 +0200
+Message-ID: <20050712213531.GA10936@pc117b.liacs.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jul 12 23:35:36 2005
+Cc: Matthias Urlichs <smurf@smurf.noris.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 23:42:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsSOY-00065w-Fj
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 23:34:26 +0200
+	id 1DsSWP-0007Os-2q
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 23:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262446AbVGLVYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 17:24:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262394AbVGLVDL
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 17:03:11 -0400
-Received: from main.gmane.org ([80.91.229.2]:14570 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262423AbVGLVBA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 17:01:00 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1DsRri-0008V1-E9
-	for git@vger.kernel.org; Tue, 12 Jul 2005 23:00:34 +0200
-Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:00:30 +0200
-Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:00:30 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4)
+	id S262422AbVGLVlt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 17:41:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262486AbVGLVj2
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 17:39:28 -0400
+Received: from rhodium.liacs.nl ([132.229.131.16]:26753 "EHLO rhodium.liacs.nl")
+	by vger.kernel.org with ESMTP id S262422AbVGLVhO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 17:37:14 -0400
+Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
+	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id j6CLZWTf017174;
+	Tue, 12 Jul 2005 23:35:37 +0200
+Received: by pc117b.liacs.nl (Postfix, from userid 17122)
+	id 3DDB04CCA2; Tue, 12 Jul 2005 23:35:32 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Matthias Urlichs <smurf <at> smurf.noris.de> writes:
+git-cvsimport-script: parse multidigit revisions.
 
-> 
-> Hi, Marc Singer wrote:
-> 
-> >   # git-update-cache `git-diff-cache | cut -f2`
-> 
-> g-d-c should have an option to print file names only. All that cutting
-> and argument-backtick-ing gets pretty nasty when there are a lot of files,
-> or if they contain special characters.
+Previously, git-cvsimport-script would fail
+on revisions with more than one digit.
 
-I concur.  I'll add --name-only flag to diff brothers soonish.
+Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
 
-Sorry I am at work and have turned the incoming connection to my home network
-before I left for work today -- this is the same junkio@cox.net who is guilty
-for all your diff problems ;-).
+---
+commit 7b5f7bcc470528beb4a0b6ef1c93ce634aaa0158
+tree db66d0759f97016bd123e2351aa0e77585e3177b
+parent e30e814dbfef7a6e89418863e5d7291a2d53b18f
+author Sven Verdoolaege <skimo@kotnet.org> Tue, 12 Jul 2005 22:36:57 +0200
+committer Sven Verdoolaege <skimo@kotnet.org> Tue, 12 Jul 2005 22:36:57 +0200
+
+ git-cvsimport-script |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-cvsimport-script b/git-cvsimport-script
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -675,7 +675,7 @@ while(<CVS>) {
+ 		$state = 9;
+ 	} elsif($state == 8) {
+ 		$logmsg .= "$_\n";
+-	} elsif($state == 9 and /^\s+(\S+):(INITIAL|\d(?:\.\d+)+)->(\d(?:\.\d+)+)\s*$/) {
++	} elsif($state == 9 and /^\s+(\S+):(INITIAL|\d+(?:\.\d+)+)->(\d+(?:\.\d+)+)\s*$/) {
+ #	VERSION:1.96->1.96.2.1
+ 		my $init = ($2 eq "INITIAL");
+ 		my $fn = $1;
