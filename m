@@ -1,57 +1,76 @@
-From: Tony Luck <tony.luck@intel.com>
-Subject: [PATCH] git: fix trivial warning from show_rename_copy()
-Date: Tue, 12 Jul 2005 11:54:21 -0700
-Message-ID: <200507121854.j6CIsLxd001509@agluck-lia64.sc.intel.com>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 21:02:23 2005
+From: "Jerry Seutter" <Jerry.Seutter@pason.com>
+Subject: RE: Compilation troubles
+Date: Tue, 12 Jul 2005 13:00:46 -0600
+Message-ID: <5EDB10423795F248B2A4C4957409ED680280D603@exch-calgary.int.pason.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+X-From: git-owner@vger.kernel.org Tue Jul 12 21:05:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsPzf-0005gw-Eu
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 21:00:35 +0200
+	id 1DsQ4F-0006jH-Uz
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 21:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262239AbVGLS7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 14:59:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262186AbVGLS5k
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 14:57:40 -0400
-Received: from fmr21.intel.com ([143.183.121.13]:28570 "EHLO
-	scsfmr001.sc.intel.com") by vger.kernel.org with ESMTP
-	id S262022AbVGLSzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2005 14:55:13 -0400
-Received: from scsfmr101.sc.intel.com (scsfmr101.sc.intel.com [10.3.253.10])
-	by scsfmr001.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j6CIsfMD023632;
-	Tue, 12 Jul 2005 18:54:45 GMT
-Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [143.183.251.239])
-	by scsfmr101.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j6CIlV11031305;
-	Tue, 12 Jul 2005 18:47:31 GMT
-Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
-	by agluck-lia64.sc.intel.com (8.13.1/8.13.1) with ESMTP id j6CIsa0d001510;
-	Tue, 12 Jul 2005 11:54:41 -0700
-Received: (from aegl@localhost)
-	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id j6CIsLxd001509;
-	Tue, 12 Jul 2005 11:54:21 -0700
-To: torvalds@osdl.org
-X-Scanned-By: MIMEDefang 2.44
+	id S262206AbVGLTEh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 15:04:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262022AbVGLTC6
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 15:02:58 -0400
+Received: from hemlock.pason.com ([208.38.1.1]:54049 "EHLO
+	exch-calgary.int.pason.com") by vger.kernel.org with ESMTP
+	id S262228AbVGLTAr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 15:00:47 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Compilation troubles
+Thread-Index: AcWHEDcGAWw+xoR4SmSK9oF5pT6cpAAAsoMA
+To: "Dan Kohn" <dan@dankohn.com>, <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-apply.c: In function `show_rename_copy':
-apply.c:1147: warning: field precision is not type int (arg 3)
+ 
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
+> -----Original Message-----
+> From: git-owner@vger.kernel.org 
+> [mailto:git-owner@vger.kernel.org] On Behalf Of Dan Kohn
+> Sent: Tuesday, July 12, 2005 12:34 PM
+> To: git@vger.kernel.org
+> Subject: Compilation troubles
+> 
+> I apologize for what are probably obvious compilation questions, but I
+> suspect other newbies are encountering them as well.  I'm 
+> having trouble
+> installing cogito 0.12.1 on both a vanilla Ubuntu box and on 
+> my account
+> on a FreeBSD machine.  I'm used to autoconf-built programs, so there's
+> probably just some simple library path I'm not setting up right.  But
+> I'd appreciate your suggestions, and perhaps we can add the answer to
+> the INSTALL file.
+> 
+> UBUNTU 5.04
+> 
+> I used synaptics to install openssl, zlib, and curl, but cogito can't
+> seem to see them.
+> 
+> root@ubuntu-dan-kohn:/usr/local/src/cogito-0.12.1 # make
+> cc -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>'   -c -o read-cache.o
+> read-cache.c
+> In file included from read-cache.c:6:
+> cache.h:21:21: openssl/sha.h: No such file or directory
 
----
+I tried this last night with Ubuntu (Warty).  The openssl package
+doesn't include header files so presumably you would need to install
+openssl-dev, only that package doesn't seem to exist in Ubuntu-land.  I
+gave up at this point and installed on a different system.
 
-diff --git a/apply.c b/apply.c
---- a/apply.c
-+++ b/apply.c
-@@ -1143,7 +1143,7 @@ static void show_rename_copy(struct patc
- 	 */
- 	if (old != p->old_name)
- 		printf(" %s %.*s{%s => %s} (%d%%)\n", renamecopy,
--		       old - p->old_name, p->old_name,
-+		       (int)(old - p->old_name), p->old_name,
- 		       old, new, p->score);
- 	else
- 		printf(" %s %s => %s (%d%%)\n", renamecopy,
+The README file for cogito/git mentions that there is an ssl library
+included in the source which you can use if you don't have openssl.  It
+doesn't give any directions on how to use it, however.  You could try
+looking into using that.
+
+
+Jerry Seutter
