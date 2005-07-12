@@ -1,77 +1,78 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
+From: Junio C Hamano <junkio@twinsun.com>
 Subject: Re: [PATCH] tagger id
-Date: Tue, 12 Jul 2005 16:15:36 -0600
-Message-ID: <m1pstnzn5j.fsf@ebiederm.dsl.xmission.com>
-References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
-	<m1eka574c8.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507110958400.17536@g5.osdl.org>
-	<m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507111815180.17536@g5.osdl.org>
-	<m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com>
-	<m18y0c1prv.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507121152260.17536@g5.osdl.org>
+Date: Tue, 12 Jul 2005 23:42:13 +0000 (UTC)
+Message-ID: <loom.20050713T011619-369@post.gmane.org>
+References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org> <m1eka574c8.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507110958400.17536@g5.osdl.org> <m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507111815180.17536@g5.osdl.org> <m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com> <m18y0c1prv.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507121152260.17536@g5.osdl.org> <m1pstnzn5j.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 13 00:19:14 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jul 13 01:49:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsT4t-0005To-DU
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 00:18:11 +0200
+	id 1DsUUd-0001VK-Tj
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 01:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262434AbVGLWRa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 18:17:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262408AbVGLWRN
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 18:17:13 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:9887 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S262434AbVGLWPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2005 18:15:51 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6CMFdJ3013106;
-	Tue, 12 Jul 2005 16:15:39 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6CMFa8K013105;
-	Tue, 12 Jul 2005 16:15:36 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507121152260.17536@g5.osdl.org> (Linus
- Torvalds's message of "Tue, 12 Jul 2005 11:54:05 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262493AbVGLXsR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 19:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262457AbVGLXqH
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 19:46:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:29405 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262520AbVGLXoN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 19:44:13 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DsUPL-0000lx-BG
+	for git@vger.kernel.org; Wed, 13 Jul 2005 01:43:23 +0200
+Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 01:43:23 +0200
+Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 01:43:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Eric W. Biederman <ebiederm <at> xmission.com> writes:
 
-> Eric,
->  I ended up coding the ident stuff a bit differently, and I didn't do done
-> the tag/git-id part yet. Can you check out my latest commit (pushed out, 
-> but it will probably take a few minutes to mirror out), and do the final 
-> tag stuff based on that? 
+> Since we are still looking at this there is one change in the user
+> interface I would like to make to simplify things for the end user.
+> The only time when GIT_COMMITTER != GIT_AUTHOR is in git_commit_script
+> when we you are making a new commit based on an old commit...
 
-For the most part it looks sane.   I'm not really thrilled that
-setup_ident() calls die, and when complaining about the user
-name we should probably complain that their sysadmin hated
-then if it is over a 1000 characters not their parents :)
+I am afraid I do not follow you.  For a "project lead" person like Linus, who
+takes an e-mail submission of patches, GIT_AUTHOR is almost always different
+from the committer, and typically set up by the program that reads the e-mail
+to snarf the From: and Date: lines via environment variables, when the incoming
+patches are being processed.  He is saying "I am the COMMITTER, and this commit
+I am making is written by this AUTHOR".
 
-I'm also not at all thrilled with global variables.  Globals aren't
-the source of all evil but they have a lot better claim than goto.
-At least real_email and friends are file local.  If you like
-it and the code works git is you project and I won't complain again.
+AUTHOR can be set to somebody other than yourself and that is a typical mode
+of operation for a "project lead" person.
 
-Since we are still looking at this there is one change in the user
-interface I would like to make to simplify things for the end user.
-The only time when GIT_COMMITTER != GIT_AUTHOR is in git_commit_script
-when we you are making a new commit based on an old commit. Can
-we add a command line option to git-commit-write, --author
-that will allow the author field to be overridden.  Allowing us
-to get down to a single set of GIT variables for specifying who
-the user is?
+On the other hand, we made COMMITTER overridable only because (1) the
+computed value from the system are often not quite right on many systems
+with weird GECOS field or domain/e-mail setup, and (2) when converting from
+a foreign SCM, we wanted to keep the committer information (and dates), if
+available.  Only in (2), which is quite a special case, COMMITTER names
+somebody different from yourself.
 
-That also simplifies the tagging case and answers the question 
-which environment variables tags should look at, to see who the
-user is. 
+What this means is that if you are asking the question "who the user is",
+the answer _should_ always come from COMMITTER.  
 
-Eric
+> That also simplifies the tagging case and answers the question 
+> which environment variables tags should look at, to see who the
+> user is. 
+
+The intent of "tags" (especially the signed kind) is to express "trust":
+"This commit is called v2.6.12 and *I* vouch for it."
+
+COMMITTER is the only sensible thing to use there, because (as you said)
+what you care is "who I am", not "for whom I am doing this".  
