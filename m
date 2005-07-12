@@ -1,56 +1,53 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Trial git RPM's..
-Date: Mon, 11 Jul 2005 18:15:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507111815180.17536@g5.osdl.org>
-References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
- <m1eka574c8.fsf@ebiederm.dsl.xmission.com> <Pine.LNX.4.58.0507110958400.17536@g5.osdl.org>
- <m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 2/2] Demo support for packs via HTTP
+Date: Mon, 11 Jul 2005 21:54:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.21.0507112147400.30848-100000@iabervon.org>
+References: <1121118544.3939.6.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 12 03:22:37 2005
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>,
+	Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Jul 12 03:56:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Ds9Tc-0000HB-Jh
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 03:22:24 +0200
+	id 1DsA0d-0003pa-2D
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 03:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262255AbVGLBQ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 21:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261840AbVGLBQx
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 21:16:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:52448 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261841AbVGLBPy (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 21:15:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6C1FqjA008811
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 11 Jul 2005 18:15:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6C1FqIV013616;
-	Mon, 11 Jul 2005 18:15:52 -0700
-To: "Eric W. Biederman" <ebiederm@xmission.com>
-In-Reply-To: <m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261747AbVGLB4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 21:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261693AbVGLB4Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 21:56:16 -0400
+Received: from iabervon.org ([66.92.72.58]:44294 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261747AbVGLB4L (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 21:56:11 -0400
+Received: from barkalow (helo=localhost)
+	by iabervon.org with local-esmtp (Exim 2.12 #2)
+	id 1Ds9yC-0007oD-00; Mon, 11 Jul 2005 21:54:00 -0400
+To: Darrin Thompson <darrint@progeny.com>
+In-Reply-To: <1121118544.3939.6.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 11 Jul 2005, Darrin Thompson wrote:
 
-
-On Mon, 11 Jul 2005, Eric W. Biederman wrote:
+> On Sun, 2005-07-10 at 15:56 -0400, Daniel Barkalow wrote:
+> > +	curl_easy_setopt(curl, CURLOPT_FILE, indexfile);
+> > +	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
+> > +	curl_easy_setopt(curl, CURLOPT_URL, url);
 > 
-> Actually I was looking at doing a git-ident thing that will
-> just compute who git thinks you are.  And then git-commit-tree can
-> just popen it to share code.  That looks like how the logic has
-> been accomplished in other places.
+> I was hoping to send in a patch which would turn on user auth and turn
+> off ssl peer verification.
+> 
+> Your (preliminary obviously) patch puts curl handling in two places. Is
+> there a place were I can safely start working on adding the needed
+> setopts?
 
-I hate popen() if there's a reasonable functional interface in a library.
+If I understand the curl documentation, you should be able to set options 
+on the curl object when it has just been created, if those options aren't
+going to change between requests. Note that I make requests from multiple
+places, but I use the same curl object for all of them.
 
-popen() is damn inefficient for doing something like this that is all C 
-anyway.
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
