@@ -1,93 +1,97 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
-	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-ASN: AS7018 12.0.0.0/9
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: svn versus git
-Date: Thu, 14 Dec 2006 09:19:29 +0000
-Message-ID: <200612140919.30495.andyparkins@gmail.com>
-References: <200612132200.41420.andyparkins@gmail.com> <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Mon, 11 Jul 2005 18:43:23 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+ <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Thu, 14 Dec 2006 09:19:43 +0000 (UTC)
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+NNTP-Posting-Date: Tue, 12 Jul 2005 01:44:03 +0000 (UTC)
+Cc: Marc Singer <elf@buici.com>, git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Xc4ZdBtH/imTxuPLDFc26cYmic/lvmWkBdIVl5EVpmdnm1QptPnqX0bJwPGsXqHocgrAVd73I5IxoKgU/WGxmzRSa34LGp9tyuS5vQwMzNUNqBDDtng+w/RHgzCVE1gOALIinS3Q/G/SxTG2VSO9h3Hywlic65aEy7XCDVcvL2U=
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vfybjbbsx.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34290>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gumke-0005ej-Ie for gcvg-git@gmane.org; Thu, 14 Dec
- 2006 10:19:40 +0100
+X-Report-Spam: http://spam.gmane.org/gmane.comp.version-control.git:6000
+Received: from vger.kernel.org ([12.107.209.244]) by ciao.gmane.org with
+ esmtp (Exim 4.43) id 1Ds9o8-00025L-NV for gcvg-git@gmane.org; Tue, 12 Jul
+ 2005 03:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S932119AbWLNJTh (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 14 Dec 2006
- 04:19:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbWLNJTh
- (ORCPT <rfc822;git-outgoing>); Thu, 14 Dec 2006 04:19:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:33245 "EHLO
- ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S932119AbWLNJTg (ORCPT <rfc822;git@vger.kernel.org>); Thu, 14 Dec
- 2006 04:19:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so435874uga for
- <git@vger.kernel.org>; Thu, 14 Dec 2006 01:19:34 -0800 (PST)
-Received: by 10.66.244.10 with SMTP id r10mr1077908ugh.1166087974714; Thu, 14
- Dec 2006 01:19:34 -0800 (PST)
-Received: from dvr.360vision.com ( [194.70.53.227]) by mx.google.com with
- ESMTP id j34sm1780749ugc.2006.12.14.01.19.34; Thu, 14 Dec 2006 01:19:34 -0800
- (PST)
-To: git@vger.kernel.org
+ S261750AbVGLBnb (ORCPT <rfc822;gcvg-git@m.gmane.org>); Mon, 11 Jul 2005
+ 21:43:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261753AbVGLBnb
+ (ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 21:43:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51941 "EHLO smtp.osdl.org") by
+ vger.kernel.org with ESMTP id S261750AbVGLBna (ORCPT
+ <rfc822;git@vger.kernel.org>); Mon, 11 Jul 2005 21:43:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6]) by
+ smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6C1hOjA010681
+ (version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO); Mon, 11
+ Jul 2005 18:43:24 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31]) by
+ shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6C1hNaj014824; Mon, 11 Jul
+ 2005 18:43:23 -0700
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 
-On Wednesday 2006 December 13 23:45, Junio C Hamano wrote:
 
-> ls-tree is not Porcelain and has right to expose the internals
 
-Of course; but there is no porcelain to do that operation.
-
-> by default.  "git ls-tree --name-only" could be aliased to give
-> "git ls" if you wanted to, but I wonder how often you would want
-> to run:
+On Mon, 11 Jul 2005, Linus Torvalds wrote:
 >
-> 	svn list -r538
->
-> and for what purpose?
+> No, git-checkout-script _shouldn't_ have done that. It will do the 
+> read-tree on the tag (which will do the right thing), but it won't change 
+> the HEAD itself.
 
-I've never done it.  However, the command is there in subversion, so I was 
-comparing git's implementation of that command.  I wouldn't completely write 
-it off though.  It doesn't seem unreasonable to want to see what files were 
-in an old revision.
+In preparation of actually updating the HEAD, I just made "git checkout" 
+verify that it only checks out a commit, not a tree tag or something like 
+that. Too late for Marc, but next time around a "git checkout v2.6.11" 
+will result in
 
-> I often find myself doing
-> 	git diff -r --name-status v1.3.0 HEAD
+	[torvalds@g5 linux]$ git checkout v2.6.11
+	error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
+	Needed a single revision
 
-I can live with that as an acceptable alternative to "svn list"; however, as 
-usual, how does my imaginary ex-svn user find out about that?  man git-diff 
-isn't the first place /I'd/ go; and even if you do, you won't find the "-r" 
-or "--name-status" options; you have to go to git-diff-files, git-diff-index 
-or git-diff-tree - and you're meant to guess which is the right one.
+That's not exactly _obvious_ either, but hey, it's at least a half-way
+readable and understandable error, and it's obviously correct to somebody
+who knows how git works.
 
-Bear in mind that my current theme isn't "can git do...?" it's "how does a 
-user know that git can do...?"
+That still leaves the question about what to do when you do
 
-> What do people use "svn list -r538" for and how often?  In other
-> words, when does it become necessary to get the full list of
-> paths in an arbitrary revision?
+	git checkout v2.6.12
 
-Me: I don't do it often.  It's not something I'd lose sleep over if git 
-doesn't have an easy way of doing it.  However, it was in the output 
-of "svn --help"; so I included it.
+which _is_ a valid operation. Right now it will "check out" that tag, in 
+the sense that it will make the working tree correspond to v2.6.12, but it 
+won't actually touch HEAD at all. The question is, what _should_ it do to 
+head?
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
+Should it just reset HEAD to point to .git/refs/master, and then write the
+commit ID to it? That may actually sometimes be exactly what you want, and
+at least it will result in a consistent state (ie the next commit will
+have the right parent). On the other hand, it will blow away whatever the
+old "master" branch contained, and thus likely leave an unreachable
+commit.
+
+On the other hand, creating a new branch might be a but surprising to 
+people: "But I just wanted to check it out". But as far as I can see, it's 
+the only safe thing to do, and it has the advantage that you can then go 
+back to the old state with a simple "git checkout master".
+
+But what about the branch name? Should we just ask the user? Together with 
+a flag, like
+
+	git checkout -b new-branch v2.6.12
+
+for somebody who wants to specify the branch name? Or should we pick a 
+random name and add a helper function to rename a branch later?
+
+Opinions?
+
