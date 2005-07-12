@@ -1,44 +1,58 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Darcs-git wiki page
-Date: Tue, 12 Jul 2005 18:22:06 +0200
-Message-ID: <7ik6jw9eq9.fsf@lanthane.pps.jussieu.fr>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Why is there no git-update-cache --modified (aka I give up)
+Date: Tue, 12 Jul 2005 18:16:51 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.12.16.16.45.990714@smurf.noris.de>
+References: <20050712055218.GA18192@buici.com> <7v7jfwbfvj.fsf@assigned-by-dhcp.cox.net> <20050712155316.GA5841@buici.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 18:24:03 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Tue Jul 12 18:24:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsNY6-0005vh-C8
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 18:23:58 +0200
+	id 1DsNXc-0005ts-Tq
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 18:23:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261561AbVGLQXR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 12:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261574AbVGLQXH
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 12:23:07 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:53440 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261572AbVGLQWP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 12:22:15 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j6CGM9og096973
-          ; Tue, 12 Jul 2005 18:22:12 +0200 (CEST)
-X-Ids: 164
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.4/jtpda-5.4) with ESMTP id j6CGM6bO005269
-          ; Tue, 12 Jul 2005 18:22:06 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.50)
-	id 1DsNWI-0004kZ-G2; Tue, 12 Jul 2005 18:22:06 +0200
-To: darcs-users@abridgegame.org
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.164]); Tue, 12 Jul 2005 18:22:12 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 42D3EE31.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261556AbVGLQUh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 12:20:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261523AbVGLQSg
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 12:18:36 -0400
+Received: from main.gmane.org ([80.91.229.2]:37813 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261570AbVGLQR4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 12:17:56 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DsNRk-0004yg-9c
+	for git@vger.kernel.org; Tue, 12 Jul 2005 18:17:24 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 18:17:24 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 18:17:24 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-http://www.darcs.net/DarcsWiki/DarcsGit
+Hi, Marc Singer wrote:
 
-You're welcome to leave any questions you might have -- I'll try to
-answer.
+>   # git-update-cache `git-diff-cache | cut -f2`
 
-                                        Juliusz
+g-d-c should have an option to print file names only. All that cutting
+and argument-backtick-ing gets pretty nasty when there are a lot of files,
+or if they contain special characters.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+God is a perfect example of the kind of aberration that can result from
+an untrained intellect combining with an unrestrained imagination.
+		-- Simon Ewins
