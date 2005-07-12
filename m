@@ -1,62 +1,59 @@
-From: Bryan Larsen <bryanlarsen@yahoo.com>
-Subject: [PATCH] cg-commit chokes when given a very large list of files
-Date: Tue, 12 Jul 2005 07:20:25 -0400
-Message-ID: <20050712112012.23805.32745.sendpatchset@bryan-larsens-ibook-g4.local>
-Cc: Bryan Larsen <bryanlarsen@yahoo.com>, pasky@suse.cz,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 13:22:43 2005
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: Stacked GIT 0.4
+Date: Tue, 12 Jul 2005 14:14:44 +0100
+Message-ID: <tnxfyukjhdn.fsf@arm.com>
+References: <1120899939.7125.4.camel@localhost.localdomain>
+	<42D3A415.5000709@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 15:16:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsIp1-00049e-16
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 13:21:07 +0200
+	id 1DsKcG-0005DN-Fe
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 15:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261338AbVGLLUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 07:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261336AbVGLLUe
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 07:20:34 -0400
-Received: from smtp105.mail.sc5.yahoo.com ([66.163.169.225]:2731 "HELO
-	smtp105.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S261340AbVGLLUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2005 07:20:25 -0400
-Received: (qmail 45342 invoked from network); 12 Jul 2005 11:20:18 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:From:To:Cc:Message-Id:Subject;
-  b=CGEbxVwKWYZJ+GD+o3BwM4hDdHyN9Yu39Y0QLFV6e7PWr/LcIo59UH3np1c4QS+nI6eGNt2U+l0LHx5aMCRcczJ8iN/KQsVr7o7TtSXe3jeWFq2mQ7CMzER7TEn7dO0CgO7RxLJpOoHrPtXO7Tawqe0NiH8n502AVVu5cLhUrT0=  ;
-Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@69.159.204.165 with plain)
-  by smtp105.mail.sc5.yahoo.com with SMTP; 12 Jul 2005 11:20:18 -0000
-To: bryan.larsen@gmail.com
+	id S261412AbVGLNPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 09:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261424AbVGLNPi
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 09:15:38 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:51654 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S261412AbVGLNPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2005 09:15:15 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6CDEbs4000740;
+	Tue, 12 Jul 2005 14:14:37 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id OAA12582;
+	Tue, 12 Jul 2005 14:15:11 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Tue, 12 Jul 2005 14:15:10 +0100
+To: Bryan Larsen <bryan.larsen@gmail.com>
+In-Reply-To: <42D3A415.5000709@gmail.com> (Bryan Larsen's message of "Tue,
+ 12 Jul 2005 07:05:57 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 12 Jul 2005 13:15:10.0028 (UTC) FILETIME=[BAD708C0:01C586E3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-cg-commit currently chokes when passed a very large list of files.  Fix it.
+Bryan Larsen <bryan.larsen@gmail.com> wrote:
+> import: the complement to export
 
-This patch depends on your filenames not containing line feeds.  No big deal, lots of other parts of cogito break on filenames containing line feeds.
+It is written in the TODO file but didn't have time to do it. I'm
+working on moving all the commands from main.py into separate files
+under stgit/commands/ for a clearer view. This should be ready in the
+next day or two and, after that, I will work on other commands.
 
-Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
----
+> template files for the "series" output of export, to put it into a
+> format that "sendpatchset" understands.
 
- cg-commit |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+I thought about integrating sendpatchset into stgit but it is much
+simpler to just generate a control file (especially if you want to
+review what you're going to send). Is the subject line always the
+first line of the patch description?
 
-diff --git a/cg-commit b/cg-commit
---- a/cg-commit
-+++ b/cg-commit
-@@ -288,10 +288,12 @@ precommit_update () {
- 		[ "$op" = "N" ] || [ "$op" = "D" ] || [ "$op" = "M" ] || op=M
- 		eval "queue$op[\${#queue$op[@]}]=\"\$fname\""
- 	done
-+	IFS=$'\n'
- 	# XXX: Do we even need to do the --add and --remove update-caches?
--	[ "$queueN" ] && { git-update-cache --add ${infoonly} -- "${queueN[@]}" || return 1; }
--	[ "$queueD" ] && { git-update-cache --force-remove -- "${queueD[@]}" || return 1; }
--	[ "$queueM" ] && { git-update-cache ${infoonly} -- "${queueM[@]}" || return 1; }
-+	[ "$queueN" ] && { ( echo "${queueN[*]}" | tr \\n \\0 | xargs -0 git-update-cache --add ${infoonly} -- ) || return 1; }
-+	[ "$queueD" ] && { ( echo "${queueD[*]}" | tr \\n \\0 | xargs -0 git-update-cache --force-remove -- ) || return 1;  }
-+	[ "$queueM" ] && { ( echo "${queueM[*]}" | tr \\n \\0 | xargs -0 git-update-cache ${infoonly} -- ) || return 1; }
-+	IFS=$' \n\t'
- 	return 0
- }
- 
+-- 
+Catalin
