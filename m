@@ -1,55 +1,62 @@
-From: Bryan Larsen <bryan.larsen@gmail.com>
-Subject: Re: Stacked GIT 0.4
-Date: Tue, 12 Jul 2005 07:05:57 -0400
-Message-ID: <42D3A415.5000709@gmail.com>
-References: <1120899939.7125.4.camel@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 12 13:07:59 2005
+From: Bryan Larsen <bryanlarsen@yahoo.com>
+Subject: [PATCH] cg-commit chokes when given a very large list of files
+Date: Tue, 12 Jul 2005 07:20:25 -0400
+Message-ID: <20050712112012.23805.32745.sendpatchset@bryan-larsens-ibook-g4.local>
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, pasky@suse.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 13:22:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsIbf-0001z3-GB
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 13:07:19 +0200
+	id 1DsIp1-00049e-16
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 13:21:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261326AbVGLLGo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 07:06:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261176AbVGLLGo
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 07:06:44 -0400
-Received: from zproxy.gmail.com ([64.233.162.205]:65294 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261326AbVGLLF6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 07:05:58 -0400
-Received: by zproxy.gmail.com with SMTP id r28so508571nza
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 04:05:58 -0700 (PDT)
+	id S261338AbVGLLUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 07:20:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261336AbVGLLUe
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 07:20:34 -0400
+Received: from smtp105.mail.sc5.yahoo.com ([66.163.169.225]:2731 "HELO
+	smtp105.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S261340AbVGLLUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2005 07:20:25 -0400
+Received: (qmail 45342 invoked from network); 12 Jul 2005 11:20:18 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=eYHrZXXq4TCktEObC0Gaxaj56jz2sBoyed4VUA4fLa7hmZJC5EgHYNQc5lsglLTXiWe4srllv8PalZTFR17XordpcrJnjxPDBT7Fk/b8+Tvjchk0yGyEVbakrRTGgUQj9wk+rrzu9qEUsQZGZ//8Z2Ngrhz7zyXsyzIXJDrM4Wg=
-Received: by 10.36.129.6 with SMTP id b6mr1550200nzd;
-        Tue, 12 Jul 2005 04:05:58 -0700 (PDT)
-Received: from ?192.168.2.80? ([69.159.204.165])
-        by mx.gmail.com with ESMTP id 12sm2639652nzn.2005.07.12.04.05.57;
-        Tue, 12 Jul 2005 04:05:58 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <1120899939.7125.4.camel@localhost.localdomain>
+  s=s1024; d=yahoo.com;
+  h=Received:From:To:Cc:Message-Id:Subject;
+  b=CGEbxVwKWYZJ+GD+o3BwM4hDdHyN9Yu39Y0QLFV6e7PWr/LcIo59UH3np1c4QS+nI6eGNt2U+l0LHx5aMCRcczJ8iN/KQsVr7o7TtSXe3jeWFq2mQ7CMzER7TEn7dO0CgO7RxLJpOoHrPtXO7Tawqe0NiH8n502AVVu5cLhUrT0=  ;
+Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@69.159.204.165 with plain)
+  by smtp105.mail.sc5.yahoo.com with SMTP; 12 Jul 2005 11:20:18 -0000
+To: bryan.larsen@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas wrote:
-> Stacked GIT 0.4 release is available from http://procode.org/stgit/
-> 
+cg-commit currently chokes when passed a very large list of files.  Fix it.
 
-Very nice.
+This patch depends on your filenames not containing line feeds.  No big deal, lots of other parts of cogito break on filenames containing line feeds.
 
-Here's my wishlist.  Hopefully I'll be able to dig in and help out.
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+---
 
-import: the complement to export
-template files for the "series" output of export, to put it into a 
-format that "sendpatchset" understands.
+ cg-commit |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
-Bryan
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -288,10 +288,12 @@ precommit_update () {
+ 		[ "$op" = "N" ] || [ "$op" = "D" ] || [ "$op" = "M" ] || op=M
+ 		eval "queue$op[\${#queue$op[@]}]=\"\$fname\""
+ 	done
++	IFS=$'\n'
+ 	# XXX: Do we even need to do the --add and --remove update-caches?
+-	[ "$queueN" ] && { git-update-cache --add ${infoonly} -- "${queueN[@]}" || return 1; }
+-	[ "$queueD" ] && { git-update-cache --force-remove -- "${queueD[@]}" || return 1; }
+-	[ "$queueM" ] && { git-update-cache ${infoonly} -- "${queueM[@]}" || return 1; }
++	[ "$queueN" ] && { ( echo "${queueN[*]}" | tr \\n \\0 | xargs -0 git-update-cache --add ${infoonly} -- ) || return 1; }
++	[ "$queueD" ] && { ( echo "${queueD[*]}" | tr \\n \\0 | xargs -0 git-update-cache --force-remove -- ) || return 1;  }
++	[ "$queueM" ] && { ( echo "${queueM[*]}" | tr \\n \\0 | xargs -0 git-update-cache ${infoonly} -- ) || return 1; }
++	IFS=$' \n\t'
+ 	return 0
+ }
+ 
