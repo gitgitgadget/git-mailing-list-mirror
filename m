@@ -1,80 +1,73 @@
-From: Marc Singer <elf@buici.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Bootstrapping into git, commit gripes at me
-Date: Mon, 11 Jul 2005 19:10:04 -0700
-Message-ID: <20050712021004.GA27576@buici.com>
-References: <20050708230750.GA23847@buici.com> <Pine.LNX.4.58.0507081842550.17536@g5.osdl.org> <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org> <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+Date: Mon, 11 Jul 2005 19:21:39 -0700
+Message-ID: <7voe98g3ws.fsf@assigned-by-dhcp.cox.net>
+References: <20050708230750.GA23847@buici.com>
+	<Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+	<20050711222046.GA21376@buici.com>
+	<7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 12 04:10:55 2005
+Cc: Marc Singer <elf@buici.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 04:22:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsAE8-0004vf-JP
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 04:10:28 +0200
+	id 1DsAP9-0005t7-V9
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 04:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261693AbVGLCKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 11 Jul 2005 22:10:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261754AbVGLCKH
-	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 22:10:07 -0400
-Received: from florence.buici.com ([206.124.142.26]:14745 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S261693AbVGLCKG
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Jul 2005 22:10:06 -0400
-Received: (qmail 27807 invoked by uid 1000); 12 Jul 2005 02:10:04 -0000
+	id S261683AbVGLCVr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 11 Jul 2005 22:21:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261766AbVGLCVr
+	(ORCPT <rfc822;git-outgoing>); Mon, 11 Jul 2005 22:21:47 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52391 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261683AbVGLCVq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Jul 2005 22:21:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050712022139.BXEA18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 11 Jul 2005 22:21:39 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org> (Linus Torvalds's message of "Mon, 11 Jul 2005 18:43:23 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 11, 2005 at 06:43:23PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Mon, 11 Jul 2005, Linus Torvalds wrote:
-> >
-> > No, git-checkout-script _shouldn't_ have done that. It will do the 
-> > read-tree on the tag (which will do the right thing), but it won't change 
-> > the HEAD itself.
-> 
-> In preparation of actually updating the HEAD, I just made "git checkout" 
-> verify that it only checks out a commit, not a tree tag or something like 
-> that. Too late for Marc, but next time around a "git checkout v2.6.11" 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-:-) 
-
-> will result in
-> 
-> 	[torvalds@g5 linux]$ git checkout v2.6.11
-> 	error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
-> 	Needed a single revision
-> 
-> On the other hand, creating a new branch might be a but surprising to 
-> people: "But I just wanted to check it out". But as far as I can see, it's 
-> the only safe thing to do, and it has the advantage that you can then go 
-> back to the old state with a simple "git checkout master".
-> 
 > But what about the branch name? Should we just ask the user? Together with 
 > a flag, like
-> 
+>
 > 	git checkout -b new-branch v2.6.12
-> 
+>
 > for somebody who wants to specify the branch name? Or should we pick a 
 > random name and add a helper function to rename a branch later?
-> 
+>
 > Opinions?
 
->From my POV, what I want is a branch with the tag v2.6.12 as the basis
-of the branch.  I'm guessing that -b means "make me a branch and call
-it this".
+How about treating "master" a temporary thing --- "whatever I
+happen to be working on right now"?
 
- # git checkout -b BRANCH_NAME [TAG]
+ - git branch <branch-name>       ;# copies master to branch-name;
+				     if branch-name exists in refs/heads,
+                                     warn and refuse.  Override
+				     with --force flag.
 
-If the TAG is omitted, the branch is made from the current HEAD or
-some other reasonable point defined by the current working directory.
+ - git checkout <branch-name>     ;# copies branch-name to master; but
+                                     if master does not match any
+                                     of the other refs/heads/, warn
+                                     and refuse.  Override with
+                                     --force flag.
 
-Are uncommitted changes present in the working directory maintained?
-Discarded?  I wont't care since I'll never be doing that.  At least,
-not on purpose.
+Yes I realize that you have to be careful when to push to your
+public repository if you take this route, but this is only
+relevant to people like Jeff with multiple heads, and I think he
+publicly stated that his "refs/heads/master" aka .git/HEAD does
+not mean much and what matters are his branch heads.  People who
+do not use multiple branches but just checks out various tags,
+the above would be reasonably convenient.
