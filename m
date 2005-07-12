@@ -1,63 +1,56 @@
-From: Sven Verdoolaege <skimo@liacs.nl>
-Subject: [PATCH] git-cvsimport-script: parse multidigit revisions
-Date: Tue, 12 Jul 2005 23:35:32 +0200
-Message-ID: <20050712213531.GA10936@pc117b.liacs.nl>
+From: Junio C Hamano <junkio@twinsun.com>
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
+Date: Tue, 12 Jul 2005 21:37:00 +0000 (UTC)
+Message-ID: <loom.20050712T233332-364@post.gmane.org>
+References: <20050712190552.GA7178@taniwha.stupidest.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 12 23:42:40 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 12 23:45:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsSWP-0007Os-2q
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 23:42:33 +0200
+	id 1DsSYP-0007mr-EK
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 23:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262422AbVGLVlt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 17:41:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262486AbVGLVj2
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 17:39:28 -0400
-Received: from rhodium.liacs.nl ([132.229.131.16]:26753 "EHLO rhodium.liacs.nl")
-	by vger.kernel.org with ESMTP id S262422AbVGLVhO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 17:37:14 -0400
-Received: from pc117b.liacs.nl (pc117b.liacs.nl [132.229.129.143])
-	by rhodium.liacs.nl (8.13.0/8.13.0/LIACS 1.4) with ESMTP id j6CLZWTf017174;
-	Tue, 12 Jul 2005 23:35:37 +0200
-Received: by pc117b.liacs.nl (Postfix, from userid 17122)
-	id 3DDB04CCA2; Tue, 12 Jul 2005 23:35:32 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
+	id S262476AbVGLVn7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 17:43:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262479AbVGLVjW
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 17:39:22 -0400
+Received: from main.gmane.org ([80.91.229.2]:38033 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262373AbVGLVhU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 17:37:20 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DsSRI-0006UR-OY
+	for git@vger.kernel.org; Tue, 12 Jul 2005 23:37:16 +0200
+Received: from ip-66-80-53-59.lax.megapath.net ([66.80.53.59])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:37:16 +0200
+Received: from junkio by ip-66-80-53-59.lax.megapath.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 12 Jul 2005 23:37:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 66.80.53.59 (Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.7.8) Gecko/20050511 Firefox/1.0.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-git-cvsimport-script: parse multidigit revisions.
+Chris Wedgwood <cw <at> f00f.org> writes:
 
-Previously, git-cvsimport-script would fail
-on revisions with more than one digit.
+>  if [ "$newhead" ]; then
+>  	echo "Committed as $newhead."
+> -	echo $newhead >$_git/HEAD
+> +	echo_to_file $newhead $_git/HEAD
+>  	[ "$merging" ] && rm $_git/merging $_git/merging-sym $_git/merge-base
 
-Signed-off-by: Sven Verdoolaege <skimo@kotnet.org>
+Good intentions, but wouldn't the above clobber symlinked HEAD?
 
----
-commit 7b5f7bcc470528beb4a0b6ef1c93ce634aaa0158
-tree db66d0759f97016bd123e2351aa0e77585e3177b
-parent e30e814dbfef7a6e89418863e5d7291a2d53b18f
-author Sven Verdoolaege <skimo@kotnet.org> Tue, 12 Jul 2005 22:36:57 +0200
-committer Sven Verdoolaege <skimo@kotnet.org> Tue, 12 Jul 2005 22:36:57 +0200
-
- git-cvsimport-script |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -675,7 +675,7 @@ while(<CVS>) {
- 		$state = 9;
- 	} elsif($state == 8) {
- 		$logmsg .= "$_\n";
--	} elsif($state == 9 and /^\s+(\S+):(INITIAL|\d(?:\.\d+)+)->(\d(?:\.\d+)+)\s*$/) {
-+	} elsif($state == 9 and /^\s+(\S+):(INITIAL|\d+(?:\.\d+)+)->(\d+(?:\.\d+)+)\s*$/) {
- #	VERSION:1.96->1.96.2.1
- 		my $init = ($2 eq "INITIAL");
- 		my $fn = $1;
+Not a fundamental flaw, though.  You need to see if it is a symlink,
+readlink it (repeatedly until you get a regular file or dangling symlink
+target that does not exist --- immediately after git-init-db has such a
+HEAD) and run your echo_to_file on the link target.
