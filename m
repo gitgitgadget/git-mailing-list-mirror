@@ -1,59 +1,75 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH 3/6] git-gnu-progs-Makefile: git Makefile update
-Date: Tue, 12 Jul 2005 11:03:59 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.12.09.03.59.181984@smurf.noris.de>
-References: <20050711101417.10318.64006.sendpatchset@bryan-larsens-ibook-g4.local> <20050711101454.10318.70399.sendpatchset@bryan-larsens-ibook-g4.local> <7vk6jxupxs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111206240.17536@g5.osdl.org> <42D2CBA2.8060705@yahoo.com> <Pine.LNX.4.58.0507111252380.17536@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Tue, 12 Jul 2005 02:07:43 -0700
+Message-ID: <7vy88c5r4w.fsf@assigned-by-dhcp.cox.net>
+References: <20050708230750.GA23847@buici.com>
+	<Pine.LNX.4.58.0507081842550.17536@g5.osdl.org>
+	<20050711222046.GA21376@buici.com>
+	<7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+	<20050712021004.GA27576@buici.com>
+	<Pine.LNX.4.58.0507112005540.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507112045420.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
+	<20050712074801.GD6363@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Tue Jul 12 11:10:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Marc Singer <elf@buici.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 12 11:13:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsGma-0002TZ-5X
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 11:10:28 +0200
+	id 1DsGos-0002nQ-UM
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 11:12:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261289AbVGLJJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 05:09:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVGLJHX
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 05:07:23 -0400
-Received: from main.gmane.org ([80.91.229.2]:53479 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S261277AbVGLJFN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 05:05:13 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DsGh4-0001kg-RX
-	for git@vger.kernel.org; Tue, 12 Jul 2005 11:04:46 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 11:04:46 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 12 Jul 2005 11:04:46 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S261293AbVGLJKH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 05:10:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261271AbVGLJJy
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 05:09:54 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:56478 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261267AbVGLJHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Jul 2005 05:07:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.60.172])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050712090742.OHLW1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 12 Jul 2005 05:07:42 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050712074801.GD6363@pasky.ji.cz> (Petr Baudis's message of "Tue, 12 Jul 2005 09:48:01 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Linus Torvalds wrote:
+I do want to see various Porcelains to agree on how to store
+state information in $GIT_DIR for doing common operations, when
+they are conceptually compatible.  The way they handle branches
+may fall into that category.  With the barebone GIT Porcelain,
+"seek" like operation may simply be done by creating another
+branch or tag and jumping to it, so there may not be the concept
+of "seek", in which case they may not be compatible after all.
 
-> I also don't see why, if OS-X already _does_ include the GNU tools, they 
-> couldn't be under /opt/fsf/bin or something like that, and then you could 
-> just do
-> 
-> 	PATH=/opt/fsf/bin:$PATH
+Having said that, I do like the concept of keeping track of
+"which development line are we on, and what's most recent in
+it".  The way I read your description of cg-seek, you currently
+have that information is either in .git/head-name and
+.git/refs/heads/<head-name> pair (when .git/head-name exists),
+or .git/HEAD.
 
-We could prepend /usr/lib/git to $PATH, and symlink them with their "real"
-names there.
+If you block certain operations while you have seeked to non-top
+anyway, wouldn't it be cleaner to have .git/seeked-to that
+records the commit ID you are at, which at the same time
+indicates that you are in a special situation, and not touching
+HEAD at all?  Then .git/HEAD will always have that line of
+development information.
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Go directly to jail.  Do not pass Go, do not collect $200.
+Well, that was half tongue-in-cheek suggestion; I have a feeling
+that you may feel it is a bit too late to change this kind of
+thing easily.
+
+But if we are going to agree on using .git/head-name, I'd rather
+see it exist all times, so that cat "$GIT_DIR/head-name" would
+always tell us which branch we are working in.
