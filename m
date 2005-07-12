@@ -1,35 +1,58 @@
-From: Marc Singer <elf@buici.com>
-Subject: Why is there no git-update-cache --modified (aka I give up)
-Date: Mon, 11 Jul 2005 22:52:18 -0700
-Message-ID: <20050712055218.GA18192@buici.com>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [ANNOUNCE] Cogito 0.12.1
+Date: Mon, 11 Jul 2005 23:08:41 -0700
+Message-ID: <20050712060841.GU5324@shell0.pdx.osdl.net>
+References: <20050712010058.GE5981@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Tue Jul 12 07:53:35 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 12 08:09:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsDhY-000549-Kp
-	for gcvg-git@gmane.org; Tue, 12 Jul 2005 07:53:04 +0200
+	id 1DsDwu-0006aG-Hx
+	for gcvg-git@gmane.org; Tue, 12 Jul 2005 08:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262376AbVGLFwU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 12 Jul 2005 01:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262377AbVGLFwU
-	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 01:52:20 -0400
-Received: from florence.buici.com ([206.124.142.26]:43419 "HELO
-	florence.buici.com") by vger.kernel.org with SMTP id S262376AbVGLFwT
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Jul 2005 01:52:19 -0400
-Received: (qmail 18280 invoked by uid 1000); 12 Jul 2005 05:52:18 -0000
-To: git@vger.kernel.org
+	id S262386AbVGLGIq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 12 Jul 2005 02:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262389AbVGLGIq
+	(ORCPT <rfc822;git-outgoing>); Tue, 12 Jul 2005 02:08:46 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:28592 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262386AbVGLGIp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Jul 2005 02:08:45 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6C68gjA027932
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 11 Jul 2005 23:08:42 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6C68fjT025377;
+	Mon, 11 Jul 2005 23:08:41 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j6C68fkS025376;
+	Mon, 11 Jul 2005 23:08:41 -0700
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <20050712010058.GE5981@pasky.ji.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  # git-diff-cache HEAD
+* Petr Baudis (pasky@ucw.cz) wrote:
+>   here is Cogito 0.12.1, another desperate attempt to keep pace with
+> '@' or Linus, the named Human Master Coder. (Linus, the Human Master
+> Coder, mumbles arcane do { formulae } while (0)!  Some kind of force
+> seems to attack your mind.  Everything suddenly looks so different...
+> You are confused.)  Visit the greater spellbook vault at
+> 
+> 	http://www.kernel.org/pub/software/scm/cogito
 
-is really nice.  But, do I really have to invoke git-update-cache with
-every modified file?  I could write a script to cul the filenames from
-git-diff-cache, but I'm having a hard time believing that that is how
-others are preparing their commits.
+The SRPM and RPMS are uploaded to:
+	http://www.kernel.org/pub/software/scm/cogito/RPMS
+
+thanks,
+-chris
