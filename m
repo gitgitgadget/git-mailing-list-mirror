@@ -1,57 +1,95 @@
-From: Jerry Seutter <jerry.seutter@pason.com>
-Subject: Re: [PATCH] stgit: allow spaces in filenames
-Date: Wed, 13 Jul 2005 15:09:56 -0600
-Message-ID: <42D58324.6080303@pason.com>
-References: <20050713083805.18461.87079.sendpatchset@bryan-larsens-ibook-g4.local> <tnxll4bdn7b.fsf@arm.com> <42D55AC9.4000506@gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place
+ (breaks CoW use)
+Date: Wed, 13 Jul 2005 14:23:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507131410430.17536@g5.osdl.org>
+References: <20050712190552.GA7178@taniwha.stupidest.org>
+ <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org>
+ <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 23:13:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 23:26:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsoWY-00036b-DU
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:12:10 +0200
+	id 1DsokE-0005DZ-Om
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262378AbVGMVLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 17:11:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262717AbVGMVJ0
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:09:26 -0400
-Received: from hemlock.pason.com ([208.38.1.1]:39764 "EHLO
-	exch-calgary.int.pason.com") by vger.kernel.org with ESMTP
-	id S262378AbVGMVHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 17:07:25 -0400
-Received: from [172.16.0.231] ([172.16.0.231]) by exch-calgary.int.pason.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 13 Jul 2005 15:07:24 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Bryan Larsen <bryan.larsen@gmail.com>
-In-Reply-To: <42D55AC9.4000506@gmail.com>
-X-OriginalArrivalTime: 13 Jul 2005 21:07:24.0302 (UTC) FILETIME=[DDCBE2E0:01C587EE]
+	id S261421AbVGMVZ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 17:25:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262476AbVGMVZu
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:25:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4581 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261420AbVGMVYP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 17:24:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6DLNJjA021859
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 13 Jul 2005 14:23:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6DLNIH4005522;
+	Wed, 13 Jul 2005 14:23:19 -0700
+To: Chris Wedgwood <cw@f00f.org>
+In-Reply-To: <20050713185339.GA9260@taniwha.stupidest.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Larsen wrote:
-> Catalin Marinas wrote:
+
+
+On Wed, 13 Jul 2005, Chris Wedgwood wrote:
 > 
->> An additional thing, can you please convert all the tabs to spaces?
->> That's a better convention for a language like Python where you
->> delimit blocks by indentation.
+> How about the following?
 > 
+>     echo_to_file() {
+> 	local DEST="$2"
+> 	local count=1
+> 	local RET
 > 
-> I would have hoped that emacs py-mode would "do the right thing". 
-> Anybody know how to make it do what Catalin wants?
+> 	# follow symlinks until we run out or end up with something
+> 	# dangling
+> 	while [ -L "$DEST" ] ; do
 
-Yeah, the default emacs mode seems to be to Do The Wrong Thing.  I have 
-this in my .emacs, YMMV.
+If you really want to do something like this, then you should do it like 
+this:
 
-(setq-default indent-tabs-mode nil)     ; Don't insert tab characters.
-(setq-default tab-width 4)              ; If there are tabs, display
-                                         ; as 4 spaces.
+	update_head() {
+		head="$GIT_DIR/HEAD"
+		newvalue=$(git-rev-parse --verify "$1"^0) || exit
+		if [ -L "$head" ]; then
+			head=$(readlink "$head")
+			case "$head" in
+			refs/heads/*)
+				head="$GIT_DIR"/"$head"
+				;;
+			*)
+				exit 1
+				;;
+			esac
+		fi
+		echo $newvalue > "$head.lock" && rename "$head.lock" "$head"
+	}
 
-You can set the tab-width to something much larger to make existing tabs 
-obvious.
+which is at least slightly simpler, and might even work thanks to that.
 
-Jerry
+Your was buggy for several reasons:
+
+ - following multiple links is _wrong_, since the next-level link could 
+   actually be a symlink to another tree entirely (if somebody is crazy 
+   enough to use "cp -Rl" to copy trees, then why not "cp -Rs"?)
+
+   Ergo: you should only follow a symlink if it points to refs/heads, and 
+   anything else would be a BUG.
+
+ - you got relative links wrong.
+
+Now, admittedly the above is totally untested too, so I'll probably have 
+typos etc in there. But the basic point stands: don't go for complexity. 
+Go for one _particular_ case.
+
+		Linus
