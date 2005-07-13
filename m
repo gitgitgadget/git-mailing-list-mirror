@@ -1,62 +1,60 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Tue, 12 Jul 2005 21:53:38 -0700
-Message-ID: <20050713045338.GA19819@taniwha.stupidest.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Compilation troubles
+Date: Wed, 13 Jul 2005 08:56:55 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.13.06.56.52.447219@smurf.noris.de>
+References: <B1091462CF5479489B1D8FE818330D2C01371D9F@exchange2003.ad.skymv.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 06:54:32 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Jul 13 08:58:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsZFo-000365-7m
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 06:53:52 +0200
+	id 1DsbBq-0005Gp-Nr
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 08:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262540AbVGMExs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 00:53:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262571AbVGMExs
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 00:53:48 -0400
-Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:47835 "EHLO
-	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S262540AbVGMExr
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 00:53:47 -0400
-Received: from pimout2-ext.prodigy.net (pimout2-int.prodigy.net [207.115.4.217])
-	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6D4rleC016142
-	for <git@vger.kernel.org>; Wed, 13 Jul 2005 00:53:47 -0400
-X-ORBL: [63.202.173.158]
-Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
-	by pimout2-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6D4rd7N398584;
-	Wed, 13 Jul 2005 00:53:44 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id 03F01529BBC; Tue, 12 Jul 2005 21:53:39 -0700 (PDT)
-To: Junio C Hamano <junkio@twinsun.com>
-Content-Disposition: inline
-In-Reply-To: <loom.20050712T233332-364@post.gmane.org>
+	id S262551AbVGMG5u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 02:57:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262548AbVGMG5u
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 02:57:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:45990 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262551AbVGMG5r (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 02:57:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DsbBY-0005D2-Bi
+	for git@vger.kernel.org; Wed, 13 Jul 2005 08:57:36 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 08:57:36 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 08:57:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 12, 2005 at 09:37:00PM +0000, Junio C Hamano wrote:
+Hi, Dan Kohn wrote:
 
-> >  if [ "$newhead" ]; then
-> >  	echo "Committed as $newhead."
-> > -	echo $newhead >$_git/HEAD
-> > +	echo_to_file $newhead $_git/HEAD
-> >  	[ "$merging" ] && rm $_git/merging $_git/merging-sym $_git/merge-base
->
-> Good intentions, but wouldn't the above clobber symlinked HEAD?
+> UBUNTU 5.04
 
-Yeah, but I would argue that is the right thing to do.
+You want zlib1g-dev, libssl-dev, asciidoc, xmlto, libcurl3-dev.
 
-Symlink'd trees don't really make sense to me (they seem fragile and
-somewhat pointless) but perhaps I'm missing something?
+I'll prepare a patch to do a simple set of Debian packages (so that "make
+debian" works) for git(k)/cogito. I already use them locally, but that
+branch is too unclean. :-/
 
-> Not a fundamental flaw, though.  You need to see if it is a symlink,
-> readlink it (repeatedly until you get a regular file or dangling
-> symlink target that does not exist --- immediately after git-init-db
-> has such a HEAD) and run your echo_to_file on the link target.
-
-I don't see how that's helpful.  The idea of echo_to_file is to make
-the metadata self-contained to the subtree --- so we don't want to
-have external links (possibly) pointing outside of it.
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The City of Palo Alto, in its official description of parking lot standards,
+specifies the grade of wheelchair access ramps in terms of centimeters of
+rise per foot of run.  A compromise, I imagine...
