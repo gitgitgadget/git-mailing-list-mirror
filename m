@@ -1,70 +1,57 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Wed, 13 Jul 2005 14:11:06 -0700
-Message-ID: <20050713211106.GA12047@taniwha.stupidest.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org> <Pine.LNX.4.58.0507131256490.17536@g5.osdl.org> <20050713204458.GB11403@taniwha.stupidest.org> <Pine.LNX.4.58.0507131402210.17536@g5.osdl.org>
+From: Jerry Seutter <jerry.seutter@pason.com>
+Subject: Re: [PATCH] stgit: allow spaces in filenames
+Date: Wed, 13 Jul 2005 15:09:56 -0600
+Message-ID: <42D58324.6080303@pason.com>
+References: <20050713083805.18461.87079.sendpatchset@bryan-larsens-ibook-g4.local> <tnxll4bdn7b.fsf@arm.com> <42D55AC9.4000506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Jul 13 23:13:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsoWk-00039k-4t
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:12:22 +0200
+	id 1DsoWY-00036b-DU
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262741AbVGMVLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 17:11:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262457AbVGMVLZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:11:25 -0400
-Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:24019 "EHLO
-	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S261420AbVGMVLR
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 17:11:17 -0400
-Received: from pimout2-ext.prodigy.net (pimout2-int.prodigy.net [207.115.4.217])
-	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6DLBBeE023794
-	for <git@vger.kernel.org>; Wed, 13 Jul 2005 17:11:15 -0400
-X-ORBL: [63.202.173.158]
-Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
-	by pimout2-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6DLB7RF417890;
-	Wed, 13 Jul 2005 17:11:07 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id E8DA6529BBC; Wed, 13 Jul 2005 14:11:06 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507131402210.17536@g5.osdl.org>
+	id S262378AbVGMVLT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 17:11:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262717AbVGMVJ0
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:09:26 -0400
+Received: from hemlock.pason.com ([208.38.1.1]:39764 "EHLO
+	exch-calgary.int.pason.com") by vger.kernel.org with ESMTP
+	id S262378AbVGMVHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 17:07:25 -0400
+Received: from [172.16.0.231] ([172.16.0.231]) by exch-calgary.int.pason.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 13 Jul 2005 15:07:24 -0600
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: Bryan Larsen <bryan.larsen@gmail.com>
+In-Reply-To: <42D55AC9.4000506@gmail.com>
+X-OriginalArrivalTime: 13 Jul 2005 21:07:24.0302 (UTC) FILETIME=[DDCBE2E0:01C587EE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 13, 2005 at 02:05:35PM -0700, Linus Torvalds wrote:
+Bryan Larsen wrote:
+> Catalin Marinas wrote:
+> 
+>> An additional thing, can you please convert all the tabs to spaces?
+>> That's a better convention for a language like Python where you
+>> delimit blocks by indentation.
+> 
+> 
+> I would have hoped that emacs py-mode would "do the right thing". 
+> Anybody know how to make it do what Catalin wants?
 
-> >   and .git/refs/head/master is hardlinked between both trees.
->
-> AND THAT IS WRONG.
+Yeah, the default emacs mode seems to be to Do The Wrong Thing.  I have 
+this in my .emacs, YMMV.
 
-OK, I was more-or-less assuming that 'cp -Rl tree1 tree2' was always a
-valid thing to do.
+(setq-default indent-tabs-mode nil)     ; Don't insert tab characters.
+(setq-default tab-width 4)              ; If there are tabs, display
+                                         ; as 4 spaces.
 
-Clearly if it's not then all of this is somewhat moot.
+You can set the tab-width to something much larger to make existing tabs 
+obvious.
 
-> You shouldn't hardlink whole trees. Git will not guarantee that it
-> breaks the links.
-
-I can live with that, until now though I wasn't aware that hardlinked
-trees were a bad-thing.
-
-> Your script was tens of lines of code, and it was BUGGY.
-
-Yeah well, I'm a retard.
-
-> Hardlink git _object_ directories. That's a totally different thing.
-
-I was under the misconception that hardlink entire trees was
-permissible.
-
-I would however like to be able to hardlink more than just the
-_object_ directory --- hardlinking the source is quite nice too.
-Might that be considered safe?  (I'm of course assuming that editors
-do write + rename when saving their buffers).
+Jerry
