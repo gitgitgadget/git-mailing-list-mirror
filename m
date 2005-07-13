@@ -1,68 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH (contingency)] Document "curl" requirements.
-Date: Wed, 13 Jul 2005 13:11:00 -0700
-Message-ID: <7vk6juxy97.fsf@assigned-by-dhcp.cox.net>
-References: <20050713021240.88AAD63780@morimoto.progeny.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Is cogito really this inefficient
+Date: Wed, 13 Jul 2005 13:28:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507131325170.17536@g5.osdl.org>
+References: <20050713135052.C6791@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 22:15:20 2005
+X-From: git-owner@vger.kernel.org Wed Jul 13 22:33:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsndA-0002uk-4l
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:14:56 +0200
+	id 1Dsnu8-0005Ze-Dm
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262777AbVGMUOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 16:14:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262778AbVGMUMU
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:12:20 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:24772 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262757AbVGMULD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 16:11:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050713201100.YFHI1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 13 Jul 2005 16:11:00 -0400
-To: darrint@progeny.com (Darrin Thompson)
-In-Reply-To: <20050713021240.88AAD63780@morimoto.progeny.com> (Darrin Thompson's message of "Tue, 12 Jul 2005 21:12:40 -0500 (EST)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262813AbVGMUbo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 16:31:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262758AbVGMU3D
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:29:03 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:44501 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262749AbVGMU22 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 16:28:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6DKSJjA017640
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 13 Jul 2005 13:28:19 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6DKSIY1002195;
+	Wed, 13 Jul 2005 13:28:19 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050713135052.C6791@flint.arm.linux.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-darrint@progeny.com (Darrin Thompson) writes:
 
-> Cause setting environment variable GIT_SSL_NO_VERIFY to turn off
-> curl's ssl peer verification.
+
+On Wed, 13 Jul 2005, Russell King wrote:
 >
-> Only use curl for http transfers, instead of curl and wget.
+> This says it all.  1min 22secs to generate a patch from a locally
+> modified but uncommitted file.
 
-I do not mind curl per se, since we already require libcurl for
-http-pull, but it would be nice if we document what external
-software we depend on in one place.  Something like this on top
-of what you posted?
+No, there's something else going on.
 
-------------
-Not just libcurl, but now we require curl executable as well.
+Most likely that something forced a total index file re-validation, and
+the time you see is every single checked out file having its SHA1
+re-computed.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
-diff --git a/INSTALL b/INSTALL
---- a/INSTALL
-+++ b/INSTALL
-@@ -41,8 +41,10 @@ Issues of note:
- 	  can avoid the bignum support by excising git-rev-list support
- 	  for "--merge-order" (by hand).
- 
--	- "libcurl".  git-http-pull uses this.  You can disable building of
--	  that program if you just want to get started. 
-+	- "libcurl" and "curl" (executable).  git-http-pull and
-+	  git-fetch-script use them.  If you do not use http
-+	  transfer, you are probabaly OK if you do not have
-+	  these two.
- 
- 	- "GNU diff" to generate patches.  Of course, you don't _have_ to
- 	  generate patches if you don't want to, but let's face it, you'll
+Was this a recently cloned tree, or what was the last operation you did on
+that tree before that command? Something must have invalidated the index.
+
+			Linus
