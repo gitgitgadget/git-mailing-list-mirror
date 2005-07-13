@@ -1,97 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: How to get a directory filled with v2.6.11?
-Date: Wed, 13 Jul 2005 13:37:51 -0700
-Message-ID: <7vvf3ewig0.fsf@assigned-by-dhcp.cox.net>
-References: <20050712050347.GA10751@buici.com>
-	<Pine.LNX.4.58.0507122116280.17536@g5.osdl.org>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
+Date: Wed, 13 Jul 2005 13:44:58 -0700
+Message-ID: <20050713204458.GB11403@taniwha.stupidest.org>
+References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org> <Pine.LNX.4.58.0507131256490.17536@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 22:43:30 2005
+Cc: Matthias Urlichs <smurf@smurf.noris.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 13 22:47:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dso42-0007Bw-Up
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:42:43 +0200
+	id 1Dso8f-0007qu-1R
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:47:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262758AbVGMUlz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 16:41:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262792AbVGMUj2
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:39:28 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:24553 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S262757AbVGMUhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 16:37:54 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050713203751.GVDB16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 13 Jul 2005 16:37:51 -0400
+	id S262822AbVGMUqw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 16:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262823AbVGMUqo
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:46:44 -0400
+Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:39299 "EHLO
+	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S262822AbVGMUpA
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 16:45:00 -0400
+Received: from pimout1-ext.prodigy.net (pimout1-int.prodigy.net [207.115.5.65])
+	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6DKj2eE026486
+	for <git@vger.kernel.org>; Wed, 13 Jul 2005 16:45:02 -0400
+X-ORBL: [63.202.173.158]
+Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
+	by pimout1-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6DKiwE5028156;
+	Wed, 13 Jul 2005 16:44:58 -0400
+Received: by taniwha.stupidest.org (Postfix, from userid 38689)
+	id 3D612529BBC; Wed, 13 Jul 2005 13:44:58 -0700 (PDT)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507122116280.17536@g5.osdl.org> (Linus Torvalds's message of "Tue, 12 Jul 2005 21:37:06 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507131256490.17536@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+On Wed, Jul 13, 2005 at 01:05:02PM -0700, Linus Torvalds wrote:
 
-> That said, whatever you do you will eventually end up with a series of
-> commits that are not related to the "normal" commits in the 2.6.12-rc2+
-> chain, and since they don't have a common point, git won't be able to
-> merge them for you. Git will be able to _track_ them for you, but at some
-> point you'll want to probably try to move them forward to the "rest" of
-> the git history.
->
-> And I'll warn you that that is not going to be entirely trivial, although
-> Junio's "cherrypick" scripts should be useful as a way to automate it at
-> least to some degree. This is why it would be so much easier if you could 
-> have started with a 2.6.12-rc2 or other "real" commit ;)
+> This is really complicated, for no good reason.
 
-I do not think git-cherry would be that useful in this context.
-Nobody upstream is merging things into your development trail,
-started at the private commit you made based on the 2.6.11 tree.
+What should I be doing?
 
-I was wondering if adding "graft trail" to merge-base command
-would help this situation.
+> The _object_ directories should be linked, but it's really wrong to link 
+> the "refs/" directories and expect them to have COW behaviour.
 
-    SYNOPSIS
-    --------
-    'git-merge-base' ( --graft <commit1> <commit2>)* <commit> <commit>
+I'm confused.
 
-    ...
+This function in only used to update various files, one of which is
+.git/HEAD
 
-    OPTIONS
-    -------
-    <commit>::
-            The two heads being merged.
+The complexity I added was to deal with a situation where we have
 
-    --graft <commit1> <commit2>::
-            Treat as if <commit1> is one of the ancestors of
-            <commit2> when computing the commit ancestry chain.
-            Can be specified more than once.
+  tree1/
+	.git/HEAD -> refs/head/master
 
-Then we could say "--graft v2.6.11 v2.6.12-rc2".
+and I do "cp -Rl tree1 tree2" giving me:
 
-We may want to have a configuration file in .git/ directory (I
-think it belongs to .git/objects/ hierarchy, because this is not
-per work-tree thing but per project thing) that record this
-"graft" relationship.
+  tree2/
+	.git/HEAD -> refs/head/master
 
-When we have not-so-stupid [*1*] merge algorithm in place, we
-could do even better.  Starting from v2.6.11 tree, we can
-rebuild (from BKCVS) the development trail up to v2.6.12-rc2,
-which is independent from the current kernel development trail
-which started at (a different) v2.6.12-rc2.  Use the former one
-as <commit1>, and the latter one as <commit2>, and the "clever"
-merge algorithm would be able to follow across the v2.6.12-rc2
-discontiguity and trace the development back to v2.6.11.
+  and .git/refs/head/master is hardlinked between both trees.
 
-[Footnote]
+Cogito will do "echo <foo> > .git/HEAD" which update *both* tree1 and
+tree2 which is not what I want.  So the idea is to readlink and do the
+update using echo + rename to get the CoW semantics I desire.
 
-*1* <Pine.LNX.4.58.0507052011440.3570@g5.osdl.org>
 
-So if you want to document that the current automatic merge is stupid,
-hey, go wild. It _is_ stupid. It's surprisingly effective, but that may be
-because of kernel development patterns and may not be true in other
-projects.
+Yes, weird things happen if you have out-of-treel links but I suspect
+if you do that with cogito you've probably lost anyhow.
+
+> I've tried to make most of the git tools write the refs objects
+> "safely" too, ie things like "git-receive-pack" (the receiving end
+> of a "git-send-pack") will write the new ref to a lock-file and then
+> do a "rename()" to set it.
+
+Yes, git is probably fine.  Cogito isn't.
+
+> That is COW-safe, but the thing is, it's incredibly painful for many
+> other operations, and I won't guarantee that git in general is
+> always going to be COW-safe wrt all the git files.
+
+What operations is this painful for?
