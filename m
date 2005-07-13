@@ -1,98 +1,56 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Wed, 13 Jul 2005 11:53:39 -0700
-Message-ID: <20050713185339.GA9260@taniwha.stupidest.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] stgit: allow spaces in filenames
+Date: Wed, 13 Jul 2005 12:51:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507131250060.17536@g5.osdl.org>
+References: <20050713083805.18461.87079.sendpatchset@bryan-larsens-ibook-g4.local>
+ <pan.2005.07.13.16.54.18.709929@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 21:00:22 2005
+X-From: git-owner@vger.kernel.org Wed Jul 13 21:55:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsmRw-0000SM-8U
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 20:59:16 +0200
+	id 1DsnJy-0008Tj-J8
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 21:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262397AbVGMS4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 14:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262226AbVGMSyR
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 14:54:17 -0400
-Received: from ylpvm43-ext.prodigy.net ([207.115.57.74]:50563 "EHLO
-	ylpvm43.prodigy.net") by vger.kernel.org with ESMTP id S262417AbVGMSxm
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 14:53:42 -0400
-Received: from pimout1-ext.prodigy.net (pimout1-int.prodigy.net [207.115.5.65])
-	by ylpvm43.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6DIrheC019738
-	for <git@vger.kernel.org>; Wed, 13 Jul 2005 14:53:44 -0400
-X-ORBL: [63.202.173.158]
-Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
-	by pimout1-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6DIrdIW070452;
-	Wed, 13 Jul 2005 14:53:40 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id 51A1E529BBC; Wed, 13 Jul 2005 11:53:39 -0700 (PDT)
+	id S262730AbVGMTyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 15:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262692AbVGMTwb
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 15:52:31 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:29638 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262711AbVGMTvn (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 15:51:43 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6DJpHjA013740
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 13 Jul 2005 12:51:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6DJpGg4032316;
+	Wed, 13 Jul 2005 12:51:16 -0700
 To: Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
-In-Reply-To: <pan.2005.07.13.07.03.26.398212@smurf.noris.de>
+In-Reply-To: <pan.2005.07.13.16.54.18.709929@smurf.noris.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 13, 2005 at 09:03:26AM +0200, Matthias Urlichs wrote:
-
-> You are ;-) the tree itsels is no symlinked, but HEAD points to
-> refs/heads/<branch> by default.
-
-Thanks for pointing that out.  I honestly never noticed that.
-
-How about the following?
-
-    echo_to_file() {
-	local DEST="$2"
-	local count=1
-	local RET
-
-	# follow symlinks until we run out or end up with something
-	# dangling
-	while [ -L "$DEST" ] ; do
-	    local NLINK=`readlink "$DEST"`
-
-	    if [ ! -e "$NLINK" ] ; then
-		# dangling link, just poke as-is
-		echo "$1" > "$DEST"
-		return $?
-	    fi
-
-	    # follow link
-	    if [ -L "$NLINK" ] ; then
-		count=$(("$count" + 1))
-		if [ "$count" -gt 5 ] ; then
-		    echo "Too many symlinks when resolving $2" 1>&2
-		    return 1
-		fi
-		DEST="$NLINK"
-	    fi
-	done
-
-	# end up with a regular file
-	local TMPFILE=`mktemp "$DEST.tmp-XXXXXXX"`
-	echo "$1" > "$TMPFILE"
-	RET="$?"
-	mv -f "$TMPFILE" "$DEST"
-	return "$RET"
-    }
 
 
-Obvious changes from last time are:
+On Wed, 13 Jul 2005, Matthias Urlichs wrote:
+>
+> Hi, Bryan Larsen wrote:
+> 
+> > +	r=os.spawnvp(os.P_WAIT, args_l[0], args_l + args[i:min(i+1000, len(args))])
+> 
+> The max length for argv is 32k IIRC, so 1000 is 28-byte file names.
 
-  - mark things local
+I think 32k may be the posix-mandated minimum. Linux does 128kB, so 1000 
+should likely be ok for most projects.
 
-  - follow links, bailing out if it takes too long
+That said, xargs should do things like that right.
 
-  - if the link is dangling, just use as-is
-
-  - when doing the 'replace' at the end use -f because it's quite
-    possible someone will have done cp -Rl ~otheruser/tree here and mv
-    *might* bitch if the UID is different?
-
-  - return (some) errors (just because, it's not like cogito checks
-    for these)
+		Linus
