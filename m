@@ -1,156 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: GIT overlay repositories
-Date: Wed, 13 Jul 2005 15:35:35 -0700
-Message-ID: <7vmzoqqqq0.fsf@assigned-by-dhcp.cox.net>
-References: <42D5578D.3000301@linux.intel.com>
+From: Chris Wedgwood <cw@f00f.org>
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
+Date: Wed, 13 Jul 2005 14:54:35 -0700
+Message-ID: <20050713215435.GB12882@taniwha.stupidest.org>
+References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org> <Pine.LNX.4.58.0507131410430.17536@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, torvalds@osdl.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 10:58:50 2005
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 14 11:04:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from mail-relay.eunet.no ([193.71.71.242])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DszYB-0008MI-S7
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 10:58:36 +0200
+	id 1DszdZ-0000sU-0H
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 11:04:09 +0200
 Received: from vger.kernel.org (vger.kernel.org [12.107.209.244])
-	by mail-relay.eunet.no (8.13.1/8.13.1/GN) with ESMTP id j6DMd7G5027057
-	for <gcvg-git@gmane.org>; Thu, 14 Jul 2005 00:39:07 +0200 (CEST)
+	by mail-relay.eunet.no (8.13.1/8.13.1/GN) with ESMTP id j6DM9sSL014986
+	for <gcvg-git@gmane.org>; Thu, 14 Jul 2005 00:09:54 +0200 (CEST)
 	(envelope-from git-owner@vger.kernel.org)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262580AbVGMWio (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 18:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262845AbVGMWgG
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 18:36:06 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:33191 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S262836AbVGMWfh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 18:35:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050713223536.NBL7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 13 Jul 2005 18:35:36 -0400
-To: James Ketrenos <jketreno@linux.intel.com>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261535AbVGMVyv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 17:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262808AbVGMVyv
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:54:51 -0400
+Received: from ylpvm29-ext.prodigy.net ([207.115.57.60]:59836 "EHLO
+	ylpvm29.prodigy.net") by vger.kernel.org with ESMTP id S261535AbVGMVyi
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 17:54:38 -0400
+Received: from pimout4-ext.prodigy.net (pimout4-int.prodigy.net [207.115.4.203])
+	by ylpvm29.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6DLsBgd006621
+	for <git@vger.kernel.org>; Wed, 13 Jul 2005 17:54:12 -0400
+X-ORBL: [63.202.173.158]
+Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
+	by pimout4-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6DLsZXE295600;
+	Wed, 13 Jul 2005 17:54:36 -0400
+Received: by taniwha.stupidest.org (Postfix, from userid 38689)
+	id 1FEEE529BBC; Wed, 13 Jul 2005 14:54:35 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507131410430.17536@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-James Ketrenos <jketreno@linux.intel.com> writes:
+On Wed, Jul 13, 2005 at 02:23:18PM -0700, Linus Torvalds wrote:
 
-> Start with two repositories, let's call them Repo-A and Repo-B.  Repo-A
-> is hosted on some server somewhere and contains lots of code 
-> (let's say its a kernel source repository).  Repo-B is only adding a 
-> small amount of changes to the repo (for argument sake, let's say the 
-> IPW2100 and IPW2200 projects) on top of what is already provided by Repo-A. 
+> If you really want to do something like this, then you should do it like
+> this:
 >
-> For several reasons, we would like users to be able to get just the 
-> differences between Repo-A and Repo-B from me.
+> 	update_head() {
 
-I have done something like this in late April - early May when I
-ran git-jc repository.  I took the then-current Linus head from
-git.git, placed only my commits and objects that are absent from
-his tree to a public place, and asked pullers to pull from Linus
-first and then from me to get a usable repository.  My
-understanding is that you are formalizing and automating the
-part "please pull from X, Y, Z and then from me to complete what
-I have, making it usable".  If that is the case, I agree with
-the intentions [*1*].
+except there are a number of places I need to frob things in Cogito
+and they are not all for the head.  If the head is special and the
+only candidate sure, that works for me.
 
-This is related to the reason Linus wanted to have .git/config,
-something that records "this object database depends on these
-other object databases to be complete", when we talked about
-ALTERNATE_OBJECT_DIRECTORIES last time.  I am wondering if there
-is a way to solve these two related problems in a unified way.
+>  - following multiple links is _wrong_, since the next-level link could
+>    actually be a symlink to another tree entirely (if somebody is crazy
+>    enough to use "cp -Rl" to copy trees, then why not "cp -Rs"?)
 
-One minor problem is that ALTERNATE_OBJECT_DIRECTORIES is a
-local thing and we do not want to be able to express URLs in
-there, because we do not want to run rsync nor curl from inside
-sha1_file.c.  The "partial repository" problem, on the other
-hand, is to publish such a repository and you _do_ want to have
-URLs, likely to be somewhere completely different from where
-such a partial repository is hosted at, reachable from your
-pullers.
+I already stated that wasn't supposed to work.  If you have symlinks
+outside of your tree with cogito I think there is a *lot* more code
+that probably needs to be checked.
 
-Regardless of whatever we end up doing, I have one proposal to
-make.  How about having .git/objects/info/ directory for housing
-various "object database" specific (and not repository specific)
-information?
+Remember I used cogito here, not git directly.  That probably means
+things are invoked very differently for me?
 
-The set of files I would see immediate benefits are:
+>  - you got relative links wrong.
 
-    objects/info/ext  -- this is your .git/refs/ancestors file [*2*],
-                         that lists external URLs that the objects
-                         in this object database depends upon,
-                         along with the set of head commits
-                         there to start pulling from to complete
-                         this partial object database [*3*].  This
-                         _should_ name URLs accessible to
-                         expected pullers from this repository.
-
-    objects/info/alt  -- list of local alternate object
-                         directories; probably we should
-                         deprecate ALTERNATE_OBJECT_DIRECTORIES
-                         environment variable with this, and
-                         rewrite parts of sha1_file.c.  I'd
-                         volunteer to do it if we have
-                         consensus.
-
-    objects/info/pack -- list of pack files in objects/pack/;
-                         this would be useful for discovery
-                         through really dumb web servers [*4*].
-
-Using something like the above structure, pulling from this
-"partial" repository at rsync://abc.xz/x.git would go this way:
-
-   (1) Sync from rsync://abc.xz/x.git/objects/
-      
-   (2) Read objects/info/ext just slurped from there.  Run the
-       procedure (1) thru (3) against the URLs listed in the
-       file, recursively.
-
-   (3) [*5*] Read objects/info/alt just slurped from there.  Say
-       it contained ../a.git and ../b.git.  Run the procedure
-       (1) thru (3) against rsync://abc.xz/a.git/objects/ and
-       rsync://abc.xz/b.git/objects/ recursively.
-
-   (4) Sync from rsync://abc.xz/x.git/refs/ as needed.
-
-Non-rsync transfer can and should be done the same way.  In
-either case, updating the puller's refs/ is done solely based on
-the information from rsync://abc.xz/x.git/refs/ and not from
-refs in the depended-upon repositories.
-
-Am I basically on the same page as you are?
-
-
-[Footnote]
-
-*1* But you are conflating it something else.  I will not
-comment on the part you talk about merges in this message,
-because forward-porting your own changes to updated upstream is
-orthogonal to the "partial object database" issue.  It needs be
-taken care of independently even if you maintain a fully
-populated object database for your development.
-
-*2* Ancestry is an overused word, so I would propose to call
-this "external dependency": your partial object database depends
-on them to be complete and usable.
-
-*3* I was wondering why you wanted to record the foreign head in
-addition to the URLs first, but you need that information (and
-probabaly that needs to be a set of heads, not just a single
-head) because their head may move, and in the worst case may
-even be rewound to something that is not a descendant of what
-you depend upon.
-
-*4* This is not related to the current topic.
-
-*5* This part is optional, because some alternates used locally
-at the partial repository site may not be exposed to the same
-pullers, or even when exposed, the alternate site may be behind
-a slow link and it is preferable to get the same information
-from somewhere else listed in info/ext file.  On the other hand,
-it is simpler to just maintain info/alt file to serve for both
-local and remote purposes.  I don't offhand know the tradeoffs.
- 
+Possibly, I was more for RFC/concept reasons I posted the patch.  I'm
+clueless when it comes to writing decent or reliable bash sh/bash
+scripts.
