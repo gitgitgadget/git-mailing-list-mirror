@@ -1,72 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place
- (breaks CoW use)
-Date: Wed, 13 Jul 2005 13:05:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507131256490.17536@g5.osdl.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org>
- <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org>
- <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
+Date: Wed, 13 Jul 2005 22:07:24 +0200
+Message-ID: <20050713200724.GN9915@kiste.smurf.noris.de>
+References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthias Urlichs <smurf@smurf.noris.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 13 22:10:39 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 22:10:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsnYO-0002CU-Uh
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:10:01 +0200
+	id 1DsnYO-0002CU-FN
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 22:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262692AbVGMUGf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 16:06:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262815AbVGMUGa
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:06:30 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57803 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262748AbVGMUFh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 16:05:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6DK54jA015129
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 13 Jul 2005 13:05:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6DK53Zc000734;
-	Wed, 13 Jul 2005 13:05:03 -0700
+	id S262747AbVGMUJg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 16:09:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262817AbVGMUJ0
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 16:09:26 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:29333 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S262747AbVGMUIb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 16:08:31 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1DsnVv-0002uj-L0; Wed, 13 Jul 2005 22:07:41 +0200
+Received: (nullmailer pid 372 invoked by uid 501);
+	Wed, 13 Jul 2005 20:07:25 -0000
 To: Chris Wedgwood <cw@f00f.org>
+Content-Disposition: inline
 In-Reply-To: <20050713185339.GA9260@taniwha.stupidest.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-
-On Wed, 13 Jul 2005, Chris Wedgwood wrote:
-
-> On Wed, Jul 13, 2005 at 09:03:26AM +0200, Matthias Urlichs wrote:
-> 
-> > You are ;-) the tree itsels is no symlinked, but HEAD points to
-> > refs/heads/<branch> by default.
-> 
-> Thanks for pointing that out.  I honestly never noticed that.
-> 
+Chris Wedgwood:
 > How about the following?
+> 
+Ummm...
 
-This is really complicated, for no good reason.
+> 	    local NLINK=`readlink "$DEST"`
+> 
+> 	    if [ ! -e "$NLINK" ] ; then
 
-The _object_ directories should be linked, but it's really wrong to link 
-the "refs/" directories and expect them to have COW behaviour.
+You lose if the link is relative and the symlink is not in the current
+directory. You also lose on systems where the empty filename is
+synonymous with the current directory.
 
-I've tried to make most of the git tools write the refs objects "safely" 
-too, ie things like "git-receive-pack" (the receiving end of a 
-"git-send-pack") will write the new ref to a lock-file and then do a 
-"rename()" to set it. That is COW-safe, but the thing is, it's incredibly 
-painful for many other operations, and I won't guarantee that git in 
-general is always going to be COW-safe wrt all the git files.
+You'd need to do something along the lines of
 
-For example, the "git clone -l" behaviour will _only_ link the objects 
-subdirectory. The rest is copied. Unless there's a bug there somewhere.
+	if [ -n "$NLINK" ] ; then
+		case "$NLINK" in
+		/*) ;;
+		*) NLINK="$(dirname "$DEST")/$NLINK" ;;
+		esac
+	fi
 
-		Linus
+first.
+
+> 		# dangling link, just poke as-is
+> 		echo "$1" > "$DEST"
+
+You should remove "DEST first. Otherwise, under Linux, you'll magically
+create the file the symlink points to, which may not be what you want to
+do.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Custom does often reason overrule And only serves for reason to the fool.
+					-- John Wilmot, Earl of Rochester
