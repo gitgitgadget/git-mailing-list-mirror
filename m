@@ -1,95 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place
- (breaks CoW use)
-Date: Wed, 13 Jul 2005 14:23:18 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507131410430.17536@g5.osdl.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org>
- <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org>
- <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] stgit: allow spaces in filenames
+Date: Wed, 13 Jul 2005 22:26:44 +0100
+Message-ID: <1121290004.6876.11.camel@localhost.localdomain>
+References: <20050713083805.18461.87079.sendpatchset@bryan-larsens-ibook-g4.local>
+	 <tnxll4bdn7b.fsf@arm.com>  <42D55AC9.4000506@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 13 23:26:31 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 23:29:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsokE-0005DZ-Om
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:26:19 +0200
+	id 1Dsomt-0005fE-IJ
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261421AbVGMVZ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 17:25:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262476AbVGMVZu
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:25:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4581 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261420AbVGMVYP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 17:24:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6DLNJjA021859
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 13 Jul 2005 14:23:20 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6DLNIH4005522;
-	Wed, 13 Jul 2005 14:23:19 -0700
-To: Chris Wedgwood <cw@f00f.org>
-In-Reply-To: <20050713185339.GA9260@taniwha.stupidest.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262476AbVGMV2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 17:28:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262678AbVGMV20
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:28:26 -0400
+Received: from mta07-winn.ispmail.ntl.com ([81.103.221.47]:52187 "EHLO
+	mta07-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S262476AbVGMV0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 17:26:48 -0400
+Received: from aamta12-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta07-winn.ispmail.ntl.com with ESMTP
+          id <20050713212647.NGCK481.mta07-winn.ispmail.ntl.com@aamta12-winn.ispmail.ntl.com>;
+          Wed, 13 Jul 2005 22:26:47 +0100
+Received: from cpc1-cmbg5-3-0-cust179.cmbg.cable.ntl.com ([81.104.192.179])
+          by aamta12-winn.ispmail.ntl.com with ESMTP
+          id <20050713212647.UZLY4721.aamta12-winn.ispmail.ntl.com@cpc1-cmbg5-3-0-cust179.cmbg.cable.ntl.com>;
+          Wed, 13 Jul 2005 22:26:47 +0100
+To: Bryan Larsen <bryan.larsen@gmail.com>
+In-Reply-To: <42D55AC9.4000506@gmail.com>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, 2005-07-13 at 14:17 -0400, Bryan Larsen wrote:
+> Catalin Marinas wrote:
+> I would have hoped that emacs py-mode would "do the right thing". 
+> Anybody know how to make it do what Catalin wants?
 
+It looks like the python-mode in my emacs does the right thing. You
+could add something like below in your .emacs file:
 
-On Wed, 13 Jul 2005, Chris Wedgwood wrote:
+(add-hook 'python-mode-hook
+          #'(lambda ()
+              (setq indent-tabs-mode nil)))
+
+Otherwise, select the whole buffer and do a "M-x untabify".
+
+> > What's the reason for having 'fin' as well? It doesn't seem to be used
+> > (this is found in other parts of the patch as well).
 > 
-> How about the following?
+> popen does not support bypassing the shell by using vectors of 
+> arguments.  Only popen2 and friends have this capability.
+
+But the manual says that it is not possible to get the exit code of the
+child process with popen2 (at least not in python 2.3). You would need
+to use the Popen3 and Popen4 classes in the popen2 module.
+
+Does it make that big difference if the commands are invoked via the
+shell? I haven't run any tests.
+
+> > I'm not sure whether the GIT guys are happy for us to use this mailing
+> > list for StGIT. If the StGIT traffic increases, I will try to create a
+> > separate mailing list (maybe using a site like sf.net).
+> > 
 > 
->     echo_to_file() {
-> 	local DEST="$2"
-> 	local count=1
-> 	local RET
-> 
-> 	# follow symlinks until we run out or end up with something
-> 	# dangling
-> 	while [ -L "$DEST" ] ; do
+> I'd very much like to stay on the same list.  By the same logic, cogito 
+> should have it's own list as well...
 
-If you really want to do something like this, then you should do it like 
-this:
+I'd like this too and it's probably OK with a low traffic (we'll see if
+we receive complaints :-) ).
 
-	update_head() {
-		head="$GIT_DIR/HEAD"
-		newvalue=$(git-rev-parse --verify "$1"^0) || exit
-		if [ -L "$head" ]; then
-			head=$(readlink "$head")
-			case "$head" in
-			refs/heads/*)
-				head="$GIT_DIR"/"$head"
-				;;
-			*)
-				exit 1
-				;;
-			esac
-		fi
-		echo $newvalue > "$head.lock" && rename "$head.lock" "$head"
-	}
-
-which is at least slightly simpler, and might even work thanks to that.
-
-Your was buggy for several reasons:
-
- - following multiple links is _wrong_, since the next-level link could 
-   actually be a symlink to another tree entirely (if somebody is crazy 
-   enough to use "cp -Rl" to copy trees, then why not "cp -Rs"?)
-
-   Ergo: you should only follow a symlink if it points to refs/heads, and 
-   anything else would be a BUG.
-
- - you got relative links wrong.
-
-Now, admittedly the above is totally untested too, so I'll probably have 
-typos etc in there. But the basic point stands: don't go for complexity. 
-Go for one _particular_ case.
-
-		Linus
+Catalin
