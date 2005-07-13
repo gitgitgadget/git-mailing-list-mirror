@@ -1,36 +1,36 @@
 From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Compilation troubles
-Date: Wed, 13 Jul 2005 08:56:55 +0200
+Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
+Date: Wed, 13 Jul 2005 09:03:26 +0200
 Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.13.06.56.52.447219@smurf.noris.de>
-References: <B1091462CF5479489B1D8FE818330D2C01371D9F@exchange2003.ad.skymv.com>
+Message-ID: <pan.2005.07.13.07.03.26.398212@smurf.noris.de>
+References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jul 13 08:58:09 2005
+X-From: git-owner@vger.kernel.org Wed Jul 13 09:04:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsbBq-0005Gp-Nr
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 08:57:55 +0200
+	id 1DsbHi-0005r2-Rn
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 09:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262551AbVGMG5u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 02:57:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262548AbVGMG5u
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 02:57:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:45990 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262551AbVGMG5r (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 02:57:47 -0400
+	id S262605AbVGMHDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 03:03:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262609AbVGMHDy
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 03:03:54 -0400
+Received: from main.gmane.org ([80.91.229.2]:47785 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262605AbVGMHDx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 03:03:53 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DsbBY-0005D2-Bi
-	for git@vger.kernel.org; Wed, 13 Jul 2005 08:57:36 +0200
+	id 1DsbHO-0005ob-EV
+	for git@vger.kernel.org; Wed, 13 Jul 2005 09:03:38 +0200
 Received: from run.smurf.noris.de ([192.109.102.41])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Jul 2005 08:57:36 +0200
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 09:03:38 +0200
 Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Jul 2005 08:57:36 +0200
+        for <git@vger.kernel.org>; Wed, 13 Jul 2005 09:03:38 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
 X-Complaints-To: usenet@sea.gmane.org
@@ -41,20 +41,18 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Dan Kohn wrote:
+Hi, Chris Wedgwood wrote:
 
-> UBUNTU 5.04
+> Symlink'd trees don't really make sense to me (they seem fragile and
+> somewhat pointless) but perhaps I'm missing something?
 
-You want zlib1g-dev, libssl-dev, asciidoc, xmlto, libcurl3-dev.
+You are ;-)  the tree itsels is no symlinked, but HEAD points to
+refs/heads/<branch> by default.
 
-I'll prepare a patch to do a simple set of Debian packages (so that "make
-debian" works) for git(k)/cogito. I already use them locally, but that
-branch is too unclean. :-/
+Don't clobber that, please.
 
 -- 
 Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
 Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
  - -
-The City of Palo Alto, in its official description of parking lot standards,
-specifies the grade of wheelchair access ramps in terms of centimeters of
-rise per foot of run.  A compromise, I imagine...
+Though many hands make light work, too many cooks spoil the broth.
