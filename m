@@ -1,58 +1,61 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Wed, 13 Jul 2005 09:03:26 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.13.07.03.26.398212@smurf.noris.de>
-References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org>
+From: Russell King <rmk@arm.linux.org.uk>
+Subject: Re: [ANNOUNCE] Cogito 0.12.1
+Date: Wed, 13 Jul 2005 08:12:57 +0100
+Message-ID: <20050713081257.D19871@flint.arm.linux.org.uk>
+References: <20050712010058.GE5981@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Jul 13 09:04:18 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 13 09:13:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DsbHi-0005r2-Rn
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 09:03:59 +0200
+	id 1DsbQc-0006eu-UD
+	for gcvg-git@gmane.org; Wed, 13 Jul 2005 09:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262605AbVGMHDy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 03:03:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262609AbVGMHDy
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 03:03:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:47785 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262605AbVGMHDx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 03:03:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DsbHO-0005ob-EV
-	for git@vger.kernel.org; Wed, 13 Jul 2005 09:03:38 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Jul 2005 09:03:38 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Jul 2005 09:03:38 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S262609AbVGMHNE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 03:13:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262613AbVGMHNE
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 03:13:04 -0400
+Received: from caramon.arm.linux.org.uk ([212.18.232.186]:41744 "EHLO
+	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
+	id S262609AbVGMHNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 03:13:02 -0400
+Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
+	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.41)
+	id 1DsbQR-0004ML-5B; Wed, 13 Jul 2005 08:12:59 +0100
+Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
+	id 1DsbQP-0007q7-U6; Wed, 13 Jul 2005 08:12:57 +0100
+To: Petr Baudis <pasky@ucw.cz>, Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.2.5.1i
+In-Reply-To: <20050712010058.GE5981@pasky.ji.cz>; from pasky@ucw.cz on Tue, Jul 12, 2005 at 03:00:58AM +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Chris Wedgwood wrote:
+Grumble.
 
-> Symlink'd trees don't really make sense to me (they seem fragile and
-> somewhat pointless) but perhaps I'm missing something?
+I won't bother trying to explain, I'll just paste the errors.  We've been
+here before in a previous cogito revision.
 
-You are ;-)  the tree itsels is no symlinked, but HEAD points to
-refs/heads/<branch> by default.
-
-Don't clobber that, please.
+rmk@dyn-67:[linux-2.6-rmk]:<1038> cg-branch-ls
+origin  ../linux-2.6
+smp     ../linux-2.6-smp
+rmk@dyn-67:[linux-2.6-rmk]:<1039> cg-pull origin
+...
+cp: cannot create link `.git/objects/f5/77ffd75c02b6087d5bf5ca89f806b10f2a0246': File exists
+cp: cannot create link `.git/objects/f5/e02df58c1f92cdec1cc18cd3b7eeb48fb6d0e3': File exists
+cp: cannot create link `.git/objects/f6/7ca01b4982f9e01e590468bae49bf0801bc756': File exists
+cp: cannot create link `.git/objects/f7/4e32e0ff3d556da1992c4e0418a89aa1ed2e64': File exists
+cp: cannot create link `.git/objects/fe/72a5b08ac185c230e0af6929c25061b7459b32': File exists
+cp: cannot create link `.git/objects/ff/37bc27e6034281e7686007210554c54377d420': File exists
+progress: 4707 objects, 13903516 bytes, 100% done
+`../linux-2.6/.git/objects/pack' -> `.git/objects/pack'
+`../linux-2.6/.git/objects/pack/pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.idx' -> `.git/objects/pack/pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.idx'
+`../linux-2.6/.git/objects/pack/pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack' -> `.git/objects/pack/pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack'
+cg-pull: objects pull failed
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Though many hands make light work, too many cooks spoil the broth.
+Russell King
