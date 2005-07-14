@@ -1,176 +1,58 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: [PATCH] git-diff-*: Allow "--name-only -z" as alias for "--name-only-z"
-Date: Thu, 14 Jul 2005 23:51:26 +0200
-Message-ID: <20050714215126.GY9915@kiste.smurf.noris.de>
+From: James Cloos <cloos+vger-git@jhcloos.com>
+Subject: Re: cg update failing
+Date: Thu, 14 Jul 2005 17:50:15 -0400
+Message-ID: <m3d5plm50o.fsf@lugabout.cloos.reno.nv.us>
+References: <m3oe95qn64.fsf@lugabout.cloos.reno.nv.us>
+	<1121365461.4729.0.camel@localhost.localdomain>
+	<m3k6jtnod8.fsf@lugabout.cloos.reno.nv.us>
+	<1121376069.4729.2.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NYEXl3WhqsXurSTm"
-X-From: git-owner@vger.kernel.org Thu Jul 14 23:55:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 14 23:55:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtBev-0008MA-18
+	id 1DtBev-0008MA-Eq
 	for gcvg-git@gmane.org; Thu, 14 Jul 2005 23:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261535AbVGNVx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 17:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261338AbVGNVxp
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 17:53:45 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:54167 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261535AbVGNVwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 17:52:40 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DtBc8-0007PJ-Ae; Thu, 14 Jul 2005 23:51:48 +0200
-Received: (nullmailer pid 1348 invoked by uid 501);
-	Thu, 14 Jul 2005 21:51:27 -0000
-To: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	junkio@cox.net
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S261295AbVGNVxm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 17:53:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261749AbVGNVvb
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 17:51:31 -0400
+Received: from ore.jhcloos.com ([64.240.156.239]:9220 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S261746AbVGNVu0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 17:50:26 -0400
+Received: from lugabout.jhcloos.org (host-69-48-10-3.roc.choiceone.net [69.48.10.3])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP
+	id 135FE1D02F; Thu, 14 Jul 2005 16:50:21 -0500 (CDT)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id C891C1483BB; Thu, 14 Jul 2005 21:50:15 +0000 (GMT)
+To: Darrin Thompson <darrint@progeny.com>
+In-Reply-To: <1121376069.4729.2.camel@localhost.localdomain> (Darrin Thompson's message of "Thu, 14 Jul 2005 16:21:09 -0500")
+X-Hashcash: 1:21:050714:darrint@progeny.com::XIWaHj4+nitXRQ8u:0000000000000000000000000000000000000000001c/1
+X-Hashcash: 1:21:050714:git@vger.kernel.org::eTXjoQuvOZftza3a:000000000000000000000000000000000000000000K6Vo
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+>>>>> "Darrin" == Darrin Thompson <darrint@progeny.com> writes:
 
---NYEXl3WhqsXurSTm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Darrin> Now your merge should not be blocked. No?
 
-Junio C Hamano wrote:
+I figured out what you meant after I sent that first reply, but waited
+for update to finish to be sure it worked before replying again.
 
-> +		else if (!strcmp(arg, "--name-only-z"))
-> +			diff_output_format =3D DIFF_FORMAT_NAME_Z;
+It took about thirty minutes, and claimed that I had local changes (it
+was a pristine clone) that it needed to bring forward, but it seems OK.
 
-Speaking as a user, I would get rather frustrated when I try to do that
-and it doesn't work... so the attached patch allows that usage.
-Please apply.
+Now I just need to remember how to get the checked-out copy
+updated from the 2.6.12 tag to current. ;)
 
----
-diff --git a/diff-cache.c b/diff-cache.c
---- a/diff-cache.c
-+++ b/diff-cache.c
-@@ -222,11 +222,17 @@ int main(int argc, const char **argv)
- 			continue;
- 		}
- 		if (!strcmp(arg, "-z")) {
--			diff_output_format =3D DIFF_FORMAT_MACHINE;
-+			if (diff_output_format =3D=3D DIFF_FORMAT_NAME)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_MACHINE;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--name-only")) {
--			diff_output_format =3D DIFF_FORMAT_NAME;
-+			if (diff_output_format =3D=3D DIFF_FORMAT_MACHINE)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_NAME;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--name-only-z")) {
-diff --git a/diff-files.c b/diff-files.c
---- a/diff-files.c
-+++ b/diff-files.c
-@@ -55,11 +55,17 @@ int main(int argc, const char **argv)
- 			; /* no-op */
- 		else if (!strcmp(argv[1], "-s"))
- 			; /* no-op */
--		else if (!strcmp(argv[1], "-z"))
--			diff_output_format =3D DIFF_FORMAT_MACHINE;
--		else if (!strcmp(argv[1], "--name-only"))
--			diff_output_format =3D DIFF_FORMAT_NAME;
--		else if (!strcmp(argv[1], "--name-only-z"))
-+		else if (!strcmp(argv[1], "-z")) {
-+			if (diff_output_format =3D=3D DIFF_FORMAT_NAME)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_MACHINE;
-+		} else if (!strcmp(argv[1], "--name-only")) {
-+			if (diff_output_format =3D=3D DIFF_FORMAT_MACHINE)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_NAME;
-+		} else if (!strcmp(argv[1], "--name-only-z"))
- 			diff_output_format =3D DIFF_FORMAT_NAME_Z;
- 		else if (!strcmp(argv[1], "-R"))
- 			diff_setup_opt |=3D DIFF_SETUP_REVERSE;
-diff --git a/diff-stages.c b/diff-stages.c
---- a/diff-stages.c
-+++ b/diff-stages.c
-@@ -86,11 +86,17 @@ int main(int ac, const char **av)
- 		}
- 		else if (!strcmp(arg, "--find-copies-harder"))
- 			find_copies_harder =3D 1;
--		else if (!strcmp(arg, "-z"))
--			diff_output_format =3D DIFF_FORMAT_MACHINE;
--		else if (!strcmp(arg, "--name-only"))
--			diff_output_format =3D DIFF_FORMAT_NAME;
--		else if (!strcmp(arg, "--name-only-z"))
-+		else if (!strcmp(arg, "-z")) {
-+			if (diff_output_format =3D=3D DIFF_FORMAT_NAME)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_MACHINE;
-+		} else if (!strcmp(arg, "--name-only")) {
-+			if (diff_output_format =3D=3D DIFF_FORMAT_MACHINE)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_NAME;
-+		} else if (!strcmp(arg, "--name-only-z"))
- 			diff_output_format =3D DIFF_FORMAT_NAME_Z;
- 		else if (!strcmp(arg, "-R"))
- 			diff_setup_opt |=3D DIFF_SETUP_REVERSE;
-diff --git a/diff-tree.c b/diff-tree.c
---- a/diff-tree.c
-+++ b/diff-tree.c
-@@ -483,7 +483,10 @@ int main(int argc, const char **argv)
- 			continue;
- 		}
- 		if (!strcmp(arg, "--name-only")) {
--			diff_output_format =3D DIFF_FORMAT_NAME;
-+			if (diff_output_format =3D=3D DIFF_FORMAT_MACHINE)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_NAME;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--name-only-z")) {
-@@ -491,7 +494,10 @@ int main(int argc, const char **argv)
- 			continue;
- 		}
- 		if (!strcmp(arg, "-z")) {
--			diff_output_format =3D DIFF_FORMAT_MACHINE;
-+			if (diff_output_format =3D=3D DIFF_FORMAT_NAME)
-+				diff_output_format =3D DIFF_FORMAT_NAME_Z;
-+			else
-+				diff_output_format =3D DIFF_FORMAT_MACHINE;
- 			continue;
- 		}
- 		if (!strcmp(arg, "-m")) {
+(I'd been using hg, but www.kernel.org/hg is fubar, so I had to go
+back to my cg clone.)
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-When The Religious Right Takes Over, We'll All Live In Iran
-
---NYEXl3WhqsXurSTm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFC1t5e8+hUANcKr/kRAvWHAKCibxe7vTXc68Fb19xHsL8ib0cufQCfRZvN
-YApvMfJltwFpoFkQSTFk3iA=
-=D0Dh
------END PGP SIGNATURE-----
-
---NYEXl3WhqsXurSTm--
+-JimC
