@@ -1,72 +1,87 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Why O_EXCL would make this difference?  I am puzzled..
-Date: Thu, 14 Jul 2005 09:52:48 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507140944580.19183@g5.osdl.org>
-References: <7v8y09g5sq.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0507140904440.19183@g5.osdl.org>
+From: James Ketrenos <jketreno@linux.intel.com>
+Subject: Getting list of changed objects...
+Date: Thu, 14 Jul 2005 13:20:32 -0500
+Message-ID: <42D6ACF0.30303@linux.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 18:54:47 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Jul 14 19:24:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dt6xU-0002QU-Gz
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 18:53:12 +0200
+	id 1Dt7QW-0007aJ-UM
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 19:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261532AbVGNQxE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 12:53:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261563AbVGNQxE
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 12:53:04 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:4285 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261532AbVGNQxD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 12:53:03 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6EGqrjA006004
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Jul 2005 09:52:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6EGqmYl022250;
-	Thu, 14 Jul 2005 09:52:51 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0507140904440.19183@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261564AbVGNRWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 13:22:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262659AbVGNRWy
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 13:22:54 -0400
+Received: from fmr17.intel.com ([134.134.136.16]:42674 "EHLO
+	orsfmr002.jf.intel.com") by vger.kernel.org with ESMTP
+	id S261564AbVGNRUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 13:20:12 -0400
+Received: from orsfmr101.jf.intel.com (orsfmr101.jf.intel.com [10.7.209.17])
+	by orsfmr002.jf.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j6EHK1Pw028586
+	for <git@vger.kernel.org>; Thu, 14 Jul 2005 17:20:01 GMT
+Received: from [127.0.0.1] (logicsbox.jf.intel.com [134.134.16.142])
+	by orsfmr101.jf.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j6EHJwVU029971
+	for <git@vger.kernel.org>; Thu, 14 Jul 2005 17:20:00 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.8) Gecko/20050626
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+I have the following tree path:
 
-On Thu, 14 Jul 2005, Linus Torvalds wrote:
-> 
-> I'll strace the dang thing.
+  A   C   B
+  |   |
+  | 3.|<--.   
+  |   |   |
+2.|-->'   |
+  |       |
+1.|------>'
+  |
 
-It's the "Adding" case in git-merge-one-file-script, which does
+Where A is the root repository for my overlays.  B was created by 
+cloning A (1)
 
-	git-checkout-cache -u -f -- "$4"
+B is where development has been progressing.  Finding the set of 
+objects to move from A to B is easily obtained via:
 
-and it's because of this:
+  git-rev-list --objects B ^A 
 
-	lstat64("DF", {st_mode=S_IFDIR|0775, st_size=4096, ...}) = 0
-	unlink("DF")                            = -1 EISDIR (Is a directory)
-	.. unpack the object ..
-	open("DF", O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0666) = -1 EEXIST (File exists)
+The problem is now when I want to re-sync B with the latest version 
+of A.  What I currently do is:
 
-ie the problem is that we actually _have_ a test for this, but it's:
+Create a new C tree based on latest A (2) and then merge B back into 
+it (3):
 
-	if (errno == EISDIR && force) {
+  git-merge-tree -m $(git-merge-base C B) C B
 
-but if the directory already exists, we do that wrong.
+That works great.  I now have a tree with all of the latest A code
+and the B changes applied.  The problem is now in getting the list
+of objects to create the overlay repository.
 
-Btw, this also shows a different problem: the symlink handling doesn't do 
-any of this, so you cannot even force a directory to become a symlink.
+  cg-log -f -r C:B
 
-I think both problems can be fixed by just moving the (EISDIR && force) 
-test down to the "unlink()".
+Will correctly show only those files that have actually changed 
+between C and B in the first log entry.  However, cg-log does 
+not show me the list of tree objects that have changed between 
+C and B.  
 
-Will try.
+The problem is that if I run:
 
-		Linus
+  git-rev-list --objects B ^C
+
+It shows me all of the tree and commit objects but also gives a 
+list of all of the files that changed between A and C as if they 
+are needed to move C to B.
+
+Am I overlooking something, misusing things, or ?
+
+Thanks,
+James
