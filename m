@@ -1,82 +1,91 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: "git daemon"
-Date: Wed, 13 Jul 2005 20:11:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507131956580.17536@g5.osdl.org>
-References: <Pine.LNX.4.58.0507131946540.17536@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Document two pack push-pull protocols.
+Date: Wed, 13 Jul 2005 20:21:54 -0700
+Message-ID: <7v64vem5rh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu Jul 14 05:11:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 14 05:22:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dsu7y-0006QL-6R
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 05:11:10 +0200
+	id 1DsuIW-0007ZC-AN
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 05:22:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262865AbVGNDLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 23:11:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262866AbVGNDLF
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 23:11:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:1219 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262865AbVGNDLE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 23:11:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6E3B3jA014698
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 13 Jul 2005 20:11:03 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6E3B277022098;
-	Wed, 13 Jul 2005 20:11:02 -0700
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0507131946540.17536@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262872AbVGNDV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 23:21:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262873AbVGNDV5
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 23:21:57 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:27859 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S262872AbVGNDV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Jul 2005 23:21:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050714032155.SIH1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 13 Jul 2005 23:21:55 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This documents the two pack push-pull protocols used by the
+smart upload-fetch/clone and send/receive commands.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-On Wed, 13 Jul 2005, Linus Torvalds wrote:
-> 
-> Anyway, this would be a _wonderful_ interface for read-only updates, ie 
-> people pulling from my (and other peoples) git repositories.
+There currently are these two pack push-pull protocols used for
+different purposes.  Maybe you invented another today?  I have
+not looked beyond your log message.
 
-I guess I should say what the interface is, so that people don't have to 
-read the sources to find out..
+ Documentation/pack-protocol.txt |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/pack-protocol.txt
 
-On the server side:
-
-	# mark all repositories you want to export with the
-	# "git-daemon-export-ok" file in the .git directory..
-	#
-	# .. and let the port (9418) through any firewalls etc,
-	# of course
-
-	git-daemon >& logfile &
-
-(NOTE! "git-daemon" will not disassociate from any tty's or anything fancy 
-like that.)
-
-On the client side:
-
-	git pull git://servername/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-
-And you're done.
-
-(or "git clone", for that matter - I just fixed a one-liner that caused
-"clone" to not work, so make sure that you have a commit that says 'Fix
-the "close before dup" bug in clone-pack too').
-
-If you want to use a different port number (maybe 9418 is some really 133t 
-port, and google just doesn't know about it), you can give git-daemon a 
-"--port=x" command line argument, and you can use
-
-	git://servername:port/pathname
-
-on the client side. At least that was my intention, I didn't actually test 
-whether that worked (but the default port has been tested).
-
-			Linus
+3a74ad8bd10e958ddbd4d432ad3140abc5464229
+diff --git a/Documentation/pack-protocol.txt b/Documentation/pack-protocol.txt
+new file mode 100644
+--- /dev/null
++++ b/Documentation/pack-protocol.txt
+@@ -0,0 +1,38 @@
++There are two Pack push-pull protocols.
++
++upload-pack (S) | fetch/clone-pack (C) protocol:
++
++	# Tell the puller what commits we have and what their names are
++	S: SHA1 name
++	S: ...
++	S: SHA1 name
++	S: # flush -- it's your turn
++	# Tell the pusher what commits we want, and what we have
++	C: want name
++	C: ..
++	C: want name
++	C: have SHA1
++	C: have SHA1
++	C: ...
++	C: # flush -- occasionally ask "had enough?"
++	S: NAK
++	C: have SHA1
++	C: ...
++	C: have SHA1
++	S: ACK
++	C: done
++	S: XXXXXXX -- packfile contents.
++
++send-pack | receive-pack protocol.
++
++	# Tell the pusher what commits we have and what their names are
++	C: SHA1 name
++	C: ...
++	C: SHA1 name
++	C: # flush -- it's your turn
++	# Tell the puller what the pusher has
++	S: old-SHA1 new-SHA1 name
++	S: old-SHA1 new-SHA1 name
++	S: ...
++	S: # flush -- done with the list
++	S: XXXXXXX --- packfile contents.
