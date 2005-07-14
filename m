@@ -1,74 +1,111 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-diff-*: Allow "--name-only -z" as alias for "--name-only-z"
-Date: Fri, 15 Jul 2005 00:36:23 +0200
-Message-ID: <20050714223622.GZ9915@kiste.smurf.noris.de>
-References: <20050714215126.GY9915@kiste.smurf.noris.de> <7vvf3d6nis.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 14 Jul 2005 16:11:39 -0700
+Message-ID: <7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
+References: <20050714215126.GY9915@kiste.smurf.noris.de>
+	<7vvf3d6nis.fsf@assigned-by-dhcp.cox.net>
+	<20050714223622.GZ9915@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Hy4a9G0dOYssRJVI"
+Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 00:40:42 2005
+X-From: git-owner@vger.kernel.org Fri Jul 15 01:14:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtCMq-0005FJ-Uf
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 00:39:45 +0200
+	id 1DtCtd-0000dk-F7
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 01:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263167AbVGNWjD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 18:39:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263164AbVGNWix
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 18:38:53 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:23169 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S263167AbVGNWhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 18:37:46 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DtCJc-0000Q6-5Q; Fri, 15 Jul 2005 00:36:47 +0200
-Received: (nullmailer pid 30415 invoked by uid 501);
-	Thu, 14 Jul 2005 22:36:23 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vvf3d6nis.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S262639AbVGNXNN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 19:13:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262821AbVGNXNA
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 19:13:00 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:6542 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S262639AbVGNXLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 19:11:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050714231137.MUJL17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 14 Jul 2005 19:11:37 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20050714223622.GZ9915@kiste.smurf.noris.de> (Matthias Urlichs's message of "Fri, 15 Jul 2005 00:36:23 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
---Hy4a9G0dOYssRJVI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Exactly the same thing as vice versa.
+> Or, even more exactly, my patch *makes* that happen. ;-)
 
-Hi,
+Ah, I was not being careful enough.  Sorry.
 
-Junio C Hamano:
-> I've considered it, but what happens if you give -z first and
-> then name-only?
->=20
-Exactly the same thing as vice versa.
-Or, even more exactly, my patch *makes* that happen. ;-)
+That said, I have been hating that diff options parsing for
+quite a while, and I've been thinking about cleaning it up along
+the lines I'll outline here, but have not done anything about
+it.  Care to help me out?
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Isn't this a beautiful day! Just watch some bastard louse it up.
+ - In diff.h introduce these new stuff:
 
---Hy4a9G0dOYssRJVI
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+     struct diff_opts {
+     int output_format;
+     int detect_rename;
+     ...
+     };
+     void diff_opts_init(struct diff_opts *);
+     int diff_opts_parse(const char *, struct diff_opts *);
+     int diff_opts_final(struct diff_opts *);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+ - In diff-* brothers:
 
-iD8DBQFC1ujm8+hUANcKr/kRAo07AKCiaJXfCdQAYa9Xn69C2VrgiRxZjgCfUUGY
-UIYA22gyaUfGaYyOtpiEXQU=
-=+0aB
------END PGP SIGNATURE-----
+   - replace individual diff option variables with a single
+     "static struct diff_opts diff_opts";
 
---Hy4a9G0dOYssRJVI--
+   - change the argument parsing code to do the following:
+
+     diff_opts_init(&diff_opts);
+     for each arg {
+         /* common options to diff brothers are handled by
+          * diff_opts_parse()
+          */
+         switch (diff_opts_parse(arg, &diff_opts)) {
+         case 1: /* was a diff option and was parsed successfully */
+         	continue;
+         case -1: /* error */
+                usage(diff_*_usage);
+         }
+         if (!strcmp())
+              ... parsing of other options
+     }
+     if (diff_opts_final(&diff_opts))
+         /* defaulting to HUMAN format when nothing specified,
+          * complaining if find-copies-harder is specified but
+          * -C was not, etc. is done in diff_opts_final().
+          *
+          * The complex if() chains that checks if we are in
+          * name or in raw mode and switch output_format around
+          * properly is what I missed in your patch, but I think
+          * you can lose that by recording z-ness of the output
+          * independently from the output format in diff_opts_parse()
+          * and combining diff-raw vs diff-name and z vs non-z
+          * in diff_opts_final().  That would make the code much
+          * simpler.
+          */
+         usage(diff_*_usage);
+
+ - In diff.h and diff.c, replace individual option parameters
+   for the following functions to a single pointer to struct
+   diff_opts:
+
+     diff_setup(), diffcore_std(), diffcore_std_no_resolve(), diff_flush().  
+
+We probably can make diff_scoreopt_parse() function static to
+diff.c once this is done.
+
+We may want to rip out the independeant pickaxe, orderfile and
+filter support for diff-helper while we are at it, making it
+truly just a "diff-raw to diff-patch" converter.
+
+Hmm?
