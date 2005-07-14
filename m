@@ -1,86 +1,98 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Is cogito really this inefficient
-Date: Thu, 14 Jul 2005 08:51:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org>
-References: <20050713135052.C6791@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0507131325170.17536@g5.osdl.org> <20050714083700.A26322@flint.arm.linux.org.uk>
- <tnxu0ixoiuo.fsf@arm.com> <20050714105938.A31383@flint.arm.linux.org.uk>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Patch to make README more newbie-friendly
+Date: Thu, 14 Jul 2005 18:01:01 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.14.16.00.53.434018@smurf.noris.de>
+References: <42D5F10B.5050708@pason.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 17:52:40 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Jul 14 18:05:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dt60J-0000F8-9x
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 17:52:03 +0200
+	id 1Dt6Bp-0002Oo-OP
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 18:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261541AbVGNPvx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 11:51:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262832AbVGNPvx
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 11:51:53 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:7851 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261541AbVGNPvw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 11:51:52 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6EFpjjA001174
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Jul 2005 08:51:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6EFpihb018707;
-	Thu, 14 Jul 2005 08:51:44 -0700
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <20050714105938.A31383@flint.arm.linux.org.uk>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263052AbVGNQDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 12:03:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263046AbVGNQCk
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 12:02:40 -0400
+Received: from main.gmane.org ([80.91.229.2]:35788 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S263051AbVGNQCi (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 12:02:38 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Dt69O-0001uO-7G
+	for git@vger.kernel.org; Thu, 14 Jul 2005 18:01:26 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jul 2005 18:01:26 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Jul 2005 18:01:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, Jerry Seutter wrote:
 
+> I'd also like to include stuff about branches, but I haven't gotten my 
+> head wrapped around how they work yet.  cg-branch-add expects a location
+> after the branch name and I'm not sure what to give it.
 
-On Thu, 14 Jul 2005, Russell King wrote:
-> 
-> Actually, I should've left the sh -x /usr/bin/cg-diff drivers/serial/8250.c
-> running a little longer.  It's not the git-update-cache command which
-> is taking the time, it's git-diff-cache.
+Cogito branch creation is based on the idea that you have a different
+archive _somewhere_else_ that you pull from, so it wants to store the
+source URL in .git/branches/<name>.
 
-Ok. git-diff-cache actually ends up reading your HEAD tree, and that, in
-turn, is 1000+ tree objects. So it can take a while for the whole tree,
-especially in the nonpacked and uncached case.
+Git doesn't have that assumption; "git checkout -b <name>" simply
+creates a new branch and switches to it. However, the git branch idea came
+somewhat later, so there's a bit of a mismatch at the moment.
 
-git-diff-tree (comparing two trees) is smart enough to limit itself to 
-just the sub-trees that have been named, and would have compared the two 
-trees by looking up just eight objects (three subdirectories from each 
-tree, and then the file itself from both trees). 
+Simply switching branches isn't supposed to have any effect unless you
+actually have changes in different branches. I tend to work along these
+lines:
 
-But git-diff-cache isn't - because it's comparing the tree against the
-index file, and the index is inevitably the whole tree.
+#!/bin/sh
 
-And I now think I know what makes it slow. Not only are you basically
-opening 1100 files (the tree objects - there's really that many
-subdirectories in the kernel. Scary), but because you have alternate
-object directories, and almost all of the objects are in the alternate
-(not your primary), you'll basically always end up _first_ looking in the
-primary, failing, and then looking in the alternate.
+cd /tmp
+rm -rf test.$$
+mkdir test.$$
+cd test.$$
+git-init-db
+echo not-quite-empty >testfile
+cg-add testfile
+echo Created test | cg-commit
+git checkout -b one
+echo foo >>testfile
+echo added foo to testfile | cg-commit
+git checkout -b two master
+echo bar >> testfile
+echo added bar to testfile | cg-commit
+cg-diff -r one:two | cat
+git checkout master
+cg-merge one
+cg-merge two
 
-Together with the hashing, you'll be looking all over the place, in other
-words ;)
+The first merge fast-forwards your master tree to "one"; the second 
+creates a conflict (lines were added at the same location) which you'll
+have to resolve (edit the file).
 
-Which means that you'll be needing a fair amount of memory to keep all of
-those negative dentries etc cached (and the directory tree too).
+vi testfile
+echo Merged one and two | cg-commit
+gitk
 
-This is something the pack-files will just help enormously with, but it
-was only recently that we turned git around to check the pack-files
-_first_, and the object directories second, so you probably won't see it
-(not to mention that you probably don't have big pack-files at all ;)
-
-I'll look into making diff-cache be more efficient. I normally don't use
-it myself, so I didn't bother (I use git-diff-files, which is way more
-efficient, but doesn't show the difference against the _tree_, it shows
-the difference against the index. Since cogito tries to hide the index
-from you, cogito can't very well use that).
-
-			Linus
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Apollo, the God of light, of reason, of proportion, harmony, number --
+Apollo blinds those who press too close in worship. Don't look straight
+at the sun. Go into a dark bar and have a beer with Dionysos, every now
+and then. -- Ursula K. LeGuin
