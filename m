@@ -1,98 +1,83 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Patch to make README more newbie-friendly
-Date: Thu, 14 Jul 2005 18:01:01 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.14.16.00.53.434018@smurf.noris.de>
-References: <42D5F10B.5050708@pason.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why O_EXCL would make this difference?  I am puzzled..
+Date: Thu, 14 Jul 2005 09:08:59 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507140904440.19183@g5.osdl.org>
+References: <7v8y09g5sq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Thu Jul 14 18:05:50 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 14 18:14:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dt6Bp-0002Oo-OP
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 18:03:58 +0200
+	id 1Dt6Ly-000469-Ne
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 18:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263052AbVGNQDm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 12:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263046AbVGNQCk
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 12:02:40 -0400
-Received: from main.gmane.org ([80.91.229.2]:35788 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S263051AbVGNQCi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 12:02:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Dt69O-0001uO-7G
-	for git@vger.kernel.org; Thu, 14 Jul 2005 18:01:26 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 14 Jul 2005 18:01:26 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 14 Jul 2005 18:01:26 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S263055AbVGNQOD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 12:14:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263046AbVGNQLa
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 12:11:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:8367 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S263055AbVGNQJO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 12:09:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6EG91jA002631
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 14 Jul 2005 09:09:01 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6EG8x8o019694;
+	Thu, 14 Jul 2005 09:09:00 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v8y09g5sq.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Jerry Seutter wrote:
 
-> I'd also like to include stuff about branches, but I haven't gotten my 
-> head wrapped around how they work yet.  cg-branch-add expects a location
-> after the branch name and I'm not sure what to give it.
 
-Cogito branch creation is based on the idea that you have a different
-archive _somewhere_else_ that you pull from, so it wants to store the
-source URL in .git/branches/<name>.
+On Thu, 14 Jul 2005, Junio C Hamano wrote:
+>
+> The bisect search found that the commit
+> 
+> 	Make "git-checkout" create files with O_EXCL
+> 
+> makes the test t1005 fail.  But it is getting late so I give up
+> to figuire this out tonight.
 
-Git doesn't have that assumption; "git checkout -b <name>" simply
-creates a new branch and switches to it. However, the git branch idea came
-somewhat later, so there's a bit of a mismatch at the moment.
+Ahh, thanks for noticing.
 
-Simply switching branches isn't supposed to have any effect unless you
-actually have changes in different branches. I tend to work along these
-lines:
+It says
 
-#!/bin/sh
+	* expecting success: rm -f .git/index &&
+	     rm -fr DF &&
+	     mkdir DF &&
+	     echo DF/DF >DF/DF &&
+	     git-update-cache --add DF/DF &&
+	     read_tree_twoway $treeDFDF $treeDF &&
+	     git-ls-files --stage >DFDFcheck.out &&
+	     diff -u DF.out DFDFcheck.out &&
+	     check_cache_at DF clean && # different from pure 2-way
+	     :
+	100644 052efc3abbc31348f7abd34535b1953d38273257 3       DF
+	100644 b90ea14b2dd74b6f377c10870b3757344bbe077c 1       DF/DF
+	100644 b90ea14b2dd74b6f377c10870b3757344bbe077c 2       DF/DF
+	Adding DF
+	error: git-checkout-cache: unable to create file DF (File exists)
+	Removing DF/DF
+	100644 052efc3abbc31348f7abd34535b1953d38273257 0       DF
+	DF: dirty
+	* FAIL 24: DF vs DF/DF case test (#2) rm -f .git/index &&
 
-cd /tmp
-rm -rf test.$$
-mkdir test.$$
-cd test.$$
-git-init-db
-echo not-quite-empty >testfile
-cg-add testfile
-echo Created test | cg-commit
-git checkout -b one
-echo foo >>testfile
-echo added foo to testfile | cg-commit
-git checkout -b two master
-echo bar >> testfile
-echo added bar to testfile | cg-commit
-cg-diff -r one:two | cat
-git checkout master
-cg-merge one
-cg-merge two
+Which is strange. If the path already exists, the "lstat(path, &st)" 
+should have returned 0 in checkout_entry (which is the only caller of 
+"write_entry()"), and that code does an "unlink(path)" before it calls 
+write-entry. So I was sure O_EXCL wouldn't make any difference, but I'm 
+obviously wrong, wrong, wrong.
 
-The first merge fast-forwards your master tree to "one"; the second 
-creates a conflict (lines were added at the same location) which you'll
-have to resolve (edit the file).
+I'll strace the dang thing.
 
-vi testfile
-echo Merged one and two | cg-commit
-gitk
-
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Apollo, the God of light, of reason, of proportion, harmony, number --
-Apollo blinds those who press too close in worship. Don't look straight
-at the sun. Go into a dark bar and have a beer with Dionysos, every now
-and then. -- Ursula K. LeGuin
+		Linus
