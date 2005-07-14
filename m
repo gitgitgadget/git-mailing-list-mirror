@@ -1,70 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Getting list of changed objects...
-Date: Thu, 14 Jul 2005 10:58:27 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507141053540.19183@g5.osdl.org>
-References: <42D6ACF0.30303@linux.intel.com>
+From: James Cloos <cloos+vger-git@jhcloos.com>
+Subject: cg update failing
+Date: Thu, 14 Jul 2005 14:04:35 -0400
+Message-ID: <m3oe95qn64.fsf@lugabout.cloos.reno.nv.us>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 19:59:30 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Jul 14 20:07:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dt7yv-00058O-LY
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 19:58:45 +0200
+	id 1Dt86M-0006RD-TH
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 20:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262810AbVGNR6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 13:58:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262823AbVGNR6j
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 13:58:39 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:59090 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262810AbVGNR6i (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 13:58:38 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6EHwUjA011437
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Jul 2005 10:58:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6EHwRwB025852;
-	Thu, 14 Jul 2005 10:58:29 -0700
-To: James Ketrenos <jketreno@linux.intel.com>
-In-Reply-To: <42D6ACF0.30303@linux.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263071AbVGNSFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 14:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263070AbVGNSE7
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 14:04:59 -0400
+Received: from ore.jhcloos.com ([64.240.156.239]:48914 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S263064AbVGNSEr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 14:04:47 -0400
+Received: from lugabout.jhcloos.org (host-69-48-10-3.roc.choiceone.net [69.48.10.3])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP id 3E2791D02F
+	for <git@vger.kernel.org>; Thu, 14 Jul 2005 13:04:43 -0500 (CDT)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 1C775AC505; Thu, 14 Jul 2005 18:04:36 +0000 (GMT)
+To: git@vger.kernel.org
+X-Hashcash: 1:21:050714:git@vger.kernel.org::MNxSVNEdkswgoq7v:0000000000000000000000000000000000000000008T93
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+I'm getting this on my clone of linus' tree:
 
+,----
+| cg-merge: merge blocked: seeked from master
+`----
 
-On Thu, 14 Jul 2005, James Ketrenos wrote:
-> 
-> The problem is that if I run:
-> 
->   git-rev-list --objects B ^C
-> 
-> It shows me all of the tree and commit objects but also gives a 
-> list of all of the files that changed between A and C as if they 
-> are needed to move C to B.
+I've not found a way past it.
 
-Since you haven't merged A and B in the above, they _are_ needed, aren't 
-they?
+Is there an easy way, or do I have still yet another borked lk clone?
 
-Maybe what you want is 
+(Borked clones would be much less of an issue if I had more bandwidth
+than disk space, but at the moment I'm stuck behind a straw.  Cloning
+something like lk takes hours.)
 
-	git-rev-list --objects B ^A ^C
-
-ie "objects that are in B, but not in A or in C", since you seem to 
-consider A uninteresting too?
-
-I don't actually understand what you want to do, and also, "git-rev-list
---objects" is actually not 100% careful - it can include objects that are
-in the "not" group, just because it doesn't actually bother to do a full
-negative list (it only creates a negative list for the "boundary" objects,
-but it won't even do "mark_tree_uninteresting()" for commits that it has
-decided cannot be meaningful, so it's not in any way guaranteed to be a
-_minimal_ set of objects).
-
-			Linus
+-JimC
+-- 
+James H. Cloos, Jr. <cloos@jhcloos.com>
