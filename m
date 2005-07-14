@@ -1,66 +1,67 @@
-From: Chris Wedgwood <cw@f00f.org>
-Subject: Re: [RFC PATCH] cogito --- don't overwrite metadata files in place (breaks CoW use)
-Date: Wed, 13 Jul 2005 14:50:39 -0700
-Message-ID: <20050713215039.GA12882@taniwha.stupidest.org>
-References: <20050712190552.GA7178@taniwha.stupidest.org> <loom.20050712T233332-364@post.gmane.org> <20050713045338.GA19819@taniwha.stupidest.org> <pan.2005.07.13.07.03.26.398212@smurf.noris.de> <20050713185339.GA9260@taniwha.stupidest.org> <Pine.LNX.4.58.0507131256490.17536@g5.osdl.org> <20050713204458.GB11403@taniwha.stupidest.org> <Pine.LNX.4.58.0507131402210.17536@g5.osdl.org> <20050713211106.GA12047@taniwha.stupidest.org> <Pine.LNX.4.58.0507131425080.17536@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: "git daemon"
+Date: Wed, 13 Jul 2005 19:53:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507131946540.17536@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthias Urlichs <smurf@smurf.noris.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 13 23:54:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Jul 14 04:54:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DspBt-00019V-Fm
-	for gcvg-git@gmane.org; Wed, 13 Jul 2005 23:54:53 +0200
+	id 1DstrG-0004KK-9g
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 04:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262839AbVGMVxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 13 Jul 2005 17:53:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261663AbVGMVw3
-	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 17:52:29 -0400
-Received: from ylpvm29-ext.prodigy.net ([207.115.57.60]:29105 "EHLO
-	ylpvm29.prodigy.net") by vger.kernel.org with ESMTP id S261535AbVGMVun
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Jul 2005 17:50:43 -0400
-Received: from pimout3-ext.prodigy.net (pimout3-int.prodigy.net [207.115.4.218])
-	by ylpvm29.prodigy.net (8.12.10 outbound/8.12.10) with ESMTP id j6DLoFgd024149
-	for <git@vger.kernel.org>; Wed, 13 Jul 2005 17:50:18 -0400
-X-ORBL: [63.202.173.158]
-Received: from stupidest.org (adsl-63-202-173-158.dsl.snfc21.pacbell.net [63.202.173.158])
-	by pimout3-ext.prodigy.net (8.13.4 outbound domainkey aix/8.13.4) with ESMTP id j6DLoddw297570;
-	Wed, 13 Jul 2005 17:50:40 -0400
-Received: by taniwha.stupidest.org (Postfix, from userid 38689)
-	id A4908529BBC; Wed, 13 Jul 2005 14:50:39 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507131425080.17536@g5.osdl.org>
+	id S262860AbVGNCxt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 13 Jul 2005 22:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262862AbVGNCxt
+	(ORCPT <rfc822;git-outgoing>); Wed, 13 Jul 2005 22:53:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:3009 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262860AbVGNCxs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Jul 2005 22:53:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6E2rljA013781
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 13 Jul 2005 19:53:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6E2rkli021443;
+	Wed, 13 Jul 2005 19:53:46 -0700
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 13, 2005 at 02:33:43PM -0700, Linus Torvalds wrote:
 
-> Hmm.. I don't think it's necessarily wrong, although as you say,
-> your editor had better DTRT.
+Guys,
+ I've written a really simple TCP git daemon that normally listens on 
+port "DEFAULT_GIT_PORT" aka 9418. It waits for a connection, and will just 
+execute "git-upload-pack" when it gets one.
 
-It does.  I assume probably everything does but I never really
-checked.
+It's actually a bit more careful than that, in that there's a magic 
+request-line that gives the command and what directory to upload, and it 
+verifies that the directory is ok.
 
-> That said, even if your editor doesn't, at least you won't corrupt
-> your git archive, although you might have surprising changes creep
-> into the other side..
+In particular, it verifies that the directory has the magic file
+"git-daemon-export-ok", and it will refuse to export any git directory 
+that hasn't explicitly been marked for export this way.
 
-Well, with hard-linked trees and the nastyness I posted I would test
-with
+What I'd ask people to check is how comfortable for example kernel.org 
+would be to have one machine that runs this kind of service? I've tried 
+very hard to set it up so that it doesn't have any security issues: the 
+daemon can be run as "nobody", and it shouldn't ever even write to any 
+files, although I guess we should do a full check of that.
 
-	cp -Rl tree1 tree2
-	cd tree2
-	<hack hack hack>
-	find ../tree1 -mmin -<n> ... # make sure we didn't mess up original tree
+In fact, it doesn't even really accept any user input except for the list
+of SHA1's that you give the upload which denote the "I have these" list. 
+So I really think it should be hard to fool into doing anything bad, and 
+the code isn't _that_ complicated, but hey, it's a daemon. They're always 
+buggy, and there are always security issues.
 
-So far this seems to work for me.
+Anyway, this would be a _wonderful_ interface for read-only updates, ie 
+people pulling from my (and other peoples) git repositories.
 
-> Search-search-search.. Indeed: at least "git-apply" seems to modify
-> the file in place.
-
-I probably just luckily never hit this.
+		Linus
