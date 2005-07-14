@@ -1,160 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Documentation: push-pull commands into a separate category.
-Date: Thu, 14 Jul 2005 00:10:48 -0700
-Message-ID: <7vu0ixj213.fsf@assigned-by-dhcp.cox.net>
+From: Bryan Larsen <bryan.larsen@gmail.com>
+Subject: Re: [PATCH] stgit: allow spaces in filenames
+Date: Thu, 14 Jul 2005 03:22:35 -0400
+Message-ID: <42D612BB.5040400@gmail.com>
+References: <20050713083805.18461.87079.sendpatchset@bryan-larsens-ibook-g4.local>	 <tnxll4bdn7b.fsf@arm.com>  <42D55AC9.4000506@gmail.com> <1121290004.6876.11.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 09:11:33 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 14 09:23:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dsxs5-0004LC-Eu
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 09:11:01 +0200
+	id 1Dsy3f-0005aS-To
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 09:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262937AbVGNHKw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 03:10:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262939AbVGNHKw
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 03:10:52 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:13288 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S262937AbVGNHKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 03:10:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050714071048.KEKE12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 14 Jul 2005 03:10:48 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S262925AbVGNHWt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 03:22:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262941AbVGNHWt
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 03:22:49 -0400
+Received: from zproxy.gmail.com ([64.233.162.197]:18673 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262925AbVGNHWf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 03:22:35 -0400
+Received: by zproxy.gmail.com with SMTP id m7so197973nzf
+        for <git@vger.kernel.org>; Thu, 14 Jul 2005 00:22:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=Wwvd9Op6sMDHWn0/7hyKS+zDxL35o1nmg7hvpbxQp8nc79ShzsJ/10701xWvapeUAfOppL3ySYhhqDuU2QQQmelfPfz1wbrODS7M4sp1YuOXzVdglfLuRFF0lvsT2u3iJEPNJblvhn2oG7TTAS3vTTNRpACJprEXLJjAe7qAZGI=
+Received: by 10.36.90.8 with SMTP id n8mr120503nzb;
+        Thu, 14 Jul 2005 00:22:34 -0700 (PDT)
+Received: from ?192.168.2.80? ([69.159.204.165])
+        by mx.gmail.com with ESMTP id 19sm1729286nzp.2005.07.14.00.22.34;
+        Thu, 14 Jul 2005 00:22:34 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
+X-Accept-Language: en-us, en
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <1121290004.6876.11.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This splits push-pull related commands into a separate
-category.  I think a bigger overhaul of the main index is
-needed, but have not got around to it.  Help is welcome.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> Does it make that big difference if the commands are invoked via the
+> shell? I haven't run any tests.
+> 
 
- Documentation/git.txt |   65 ++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 42 insertions(+), 23 deletions(-)
+It wasn't for the time difference that I bypassed the shell, it was to 
+support spaces and other strange characters  in parameters.  It's easy 
+to use spawnvp than it is to escape the parameters properly.
 
-9ea24aa8739dc23074872679d493dfd6fb0e5321
-diff --git a/Documentation/git.txt b/Documentation/git.txt
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -30,8 +30,9 @@ reflect recent changes.
- Commands Overview
- -----------------
- The git commands can helpfully be split into those that manipulate
--the repository, the cache and the working fileset and those that
--interrogate and compare them.
-+the repository, the cache and the working fileset, those that
-+interrogate and compare them, and those that moves objects and
-+references between repositories.
- 
- There are also some ancilliary programs that can be viewed as useful
- aids for using the core commands but which are unlikely to be used by
-@@ -117,16 +118,6 @@ The interrogate commands may create file
- touch the working file set - but in general they don't
- 
- 
--Ancilliary Commands
---------------------
--Manipulators:
--
--link:git-apply-patch-script.html[git-apply-patch-script]::
--	Sample script to apply the diffs from git-diff-*
--
--link:git-convert-cache.html[git-convert-cache]::
--	Converts old-style GIT repository
--
- link:git-clone-script.html[git-clone-script]::
- 	Clones a repository into the current repository (user interface)
- 
-@@ -134,18 +125,49 @@ link:git-clone-pack.html[git-clone-pack]
- 	Clones a repository into the current repository (engine
- 	for ssh and local transport)
- 
-+link:git-pull-script.html[git-pull-script]::
-+	Pull from a repote repository via various protocols
-+	(user interface).
-+
- link:git-http-pull.html[git-http-pull]::
- 	Downloads a remote GIT repository via HTTP
- 
- link:git-local-pull.html[git-local-pull]::
- 	Duplicates another GIT repository on a local system
- 
-+link:git-ssh-pull.html[git-ssh-pull]::
-+	Pulls from a remote repository over ssh connection
-+
-+link:git-send-pack.html[git-send-pack]::
-+	Pushes to a remote repository, intelligently.
-+
-+link:git-receive-pack.html[git-receive-pack]::
-+	Invoked by 'git-send-pack' to receive what is pushed to it.
-+
-+link:git-clone-pack.html[git-clone-pack]::
-+	Clones from a remote repository.
-+
-+link:git-fetch-pack.html[git-fetch-pack]::
-+	Updates from a remote repository.
-+
-+link:git-upload-pack.html[git-upload-pack]::
-+	Invoked by 'git-clone-pack' and 'git-fetch-pack' to push
-+	what are asked for.
-+
-+
-+Ancilliary Commands
-+-------------------
-+Manipulators:
-+
-+link:git-apply-patch-script.html[git-apply-patch-script]::
-+	Sample script to apply the diffs from git-diff-*
-+
-+link:git-convert-cache.html[git-convert-cache]::
-+	Converts old-style GIT repository
-+
- link:git-merge-one-file-script.html[git-merge-one-file-script]::
- 	The standard helper program to use with "git-merge-cache"
- 
--link:git-pull-script.html[git-pull-script]::
--	Script used by Linus to pull and merge a remote repository
--
- link:git-prune-script.html[git-prune-script]::
- 	Prunes all unreachable objects from the object database
- 
-@@ -155,8 +177,6 @@ link:git-resolve-script.html[git-resolve
- link:git-tag-script.html[git-tag-script]::
- 	An example script to create a tag object signed with GPG
- 
--link:git-ssh-pull.html[git-ssh-pull]::
--	Pulls from a remote repository over ssh connection
- 
- Interogators:
- 
-@@ -221,17 +241,16 @@ The git-core manipulates the following a
- 
-  .git/	       The base (overridden with $GIT_DIR)
-    objects/    The object base (overridden with $GIT_OBJECT_DIRECTORY)
--     ??/       'First 2 chars of object' directories
--
--It can interrogate (but never updates) the following areas:
-+     ??/       'First 2 chars of object' directories.
-+     pack/     Packed archives.
- 
-    refs/       Directories containing symbolic names for objects
- 	       (each file contains the hex SHA1 + newline)
-      heads/    Commits which are heads of various sorts
-      tags/     Tags, by the tag name (or some local renaming of it)
--     snap/     ????
--   ...         Everything else isn't shared
--   HEAD        Symlink to refs/heads/<something>
-+     */        Any other subdirectory of refs/ can be used to store
-+	       files similar to what are under refs/heads/.
-+   HEAD        Symlink to refs/heads/<current-branch-name>
- 
- Higher level SCMs may provide and manage additional information in the
- GIT_DIR.
+Bryan
