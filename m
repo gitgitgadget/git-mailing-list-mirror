@@ -1,145 +1,163 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Documentation: clone/fetch/upload.
-Date: Thu, 14 Jul 2005 00:08:37 -0700
-Message-ID: <7v64vdkgp6.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Documentation: packed GIT support commands.
+Date: Thu, 14 Jul 2005 00:08:05 -0700
+Message-ID: <7vbr55kgq2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 14 09:08:48 2005
+X-From: git-owner@vger.kernel.org Thu Jul 14 09:09:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dsxpt-000487-7M
-	for gcvg-git@gmane.org; Thu, 14 Jul 2005 09:08:45 +0200
+	id 1DsxpS-00046n-7S
+	for gcvg-git@gmane.org; Thu, 14 Jul 2005 09:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262932AbVGNHIk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 03:08:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262935AbVGNHIk
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 03:08:40 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53396 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S262932AbVGNHIj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 03:08:39 -0400
+	id S262934AbVGNHIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 03:08:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262935AbVGNHIL
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 03:08:11 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:37280 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S262934AbVGNHIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 03:08:09 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050714070837.UEYU16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 14 Jul 2005 03:08:37 -0400
+          id <20050714070803.MQSZ15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 14 Jul 2005 03:08:03 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds documentation for 'smarter pull' family of commands.
+This adds documentation for creating packed archives, inspecting,
+validating them, and unpacking them.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- Documentation/git-clone-pack.txt  |   13 +++++--
- Documentation/git-fetch-pack.txt  |   73 +++++++++++++++++++++++++++++++++++++
- Documentation/git-upload-pack.txt |   40 ++++++++++++++++++++
- fetch-pack.c                      |   11 ++++--
- 4 files changed, 130 insertions(+), 7 deletions(-)
- create mode 100644 Documentation/git-fetch-pack.txt
- create mode 100644 Documentation/git-upload-pack.txt
+ Documentation/git-pack-objects.txt   |   80 ++++++++++++++++++++++++++++++++++
+ Documentation/git-show-index.txt     |   36 +++++++++++++++
+ Documentation/git-unpack-objects.txt |   33 ++++++++++++++
+ Documentation/git-verify-pack.txt    |   13 +++++-
+ 4 files changed, 161 insertions(+), 1 deletions(-)
+ create mode 100644 Documentation/git-pack-objects.txt
+ create mode 100644 Documentation/git-show-index.txt
+ create mode 100644 Documentation/git-unpack-objects.txt
 
-1ac6853af4e4a24eaf7008be9b4e9e033bc624f1
-diff --git a/Documentation/git-clone-pack.txt b/Documentation/git-clone-pack.txt
---- a/Documentation/git-clone-pack.txt
-+++ b/Documentation/git-clone-pack.txt
-@@ -9,7 +9,7 @@ git-clone-pack - Clones a repository by 
- 
- SYNOPSIS
- --------
--'git-clone-pack' [-q] [--exec=<git-upload-pack>] [<host>:]<directory> [<heads>...]
-+'git-clone-pack' [-q] [--exec=<git-upload-pack>] [<host>:]<directory> [<head>...]
- 
- DESCRIPTION
- -----------
-@@ -36,10 +36,15 @@ OPTIONS
- 	shells by having a lean .bashrc file (they set most of
- 	the things up in .bash_profile).
- 
--[<host>:]<directory::
--	The (possibly remote) repository to clone from.
-+<host>::
-+	A remote host that houses the repository.  When this
-+	part is specified, 'git-upload-pack' is invoked via
-+	ssh.
- 
--<heads>...::
-+<directory>::
-+	The repository to sync from.
-+
-+<head>...::
- 	The heads to update.  This is relative to $GIT_DIR
- 	(e.g. "HEAD", "refs/heads/master").  When unspecified,
- 	all heads are updated to match the remote repository.
-diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch-pack.txt
+32a772fa72da57fbbe9ea27d195e6b755c83cd22
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
 new file mode 100644
 --- /dev/null
-+++ b/Documentation/git-fetch-pack.txt
-@@ -0,0 +1,73 @@
-+git-fetch-pack(1)
++++ b/Documentation/git-pack-objects.txt
+@@ -0,0 +1,80 @@
++git-pack-objects(1)
++===================
++v0.1, July 2005
++
++NAME
++----
++git-pack-objects - Create a packed archive of objects.
++
++
++SYNOPSIS
++--------
++'git-pack-objects' [--incremental] [--window=N] [--depth=N] {--stdout | base-name} < object-list
++
++
++DESCRIPTION
++-----------
++Reads list of objects from the standard input, and writes a packed
++archive with specified base-name, or to the standard output.
++
++A packed archive is an efficient way to transfer set of objects
++between two repositories, and also is an archival format which
++is efficient to access.  The packed archive format (.pack) is
++designed to be unpackable without having anything else, but for
++random access, accompanied with the pack index file (.idx).
++
++'git-unpack-objects' command can read the packed archive and
++expand the objects contained in the pack into "one-file
++one-object" format; this is typically done by the smart-pull
++commands when a pack is created on-the-fly for efficient network
++transport by their peers.
++
++Placing both in pack subdirectory of $GIT_OBJECT_DIRECTORY (or
++any of the directories on $GIT_ALTERNATE_OBJECT_DIRECTORIES)
++enables GIT to read from such an archive.
++
++
++OPTIONS
++-------
++base-name::
++	Write into a pair of files (.pack and .idx), using
++	<base-name> to determine the name of the created file.
++	When this option is used, the two files are written in
++	<base-name>-<SHA1>.{pack,idx} files.  <SHA1> is a hash
++	of object names (currently in random order so it does
++	not have any useful meaning) to make the resulting
++	filename reasonably unique, and written to the standard
++	output of the command.
++
++--stdout::
++	Write the pack contents (what would have been writtin to
++	.pack file) out to the standard output.
++
++--window and --depth::
++	These two options affects how the objects contained in
++	the pack are stored using delta compression.  The
++	objects are first internally sorted by type, size and
++	optionally names and compared against the other objects
++	within --window to see if using delta compression saves
++	space.  --depth limits the maximum delta depth; making
++	it too deep affects the performance on the unpacker
++	side, because delta data needs to be applied that many
++	times to get to the necessary object.
++
++--incremental::
++	This flag causes an object already in a pack ignored
++	even if it appears in the standard input.
++
++
++Author
++------
++Written by Linus Torvalds <torvalds@osdl.org>
++
++Documentation
++-------------
++Documentation by Junio C Hamano
++
++GIT
++---
++Part of the link:git.html[git] suite
++
+diff --git a/Documentation/git-show-index.txt b/Documentation/git-show-index.txt
+new file mode 100644
+--- /dev/null
++++ b/Documentation/git-show-index.txt
+@@ -0,0 +1,36 @@
++git-show-index(1)
 +=================
 +v0.1, July 2005
 +
 +NAME
 +----
-+git-fetch-pack - Receive missing objects from another repository.
++git-show-index - Show packed archive index
 +
 +
 +SYNOPSIS
 +--------
-+git-fetch-pack [-q] [--exec=<git-upload-pack>] [<host>:]<directory> [<head>...] < <commit-list>
++'git-show-index' < idx-file
++
 +
 +DESCRIPTION
 +-----------
-+Invokes 'git-upload-pack' on a potentially remote repository,
-+and asks it to send objects missing from this repository, to
-+update the named heads.  The list of commits available locally
-+is fed from the standard input, to be sent to 'git-upload-pack'
-+running on the other end.
++Reads given idx file for packed GIT archive created with
++git-pack-objects command, and dumps its contents.
 +
-+This command can be used only when the local side has a common
-+(ancestor) commit with the remote head that is being pulled
-+from.  Use 'git-clone-pack' for that.
-+
-+
-+OPTIONS
-+-------
-+-q::
-+	Pass '-q' flag to 'git-unpack-objects'; this makes the
-+	cloning process less verbose.
-+
-+--exec=<git-upload-pack>::
-+	Use this to specify the path to 'git-upload-pack' on the
-+	remote side, if is not found on your $PATH.
-+	Installations of sshd ignores the user's environment
-+	setup scripts for login shells (e.g. .bash_profile) and
-+	your privately installed GIT may not be found on the system
-+	default $PATH.  Another workaround suggested is to set
-+	up your $PATH in ".bashrc", but this flag is for people
-+	who do not want to pay the overhead for non-interactive
-+	shells by having a lean .bashrc file (they set most of
-+	the things up in .bash_profile).
-+
-+<host>::
-+	A remote host that houses the repository.  When this
-+	part is specified, 'git-upload-pack' is invoked via
-+	ssh.
-+
-+<directory>::
-+	The repository to sync from.
-+
-+<head>...::
-+	The remote heads to update from. This is relative to
-+	$GIT_DIR (e.g. "HEAD", "refs/heads/master").  When
-+	unspecified, update from all heads the remote side has.
-+
-+	However the program refuses to work if more than one
-+	remote head matches the specified heads.  I am not sure
-+	what this means... Help!!!!!
++The information it outputs is subset of what you can get from
++'git-verify-pack -v'; this command only shows the packfile
++offset and SHA1 of each object.
 +
 +
 +Author
@@ -148,88 +166,77 @@ new file mode 100644
 +
 +Documentation
 +--------------
-+Documentation by Junio C Hamano.
++Documentation by Junio C Hamano
 +
 +GIT
 +---
 +Part of the link:git.html[git] suite
-diff --git a/Documentation/git-upload-pack.txt b/Documentation/git-upload-pack.txt
++
+diff --git a/Documentation/git-unpack-objects.txt b/Documentation/git-unpack-objects.txt
 new file mode 100644
 --- /dev/null
-+++ b/Documentation/git-upload-pack.txt
-@@ -0,0 +1,40 @@
-+git-upload-pack(1)
-+==================
++++ b/Documentation/git-unpack-objects.txt
+@@ -0,0 +1,33 @@
++git-unpack-objects(1)
++=====================
 +v0.1, July 2005
 +
 +NAME
 +----
-+git-upload-pack - Send missing objects packed.
++git-unpack-objects - Create a packed archive of objects.
 +
 +
 +SYNOPSIS
 +--------
-+'git-upload-pack' <directory>
++'git-unpack-objects' < pack-file
++
 +
 +DESCRIPTION
 +-----------
-+Invoked by 'git-clone-pack' and/or 'git-fetch-pack', learns what
-+objects the other side is missing, and sends them after packing.
++Reads a packed archive (.pack) from the standard input, and
++expands the objects contained in the pack into "one-file
++one-object" format in $GIT_OBJECT_DIRECTORY.
 +
-+This command is usually not invoked directly by the end user.
-+The UI for the protocol is on the 'git-fetch-pack' side, and the
-+program pair is meant to be used to pull updates from a remote
-+repository.  For push operations, see 'git-send-pack'.
-+
-+
-+OPTIONS
-+-------
-+<directory>::
-+	The repository to sync from.
 +
 +Author
 +------
 +Written by Linus Torvalds <torvalds@osdl.org>
 +
 +Documentation
-+--------------
-+Documentation by Junio C Hamano.
++-------------
++Documentation by Junio C Hamano
 +
 +GIT
 +---
 +Part of the link:git.html[git] suite
-diff --git a/fetch-pack.c b/fetch-pack.c
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -3,7 +3,8 @@
- #include "pkt-line.h"
- #include <sys/wait.h>
++
+diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
+--- a/Documentation/git-verify-pack.txt
++++ b/Documentation/git-verify-pack.txt
+@@ -9,7 +9,7 @@ git-verify-pack - Validate packed GIT ar
  
--static const char fetch_pack_usage[] = "git-fetch-pack [host:]directory [heads]* < mycommitlist";
-+static int quiet;
-+static const char fetch_pack_usage[] = "git-fetch-pack [-q] [--exec=upload-pack] [host:]directory [heads]* < mycommitlist";
- static const char *exec = "git-upload-pack";
+ SYNOPSIS
+ --------
+-'git-verify-pack' <pack>.idx ...
++'git-verify-pack' [-v] <pack>.idx ...
  
- static int find_common(int fd[2], unsigned char *result_sha1, unsigned char *remote)
-@@ -98,7 +99,8 @@ static int fetch_pack(int fd[2], int nr_
- 		dup2(fd[0], 0);
- 		close(fd[0]);
- 		close(fd[1]);
--		execlp("git-unpack-objects", "git-unpack-objects", NULL);
-+		execlp("git-unpack-objects", "git-unpack-objects",
-+		       quiet ? "-q" : NULL, NULL);
- 		die("git-unpack-objects exec failed");
- 	}
- 	close(fd[0]);
-@@ -134,7 +136,10 @@ int main(int argc, char **argv)
- 		char *arg = argv[i];
  
- 		if (*arg == '-') {
--			/* Arguments go here */
-+			if (!strncmp("--exec=", arg, 7)) {
-+				exec = arg + 7;
-+				continue;
-+			}
- 			usage(fetch_pack_usage);
- 		}
- 		dest = arg;
+ DESCRIPTION
+@@ -23,6 +23,17 @@ OPTIONS
+ <pack>.idx ...::
+ 	The idx files to verify.
+ 
++-v::
++	After verifying the pack, show list of objects contained
++	in the pack.  The format used is:
++
++		SHA1 type size offset-in-packfile
++
++	for objects that are not deltified in the pack, and
++
++		SHA1 type size offset-in-packfile depth base-SHA1
++
++	for objects that are deltified.
+ 
+ Author
+ ------
