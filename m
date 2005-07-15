@@ -1,80 +1,63 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] git-diff-*: Allow "--name-only -z" as alias for "--name-only-z"
-Date: Fri, 15 Jul 2005 01:29:19 +0200
-Message-ID: <20050714232918.GB9915@kiste.smurf.noris.de>
-References: <20050714215126.GY9915@kiste.smurf.noris.de> <7vvf3d6nis.fsf@assigned-by-dhcp.cox.net> <20050714223622.GZ9915@kiste.smurf.noris.de> <7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Is cogito really this inefficient
+Date: Thu, 14 Jul 2005 17:29:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507141725280.19183@g5.osdl.org>
+References: <20050713135052.C6791@flint.arm.linux.org.uk>
+ <Pine.LNX.4.58.0507131325170.17536@g5.osdl.org> <20050714083700.A26322@flint.arm.linux.org.uk>
+ <tnxu0ixoiuo.fsf@arm.com> <20050714105938.A31383@flint.arm.linux.org.uk>
+ <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="KtWcatouGV9Nk9BU"
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 01:37:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 15 02:32:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtDGg-0002y6-El
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 01:37:26 +0200
+	id 1DtE7H-000816-GS
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262754AbVGNXgw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 19:36:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262397AbVGNXgv
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 19:36:51 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:56250 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S262754AbVGNXf3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 19:35:29 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1DtDEH-0002Ff-Gj; Fri, 15 Jul 2005 01:34:57 +0200
-Received: (nullmailer pid 9374 invoked by uid 501);
-	Thu, 14 Jul 2005 23:29:19 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Whitelist: +relay_from_hosts
+	id S262936AbVGOAbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 20:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262942AbVGOAbN
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:31:13 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:56783 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262936AbVGOA3a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 20:29:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6F0TFjA009522
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 14 Jul 2005 17:29:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6F0T9Uu015361;
+	Thu, 14 Jul 2005 17:29:11 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
---KtWcatouGV9Nk9BU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, 14 Jul 2005, Linus Torvalds wrote:
+>
+> I'll look into making diff-cache be more efficient. I normally don't use
+> it myself, so I didn't bother (I use git-diff-files, which is way more
+> efficient, but doesn't show the difference against the _tree_, it shows
+> the difference against the index. Since cogito tries to hide the index
+> from you, cogito can't very well use that).
 
-Junio C Hamano:
-> That said, I have been hating that diff options parsing for
-> quite a while, and I've been thinking about cleaning it up along
-> the lines I'll outline here, but have not done anything about
-> it.  Care to help me out?
->=20
-I saw the problem...
->=20
-> Hmm?
->=20
-Sure -- assuming I find some time to actually do it over the next few days.
+Ok, done.
 
-The problem is that this has been a problem lately. :-/
+I made git-diff-cache _and_ git-diff-files limit the pathnames early, so
+that they don't even bother expanding the tree objects that are
+irrelevant, and don't bother even validating index objects that don't
+match the pathnames given.
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Illiterate?  Write today, for free help!
+Junio - I think this makes gitcore-pathspec pretty pointless, but I didn't
+actually remove it. I guess "git-diff-helper" still uses it.
 
---KtWcatouGV9Nk9BU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFC1vVO8+hUANcKr/kRAuN6AJoDghjFWVMaGC++f/bxi8NJKK2ZTACfYZCS
-yxTMrfkHbYFRHLP7TfD2j88=
-=0MBX
------END PGP SIGNATURE-----
-
---KtWcatouGV9Nk9BU--
+		Linus
