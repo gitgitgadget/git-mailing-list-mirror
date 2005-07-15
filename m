@@ -1,36 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/6] Add git-var a tool for reading interesting git variables.
-Date: Thu, 14 Jul 2005 19:13:10 -0700
-Message-ID: <7vbr5424w9.fsf@assigned-by-dhcp.cox.net>
-References: <m1k6jsyjki.fsf@ebiederm.dsl.xmission.com>
+From: James Cloos <cloos+vger-git@jhcloos.com>
+Subject: Re: cg update failing
+Date: Fri, 15 Jul 2005 00:12:48 -0400
+Message-ID: <m3eka04shr.fsf@lugabout.cloos.reno.nv.us>
+References: <m3oe95qn64.fsf@lugabout.cloos.reno.nv.us>
+	<1121365461.4729.0.camel@localhost.localdomain>
+	<m3k6jtnod8.fsf@lugabout.cloos.reno.nv.us>
+	<1121376069.4729.2.camel@localhost.localdomain>
+	<m3d5plm50o.fsf@lugabout.cloos.reno.nv.us>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 04:27:59 2005
+Cc: Darrin Thompson <darrint@progeny.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 06:13:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtFvi-0002qf-48
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 04:27:58 +0200
+	id 1DtHZp-0001yz-9w
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 06:13:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263192AbVGOCSU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 22:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263177AbVGOCNX
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 22:13:23 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:19697 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S263159AbVGOCNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 22:13:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050715021309.UOL12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 14 Jul 2005 22:13:09 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1k6jsyjki.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's message of "Thu, 14 Jul 2005 18:55:09 -0600")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S263197AbVGOENR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jul 2005 00:13:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263191AbVGOENR
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jul 2005 00:13:17 -0400
+Received: from ore.jhcloos.com ([64.240.156.239]:35589 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S263199AbVGOENM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2005 00:13:12 -0400
+Received: from lugabout.jhcloos.org (host-69-48-15-167.roc.choiceone.net [69.48.15.167])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP
+	id AADC61D02F; Thu, 14 Jul 2005 23:13:02 -0500 (CDT)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id B5B251DE0AB; Fri, 15 Jul 2005 04:12:48 +0000 (GMT)
+To: git@vger.kernel.org
+In-Reply-To: <m3d5plm50o.fsf@lugabout.cloos.reno.nv.us> (James Cloos's message of "Thu, 14 Jul 2005 17:50:15 -0400")
+X-Hashcash: 1:21:050715:git@vger.kernel.org::Z/55aNyPjnLMsq0j:0000000000000000000000000000000000000000001EM3
+X-Hashcash: 1:21:050715:darrint@progeny.com::PHpDx2LYrfC8eMV4:0000000000000000000000000000000000000000004cMf
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Wonderful.
+Well, it wasn't as Ok as I first thought.  There were several .rej and
+backup files as left behind by patch(1).  cg update HEAD says:  Branch
+already fully merged but Makefile still says 2.6.12.
+
+I'm cloning now to a remote uml and will try and rsync from there to
+the laptop.  Perhaps *that* will get me a working repo.
+
+[SIGH]
+
+-JimC
