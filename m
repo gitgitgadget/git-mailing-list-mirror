@@ -1,77 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] git-diff-*: Allow "--name-only -z" as alias for
- "--name-only-z"
-Date: Thu, 14 Jul 2005 22:12:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507142205580.19183@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-diff-*: Allow "--name-only -z" as alias for "--name-only-z"
+Date: Thu, 14 Jul 2005 22:46:46 -0700
+Message-ID: <7vu0iwy62h.fsf@assigned-by-dhcp.cox.net>
 References: <20050714215126.GY9915@kiste.smurf.noris.de>
- <7vvf3d6nis.fsf@assigned-by-dhcp.cox.net> <20050714223622.GZ9915@kiste.smurf.noris.de>
- <7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
+	<7vvf3d6nis.fsf@assigned-by-dhcp.cox.net>
+	<20050714223622.GZ9915@kiste.smurf.noris.de>
+	<7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507142205580.19183@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 07:15:52 2005
+X-From: git-owner@vger.kernel.org Fri Jul 15 07:47:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtIXw-0006NA-53
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 07:15:36 +0200
+	id 1DtJ2P-0000gE-1u
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 07:47:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263215AbVGOFOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jul 2005 01:14:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263208AbVGOFOz
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jul 2005 01:14:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18842 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263211AbVGOFNV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2005 01:13:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6F5CHjA028266
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Jul 2005 22:12:18 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6F5CGbx027361;
-	Thu, 14 Jul 2005 22:12:16 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vmzop56fo.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261855AbVGOFqv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jul 2005 01:46:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263211AbVGOFqv
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jul 2005 01:46:51 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:49537 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261855AbVGOFqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Jul 2005 01:46:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050715054650.CRUM7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 15 Jul 2005 01:46:50 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507142205580.19183@g5.osdl.org> (Linus Torvalds's message of "Thu, 14 Jul 2005 22:12:15 -0700 (PDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> On Thu, 14 Jul 2005, Junio C Hamano wrote:
+>> 
+>> That said, I have been hating that diff options parsing for
+>> quite a while, and I've been thinking about cleaning it up along
+>> the lines I'll outline here, but have not done anything about
+>> it.  Care to help me out?
+>
+> I didn't do what you suggested, but I _did_ split the "format" up into 
+> "format + line_termination", which in my opinion cleaned up part of it a 
+> _lot_.
 
-On Thu, 14 Jul 2005, Junio C Hamano wrote:
-> 
-> That said, I have been hating that diff options parsing for
-> quite a while, and I've been thinking about cleaning it up along
-> the lines I'll outline here, but have not done anything about
-> it.  Care to help me out?
-
-I didn't do what you suggested, but I _did_ split the "format" up into 
-"format + line_termination", which in my opinion cleaned up part of it a 
-_lot_.
-
-So now "-z" only sets "line_termination" to NUL. "format" starts out as 
-"DIFF_FORMAT_RAW" (which is the old HUMAN/MACHINE format - the difference 
-between those two are now the line termination) but can be "PATCH" and 
-"NAME".
-
-Now, DIFF_FORMAT_PATCH + -z wouldn't seem to make any sense at all, but
-you can actually do so, and it actually makes some amount of sense for the 
-case of
-
-	git-diff-tree -v -p -z HEAD
-
-where the "-z" means that the commit _message_ will be terminated by a NUL 
-character, while the "-v" obviously means that the commit message will be 
-printed at all, and the "-p" means that the diff gets printed as a patch.
-
-But the diff obviously gets printed with newlines (as does any newlines
-_within_ the commit message), not with lines terminated by NUL's.
-
-So "--name-only-z" no longer exists. It's "-z --name-only" (in any order,
-quite naturally).
-
-			Linus
+Agreed 100%.  Regardless of the further cleanup I suggested,
+what you did was something I should have done in the first
+place.  Thanks for the cleanup.
