@@ -1,7 +1,7 @@
 From: ebiederm@xmission.com (Eric W. Biederman)
 Subject: Re: [PATCH] tagger id
-Date: Thu, 14 Jul 2005 18:36:33 -0600
-Message-ID: <m14qawzyzy.fsf@ebiederm.dsl.xmission.com>
+Date: Thu, 14 Jul 2005 18:46:16 -0600
+Message-ID: <m1zmsoyjzb.fsf@ebiederm.dsl.xmission.com>
 References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
 	<m1eka574c8.fsf@ebiederm.dsl.xmission.com>
 	<Pine.LNX.4.58.0507110958400.17536@g5.osdl.org>
@@ -9,37 +9,37 @@ References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
 	<Pine.LNX.4.58.0507111815180.17536@g5.osdl.org>
 	<m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com>
 	<m18y0c1prv.fsf@ebiederm.dsl.xmission.com>
-	<Pine.LNX.4.58.0507121152260.17536@g5.osdl.org>
-	<m1pstnzn5j.fsf@ebiederm.dsl.xmission.com>
-	<loom.20050713T011619-369@post.gmane.org>
+	<7veka48lcw.fsf@assigned-by-dhcp.cox.net>
+	<m14qb012x4.fsf@ebiederm.dsl.xmission.com>
+	<loom.20050712T230013-978@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 02:37:00 2005
+X-From: git-owner@vger.kernel.org Fri Jul 15 02:46:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtECH-0000pL-7Q
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:36:57 +0200
+	id 1DtELb-0001fK-PA
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262872AbVGOAgx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 20:36:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262934AbVGOAgx
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:36:53 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:64188 "EHLO
+	id S262944AbVGOAq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 20:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262983AbVGOAq2
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:46:28 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:5565 "EHLO
 	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S262872AbVGOAgw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 20:36:52 -0400
+	id S262944AbVGOAq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 20:46:27 -0400
 Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6F0aciQ020245;
-	Thu, 14 Jul 2005 18:36:38 -0600
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6F0kHac020365;
+	Thu, 14 Jul 2005 18:46:17 -0600
 Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6F0aXJ5020244;
-	Thu, 14 Jul 2005 18:36:33 -0600
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6F0kHA8020364;
+	Thu, 14 Jul 2005 18:46:17 -0600
 X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
 To: Junio C Hamano <junkio@twinsun.com>
-In-Reply-To: <loom.20050713T011619-369@post.gmane.org> (Junio C. Hamano's
- message of "Tue, 12 Jul 2005 23:42:13 +0000 (UTC)")
+In-Reply-To: <loom.20050712T230013-978@post.gmane.org> (Junio C. Hamano's
+ message of "Tue, 12 Jul 2005 21:16:52 +0000 (UTC)")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -47,23 +47,33 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <junkio@twinsun.com> writes:
 
-> I am afraid I do not follow you.  
-
-I was confused.  My big problem was that we don't really have
-an in tree user, and there wasn't a good explanation anywhere.  So it
-was hard to track this down. 
-
-I'm going to lobby for a script to import patches from email being
-in the git tree just so people can see how this is done, and probably
-because there are a lot of people who have been reinventing this
-script :)
-
-> The intent of "tags" (especially the signed kind) is to express "trust":
-> "This commit is called v2.6.12 and *I* vouch for it."
+> Eric W. Biederman <ebiederm <at> xmission.com> writes:
 >
-> COMMITTER is the only sensible thing to use there, because (as you said)
-> what you care is "who I am", not "for whom I am doing this"
+>
+>> Part of the request was to put all of this information together
+>> in a common place.  And note that it is actually:
+>> tagger="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE"
+>> Where the date is a human unreadable string of the number of seconds
+>> since the epoch (aka 1 Jan 1970 UTC).
+>
+> This may sound whacy, but how about having git-env command that
+>
+>  (1) parrots GIT_* environment variables if the user has one; or
+>  (2) shows the values of environment variables the user _could_ have had
+>      to cause the program to behave the same way, when it the user does
+>      not have them?
 
-Sounds good.
+I like the general idea.  But I hate the code implications for
+echoing environmental variables that git cares about.  Especially
+since we really don't care about the environmental variables.  Instead
+we are doing this because we are doing things that the are best
+not done in shell.
+
+So I have made the program git-var [ -l | <variable name ]
+
+Without the implicit tying we can just export those values
+that we find interesting. -l will list all of the variables
+and their values like env, while specifying an single variable
+will just read that variables value.
 
 Eric
