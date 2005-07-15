@@ -1,78 +1,95 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: [ANNOUNCE] Gct-0.1, a GUI enabled Git commit tool
-Date: Fri, 15 Jul 2005 02:46:42 +0200
-Message-ID: <914f22914f26.914f26914f22@liu.se>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: [PATCH 1/6] Move git_author_info and git_commiter_info to ident.c
+Date: Thu, 14 Jul 2005 18:50:33 -0600
+Message-ID: <m1slygyjs6.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Fri Jul 15 02:47:08 2005
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 15 02:51:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtELt-0001hw-C6
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:46:53 +0200
+	id 1DtEPu-00020h-0f
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:51:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262983AbVGOAqs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 20:46:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262997AbVGOAqs
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:46:48 -0400
-Received: from elysium.unit.liu.se ([130.236.230.145]:3315 "EHLO
-	elysium.unit.liu.se") by vger.kernel.org with ESMTP id S262983AbVGOAqq
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Jul 2005 20:46:46 -0400
-Received: by elysium.unit.liu.se (Postfix, from userid 102)
-	id 0337F339AE; Fri, 15 Jul 2005 02:46:45 +0200 (MEST)
-Received: from liu.se (avalon.unit.liu.se [130.236.230.138])
-	by elysium.unit.liu.se (Postfix) with ESMTP id A2232339AE
-	for <git@vger.kernel.org>; Fri, 15 Jul 2005 02:46:42 +0200 (MEST)
-Received: from [81.228.155.80] by qom.unit.liu.se (mshttpd); Fri, 15 Jul
- 2005 02:46:42 +0200
-To: git@vger.kernel.org
-X-Mailer: iPlanet Messenger Express 5.2 HotFix 2.05 (built Mar  3 2005)
-Content-Language: sv
-X-Accept-Language: sv
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.4-liu_20050621_1634 (2005-06-05) on 
-	themis.unit.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.0 required=5.0 tests=FROM_ENDS_IN_NUMS,
-	LIU_FROM_MATCHES_LIUSTUDENT autolearn=disabled 
-	version=3.0.4-liu_20050621_1634
+	id S262997AbVGOAuw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 20:50:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262998AbVGOAuw
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:50:52 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:10173 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S262997AbVGOAuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 20:50:50 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6F0oXPg020747;
+	Thu, 14 Jul 2005 18:50:33 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6F0oXcZ020746;
+	Thu, 14 Jul 2005 18:50:33 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Gct v0.1 has been released and can be downloaded from
-http://www.cyd.liu.se/~freku045/gct/gct-0.1.tar.gz
+Moving these functions allows all of the logic for figuring out what
+these values are to be shared between programs.
+---
 
-What follows is an excerpt from the README in the tarball:
+ cache.h       |    2 ++
+ commit-tree.c |   10 ----------
+ ident.c       |   10 ++++++++++
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-Introduction
-------------
-
-Git Commit Tool or gct is a simple GUI enabled Git commit tool. It
-allows the user to select which files should be committed, write
-commit messages and perform the commit. It also has some support for
-controlling the synchronisation between the Git cache and the working
-directory.
-
-Any comments, suggestions and/or bug reports regarding Gct are greatly
-appreciated.
-
-Requirements
-------------
-
-* Python, http://www.python.org
-* Qt version 3.*, http://www.trolltech.com/products/qt/index.html
-* PyQt, http://www.riverbankcomputing.co.uk/pyqt/
-* Git a fairly recent snapshot,
- http://www.kernel.org/pub/software/scm/git/ and
- rsync://rsync.kernel.org/pub/scm/git/git.git
-
-Gct has been developed with Python 2.3, Qt 3.3.4 and PyQt 2.13. Other
-fairly recent versions may or may not work.
-
-
-- Fredrik Kuivinen
+c6f1b65729df142a8968441ca441f6b69926127a
+diff --git a/cache.h b/cache.h
+--- a/cache.h
++++ b/cache.h
+@@ -223,6 +223,8 @@ void datestamp(char *buf, int bufsize);
+ 
+ extern int setup_ident(void);
+ extern char *get_ident(const char *name, const char *email, const char *date_str);
++extern char *git_author_info(void);
++extern char *git_committer_info(void);
+ 
+ static inline void *xmalloc(size_t size)
+ {
+diff --git a/commit-tree.c b/commit-tree.c
+--- a/commit-tree.c
++++ b/commit-tree.c
+@@ -79,16 +79,6 @@ static int new_parent(int idx)
+ 	return 1;
+ }
+ 
+-static char *git_author_info(void)
+-{
+-	return get_ident(gitenv("GIT_AUTHOR_NAME"), gitenv("GIT_AUTHOR_EMAIL"), gitenv("GIT_AUTHOR_DATE"));
+-}
+-
+-static char *git_committer_info(void)
+-{
+-	return get_ident(gitenv("GIT_COMMITTER_NAME"), gitenv("GIT_COMMITTER_EMAIL"), gitenv("GIT_COMMITTER_DATE"));
+-}
+-
+ int main(int argc, char **argv)
+ {
+ 	int i;
+diff --git a/ident.c b/ident.c
+--- a/ident.c
++++ b/ident.c
+@@ -136,3 +136,13 @@ char *get_ident(const char *name, const 
+ 	buffer[i] = 0;
+ 	return buffer;
+ }
++
++char *git_author_info(void)
++{
++	return get_ident(gitenv("GIT_AUTHOR_NAME"), gitenv("GIT_AUTHOR_EMAIL"), gitenv("GIT_AUTHOR_DATE"));
++}
++
++char *git_committer_info(void)
++{
++	return get_ident(gitenv("GIT_COMMITTER_NAME"), gitenv("GIT_COMMITTER_EMAIL"), gitenv("GIT_COMMITTER_DATE"));
++}
