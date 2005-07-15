@@ -1,63 +1,69 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Is cogito really this inefficient
-Date: Thu, 14 Jul 2005 17:29:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507141725280.19183@g5.osdl.org>
-References: <20050713135052.C6791@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0507131325170.17536@g5.osdl.org> <20050714083700.A26322@flint.arm.linux.org.uk>
- <tnxu0ixoiuo.fsf@arm.com> <20050714105938.A31383@flint.arm.linux.org.uk>
- <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: [PATCH] tagger id
+Date: Thu, 14 Jul 2005 18:36:33 -0600
+Message-ID: <m14qawzyzy.fsf@ebiederm.dsl.xmission.com>
+References: <Pine.LNX.4.58.0507101814210.17536@g5.osdl.org>
+	<m1eka574c8.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.58.0507110958400.17536@g5.osdl.org>
+	<m1vf3gzvvd.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.58.0507111815180.17536@g5.osdl.org>
+	<m1slyk63k2.fsf_-_@ebiederm.dsl.xmission.com>
+	<m18y0c1prv.fsf@ebiederm.dsl.xmission.com>
+	<Pine.LNX.4.58.0507121152260.17536@g5.osdl.org>
+	<m1pstnzn5j.fsf@ebiederm.dsl.xmission.com>
+	<loom.20050713T011619-369@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 02:32:14 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 15 02:37:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtE7H-000816-GS
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:31:47 +0200
+	id 1DtECH-0000pL-7Q
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 02:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262936AbVGOAbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 14 Jul 2005 20:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262942AbVGOAbN
-	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:31:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:56783 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262936AbVGOA3a (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Jul 2005 20:29:30 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6F0TFjA009522
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 14 Jul 2005 17:29:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6F0T9Uu015361;
-	Thu, 14 Jul 2005 17:29:11 -0700
-To: Russell King <rmk@arm.linux.org.uk>
-In-Reply-To: <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262872AbVGOAgx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 14 Jul 2005 20:36:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262934AbVGOAgx
+	(ORCPT <rfc822;git-outgoing>); Thu, 14 Jul 2005 20:36:53 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:64188 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S262872AbVGOAgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Jul 2005 20:36:52 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6F0aciQ020245;
+	Thu, 14 Jul 2005 18:36:38 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6F0aXJ5020244;
+	Thu, 14 Jul 2005 18:36:33 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Junio C Hamano <junkio@twinsun.com>
+In-Reply-To: <loom.20050713T011619-369@post.gmane.org> (Junio C. Hamano's
+ message of "Tue, 12 Jul 2005 23:42:13 +0000 (UTC)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <junkio@twinsun.com> writes:
 
+> I am afraid I do not follow you.  
 
-On Thu, 14 Jul 2005, Linus Torvalds wrote:
+I was confused.  My big problem was that we don't really have
+an in tree user, and there wasn't a good explanation anywhere.  So it
+was hard to track this down. 
+
+I'm going to lobby for a script to import patches from email being
+in the git tree just so people can see how this is done, and probably
+because there are a lot of people who have been reinventing this
+script :)
+
+> The intent of "tags" (especially the signed kind) is to express "trust":
+> "This commit is called v2.6.12 and *I* vouch for it."
 >
-> I'll look into making diff-cache be more efficient. I normally don't use
-> it myself, so I didn't bother (I use git-diff-files, which is way more
-> efficient, but doesn't show the difference against the _tree_, it shows
-> the difference against the index. Since cogito tries to hide the index
-> from you, cogito can't very well use that).
+> COMMITTER is the only sensible thing to use there, because (as you said)
+> what you care is "who I am", not "for whom I am doing this"
 
-Ok, done.
+Sounds good.
 
-I made git-diff-cache _and_ git-diff-files limit the pathnames early, so
-that they don't even bother expanding the tree objects that are
-irrelevant, and don't bother even validating index objects that don't
-match the pathnames given.
-
-Junio - I think this makes gitcore-pathspec pretty pointless, but I didn't
-actually remove it. I guess "git-diff-helper" still uses it.
-
-		Linus
+Eric
