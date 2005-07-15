@@ -1,51 +1,59 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: Is cogito really this inefficient
-Date: Fri, 15 Jul 2005 10:48:26 +0100
-Message-ID: <20050715104826.H25428@flint.arm.linux.org.uk>
-References: <20050713135052.C6791@flint.arm.linux.org.uk> <Pine.LNX.4.58.0507131325170.17536@g5.osdl.org> <20050714083700.A26322@flint.arm.linux.org.uk> <tnxu0ixoiuo.fsf@arm.com> <20050714105938.A31383@flint.arm.linux.org.uk> <Pine.LNX.4.58.0507140832490.19183@g5.osdl.org> <Pine.LNX.4.58.0507141725280.19183@g5.osdl.org>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Kernel Hacker's guide to git (updated)
+Date: Fri, 15 Jul 2005 13:36:21 -0400
+Message-ID: <42D7F415.30609@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 15 11:49:08 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Dave Jones <davej@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Jul 15 19:37:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtMoO-0006za-GC
-	for gcvg-git@gmane.org; Fri, 15 Jul 2005 11:48:52 +0200
+	id 1DtU76-0001Bk-71
+	for gcvg-git@gmane.org; Fri, 15 Jul 2005 19:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263259AbVGOJsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 15 Jul 2005 05:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263268AbVGOJsi
-	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jul 2005 05:48:38 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:62223 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S263266AbVGOJsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Jul 2005 05:48:31 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1DtMo0-0006l2-GO; Fri, 15 Jul 2005 10:48:28 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1DtMnz-0007Yy-3b; Fri, 15 Jul 2005 10:48:27 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <Pine.LNX.4.58.0507141725280.19183@g5.osdl.org>; from torvalds@osdl.org on Thu, Jul 14, 2005 at 05:29:09PM -0700
+	id S263347AbVGORgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 15 Jul 2005 13:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263343AbVGORgb
+	(ORCPT <rfc822;git-outgoing>); Fri, 15 Jul 2005 13:36:31 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:29149 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S263340AbVGORg3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Jul 2005 13:36:29 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.51 #1 (Red Hat Linux))
+	id 1DtU6q-0002tK-8s; Fri, 15 Jul 2005 17:36:24 +0000
+User-Agent: Mozilla Thunderbird 1.0.2-6 (X11/20050513)
+X-Accept-Language: en-us, en
+To: Linux Kernel <linux-kernel@vger.kernel.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 14, 2005 at 05:29:09PM -0700, Linus Torvalds wrote:
-> On Thu, 14 Jul 2005, Linus Torvalds wrote:
-> > I'll look into making diff-cache be more efficient. I normally don't use
-> > it myself, so I didn't bother (I use git-diff-files, which is way more
-> > efficient, but doesn't show the difference against the _tree_, it shows
-> > the difference against the index. Since cogito tries to hide the index
-> > from you, cogito can't very well use that).
-> 
-> Ok, done.
 
-Thanks Linus.  I'll look forward to trying this out.
+I've updated my git quickstart guide at
 
--- 
-Russell King
+	http://linux.yyz.us/git-howto.html
+
+It now points to DaveJ's daily snapshots for the initial bootstrap 
+tarball, is reorganized for better navigation, and other things.
+
+
+Also, a bonus recipe:  how to import Linus's pack files (it's easy).
+
+This recipe presumes that you have a vanilla-Linus repo 
+(/repo/linux-2.6) and your own repo (/repo/myrepo-2.6).
+
+$ cd /repo/myrepo-2.6
+$ git-fsck-cache		# fsck, make sure we're OK
+$ git pull /repo/linux-2.6/.git	# make sure we're up-to-date
+$ cp -al ../linux-2.6/.git/objects/pack .git/objects
+$ cp ../linux-2.6/.git/refs/tags/* .git/refs/tags
+$ git-prune-packed
+$ git-fsck-cache		# fsck #2, make sure we're OK
+
+This recipe reduced my kernel.org sync from ~50,000 files to ~5,000 files.
+
+	Jeff
