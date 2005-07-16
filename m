@@ -1,94 +1,52 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Subject: Darcs-Git: upgrading to Git 0.99
-Date: Sat, 16 Jul 2005 22:45:47 +0200
-Message-ID: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: darcs-devel-bounces@darcs.net Sat Jul 16 22:46:10 2005
-Return-path: <darcs-devel-bounces@darcs.net>
-Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
+From: Bryan Larsen <bryanlarsen@yahoo.com>
+Subject: [PATCH] git: remove usage of xargs -r, a non-portable gnu extension
+Date: Sat, 16 Jul 2005 19:18:35 -0400
+Message-ID: <20050716231825.7315.30191.sendpatchset@bryan-larsens-ibook-g4.local>
+Cc: junkio@cox.net, torvalds@osdl.org,
+	Bryan Larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 17 01:18:56 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DttXy-000501-E9
-	for gcvdd-darcs-devel@m.gmane.org; Sat, 16 Jul 2005 22:46:06 +0200
-Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
-	by abridgegame.org with esmtp (Exim 4.50)
-	id 1DttXo-00074k-95; Sat, 16 Jul 2005 16:45:56 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129])
-	by abridgegame.org with esmtp (Exim 4.50) id 1DttXl-00070a-HO
-	for darcs-devel@darcs.net; Sat, 16 Jul 2005 16:45:53 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
-	[134.157.168.1])
-	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j6GKjqrL091440
-	; Sat, 16 Jul 2005 22:45:52 +0200 (CEST)
-X-Ids: 168
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
-	[134.157.168.57])
-	by hydrogene.pps.jussieu.fr (8.13.4/jtpda-5.4) with ESMTP id
-	j6GKjlIx011778 ; Sat, 16 Jul 2005 22:45:48 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.50)
-	id 1DttXf-00018V-Mg; Sat, 16 Jul 2005 22:45:47 +0200
-To: darcs-devel@darcs.net
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
-	(shiva.jussieu.fr [134.157.0.168]);
-	Sat, 16 Jul 2005 22:45:52 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 42D97200.001 by Joe's j-chkmail
-	(http://j-chkmail.ensmp.fr)!
-X-BeenThere: darcs-devel@darcs.net
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "List for darcs-related development discussion."
-	<darcs-devel.darcs.net>
-List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
-List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
-List-Post: <mailto:darcs-devel@darcs.net>
-List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
-List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
-	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
-Sender: darcs-devel-bounces@darcs.net
-Errors-To: darcs-devel-bounces@darcs.net
+	id 1Dtvvq-0007Db-Qr
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 01:18:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S261846AbVGPXSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Jul 2005 19:18:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261879AbVGPXSs
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jul 2005 19:18:48 -0400
+Received: from smtp102.mail.sc5.yahoo.com ([216.136.174.140]:2444 "HELO
+	smtp102.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
+	id S261846AbVGPXSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2005 19:18:35 -0400
+Received: (qmail 59873 invoked from network); 16 Jul 2005 23:18:31 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Received:From:To:Cc:Message-Id:Subject;
+  b=RmHWvV2swOerQlSW1xxIrV4fPS8f/DzXxGG2IUob8ZOaqZmPo7BnY0eqL9Z1UHJ5DZwwJVTNgpUum8Z94SR3LClcnPPxVa8KHv2eLiB5uJOGzQkD2XzevHJNx0vGsKxjY2izE1JRa3le0DblnnB/8iHS7/oP9uewFMJUnFBCUMo=  ;
+Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@65.93.75.85 with plain)
+  by smtp102.mail.sc5.yahoo.com with SMTP; 16 Jul 2005 23:18:30 -0000
+To: bryan.larsen@gmail.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
 
-[CC'd to the Git mailling list; please CC any replies to Darcs-Devel]
+Remove usage of xargs -r, a non-portable gnu extension.
 
-David, Ian,
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+---
 
-I'd like to upgrade the Git code used in Darcs to 0.99 (we're
-currently using 0.6).  There are two good reasons for that, the first
-of which is actually a showstopper:
+ git-prune-script |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
- - the format of Git repositories has changed incompatibly, with a new
-   kind of thing called the ``pack'' (a very neat performance hack, by
-   the way); hence, Darcs-Git is unable to read recent Git repos,
-   unless you use the Git tools to unpack them;
-
- - 0.99 actually exports usable interfaces, which will allow us to use
-   pristine Git sources in Darcs.
-
-Now I'm wondering how to do that.  Currently, I'm using a nasty hack
-using the C preprocessor to include just the sources we need in
-Darcs.  As 0.99 builds a ``libgit.a'', I'd like to use that instead.
-
-There are three ways to do that:
-
-  (1) require that the users put a suitable libgit.a in /usr/local/lib
-      before building Darcs, and distribute a tarball of Git from
-      darcs.net;
-
-  (2) include just the sources needed for libgit.a in Darcs, and have
-      the Darcs build build a local libgit
-
-  (3) as (2), but include all of Git, including their
-      ``user-friendly'' scripts.
-
-Solution (2) will include 33 files totalling 167KB, while (3) is about
-a megabyte of source.
-
-My personal favourite is solution (2), as it is simple for both the
-users and us.  I'm not very keen on (1), as it will cause problems
-when the friendly Git folks change their interfaces, but have no
-strong dislike towards it if it's what you think is right.  (3) is
-definitely overkill.
-
-                                        Juliusz
+diff --git a/git-prune-script b/git-prune-script
+--- a/git-prune-script
++++ b/git-prune-script
+@@ -20,6 +20,6 @@ sed -ne '/unreachable /{
+     s|\(..\)|\1/|p
+ }' | {
+ 	cd "$GIT_OBJECT_DIRECTORY" || exit
+-	xargs -r $dryrun rm -f
++	xargs $dryrun rm -f ""
+ }
+ 
