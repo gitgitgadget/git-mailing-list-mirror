@@ -1,103 +1,94 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
-Subject: [PATCH] git-revover-tags-script
-Date: Sat, 16 Jul 2005 14:20:49 -0600
-Message-ID: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
+From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+Subject: Darcs-Git: upgrading to Git 0.99
+Date: Sat, 16 Jul 2005 22:45:47 +0200
+Message-ID: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 16 22:21:17 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Cc: git@vger.kernel.org
+X-From: darcs-devel-bounces@darcs.net Sat Jul 16 22:46:10 2005
+Return-path: <darcs-devel-bounces@darcs.net>
+Received: from www.abridgegame.org ([66.179.181.159] helo=abridgegame.org)
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dtt9v-00035n-6J
-	for gcvg-git@gmane.org; Sat, 16 Jul 2005 22:21:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261632AbVGPUVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Jul 2005 16:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261672AbVGPUVI
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jul 2005 16:21:08 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:34008 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261632AbVGPUVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2005 16:21:07 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6GKKnru020696;
-	Sat, 16 Jul 2005 14:20:49 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6GKKnPY020695;
-	Sat, 16 Jul 2005 14:20:49 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+	id 1DttXy-000501-E9
+	for gcvdd-darcs-devel@m.gmane.org; Sat, 16 Jul 2005 22:46:06 +0200
+Received: from localhost ([127.0.0.1] helo=www.abridgegame.org)
+	by abridgegame.org with esmtp (Exim 4.50)
+	id 1DttXo-00074k-95; Sat, 16 Jul 2005 16:45:56 -0400
+Received: from shiva.jussieu.fr ([134.157.0.129])
+	by abridgegame.org with esmtp (Exim 4.50) id 1DttXl-00070a-HO
+	for darcs-devel@darcs.net; Sat, 16 Jul 2005 16:45:53 -0400
+Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr
+	[134.157.168.1])
+	by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j6GKjqrL091440
+	; Sat, 16 Jul 2005 22:45:52 +0200 (CEST)
+X-Ids: 168
+Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr
+	[134.157.168.57])
+	by hydrogene.pps.jussieu.fr (8.13.4/jtpda-5.4) with ESMTP id
+	j6GKjlIx011778 ; Sat, 16 Jul 2005 22:45:48 +0200
+Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.50)
+	id 1DttXf-00018V-Mg; Sat, 16 Jul 2005 22:45:47 +0200
+To: darcs-devel@darcs.net
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2
+	(shiva.jussieu.fr [134.157.0.168]);
+	Sat, 16 Jul 2005 22:45:52 +0200 (CEST)
+X-Antivirus: scanned by sophie at shiva.jussieu.fr
+X-Miltered: at shiva.jussieu.fr with ID 42D97200.001 by Joe's j-chkmail
+	(http://j-chkmail.ensmp.fr)!
+X-BeenThere: darcs-devel@darcs.net
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "List for darcs-related development discussion."
+	<darcs-devel.darcs.net>
+List-Unsubscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=unsubscribe>
+List-Archive: <http://www.abridgegame.org/pipermail/darcs-devel>
+List-Post: <mailto:darcs-devel@darcs.net>
+List-Help: <mailto:darcs-devel-request@darcs.net?subject=help>
+List-Subscribe: <http://www.abridgegame.org/cgi-bin/mailman/listinfo/darcs-devel>,
+	<mailto:darcs-devel-request@darcs.net?subject=subscribe>
+Sender: darcs-devel-bounces@darcs.net
+Errors-To: darcs-devel-bounces@darcs.net
 
+[CC'd to the Git mailling list; please CC any replies to Darcs-Devel]
 
-First pass at a script to dig through .git/objects and find dangling
-tags.  It likely has a lot of weird limitations, I don't know if it
-will work with packs, and the policy it implments is pretty stupid,
-but it is a sane start and should keep people from needing to
-rsync anything except the .git/objects part of the tree.
+David, Ian,
 
-The current policy is if a tag's gpg signature can be verified
-and if the tag name does not conflict with an existing tag
-place it in .git/refs/tags/.   So far this only works with
-dangling tags so I don't know if these tags will even be pulled
-with the pack methods.  But since we aren't quite going at
-full speed on those yet we should be good.
+I'd like to upgrade the Git code used in Darcs to 0.99 (we're
+currently using 0.6).  There are two good reasons for that, the first
+of which is actually a showstopper:
 
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
----
+ - the format of Git repositories has changed incompatibly, with a new
+   kind of thing called the ``pack'' (a very neat performance hack, by
+   the way); hence, Darcs-Git is unable to read recent Git repos,
+   unless you use the Git tools to unpack them;
 
- Makefile                |    3 ++-
- git-recover-tags-script |   27 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 1 deletions(-)
- create mode 100755 git-recover-tags-script
+ - 0.99 actually exports usable interfaces, which will allow us to use
+   pristine Git sources in Darcs.
 
-4b171e71fd6b5de56dd4a93ea203e49115c2caee
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -36,7 +36,8 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-reset-script git-add-script git-checkout-script git-clone-script \
- 	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
- 	git-format-patch-script git-sh-setup-script git-push-script \
--	git-branch-script git-parse-remote git-verify-tag-script
-+	git-branch-script git-parse-remote git-verify-tag-script \
-+	git-recover-tags-script
- 
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-recover-tags-script b/git-recover-tags-script
-new file mode 100755
---- /dev/null
-+++ b/git-recover-tags-script
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+# Copyright (c) 2005 Eric Biederman
-+
-+. git-sh-setup-script || die "Not a git archive"
-+
-+TMP_TAG=".tmp-tag.$$"
-+git-fsck-cache |
-+while read status type sha1 rest ; do
-+	if [ '(' "$status" == "dangling" ')' -a '(' "$type" == "tag" ')' ] ; then
-+		if ! git-verify-tag-script $sha1 ; then
-+			echo "Could not verify tag $sha1"
-+		else
-+			tag=$(git-cat-file tag $sha1 | sed -ne 's/^tag //p')
-+			tagger=$(git-cat-file tag $sha1 | sed -ne 's/^tagger //p')
-+			if [ ! -e $GIT_DIR/refs/tags/$tag ]; then
-+				echo "installing tag $tag tagger $tagger"
-+				mkdir -p $GIT_DIR/refs/tags
-+				echo "$sha1" > $GIT_DIR/refs/tags/$tag
-+			fi
-+		fi
-+	else
-+		if [ "$status" != "dangling" ] ; then
-+			echo "$status $type $sha1 $rest";
-+		fi
-+	fi
-+done
-+rm -f $TMP_TAG
+Now I'm wondering how to do that.  Currently, I'm using a nasty hack
+using the C preprocessor to include just the sources we need in
+Darcs.  As 0.99 builds a ``libgit.a'', I'd like to use that instead.
+
+There are three ways to do that:
+
+  (1) require that the users put a suitable libgit.a in /usr/local/lib
+      before building Darcs, and distribute a tarball of Git from
+      darcs.net;
+
+  (2) include just the sources needed for libgit.a in Darcs, and have
+      the Darcs build build a local libgit
+
+  (3) as (2), but include all of Git, including their
+      ``user-friendly'' scripts.
+
+Solution (2) will include 33 files totalling 167KB, while (3) is about
+a megabyte of source.
+
+My personal favourite is solution (2), as it is simple for both the
+users and us.  I'm not very keen on (1), as it will cause problems
+when the friendly Git folks change their interfaces, but have no
+strong dislike towards it if it's what you think is right.  (3) is
+definitely overkill.
+
+                                        Juliusz
