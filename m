@@ -1,125 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-revover-tags-script
-Date: Sat, 16 Jul 2005 17:51:23 -0700
-Message-ID: <7vr7dy9rw4.fsf@assigned-by-dhcp.cox.net>
-References: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Last mile to 1.0?
+Date: Sat, 16 Jul 2005 18:18:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0507161815100.15383@qynat.qvtvafvgr.pbz>
+References: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net><m18y06pphg.fsf@ebiederm.dsl.xmission.com>
+ <7vy8869ryi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 17 02:51:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: ebiederm@xmission.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 17 03:19:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DtxNS-00066C-BO
-	for gcvg-git@gmane.org; Sun, 17 Jul 2005 02:51:30 +0200
+	id 1Dtxnz-0007eD-UE
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 03:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261675AbVGQAvZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 16 Jul 2005 20:51:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261744AbVGQAvZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jul 2005 20:51:25 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:40884 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S261675AbVGQAvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Jul 2005 20:51:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050717005125.KFTE16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 16 Jul 2005 20:51:25 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's message of "Sat, 16 Jul 2005 14:20:49 -0600")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261908AbVGQBSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 16 Jul 2005 21:18:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261905AbVGQBSu
+	(ORCPT <rfc822;git-outgoing>); Sat, 16 Jul 2005 21:18:50 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:16322 "HELO
+	warden.diginsite.com") by vger.kernel.org with SMTP id S261911AbVGQBSo
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Jul 2005 21:18:44 -0400
+Received: from wlvims01.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Sat, 16 Jul 2005 18:18:44 -0700
+Received: by wlvexc02.diginsite.com with Internet Mail Service (5.5.2657.72)
+	id <34M2VSQM>; Sat, 16 Jul 2005 18:18:26 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id 34ML5HYG; Sat, 16 Jul 2005 18:18:24 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-X-Sender: dlang@dlang.diginsite.com
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <7vy8869ryi.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
+On Sat, 16 Jul 2005, Junio C Hamano wrote:
 
-> First pass at a script to dig through .git/objects and find dangling
-> tags.  It likely has a lot of weird limitations, I don't know if it
-> will work with packs, and the policy it implments is pretty stupid,
-> but it is a sane start and should keep people from needing to
-> rsync anything except the .git/objects part of the tree.
-
-Also in an earlier message:
-
-> Do we want to put some porcelain around, git-fsck-cache --tags?
-> So we can discover the tag objects in the archive and place
-> them someplace usable.  Jeff Garzik in his howto is still recommending:
+> ebiederm@xmission.com (Eric W. Biederman) writes:
 >
->>   git-pull-script only downloads sha1-indexed object data, and the requested remote head.
->>   This misses updates to the .git/refs/tags/ and .git/refs/heads/ directories. It is
->>   advisable to update your kernel .git directories periodically with a full rsync command, to
->>   make sure you got everything:
->>$ cd linux-2.6
->>$ rsync -a --verbose --stats --progress \
->>   rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/ \
->>   .git/
+>> Junio C Hamano <junkio@cox.net> writes:
+>>>
+>>>    - Anonymous pull from packed archives on remote sites via
+>>>      non-rsync, non-ssh transport.  ...
+>>>      ... but we may also end up wanting something HTTP
+>>>      reachable.
+>>
+>> For this we need a cgi script that will generate an appropriate
+>> pack.
 >
-> Which feels like something is missing.  Given that tags are
-> sha1-indexed objects we should be pulling them.  And I believe you can
-> have a tag as a parent of a commit, so even with the pack optimized
-> clients we should be pulling them now.  
+> I agree that nothing would beat a pack customized for each
+> puller from the bandwidth point of view.  I like the general
+> idea of git-daemon Linus did and the cgi script you suggest, but
+> I wonder what the CPU/disk load implications for the server.
+>
 
-You cannot have a tag as a parent of a commit.  commit-tree.c
-explicitly checks for "commit" objects, and I think it is the
-right thing to do [*1*].  You will also notice that at the end
-of git-fetch-script, a tag is written in the .git/tag/<name>
-file as fetched, but the .git/FETCH_HEAD file records the commit
-SHA1 if a tag is fetched.  So, no, unless you are using rsync
-transport to pull everything in sight, I do not think you will
-pull tags you do not explicitly request to be pulled as part of
-the commit chain (be it done by the old fashioned commit walker,
-or the on-the-fly pack transfer).  I do not think "finding a
-dangling tag using git-fsck-cache" is something we particularly
-want to have a special wrapper around for [*2*], because the
-user should not be needing to do it.
+I think you need to nail down the various scenerios that people will be 
+useing here.
 
-I do think we need a way to discover remote tags, an equivalent
-to "wget $remote_repo/refs/tags/" (non recursive kind, just the
-names).  When to fetch them from remote, and where to store them
-locally, however, are different matter, I think.
+a very common one will be prople who want to setup a cron job to update 
+their local tree nightly, in this case having a pre-generated pack file 
+with each day's updates will save a significant amount of processing 
+power.
 
-Given that tags, especially the signed kind, are almost always
-only made by the project lead and percolate down the patch
-foodchain in practice, copying _all_ tags from the remote
-repository like Jeff suggests makes sense in many situations,
-but in general I think the namespace under the .git/refs
-directory should be controlled by the local user [*3*].  As
-Linus said before, you can choose to pull a tag from him only
-because he told you about it.  After learning about that tag,
-deciding to pull the tag "v2.6.13-rc3" from his repository, and
-storing it in the same ".git/refs/tags/v2.6.13-rc3" path locally
-is your choice, not his [*4*].
+would it make sense to have it do something along the lines of sending the 
+day;s pack file plus a small number of individual object (even if the pack 
+file will partially duplicate object the puller already has)
 
-I think the same can be said about the remote branch heads; an
-obvious case is ".git/refs/heads/master".
-
-"git-fetch-script" is very conservative.  Only when you tell it
-to fetch the tag <name>, it stores it in .git/refs/tags/<name>
-locally.  When you tell it to fetch the head via the short-hand
-merchanism by having .git/branch/linus file that records the URL
-of his repository, the head is stored in .git/ref/heads/linus.
-Otherwise it does not touch .git/refs at all, and I think that
-is the right thing to do.
-
-Maybe we want to have "git-list-remote URL --tags --heads" for
-discovery, and perhaps "--all-tags" flag to "git-fetch-script",
-to cause it to fetch all remote tags.
+David Lang
 
 
-[Footnote]
-
-*1* I think I once sent a patch to break this, but luckily Linus
-had a much better sense than me and dropped it.  It is very nice
-to have adult supervision ;-).
-
-*2* I noticed you have already sent a patch about it.
-
-*3* I am not saying what Jeff suggests is wrong.  In his
-suggestion, the user is making a conscious decision to accept
-and use all tags Linus has in his repository as they are; and
-that is one valid usage pattern.
-
-*4* The tag discovery mechanism is one way for the remote
-repository owner to tell you about the tags.
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
