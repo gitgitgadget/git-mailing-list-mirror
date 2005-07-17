@@ -1,120 +1,64 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
+From: Matthias Urlichs <smurf@smurf.noris.de>
 Subject: Re: "git cvsimport" with branches?
-Date: Sun, 17 Jul 2005 12:57:59 +0400
-Message-ID: <200507171257.59384.snake@penza-gsm.ru>
+Date: Sun, 17 Jul 2005 11:37:59 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.17.09.37.58.463540@smurf.noris.de>
 References: <20050717084053.94D603525D1@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_X2h2CtYsYP8KbBY"
-X-From: git-owner@vger.kernel.org Sun Jul 17 10:59:15 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sun Jul 17 11:39:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Du4zR-0006Be-I5
-	for gcvg-git@gmane.org; Sun, 17 Jul 2005 10:59:13 +0200
+	id 1Du5cD-0008Kb-4r
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 11:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261227AbVGQI64 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 04:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261222AbVGQI64
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 04:58:56 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:55997
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261227AbVGQI6D
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2005 04:58:03 -0400
-Received: (qmail 5224 invoked from network); 17 Jul 2005 08:58:02 -0000
-Received: from unknown (HELO snake-modem.penza-gsm.ru) (192.168.5.2)
-  by fileserver.penza-gsm.ru with SMTP; 17 Jul 2005 08:58:00 -0000
+	id S261239AbVGQJjB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jul 2005 05:39:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261238AbVGQJjB
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 05:39:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:13717 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261239AbVGQJil (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Jul 2005 05:38:41 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Du5bU-0008Gg-Qb
+	for git@vger.kernel.org; Sun, 17 Jul 2005 11:38:32 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 17 Jul 2005 11:38:32 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 17 Jul 2005 11:38:32 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <20050717084053.94D603525D1@atlas.denx.de>
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
-X-Spam-Level: 
-X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
-	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---Boundary-00=_X2h2CtYsYP8KbBY
-Content-Type: text/plain;
-  charset="koi8-r"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hi, Wolfgang Denk wrote:
 
-=F7 =D3=CF=CF=C2=DD=C5=CE=C9=C9 =CF=D4 =F7=CF=D3=CB=D2=C5=D3=C5=CE=D8=C5 17=
- =E9=C0=CC=D8 2005 12:40 Wolfgang Denk =CE=C1=D0=C9=D3=C1=CC(a):
 > Is there a way to make "git cvsimport" create branches in git for any
 > branches it encounters in the CVS repository?
-Heh. I was just preparing mail about the same problem.
-It seems that git-cvsimport-script really don't likes branches in CVS.
-I have attached simple script that demonstrates this.
-On my machine it gives:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-snake@home2:/tmp$ ./testscript
-cvs checkout: Updating project
-cvs add: scheduling file `a' for addition
-cvs add: use `cvs commit' to add this file permanently
-/tmp/20050717125452/cvsroot/project/a,v  <--  a
-initial revision: 1.1
-cvs tag: Tagging .
-T a
-/tmp/20050717125452/cvsroot/project/a,v  <--  a
-new revision: 1.2; previous revision: 1.1
-cvs update: Updating .
-U a
-/tmp/20050717125452/cvsroot/project/a,v  <--  a
-new revision: 1.1.2.1; previous revision: 1.1
-cvs rlog: Logging project
-New a: 2 bytes.
-Tree ID 2ce1eef76631e82282e0f7f0cf9e6f3e9a4a0b1e
-Committed patch 1 (origin)
-Committing initial tree 2ce1eef76631e82282e0f7f0cf9e6f3e9a4a0b1e
-Commit ID f7030e1c361f94b8847ef6ad88248a675c7ce5a9
-Update a: 4 bytes.
-Tree ID 9d3d025fff2e43c6a7b837056632b436c8e31dfe
-Parent ID f7030e1c361f94b8847ef6ad88248a675c7ce5a9
-Committed patch 2 (origin)
-Commit ID 67889434ca9623ad91f8e81e6143fed9c4115a86
-Switching from origin to branch1
-usage: git-read-tree (<sha> | -m [-u] <sha1> [<sha2> [<sha3>]])
-read-tree failed: 256
-snake@home2:/tmp$
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-Is it a planned behaivoir or cvsimport script were just recently broken?
+> 
+That's what it does.
 
-=2D-=20
-Respectfully
-Alexey Nezhdanov
+> All my imports so far show just a linear line of development, and CVS
+> branch information seems lost.
 
---Boundary-00=_X2h2CtYsYP8KbBY
-Content-Type: text/plain;
-  charset="koi8-r";
-  name="testscript"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename="testscript"
+Umm, exactly what did you do to visualize that? "gitk origin" obvioously
+shows only one branch, because CVS doesn't have merge infe. Use
+"gitk $(cat .git/revs/heads/*)" to show everything.
 
-#!/bin/sh
-dirname=`date +"%Y%m%d%H%M%S"`
-mkdir /tmp/$dirname
-cd /tmp/$dirname
-mkdir cvsroot
-declare -x CVSROOT=/tmp/$dirname/cvsroot
-cvs init
-mkdir cvsroot/project
-cvs co project
-cd project
-echo 1 >a
-cvs add a
-cvs ci -m 1 a
-cvs tag -b branch1
-echo 2 >>a
-cvs ci -m 2 a
-cvs update -r branch1
-echo 3 >>a
-cvs ci -m 3 a
-git-cvsimport-script -v
-
---Boundary-00=_X2h2CtYsYP8KbBY--
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+"Any body of men who believe in hell will
+ persecute whenever they have the power."
+  [Joseph McCabe, "What Gods Cost Men"]
