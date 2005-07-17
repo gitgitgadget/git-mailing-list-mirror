@@ -1,83 +1,54 @@
-From: David Roundy <droundy@abridgegame.org>
-Subject: Re: [darcs-devel] Darcs-Git: upgrading to Git 0.99
-Date: Sun, 17 Jul 2005 06:40:42 -0400
-Message-ID: <20050717104035.GA8315@abridgegame.org>
-References: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>
+From: Alexey Nezhdanov <snake@penza-gsm.ru>
+Subject: Re: "git cvsimport" with branches?
+Date: Sun, 17 Jul 2005 14:48:08 +0400
+Message-ID: <200507171448.09049.snake@penza-gsm.ru>
+References: <20050717084053.94D603525D1@atlas.denx.de> <pan.2005.07.17.09.37.58.463540@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: darcs-devel@darcs.net, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Sun Jul 17 12:47:05 2005
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Matthias Urlichs <smurf@smurf.noris.de>
+X-From: git-owner@vger.kernel.org Sun Jul 17 12:48:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Du6fm-0004Ch-SG
-	for gcvg-git@gmane.org; Sun, 17 Jul 2005 12:47:03 +0200
+	id 1Du6he-0004Jt-Al
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 12:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261238AbVGQKqp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 06:46:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261243AbVGQKqp
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 06:46:45 -0400
-Received: from user-10bj72p.cable.mindspring.com ([64.185.156.89]:29029 "EHLO
-	localhost") by vger.kernel.org with ESMTP id S261238AbVGQKqp (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jul 2005 06:46:45 -0400
-Received: from droundy by localhost with local (Exim 4.50)
-	id 1Du6Ze-0002hy-4L; Sun, 17 Jul 2005 06:40:42 -0400
-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
-Mail-Followup-To: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	darcs-devel@darcs.net, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
+	id S261243AbVGQKsw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jul 2005 06:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261246AbVGQKsw
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 06:48:52 -0400
+Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:64702
+	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261243AbVGQKsP
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2005 06:48:15 -0400
+Received: (qmail 8747 invoked from network); 17 Jul 2005 10:48:13 -0000
+Received: from unknown (HELO snake-modem.penza-gsm.ru) (192.168.5.2)
+  by fileserver.penza-gsm.ru with SMTP; 17 Jul 2005 10:48:10 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.7.2
+In-Reply-To: <pan.2005.07.17.09.37.58.463540@smurf.noris.de>
 Content-Disposition: inline
-In-Reply-To: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>
-User-Agent: Mutt/1.5.9i
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
+	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jul 16, 2005 at 10:45:47PM +0200, Juliusz Chroboczek wrote:
-> 
-> I'd like to upgrade the Git code used in Darcs to 0.99 (we're
-> currently using 0.6). [...]
+Sunday, 17 July 2005 13:37 Matthias Urlichs wrote:
+> Hi, Wolfgang Denk wrote:
+> > Is there a way to make "git cvsimport" create branches in git for any
+> > branches it encounters in the CVS repository?
+>
+> That's what it does.
+But it does not, at least in some cases.
+See my previous mail:
+http://marc.theaimsgroup.com/?l=git&m=112159075029007&w=2
+It have simple script attached that reproduces the problem.
 
-Great!
-
-> Now I'm wondering how to do that.  Currently, I'm using a nasty hack
-> using the C preprocessor to include just the sources we need in
-> Darcs.  As 0.99 builds a ``libgit.a'', I'd like to use that instead.
-> 
-> There are three ways to do that:
-> 
->   (1) require that the users put a suitable libgit.a in /usr/local/lib
->       before building Darcs, and distribute a tarball of Git from
->       darcs.net;
-> 
->   (2) include just the sources needed for libgit.a in Darcs, and have
->       the Darcs build build a local libgit
-> 
->   (3) as (2), but include all of Git, including their
->       ``user-friendly'' scripts.
-> 
-> Solution (2) will include 33 files totalling 167KB, while (3) is about
-> a megabyte of source.
-
-I'd really prefer option (1), *if* the git folks can confirm that the API
-is at least intended to be stable.  As an subtly different option, we could
-include a script that would download and untar the git sources and then
-build them.  But it'd be great to allow users to upgrade their libgit
-without our intervention if a protocol or repository format change occurs
-that doesn't affect the API.
-
-I guess the real question is whether the API is more or less stable than
-the protocols and disk formats.  If the API is more stable, we'd rather
-link with an external libgit and be robust with respect to on-disk format
-changes (such as pack files).  If the on-disk format is more stable, we'd
-rather include a copy of the source code and be robust with respect to API
-changes of libgit.
-
-A fourth option would be to include git sources, but also include a
-configure flag that could be used to link with an external libgit.  This is
-probably the most robust solution, but also the most complex solution (and
-thus probably not the best).
 -- 
-David Roundy
-http://www.darcs.net
+Respectfully
+Alexey Nezhdanov
