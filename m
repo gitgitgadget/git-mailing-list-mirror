@@ -1,61 +1,79 @@
-From: Alexey Nezhdanov <snake@penza-gsm.ru>
-Subject: [offtopic]Re: "git cvsimport" with branches?
-Date: Sun, 17 Jul 2005 22:02:48 +0400
-Message-ID: <200507172202.48642.snake@penza-gsm.ru>
-References: <20050717084053.94D603525D1@atlas.denx.de> <200507171448.09049.snake@penza-gsm.ru> <200507171633.17667.snake@penza-gsm.ru>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-revover-tags-script
+Date: Sun, 17 Jul 2005 11:53:29 -0700
+Message-ID: <7voe91jmc6.fsf@assigned-by-dhcp.cox.net>
+References: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
+	<7vr7dy9rw4.fsf@assigned-by-dhcp.cox.net>
+	<m1psthomf0.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jul 17 20:05:47 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 17 20:54:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DuDVo-00017U-1e
-	for gcvg-git@gmane.org; Sun, 17 Jul 2005 20:05:12 +0200
+	id 1DuEGq-0004XQ-SE
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 20:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261345AbVGQSFB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 14:05:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261347AbVGQSFB
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 14:05:01 -0400
-Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:26820
-	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S261345AbVGQSE7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2005 14:04:59 -0400
-Received: (qmail 23401 invoked from network); 17 Jul 2005 18:04:56 -0000
-Received: from unknown (HELO snake-modem.penza-gsm.ru) (192.168.5.2)
-  by fileserver.penza-gsm.ru with SMTP; 17 Jul 2005 18:04:54 -0000
-To: git@vger.kernel.org
-User-Agent: KMail/1.7.2
-In-Reply-To: <200507171633.17667.snake@penza-gsm.ru>
-Content-Disposition: inline
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
-X-Spam-Level: 
-X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
-	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
+	id S261308AbVGQSxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jul 2005 14:53:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261320AbVGQSxf
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 14:53:35 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:55939 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261308AbVGQSxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2005 14:53:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050717185330.AVW8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Jul 2005 14:53:30 -0400
+To: ebiederm@xmission.com (Eric W. Biederman)
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for noise again.
-I have found two bugs in cvsps that results in the wrong import to git.
-I tried to contact developer but it seems that his mail have no mailserver 
-ATM. Since he has made some changes for git already - probably someone on 
-this list have his new contact. Please tell me it or forward my mail to him. 
-Thanks.
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-For the curious, here are the bugs:
-1) some branches fork off too late - cvsps shifts brahches starts forward to 
-the future
-Example:
-http://www.penza-gsm.ru/snake/testscript
+> What we care about are the tag objects, those are the only kind
+> that are verifiable and usable remotely.  
+>
+> Now that I know we do not pull tags currently with any of the
+> optimized transports, I would suggest taking the list of commit
+> objects we are transporting and for each commit look in the
+> remote repo/refs/tags and transferring every tag object we can find
+> that refers to that commit.
 
-2) some branches are not detected at all, not recorded as patchsets and 
-consequently not imported into git.
-Example (branch "old"):
-http://www.penza-gsm.ru/snake/simplexml.py,v
+I do not think it is particularly a good idea to fetch a tag
+that refers to a commit when the user asks only for that commit
+(e.g. the user said "the head of this remote branch I am
+tracking", and the head happened to have been tagged).  Yes, it
+may be convenient, but retrieving the commit chain and
+retrieving tags are conceptually separate issues.  A tag does
+not necessarily refer to a commit, so your reverse index does
+not make sense for a tag pointing at a blob, for example.
 
+I think if we have discovery mechanism of remote tags/heads, we
+do not need anything else.  You _could_ say something like:
 
--- 
-Respectfully
-Alexey Nezhdanov
+    $ git-list-remote --tags linux-2.6
+    9e734775f7c22d2f89943ad6c745571f1930105f	v2.6.12-rc2
+    26791a8bcf0e6d33f43aef7682bdb555236d56de	v2.6.12
+    ...
+    a339981ec18d304f9efeb9ccf01b1f04302edf32	v2.6.13-rc3
+    $ git-list-remote --tags linux-2.6 |
+      while read sha1 tag;
+      do
+          git fetch linux-2.6 tag $tag
+      done
+
+and you are done.  We did not use the reverse index, nor we used
+the --all-tags flag to git-fetch-script.  You do not even need
+git-list-remote if you are willing to wget a=summary output from
+gitweb and parse the bottom of the page ;-).
+
+The above may not exactly work for linux-2.6 repository because
+I think the "tag" form of git-fetch-script may expect to find a
+tag that resolves to a commit object and there is the oddball
+v2.6.11-tree tag, but you got the general idea.
