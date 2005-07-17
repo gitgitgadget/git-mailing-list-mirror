@@ -1,55 +1,127 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: "git cvsimport" with branches?
-Date: Sun, 17 Jul 2005 10:40:53 +0200
-Message-ID: <20050717084053.94D603525D1@atlas.denx.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Audit rev-parse users.
+Date: Sun, 17 Jul 2005 01:45:15 -0700
+Message-ID: <7v8y053jok.fsf@assigned-by-dhcp.cox.net>
+References: <7vmzol29zm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Jul 17 10:42:27 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 17 10:45:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Du4jA-00058Q-Ub
-	for gcvg-git@gmane.org; Sun, 17 Jul 2005 10:42:25 +0200
+	id 1Du4mA-0005Jt-BN
+	for gcvg-git@gmane.org; Sun, 17 Jul 2005 10:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261187AbVGQImS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 04:42:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261217AbVGQImS
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 04:42:18 -0400
-Received: from mailout10.sul.t-online.com ([194.25.134.21]:15280 "EHLO
-	mailout10.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S261187AbVGQImR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2005 04:42:17 -0400
-Received: from fwd17.aul.t-online.de 
-	by mailout10.sul.t-online.com with smtp 
-	id 1Du4j0-0002X7-00; Sun, 17 Jul 2005 10:42:14 +0200
-Received: from denx.de (ExExJYZXoeVak7qnCcYssJxUUfmkLpjyE1VUKsCPmSZ+MiFKk61B41@[84.150.113.51]) by fwd17.sul.t-online.de
-	with esmtp id 1Du4iv-26NejI0; Sun, 17 Jul 2005 10:42:09 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP id 16A89422A7
-	for <git@vger.kernel.org>; Sun, 17 Jul 2005 10:42:07 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 94D603525D1
-	for <git@vger.kernel.org>; Sun, 17 Jul 2005 10:40:53 +0200 (MEST)
-To: git@vger.kernel.org
-X-ID: ExExJYZXoeVak7qnCcYssJxUUfmkLpjyE1VUKsCPmSZ+MiFKk61B41@t-dialin.net
-X-TOI-MSGID: 4f114d2b-1457-4b9d-adf1-931f4a97e441
+	id S261217AbVGQIpV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jul 2005 04:45:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261221AbVGQIpU
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 04:45:20 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:2460 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261217AbVGQIpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2005 04:45:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050717084517.BGBX7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Jul 2005 04:45:17 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vmzol29zm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat, 16 Jul 2005 23:59:57 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Is there a way to make "git cvsimport" create branches in git for any
-branches it encounters in the CVS repository?
+This patch changes rev-parse users that pass a single argument
+that is supposed to be a rev parameter to use "--verify".
 
-All my imports so far show just a linear line of development, and CVS
-branch information seems lost.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Best regards,
+*** This does not have anything to do with the --sq flag.
 
-Wolfgang Denk
+ git-checkout-script |    2 +-
+ git-cherry          |    8 ++++----
+ git-commit-script   |    2 +-
+ git-rebase-script   |    8 ++++----
+ git-resolve-script  |    4 ++--
+ 5 files changed, 12 insertions(+), 12 deletions(-)
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-Little known fact about Middle Earth:   The Hobbits had a very sophi-
-sticated computer network!   It was a Tolkien Ring...
+eee0f165b4762203c0d827bae7480daf41514f17
+diff --git a/git-checkout-script b/git-checkout-script
+--- a/git-checkout-script
++++ b/git-checkout-script
+@@ -22,7 +22,7 @@ while [ "$#" != "0" ]; do
+ 		force=1
+ 		;;
+ 	*)
+-		rev=$(git-rev-parse --verify --revs-only "$arg^0") || exit
++		rev=$(git-rev-parse --verify "$arg^0") || exit
+ 		if [ -z "$rev" ]; then
+ 			echo "unknown flag $arg"
+ 			exit 1
+diff --git a/git-cherry b/git-cherry
+--- a/git-cherry
++++ b/git-cherry
+@@ -28,11 +28,11 @@ The output is intended to be used as:
+ '
+ 
+ case "$#" in
+-1) linus=`git-rev-parse "$1"` &&
+-   junio=`git-rev-parse HEAD` || exit
++1) linus=`git-rev-parse --verify "$1"` &&
++   junio=`git-rev-parse --verify HEAD` || exit
+    ;;
+-2) linus=`git-rev-parse "$1"` &&
+-   junio=`git-rev-parse "$2"` || exit
++2) linus=`git-rev-parse --verify "$1"` &&
++   junio=`git-rev-parse --verify "$2"` || exit
+    ;;
+ *) echo >&2 "$usage"; exit 1 ;;
+ esac
+diff --git a/git-commit-script b/git-commit-script
+--- a/git-commit-script
++++ b/git-commit-script
+@@ -15,7 +15,7 @@ do
+     -m) shift
+         case "$#" in
+ 	0) usage ;;
+-	*) use_commit=`git-rev-parse "$1"` ||
++	*) use_commit=`git-rev-parse --verify "$1"` ||
+ 	   exit ;;
+ 	esac
+ 	;;
+diff --git a/git-rebase-script b/git-rebase-script
+--- a/git-rebase-script
++++ b/git-rebase-script
+@@ -11,11 +11,11 @@ upstream tree.'
+ : ${GIT_DIR=.git}
+ 
+ case "$#" in
+-1) linus=`git-rev-parse "$1"` &&
+-   junio=`git-rev-parse HEAD` || exit
++1) linus=`git-rev-parse --verify "$1"` &&
++   junio=`git-rev-parse --verify HEAD` || exit
+    ;;
+-2) linus=`git-rev-parse "$1"` &&
+-   junio=`git-rev-parse "$2"` || exit
++2) linus=`git-rev-parse --verify "$1"` &&
++   junio=`git-rev-parse --verify "$2"` || exit
+    ;;
+ *) echo >&2 "$usage"; exit 1 ;;
+ esac
+diff --git a/git-resolve-script b/git-resolve-script
+--- a/git-resolve-script
++++ b/git-resolve-script
+@@ -6,8 +6,8 @@
+ #
+ . git-sh-setup-script || die "Not a git archive"
+ 
+-head=$(git-rev-parse --revs-only "$1")
+-merge=$(git-rev-parse --revs-only "$2")
++head=$(git-rev-parse --verify "$1")
++merge=$(git-rev-parse --verify "$2")
+ merge_msg="$3"
+ 
+ dropheads() {
