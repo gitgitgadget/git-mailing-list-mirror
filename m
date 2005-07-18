@@ -1,72 +1,96 @@
-From: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>
+From: Bryan Larsen <bryan.larsen@gmail.com>
 Subject: Re: git, porcelain, darcs, and version 1.0
-Date: Mon, 18 Jul 2005 21:49:01 +0200
-Message-ID: <7id5pfx5ci.fsf@lanthane.pps.jussieu.fr>
-References: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>
-	<42DB341D.6050506@gmail.com>
+Date: Mon, 18 Jul 2005 16:18:54 -0400
+Message-ID: <42DC0EAE.8000600@gmail.com>
+References: <7islyev5s4.fsf@lanthane.pps.jussieu.fr>	<42DB341D.6050506@gmail.com> <7vslycnd42.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Juliusz Chroboczek <Juliusz.Chroboczek@pps.jussieu.fr>,
-	darcs-devel@darcs.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 21:50:24 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 22:21:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dubcw-0001Cn-TP
-	for gcvg-git@gmane.org; Mon, 18 Jul 2005 21:50:11 +0200
+	id 1Duc5Q-0006VY-AA
+	for gcvg-git@gmane.org; Mon, 18 Jul 2005 22:19:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261584AbVGRTtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 18 Jul 2005 15:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261583AbVGRTtc
-	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jul 2005 15:49:32 -0400
-Received: from shiva.jussieu.fr ([134.157.0.129]:12488 "EHLO shiva.jussieu.fr")
-	by vger.kernel.org with ESMTP id S261584AbVGRTt3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2005 15:49:29 -0400
-Received: from hydrogene.pps.jussieu.fr (hydrogene.pps.jussieu.fr [134.157.168.1])
-          by shiva.jussieu.fr (8.12.11/jtpda-5.4) with ESMTP id j6IJnPbk015735
-          ; Mon, 18 Jul 2005 21:49:26 +0200 (CEST)
-X-Ids: 168
-Received: from lanthane.pps.jussieu.fr (lanthane.pps.jussieu.fr [134.157.168.57])
-          by hydrogene.pps.jussieu.fr (8.13.4/jtpda-5.4) with ESMTP id j6IJnHV5008387
-          ; Mon, 18 Jul 2005 21:49:19 +0200
-Received: from jch by lanthane.pps.jussieu.fr with local (Exim 4.50)
-	id 1Dubbz-0002He-HJ; Mon, 18 Jul 2005 21:49:11 +0200
-To: Bryan Larsen <bryan.larsen@gmail.com>
-In-Reply-To: <42DB341D.6050506@gmail.com> (Bryan Larsen's message of "Mon, 18 Jul 2005 00:46:21 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-1.7.2 (shiva.jussieu.fr [134.157.0.168]); Mon, 18 Jul 2005 21:49:26 +0200 (CEST)
-X-Antivirus: scanned by sophie at shiva.jussieu.fr
-X-Miltered: at shiva.jussieu.fr with ID 42DC07C5.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+	id S261620AbVGRUT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jul 2005 16:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261709AbVGRUT1
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jul 2005 16:19:27 -0400
+Received: from zproxy.gmail.com ([64.233.162.200]:55570 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261620AbVGRUTZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Jul 2005 16:19:25 -0400
+Received: by zproxy.gmail.com with SMTP id k1so977954nzf
+        for <git@vger.kernel.org>; Mon, 18 Jul 2005 13:19:21 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=WyG1xWmr1C8DAKawUbjawe/0nC+XzYUv6OdXsw4VQ/LiXDxyOKU92XL1pCqA+vkGIxbaDkC9zJBI8eUXCpL9MSN8lP4koGXvson9HGS+8tSPIlBUNqGuqmVE5/9oBhjxj3rkW1gDZRzVgd1E/8RXOuho2SPA/1ty9Y1d/BPZjHM=
+Received: by 10.36.36.15 with SMTP id j15mr3681020nzj;
+        Mon, 18 Jul 2005 13:18:53 -0700 (PDT)
+Received: from ?192.168.2.109? ([69.159.204.165])
+        by mx.gmail.com with ESMTP id 10sm6708587nzo.2005.07.18.13.18.53;
+        Mon, 18 Jul 2005 13:18:53 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslycnd42.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> I certainly don't think the lib interface is anywhere near stable:
-> Linus accepted my change to index_fd far too easily.
+Junio C Hamano wrote:
+> 
+> I fully agree that supporting C-level linkage is worthy, and
+> should be one of our longer term goals.
 
-Noted, thanks for the info.
+Excellent.
+> 
+> 
+>>A similar 1.0 goal would be to document porcelain's use of the .git
+>>directory.  For instance, stacked git uses .git/patches,
+>>.git/patchdescr.tmpl and .git/patchexport.tmpl.  If Linus does not
+>>accept a patch documenting this usage, stacked git should use .stgit
+>>instead.
+> 
+> 
+> I agree that coordinating the namespace under $GIT_DIR among
+> Porcelains is something we need (it was what prompted me to
+> steal the branches/ convention from Cogito).  The job of the
+> core should be to help Porcelains avoid stepping on each other's
+> toes.
+> 
+> The documentation of the internals for $GIT_DIR/patches is
+> probably better left to StGIT documentation, though, at the
+> moment.  When other Porcelains start wishing to access the
+> "series of patches expressed as a set of commit chain" expressed
+> by StGIT there (e.g. show patch series in addition to regular
+> commit chain in gitk), the core should help the Porcelains to
+> work well with each other, to do things in a compatible way.
+> This may involve moving some common things to core side and
+> mention the convention for Porcelains to work well together in
+> the core documentation.
 
-(This makes a lot of sense, Git is evolving very fast.  I haven't
-looked at Git since mid-April, and I'm very much impressed at the
-difference between 0.6 and 0.99.)
+I think we want the same thing, you're just expressing it explicitly: 
+stgit's usage of the .git namespace should be mentioned in git 
+documentation.  actual details belong in stgit, either explicitly in 
+documentation or implicitly in the code.
 
-> Ugh.  That's what they do in the commercial world.  We have it so much
-> better here in Linux & BSD land: you just add a "depends libgit1" line
-> to your package, and the right thing happens: minor updates happen
-> automatically and changes that break the interface don't.
 
-This is, of course, only possible when there are stable interfaces,
-which in turn make change problematic.  (Which, as far as I
-understand, is the very reason why the Linux kernel tree contains
-everyone's and his brother's driver rather than having a stable module
-ABI, but that's besides the point.)
+> 
+> However, I am slightly negative about suggesting these two to be
+> part of the 1.0 goals.  Linus wanted to make 1.0 how many weeks
+> ago?  I personally think that a usable baseline, stable enough
+> to allow stripping out the core part currently shipped as part
+> of Cogito, would be a good place to stop and declare 1.0.  My
+> list was meant to enumuerate what might be missing from the
+> "usable baseline".
 
-> Darcs and git work together to determine the minimal amount
-> that needs to go into libgit1.so.
+All I'm looking for is a statement like "once we're at 1.0, darcs 
+doesn't break until 2.0".  If we don't actually break out a blessed lib 
+interface until 1.1,  that's fine with me.  To me, 1.0 implies core 
+stability.
 
-Hold on...  Nobody is speaking about *binary* compatibility, it's
-source-level compatibility that we need.  There is absolutely no
-reason to introduce the complexities of shared libraries into the
-picture.
-
-                                        Juliusz
+thanks,
+Bryan
