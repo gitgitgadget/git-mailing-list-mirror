@@ -1,76 +1,102 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] git-revover-tags-script
-Date: Sun, 17 Jul 2005 18:19:42 -0600
-Message-ID: <m1d5phnext.fsf@ebiederm.dsl.xmission.com>
+Date: Sun, 17 Jul 2005 18:13:36 -0700
+Message-ID: <7v64v8j4qn.fsf@assigned-by-dhcp.cox.net>
 References: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
 	<7vr7dy9rw4.fsf@assigned-by-dhcp.cox.net>
 	<m1psthomf0.fsf@ebiederm.dsl.xmission.com>
 	<7voe91jmc6.fsf@assigned-by-dhcp.cox.net>
+	<m1hdetnfjq.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 02:20:25 2005
+X-From: git-owner@vger.kernel.org Mon Jul 18 03:14:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DuJMt-0004jf-4l
-	for gcvg-git@gmane.org; Mon, 18 Jul 2005 02:20:24 +0200
+	id 1DuKCZ-0001UJ-AH
+	for gcvg-git@gmane.org; Mon, 18 Jul 2005 03:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261455AbVGRAUA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 20:20:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261457AbVGRAUA
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 20:20:00 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:10732 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S261455AbVGRAT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Jul 2005 20:19:59 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j6I0JhHN003438;
-	Sun, 17 Jul 2005 18:19:43 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j6I0JgZX003433;
-	Sun, 17 Jul 2005 18:19:42 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe91jmc6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Sun, 17 Jul 2005 11:53:29 -0700")
+	id S261471AbVGRBNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 17 Jul 2005 21:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261473AbVGRBNj
+	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 21:13:39 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:53185 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S261471AbVGRBNi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Jul 2005 21:13:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050718011335.XZAQ550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 17 Jul 2005 21:13:35 -0400
+To: ebiederm@xmission.com (Eric W. Biederman)
+In-Reply-To: <m1hdetnfjq.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's message of "Sun, 17 Jul 2005 18:06:33 -0600")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
+ebiederm@xmission.com (Eric W. Biederman) writes:
 
-> ebiederm@xmission.com (Eric W. Biederman) writes:
->
->> What we care about are the tag objects, those are the only kind
->> that are verifiable and usable remotely.  
->>
->> Now that I know we do not pull tags currently with any of the
->> optimized transports, I would suggest taking the list of commit
->> objects we are transporting and for each commit look in the
->> remote repo/refs/tags and transferring every tag object we can find
->> that refers to that commit.
->
-> I think if we have discovery mechanism of remote tags/heads, we
-> do not need anything else.  You _could_ say something like:
->
->     $ git-list-remote --tags linux-2.6
->     9e734775f7c22d2f89943ad6c745571f1930105f	v2.6.12-rc2
->     26791a8bcf0e6d33f43aef7682bdb555236d56de	v2.6.12
->     ...
->     a339981ec18d304f9efeb9ccf01b1f04302edf32	v2.6.13-rc3
->     $ git-list-remote --tags linux-2.6 |
->       while read sha1 tag;
->       do
->           git fetch linux-2.6 tag $tag
->       done
+> There are a couple pieces of your example that disturb me.
 
-Actually looking a little deeper unless I have misread
-the code git-fetch-pack at least will only ask for commit
-objects so git fetch will never return a tag object.
+Did you actually think I suggested you to make that into a
+script that cannot be configured?  No, it was Junio acquiring a
+habit from Linus to give a rough outline in a code form in his
+e-mail client.
 
-I have yet to find where it git-fetch-pack actually prints
-objects out so I still may be something.
+In another message, you said:
 
-Eric
+> Actually looking a little deeper unless I have misread
+> the code git-fetch-pack at least will only ask for commit
+> objects so git fetch will never return a tag object.
+
+I thought so but then I tried it and actually it does seem to
+work as expected (well, it is Linus code so it has to be perfect
+;-).  I created an empty directory and ran the following script.
+It creates two commits, tags the later commit to
+".git/refs/tags/one", and shows the list of objects the
+upload-pack (the peer git-fetch-pack talks to) decides to pack
+and send to the puller that has the first commit only.  The
+first git-rev-list shows one extra object compared to the second
+one; the difference is the named tag that is being asked.
+
+
+------------
+#!/bin/sh
+
+rm -fr .git
+git-init-db
+zero_tree=$(git-write-tree)
+echo "base tree $zero_tree"
+zero_commit=$(
+	echo Empty tree as the base |
+	git-commit-tree $zero_tree
+)
+echo "base commit $zero_commit"
+
+echo >a
+git-update-cache --add a
+one_tree=$(git-write-tree)
+echo "one tree $one_tree"
+one_commit=$(
+	echo Add one file |
+	git-commit-tree $one_tree -p $zero_commit
+)
+echo "one commit $one_commit"
+
+tagger=$(git-var GIT_COMMITTER_IDENT)
+echo "object $one_commit
+type commit
+tag tag-one
+tagger $tagger
+
+just a tag." | git-mktag >.git/refs/tags/one
+echo "one tag `cat .git/refs/tags/one`"
+
+echo "*** reachable from one tag but not from zero"
+git-rev-list --objects tags/one ^$zero_commit
+
+echo "*** reachable from one commit but not from zero"
+git-rev-list --objects $one_commit ^$zero_commit
