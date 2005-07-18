@@ -1,81 +1,89 @@
-From: Bryan Larsen <bryan.larsen@gmail.com>
-Subject: Re: [PATCH] cg-commit chokes when given a very large list of files
-Date: Sun, 17 Jul 2005 23:29:41 -0400
-Message-ID: <42DB2225.2070207@gmail.com>
-References: <20050718031808.20247.43698.sendpatchset@bryan-larsens-ibook-g4.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 18 05:30:08 2005
+From: Bryan Larsen <bryanlarsen@yahoo.com>
+Subject: [PATCH UPDATED] cg-commit chokes when given a very large list of files
+Date: Mon, 18 Jul 2005 00:37:22 -0400
+Message-ID: <20050718043713.22322.21445.sendpatchset@bryan-larsens-ibook-g4.local>
+Cc: Bryan Larsen <bryanlarsen@yahoo.com>, pasky@suse.cz,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 18 06:38:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DuMKI-0002Bw-SO
-	for gcvg-git@gmane.org; Mon, 18 Jul 2005 05:29:55 +0200
+	id 1DuNNz-0006eo-7n
+	for gcvg-git@gmane.org; Mon, 18 Jul 2005 06:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261508AbVGRD3n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 17 Jul 2005 23:29:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261511AbVGRD3n
-	(ORCPT <rfc822;git-outgoing>); Sun, 17 Jul 2005 23:29:43 -0400
-Received: from zproxy.gmail.com ([64.233.162.193]:60136 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261508AbVGRD3n (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Jul 2005 23:29:43 -0400
-Received: by zproxy.gmail.com with SMTP id z31so39415nzd
-        for <git@vger.kernel.org>; Sun, 17 Jul 2005 20:29:42 -0700 (PDT)
+	id S261331AbVGREhY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 18 Jul 2005 00:37:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261371AbVGREhY
+	(ORCPT <rfc822;git-outgoing>); Mon, 18 Jul 2005 00:37:24 -0400
+Received: from smtp017.mail.yahoo.com ([216.136.174.114]:26240 "HELO
+	smtp017.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S261331AbVGREhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Jul 2005 00:37:22 -0400
+Received: (qmail 21716 invoked from network); 18 Jul 2005 04:37:18 -0000
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=LpHyJ3gn6P9at1ugumbYANtmh5VZ3KJlUrxeiOKn4INYeKPfQU0mOk8WDAFPdX056aeQmg9AYgoSIj46n0zyLFh9TeqLGiGBxcih4I/qOJPMVVsSxtU5pGGvMKxNWSCmOT1k99qpxjEm9A1E0Ps96l8ti7mrUl8dsOO6pJJ4JtQ=
-Received: by 10.36.157.2 with SMTP id f2mr3632832nze;
-        Sun, 17 Jul 2005 20:29:42 -0700 (PDT)
-Received: from ?192.168.1.100? ([70.26.43.137])
-        by mx.gmail.com with ESMTP id 22sm5319201nzn.2005.07.17.20.29.41;
-        Sun, 17 Jul 2005 20:29:42 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: Bryan Larsen <bryanlarsen@yahoo.com>
-In-Reply-To: <20050718031808.20247.43698.sendpatchset@bryan-larsens-ibook-g4.local>
+  s=s1024; d=yahoo.com;
+  h=Received:From:To:Cc:Message-Id:Subject;
+  b=RpgGCPfdYAD8BnRoz+94Ol6iVw1Z3MSLYhzrTBzqVxB6kyMAU73PbRUnQd6U7q+G0b6T2IvIlc/+TNQ6UZAD8tjAjKosQeGBBUY80hOeVczKGJqyRrI4VGKeenSHGXwFXLYd7fPVeM69jPwKxeRcklHeefzRDleFc02jDRmIx4o=  ;
+Received: from unknown (HELO bryan-larsens-ibook-g4.local) (bryanlarsen@70.26.43.137 with plain)
+  by smtp017.mail.yahoo.com with SMTP; 18 Jul 2005 04:37:18 -0000
+To: bryan.larsen@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch is broken.  The original patch still works.
+cg-commit currently chokes when passed a very large list of files.  Fix it.
 
-Bryan
+Resent again.  This time we completely avoid messing with IFS, resulting 
+in support for filenames with line feeds.
 
+Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
+---
 
-Bryan Larsen wrote:
-> cg-commit currently chokes when passed a very large list of files.
-> Fix it.
-> 
-> This patch depends on your filenames not containing line feeds.  No
-> big deal, other parts of cogito break on filenames containing line
-> feeds.
-> 
-> Resent because previous send appears to have been dropped.  This patch
-> is cleaner.
-> 
-> Signed-off-by: Bryan Larsen <bryan.larsen@gmail.com>
-> ---
-> 
->  cg-commit |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/cg-commit b/cg-commit
-> --- a/cg-commit
-> +++ b/cg-commit
-> @@ -289,9 +289,9 @@ precommit_update () {
->  		eval "queue$op[\${#queue$op[@]}]=\"\$fname\""
->  	done
->  	# XXX: Do we even need to do the --add and --remove update-caches?
-> -	[ "$queueN" ] && { git-update-cache --add ${infoonly} -- "${queueN[@]}" || return 1; }
-> -	[ "$queueD" ] && { git-update-cache --force-remove -- "${queueD[@]}" || return 1; }
-> -	[ "$queueM" ] && { git-update-cache ${infoonly} -- "${queueM[@]}" || return 1; }
-> +	[ "$queueN" ] && { ( echo "${queueN[*]}" | tr \\n \\0 | IFS=$'\n' xargs -0 git-update-cache --add ${infoonly} -- ) || return 1; }
-> +	[ "$queueD" ] && { ( echo "${queueD[*]}" | tr \\n \\0 | IFS=$'\n' xargs -0 git-update-cache --force-remove -- ) || return 1;  }
-> +	[ "$queueM" ] && { ( echo "${queueM[*]}" | tr \\n \\0 | IFS=$'\n' xargs -0 git-update-cache ${infoonly} -- ) || return 1; }
->  	return 0
->  }
->  
-> 
+ cg-Xlib   |   18 ++++++++++++++++++
+ cg-commit |    6 +++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/cg-Xlib b/cg-Xlib
+--- a/cg-Xlib
++++ b/cg-Xlib
+@@ -49,6 +49,24 @@ mktemp () {
+ 	$(which mktemp) $dirarg $prefix"$1"
+ }
+ 
++
++# this function is useful when you want to execute a command that's bigger
++# than the system's limit.
++#
++# this is similar to piping output to xargs -0r
++# 
++# example usage:  eval_via_xargs "git-update-cache --add --" "$@"
++eval_via_xargs () {
++    local cmd=$1
++    shift
++    if [ "$1" ] ; then	
++	( for f in "$@" ; do
++	    echo -ne ${f}\\000
++	done ) | xargs -0 $cmd
++    fi
++}
++
++
+ stat () {
+ 	if [ "$1" != "-c" ] || [ "$2" != "%s" ]; then
+ 		echo "INTERNAL ERROR: Unsupported stat call $@" >&2
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -289,9 +289,9 @@ precommit_update () {
+ 		eval "queue$op[\${#queue$op[@]}]=\"\$fname\""
+ 	done
+ 	# XXX: Do we even need to do the --add and --remove update-caches?
+-	[ "$queueN" ] && { git-update-cache --add ${infoonly} -- "${queueN[@]}" || return 1; }
+-	[ "$queueD" ] && { git-update-cache --force-remove -- "${queueD[@]}" || return 1; }
+-	[ "$queueM" ] && { git-update-cache ${infoonly} -- "${queueM[@]}" || return 1; }
++	eval_via_xargs "git-update-cache --add ${infoonly} --" "${queueN[@]}" || return 1
++	eval_via_xargs "git-update-cache --force-remove --" "${queueD[@]}" || return 1
++	eval_via_xargs "git-update-cache ${infoonly} --" "${queueM[@]}" || return 1
+ 	return 0
+ }
+ 
