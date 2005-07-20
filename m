@@ -1,192 +1,240 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [RFD] server-info to help clients
-Date: Tue, 19 Jul 2005 17:20:58 -0700
-Message-ID: <7vu0iqiaz9.fsf@assigned-by-dhcp.cox.net>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [RFD] server-info to help clients
+Date: Tue, 19 Jul 2005 17:35:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0507191728380.18963@qynat.qvtvafvgr.pbz>
 References: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
+ <7vu0iqiaz9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 20 02:21:52 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	ebiederm@xmission.com
+X-From: git-owner@vger.kernel.org Wed Jul 20 02:36:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dv2Ks-0000m1-R5
-	for gcvg-git@gmane.org; Wed, 20 Jul 2005 02:21:19 +0200
+	id 1Dv2ZW-0003HQ-6I
+	for gcvg-git@gmane.org; Wed, 20 Jul 2005 02:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261260AbVGTAVD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jul 2005 20:21:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261625AbVGTAVD
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jul 2005 20:21:03 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:3794 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261260AbVGTAVC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2005 20:21:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050720002059.SHEM17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 19 Jul 2005 20:20:59 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-cc: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's message of "Sat, 16 Jul 2005 14:20:49 -0600")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261260AbVGTAgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 19 Jul 2005 20:36:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261625AbVGTAgK
+	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jul 2005 20:36:10 -0400
+Received: from warden3-p.diginsite.com ([208.147.64.186]:41894 "HELO
+	warden3.diginsite.com") by vger.kernel.org with SMTP
+	id S261260AbVGTAgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Jul 2005 20:36:08 -0400
+Received: from sacims01.digitalinsight.com by warden3.diginsite.com
+          via smtpd (for vger.kernel.org [12.107.209.244]) with SMTP; Tue, 19 Jul 2005 17:36:08 -0700
+Received: by sacexc01.diginsite.com with Internet Mail Service (5.5.2657.72)
+	id <PCZWDHC9>; Tue, 19 Jul 2005 17:35:53 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id PHVSX01V; Tue, 19 Jul 2005 17:35:49 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-X-Sender: dlang@dlang.diginsite.com
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <7vu0iqiaz9.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-While things are quiet (I envy everybody having fun at OLS),
-I've been cooking something to help clients to pull from dumb
-servers.
+i wonder how much benifit there is to the throw-away packs.
 
-I assume that:
+if you do permanent incremental packs every day (or every few days) is 
+there really enough activity to make it worth the added complexities 
+(specificly including detecting that it is a throw-away pack on the client 
+side and therefor you probably don't want to keep it) for the slight 
+performance increase you may get
 
- - The object database is packed, following the recommendations
-   in the "Working with Others" section of the tutorial.
+remember that since deltas only work within a pack the throw-away pack 
+will only be noticably smaller once you start having one file modified 
+multiple times before a new incremental pack is created, so you aren't 
+likly to save much on space, so all you are likly to save is the overhead 
+of fetching multiple objects compared to one object.
 
- - The repository owner _may_ further create throw-away
-   incremental packs.  There can be the following in one object
-   database:
+going forward it may be worth a smarter packing program to support HPA's 
+goal of a cental object storage, one that can make decisions like: 'object 
+A is part of this 40% of the trees, while object B is part of that 
+otehr 40% (disjoint set) so it's probably a good idea to put them into 
+seperate packs'
 
-     - one baseline pack.
-     - permanent incremental packs #1 .. #N
-     - one throw-away incremental pack.
-     - unpacked files under objects/??/.
+but that can be done much futher down the road without having to change 
+the clients at all.
 
-   Baseline and permanent incremental packs are built by "git
-   repack", just like Linus recommended from the beginning.  The
-   throwaway pack is built periodically (say every hour) to
-   collect all objects that are not in the baseline nor
-   permanent incrementals.  Building of such a throw-away pack
-   involves:
+David Lang
 
-     - unpacking and removal of the current throw-away pack.
-     - running "git repack".
-     - running "git prune-packed".
 
- - The server could be truly dumb and can even refuse to serve
-   dirindex; parsing autogenerated index.html is a pain anyway.
+  On Tue, 19 Jul 2005, 
+Junio C Hamano wrote:
 
-First, a somewhat related change I did was to write a script
-called "git ls-remote".  It is used this way:
+> Date: Tue, 19 Jul 2005 17:20:58 -0700
+> From: Junio C Hamano <junkio@cox.net>
+> To: Linus Torvalds <torvalds@osdl.org>
+> Cc: git@vger.kernel.org, ebiederm@xmission.com
+> Subject: [RFD] server-info to help clients
+> 
+> While things are quiet (I envy everybody having fun at OLS),
+> I've been cooking something to help clients to pull from dumb
+> servers.
+>
+> I assume that:
+>
+> - The object database is packed, following the recommendations
+>   in the "Working with Others" section of the tutorial.
+>
+> - The repository owner _may_ further create throw-away
+>   incremental packs.  There can be the following in one object
+>   database:
+>
+>     - one baseline pack.
+>     - permanent incremental packs #1 .. #N
+>     - one throw-away incremental pack.
+>     - unpacked files under objects/??/.
+>
+>   Baseline and permanent incremental packs are built by "git
+>   repack", just like Linus recommended from the beginning.  The
+>   throwaway pack is built periodically (say every hour) to
+>   collect all objects that are not in the baseline nor
+>   permanent incrementals.  Building of such a throw-away pack
+>   involves:
+>
+>     - unpacking and removal of the current throw-away pack.
+>     - running "git repack".
+>     - running "git prune-packed".
+>
+> - The server could be truly dumb and can even refuse to serve
+>   dirindex; parsing autogenerated index.html is a pain anyway.
+>
+> First, a somewhat related change I did was to write a script
+> called "git ls-remote".  It is used this way:
+>
+>    $ git ls-remote origin
+>    17c0bd743c1c8113cd0ed72b7ca1776d13c27e01	HEAD
+>    17c0bd743c1c8113cd0ed72b7ca1776d13c27e01	refs/heads/master
+>    f0b32737ad5a35cc047db47353a75faccfe5939e	refs/heads/linus
+>    4d9ae497491fd838dafd7fcbd11c4aa678a726f1	refs/heads/pu
+>    d6602ec5194c87b0fc87103ca4d67251c76f233a	refs/tags/v0.99
+>    f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tags/v0.99.1
+>
+> It slurps the set of refs from a remote repository (the same
+> short-hand we stole from Cogito using .git/branches/ can be used
+> here) and optionally it can be told to store tags under local
+> refs/.
+>
+> This is produced by connecting directly to the git-daemon
+> running on the remote side and talking upload-pack protocol with
+> it.  A new helper program "git-peek-remote" is used to do this
+> when we use git:// URL.  From an rsync URL, everything under its
+> refs/ is copied to a temporary directory to produce the same
+> information.
+>
+> To support the same on a dumb transport, I gave the server side
+> a new command, "git update-server-info", which prepares this
+> information in "$repo/info/refs", so writing http support for
+> "git ls-remote" using curl is trivial.  I arranged things so
+> that update-server-info is run whenever you push into the
+> repository via "git push".  You can of course run it by hand
+> from the command line.
+>
+> The other file that update-server-info produces is to help dumb
+> pullers.  It is stored in "$repo/objects/info/pack", and looks
+> like this:
+>
+>    P pack-c60dc6f7486e34043bd6861d6b2c0d21756dde76.pack
+>    P pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack
+>    D 0 1
+>    D 1
+>    T 0 9fb1759a3102c26cd8f64254a7c3e532782c2bb8 commit
+>    T 0 a339981ec18d304f9efeb9ccf01b1f04302edf32 tag
+>    T 1 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a tag
+>    T 1 043d051615aa5da09a7e44f1edbb69798458e067 commit
+>    T 1 06f6d9e2f140466eeb41e494e14167f90210f89d tag
+>    T 1 26791a8bcf0e6d33f43aef7682bdb555236d56de tag
+>    T 1 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c tag
+>    T 1 701d7ecec3e0c6b4ab9bb824fd2b34be4da63b7e tag
+>    T 1 733ad933f62e82ebc92fed988c7f0795e64dea62 tag
+>    T 1 9e734775f7c22d2f89943ad6c745571f1930105f tag
+>    T 1 c521cb0f10ef2bf28a18e1cc8adf378ccbbe5a19 tag
+>    T 1 ebb5573ea8beaf000d4833735f3e53acb9af844c tag
+>
+> The lines that start with a 'P' list all the packs available in
+> this object database (relative to $repo/objects/pack).  These
+> packs are implicitly numbered starting at 0 in the order they
+> appear in the file; in the above, the pack c60dc6... is pack #0
+> and e3117b... is pack #1.
+>
+> The lines that start with a 'D' list the dependencies.  "D 0 1"
+> says, pack #0 is not complete and refers to objects found in
+> pack #1 (e.g. a commit object in pack #0 has a subtree that is
+> the same one found in pack #1 hence pack #0 does not contain
+> that tree).  "D 1" shows that the pack #1 is self sufficient and
+> does not depend on anything (it is the linux-2.6 baseline pack).
+> Of course, you could have a pack that depends on more than one
+> packs, in which case you would see something like "D 4 1 2 3" to
+> mean pack #4 depending on packs #1, #2 and #3.
+>
+> If the repository follows the "baseline, permanent incrementals,
+> and one throw-away" scheme I outlined above, the baseline would
+> be self sufficient, most likely incremental #i would depend on
+> the baseline and all the incrementals #j (j < i), and the
+> throw-away would depend on everybody else.
+>
+> The lines that start with a 'T' list objects in a pack that are
+> not referenced by anything else in the same pack (they are
+> typically branch heads and tags).  We can see that pack #0 has
+> one head commit and a tag in the above example.
+>
+> This file always resides at a known location.   A client can do
+> something like this to slurp from a dumb server:
+>
+> (1) Fetch $repo/objects/info/pack file for the above
+>     information.
+>
+> (2) Look at T lines.  If you have all the objects listed there
+>     for a pack, and if your repository is not incomplete to begin
+>     with, you are not interested in that pack.  By definition, all
+>     things that are in that pack are reachable from one of those
+>     objects listed on the T lines, and you already have them.
+>     Otherwise, you _may_ be interested in that pack.
+>
+> (3) Download corresponding .idx files for the packs you are
+>     interested in.  Run "git show-index" to see if the heads/tags
+>     you are interested in appear in one of them (you found out
+>     about the heads/tags using "git ls-remote" earlier).  If you
+>     find a pack that contains objects you are interested in, look
+>     at D lines to make sure you have all the head objects from
+>     packs that this pack depends on; otherwise you need to slurp
+>     that depended-upon packs as well (needless to say, this goes
+>     recursive).
+>
+> (4) Download the packs you decided to pick in the previous
+>     step.  It is up to you if you unpack those packs, but if
+>     the upstream has it statically packed I would recommend
+>     against unpacking.  Next time around you can just look at
+>     the name of the pack and decide you already have that pack.
+>
+>     On the other hand, keeping a throw-away packed may not make
+>     much sense.  You can unpack the throw-away and then run
+>     "git prune-packed" in your repository next time you get the
+>     pack info file from the repository, by noticing that the
+>     pack is gone from the remote repository already.
+>
+> (5) Fill the rest using the commit walker.
+>
+> The initial client implementation which is _really_ dumb could
+> even skip steps (2) and (3) and choose to always download/sync
+> all available packs from the dumb server, and directly go to
+> step (5) to fall back on the commit walker.
+>
+> I haven't written the client side, but all the rest that are
+> necessary to support the above will be sent to the list as
+> separate patches.
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-    $ git ls-remote origin
-    17c0bd743c1c8113cd0ed72b7ca1776d13c27e01	HEAD
-    17c0bd743c1c8113cd0ed72b7ca1776d13c27e01	refs/heads/master
-    f0b32737ad5a35cc047db47353a75faccfe5939e	refs/heads/linus
-    4d9ae497491fd838dafd7fcbd11c4aa678a726f1	refs/heads/pu
-    d6602ec5194c87b0fc87103ca4d67251c76f233a	refs/tags/v0.99
-    f25a265a342aed6041ab0cc484224d9ca54b6f41	refs/tags/v0.99.1
-
-It slurps the set of refs from a remote repository (the same
-short-hand we stole from Cogito using .git/branches/ can be used
-here) and optionally it can be told to store tags under local
-refs/.
-
-This is produced by connecting directly to the git-daemon
-running on the remote side and talking upload-pack protocol with
-it.  A new helper program "git-peek-remote" is used to do this
-when we use git:// URL.  From an rsync URL, everything under its
-refs/ is copied to a temporary directory to produce the same
-information.
-
-To support the same on a dumb transport, I gave the server side
-a new command, "git update-server-info", which prepares this
-information in "$repo/info/refs", so writing http support for
-"git ls-remote" using curl is trivial.  I arranged things so
-that update-server-info is run whenever you push into the
-repository via "git push".  You can of course run it by hand
-from the command line.
-
-The other file that update-server-info produces is to help dumb
-pullers.  It is stored in "$repo/objects/info/pack", and looks
-like this:
-
-    P pack-c60dc6f7486e34043bd6861d6b2c0d21756dde76.pack
-    P pack-e3117bbaf6a59cb53c3f6f0d9b17b9433f0e4135.pack
-    D 0 1
-    D 1
-    T 0 9fb1759a3102c26cd8f64254a7c3e532782c2bb8 commit
-    T 0 a339981ec18d304f9efeb9ccf01b1f04302edf32 tag
-    T 1 0397236d43e48e821cce5bbe6a80a1a56bb7cc3a tag
-    T 1 043d051615aa5da09a7e44f1edbb69798458e067 commit
-    T 1 06f6d9e2f140466eeb41e494e14167f90210f89d tag
-    T 1 26791a8bcf0e6d33f43aef7682bdb555236d56de tag
-    T 1 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c tag
-    T 1 701d7ecec3e0c6b4ab9bb824fd2b34be4da63b7e tag
-    T 1 733ad933f62e82ebc92fed988c7f0795e64dea62 tag
-    T 1 9e734775f7c22d2f89943ad6c745571f1930105f tag
-    T 1 c521cb0f10ef2bf28a18e1cc8adf378ccbbe5a19 tag
-    T 1 ebb5573ea8beaf000d4833735f3e53acb9af844c tag
-
-The lines that start with a 'P' list all the packs available in
-this object database (relative to $repo/objects/pack).  These
-packs are implicitly numbered starting at 0 in the order they
-appear in the file; in the above, the pack c60dc6... is pack #0
-and e3117b... is pack #1.
-
-The lines that start with a 'D' list the dependencies.  "D 0 1"
-says, pack #0 is not complete and refers to objects found in
-pack #1 (e.g. a commit object in pack #0 has a subtree that is
-the same one found in pack #1 hence pack #0 does not contain
-that tree).  "D 1" shows that the pack #1 is self sufficient and
-does not depend on anything (it is the linux-2.6 baseline pack).
-Of course, you could have a pack that depends on more than one
-packs, in which case you would see something like "D 4 1 2 3" to
-mean pack #4 depending on packs #1, #2 and #3.
-
-If the repository follows the "baseline, permanent incrementals,
-and one throw-away" scheme I outlined above, the baseline would
-be self sufficient, most likely incremental #i would depend on
-the baseline and all the incrementals #j (j < i), and the
-throw-away would depend on everybody else.
-
-The lines that start with a 'T' list objects in a pack that are
-not referenced by anything else in the same pack (they are
-typically branch heads and tags).  We can see that pack #0 has
-one head commit and a tag in the above example.
-
-This file always resides at a known location.   A client can do
-something like this to slurp from a dumb server:
-
- (1) Fetch $repo/objects/info/pack file for the above
-     information.
-
- (2) Look at T lines.  If you have all the objects listed there
-     for a pack, and if your repository is not incomplete to begin
-     with, you are not interested in that pack.  By definition, all
-     things that are in that pack are reachable from one of those
-     objects listed on the T lines, and you already have them.
-     Otherwise, you _may_ be interested in that pack.
-
- (3) Download corresponding .idx files for the packs you are
-     interested in.  Run "git show-index" to see if the heads/tags
-     you are interested in appear in one of them (you found out
-     about the heads/tags using "git ls-remote" earlier).  If you
-     find a pack that contains objects you are interested in, look
-     at D lines to make sure you have all the head objects from
-     packs that this pack depends on; otherwise you need to slurp
-     that depended-upon packs as well (needless to say, this goes
-     recursive).
-
- (4) Download the packs you decided to pick in the previous
-     step.  It is up to you if you unpack those packs, but if
-     the upstream has it statically packed I would recommend
-     against unpacking.  Next time around you can just look at
-     the name of the pack and decide you already have that pack.
-
-     On the other hand, keeping a throw-away packed may not make
-     much sense.  You can unpack the throw-away and then run
-     "git prune-packed" in your repository next time you get the
-     pack info file from the repository, by noticing that the
-     pack is gone from the remote repository already.
-
- (5) Fill the rest using the commit walker.
-
-The initial client implementation which is _really_ dumb could
-even skip steps (2) and (3) and choose to always download/sync
-all available packs from the dumb server, and directly go to
-step (5) to fall back on the commit walker.
-
-I haven't written the client side, but all the rest that are
-necessary to support the above will be sent to the list as
-separate patches.
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
