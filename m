@@ -1,192 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-format-patch-script and mailinfo updates.
-Date: Wed, 20 Jul 2005 16:32:16 -0700
-Message-ID: <7vmzohdpfj.fsf@assigned-by-dhcp.cox.net>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Should cg-mkpatch output be usable with cg-patch?
+Date: Thu, 21 Jul 2005 01:49:04 +0200
+Message-ID: <20050720234904.B3ED735267C@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 21 01:32:54 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Jul 21 01:49:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvO38-0001hg-5f
-	for gcvg-git@gmane.org; Thu, 21 Jul 2005 01:32:26 +0200
+	id 1DvOJd-00032f-Ao
+	for gcvg-git@gmane.org; Thu, 21 Jul 2005 01:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261524AbVGTXcT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jul 2005 19:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261539AbVGTXcT
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 19:32:19 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:44542 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261524AbVGTXcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2005 19:32:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050720233215.QSUA1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 20 Jul 2005 19:32:15 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261539AbVGTXtW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jul 2005 19:49:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261565AbVGTXtW
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 19:49:22 -0400
+Received: from mailout01.sul.t-online.com ([194.25.134.80]:40596 "EHLO
+	mailout01.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S261539AbVGTXtV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2005 19:49:21 -0400
+Received: from fwd18.aul.t-online.de 
+	by mailout01.sul.t-online.com with smtp 
+	id 1DvOJT-0001vh-00; Thu, 21 Jul 2005 01:49:19 +0200
+Received: from denx.de (GoBvAYZlZepetoT9uo+POooPxRElWlh2MpNBb8zGdjNpZW0GDXPs6U@[84.150.85.110]) by fwd18.sul.t-online.de
+	with esmtp id 1DvOJG-2AIjxo0; Thu, 21 Jul 2005 01:49:06 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP id 1D02142EA5
+	for <git@vger.kernel.org>; Thu, 21 Jul 2005 01:49:05 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id B3ED735267C
+	for <git@vger.kernel.org>; Thu, 21 Jul 2005 01:49:04 +0200 (MEST)
+To: git@vger.kernel.org
+X-ID: GoBvAYZlZepetoT9uo+POooPxRElWlh2MpNBb8zGdjNpZW0GDXPs6U@t-dialin.net
+X-TOI-MSGID: 907707b7-a408-4087-b231-ad87663e8340
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
- - avoid duplicating [PATCH] in the commit message body if the
-   original commit has it already (happens for commits done from
-   mails via applymbox).
+I wander what I should do with "cg-mkpatch" generated output;  I  had
+the  impression that this should be usable with "cg-patch", but these
+are incompatible with each other. Forexample. if  a  commit  contains
+permission changes, my generated patch may look like this:
 
- - check if the commit author is different from the one who is
-   running the script, and emit an appropriate "From:" and
-   "Date: " lines to the output.
+	...
+	diff --git a/MAKEALL b/MAKEALL
+	old mode 100644
+	new mode 100755
+	diff --git a/mkconfig b/mkconfig
+	old mode 100644
+	new mode 100755
+	diff --git a/tools/img2brec.sh b/tools/img2brec.sh
+	old mode 100644
+	new mode 100755
+	...
 
- - with '--date', emit "Date: " line to preserve the original
-   author date even for the user's own commit.
+If I feed this into "cg-patch", I get:
 
- - teach mailinfo to grok not just "From: " but "Date: ".
+	patch: **** Only garbage was found in the patch input.
 
-The patch e-mail output by format-patch starts with the first
-line from the original commit message, prefixed with [PATCH],
-and optionally a From: line if you are reformatting a patch
-obtained from somebody else, a Date: line from the original
-commit if (1) --date is specified or (2) for somebody else's
-patch, and the rest of the commit message body.
+-> rpm -q cogito
+cogito-0.12.1-1
 
-Expected use of this is to move the title line from the commit
-to Subject: when sending it via an e-mail, and leave the From:
-and the Date: lines as the first lines of your message.
 
-The mailinfo command has been changed to read Date: (in addition
-to From: it already understands) and do sensible things when
-running applymbox.
+Best regards,
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Wolfgang Denk
 
- git-format-patch-script |   38 +++++++++++++++++++++++++++++++-------
- tools/mailinfo.c        |   10 +++++++++-
- 2 files changed, 40 insertions(+), 8 deletions(-)
-
-70e9ebdaa9951183d2e4f9b569dafbc50012d8ec
-diff --git a/git-format-patch-script b/git-format-patch-script
---- a/git-format-patch-script
-+++ b/git-format-patch-script
-@@ -30,6 +30,8 @@ outdir=./
- while case "$#" in 0) break;; esac
- do
-     case "$1" in
-+    -d|--d|--da|--dat|--date)
-+    date=t ;;
-     -n|--n|--nu|--num|--numb|--numbe|--number|--numbere|--numbered)
-     numbered=t ;;
-     -o=*|--o=*|--ou=*|--out=*|--outp=*|--outpu=*|--output=*|--output-=*|\
-@@ -56,6 +58,8 @@ esac
- junio=`git-rev-parse --verify "$junio"`
- linus=`git-rev-parse --verify "$linus"`
- 
-+me=`git-var GIT_AUTHOR_IDENT | sed -e 's/>.*/>/'`
-+
- case "$outdir" in
- */) ;;
- *) outdir="$outdir/" ;;
-@@ -66,6 +70,7 @@ tmp=.tmp-series$$
- trap 'rm -f $tmp-*' 0 1 2 3 15
- 
- series=$tmp-series
-+commsg=$tmp-commsg
- 
- titleScript='
- 	/./d
-@@ -82,6 +87,12 @@ titleScript='
- 	q
- '
- 
-+whosepatchScript='
-+/^author /{
-+	s/author \(.*>\) \(.*\)$/au='\''\1'\'' ad='\''\2'\''/p
-+	q
-+}'
-+
- _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- stripCommitHead='/^'"$_x40"' (from '"$_x40"')$/d'
-@@ -91,9 +102,8 @@ total=`wc -l <$series`
- i=$total
- while read commit
- do
--    title=`git-cat-file commit "$commit" |
--    git-stripspace |
--    sed -ne "$titleScript"`
-+    git-cat-file commit "$commit" | git-stripspace >$commsg
-+    title=`sed -ne "$titleScript" <$commsg`
-     case "$numbered" in
-     '') num= ;;
-     *)
-@@ -102,6 +112,7 @@ do
- 	*) num=' '`printf "%d/%d" $i $total` ;;
- 	esac
-     esac
-+
-     file=`printf '%04d-%stxt' $i "$title"`
-     i=`expr "$i" - 1`
-     echo "$file"
-@@ -109,15 +120,28 @@ do
- 	mailScript='
- 	/./d
- 	/^$/n
--	s|^|[PATCH'"$num"'] |
-+	s|^\[PATCH[^]]*\] *||
-+	s|^|[PATCH'"$num"'] |'
-+
-+	eval "$(sed -ne "$whosepatchScript" $commsg)"
-+	test "$au" = "$me" || {
-+		mailScript="$mailScript"'
-+	a\
-+From: '"$au"
-+	}
-+	test "$date,$au" = ",$me" || {
-+		mailScript="$mailScript"'
-+	a\
-+Date: '"$ad"
-+	}
-+
-+	mailScript="$mailScript"'
- 	: body
- 	p
- 	n
- 	b body'
- 
--	git-cat-file commit "$commit" |
--	git-stripspace |
--	sed -ne "$mailScript"
-+	sed -ne "$mailScript" <$commsg
- 	echo '---'
- 	echo
- 	git-diff-tree -p $diff_opts "$commit" | git-apply --stat --summary
-diff --git a/tools/mailinfo.c b/tools/mailinfo.c
---- a/tools/mailinfo.c
-+++ b/tools/mailinfo.c
-@@ -220,8 +220,9 @@ static int eatspace(char *line)
- static void handle_body(void)
- {
- 	int has_from = 0;
-+	int has_date = 0;
- 
--	/* First line of body can be a From: */
-+	/* First lines of body can have From: and Date: */
- 	while (fgets(line, sizeof(line), stdin) != NULL) {
- 		int len = eatspace(line);
- 		if (!len)
-@@ -232,6 +233,13 @@ static void handle_body(void)
- 				continue;
- 			}
- 		}
-+		if (!memcmp("Date:", line, 5) && isspace(line[5])) {
-+			if (!has_date) {
-+				handle_date(line+6);
-+				has_date = 1;
-+				continue;
-+			}
-+		}
- 		line[len] = '\n';
- 		handle_rest();
- 		break;
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+I really hate this damned machine     It never does quite what I want
+I wish that they would sell it.              But only what I tell it.
