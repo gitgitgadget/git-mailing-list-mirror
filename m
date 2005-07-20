@@ -1,78 +1,153 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Misc documentation fixes and improvements
-Date: Wed, 20 Jul 2005 19:12:22 +0200
-Message-ID: <20050720171221.GD17217@pasky.ji.cz>
-References: <20050720120501.GA14074@diku.dk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] format-patch: --mbox and --check.
+Date: Wed, 20 Jul 2005 15:37:19 -0700
+Message-ID: <7v4qapf6jk.fsf@assigned-by-dhcp.cox.net>
+References: <7vpstdf6rr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 20 19:13:09 2005
+X-From: git-owner@vger.kernel.org Thu Jul 21 00:39:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvI7c-0002Xh-Gn
-	for gcvg-git@gmane.org; Wed, 20 Jul 2005 19:12:40 +0200
+	id 1DvNDZ-0003OX-4l
+	for gcvg-git@gmane.org; Thu, 21 Jul 2005 00:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261421AbVGTRMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jul 2005 13:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261426AbVGTRMZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 13:12:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:13330 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261421AbVGTRMY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2005 13:12:24 -0400
-Received: (qmail 21566 invoked by uid 2001); 20 Jul 2005 17:12:22 -0000
-To: Jonas Fonseca <fonseca@diku.dk>
-Content-Disposition: inline
-In-Reply-To: <20050720120501.GA14074@diku.dk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261521AbVGTWix (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jul 2005 18:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261522AbVGTWix
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 18:38:53 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:27011 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S261521AbVGTWhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Jul 2005 18:37:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050720223720.HOQJ17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 20 Jul 2005 18:37:20 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <7vpstdf6rr.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed, 20 Jul 2005 15:32:24 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Jul 20, 2005 at 02:05:01PM CEST, I got a letter
-where Jonas Fonseca <fonseca@diku.dk> told me that...
-> Fix displaying of an error message when cg-help is called with unknown
-> command and use $USAGE so the correct cg-help usage string is printed.
-> Drop useless use of cat in print_help(). Improve the asciidoc markup.
-> 
-> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
-> ---
-> 
-> diff --git a/cg-diff b/cg-diff
-> --- a/cg-diff
-> +++ b/cg-diff
-> @@ -3,7 +3,7 @@
->  # Make a diff between two GIT trees.
->  # Copyright (c) Petr Baudis, 2005
->  #
-> -# Outputs a diff for converting the first tree to the second one.
-> +# Outputs a diff for converting between two trees.
->  # By default compares the current working tree to the state at the
->  # last commit. The output will automatically be displayed in a pager
->  # unless it is piped to a program.
+Add --mbox option to export patches in a format resembling UNIX
+mbox, so that later they can be concatenated and fed to
+applymbox.
 
-I dropped this hunk (seems to only lose clarity).
+Add --check to look for lines that introduce bogus whitespaces.
 
-> diff --git a/cg-help b/cg-help
-> --- a/cg-help
-> +++ b/cg-help
-> @@ -90,7 +91,7 @@ ADVANCED_COMMANDS="$(ls $bin_path/cg-adm
->  colorize <<__END__
->  The Cogito version control system  $(cg-version)
->  
-> -Usage: cg-COMMAND [ARG]...
-> +Usage: $USAGE
->  
->  Available commands:
->  $(print_command_listing $REGULAR_COMMANDS)
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-And I dropped the Usage string here altogether.
+ git-format-patch-script |   49 +++++++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 43 insertions(+), 6 deletions(-)
 
-Thanks,
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+b9d503a8a5e3d83059836c939a09d5f6abdf5406
+diff --git a/git-format-patch-script b/git-format-patch-script
+--- a/git-format-patch-script
++++ b/git-format-patch-script
+@@ -4,7 +4,7 @@
+ #
+ 
+ usage () {
+-    echo >&2 "usage: $0"' [-n] [-o dir] [-<diff options>...] upstream [ our-head ]
++    echo >&2 "usage: $0"' [-n] [-o dir] [--mbox] [--check] [-<diff options>...] upstream [ our-head ]
+ 
+ Prepare each commit with its patch since our-head forked from upstream,
+ one file per patch, for e-mail submission.  Each output file is
+@@ -16,6 +16,10 @@ the current working directory.
+ 
+ When -n is specified, instead of "[PATCH] Subject", the first line is formatted
+ as "[PATCH N/M] Subject", unless you have only one patch.
++
++When --mbox is specified, the output is formatted to resemble
++UNIX mailbox format, and can be concatenated together for processing
++with applymbox.
+ '
+     exit 1
+ }
+@@ -25,13 +29,19 @@ IFS='
+ '
+ LF='
+ '
+-outdir=./
+ 
++outdir=./
+ while case "$#" in 0) break;; esac
+ do
+     case "$1" in
++    -a|--a|--au|--aut|--auth|--autho|--author)
++    author=t ;;
++    -c|--c|--ch|--che|--chec|--check)
++    check=t ;;
+     -d|--d|--da|--dat|--date)
+     date=t ;;
++    -m|--m|--mb|--mbo|--mbox)
++    date=t author=t mbox=t ;;
+     -n|--n|--nu|--num|--numb|--numbe|--number|--numbere|--numbered)
+     numbered=t ;;
+     -o=*|--o=*|--ou=*|--out=*|--outp=*|--outpu=*|--output=*|--output-=*|\
+@@ -71,6 +81,7 @@ trap 'rm -f $tmp-*' 0 1 2 3 15
+ 
+ series=$tmp-series
+ commsg=$tmp-commsg
++filelist=$tmp-files
+ 
+ titleScript='
+ 	/./d
+@@ -115,16 +126,27 @@ do
+ 
+     file=`printf '%04d-%stxt' $i "$title"`
+     i=`expr "$i" - 1`
+-    echo "$file"
++    echo >&2 "* $file"
+     {
+ 	mailScript='
+ 	/./d
+ 	/^$/n
+-	s|^\[PATCH[^]]*\] *||
+-	s|^|[PATCH'"$num"'] |'
++	s|^\[PATCH[^]]*\] *||'
++
++	case "$mbox" in
++	t)
++	    echo 'From nobody Mon Sep 17 00:00:00 2001' ;# UNIX "From" line
++	    mailScript="$mailScript"'
++	    s|^|Subject: [PATCH'"$num"'] |'
++	    ;;
++	*)
++	    mailScript="$mailScript"'
++	    s|^|[PATCH'"$num"'] |'
++	    ;;
++	esac
+ 
+ 	eval "$(sed -ne "$whosepatchScript" $commsg)"
+-	test "$au" = "$me" || {
++	test "$author,$au" = ",$me" || {
+ 		mailScript="$mailScript"'
+ 	a\
+ From: '"$au"
+@@ -147,5 +169,20 @@ Date: '"$ad"
+ 	git-diff-tree -p $diff_opts "$commit" | git-apply --stat --summary
+ 	echo
+ 	git-diff-tree -p $diff_opts "$commit" | sed -e "$stripCommitHead"
++
++	case "$mbox" in
++	t)
++		echo
++		;;
++	esac
+     } >"$outdir$file"
++    case "$check" in
++    t)
++	# This is slightly modified from Andrew Morton's Perfect Patch.
++	# Lines you introduce should not have trailing whitespace.
++	# Also check for an indentation that has SP before a TAB.
++        grep -n '^+\([ 	]* 	.*\|.*[ 	]\)$' "$outdir$file"
++
++	: do not exit with non-zero because we saw no problem in the last one.
++    esac
+ done <$series
