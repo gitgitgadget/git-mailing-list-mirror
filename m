@@ -1,56 +1,47 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cg update failing
-Date: Wed, 20 Jul 2005 10:12:26 +0200
-Message-ID: <20050720081226.GA27102@pasky.ji.cz>
-References: <m3oe95qn64.fsf@lugabout.cloos.reno.nv.us> <1121365461.4729.0.camel@localhost.localdomain> <m3k6jtnod8.fsf@lugabout.cloos.reno.nv.us> <1121376069.4729.2.camel@localhost.localdomain> <m3d5plm50o.fsf@lugabout.cloos.reno.nv.us> <m3eka04shr.fsf@lugabout.cloos.reno.nv.us> <20050720010712.GB2255@pasky.ji.cz> <m3oe8yw0ws.fsf@lugabout.cloos.reno.nv.us>
+Subject: Re: [PATCH 0/6] cogito: compatibility with OS X
+Date: Wed, 20 Jul 2005 11:19:34 +0200
+Message-ID: <20050720091933.GG27102@pasky.ji.cz>
+References: <20050718025024.11198.10556.sendpatchset@bryan-larsens-ibook-g4.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Darrin Thompson <darrint@progeny.com>
-X-From: git-owner@vger.kernel.org Wed Jul 20 10:13:05 2005
+Cc: bryan.larsen@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 20 11:20:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dv9hG-00065S-MA
-	for gcvg-git@gmane.org; Wed, 20 Jul 2005 10:12:54 +0200
+	id 1DvAju-0006gg-B1
+	for gcvg-git@gmane.org; Wed, 20 Jul 2005 11:19:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261311AbVGTIM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jul 2005 04:12:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261407AbVGTIM3
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 04:12:29 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:48906 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261311AbVGTIM2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2005 04:12:28 -0400
-Received: (qmail 28364 invoked by uid 2001); 20 Jul 2005 08:12:27 -0000
-To: James Cloos <cloos+vger-git@jhcloos.com>
+	id S261462AbVGTJTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 20 Jul 2005 05:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261473AbVGTJTh
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 05:19:37 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51467 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261462AbVGTJTg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2005 05:19:36 -0400
+Received: (qmail 1139 invoked by uid 2001); 20 Jul 2005 09:19:34 -0000
+To: Bryan Larsen <bryanlarsen@yahoo.com>
 Content-Disposition: inline
-In-Reply-To: <m3oe8yw0ws.fsf@lugabout.cloos.reno.nv.us>
+In-Reply-To: <20050718025024.11198.10556.sendpatchset@bryan-larsens-ibook-g4.local>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Jul 20, 2005 at 06:34:43AM CEST, I got a letter
-where James Cloos <cloos+vger-git@jhcloos.com> told me that...
-> >>>>> "Petr" == Petr Baudis <pasky@suse.cz> writes:
-> 
-> Petr> Huh. Well, you had to do uberweird things with your repository -
-> Petr> why did you cg-seek at all? What Cogito version is it?
-> 
-> All I ever did was track and compile linus??? tree.  IIRC, when the
-> first new tag was added after I cloned the tree I had to seek to
-> that tag to see the new versions of the files.  But obviously
-> that was long enough before hg???s repo broke that I???d forgotten
-> how I???d done that....
+Dear diary, on Mon, Jul 18, 2005 at 04:50:31AM CEST, I got a letter
+where Bryan Larsen <bryanlarsen@yahoo.com> told me that...
+> 3) upload Portfile's along with the .tar.gz's.
 
-Ah so. Well, yes, the first tag was IIRC weird since it was a tree tag,
-not a commit tag. That confused things, but it shouldn't be necessary
-anymore since all new tags are hopefully commits. That might somehow
-create the local modifications as well, although I don't have a clear
-idea how could be that possible. Well, there were some bugs like this in
-Cogito in the past, but that should be long fixed.
+That's what we do with cogito.spec as well and it's fine. Just send me
+an appropriate patch for the dist target.
 
-Thanks anyway,
+> 2 of these 5 patches are unchanged from the previous post.  I have
+> attached them anyways to maintain the series.  Please let me know if
+> this is poor etiquette.
+
+I think it's fine. :-)
 
 -- 
 				Petr "Pasky" Baudis
