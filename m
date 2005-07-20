@@ -1,74 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFD] server-info to help clients
-Date: Tue, 19 Jul 2005 18:53:52 -0700
-Message-ID: <7vd5pegs3z.fsf@assigned-by-dhcp.cox.net>
-References: <m1u0iuo63i.fsf@ebiederm.dsl.xmission.com>
-	<7vu0iqiaz9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.62.0507191728380.18963@qynat.qvtvafvgr.pbz>
+From: James Cloos <cloos+vger-git@jhcloos.com>
+Subject: Re: cg update failing
+Date: Wed, 20 Jul 2005 00:34:43 -0400
+Message-ID: <m3oe8yw0ws.fsf@lugabout.cloos.reno.nv.us>
+References: <m3oe95qn64.fsf@lugabout.cloos.reno.nv.us>
+	<1121365461.4729.0.camel@localhost.localdomain>
+	<m3k6jtnod8.fsf@lugabout.cloos.reno.nv.us>
+	<1121376069.4729.2.camel@localhost.localdomain>
+	<m3d5plm50o.fsf@lugabout.cloos.reno.nv.us>
+	<m3eka04shr.fsf@lugabout.cloos.reno.nv.us>
+	<20050720010712.GB2255@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	ebiederm@xmission.com
-X-From: git-owner@vger.kernel.org Wed Jul 20 03:54:21 2005
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Darrin Thompson <darrint@progeny.com>
+X-From: git-owner@vger.kernel.org Wed Jul 20 06:35:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dv3mk-0001ue-D9
-	for gcvg-git@gmane.org; Wed, 20 Jul 2005 03:54:10 +0200
+	id 1Dv6IX-0001pS-Ul
+	for gcvg-git@gmane.org; Wed, 20 Jul 2005 06:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261362AbVGTBx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 19 Jul 2005 21:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261479AbVGTBx5
-	(ORCPT <rfc822;git-outgoing>); Tue, 19 Jul 2005 21:53:57 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:43995 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S261362AbVGTBx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Jul 2005 21:53:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050720015352.ETUN8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 19 Jul 2005 21:53:52 -0400
-To: David Lang <david.lang@digitalinsight.com>
-In-Reply-To: <Pine.LNX.4.62.0507191728380.18963@qynat.qvtvafvgr.pbz> (David Lang's message of "Tue, 19 Jul 2005 17:35:49 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261626AbVGTEe7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 20 Jul 2005 00:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261638AbVGTEe7
+	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 00:34:59 -0400
+Received: from ore.jhcloos.com ([64.240.156.239]:54031 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S261626AbVGTEe6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Jul 2005 00:34:58 -0400
+Received: from lugabout.jhcloos.org (host-69-48-12-36.roc.choiceone.net [69.48.12.36])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP
+	id DD99B1C5ED; Tue, 19 Jul 2005 23:34:50 -0500 (CDT)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 56E281AB2BF; Wed, 20 Jul 2005 04:34:43 +0000 (GMT)
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050720010712.GB2255@pasky.ji.cz> (Petr Baudis's message of "Wed, 20 Jul 2005 03:07:12 +0200")
+X-Hashcash: 1:21:050720:pasky@suse.cz::+YC0Q4X67Xgxrwj9:0000M+Ra
+X-Hashcash: 1:21:050720:git@vger.kernel.org::bVUKKXxGXNbgrwij:00000000000000000000000000000000000000000071Lq
+X-Hashcash: 1:21:050720:darrint@progeny.com::+QnX9nxwz+8L/5Xh:000000000000000000000000000000000000000000B9cY
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The management of multiple packs and strategy of deciding when
-to create the next incremental (be it throw-away or permanent)
-is something I am not particularly interested in at this moment,
-and as you correctly pointed out, the "single throw-away pack"
-is an example of _bad_ strategy [*1*].  I am more interested in
-designing a concise way to express what the server side has
-(after applying such packing/repacking strategy) to help clients
-coming over a dumb transport.
+>>>>> "Petr" =3D=3D Petr Baudis <pasky@suse.cz> writes:
 
-One thing that I forgot to mention is that there is another
-per-repository information "$repo/info/revinfo".  This lists all
-the commit ancestry reachable from "$repo/refs", and is needed
-for clients to find out the closest commit from the very tip of
-branches, which are likely not packed yet, that appears as a
-head in "$repo/objects/info/pack" and go from there.
+Petr> Huh. Well, you had to do uberweird things with your repository -
+Petr> why did you cg-seek at all? What Cogito version is it?
 
+All I ever did was track and compile linus=E2=80=99 tree.  IIRC, when t=
+he
+first new tag was added after I cloned the tree I had to seek to
+that tag to see the new versions of the files.  But obviously
+that was long enough before hg=E2=80=99s repo broke that I=E2=80=99d fo=
+rgotten
+how I=E2=80=99d done that....
 
-[Footnote]
+I forget what version I started with.  I=E2=80=99ve been tracking gento=
+o=E2=80=99s
+ebuild since it entered portage.
 
-*1* As I said, I am not interested in thinking about this at
-this moment, but I suspect a scheme that employs the base pack,
-permanent incrementals, and N new throw-aways every day for the
-N-th day of the month may work reasonably well.
-
-On the N-th day of the month, you create incrementals relative
-to what existed on the N-1th, N-2th, ..., 1st of the month.  At
-the end of the day, create N+1 new throw-aways for the N+1th day
-of the month (you can garbage collect older days' throw-away
-incrementals whenever you like).  At the end of the month, you
-mark the throw-away incremental that is relative to the
-beginning of the month as the latest permanent incremental.
-
-Bootstrappers can slurp base, permanent incremental and the
-throwaway for today that is relative to the last permanent
-incremental.  Updaters can pick the one relative to the day they
-updated last time.
+-JimC
+--=20
+James H. Cloos, Jr. <cloos@jhcloos.com>
