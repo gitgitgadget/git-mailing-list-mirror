@@ -1,52 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Should cg-mkpatch output be usable with cg-patch?
-Date: Wed, 20 Jul 2005 20:57:49 -0700
-Message-ID: <7vackgerpe.fsf@assigned-by-dhcp.cox.net>
-References: <20050720234904.B3ED735267C@atlas.denx.de>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [PATCH] Deb packages should include the binaries
+Date: Thu, 21 Jul 2005 02:15:45 -0400
+Message-ID: <20050721061545.GM20369@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 21 05:58:09 2005
+X-From: git-owner@vger.kernel.org Thu Jul 21 08:16:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvSCD-00045E-Fe
-	for gcvg-git@gmane.org; Thu, 21 Jul 2005 05:58:05 +0200
+	id 1DvULp-0008TW-0W
+	for gcvg-git@gmane.org; Thu, 21 Jul 2005 08:16:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261348AbVGUD5w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 20 Jul 2005 23:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261605AbVGUD5w
-	(ORCPT <rfc822;git-outgoing>); Wed, 20 Jul 2005 23:57:52 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:16865 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261348AbVGUD5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Jul 2005 23:57:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050721035750.MMCI17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 20 Jul 2005 23:57:50 -0400
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20050720234904.B3ED735267C@atlas.denx.de> (Wolfgang Denk's message of "Thu, 21 Jul 2005 01:49:04 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261652AbVGUGPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jul 2005 02:15:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261658AbVGUGPs
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jul 2005 02:15:48 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:35514 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261652AbVGUGPq (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2005 02:15:46 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DvULS-0006Fg-FH; Thu, 21 Jul 2005 02:15:46 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DvUTT-0000v0-00; Thu, 21 Jul 2005 02:24:03 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DvULR-0007hm-Q3; Thu, 21 Jul 2005 02:15:45 -0400
+To: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Wolfgang Denk <wd@denx.de> writes:
 
-> I wander what I should do with "cg-mkpatch" generated output;  I  had
-> the  impression that this should be usable with "cg-patch", but these
-> are incompatible with each other. Forexample. if  a  commit  contains
-> permission changes, my generated patch may look like this:
+The Deb packages were mising a dependency on "build install" from the
+binary target - this fixes that, and cleans up some inconsistencies
+elsewhere in the rulesets.
 
-Yes, cg-patch does grok git extended diff headers, but does it
-by hand and missing corner cases like this is understandable.
+Traditionally, Debian packaging uses a file called "build-stamp" (or
+"install-stamp", etc) in the main source tree.  The initial deb package
+support for Git tried to move this "build-stamp" file into the debian/
+directory, but some instances were missed.  That problem, however, was
+incidental - the real fix is the missing dependency mentioned above.
 
-I only briefly looked at cg-patch, but I suspect that it can
-lose 90% lines of its code by just using "git-apply --index".
 
-I see cg-patch wants to be able to do reverse patch, which is
-not supported by git-apply currently.
+diff --git a/debian/changelog b/debian/changelog
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,5 +1,11 @@
++git-core (0.99-1) unstable; urgency=low
++
++  * Update deb package support to build correctly. 
++
++ -- Ryan Anderson <ryan@michonline.com>  Thu, 21 Jul 2005 02:03:32 -0400
++
+ git-core (0.99-0) unstable; urgency=low
+-	
++
+   * Initial deb package support
+ 
+  -- Eric Biederman <ebiederm@xmission.com>  Tue, 12 Jul 2005 10:57:51 -0600
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -21,8 +21,8 @@ DESTDIR  := $(CURDIR)/debian/tmp
+ DOC_DESTDIR := $(DESTDIR)/usr/share/doc/git-core/
+ MAN_DESTDIR := $(DESTDIR)/$(MANDIR)
+ 
+-build: build-stamp
+-build-stamp:
++build: debian/build-stamp
++debian/build-stamp:
+ 	dh_testdir
+ 	$(MAKE) all doc
+ 	touch debian/build-stamp
+@@ -36,7 +36,7 @@ debian-clean:
+ clean: debian-clean
+ 	$(MAKE) clean
+ 
+-install: debian/build-stamp
++install: build
+ 	dh_testdir
+ 	dh_testroot
+ 	dh_clean -k 
+@@ -49,7 +49,7 @@ install: debian/build-stamp
+ 
+ 	dh_install --list-missing --sourcedir=$(DESTDIR)
+ 
+-binary:
++binary: build install
+ 	dh_testdir
+ 	dh_testroot
+ 	dh_installchangelogs
+-- 
 
-Do people find "cg-patch -R" useful?
+Ryan Anderson
+  sometimes Pug Majere
