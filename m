@@ -1,109 +1,71 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH/RFC] Add git-changelog-script to show the changes between two commits
-Date: Thu, 21 Jul 2005 02:31:43 -0400
-Message-ID: <20050721063143.GO20369@mythryan2.michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/9] applymbox updates and assorted trivial patches.
+Date: Wed, 20 Jul 2005 23:58:42 -0700
+Message-ID: <7vsly8bq71.fsf@assigned-by-dhcp.cox.net>
+References: <7vy881dpii.fsf@assigned-by-dhcp.cox.net>
+	<20050721061906.GN20369@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Jul 21 08:32:14 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 21 08:58:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvUb1-0001Gr-8P
-	for gcvg-git@gmane.org; Thu, 21 Jul 2005 08:31:51 +0200
+	id 1DvV1B-0003iV-Pz
+	for gcvg-git@gmane.org; Thu, 21 Jul 2005 08:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261661AbVGUGbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jul 2005 02:31:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261662AbVGUGbr
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jul 2005 02:31:47 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:59834 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261661AbVGUGbq (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Jul 2005 02:31:46 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DvUau-0006R9-5s; Thu, 21 Jul 2005 02:31:44 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DvUiv-00010r-00; Thu, 21 Jul 2005 02:40:01 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1DvUat-0007mV-6N; Thu, 21 Jul 2005 02:31:43 -0400
-To: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S261664AbVGUG6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jul 2005 02:58:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261666AbVGUG6p
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jul 2005 02:58:45 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58772 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S261664AbVGUG6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2005 02:58:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050721065842.NWBY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 21 Jul 2005 02:58:42 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050721061906.GN20369@mythryan2.michonline.com> (Ryan Anderson's message of "Thu, 21 Jul 2005 02:19:06 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I'll start by saying that, well, I'm pretty sure this patch is wrong.
+Ryan Anderson <ryan@michonline.com> writes:
 
-I was trying to look at the changes between two commits, sanely, but
-failed to find a tool or example in the tree that hinted at how to do
-this.
+> Is it just me, or does format-patch lose the commit comments during
+> export?  I haven't experimented with your new patches yet - and since
+> I'm at OLS and playing with Git during my free time, my brain is pretty
+> much shut down now - so if you have happen to have fixed that, thanks!
 
-After poking around at git-whatchanged trying to figure out what it is
-trying to do - I gave up and wrote something that *seems* to work
-correctly for the simple test cases I pulled together.  I just don't
-trust it.
+Oh, I envy you guys!  Have fun at OLS.
 
-My thinking here is that, when doing a release of a package such as git
-or Linux, the releaser could do something like:
+As far as I know, the commit comments are not lost since the
+original version of format-patch.  What I added as extras with
+today's patch are the original author name, email and author
+timestamp.  There wasn't a provision to record these in the
+output from format-patch.
 
-	git changelog $LAST_RELEASED_COMMIT HEAD | git-shortlog |\
-		mail -s "Linux 2.7.0 finally open" linux-kernel
+The applymbox/applypatch pair Linus did allowed you to have an
+extra "From:" line as the first line of the e-mail patch
+submission when you are forwarding a patch somebody else has
+written.  When such e-mail is applied to his repository using
+applymbox (back then it was called "dotest"), however, the
+original author timestamp is lost, and instead the commit gets
+timestamp from the message forwarding the patch.  That is what I
+meant by the loss of information.
 
-Where LAST_RELEASED is recorded somewhere or pulled from an internal
-changelog with something like:
-	grep "Released commit-id:" changelog | awk -F: '{print $2}'" |\
-		head -1
+Once I acked a patch to Linus with "Author-Date:" line as the
+second line of the e-mail message (the first being the "From:"),
+and he told me to refrain from doing it "for now", but that "for
+now" has never been lifted, so I decided to lift it myself ;-).
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
-
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -36,7 +36,8 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-reset-script git-add-script git-checkout-script git-clone-script \
- 	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
- 	git-format-patch-script git-sh-setup-script git-push-script \
--	git-branch-script git-parse-remote
-+	git-branch-script git-parse-remote \
-+	git-changelog-script git-revdiff-script
- 
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-changelog-script b/git-changelog-script
-new file mode 100755
---- /dev/null
-+++ b/git-changelog-script
-@@ -0,0 +1,3 @@
-+#!/bin/sh
-+
-+git-revdiff-script $@ | git-diff-tree --stdin --pretty -r | LESS="$LESS -S" ${PAGER:-less}
-diff --git a/git-revdiff-script b/git-revdiff-script
-new file mode 100755
---- /dev/null
-+++ b/git-revdiff-script
-@@ -0,0 +1,18 @@
-+#!/usr/bin/perl
-+
-+use warnings;
-+use strict;
-+
-+my ($start,$end) = @ARGV;
-+
-+open(R,"-|","git-rev-list",$start)
-+	or die "Failed to pipe from git-rev-list: " . $!;
-+
-+my $rev;
-+while ($rev = <R>) {
-+	chomp $rev;
-+	print $rev,"\n";
-+	last if $end eq $rev;
-+}
-+
-+close(R);
-
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+The changed format-patch can be told to produce "Date:" (instead
+of "Author-Date:"), and "From:".  There is a corresponding
+change to the receiving end (the mailinfo program that is used
+by applymbox/applypatch pair) to read this extra "Date:" line
+and use that instead of the timestamp obtained from the e-mail
+submission.
