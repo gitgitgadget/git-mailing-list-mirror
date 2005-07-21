@@ -1,71 +1,109 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 0/9] applymbox updates and assorted trivial patches.
-Date: Wed, 20 Jul 2005 23:58:42 -0700
-Message-ID: <7vsly8bq71.fsf@assigned-by-dhcp.cox.net>
-References: <7vy881dpii.fsf@assigned-by-dhcp.cox.net>
-	<20050721061906.GN20369@mythryan2.michonline.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 21 08:58:59 2005
+From: Sebastian Kuzminsky <seb@highlab.com>
+Subject: [PATCH] debian packaging fixes
+Date: Thu, 21 Jul 2005 01:56:07 -0600
+Message-ID: <E1DvVuZ-0008QX-8N@highlab.com>
+X-From: git-owner@vger.kernel.org Thu Jul 21 09:55:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvV1B-0003iV-Pz
-	for gcvg-git@gmane.org; Thu, 21 Jul 2005 08:58:54 +0200
+	id 1DvVtZ-000204-0c
+	for gcvg-git@gmane.org; Thu, 21 Jul 2005 09:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261664AbVGUG6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 21 Jul 2005 02:58:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261666AbVGUG6p
-	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jul 2005 02:58:45 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:58772 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261664AbVGUG6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Jul 2005 02:58:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050721065842.NWBY19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 21 Jul 2005 02:58:42 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050721061906.GN20369@mythryan2.michonline.com> (Ryan Anderson's message of "Thu, 21 Jul 2005 02:19:06 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261677AbVGUHy6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 21 Jul 2005 03:54:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261682AbVGUHy6
+	(ORCPT <rfc822;git-outgoing>); Thu, 21 Jul 2005 03:54:58 -0400
+Received: from rwcrmhc14.comcast.net ([216.148.227.89]:51114 "EHLO
+	rwcrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S261677AbVGUHy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Jul 2005 03:54:57 -0400
+Received: from highlab.com ([67.165.222.77])
+          by comcast.net (rwcrmhc14) with ESMTP
+          id <20050721075453014009pj4se>; Thu, 21 Jul 2005 07:54:57 +0000
+Received: from seb (helo=highlab.com)
+	by highlab.com with local-esmtp (Exim 4.50)
+	id 1DvVuZ-0008QX-8N
+	for git@vger.kernel.org; Thu, 21 Jul 2005 01:56:07 -0600
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson <ryan@michonline.com> writes:
+This patch includes two fixes to the git-core Debian package:
 
-> Is it just me, or does format-patch lose the commit comments during
-> export?  I haven't experimented with your new patches yet - and since
-> I'm at OLS and playing with Git during my free time, my brain is pretty
-> much shut down now - so if you have happen to have fixed that, thanks!
+    * Conflict with the GNU Interactive Tools package, which _also_
+      wants to install /usr/bin/git.
 
-Oh, I envy you guys!  Have fun at OLS.
+    * Compile against the unencumbered Mozilla SHA1 code, instead of
+      the iffy OpenSSL code.  This makes it easier to get the package
+      included for distribution with Debian.
 
-As far as I know, the commit comments are not lost since the
-original version of format-patch.  What I added as extras with
-today's patch are the original author name, email and author
-timestamp.  There wasn't a provision to record these in the
-output from format-patch.
+Note: Assumes that Ryan Anderson's patch "Deb packages should include
+the binaries" has been applied.
 
-The applymbox/applypatch pair Linus did allowed you to have an
-extra "From:" line as the first line of the e-mail patch
-submission when you are forwarding a patch somebody else has
-written.  When such e-mail is applied to his repository using
-applymbox (back then it was called "dotest"), however, the
-original author timestamp is lost, and instead the commit gets
-timestamp from the message forwarding the patch.  That is what I
-meant by the loss of information.
+Signed-off-by: Sebastian Kuzminsky <seb@highlab.com>
+---
 
-Once I acked a patch to Linus with "Author-Date:" line as the
-second line of the e-mail message (the first being the "From:"),
-and he told me to refrain from doing it "for now", but that "for
-now" has never been lifted, so I decided to lift it myself ;-).
+ changelog |   11 +++++++++++
+ control   |    3 ++-
+ rules     |   14 ++++++++++++++
+ 3 files changed, 27 insertions(+), 1 deletion(-)
 
-The changed format-patch can be told to produce "Date:" (instead
-of "Author-Date:"), and "From:".  There is a corresponding
-change to the receiving end (the mailinfo program that is used
-by applymbox/applypatch pair) to read this extra "Date:" line
-and use that instead of the timestamp obtained from the e-mail
-submission.
+diff --git a/debian/changelog b/debian/changelog
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,3 +1,14 @@
++git-core (0.99.1-1) unstable; urgency=low
++
++  * Conflict with the GNU Interactive Tools package, which also installs
++    /usr/bin/git.
++  * Dont compile against the OpenSSL SHA1 code, it's problematically
++    licensed.  Instead use the PPC assembly on PPC, and the code ripped
++    from Mozilla everywhere else.
++  * Minor tweaks to the Build-Depends.
++
++ -- Sebastian Kuzminsky <seb@highlab.com>  Thu, 21 Jul 2005 01:28:35 -0600
++
+ git-core (0.99-1) unstable; urgency=low
+ 
+   * Update deb package support to build correctly. 
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -7,7 +7,8 @@
+ 
+ Package: git-core
+ Architecture: any
+-Depends: ${shlibs:Depends}, shellutils, diff, rysnc, rcs
++Depends: ${shlibs:Depends}, patch, diff, rsync, rcs, wget, rsh-client
++Conflicts: git
+ Description: The git content addressable filesystem
+  GIT comes in two layers. The bottom layer is merely an extremely fast
+  and flexible filesystem-based database designed to store directory trees
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -12,6 +12,20 @@
+ endif
+ export CFLAGS
+ 
++#
++# On PowerPC we compile against the hand-crafted assembly, on all
++# other architectures we compile against GPL'ed sha1 code lifted
++# from Mozilla.  OpenSSL is strangely licensed and best avoided
++# in Debian.
++#
++HOST_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
++ifeq (${HOST_ARCH},powerpc)
++	export PPC_SHA1=YesPlease
++else
++	export MOZILLA_SHA1=YesPlease
++endif
++
++
+ PREFIX := /usr
+ MANDIR := /usr/share/man/
+ 
+
+-- 
+Sebastian Kuzminsky
