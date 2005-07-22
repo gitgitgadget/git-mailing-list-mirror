@@ -1,65 +1,113 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Fri, 22 Jul 2005 11:37:05 +0100
-Message-ID: <tnx1x5ryvn2.fsf@arm.com>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
-	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 1/2] apply.c: handle incomplete lines correctly.
+Date: Fri, 22 Jul 2005 09:56:39 -0700
+Message-ID: <7vsly6wzi0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Bryan larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 22 12:38:16 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 22 18:56:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dvuuz-0003mQ-TX
-	for gcvg-git@gmane.org; Fri, 22 Jul 2005 12:38:14 +0200
+	id 1Dw0pM-0005xw-MB
+	for gcvg-git@gmane.org; Fri, 22 Jul 2005 18:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261812AbVGVKh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 06:37:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261595AbVGVKh6
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 06:37:58 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:56245 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S261812AbVGVKhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2005 06:37:52 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6MAaus4013699;
-	Fri, 22 Jul 2005 11:36:56 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch1.emea.arm.com [10.1.255.57])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id LAA11473;
-	Fri, 22 Jul 2005 11:37:36 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 22 Jul 2005 11:37:35 +0100
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
- message of "Thu, 21 Jul 2005 19:50:20 -0700")
+	id S262118AbVGVQ4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 12:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262116AbVGVQ4m
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 12:56:42 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:58085 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262118AbVGVQ4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 12:56:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050722165636.YDUP550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 12:56:36 -0400
+To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 22 Jul 2005 10:37:35.0591 (UTC) FILETIME=[5FAFEF70:01C58EA9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> wrote:
-> I do not do Porcelain, but wouldn't it be nicer if we had a
-> Porcelain neutral "commit log template file" under $GIT_DIR
-> somewhere?  'vim: textwidth=75' is completely useless for
-> somebody like me (I almost always work inside Emacs).
+The parsing code had a bug that failed to recognize an
+incomplete line at the end of a fragment, and the fragment
+application code had a comparison bug to recognize such.  Fix
+them to handle incomplete lines correctly.
 
-StGIT uses .git/patchdescr.tmpl as the template, where people can put
-the a line like "STG: vim: textwidth=75" which will be automatically
-removed. I won't include this patch since it is up to the user to
-define whatever setting he/she wants for his editor (I use emacs
-myself and add something like "STG: -*- mode: text; -*-" on the first
-line)
+Add a test script for patches with various combinations of
+complete and incomplete lines to make sure the fix works.
 
-> Cogito seems to use $GIT_DIR/commit-template for that purpose.
-> Can't users put that "vim:" hint there, and if StGIT does not
-> use a commit template, patch it to use the same file as Cogito
-> does?
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-I would use a neutral commit template, only that it should have a
-neutral prefix as well for the lines to be removed (neither STG nor CG
-but GIT maybe). The $GIT_DIR/commit-template is fine as a file name.
+ apply.c               |    9 ++++++++-
+ t/t4101-apply-nonl.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 1 deletions(-)
+ create mode 100755 t/t4101-apply-nonl.sh
 
--- 
-Catalin
+9b378103b8ba89d697cdf368d29a6113929b127a
+diff --git a/apply.c b/apply.c
+--- a/apply.c
++++ b/apply.c
+@@ -679,6 +679,13 @@ static int parse_fragment(char *line, un
+ 			break;
+ 		}
+ 	}
++	/* If a fragment ends with an incomplete line, we failed to include
++	 * it in the above loop because we hit oldlines == newlines == 0
++	 * before seeing it.
++	 */
++	if (12 < size && !memcmp(line, "\\ No newline", 12))
++		offset += linelen(line, size);
++
+ 	patch->lines_added += added;
+ 	patch->lines_deleted += deleted;
+ 	return offset;
+@@ -900,7 +907,7 @@ static int apply_one_fragment(struct buf
+ 		 * last one (which is the newline, of course).
+ 		 */
+ 		plen = len-1;
+-		if (len > size && patch[len] == '\\')
++		if (len < size && patch[len] == '\\')
+ 			plen--;
+ 		switch (*patch) {
+ 		case ' ':
+diff --git a/t/t4101-apply-nonl.sh b/t/t4101-apply-nonl.sh
+new file mode 100755
+--- /dev/null
++++ b/t/t4101-apply-nonl.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Junio C Hamano
++#
++
++test_description='git-apply should handle files with incomplete lines.
++
++'
++. ./test-lib.sh
++
++# setup
++
++(echo a; echo b) >frotz.0
++(echo a; echo b; echo c) >frotz.1
++(echo a; echo b | tr -d '\012') >frotz.2
++(echo a; echo c; echo b | tr -d '\012') >frotz.3
++
++for i in 0 1 2 3
++do
++  for j in 0 1 2 3
++  do
++    test $i -eq $j && continue
++    diff -u frotz.$i frotz.$j |
++    sed -e '
++	/^---/s|.*|--- a/frotz|
++	/^+++/s|.*|+++ b/frotz|' >diff.$i-$j
++    cat frotz.$i >frotz
++    test_expect_success \
++        "apply diff between $i and $j" \
++	"git-apply <diff.$i-$j && diff frotz.$j frotz"
++  done
++done
