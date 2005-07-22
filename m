@@ -1,75 +1,108 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 0/9] applymbox updates and assorted trivial patches.
-Date: Fri, 22 Jul 2005 16:03:58 -0700
-Message-ID: <7voe8uigtd.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] tools/applymbox: allow manual fixing and continuing after a failure.
+Date: Fri, 22 Jul 2005 16:04:19 -0700
+Message-ID: <7vhdemigss.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 01:04:19 2005
+X-From: git-owner@vger.kernel.org Sat Jul 23 01:04:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw6Yz-00019q-0r
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 01:04:17 +0200
+	id 1Dw6ZB-0001D1-0W
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 01:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262212AbVGVXEC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 19:04:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262213AbVGVXEC
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 19:04:02 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:25060 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S262212AbVGVXEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2005 19:04:00 -0400
+	id S262213AbVGVXEW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 19:04:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262214AbVGVXEW
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 19:04:22 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:61331 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S262213AbVGVXEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 19:04:21 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050722230357.BDLG8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 22 Jul 2005 19:03:57 -0400
+          id <20050722230419.UUBF18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 19:04:19 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(Resend after you said you prefer people resending).
+With "-c .dotest/0002" flag, the applymbox command can be told
+to use existing .dotest/patch file after hand-fixing the patch
+conflicts for the second patch in the mailbox, and continue on
+from that message, skipping the already applied first patch in
+.dotest/0001.
 
-I was experimenting with applypatch and applymbox to see how it
-feels like being Linus ;-) and also I saw some trivially correct
-patches on the list floating unmerged during KS/OLS.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Since I rebase my repostitory to fix up the history often, I
-needed a reliable way to preserve authorship information when I
-export the patches via format-patch and slurp them via applymbox.
+ tools/applymbox |   48 ++++++++++++++++++++++++++++++++++++++----------
+ 1 files changed, 38 insertions(+), 10 deletions(-)
 
-I am sending the following changes to applymbox and format-patch
-first:
-
-  [PATCH] tools/applymbox: allow manual fixing and continuing after a failure.
-  [PATCH] git-format-patch-script and mailinfo updates.
-  [PATCH] format-patch: --mbox and --check.
-
-I wrote the first one to recover from a situation where an
-earlier patch failed to apply but I still had many other e-mails
-in the mailbox.
-
-The second one allows format-patch to give ability to optionally
-add From: and Date: lines as the first two lines after the patch
-title line.  The mailinfo program has been enhanced to grok
-Date: in the top part of the message body just like From: in the
-message body can override the sender of the e-mail.
-
-The third one is an extra.  It lets me export patches in a
-format resembling UNIX mbox, so I can concatenate the output
-together and reprocess them through applymbox.
-
-After they are accepted, I will forward these trivially correct
-patches I saw on the list, using the enhanced format-patch; they
-are expected to be processed with the new applymbox as a
-practice; by doing this I am also ACKing these patches:
-
-  [PATCH] debian/ fixes
-  [PATCH] Fix a typo in git-unpack-objects documentation.
-  [PATCH] Cleanup: git-verify-tag-script
-  [PATCH] Install git-verify-tag-script
-  [PATCH] Support more http features: https no cert, .netrc -> auth
-  [PATCH] Document "curl" requirements.
+688c63d625903ea3972deb3ec5c6dc3ef00f950e
+diff --git a/tools/applymbox b/tools/applymbox
+--- a/tools/applymbox
++++ b/tools/applymbox
+@@ -9,20 +9,48 @@
+ ## You give it a mbox-format collection of emails, and it will try to
+ ## apply them to the kernel using "applypatch"
+ ##
+-## dotest [ -q ] mail_archive [Signoff_file]
++## applymbox [ -c .dotest/msg-number ] [ -q ] mail_archive [Signoff_file]"
+ ##
+-rm -rf .dotest
+-mkdir .dotest
+-case $1 in
++## The patch application may fail in the middle.  In which case:
++## (1) look at .dotest/patch and fix it up to apply
++## (2) re-run applymbox with -c .dotest/msg-number for the current one.
++## Pay a special attention to the commit log message if you do this and
++## use a Signoff_file, because applypatch wants to append the sign-off
++## message to msg-clean every time it is run.
+ 
+-	-q)	touch .dotest/.query_apply
+-		shift;;
++query_apply= continue= resume=t
++while case "$#" in 0) break ;; esac
++do
++	case "$1" in
++	-q)	query_apply=t ;;
++	-c)	continue="$2"; resume=f; shift ;;
++	-*)	usage ;;
++	*)	break ;;
++	esac
++	shift
++done
++
++case "$continue" in
++'')
++	rm -rf .dotest
++	mkdir .dotest
++	mailsplit "$1" .dotest || exit 1
+ esac
+-mailsplit $1 .dotest || exit 1
+-for i in .dotest/*
++
++case "$query_apply" in
++t)	touch .dotest/.query_apply
++esac
++
++for i in .dotest/0*
+ do
+-	mailinfo .dotest/msg .dotest/patch < $i > .dotest/info || exit 1
+-	git-stripspace < .dotest/msg > .dotest/msg-clean
++	case "$resume,$continue" in
++	f,$i)	resume=t;;
++	f,*)	continue;;
++	*)
++		mailinfo .dotest/msg .dotest/patch <$i >.dotest/info || exit 1
++		git-stripspace < .dotest/msg > .dotest/msg-clean
++		;;
++	esac
+ 	applypatch .dotest/msg-clean .dotest/patch .dotest/info "$2"
+ 	ret=$?
+ 	if [ $ret -ne 0 ]; then
