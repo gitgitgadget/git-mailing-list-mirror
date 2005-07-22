@@ -1,79 +1,65 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Deb packaging needs two more configuration files
-Date: Fri, 22 Jul 2005 02:36:07 -0400
-Message-ID: <20050722063607.GS20369@mythryan2.michonline.com>
-References: <20050721061545.GM20369@mythryan2.michonline.com> <20050722055556.GR20369@mythryan2.michonline.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
+Date: Fri, 22 Jul 2005 11:37:05 +0100
+Message-ID: <tnx1x5ryvn2.fsf@arm.com>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
+	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jul 22 08:36:34 2005
+Cc: Bryan larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 22 12:38:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dvr90-0002yT-77
-	for gcvg-git@gmane.org; Fri, 22 Jul 2005 08:36:26 +0200
+	id 1Dvuuz-0003mQ-TX
+	for gcvg-git@gmane.org; Fri, 22 Jul 2005 12:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261942AbVGVGgM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 02:36:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261950AbVGVGgM
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 02:36:12 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:49380 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261942AbVGVGgK (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 02:36:10 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1Dvr8i-0004Q6-Jo; Fri, 22 Jul 2005 02:36:08 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DvrGr-00025r-00; Fri, 22 Jul 2005 02:44:33 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1Dvr8i-0004rb-06; Fri, 22 Jul 2005 02:36:08 -0400
-To: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <20050722055556.GR20369@mythryan2.michonline.com>
-User-Agent: Mutt/1.5.6+20040907i
+	id S261812AbVGVKh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 06:37:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261595AbVGVKh6
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 06:37:58 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:56245 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S261812AbVGVKhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 06:37:52 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6MAaus4013699;
+	Fri, 22 Jul 2005 11:36:56 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch1.emea.arm.com [10.1.255.57])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id LAA11473;
+	Fri, 22 Jul 2005 11:37:36 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 22 Jul 2005 11:37:35 +0100
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Thu, 21 Jul 2005 19:50:20 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 22 Jul 2005 10:37:35.0591 (UTC) FILETIME=[5FAFEF70:01C58EA9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <junkio@cox.net> wrote:
+> I do not do Porcelain, but wouldn't it be nicer if we had a
+> Porcelain neutral "commit log template file" under $GIT_DIR
+> somewhere?  'vim: textwidth=75' is completely useless for
+> somebody like me (I almost always work inside Emacs).
 
-The deb package building needs these two new files to work correctly.
+StGIT uses .git/patchdescr.tmpl as the template, where people can put
+the a line like "STG: vim: textwidth=75" which will be automatically
+removed. I won't include this patch since it is up to the user to
+define whatever setting he/she wants for his editor (I use emacs
+myself and add something like "STG: -*- mode: text; -*-" on the first
+line)
 
-debian/compat sets the rules under which the debhelper scripts (dh_*) operate.
+> Cogito seems to use $GIT_DIR/commit-template for that purpose.
+> Can't users put that "vim:" hint there, and if StGIT does not
+> use a commit template, patch it to use the same file as Cogito
+> does?
 
-debian/git-core.install tells dh_install what files to install in each package
-that is generated.  There is only one package being generated, so all files go
-into it.
+I would use a neutral commit template, only that it should have a
+neutral prefix as well for the lines to be removed (neither STG nor CG
+but GIT maybe). The $GIT_DIR/commit-template is fine as a file name.
 
-(I missed these in the last patch, mostly because I needed to do this to
-find stuff I had missed:
-	find . -name .git -type d -prune -o -type f -print \
-		| grep -v -e .tree1 -e .tree2 \
-		| sed -e "s/^\.\///" \
-		| sort >.tree1
-	git-ls-files | grep -v -e .tree1 -e .tree2 \
-		| sort >.tree2
-	diff -u .tree1 .tree2
-)
-
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
----
-
- debian/compat           |    1 +
- debian/git-core.install |    1 +
- 2 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100644 debian/compat
- create mode 100644 debian/git-core.install
-
-d5ccc10c30f1baa968705aa0c3dfc98e0ade5eaf
-diff --git a/debian/compat b/debian/compat
-new file mode 100644
---- /dev/null
-+++ b/debian/compat
-@@ -0,0 +1 @@
-+4
-diff --git a/debian/git-core.install b/debian/git-core.install
-new file mode 100644
---- /dev/null
-+++ b/debian/git-core.install
-@@ -0,0 +1 @@
-+*
+-- 
+Catalin
