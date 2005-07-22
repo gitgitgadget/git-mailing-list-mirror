@@ -1,51 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Local cg-pull fails
-Date: Sat, 23 Jul 2005 01:22:19 +0200
-Message-ID: <20050722232218.GO11916@pasky.ji.cz>
-References: <20050714111224.B31383@flint.arm.linux.org.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
+Date: Fri, 22 Jul 2005 16:24:35 -0700
+Message-ID: <7v8xzyh1ak.fsf@assigned-by-dhcp.cox.net>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
+	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
+	<20050722204120.GD11916@pasky.ji.cz>
+	<7vr7dqpmm4.fsf@assigned-by-dhcp.cox.net>
+	<20050722212725.GJ11916@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 01:28:11 2005
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	Bryan larsen <bryanlarsen@yahoo.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 01:28:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw6vz-0003Pm-GG
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 01:28:03 +0200
+	id 1Dw6vz-0003Pm-U3
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 01:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262225AbVGVXYf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 19:24:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262231AbVGVXWq
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 19:22:46 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:62217 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262219AbVGVXWa (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 19:22:30 -0400
-Received: (qmail 14108 invoked by uid 2001); 22 Jul 2005 23:22:19 -0000
-To: Russell King <rmk@arm.linux.org.uk>
-Content-Disposition: inline
-In-Reply-To: <20050714111224.B31383@flint.arm.linux.org.uk>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262230AbVGVX1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 19:27:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262228AbVGVX1Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 19:27:16 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:59631 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262230AbVGVXYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 19:24:39 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050722232433.EMML550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 19:24:33 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050722212725.GJ11916@pasky.ji.cz> (Petr Baudis's message of "Fri, 22 Jul 2005 23:27:25 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Thu, Jul 14, 2005 at 12:12:25PM CEST, I got a letter
-where Russell King <rmk@arm.linux.org.uk> told me that...
-> Last time this was discussed, someone suggested -f, which solved the
-> problem.  Can we please modify the cg-pull script to use -f ?
+Petr Baudis <pasky@suse.cz> writes:
 
-Thanks, done.
+> Cogito shows '[NMD] filename' in place of @FILELIST@.
 
-> Secondly, can I suggest that cogito developers consider the above
-> usage scenario and construct a regression test for it to ensure that
-> future breakages of this nature are caught.  For me, cogito has been
-> extremely fragile, and I don't think the above usage is unreasonable.
+Sounds sensible.  Does it parse it to limit the files to be
+committed?
 
-Done.
+> This brings me to another subject, M and N are pretty hard to
+> distinguish visually without close inspection of the output. What about
+> switching to use A instead of N everywhere?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Although I admit that is minor, I've had the same problem, and
+this sounds like a good idea.
+
+However, I'd like to see what the extent of damage would be even
+if everybody agrees this is a good change.  Any one of core
+barebone Porcelain, Linus git-tools, gitk, gitweb, Cogito, and
+StGIT would have a veto over this kind of change, or at least we
+should wait until everybody catches up.
+
+If we all decide to go ahead, the transition would not be so
+painful, since we do not currently say 'A', the Porcelains can
+start accepting 'A' as synonym for 'N' today, and then later we
+can change the tools to produce 'A' instead of 'N'.
