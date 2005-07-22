@@ -1,74 +1,78 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH 0/2] apply.c: a fix and an enhancement
-Date: Fri, 22 Jul 2005 14:18:00 -0400
-Message-ID: <20050722181800.GU20369@mythryan2.michonline.com>
-References: <7vzmsewzik.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.8
+Date: Fri, 22 Jul 2005 11:37:28 -0700 (PDT)
+Message-ID: <20050722183728.93526.qmail@web26309.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Jul 22 20:19:34 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: berkus@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jul 22 20:39:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw26w-0000hD-Fg
-	for gcvg-git@gmane.org; Fri, 22 Jul 2005 20:19:02 +0200
+	id 1Dw2QX-0003WT-Gl
+	for gcvg-git@gmane.org; Fri, 22 Jul 2005 20:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261349AbVGVSST (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 14:18:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261328AbVGVSST
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 14:18:19 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:53915 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261349AbVGVSSE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 14:18:04 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1Dw25w-000061-VO; Fri, 22 Jul 2005 14:18:01 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1Dw2EE-0008MR-00; Fri, 22 Jul 2005 14:26:34 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1Dw25w-0003zb-7T; Fri, 22 Jul 2005 14:18:00 -0400
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vzmsewzik.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+	id S262095AbVGVSi5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 14:38:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261376AbVGVSh6
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 14:37:58 -0400
+Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:45174 "HELO
+	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S262131AbVGVShg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 14:37:36 -0400
+Received: (qmail 93528 invoked by uid 60001); 22 Jul 2005 18:37:28 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=hRqWx2gl+FMPfA/hpzeS8XcC/woSgTw7Xw+qAtjuyUgG0hBd9RwT1LfQ8hXv3cFvrn4lIuun1xwthTauUzuqLIL5XbXUycJQ7CFJWIFkkaRVDZ6fhqe8agKe7GUUePeuzt4tFIdqI+9z0ryOjjYNJNi0YasxR1OpgDJax05/Xa8=  ;
+Received: from [151.42.110.245] by web26309.mail.ukl.yahoo.com via HTTP; Fri, 22 Jul 2005 11:37:28 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 22, 2005 at 09:56:19AM -0700, Junio C Hamano wrote:
-> Now if we had a mechanism to graft a later history which starts
-> at 2.6.12-rc2 on top of this earlier history leading up to
-> it,...  ;-)
+Hi,
 
-We do - it's not even very hard, we just end up with 2 commits for every
-change/merge that's unique to git, until we get to the current head:
+  here is qgit-0.8:
 
-Take the last imported commit - we'll call this branch A.
-Take the 2.6.12-rc2 initial commit, we'll call this branch B.
+    http://prdownloads.sourceforge.net/qgit/qgit-0.8.tar.bz2?download
 
-This algorithm should stitch things together:
 
-For each commit on branch B
-	Copy all commit metadata (author,etc)
-	Add a new parent Ai.
-	Take the trees from commit B.
-	Write a new commit, Ai+1
+This release shows a big GUI rewrite with added menus, 
+buttons, help, settings page, etc.
 
-When we get to HEAD, we replace HEAD with this last commit we have
-created, and we now have a nice, parallel commit tree that stitches
-everything back together.
+Some new features:
 
-Working from the initial import up, you'll need to work in parallel and
-handle create some mappings of "old commit" to "new commit" to create
-all the merges with the new commit ids, but I think  this should be
-pretty straightforward to do.
+- Possibility to view diffs against current checked-out tree, i.e
+  GUI interface to git-diff-cache. 
+  Defaut is off, change it from menu->settings.
 
-If this is all integrated, I'd suggest unpacking everything but the
-packs that are currently in the main tree, and repacking one very big
-pack to get the maximum posible benefit from the deltas.
+- GUI interface to git-format-patch-script with options in settings page
 
--- 
+- Right click on an empty lane shows childs and parent in a pop-up 
+  with 'jump to' on select
 
-Ryan Anderson
-  sometimes Pug Majere
+- Make install/uninstall support (thanks to Stanislav Karchebny)
+
+- Separation of groups of files by two empty lines in case of merges
+
+
+See changelog for a complete list of changes
+
+I have updated some screens too:
+
+    https://sourceforge.net/project/screenshots.php?group_id=139897
+
+
+
+Marco
+
+
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
