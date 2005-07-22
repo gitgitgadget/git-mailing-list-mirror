@@ -1,121 +1,79 @@
 From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Deb packages should include the binaries (Try 2 - this time it actually applies)
-Date: Fri, 22 Jul 2005 01:55:56 -0400
-Message-ID: <20050722055556.GR20369@mythryan2.michonline.com>
-References: <20050721061545.GM20369@mythryan2.michonline.com>
+Subject: [PATCH] Deb packaging needs two more configuration files
+Date: Fri, 22 Jul 2005 02:36:07 -0400
+Message-ID: <20050722063607.GS20369@mythryan2.michonline.com>
+References: <20050721061545.GM20369@mythryan2.michonline.com> <20050722055556.GR20369@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Jul 22 07:56:19 2005
+X-From: git-owner@vger.kernel.org Fri Jul 22 08:36:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DvqW1-0007G3-7m
-	for gcvg-git@gmane.org; Fri, 22 Jul 2005 07:56:09 +0200
+	id 1Dvr90-0002yT-77
+	for gcvg-git@gmane.org; Fri, 22 Jul 2005 08:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262036AbVGVFz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 01:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262041AbVGVFz7
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 01:55:59 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:5092 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S262036AbVGVFz5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 01:55:57 -0400
+	id S261942AbVGVGgM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 02:36:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261950AbVGVGgM
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 02:36:12 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:49380 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261942AbVGVGgK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 02:36:10 -0400
 Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
 	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DvqVo-0003Hr-NT; Fri, 22 Jul 2005 01:55:56 -0400
+	id 1Dvr8i-0004Q6-Jo; Fri, 22 Jul 2005 02:36:08 -0400
 Received: from mythical ([10.254.251.11] ident=Debian-exim)
 	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1Dvqdx-0001rv-00; Fri, 22 Jul 2005 02:04:21 -0400
+	id 1DvrGr-00025r-00; Fri, 22 Jul 2005 02:44:33 -0400
 Received: from ryan by mythical with local (Exim 4.52)
-	id 1DvqVo-0002lY-5s; Fri, 22 Jul 2005 01:55:56 -0400
+	id 1Dvr8i-0004rb-06; Fri, 22 Jul 2005 02:36:08 -0400
 To: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
-In-Reply-To: <20050721061545.GM20369@mythryan2.michonline.com>
+In-Reply-To: <20050722055556.GR20369@mythryan2.michonline.com>
 User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-The Deb packages were mising a dependency on "build install" from the
-binary target - this fixes that, and cleans up some inconsistencies
-elsewhere in the rulesets.
+The deb package building needs these two new files to work correctly.
 
-Traditionally, Debian packaging uses a file called "build-stamp" (or
-"install-stamp", etc) in the main source tree.  The initial deb package
-support for Git tried to move this "build-stamp" file into the debian/
-directory, but some instances were missed.  That problem, however, was
-incidental - the real fix is the missing dependency mentioned above.
+debian/compat sets the rules under which the debhelper scripts (dh_*) operate.
 
-(version 2 of this patch.  I missed an early commit in v1 that made the old
-patch impossible to apply.)
+debian/git-core.install tells dh_install what files to install in each package
+that is generated.  There is only one package being generated, so all files go
+into it.
+
+(I missed these in the last patch, mostly because I needed to do this to
+find stuff I had missed:
+	find . -name .git -type d -prune -o -type f -print \
+		| grep -v -e .tree1 -e .tree2 \
+		| sed -e "s/^\.\///" \
+		| sort >.tree1
+	git-ls-files | grep -v -e .tree1 -e .tree2 \
+		| sort >.tree2
+	diff -u .tree1 .tree2
+)
 
 Signed-off-by: Ryan Anderson <ryan@michonline.com>
+---
 
+ debian/compat           |    1 +
+ debian/git-core.install |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 debian/compat
+ create mode 100644 debian/git-core.install
 
-diff --git a/debian/changelog b/debian/changelog
---- a/debian/changelog
-+++ b/debian/changelog
-@@ -1,5 +1,11 @@
-+git-core (0.99-1) unstable; urgency=low
-+
-+  * Update deb package support to build correctly. 
-+
-+ -- Ryan Anderson <ryan@michonline.com>  Thu, 21 Jul 2005 02:03:32 -0400
-+
- git-core (0.99-0) unstable; urgency=low
--	
-+
-   * Initial deb package support
- 
-  -- Eric Biederman <ebiederm@xmission.com>  Tue, 12 Jul 2005 10:57:51 -0600
-diff --git a/debian/control b/debian/control
---- a/debian/control
-+++ b/debian/control
-@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
- 
- Package: git-core
- Architecture: any
--Depends: ${shlibs:Depends}, shellutils, diff, rsync, rcs
-+Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
- Description: The git content addressable filesystem
-  GIT comes in two layers. The bottom layer is merely an extremely fast
-  and flexible filesystem-based database designed to store directory trees
-diff --git a/debian/rules b/debian/rules
---- a/debian/rules
-+++ b/debian/rules
-@@ -21,8 +21,8 @@ DESTDIR  := $(CURDIR)/debian/tmp
- DOC_DESTDIR := $(DESTDIR)/usr/share/doc/git-core/
- MAN_DESTDIR := $(DESTDIR)/$(MANDIR)
- 
--build: build-stamp
--build-stamp:
-+build: debian/build-stamp
-+debian/build-stamp:
- 	dh_testdir
- 	$(MAKE) all doc
- 	touch debian/build-stamp
-@@ -36,7 +36,7 @@ debian-clean:
- clean: debian-clean
- 	$(MAKE) clean
- 
--install: debian/build-stamp
-+install: build
- 	dh_testdir
- 	dh_testroot
- 	dh_clean -k 
-@@ -47,9 +47,9 @@ install: debian/build-stamp
- 	mkdir -p $(DOC_DESTDIR)
- 	find $(DOC) '(' -name '*.txt' -o -name '*.html' ')' -exec install {} $(DOC_DESTDIR) ';'
- 
--	dh_install --sourcedir=$(DESTDIR)
-+	dh_install --list-missing --sourcedir=$(DESTDIR)
- 
--binary:
-+binary: build install
- 	dh_testdir
- 	dh_testroot
- 	dh_installchangelogs
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+d5ccc10c30f1baa968705aa0c3dfc98e0ade5eaf
+diff --git a/debian/compat b/debian/compat
+new file mode 100644
+--- /dev/null
++++ b/debian/compat
+@@ -0,0 +1 @@
++4
+diff --git a/debian/git-core.install b/debian/git-core.install
+new file mode 100644
+--- /dev/null
++++ b/debian/git-core.install
+@@ -0,0 +1 @@
++*
