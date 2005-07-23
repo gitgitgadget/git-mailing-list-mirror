@@ -1,139 +1,121 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] GIT: Try all addresses for given remote name
-Date: Fri, 22 Jul 2005 22:36:13 -0700
-Message-ID: <7v4qam5bjm.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
+Date: Sat, 23 Jul 2005 03:37:07 -0400
+Message-ID: <20050723073707.GA3255@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, <yoshfuji@linux-ipv6.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 07:36:35 2005
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 09:38:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwCgS-0003me-W8
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 07:36:25 +0200
+	id 1DwEa4-00021O-EY
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 09:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261526AbVGWFgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 01:36:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262351AbVGWFgQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 01:36:16 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65492 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261526AbVGWFgP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2005 01:36:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050723053612.CZIH1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 23 Jul 2005 01:36:12 -0400
+	id S261456AbVGWHhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 03:37:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261568AbVGWHhL
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 03:37:11 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:23213 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261456AbVGWHhJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 03:37:09 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DwEZI-0004ty-0K; Sat, 23 Jul 2005 03:37:08 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DwEhZ-0003p5-00; Sat, 23 Jul 2005 03:45:41 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DwEZH-0000tE-Az; Sat, 23 Jul 2005 03:37:07 -0400
 To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-From: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
-Date: 1121951436 -0400
 
-Try all addresses for given remote name until it succeeds.
-Also supports IPv6.
+This patch includes two fixes to the git-core Debian package:
 
-Signed-off-by: Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+    * Conflict with the GNU Interactive Tools package, which _also_
+      wants to install /usr/bin/git.
+
+    * Compile against the unencumbered Mozilla SHA1 code, instead of
+      the iffy OpenSSL code.  This makes it easier to get the package
+      included for distribution with Debian.
+
+Note: Assumes that Ryan Anderson's patch "Deb packages should include
+the binaries" has been applied.
+
+(Note - I fixed up the conflicts against my earlier packaging fixes -- Ryan)
+
+Signed-off-by: Sebastian Kuzminsky <seb@highlab.com>
+Signed-off-by: Ryan Anderson <ryan@michonline.com>
 ---
-*** Linus, I am not ACKing Hideaki's other change on the
-*** daemon.c side at this moment; Pasky raised two good points
-*** and I expect Hideaki will resubmit (either modified or as
-*** is).
 
- connect.c |   71 +++++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 43 insertions(+), 28 deletions(-)
+ debian/changelog |   11 +++++++++++
+ debian/control   |    3 ++-
+ debian/rules     |   14 ++++++++++++++
+ 3 files changed, 27 insertions(+), 1 deletions(-)
 
-42210dd815647c3d4b71142a8a43de5a009485b2
-diff --git a/connect.c b/connect.c
---- a/connect.c
-+++ b/connect.c
-@@ -96,42 +96,57 @@ static enum protocol get_protocol(const 
- 	die("I don't handle protocol '%s'", name);
- }
+c651cdc175712c26d4b9c8b75b44a89eb1b74752
+diff --git a/debian/changelog b/debian/changelog
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,3 +1,14 @@
++git-core (0.99.1-1) unstable; urgency=low
++
++  * Conflict with the GNU Interactive Tools package, which also installs
++    /usr/bin/git.
++  * Dont compile against the OpenSSL SHA1 code, it's problematically
++    licensed.  Instead use the PPC assembly on PPC, and the code ripped
++    from Mozilla everywhere else.
++  * Minor tweaks to the Build-Depends.
++
++ -- Sebastian Kuzminsky <seb@highlab.com>  Thu, 21 Jul 2005 01:28:35 -0600
++
+ git-core (0.99-1) unstable; urgency=low
  
--static void lookup_host(const char *host, struct sockaddr *in)
--{
--	struct addrinfo *res;
--	int ret;
--
--	ret = getaddrinfo(host, NULL, NULL, &res);
--	if (ret)
--		die("Unable to look up %s (%s)", host, gai_strerror(ret));
--	*in = *res->ai_addr;
--	freeaddrinfo(res);
--}
-+#define STR_(s)	# s
-+#define STR(s)	STR_(s)
+   * Update deb package support to build correctly. 
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -7,7 +7,8 @@ Standards-Version: 3.6.1
  
- static int git_tcp_connect(int fd[2], const char *prog, char *host, char *path)
- {
--	struct sockaddr addr;
--	int port = DEFAULT_GIT_PORT, sockfd;
--	char *colon;
--
--	colon = strchr(host, ':');
--	if (colon) {
--		char *end;
--		unsigned long n = strtoul(colon+1, &end, 0);
--		if (colon[1] && !*end) {
--			*colon = 0;
--			port = n;
-+	int sockfd = -1;
-+	char *colon, *end;
-+	char *port = STR(DEFAULT_GIT_PORT);
-+	struct addrinfo hints, *ai0, *ai;
-+	int gai;
-+
-+	if (host[0] == '[') {
-+		end = strchr(host + 1, ']');
-+		if (end) {
-+			*end = 0;
-+			end++;
-+			host++;
-+		} else
-+			end = host;
-+	} else
-+		end = host;
-+	colon = strchr(end, ':');
-+
-+	if (colon)
-+		port = colon + 1;
-+
-+	memset(&hints, 0, sizeof(hints));
-+	hints.ai_socktype = SOCK_STREAM;
-+	hints.ai_protocol = IPPROTO_TCP;
-+
-+	gai = getaddrinfo(host, port, &hints, &ai);
-+	if (gai)
-+		die("Unable to look up %s (%s)", host, gai_strerror(gai));
-+
-+	for (ai0 = ai; ai; ai = ai->ai_next) {
-+		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-+		if (sockfd < 0)
-+			continue;
-+		if (connect(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
-+			close(sockfd);
-+			sockfd = -1;
-+			continue;
- 		}
-+		break;
- 	}
+ Package: git-core
+ Architecture: any
+-Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
++Depends: ${misc:Depends}, patch, diff, rsync, rcs, wget, rsh-client
++Conflicts: git
+ Description: The git content addressable filesystem
+  GIT comes in two layers. The bottom layer is merely an extremely fast
+  and flexible filesystem-based database designed to store directory trees
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -12,6 +12,20 @@ else
+ endif
+ export CFLAGS
  
--	lookup_host(host, &addr);
--	((struct sockaddr_in *)&addr)->sin_port = htons(port);
-+	freeaddrinfo(ai0);
- 
--	sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_IP);
- 	if (sockfd < 0)
--		die("unable to create socket (%s)", strerror(errno));
--	if (connect(sockfd, (void *)&addr, sizeof(addr)) < 0)
--		die("unable to connect (%s)", strerror(errno));
-+		die("unable to connect a socket (%s)", strerror(errno));
++#
++# On PowerPC we compile against the hand-crafted assembly, on all
++# other architectures we compile against GPL'ed sha1 code lifted
++# from Mozilla.  OpenSSL is strangely licensed and best avoided
++# in Debian.
++#
++HOST_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
++ifeq (${HOST_ARCH},powerpc)
++	export PPC_SHA1=YesPlease
++else
++	export MOZILLA_SHA1=YesPlease
++endif
 +
- 	fd[0] = sockfd;
- 	fd[1] = sockfd;
- 	packet_write(sockfd, "%s %s\n", prog, path);
++
+ PREFIX := /usr
+ MANDIR := /usr/share/man/
+ 
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
