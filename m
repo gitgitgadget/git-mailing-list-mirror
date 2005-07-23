@@ -1,85 +1,179 @@
-From: Junio C Hamano <junio@twinsun.com>
-Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for
- Debian, conflict with "git"
-Date: Sat, 23 Jul 2005 02:11:16 -0700
-Message-ID: <7vd5p9horr.fsf@totally-fudged-out-message-id>
-References: <20050723073707.GA3255@mythryan2.michonline.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
+Date: Sat, 23 Jul 2005 11:30:35 +0200
+Message-ID: <20050723093035.GB11814@pasky.ji.cz>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca> <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com> <20050722192424.GB8556@mars.ravnborg.org> <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net> <1122068634.7042.35.camel@localhost.localdomain> <7vu0imh23q.fsf@assigned-by-dhcp.cox.net> <1122108098.6863.38.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sebastian Kuzminsky <seb@highlab.com>
-X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:40 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Bryan larsen <bryanlarsen@yahoo.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Sat Jul 23 11:31:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwG2a-0007mA-Js
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:11:28 +0200
+	id 1DwGLV-0000nE-PA
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261640AbVGWJLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 05:11:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVGWJLY
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:11:24 -0400
-Received: from alcor.twinsun.com ([198.147.65.9]:59970 "EHLO alcor.twinsun.com")
-	by vger.kernel.org with ESMTP id S261640AbVGWJLY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:11:24 -0400
-Received: from sic.twinsun.com ([192.54.239.17])
-	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9BG3x013845;
-	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
-Received: from pete.twinsun.com (pete.twinsun.com [192.54.239.43])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9BGY12018;
-	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
-Received: from sic.twinsun.com ([192.54.239.17])
- by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302111626161
- ; Sat, 23 Jul 2005 02:11:16 -0700
-Received: from arte (arte.twinsun.com [192.54.239.5])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9BGY12014;
-	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
-Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:11:16 -0700
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050723073707.GA3255@mythryan2.michonline.com> (Ryan
- Anderson's message of "Sat, 23 Jul 2005 03:37:07 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261656AbVGWJal (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 05:30:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261657AbVGWJak
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:30:40 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:34321 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S261656AbVGWJai (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:30:38 -0400
+Received: (qmail 16767 invoked by uid 2001); 23 Jul 2005 09:30:35 -0000
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <1122108098.6863.38.camel@localhost.localdomain>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson <ryan@michonline.com> writes:
+Dear diary, on Sat, Jul 23, 2005 at 10:41:38AM CEST, I got a letter
+where Catalin Marinas <catalin.marinas@gmail.com> told me that...
+> Another problem with the template is when one wants a header as well as
+> footer (for things like '-*- mode: text; -*-'). Maybe something like
+> below would work:
+> 
+> GIT: your header
+> @DESCRIPTION@
+> GIT: your footer
+> GIT: @FILELIST@
+> 
+> where @DESCRIPTION@ is either a blank line for cogito or the existing
+> patch description for StGIT. One could also add a 'Signed-...' line when
+> the patch is first created (instead of a blank line).
+> 
+> For StGIT, one could add something like @PATCHNAME@ as well.
 
-> --- a/debian/changelog
-> +++ b/debian/changelog
-> ...
-> +  * Minor tweaks to the Build-Depends.
+Great idea.
 
-This is a nit and not the reason for NACK, but I do not see any
-change to Build-Depends.
+> > When you merge two projects like Linus did between git.git and
+> > gitk, obviously the person who is merging the two is responsible
+> > for merging the per-project default configuration and resolving
+> > conflicts.  This probably should be overridable by individual
+> > developers who pull/fetch into their repository by having per-
+> > repository configuration.
+> 
+> The problem appears when one upstream maintainer changes the
+> configuration, should this be merged again? In this case you can get
+> conflicts.
 
-> -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
-> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, wget, rsh-client
+So you resolve them...? If the upstream keeps doing changes frequent
+enough and large-scale enough to this becoming annoying, something is
+wrong. :-)
 
-This is primarily my fault, but this new Depends line is already
-obsolete.  Darrin Thompson removed the last remaining use of
-wget and it is my understanding that we do not depend on wget
-anymore; instead we now depend on curl executable.
+> > > That's the thing I didn't like in GNU Arch. You modify the file ignoring
+> > > rules for example and the change will be included in the next commit.
+> > > You could only get some defaults when cloning a repository, otherwise
+> > > once you have different preferences from the repository's maintainer,
+> > > you start getting conflicts in the config files.
+> > 
+> > That's why I suggested to have "_git" (project wide default)
+> > separate from $GIT_DIR/info (repository owner's discretion), the
+> > latter overriding the former.
+> 
+> That's OK with one issue - git should be able to exclude _git when
+> generating a diff between 2 trees, unless one can enforce the _git/*
+> files to be read-only.
 
-I do not offhand remember where we use rsh-client.  The
-rsh-client I know of is this one, which claims to offer rsh, rcp
-and rlogin but I do not think we use any of them.  Did you mean
-"ssh" package?
+Why? I think those meta-information is important too, and if it differs,
+I want to see it in the diff. Oh, now I see what you mean - to
+optionally exclude it. That would be nice, having --exclude in
+common diff options.
 
-    Package: rsh-client
-    Priority: extra
-    Section: net
-    Maintainer: Alberto Gonzalez Iniesta <agi@inittab.org>
-    Source: netkit-rsh
-    Version: 0.17-13
-    Description: rsh clients.
-     This package contains rsh, rcp and rlogin.
+> Another option would be to have .git/info/<branch> and, with cogito for
+> example, .git/info/origin should always be pulled, even if the local
+> files were modified. You would override these settings
+> in .git/info/master. The problem is to define the branches order in
+> which the settings are read.
 
-Perhaps (I am not sure about the rsh-client vs ssh):
+Yes, and you may be pulling from multiple branches. I would keep
+.git/info simple and single-instanced. If you want your stuff to
+propagate to others, put it to .gitinfo/.
 
-> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, curl, ssh
+> > > Again, having Porcelain specific options mixed in the same file might
+> > > lead to some confusion among users.
+> > 
+> > True.  We need to be careful.
+> 
+> This could be avoided by using ini-like files (well, easy to read in
+> Python) and have [git] (for the common things like author name),
+> [cogito], [stgit] etc. sections.
 
-Both the use of mozilla SHA1 library and conflicting with the
-other GIT, which are the primary points of this patch, sound
-sensible, relative to the Debian poli(cies|tics), but as long as
-we are touching the Depends: line, let's make sure we get it
-right (the current one is obviously obsolete).
+Now if it is going to look like this, I think separate files would be
+much more practical, more effective and likely simpler for the user as
+well. For Cogito-specific stuff, the user can well dive into
+Cogito-specific configuration files, I think. (Well, there's none now;
+there is .cgrc but that only contains default options for Cogito
+commands and will stay so; I plan ~/.cg/cogito.conf or something.
+Actually, perhaps the Git configuration file should be ~/.git/git.conf -
+it looks cool, doesn't it?)
+
+> The problem is how much similar we want the Porcelains to be regarding
+> the settings and the templates. For StGIT, it is much simpler to have
+> something like '%(FILELIST)s' rather than '@FILELIST@' in a template but
+> I have not problem with switching to a common syntax. But we should see
+> what can easily be changed.
+
+I chose @FILELIST@ only since it is a common convention to have this as
+rewrite placeholders, and I think it's more visually clear than
+%(FILELIST). Were you insisting on the second syntax, I wouldn't have
+%any problem switching, though. Cogito does no @@ rewriting yet.
+
+> I will write a list with what files StGIT uses and where they are placed
+> and we can agree on a structure. I think the .git/ directory usage is
+> more important to be clarified than having a common {git,cogito,stgit}rc
+> file.
+
+Agreed. What Cogito uses:
+
+	.git/author	Default author information in format
+				Person Name <email@addy>
+
+	.git/branch-name
+			Symbolic name of the branch of this repository.
+			This is purely descriptive, does not need to be
+			unique and is used only in commit-post. I need
+			to distinguish commits done in git-pb and Cogito
+			so that's the contents of this file in those two
+			repositories. Quite ad-hoc and deserves a better
+			solution, but I have none so far; in the future,
+			I might just have shared repository for those
+			two and use the head name.
+
+	.git/commit-template
+			Commit template to use in the commit editor
+			instead of some short header (most of it is
+			still hardcoded).
+
+	.git/exclude	--exclude-from for git-ls-files
+			I want to rename this to .git/ignore
+
+	.git/hooks/commit-post
+			COMMIT-ID BRANCHNAME
+			(could be <headname> if no branchname defined)
+
+	.git/hooks/merge-pre
+			BRANCHNAME BASE CURHEAD MERGEDHEAD MERGETYPE
+			MERGETYPE is either "forward" or "tree".
+			The merge is cancelled if the script returns
+			non-zero exit code.
+
+	.git/hooks/merge-post
+			BRANCHNAME BASE CURHEAD MERGEDHEAD MERGETYPE STATUS
+			MERGETYPE is either "forward" or "tree".
+			For "forward", the STATUS is always "ok",
+			while for "tree" the STATUS can be
+			"localchanges", "conflicts", "nocommit",
+			or "ok".
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
