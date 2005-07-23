@@ -1,187 +1,170 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Sat, 23 Jul 2005 11:04:33 +0200
-Message-ID: <20050723090433.GA11814@pasky.ji.cz>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca> <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com> <20050722192424.GB8556@mars.ravnborg.org> <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net> <1122068634.7042.35.camel@localhost.localdomain> <7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junio@twinsun.com>
+Subject: [PATCH] mailinfo: handle folded header.
+Date: Sat, 23 Jul 2005 02:10:31 -0700
+Message-ID: <7vfyu5horr.fsf@totally-fudged-out-message-id>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Bryan larsen <bryanlarsen@yahoo.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 11:05:54 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwFxC-0007JD-0Q
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:05:54 +0200
+	id 1DwG24-0007gg-A2
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261589AbVGWJFT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 05:05:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261637AbVGWJFT
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:05:19 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:12049 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261589AbVGWJEh (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:04:37 -0400
-Received: (qmail 14224 invoked by uid 2001); 23 Jul 2005 09:04:34 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261248AbVGWJKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 05:10:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261309AbVGWJKr
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:10:47 -0400
+Received: from alcor.twinsun.com ([198.147.65.9]:9052 "EHLO alcor.twinsun.com")
+	by vger.kernel.org with ESMTP id S261248AbVGWJKo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:10:44 -0400
+Received: from sic.twinsun.com ([192.54.239.17])
+	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9AV3x016438;
+	Sat, 23 Jul 2005 02:10:32 -0700 (PDT)
+Received: from pete.twinsun.com (pete.twinsun.com [192.54.239.43])
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AVY11971;
+	Sat, 23 Jul 2005 02:10:31 -0700 (PDT)
+Received: from sic.twinsun.com ([192.54.239.17])
+ by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302103126159
+ ; Sat, 23 Jul 2005 02:10:31 -0700
+Received: from arte (arte.twinsun.com [192.54.239.5])
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AVY11967;
+	Sat, 23 Jul 2005 02:10:31 -0700 (PDT)
+Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:10:31 -0700
+To: Linus Torvalds <torvalds@osdl.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Jul 23, 2005 at 01:07:05AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Catalin Marinas <catalin.marinas@gmail.com> writes:
-> 
-> > Would such a template only have 'GIT:' prefixed lines? I usually put
-> > another line like 'Signed-off-by:', for convenience. The problem with
-> > StGIT appears when one wants to re-edit the patch description (stg
-> > refresh -e), in which case the existing description should be merged
-> > with a part of the template (if you want to get the editor setting for
-> > example). It doesn't do this since there is no point in getting another
-> > 'Signed...' line in the existing description.
-> 
-> If signed-off-by is the only thing you are worried about, how
-> about making it not part of the commit template and the message
-> user touches with the editor?  You first look at the user
-> configuration somewhere to see if the user wants the
-> signed-off-by line to his commits and with what value, and if
-> the last lines of the edit result does not contain that value
-> (to avoid duplicates), add it before feeding the message to
-> git-commit-tree.
+Some people split their long E-mail address over two lines
+using the RFC2822 header "folding".  We can lose authorship
+information this way, so make a minimum effort to deal with it,
+instead of special casing only the "Subject:" field.
 
-I would rather have something universal. Just avoid inserting duplicate
-lines at the bottom.
+We could teach mailsplit to unfold the folded header, but
+teaching mailinfo about folding would make more sense; a single
+message can be fed to mailinfo without going through mailsplit.
 
-> >>   - standard "dontdiff/ignore" file.
-> >
-> > StGIT currently uses .git/exclude, since I saw it used by cogito. What
-> > is dontdiff supposed to do? The 'git diff' command only shows the diff
-> > for the files added to the repository.
-> 
-> I see that what I wrote was vague and badly stated.  Please
-> forget about my mentioning "dontdiff".  What I meant was your
-> .git/exclude, Pasky's .gitignore file and friends.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-Cogito supports .git/exclude too, but I'd rather rename it to
-.git/ignore (or .git/conf/ignore) as well (gradually).
+  This was done primarily to help Yoshifuji-san ;-) but I am not
+  sure if it is worth this half-effort.  His address would be
+  parsed as:
 
-> >>   - environment overrides (COMMITTER_NAME, COMMITTER_EMAIL and
-> >>     such).
-> >
-> > StGIT works the other way around. By default uses the environment, which
-> > can be overridden by the stgitrc file. I could change this easily.
-> 
-> Again I was vague, and what you say StGIT does is exactly what I
-> meant.  I have one value in my environment coming from the login
-> shell, and a per- repository preference item overrides it to
-> something else.
+    Author: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI
+    Email: yoshfuji@linux-ipv6.org
 
-I have it the other way around, with the rationale that your default
-settings should be in your ~/.gitrc, not environment, which is always
-the highest priority. The simple reason is that how would I apply the
-patches of other people otherwise? Now I do
+  which, while it is certainly better than the emptiness we would
+  get without this patch, I suspect that it is not really what he
+  would want to see either.
 
-	GIT_AUTHOR_NAME="Junio C Hamano" \
-		GIT_AUTHOR_EMAIL="junkio@cox.net" \
-		GIT_AUTHOR_DATE="2008-04-01 05:12:33" \
-		cg-commit
+  We _might_ want to go all the way, decoding the mime encoded
+  strings and convert them to utf8 (not limited to the From: but
+  also the Subject: field).  I dunno.  I am submitting this
+  patch in this form because it is an improvement over the
+  current version without opening this can of worms.  I'll let
+  other people open it by submitting a separate patch on top of
+  this one if they want to.
 
-and it makes complete sense to me.
+ tools/mailinfo.c |   64 +++++++++++++++++++++++-------------------------------
+ 1 files changed, 27 insertions(+), 37 deletions(-)
 
-> > For StGIT it makes sense to get some default settings via /etc/stgitrc.
-> > There are things like a SMTP server and the diff3 command. These are set
-> > when installing the application and can be overridden in your home
-> > or .git directories.
-> 
-> Exactly, but that is not specific to StGIT, I presume, and I did
-> not want to hear "``For StGIT'' it makes sense".  If StGIT needs
-> to use "diff3" on a system, probably that is because "merge" is
-> not available on that system.  In that case,  cogito needs to
-> use it too, doesn't it?
-
-diff3 throws its output on stdout, AFAIK.
-
-> If we can make users and sysadmins not having to maintain two
-> sets of configuration files for two Porcelains, if we
-> can,... that is what I have been trying to address.
-
-Yes, but it is a bit secondary to me. The most important for me is that
-meta-files inside the project itself (e.g. .gitignore) should be as
-portable as possible, as that'd be the biggest hurdle. The second
-priority for me is to make ~/.git/ as universal as possible. Having
-common per-user/per-system configuration file as well is nice too, but
-not so crucial.
-
-> > Before we get to "where", we should define the common
-> > settings. I think that git should define the common settings
-> > for its operations and the other tools should follow them.
-> 
-> Personally, unless it is something very obvious and basic, I do
-> not think the core barebone Porcelain should be inventing
-> arbitrary conventions and imposing them on other Porcelains.
-> For very basic things I would agree.
-> 
-> I think Petr already started the discussion rolling for commit
-> templates, and I like his proposal.  For ignore pattern files, I
-> think what Cogito does sounds almost sensible [*1*] and I am
-> sure StGIT have something similar.  I do not see Linus and co
-> jumping up and down saying git-status should detect and show new
-> files not registered in the cache, so for now I'd propose to
-> skip adding this one to the barebone Porcelain (meaning, this is
-> an example of not "git defining the common and others following
-> suite").
-
-(Quite some things came to git from Cogito anyway. ;-) And well, that's
-completely natural.)
-
-> *1* I said "almost sensible" but it is not meant to blame Pasky.
-> I think the --exclude mechanism in git-ls-files should be
-> extended to allow not just the filename-sans-leading-directory
-> match but a full relative-to-the-project-root path match.  That
-> way, cg-status would not have to run around in the tree to find
-> individual .gitignore files.  
-> 
-> Personally, I think having to have ignore pattern like .cvsignore
-> per-directory is simply _ugly_.
-
-No, I think it's great. That increases the locality of things, which is
-good. Think about it as of variables - it's nicer to have them local.
-Also, with a central .gitignore file, how do you specify "Ignore all
-*.html files under Documentation/" or so? (Without having ** - or you
-need to support that one too to make the central .gitignore feasible.
-But I think that in that case, it would depend on the user whether he
-defines things in the central .gitignore or in subdirectories.)
-
-> >>   - Use $HOME/.gitrc (could be a directory or a file in .ini
-> >>     style like StGIT uses -- again, I do not care about the
-> >>     details at this moment) to store per-user configuration.
-> >
-> > Again, having Porcelain specific options mixed in the same file might
-> > lead to some confusion among users.
-> 
-> True.  We need to be careful.
-> 
-> Or course, there is an option of not worry about Porcelain
-> compatibilities at all --- which is certainly simpler.  All we
-> need is to make sure they do not use the same filename for
-> conflicting purposes.  If everybody feels that way then this
-> discussion is moot and I apologize for wasting people's time.
-
-I don't think it is moot at all. (But see above - if we can't agree on
-everything, I would much rather have common stuff in the project tree
-than in ~ - there's not so much trouble of having multiple sets in ~,
-but it's annoying to have e.g. .stgitignore, .cgignore and .jitignore in
-each directory of the project, and if one project developer moves to
-another Porcelain, having to add another set of files, and then keeping
-them all up to date...)
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+25c8a3906c9f8645d7482abb2ef2de2b51155e45
+diff --git a/tools/mailinfo.c b/tools/mailinfo.c
+--- a/tools/mailinfo.c
++++ b/tools/mailinfo.c
+@@ -89,45 +89,14 @@ static void handle_subject(char *line)
+ 	strcpy(subject, line);
+ }
+ 
+-static void add_subject_line(char *line)
+-{
+-	while (isspace(*line))
+-		line++;
+-	*--line = ' ';
+-	strcat(subject, line);
+-}
+-
+ static void check_line(char *line, int len)
+ {
+-	static int cont = -1;
+-	if (!memcmp(line, "From:", 5) && isspace(line[5])) {
++	if (!memcmp(line, "From:", 5) && isspace(line[5]))
+ 		handle_from(line+6);
+-		cont = 0;
+-		return;
+-	}
+-	if (!memcmp(line, "Date:", 5) && isspace(line[5])) {
++	else if (!memcmp(line, "Date:", 5) && isspace(line[5]))
+ 		handle_date(line+6);
+-		cont = 0;
+-		return;
+-	}
+-	if (!memcmp(line, "Subject:", 8) && isspace(line[8])) {
++	else if (!memcmp(line, "Subject:", 8) && isspace(line[8]))
+ 		handle_subject(line+9);
+-		cont = 1;
+-		return;
+-	}
+-	if (isspace(*line)) {
+-		switch (cont) {
+-		case 0:
+-			fprintf(stderr, "I don't do 'Date:' or 'From:' line continuations\n");
+-			break;
+-		case 1:
+-			add_subject_line(line);
+-			return;
+-		default:
+-			break;
+-		}
+-	}
+-	cont = -1;
+ }
+ 
+ static char * cleanup_subject(char *subject)
+@@ -246,9 +215,30 @@ static void handle_body(void)
+ 	}
+ }
+ 
++static int read_one_header_line(char *line, int sz, FILE *in)
++{
++	int ofs = 0;
++	while (ofs < sz) {
++		int peek, len;
++		if (fgets(line + ofs, sz - ofs, in) == NULL)
++			return ofs;
++		len = eatspace(line + ofs);
++		if (len == 0)
++			return ofs;
++		peek = fgetc(in); ungetc(peek, in);
++		if (peek == ' ' || peek == '\t') {
++			/* Yuck, 2822 header "folding" */
++			ofs += len;
++			continue;
++		}
++		return ofs + len;
++	}
++	return ofs;
++}
++
+ static void usage(void)
+ {
+-	fprintf(stderr, "mailinfo msg-file path-file < email\n");
++	fprintf(stderr, "mailinfo msg-file patch-file < email\n");
+ 	exit(1);
+ }
+ 
+@@ -266,8 +256,8 @@ int main(int argc, char ** argv)
+ 		perror(argv[2]);
+ 		exit(1);
+ 	}
+-	while (fgets(line, sizeof(line), stdin) != NULL) {
+-		int len = eatspace(line);
++	while (1) {
++		int len = read_one_header_line(line, sizeof(line), stdin);
+ 		if (!len) {
+ 			handle_body();
+ 			break;
