@@ -1,108 +1,116 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-clone-script: store where we cloned from in .git/branches/origin
-Date: Fri, 22 Jul 2005 19:11:22 -0700
-Message-ID: <7v64v26zlh.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] tutorial: mention "git clone" records .git/branches/origin
+Date: Fri, 22 Jul 2005 19:13:07 -0700
+Message-ID: <7vwtni5ky4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 04:11:47 2005
+X-From: git-owner@vger.kernel.org Sat Jul 23 04:13:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw9UH-0008RY-Oq
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 04:11:38 +0200
+	id 1Dw9Vt-000063-1p
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 04:13:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262281AbVGWCL1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 22:11:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262282AbVGWCL1
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 22:11:27 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:41183 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S262281AbVGWCLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2005 22:11:24 -0400
+	id S262282AbVGWCNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 22:13:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262283AbVGWCNK
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 22:13:10 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:61893 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S262282AbVGWCNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 22:13:09 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050723021123.UOSL17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 22 Jul 2005 22:11:23 -0400
+          id <20050723021305.GJUC550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 22:13:05 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-A bit more usability enhancement, while retaining Cogito
-compatibility.
+Update the recommended workflow for individual developers.
+While they are tracking the origin, refs/heads/origin is updated
+by "git fetch", so there is no need to manually copy FETCH_HEAD
+to refs/heads/ anywhere.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
-*** Just after sending I noticed that the first hunk is a pure
-*** bugfix.  Hope you do not mind...
 
- git-clone-script |   41 +++++++++++++++++++++++------------------
- 1 files changed, 23 insertions(+), 18 deletions(-)
+ Documentation/tutorial.txt |   48 ++++++++++++++++++++------------------------
+ 1 files changed, 22 insertions(+), 26 deletions(-)
 
-170214e3ccecc995e4f5c2567f9542a8de8cfc65
-diff --git a/git-clone-script b/git-clone-script
---- a/git-clone-script
-+++ b/git-clone-script
-@@ -20,12 +20,12 @@ upload_pack=
- while
- 	case "$#,$1" in
- 	0,*) break ;;
--        *,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local) use_local=yes ;;
-+	*,-l|*,--l|*,--lo|*,--loc|*,--loca|*,--local) use_local=yes ;;
- 	*,-q|*,--quiet) quiet=-q ;;
--	1,-u|*,--upload-pack) usage ;;
-+	1,-u|1,--upload-pack) usage ;;
- 	*,-u|*,--upload-pack)
- 		shift
--		upload_pack="--exec=$2" ;;
-+		upload_pack="--exec=$1" ;;
- 	*,-*) usage ;;
- 	*) break ;;
- 	esac
-@@ -81,23 +81,28 @@ yes,yes)
- 		HEAD=HEAD
- 	fi
- 	tar Ccf "$repo" - refs $HEAD | tar Cxf "$D/.git" - || exit 1
--	exit 0
--	;;
--esac
+6a1a7bd322037c65a4325798ddd76024d99dff3d
+diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+--- a/Documentation/tutorial.txt
++++ b/Documentation/tutorial.txt
+@@ -1042,7 +1042,8 @@ A recommended work cycle for a "subsyste
+ on that project and has own "public repository" goes like this:
+ 
+  (1) Prepare your work repository, by "git clone" the public
+-     repository of the "project lead".
++     repository of the "project lead".  The URL used for the
++     initial cloning is stored in .git/branches/origin.
+ 
+  (2) Prepare a public repository accessible to others.
+ 
+@@ -1051,7 +1052,7 @@ on that project and has own "public repo
+      currently not automated.
+ 
+  (4) Push into the public repository from your primary
+-     repository.  Run "git repack" (and possibly "git
++     repository.  Run "git repack", and possibly "git
+      prune-packed" if the transport used for pulling from your
+      repository supports packed repositories.
+ 
+@@ -1076,30 +1077,25 @@ A recommended work cycle for an "individ
+ not have a "public" repository is somewhat different.  It goes
+ like this:
+ 
+- (1) Prepare your work repositories, by "git clone" the public
+-     repository of the "project lead" (or "subsystem
+-     maintainer", if you work on a subsystem).
 -
--case "$repo" in
--rsync://*)
--	rsync $quiet -avz --ignore-existing "$repo/objects/" "$D/.git/objects/" &&
--	rsync $quiet -avz --ignore-existing "$repo/refs/" "$D/.git/refs/"
--	;;
--http://*)
--	echo "Somebody should add http fetch" >&2
--	exit 1
- 	;;
- *)
--	cd "$D" && case "$upload_pack" in
--	'') git-clone-pack $quiet "$repo" ;;
--	*) git-clone-pack $quiet "$upload_pack" "$repo" ;;
-+	case "$repo" in
-+	rsync://*)
-+		rsync $quiet -avz --ignore-existing "$repo/objects/" "$D/.git/objects/" &&
-+		rsync $quiet -avz --ignore-existing "$repo/refs/" "$D/.git/refs/"
-+		;;
-+	http://*)
-+		echo "Somebody should add http fetch" >&2
-+		exit 1
-+		;;
-+	*)
-+		cd "$D" && case "$upload_pack" in
-+		'') git-clone-pack $quiet "$repo" ;;
-+		*) git-clone-pack $quiet "$upload_pack" "$repo" ;;
-+		esac
-+		;;
- 	esac
- 	;;
- esac
+- (2) Copy .git/refs/master to .git/refs/upstream.
+-
+- (3) Do your work there.  Make commits.
+-
+- (4) Run "git fetch" from the public repository of your upstream
+-     every once in a while.  This does only the first half of
+-     "git pull" but does not merge.  The head of the public
+-     repository is stored in .git/FETCH_HEAD.  Copy it in
+-     .git/refs/heads/upstream.
+-
+- (5) Use "git cherry" to see which ones of your patches were
+-     accepted, and/or use "git rebase" to port your unmerged
+-     changes forward to the updated upstream.
+-
+- (6) Use "git format-patch upstream" to prepare patches for
+-     e-mail submission to your upstream and send it out.
+-     Go back to step (3) and continue. 
+-
+-[Side Note: I think Cogito calls this upstream "origin".
+- Somebody care to confirm or deny?  ]
++ (1) Prepare your work repository, by "git clone" the public
++     repository of the "project lead" (or a "subsystem
++     maintainer", if you work on a subsystem).  The URL used for
++     the initial cloning is stored in .git/branches/origin.
 +
-+# Update origin.
-+mkdir -p "$D/.git/branches/" &&
-+rm -f "$D/.git/branches/origin" &&
-+echo "$repo" >"$D/.git/branches/origin"
++ (2) Do your work there.  Make commits.
++
++ (3) Run "git fetch origin" from the public repository of your
++     upstream every once in a while.  This does only the first
++     half of "git pull" but does not merge.  The head of the
++     public repository is stored in .git/refs/heads/origin.
++
++ (4) Use "git cherry origin" to see which ones of your patches
++     were accepted, and/or use "git rebase origin" to port your
++     unmerged changes forward to the updated upstream.
++
++ (5) Use "git format-patch origin" to prepare patches for e-mail
++     submission to your upstream and send it out.  Go back to
++     step (2) and continue.
+ 
+ 
+ [ to be continued.. cvsimports ]
