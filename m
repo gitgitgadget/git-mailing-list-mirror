@@ -1,97 +1,87 @@
-From: Gene Heskett <gene.heskett@verizon.net>
-Subject: Re: Last mile to 1.0?
-Date: Sat, 23 Jul 2005 09:14:17 -0400
-Organization: None, usuallly detectable by casual observers
-Message-ID: <200507230914.18095.gene.heskett@verizon.net>
-References: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net>
- <20050723085031.GD3255@mythryan2.michonline.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
+Date: Sat, 23 Jul 2005 10:39:36 -0400
+Message-ID: <20050723143936.GE3255@mythryan2.michonline.com>
+References: <20050723073707.GA3255@mythryan2.michonline.com> <7vd5p9horr.fsf@totally-fudged-out-message-id>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sat Jul 23 15:14:50 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org,
+	Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 16:40:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwJq4-0001bd-Cn
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 15:14:48 +0200
+	id 1DwLAE-00081P-QR
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 16:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261673AbVGWNO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 09:14:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261696AbVGWNO2
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 09:14:28 -0400
-Received: from vms040pub.verizon.net ([206.46.252.40]:61687 "EHLO
-	vms040pub.verizon.net") by vger.kernel.org with ESMTP
-	id S261673AbVGWNOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2005 09:14:22 -0400
-Received: from coyote.coyote.den ([151.205.63.153])
- by vms040.mailsrvcs.net (Sun Java System Messaging Server 6.2 HotFix 0.04
- (built Dec 24 2004)) with ESMTPA id <0IK3001NK0RUZOG9@vms040.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 23 Jul 2005 08:14:19 -0500 (CDT)
-In-reply-to: <20050723085031.GD3255@mythryan2.michonline.com>
-To: git@vger.kernel.org
-Content-disposition: inline
-User-Agent: KMail/1.7
+	id S261745AbVGWOji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 10:39:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261748AbVGWOji
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 10:39:38 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:9138 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261745AbVGWOji (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 10:39:38 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DwLA9-0000w2-CQ; Sat, 23 Jul 2005 10:39:37 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DwLIY-0007a7-00; Sat, 23 Jul 2005 10:48:18 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DwLA8-00067T-Ol; Sat, 23 Jul 2005 10:39:36 -0400
+To: Junio C Hamano <junio@twinsun.com>
+Content-Disposition: inline
+In-Reply-To: <7vd5p9horr.fsf@totally-fudged-out-message-id>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Duplicate send, had typo in orif address line :(
-On Saturday 23 July 2005 04:50, Ryan Anderson wrote:
->On Sat, Jul 16, 2005 at 10:46:00AM -0700, Junio C Hamano wrote:
->>  - Publicity.  I would be very happy to see somebody with good
->>    writing and summarizing skills to prepare an article to be
->>    published on LWN.NET to coincide with the 1.0 release.  An
->>    update to GIT traffic would also be nice.
->
->How is this for a start?
->
->Source Code Management with Git
->
->Git, sometimes called "global information tracker", is a "directory
->content manager".  Git has been designed to handle absolutely
-> massive projects with speed and efficiency, and the release of the
-> 2.6.12 and (soon) the 2.6.13 version of the Linux kernel would
-> indicate that it does this task well.
->
->Git falls into the category of distributed source code management
-> tools, similar to Arch or Darcs (or, in the commercial world,
-> BitKeeper).  This means that every working directory is a
-> full-fledged repository with full revision tracking capabilities.
->
->Git uses the SHA1 hash algorithm to provide a content-addressable
-> pseudo filesystem, complete with its own version of fsck.
->  o Speed of use, both for the project maintainer, and the
-> end-users, is a key development principle.
->  o The history is stored as a directed acyclic graph, making
-> long-lived branches and repeated merging simple.
->  o A collection of related projects are building on the core Git
->    project, either to provide an easier to use interface on top
-> (Darcs, Mercurial, StGit, Cogito), or to take some of the
-> underlying concepts and reimplement them directly into another
-> system (Arch 2.0). o Two, interchangeable, on-disk formats are
-> used:
->    o An efficient, packed format that saves spaced and network
->      bandwidth.
->    o An unpacked format, optimized for fast writes and incremental
->      work.
->
-A very good start for the overview preamble.  Do carry on.
+On Sat, Jul 23, 2005 at 02:11:16AM -0700, Junio C Hamano wrote:
+> Ryan Anderson <ryan@michonline.com> writes:
+> 
+> > --- a/debian/changelog
+> > +++ b/debian/changelog
+> > ...
+> > +  * Minor tweaks to the Build-Depends.
+> 
+> This is a nit and not the reason for NACK, but I do not see any
+> change to Build-Depends.
+> 
+> > -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
+> > +Depends: ${misc:Depends}, patch, diff, rsync, rcs, wget, rsh-client
 
->Git results from the inspiration and frustration of Linus Torvalds,
-> and the enthusiastic help of over 300 participants on the
-> development mailing list.[1]
->
->
->1 - Generated with the following, in a maildir folder:
-> find . -type f | xargs grep -h "^From:" | perl -ne \
-> 'tr#A-Z#a-z#; m#<(.*)># && print $1,"\n";' | sort -u | wc -l
+Just to be clear - I was forwarding Sebastian's patch on, after fixing
+up the conflict I got applying it, so I didn't edit the comments, other
+than to add my Signed-off-by line.
+ 
+> This is primarily my fault, but this new Depends line is already
+> obsolete.  Darrin Thompson removed the last remaining use of
+> wget and it is my understanding that we do not depend on wget
+> anymore; instead we now depend on curl executable.
+> 
+> I do not offhand remember where we use rsh-client.  The
+> rsh-client I know of is this one, which claims to offer rsh, rcp
+> and rlogin but I do not think we use any of them.  Did you mean
+> "ssh" package?
+
+ssh Provides rsh-client.
+
+I suspect that was the thinking.  I think the way we use ssh should be
+compatible with rsh, and that was the underlying reason for doing it
+this way.
+
+> Both the use of mozilla SHA1 library and conflicting with the
+> other GIT, which are the primary points of this patch, sound
+> sensible, relative to the Debian poli(cies|tics), but as long as
+> we are touching the Depends: line, let's make sure we get it
+> right (the current one is obviously obsolete).
+
+I have no issue with the hunk being dropped or just doing a followup to
+fix things up.  I'll wait until Linus settles back in and our massive
+backlog is fully committed or commented on.
 
 -- 
-Cheers, Gene
-"There are four boxes to be used in defense of liberty:
- soap, ballot, jury, and ammo. Please use in that order."
--Ed Howdershelt (Author)
-99.35% setiathome rank, not too shabby for a WV hillbilly
-Yahoo.com and AOL/TW attorneys please note, additions to the above
-message by Gene Heskett are:
-Copyright 2005 by Maurice Eugene Heskett, all rights reserved.
+
+Ryan Anderson
+  sometimes Pug Majere
