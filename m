@@ -1,79 +1,69 @@
-From: Bryan Larsen <bryanlarsen@yahoo.com>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Sat, 23 Jul 2005 12:33:25 -0400
-Message-ID: <42E27155.6070903@yahoo.com>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>	 <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>	 <20050722192424.GB8556@mars.ravnborg.org>	 <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>	 <1122068634.7042.35.camel@localhost.localdomain>	 <7vu0imh23q.fsf@assigned-by-dhcp.cox.net>	 <1122108098.6863.38.camel@localhost.localdomain>	 <20050723093035.GB11814@pasky.ji.cz> <1122114452.6863.72.camel@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Last mile to 1.0?
+Date: Sat, 23 Jul 2005 10:09:43 -0700
+Message-ID: <7vzmsdqwiw.fsf@assigned-by-dhcp.cox.net>
+References: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net>
+	<20050723085031.GD3255@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Sat Jul 23 18:33:58 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 19:12:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwMwg-00014Z-Iv
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 18:33:50 +0200
+	id 1DwNXv-0005HQ-EI
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 19:12:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262316AbVGWQdi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 12:33:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262382AbVGWQdf
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 12:33:35 -0400
-Received: from smtp109.mail.sc5.yahoo.com ([66.163.170.7]:18767 "HELO
-	smtp109.mail.sc5.yahoo.com") by vger.kernel.org with SMTP
-	id S262396AbVGWQd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2005 12:33:26 -0400
-Received: (qmail 5775 invoked from network); 23 Jul 2005 16:33:24 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:Message-ID:Date:From:User-Agent:X-Accept-Language:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-  b=rrgELuW8v5TC422XrAg9hK2GZcwx8PjAXc5z5e1P2Px7Ph+J/oYK5MEi+N7cOnZQFfdOFNPcsCgj8QVOZIw0h+Ia8BYRMb2gB0hWYo2xuLxUoBTVT6W1GcX3e2uR+ZRIR+RKI3cdj/MPwTM9pKqG7jCzKhCeXyvNd39Mp5k3eVs=  ;
-Received: from unknown (HELO ?72.0.77.164?) (bryanlarsen@72.0.77.164 with plain)
-  by smtp109.mail.sc5.yahoo.com with SMTP; 23 Jul 2005 16:33:23 -0000
-User-Agent: Mozilla Thunderbird 1.0.2 (Macintosh/20050317)
-X-Accept-Language: en-us, en
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <1122114452.6863.72.camel@localhost.localdomain>
+	id S262381AbVGWRLg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 13:11:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262375AbVGWRLg
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 13:11:36 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:50156 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S262381AbVGWRJs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2005 13:09:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050723170940.MRVU1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 23 Jul 2005 13:09:40 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050723085031.GD3255@mythryan2.michonline.com> (Ryan Anderson's message of "Sat, 23 Jul 2005 04:50:31 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas wrote:
+Ryan Anderson <ryan@michonline.com> writes:
 
-It seems I inadvertantly kicked off the discussion I wanted to kick off, 
-but I didn't excpect this patch to do so!
+> How is this for a start?
 
-I prepared a patch adding the following information into 
-git/Documentation to kick off discussion.  Obviously Catalin is more 
-likely to be accurate.
+A very good start indeed.  Thanks.
 
-> 
-> OK, though StGIT doesn't use any at the moment.
-> 
-> Now, the StGIT files (.git means $GIT_DIR):
-> 
->       * /etc/stgitrc, ~/.stgitrc, .git/stgitrc - configuration files
->         (the latter overrides the former). The syntax is similar to the
->         ini files
->       * .git/patches/ - directory containing the patch information. I
->         won't go into details here since this is only used by StGIT
->       * .git/exclude - for the files to be ignored by the 'status'
->         command
->       * .git/conflicts - includes the list of files conflicting after a
->         merge operation. The user should run 'stg resolved --all' to
->         mark the conflicts as resolved and remove this file
->       * .git/branches/ - the same meaning as in cogito, only that
->         'master' is considered a branch and 'stg pull' doesn't use
->         'origin'
->       * .git/patchdescr.tmpl - the same idea as commit-template, used
->         when creating the first description for a patch
->       * .git/patchexport.tmpl - template used when exporting the patches
->         in a series
->       * .git/patchmail.tmpl - template used for sending patches by
->         e-mail
-> 
+> Git falls into the category of distributed source code management tools,
+> similar to Arch or Darcs (or, in the commercial world, BitKeeper).  This
+> means that every working directory is a full-fledged repository with
+> full revision tracking capabilities.
 
-how about:
-  .git/refs/heads/master - documented in README, doesn't appear to be used.
-.git/firstmail.tmpl - template used for sending the preamble email
+I think Kevin's comment is valid and his description is reasonable.
+
+>   o A collection of related projects are building on the core Git
+>     project, either to provide an easier to use interface on top (Darcs,
+>     Mercurial, StGit, Cogito), or to take some of the underlying concepts
+>     and reimplement them directly into another system (Arch 2.0).
+
+I think you would want to drop Darcs and Mercurial from the "on
+top" list.  If I understand correctly, Mercurial is
+independently written with its own on-disk formats [*1*].  It
+would be very unfair to put Darcs in "building on" category.
+They've been there for quite some time with their own repository
+format and the tools and interfaces are reasonably mature.
+
+Instead, please add gitk and gitweb to the list.  We should not
+forget that these "mostly read-only" things are Porcelains.
+
+
+[Footnote]
+
+*1* It feels that actually it is done right.  Its misfortune is
+that many core kernel people have already switched to git.
