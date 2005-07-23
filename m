@@ -1,73 +1,86 @@
-From: Petr Baudis <pasky@suse.cz>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 0/2] apply.c: a fix and an enhancement
-Date: Sat, 23 Jul 2005 01:59:44 +0200
-Message-ID: <20050722235944.GS11916@pasky.ji.cz>
-References: <7vzmsewzik.fsf@assigned-by-dhcp.cox.net> <20050722181800.GU20369@mythryan2.michonline.com> <7vsly6vd2b.fsf@assigned-by-dhcp.cox.net> <42E1571B.8070108@gmail.com> <Pine.LNX.4.58.0507221340450.6074@g5.osdl.org> <7vhdempmgg.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507221447420.6074@g5.osdl.org> <20050722233344.GP11916@pasky.ji.cz> <Pine.LNX.4.58.0507221640050.6074@g5.osdl.org>
+Date: Fri, 22 Jul 2005 17:20:53 -0700
+Message-ID: <7vhdeme5ju.fsf@assigned-by-dhcp.cox.net>
+References: <7vzmsewzik.fsf@assigned-by-dhcp.cox.net>
+	<20050722181800.GU20369@mythryan2.michonline.com>
+	<7vsly6vd2b.fsf@assigned-by-dhcp.cox.net> <42E1571B.8070108@gmail.com>
+	<Pine.LNX.4.58.0507221340450.6074@g5.osdl.org>
+	<7vhdempmgg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507221447420.6074@g5.osdl.org>
+	<7vfyu6jvrm.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507221619450.6074@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	A Large Angry SCM <gitzilla@gmail.com>,
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
 	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 01:59:52 2005
+X-From: git-owner@vger.kernel.org Sat Jul 23 02:21:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw7Qk-00069p-UV
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 01:59:51 +0200
+	id 1Dw7li-0007go-A2
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 02:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262243AbVGVX7p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 19:59:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262244AbVGVX7p
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 19:59:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33034 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262243AbVGVX7o (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Jul 2005 19:59:44 -0400
-Received: (qmail 25839 invoked by uid 2001); 22 Jul 2005 23:59:44 -0000
+	id S262246AbVGWAVD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 20:21:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262251AbVGWAVD
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 20:21:03 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:22001 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S262246AbVGWAU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 20:20:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050723002055.ICMY7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 20:20:55 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507221640050.6074@g5.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Jul 23, 2005 at 01:50:09AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> 
-> 
-> On Sat, 23 Jul 2005, Petr Baudis wrote:
-> > 
-> > Yes, but this stuff is not for personal preferences. It is for
-> > project-wide preferences and policies, which can be still normally
-> > overridden or altered locally in each repository.
-> 
-> What you are describing is a nightmare.
-> 
-> Let's assume that a user alters the settings locally.
-> 
-> EVERY SINGLE TIME he does a "cg-commit", those local alterations would get 
-> committed, since that config file is part of the same project, and cogito 
-> by default commits all changes.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-No, no, no. A user does not alter the settings locally in .gitinfo/ -
-.gitinfo/ is for per-_project_ stuff, not per-user. If user wants an
-override, he does it per-repository in his .git/conf directory, which is
-not version-tracked (actually, core GIT does not even let me to).
+> In other words, if it's per-project, then that implies that every single 
+> developer has to agree on the same thing. Which just not possible - it 
+> makes no sense.
 
-> That's just insane. It means that in practive it's simply not reasonable 
-> to have your own local copies of that file. So what would you do? You'd 
-> add more and more hacks to cover this up, and have a "commit-ignore" file 
-> that ignores the .gitinfo files etc etc. UGLY. All because of a design 
-> mistake.
+I agree 75%.  See the bottom for the rest 25%.
 
-Actually, commit-ignore might be useful in other cases, e.g. when
-someone (me, a thousand times in the past) needs to keep temporary hacks
-in the Makefile so that he can actually build the thing on his weird
-system etc. ;-)
+> In contrast, if you have a separate local _branch_ that maintains a
+> ".gitinfo"  totally separately (no common commits at all), then you can
+> choose to propagate/participate in that branch or not, as you wish, on a
+> per-developer basis.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Ah, finally the lightbulb moment.  And I think what you outlined
+using "git switch" in another message is a clean way to do it if
+somebody wanted to.
+
+
+> For example, what if I tried to dig out even _more_ information than what 
+> is in the BK CVS archives? Or if I wanted to have just the 2.6.0-> 
+> history?
+
+Good examples; I stand corrected.  That is also per "group of
+people who share the same view", i.e. per-developer thing that
+may be propagated among consenting branch participants.
+
+
+> What you're saying is that people can be happy if they just
+> don't use a stupid decision. That's a sure sign that the
+> decision shouldn't have been made in the first place.
+
+I am not saying it that strongly.  Rather, people can be happy
+if they do not have to use a decision that they feel stupid.
+
+In circles you are part of, especially in a project like the
+kernel where hundreds of people participate worldwode, I can see
+that having project-wide preference (or policy) and maintaining
+it may not make _any_ sense.  
+
+But on the other hand, it is my understanding that it is a
+common practice to enforce some centralized policy (I am
+thinking about pre-commit hooks in particular) in a corporate
+settings, and for people wanting to have that kind of thing, it
+is not even a stupid decision.
