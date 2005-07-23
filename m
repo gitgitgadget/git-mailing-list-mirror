@@ -1,63 +1,94 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-branch: avoid getting confused by empty or nonexisting branches.
-Date: Fri, 22 Jul 2005 19:08:47 -0700
-Message-ID: <7vzmse6zps.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Install tools with "make install-tools".
+Date: Fri, 22 Jul 2005 19:09:20 -0700
+Message-ID: <7vll3y6zov.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 04:09:13 2005
+X-From: git-owner@vger.kernel.org Sat Jul 23 04:11:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw9Rd-0008Aw-L3
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 04:08:53 +0200
+	id 1Dw9Ts-0008Nn-Ib
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 04:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262276AbVGWCIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 22:08:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262277AbVGWCIt
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 22:08:49 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:58098 "EHLO
+	id S262279AbVGWCKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 22 Jul 2005 22:10:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262281AbVGWCK1
+	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 22:10:27 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:1011 "EHLO
 	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S262276AbVGWCIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2005 22:08:49 -0400
+	id S262279AbVGWCJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Jul 2005 22:09:22 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao01.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050723020847.WUMC18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 22 Jul 2005 22:08:47 -0400
+          id <20050723020920.WUOT18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 22 Jul 2005 22:09:20 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-When not specifying the start point explicitly, we ended up
-emitting ^0 in addition to the default HEAD.  Be careful to see
-if we have "$2" before finding out which commit to base the new
-branch on.
+Match the main Makefile by separating COPTS from CFLAGS,
+defining INSTALL, prefix, and bin.  Add a new target 'install-tools'
+to the main Makefile to install them.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- git-branch-script |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+ Makefile       |    4 ++++
+ tools/Makefile |   13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-baf3c4ffceae925d836f19382611968699414cd6
-diff --git a/git-branch-script b/git-branch-script
---- a/git-branch-script
-+++ b/git-branch-script
-@@ -3,7 +3,13 @@
- . git-sh-setup-script || die "Not a git archive"
+b0189708a35914c504e7bfa8914d1f5ff029a3a4
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -195,12 +195,16 @@ test: all
+ doc:
+ 	$(MAKE) -C Documentation all
  
- branchname="$1"
--rev=$(git-rev-parse --verify --default HEAD "$2"^0) || exit
-+case "$2" in
-+'')
-+	head=HEAD ;;
-+*)
-+	head="$2^0" ;;
-+esac
-+rev=$(git-rev-parse --revs-only --verify "$head") || exit
++install-tools:
++	$(MAKE) -C tools install
++
+ install-doc:
+ 	$(MAKE) -C Documentation install
  
- [ -z "$branchname" ] && die "git branch: I want a branch name"
- [ -e "$GIT_DIR/refs/heads/$branchname" ] && die "$branchname already exists"
+ clean:
+ 	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(LIB_FILE)
+ 	rm -f git-core-*.tar.gz git-core.spec
++	$(MAKE) -C tools/ clean
+ 	$(MAKE) -C Documentation/ clean
+ 
+ backup: clean
+diff --git a/tools/Makefile b/tools/Makefile
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -1,6 +1,14 @@
++#
++# Make Linus git-tools
++#
+ CC=gcc
+-CFLAGS=-Wall -O2
++COPTS=-O2
++CFLAGS=-g $(COPTS) -Wall
++INSTALL=install
+ HOME=$(shell echo $$HOME)
++prefix=$(HOME)
++bin=$(prefix)/bin
++# dest=
+ 
+ PROGRAMS=mailsplit mailinfo
+ SCRIPTS=applymbox applypatch
+@@ -8,7 +16,8 @@ SCRIPTS=applymbox applypatch
+ all: $(PROGRAMS)
+ 
+ install: $(PROGRAMS) $(SCRIPTS)
+-	cp -f $(PROGRAMS) $(SCRIPTS) $(HOME)/bin/
++	$(INSTALL) -m755 -d $(dest)$(bin)
++	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(dest)$(bin)
+ 
+ clean:
+ 	rm -f $(PROGRAMS) *.o
