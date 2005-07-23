@@ -1,116 +1,121 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] tutorial: mention "git clone" records .git/branches/origin
-Date: Fri, 22 Jul 2005 19:13:07 -0700
-Message-ID: <7vwtni5ky4.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Deb packages should include the binaries (Try 2 - this time it actually applies)
+Date: Fri, 22 Jul 2005 22:31:59 -0700
+Message-ID: <7voe8u5bqo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 04:13:24 2005
+X-From: git-owner@vger.kernel.org Sat Jul 23 07:32:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dw9Vt-000063-1p
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 04:13:17 +0200
+	id 1DwCcT-0003WI-LH
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 07:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262282AbVGWCNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 22 Jul 2005 22:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262283AbVGWCNK
-	(ORCPT <rfc822;git-outgoing>); Fri, 22 Jul 2005 22:13:10 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:61893 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S262282AbVGWCNJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Jul 2005 22:13:09 -0400
+	id S261205AbVGWFcC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 01:32:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261419AbVGWFcC
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 01:32:02 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:9151 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S261205AbVGWFcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Jul 2005 01:32:01 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao01.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050723021305.GJUC550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 22 Jul 2005 22:13:05 -0400
+          id <20050723053159.YLMV18672.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 23 Jul 2005 01:31:59 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Update the recommended workflow for individual developers.
-While they are tracking the origin, refs/heads/origin is updated
-by "git fetch", so there is no need to manually copy FETCH_HEAD
-to refs/heads/ anywhere.
+From: Ryan Anderson <ryan@michonline.com>
+Date: 1122011756 -0400
 
+The Deb packages were missing a dependency on "build install" from the
+binary target - this fixes that, and cleans up some inconsistencies
+elsewhere in the rulesets.
+
+Traditionally, Debian packaging uses a file called "build-stamp" (or
+"install-stamp", etc) in the main source tree.  The initial deb package
+support for Git tried to move this "build-stamp" file into the debian/
+directory, but some instances were missed.  That problem, however, was
+incidental - the real fix is the missing dependency mentioned above.
+
+(version 2 of this patch.  I missed an early commit in v1 that made the old
+patch impossible to apply.)
+
+Signed-off-by: Ryan Anderson <ryan@michonline.com>
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- Documentation/tutorial.txt |   48 ++++++++++++++++++++------------------------
- 1 files changed, 22 insertions(+), 26 deletions(-)
+ debian/changelog |    8 +++++++-
+ debian/control   |    2 +-
+ debian/rules     |   10 +++++-----
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
-6a1a7bd322037c65a4325798ddd76024d99dff3d
-diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
---- a/Documentation/tutorial.txt
-+++ b/Documentation/tutorial.txt
-@@ -1042,7 +1042,8 @@ A recommended work cycle for a "subsyste
- on that project and has own "public repository" goes like this:
- 
-  (1) Prepare your work repository, by "git clone" the public
--     repository of the "project lead".
-+     repository of the "project lead".  The URL used for the
-+     initial cloning is stored in .git/branches/origin.
- 
-  (2) Prepare a public repository accessible to others.
- 
-@@ -1051,7 +1052,7 @@ on that project and has own "public repo
-      currently not automated.
- 
-  (4) Push into the public repository from your primary
--     repository.  Run "git repack" (and possibly "git
-+     repository.  Run "git repack", and possibly "git
-      prune-packed" if the transport used for pulling from your
-      repository supports packed repositories.
- 
-@@ -1076,30 +1077,25 @@ A recommended work cycle for an "individ
- not have a "public" repository is somewhat different.  It goes
- like this:
- 
-- (1) Prepare your work repositories, by "git clone" the public
--     repository of the "project lead" (or "subsystem
--     maintainer", if you work on a subsystem).
--
-- (2) Copy .git/refs/master to .git/refs/upstream.
--
-- (3) Do your work there.  Make commits.
--
-- (4) Run "git fetch" from the public repository of your upstream
--     every once in a while.  This does only the first half of
--     "git pull" but does not merge.  The head of the public
--     repository is stored in .git/FETCH_HEAD.  Copy it in
--     .git/refs/heads/upstream.
--
-- (5) Use "git cherry" to see which ones of your patches were
--     accepted, and/or use "git rebase" to port your unmerged
--     changes forward to the updated upstream.
--
-- (6) Use "git format-patch upstream" to prepare patches for
--     e-mail submission to your upstream and send it out.
--     Go back to step (3) and continue. 
--
--[Side Note: I think Cogito calls this upstream "origin".
-- Somebody care to confirm or deny?  ]
-+ (1) Prepare your work repository, by "git clone" the public
-+     repository of the "project lead" (or a "subsystem
-+     maintainer", if you work on a subsystem).  The URL used for
-+     the initial cloning is stored in .git/branches/origin.
+469775a2f3b479cd4bbd930754e59601a7132f68
+diff --git a/debian/changelog b/debian/changelog
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,5 +1,11 @@
++git-core (0.99-1) unstable; urgency=low
 +
-+ (2) Do your work there.  Make commits.
++  * Update deb package support to build correctly. 
 +
-+ (3) Run "git fetch origin" from the public repository of your
-+     upstream every once in a while.  This does only the first
-+     half of "git pull" but does not merge.  The head of the
-+     public repository is stored in .git/refs/heads/origin.
++ -- Ryan Anderson <ryan@michonline.com>  Thu, 21 Jul 2005 02:03:32 -0400
 +
-+ (4) Use "git cherry origin" to see which ones of your patches
-+     were accepted, and/or use "git rebase origin" to port your
-+     unmerged changes forward to the updated upstream.
+ git-core (0.99-0) unstable; urgency=low
+-	
 +
-+ (5) Use "git format-patch origin" to prepare patches for e-mail
-+     submission to your upstream and send it out.  Go back to
-+     step (2) and continue.
+   * Initial deb package support
  
+  -- Eric Biederman <ebiederm@xmission.com>  Tue, 12 Jul 2005 10:57:51 -0600
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
  
- [ to be continued.. cvsimports ]
+ Package: git-core
+ Architecture: any
+-Depends: ${shlibs:Depends}, shellutils, diff, rsync, rcs
++Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
+ Description: The git content addressable filesystem
+  GIT comes in two layers. The bottom layer is merely an extremely fast
+  and flexible filesystem-based database designed to store directory trees
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -21,8 +21,8 @@ DESTDIR  := $(CURDIR)/debian/tmp
+ DOC_DESTDIR := $(DESTDIR)/usr/share/doc/git-core/
+ MAN_DESTDIR := $(DESTDIR)/$(MANDIR)
+ 
+-build: build-stamp
+-build-stamp:
++build: debian/build-stamp
++debian/build-stamp:
+ 	dh_testdir
+ 	$(MAKE) all doc
+ 	touch debian/build-stamp
+@@ -36,7 +36,7 @@ debian-clean:
+ clean: debian-clean
+ 	$(MAKE) clean
+ 
+-install: debian/build-stamp
++install: build
+ 	dh_testdir
+ 	dh_testroot
+ 	dh_clean -k 
+@@ -47,9 +47,9 @@ install: debian/build-stamp
+ 	mkdir -p $(DOC_DESTDIR)
+ 	find $(DOC) '(' -name '*.txt' -o -name '*.html' ')' -exec install {} $(DOC_DESTDIR) ';'
+ 
+-	dh_install --sourcedir=$(DESTDIR)
++	dh_install --list-missing --sourcedir=$(DESTDIR)
+ 
+-binary:
++binary: build install
+ 	dh_testdir
+ 	dh_testroot
+ 	dh_installchangelogs
