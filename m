@@ -1,57 +1,57 @@
-From: Kevin Smith <yarcs@qualitycode.com>
-Subject: Re: Last mile to 1.0?
-Date: Sat, 23 Jul 2005 10:47:16 -0400
-Message-ID: <42E25874.2090201@qualitycode.com>
-References: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net> <20050723085031.GD3255@mythryan2.michonline.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for
+ Debian, conflict with "git"
+Date: Sat, 23 Jul 2005 09:24:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507230921320.6074@g5.osdl.org>
+References: <20050723073707.GA3255@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 16:48:07 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 18:27:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwLIJ-0000az-9b
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 16:48:03 +0200
+	id 1DwMq2-0000UJ-Vi
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 18:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261748AbVGWOrz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 10:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261754AbVGWOry
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 10:47:54 -0400
-Received: from deuterium.rootr.net ([203.194.209.160]:48906 "EHLO
-	vulcan.rootr.net") by vger.kernel.org with ESMTP id S261748AbVGWOry
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Jul 2005 10:47:54 -0400
-Received: from [192.168.15.100] (186-49.35-65.tampabay.res.rr.com [65.35.49.186])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by vulcan.rootr.net (Postfix) with ESMTP id 360983C09;
-	Sat, 23 Jul 2005 14:47:47 +0000 (UTC)
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050404)
-X-Accept-Language: en-us, en
+	id S261834AbVGWQ0U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 12:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261790AbVGWQ0N
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 12:26:13 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:53125 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262087AbVGWQYy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 12:24:54 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6NGOYjA002709
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 23 Jul 2005 09:24:37 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6NGOX89027819;
+	Sat, 23 Jul 2005 09:24:34 -0700
 To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050723085031.GD3255@mythryan2.michonline.com>
+In-Reply-To: <20050723073707.GA3255@mythryan2.michonline.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson wrote:
-> Git falls into the category of distributed source code management tools,
-> similar to Arch or Darcs (or, in the commercial world, BitKeeper).  This
-> means that every working directory is a full-fledged repository with
-> full revision tracking capabilities.
 
-That's not actually what "distributed" means. There are several 
-distributed SCM tools[1] that store repo information outside the actual 
-working directory.
 
-Perhaps that last sentence could be something like "This means that each 
-developer has a local full-fledged repository with full revision 
-tracking capabilities, not dependent on network access to a central 
-server." I'm sure there are better wordings, but I hate to point out an 
-problem without offering at least one possible improvement.
+On Sat, 23 Jul 2005, Ryan Anderson wrote:
+> 
+>     * Compile against the unencumbered Mozilla SHA1 code, instead of
+>       the iffy OpenSSL code.  This makes it easier to get the package
+>       included for distribution with Debian.
 
-Kevin
+Note that this is just not true.
 
-[1] I believe that ArX, monotone, codeville, and svk all fall into this 
-category. Possibly even Arch itself, although I haven't researched that.
+We still use openssl for the bignum stuff in epoch.c, so using the mozilla
+SHA1 libraries just doesn't make any difference at all from an openssl 
+standpoint. You'd have to disable the "--merge-order" flag entirely to get 
+rid of the openssl dependency, methinks.
+
+		Linus
