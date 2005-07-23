@@ -1,82 +1,85 @@
-From: Junio Hamano <junio@twinsun.com>
-Subject: (unknown)
-Date: Sat, 23 Jul 2005 02:10:51 -0700 (PDT)
-Message-ID: <7vek9phorr.fsf@totally-fudged-out-message-id>
-X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:23 2005
+From: Junio C Hamano <junio@twinsun.com>
+Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for
+ Debian, conflict with "git"
+Date: Sat, 23 Jul 2005 02:11:16 -0700
+Message-ID: <7vd5p9horr.fsf@totally-fudged-out-message-id>
+References: <20050723073707.GA3255@mythryan2.michonline.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwG2J-0007iU-6G
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:11:11 +0200
+	id 1DwG2a-0007mA-Js
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261309AbVGWJLE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 05:11:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261637AbVGWJLE
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:11:04 -0400
-Received: from alcor.twinsun.com ([198.147.65.9]:21623 "EHLO alcor.twinsun.com")
-	by vger.kernel.org with ESMTP id S261309AbVGWJLC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:11:02 -0400
+	id S261640AbVGWJLY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 05:11:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261649AbVGWJLY
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:11:24 -0400
+Received: from alcor.twinsun.com ([198.147.65.9]:59970 "EHLO alcor.twinsun.com")
+	by vger.kernel.org with ESMTP id S261640AbVGWJLY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:11:24 -0400
 Received: from sic.twinsun.com ([192.54.239.17])
-	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9Aq3x012104;
-	Sat, 23 Jul 2005 02:10:52 -0700 (PDT)
+	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9BG3x013845;
+	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
 Received: from pete.twinsun.com (pete.twinsun.com [192.54.239.43])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AqY11990;
-	Sat, 23 Jul 2005 02:10:52 -0700 (PDT)
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9BGY12018;
+	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
 Received: from sic.twinsun.com ([192.54.239.17])
- by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302105126160
- ; Sat, 23 Jul 2005 02:10:51 -0700
+ by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302111626161
+ ; Sat, 23 Jul 2005 02:11:16 -0700
 Received: from arte (arte.twinsun.com [192.54.239.5])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9ApY11986;
-	Sat, 23 Jul 2005 02:10:51 -0700 (PDT)
-Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:10:51 -0700
-To: undisclosed-recipients:;
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9BGY12014;
+	Sat, 23 Jul 2005 02:11:16 -0700 (PDT)
+Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:11:16 -0700
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050723073707.GA3255@mythryan2.michonline.com> (Ryan
+ Anderson's message of "Sat, 23 Jul 2005 03:37:07 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->From nobody Sat Jul 23 02:08:27 2005
-To: Ryan Anderson <ryan@michonline.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Add git-find-new-files to spot files added to the tree,
- but not the repository
-Bcc: junkio@cox.net
-References: <20050723074219.GB3255@mythryan2.michonline.com>
-From: Junio C Hamano <junio@twinsun.com>
-Date: Sat, 23 Jul 2005 02:10:51 -0700
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-
 Ryan Anderson <ryan@michonline.com> writes:
 
-> Add git-find-new-files to find files that are in the tree, but
-> not checked into the repository.
+> --- a/debian/changelog
+> +++ b/debian/changelog
+> ...
+> +  * Minor tweaks to the Build-Depends.
 
-You _ought_ to be able to just say:
+This is a nit and not the reason for NACK, but I do not see any
+change to Build-Depends.
 
- $ git-ls-files --others --exclude-from=<exclude pattern file>
+> -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
+> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, wget, rsh-client
 
-and be done with it.  Also please see the thread about Cogito
-and StGIT's use of .gitignore and .git/exclude files.
+This is primarily my fault, but this new Depends line is already
+obsolete.  Darrin Thompson removed the last remaining use of
+wget and it is my understanding that we do not depend on wget
+anymore; instead we now depend on curl executable.
 
-The current implementation of "git-ls-files" exclude mechanism
-may have rooms for improvements; the last time I checked, it
-only did the matching of patterns against filename without
-leading directories).  The world will be a better place if
-somebody extends it, instead of working around its limitation.
+I do not offhand remember where we use rsh-client.  The
+rsh-client I know of is this one, which claims to offer rsh, rcp
+and rlogin but I do not think we use any of them.  Did you mean
+"ssh" package?
 
-I may be tempted to doing it myself, but I'm in the middle of
-something else, so ...
+    Package: rsh-client
+    Priority: extra
+    Section: net
+    Maintainer: Alberto Gonzalez Iniesta <agi@inittab.org>
+    Source: netkit-rsh
+    Version: 0.17-13
+    Description: rsh clients.
+     This package contains rsh, rcp and rlogin.
 
-> +#	find . -name .git -type d -prune -o -type f -print \
-> +#		| grep -v -e .tree1 -e .tree2 \
-> +#		| sed -e "s/^\.\///" \
-> +#		| sort >.tree1
-> +#	git-ls-files | grep -v -e .tree1 -e .tree2 \
-> +#		| sort >.tree2
-> +#	diff -u .tree1 .tree2
+Perhaps (I am not sure about the rsh-client vs ssh):
 
-It does not matter since the above is just an example and I
-think you should be able to just use "ls-files --others", but
-just FYI, you could have written "comm -23 .tree1 .tree2" above
-instead of "diff -u".
+> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, curl, ssh
+
+Both the use of mozilla SHA1 library and conflicting with the
+other GIT, which are the primary points of this patch, sound
+sensible, relative to the Debian poli(cies|tics), but as long as
+we are touching the Depends: line, let's make sure we get it
+right (the current one is obviously obsolete).
