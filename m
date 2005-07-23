@@ -1,33 +1,32 @@
 From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
-Date: Sat, 23 Jul 2005 03:37:07 -0400
-Message-ID: <20050723073707.GA3255@mythryan2.michonline.com>
+Subject: [PATCH] Add git-find-new-files to spot files added to the tree, but not the repository
+Date: Sat, 23 Jul 2005 03:42:19 -0400
+Message-ID: <20050723074219.GB3255@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Sebastian Kuzminsky <seb@highlab.com>
-X-From: git-owner@vger.kernel.org Sat Jul 23 09:38:17 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 23 09:43:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwEa4-00021O-EY
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 09:37:56 +0200
+	id 1DwEeq-0002Og-GQ
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 09:42:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261456AbVGWHhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 03:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261568AbVGWHhL
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 03:37:11 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:23213 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261456AbVGWHhJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 03:37:09 -0400
+	id S261514AbVGWHm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 03:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261568AbVGWHm1
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 03:42:27 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:26797 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261514AbVGWHmW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 03:42:22 -0400
 Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
 	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DwEZI-0004ty-0K; Sat, 23 Jul 2005 03:37:08 -0400
+	id 1DwEeK-0004vE-6q; Sat, 23 Jul 2005 03:42:20 -0400
 Received: from mythical ([10.254.251.11] ident=Debian-exim)
 	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DwEhZ-0003p5-00; Sat, 23 Jul 2005 03:45:41 -0400
+	id 1DwEmb-0003tK-00; Sat, 23 Jul 2005 03:50:53 -0400
 Received: from ryan by mythical with local (Exim 4.52)
-	id 1DwEZH-0000tE-Az; Sat, 23 Jul 2005 03:37:07 -0400
+	id 1DwEeJ-0000xS-Ij; Sat, 23 Jul 2005 03:42:19 -0400
 To: Linus Torvalds <torvalds@osdl.org>
 Content-Disposition: inline
 User-Agent: Mutt/1.5.6+20040907i
@@ -35,86 +34,86 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Add git-find-new-files to find files that are in the tree, but not checked into the repository.
 
-This patch includes two fixes to the git-core Debian package:
+Most users will probably want to "make clean" before using this for real
+significant changes, as it does such a good job that it finds binaries that
+just got built.
 
-    * Conflict with the GNU Interactive Tools package, which _also_
-      wants to install /usr/bin/git.
-
-    * Compile against the unencumbered Mozilla SHA1 code, instead of
-      the iffy OpenSSL code.  This makes it easier to get the package
-      included for distribution with Debian.
-
-Note: Assumes that Ryan Anderson's patch "Deb packages should include
-the binaries" has been applied.
-
-(Note - I fixed up the conflicts against my earlier packaging fixes -- Ryan)
-
-Signed-off-by: Sebastian Kuzminsky <seb@highlab.com>
 Signed-off-by: Ryan Anderson <ryan@michonline.com>
 ---
 
- debian/changelog |   11 +++++++++++
- debian/control   |    3 ++-
- debian/rules     |   14 ++++++++++++++
- 3 files changed, 27 insertions(+), 1 deletions(-)
+ Makefile           |    2 +-
+ git-find-new-files |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+), 1 deletions(-)
+ create mode 100755 git-find-new-files
 
-c651cdc175712c26d4b9c8b75b44a89eb1b74752
-diff --git a/debian/changelog b/debian/changelog
---- a/debian/changelog
-+++ b/debian/changelog
-@@ -1,3 +1,14 @@
-+git-core (0.99.1-1) unstable; urgency=low
-+
-+  * Conflict with the GNU Interactive Tools package, which also installs
-+    /usr/bin/git.
-+  * Dont compile against the OpenSSL SHA1 code, it's problematically
-+    licensed.  Instead use the PPC assembly on PPC, and the code ripped
-+    from Mozilla everywhere else.
-+  * Minor tweaks to the Build-Depends.
-+
-+ -- Sebastian Kuzminsky <seb@highlab.com>  Thu, 21 Jul 2005 01:28:35 -0600
-+
- git-core (0.99-1) unstable; urgency=low
+028b21ae78dba3edab5e9b1a24cdf68011e42ab7
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -36,7 +36,7 @@ SCRIPTS=git git-apply-patch-script git-m
+ 	git-reset-script git-add-script git-checkout-script git-clone-script \
+ 	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
+ 	git-format-patch-script git-sh-setup-script git-push-script \
+-	git-branch-script git-parse-remote
++	git-branch-script git-parse-remote git-find-new-files
  
-   * Update deb package support to build correctly. 
-diff --git a/debian/control b/debian/control
---- a/debian/control
-+++ b/debian/control
-@@ -7,7 +7,8 @@ Standards-Version: 3.6.1
- 
- Package: git-core
- Architecture: any
--Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
-+Depends: ${misc:Depends}, patch, diff, rsync, rcs, wget, rsh-client
-+Conflicts: git
- Description: The git content addressable filesystem
-  GIT comes in two layers. The bottom layer is merely an extremely fast
-  and flexible filesystem-based database designed to store directory trees
-diff --git a/debian/rules b/debian/rules
---- a/debian/rules
-+++ b/debian/rules
-@@ -12,6 +12,20 @@ else
- endif
- export CFLAGS
- 
+ PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
+ 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
+diff --git a/git-find-new-files b/git-find-new-files
+new file mode 100755
+--- /dev/null
++++ b/git-find-new-files
+@@ -0,0 +1,48 @@
++#!/usr/bin/perl
 +#
-+# On PowerPC we compile against the hand-crafted assembly, on all
-+# other architectures we compile against GPL'ed sha1 code lifted
-+# from Mozilla.  OpenSSL is strangely licensed and best avoided
-+# in Debian.
++# A simple script to take a look at all the files git knows about and compare
++# that to the files that we actually see in teh source tree, and output a
++# listing of the difference between them.
 +#
-+HOST_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
-+ifeq (${HOST_ARCH},powerpc)
-+	export PPC_SHA1=YesPlease
-+else
-+	export MOZILLA_SHA1=YesPlease
-+endif
++# The original command that did this is below, but a pure-Perl version can skip
++# the temp files.
++#
++#	find . -name .git -type d -prune -o -type f -print \
++#		| grep -v -e .tree1 -e .tree2 \
++#		| sed -e "s/^\.\///" \
++#		| sort >.tree1
++#	git-ls-files | grep -v -e .tree1 -e .tree2 \
++#		| sort >.tree2
++#	diff -u .tree1 .tree2
 +
++use warnings;
++use strict;
 +
- PREFIX := /usr
- MANDIR := /usr/share/man/
- 
++# Since we're using NUL (ASCII value of 0) to terminate strings,
++# set the field separator to that:
++$/ = "\0";
++
++my (%actual,%git);
++
++open(F,"-|","find . -name .git -type d -prune -o -type f -print0")
++	or die "Failed to open pipe from find: " . $!;
++
++while(<F>) {
++	chomp;
++	s#^\./##;
++	$actual{$_}++;
++}
++close(F);
++
++open(F,"-|","git-ls-files -z")
++	or die "Failed to open pipe from git-ls-files: " . $!;
++
++while(<F>) {
++	chomp;
++	delete $actual{$_};
++}
++close(F);
++
++foreach my $f (sort keys %actual) {
++	printf("A\t%s\n",$f);
++}
 -- 
 
 Ryan Anderson
