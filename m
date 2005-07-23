@@ -1,83 +1,70 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Add git-find-new-files to spot files added to the tree,
- but not the repository
-Date: Sat, 23 Jul 2005 10:48:39 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507231043330.6074@g5.osdl.org>
-References: <20050723074219.GB3255@mythryan2.michonline.com>
- <Pine.LNX.4.58.0507231039290.6074@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
+Date: Sat, 23 Jul 2005 15:23:35 -0400
+Message-ID: <20050723192335.GA24071@mythryan2.michonline.com>
+References: <20050723073707.GA3255@mythryan2.michonline.com> <Pine.LNX.4.58.0507230921320.6074@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 19:49:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>,
+	Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Sat Jul 23 21:24:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwO7K-0008Bt-Dr
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 19:48:54 +0200
+	id 1DwPbd-00071O-7f
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 21:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262383AbVGWRsr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 13:48:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262391AbVGWRsr
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 13:48:47 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:34451 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262385AbVGWRsn (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 13:48:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6NHmejA008374
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 23 Jul 2005 10:48:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6NHmdZp031057;
-	Sat, 23 Jul 2005 10:48:39 -0700
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <Pine.LNX.4.58.0507231039290.6074@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261483AbVGWTXo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 15:23:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261553AbVGWTXn
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 15:23:43 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:56500 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261483AbVGWTXi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 15:23:38 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DwPay-0003A2-79; Sat, 23 Jul 2005 15:23:36 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DwPjN-0000o5-00; Sat, 23 Jul 2005 15:32:17 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DwPax-0000nI-G5; Sat, 23 Jul 2005 15:23:35 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0507230921320.6074@g5.osdl.org>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Sat, 23 Jul 2005, Linus Torvalds wrote:
-
+On Sat, Jul 23, 2005 at 09:24:33AM -0700, Linus Torvalds wrote:
 > 
 > 
 > On Sat, 23 Jul 2005, Ryan Anderson wrote:
-> >
-> > Add git-find-new-files to find files that are in the tree, but not checked into the repository.
 > > 
-> > Most users will probably want to "make clean" before using this for real
-> > significant changes, as it does such a good job that it finds binaries that
-> > just got built.
+> >     * Compile against the unencumbered Mozilla SHA1 code, instead of
+> >       the iffy OpenSSL code.  This makes it easier to get the package
+> >       included for distribution with Debian.
 > 
-> You really want to run "file" on the files. We almost certainly don't want 
-> to add binary executables, object files etc etc to the tree, so why even 
-> show them?
+> Note that this is just not true.
 > 
-> You should also filter the list by the "ignore" file. And I'd suggest
-> ignoring dot-files by default, for example (maybe add a "-a" flag to 
-> disable that, the same way "ls" does).
+> We still use openssl for the bignum stuff in epoch.c, so using the mozilla
+> SHA1 libraries just doesn't make any difference at all from an openssl 
+> standpoint. You'd have to disable the "--merge-order" flag entirely to get 
+> rid of the openssl dependency, methinks.
 
-Oh, and btw, maybe you didn't realize that "git-ls-files --others" already 
-basically does what your script does? Without any filtering - it was meant 
-to be run from a script, so something like
+I think that's going a bit far for the purpose of this packaging.
 
-	for i in $(git-ls-files --others)
-	do
-		if [ ! match_ignore "$i" ]; then
-			case $(file -b $i)
-			ELF*)
-				;;
-			*)
-				echo $i
-				;;
-			esac
-		fi
-	done
+I reworked the comments in the changelog to make it clear that the
+elimination of OpenSSL is not complete, and also address the comments
+Junio made.
 
-was what I was thinking of.
+I'll reply to this email with that updated patch, but I've got this and
+all the other pending Debian packaging fixes in
+rsync://h4x0r5.com/git-ryan.git/
 
-		Linus
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
