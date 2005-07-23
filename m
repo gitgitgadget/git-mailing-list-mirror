@@ -1,170 +1,82 @@
-From: Junio C Hamano <junio@twinsun.com>
-Subject: [PATCH] mailinfo: handle folded header.
-Date: Sat, 23 Jul 2005 02:10:31 -0700
-Message-ID: <7vfyu5horr.fsf@totally-fudged-out-message-id>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:22 2005
+From: Junio Hamano <junio@twinsun.com>
+Subject: (unknown)
+Date: Sat, 23 Jul 2005 02:10:51 -0700 (PDT)
+Message-ID: <7vek9phorr.fsf@totally-fudged-out-message-id>
+X-From: git-owner@vger.kernel.org Sat Jul 23 11:11:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwG24-0007gg-A2
-	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:10:56 +0200
+	id 1DwG2J-0007iU-6G
+	for gcvg-git@gmane.org; Sat, 23 Jul 2005 11:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261248AbVGWJKr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 23 Jul 2005 05:10:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261309AbVGWJKr
-	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:10:47 -0400
-Received: from alcor.twinsun.com ([198.147.65.9]:9052 "EHLO alcor.twinsun.com")
-	by vger.kernel.org with ESMTP id S261248AbVGWJKo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:10:44 -0400
+	id S261309AbVGWJLE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 23 Jul 2005 05:11:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261637AbVGWJLE
+	(ORCPT <rfc822;git-outgoing>); Sat, 23 Jul 2005 05:11:04 -0400
+Received: from alcor.twinsun.com ([198.147.65.9]:21623 "EHLO alcor.twinsun.com")
+	by vger.kernel.org with ESMTP id S261309AbVGWJLC (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Jul 2005 05:11:02 -0400
 Received: from sic.twinsun.com ([192.54.239.17])
-	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9AV3x016438;
-	Sat, 23 Jul 2005 02:10:32 -0700 (PDT)
+	by alcor.twinsun.com (8.12.9/8.12.9) with ESMTP id j6N9Aq3x012104;
+	Sat, 23 Jul 2005 02:10:52 -0700 (PDT)
 Received: from pete.twinsun.com (pete.twinsun.com [192.54.239.43])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AVY11971;
-	Sat, 23 Jul 2005 02:10:31 -0700 (PDT)
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AqY11990;
+	Sat, 23 Jul 2005 02:10:52 -0700 (PDT)
 Received: from sic.twinsun.com ([192.54.239.17])
- by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302103126159
- ; Sat, 23 Jul 2005 02:10:31 -0700
+ by pete.twinsun.com (SMSSMTP 4.1.0.19) with SMTP id M2005072302105126160
+ ; Sat, 23 Jul 2005 02:10:51 -0700
 Received: from arte (arte.twinsun.com [192.54.239.5])
-	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9AVY11967;
-	Sat, 23 Jul 2005 02:10:31 -0700 (PDT)
-Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:10:31 -0700
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	by sic.twinsun.com (8.11.7p1+Sun/8.11.7) with SMTP id j6N9ApY11986;
+	Sat, 23 Jul 2005 02:10:51 -0700 (PDT)
+Received: by arte (sSMTP sendmail emulation); Sat, 23 Jul 2005 02:10:51 -0700
+To: undisclosed-recipients:;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Some people split their long E-mail address over two lines
-using the RFC2822 header "folding".  We can lose authorship
-information this way, so make a minimum effort to deal with it,
-instead of special casing only the "Subject:" field.
+>From nobody Sat Jul 23 02:08:27 2005
+To: Ryan Anderson <ryan@michonline.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Add git-find-new-files to spot files added to the tree,
+ but not the repository
+Bcc: junkio@cox.net
+References: <20050723074219.GB3255@mythryan2.michonline.com>
+From: Junio C Hamano <junio@twinsun.com>
+Date: Sat, 23 Jul 2005 02:10:51 -0700
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 
-We could teach mailsplit to unfold the folded header, but
-teaching mailinfo about folding would make more sense; a single
-message can be fed to mailinfo without going through mailsplit.
+Ryan Anderson <ryan@michonline.com> writes:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> Add git-find-new-files to find files that are in the tree, but
+> not checked into the repository.
 
-  This was done primarily to help Yoshifuji-san ;-) but I am not
-  sure if it is worth this half-effort.  His address would be
-  parsed as:
+You _ought_ to be able to just say:
 
-    Author: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI
-    Email: yoshfuji@linux-ipv6.org
+ $ git-ls-files --others --exclude-from=<exclude pattern file>
 
-  which, while it is certainly better than the emptiness we would
-  get without this patch, I suspect that it is not really what he
-  would want to see either.
+and be done with it.  Also please see the thread about Cogito
+and StGIT's use of .gitignore and .git/exclude files.
 
-  We _might_ want to go all the way, decoding the mime encoded
-  strings and convert them to utf8 (not limited to the From: but
-  also the Subject: field).  I dunno.  I am submitting this
-  patch in this form because it is an improvement over the
-  current version without opening this can of worms.  I'll let
-  other people open it by submitting a separate patch on top of
-  this one if they want to.
+The current implementation of "git-ls-files" exclude mechanism
+may have rooms for improvements; the last time I checked, it
+only did the matching of patterns against filename without
+leading directories).  The world will be a better place if
+somebody extends it, instead of working around its limitation.
 
- tools/mailinfo.c |   64 +++++++++++++++++++++++-------------------------------
- 1 files changed, 27 insertions(+), 37 deletions(-)
+I may be tempted to doing it myself, but I'm in the middle of
+something else, so ...
 
-25c8a3906c9f8645d7482abb2ef2de2b51155e45
-diff --git a/tools/mailinfo.c b/tools/mailinfo.c
---- a/tools/mailinfo.c
-+++ b/tools/mailinfo.c
-@@ -89,45 +89,14 @@ static void handle_subject(char *line)
- 	strcpy(subject, line);
- }
- 
--static void add_subject_line(char *line)
--{
--	while (isspace(*line))
--		line++;
--	*--line = ' ';
--	strcat(subject, line);
--}
--
- static void check_line(char *line, int len)
- {
--	static int cont = -1;
--	if (!memcmp(line, "From:", 5) && isspace(line[5])) {
-+	if (!memcmp(line, "From:", 5) && isspace(line[5]))
- 		handle_from(line+6);
--		cont = 0;
--		return;
--	}
--	if (!memcmp(line, "Date:", 5) && isspace(line[5])) {
-+	else if (!memcmp(line, "Date:", 5) && isspace(line[5]))
- 		handle_date(line+6);
--		cont = 0;
--		return;
--	}
--	if (!memcmp(line, "Subject:", 8) && isspace(line[8])) {
-+	else if (!memcmp(line, "Subject:", 8) && isspace(line[8]))
- 		handle_subject(line+9);
--		cont = 1;
--		return;
--	}
--	if (isspace(*line)) {
--		switch (cont) {
--		case 0:
--			fprintf(stderr, "I don't do 'Date:' or 'From:' line continuations\n");
--			break;
--		case 1:
--			add_subject_line(line);
--			return;
--		default:
--			break;
--		}
--	}
--	cont = -1;
- }
- 
- static char * cleanup_subject(char *subject)
-@@ -246,9 +215,30 @@ static void handle_body(void)
- 	}
- }
- 
-+static int read_one_header_line(char *line, int sz, FILE *in)
-+{
-+	int ofs = 0;
-+	while (ofs < sz) {
-+		int peek, len;
-+		if (fgets(line + ofs, sz - ofs, in) == NULL)
-+			return ofs;
-+		len = eatspace(line + ofs);
-+		if (len == 0)
-+			return ofs;
-+		peek = fgetc(in); ungetc(peek, in);
-+		if (peek == ' ' || peek == '\t') {
-+			/* Yuck, 2822 header "folding" */
-+			ofs += len;
-+			continue;
-+		}
-+		return ofs + len;
-+	}
-+	return ofs;
-+}
-+
- static void usage(void)
- {
--	fprintf(stderr, "mailinfo msg-file path-file < email\n");
-+	fprintf(stderr, "mailinfo msg-file patch-file < email\n");
- 	exit(1);
- }
- 
-@@ -266,8 +256,8 @@ int main(int argc, char ** argv)
- 		perror(argv[2]);
- 		exit(1);
- 	}
--	while (fgets(line, sizeof(line), stdin) != NULL) {
--		int len = eatspace(line);
-+	while (1) {
-+		int len = read_one_header_line(line, sizeof(line), stdin);
- 		if (!len) {
- 			handle_body();
- 			break;
+> +#	find . -name .git -type d -prune -o -type f -print \
+> +#		| grep -v -e .tree1 -e .tree2 \
+> +#		| sed -e "s/^\.\///" \
+> +#		| sort >.tree1
+> +#	git-ls-files | grep -v -e .tree1 -e .tree2 \
+> +#		| sort >.tree2
+> +#	diff -u .tree1 .tree2
+
+It does not matter since the above is just an example and I
+think you should be able to just use "ls-files --others", but
+just FYI, you could have written "comm -23 .tree1 .tree2" above
+instead of "diff -u".
