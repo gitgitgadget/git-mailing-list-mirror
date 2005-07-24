@@ -1,57 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Bootstrapping into git, commit gripes at me
-Date: Sun, 24 Jul 2005 09:24:52 -0700
-Message-ID: <7v4qakdve3.fsf@assigned-by-dhcp.cox.net>
-References: <20050711222046.GA21376@buici.com>
-	<7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
-	<Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
-	<20050712021004.GA27576@buici.com>
-	<Pine.LNX.4.58.0507112005540.17536@g5.osdl.org>
-	<Pine.LNX.4.58.0507112045420.17536@g5.osdl.org>
-	<Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
-	<20050712074801.GD6363@pasky.ji.cz>
-	<7vy88c5r4w.fsf@assigned-by-dhcp.cox.net>
-	<20050724085757.GB7601@pasky.ji.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Marc Singer <elf@buici.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 24 18:25:23 2005
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: Should cg-mkpatch output be usable with cg-patch?
+Date: Sun, 24 Jul 2005 19:50:18 +0200
+Message-ID: <20050724175018.3D721352B73@atlas.denx.de>
+References: <20050720234904.B3ED735267C@atlas.denx.de> <20050722210352.GG11916@pasky.ji.cz>
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 24 19:51:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwjHf-0007yP-SI
-	for gcvg-git@gmane.org; Sun, 24 Jul 2005 18:25:00 +0200
+	id 1Dwkcy-000708-5O
+	for gcvg-git@gmane.org; Sun, 24 Jul 2005 19:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261399AbVGXQY4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jul 2005 12:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261404AbVGXQY4
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 12:24:56 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7861 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S261399AbVGXQYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2005 12:24:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050724162451.GEV12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 24 Jul 2005 12:24:51 -0400
+	id S261219AbVGXRuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jul 2005 13:50:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261379AbVGXRuj
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 13:50:39 -0400
+Received: from mailout08.sul.t-online.com ([194.25.134.20]:31695 "EHLO
+	mailout08.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S261219AbVGXRuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2005 13:50:37 -0400
+Received: from fwd27.aul.t-online.de 
+	by mailout08.sul.t-online.com with smtp 
+	id 1DwkcU-0007Ay-04; Sun, 24 Jul 2005 19:50:34 +0200
+Received: from denx.de (ZB+OJiZTre+sL2UbSyhiH3b7uzxUOHMwunY95AEsStu0-cXQvJP8gh@[84.150.77.91]) by fwd27.sul.t-online.de
+	with esmtp id 1DwkcF-20YKSu0; Sun, 24 Jul 2005 19:50:19 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP
+	id 7560F42C04; Sun, 24 Jul 2005 19:50:18 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 3D721352B73;
+	Sun, 24 Jul 2005 19:50:18 +0200 (MEST)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050724085757.GB7601@pasky.ji.cz> (Petr Baudis's message of "Sun, 24 Jul 2005 10:57:57 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+In-reply-to: <20050722210352.GG11916@pasky.ji.cz> 
+Comments: In-reply-to Petr Baudis <pasky@suse.cz>
+   message dated "Fri, 22 Jul 2005 23:03:52 +0200."
+X-ID: ZB+OJiZTre+sL2UbSyhiH3b7uzxUOHMwunY95AEsStu0-cXQvJP8gh@t-dialin.net
+X-TOI-MSGID: 3f584630-031a-49c9-89ef-b7ff345699fa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+In message <20050722210352.GG11916@pasky.ji.cz> you wrote:
+>
+> > I wander what I should do with "cg-mkpatch" generated output;  I  had
+> > the  impression that this should be usable with "cg-patch", but these
+> > are incompatible with each other.
+> 
+> They certainly aren't.
 
-> After some thought, I like Linus' approach more now, having head-name
-> only when it's really necessary.
+Is this a problem with the current implementation, or intentional?
 
-I agree 100%.  That makes much more sense.
+> > 	diff --git a/tools/img2brec.sh b/tools/img2brec.sh
+> > 	old mode 100644
+> > 	new mode 100755
+> > 	...
+> > If I feed this into "cg-patch", I get:
+> > 	patch: **** Only garbage was found in the patch input.
+> 
+> And did the changes apply? :-)
 
-The message from Linus reminded me that the way he tackles a
-problem is (as always) simpler, consistent and more elegant than
-mine.  I have been practicing thinking things through more than
-three times before I open my mouth, but still...
+No, they did not. No file modes were changed.
+
+> The message is surely confusing, but appeared to be rather corner-casy
+> and after I imagined the required complexity of filtering this, I
+> decided to spend my time on something more useful for the time being. :)
+
+I don't think this is a corner case. I think it is  pretty  important
+to be able to promote permissiong changes.
+
+
+Best regards,
+
+Wolfgang Denk
+
+-- 
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Too many people are ready to carry the stool when the piano needs  to
+be moved.
