@@ -1,78 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
-Date: Sat, 23 Jul 2005 23:12:22 -0700
-Message-ID: <7vwtngg2bd.fsf@assigned-by-dhcp.cox.net>
-References: <20050723073707.GA3255@mythryan2.michonline.com>
-	<20050723192335.GA24071@mythryan2.michonline.com>
-	<20050723192632.GB24071@mythryan2.michonline.com>
-	<200507240728.40158.snake@penza-gsm.ru>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: [PATCH] Extend git-ls-files --exclude option to match against directories
+Date: Sun, 24 Jul 2005 01:12:25 -0700 (PDT)
+Message-ID: <20050724081225.81671.qmail@web26304.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 24 08:13:21 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sun Jul 24 10:12:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwZje-0003S3-Ev
-	for gcvg-git@gmane.org; Sun, 24 Jul 2005 08:13:15 +0200
+	id 1DwbbD-00012D-5Y
+	for gcvg-git@gmane.org; Sun, 24 Jul 2005 10:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261919AbVGXGMm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jul 2005 02:12:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261922AbVGXGMm
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 02:12:42 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28556 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S261919AbVGXGM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2005 02:12:27 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050724061221.NMBZ17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 24 Jul 2005 02:12:21 -0400
-To: Alexey Nezhdanov <snake@penza-gsm.ru>
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261424AbVGXIM1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jul 2005 04:12:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261911AbVGXIM1
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 04:12:27 -0400
+Received: from web26304.mail.ukl.yahoo.com ([217.146.176.15]:48724 "HELO
+	web26304.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S261424AbVGXIM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2005 04:12:26 -0400
+Received: (qmail 81673 invoked by uid 60001); 24 Jul 2005 08:12:25 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=vkkAIT50MIuj/xnRrNZOPhYxFC5ZrhjpUY3PHQBQAUwMhYyFcybeMmMGpPTFjJRNVY5nUnluqCpNY3A8NSNENSfeS4Q8fLlZ1bi2jJDCSSxOTEc3tD2Ry+rCo2jDhLUQoRSokXrZeXUmX7OVnuOZD8jcjirxr7Kaof4Xp2CZPuA=  ;
+Received: from [151.42.103.53] by web26304.mail.ukl.yahoo.com via HTTP; Sun, 24 Jul 2005 01:12:25 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Alexey Nezhdanov <snake@penza-gsm.ru> writes:
-
-> Satturday, 23 July 2005 23:26 Ryan Anderson wrote:
->> -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
->> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, ssh
-> Did I missed something or you forgot about libcurl3 dependency?
-
-I think you are right.  In the build process, dh_shlibdeps is
-used and shlib:Depends is created to include the libcurl3 (among
-other things) in debian/git-core.substvars, but it is not
-actually used in the resulting binary package because the line
-misses ${shlibs:Depends} there.
-
-Ryan, would this change be enough?  I do not know what I am
-doing (${misc:Depends} is new to me), but this patch seems to
-fix it on my box.
-
-------------
-Make sure binary debian package depends on shlibs it uses.
-
-The "Depends:" line in debian/control lacked ${shlibs:Depends},
-which caused the resulting binary package not to depend on
-libcurl3 nor even libc6 ;-).
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Pattern in git-ls-files --exclude=<pattern> can include directories
+as example git-ls-files --exclude=Documentation/* will do what you expect
 ---
 
-# - linus: Fix up applymbox script for the addition of "git-" prefix
-# + (working tree)
-diff --git a/debian/control b/debian/control
---- a/debian/control
-+++ b/debian/control
-@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
- 
- Package: git-core
- Architecture: any
--Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
-+Depends: ${shlibs:Depends} ${misc:Depends}, shellutils, diff, rsync, rcs
- Description: The git content addressable filesystem
-  GIT comes in two layers. The bottom layer is merely an extremely fast
-  and flexible filesystem-based database designed to store directory trees
+ ls-files.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+c8fdfc1f8280a753baf13c293db573c4e50f0a99
+diff --git a/ls-files.c b/ls-files.c
+--- a/ls-files.c
++++ b/ls-files.c
+@@ -80,10 +80,8 @@ static int excluded(const char *pathname
+ {
+ 	int i;
+ 	if (nr_excludes) {
+-		const char *basename = strrchr(pathname, '/');
+-		basename = (basename) ? basename+1 : pathname;
+ 		for (i = 0; i < nr_excludes; i++)
+-			if (fnmatch(excludes[i], basename, 0) == 0)
++			if (fnmatch(excludes[i], pathname, FNM_PATHNAME) == 0)
+ 				return 1;
+ 	}
+ 	return 0;
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
