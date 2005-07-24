@@ -1,110 +1,57 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: [PATCH] Add -a option to get-tag-script to annotate but not sign
- a tag
-Date: Sun, 24 Jul 2005 11:35:07 -0400
-Message-ID: <42E3B52B.2030602@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Bootstrapping into git, commit gripes at me
+Date: Sun, 24 Jul 2005 09:24:52 -0700
+Message-ID: <7v4qakdve3.fsf@assigned-by-dhcp.cox.net>
+References: <20050711222046.GA21376@buici.com>
+	<7vll4dndwu.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507111646000.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507111833380.17536@g5.osdl.org>
+	<20050712021004.GA27576@buici.com>
+	<Pine.LNX.4.58.0507112005540.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507112045420.17536@g5.osdl.org>
+	<Pine.LNX.4.58.0507112132170.17536@g5.osdl.org>
+	<20050712074801.GD6363@pasky.ji.cz>
+	<7vy88c5r4w.fsf@assigned-by-dhcp.cox.net>
+	<20050724085757.GB7601@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 24 17:35:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Marc Singer <elf@buici.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 24 18:25:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwiVs-0003RS-M8
-	for gcvg-git@gmane.org; Sun, 24 Jul 2005 17:35:36 +0200
+	id 1DwjHf-0007yP-SI
+	for gcvg-git@gmane.org; Sun, 24 Jul 2005 18:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261374AbVGXPfN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jul 2005 11:35:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261378AbVGXPfN
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 11:35:13 -0400
-Received: from wproxy.gmail.com ([64.233.184.199]:55088 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261374AbVGXPfL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2005 11:35:11 -0400
-Received: by wproxy.gmail.com with SMTP id i36so775700wra
-        for <git@vger.kernel.org>; Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=XmVDEyb9B+FbVHbEln7iSJgFSa+v/FA/i8Kvc+o8jBhJb4vgSFNMsucu+eCdFazv9rhf+wHmtFddVGJy2F180wQmBZyBI1KpjEsc/Mvs0/ClVwddTEFZikwjTStd1KGW2yeqabMOMSX7tXwlnXQ5vIYue6efH75Ydw/QqWsy1M8=
-Received: by 10.54.37.72 with SMTP id k72mr1940681wrk;
-        Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id d74sm2200600wra.2005.07.24.08.35.10;
-        Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
+	id S261399AbVGXQY4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jul 2005 12:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261404AbVGXQY4
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 12:24:56 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:7861 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S261399AbVGXQYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Jul 2005 12:24:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050724162451.GEV12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 24 Jul 2005 12:24:51 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050724085757.GB7601@pasky.ji.cz> (Petr Baudis's message of "Sun, 24 Jul 2005 10:57:57 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Add -a option to get-tag-script to annotate but not sign a tag
+Petr Baudis <pasky@suse.cz> writes:
 
-Also fix the test for an existing tag.
+> After some thought, I like Linus' approach more now, having head-name
+> only when it's really necessary.
 
-Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
----
+I agree 100%.  That makes much more sense.
 
-  git-tag-script |   21 +++++++++++++++------
-  1 files changed, 15 insertions(+), 6 deletions(-)
-
-a49029e5cf9cca0c2999c0241e75789bcc38dbb5
-diff --git a/git-tag-script b/git-tag-script
---- a/git-tag-script
-+++ b/git-tag-script
-@@ -3,11 +3,15 @@
-
-  . git-sh-setup-script || die "Not a git archive"
-
-+annotate=
-  signed=
-  force=
-  while case "$#" in 0) break ;; esac
-  do
-      case "$1" in
-+    -a)
-+	annotate=1
-+	;;
-      -s)
-  	signed=1
-  	;;
-@@ -23,15 +27,16 @@ done
-
-  name="$1"
-  [ "$name" ] || die "I need a tag-name"
--[ -e "$GIT_DIR/refs/tags/$name" ] &&
--	[ "$force" ] || die "tag '$name' already exists"
-+if [ -e "$GIT_DIR/refs/tags/$name" -a -z "$force" ]; then
-+    die "tag '$name' already exists"
-+fi
-  shift
-
-  object=$(git-rev-parse --verify --revs-only --default HEAD "$@") || exit 1
-  type=$(git-cat-file -t $object) || exit 1
-  tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
-
--if [ "$signed" ]; then
-+if [ "$annotate" -o "$signed" ]; then
-      ( echo "#"
-        echo "# Write a tag message"
-        echo "#" ) > .editmsg
-@@ -42,10 +47,14 @@ if [ "$signed" ]; then
-      [ -s .tagmsg ] || exit
-
-      ( echo -e "object $object\ntype $type\ntag $name\ntagger $tagger\n"; cat .tagmsg ) > .tmp-tag
--    rm -f .tmp-tag.asc .tagmsg
--    gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
-+    rm -f .tagmsg
-+    if [ "$signed" ]; then
-+	rm -f .tmp-tag.asc
-+	gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
-+	rm -f .tmp-tag.sig
-+    fi
-      object=$(git-mktag < .tmp-tag)
--    rm -f .tmp-tag .tmp-tag.sig
-+    rm -f .tmp-tag
-  fi
-
-  mkdir -p "$GIT_DIR/refs/tags"
+The message from Linus reminded me that the way he tackles a
+problem is (as always) simpler, consistent and more elegant than
+mine.  I have been practicing thinking things through more than
+three times before I open my mouth, but still...
