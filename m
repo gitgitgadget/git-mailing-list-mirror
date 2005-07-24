@@ -1,63 +1,110 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Bootstrapping into git, commit gripes at me
-Date: Sun, 24 Jul 2005 10:57:57 +0200
-Message-ID: <20050724085757.GB7601@pasky.ji.cz>
-References: <20050711222046.GA21376@buici.com> <7vll4dndwu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0507111646000.17536@g5.osdl.org> <Pine.LNX.4.58.0507111833380.17536@g5.osdl.org> <20050712021004.GA27576@buici.com> <Pine.LNX.4.58.0507112005540.17536@g5.osdl.org> <Pine.LNX.4.58.0507112045420.17536@g5.osdl.org> <Pine.LNX.4.58.0507112132170.17536@g5.osdl.org> <20050712074801.GD6363@pasky.ji.cz> <7vy88c5r4w.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [PATCH] Add -a option to get-tag-script to annotate but not sign
+ a tag
+Date: Sun, 24 Jul 2005 11:35:07 -0400
+Message-ID: <42E3B52B.2030602@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, Marc Singer <elf@buici.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 24 10:58:23 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 24 17:35:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwcJL-00039G-HD
-	for gcvg-git@gmane.org; Sun, 24 Jul 2005 10:58:15 +0200
+	id 1DwiVs-0003RS-M8
+	for gcvg-git@gmane.org; Sun, 24 Jul 2005 17:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261944AbVGXI6A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jul 2005 04:58:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262122AbVGXI6A
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 04:58:00 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19727 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261944AbVGXI57 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2005 04:57:59 -0400
-Received: (qmail 14600 invoked by uid 2001); 24 Jul 2005 08:57:57 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy88c5r4w.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S261374AbVGXPfN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 24 Jul 2005 11:35:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261378AbVGXPfN
+	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 11:35:13 -0400
+Received: from wproxy.gmail.com ([64.233.184.199]:55088 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261374AbVGXPfL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Jul 2005 11:35:11 -0400
+Received: by wproxy.gmail.com with SMTP id i36so775700wra
+        for <git@vger.kernel.org>; Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
+        b=XmVDEyb9B+FbVHbEln7iSJgFSa+v/FA/i8Kvc+o8jBhJb4vgSFNMsucu+eCdFazv9rhf+wHmtFddVGJy2F180wQmBZyBI1KpjEsc/Mvs0/ClVwddTEFZikwjTStd1KGW2yeqabMOMSX7tXwlnXQ5vIYue6efH75Ydw/QqWsy1M8=
+Received: by 10.54.37.72 with SMTP id k72mr1940681wrk;
+        Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
+Received: from ?10.0.0.6? ([70.89.97.97])
+        by mx.gmail.com with ESMTP id d74sm2200600wra.2005.07.24.08.35.10;
+        Sun, 24 Jul 2005 08:35:10 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Linus Torvalds <torvalds@osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Tue, Jul 12, 2005 at 11:07:43AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> If you block certain operations while you have seeked to non-top
-> anyway, wouldn't it be cleaner to have .git/seeked-to that
-> records the commit ID you are at, which at the same time
-> indicates that you are in a special situation, and not touching
-> HEAD at all?  Then .git/HEAD will always have that line of
-> development information.
-> 
-> Well, that was half tongue-in-cheek suggestion; I have a feeling
-> that you may feel it is a bit too late to change this kind of
-> thing easily.
+Add -a option to get-tag-script to annotate but not sign a tag
 
-The thing is, _everything_ assumes .git/HEAD is the current commit
-checked out in the index. All the Cogito (that wouldn't be hard to
-change at all), all the other Porcelains, the core GIT tools. So
-changing that would be difficult and it's much easier this way.
+Also fix the test for an existing tag.
 
-> But if we are going to agree on using .git/head-name, I'd rather
-> see it exist all times, so that cat "$GIT_DIR/head-name" would
-> always tell us which branch we are working in.
+Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
+---
 
-After some thought, I like Linus' approach more now, having head-name
-only when it's really necessary.
+  git-tag-script |   21 +++++++++++++++------
+  1 files changed, 15 insertions(+), 6 deletions(-)
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+a49029e5cf9cca0c2999c0241e75789bcc38dbb5
+diff --git a/git-tag-script b/git-tag-script
+--- a/git-tag-script
++++ b/git-tag-script
+@@ -3,11 +3,15 @@
+
+  . git-sh-setup-script || die "Not a git archive"
+
++annotate=
+  signed=
+  force=
+  while case "$#" in 0) break ;; esac
+  do
+      case "$1" in
++    -a)
++	annotate=1
++	;;
+      -s)
+  	signed=1
+  	;;
+@@ -23,15 +27,16 @@ done
+
+  name="$1"
+  [ "$name" ] || die "I need a tag-name"
+-[ -e "$GIT_DIR/refs/tags/$name" ] &&
+-	[ "$force" ] || die "tag '$name' already exists"
++if [ -e "$GIT_DIR/refs/tags/$name" -a -z "$force" ]; then
++    die "tag '$name' already exists"
++fi
+  shift
+
+  object=$(git-rev-parse --verify --revs-only --default HEAD "$@") || exit 1
+  type=$(git-cat-file -t $object) || exit 1
+  tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
+
+-if [ "$signed" ]; then
++if [ "$annotate" -o "$signed" ]; then
+      ( echo "#"
+        echo "# Write a tag message"
+        echo "#" ) > .editmsg
+@@ -42,10 +47,14 @@ if [ "$signed" ]; then
+      [ -s .tagmsg ] || exit
+
+      ( echo -e "object $object\ntype $type\ntag $name\ntagger $tagger\n"; cat .tagmsg ) > .tmp-tag
+-    rm -f .tmp-tag.asc .tagmsg
+-    gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
++    rm -f .tagmsg
++    if [ "$signed" ]; then
++	rm -f .tmp-tag.asc
++	gpg -bsa .tmp-tag && cat .tmp-tag.asc >> .tmp-tag
++	rm -f .tmp-tag.sig
++    fi
+      object=$(git-mktag < .tmp-tag)
+-    rm -f .tmp-tag .tmp-tag.sig
++    rm -f .tmp-tag
+  fi
+
+  mkdir -p "$GIT_DIR/refs/tags"
