@@ -1,109 +1,81 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Fwd: Re: [RFC] extending git-ls-files --exclude.
-Date: Mon, 25 Jul 2005 14:39:33 -0700 (PDT)
-Message-ID: <20050725213933.34939.qmail@web26308.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] extending git-ls-files --exclude.
+Date: Mon, 25 Jul 2005 15:06:18 -0700
+Message-ID: <7vll3uh76t.fsf@assigned-by-dhcp.cox.net>
+References: <20050725213456.23910.qmail@web26310.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Jul 25 23:39:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
+	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 26 00:07:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxAfo-0007QW-Om
-	for gcvg-git@gmane.org; Mon, 25 Jul 2005 23:39:45 +0200
+	id 1DxB5d-0002Pv-TN
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 00:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261448AbVGYVji (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jul 2005 17:39:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261500AbVGYVji
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 17:39:38 -0400
-Received: from web26308.mail.ukl.yahoo.com ([217.146.176.19]:35244 "HELO
-	web26308.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S261448AbVGYVjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2005 17:39:37 -0400
-Received: (qmail 34941 invoked by uid 60001); 25 Jul 2005 21:39:33 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=kcwFVli9s0YM2crW4LuGQU9OdZn9L73SiT5yU+V+RNcgfle648XaAW0hIx2bpE5WcjRc+O0UF4tN+C/4nYe/IwV0xwy5J+TDywR6sZf5GTh3OV13UMWQINcy66LEMAF0HShW2koRxLSH7+lGhonaOQy/lS9kmEfApjliDslzms8=  ;
-Received: from [151.42.103.53] by web26308.mail.ukl.yahoo.com via HTTP; Mon, 25 Jul 2005 14:39:33 PDT
-To: git@vger.kernel.org
+	id S261184AbVGYWGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jul 2005 18:06:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261192AbVGYWGV
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 18:06:21 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:728 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S261184AbVGYWGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2005 18:06:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050725220613.EDNE16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 25 Jul 2005 18:06:13 -0400
+To: Marco Costalba <mcostalba@yahoo.it>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Marco Costalba <mcostalba@yahoo.it> writes:
 
-
---- Marco Costalba <mcostalba@yahoo.it> wrote:
-
-> Date: Mon, 25 Jul 2005 14:34:56 -0700 (PDT)
-> From: Marco Costalba <mcostalba@yahoo.it>
-> Subject: Re: [RFC] extending git-ls-files --exclude.
-> To: Junio C Hamano <junkio@cox.net>
-> CC: Linus Torvalds <torvalds@osdl.org>, 
->     Catalin Marinas <catalin.marinas@gmail.com>, Petr Baudis <pasky@suse.cz>
-> 
-> Junio C Hamano wrote:
-> 
-> >Linus Torvalds <torvalds@osdl.org> writes:
-> >
-> >>On Mon, 25 Jul 2005, Junio C Hamano wrote:
-> >>
-> >I imagined it, but it appears to me that this is a bad example.
-> >My understanding of what Catalin and the proposed patch
-> >disagrees is whether the patterns in .gitignore at the top level
-> >should govern files under ppc/ and mozilla-sha1/ subdirectories;
-> >Catalin thinks they should not.
-> >
-> >What I meant by "cumulative" (now I realize I might have
-> >misunderstood what Pasky wanted to mean by that word, though)
-> >was not just .gitignore in subdirectory being added, but the
-> >effect of patterns being added so far, either from the command
-> >line or by parent directories, last while in the deeper
-> >directories.
-> >
-> 
 > This cumulative effect brakes local scoping of .gitignore files in 
 > corresponding subdirectory.
-> 
+>
 > As example in a directory A we can have a .gitignore file with
-> 
+>
 > !foo.html
 > *.html
-> 
-> because we want to special case 'that' foo.html 
-> in 'that' directory.
-> 
-> If for any reason in any of part of subdirectories tree
-> with base A there is (or there will be in the future) another
->  foo.html this will be automatically special cased because
->  of cumulative adding of patterns.
-> 
+>
+> because we want to special case 'that' foo.html in 'that'
+> directory.
+
+I guess that !foo.html I wrote was a bad example of special case
+not being specific enough.  Saying "!/foo.html" should work
+[*1*], so I think "cumulative effect _breaks_" is a bit too strong
+a word.
+
+Having said that,...
+
 > This can be powerful and flexible but also prone to errors. 
-> 
-> Peraphs can be better to use just one file with global scope
-> (as example .git/exclude) and all the others .gitignore files
-> with scope local to their directory.
-> 
-> 
-> Marco
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 		
-> ____________________________________________________
-> Start your day with Yahoo! - make it your home page 
-> http://www.yahoo.com/r/hs 
->  
-> 
 
+While I also suspect it _might_ be prone to user errors, at
+least to some classes of users, Catalin (and Peter as well I
+suspect, although I may be mistaken by what he originally meant
+by "cumulative") seems to think it is OK.  As a developer of
+another Porcelain (qgit), your input is as valuable as others,
+so...
 
+BTW, I am CC'ing git list because I saw you forwarded your
+entire message to the list as a quoted message form.  Please do
+not do that.  I cannot distinguish a message like that with a
+message with nothing but quote and no original contents, which I
+normally discard without even reading.
 
-		
-____________________________________________________
-Start your day with Yahoo! - make it your home page 
-http://www.yahoo.com/r/hs 
- 
+[Footnote]
+
+*1* I just tried, and it seems to work.
+
+  $ rm -f .gitignore ppc/.gitignore
+  $ (echo '!/foo.bar'; echo '*.bar') >.gitignore
+  $ for i in foo.bar baz.bar; do date >$i; date >ppc/$i; done
+  $ git-ls-files --others --exclude-per-directory=.gitignore | grep '\.bar'
+  foo.bar
+  $ rm -f .gitignore ppc/.gitignore
