@@ -1,85 +1,84 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Problems Importing a CVS tree into FAUmachine
-Date: Mon, 25 Jul 2005 11:15:05 +0200
-Message-ID: <20050725091505.GA5680@kiste.smurf.noris.de>
-References: <20050724205601.GD2117@cip.informatik.uni-erlangen.de> <20050725085756.GA25825@cip.informatik.uni-erlangen.de> <20050725090313.GB25825@cip.informatik.uni-erlangen.de>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [RFC] extending git-ls-files --exclude.
+Date: Mon, 25 Jul 2005 10:19:44 +0100
+Message-ID: <tnxmzobutsf.fsf@arm.com>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
+	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
+	<20050722192424.GB8556@mars.ravnborg.org>
+	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
+	<20050722205948.GE11916@pasky.ji.cz>
+	<7vd5p73jlu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="x+6KMIRAuhnl3hBn"
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 25 11:18:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Linus Torvalds <torvalds@osdl.org>,
+	git@vger.kernel.org, Marco Costalba <mcostalba@yahoo.it>
+X-From: git-owner@vger.kernel.org Mon Jul 25 11:21:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dwz5w-0003W0-M4
-	for gcvg-git@gmane.org; Mon, 25 Jul 2005 11:17:56 +0200
+	id 1Dwz92-0003q8-1G
+	for gcvg-git@gmane.org; Mon, 25 Jul 2005 11:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261158AbVGYJRr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jul 2005 05:17:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261159AbVGYJRr
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 05:17:47 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:30900 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S261158AbVGYJRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Jul 2005 05:17:36 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1Dwz3E-0003es-LL; Mon, 25 Jul 2005 11:16:40 +0200
-Received: (nullmailer pid 21846 invoked by uid 501);
-	Mon, 25 Jul 2005 09:15:05 -0000
-To: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
-Content-Disposition: inline
-In-Reply-To: <20050725090313.GB25825@cip.informatik.uni-erlangen.de>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S261160AbVGYJU5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jul 2005 05:20:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261164AbVGYJU5
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 05:20:57 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:58315 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S261160AbVGYJUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2005 05:20:55 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6P9JZs4006648;
+	Mon, 25 Jul 2005 10:19:35 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA20054;
+	Mon, 25 Jul 2005 10:20:16 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 25 Jul 2005 10:20:15 +0100
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5p73jlu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sun, 24 Jul 2005 15:49:33 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 25 Jul 2005 09:20:15.0915 (UTC) FILETIME=[1176CFB0:01C590FA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <junkio@cox.net> wrote:
+>  * When --exclude-per-directory=<name> is specified, upon
+>    entering a directory that has such a file, its contents are
+>    appended at the end of the current "list of patterns".  They
+>    are popped off when leaving the directory.
+[...]
+> A pattern specified on the command line with --exclude or read
+> from the file specified with --exclude-from is relative to the
+> top of the directory tree.  A pattern read from a file specified
+> by --exclude-per-directory is relative to the directory that the
+> pattern file appears in.
 
---x+6KMIRAuhnl3hBn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think it would make more sense for the exclude-per-directory
+patterns to be local to that directory only, without recursively
+preserving them for subdirectories. One would, in general, put the
+common exclude patterns like *.o *~ etc. in the global file
+(.git/exclude). The patterns local to a directory only (take the
+vmlinux file for example), one would write it in the .gitignore file
+but this should be used for subdirectories.
 
-Hi,
+> An exclude pattern is of the following format:
+[...]
 
-Thomas Glanzmann:
-> 	Members:
-> 		lib/pattern-matcher/input/Pic0.ppm:INITIAL->1.1
-> 		lib/pattern-matcher/input/Pic1.ppm:INITIAL->1.1
-> 		lib/pattern-matcher/input/Pic2.ppm:INITIAL->1.1
-> 		lib/pattern-matcher/input/Pic3.ppm:INITIAL->1.1
->=20
-If there's no lib/pattern-matcher/input/Pic0.ppm,v nor
-lib/pattern-matcher/input/Attic/Pic0.ppm,v file ...
+That's fine. Actually, the Porcelain would care much about it since it
+gets the information already filtered by git.
 
-> But I see the PatchSet if I run cvsps manually. Very strange.
->=20
-=2E.. then, congratulations, you've found a bug in cvsps.
-Please talk to its author.
+>     $ cat Documentation/.gitignore
+>     # ignore generated html files,
+>     # except foo.html which is maintained by hand
+>     !foo.html
+>     *.html
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-I believe that the moment is near when by a procedure of active paranoiac
-thought, it will be possible to systematize confusion and contribute to the
-total discrediting of the world of reality.
-		-- Salvador Dali
+Wouldn't it be clearer to have the general rules first (*.html),
+overridden by the more specific ones (!foo.html)? Just my opinion, I
+don't know what others think.
 
---x+6KMIRAuhnl3hBn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFC5K2Z8+hUANcKr/kRAnWlAJ9yRXQzRb6c6292iHJ6MzPgXxt5tQCghT+9
-nNd2EoNJNXVcurIjQzr94Ek=
-=IweS
------END PGP SIGNATURE-----
-
---x+6KMIRAuhnl3hBn--
+-- 
+Catalin
