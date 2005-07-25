@@ -1,79 +1,78 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Update the documentation for git-tag-script to reflect current behavior.
-Date: Mon, 25 Jul 2005 02:17:16 -0400
-Message-ID: <20050725061716.GE6098@mythryan2.michonline.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add support for directories to git-rename-script.
+Date: Sun, 24 Jul 2005 23:21:14 -0700
+Message-ID: <7vpst7z9r9.fsf@assigned-by-dhcp.cox.net>
+References: <20050725052646.GB6098@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 25 08:20:43 2005
+X-From: git-owner@vger.kernel.org Mon Jul 25 08:25:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwwK0-0004Iv-HJ
-	for gcvg-git@gmane.org; Mon, 25 Jul 2005 08:20:16 +0200
+	id 1DwwOa-0004dN-23
+	for gcvg-git@gmane.org; Mon, 25 Jul 2005 08:25:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261747AbVGYGTj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 25 Jul 2005 02:19:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261732AbVGYGRc
-	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 02:17:32 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:43469 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261853AbVGYGRS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2005 02:17:18 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DwwH6-0006WM-S3; Mon, 25 Jul 2005 02:17:16 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DwwPm-00038T-00; Mon, 25 Jul 2005 02:26:14 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1DwwH6-0006Hv-Ah; Mon, 25 Jul 2005 02:17:16 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+	id S261732AbVGYGYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jul 2005 02:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261265AbVGYGW2
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 02:22:28 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:42121 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S261219AbVGYGVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Jul 2005 02:21:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050725062116.LLZU7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 25 Jul 2005 02:21:16 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050725052646.GB6098@mythryan2.michonline.com> (Ryan Anderson's message of "Mon, 25 Jul 2005 01:26:47 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Ryan Anderson <ryan@michonline.com> writes:
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
----
+> +open(F,"-|","git-ls-files")
+> +	or die "Failed to open pipe from git-ls-files: " . $!;
+> +
+> +@allfiles = <F>;
+> +close(F);
 
- Documentation/git-tag-script.txt |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
+We can afford to handle funny characters in the filename right
+without pain in Perl, so let's do it right:
 
-8f1801c948cbf1187a192df1656709689ba46d61
-diff --git a/Documentation/git-tag-script.txt b/Documentation/git-tag-script.txt
---- a/Documentation/git-tag-script.txt
-+++ b/Documentation/git-tag-script.txt
-@@ -4,18 +4,22 @@ v0.1, May 2005
- 
- NAME
- ----
--git-tag-script - An example script to create a tag object signed with GPG
-+git-tag-script -  Create a tag object signed with GPG
- 
- 
- 
- SYNOPSIS
- --------
--'git-tag-script'
-+'git-tag-script' [-s] [-f] <name>
- 
- DESCRIPTION
- -----------
--This is an example script that uses "git-mktag" to create a tag object
--signed with GPG.
-+Adds a "tag" reference in .git/refs/tags/
-+
-+Unless "-f" is given, the tag must not yet exist in ".git/refs/tags"
-+
-+If "-s" is passed, the user will be prompted for a tag message, and a GnuPG
-+signed tag object will be created as well.
- 
- 
- Author
+    use vars qw($/);
+    $/ = "\0";
+    open F, '-|', 'git-ls-files', '-z'
+    	or die "Failed to open pipe from git-ls-files: " . $!;
+    @allfiles = map { chomp; $_} <F>;
 
--- 
+> +@srcfiles = grep /^$src/, @allfiles;
+> +@dstfiles = @srcfiles;
+> +s#^$src(/|$)#$dst$1# for @dstfiles;
 
-Ryan Anderson
-  sometimes Pug Majere
+Be careful with these regexps.  Perhaps something like this?
+
+    @dstfiles = @srcfiles = grep /^\Q$src\E/, @allfiles;
+    s#^\Q$src\E(/|$)#$dst$1# for @dstfiles;
+
+or perhaps a bit more readable:
+
+    my $qsrc = quotemeta($src);
+    @dstfiles = @srcfiles = grep /^$qsrc/, @allfiles;
+    for (@dstfiles) { s/^$qsrc(/|$)/$dst$1/; }
+
+> +rename($src,$dst)
+> +	or die "rename failed: $!";
+
+Making sure leading directories for $dst exists, perhaps?
+
+Otherwise looks good.
+
+> +sub usage($) {
+
+This is just a style thing, but do you really care to force a
+scalar contect when "usage" is used?
