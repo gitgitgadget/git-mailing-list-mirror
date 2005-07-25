@@ -1,167 +1,106 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Documentation: describe git-ls-files --exclude patterns.
-Date: Sun, 24 Jul 2005 15:51:38 -0700
-Message-ID: <7vwtnf24xx.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
-	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
-	<20050722192424.GB8556@mars.ravnborg.org>
-	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
-	<20050722205948.GE11916@pasky.ji.cz>
-	<7vd5p73jlu.fsf@assigned-by-dhcp.cox.net>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: [PATCH] Deb Packaging fixes: Build against Mozilla libs for Debian, conflict with "git"
+Date: Mon, 25 Jul 2005 00:27:45 -0400
+Message-ID: <20050725042745.GA6098@mythryan2.michonline.com>
+References: <20050723073707.GA3255@mythryan2.michonline.com> <20050723192335.GA24071@mythryan2.michonline.com> <20050723192632.GB24071@mythryan2.michonline.com> <200507240728.40158.snake@penza-gsm.ru> <7vwtngg2bd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 25 00:54:13 2005
+Cc: Alexey Nezhdanov <snake@penza-gsm.ru>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 25 06:28:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DwpM5-0006Qa-Nr
-	for gcvg-git@gmane.org; Mon, 25 Jul 2005 00:53:58 +0200
+	id 1DwuZK-0004h7-GJ
+	for gcvg-git@gmane.org; Mon, 25 Jul 2005 06:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261517AbVGXWx1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 24 Jul 2005 18:53:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261532AbVGXWxQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 24 Jul 2005 18:53:16 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:12688 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261517AbVGXWvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Jul 2005 18:51:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050724225134.YERW1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 24 Jul 2005 18:51:34 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <7vd5p73jlu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sun, 24 Jul 2005 15:49:33 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261670AbVGYE1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 25 Jul 2005 00:27:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261656AbVGYE1x
+	(ORCPT <rfc822;git-outgoing>); Mon, 25 Jul 2005 00:27:53 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:48331 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261670AbVGYE1w (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Jul 2005 00:27:52 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DwuZ7-0001TN-TW; Mon, 25 Jul 2005 00:27:45 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Dwuhn-00058n-00; Mon, 25 Jul 2005 00:36:43 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DwuZ7-0006Gb-5r; Mon, 25 Jul 2005 00:27:45 -0400
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vwtngg2bd.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+On Sat, Jul 23, 2005 at 11:12:22PM -0700, Junio C Hamano wrote:
+> Alexey Nezhdanov <snake@penza-gsm.ru> writes:
+> 
+> > Satturday, 23 July 2005 23:26 Ryan Anderson wrote:
+> >> -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
+> >> +Depends: ${misc:Depends}, patch, diff, rsync, rcs, ssh
+> > Did I missed something or you forgot about libcurl3 dependency?
+> 
+> I think you are right.  In the build process, dh_shlibdeps is
+> used and shlib:Depends is created to include the libcurl3 (among
+> other things) in debian/git-core.substvars, but it is not
+> actually used in the resulting binary package because the line
+> misses ${shlibs:Depends} there.
+> 
+> Ryan, would this change be enough?  I do not know what I am
+> doing (${misc:Depends} is new to me), but this patch seems to
+> fix it on my box.
 
- Documentation/git-ls-files.txt |   96 ++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 92 insertions(+), 4 deletions(-)
+Yes - this looks like the right idea - but you're missing a comma
+between the two variables.  (That will cause the *entire* depends line
+to get dropped, btw.)
 
-d9296497b70d9007da94cec453ecb5c6c7173140
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 		(-[c|d|o|i|s|u|k])\*
- 		[-x <pattern>|--exclude=<pattern>]
- 		[-X <file>|--exclude-from=<file>]
-+		[--exclude-per-directory=<file>]
- 
- DESCRIPTION
- -----------
-@@ -59,10 +60,10 @@ OPTIONS
- 
- -X|--exclude-from=<file>::
- 	exclude patterns are read from <file>; 1 per line.
--	Allows the use of the famous dontdiff file as follows to find
--	out about uncommitted files just as dontdiff is used with
--	the diff command:
--	     git-ls-files --others --exclude-from=dontdiff
-+
-+--exclude-per-directory=<file>::
-+	read additional exclude patterns that apply only to the
-+	directory and its subdirectories in <file>.
- 
- -t::
- 	Identify the file status with the following tags (followed by
-@@ -89,6 +90,93 @@ the dircache records up to three such pa
- the user (or Cogito) to see what should eventually be recorded at the
- path. (see read-cache for more information on state)
- 
-+
-+Exclude Patterns
-+----------------
-+
-+'git-ls-files' can use a list of "exclude patterns" when
-+traversing the directory tree and finding files to show when the
-+flags --others or --ignored are specified.
-+
-+These exclude patterns come from these places:
-+
-+ (1) command line flag --exclude=<pattern> specifies a single
-+     pattern.
-+
-+ (2) command line flag --exclude-from=<file> specifies a list of
-+     patterns stored in a file.
-+
-+ (3) command line flag --exclude-per-directory=<name> specifies
-+     a name of the file in each directory 'git-ls-files'
-+     examines, and if exists, its contents are used as an
-+     additional list of patterns.
-+
-+An exclude pattern file used by (2) and (3) contains one pattern
-+per line.  A line that starts with a '#' can be used as comment
-+for readability.
-+
-+The list of patterns that is in effect at a given time is
-+built and ordered in the following way:
-+
-+ * --exclude=<pattern> and lines read from --exclude-from=<file>
-+   come at the beginning of the list of patterns, in the order
-+   given on the command line.  Patterns that come from the file
-+   specified with --exclude-from are ordered in the same order
-+   as they appear in the file.
-+
-+ * When --exclude-per-directory=<name> is specified, upon
-+   entering a directory that has such a file, its contents are
-+   appended at the end of the current "list of patterns".  They
-+   are popped off when leaving the directory.
-+
-+Each pattern in the pattern list specifies "a match pattern" and
-+optionally the fate --- either a file that matches the pattern
-+is considered excluded or included.  By default, this being
-+"exclude" mechanism, the fate is "excluded".  A filename is
-+examined against the patterns in the list, and the first match
-+determines its fate.
-+
-+A pattern specified on the command line with --exclude or read
-+from the file specified with --exclude-from is relative to the
-+top of the directory tree.  A pattern read from a file specified
-+by --exclude-per-directory is relative to the directory that the
-+pattern file appears in.
-+
-+An exclude pattern is of the following format:
-+
-+ - an optional prefix '!' which means that the fate this pattern
-+   specifies is "include", not the usual "exclude"; the
-+   remainder of the pattern string is interpreted according to
-+   the following rules.
-+
-+ - if it does not contain a slash '/', it is a shell glob
-+   pattern and used to match against the filename without
-+   leading directories (i.e. the same way as the current
-+   implementation).
-+
-+ - otherwise, it is a shell glob pattern, suitable for
-+   consumption by fnmatch(3) with FNM_PATHNAME flag.  I.e. a
-+   slash in the pattern must match a slash in the pathname.
-+   "Documentation/*.html" matches "Documentation/git.html" but
-+   not "ppc/ppc.html".  As a natural exception, "/*.c" matches
-+   "cat-file.c" but not "mozilla-sha1/sha1.c".
-+
-+An example:
-+
-+    $ cat .git/ignore
-+    # ignore objects and archives, anywhere in the tree.
-+    *.[oa]
-+    $ cat Documentation/.gitignore
-+    # ignore generated html files,
-+    # except foo.html which is maintained by hand
-+    !foo.html
-+    *.html
-+    $ git-ls-files --ignored \
-+        --exclude='Documentation/*.[0-9]' \
-+        --exclude-from=.git/ignore \
-+        --exclude-per-directory=.gitignore
-+
-+
- See Also
- --------
- link:read-cache.html[read-cache]
+I changed it from shlibs:Depends to misc:Depends because I saw something
+when I was tracking down exactly what I needed to put into debian/compat
+(in fact, man debhelper, then search for "compat" and look under V4),
+but I misread "supplements" to be something else. 
+
+So, Acked-By: me, if you put the comma in. :)
+
+
+
+> ------------
+> Make sure binary debian package depends on shlibs it uses.
+> 
+> The "Depends:" line in debian/control lacked ${shlibs:Depends},
+> which caused the resulting binary package not to depend on
+> libcurl3 nor even libc6 ;-).
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+> ---
+> 
+> # - linus: Fix up applymbox script for the addition of "git-" prefix
+> # + (working tree)
+> diff --git a/debian/control b/debian/control
+> --- a/debian/control
+> +++ b/debian/control
+> @@ -7,7 +7,7 @@ Standards-Version: 3.6.1
+>  
+>  Package: git-core
+>  Architecture: any
+> -Depends: ${misc:Depends}, shellutils, diff, rsync, rcs
+> +Depends: ${shlibs:Depends} ${misc:Depends}, shellutils, diff, rsync, rcs
+>  Description: The git content addressable filesystem
+>   GIT comes in two layers. The bottom layer is merely an extremely fast
+>   and flexible filesystem-based database designed to store directory trees
+> 
+> 
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
