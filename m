@@ -1,102 +1,72 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH] Make git-rename-script behave better with input containing Perl regexp metachars.
-Date: Tue, 26 Jul 2005 03:40:28 -0400
-Message-ID: <20050726074028.GL6098@mythryan2.michonline.com>
-References: <20050725052646.GB6098@mythryan2.michonline.com> <7vpst7z9r9.fsf@assigned-by-dhcp.cox.net> <20050726065657.GI6098@mythryan2.michonline.com>
+From: David Greaves <david@dgreaves.com>
+Subject: Re: updating the git documentation on http://www.kernel.org/pub/software/scm/git/docs/
+Date: Tue, 26 Jul 2005 08:46:54 +0100
+Message-ID: <42E5EA6E.7020709@dgreaves.com>
+References: <20050725185751.GA12907@cip.informatik.uni-erlangen.de> <7v1x5mh26l.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 26 09:41:38 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
+	David Woodhouse <dwmw2@infradead.org>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 26 09:48:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxK3P-0002Nb-KD
-	for gcvg-git@gmane.org; Tue, 26 Jul 2005 09:40:44 +0200
+	id 1DxKAs-00036d-Co
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 09:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261842AbVGZHke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jul 2005 03:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261844AbVGZHkb
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 03:40:31 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:62606 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261841AbVGZHk3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 03:40:29 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DxK3A-00015l-P9; Tue, 26 Jul 2005 03:40:28 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DxKBz-0006LM-00; Tue, 26 Jul 2005 03:49:35 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1DxK3A-0004yb-83; Tue, 26 Jul 2005 03:40:28 -0400
+	id S261848AbVGZHrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jul 2005 03:47:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVGZHrn
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 03:47:43 -0400
+Received: from s2.ukfsn.org ([217.158.120.143]:28365 "EHLO mail.ukfsn.org")
+	by vger.kernel.org with ESMTP id S261841AbVGZHq4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 03:46:56 -0400
+Received: from localhost (lucy.ukfsn.org [127.0.0.1])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id BD788E6DE1; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
+Received: from mail.ukfsn.org ([127.0.0.1])
+ by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 13360-07; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
+Received: from oak.dgreaves.com (i-83-67-36-194.freedom2surf.net [83.67.36.194])
+	by mail.ukfsn.org (Postfix) with ESMTP
+	id 7D8F9E6A7F; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
+Received: from ash.dgreaves.com ([10.0.0.90])
+	by oak.dgreaves.com with esmtp (Exim 4.20)
+	id 1DxK8f-00015M-TL; Tue, 26 Jul 2005 08:46:09 +0100
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050602)
+X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20050726065657.GI6098@mythryan2.michonline.com>
-User-Agent: Mutt/1.5.6+20040907i
+In-Reply-To: <7v1x5mh26l.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Make git-rename-script behave much better when faced with input contain Perl
-regular expression metacharacters.
+Junio C Hamano wrote:
 
-Also, restore support for the GIT_DIR
+>Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
+>
+>  
+>
+>>I hope you're the right contact person for this. Could you please update
+>>the documentation on http://www.kernel.org/pub/software/scm/git/docs/ .
+>>It is a bit outdated. I just wanted to send a co-worker a link to the
+>>'migration from cvs' URL and couldn't find one.
+>>    
+>>
+>
+>Thomas, I suspect you have a wrong David, and would want to ask
+>David Greaves instead.
+>
+>
+>  
+>
+quite right.
+I've dropped out somewhat since moving house/job. I'll fix it.
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
----
+David
 
- git-rename-script |   26 ++++++++++++++++----------
- 1 files changed, 16 insertions(+), 10 deletions(-)
 
-28d2bb7cbb38424c4c6879110bf8aff1e3e5ac42
-diff --git a/git-rename-script b/git-rename-script
---- a/git-rename-script
-+++ b/git-rename-script
-@@ -12,8 +12,11 @@ use strict;
- sub usage($);
- 
- # Sanity checks:
--unless ( -d ".git" && -d ".git/objects" && 
--	-d ".git/objects/00" && -d ".git/refs") {
-+my $GIT_DIR = $$ENV{'GIT_DIR'};
-+$GIT_DIR = ".git" unless defined $GIT_DIR;
-+
-+unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
-+	-d $GIT_DIR . "/objects/00" && -d $GIT_DIR . "/refs") {
- 	usage("Git repository not found.");
- }
- 
-@@ -31,23 +34,26 @@ if (-e $dst) {
- 
- my (@allfiles,@srcfiles,@dstfiles);
- 
--open(F,"-|","git-ls-files")
-+$/ = "\0";
-+open(F,"-|","git-ls-files","-z")
- 	or die "Failed to open pipe from git-ls-files: " . $!;
- 
--@allfiles = <F>;
-+@allfiles = map { chomp; $_; } <F>;
- close(F);
--chomp for @allfiles;
--
- 
--@srcfiles = grep /^$src/, @allfiles;
-+my $safesrc = quotemeta($src);
-+@srcfiles = grep /^$safesrc/, @allfiles;
- @dstfiles = @srcfiles;
--s#^$src(/|$)#$dst$1# for @dstfiles;
-+s#^$safesrc(/|$)#$dst$1# for @dstfiles;
- 
- rename($src,$dst)
- 	or die "rename failed: $!";
- 
--system("git-update-cache","--remove","--",@srcfiles);
--system("git-update-cache","--add","--",@dstfiles);
-+my $rc = system("git-update-cache","--add","--",@dstfiles);
-+die "git-update-cache failed to add new name with code $?\n" if $rc;
-+
-+$rc = system("git-update-cache","--remove","--",@srcfiles);
-+die "git-update-cache failed to remove old name with code $?\n" if $rc;
- 
- 
- sub usage($) {
+-- 
