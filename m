@@ -1,50 +1,87 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Why pack+unpack?
-Date: Tue, 26 Jul 2005 00:39:45 -0400
-Message-ID: <42E5BE91.2050901@pobox.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why pack+unpack?
+Date: Mon, 25 Jul 2005 21:53:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507252145470.6074@g5.osdl.org>
+References: <42D7F415.30609@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Jul 26 06:41:01 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 26 06:54:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxHEQ-0003nu-Pr
-	for gcvg-git@gmane.org; Tue, 26 Jul 2005 06:39:56 +0200
+	id 1DxHSr-0004yp-23
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 06:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261658AbVGZEjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jul 2005 00:39:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261665AbVGZEjt
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 00:39:49 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:61622 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S261658AbVGZEjt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 00:39:49 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1DxHEJ-0002hu-Vs
-	for git@vger.kernel.org; Tue, 26 Jul 2005 04:39:48 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
-X-Spam-Score: 0.0 (/)
+	id S261685AbVGZEyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jul 2005 00:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261702AbVGZEyM
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 00:54:12 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:2992 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261697AbVGZEyH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 00:54:07 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6Q4rkjA012413
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 25 Jul 2005 21:53:46 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6Q4rj4Z032621;
+	Mon, 25 Jul 2005 21:53:45 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <42D7F415.30609@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Whenever I pull a local repository, such as
 
-	cd /spare/repo/libata-dev
-	git pull /spare/repo/linux-2.6/.git
+On Tue, 26 Jul, Jeff Garzik wrote:
+>
+>				AFAICT this is
+> just a complete waste of time.  Why does this occur?
+>
+> Packing 1394 objects
+> Unpacking 1394 objects
+>   100% (1394/1394) done
+> 
+> It doesn't seem to make any sense to perform work, then immediately undo
+> that work, just for a local pull.
 
-git will pack, then unpack, the objects being pulled.  AFAICT this is 
-just a complete waste of time.  Why does this occur?
+First, make sure you have a recent git, it does better at optimizing the 
+objects, so there are fewer of them. Of course, the above could be a real 
+pull of a a fair amount of work, but check that your git has this commit:
 
-Packing 1394 objects
-Unpacking 1394 objects
-  100% (1394/1394) done
+	commit 4311d328fee11fbd80862e3c5de06a26a0e80046
 
-It doesn't seem to make any sense to perform work, then immediately undo 
-that work, just for a local pull.
+	    Be more aggressive about marking trees uninteresting
 
-	Jeff
+because otherwise you sometimes get a fair number of objects just because
+git-rev-list wasn't always being very careful, and took more objects than
+it strictly needed.
+
+Secondly, what's the problem? Sure, I could special-case the local case, 
+but do you really want to have two _totally_ different code-paths? In 
+other words, it's absolutely NOT a complete waste of time: it's very much 
+a case of trying to have a unified architecture, and the fact that it 
+spends a few seconds doing things in a way that is network-transparent is 
+time well spent.
+
+Put another way: do you argue that X network transparency is a total waste
+of time? You could certainly optimize X if you always made it be
+local-machine only. Or you could make tons of special cases, and have X 
+have separate code-paths for local clients and for remote clients, rather 
+than just always opening a socket connection.
+
+See? Trying to have one really solid code-path is not a waste of time. 
+
+We do end up having a special code-path for "clone" (the "-l" flag), which
+does need it, but I seriously doubt you need it for a local pull. The most 
+expensive operation in a local pull tends to be (if the repositories are 
+unpacked and cold-cache) just figuring out the objects to pull, not the 
+packing/unpacking per se.
+
+			Linus
