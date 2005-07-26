@@ -1,51 +1,50 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH] git-cvsimport-script: parse multidigit revisions
-Date: Tue, 26 Jul 2005 00:22:59 -0400
-Message-ID: <20050726042259.GG6098@mythryan2.michonline.com>
-References: <20050712213531.GA10936@pc117b.liacs.nl> <20050713011818.GM9915@kiste.smurf.noris.de> <Pine.LNX.4.58.0507251544300.6074@g5.osdl.org> <20050725234257.GC5680@kiste.smurf.noris.de>
+From: Jeff Garzik <jgarzik@pobox.com>
+Subject: Why pack+unpack?
+Date: Tue, 26 Jul 2005 00:39:45 -0400
+Message-ID: <42E5BE91.2050901@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Sven Verdoolaege <skimo@liacs.nl>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 26 06:23:54 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Jul 26 06:41:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxGyh-0002ab-Jp
-	for gcvg-git@gmane.org; Tue, 26 Jul 2005 06:23:40 +0200
+	id 1DxHEQ-0003nu-Pr
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 06:39:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261638AbVGZEXf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jul 2005 00:23:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261641AbVGZEXc
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 00:23:32 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:21898 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261638AbVGZEXb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 00:23:31 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1DxGy3-00045L-Nx; Tue, 26 Jul 2005 00:22:59 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1DxH6r-0007O3-00; Tue, 26 Jul 2005 00:32:05 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1DxGy3-0005Wv-4M; Tue, 26 Jul 2005 00:22:59 -0400
-To: Matthias Urlichs <smurf@smurf.noris.de>
-Content-Disposition: inline
-In-Reply-To: <20050725234257.GC5680@kiste.smurf.noris.de>
-User-Agent: Mutt/1.5.6+20040907i
+	id S261658AbVGZEjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jul 2005 00:39:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261665AbVGZEjt
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 00:39:49 -0400
+Received: from mail.dvmed.net ([216.237.124.58]:61622 "EHLO mail.dvmed.net")
+	by vger.kernel.org with ESMTP id S261658AbVGZEjt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 00:39:49 -0400
+Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
+	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1DxHEJ-0002hu-Vs
+	for git@vger.kernel.org; Tue, 26 Jul 2005 04:39:48 +0000
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Spam-Score: 0.0 (/)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 26, 2005 at 01:42:57AM +0200, Matthias Urlichs wrote:
-> (Side question - why aren't you doing a direct bk2git import?)
 
-The last time I went looking for a tool to do this, I failed to find it
-- where can I get this?
+Whenever I pull a local repository, such as
 
+	cd /spare/repo/libata-dev
+	git pull /spare/repo/linux-2.6/.git
 
--- 
+git will pack, then unpack, the objects being pulled.  AFAICT this is 
+just a complete waste of time.  Why does this occur?
 
-Ryan Anderson
-  sometimes Pug Majere
+Packing 1394 objects
+Unpacking 1394 objects
+  100% (1394/1394) done
+
+It doesn't seem to make any sense to perform work, then immediately undo 
+that work, just for a local pull.
+
+	Jeff
