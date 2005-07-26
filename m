@@ -1,72 +1,79 @@
-From: David Greaves <david@dgreaves.com>
-Subject: Re: updating the git documentation on http://www.kernel.org/pub/software/scm/git/docs/
-Date: Tue, 26 Jul 2005 08:46:54 +0100
-Message-ID: <42E5EA6E.7020709@dgreaves.com>
-References: <20050725185751.GA12907@cip.informatik.uni-erlangen.de> <7v1x5mh26l.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Why pack+unpack?
+Date: Tue, 26 Jul 2005 09:44:07 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507260937460.19309@g5.osdl.org>
+References: <42D7F415.30609@pobox.com> <Pine.LNX.4.58.0507252145470.6074@g5.osdl.org>
+ <42E5C677.2020403@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Glanzmann <sithglan@stud.uni-erlangen.de>,
-	David Woodhouse <dwmw2@infradead.org>,
-	GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 26 09:48:50 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 26 18:54:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxKAs-00036d-Co
-	for gcvg-git@gmane.org; Tue, 26 Jul 2005 09:48:26 +0200
+	id 1DxSgj-0002Z6-BV
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 18:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261848AbVGZHrv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jul 2005 03:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVGZHrn
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 03:47:43 -0400
-Received: from s2.ukfsn.org ([217.158.120.143]:28365 "EHLO mail.ukfsn.org")
-	by vger.kernel.org with ESMTP id S261841AbVGZHq4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 03:46:56 -0400
-Received: from localhost (lucy.ukfsn.org [127.0.0.1])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id BD788E6DE1; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
-Received: from mail.ukfsn.org ([127.0.0.1])
- by localhost (lucy.ukfsn.org [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 13360-07; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
-Received: from oak.dgreaves.com (i-83-67-36-194.freedom2surf.net [83.67.36.194])
-	by mail.ukfsn.org (Postfix) with ESMTP
-	id 7D8F9E6A7F; Tue, 26 Jul 2005 08:45:30 +0100 (BST)
-Received: from ash.dgreaves.com ([10.0.0.90])
-	by oak.dgreaves.com with esmtp (Exim 4.20)
-	id 1DxK8f-00015M-TL; Tue, 26 Jul 2005 08:46:09 +0100
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050602)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x5mh26l.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.91.0.0
+	id S261908AbVGZQsA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jul 2005 12:48:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261900AbVGZQpZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 12:45:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:35553 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S261805AbVGZQoM (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 12:44:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6QGi8jA029576
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 26 Jul 2005 09:44:08 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6QGi73F031246;
+	Tue, 26 Jul 2005 09:44:08 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <42E5C677.2020403@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-
->Thomas Glanzmann <sithglan@stud.uni-erlangen.de> writes:
->
->  
->
->>I hope you're the right contact person for this. Could you please update
->>the documentation on http://www.kernel.org/pub/software/scm/git/docs/ .
->>It is a bit outdated. I just wanted to send a co-worker a link to the
->>'migration from cvs' URL and couldn't find one.
->>    
->>
->
->Thomas, I suspect you have a wrong David, and would want to ask
->David Greaves instead.
->
->
->  
->
-quite right.
-I've dropped out somewhat since moving house/job. I'll fix it.
-
-David
 
 
--- 
+On Tue, 26 Jul 2005, Jeff Garzik wrote:
+> > 
+> > Put another way: do you argue that X network transparency is a total waste
+> > of time? You could certainly optimize X if you always made it be
+> > local-machine only. Or you could make tons of special cases, and have X 
+> > have separate code-paths for local clients and for remote clients, rather 
+> > than just always opening a socket connection.
+> 
+> Poor example...   sure it opens a socket, but X certainly does have a 
+> special case local path (mit shm), and they're adding more for 3D due 
+> the massive amount of data involved in 3D.
+
+.. and that's still a special case. Exactly like git does the "clone -l" 
+special case.
+
+> Well, I'm not overly concerned, mostly curious.  The pack+unpack step 
+> (a) appears completely redundant and (b) is the step that takes the most 
+> time here, for local pulls, after the diffstat.
+
+It's not actually redundant. Some of the _compression_ may be, and you 
+could see if you prefer a smaller delta window (use "--window=0" to 
+git-pack-objects to totally disable delta compression), but in general you 
+can't actually just link the files over like with "git clone", because 
+that would create total chaos and a real mess if the other end was packed.
+
+So "git pull" actually needs to copy one object at a time in order to have 
+sensible semantics together with "git repack". Now, you could make that 
+"one object at a time" thing have its own special cases ("if it's packed, 
+extract it as a unpacked object in the destination, if it's unpacked, just 
+link it if you can"), but it would just be pretty ugly.
+
+If it ever gets to be a real performance problem, we can certainly fix it,
+but in the meantime I _much_ prefer having one single path. I dislike the
+rsync (and the http) paths immensely already, but at least I don't have to
+use them..
+
+			Linus
