@@ -1,65 +1,105 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Why pack+unpack?
-Date: Mon, 25 Jul 2005 23:14:52 -0700
-Message-ID: <7vek9mayar.fsf@assigned-by-dhcp.cox.net>
-References: <42D7F415.30609@pobox.com>
-	<Pine.LNX.4.58.0507252145470.6074@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [PATCH] Make git-rename-script behave much better when faced with input contain Perl regular expression metacharacters.
+Date: Tue, 26 Jul 2005 02:56:57 -0400
+Message-ID: <20050726065657.GI6098@mythryan2.michonline.com>
+References: <20050725052646.GB6098@mythryan2.michonline.com> <7vpst7z9r9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff Garzik <jgarzik@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 26 08:17:02 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 26 08:57:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxIju-0002Bj-1E
-	for gcvg-git@gmane.org; Tue, 26 Jul 2005 08:16:30 +0200
+	id 1DxJNK-00066b-3q
+	for gcvg-git@gmane.org; Tue, 26 Jul 2005 08:57:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261744AbVGZGPu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 26 Jul 2005 02:15:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261742AbVGZGPt
-	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 02:15:49 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:56994 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S261744AbVGZGO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Jul 2005 02:14:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050726061454.DQTG7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 26 Jul 2005 02:14:54 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507252145470.6074@g5.osdl.org> (Linus Torvalds's message of "Mon, 25 Jul 2005 21:53:45 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261770AbVGZG5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 26 Jul 2005 02:57:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261809AbVGZG5B
+	(ORCPT <rfc822;git-outgoing>); Tue, 26 Jul 2005 02:57:01 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:8588 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261770AbVGZG5A (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Jul 2005 02:57:00 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1DxJN3-0000TG-Pe; Tue, 26 Jul 2005 02:56:57 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1DxJVs-0005YK-00; Tue, 26 Jul 2005 03:06:04 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1DxJN3-0004Kj-5U; Tue, 26 Jul 2005 02:56:57 -0400
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vpst7z9r9.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> See? Trying to have one really solid code-path is not a waste of time. 
+Also, restore support for the GIT_DIR
 
-An alternative code path specialized for local case would not be
-too bad.
+Signed-off-by: Ryan Anderson <ryan@michonline.com>
+---
 
-First, finding the list of objects to copy.  You can use
-alternate object pool to cover the upstream repository to pull
-from, and the downstream repository to pull into (both local),
-run rev-list --objects, giving it prefix '^' for all refs in the
-downstream repository, and the upstream head SHA1 you are
-pulling.  If the upstream head you are pulling is a tag, then
-you may need to dereference it as well.
+ git-rename-script |   26 ++++++++++----------------
+ 1 files changed, 10 insertions(+), 16 deletions(-)
 
-Among those objects, ones unpacked in the upstream can be
-copied/linked to the downstream repository.
+1ed66638c7ce328d882639447b80099f096c2993
+diff --git a/git-rename-script b/git-rename-script
+--- a/git-rename-script
++++ b/git-rename-script
+@@ -12,11 +12,8 @@ use strict;
+ sub usage($);
+ 
+ # Sanity checks:
+-my $GIT_DIR = $$ENV{'GIT_DIR'};
+-$GIT_DIR = ".git" unless defined $GIT_DIR;
+-
+-unless ( -d $GIT_DIR && -d $GIT_DIR . "/objects" && 
+-	-d $GIT_DIR . "/objects/00" && -d $GIT_DIR . "/refs") {
++unless ( -d ".git" && -d ".git/objects" && 
++	-d ".git/objects/00" && -d ".git/refs") {
+ 	usage("Git repository not found.");
+ }
+ 
+@@ -34,26 +31,23 @@ if (-e $dst) {
+ 
+ my (@allfiles,@srcfiles,@dstfiles);
+ 
+-$/ = "\0";
+-open(F,"-|","git-ls-files","-z")
++open(F,"-|","git-ls-files")
+ 	or die "Failed to open pipe from git-ls-files: " . $!;
+ 
+-@allfiles = map { chomp; $_; } <F>;
++@allfiles = <F>;
+ close(F);
++chomp for @allfiles;
++
+ 
+-my $safesrc = quotemeta($src);
+-@srcfiles = grep /^$safesrc/, @allfiles;
++@srcfiles = grep /^$src/, @allfiles;
+ @dstfiles = @srcfiles;
+-s#^$safesrc(/|$)#$dst$1# for @dstfiles;
++s#^$src(/|$)#$dst$1# for @dstfiles;
+ 
+ rename($src,$dst)
+ 	or die "rename failed: $!";
+ 
+-my $rc = system("git-update-cache","--add","--",@dstfiles);
+-die "git-update-cache failed to add new name with code $?\n" if $rc;
+-
+-$rc = system("git-update-cache","--remove","--",@srcfiles);
+-die "git-update-cache failed to remove old name with code $?\n" if $rc;
++system("git-update-cache","--remove","--",@srcfiles);
++system("git-update-cache","--add","--",@dstfiles);
+ 
+ 
+ sub usage($) {
 
-Handling packs involves a little bit of policy decision.  The
-current pack/unpack way always unpacks, and to emulate it, we
-can cat-file in the upstream object database, pipe that to
-"hash-object -w" (after giving hash-object an option to read
-from the standard input) to write in the downstream repository
-unpacked.  Easier alternative is to just hardlink all the packs
-from the upstream object database into the downstream object
-database, and keep packed things packed.
+-- 
 
-Well, it starts to sound somewhat bad...
+Ryan Anderson
+  sometimes Pug Majere
