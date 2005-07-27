@@ -1,72 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git 1.0 Synopis (Draft v2)
-Date: Wed, 27 Jul 2005 15:13:18 -0700
-Message-ID: <7vek9jq4n5.fsf@assigned-by-dhcp.cox.net>
-References: <20050727100123.GH19290@mythryan2.michonline.com>
+From: "Brian O'Mahoney" <omb@khandalf.com>
+Subject: Handover, Make
+Date: Thu, 28 Jul 2005 01:08:03 +0200
+Message-ID: <42E813D3.7020804@khandalf.com>
+Reply-To: omb@bluewin.ch
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 28 00:18:24 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Thu Jul 28 01:13:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxuE3-00040y-Pb
-	for gcvg-git@gmane.org; Thu, 28 Jul 2005 00:18:08 +0200
+	id 1Dxv4u-00015G-0D
+	for gcvg-git@gmane.org; Thu, 28 Jul 2005 01:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261198AbVG0WR1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 18:17:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261196AbVG0WOz
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 18:14:55 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:46543 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S261191AbVG0WNt (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 18:13:49 -0400
-Received: from fed1rmmtao05.cox.net (fed1rmmtao05.cox.net [68.230.241.34])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j6RMDm3f009246
-	for <git@vger.kernel.org>; Wed, 27 Jul 2005 15:13:48 -0700
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050727221311.UEC8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 27 Jul 2005 18:13:11 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050727100123.GH19290@mythryan2.michonline.com> (Ryan Anderson's message of "Wed, 27 Jul 2005 06:01:23 -0400")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
+	id S261215AbVG0XLz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 27 Jul 2005 19:11:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261160AbVG0XJe
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 19:09:34 -0400
+Received: from mxout.hispeed.ch ([62.2.95.247]:15520 "EHLO smtp.hispeed.ch")
+	by vger.kernel.org with ESMTP id S261153AbVG0XHS (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 19:07:18 -0400
+Received: from 84-73-132-32.dclient.hispeed.ch. (84-73-132-32.dclient.hispeed.ch [84.73.132.32])
+	(authenticated bits=0)
+	by smtp.hispeed.ch (8.12.6/8.12.6/tornado-1.0) with ESMTP id j6RN7BKQ013329
+	for <git@vger.kernel.org.>; Thu, 28 Jul 2005 01:07:11 +0200
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by
+    teraflex.teraflex-research.com (8.12.10/8.12.10/SuSE Linux 0.7) with ESMTP
+    id j6RN83WT019910 for <git@vger.kernel.org>; Thu, 28 Jul 2005 01:08:03
+    +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-Enigmail-Version: 0.90.2.0
+X-Enigmail-Supports: pgp-inline, pgp-mime
+X-Md5-Body: ee9cd4dea243474ec3d839a107a92996
+X-Transmit-Date: Thursday, 28 Jul 2005 1:8:9 +0200
+X-Message-Uid: 0000b49cec9dd603000000020000000042e813d90003187d00000001000bd4ce
+Replyto: omb@bluewin.ch
+X-Sender-Postmaster: Postmaster@84-73-132-32.dclient.hispeed.ch.
+Read-Receipt-To: omb@bluewin.ch
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on smtp-05.tornado.cablecom.ch
 X-Virus-Status: Clean
+X-DCC-spamcheck-02.tornado.cablecom.ch-Metrics: smtp-05.tornado.cablecom.ch 32701; Body=1
+	Fuz1=1 Fuz2=1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson <ryan@michonline.com> writes:
+=46irst, congratulations Junio, on taking over this stuff, and all the =
+best.
 
-> Source Code Management with Git
+Second, the killer argument, in the 'Recursive Make ... harmful' is the
+basic one that Recursive Makes breaks up the dependancy graph, and
+almost guarentees that it is wrong unless you do a lot of work to fix
+that artifact. Now git is small enough that make clean; make won't take
+too long but git is also a basis for other layers, so there is good
+reason to try to get it right.
 
-Thanks for doing this.  Generally looks excellent.
-
->   o Two, interchangeable, on-disk formats are used:
->     o An efficient, packed format that saves spaced and network
->       bandwidth.
-
-??? "spaced" ???
-
-> 	Or via Git itself:
-> 	git clone http://www.kernel.org/pub/scm/git/git.git/
-> 	git clone rsync://rsync.kernel.org/pub/scm/git/git.git/
-> 	(rsync is generally faster for an initial pull)
-
-These need a target directory name to create, like this:
-
-    git clone rsync://rsync.kernel.org/pub/scm/git/git.git/ $new_dir
-    git clone http://www.kernel.org/pub/scm/git/git.git/ $new_dir
-
-> Git results from the inspiration and frustration of Linus Torvalds, and
-> the enthusiastic help of over 300 participants on the development
-> mailing list.[1]  It is maintained by Junio C Hamano <junkio@cox.net>.
-
-Please drop the e-mail address here; you mention nobody else's.
-
-Well, dropping "the current maintainer" information altogether
-might be even better; the above to a casual reader sounds like
-Linus was frustrated and I wrote it for him, which is definitely
-not what we would like to say.  I suspect it still has more code
-by Linus than anybody else (I stopped counting some time ago).
+--=20
+mit freundlichen Gr=FC=DFen, Brian.
