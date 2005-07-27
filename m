@@ -1,75 +1,69 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
-Date: Wed, 27 Jul 2005 11:32:12 -0400
-Message-ID: <42E7A8FC.3080904@gmail.com>
-References: <20050727083910.GG19290@mythryan2.michonline.com> <42E79946.2020309@gmail.com> <20050727143720.GG7410@birddog.com>
-Reply-To: gitzilla@gmail.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Linux BKCVS kernel history git import..
+Date: Wed, 27 Jul 2005 08:50:27 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507270846360.3227@g5.osdl.org>
+References: <Pine.LNX.4.58.0507261136280.19309@g5.osdl.org> 
+ <1122457238.3027.37.camel@baythorne.infradead.org> 
+ <Pine.LNX.4.58.0507270819550.3227@g5.osdl.org> <1122478870.28128.52.camel@hades.cambridge.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 27 17:39:16 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: tglx@linutronix.de, Git Mailing List <git@vger.kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262430AbVG0Pww@vger.kernel.org Wed Jul 27 18:00:32 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel=40m.gmane.org-S262430AbVG0Pww@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxnzJ-0002BU-1d
-	for gcvg-git@gmane.org; Wed, 27 Jul 2005 17:38:29 +0200
+	id 1DxoJt-0005LR-RH
+	for glk-linux-kernel@gmane.org; Wed, 27 Jul 2005 17:59:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262367AbVG0PhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 11:37:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262365AbVG0Pee
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 11:34:34 -0400
-Received: from wproxy.gmail.com ([64.233.184.200]:6153 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262333AbVG0PcW (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 11:32:22 -0400
-Received: by wproxy.gmail.com with SMTP id i35so177231wra
-        for <git@vger.kernel.org>; Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=GryBr+J0h5t6XIpg3IP4VyPPmeHZ/hMmoBJiKWWQxVjLlJR/CxZ/Brne0tu465DiYBUCu8zFoPfUZDmqXgsK+x7R8XPgBHx7bVJnM1X2wIsdloG8dPc58txnRonB/m/oeuHG1cHZoGtcpX0fuz3h0qN+zRzXe/M0pDNd40tUuAM=
-Received: by 10.54.68.4 with SMTP id q4mr384347wra;
-        Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id d8sm650846wra.2005.07.27.08.32.15;
-        Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: "Kirby C. Bohling" <kbohling@birddog.com>
-In-Reply-To: <20050727143720.GG7410@birddog.com>
-Sender: git-owner@vger.kernel.org
+	id S262430AbVG0Pww (ORCPT <rfc822;glk-linux-kernel@m.gmane.org>);
+	Wed, 27 Jul 2005 11:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262429AbVG0Pwe
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 27 Jul 2005 11:52:34 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:38842 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262398AbVG0Puw (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 27 Jul 2005 11:50:52 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6RFoWjA030175
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 27 Jul 2005 08:50:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6RFoRIr027180;
+	Wed, 27 Jul 2005 08:50:29 -0700
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1122478870.28128.52.camel@hades.cambridge.redhat.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
+X-Mailing-List: linux-kernel@vger.kernel.org
 
-Kirby C. Bohling wrote:
-> On Wed, Jul 27, 2005 at 10:25:10AM -0400, A Large Angry SCM wrote:
->>Ryan Anderson wrote:
->>>Convert build process from recurse Make to a single Make
->>>
->>Please explain the rational for this.
-> 
-> I'm new to the list, but given the subject, I'm fairly confident
-> it's this.
-> 
-> http://www.canb.auug.org.au/~millerp/rmch/recu-make-cons-harm.html
-> 
-...
-> 
-> He used the exact wording just about everyone dones when referring
-> to it conceptually.  It's easy to google for support and rebuttal:
-> 
-> http://www.google.com/search?hl=en&q=Recursive+Make+considered+harmful&btnG=Google+Search
 
-Thanks for the references.
 
-A quick read of the paper and some of the rebuttals make me think that 
-either way (recursive/non-recursive):
-	* require about the same amount of makefile/dependency maintenance work 
-from developers.
-	* allow developers to be lazy in different ways with 
-makefiles/dependencies.
-	* achieves the same end.
+On Wed, 27 Jul 2005, David Woodhouse wrote:
+> 
+> Hm, OK. That works and can also be used for the "fake _absence_ of
+> parent" thing -- if I'm space-constrained and want only the history back
+> to some relatively recent point like 2.6.0, I can do that by turning the
+> 2.6.0 commit into an orphan instead of also using all the rest of the
+> history back to 2.4.0. 
 
-The non-recursive make method may have a small advantage for developers 
-using Git for their SCM because the Git operations are also performed at 
-the top level due to Git's design.
+Yes. The grafting really should work pretty well for various things like
+this, and at the same time I don't think it's ever going to be a huge 
+problem: people may have a couple of graft-points (if you want to drop 
+history, you may well have more than one point you need to "cauterize": 
+you may not be able to just cut it off at 2.6.0, since there may be merges 
+furhter back in history), but I don't think it's going to explode and 
+become unwieldly.
+
+I just don't see people having more than a few trees that they might want
+to graft together, and while the "drop history" thing might cause more
+issues, even that is bounded by the amount of development parallellism, so 
+while it probably causes more graft-points than the "join trees" usage, it 
+should still be just a small handful of points.
+
+			Linus
