@@ -1,89 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Linux BKCVS kernel history git import..
-Date: Wed, 27 Jul 2005 08:29:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507270819550.3227@g5.osdl.org>
-References: <Pine.LNX.4.58.0507261136280.19309@g5.osdl.org>
- <1122457238.3027.37.camel@baythorne.infradead.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
+Date: Wed, 27 Jul 2005 11:32:12 -0400
+Message-ID: <42E7A8FC.3080904@gmail.com>
+References: <20050727083910.GG19290@mythryan2.michonline.com> <42E79946.2020309@gmail.com> <20050727143720.GG7410@birddog.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: tglx@linutronix.de, Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 27 17:31:30 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 27 17:39:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dxnre-0000yp-Ib
-	for gcvg-git@gmane.org; Wed, 27 Jul 2005 17:30:34 +0200
+	id 1DxnzJ-0002BU-1d
+	for gcvg-git@gmane.org; Wed, 27 Jul 2005 17:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261253AbVG0PaK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 11:30:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261297AbVG0PaK
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 11:30:10 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33461 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261253AbVG0PaH (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 11:30:07 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6RFTojA028407
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 27 Jul 2005 08:29:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6RFTn5E026018;
-	Wed, 27 Jul 2005 08:29:50 -0700
-To: David Woodhouse <dwmw2@infradead.org>
-In-Reply-To: <1122457238.3027.37.camel@baythorne.infradead.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262367AbVG0PhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jul 2005 11:37:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262365AbVG0Pee
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 11:34:34 -0400
+Received: from wproxy.gmail.com ([64.233.184.200]:6153 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262333AbVG0PcW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 11:32:22 -0400
+Received: by wproxy.gmail.com with SMTP id i35so177231wra
+        for <git@vger.kernel.org>; Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=GryBr+J0h5t6XIpg3IP4VyPPmeHZ/hMmoBJiKWWQxVjLlJR/CxZ/Brne0tu465DiYBUCu8zFoPfUZDmqXgsK+x7R8XPgBHx7bVJnM1X2wIsdloG8dPc58txnRonB/m/oeuHG1cHZoGtcpX0fuz3h0qN+zRzXe/M0pDNd40tUuAM=
+Received: by 10.54.68.4 with SMTP id q4mr384347wra;
+        Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
+Received: from ?10.0.0.6? ([70.89.97.97])
+        by mx.gmail.com with ESMTP id d8sm650846wra.2005.07.27.08.32.15;
+        Wed, 27 Jul 2005 08:32:15 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: "Kirby C. Bohling" <kbohling@birddog.com>
+In-Reply-To: <20050727143720.GG7410@birddog.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Wed, 27 Jul 2005, David Woodhouse wrote:
-
-> On Tue, 2005-07-26 at 11:57 -0700, Linus Torvalds wrote:
-> > If somebody adds some logic to "parse_commit()" to do the "fake parent"
-> > thing, you can stitch the histories together and see the end result as one
-> > big tree. Even without that, you can already do things like
-> > 
-> >         git diff v2.6.10..v2.6.12
+Kirby C. Bohling wrote:
+> On Wed, Jul 27, 2005 at 10:25:10AM -0400, A Large Angry SCM wrote:
+>>Ryan Anderson wrote:
+>>>Convert build process from recurse Make to a single Make
+>>>
+>>Please explain the rational for this.
 > 
-> That's a bit of a hack which really doesn't belong in the git tools.
+> I'm new to the list, but given the subject, I'm fairly confident
+> it's this.
+> 
+> http://www.canb.auug.org.au/~millerp/rmch/recu-make-cons-harm.html
+> 
+...
+> 
+> He used the exact wording just about everyone dones when referring
+> to it conceptually.  It's easy to google for support and rebuttal:
+> 
+> http://www.google.com/search?hl=en&q=Recursive+Make+considered+harmful&btnG=Google+Search
 
-Actually, it's not a hack at all. It's very fundamentally how git works: 
-you give it two trees that it knows about, and it will show the 
-differences between them - regardless of whether they share any common 
-ancestry or not.
+Thanks for the references.
 
-> It's not particularly hard to reparent the tree for real -- I'd much
-> rather see a tool added to git which can _actually_ change the
-> 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 commit to have a parent of
-> 0bcc493c633d78373d3fcf9efc29d6a710637519, and ripple the corresponding
-> SHA1 changes up to the current HEAD.
+A quick read of the paper and some of the rebuttals make me think that 
+either way (recursive/non-recursive):
+	* require about the same amount of makefile/dependency maintenance work 
+from developers.
+	* allow developers to be lazy in different ways with 
+makefiles/dependencies.
+	* achieves the same end.
 
-I used to think I wanted to, but these days I really don't. One of the
-reasons is that I expect to try to pretty up the old bkcvs conversion some
-time: use the name translation from the old "shortlog" scripts etc, and
-see if I can do some other improvements on the conversion (I think I'll
-remove the BK files - "ChangeSet" etc).
-
-And it's really much easier and more general to have a "graft" facility.  
-It's something that git can do trivially (literally a hook in
-"parse_commit" to add a special parent), and it's actually a generic
-mechanism exactly for issues like this ("project had old history in some
-other format").
-
-Somebody already asked for having the import history for old historic 
-patches - which we _do_ actually have as patches, but which obviously 
-don't have any changelogs except for the version information. Most people 
-may not want that, but the thing is, with a "graft" facility, the people 
-who _do_ want that can easily see it all, and it is totally seamless.
-
-So it's not even a one-time hack - it's a real feature that just in the 
-kernel would have several cases we'd be able to use it for, and the same 
-is likely true for almost any other project that wasn't started purely 
-from git..
-
-		Linus
+The non-recursive make method may have a small advantage for developers 
+using Git for their SCM because the Git operations are also performed at 
+the top level due to Git's design.
