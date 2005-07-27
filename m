@@ -1,63 +1,41 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Linux BKCVS kernel history git import..
-Date: Wed, 27 Jul 2005 16:41:09 +0100
-Message-ID: <1122478870.28128.52.camel@hades.cambridge.redhat.com>
-References: <Pine.LNX.4.58.0507261136280.19309@g5.osdl.org>
-	 <1122457238.3027.37.camel@baythorne.infradead.org>
-	 <Pine.LNX.4.58.0507270819550.3227@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-status-script was missed during the conversion from N -> A
+Date: Wed, 27 Jul 2005 14:45:18 -0700
+Message-ID: <7vhdefrki9.fsf@assigned-by-dhcp.cox.net>
+References: <20050727083608.GF19290@mythryan2.michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: tglx@linutronix.de, Git Mailing List <git@vger.kernel.org>,
-	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 27 18:48:15 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 27 23:56:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dxp4o-0005A3-Si
-	for gcvg-git@gmane.org; Wed, 27 Jul 2005 18:48:15 +0200
+	id 1Dxtse-0001Fq-O9
+	for gcvg-git@gmane.org; Wed, 27 Jul 2005 23:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262394AbVG0Qmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 12:42:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262355AbVG0PkD
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 11:40:03 -0400
-Received: from pentafluge.infradead.org ([213.146.154.40]:58589 "EHLO
-	pentafluge.infradead.org") by vger.kernel.org with ESMTP
-	id S262389AbVG0Pjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2005 11:39:55 -0400
-Received: from nat-pool-stn.redhat.com ([62.200.124.98] helo=hades.cambridge.redhat.com)
-	by pentafluge.infradead.org with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1Dxo0c-0007Jr-9t; Wed, 27 Jul 2005 16:39:52 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507270819550.3227@g5.osdl.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-5) 
-X-Spam-Score: 0.0 (/)
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by pentafluge.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S261166AbVG0VqR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jul 2005 17:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261160AbVG0VqG
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 17:46:06 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:8149 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261154AbVG0VpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2005 17:45:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050727214511.INF8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 27 Jul 2005 17:45:11 -0400
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050727083608.GF19290@mythryan2.michonline.com> (Ryan Anderson's message of "Wed, 27 Jul 2005 04:36:08 -0400")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2005-07-27 at 08:29 -0700, Linus Torvalds wrote:
-> I used to think I wanted to, but these days I really don't. One of the
-> reasons is that I expect to try to pretty up the old bkcvs conversion some
-> time: use the name translation from the old "shortlog" scripts etc, and
-> see if I can do some other improvements on the conversion (I think I'll
-> remove the BK files - "ChangeSet" etc).
+Ryan Anderson <ryan@michonline.com> writes:
 
-Thomas has done all that; it's on kernel.org already.
+> git-status-script was missed during the conversion from "N" to "A" as
+> the new-file marker flag.
 
-> And it's really much easier and more general to have a "graft" facility.  
-> It's something that git can do trivially (literally a hook in
-> "parse_commit" to add a special parent), and it's actually a generic
-> mechanism exactly for issues like this ("project had old history in some
-> other format").
-
-Hm, OK. That works and can also be used for the "fake _absence_ of
-parent" thing -- if I'm space-constrained and want only the history back
-to some relatively recent point like 2.6.0, I can do that by turning the
-2.6.0 commit into an orphan instead of also using all the rest of the
-history back to 2.4.0. 
-
--- 
-dwmw2
+Thanks.  Applied and pushed out.
