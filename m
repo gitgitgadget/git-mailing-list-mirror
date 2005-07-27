@@ -1,103 +1,48 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
-Date: Wed, 27 Jul 2005 14:58:42 +0200
-Message-ID: <200507271458.43063.Josef.Weidendorfer@gmx.de>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
+Date: Wed, 27 Jul 2005 10:25:10 -0400
+Message-ID: <42E79946.2020309@gmail.com>
+References: <20050727083910.GG19290@mythryan2.michonline.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Jul 27 14:59:43 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 27 16:26:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DxlUt-0002tw-8o
-	for gcvg-git@gmane.org; Wed, 27 Jul 2005 14:58:55 +0200
+	id 1Dxmqd-00083x-3y
+	for gcvg-git@gmane.org; Wed, 27 Jul 2005 16:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262233AbVG0M6u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 08:58:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262234AbVG0M6u
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 08:58:50 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:16309 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S262233AbVG0M6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Jul 2005 08:58:49 -0400
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.1
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+	id S261290AbVG0OZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jul 2005 10:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262261AbVG0OZP
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 10:25:15 -0400
+Received: from wproxy.gmail.com ([64.233.184.200]:12239 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S261290AbVG0OZM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 10:25:12 -0400
+Received: by wproxy.gmail.com with SMTP id 57so187055wri
+        for <git@vger.kernel.org>; Wed, 27 Jul 2005 07:25:11 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=IgNXpVIHb/ztjB3y/DNEkvymsPHubUqdyJqGHweq3ffWkpNBdaXKzCk6d935tejqLJAfj+E2OVZqxLvIV7EpEdZ/Y7YqMh/d+z0X5j+GqvQMDTEZPu1t5fH5DGIpAQ0B+slvKwk1Hf3BVVzTypSJi3XJJksXG8PIUws9hFpaCKs=
+Received: by 10.54.143.10 with SMTP id q10mr360382wrd;
+        Wed, 27 Jul 2005 07:25:11 -0700 (PDT)
+Received: from ?10.0.0.6? ([70.89.97.97])
+        by mx.gmail.com with ESMTP id g7sm639295wra.2005.07.27.07.25.11;
+        Wed, 27 Jul 2005 07:25:11 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Ryan Anderson <ryan@michonline.com>
+In-Reply-To: <20050727083910.GG19290@mythryan2.michonline.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Ryan Anderson wrote:
+> Convert build process from recurse Make to a single Make
+> 
 
-if I clone a remote head other than master via Cogito with
-
-	cg-clone host:path#remoteHead,
-
-work on this branch, and try to push back my changes with
-
-	cg-push,
-
-I get the error
-
-	"pushing to a different head not supported yet".
-
-As far as I can see, there is no support in core GIT to make this ever work 
-(at least with get-send-packs), as "git-send-pack" only updates a set of 
-heads with the same name both locally and remote.
-
-I suppose the best would be to always keep the same head names in cloned 
-repositories - it seems to be easier to handle for users. Perhaps the only 
-exception would be "master", as one probably would like to pull masters of 
-different remote repositories into a local one (without really working on 
-them).
-
-Thus, what about the following: Each time a remote head other than master is 
-cloned, a head with the same name is created locally which is an alias to the 
-local master. This way, cg-push almost works out of the box. Following patch 
-implements this behavior.
-
-Josef
-
-diff --git a/cg-clone b/cg-clone
---- a/cg-clone
-+++ b/cg-clone
-@@ -69,5 +69,12 @@ cp $_git/refs/heads/origin $_git/refs/he
- git-read-tree HEAD
- git-checkout-cache -a
- git-update-cache --refresh
-
- echo "Cloned to $dir/ (origin $location available as branch \"origin\")"
-+
-+if echo "$location" | grep -q "#" ; then
-+       rembranch=$(echo "$location" | sed -e "s/.*#//")
-+       (cd $_git/refs/heads; ln -s master "$rembranch")
-+       echo "Remote head \"$rbranch\" locally available as alias for \"master\""
-+fi
-+
-diff --git a/cg-push b/cg-push
---- a/cg-push
-+++ b/cg-push
-@@ -28,17 +28,18 @@ uri=$(cat "$_git/branches/$name" 2>/dev/
-
- rembranch=master
- if echo "$uri" | grep -q '#'; then
-        rembranch=$(echo $uri | cut -d '#' -f 2)
-        uri=$(echo $uri | cut -d '#' -f 1)
--       die "pushing to a different head not supported yet"
-+        [ -s $_git/refs/heads/$rembranch ] || (cd $_git/refs/heads;ln -s master $rembranch)
-+        [ $(readlink $_git/refs/heads/$rembranch) = "master" ] || \
-+          die "can not push to remote head \"$rembranch\""
- fi
-
- if echo "$uri" | grep -q "^http://"; then
-        die "pushing over HTTP not supported yet"
- elif echo "$uri" | grep -q "^git+ssh://"; then
-        git-send-pack "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" $rembranch
--elif echo "$uri" | grep -q ":"; then
-+elif echo "$uri" | grep -q "^rsync://"; then
-        die "pushing over rsync not supported"
- else
-        git-send-pack "$uri" $rembranch
- fi
+Please explain the rational for this.
