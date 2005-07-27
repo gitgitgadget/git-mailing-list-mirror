@@ -1,113 +1,103 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Git 1.0 Synopis (Draft v2)
-Date: Wed, 27 Jul 2005 06:01:23 -0400
-Message-ID: <20050727100123.GH19290@mythryan2.michonline.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
+Date: Wed, 27 Jul 2005 14:58:42 +0200
+Message-ID: <200507271458.43063.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Wed Jul 27 12:05:03 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Jul 27 14:59:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DximP-0003EL-9G
-	for gcvg-git@gmane.org; Wed, 27 Jul 2005 12:04:49 +0200
+	id 1DxlUt-0002tw-8o
+	for gcvg-git@gmane.org; Wed, 27 Jul 2005 14:58:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262141AbVG0KEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 27 Jul 2005 06:04:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262134AbVG0KBv
-	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 06:01:51 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:41413 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S262115AbVG0KBY (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Jul 2005 06:01:24 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1Dxij6-00084o-Du
-	for git@vger.kernel.org; Wed, 27 Jul 2005 06:01:24 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1Dxis6-0000uY-00
-	for <git@vger.kernel.org>; Wed, 27 Jul 2005 06:10:42 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1Dxij5-0001DC-QL
-	for git@vger.kernel.org; Wed, 27 Jul 2005 06:01:23 -0400
+	id S262233AbVG0M6u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 27 Jul 2005 08:58:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262234AbVG0M6u
+	(ORCPT <rfc822;git-outgoing>); Wed, 27 Jul 2005 08:58:50 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:16309 "EHLO
+	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
+	id S262233AbVG0M6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Jul 2005 08:58:49 -0400
 To: git@vger.kernel.org
+User-Agent: KMail/1.8.1
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6+20040907i
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[This is still a draft, but I think I incorporated the suggestons from
-the last attempt.]
+Hi,
 
-Source Code Management with Git
+if I clone a remote head other than master via Cogito with
 
-Git, sometimes called "global information tracker", is a "directory
-content manager".  Git has been designed to handle absolutely massive
-projects with speed and efficiency, and the release of the 2.6.12 and
-(soon) the 2.6.13 version of the Linux kernel would indicate that it
-does this task well.
+	cg-clone host:path#remoteHead,
 
-Git falls into the category of distributed source code management tools,
-similar to Arch or Darcs (or, in the commercial world, BitKeeper).  Every Git
-working directory is a full-fledged repository with full revision tracking
-capabilities, not dependent on network access to a central server.
+work on this branch, and try to push back my changes with
 
-Git uses the SHA1 hash algorithm to provide a content-addressable pseudo
-filesystem, complete with its own version of fsck.
-  o Speed of use, both for the project maintainer, and the end-users, is
-    a key development principle.
-  o The history is stored as a directed acyclic graph, making long-lived
-    branches and repeated merging simple.
-  o A collection of related projects are building on the core Git project,
-    either to provide an easier to use interface on top (StGit, Cogito, qgit,
-    gitk, gitweb), or to take some of the underlying concepts and reimplement
-    them directly into another system (Arch 2.0, Darcs-git).
-  o Two, interchangeable, on-disk formats are used:
-    o An efficient, packed format that saves spaced and network
-      bandwidth.
-    o An unpacked format, optimized for fast writes and incremental
-      work.
+	cg-push,
 
-To get a copy of Git:
-	Daily snapshots are available at:
-	http://www.codemonkey.org.uk/projects/git-snapshots/git/
-	(Thanks to Dave Jones)
+I get the error
 
-	Source tarballs and RPMs at:
-	http://www.kernel.org/pub/software/scm/git/
+	"pushing to a different head not supported yet".
 
-	Deb packages at:
-	<insert url here>
+As far as I can see, there is no support in core GIT to make this ever work 
+(at least with get-send-packs), as "git-send-pack" only updates a set of 
+heads with the same name both locally and remote.
 
-	Or via Git itself:
-	git clone http://www.kernel.org/pub/scm/git/git.git/
-	git clone rsync://rsync.kernel.org/pub/scm/git/git.git/
-	(rsync is generally faster for an initial pull)
+I suppose the best would be to always keep the same head names in cloned 
+repositories - it seems to be easier to handle for users. Perhaps the only 
+exception would be "master", as one probably would like to pull masters of 
+different remote repositories into a local one (without really working on 
+them).
 
-Git distributions contain a tutorial in the Documentation subdirectory.
-Additionally, the Kernel-Hacker's Git Tutorial at
-http://linux.yyz.us/git-howto.html may be useful.  (Thanks to Jeff Garzik for
-that document)
+Thus, what about the following: Each time a remote head other than master is 
+cloned, a head with the same name is created locally which is an alias to the 
+local master. This way, cg-push almost works out of the box. Following patch 
+implements this behavior.
 
-Git development takes place on the Git mailing list.  To subscribe, send an
-email with just "subscribe git" in the body to majordomo@vger.kernel.org.
-Mailing list archives are available at http://marc.theaimsgroup.com/?l=git
+Josef
 
-Git results from the inspiration and frustration of Linus Torvalds, and
-the enthusiastic help of over 300 participants on the development
-mailing list.[1]  It is maintained by Junio C Hamano <junkio@cox.net>.
+diff --git a/cg-clone b/cg-clone
+--- a/cg-clone
++++ b/cg-clone
+@@ -69,5 +69,12 @@ cp $_git/refs/heads/origin $_git/refs/he
+ git-read-tree HEAD
+ git-checkout-cache -a
+ git-update-cache --refresh
 
-1 - Generated with the following, in a maildir folder:
-        find . -type f | xargs grep -h "^From:" | perl -ne \
-        'tr#A-Z#a-z#; m#<(.*)># && print $1,"\n";' | sort -u | wc -l
+ echo "Cloned to $dir/ (origin $location available as branch \"origin\")"
++
++if echo "$location" | grep -q "#" ; then
++       rembranch=$(echo "$location" | sed -e "s/.*#//")
++       (cd $_git/refs/heads; ln -s master "$rembranch")
++       echo "Remote head \"$rbranch\" locally available as alias for \"master\""
++fi
++
+diff --git a/cg-push b/cg-push
+--- a/cg-push
++++ b/cg-push
+@@ -28,17 +28,18 @@ uri=$(cat "$_git/branches/$name" 2>/dev/
 
-(This summary written by Ryan Anderson <ryan@michonline.com>.  Please bug him
-with any corrections or complaints.)
+ rembranch=master
+ if echo "$uri" | grep -q '#'; then
+        rembranch=$(echo $uri | cut -d '#' -f 2)
+        uri=$(echo $uri | cut -d '#' -f 1)
+-       die "pushing to a different head not supported yet"
++        [ -s $_git/refs/heads/$rembranch ] || (cd $_git/refs/heads;ln -s master $rembranch)
++        [ $(readlink $_git/refs/heads/$rembranch) = "master" ] || \
++          die "can not push to remote head \"$rembranch\""
+ fi
 
-
-
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+ if echo "$uri" | grep -q "^http://"; then
+        die "pushing over HTTP not supported yet"
+ elif echo "$uri" | grep -q "^git+ssh://"; then
+        git-send-pack "$(echo "$uri" | sed 's#^git+ssh://\([^/]*\)\(/.*\)$#\1:\2#')" $rembranch
+-elif echo "$uri" | grep -q ":"; then
++elif echo "$uri" | grep -q "^rsync://"; then
+        die "pushing over rsync not supported"
+ else
+        git-send-pack "$uri" $rembranch
+ fi
