@@ -1,68 +1,73 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [RFC] extending git-ls-files --exclude.
-Date: Thu, 28 Jul 2005 12:04:31 -0400
-Message-ID: <42E9020F.3080302@gmail.com>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca> <7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com> <20050722192424.GB8556@mars.ravnborg.org> <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net> <20050722205948.GE11916@pasky.ji.cz> <7vd5p73jlu.fsf@assigned-by-dhcp.cox.net> <20050728155210.GA17952@pasky.ji.cz>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
+Date: Thu, 28 Jul 2005 09:14:17 -0700
+Message-ID: <7vwtnadi1y.fsf@assigned-by-dhcp.cox.net>
+References: <200507271458.43063.Josef.Weidendorfer@gmx.de>
+	<7vll3rlnqm.fsf@assigned-by-dhcp.cox.net>
+	<200507271458.43063.Josef.Weidendorfer@gmx.de>
+	<20050728120806.GA2391@pasky.ji.cz>
+	<Pine.LNX.4.58.0507281504100.25402@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<20050728153506.GL14229@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Thu Jul 28 18:10:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 28 18:19:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyAxe-0005ho-Q6
-	for gcvg-git@gmane.org; Thu, 28 Jul 2005 18:10:19 +0200
+	id 1DyB52-00070W-T5
+	for gcvg-git@gmane.org; Thu, 28 Jul 2005 18:17:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261610AbVG1QJj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jul 2005 12:09:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261556AbVG1QHA
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 12:07:00 -0400
-Received: from wproxy.gmail.com ([64.233.184.207]:27735 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261610AbVG1QEf (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2005 12:04:35 -0400
-Received: by wproxy.gmail.com with SMTP id i24so426176wra
-        for <git@vger.kernel.org>; Thu, 28 Jul 2005 09:04:34 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=XP1O1yE2Hi7bLibpii9YhWkxtq9BWfvt8gCIR/SQFZeG5Oip1ktCaP9buAdgIoSASaIMcsJt5yS6vyY76/d077O2rGJgIYMe3t0z8gy2kZUlsVqxRIPVohN59wVjccZbqwvRDp8Pkz42Igw9R8zbNP9crDa5AdISWY4e+T/Lnt4=
-Received: by 10.54.13.59 with SMTP id 59mr859971wrm;
-        Thu, 28 Jul 2005 09:04:34 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id 45sm1397958wri.2005.07.28.09.04.33;
-        Thu, 28 Jul 2005 09:04:34 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
+	id S261609AbVG1QRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jul 2005 12:17:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261456AbVG1QOf
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 12:14:35 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:42140 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261573AbVG1QOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2005 12:14:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050728161414.UWEV1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Jul 2005 12:14:14 -0400
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050728155210.GA17952@pasky.ji.cz>
+In-Reply-To: <20050728153506.GL14229@pasky.ji.cz> (Petr Baudis's message of "Thu, 28 Jul 2005 17:35:06 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis wrote:
->   I think this is wrong, and my brief experiments confirm that. I think
-> that the actually useful semantics of exclusion would be for
-> _subsequent_ exclusions, not preliminary ones. You generally don't say
-> "I never want this ignored, but I want the rest of that ignored", but
-> "I want that ignored, except this". This also gives you more
-> flexibility:
-> 
-> 	*.html
-> 	!f*.html
-> 	fo*.html
-> 
-> would ignore *.html and fo*.html, but not any other f*.html filenames.
-> But more importantly,
-> 
-> 	.gitignore: *.txt
-> 	Documentation/.gitignore: !*.txt
-> 
-> will not work, which was the whole _point_ of the exclusion.
+Petr Baudis <pasky@suse.cz> writes:
 
-So you're arguing for "last match wins" versus "first match wins". I, 
-personally, find the former more natural and easier to debug by hand.
+> Dear diary, on Thu, Jul 28, 2005 at 03:07:01PM CEST, I got a letter
+> where Johannes Schindelin <Johannes.Schindelin@gmx.de> told me that...
+>> IMHO this opens the door for shooting in your own foot. Isn't it much too
+>> easy to make a mistake with that syntax?
+>
+> What mistake?
+>
+>> What is so wrong with git-clone not allowing you to name the HEAD
+>> differently?
+>
+> Did you read the preceding discussion? When you are pushing from your
+> master branch to a remote branch, it may well be called different over
+> there.
+
+The real question is why you would even want to do that.
+
+Managing multiple heads and making sure which one is which even
+on a single repository is a mental burden, at least to me.  When
+you can name local and remote differently, the name mappings
+also need to be managed in addition to that.  Yes, the mappings
+can be automated by Porcelains, but that means we need to have
+another configuration item around (which needs to be compatible
+across Porcelains) to achieve that flexibility, but what does
+that flexibility really buys you?
+
+My gut feeling is that Johannes is right here, at least about
+the send-pack side.  Storing "master" pulled from a remote under
+a name different from the remote is a different story.  I do not
+have much problem with that.
