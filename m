@@ -1,112 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] gitk: Use GIT_DIR where appropriate.
-Date: Thu, 28 Jul 2005 00:28:44 -0700
-Message-ID: <7vpst3e6dv.fsf@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
+Date: Thu, 28 Jul 2005 09:45:31 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.28.07.45.31.245357@smurf.noris.de>
+References: <20050727083910.GG19290@mythryan2.michonline.com> <7v4qafrk8w.fsf@assigned-by-dhcp.cox.net> <7v64uvh0mo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 28 09:29:18 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Thu Jul 28 09:49:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dy2p5-0000dv-4q
-	for gcvg-git@gmane.org; Thu, 28 Jul 2005 09:28:55 +0200
+	id 1Dy38u-0002bj-DR
+	for gcvg-git@gmane.org; Thu, 28 Jul 2005 09:49:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261308AbVG1H2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jul 2005 03:28:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261315AbVG1H2u
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 03:28:50 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8138 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S261308AbVG1H2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2005 03:28:50 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050728072840.CDMS1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 28 Jul 2005 03:28:40 -0400
-To: Paul Mackerras <paulus@samba.org>
+	id S261323AbVG1Hsw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jul 2005 03:48:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261331AbVG1HrE
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 03:47:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:16790 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261323AbVG1HqO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2005 03:46:14 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Dy35c-0002Iw-Ai
+	for git@vger.kernel.org; Thu, 28 Jul 2005 09:46:02 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Jul 2005 09:46:00 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 28 Jul 2005 09:46:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Some places assumed .git is the GIT_DIR, resulting heads and
-tags not showing when it was run like "GIT_DIR=. gitk --all".
-This is not a contrived example --- I rely on it to verify
-my private copy of git.git repository before pushing it out.
+Hi, Junio C Hamano wrote:
 
-Define a single procedure "gitdir" and use it.
+> The Debian build is not affected because it does not produce
+> separate git-core and doc-git-core packages[*1*]; probably this
+> was the reason you did not notice this.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+git-core-doc, actually.
 
-*** Paul, I will not be applying this to the copy Linus pulled
-*** into git.git repository, but sending it to you in a patch
-*** form.  I believe that would be easier for you to work with
-*** than pulling from git.git along with all the other stuff.
+Debian does that only if the documentation is substantial. Even then,
+manpages may not be segregated into -doc.
 
- gitk |   24 +++++++++++++-----------
- 1 files changed, 13 insertions(+), 11 deletions(-)
+However, I *would* segregate gitk into its own Debian package, because
+it requires wish et al., which would pull a large chunk of X11 stuff,
+which people may not want on their server.
 
-c41a6a0271ea966f5d5cd648b854ec78b90096a6
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -7,17 +7,22 @@ exec wish "$0" -- "${1+$@}"
- # and distributed under the terms of the GNU General Public Licence,
- # either version 2, or (at your option) any later version.
- 
-+proc gitdir {} {
-+    global env
-+    if {[info exists env(GIT_DIR)]} {
-+	return $env(GIT_DIR)
-+    } else {
-+	return ".git"
-+    }
-+}
-+
- proc getcommits {rargs} {
-     global commits commfd phase canv mainfont env
-     global startmsecs nextupdate
-     global ctext maincursor textcursor leftover
- 
-     # check that we can find a .git directory somewhere...
--    if {[info exists env(GIT_DIR)]} {
--	set gitdir $env(GIT_DIR)
--    } else {
--	set gitdir ".git"
--    }
-+    set gitdir [gitdir]
-     if {![file isdirectory $gitdir]} {
- 	error_popup "Cannot find the git directory \"$gitdir\"."
- 	exit 1
-@@ -212,7 +217,7 @@ proc parsecommit {id contents listed} {
- 
- proc readrefs {} {
-     global tagids idtags headids idheads
--    set tags [glob -nocomplain -types f .git/refs/tags/*]
-+    set tags [glob -nocomplain -types f [gitdir]/refs/tags/*]
-     foreach f $tags {
- 	catch {
- 	    set fd [open $f r]
-@@ -241,7 +246,7 @@ proc readrefs {} {
- 	    close $fd
- 	}
-     }
--    set heads [glob -nocomplain -types f .git/refs/heads/*]
-+    set heads [glob -nocomplain -types f [gitdir]/refs/heads/*]
-     foreach f $heads {
- 	catch {
- 	    set fd [open $f r]
-@@ -2752,10 +2757,7 @@ proc domktag {} {
- 	return
-     }
-     if {[catch {
--	set dir ".git"
--	if {[info exists env(GIT_DIR)]} {
--	    set dir $env(GIT_DIR)
--	}
-+	set dir [gitdir]
- 	set fname [file join $dir "refs/tags" $tag]
- 	set f [open $fname w]
- 	puts $f $id
+Patch follows separately -- I'll have to pull it from my other mess
+(which includes yet another Debian package for Cogito ;-).
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+A zealot's stones will break my bones, but gods will never hurt me.
