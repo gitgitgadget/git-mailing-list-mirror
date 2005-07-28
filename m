@@ -1,36 +1,37 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] support bc version 1.04
-Date: Thu, 28 Jul 2005 16:48:37 +0200 (CEST)
-Message-ID: <Pine.LNX.4.58.0507281648150.25783@wgmdd8.biozentrum.uni-wuerzburg.de>
+Subject: [RFD] socklen_t needs to be defined and libssl to be linked on old
+ Mac OS X
+Date: Thu, 28 Jul 2005 16:51:41 +0200 (CEST)
+Message-ID: <Pine.LNX.4.58.0507281649230.25783@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Jul 28 16:52:55 2005
+X-From: git-owner@vger.kernel.org Thu Jul 28 17:00:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dy9jH-0000T8-OC
-	for gcvg-git@gmane.org; Thu, 28 Jul 2005 16:51:24 +0200
+	id 1Dy9rC-0001lN-6x
+	for gcvg-git@gmane.org; Thu, 28 Jul 2005 16:59:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261493AbVG1Oun (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jul 2005 10:50:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261480AbVG1Oss
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 10:48:48 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3249 "EHLO
+	id S261548AbVG1O7C (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jul 2005 10:59:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261528AbVG1OyA
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 10:54:00 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:57521 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S261493AbVG1Osi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2005 10:48:38 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id AF797E25B7
-	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:48:37 +0200 (CEST)
+	id S261515AbVG1Ovm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2005 10:51:42 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 6B533E243F
+	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:51:41 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 96D51913C9
-	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:48:37 +0200 (CEST)
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 48066A86AF
+	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:51:41 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 7E84191393
-	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:48:37 +0200 (CEST)
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2B9F7A8677
+	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:51:41 +0200 (CEST)
 Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 60FF8E25B7
-	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:48:37 +0200 (CEST)
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 1495CE243F
+	for <git@vger.kernel.org>; Thu, 28 Jul 2005 16:51:41 +0200 (CEST)
 X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
 To: git@vger.kernel.org
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
@@ -39,31 +40,45 @@ Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
-Test t6002 unnecessarily fails when bc is a bit older than average.
+On older Mac OS X (10.2.8), no socklen_t is defined, and therefore
+daemon.c does not compile. However, Mac OS X 10.4 seems to define
+socklen_t differently.
 
-Signed-off-by: Johannes.Schindelin <Johannes.Schindelin@gmx.de>
+Also, linking fails due to some symbols defined in libssl (not just
+libcrypto).
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
 ---
 
- t/t6002-rev-list-bisect.sh |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+ Makefile |    4 ++++
+ daemon.c |    3 +++
+ 2 files changed, 7 insertions
 
-ccea5a568914eafc07caf0c291afe5f962672cd3
-diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
---- a/t/t6002-rev-list-bisect.sh
-+++ b/t/t6002-rev-list-bisect.sh
-@@ -11,8 +11,12 @@ bc_expr()
- {
- bc <<EOF
- scale=1
--define abs(x) { if (x>=0) { return x; } else { return -x; } }
--define floor(x) { save=scale; scale=0; result=x/1; scale=save; return result; }
-+define abs(x) {
-+	if (x>=0) { return (x); } else { return (-x); }
-+}
-+define floor(x) {
-+	save=scale; scale=0; result=x/1; scale=save; return (result);
-+}
- $*
- EOF
- }
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -95,7 +95,11 @@ ifdef PPC_SHA1
+   LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
+ else
+   SHA1_HEADER=<openssl/sha.h>
++ifeq ($(shell uname -s),Darwin)
++  LIBS += -lcrypto -lssl
++else
+   LIBS += -lcrypto
++endif
+ endif
+ endif
+
+diff --git a/daemon.c b/daemon.c
+--- a/daemon.c
++++ b/daemon.c
+@@ -5,6 +5,9 @@
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
++#ifdef __APPLE__
++typedef int socklen_t;
++#endif
+
+ static const char daemon_usage[] = "git-daemon [--inetd | --port=n]";
