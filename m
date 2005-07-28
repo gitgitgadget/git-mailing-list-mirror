@@ -1,78 +1,112 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
-Date: Thu, 28 Jul 2005 00:04:47 -0700
-Message-ID: <7v64uvh0mo.fsf@assigned-by-dhcp.cox.net>
-References: <20050727083910.GG19290@mythryan2.michonline.com>
-	<7v4qafrk8w.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] gitk: Use GIT_DIR where appropriate.
+Date: Thu, 28 Jul 2005 00:28:44 -0700
+Message-ID: <7vpst3e6dv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 28 09:05:42 2005
+X-From: git-owner@vger.kernel.org Thu Jul 28 09:29:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dy2Rr-0006zL-39
-	for gcvg-git@gmane.org; Thu, 28 Jul 2005 09:04:55 +0200
+	id 1Dy2p5-0000dv-4q
+	for gcvg-git@gmane.org; Thu, 28 Jul 2005 09:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261314AbVG1HEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jul 2005 03:04:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261317AbVG1HEu
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 03:04:50 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:30407 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S261314AbVG1HEt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Jul 2005 03:04:49 -0400
+	id S261308AbVG1H2u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jul 2005 03:28:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261315AbVG1H2u
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 03:28:50 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:8138 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261308AbVG1H2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2005 03:28:50 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050728070437.SPOT19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 28 Jul 2005 03:04:37 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <7v4qafrk8w.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed, 27 Jul 2005 14:50:55 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+          id <20050728072840.CDMS1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Jul 2005 03:28:40 -0400
+To: Paul Mackerras <paulus@samba.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan, I am dropping this patch, at least for now, after keeping
-it in the "pu" (proposed updates) branch and using it myself.
-There are two complaints from me.
+Some places assumed .git is the GIT_DIR, resulting heads and
+tags not showing when it was run like "GIT_DIR=. gitk --all".
+This is not a contrived example --- I rely on it to verify
+my private copy of git.git repository before pushing it out.
 
-I am used to "make bin=$HOME/bin/i386 install install-tools",
-which the patch breaks (I do not want to build docs for myself).
-This is minor; I could say "install-bin install-toolsxx"
-instead.
+Define a single procedure "gitdir" and use it.
 
-I do not deal with RPM packages myself, but guessing by reading
-git-core.spec.in, I think it relies on the install target not
-touching the documentation, in order for it to be able to build
-doc-full and/or doc-less binary packages.  The patch makes
-install target to also build and install docs.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-The Debian build is not affected because it does not produce
-separate git-core and doc-git-core packages[*1*]; probably this
-was the reason you did not notice this.
+*** Paul, I will not be applying this to the copy Linus pulled
+*** into git.git repository, but sending it to you in a patch
+*** form.  I believe that would be easier for you to work with
+*** than pulling from git.git along with all the other stuff.
 
-I think what is installed from the toplevel and what comes from
-tools/ subdirectory are divided mostly for historical reasons
-and nothing else[*2*], and I do not mind the install target
-depending on install-bin and install-tools, but I suspect that
-binary packaging folks would appreciate to have a separate doc
-target that is not done by a normal install.
+ gitk |   24 +++++++++++++-----------
+ 1 files changed, 13 insertions(+), 11 deletions(-)
 
-Speeding up the build procedure by defining dependencies
-correctly is a worthy goal.  Personally I feel a low hanging
-fruit is in the main Makefile, before worrying about the make
-recursion.  Many things are in libgit.a and when I touch
-something only relevant to small number of things, say
-csum-file.c, all "git-%: %.c" programs are recompiled and
-relinked, even most of them do not link with csum-file.o (this
-particular one is only used by git-pack-objects, by the way).
-
-[Footnote]
-
-*1* Which, BTW, would be the Debian way, if I am not mistaken.
-
-*2* Although one _could_ argue that tools/ is primarily meant
-for "project lead" role users who accept and incorporate patches
-obtained via e-mails.
+c41a6a0271ea966f5d5cd648b854ec78b90096a6
+diff --git a/gitk b/gitk
+--- a/gitk
++++ b/gitk
+@@ -7,17 +7,22 @@ exec wish "$0" -- "${1+$@}"
+ # and distributed under the terms of the GNU General Public Licence,
+ # either version 2, or (at your option) any later version.
+ 
++proc gitdir {} {
++    global env
++    if {[info exists env(GIT_DIR)]} {
++	return $env(GIT_DIR)
++    } else {
++	return ".git"
++    }
++}
++
+ proc getcommits {rargs} {
+     global commits commfd phase canv mainfont env
+     global startmsecs nextupdate
+     global ctext maincursor textcursor leftover
+ 
+     # check that we can find a .git directory somewhere...
+-    if {[info exists env(GIT_DIR)]} {
+-	set gitdir $env(GIT_DIR)
+-    } else {
+-	set gitdir ".git"
+-    }
++    set gitdir [gitdir]
+     if {![file isdirectory $gitdir]} {
+ 	error_popup "Cannot find the git directory \"$gitdir\"."
+ 	exit 1
+@@ -212,7 +217,7 @@ proc parsecommit {id contents listed} {
+ 
+ proc readrefs {} {
+     global tagids idtags headids idheads
+-    set tags [glob -nocomplain -types f .git/refs/tags/*]
++    set tags [glob -nocomplain -types f [gitdir]/refs/tags/*]
+     foreach f $tags {
+ 	catch {
+ 	    set fd [open $f r]
+@@ -241,7 +246,7 @@ proc readrefs {} {
+ 	    close $fd
+ 	}
+     }
+-    set heads [glob -nocomplain -types f .git/refs/heads/*]
++    set heads [glob -nocomplain -types f [gitdir]/refs/heads/*]
+     foreach f $heads {
+ 	catch {
+ 	    set fd [open $f r]
+@@ -2752,10 +2757,7 @@ proc domktag {} {
+ 	return
+     }
+     if {[catch {
+-	set dir ".git"
+-	if {[info exists env(GIT_DIR)]} {
+-	    set dir $env(GIT_DIR)
+-	}
++	set dir [gitdir]
+ 	set fname [file join $dir "refs/tags" $tag]
+ 	set f [open $fname w]
+ 	puts $f $id
