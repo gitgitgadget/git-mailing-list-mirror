@@ -1,60 +1,74 @@
 From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
-Date: Fri, 29 Jul 2005 09:46:14 +0200
-Message-ID: <20050729074614.GF24895@pasky.ji.cz>
-References: <20050727083910.GG19290@mythryan2.michonline.com> <7v4qafrk8w.fsf@assigned-by-dhcp.cox.net> <20050729065335.GA32263@mythryan2.michonline.com> <20050729073134.GA6507@mars.ravnborg.org>
+Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
+Date: Fri, 29 Jul 2005 10:10:51 +0200
+Message-ID: <20050729081051.GH24895@pasky.ji.cz>
+References: <20050728120806.GA2391@pasky.ji.cz> <Pine.LNX.4.58.0507281504100.25402@wgmdd8.biozentrum.uni-wuerzburg.de> <20050728153506.GL14229@pasky.ji.cz> <Pine.LNX.4.58.0507281747320.29968@wgmdd8.biozentrum.uni-wuerzburg.de> <20050728161815.GC17952@pasky.ji.cz> <7v1x5ic1pe.fsf@assigned-by-dhcp.cox.net> <20050728183904.GA24948@pasky.ji.cz> <7v4qaeqrh3.fsf@assigned-by-dhcp.cox.net> <20050729070628.GA24895@pasky.ji.cz> <7vmzo6jbme.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ryan Anderson <ryan@michonline.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 09:57:30 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 10:13:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyPk8-0006Xa-EU
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 09:57:20 +0200
+	id 1DyPyy-0007rV-KP
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 10:12:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262513AbVG2H4q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 03:56:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262495AbVG2Hqt
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 03:46:49 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:54283 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262496AbVG2HqR (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 03:46:17 -0400
-Received: (qmail 30832 invoked by uid 2001); 29 Jul 2005 07:46:14 -0000
-To: Sam Ravnborg <sam@ravnborg.org>
+	id S262506AbVG2IMX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 04:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262515AbVG2IMX
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 04:12:23 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:12300 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262506AbVG2IK4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 04:10:56 -0400
+Received: (qmail 1496 invoked by uid 2001); 29 Jul 2005 08:10:51 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <20050729073134.GA6507@mars.ravnborg.org>
+In-Reply-To: <7vmzo6jbme.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.4i
 X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jul 29, 2005 at 09:31:34AM CEST, I got a letter
-where Sam Ravnborg <sam@ravnborg.org> told me that...
-> > > While I do not have strong objections to make the build process
-> > > go faster, it is somewhat disturbing that the Makefile pieces
-> > > maintained in subdirectories need to name things they touch
-> > > using paths that include the subdirectory names.  I do not have
-> > > a better alternative to suggest, though...
+Dear diary, on Fri, Jul 29, 2005 at 09:48:57AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Petr Baudis <pasky@suse.cz> writes:
 > 
-> If the goal is to speed up the build process the only sane way is to fix
-> the dependencies. In kbuild fixdep is used to parse the .c file and it
-> locates all references to .h files (recursive) and also detects any
-> usage of CONFIG_ symbols.
-> This part should be relative straightforward to include in git.
+> > Aha, so it seems our problem is hopefully only in terminology, great.
+> >
+> > So, what do you mean by "clone" here? And what command should I use for
+> > pushing then?
+> 
+> Notice I never used the word "clone" in what I said.
 
-FWIW, I made tiny "build system" (inspired by kconfig) for smaller
-projects I work on:
+> > However, I happen to think that two repositories
+> > you use send-pack (not _CLONE_ which uses completely different
+> > protocol)
 
-http://pasky.or.cz/~pasky/dev/tunneler/co/Makefile
-http://pasky.or.cz/~pasky/dev/tunneler/co/Makefile.lib
-http://pasky.or.cz/~pasky/dev/tunneler/co/client/Makefile
+(emphasis mine ;-)
 
-Perhaps someone might find that a nice base for further hacking. It
-generally appears to work pretty well in practice, although the
-automatic dependency tracking might not be perfect.
+> Now, A may happen to be on my home machine and B may happen be
+> on my notebook, meaning the owner of A and B are both myself.
+> But even in that case I would still work by "pulling from A"
+> when I am on B, and "pulling from B" when I am on A.  In other
+> words, "pulling" is the only patch flow mechanism I would use.
+
+I use cg-push on my notebook, given that the notebook might not happen
+to have public IP address in some cases, or might be behind some
+corporate firewall, or that I'm lazy to ssh to my home machine in order
+to pull.
+
+> Pushing is only for publication and I treat it as just a
+> GIT-aware rsync/mirror, nothing more.  I have a feeling that
+> your workflow is different and you plan to use both push and
+> pull for normal patch flows.  This distinction is probably where
+> the disagreement comes from.
+
+Exactly. I want much more freedom in pushing, the only requirement being
+that "the to-be-replaced remote head is ancestor of the to-be-pushed
+local head". I think (am I wrong?) git-send-pack localhead:remotehead
+would work just fine for me, the only thing I need is the support for
+different local and remote head names.
 
 -- 
 				Petr "Pasky" Baudis
