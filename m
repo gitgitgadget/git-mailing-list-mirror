@@ -1,66 +1,83 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] mmap error handling
-Date: Thu, 28 Jul 2005 17:30:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507281725440.3307@g5.osdl.org>
-References: <1122586842.17837.9.camel@dv> <118833cc05072816294f80a829@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] server-info: do not complain if a tag points at a non-commit.
+Date: Thu, 28 Jul 2005 19:24:03 -0700
+Message-ID: <7vr7diqri4.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0507271504071.3227@g5.osdl.org>
+	<7vack7q2k7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507271610010.3227@g5.osdl.org>
+	<7vll3rn4sj.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507271813330.3227@g5.osdl.org>
+	<Pine.LNX.4.58.0507272244260.3227@g5.osdl.org>
+	<Pine.LNX.4.58.0507272249140.3227@g5.osdl.org>
+	<7vll3rjwld.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0507280040380.3227@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pavel Roskin <proski@gnu.org>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 02:32:30 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Fri Jul 29 04:24:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyInI-0007GE-3J
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 02:32:08 +0200
+	id 1DyKXq-0008Pq-Dc
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 04:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262184AbVG2Abu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 28 Jul 2005 20:31:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262222AbVG2Abu
-	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 20:31:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41429 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262217AbVG2Aag (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Jul 2005 20:30:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6T0UUjA016260
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 28 Jul 2005 17:30:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6T0UTGm031221;
-	Thu, 28 Jul 2005 17:30:29 -0700
-To: Morten Welinder <mwelinder@gmail.com>
-In-Reply-To: <118833cc05072816294f80a829@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262130AbVG2CYI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 28 Jul 2005 22:24:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262184AbVG2CYI
+	(ORCPT <rfc822;git-outgoing>); Thu, 28 Jul 2005 22:24:08 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:33775 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S262130AbVG2CYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Jul 2005 22:24:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050729022354.UWHR8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 28 Jul 2005 22:23:54 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linux 2.6 tree has one of those tree tags.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-On Thu, 28 Jul 2005, Morten Welinder wrote:
->
-> > I have verified that successful close() after failed mmap() won't reset
-> > the output of perror() to "Success".
-> 
-> Does $standard guarantee that?
-> 
-> In general, successful libc calls can set errno to whatever they
-> please, except zero.  And they sometimes do.  This follows from
-> C99.
+ server-info.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
 
-Indeed. 
-
-_always_ save the value of errno before doing any other calls. Even 
-successful calls are perfectly allowed to change errno.
-
-"close()" may not _normally_ change errno, but the fact is, not only can 
-close sometimes return an error, but it could validly have some debugging 
-wrapper that does logging, and change errno because of that.
-
-Yeah, we'd be better off if UNIX had always used the linux kernel practice
-of hiding errno as a negative return value (and the "IS_ERR()" test for
-pointers), but hey, crud happens to the best of us.
-
-		Linus
+42fa3ca33f92381a73c08ab98dc4b54e6a6412cc
+diff --git a/server-info.c b/server-info.c
+--- a/server-info.c
++++ b/server-info.c
+@@ -2,6 +2,7 @@
+ #include "refs.h"
+ #include "object.h"
+ #include "commit.h"
++#include "tag.h"
+ #include "rev-cache.h"
+ 
+ /* refs */
+@@ -518,10 +519,16 @@ static int update_info_packs(int force)
+ /* rev-cache */
+ static int record_rev_cache_ref(const char *path, const unsigned char *sha1)
+ {
+-	struct commit *commit;
+-	if (!(commit = lookup_commit_reference(sha1)))
+-		return error("not a commit: %s", sha1_to_hex(sha1));
+-	return record_rev_cache(commit->object.sha1, NULL);
++	struct object *obj = parse_object(sha1);
++
++	if (!obj)
++		return error("ref %s has bad sha %s", path, sha1_to_hex(sha1));
++	while (obj && obj->type == tag_type)
++		obj = parse_object(((struct tag *)obj)->tagged->sha1);
++	if (!obj || obj->type != commit_type)
++		/* tag pointing at a non-commit */
++		return 0;
++	return record_rev_cache(obj->sha1, NULL);
+ }
+ 
+ static int update_info_revs(int force)
