@@ -1,78 +1,90 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Last mile to 1.0?
-Date: Sat, 30 Jul 2005 00:41:48 +0200
-Message-ID: <20050729224148.GB22530@pasky.ji.cz>
-References: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix interesting git-rev-list corner case
+Date: Fri, 29 Jul 2005 15:50:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507291542060.29650@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 30 00:46:26 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 30 00:56:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DydcC-0001ey-EU
-	for gcvg-git@gmane.org; Sat, 30 Jul 2005 00:46:04 +0200
+	id 1Dydlr-0002TN-R5
+	for gcvg-git@gmane.org; Sat, 30 Jul 2005 00:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262893AbVG2WpP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 18:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262899AbVG2WnS
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 18:43:18 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:8456 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262904AbVG2Wlv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 18:41:51 -0400
-Received: (qmail 1671 invoked by uid 2001); 29 Jul 2005 22:41:48 -0000
+	id S262886AbVG2WzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 18:55:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262887AbVG2WxM
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 18:53:12 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:14049 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262886AbVG2Wur (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 18:50:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6TMoVjA021446
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 29 Jul 2005 15:50:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6TMoURA027493;
+	Fri, 29 Jul 2005 15:50:30 -0700
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vwtnqhcfb.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Jul 16, 2005 at 07:46:00PM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> I do not know what release plan Linus has in mind, and also
-> expect things to be quieter next week during OLS and kernel
-> summit, but I think we are getting really really close.
-> 
-> Here are the things I think we would want to see before we hit
-> 1.0:
-> 
->  - Remaining feature enhancements and fixes.
-> 
->    - Anonymous pull from packed archives on remote sites via
->      non-rsync, non-ssh transport.  Many people are behind
->      corporate firewalls that do not pass anything but outgoing
->      http(s) and some do not even pass outgoing ssh.  The recent
->      addition of git-daemon by Linus would greatly alleviate the
->      situation, but we may also end up wanting something HTTP
->      reachable.
 
-I hope to get to it tomorrow but it now occurred to me that I don't know
-when do you actually want to release 1.0 and I think it's crucial for it
-to support some sensible HTTP transport - I saw some scripts going in
-etc, but what's its current state? Is it usable?
+This corner-case was triggered by a kernel commit that was not in date
+order, due to a misconfigured time zone that made the commit appear three
+hours older than it was.
 
-Note that I really _loved_ the Daniel's tools while they lasted. What I
-loved most about them was that they really only pulled objects I needed
-and not a single worthless one. Does the current HTTP transport share
-this property?
+That caused git-rev-list to traverse the commit tree in a non-obvious
+order, and made it parse several of the _parents_ of the misplaced commit
+before it actually parsed the commit itself. That's fine, but it meant 
+that the grandparents of the commit didn't get marked uninteresting, 
+because they had been reached through an "interesting" branch.
 
->  - Publicity.  I would be very happy to see somebody with good
->    writing and summarizing skills to prepare an article to be
->    published on LWN.NET to coincide with the 1.0 release.  An
->    update to GIT traffic would also be nice.
+The reason was that "mark_parents_uninteresting()" (which is supposed to 
+mark all existing parents as being uninteresting - duh) didn't actually 
+traverse more than one level down the parent chain.
 
-Note that I also want to setup a simple "proof-of-concept" GIT homepage
-tomorrow. Well, write it, where it should be hosted can be worked out
-later and I have places for it to reside at for now. (Suggestions for
-final hosting welcome. In reality, how nice (and persistent) the URL
-gets is probably the only thing that really matters. My attempt will
-live at http://git.or.cz/.)
+NORMALLY this is fine, since with the date-based traversal order,
+grandparents won't ever even have been looked at before their parents (so
+traversing the chain down isn't needed, because the next time around when 
+we pick out the parent we'll mark _its_ parents uninteresting), but since 
+we'd gotten out of order, we'd already seen the parent and thus never got 
+around to mark the grandparents.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Anyway, the fix is simple. Just traverse parent chains recursively.  
+Normally the chain won't even exist (since the parent hasn't been parsed
+yet), so this is not actually going to trigger except in this strange 
+corner-case.
+
+Add a comment to the simple one-liner, since this was a bit subtle, and I 
+had to really think things through to understand how it could happen.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -228,6 +228,17 @@ static void mark_parents_uninteresting(s
+ 		commit->object.flags |= UNINTERESTING;
+ 
+ 		/*
++		 * Normally we haven't parsed the parent
++		 * yet, so we won't have a parent of a parent
++		 * here. However, it may turn out that we've
++		 * reached this commit some other way (where it
++		 * wasn't uninteresting), in which case we need
++		 * to mark its parents recursively too..
++		 */
++		if (commit->parents)
++			mark_parents_uninteresting(commit);
++
++		/*
+ 		 * A missing commit is ok iff its parent is marked 
+ 		 * uninteresting.
+ 		 *
