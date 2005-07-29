@@ -1,70 +1,68 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Fri, 29 Jul 2005 10:55:52 +0100
-Message-ID: <tnxfytyey1j.fsf@arm.com>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
-	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
-	<20050722192424.GB8556@mars.ravnborg.org>
-	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
-	<1122068634.7042.35.camel@localhost.localdomain>
-	<7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
-	<1122108098.6863.38.camel@localhost.localdomain>
-	<20050723093035.GB11814@pasky.ji.cz>
-	<1122114452.6863.72.camel@localhost.localdomain>
-	<20050728194748.GD24948@pasky.ji.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] support older versions of libcurl
+Date: Fri, 29 Jul 2005 12:23:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.58.0507291220350.5849@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.58.0507281648390.25783@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vll3qqrhu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Bryan larsen <bryanlarsen@yahoo.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 12:06:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 12:29:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyRlB-0004Hd-2y
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 12:06:33 +0200
+	id 1DyS78-0006nw-8F
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 12:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262560AbVG2KAo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 06:00:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261948AbVG2J6j
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 05:58:39 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:52209 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S262554AbVG2J47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2005 05:56:59 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6T9tes4017272;
-	Fri, 29 Jul 2005 10:55:40 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA22963;
-	Fri, 29 Jul 2005 10:56:25 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 29 Jul 2005 10:56:24 +0100
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050728194748.GD24948@pasky.ji.cz> (Petr Baudis's message of
- "Thu, 28 Jul 2005 21:47:49 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 29 Jul 2005 09:56:24.0468 (UTC) FILETIME=[C7ACBD40:01C59423]
+	id S262580AbVG2KXn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 06:23:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262568AbVG2KXk
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 06:23:40 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:60133 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S262555AbVG2KXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 06:23:30 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6C74EE25B8; Fri, 29 Jul 2005 12:23:27 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5025D9143D; Fri, 29 Jul 2005 12:23:27 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3D7F2913E7; Fri, 29 Jul 2005 12:23:27 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 268D3E25B8; Fri, 29 Jul 2005 12:23:27 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vll3qqrhu.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> wrote:
-> The committer field generally identifies the committer "physically", and
-> isn't usually overriden. You'll find <xpasky@machine.sinus.cz> in my
-> committer field, e.g.
+Hi,
 
-I thought GIT_COMMITTER_{NAME,EMAIL} were added to be able to override
-the defaults like username@localmachine.
+On Thu, 28 Jul 2005, Junio C Hamano wrote:
 
-The latest StGIT snapshot uses, by default, the committer's details
-for the From: line when sending patches by e-mail, assuming that this
-is a valid e-mail address. One can define his own e-mail template and
-use a different From: line but I thought it would be simpler to
-provide some defaults based on this.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > Some newer features of libcurl are used which are not strictly necessary
+> > for http-pull. Use them only if libcurl is new enough to know about them.
+>
+> Do you need to check against that many versions?  Especially
+> cleanup and init not depending on the same version number looks
+> really suspicious.
 
-If StGIT users don't like this default template, I can change it.
+I investigated the issue using curl's CVS. The different version numbers
+are easily explained: While curl_global_init is defined starting from
+0x070704, CURL_GLOBAL_ALL is only defined starting from 0x070800.
 
--- 
-Catalin
+> Assuming that the answer is still yes, how about doing things
+> this way instead?
+
+Looks better.
+
+Ciao,
+Dscho
