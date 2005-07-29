@@ -1,60 +1,68 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
-Date: Fri, 29 Jul 2005 14:28:44 +0200
-Message-ID: <20050729122844.GA21909@pasky.ji.cz>
-References: <20050728183904.GA24948@pasky.ji.cz> <7v4qaeqrh3.fsf@assigned-by-dhcp.cox.net> <20050729070628.GA24895@pasky.ji.cz> <7vmzo6jbme.fsf@assigned-by-dhcp.cox.net> <20050729081051.GH24895@pasky.ji.cz> <7vek9igfgw.fsf@assigned-by-dhcp.cox.net> <20050729094046.GO24895@pasky.ji.cz> <Pine.LNX.4.58.0507291254100.5849@wgmdd8.biozentrum.uni-wuerzburg.de> <20050729111304.GS24895@pasky.ji.cz> <Pine.LNX.4.58.0507291424070.6247@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
+Date: Fri, 29 Jul 2005 13:34:49 +0100
+Message-ID: <tnx8xzpg592.fsf@arm.com>
+References: <tnx1x5ryvn2.fsf@arm.com>
+	<20050722192424.GB8556@mars.ravnborg.org>
+	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
+	<1122068634.7042.35.camel@localhost.localdomain>
+	<7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
+	<1122108098.6863.38.camel@localhost.localdomain>
+	<20050723093035.GB11814@pasky.ji.cz>
+	<1122114452.6863.72.camel@localhost.localdomain>
+	<20050728194748.GD24948@pasky.ji.cz> <tnxfytyey1j.fsf@arm.com>
+	<20050729111056.GR24895@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 14:29:42 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Bryan larsen <bryanlarsen@yahoo.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Fri Jul 29 14:36:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyTzX-0002dr-AP
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 14:29:31 +0200
+	id 1DyU61-0003RY-Hp
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 14:36:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262585AbVG2M3F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 08:29:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262591AbVG2M3F
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 08:29:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33295 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262585AbVG2M2q (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 08:28:46 -0400
-Received: (qmail 23031 invoked by uid 2001); 29 Jul 2005 12:28:44 -0000
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0507291424070.6247@wgmdd8.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262581AbVG2Mfy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 08:35:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262590AbVG2Mfy
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 08:35:54 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:24473 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S262581AbVG2Mfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 08:35:51 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6TCYbs4022503;
+	Fri, 29 Jul 2005 13:34:37 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id NAA26308;
+	Fri, 29 Jul 2005 13:35:21 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 29 Jul 2005 13:35:21 +0100
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050729111056.GR24895@pasky.ji.cz> (Petr Baudis's message of
+ "Fri, 29 Jul 2005 13:10:56 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 29 Jul 2005 12:35:21.0224 (UTC) FILETIME=[FC063880:01C59439]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jul 29, 2005 at 02:26:51PM CEST, I got a letter
-where Johannes Schindelin <Johannes.Schindelin@gmx.de> told me that...
-> Hi,
-> 
-> On Fri, 29 Jul 2005, Petr Baudis wrote:
-> 
-> > Dear diary, on Fri, Jul 29, 2005 at 12:57:50PM CEST, I got a letter
-> > where Johannes Schindelin <Johannes.Schindelin@gmx.de> told me that...
-> >
-> > > 	git-switch-tree remotehead
-> > > 	git-merge master
-> > > 	git-push remoteside remotehead
-> > >
-> > > which would have the further advantage of documenting what you really did
-> > > in the history.
-> >
-> > How would that document anything normal push wouldn't?
-> 
-> git-merge?
+Petr Baudis <pasky@suse.cz> wrote:
+> Dear diary, on Fri, Jul 29, 2005 at 11:55:52AM CEST, I got a letter
+> where Catalin Marinas <catalin.marinas@gmail.com> told me that...
+>> The latest StGIT snapshot uses, by default, the committer's details
+>> for the From: line when sending patches by e-mail, assuming that this
+>> is a valid e-mail address. One can define his own e-mail template and
+>> use a different From: line but I thought it would be simpler to
+>> provide some defaults based on this.
+>
+> Why don't you rather use the GIT_AUTHOR_* variables?
 
-You have to git-merge anyway if remote head is not your ancestor yet,
-otherwise the push cannot proceed.
+It was simpler since the template variables were based on the patch
+details. Anyway, it's not hard to modify.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Catalin
