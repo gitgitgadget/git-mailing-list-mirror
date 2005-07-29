@@ -1,247 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] ls-files: rework exclude patterns.
-Date: Fri, 29 Jul 2005 00:50:34 -0700
-Message-ID: <7vhdeejbjp.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
-	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
-	<20050722192424.GB8556@mars.ravnborg.org>
-	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
-	<20050722205948.GE11916@pasky.ji.cz>
-	<7vd5p73jlu.fsf@assigned-by-dhcp.cox.net>
-	<20050728155210.GA17952@pasky.ji.cz>
-	<7vack6mcd7.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH/RFC] "Recursive Make considered harmful"
+Date: Fri, 29 Jul 2005 09:46:14 +0200
+Message-ID: <20050729074614.GF24895@pasky.ji.cz>
+References: <20050727083910.GG19290@mythryan2.michonline.com> <7v4qafrk8w.fsf@assigned-by-dhcp.cox.net> <20050729065335.GA32263@mythryan2.michonline.com> <20050729073134.GA6507@mars.ravnborg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Fri Jul 29 09:54:48 2005
+Cc: Ryan Anderson <ryan@michonline.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 09:57:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyPhV-0006JG-5x
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 09:54:37 +0200
+	id 1DyPk8-0006Xa-EU
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 09:57:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262493AbVG2Hxk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 03:53:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262482AbVG2Hv3
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 03:51:29 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:8399 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S262493AbVG2Hug (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2005 03:50:36 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050729075025.JFCZ16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 29 Jul 2005 03:50:25 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <7vack6mcd7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu, 28 Jul 2005 22:04:36 -0700")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262513AbVG2H4q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 03:56:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262495AbVG2Hqt
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 03:46:49 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:54283 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262496AbVG2HqR (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 03:46:17 -0400
+Received: (qmail 30832 invoked by uid 2001); 29 Jul 2005 07:46:14 -0000
+To: Sam Ravnborg <sam@ravnborg.org>
+Content-Disposition: inline
+In-Reply-To: <20050729073134.GA6507@mars.ravnborg.org>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Pasky and others raised many valid points on the problems
-initial exclude pattern enhancement work had.  Based on the
-list discussion, rework the exclude logic to use "last match
-determines its fate" rule, and order the list by exclude-from
-(the fallback default pattern file), exclude-per-directory
-(shallower to deeper, so deeper ones can override), and then
-command line exclude patterns.
+Dear diary, on Fri, Jul 29, 2005 at 09:31:34AM CEST, I got a letter
+where Sam Ravnborg <sam@ravnborg.org> told me that...
+> > > While I do not have strong objections to make the build process
+> > > go faster, it is somewhat disturbing that the Makefile pieces
+> > > maintained in subdirectories need to name things they touch
+> > > using paths that include the subdirectory names.  I do not have
+> > > a better alternative to suggest, though...
+> 
+> If the goal is to speed up the build process the only sane way is to fix
+> the dependencies. In kbuild fixdep is used to parse the .c file and it
+> locates all references to .h files (recursive) and also detects any
+> usage of CONFIG_ symbols.
+> This part should be relative straightforward to include in git.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+FWIW, I made tiny "build system" (inspired by kconfig) for smaller
+projects I work on:
 
- ls-files.c |  100 +++++++++++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 72 insertions(+), 28 deletions(-)
+http://pasky.or.cz/~pasky/dev/tunneler/co/Makefile
+http://pasky.or.cz/~pasky/dev/tunneler/co/Makefile.lib
+http://pasky.or.cz/~pasky/dev/tunneler/co/client/Makefile
 
-a908ed1b0fed52bfdcfc8b3ada366ce05e44c887
-diff --git a/ls-files.c b/ls-files.c
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -26,30 +26,45 @@ static const char *tag_other = "";
- static const char *tag_killed = "";
- 
- static char *exclude_per_dir = NULL;
--static int nr_excludes;
--static int excludes_alloc;
--static struct exclude {
--	const char *pattern;
--	const char *base;
--	int baselen;
--} **excludes;
- 
--static void add_exclude(const char *string, const char *base, int baselen)
-+/* We maintain three exclude pattern lists:
-+ * EXC_CMDL lists patterns explicitly given on the command line.
-+ * EXC_DIRS lists patterns obtained from per-directory ignore files.
-+ * EXC_FILE lists patterns from fallback ignore files.
-+ */
-+#define EXC_CMDL 0
-+#define EXC_DIRS 1
-+#define EXC_FILE 2
-+static struct exclude_list {
-+	int nr;
-+	int alloc;
-+	struct exclude {
-+		const char *pattern;
-+		const char *base;
-+		int baselen;
-+	} **excludes;
-+} exclude_list[3];
-+
-+static void add_exclude(const char *string, const char *base,
-+			int baselen, struct exclude_list *which)
- {
- 	struct exclude *x = xmalloc(sizeof (*x));
- 
- 	x->pattern = string;
- 	x->base = base;
- 	x->baselen = baselen;
--	if (nr_excludes == excludes_alloc) {
--		excludes_alloc = alloc_nr(excludes_alloc);
--		excludes = realloc(excludes, excludes_alloc*sizeof(char *));
-+	if (which->nr == which->alloc) {
-+		which->alloc = alloc_nr(which->alloc);
-+		which->excludes = realloc(which->excludes,
-+					  which->alloc * sizeof(x));
- 	}
--	excludes[nr_excludes++] = x;
-+	which->excludes[which->nr++] = x;
- }
- 
- static int add_excludes_from_file_1(const char *fname,
--				    const char *base, int baselen)
-+				    const char *base,
-+				    int baselen,
-+				    struct exclude_list *which)
- {
- 	int fd, i;
- 	long size;
-@@ -76,7 +91,7 @@ static int add_excludes_from_file_1(cons
- 		if (buf[i] == '\n') {
- 			if (entry != buf + i && entry[0] != '#') {
- 				buf[i] = 0;
--				add_exclude(entry, base, baselen);
-+				add_exclude(entry, base, baselen, which);
- 			}
- 			entry = buf + i + 1;
- 		}
-@@ -91,38 +106,45 @@ static int add_excludes_from_file_1(cons
- 
- static void add_excludes_from_file(const char *fname)
- {
--	if (add_excludes_from_file_1(fname, "", 0) < 0)
-+	if (add_excludes_from_file_1(fname, "", 0,
-+				     &exclude_list[EXC_FILE]) < 0)
- 		die("cannot use %s as an exclude file", fname);
- }
- 
- static int push_exclude_per_directory(const char *base, int baselen)
- {
- 	char exclude_file[PATH_MAX];
--	int current_nr = nr_excludes;
-+	struct exclude_list *el = &exclude_list[EXC_DIRS];
-+	int current_nr = el->nr;
- 
- 	if (exclude_per_dir) {
- 		memcpy(exclude_file, base, baselen);
- 		strcpy(exclude_file + baselen, exclude_per_dir);
--		add_excludes_from_file_1(exclude_file, base, baselen);
-+		add_excludes_from_file_1(exclude_file, base, baselen, el);
- 	}
- 	return current_nr;
- }
- 
- static void pop_exclude_per_directory(int stk)
- {
--	while (stk < nr_excludes)
--		free(excludes[--nr_excludes]);
-+	struct exclude_list *el = &exclude_list[EXC_DIRS];
-+
-+	while (stk < el->nr)
-+		free(el->excludes[--el->nr]);
- }
- 
--static int excluded(const char *pathname)
-+/* Scan the list and let the last match determines the fate.
-+ * Return 1 for exclude, 0 for include and -1 for undecided.
-+ */
-+static int excluded_1(const char *pathname,
-+		      int pathlen,
-+		      struct exclude_list *el)
- {
- 	int i;
- 
--	if (nr_excludes) {
--		int pathlen = strlen(pathname);
--
--		for (i = 0; i < nr_excludes; i++) {
--			struct exclude *x = excludes[i];
-+	if (el->nr) {
-+		for (i = el->nr - 1; 0 <= i; i--) {
-+			struct exclude *x = el->excludes[i];
- 			const char *exclude = x->pattern;
- 			int to_exclude = 1;
- 
-@@ -158,6 +180,22 @@ static int excluded(const char *pathname
- 			}
- 		}
- 	}
-+	return -1; /* undecided */
-+}
-+
-+static int excluded(const char *pathname)
-+{
-+	int pathlen = strlen(pathname);
-+	int st;
-+
-+	for (st = EXC_CMDL; st <= EXC_FILE; st++) {
-+		switch (excluded_1(pathname, pathlen, &exclude_list[st])) {
-+		case 0:
-+			return 0;
-+		case 1:
-+			return 1;
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -371,6 +409,7 @@ static const char *ls_files_usage =
- int main(int argc, char **argv)
- {
- 	int i;
-+	int exc_given = 0;
- 
- 	for (i = 1; i < argc; i++) {
- 		char *arg = argv[i];
-@@ -402,20 +441,25 @@ int main(int argc, char **argv)
- 			show_stage = 1;
- 			show_unmerged = 1;
- 		} else if (!strcmp(arg, "-x") && i+1 < argc) {
--			add_exclude(argv[++i], "", 0);
-+			exc_given = 1;
-+			add_exclude(argv[++i], "", 0, &exclude_list[EXC_CMDL]);
- 		} else if (!strncmp(arg, "--exclude=", 10)) {
--			add_exclude(arg+10, "", 0);
-+			exc_given = 1;
-+			add_exclude(arg+10, "", 0, &exclude_list[EXC_CMDL]);
- 		} else if (!strcmp(arg, "-X") && i+1 < argc) {
-+			exc_given = 1;
- 			add_excludes_from_file(argv[++i]);
- 		} else if (!strncmp(arg, "--exclude-from=", 15)) {
-+			exc_given = 1;
- 			add_excludes_from_file(arg+15);
- 		} else if (!strncmp(arg, "--exclude-per-directory=", 24)) {
-+			exc_given = 1;
- 			exclude_per_dir = arg + 24;
- 		} else
- 			usage(ls_files_usage);
- 	}
- 
--	if (show_ignored && !nr_excludes) {
-+	if (show_ignored && !exc_given) {
- 		fprintf(stderr, "%s: --ignored needs some exclude pattern\n",
- 			argv[0]);
- 		exit(1);
+Perhaps someone might find that a nice base for further hacking. It
+generally appears to work pretty well in practice, although the
+automatic dependency tracking might not be perfect.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
