@@ -1,68 +1,149 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Fri, 29 Jul 2005 13:34:49 +0100
-Message-ID: <tnx8xzpg592.fsf@arm.com>
-References: <tnx1x5ryvn2.fsf@arm.com>
-	<20050722192424.GB8556@mars.ravnborg.org>
-	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
-	<1122068634.7042.35.camel@localhost.localdomain>
-	<7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
-	<1122108098.6863.38.camel@localhost.localdomain>
-	<20050723093035.GB11814@pasky.ji.cz>
-	<1122114452.6863.72.camel@localhost.localdomain>
-	<20050728194748.GD24948@pasky.ji.cz> <tnxfytyey1j.fsf@arm.com>
-	<20050729111056.GR24895@pasky.ji.cz>
+From: Petr Baudis <pasky@suse.cz>
+Subject: [PATCH 3/2] git-merge-cache -q doesn't complain about failing merge program
+Date: Fri, 29 Jul 2005 14:53:38 +0200
+Message-ID: <20050729125338.GB21909@pasky.ji.cz>
+References: <20050729085819.GL24895@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Bryan larsen <bryanlarsen@yahoo.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 14:36:20 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 14:54:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyU61-0003RY-Hp
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 14:36:13 +0200
+	id 1DyUN3-0005dy-BZ
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 14:53:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262581AbVG2Mfy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 08:35:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262590AbVG2Mfy
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 08:35:54 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:24473 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S262581AbVG2Mfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2005 08:35:51 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6TCYbs4022503;
-	Fri, 29 Jul 2005 13:34:37 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id NAA26308;
-	Fri, 29 Jul 2005 13:35:21 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Fri, 29 Jul 2005 13:35:21 +0100
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050729111056.GR24895@pasky.ji.cz> (Petr Baudis's message of
- "Fri, 29 Jul 2005 13:10:56 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 29 Jul 2005 12:35:21.0224 (UTC) FILETIME=[FC063880:01C59439]
+	id S262591AbVG2Mxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 08:53:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262593AbVG2Mxp
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 08:53:45 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51983 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262591AbVG2Mxo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 08:53:44 -0400
+Received: (qmail 26102 invoked by uid 2001); 29 Jul 2005 12:53:38 -0000
+To: junkio@cox.net
+Content-Disposition: inline
+In-Reply-To: <20050729085819.GL24895@pasky.ji.cz>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> wrote:
-> Dear diary, on Fri, Jul 29, 2005 at 11:55:52AM CEST, I got a letter
-> where Catalin Marinas <catalin.marinas@gmail.com> told me that...
->> The latest StGIT snapshot uses, by default, the committer's details
->> for the From: line when sending patches by e-mail, assuming that this
->> is a valid e-mail address. One can define his own e-mail template and
->> use a different From: line but I thought it would be simpler to
->> provide some defaults based on this.
->
-> Why don't you rather use the GIT_AUTHOR_* variables?
+git-merge-cache reporting failed merge program is undesirable for
+Cogito, since it emits its own more appropriate error message in that
+case. However, I want to show other possible git-merge-cache error
+messages. So -q will just silence this particular error.
 
-It was simpler since the template variables were based on the patch
-details. Anyway, it's not hard to modify.
+Signed-off-by: Petr Baudis <pasky@ucw.cz>
 
--- 
-Catalin
+---
+
+There's more of patches to come. All those which are overflowing this
+series are in the git-pb branch as well and you'd get them by pulling
+it.
+
+commit 8ddefe85adc8e035864be615c87844ef982f4bc6
+tree d5e6c49f93d2e4138ad63faa7fcfb893f4843c88
+parent 527a155a0400df1af2e1da64fc02f2dd003413a8
+author Petr Baudis <pasky@suse.cz> Fri, 29 Jul 2005 14:52:53 +0200
+committer Petr Baudis <xpasky@machine.sinus.cz> Fri, 29 Jul 2005 14:52:53 +0200
+
+ Documentation/git-merge-cache.txt |    9 +++++++--
+ merge-cache.c                     |   23 +++++++++++++++--------
+ 2 files changed, 22 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/git-merge-cache.txt b/Documentation/git-merge-cache.txt
+--- a/Documentation/git-merge-cache.txt
++++ b/Documentation/git-merge-cache.txt
+@@ -9,7 +9,7 @@ git-merge-cache - Runs a merge for files
+ 
+ SYNOPSIS
+ --------
+-'git-merge-cache' [-o] <merge-program> (-a | -- | <file>\*) 
++'git-merge-cache' [-o] [-q] <merge-program> (-a | -- | <file>\*) 
+ 
+ DESCRIPTION
+ -----------
+@@ -32,6 +32,11 @@ OPTIONS
+ 	returned errors, and only return the error code after all the
+ 	merges are over.
+ 
++-q::
++	Do not complain about failed merge program (the merge program
++	failure usually indicates conflicts during merge). This is for
++	porcelains which might want to emit custom messages.
++
+ If "git-merge-cache" is called with multiple <file>s (or -a) then it
+ processes them in turn only stopping if merge returns a non-zero exit
+ code.
+@@ -40,7 +45,7 @@ Typically this is run with the a script 
+ the RCS package.
+ 
+ A sample script called "git-merge-one-file-script" is included in the
+-ditribution.
++distribution.
+ 
+ ALERT ALERT ALERT! The git "merge object order" is different from the
+ RCS "merge" program merge object order. In the above ordering, the
+diff --git a/merge-cache.c b/merge-cache.c
+--- a/merge-cache.c
++++ b/merge-cache.c
+@@ -5,7 +5,7 @@
+ 
+ static const char *pgm = NULL;
+ static const char *arguments[8];
+-static int one_shot;
++static int one_shot, quiet;
+ static int err;
+ 
+ static void run_program(void)
+@@ -27,10 +27,13 @@ static void run_program(void)
+ 		die("unable to execute '%s'", pgm);
+ 	}
+ 	if (waitpid(pid, &status, 0) < 0 || !WIFEXITED(status) || WEXITSTATUS(status)) {
+-		if (one_shot)
++		if (one_shot) {
+ 			err++;
+-		else
+-			die("merge program failed");
++		} else {
++			if (quiet)
++				die("merge program failed");
++			exit(1);
++		}
+ 	}
+ }
+ 
+@@ -97,15 +100,19 @@ int main(int argc, char **argv)
+ 	int i, force_file = 0;
+ 
+ 	if (argc < 3)
+-		usage("git-merge-cache [-o] <merge-program> (-a | <filename>*)");
++		usage("git-merge-cache [-o] [-q] <merge-program> (-a | <filename>*)");
+ 
+ 	read_cache();
+ 
+ 	i = 1;
+-	if (!strcmp(argv[1], "-o")) {
++	if (!strcmp(argv[i], "-o")) {
+ 		one_shot = 1;
+ 		i++;
+ 	}
++	if (!strcmp(argv[i], "-q")) {
++		quiet = 1;
++		i++;
++	}
+ 	pgm = argv[i++];
+ 	for (; i < argc; i++) {
+ 		char *arg = argv[i];
+@@ -122,7 +129,7 @@ int main(int argc, char **argv)
+ 		}
+ 		merge_file(arg);
+ 	}
+-	if (err)
++	if (err && quiet)
+ 		die("merge program failed");
+-	return 0;
++	return err;
+ }
