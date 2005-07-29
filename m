@@ -1,76 +1,70 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
-Date: Fri, 29 Jul 2005 11:40:46 +0200
-Message-ID: <20050729094046.GO24895@pasky.ji.cz>
-References: <20050728153506.GL14229@pasky.ji.cz> <Pine.LNX.4.58.0507281747320.29968@wgmdd8.biozentrum.uni-wuerzburg.de> <20050728161815.GC17952@pasky.ji.cz> <7v1x5ic1pe.fsf@assigned-by-dhcp.cox.net> <20050728183904.GA24948@pasky.ji.cz> <7v4qaeqrh3.fsf@assigned-by-dhcp.cox.net> <20050729070628.GA24895@pasky.ji.cz> <7vmzo6jbme.fsf@assigned-by-dhcp.cox.net> <20050729081051.GH24895@pasky.ji.cz> <7vek9igfgw.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
+Date: Fri, 29 Jul 2005 10:55:52 +0100
+Message-ID: <tnxfytyey1j.fsf@arm.com>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
+	<7v3bq71rmb.fsf@assigned-by-dhcp.cox.net> <tnx1x5ryvn2.fsf@arm.com>
+	<20050722192424.GB8556@mars.ravnborg.org>
+	<7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
+	<1122068634.7042.35.camel@localhost.localdomain>
+	<7vu0imh23q.fsf@assigned-by-dhcp.cox.net>
+	<1122108098.6863.38.camel@localhost.localdomain>
+	<20050723093035.GB11814@pasky.ji.cz>
+	<1122114452.6863.72.camel@localhost.localdomain>
+	<20050728194748.GD24948@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 11:43:39 2005
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
+	Bryan larsen <bryanlarsen@yahoo.com>,
+	Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Fri Jul 29 12:06:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyRNd-0001Jy-IN
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 11:42:13 +0200
+	id 1DyRlB-0004Hd-2y
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 12:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261911AbVG2Jlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 05:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262550AbVG2Jlj
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 05:41:39 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:25613 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S261911AbVG2Jkt (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 05:40:49 -0400
-Received: (qmail 13868 invoked by uid 2001); 29 Jul 2005 09:40:46 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vek9igfgw.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262560AbVG2KAo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 06:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261948AbVG2J6j
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 05:58:39 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:52209 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S262554AbVG2J47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 05:56:59 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j6T9tes4017272;
+	Fri, 29 Jul 2005 10:55:40 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA22963;
+	Fri, 29 Jul 2005 10:56:25 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 29 Jul 2005 10:56:24 +0100
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050728194748.GD24948@pasky.ji.cz> (Petr Baudis's message of
+ "Thu, 28 Jul 2005 21:47:49 +0200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 29 Jul 2005 09:56:24.0468 (UTC) FILETIME=[C7ACBD40:01C59423]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jul 29, 2005 at 10:54:07AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> I however still suspect that you might be spreading chaos under the
-> name of more flexibility.
+Petr Baudis <pasky@suse.cz> wrote:
+> The committer field generally identifies the committer "physically", and
+> isn't usually overriden. You'll find <xpasky@machine.sinus.cz> in my
+> committer field, e.g.
 
-I'm such a villain! ;-))
+I thought GIT_COMMITTER_{NAME,EMAIL} were added to be able to override
+the defaults like username@localmachine.
 
-> The fact that you can push into it by definition means you have some
-> control over the other end, and obviously you are in total control on
-> your end.  I do not see why you cannot rename branches where needed so
-> that whatever you are pushing match.  That would also be one less
-> thing to keep track of for yourself [*1*].
+The latest StGIT snapshot uses, by default, the committer's details
+for the From: line when sending patches by e-mail, assuming that this
+is a valid e-mail address. One can define his own e-mail template and
+use a different From: line but I thought it would be simpler to
+provide some defaults based on this.
 
-You might get the push access rather lately in the process (this "lazy
-development privileges granting" is one of the point of distributed
-VCSes), at point where other people are used to pull from you and
-renaming your branch locally might mean some trouble.
-
-> Yes, I am aware that you brought up the example of pushing to
-> two separate places, but does it happen in practice that you can
-> push to two places, and at the same time neither of them
-> cooperates with you to make it easier for you to work on these
-> three machines by having the same head names?
-
-Yes, they may have incompatible but strict head naming conventions. And
-wouldn't it be easier to just have different head names rather than
-forcing to increase administrative load 'n stuff?
-
-> [Footnote]
-> 
-> *1* In a hypothetical situation ``I use branch "b00" in this
-> repository to do XYZ work but I use branch "b24" in the other
-> repository for the same XYZ work'', Porcelain can keep track of
-> mapping between b00:b24 for you, but you still need to keep
-> track of b00:XYZ and b24:XYZ mapping in your head.
-
-I think 95% of the cases will be "master locally, non-master remotely".
-That's not really that difficult at all.
+If StGIT users don't like this default template, I can change it.
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Catalin
