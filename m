@@ -1,59 +1,53 @@
-From: Timo Hirvonen <tihirvon@ee.oulu.fi>
-Subject: Re: Makefile: COPTS vs CFLAGS
-Date: Fri, 29 Jul 2005 17:03:27 +0300
-Message-ID: <20050729170327.5f8f3d5a.tihirvon@ee.oulu.fi>
-References: <20050729134011.GD21909@pasky.ji.cz>
+From: Darrin Thompson <darrint@progeny.com>
+Subject: Re: Tutorial problem a/a a/b
+Date: Fri, 29 Jul 2005 09:07:32 -0500
+Message-ID: <1122646052.4263.9.camel@localhost.localdomain>
+References: <1122582005.12374.6.camel@localhost.localdomain>
+	 <7vy87qkwdp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Jul 29 16:03:52 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 16:09:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyVSm-0006m5-Lg
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 16:03:48 +0200
+	id 1DyVX5-0007aS-PI
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 16:08:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262596AbVG2ODf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 10:03:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262597AbVG2ODf
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 10:03:35 -0400
-Received: from marski.suomi.net ([212.50.131.142]:6330 "EHLO marski.suomi.net")
-	by vger.kernel.org with ESMTP id S262596AbVG2ODe (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 10:03:34 -0400
-Received: from spam1.suomi.net (spam1.suomi.net [212.50.131.165])
- by marski.suomi.net (Sun Java System Messaging Server 6.2 (built Dec  2 2004))
- with ESMTP id <0IKE0090K71WHX00@marski.suomi.net> for git@vger.kernel.org;
- Fri, 29 Jul 2005 17:03:33 +0300 (EEST)
-Received: from garlic.home.net (addr-213-216-219-24.suomi.net [213.216.219.24])
-	by spam1.suomi.net (Postfix) with SMTP id F1FCB6A00; Fri,
- 29 Jul 2005 17:03:27 +0300 (EEST)
-In-reply-to: <20050729134011.GD21909@pasky.ji.cz>
-To: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-Mailer: Sylpheed version 2.0.0rc (GTK+ 2.6.8; i686-pc-linux-gnu)
-X-OPOY-MailScanner-Information: Please contact the OPOY for more information
-X-OPOY-MailScanner: Not virus scanned: please contact OPOY for details
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (score=-2.827,	required 5,
- autolearn=not spam, AWL 2.07, BAYES_00 -4.90)
-X-MailScanner-From: tihirvon@ee.oulu.fi
+	id S262598AbVG2OIE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 10:08:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262600AbVG2OIE
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 10:08:04 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:19585 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S262598AbVG2OHd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 10:07:33 -0400
+Received: from dhcp-2-246.progeny.com (dhcp-2-246.progeny.com [192.168.2.246])
+	by morimoto.progeny.com (Postfix) with ESMTP
+	id 2AA43636AB; Fri, 29 Jul 2005 09:07:33 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy87qkwdp.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 29 Jul 2005 15:40:11 +0200
-Petr Baudis <pasky@suse.cz> wrote:
-
->   What I would propose:
+On Thu, 2005-07-28 at 22:35 -0700, Junio C Hamano wrote:
+> Darrin Thompson <darrint@progeny.com> writes:
 > 
-> 	-COPTS=-g -O2
-> 	-CFLAGS=$(COPTS) -Wall
-> 	+CFLAGS?=-g -O2
-> 	+CFLAGS+=-Wall
+> > In the tutorial the user is instructed to create two files: a and b.
+> >
+> > Then when the user diffs the files, they see this:
+> >
+> > diff --git a/a b/a
+> >
+> > That really confused somebody and I had to untangle their brain. :-)
+> 
+> Yes I was confused when I read it for the first time.
+> How does this look?
 
-Sounds good. I've never heard of anyone using COPTS variable before. And
-"-g -O2" seems to be a good default value.
+Looks good to me and guy with the original question.
 
-Using $DESTDIR instead of $dest would be nice too because DESTDIR is used
-by Autotools.
-
--- 
-http://onion.dynserv.net/~timo/
+--
+Darrin
