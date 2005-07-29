@@ -1,189 +1,69 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH 6/2] Reorder Makefile rules
-Date: Fri, 29 Jul 2005 17:50:24 +0200
-Message-ID: <20050729155024.GI21909@pasky.ji.cz>
-References: <20050729085819.GL24895@pasky.ji.cz>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [PACKAGERS] Makefile: DESTDIR vs. dest
+Date: Fri, 29 Jul 2005 09:42:28 -0700
+Message-ID: <20050729164228.GP16618@ca-server1.us.oracle.com>
+References: <20050729133015.GC21909@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 29 17:53:50 2005
+X-From: git-owner@vger.kernel.org Fri Jul 29 18:45:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DyXAX-0005mk-Ct
-	for gcvg-git@gmane.org; Fri, 29 Jul 2005 17:53:05 +0200
+	id 1DyXxy-0004h3-Qs
+	for gcvg-git@gmane.org; Fri, 29 Jul 2005 18:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262639AbVG2Pwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 11:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262636AbVG2Pup
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 11:50:45 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:16402 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262633AbVG2Pu1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 11:50:27 -0400
-Received: (qmail 11876 invoked by uid 2001); 29 Jul 2005 15:50:24 -0000
-To: junkio@cox.net
+	id S261385AbVG2Qnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 12:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262665AbVG2Qno
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 12:43:44 -0400
+Received: from rgminet04.oracle.com ([148.87.122.33]:51769 "EHLO
+	rgminet04.oracle.com") by vger.kernel.org with ESMTP
+	id S261385AbVG2Qmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 12:42:36 -0400
+Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.191.10])
+	by rgminet04.oracle.com (Switch-3.1.6/Switch-3.1.6) with ESMTP id j6TGgTB6010002;
+	Fri, 29 Jul 2005 10:42:29 -0600
+Received: from rgmgw1.us.oracle.com (localhost [127.0.0.1])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j6TGgTVj024138;
+	Fri, 29 Jul 2005 10:42:29 -0600
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.118.41])
+	by rgmgw1.us.oracle.com (Switch-3.1.4/Switch-3.1.0) with ESMTP id j6TGgT4A024130;
+	Fri, 29 Jul 2005 10:42:29 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.52)
+	id 1DyXwK-0002yu-Tb; Fri, 29 Jul 2005 09:42:28 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <20050729085819.GL24895@pasky.ji.cz>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20050729133015.GC21909@pasky.ji.cz>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever come to perfection.
+User-Agent: Mutt/1.5.9i
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-The Makefile rules were massively reordered so that they are actually
-logically grouped now. Captions were added to separate the sections. No
-rule contents was touched during the process.
+On Fri, Jul 29, 2005 at 03:30:15PM +0200, Petr Baudis wrote:
+>   git has $dest in its Makefile while Cogito uses $DESTDIR. I'd like to
+> ask the potential users of those variables (probably mostly distribution
+> package maintainers) what's easier for them and what do they prefer, as
+> I would like to unify this.
 
-Signed-off-by: Petr Baudis <pasky@ucw.cz>
+	DESTDIR is "standardized" by automake.  Doesn't make it best,
+but does make it expected by a lot of folks.
 
----
-commit 656a66fe63898954dbc40854dd049dc76eb9b841
-tree a5b29a2163c1bbd671a1dc40d0cb6dade3c4aaee
-parent ee84cc0f730f0e744fe8d922b24f6f7ebe31d737
-author Petr Baudis <pasky@suse.cz> Fri, 29 Jul 2005 17:02:14 +0200
-committer Petr Baudis <xpasky@machine.sinus.cz> Fri, 29 Jul 2005 17:02:14 +0200
+Joel
 
- Makefile |   87 +++++++++++++++++++++++++++++++++++++++++---------------------
- 1 files changed, 57 insertions(+), 30 deletions(-)
+-- 
 
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -43,12 +43,16 @@ AR?=ar
- INSTALL?=install
- RPMBUILD?=rpmbuild
- 
--#
- # sparse is architecture-neutral, which means that we need to tell it
- # explicitly what architecture to check for. Fix this up for yours..
--#
- SPARSE_FLAGS?=-D__BIG_ENDIAN__ -D__powerpc__
- 
-+
-+
-+### --- END CONFIGURATION SECTION ---
-+
-+
-+
- SCRIPTS=git git-apply-patch-script git-merge-one-file-script git-prune-script \
- 	git-pull-script git-tag-script git-resolve-script git-whatchanged \
- 	git-fetch-script git-status-script git-commit-script \
-@@ -74,18 +78,12 @@ PROG=   git-update-cache git-diff-files 
- 	git-show-index git-daemon git-var git-peek-remote \
- 	git-update-server-info git-show-rev-cache git-build-rev-cache
- 
--all: $(PROG)
--
--install: $(PROG) $(SCRIPTS)
--	$(INSTALL) -m755 -d $(dest)$(bindir)
--	$(INSTALL) $(PROG) $(SCRIPTS) $(dest)$(bin)
--
--LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
--	 tag.o date.o index.o diff-delta.o patch-delta.o entry.o path.o \
--	 epoch.o refs.o csum-file.o pack-check.o pkt-line.o connect.o ident.o
- LIB_FILE=libgit.a
- LIB_H=cache.h object.h blob.h tree.h commit.h tag.h delta.h epoch.h csum-file.h \
- 	pack.h pkt-line.h refs.h
-+LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
-+	 tag.o date.o index.o diff-delta.o patch-delta.o entry.o path.o \
-+	 epoch.o refs.o csum-file.o pack-check.o pkt-line.o connect.o ident.o
- 
- LIB_H += rev-cache.h
- LIB_OBJS += rev-cache.o
-@@ -122,17 +120,12 @@ endif
- 
- CFLAGS += '-DSHA1_HEADER=$(SHA1_HEADER)'
- 
--$(LIB_FILE): $(LIB_OBJS)
--	$(AR) rcs $@ $(LIB_OBJS)
- 
--check:
--	for i in *.c; do sparse $(CFLAGS) $(SPARSE_FLAGS) $$i; done
- 
--test-date: test-date.c date.o
--	$(CC) $(CFLAGS) -o $@ test-date.c date.o
-+### Build rules
-+
-+all: $(PROG)
- 
--test-delta: test-delta.c diff-delta.o patch-delta.o
--	$(CC) $(CFLAGS) -o $@ $^
- 
- git-%: %.c $(LIB_FILE)
- 	$(CC) $(CFLAGS) -o $@ $(filter %.c,$^) $(LIBS)
-@@ -148,6 +141,47 @@ git-rev-list: LIBS += -lssl
- $(LIB_OBJS): $(LIB_H)
- $(DIFF_OBJS): diffcore.h
- 
-+$(LIB_FILE): $(LIB_OBJS)
-+	$(AR) rcs $@ $(LIB_OBJS)
-+
-+doc:
-+	$(MAKE) -C Documentation all
-+
-+
-+
-+### Testing rules
-+
-+test: all
-+	$(MAKE) -C t/ all
-+
-+test-date: test-date.c date.o
-+	$(CC) $(CFLAGS) -o $@ test-date.c date.o
-+
-+test-delta: test-delta.c diff-delta.o patch-delta.o
-+	$(CC) $(CFLAGS) -o $@ $^
-+
-+check:
-+	for i in *.c; do sparse $(CFLAGS) $(SPARSE_FLAGS) $$i; done
-+
-+
-+
-+### Installation rules
-+
-+install: $(PROG) $(SCRIPTS)
-+	$(INSTALL) -m755 -d $(dest)$(bindir)
-+	$(INSTALL) $(PROG) $(SCRIPTS) $(dest)$(bin)
-+
-+install-tools:
-+	$(MAKE) -C tools install
-+
-+install-doc:
-+	$(MAKE) -C Documentation install
-+
-+
-+
-+
-+### Maintainer's dist rules
-+
- git-core.spec: git-core.spec.in Makefile
- 	sed -e 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@
- 
-@@ -163,23 +197,16 @@ dist: git-core.spec git-tar-tree
- rpm: dist
- 	$(RPMBUILD) -ta git-core-$(GIT_VERSION).tar.gz
- 
--test: all
--	$(MAKE) -C t/ all
- 
--doc:
--	$(MAKE) -C Documentation all
-+backup: clean
-+	cd .. ; tar czvf dircache.tar.gz dir-cache
- 
--install-tools:
--	$(MAKE) -C tools install
- 
--install-doc:
--	$(MAKE) -C Documentation install
-+
-+### Cleaning rules
- 
- clean:
- 	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(LIB_FILE)
- 	rm -f git-core-*.tar.gz git-core.spec
- 	$(MAKE) -C tools/ clean
- 	$(MAKE) -C Documentation/ clean
--
--backup: clean
--	cd .. ; tar czvf dircache.tar.gz dir-cache
+"In the beginning, the universe was created. This has made a lot 
+ of people very angry, and is generally considered to have been a 
+ bad move."
+        - Douglas Adams
+
+Joel Becker
+Senior Member of Technical Staff
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
