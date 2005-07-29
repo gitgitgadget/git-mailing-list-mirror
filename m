@@ -1,90 +1,67 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix interesting git-rev-list corner case
-Date: Fri, 29 Jul 2005 15:50:30 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0507291542060.29650@g5.osdl.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
+Date: Fri, 29 Jul 2005 22:40:13 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.07.29.20.40.11.910646@smurf.noris.de>
+References: <20050728120806.GA2391@pasky.ji.cz> <Pine.LNX.4.58.0507281504100.25402@wgmdd8.biozentrum.uni-wuerzburg.de> <20050728153506.GL14229@pasky.ji.cz> <Pine.LNX.4.58.0507281747320.29968@wgmdd8.biozentrum.uni-wuerzburg.de> <20050728161815.GC17952@pasky.ji.cz> <7v1x5ic1pe.fsf@assigned-by-dhcp.cox.net> <20050728183904.GA24948@pasky.ji.cz> <7v4qaeqrh3.fsf@assigned-by-dhcp.cox.net> <20050729070628.GA24895@pasky.ji.cz> <7vmzo6jbme.fsf@assigned-by-dhcp.cox.net> <20050729081051.GH24895@pasky.ji.cz> <7vek9igfgw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 30 00:56:22 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Jul 30 02:03:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dydlr-0002TN-R5
-	for gcvg-git@gmane.org; Sat, 30 Jul 2005 00:56:04 +0200
+	id 1DyepR-0007NJ-CV
+	for gcvg-git@gmane.org; Sat, 30 Jul 2005 02:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262886AbVG2WzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 18:55:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262887AbVG2WxM
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 18:53:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:14049 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262886AbVG2Wur (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 18:50:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6TMoVjA021446
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 29 Jul 2005 15:50:32 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6TMoURA027493;
-	Fri, 29 Jul 2005 15:50:30 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262828AbVG3AD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 20:03:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262817AbVG3ABT
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 20:01:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:47773 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262821AbVG2UnG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 16:43:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Dybfe-0005me-UR
+	for git@vger.kernel.org; Fri, 29 Jul 2005 22:41:31 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jul 2005 22:41:30 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 29 Jul 2005 22:41:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, Junio C Hamano wrote:
 
-This corner-case was triggered by a kernel commit that was not in date
-order, due to a misconfigured time zone that made the commit appear three
-hours older than it was.
+> Porcelain can keep track of
+> mapping between b00:b24 for you,
 
-That caused git-rev-list to traverse the commit tree in a non-obvious
-order, and made it parse several of the _parents_ of the misplaced commit
-before it actually parsed the commit itself. That's fine, but it meant 
-that the grandparents of the commit didn't get marked uninteresting, 
-because they had been reached through an "interesting" branch.
+Exactly.
 
-The reason was that "mark_parents_uninteresting()" (which is supposed to 
-mark all existing parents as being uninteresting - duh) didn't actually 
-traverse more than one level down the parent chain.
+> but you still need to keep
+> track of b00:XYZ and b24:XYZ mapping in your head.
 
-NORMALLY this is fine, since with the date-based traversal order,
-grandparents won't ever even have been looked at before their parents (so
-traversing the chain down isn't needed, because the next time around when 
-we pick out the parent we'll mark _its_ parents uninteresting), but since 
-we'd gotten out of order, we'd already seen the parent and thus never got 
-around to mark the grandparents.
+This is why I name my local branch "XYZ". ;-)
 
-Anyway, the fix is simple. Just traverse parent chains recursively.  
-Normally the chain won't even exist (since the parent hasn't been parsed
-yet), so this is not actually going to trigger except in this strange 
-corner-case.
+XYZ may not be an appropriate name for the remote branch, or maybe the
+remote repo is *not* under my direct control, e.g. a shared-master style
+setup.
 
-Add a comment to the simple one-liner, since this was a bit subtle, and I 
-had to really think things through to understand how it could happen.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -228,6 +228,17 @@ static void mark_parents_uninteresting(s
- 		commit->object.flags |= UNINTERESTING;
- 
- 		/*
-+		 * Normally we haven't parsed the parent
-+		 * yet, so we won't have a parent of a parent
-+		 * here. However, it may turn out that we've
-+		 * reached this commit some other way (where it
-+		 * wasn't uninteresting), in which case we need
-+		 * to mark its parents recursively too..
-+		 */
-+		if (commit->parents)
-+			mark_parents_uninteresting(commit);
-+
-+		/*
- 		 * A missing commit is ok iff its parent is marked 
- 		 * uninteresting.
- 		 *
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+:munch: vt. [often confused with {mung}, q.v.] To transform information
+   in a serial fashion, often requiring large amounts of computation. To
+   trace down a data structure. Related to {crunch} and nearly synonymous
+   with {grovel}, but connotes less pain.
