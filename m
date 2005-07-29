@@ -1,61 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH 1/1] Tell vim the textwidth is 75.
-Date: Fri, 29 Jul 2005 13:10:56 +0200
-Message-ID: <20050729111056.GR24895@pasky.ji.cz>
-References: <tnx1x5ryvn2.fsf@arm.com> <20050722192424.GB8556@mars.ravnborg.org> <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net> <1122068634.7042.35.camel@localhost.localdomain> <7vu0imh23q.fsf@assigned-by-dhcp.cox.net> <1122108098.6863.38.camel@localhost.localdomain> <20050723093035.GB11814@pasky.ji.cz> <1122114452.6863.72.camel@localhost.localdomain> <20050728194748.GD24948@pasky.ji.cz> <tnxfytyey1j.fsf@arm.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] add "-f" option to git-commit-script to force commit
+ withoutchanges
+Date: Fri, 29 Jul 2005 13:06:06 +0200 (CEST)
+Message-ID: <Pine.LNX.4.58.0507291300340.5849@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.58.0507281646340.25783@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vslxypcw6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org,
-	Bryan larsen <bryanlarsen@yahoo.com>,
-	Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Fri Jul 29 13:12:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 29 13:12:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DySmU-0002P9-6m
+	id 1DySmT-0002P9-QM
 	for gcvg-git@gmane.org; Fri, 29 Jul 2005 13:11:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262480AbVG2LLV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 07:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262463AbVG2LLQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 07:11:16 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33806 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262453AbVG2LLI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Jul 2005 07:11:08 -0400
-Received: (qmail 18007 invoked by uid 2001); 29 Jul 2005 11:10:56 -0000
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <tnxfytyey1j.fsf@arm.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262055AbVG2LLL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 07:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262463AbVG2LIc
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 07:08:32 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19075 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S262453AbVG2LGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 07:06:07 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 7C8B5E1313; Fri, 29 Jul 2005 13:06:06 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 59D07A873C; Fri, 29 Jul 2005 13:06:06 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 15F7EA873D; Fri, 29 Jul 2005 13:06:06 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 06EB4E1313; Fri, 29 Jul 2005 13:06:06 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslxypcw6.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Jul 29, 2005 at 11:55:52AM CEST, I got a letter
-where Catalin Marinas <catalin.marinas@gmail.com> told me that...
-> Petr Baudis <pasky@suse.cz> wrote:
-> > The committer field generally identifies the committer "physically", and
-> > isn't usually overriden. You'll find <xpasky@machine.sinus.cz> in my
-> > committer field, e.g.
-> 
-> I thought GIT_COMMITTER_{NAME,EMAIL} were added to be able to override
-> the defaults like username@localmachine.
+Hi,
 
-Yes, but IIRC only for rather special cases like recommitting older
-commits, importing from other VCSes, etc.
+On Thu, 28 Jul 2005, Junio C Hamano wrote:
 
-> The latest StGIT snapshot uses, by default, the committer's details
-> for the From: line when sending patches by e-mail, assuming that this
-> is a valid e-mail address. One can define his own e-mail template and
-> use a different From: line but I thought it would be simpler to
-> provide some defaults based on this.
+> While I agree there should be a graceful way to go back to the
+> original head from a failed merge situation, I do not think
+> "committing the current HEAD" is the right model for the end
+> user to think about it.
+>
+> Wouldn't using "checkout -f" to revert to the version you would
+> want to go back work as expected?
 
-Why don't you rather use the GIT_AUTHOR_* variables?
+I had the following situation: in a throw away tree I made some changes.
+The last conflicted with a change I pulled from somewhere else into the
+master, and the best solution was to revert that last change from the
+throw away tree. Basically, the result of the merge was identical to
+master, i.e. git-status says "nothing to commit". I wanted to document,
+however, that I do not want that change from the throw away tree in my
+master, even if I keep it in the throw away tree.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+I am no longer sure if that was a good thing to do, maybe I should have
+fixed it in the throw away tree by merging master there. Or, alternatively
+git-commit could check for "nothing to commit" OR "MERGE_HEAD exists".
+Dunno.
+
+Ciao,
+Dscho
