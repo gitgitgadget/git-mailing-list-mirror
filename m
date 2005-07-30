@@ -1,57 +1,92 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Display of merges in gitk
-Date: Fri, 29 Jul 2005 21:25:41 -0700
-Message-ID: <7vy87o6htm.fsf@assigned-by-dhcp.cox.net>
-References: <17130.56620.137642.941175@cargo.ozlabs.ibm.com>
+Subject: [PATCH] Under NO_OPENSSL -lssl should not be used
+Date: Fri, 29 Jul 2005 22:02:24 -0700
+Message-ID: <7vek9g6g4f.fsf_-_@assigned-by-dhcp.cox.net>
+References: <20050729085819.GL24895@pasky.ji.cz>
+	<20050729155051.GJ21909@pasky.ji.cz>
+	<Pine.LNX.4.58.0507292038160.29650@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 30 06:27:06 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 30 07:03:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dyiw9-00005i-7R
-	for gcvg-git@gmane.org; Sat, 30 Jul 2005 06:27:01 +0200
+	id 1DyjVG-0001xM-Lk
+	for gcvg-git@gmane.org; Sat, 30 Jul 2005 07:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262771AbVG3E0T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jul 2005 00:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262938AbVG3E0S
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jul 2005 00:26:18 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:46017 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S262771AbVG3EZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Jul 2005 00:25:43 -0400
+	id S262717AbVG3FC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jul 2005 01:02:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262761AbVG3FC2
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jul 2005 01:02:28 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:11168 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S262717AbVG3FC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2005 01:02:27 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050730042530.ZLHM550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 30 Jul 2005 00:25:30 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17130.56620.137642.941175@cargo.ozlabs.ibm.com> (Paul Mackerras's message of "Fri, 29 Jul 2005 20:51:40 -0500")
+          id <20050730050227.RRRP7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 30 Jul 2005 01:02:27 -0400
+To: Petr Baudis <pasky@suse.cz>, Jon Seymour <jon.seymour@gmail.com>
+In-Reply-To: <Pine.LNX.4.58.0507292038160.29650@g5.osdl.org> (Linus Torvalds's message of "Fri, 29 Jul 2005 20:39:56 -0700 (PDT)")
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Paul Mackerras <paulus@samba.org> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Linus, could you do a pull from the usual place to pick this up?
-> (rsync://rsync.kernel.org/pub/scm/gitk/gitk.git).  I also included a
-> patch from Junio.
+> This doesn't work at least in the form that Junio merged it (and from 
+> what I can tell, he merged your patch as-is):
+>
+>   torvalds@shell0:~/src/git> make NO_OPENSSL=1
+>   cc -g -O2 -Wall '-DNO_OPENSSL' '-DSHA1_HEADER="mozilla-sha1/sha1.h"' -o git-rev-list rev-list.o libgit.a -lz -lssl
+>   /usr/lib/gcc-lib/i586-suse-linux/3.3.4/../../../../i586-suse-linux/bin/ld: cannot find -lssl
+>
+> it needs to disable the -lssl too..
 
-In case you did not notice, /pub/scm/git/git.git/ repository is
-under the care of yours truly starting this week.  I've merged
-from your tree up to this commit:
+Would this be OK?  I think it is ugly but it gets the job done.
 
-    commit c8a4acbf4a7b0f9da3e320877b2b2d12cd58700b
-    Author: Paul Mackerras <paulus@samba.org>
-    Date:   Fri Jul 29 09:23:03 2005 -0500
+Jon, do we really need bignum to do the flow computation?  From
+a quick glance, it appears to me that the fraction manipulation
+part is quite well isolated.  Do you think adding the support
+for using other bignum implementation be reasonable (assuming
+you do need to use bignum based fraction)?
 
-      Improve the merge display when the result differs from all parents.
+------------
+This is quick and dirty but under NO_OPENSSL we should not
+attempt to link with -lssl (nor -lcrypto).
 
-      Now we see if the result is quite similar to one of the parents, and
-      if it is, display the result as a diff from that parent.  If the result
-      is similar to more than one parent, pick the one that it's most
-      similar to.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+cd /opt/packrat/playpen/public/in-place/git/git.junio/
+jit-diff
+# - pu: Fetch from a packed repository on dumb servers.
+# + (working tree)
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -108,9 +108,11 @@ LIBS += -lz
+ 
+ ifndef NO_OPENSSL
+ 	LIB_OBJS += epoch.o
++	OPENSSL_LIBSSL=-lssl
+ else
+ 	CFLAGS += '-DNO_OPENSSL'
+ 	MOZILLA_SHA1=1
++	OPENSSL_LIBSSL=
+ endif
+ ifdef MOZILLA_SHA1
+   SHA1_HEADER="mozilla-sha1/sha1.h"
+@@ -148,7 +150,7 @@ git-ssh-pull: rsh.o pull.o
+ git-ssh-push: rsh.o
+ 
+ git-http-pull: LIBS += -lcurl
+-git-rev-list: LIBS += -lssl
++git-rev-list: LIBS += $(OPENSSL_LIBSSL)
+ 
+ $(LIB_OBJS): $(LIB_H)
+ $(DIFF_OBJS): diffcore.h
 
-Thanks for the great tool.
+Compilation finished at Fri Jul 29 21:48:01
