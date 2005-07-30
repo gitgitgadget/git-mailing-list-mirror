@@ -1,67 +1,125 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Dump http servers still slow?
-Date: Fri, 29 Jul 2005 19:11:45 -0700
-Message-ID: <7vmzo56o0u.fsf@assigned-by-dhcp.cox.net>
-References: <1122584423.12374.11.camel@localhost.localdomain>
-	<7vy87qpcwg.fsf@assigned-by-dhcp.cox.net>
-	<1122645821.4263.6.camel@localhost.localdomain>
+Subject: [PATCH] git-applymbox: allow retrying after fixing up.
+Date: Fri, 29 Jul 2005 19:11:33 -0700
+Message-ID: <7vy87p6o16.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 30 04:19:37 2005
+X-From: git-owner@vger.kernel.org Sat Jul 30 04:19:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DygwD-000202-EH
-	for gcvg-git@gmane.org; Sat, 30 Jul 2005 04:18:57 +0200
+	id 1DygwS-00020H-QA
+	for gcvg-git@gmane.org; Sat, 30 Jul 2005 04:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262767AbVG3CSQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 29 Jul 2005 22:18:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262917AbVG3CNc
-	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 22:13:32 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:34706 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262934AbVG3CLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Jul 2005 22:11:47 -0400
+	id S262769AbVG3CTD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 29 Jul 2005 22:19:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262802AbVG3CNT
+	(ORCPT <rfc822;git-outgoing>); Fri, 29 Jul 2005 22:13:19 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:8360 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S262928AbVG3CLf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Jul 2005 22:11:35 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050730021142.TXQM1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 29 Jul 2005 22:11:42 -0400
-To: Darrin Thompson <darrint@progeny.com>
+          id <20050730021123.MGLK8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 29 Jul 2005 22:11:23 -0400
+To: git@vger.kernel.org
 User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Darrin Thompson <darrint@progeny.com> writes:
+After failing to apply a patch, when operating under -q (query)
+flag, give the user an opportunity to fix up the patch in a
+separate window and retry.
 
-> Ok... so lets check my assumptions:
->
-> 1. Pack files should reduce the number of http round trips.
-> 2. What I'm seeing when I check out mainline git is the acquisition of a
-> single large pack, then 600+ more recent objects. Better than before,
-> but still hundreds of round trips.
-> 3. If I wanted to further speed up the initial checkout on my own
-> repositories I could frequently repack my most recent few hundred
-> objects.
-> 4. If curl had pipelining then less pack management would be needed.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-All true.  Another possibility is to make multiple requests in
-parallel; if curl does not do pipelining, either switch to
-something that does, or have more then one process using curl.
+ tools/git-applymbox |   56 +++++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 41 insertions(+), 15 deletions(-)
 
-The dumb server preparation creates three files, two of which is
-currently used by clone (one is list of packs, the other is list
-of branches and tags).  The third one is commit ancestry
-information.  The commit walker could be taught to read it to
-figure out what commits it still needs to fetch without waiting
-for the commit being retrieved to be parsed.
-
-Sorry, I am not planning to write that part myself.
-
-One potential low hanging fruit is that even for cloning via
-git:// URL we _might_ be better off starting with the dumb
-server protocol; get the list of statically prepared packs and
-obtain them upfront before starting the clone-pack/upload-pack
-protocol pair.
+2b1077125e629c316905ae480ab4f8699332b7f7
+diff --git a/tools/git-applymbox b/tools/git-applymbox
+--- a/tools/git-applymbox
++++ b/tools/git-applymbox
+@@ -9,7 +9,7 @@
+ ## You give it a mbox-format collection of emails, and it will try to
+ ## apply them to the kernel using "applypatch"
+ ##
+-## applymbox [ -c .dotest/msg-number ] [ -q ] mail_archive [Signoff_file]"
++## applymbox [ -q ] (-c .dotest/msg-number | mail_archive) [Signoff_file]"
+ ##
+ ## The patch application may fail in the middle.  In which case:
+ ## (1) look at .dotest/patch and fix it up to apply
+@@ -35,29 +35,55 @@ case "$continue" in
+ 	rm -rf .dotest
+ 	mkdir .dotest
+ 	git-mailsplit "$1" .dotest || exit 1
++	shift
+ esac
+ 
+ case "$query_apply" in
+ t)	touch .dotest/.query_apply
+ esac
+ 
+-for i in .dotest/0*
++signoff="$1"
++set x .dotest/0*
++shift
++while case "$#" in 0) break;; esac
+ do
+-	case "$resume,$continue" in
+-	f,$i)	resume=t;;
+-	f,*)	continue;;
+-	*)
+-		git-mailinfo .dotest/msg .dotest/patch <$i >.dotest/info || exit 1
+-		git-stripspace < .dotest/msg > .dotest/msg-clean
+-		;;
+-	esac
+-	git-applypatch .dotest/msg-clean .dotest/patch .dotest/info "$2"
+-	ret=$?
+-	if [ $ret -ne 0 ]; then
++    i="$1" 
++    case "$resume,$continue" in
++    f,$i)	resume=t;;
++    f,*)	continue;;
++    *)
++	    git-mailinfo .dotest/msg .dotest/patch <$i >.dotest/info || exit 1
++	    git-stripspace < .dotest/msg > .dotest/msg-clean
++	    ;;
++    esac
++    while :; # for fixing up and retry
++    do
++	git-applypatch .dotest/msg-clean .dotest/patch .dotest/info "$signoff"
++	case "$?" in
++	0 | 2 )
+ 		# 2 is a special exit code from applypatch to indicate that
+ 	    	# the patch wasn't applied, but continue anyway 
+-		[ $ret -ne 2 ] && exit $ret
+-	fi
++		;;
++	*)
++		ret=$?
++		if test -f .dotest/.query_apply
++		then
++			echo >&2 "* Patch failed."
++			echo >&2 "* You could fix it up in your editor and"
++			echo >&2 "  retry.  If you want to do so, say yes here"
++			echo >&2 "  AFTER fixing .dotest/patch up."
++			echo >&2 -n "Retry [y/N]? "
++			read yesno
++			case "$yesno" in
++			[Yy]*)
++				continue ;;
++		        esac
++		fi
++		exit $ret
++	esac
++	break
++    done
++    shift
+ done
+ # return to pristine
+ rm -fr .dotest
