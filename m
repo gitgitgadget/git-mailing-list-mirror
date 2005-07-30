@@ -1,58 +1,100 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] Teach parse_commit_buffer about grafting.
-Date: Sat, 30 Jul 2005 10:40:20 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.07.30.08.40.11.725422@smurf.noris.de>
-References: <Pine.LNX.4.58.0507261136280.19309@g5.osdl.org> <1122457238.3027.37.camel@baythorne.infradead.org> <Pine.LNX.4.58.0507270819550.3227@g5.osdl.org> <1122478870.28128.52.camel@hades.cambridge.redhat.com> <Pine.LNX.4.58.0507270846360.3227@g5.osdl.org> <7vslxw4tb1.fsf_-_@assigned-by-dhcp.cox.net>
+From: Peter Osterlund <petero2@telia.com>
+Subject: Re: Fix interesting git-rev-list corner case
+Date: 30 Jul 2005 12:10:35 +0200
+Message-ID: <m31x5gob8k.fsf@telia.com>
+References: <Pine.LNX.4.58.0507291542060.29650@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sat Jul 30 10:40:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 30 12:12:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dymtm-0004EQ-OC
-	for gcvg-git@gmane.org; Sat, 30 Jul 2005 10:40:51 +0200
+	id 1DyoKF-0001u5-GL
+	for gcvg-git@gmane.org; Sat, 30 Jul 2005 12:12:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263014AbVG3Ikk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 30 Jul 2005 04:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263015AbVG3Ikk
-	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jul 2005 04:40:40 -0400
-Received: from main.gmane.org ([80.91.229.2]:62869 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S263014AbVG3Iki (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Jul 2005 04:40:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1DymtZ-0004Cm-K7
-	for git@vger.kernel.org; Sat, 30 Jul 2005 10:40:37 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 30 Jul 2005 10:40:37 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 30 Jul 2005 10:40:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S263008AbVG3KLh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 30 Jul 2005 06:11:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263030AbVG3KLh
+	(ORCPT <rfc822;git-outgoing>); Sat, 30 Jul 2005 06:11:37 -0400
+Received: from pne-smtpout2-sn2.hy.skanova.net ([81.228.8.164]:18125 "EHLO
+	pne-smtpout2-sn2.hy.skanova.net") by vger.kernel.org with ESMTP
+	id S263008AbVG3KK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Jul 2005 06:10:57 -0400
+Received: from r3000.localdomain (212.181.176.51) by pne-smtpout2-sn2.hy.skanova.net (7.2.060.1)
+        id 42B94E29005EDFA1; Sat, 30 Jul 2005 12:10:44 +0200
+Received: from r3000.localdomain (r3000.localdomain [127.0.0.1])
+	by r3000.localdomain (8.13.1/8.13.1) with ESMTP id j6UAAaw0011638;
+	Sat, 30 Jul 2005 12:10:36 +0200
+Received: (from petero@localhost)
+	by r3000.localdomain (8.13.1/8.13.1/Submit) id j6UAAad7011632;
+	Sat, 30 Jul 2005 12:10:36 +0200
+X-Authentication-Warning: r3000.localdomain: petero set sender to petero2@telia.com using -f
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0507291542060.29650@g5.osdl.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio C Hamano wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> Introduce a new file $GIT_DIR/info/grafts
+> This corner-case was triggered by a kernel commit that was not in date
+> order, due to a misconfigured time zone that made the commit appear three
+> hours older than it was.
 
-Nice work.
+I have problems pulling linux kernel changes from
+33ac02aa4cef417871e128ab4a6565e751e5f3b2 to
+b0825488a642cadcf39709961dde61440cb0731c into my local tree. At first
+I thought your patch would fix it, but it doesn't:
 
-Has anybody git-imported the old tarfile+patch history yet?
-If not, I'll do it over the weekend.
+r3000:~/git$ cat linux/.git/HEAD
+b0825488a642cadcf39709961dde61440cb0731c
+r3000:~/git$ git-clone-script -l linux linux.test
+defaulting to local storage area
+0 blocks
+r3000:~/git$ cd linux.test/
+r3000:~/git/linux.test$ echo 33ac02aa4cef417871e128ab4a6565e751e5f3b2 >.git/HEAD
+r3000:~/git/linux.test$ git-pull-script ../linux
+Packing 291 objects
+Unpacking 291 objects
+ 100% (291/291) done
+Trying to merge b0825488a642cadcf39709961dde61440cb0731c into 33ac02aa4cef417871e128ab4a6565e751e5f3b2
+Simple merge failed, trying Automatic merge
+Removing arch/mips/vr41xx/common/giu.c
+Auto-merging arch/s390/kernel/head.S.
+Auto-merging arch/s390/kernel/head64.S.
+Auto-merging arch/um/os-Linux/elf_aux.c.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in arch/um/os-Linux/elf_aux.c.
+Auto-merging arch/x86_64/kernel/smp.c.
+Auto-merging arch/x86_64/kernel/smpboot.c.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in arch/x86_64/kernel/smpboot.c.
+Auto-merging drivers/i2c/busses/i2c-mpc.c.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in drivers/i2c/busses/i2c-mpc.c.
+Removing drivers/ide/cris/ide-v10.c
+Removing drivers/media/dvb/frontends/lgdt3302.c
+Removing drivers/media/dvb/frontends/lgdt3302.h
+Removing drivers/media/dvb/frontends/lgdt3302_priv.h
+Removing drivers/serial/bast_sio.c
+Auto-merging drivers/usb/input/hid-input.c.
+Auto-merging drivers/video/fbmem.c.
+Auto-merging include/asm-i386/bitops.h.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in include/asm-i386/bitops.h.
+Auto-merging include/asm-x86_64/smp.h.
+Auto-merging kernel/sys.c.
+merge: warning: conflicts during merge
+ERROR: Merge conflict in kernel/sys.c.
+Removing net/ipv4/utils.c
+Removing sound/pcmcia/vx/vx_entry.c
+Removing sound/pcmcia/vx/vxp440.c
+fatal: merge program failed
+Automatic merge failed, fix up by hand
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Whatever occurs from love is always beyond good and evil.
-		-- Friedrich Nietzsche
+Peter Osterlund - petero2@telia.com
+http://web.telia.com/~u89404340
