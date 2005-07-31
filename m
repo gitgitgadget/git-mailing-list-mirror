@@ -1,91 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Dump http servers still slow?
-Date: Sat, 30 Jul 2005 23:51:10 -0700
-Message-ID: <7v1x5ftqn5.fsf@assigned-by-dhcp.cox.net>
-References: <1122584423.12374.11.camel@localhost.localdomain>
-	<7vy87qpcwg.fsf@assigned-by-dhcp.cox.net>
-	<1122645821.4263.6.camel@localhost.localdomain>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: [PATCH 3/3] Add new dependencies caused by git-send-email-script to debian/control
+Date: Sun, 31 Jul 2005 04:17:25 -0400
+Message-ID: <1122797845573@foobar.com>
+References: <112279784541@foobar.com>
+Reply-To: Ryan Anderson <ryan@michonline.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Darrin Thompson <darrint@progeny.com>, barkalow@iabervon.org
-X-From: git-owner@vger.kernel.org Sun Jul 31 08:51:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: ryan@michonline.com
+X-From: git-owner@vger.kernel.org Sun Jul 31 10:18:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dz7fN-0004uA-3D
-	for gcvg-git@gmane.org; Sun, 31 Jul 2005 08:51:21 +0200
+	id 1Dz91s-00013d-0q
+	for gcvg-git@gmane.org; Sun, 31 Jul 2005 10:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263200AbVGaGvN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 02:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261822AbVGaGvN
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 02:51:13 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64418 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S261788AbVGaGvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2005 02:51:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050731065109.FDKA1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 31 Jul 2005 02:51:09 -0400
-To: git@vger.kernel.org
-In-Reply-To: <1122645821.4263.6.camel@localhost.localdomain> (Darrin Thompson's message of "Fri, 29 Jul 2005 09:03:41 -0500")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S261835AbVGaIR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 04:17:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261845AbVGaIR2
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 04:17:28 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:3561 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S261835AbVGaIR1 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Jul 2005 04:17:27 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1Dz90g-0005mH-HR; Sun, 31 Jul 2005 04:17:26 -0400
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1Dz9AL-0004nD-00; Sun, 31 Jul 2005 04:27:25 -0400
+Received: from localhost ([127.0.0.1] helo=mythryan)
+	by mythryan with smtp (Exim 4.52)
+	id 1Dz90f-0006Xl-Nx; Sun, 31 Jul 2005 04:17:25 -0400
+In-Reply-To: <112279784541@foobar.com>
+X-Mailer: git-send-email-script
+To: junkio@cox.net, git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Darrin Thompson <darrint@progeny.com> writes:
+Signed-off-by: Ryan Anderson <ryan@michonline.com>
+---
 
-> 1. Pack files should reduce the number of http round trips.
-> 2. What I'm seeing when I check out mainline git is the acquisition of a
-> single large pack, then 600+ more recent objects. Better than before,
-> but still hundreds of round trips.
+ debian/control |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I've packed the git.git repository, by the way.  It has 43
-unpacked objects totalling 224 kilobytes, so cloning over dumb
-http should go a lot faster until we accumulate more unpacked
-objects.
-
-Some of you may have noticed that in the proposed updates queue
-("pu" branch) I have a couple of commits related to pulling from
-a packed dumb http server.  There are two "git fetch http://"
-commits to let you pull from such, and another stupid "count
-objects" script that you can use to see how many unpacked
-objects you have in your repository; the latter is to help
-you decide when to repack.
-
-Brave souls may want to try out the dumb http fetch.  For
-example, it _should_ do the right thing even if you do the
-following:
-
- $ git clone http://www.kernel.org/pub/scm/git/git.git/ newdir
- $ cd newdir
- $ mv .git/objects/pack/pack-* . ;# even if you unpack packs on your
- $ rm -f pack-*.idx		 ;# end, it should do the right thing.
- $ for pack in pack-*.pack; do
-     git-unpack-objects <$pack
-     rm -f "$pack"
-   done
- $ rm -f .git/refs/heads/pu
- $ git prune ;# lose objects in "pu" but still not in "master"
- $ git pull origin pu
- $ git ls-remote origin |
-   while read sha1 refname
-   do
-       case "$refname" in
-       refs/heads/master) echo $sha1 >".git/$refname" ;;
-       esac
-   done ;# revert master to upstream master
- $ old=$(git-rev-parse master^^^^^^^^^^)
- $ echo "$old" >.git/refs/heads/master ;# rewind further
- $ git checkout -f master
- $ git prune ;# try losing a bit more objects.
- $ git pull origin master
- $ git ls-remote ./.		;# show me my refs
- $ git ls-remote origin		;# show me his refs
-
-Unlike my other shell scripts I usually write in my e-mail
-buffer, I have actually run the above ;-).
-
--jc
+6dbf602b0931608831888e779612fcc89b90d16f
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -8,7 +8,7 @@ Standards-Version: 3.6.1
+ Package: git-core
+ Architecture: any
+ Depends: ${shlibs:Depends}, ${misc:Depends}, patch, diff, rcs
+-Recommends: rsync, curl, ssh
++Recommends: rsync, curl, ssh, libmail-sendmail-perl, libemail-valid-perl
+ Conflicts: git
+ Description: The git content addressable filesystem
+  GIT comes in two layers. The bottom layer is merely an extremely fast
