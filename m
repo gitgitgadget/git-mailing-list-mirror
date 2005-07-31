@@ -1,147 +1,61 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: [PATCH] Added hook in git-receive-pack
-Date: Sun, 31 Jul 2005 21:17:43 +0200
-Message-ID: <200507312117.43957.Josef.Weidendorfer@gmx.de>
+From: barkalow@iabervon.org
+Subject: [PATCH 1/3] Fix support for old libcurl
+Date: Sun, 31 Jul 2005 15:59:20 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0507311530210.23721@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Sun Jul 31 21:22:06 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 31 21:59:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzJNb-00051s-Qq
-	for gcvg-git@gmane.org; Sun, 31 Jul 2005 21:21:48 +0200
+	id 1DzJxe-0007yE-OP
+	for gcvg-git@gmane.org; Sun, 31 Jul 2005 21:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261928AbVGaTVF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 15:21:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261924AbVGaTSm
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 15:18:42 -0400
-Received: from mail.gmx.de ([213.165.64.20]:63964 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S261926AbVGaTR7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 15:17:59 -0400
-Received: (qmail invoked by alias); 31 Jul 2005 19:17:58 -0000
-Received: from p5496AE80.dip0.t-ipconnect.de (EHLO linux) [84.150.174.128]
-  by mail.gmx.net (mp033) with SMTP; 31 Jul 2005 21:17:58 +0200
-X-Authenticated: #352111
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S261886AbVGaT6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 15:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261958AbVGaT6j
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 15:58:39 -0400
+Received: from iabervon.org ([66.92.72.58]:18188 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S261886AbVGaT42 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 15:56:28 -0400
+Received: (qmail 24036 invoked by uid 1000); 31 Jul 2005 15:59:20 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Jul 2005 15:59:20 -0400
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Added hook in git-receive-pack
+Old libcurl has curl_easy_setopt(), and http-pull requires it; it just
+doesn't have one of the options.
 
-After successful update of a ref,
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
 
- $GIT_DIR/hooks/update refname old-sha1 new-sha2
+  http-pull.c |    5 ++---
+  1 files changed, 2 insertions(+), 3 deletions(-)
 
-is called if present. This allows e.g sending of a mail
-with pushed commits on the remote repository.
-Documentation update with example hook included.
+9c32b0230180d507b4429fb35432bc404a89e637
+diff --git a/http-pull.c b/http-pull.c
+--- a/http-pull.c
++++ b/http-pull.c
+@@ -12,9 +12,6 @@
+  #if LIBCURL_VERSION_NUM < 0x070800
+  #define curl_global_init(a) do { /* nothing */ } while(0)
+  #endif
+-#if LIBCURL_VERSION_NUM < 0x070907
+-#define curl_easy_setopt(a, b, c) do { /* nothing */ } while(0)
+-#endif
 
-Signed-off-by: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-------------------------------------------------
+  static CURL *curl;
 
-diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
---- a/Documentation/git-receive-pack.txt
-+++ b/Documentation/git-receive-pack.txt
-@@ -20,10 +20,25 @@ This command is usually not invoked dire
- The UI for the protocol is on the 'git-send-pack' side, and the
- program pair is meant to be used to push updates to remote
- repository.  For pull operations, see 'git-fetch-pack' and
- 'git-clone-pack'.
+@@ -187,7 +184,9 @@ int main(int argc, char **argv)
 
-+The command allows for creation and fast forwarding of sha1 refs
-+(heads/tags) on the local end. After each successful update, the
-+following external hook script is called if it is present:
-+
-+       $GIT_DIR/hooks/update refname sha1-old sha1-new
-+
-+It is assured that sha1-old is an ancestor of sha1-new (otherwise,
-+the update would have not been allowed). refname is relative to
-+$GIT_DIR; e.g. for the master head this is "refs/heads/master".
-+Using this hook, it is easy to generate mails on updates to
-+the local repository. This example script sends a mail with
-+the commits pushed to the repository:
-+
-+       #!/bin/sh
-+       git-rev-list --pretty "$3" "^$2" |
-+        mail -r $USER -s "New commits on $1" commit-list@mydomain
+  	curl_ssl_verify = gitenv("GIT_SSL_NO_VERIFY") ? 0 : 1;
+  	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, curl_ssl_verify);
++#if LIBCURL_VERSION_NUM >= 0x070907
+  	curl_easy_setopt(curl, CURLOPT_NETRC, CURL_NETRC_OPTIONAL);
++#endif
 
- OPTIONS
- -------
- <directory>::
-        The repository to sync into.
-diff --git a/receive-pack.c b/receive-pack.c
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -53,10 +53,53 @@ static int verify_old_ref(const char *na
-        if (memcmp(buffer, hex_contents, 40))
-                return -1;
-        return 0;
- }
-
-+static const char *update_hook = "hooks/update";
-+
-+static void updatehook(const char *name, unsigned char *old_sha1, unsigned char *new_sha1)
-+{
-+        if (access(update_hook, X_OK) < 0) return;
-+       fprintf(stderr, "executing update hook for %s\n", name);
-+
-+       pid_t pid = fork();
-+
-+       if (pid < 0)
-+               die("hook fork failed");
-+       if (!pid) {
-+               execlp(update_hook, update_hook, name, old_sha1, new_sha1, NULL);
-+               die("hook execute failed");
-+       }
-+
-+       for (;;) {
-+               int status, code;
-+               int retval = waitpid(pid, &status, 0);
-+
-+               if (retval < 0) {
-+                       if (errno == EINTR)
-+                               continue;
-+                       die("waitpid failed (%s)", strerror(retval));
-+               }
-+               if (retval != pid)
-+                       die("waitpid is confused");
-+               if (WIFSIGNALED(status)) {
-+                   fprintf(stderr, "%s died of signal %d",
-+                           update_hook, WTERMSIG(status));
-+                   return;
-+               }
-+               if (!WIFEXITED(status))
-+                       die("%s died out of really strange complications",
-+                           update_hook);
-+               code = WEXITSTATUS(status);
-+               if (code)
-+                   fprintf(stderr, "%s exited with error code %d",
-+                           update_hook, code);
-+               return;
-+       }
-+}
-+
- static void update(const char *name, unsigned char *old_sha1, unsigned char *new_sha1)
- {
-        char new_hex[60], *old_hex, *lock_name;
-        int newfd, namelen, written;
-
-@@ -93,10 +136,12 @@ static void update(const char *name, uns
-        if (rename(lock_name, name) < 0) {
-                unlink(lock_name);
-                die("unable to replace %s", name);
-        }
-        fprintf(stderr, "%s: %s -> %s\n", name, old_hex, new_hex);
-+
-+       updatehook(name, old_hex, new_hex);
- }
-
-
- /*
-  * This gets called after(if) we've successfully
+  	base = url;
