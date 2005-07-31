@@ -1,53 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] Add git-send-email-script - tool to send emails from
- git-format-patch-script
-Date: Sun, 31 Jul 2005 12:25:13 +0200 (CEST)
-Message-ID: <Pine.LNX.4.58.0507311223240.16181@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH 1/3] Add git-send-email-script - tool to send emails
+ from git-format-patch-script
+Date: Sun, 31 Jul 2005 14:50:55 +0400
+Message-ID: <20050731145055.2b5e6161.vsu@altlinux.ru>
 References: <11227978451100@foobar.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="pgp-sha1";
+ boundary="Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff"
 Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 31 12:25:39 2005
+X-From: git-owner@vger.kernel.org Sun Jul 31 12:51:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzB0g-0008QR-TG
-	for gcvg-git@gmane.org; Sun, 31 Jul 2005 12:25:35 +0200
+	id 1DzBPy-0001aF-5O
+	for gcvg-git@gmane.org; Sun, 31 Jul 2005 12:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261398AbVGaKZY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 06:25:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263193AbVGaKZY
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 06:25:24 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6609 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S261398AbVGaKZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2005 06:25:22 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 95AD2E2093; Sun, 31 Jul 2005 12:25:21 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 74D87AAAA7; Sun, 31 Jul 2005 12:25:21 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 02A14AAA66; Sun, 31 Jul 2005 12:25:15 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 87FB7E2054; Sun, 31 Jul 2005 12:25:13 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+	id S261672AbVGaKvg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 06:51:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263070AbVGaKvg
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 06:51:36 -0400
+Received: from mail.murom.net ([213.177.124.17]:3487 "EHLO ns1.murom.ru")
+	by vger.kernel.org with ESMTP id S261672AbVGaKvc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 06:51:32 -0400
+Received: from [172.17.7.8] (helo=procyon.home)
+	by ns1.murom.ru with esmtp (Exim 4.42)
+	id 1DzBPa-0008WV-ID; Sun, 31 Jul 2005 14:51:18 +0400
+Received: by procyon.home (Postfix, from userid 500)
+	id 814C6E510A9; Sun, 31 Jul 2005 14:50:58 +0400 (MSD)
 To: Ryan Anderson <ryan@michonline.com>
 In-Reply-To: <11227978451100@foobar.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i586-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+--Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-wouldn't it be a good idea to make $from and $to required parameters? At
-least you could infer a sensible default of $from from GIT_* environment
-variables, no? I am not quite comfortable with a hard coded sender in a
-script possibly deployed into a multi-user environment.
+On Sun, 31 Jul 2005 04:17:25 -0400 Ryan Anderson wrote:
 
-Ciao,
-Dscho
+> This is based off of GregKH's script, send-lots-of-email.pl, and
+> strives to do all the nice things a good subsystem maintainer does
+> when forwarding a patch or 50 upstream:
+> 
+> 	All the prior handlers of the patch, as determined by the
+> 	Signed-off-by: lines, and/or the author of the commit, are cc:ed
+> 	on the email.
+
+> 	All emails are sent as a reply to the previous email, making it
+> 	easy to skip a collection of emails that are uninteresting.
+
+Actually, this is the part of GregKH's script which I hate ;)
+
+50 patches sent this way produce an enormous email thread; if someone
+then tries to comment on a 40th patch, this part of the thread ends up
+far behind the right edge of the message list window in almost any mail
+client (and if someone comments on the first patch, the comments are far
+from that patch).
+
+Sending a [PATCH 0/N] message with the overall description of the
+patchset and then all patches as replies to that message looks much
+better in that respect.  However, missing messages in this form are less
+obvious.
+
+--Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQFC7K0SW82GfkQfsqIRAn57AKCTXTitlV2H2tTWBoFY0uhA8SDFGgCgkLIh
+m4QXu7AVkwmrXyrGO5wr8wc=
+=XEv+
+-----END PGP SIGNATURE-----
+
+--Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff--
