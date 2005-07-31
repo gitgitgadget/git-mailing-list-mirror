@@ -1,80 +1,77 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH 1/3] Add git-send-email-script - tool to send emails
- from git-format-patch-script
-Date: Sun, 31 Jul 2005 14:50:55 +0400
-Message-ID: <20050731145055.2b5e6161.vsu@altlinux.ru>
-References: <11227978451100@foobar.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Shipping gitk as part of core git.
+Date: Sun, 31 Jul 2005 07:00:25 -0500
+Message-ID: <17132.48473.276198.835869@cargo.ozlabs.ibm.com>
+References: <17130.56620.137642.941175@cargo.ozlabs.ibm.com>
+	<7vy87o6htm.fsf@assigned-by-dhcp.cox.net>
+	<7vk6j8yo0g.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha1";
- boundary="Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff"
-Cc: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 31 12:51:42 2005
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 31 14:02:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzBPy-0001aF-5O
-	for gcvg-git@gmane.org; Sun, 31 Jul 2005 12:51:42 +0200
+	id 1DzCWI-00066H-AZ
+	for gcvg-git@gmane.org; Sun, 31 Jul 2005 14:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261672AbVGaKvg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 06:51:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263070AbVGaKvg
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 06:51:36 -0400
-Received: from mail.murom.net ([213.177.124.17]:3487 "EHLO ns1.murom.ru")
-	by vger.kernel.org with ESMTP id S261672AbVGaKvc (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 06:51:32 -0400
-Received: from [172.17.7.8] (helo=procyon.home)
-	by ns1.murom.ru with esmtp (Exim 4.42)
-	id 1DzBPa-0008WV-ID; Sun, 31 Jul 2005 14:51:18 +0400
-Received: by procyon.home (Postfix, from userid 500)
-	id 814C6E510A9; Sun, 31 Jul 2005 14:50:58 +0400 (MSD)
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <11227978451100@foobar.com>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i586-alt-linux-gnu)
+	id S263216AbVGaMCL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 08:02:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263218AbVGaMCL
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 08:02:11 -0400
+Received: from ozlabs.org ([203.10.76.45]:16055 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S263216AbVGaMCK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 08:02:10 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id B516967DC5; Sun, 31 Jul 2005 22:02:08 +1000 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vk6j8yo0g.fsf_-_@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Junio C Hamano writes:
 
-On Sun, 31 Jul 2005 04:17:25 -0400 Ryan Anderson wrote:
+> It appears that gitk gets wider test coverage only after it is
+> pulled into git.git repository.  I think it would be a good idea
+> for me to pull from you often.
 
-> This is based off of GregKH's script, send-lots-of-email.pl, and
-> strives to do all the nice things a good subsystem maintainer does
-> when forwarding a patch or 50 upstream:
-> 
-> 	All the prior handlers of the patch, as determined by the
-> 	Signed-off-by: lines, and/or the author of the commit, are cc:ed
-> 	on the email.
+Yes, I agree.  I'm happy to send you an email when I have committed
+changes to gitk if that will help.
 
-> 	All emails are sent as a reply to the previous email, making it
-> 	easy to skip a collection of emails that are uninteresting.
+> Recently there was a discussion with binary packaging folks.
+> While I do not mind, and actually I would prefer, shipping gitk
+> as part of the core GIT, I have never heard about your
+> preference.  As long as gitk is just a single file (or even a
+> handful files in the future) project that does not have a
+> filename that overlaps with core GIT, I can continue pulling
+> from you and I think the binary packaging folks can produce
+> separate git-core and gitk package out of git.git tree without
+> problems.  However, once you start wanting to have your own
+> Makefile and maybe debian/rules file for packaging, for example,
+> I suspect the way currently things are set up would break
+> miserably.  It's all Linus' fault to have merged with your tree
+> in the first place ;-).
 
-Actually, this is the part of GregKH's script which I hate ;)
+He did ask me first, and I said he could :).  It makes things easier
+for me, having gitk in the core git, because it means that I don't
+have to worry about making a proper package out of it.  I don't see
+any reason why gitk would grow to be more than just the script.
 
-50 patches sent this way produce an enormous email thread; if someone
-then tries to comment on a 40th patch, this part of the thread ends up
-far behind the right edge of the message list window in almost any mail
-client (and if someone comments on the first patch, the comments are far
-from that patch).
+I am also thinking of doing a "gitool", somewhat like bk citool, to
+make it easier to create commits.  I guess we can decide later whether
+to make it part of the core git, although it seems more like porcelain
+than gitk.
 
-Sending a [PATCH 0/N] message with the overall description of the
-patchset and then all patches as replies to that message looks much
-better in that respect.  However, missing messages in this form are less
-obvious.
+> Anyhow, I have one bug to report.  I selected one rev, and then
+> said "diff this -> selected" from right-click menu on an
+> adjacent one, and I got this:
 
---Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff
-Content-Type: application/pgp-signature
+Thanks for the patch.  I have committed that fix plus fixes for some
+other bugs that people have reported, and pushed it to
+master.kernel.org.  Could you do another pull please?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQFC7K0SW82GfkQfsqIRAn57AKCTXTitlV2H2tTWBoFY0uhA8SDFGgCgkLIh
-m4QXu7AVkwmrXyrGO5wr8wc=
-=XEv+
------END PGP SIGNATURE-----
-
---Signature=_Sun__31_Jul_2005_14_50_55_+0400_V7pdTeP_7=5OOXff--
+Regards,
+Paul.
