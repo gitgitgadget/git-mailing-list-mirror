@@ -1,50 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Terminology
-Date: Mon, 1 Aug 2005 00:38:54 +0200 (CEST)
-Message-ID: <Pine.LNX.4.58.0508010038250.32179@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.58.0507311541340.29235@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vhdeaj05n.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Added hook in git-receive-pack
+Date: Sun, 31 Jul 2005 15:50:21 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507311549300.14342@g5.osdl.org>
+References: <200507312117.43957.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.58.0507311305170.29650@g5.osdl.org> <7vr7ded8ax.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 00:49:27 2005
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 01 00:58:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzMcN-0002d6-Jw
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 00:49:15 +0200
+	id 1DzMlC-0003HS-NR
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 00:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262046AbVGaWnm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 18:43:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262027AbVGaWlI
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 18:41:08 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:906 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S262022AbVGaWi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2005 18:38:57 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2D774E1CD0; Mon,  1 Aug 2005 00:38:55 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 14445ABBCC; Mon,  1 Aug 2005 00:38:55 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id EDF85A49AD; Mon,  1 Aug 2005 00:38:54 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D7109E1CD0; Mon,  1 Aug 2005 00:38:54 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+	id S262059AbVGaWwu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 18:52:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262038AbVGaWul
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 18:50:41 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:19165 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262037AbVGaWub (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 18:50:31 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j6VMoMjA015464
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 31 Jul 2005 15:50:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j6VMoLk9007008;
+	Sun, 31 Jul 2005 15:50:21 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdeaj05n.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <7vr7ded8ax.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-I tried to avoid the work. But I'll do it.
 
-Ciao,
-Dscho
+On Sun, 31 Jul 2005, Junio C Hamano wrote:
+> 
+> But you are.  I can run this just fine:
+
+No I'm not. Try all the machines behind my firewall.
+
+kernel.org is just the place I put things to when I publish them. It 
+doesn't have any of my working directories on it.
+
+			Linus
