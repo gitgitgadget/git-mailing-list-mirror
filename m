@@ -1,258 +1,271 @@
 From: barkalow@iabervon.org
-Subject: [PATCH 1/2] Functions for managing the set of packs the library is
- using (whitespace fixed)
-Date: Sun, 31 Jul 2005 20:53:44 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0507312053010.23721@iabervon.org>
+Subject: [PATCH 2/2] Support downloading packs by HTTP (whitespace fixed)
+Date: Sun, 31 Jul 2005 20:54:17 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0507312053470.23721@iabervon.org>
 References: <Pine.LNX.4.62.0507311600040.23721@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 02:52:43 2005
+X-From: git-owner@vger.kernel.org Mon Aug 01 02:54:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzOXR-0002AR-70
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 02:52:17 +0200
+	id 1DzOZS-0002I9-63
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 02:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262301AbVHAAvr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 20:51:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262310AbVHAAvr
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 20:51:47 -0400
-Received: from iabervon.org ([66.92.72.58]:23313 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262301AbVHAAut (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 20:50:49 -0400
-Received: (qmail 24951 invoked by uid 1000); 31 Jul 2005 20:53:44 -0400
+	id S262305AbVHAAwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 20:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262294AbVHAAvy
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 20:51:54 -0400
+Received: from iabervon.org ([66.92.72.58]:23825 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262308AbVHAAvU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 20:51:20 -0400
+Received: (qmail 24955 invoked by uid 1000); 31 Jul 2005 20:54:17 -0400
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jul 2005 20:53:44 -0400
+  by localhost with SMTP; 31 Jul 2005 20:54:17 -0400
 To: Junio C Hamano <junkio@cox.net>
 In-Reply-To: <Pine.LNX.4.62.0507311600040.23721@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds support for reading an uninstalled index, and installing a
-pack file that was added while the program was running, as well as
-functions for determining where to put the file.
+This adds support to http-pull for finding the list of pack files
+available on the server, downloading the index files for those pack
+files, and downloading pack files when they contain needed objects not
+available individually. It retains the index files even if the pack
+files were not needed, but downloads the list of pack files once per
+run if an object is not found separately.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
 
- cache.h     |   13 ++++++
- sha1_file.c |  123 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 135 insertions(+), 1 deletions(-)
+ http-pull.c |  181 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 175 insertions(+), 6 deletions(-)
 
-20fcc8f66a6780cf9bbd2fc2ba3b918c33696a67
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -172,6 +172,8 @@ extern void rollback_index_file(struct c
- extern char *mkpath(const char *fmt, ...);
- extern char *git_path(const char *fmt, ...);
- extern char *sha1_file_name(const unsigned char *sha1);
-+extern char *sha1_pack_name(const unsigned char *sha1);
-+extern char *sha1_pack_index_name(const unsigned char *sha1);
+dff0b76c4a2efbb8407778a1da6dc2ea2ca1458f
+diff --git a/http-pull.c b/http-pull.c
+--- a/http-pull.c
++++ b/http-pull.c
+@@ -33,7 +33,8 @@ struct buffer
+ };
  
- int safe_create_leading_directories(char *path);
+ static size_t fwrite_buffer(void *ptr, size_t eltsize, size_t nmemb,
+-                            struct buffer *buffer) {
++                            struct buffer *buffer)
++{
+         size_t size = eltsize * nmemb;
+         if (size > buffer->size - buffer->posn)
+                 size = buffer->size - buffer->posn;
+@@ -42,8 +43,9 @@ static size_t fwrite_buffer(void *ptr, s
+         return size;
+ }
  
-@@ -200,6 +202,9 @@ extern int write_sha1_to_fd(int fd, cons
- extern int has_sha1_pack(const unsigned char *sha1);
- extern int has_sha1_file(const unsigned char *sha1);
+-static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb, 
+-			       void *data) {
++static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
++			       void *data)
++{
+ 	unsigned char expn[4096];
+ 	size_t size = eltsize * nmemb;
+ 	int posn = 0;
+@@ -65,6 +67,168 @@ static size_t fwrite_sha1_file(void *ptr
+ 	return size;
+ }
  
-+extern int has_pack_file(const unsigned char *sha1);
-+extern int has_pack_index(const unsigned char *sha1);
++static int got_indices = 0;
 +
- /* Convert to/from hex/sha1 representation */
- extern int get_sha1(const char *str, unsigned char *sha1);
- extern int get_sha1_hex(const char *hex, unsigned char *sha1);
-@@ -276,6 +281,7 @@ extern struct packed_git {
- 	void *pack_base;
- 	unsigned int pack_last_used;
- 	unsigned int pack_use_cnt;
++static struct packed_git *packs = NULL;
++
++static int fetch_index(unsigned char *sha1)
++{
++	char *filename;
++	char *url;
++
++	FILE *indexfile;
++
++	if (has_pack_index(sha1))
++		return 0;
++
++	if (get_verbosely)
++		fprintf(stderr, "Getting index for pack %s\n",
++			sha1_to_hex(sha1));
++	
++	url = xmalloc(strlen(base) + 64);
++	sprintf(url, "%s/objects/pack/pack-%s.idx",
++		base, sha1_to_hex(sha1));
++	
++	filename = sha1_pack_index_name(sha1);
++	indexfile = fopen(filename, "w");
++	if (!indexfile)
++		return error("Unable to open local file %s for pack index",
++			     filename);
++
++	curl_easy_setopt(curl, CURLOPT_FILE, indexfile);
++	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
++	curl_easy_setopt(curl, CURLOPT_URL, url);
++	
++	if (curl_easy_perform(curl)) {
++		fclose(indexfile);
++		return error("Unable to get pack index %s", url);
++	}
++
++	fclose(indexfile);
++	return 0;
++}
++
++static int setup_index(unsigned char *sha1)
++{
++	struct packed_git *new_pack;
++	if (has_pack_file(sha1))
++		return 0; // don't list this as something we can get
++
++	if (fetch_index(sha1))
++		return -1;
++
++	new_pack = parse_pack_index(sha1);
++	new_pack->next = packs;
++	packs = new_pack;
++	return 0;
++}
++
++static int fetch_indices(void)
++{
 +	unsigned char sha1[20];
- 	char pack_name[0]; /* something like ".git/objects/pack/xxxxx.pack" */
- } *packed_git;
- 
-@@ -298,7 +304,14 @@ extern int path_match(const char *path, 
- extern int get_ack(int fd, unsigned char *result_sha1);
- extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match);
- 
-+extern struct packed_git *parse_pack_index(unsigned char *sha1);
++	char *url;
++	struct buffer buffer;
++	char *data;
++	int i = 0;
 +
- extern void prepare_packed_git(void);
-+extern void install_packed_git(struct packed_git *pack);
++	if (got_indices)
++		return 0;
 +
-+extern struct packed_git *find_sha1_pack(const unsigned char *sha1, 
-+					 struct packed_git *packs);
++	data = xmalloc(4096);
++	buffer.size = 4096;
++	buffer.posn = 0;
++	buffer.buffer = data;
 +
- extern int use_packed_git(struct packed_git *);
- extern void unuse_packed_git(struct packed_git *);
- extern struct packed_git *add_packed_git(char *, int);
-diff --git a/sha1_file.c b/sha1_file.c
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -200,6 +200,56 @@ char *sha1_file_name(const unsigned char
- 	return base;
- }
- 
-+char *sha1_pack_name(const unsigned char *sha1)
-+{
-+	static const char hex[] = "0123456789abcdef";
-+	static char *name, *base, *buf;
-+	int i;
-+
-+	if (!base) {
-+		const char *sha1_file_directory = get_object_directory();
-+		int len = strlen(sha1_file_directory);
-+		base = xmalloc(len + 60);
-+		sprintf(base, "%s/pack/pack-1234567890123456789012345678901234567890.pack", sha1_file_directory);
-+		name = base + len + 11;
-+	}
-+
-+	buf = name;
-+
-+	for (i = 0; i < 20; i++) {
-+		unsigned int val = *sha1++;
-+		*buf++ = hex[val >> 4];
-+		*buf++ = hex[val & 0xf];
-+	}
++	if (get_verbosely)
++		fprintf(stderr, "Getting pack list\n");
 +	
-+	return base;
-+}
++	url = xmalloc(strlen(base) + 21);
++	sprintf(url, "%s/objects/info/packs", base);
 +
-+char *sha1_pack_index_name(const unsigned char *sha1)
-+{
-+	static const char hex[] = "0123456789abcdef";
-+	static char *name, *base, *buf;
-+	int i;
-+
-+	if (!base) {
-+		const char *sha1_file_directory = get_object_directory();
-+		int len = strlen(sha1_file_directory);
-+		base = xmalloc(len + 60);
-+		sprintf(base, "%s/pack/pack-1234567890123456789012345678901234567890.idx", sha1_file_directory);
-+		name = base + len + 11;
-+	}
-+
-+	buf = name;
-+
-+	for (i = 0; i < 20; i++) {
-+		unsigned int val = *sha1++;
-+		*buf++ = hex[val >> 4];
-+		*buf++ = hex[val & 0xf];
-+	}
++	curl_easy_setopt(curl, CURLOPT_FILE, &buffer);
++	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
++	curl_easy_setopt(curl, CURLOPT_URL, url);
 +	
-+	return base;
-+}
-+
- struct alternate_object_database *alt_odb;
- 
- /*
-@@ -360,6 +410,14 @@ void unuse_packed_git(struct packed_git 
- 
- int use_packed_git(struct packed_git *p)
- {
-+	if (!p->pack_size) {
-+		struct stat st;
-+		// We created the struct before we had the pack
-+		stat(p->pack_name, &st);
-+		if (!S_ISREG(st.st_mode))
-+			die("packfile %s not a regular file", p->pack_name);
-+		p->pack_size = st.st_size;
++	if (curl_easy_perform(curl)) {
++		return error("Unable to get pack index %s", url);
 +	}
- 	if (!p->pack_base) {
- 		int fd;
- 		struct stat st;
-@@ -387,8 +445,10 @@ int use_packed_git(struct packed_git *p)
- 		 * this is cheap.
- 		 */
- 		if (memcmp((char*)(p->index_base) + p->index_size - 40,
--			   p->pack_base + p->pack_size - 20, 20))
-+			   p->pack_base + p->pack_size - 20, 20)) {
-+			      
- 			die("packfile %s does not match index.", p->pack_name);
++
++	do {
++		switch (data[i]) {
++		case 'P':
++			i++;
++			if (i + 52 < buffer.posn &&
++			    !strncmp(data + i, " pack-", 6) &&
++			    !strncmp(data + i + 46, ".pack\n", 6)) {
++				get_sha1_hex(data + i + 6, sha1);
++				setup_index(sha1);
++				i += 51;
++				break;
++			}
++		default:
++			while (data[i] != '\n')
++				i++;
 +		}
- 	}
- 	p->pack_last_used = pack_used_ctr++;
- 	p->pack_use_cnt++;
-@@ -426,6 +486,37 @@ struct packed_git *add_packed_git(char *
- 	return p;
- }
- 
-+struct packed_git *parse_pack_index(unsigned char *sha1)
-+{
-+	struct packed_git *p;
-+	unsigned long idx_size;
-+	void *idx_map;
-+	char *path = sha1_pack_index_name(sha1);
++		i++;
++	} while (i < buffer.posn);
 +
-+	if (check_packed_git_idx(path, &idx_size, &idx_map))
-+		return NULL;
-+
-+	path = sha1_pack_name(sha1);
-+
-+	p = xmalloc(sizeof(*p) + strlen(path) + 2);
-+	strcpy(p->pack_name, path);
-+	p->index_size = idx_size;
-+	p->pack_size = 0;
-+	p->index_base = idx_map;
-+	p->next = NULL;
-+	p->pack_base = NULL;
-+	p->pack_last_used = 0;
-+	p->pack_use_cnt = 0;
-+	memcpy(p->sha1, sha1, 20);
-+	return p;
++	got_indices = 1;
++	return 0;
 +}
 +
-+void install_packed_git(struct packed_git *pack)
++static int fetch_pack(unsigned char *sha1)
 +{
-+	pack->next = packed_git;
-+	packed_git = pack;
-+}
++	char *url;
++	struct packed_git *target;
++	struct packed_git **lst;
++	FILE *packfile;
++	char *filename;
 +
- static void prepare_packed_git_one(char *objdir)
- {
- 	char path[PATH_MAX];
-@@ -989,6 +1080,20 @@ static int find_pack_entry(const unsigne
- 	return 0;
- }
- 
-+struct packed_git *find_sha1_pack(const unsigned char *sha1, 
-+				  struct packed_git *packs)
-+{
-+	struct packed_git *p;
-+	struct pack_entry e;
++	if (fetch_indices())
++		return -1;
++	target = find_sha1_pack(sha1, packs);
++	if (!target)
++		return error("Couldn't get %s: not separate or in any pack",
++			     sha1_to_hex(sha1));
 +
-+	for (p = packs; p; p = p->next) {
-+		if (find_pack_entry_one(sha1, &e, p))
-+			return p;
++	if (get_verbosely) {
++		fprintf(stderr, "Getting pack %s\n",
++			sha1_to_hex(target->sha1));
++		fprintf(stderr, " which contains %s\n",
++			sha1_to_hex(sha1));
 +	}
-+	return NULL;
++
++	url = xmalloc(strlen(base) + 65);
++	sprintf(url, "%s/objects/pack/pack-%s.pack",
++		base, sha1_to_hex(target->sha1));
++
++	filename = sha1_pack_name(target->sha1);
++	packfile = fopen(filename, "w");
++	if (!packfile)
++		return error("Unable to open local file %s for pack",
++			     filename);
++
++	curl_easy_setopt(curl, CURLOPT_FILE, packfile);
++	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
++	curl_easy_setopt(curl, CURLOPT_URL, url);
 +	
++	if (curl_easy_perform(curl)) {
++		fclose(packfile);
++		return error("Unable to get pack file %s", url);
++	}
++
++	fclose(packfile);
++
++	lst = &packs;
++	while (*lst != target)
++		lst = &((*lst)->next);
++	*lst = (*lst)->next;
++
++	install_packed_git(target);
++
++	return 0;
 +}
 +
- int sha1_object_info(const unsigned char *sha1, char *type, unsigned long *sizep)
+ int fetch(unsigned char *sha1)
  {
- 	int status;
-@@ -1335,6 +1440,22 @@ int write_sha1_from_fd(const unsigned ch
- 	return 0;
- }
+ 	char *hex = sha1_to_hex(sha1);
+@@ -76,7 +240,7 @@ int fetch(unsigned char *sha1)
+ 	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
  
-+int has_pack_index(const unsigned char *sha1)
-+{
-+	struct stat st;
-+	if (stat(sha1_pack_index_name(sha1), &st))
+ 	if (local < 0)
+-		return error("Couldn't open %s\n", filename);
++		return error("Couldn't open local object %s\n", filename);
+ 
+ 	memset(&stream, 0, sizeof(stream));
+ 
+@@ -84,6 +248,7 @@ int fetch(unsigned char *sha1)
+ 
+ 	SHA1_Init(&c);
+ 
++	curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
+ 	curl_easy_setopt(curl, CURLOPT_FILE, NULL);
+ 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+ 
+@@ -99,8 +264,12 @@ int fetch(unsigned char *sha1)
+ 
+ 	curl_easy_setopt(curl, CURLOPT_URL, url);
+ 
+-	if (curl_easy_perform(curl))
+-		return error("Couldn't get %s for %s\n", url, hex);
++	if (curl_easy_perform(curl)) {
++		unlink(filename);
++		if (fetch_pack(sha1))
++			return error("Tried %s", url);
 +		return 0;
-+	return 1;
-+}
-+
-+int has_pack_file(const unsigned char *sha1)
-+{
-+	struct stat st;
-+	if (stat(sha1_pack_name(sha1), &st))
-+		return 0;
-+	return 1;
-+}
-+
- int has_sha1_pack(const unsigned char *sha1)
- {
- 	struct pack_entry e;
++	}
+ 
+ 	close(local);
+ 	inflateEnd(&stream);
