@@ -1,271 +1,185 @@
-From: barkalow@iabervon.org
-Subject: [PATCH 2/2] Support downloading packs by HTTP (whitespace fixed)
-Date: Sun, 31 Jul 2005 20:54:17 -0400 (EDT)
-Message-ID: <Pine.LNX.4.62.0507312053470.23721@iabervon.org>
-References: <Pine.LNX.4.62.0507311600040.23721@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git diffs
+Date: Sun, 31 Jul 2005 18:00:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507311725590.14342@g5.osdl.org>
+References: <20050731172256.73f91a20.akpm@osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 02:54:36 2005
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 01 03:01:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzOZS-0002I9-63
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 02:54:22 +0200
+	id 1DzOgA-0002hH-Qx
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 03:01:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262305AbVHAAwF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 20:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262294AbVHAAvy
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 20:51:54 -0400
-Received: from iabervon.org ([66.92.72.58]:23825 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S262308AbVHAAvU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 20:51:20 -0400
-Received: (qmail 24955 invoked by uid 1000); 31 Jul 2005 20:54:17 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jul 2005 20:54:17 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.62.0507311600040.23721@iabervon.org>
+	id S262312AbVHABA5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 21:00:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262308AbVHABA5
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 21:00:57 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:51584 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262312AbVHABAv (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 21:00:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7110jjA023441
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
+	for <git@vger.kernel.org>; Sun, 31 Jul 2005 18:00:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7110i9S012653;
+	Sun, 31 Jul 2005 18:00:44 -0700
+To: Andrew Morton <akpm@osdl.org>
+In-Reply-To: <20050731172256.73f91a20.akpm@osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This adds support to http-pull for finding the list of pack files
-available on the server, downloading the index files for those pack
-files, and downloading pack files when they contain needed objects not
-available individually. It retains the index files even if the pack
-files were not needed, but downloads the list of pack files once per
-run if an object is not found separately.
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
 
- http-pull.c |  181 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 175 insertions(+), 6 deletions(-)
+On Sun, 31 Jul 2005, Andrew Morton wrote:
+> 
+> So I finally decided to take a look at my git problems.  Discovered I
+> couldn't fix them with zero git knowledge :(
 
-dff0b76c4a2efbb8407778a1da6dc2ea2ca1458f
-diff --git a/http-pull.c b/http-pull.c
---- a/http-pull.c
-+++ b/http-pull.c
-@@ -33,7 +33,8 @@ struct buffer
- };
- 
- static size_t fwrite_buffer(void *ptr, size_t eltsize, size_t nmemb,
--                            struct buffer *buffer) {
-+                            struct buffer *buffer)
-+{
-         size_t size = eltsize * nmemb;
-         if (size > buffer->size - buffer->posn)
-                 size = buffer->size - buffer->posn;
-@@ -42,8 +43,9 @@ static size_t fwrite_buffer(void *ptr, s
-         return size;
- }
- 
--static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb, 
--			       void *data) {
-+static size_t fwrite_sha1_file(void *ptr, size_t eltsize, size_t nmemb,
-+			       void *data)
-+{
- 	unsigned char expn[4096];
- 	size_t size = eltsize * nmemb;
- 	int posn = 0;
-@@ -65,6 +67,168 @@ static size_t fwrite_sha1_file(void *ptr
- 	return size;
- }
- 
-+static int got_indices = 0;
-+
-+static struct packed_git *packs = NULL;
-+
-+static int fetch_index(unsigned char *sha1)
-+{
-+	char *filename;
-+	char *url;
-+
-+	FILE *indexfile;
-+
-+	if (has_pack_index(sha1))
-+		return 0;
-+
-+	if (get_verbosely)
-+		fprintf(stderr, "Getting index for pack %s\n",
-+			sha1_to_hex(sha1));
-+	
-+	url = xmalloc(strlen(base) + 64);
-+	sprintf(url, "%s/objects/pack/pack-%s.idx",
-+		base, sha1_to_hex(sha1));
-+	
-+	filename = sha1_pack_index_name(sha1);
-+	indexfile = fopen(filename, "w");
-+	if (!indexfile)
-+		return error("Unable to open local file %s for pack index",
-+			     filename);
-+
-+	curl_easy_setopt(curl, CURLOPT_FILE, indexfile);
-+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+	
-+	if (curl_easy_perform(curl)) {
-+		fclose(indexfile);
-+		return error("Unable to get pack index %s", url);
-+	}
-+
-+	fclose(indexfile);
-+	return 0;
-+}
-+
-+static int setup_index(unsigned char *sha1)
-+{
-+	struct packed_git *new_pack;
-+	if (has_pack_file(sha1))
-+		return 0; // don't list this as something we can get
-+
-+	if (fetch_index(sha1))
-+		return -1;
-+
-+	new_pack = parse_pack_index(sha1);
-+	new_pack->next = packs;
-+	packs = new_pack;
-+	return 0;
-+}
-+
-+static int fetch_indices(void)
-+{
-+	unsigned char sha1[20];
-+	char *url;
-+	struct buffer buffer;
-+	char *data;
-+	int i = 0;
-+
-+	if (got_indices)
-+		return 0;
-+
-+	data = xmalloc(4096);
-+	buffer.size = 4096;
-+	buffer.posn = 0;
-+	buffer.buffer = data;
-+
-+	if (get_verbosely)
-+		fprintf(stderr, "Getting pack list\n");
-+	
-+	url = xmalloc(strlen(base) + 21);
-+	sprintf(url, "%s/objects/info/packs", base);
-+
-+	curl_easy_setopt(curl, CURLOPT_FILE, &buffer);
-+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+	
-+	if (curl_easy_perform(curl)) {
-+		return error("Unable to get pack index %s", url);
-+	}
-+
-+	do {
-+		switch (data[i]) {
-+		case 'P':
-+			i++;
-+			if (i + 52 < buffer.posn &&
-+			    !strncmp(data + i, " pack-", 6) &&
-+			    !strncmp(data + i + 46, ".pack\n", 6)) {
-+				get_sha1_hex(data + i + 6, sha1);
-+				setup_index(sha1);
-+				i += 51;
-+				break;
-+			}
-+		default:
-+			while (data[i] != '\n')
-+				i++;
-+		}
-+		i++;
-+	} while (i < buffer.posn);
-+
-+	got_indices = 1;
-+	return 0;
-+}
-+
-+static int fetch_pack(unsigned char *sha1)
-+{
-+	char *url;
-+	struct packed_git *target;
-+	struct packed_git **lst;
-+	FILE *packfile;
-+	char *filename;
-+
-+	if (fetch_indices())
-+		return -1;
-+	target = find_sha1_pack(sha1, packs);
-+	if (!target)
-+		return error("Couldn't get %s: not separate or in any pack",
-+			     sha1_to_hex(sha1));
-+
-+	if (get_verbosely) {
-+		fprintf(stderr, "Getting pack %s\n",
-+			sha1_to_hex(target->sha1));
-+		fprintf(stderr, " which contains %s\n",
-+			sha1_to_hex(sha1));
-+	}
-+
-+	url = xmalloc(strlen(base) + 65);
-+	sprintf(url, "%s/objects/pack/pack-%s.pack",
-+		base, sha1_to_hex(target->sha1));
-+
-+	filename = sha1_pack_name(target->sha1);
-+	packfile = fopen(filename, "w");
-+	if (!packfile)
-+		return error("Unable to open local file %s for pack",
-+			     filename);
-+
-+	curl_easy_setopt(curl, CURLOPT_FILE, packfile);
-+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite);
-+	curl_easy_setopt(curl, CURLOPT_URL, url);
-+	
-+	if (curl_easy_perform(curl)) {
-+		fclose(packfile);
-+		return error("Unable to get pack file %s", url);
-+	}
-+
-+	fclose(packfile);
-+
-+	lst = &packs;
-+	while (*lst != target)
-+		lst = &((*lst)->next);
-+	*lst = (*lst)->next;
-+
-+	install_packed_git(target);
-+
-+	return 0;
-+}
-+
- int fetch(unsigned char *sha1)
- {
- 	char *hex = sha1_to_hex(sha1);
-@@ -76,7 +240,7 @@ int fetch(unsigned char *sha1)
- 	local = open(filename, O_WRONLY | O_CREAT | O_EXCL, 0666);
- 
- 	if (local < 0)
--		return error("Couldn't open %s\n", filename);
-+		return error("Couldn't open local object %s\n", filename);
- 
- 	memset(&stream, 0, sizeof(stream));
- 
-@@ -84,6 +248,7 @@ int fetch(unsigned char *sha1)
- 
- 	SHA1_Init(&c);
- 
-+	curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1);
- 	curl_easy_setopt(curl, CURLOPT_FILE, NULL);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
- 
-@@ -99,8 +264,12 @@ int fetch(unsigned char *sha1)
- 
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 
--	if (curl_easy_perform(curl))
--		return error("Couldn't get %s for %s\n", url, hex);
-+	if (curl_easy_perform(curl)) {
-+		unlink(filename);
-+		if (fetch_pack(sha1))
-+			return error("Tried %s", url);
-+		return 0;
-+	}
- 
- 	close(local);
- 	inflateEnd(&stream);
+Heh. We're here to please.
+
+I'll cc the git list too, because there really _are_ a lot of people out 
+there that know it fairly well, and may even have better suggestions than 
+I do.
+
+> What I want to do is to pull zillions of people's git trees into one repo
+> and then run some magic command to give me unified diffs from everyone's
+> trees which will apply to your latest.
+
+Absolutely. 
+
+Here's how to do it:
+
+ - start off by fetching every single tree you want to have into its own 
+   local branch. I think you basically do this already. If you're using 
+   cogito, I think a simple "cg-pull" will do it for you.
+
+   If you are using raw git, the easiest thing to do is to really just do
+
+	result=$(git-fetch-pack "$repo" "$head") || exit
+
+   which will fetch the named "head" from the named "repo", and stuff the 
+   result in the "result" variable. You can then stuff that result 
+   anywhere, so for example, if you pull _my_ repostiry, you could then 
+   name the result "linus-tree" by just doing
+
+	echo $result > .git/refs/heads/linus-tree
+
+   and it really is that easy.
+
+   So just do this for all the repos you want to pull, so that you have 
+   <n> heads in the same tree, names however you wish (it the head naming
+   _you_ have in your tree do not necessarily have anything at all to do 
+   with the head naming in the heads in the trees the data came from. In
+   fact, that's very important, because there can be multiple HEAD or
+   "master" source branches, of course, and you need to make _your_ heads
+   be unique).
+
+ - second phase is to select some kind of order for these things, and just 
+   start merging. Start off with a known base, and for each tree you merge 
+   it against the previous merge, and then just generate the diff against 
+   the previous merge.
+
+   Now, one downside is that the current "git resolve" will _always_ 
+   resolve into HEAD, which is admittedly a bit of a bummer: you can't 
+   resolve into a totally temporary tree, which is what your usage might 
+   want.
+
+   This might be something git could do better for you, but the upside is
+   that "git resolve" will always leave the previous tree in ORIG_HEAD,
+   and since you really need to generate a temporary branch for all your
+   merges anyway, you might as well just do exactly that, and switch to it
+   before you start the merge process.
+
+   Anyway, this example script will jusy always create a temporary branch
+   called "merge-branch" that starts at whatever point you use as your
+   base. Not a biggie. You can choose whatever as your starting point, I'm 
+   just assuming that it's the "master" branch, and that you'd keep (for 
+   example) my last release in there as the base.
+
+   But if you want to keep the result of your quilt stuff, that should be 
+   doable too, for example. I'm _assuming_ that you'd do the git merge 
+   diffs first, and then do the quilt stuff on top of the result, but 
+   there's nothing really that forces that order.
+
+   So it should literally be as simple as something like this:
+
+	#
+	# Start off from "master", create a new branch "merge-branch"
+	# off that state.
+	#
+	git checkout -f master
+	git-rev-parse master > .git/refs/heads/merge-branch
+
+	#
+	# Switch to it, always leaving "master" untouched
+	#
+	git checkout -f merge-branch
+
+	#
+	#
+	# For each tree you want to merge, just do so..
+	#
+	# This also decides the order of the patches
+	#
+	for i in linus-tree davem-net-tree davem-sparc-tree ...
+	do
+		git resolve HEAD $i "Merging $i"
+		if [ "$?" -ne 0 ]; then
+			echo "Automatic resolve failed, skipping $i" >&2
+
+			#
+			# Revert back to previous state, we're not going
+			# to do any manual fixups here.
+			#
+			git checkout -f
+		else
+			#
+			# Yay! The resolve worked, let's just diff what
+			# it did and continue onward from here
+			#
+			git diff ORIG_HEAD.. > merge-diff-$i
+		fi
+	done
+
+	#
+	# Finally, just switch back to "master", throw away all the work
+	# we did (the objects will stay around, but you can do a
+	#
+	#	git prune
+	#
+	# once a week to get rid of the temporary objects. Don't do it
+	# here, it's too expensive and there's no real point).
+	#
+	git checkout -f master
+	rm .git/refs/heads/merge-branch
+
+and you're hopefully done. It really _should_ be that easy.
+
+The above will leave you with a series of diffs called
+
+	merge-diff-linus-tree
+	merge-diff-davem-net-tree
+	merge-diff-davem-sparc-tree
+	...
+
+which are all relative to each other (ie order very much matters, and 
+comes directly from the order you did the merging in).
+
+NOTE NOTE NOTE! I wrote the above in this email client, I've not tested it 
+at all. It _looks_ straightforward enough, but hey, maybe I'm a retard.
+
+And btw, this should all be quite efficient. It really shouldn't take many 
+seconds per tree. The most expensive op _should_ be downloading the 
+changes, and the fact that "git resolve" will always do a "diffstat" of 
+the result..
+
+		Linus
