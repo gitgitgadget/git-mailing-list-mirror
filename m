@@ -1,62 +1,112 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: [PATCH] Fix warning about non-void return in a void function.
-Date: Mon, 01 Aug 2005 10:05:57 -0400
-Message-ID: <42EE2C45.4050004@gmail.com>
-Reply-To: gitzilla@gmail.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Updates for cvs-migration.txt
+Date: Mon, 1 Aug 2005 16:32:58 +0200 (CEST)
+Message-ID: <Pine.LNX.4.58.20050801163152.12985@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Aug 01 16:06:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Mon Aug 01 16:34:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dzavv-0004gZ-TZ
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 16:06:24 +0200
+	id 1DzbMQ-0000OX-0J
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 16:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262062AbVHAOGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 10:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262066AbVHAOGK
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 10:06:10 -0400
-Received: from wproxy.gmail.com ([64.233.184.204]:21508 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262062AbVHAOGF (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 10:06:05 -0400
-Received: by wproxy.gmail.com with SMTP id i6so1078357wra
-        for <git@vger.kernel.org>; Mon, 01 Aug 2005 07:06:04 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=EOm2DG7V7Uz8/q2kg82PicZDUsOusEGivdPykqC6wcfFv6FVMxuq0+3MXeygXPBjB/s7Box7dIiy+cbLK5eGi8g8qtHr8GfC7TyclYyNYKix0oJwJupC8TdfmKH6m5cWJd3MlhRMEHHtljxPhI9T+0kcn+G00WNHaex5NdzTdTI=
-Received: by 10.54.46.20 with SMTP id t20mr2907988wrt;
-        Mon, 01 Aug 2005 07:06:01 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id g12sm4093763wra.2005.08.01.07.06.00;
-        Mon, 01 Aug 2005 07:06:01 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>
+	id S261989AbVHAOd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 10:33:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261878AbVHAOd0
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 10:33:26 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:46268 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S261989AbVHAOc7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2005 10:32:59 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 8F272E23D6
+	for <git@vger.kernel.org>; Mon,  1 Aug 2005 16:32:58 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 747F491BDA
+	for <git@vger.kernel.org>; Mon,  1 Aug 2005 16:32:58 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 5E0D691BB3
+	for <git@vger.kernel.org>; Mon,  1 Aug 2005 16:32:58 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 511BCE23D6
+	for <git@vger.kernel.org>; Mon,  1 Aug 2005 16:32:58 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[PATCH] Fix warning about non-void return in a void function.
+Describe core git, not cogito.
+Tell something about emulating the CVS work flow.
+Fix small typos.
 
-Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
 ---
 
- receive-pack.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ Documentation/cvs-migration.txt |   28 ++++++++++++++++++++++------
+ 1 files changed, 22 insertions(+), 6 deletions(-)
 
-8eda2e60f24221255b77e48f4dd60e2b025839ed
-diff --git a/receive-pack.c b/receive-pack.c
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -186,7 +186,7 @@ static void unpack(void)
- 	int code = run_command(unpacker, NULL);
- 	switch (code) {
- 	case 0:
--		return 0;
-+		return;
- 	case -ERR_RUN_COMMAND_FORK:
- 		die("unpack fork failed");
- 	case -ERR_RUN_COMMAND_EXEC:
+4d171682e6e6499db8563aa61e68fc4a04abf413
+diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
+--- a/Documentation/cvs-migration.txt
++++ b/Documentation/cvs-migration.txt
+@@ -90,7 +90,7 @@ from CVS.
+ You can merge those updates (or, in fact, a different CVS branch) into
+ your main branch:
+
+-	cg-merge <branch>
++	git resolve HEAD origin "merge with current CVS HEAD"
+
+ The HEAD revision from CVS is named "origin", not "HEAD", because git
+ already uses "HEAD". (If you don't like 'origin', use cvsimport's
+@@ -101,10 +101,26 @@ Emulating CVS behaviour
+ -----------------------
+
+
+-FIXME! Talk about setting up several repositories, and pulling and
+-pushing between them. Talk about merging, and branches. Some of this
+-needs to be in the tutorial too.
++So, by now you are convinced you absolutely want to work with git, but
++at the same time you absolutely have to have a central repository.
++Step back and think again. Okay, you still need a single central
++repository? There are several ways to go about that:
++
++1. Designate a person responsible to pull all branches. Make the
++repository of this person public, and make every team member
++pull regularly from it.
++
++2. Set up a public repository with read/write access for every team
++member. Use "git pull/push" as you used "cvs update/commit". Beware!
++Linus says that "git push" does no locking, since it was not meant
++for multi-user repositories!
++
++3. Make the repository of every team member public. It is the
++responsibility of each single member to pull from every other
++team member.
+
++4. Read Documentation/tutorial.txt and admit that the described work
++flow is the best.
+
+
+ CVS annotate
+@@ -157,7 +173,7 @@ modifications that are not related to th
+ interested in.  You would see many log messages and patches that
+ do not have anything to do with the piece of code you are
+ interested in.  As an example, assuming that you have this piece
+-code that you are interested in in the HEAD version:
++of code that you are interested in in the HEAD version:
+
+ 	if (frotz) {
+ 		nitfol();
+@@ -207,7 +223,7 @@ in the current HEAD commit, even if the
+ called "o-file.c" and then renamed in an earlier commit, or if
+ the file was created by copying an existing "o-file.c" in an
+ earlier commit, you will not lose track.  If the "if" statement
+-did not change across such rename or copy, then the commit that
++did not change across such a rename or copy, then the commit that
+ does rename or copy would not show in the output, and if the
+ "if" statement was modified while the file was still called
+ "o-file.c", it would find the commit that changed the statement
