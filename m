@@ -1,71 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git diffs
-Date: Mon, 1 Aug 2005 08:51:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508010849390.14342@g5.osdl.org>
-References: <20050731172256.73f91a20.akpm@osdl.org>
- <Pine.LNX.4.58.0507311725590.14342@g5.osdl.org> <pan.2005.08.01.07.55.40.43904@smurf.noris.de>
+From: Wayne Scott <wsc9tt@gmail.com>
+Subject: Re: [RFC] extending git-ls-files --exclude.
+Date: Mon, 1 Aug 2005 11:14:37 -0500
+Message-ID: <59a6e5830508010914714a1fd6@mail.gmail.com>
+References: <20050721202309.8216.19338.stgit@h164.c77.b0.tor.eicat.ca>
+	 <tnx1x5ryvn2.fsf@arm.com> <20050722192424.GB8556@mars.ravnborg.org>
+	 <7vy87yr2xh.fsf@assigned-by-dhcp.cox.net>
+	 <20050722205948.GE11916@pasky.ji.cz>
+	 <7vd5p73jlu.fsf@assigned-by-dhcp.cox.net>
+	 <20050728155210.GA17952@pasky.ji.cz>
+	 <7vack6mcd7.fsf@assigned-by-dhcp.cox.net>
+	 <20050729073644.GE24895@pasky.ji.cz>
+	 <7vd5p2hve1.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Wayne Scott <wsc9tt@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 17:56:42 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 01 18:26:00 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dzce0-0004Qo-NM
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 17:56:01 +0200
+	id 1Dzd5k-000098-Mq
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 18:24:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262236AbVHAPzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 11:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262237AbVHAPx2
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 11:53:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:10438 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262234AbVHAPvl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 11:51:41 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j71FpEjA023916
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 1 Aug 2005 08:51:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j71FpD1U016239;
-	Mon, 1 Aug 2005 08:51:14 -0700
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.08.01.07.55.40.43904@smurf.noris.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262249AbVHAQTT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 12:19:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262226AbVHAQPI
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 12:15:08 -0400
+Received: from wproxy.gmail.com ([64.233.184.194]:33195 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S262219AbVHAQOs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 12:14:48 -0400
+Received: by wproxy.gmail.com with SMTP id i34so23606wra
+        for <git@vger.kernel.org>; Mon, 01 Aug 2005 09:14:39 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Cz/j3UkJpCmjEzhFR0BtpopVoXTmyc/Ox0fx+2BhDMQ3fU2/Crz5iXb2vrS47jVNu9B8EUI+mJ8D+9Ma2GkLfspLivtXWB9ThEiuNUy06Kugs7CFGZi6E9ZsmYqgtjEaipWlMR/4dR3DC1YeZ/NJcJbGJSKGwOydNejQDNm4kZY=
+Received: by 10.54.30.50 with SMTP id d50mr2963745wrd;
+        Mon, 01 Aug 2005 09:14:37 -0700 (PDT)
+Received: by 10.54.36.41 with HTTP; Mon, 1 Aug 2005 09:14:37 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vd5p2hve1.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On 7/29/05, Junio C Hamano <junkio@cox.net> wrote:
+> While I would in principle prefer to offer more freedom to shoot
+> yourselves in the foot ;-), the pragmatic side of me says too
+> much flexibility is just asking for trouble with not much
+> additional gain.  
 
+For an example of just how far you can go down the road to mind
+numbing complexity try reading the rsync manpage about how to exclude
+files.
 
-On Mon, 1 Aug 2005, Matthias Urlichs wrote:
->
-> Hi, Linus Torvalds wrote:
-> 
-> > 	git checkout -f master
-> > 	git-rev-parse master > .git/refs/heads/merge-branch
-> > 
-> > 	#
-> > 	# Switch to it, always leaving "master" untouched
-> > 	#
-> > 	git checkout -f merge-branch
-> 
-> Isn't that equivalent to (but slower than)
-> 
->     git checkout -f -b merge-branch master
-
-No.
-
-If you had a previous merge-branch (because something went wrong last 
-time, and you just re-start the whole thing), you really want to _first_ 
-force the branch to "master", and then create the new merge-branch.
-
-Also, the last "git checkout -f merge-branch" will be pretty much zero
-time, because the stuff is already at the right point, so it will
-basically end up just re-doing the symlink.
-
-So I did it that strange way for a reason.
-
-		Linus
+-Wayne
