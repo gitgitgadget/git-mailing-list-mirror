@@ -1,59 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Added hook in git-receive-pack
-Date: Mon, 01 Aug 2005 01:14:13 -0700
-Message-ID: <7vzms2xeei.fsf@assigned-by-dhcp.cox.net>
-References: <200507312117.43957.Josef.Weidendorfer@gmx.de>
-	<7v3bpuenpi.fsf@assigned-by-dhcp.cox.net>
-	<200508010117.41848.Josef.Weidendorfer@gmx.de>
+From: Komal Shah <komal_shah802003@yahoo.com>
+Subject: Re: cg-clone failing to get cogito latest tree.
+Date: Mon, 1 Aug 2005 01:13:51 -0700 (PDT)
+Message-ID: <20050801081351.38171.qmail@web53607.mail.yahoo.com>
+References: <46a038f905073119492e521bde@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 01 10:16:15 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Aug 01 10:16:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzVSm-0007DY-4n
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 10:15:56 +0200
+	id 1DzVTK-0007HV-95
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 10:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263220AbVHAIPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 04:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263233AbVHAIPd
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 04:15:33 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:52379 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S263220AbVHAIOP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2005 04:14:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050801081413.FXIJ19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 1 Aug 2005 04:14:13 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200508010117.41848.Josef.Weidendorfer@gmx.de> (Josef Weidendorfer's message of "Mon, 1 Aug 2005 01:17:41 +0200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262384AbVHAIPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 04:15:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262334AbVHAIP0
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 04:15:26 -0400
+Received: from web53607.mail.yahoo.com ([206.190.37.40]:47995 "HELO
+	web53607.mail.yahoo.com") by vger.kernel.org with SMTP
+	id S261970AbVHAINz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2005 04:13:55 -0400
+Received: (qmail 38173 invoked by uid 60001); 1 Aug 2005 08:13:51 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:Received:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Gu/sIEeu5RFKlvX047Bl9IyvG1r3ydQ1iRSrApUFPgIc1E1//bBbbIgrT9oie/tn/c2YSX4kEXuaJi8TTW0rdU1O4ZrZEqbvxEc3+7/oZpcCoVnTUWwqRO+WcKzHl/pDRkawLC+9J3g2a7a+nJc4G44YuWW137kQIMEh1/v8Gbg=  ;
+Received: from [61.16.170.178] by web53607.mail.yahoo.com via HTTP; Mon, 01 Aug 2005 01:13:51 PDT
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	GIT <git@vger.kernel.org>
+In-Reply-To: <46a038f905073119492e521bde@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Josef, I've committed a version that has slightly different
-semantics from what you originally posted.
+ 
+--- Martin Langhoff <martin.langhoff@gmail.com> wrote:
 
-The differences are:
+> On a new machine, trying to boostrap into latest cogito, I download
+> and make cogito 0.12.1, and then...
+> 
+> $ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git cogito
+> defaulting to local storage area
+> 14:48:53
 
- - Instead of being post-change hook, the script is run just
-   before each ref is updated.  The script can exit with
-   non-zero status to tell receive-pack not to update that ref
-   if it wants to.  This means that you should explicitly exit
-   with zero status if all you want to do in the hook is to send
-   a mail out.
+Please try "rsync" method too. Last week http seem to be broken. I have
+tried linux-omap tree and "rsync" worked, but "http" was failing.
 
- - The script is called once at the very end with a single
-   parameter "" (i.e. $refname == ""), to signal that
-   receive-pack is about to finish.  This is a good place to add
-   any "final cleanup" hook.
+---Komal Shah
 
-The latter change allowed me to remove the mandatory
-update_server_info call Linus did not like and make it
-optional.
-
--jc
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
