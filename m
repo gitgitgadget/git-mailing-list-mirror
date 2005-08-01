@@ -1,78 +1,56 @@
-From: Tejun Heo <htejun@gmail.com>
-Subject: [ANNOUNCE] mtkdiff-20050801 (with patchkdiff, quiltkdiff, gitkdiff
- and modified gitk)
-Date: Mon, 01 Aug 2005 22:28:47 +0900
-Message-ID: <42EE238F.4050900@gmail.com>
+From: Darrin Thompson <darrint@progeny.com>
+Subject: Re: Dump http servers still slow?
+Date: Mon, 01 Aug 2005 09:03:57 -0500
+Message-ID: <1122905037.4042.1.camel@localhost.localdomain>
+References: <1122584423.12374.11.camel@localhost.localdomain>
+	 <7vy87qpcwg.fsf@assigned-by-dhcp.cox.net>
+	 <1122645821.4263.6.camel@localhost.localdomain>
+	 <7v1x5ftqn5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 01 15:29:15 2005
+Cc: git@vger.kernel.org, barkalow@iabervon.org
+X-From: git-owner@vger.kernel.org Mon Aug 01 16:06:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzaLn-0007uP-5q
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 15:29:03 +0200
+	id 1DzavF-0004ZZ-RI
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 16:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261803AbVHAN24 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 09:28:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261983AbVHAN24
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 09:28:56 -0400
-Received: from wproxy.gmail.com ([64.233.184.194]:27186 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261803AbVHAN2z (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 09:28:55 -0400
-Received: by wproxy.gmail.com with SMTP id i34so463439wra
-        for <git@vger.kernel.org>; Mon, 01 Aug 2005 06:28:54 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=DxMBmmxA9q8u+lY/BIr2veGSSjVGLkJS/yvON1ZldksAWswdF2GZZx4sN3zm3ycHpWowM/epeCvM5svLJ5c4HHw/Y4nC1WcVaTHwZT2MviMX10HgkN1FgDEuayS9T+9tNZm05fxoqLBlMao3PZkYmFs3ydCEfMgC/rRxIh9A7Rw=
-Received: by 10.54.143.10 with SMTP id q10mr2847136wrd;
-        Mon, 01 Aug 2005 06:28:54 -0700 (PDT)
-Received: from htj.dyndns.org ([222.97.233.53])
-        by mx.gmail.com with ESMTP id g5sm2329515wra.2005.08.01.06.28.52;
-        Mon, 01 Aug 2005 06:28:54 -0700 (PDT)
-Received: from [127.0.0.1] (htj.dyndns.org [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by htj.dyndns.org (Postfix) with ESMTP id 286821846C9;
-	Mon,  1 Aug 2005 22:28:48 +0900 (KST)
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050402)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-	snemana@yahoo.com, paulus@samba.org, rdunlap@xenotime.net,
-	mingo@elte.hu
+	id S262052AbVHAOFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 10:05:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262047AbVHAOFM
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 10:05:12 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:63650 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S262052AbVHAOD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2005 10:03:59 -0400
+Received: from dhcp-2-246.progeny.com (dhcp-2-246.progeny.com [192.168.2.246])
+	by morimoto.progeny.com (Postfix) with ESMTP
+	id 5EB5A636AC; Mon,  1 Aug 2005 09:03:58 -0500 (EST)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x5ftqn5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello, guys.
+On Sat, 2005-07-30 at 23:51 -0700, Junio C Hamano wrote:
+> Darrin Thompson <darrint@progeny.com> writes:
+> 
+> > 1. Pack files should reduce the number of http round trips.
+> > 2. What I'm seeing when I check out mainline git is the acquisition of a
+> > single large pack, then 600+ more recent objects. Better than before,
+> > but still hundreds of round trips.
+> 
+> I've packed the git.git repository, by the way.  It has 43
+> unpacked objects totalling 224 kilobytes, so cloning over dumb
+> http should go a lot faster until we accumulate more unpacked
+> objects.
 
-New version of mtkdiff package is available.  Changes since last release 
-(20050514) are.
+I did a pull from the office and the times were 27 sec for http and 17
+sec for rsync. So the moral of the story should be that frequent repacks
+are sufficient for decent http performance.
 
-* patchkdiff added.  Idea is from patchview of Randy Dunlap (Hi!).
-   patchkdiff can show multiple diff files.
-
-* quiltkdiff rewritten in perl.  It's faster and doesn't push/pop quilt
-   repository.  Patches are rolled back and applied in a temporary
-   working directory.
-
-* gitkdiff rewritten in perl.  It now works with the new git diff
-   output format and a bit faster.  Also, this version can show
-   multiple commits.  For example, you can do the following.
-   $ git-rev-list HEAD ^OLD_HEAD | gitkdiff -c -r
-
-* modified gitk-1.2.
-
-For more information...
-
-http://home-tj.org/mtkdiff
-
-Tarball is available at
-
-http://home-tj.org/mtkdiff/files/mtkdiff-20050801.tar.gz
-
-Thanks.
-
--- 
-tejun
+--
+Darrin
