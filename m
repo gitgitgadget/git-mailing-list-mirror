@@ -1,56 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [PATCH] Added hook in git-receive-pack
-Date: Sun, 31 Jul 2005 17:11:20 -0700
-Message-ID: <7vhdeabjo7.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 31 Jul 2005 17:25:47 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0507311720220.14342@g5.osdl.org>
 References: <200507312117.43957.Josef.Weidendorfer@gmx.de>
-	<Pine.LNX.4.58.0507311305170.29650@g5.osdl.org>
-	<7vr7ded8ax.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507311549300.14342@g5.osdl.org>
-	<7viryqd0eo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0507311627280.14342@g5.osdl.org>
+ <Pine.LNX.4.58.0507311305170.29650@g5.osdl.org> <7vr7ded8ax.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507311549300.14342@g5.osdl.org> <7viryqd0eo.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0507311627280.14342@g5.osdl.org> <7vhdeabjo7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 01 02:12:34 2005
+X-From: git-owner@vger.kernel.org Mon Aug 01 02:27:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzNuv-0007j2-Nw
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 02:12:30 +0200
+	id 1DzO9I-0008TN-Qu
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 02:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262173AbVHAALx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 20:11:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261818AbVHAALx
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 20:11:53 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:25266 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S262173AbVHAALW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2005 20:11:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050801001120.BOXC550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 31 Jul 2005 20:11:20 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0507311627280.14342@g5.osdl.org> (Linus Torvalds's message of "Sun, 31 Jul 2005 16:33:53 -0700 (PDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S262187AbVHAA0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 31 Jul 2005 20:26:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262204AbVHAA0g
+	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 20:26:36 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:53225 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262187AbVHAAZ6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 31 Jul 2005 20:25:58 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j710PmjA021335
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 31 Jul 2005 17:25:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j710PlQY011090;
+	Sun, 31 Jul 2005 17:25:47 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhdeabjo7.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
 
-> In the "central repo model" you have another issue - you have potentially
-> parallell pushes to different branches with no locking what-so-ever (and
-> that's definitely _supposed_ to work), and I have this suspicion that the 
-> "update for dumb servers" code isn't really safe in that setting anyway. I 
-> haven't checked.
 
-You are absolutely right.  It should grab some sort of lock
-while it does its thing (would fcntl(F_GETLK) be acceptable to
-networked filesystem folks?).
+On Sun, 31 Jul 2005, Junio C Hamano wrote:
+> 
+> You are absolutely right.  It should grab some sort of lock
+> while it does its thing (would fcntl(F_GETLK) be acceptable to
+> networked filesystem folks?).
 
-I have one question regarding the hooks.  We seem to prefer
-avoiding system and roll our own.  Is there a particular reason,
-other than bypassing the need to quote parameters for shell?
+There is no lock that works reliably except for the "create a directory 
+and rename it onto another directory"
+
+Please do it in the hook layer.
+
+> I have one question regarding the hooks.  We seem to prefer
+> avoiding system and roll our own.  Is there a particular reason,
+> other than bypassing the need to quote parameters for shell?
+
+Hmm.. I suspect it's partly just because there is existing code that does
+the fork()/exec() thing because it needs to do IO, and system() doesn't
+close the right pipes after fork etc.
+
+"system()" really is very inflexible. It basically never works if you have 
+any shared file descriptors.
+
+		Linus
