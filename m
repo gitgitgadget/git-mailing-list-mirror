@@ -1,75 +1,65 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: cg-clone failing to get cogito latest tree.
-Date: Mon, 1 Aug 2005 14:49:37 +1200
-Message-ID: <46a038f905073119492e521bde@mail.gmail.com>
-Reply-To: Martin Langhoff <martin.langhoff@gmail.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: git diffs
+Date: Mon, 01 Aug 2005 09:55:47 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.01.07.55.40.43904@smurf.noris.de>
+References: <20050731172256.73f91a20.akpm@osdl.org> <Pine.LNX.4.58.0507311725590.14342@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Aug 01 04:50:12 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Aug 01 09:58:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzQNK-0002me-Mw
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 04:49:58 +0200
+	id 1DzVAr-0005k9-UH
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 09:57:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262001AbVHACtm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 31 Jul 2005 22:49:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262030AbVHACtm
-	(ORCPT <rfc822;git-outgoing>); Sun, 31 Jul 2005 22:49:42 -0400
-Received: from rproxy.gmail.com ([64.233.170.198]:32067 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S262001AbVHACtm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Jul 2005 22:49:42 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1201442rne
-        for <git@vger.kernel.org>; Sun, 31 Jul 2005 19:49:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=NarIB0Ajb9ZL5NIKCrVP1a3d3WXcze2VztdjomWwiuk2B/NsmCr57wc+D+CTdF4q7PtrgENKOY3lqv3lFwE59q6IHN8nLftoxVnNQ5Fsgiy1qZXRMIdtkTnSWNimgyXYMR9ybotraXNj6u6JptlkZp3v/WEZZu7DiVM72MmJteM=
-Received: by 10.38.75.30 with SMTP id x30mr782670rna;
-        Sun, 31 Jul 2005 19:49:37 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Sun, 31 Jul 2005 19:49:37 -0700 (PDT)
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
+	id S261787AbVHAH4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 03:56:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261527AbVHAH4w
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 03:56:52 -0400
+Received: from main.gmane.org ([80.91.229.2]:19884 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S261787AbVHAH42 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 03:56:28 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1DzV9o-0005dU-2w
+	for git@vger.kernel.org; Mon, 01 Aug 2005 09:56:20 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Aug 2005 09:56:20 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Aug 2005 09:56:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On a new machine, trying to boostrap into latest cogito, I download
-and make cogito 0.12.1, and then...
+Hi, Linus Torvalds wrote:
 
-$ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git cogito
-defaulting to local storage area
-14:48:53 URL:http://www.kernel.org/pub/scm/cogito/cogito.git/refs/heads/master
-[41/41] -> "refs/heads/origin" [1]
-progress: 34 objects, 45126 bytes
-error: File d2072194059c65f92487c84c53b9f6b5da780d14
-(http://www.kernel.org/pub/scm/cogito/cogito.git/objects/d2/072194059c65f92487c84c53b9f6b5da780d14)
-corrupt
+> 	git checkout -f master
+> 	git-rev-parse master > .git/refs/heads/merge-branch
+> 
+> 	#
+> 	# Switch to it, always leaving "master" untouched
+> 	#
+> 	git checkout -f merge-branch
 
-Cannot obtain needed blob d2072194059c65f92487c84c53b9f6b5da780d14
-while processing commit 0000000000000000000000000000000000000000.
-cg-pull: objects pull failed
-cg-init: pull failed
+Isn't that equivalent to (but slower than)
 
-any hints? I have a similar problem fetching git with cg-clone: 
+    git checkout -f -b merge-branch master
 
-$ cg-clone http://www.kernel.org/pub/scm/git/git.git git
-defaulting to local storage area
-14:53:44 URL:http://www.kernel.org/pub/scm/git/git.git/refs/heads/master
-[41/41] -> "refs/heads/origin" [1]
-progress: 2 objects, 4666 bytes
-error: File 6ff87c4664981e4397625791c8ea3bbb5f2279a3
-(http://www.kernel.org/pub/scm/git/git.git/objects/6f/f87c4664981e4397625791c8ea3bbb5f2279a3)
-corrupt
+?
 
-Cannot obtain needed blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3
-while processing commit 0000000000000000000000000000000000000000.
-cg-pull: objects pull failed
-cg-init: pull failed
-
-Probably doing somethginf hopelessly wrong...
-
-
-martin
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+You can tell it's going to be a rotten day when the bird singing outside your
+window is a buzzard.
