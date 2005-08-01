@@ -1,55 +1,46 @@
-From: Komal Shah <komal_shah802003@yahoo.com>
-Subject: Re: cg-clone failing to get cogito latest tree.
-Date: Mon, 1 Aug 2005 01:13:51 -0700 (PDT)
-Message-ID: <20050801081351.38171.qmail@web53607.mail.yahoo.com>
-References: <46a038f905073119492e521bde@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Functions for managing the set of packs the library is using (whitespace fixed)
+Date: Mon, 01 Aug 2005 01:16:39 -0700
+Message-ID: <7vpssyxeag.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.62.0507311600040.23721@iabervon.org>
+	<Pine.LNX.4.62.0507312053010.23721@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Aug 01 10:16:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 01 10:17:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1DzVTK-0007HV-95
-	for gcvg-git@gmane.org; Mon, 01 Aug 2005 10:16:30 +0200
+	id 1DzVTj-0007Ib-MD
+	for gcvg-git@gmane.org; Mon, 01 Aug 2005 10:16:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262384AbVHAIPb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 04:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262334AbVHAIP0
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 04:15:26 -0400
-Received: from web53607.mail.yahoo.com ([206.190.37.40]:47995 "HELO
-	web53607.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S261970AbVHAINz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Aug 2005 04:13:55 -0400
-Received: (qmail 38173 invoked by uid 60001); 1 Aug 2005 08:13:51 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Gu/sIEeu5RFKlvX047Bl9IyvG1r3ydQ1iRSrApUFPgIc1E1//bBbbIgrT9oie/tn/c2YSX4kEXuaJi8TTW0rdU1O4ZrZEqbvxEc3+7/oZpcCoVnTUWwqRO+WcKzHl/pDRkawLC+9J3g2a7a+nJc4G44YuWW137kQIMEh1/v8Gbg=  ;
-Received: from [61.16.170.178] by web53607.mail.yahoo.com via HTTP; Mon, 01 Aug 2005 01:13:51 PDT
-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	GIT <git@vger.kernel.org>
-In-Reply-To: <46a038f905073119492e521bde@mail.gmail.com>
+	id S262045AbVHAIQo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 1 Aug 2005 04:16:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262090AbVHAIQo
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 04:16:44 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:65504 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S262045AbVHAIQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Aug 2005 04:16:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050801081639.UUPT19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 1 Aug 2005 04:16:39 -0400
+To: barkalow@iabervon.org
+In-Reply-To: <Pine.LNX.4.62.0507312053010.23721@iabervon.org> (barkalow@iabervon.org's message of "Sun, 31 Jul 2005 20:53:44 -0400 (EDT)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
- 
---- Martin Langhoff <martin.langhoff@gmail.com> wrote:
+barkalow@iabervon.org writes:
 
-> On a new machine, trying to boostrap into latest cogito, I download
-> and make cogito 0.12.1, and then...
-> 
-> $ cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git cogito
-> defaulting to local storage area
-> 14:48:53
+> This adds support for reading an uninstalled index, and installing a
+> pack file that was added while the program was running, as well as
+> functions for determining where to put the file.
 
-Please try "rsync" method too. Last week http seem to be broken. I have
-tried linux-omap tree and "rsync" worked, but "http" was failing.
+Thanks.  Applied and pushed out.
 
----Komal Shah
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+I removed my own version of stop-gap hack; git-fetch-script
+now directly calls git-http-pull.
