@@ -1,104 +1,51 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH] Under NO_OPENSSL -lssl should not be used
-Date: Wed, 3 Aug 2005 08:43:18 +1000
-Message-ID: <2cfc403205080215433786775f@mail.gmail.com>
-References: <20050729085819.GL24895@pasky.ji.cz>
-	 <20050729155051.GJ21909@pasky.ji.cz>
-	 <Pine.LNX.4.58.0507292038160.29650@g5.osdl.org>
-	 <7vek9g6g4f.fsf_-_@assigned-by-dhcp.cox.net>
-Reply-To: Jon Seymour <jon.seymour@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [patch] list shortlog items in commit order
+Date: Tue, 02 Aug 2005 18:41:48 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508021840070.15300@localhost.localdomain>
+References: <Pine.LNX.4.63.0508021713230.15300@localhost.localdomain>
+ <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, Linus Torvalds <torvalds@osdl.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 00:43:42 2005
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@ppc970.osdl.org>,
+	Jeff Garzik <jgarzik@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 03 00:44:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E05Tr-00009R-CZ
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 00:43:27 +0200
+	id 1E05Sb-0008RF-9o
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 00:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261807AbVHBWnU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Aug 2005 18:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261895AbVHBWnU
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 18:43:20 -0400
-Received: from rproxy.gmail.com ([64.233.170.203]:607 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S261807AbVHBWnT convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 18:43:19 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1531572rne
-        for <git@vger.kernel.org>; Tue, 02 Aug 2005 15:43:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=p64XHiFjS+c1KyWBS/bGo5pbqvElDE+RZLRPoKDosWFYqnTOOXA5APTfYuZBxpKh78SqXrvi3xiX9Jo5Qn9rQjKnc6BEmOT+QmuACQdG6+mEy0Vmkk4Bb1fnILJXapfopgGMfKG89pMp5t+g8x1KBgP7ojsXqpu3sKgMFeMX3rU=
-Received: by 10.38.181.38 with SMTP id d38mr21389rnf;
-        Tue, 02 Aug 2005 15:43:18 -0700 (PDT)
-Received: by 10.38.104.42 with HTTP; Tue, 2 Aug 2005 15:43:18 -0700 (PDT)
+	id S261461AbVHBWmC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Aug 2005 18:42:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261807AbVHBWmC
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 18:42:02 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:22485 "EHLO
+	relais.videotron.ca") by vger.kernel.org with ESMTP id S261461AbVHBWmB
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 18:42:01 -0400
+Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR011.ip.videotron.ca
+ (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
+ with ESMTP id <0IKM00C6V9POW6@VL-MO-MR011.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 02 Aug 2005 18:41:49 -0400 (EDT)
+In-reply-to: <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@localhost.localdomain
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek9g6g4f.fsf_-_@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-G'day Junio,
+On Tue, 2 Aug 2005, Junio C Hamano wrote:
 
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> Jon, do we really need bignum to do the flow computation?  From
-> a quick glance, it appears to me that the fraction manipulation
-> part is quite well isolated.  Do you think adding the support
-> for using other bignum implementation be reasonable (assuming
-> you do need to use bignum based fraction)?
->
+> > The current shortlog list is backward making it look odd.
+> > This reverses it so things appear more logically.
+> 
+> Sorry, I do not know how the shortlog looked like in BK days,
+> but it would be nice to match that order.
 
-Sorry, only just saw this. An alternative bignum implementation would
-be ok, I just used the ssl stuff since it happened to do what I want
-and was available. I also have a patch in the pipes that gets around
-the need for arbitrary precision fractions completely.
-
-jon.
-
-> ------------
-> This is quick and dirty but under NO_OPENSSL we should not
-> attempt to link with -lssl (nor -lcrypto).
-> 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
-> cd /opt/packrat/playpen/public/in-place/git/git.junio/
-> jit-diff
-> # - pu: Fetch from a packed repository on dumb servers.
-> # + (working tree)
-> diff --git a/Makefile b/Makefile
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -108,9 +108,11 @@ LIBS += -lz
-> 
->  ifndef NO_OPENSSL
->         LIB_OBJS += epoch.o
-> +       OPENSSL_LIBSSL=-lssl
->  else
->         CFLAGS += '-DNO_OPENSSL'
->         MOZILLA_SHA1=1
-> +       OPENSSL_LIBSSL=
->  endif
->  ifdef MOZILLA_SHA1
->    SHA1_HEADER="mozilla-sha1/sha1.h"
-> @@ -148,7 +150,7 @@ git-ssh-pull: rsh.o pull.o
->  git-ssh-push: rsh.o
-> 
->  git-http-pull: LIBS += -lcurl
-> -git-rev-list: LIBS += -lssl
-> +git-rev-list: LIBS += $(OPENSSL_LIBSSL)
-> 
->  $(LIB_OBJS): $(LIB_H)
->  $(DIFF_OBJS): diffcore.h
-> 
-> Compilation finished at Fri Jul 29 21:48:01
-> 
-> 
+This is precisely why I made this patch: to make it look like the BK 
+shortlog.
 
 
--- 
-homepage: http://www.zeta.org.au/~jon/
-blog: http://orwelliantremors.blogspot.com/
+Nicolas
