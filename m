@@ -1,97 +1,55 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix sparse warnings
-Date: Mon, 1 Aug 2005 12:11:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508011208280.3341@g5.osdl.org>
+From: Noel Maddy <noel@zhtwn.com>
+Subject: Re: [OT] Perl-ish perl vs. C-ish perl.
+Date: Tue, 2 Aug 2005 08:48:24 -0400
+Message-ID: <20050802124824.GA13096@uglybox.localnet>
+References: <11227978451100@foobar.com> <7vbr4jmhqe.fsf@assigned-by-dhcp.cox.net> <20050731235242.GH32263@mythryan2.michonline.com> <20050801220800.GA12331@uglybox.localnet> <20050801224308.GB12331@uglybox.localnet> <7vk6j52qhn.fsf_-_@assigned-by-dhcp.cox.net>
+Reply-To: Noel Maddy <noel@zhtwn.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 02 14:12:38 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Noel Maddy <noel@zhtwn.com>, Ryan Anderson <ryan@michonline.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 02 14:49:36 2005
 Return-path: <git-owner@vger.kernel.org>
-Received: from mail-relay.eunet.no ([193.71.71.242])
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1Dzvc0-0006YE-Sw
-	for gcvg-git@gmane.org; Tue, 02 Aug 2005 14:11:12 +0200
-Received: from vger.kernel.org (vger.kernel.org [12.107.209.244])
-	by mail-relay.eunet.no (8.13.1/8.13.1/GN) with ESMTP id j71JCema055638
-	for <gcvg-git@gmane.org>; Mon, 1 Aug 2005 21:12:41 +0200 (CEST)
-	(envelope-from git-owner@vger.kernel.org)
+	id 1DzwCr-000464-Uk
+	for gcvg-git@gmane.org; Tue, 02 Aug 2005 14:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261153AbVHATML (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 1 Aug 2005 15:12:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261155AbVHATML
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Aug 2005 15:12:11 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40335 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261153AbVHATMK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Aug 2005 15:12:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j71JBsjA007573
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 1 Aug 2005 12:11:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j71JBre1026720;
-	Mon, 1 Aug 2005 12:11:54 -0700
+	id S261498AbVHBMtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Aug 2005 08:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261500AbVHBMtJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 08:49:09 -0400
+Received: from sccrmhc12.comcast.net ([63.240.76.22]:42404 "EHLO
+	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
+	id S261498AbVHBMtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Aug 2005 08:49:08 -0400
+Received: from uglybox (pcp08381697pcs.wbrmfd01.mi.comcast.net[68.43.216.103])
+          by comcast.net (sccrmhc12) with ESMTP
+          id <20050802124907012006atcce>; Tue, 2 Aug 2005 12:49:07 +0000
+Received: from noel by uglybox with local (Exim 4.52)
+	id 1DzwC0-0003Q0-Ar; Tue, 02 Aug 2005 08:48:24 -0400
 To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <7vk6j52qhn.fsf_-_@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 01, 2005 at 04:21:08PM -0700, Junio C Hamano wrote:
+> Noel Maddy <noel@zhtwn.com> writes:
 
-A few sparse warnings have crept in again since I checked last time:  
-undeclared variables with global scope.
+(silly perl stuff)
 
-Fix them by marking the private variables properly "static".
+> Please refrain from making this thread "I know more Perl than
+> you do"; thank you.
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-----
-Btw, sparse also warns about the "return 0" in receive-pack.c: unpack(), 
-since that function is supposed to return void. I think somebody else 
-already sent a patch for that one.
+Sorry. Just trying to help, but suitably chastened.
 
+Thanks
 
-diff --git a/daemon.c b/daemon.c
---- a/daemon.c
-+++ b/daemon.c
-@@ -71,13 +71,13 @@ static int max_connections = 25;
- 
- /* These are updated by the signal handler */
- static volatile unsigned int children_reaped = 0;
--pid_t dead_child[MAX_CHILDREN];
-+static pid_t dead_child[MAX_CHILDREN];
- 
- /* These are updated by the main loop */
- static unsigned int children_spawned = 0;
- static unsigned int children_deleted = 0;
- 
--struct child {
-+static struct child {
- 	pid_t pid;
- 	socklen_t addrlen;
- 	struct sockaddr_storage address;
-diff --git a/rev-cache.c b/rev-cache.c
---- a/rev-cache.c
-+++ b/rev-cache.c
-@@ -5,7 +5,7 @@
- struct rev_cache **rev_cache;
- int nr_revs, alloc_revs;
- 
--struct rev_list_elem *rle_free;
-+static struct rev_list_elem *rle_free;
- 
- #define BATCH_SIZE 512
- 
-diff --git a/server-info.c b/server-info.c
---- a/server-info.c
-+++ b/server-info.c
-@@ -62,7 +62,7 @@ static int update_info_refs(int force)
- }
- 
- /* packs */
--struct pack_info {
-+static struct pack_info {
- 	unsigned long latest;
- 	struct packed_git *p;
- 	int old_num;
+-- 
+Time is an illusion.  Lunchtime doubly so.
+							-- Ford Prefect
++--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+Noel Maddy <noel@zhtwn.com>
