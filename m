@@ -1,50 +1,42 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [patch] list shortlog items in commit order
-Date: Tue, 02 Aug 2005 17:18:57 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508021713230.15300@localhost.localdomain>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Email patch -> git commit?
+Date: Tue, 02 Aug 2005 15:15:19 -0700
+Message-ID: <42EFF077.6080606@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 02 23:23:21 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 03 00:18:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E04E0-0000GG-7H
-	for gcvg-git@gmane.org; Tue, 02 Aug 2005 23:23:00 +0200
+	id 1E053E-0005l8-V4
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 00:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261870AbVHBVWY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Aug 2005 17:22:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261823AbVHBVTv
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 17:19:51 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63078 "EHLO
-	relais.videotron.ca") by vger.kernel.org with ESMTP id S261838AbVHBVTT
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 17:19:19 -0400
-Received: from xanadu.home ([24.200.213.96]) by VL-MO-MR011.ip.videotron.ca
- (iPlanet Messaging Server 5.2 HotFix 1.21 (built Sep  8 2003))
- with ESMTP id <0IKM00CBY5VLW6@VL-MO-MR011.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 02 Aug 2005 17:18:57 -0400 (EDT)
-X-X-Sender: nico@localhost.localdomain
-To: Junio C Hamano <junkio@cox.net>
+	id S261897AbVHBWPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Aug 2005 18:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261899AbVHBWPf
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 18:15:35 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:22754 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S261897AbVHBWPd
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 18:15:33 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j72MFPk9025259
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 2 Aug 2005 15:15:25 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Git Mailing List <git@vger.kernel.org>
+X-Virus-Scanned: ClamAV version 0.86.1, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Anyone have any good scripts for taking patches in email and turning 
+them into git commits, preferrably while preserving the author information?
 
-The current shortlog list is backward making it look odd.
-This reverses it so things appear more logically.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
-
-diff --git a/git-shortlog b/git-shortlog
---- a/git-shortlog
-+++ b/git-shortlog
-@@ -90,7 +90,7 @@ sub shortlog_output {
- 
- 		# output author's 1-line summaries
- 		$obj = $map{$key};
--		foreach $desc (@$obj) {
-+		foreach $desc (reverse @$obj) {
- 			print "  $desc\n";
- 			$n_output++;
- 		}
+	-hpa
