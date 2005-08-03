@@ -1,65 +1,62 @@
 From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Users of git-check-files?
-Date: Wed, 03 Aug 2005 10:30:21 -0700
-Message-ID: <7vy87jc4ia.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 03 Aug 2005 10:37:12 -0700
+Message-ID: <7virymdirb.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.58.0508021942500.3341@g5.osdl.org>
+	<7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030808530.3341@g5.osdl.org>
+	<7vr7dbhvci.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030913060.3341@g5.osdl.org>
+	<7vk6j3f044.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
-	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<200508031908.22562.Josef.Weidendorfer@gmx.de>
+	<7voe8fdkd7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508031014070.3258@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 19:31:50 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 19:39:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0N4i-0000CU-74
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:30:40 +0200
+	id 1E0NBF-00019F-FN
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262362AbVHCRaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 13:30:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262364AbVHCRaZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:30:25 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:11985 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262362AbVHCRaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 13:30:23 -0400
+	id S262367AbVHCRhR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 13:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262368AbVHCRhR
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:37:17 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:63220 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S262367AbVHCRhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 13:37:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050803173023.PWTB3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 Aug 2005 13:30:23 -0400
+          id <20050803173713.FYRU17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 13:37:13 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <200508031908.22562.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Wed, 3 Aug 2005 19:08:22 +0200")
+In-Reply-To: <Pine.LNX.4.58.0508031014070.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 10:23:14 -0700 (PDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> ~/tmp/git/clone2> cg-push
-> 'refs/heads/branch2': updating from 80e4d426dd4c865b943cc1121b580a946eee921d 
-> to 8196067677e3415ce404ea5bc35731ac7d56115d
-> fatal: bad object f7e944b036fd00af656b262140c1dc93ceffadb1
-> Packing 0 objects
-> Unpacking 0 objects
+> I started out to make the "-f" flag to send-file work around it, but I
+> never finished that, partly because it really ends up being the same thing
+> as "git-fetch-pack" in reverse, which was against the whole point of
+> git-send-pack. Send-pack is meant to be an "update remote tree" thing, 
+> with the assumption that the remote tree is a subset - and exactly that 
+> assumption is what makes send-pack much cheaper than fetch-pack.
 
-Ahhhh.
-
-Yes, we read from the remote and use old->sha1 when doing the
-pack generation.  If we do not have that object (in Josef's
-example because it is not something we have pulled yet), then
-rev-list has no way to create the necessary pack.
-
-I have a feeling this explains what I've been seeing as well.
-The first thing I do before I push is to fetch (but not
-merge-pull) from kernel.org, but this happens against
-www.kernel.org (to make sure people are seeing what I want them
-to see), not against master.  So if I happen to do my push cycle
-twice before the things propagate from master to www.kernel.org,
-_and_ if I happened to have run git prune in my private
-repository just before the second cycle, I may end up not having
-the objects referenced by "pu" branch there in my private
-repository.
+I think in addition to the existing ref_newer() check, which
+makes sure you are advancing the remote head, not just replacing
+with something unrelated, making sure that we have objects
+referenced by ref->old_sha1 we obtained from the remote on our
+end for all branches involved would be the only thing needed.
+The latter the users should not even be able to override with
+the --force flag, of course, but we would remind them to pull
+from the other end first.
