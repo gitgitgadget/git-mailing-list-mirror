@@ -1,79 +1,65 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Users of git-check-files?
-Date: Wed, 3 Aug 2005 10:23:14 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508031014070.3258@g5.osdl.org>
+Date: Wed, 03 Aug 2005 10:30:21 -0700
+Message-ID: <7vy87jc4ia.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org> <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030808530.3341@g5.osdl.org> <7vr7dbhvci.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030913060.3341@g5.osdl.org> <7vk6j3f044.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org> <7voe8fdkd7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<200508031908.22562.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 19:24:48 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 19:31:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0Mxl-0007cc-B8
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:23:29 +0200
+	id 1E0N4i-0000CU-74
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262360AbVHCRXW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 13:23:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262361AbVHCRXW
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:23:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:44690 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262360AbVHCRXU (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 13:23:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j73HNFjA006531
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 3 Aug 2005 10:23:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j73HNEBv029666;
-	Wed, 3 Aug 2005 10:23:14 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe8fdkd7.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262362AbVHCRaZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 13:30:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262364AbVHCRaZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:30:25 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:11985 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S262362AbVHCRaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 13:30:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050803173023.PWTB3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 13:30:23 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <200508031908.22562.Josef.Weidendorfer@gmx.de> (Josef
+	Weidendorfer's message of "Wed, 3 Aug 2005 19:08:22 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
+> ~/tmp/git/clone2> cg-push
+> 'refs/heads/branch2': updating from 80e4d426dd4c865b943cc1121b580a946eee921d 
+> to 8196067677e3415ce404ea5bc35731ac7d56115d
+> fatal: bad object f7e944b036fd00af656b262140c1dc93ceffadb1
+> Packing 0 objects
+> Unpacking 0 objects
 
-On Wed, 3 Aug 2005, Junio C Hamano wrote:
->
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > Are you sure you have a good git version on master? I've never seen 
-> > anything like that, and I push all the time..
-> 
-> I have been esuspecting that it happens only because I rewind
-> and rebase "pu", which you never do.  The thing is, even though
-> I rewind "pu" all the time, it happens only occasionally.
+Ahhhh.
 
-Oh, that would do it. 
+Yes, we read from the remote and use old->sha1 when doing the
+pack generation.  If we do not have that object (in Josef's
+example because it is not something we have pulled yet), then
+rev-list has no way to create the necessary pack.
 
-You need to prune back the remote tree you send to, so that it is a real
-subset of what you are sending from (at least as far as the branch you
-send is concerned - other branches may be ahead of you, of course). Unlike
-"git-fetch-pack", the send-pack interface does not do any common commit
-discovery, so if you have state on the other end that isn't on your local
-end, that's setting yourself up for problems: you are basically misusing
-the interfaces.
-
-I started out to make the "-f" flag to send-file work around it, but I
-never finished that, partly because it really ends up being the same thing
-as "git-fetch-pack" in reverse, which was against the whole point of
-git-send-pack. Send-pack is meant to be an "update remote tree" thing, 
-with the assumption that the remote tree is a subset - and exactly that 
-assumption is what makes send-pack much cheaper than fetch-pack.
-
-(Actually, to me it's not the "cheaper" that matters, but exactly the fact
-that send-pack is so safe - if somebody has changed something at the other 
-end that I don't have in mine, I _want_ errors, because that would be a 
-serious problem).
-
-		Linus
+I have a feeling this explains what I've been seeing as well.
+The first thing I do before I push is to fetch (but not
+merge-pull) from kernel.org, but this happens against
+www.kernel.org (to make sure people are seeing what I want them
+to see), not against master.  So if I happen to do my push cycle
+twice before the things propagate from master to www.kernel.org,
+_and_ if I happened to have run git prune in my private
+repository just before the second cycle, I may end up not having
+the objects referenced by "pu" branch there in my private
+repository.
