@@ -1,59 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Users of git-check-files?
-Date: Wed, 3 Aug 2005 18:50:22 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+Date: Wed, 03 Aug 2005 10:02:28 -0700
+Message-ID: <7voe8fdkd7.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org> <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030808530.3341@g5.osdl.org> <7vr7dbhvci.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030913060.3341@g5.osdl.org> <7vk6j3f044.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.58.0508021942500.3341@g5.osdl.org>
+	<7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030808530.3341@g5.osdl.org>
+	<7vr7dbhvci.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030913060.3341@g5.osdl.org>
+	<7vk6j3f044.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 18:54:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 19:04:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0MUJ-0002Zr-Q3
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 18:53:04 +0200
+	id 1E0Mdh-0004B9-LR
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:02:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262335AbVHCQwe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 12:52:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262349AbVHCQwe
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 12:52:34 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16345 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S262335AbVHCQuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 12:50:23 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7BA3EE2368; Wed,  3 Aug 2005 18:50:22 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5F6A99C6D4; Wed,  3 Aug 2005 18:50:22 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4AADD930AE; Wed,  3 Aug 2005 18:50:22 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 31959E2368; Wed,  3 Aug 2005 18:50:22 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+	id S262347AbVHCRCh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 13:02:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262348AbVHCRCg
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:02:36 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:38838 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S262347AbVHCRCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 13:02:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050803170230.ILOU16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 13:02:30 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 09:45:12 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Linus Torvalds <torvalds@osdl.org> writes:
 
-On Wed, 3 Aug 2005, Linus Torvalds wrote:
-
-> Are you sure you have a good git version on master? I've never seen
+> Are you sure you have a good git version on master? I've never seen 
 > anything like that, and I push all the time..
 
-Call him Zaphod: he has two heads (master and pu). You don't. As I said in 
-another mail, this could be very well related to Junio's problems.
-
-Ciao,
-Dscho
+I have been esuspecting that it happens only because I rewind
+and rebase "pu", which you never do.  The thing is, even though
+I rewind "pu" all the time, it happens only occasionally.
