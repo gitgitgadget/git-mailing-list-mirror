@@ -1,53 +1,43 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [patch] list shortlog items in commit order
-Date: Tue, 2 Aug 2005 21:59:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508022158290.3341@g5.osdl.org>
-References: <Pine.LNX.4.63.0508021713230.15300@localhost.localdomain>
- <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net> <42F040E1.5000706@pobox.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Users of git-check-files?
+Date: Tue, 02 Aug 2005 23:17:56 -0700
+Message-ID: <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.58.0508021942500.3341@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 07:01:12 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 08:19:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0BN1-0004M0-U4
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 07:00:48 +0200
+	id 1E0CbF-0001eI-F7
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 08:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262052AbVHCE7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 00:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262054AbVHCE7u
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 00:59:50 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57026 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262052AbVHCE7o (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 00:59:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j734xPjA019281
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 2 Aug 2005 21:59:26 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j734xO3g027275;
-	Tue, 2 Aug 2005 21:59:25 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <42F040E1.5000706@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262089AbVHCGTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 02:19:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262074AbVHCGS7
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 02:18:59 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:63157 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S262089AbVHCGSB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 02:18:01 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050803061759.YCVN7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 02:17:59 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 2 Aug 2005 19:43:51 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> It has no point any more, all the tools check the file status on their 
+> own, and yes, the thing should probably be removed.
 
-On Tue, 2 Aug 2005, Jeff Garzik wrote:
-> 
-> <shrug>  I don't really care either way.
-
-I suspect it's mostly the users, not the developers, who care. The core
-developers already know what went in, and have git to see it, they don't 
-look at the shortlog output. So I suspect it's more important to see if 
-there's user feedback one way or the other..
-
-		Linus
+How about git-rev-tree?  Does anybody care?
