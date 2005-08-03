@@ -1,69 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] GIT_SSH alternate ssh name or helper
-Date: Wed, 03 Aug 2005 12:29:55 -0700
-Message-ID: <7v4qa6akek.fsf@assigned-by-dhcp.cox.net>
-References: <20050803151542.GA6655@medusa>
-	<7viryndjvu.fsf@assigned-by-dhcp.cox.net>
-	<20050803185621.GA20645@medusa>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Very limited pathspec wildcards..
+Date: Wed, 3 Aug 2005 12:38:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508031234280.3258@g5.osdl.org>
+References: <Pine.LNX.4.58.0508031038320.3258@g5.osdl.org>
+ <7voe8ec08j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 21:31:58 2005
+X-From: git-owner@vger.kernel.org Wed Aug 03 21:40:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0OwS-0008Cl-7i
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 21:30:16 +0200
+	id 1E0P4s-0000tB-5B
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 21:38:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262402AbVHCT37 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 15:29:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262426AbVHCT37
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 15:29:59 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7557 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S262402AbVHCT36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 15:29:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050803192957.YASP8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 Aug 2005 15:29:57 -0400
-To: Martin Sivak <mars@nomi.cz>
-In-Reply-To: <20050803185621.GA20645@medusa> (Martin Sivak's message of "Wed,
-	3 Aug 2005 20:56:21 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S262427AbVHCTiu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 15:38:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262428AbVHCTiu
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 15:38:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:52146 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262427AbVHCTit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 15:38:49 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j73JcijA015861
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 3 Aug 2005 12:38:45 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j73JciUH004025;
+	Wed, 3 Aug 2005 12:38:44 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe8ec08j.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Martin Sivak <mars@nomi.cz> writes:
 
-> I mean, how would you setup different identities for more user
-> accounts on the same server (it doesn't happen often, but..)?
 
-I do not claim the way I do is the best way, but I do that all
-the time.
+On Wed, 3 Aug 2005, Junio C Hamano wrote:
+> 
+> Wouldn't something like this work equally well?
 
-I just use different "name" to connect, by setting up the ssh
-client configuration file to give me the protocol parameters I
-want depending on the name I use.  The wildcard support handles
-permutations quite nicely.  Something like this:
+Nope, for several reasons:
+ - it's _horribly_ inefficient (ie it traverses directories that it 
+   doesn't need to)
+ - it shows all the changeset comments, regardless of whether they are 
+   releant or not. It just removes the diffs.
 
-    $ cat .ssh/config
-    Host *-1-*
-      Protocol 1
-    Host *-2-*
-      Protocol 2
-    Host lucia-*
-      Hostname lucia.example.xz
-    Host myriam-*
-      Hostname myriam.example.xz
-    Host *-junio
-      IdentityFile ~/.ssh/identity-junio
-      IdentityFile ~/.ssh/id_dsa-junio
-    Host *-junkio
-      IdentityFile ~/.ssh/identity-junkio
-      IdentityFile ~/.ssh/id_dsa-junkio
+Try it out.
 
-    $ ssh lucia-2-junio ;# go to lucia over protocol 2, use id_dsa-junio
-    $ ssh myriam-1-junkio ;# to myriam over protocol 1, use identity-junkio
+Junio, name-based filters _have_ to be done early. This is why
+"diffcore-pathspec" isn't used any more - it's _much_ too inefficient to
+do it later.
+
+		Linus
