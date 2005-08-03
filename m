@@ -1,303 +1,537 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Users of git-check-files?
-Date: Thu, 4 Aug 2005 00:09:17 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508032341320.31852@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] (preview) Renaming push.
+Date: Wed, 03 Aug 2005 16:25:02 -0700
+Message-ID: <7vek9a8uy9.fsf_-_@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org> <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508031618500.23728@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508031055090.3258@g5.osdl.org>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<200508031908.22562.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463794688-1611601895-1123106957=:31852"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 00:12:24 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Thu Aug 04 01:30:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0RRx-0003T7-Ll
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 00:10:58 +0200
+	id 1E0Sfj-0002ng-93
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 01:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261602AbVHCWKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 18:10:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261591AbVHCWKW
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 18:10:22 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:22668 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S261602AbVHCWJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 18:09:18 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A8087E236E; Thu,  4 Aug 2005 00:09:17 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 863E4B346E; Thu,  4 Aug 2005 00:09:17 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 55A70A8AD3; Thu,  4 Aug 2005 00:09:17 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 37CE9E236E; Thu,  4 Aug 2005 00:09:17 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508031055090.3258@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S261619AbVHCX2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 19:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261644AbVHCX0Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 19:26:16 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:32748 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S261619AbVHCXZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 19:25:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050803232502.CYGQ1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 19:25:02 -0400
+To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.58.0508031102590.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 11:08:29 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Linus Torvalds <torvalds@osdl.org> writes:
 
----1463794688-1611601895-1123106957=:31852
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-
-Hi,
-
-On Wed, 3 Aug 2005, Linus Torvalds wrote:
-
-> On Wed, 3 Aug 2005, Johannes Schindelin wrote:
->>
->> I try to write a "git annotate" based on the output of git-whatchanged.
+> The real problem with git-send-pack is that the local and remote names 
+> have to be the same, which is a bug, really. It _should_ be perfectly fine 
+> to do something like
 >
-> You can't. It's fundamentally not doable, because you lose the merge
-> information.
-
-That's why I said I need git-rev-tree. In the meantime I discovered, that 
-git-rev-list has a "--parents" option which suits me just fine. Therefore 
-I'd say: kill git-rev-tree.
-
-> So you need to use a combination of git-rev-list _and_ git-whatchanged.
-
-I tried to do without the ugly "script is calling script is calling 
-program" idiom. That is why my attempt at git-annotate (see attached) is 
-so slow.
-
-> I have been thinking of adding a "follow this file" mode to git-rev-list,
-> which just ignores all children of merges that used the file directly from
-> one of the other children. Exactly because then you could have a
-> git-rev-list that prunes based on filename, and would potentially be a lot
-> more efficient (not follow the "uninteresting" side of a merge).
-
-Let's sit and see if people pick it up at all. If yes, I'd rather rewrite 
-the whole thing in C eventually (it is in perl now and uses hashes quite 
-extensively...).
-
->> P.S.: My only unsolved problem is that git-whatchanged sometimes shows
->> the diffs in the wrong order (clock-skew problem?)
+> 	git-send-pack ..dest.. localname:remotename
 >
-> Nope, this is a direct result of two branches modifying the same file in
-> parallel. There is no "right" or "wrong" order.
+> which would push the local "localname" branch to the remote "remotename" 
+> branch.
 
-Exactly. But there is a "you probably meant that": the branch in which it 
-was modified last (not counting merges, of course).
+Yes, and that is what I have been cooking today ;-).
 
-Notes:
+This patch is a preview, only because I have not converted the
+pull side yet.  My limited testing shows that you can push refs
+under different names fine with this patch.
 
-- You can either annotate by commit (this is the default), or show 
-some other informations with the "-f" flag: Try "-f author,commit:8".
+The plan is to also let people say the renaming for pull side
+like this.
 
-- If you don't specify any files, it assumes you mean all files 
-(Attention: slow).
+        git-fetch-pack <remote> remotename:localname...
 
-- You can start at a commit instead of the current state by specifying
-"-c other_commit".
+Note that remote/local is confusing when we consider both pull
+and push sides, so we should call them srcname and dstname.  The
+commit message uses these words.
 
-- The list of commits is traversed as output by git-rev-list, i.e. 
-chronologically. Each line is marked with the commit whose parent does not 
-contain that line.
+-jc
 
-- I am not at all sure if my handling of merges is sane. The logic is like 
-this: If the commit is parent to more than one commit (i.e. a merge), then 
-the touched lines are tentatively marked as changed in that commit, but 
-are possibly overridden at a later stage.
+------------
+This allows git-send-pack to push local refs to a destination
+repository under different names.
 
-Ciao,
-Dscho
+Here is the name mapping rules for refs.
 
----1463794688-1611601895-1123106957=:31852
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=git-annotate-script
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.63.0508040009170.31852@wgmdd8.biozentrum.uni-wuerzburg.de>
-Content-Description: 
-Content-Disposition: attachment; filename=git-annotate-script
+* If there is no ref mapping on the command line:
 
-IyEvdXNyL2Jpbi9wZXJsDQoNCnVzZSBHZXRvcHQ6OlN0ZDsNCg0Kc3ViIHVz
-YWdlKCkgew0KCXByaW50IFNUREVSUiAnVXNhZ2U6ICR7XGJhc2VuYW1lICQw
-fSBbLXNdIFstZiBmb3JtYXRdIFstYyBjb21taXRdIFtmaWxlcy4uLl0NCg0K
-CS1zCQlvbmx5IGxvb2sgYXQgZmlyc3QgcGFyZW50IGluIGNhc2Ugb2YgYSBt
-ZXJnZQ0KCS1mIGZvcm1hdAlyZXZpc2lvbiBmb3JtYXQgKGUuZy4gImF1dGhv
-cixjb21taXQ6OCIpDQoJLWMgY29tbWl0CXN0YXJ0IGxvb2tpbmcgYXQgdGhp
-cyBjb21taXQNCic7DQoNCglleGl0KDEpOw0KfQ0KDQpnZXRvcHRzKCJoc2Y6
-YzoiKSBvciB1c2FnZSgpOw0KJG9wdF9oICYmIHVzYWdlKCk7DQoNCiRmaXJz
-dF9wYXJlbnRfb25seT0kb3B0X3M7DQoNCnN1YiByZWFkX2ZpbGUgKCQpIHsN
-CglteSAkZmlsZT0kX1swXTsNCglvcGVuIElOLCAkZmlsZSB8fCByZXR1cm4g
-MTsNCgkkb3JpZ19saW5lX2NvdW50PTA7DQoJQGxpbmVzPSgpOw0KCUBsaW5l
-X2hhbmRsZWQ9KCk7DQoJQHJldmlzaW9ucz0oKTsNCgl3aGlsZSg8SU4+KSB7
-DQoJCSRvcmlnX2xpbmVfY291bnQrKzsNCgkJJGxpbmVzWyRvcmlnX2xpbmVf
-Y291bnRdPSRfOw0KCX0NCgljbG9zZSBJTjsNCgkkb3JpZ19saW5lX2NvdW50
-PjAgfHwgcmV0dXJuIDI7DQoJQG1hcHBpbmdbMS4uJG9yaWdfbGluZV9jb3Vu
-dF09KDEuLiRvcmlnX2xpbmVfY291bnQpOw0KCXJldHVybiAwOw0KfQ0KCQ0K
-c3ViIGluaXRfZmlsZSgkJCkgew0KCW15ICRmaWxlPSRfWzBdOw0KCW15ICRo
-ZWFkPSRfWzFdOw0KDQoJaWYoJGhlYWQgZXEgIiIpIHsNCgkJIyByZWFkIGN1
-cnJlbnQgZmlsZQ0KCQlteSAkcmV0PXJlYWRfZmlsZSgiPCIuJGZpbGUpOw0K
-CQkkcmV0PT0wIHx8IHJldHVybiAkcmV0Ow0KDQoJCSRjdXJyZW50X3Jldmlz
-aW9uPSIqIngoJHJldmlzaW9uX3N0cmluZ19sZW5ndGgtMSkuIjsiOw0KCQlo
-YW5kbGVfZGlmZigiZ2l0LWRpZmYtZmlsZXMgLXAgIi4kZmlsZS4ifCIsMSk7
-DQoJfSBlbHNlIHsNCgkJaWYoYGdpdC1scy10cmVlICRoZWFkICRmaWxlYD1+
-L15cUytccytcUytccysoXFMrKS8pIHsNCgkJCSRzaGExPSQxOw0KCQkJbXkg
-JHJldD1yZWFkX2ZpbGUoImdpdC1jYXQtZmlsZSBibG9iICIuJHNoYTEuInwi
-KTsNCgkJCSRyZXQ9PTAgfHwgcmV0dXJuICRyZXQ7DQoJCX0gZWxzZSB7DQoJ
-CQl1c2FnZSgpOw0KCQl9DQoJfQ0KCSRmaWxlX3ZlcnNpb249MDsNCglyZXR1
-cm4gMDsNCn0NCg0KIyBtYXJrIGFsbCBsaW5lcyBzdGlsbCB1bmFjY291bnRl
-ZCBmb3INCnN1YiBtYXJrX2FsbCAoJCkgew0KCW15ICRtYXJrX2xpbmVzX2Fz
-X2hhbmRsZWQ9JF9bMF07DQoJZm9yZWFjaCAkbGluZSAoQG1hcHBpbmcpIHsN
-CgkJaWYoJGxpbmVfaGFuZGxlZHskbGluZX09PXVuZGVmKSB7DQoJCQkkcmV2
-aXNpb25zWyRsaW5lXT1nZXRfcmV2aXNpb24oKTsNCgkJCWlmKCRtYXJrX2xp
-bmVzX2FzX2hhbmRsZWQpIHsNCgkJCQkkbGluZV9oYW5kbGVkeyRsaW5lfT0x
-Ow0KCQkJfQ0KCQl9DQoJfQ0KCWlmKCRtYXJrX2xpbmVzX2FzX2hhbmRsZWQp
-IHsNCgkJJG9yaWdfbGluZV9jb3VudD0wOw0KCQlAbWFwcGluZz0oKTsNCgl9
-DQp9DQoNCiMgdGhpcyBzdWIgb25seSBoYW5kbGVzIHVuaWZpZWQgZGlmZnMN
-CnN1YiBoYW5kbGVfZGlmZigkJCkgew0KCW15ICRkaWZmPSRfWzBdOw0KCW15
-ICRtYXJrX2xpbmVzX2FzX2hhbmRsZWQ9JF9bMV07DQoNCglvcGVuIERJRkYs
-ICRkaWZmOw0KCW15IEBuZXdfbWFwcGluZz0oKTsNCglteSAkY3VycmVudF9s
-aW5lX25yX21pbnVzPTE7DQoJbXkgJGN1cnJlbnRfbGluZV9ucl9wbHVzPTE7
-DQoNCgl3aGlsZSg8RElGRj4pIHsNCgkJaWYoL15AQCAtKFxkKyksKFxkKykg
-XCsoXGQrKSwoXGQrKSBAQC8pIHsNCgkJCSRlbXB0eV9kaWZmPTA7DQoJCQkk
-c3RhcnRfbWludXM9JDE7DQoJCQkkY291bnRfbWludXM9JDI7DQoJCQkkc3Rh
-cnRfcGx1cz0kMzsNCgkJCSRjb3VudF9wbHVzPSQ0Ow0KDQoJCQkjIGlmIGZp
-bGUgd2FzIGNyZWF0ZWQgaGVyZSwgd2VyZSBmaW5pc2hlZA0KCQkJaWYoJHN0
-YXJ0X21pbnVzPT0wKSB7DQoJCQkJbWFya19hbGwoJG1hcmtfbGluZXNfYXNf
-aGFuZGxlZCk7DQoJCQkJcmV0dXJuOw0KCQkJfQ0KCQkJIyBzYW5lIGNoZWNr
-DQoJCQkkc3RhcnRfbWludXMtJGN1cnJlbnRfbGluZV9ucl9taW51cz09JHN0
-YXJ0X3BsdXMtJGN1cnJlbnRfbGluZV9ucl9wbHVzDQoJCQkJfHwgZGllICJp
-bnZhbGlkIGRpZmY6ICRzdGFydF9taW51cywkY3VycmVudF9saW5lX25yX21p
-bnVzLCRzdGFydF9wbHVzLCRjdXJyZW50X2xpbmVfbnJfcGx1cyI7DQoJCQlp
-Zigkc3RhcnRfbWludXMtJGN1cnJlbnRfbGluZV9ucl9taW51cz4wKSB7DQoJ
-CQkJQG5ld19tYXBwaW5nWyRjdXJyZW50X2xpbmVfbnJfbWludXMuLiRzdGFy
-dF9taW51c10NCgkJCQkJPUBtYXBwaW5nWyRjdXJyZW50X2xpbmVfbnJfcGx1
-cy4uJHN0YXJ0X3BsdXNdOw0KCQkJCSRjdXJyZW50X2xpbmVfbnJfbWludXM9
-JHN0YXJ0X21pbnVzOw0KCQkJCSRjdXJyZW50X2xpbmVfbnJfcGx1cz0kc3Rh
-cnRfcGx1czsNCgkJCX0NCgkJCXdoaWxlKCRjb3VudF9taW51cz4wIHx8ICRj
-b3VudF9wbHVzPjApIHsNCgkJCQkkXz08RElGRj47DQoJCQkJaWYoL14tLykg
-ew0KCQkJCQkkbmV3X21hcHBpbmdbJGN1cnJlbnRfbGluZV9ucl9taW51c109
-dW5kZWY7DQoJCQkJCSRjdXJyZW50X2xpbmVfbnJfbWludXMrKzsNCgkJCQkJ
-JGNvdW50X21pbnVzLS07DQoJCQkJfSBlbHNlIHsNCgkJCQkJaWYoL15cKy8p
-IHsNCgkJCQkJCSRvcmlnPSRtYXBwaW5nWyRjdXJyZW50X2xpbmVfbnJfcGx1
-c107DQoJCQkJCQlpZigkb3JpZz4wICYmICRsaW5lX2hhbmRsZWRbJG9yaWdd
-PT11bmRlZikgew0KCQkJCQkJCSRyZXZpc2lvbnNbJG9yaWddPWdldF9yZXZp
-c2lvbigpOw0KCQkJCQkJCWlmKCRtYXJrX2xpbmVzX2FzX2hhbmRsZWQpIHsN
-CgkJCQkJCQkJJGxpbmVfaGFuZGxlZFskb3JpZ109MTsNCgkJCQkJCQkJJG9y
-aWdfbGluZV9jb3VudC0tOw0KCQkJCQkJCQlpZigkb3JpZ19saW5lX2NvdW50
-PT0wKSB7DQoJCQkJCQkJCQlAbWFwcGluZz1AbmV3X21hcHBpbmc7DQoJCQkJ
-CQkJCQlyZXR1cm47DQoJCQkJCQkJCX0NCgkJCQkJCQl9DQoJCQkJCQl9DQoJ
-CQkJCQkkY3VycmVudF9saW5lX25yX3BsdXMrKzsNCgkJCQkJCSRjb3VudF9w
-bHVzLS07DQoJCQkJCX0gZWxzZSB7DQoJCQkJCQkkb3JpZ19saW5lX25yPSRt
-YXBwaW5nWyRjdXJyZW50X2xpbmVfbnJfcGx1c107DQoJCQkJCQkkbmV3X21h
-cHBpbmdbJGN1cnJlbnRfbGluZV9ucl9taW51c109JG9yaWdfbGluZV9ucjsN
-CgkJCQkJCWlmKCRvcmlnX2xpbmVfbnI+MCkgew0KCQkJCQkJCSMgc2FuZSBj
-aGVjaw0KCQkJCQkJCWlmKHN1YnN0cigkXywxKSBuZSAkbGluZXNbJG9yaWdf
-bGluZV9ucl0pIHsNCgkJCQkJCQkJcHJpbnQgIi0tXG4iOw0KCQkJCQkJCQlw
-cmludCBAbGluZXNbKCRvcmlnX2xpbmVfbnItMykuLigkb3JpZ19saW5lX25y
-KzMpXTsNCgkJCQkJCQkJcHJpbnQgIi0tXG4iOw0KCQkJCQkJCQlkaWUgImlu
-dmFsaWQgZGlmZiAoJG9yaWdfbGluZV9ucjokY3VycmVudF9saW5lX25yX3Bs
-dXMpOiAiLnN1YnN0cigkXywxKS4iIGlzIG5vdCAiLiRsaW5lc1skb3JpZ19s
-aW5lX25yXTsNCgkJCQkJCQl9DQoJCQkJCQkJc3Vic3RyKCRfLDEpIGVxICRs
-aW5lc1skb3JpZ19saW5lX25yXSB8fA0KCQkJCQkJCQlkaWUgImludmFsaWQg
-ZGlmZiAoJGRpZmYpOiAiLnN1YnN0cigkXywxKS4iIGlzIG5vdCAiLiRsaW5l
-c1skb3JpZ19saW5lX25yXS4kbGluZXNbMS4uJCNsaW5lc107DQoJCQkJCQl9
-DQoJCQkJCQkkY3VycmVudF9saW5lX25yX21pbnVzKys7DQoJCQkJCQkkY3Vy
-cmVudF9saW5lX25yX3BsdXMrKzsNCgkJCQkJCSRjb3VudF9taW51cy0tOw0K
-CQkJCQkJJGNvdW50X3BsdXMtLTsNCgkJCQkJfQ0KCQkJCX0NCgkJCX0NCgkJ
-fQ0KCX0NCgljbG9zZSBESUZGOw0KCSRyZXN0X2xpbmVzPSQjbWFwcGluZy0k
-Y3VycmVudF9saW5lX25yX3BsdXM7DQoJaWYoJHJlc3RfbGluZXM+MCkgew0K
-CQlAbmV3X21hcHBpbmdbJGN1cnJlbnRfbGluZV9ucl9taW51cy4uKCRjdXJy
-ZW50X2xpbmVfbnJfbWludXMrJHJlc3RfbGluZXMpXQ0KCQkJPUBtYXBwaW5n
-WyRjdXJyZW50X2xpbmVfbnJfcGx1cy4uKCRjdXJyZW50X2xpbmVfbnJfcGx1
-cyskcmVzdF9saW5lcyldOw0KCX0NCgkkZmlsZV92ZXJzaW9uKys7DQoJQG1h
-cHBpbmc9QG5ld19tYXBwaW5nOw0KCXJldHVybjsNCn0NCg0Kc3ViIGdldF9y
-ZXZpc2lvbigpIHsNCglpZigkY3VycmVudF9yZXZpc2lvbiBlcSAiIikgew0K
-CQklY29tbWl0X3ZhbHVlcz0oJ2ZpbGV2ZXJzaW9uJywnVi0nLiRmaWxlX3Zl
-cnNpb24pOw0KCQkkY29tbWl0X3ZhbHVlc3snY29tbWl0J309JGN1cnJlbnRf
-Y29tbWl0Ow0KCQlvcGVuIENPTU1JVCwgImdpdC1jYXQtZmlsZSBjb21taXQg
-JGN1cnJlbnRfY29tbWl0fCI7DQoJCXdoaWxlKCgkXz08Q09NTUlUPikgJiYg
-IS9eJC8pIHsNCgkJCWlmKC9ecGFyZW50IChbMC05YS1mXXs0MH0pLykgew0K
-CQkJCSRjb21taXRfdmFsdWVzeydwYXJlbnRzJ30uPSQxLiIgIjsNCgkJCX0g
-ZWxzaWYoL15hdXRob3IgKC4qKS8pIHsNCgkJCQkkY29tbWl0X3ZhbHVlc3sn
-YXV0aG9yJ309JDE7DQoJCQl9IGVsc2lmKC9eY29tbWl0dGVyICguKikvKSB7
-DQoJCQkJJGNvbW1pdF92YWx1ZXN7J2NvbW1pdHRlcid9PSQxOw0KCQkJfQ0K
-CQl9DQoJCWNsb3NlIENPTU1JVDsNCg0KCQlmb3IoJGk9MDskaTwkI3Jldmlz
-aW9uX2Zvcm1hdDskaSs9Mikgew0KCQkJbXkgJHRlbXA9JGNvbW1pdF92YWx1
-ZXN7JHJldmlzaW9uX2Zvcm1hdFskaV19Ow0KCQkJbXkgJGxlbmd0aD1sZW5n
-dGgoJHRlbXApOw0KCQkJaWYoJGxlbmd0aD4kcmV2aXNpb25fZm9ybWF0WyRp
-KzFdKSB7DQoJCQkJJHRlbXA9c3Vic3RyKCR0ZW1wLDAsJHJldmlzaW9uX2Zv
-cm1hdFskaSsxXSk7DQoJCQl9IGVsc2lmKCRsZW5ndGg8JHJldmlzaW9uX2Zv
-cm1hdFskaSsxXSkgew0KCQkJCSR0ZW1wLj0iICJ4KCRyZXZpc2lvbl9mb3Jt
-YXRbJGkrMV0tJGxlbmd0aCk7DQoJCQl9DQoJCQkkY3VycmVudF9yZXZpc2lv
-bi49JHRlbXAuIjsiOw0KCQl9DQoJfQ0KCXJldHVybiAkY3VycmVudF9yZXZp
-c2lvbjsNCn0NCg0Kc3ViIHNob3dfY3VycmVudCB7DQoJZm9yKCRpPTE7JGk8
-PSQjbGluZXM7JGkrKykgew0KCQlwcmludCAkcmV2aXNpb25zWyRpXS4kbGlu
-ZXNbJGldOw0KCX0NCn0NCg0Kc3ViIGFubm90YXRlX2ZpbGUoJCQpIHsNCglt
-eSAkZmlsZT0kX1swXTsNCglteSAkaGVhZD0kX1sxXTsNCg0KCWluaXRfZmls
-ZSgkZmlsZSwkaGVhZCk7DQoNCglteSBAbmV3X21hcHBpbmc9QG1hcHBpbmc7
-DQoJJWNvbW1pdF9tYXBwaW5ncz0oJGNvbW1pdHNbMF09PlxAbmV3X21hcHBp
-bmcpOw0KDQoJbXkgJGluZGV4Ow0KCWZvcigkaW5kZXg9MDskaW5kZXg8JCNj
-b21taXRzOyRpbmRleCsrKSB7DQoJCSRjdXJyZW50X2NvbW1pdD0kY29tbWl0
-c1skaW5kZXhdOw0KCQkkY3VycmVudF9yZXZpc2lvbj0iIjsNCgkJaWYoJG9y
-aWdfbGluZV9jb3VudD09MCB8fCAkY2hpbGRyZW5fY291bnR7JGN1cnJlbnRf
-Y29tbWl0fT09MCkgew0KCQkJbWFya19hbGwoMSk7DQoJCQlzaG93X2N1cnJl
-bnQoKTsNCgkJCXJldHVybjsNCgkJfSBlbHNlIHsNCgkJCSRuZXh0X2NvbW1p
-dD0kY29tbWl0c1skaW5kZXgrMV07DQoJCQlpZigkcGFyZW50X3RyZWV7JG5l
-eHRfY29tbWl0fSBuZSAkY3VycmVudF9jb21taXQpIHsNCgkJCQkjIGN1cnJl
-bnRfY29tbWl0IGhhcyBjaGlsZHJlbiwgc28gc2F2ZSB0aGUgbGluZSBtYXBw
-aW5nDQoJCQkJbXkgQG5ld19tYXBwaW5nPUBtYXBwaW5nOyAjIGZvcmNlIGNv
-cHkNCgkJCQkkY29tbWl0X21hcHBpbmdzeyRjdXJyZW50X2NvbW1pdH09XEBu
-ZXdfbWFwcGluZzsNCg0KCQkJCSMgZ2V0IGN1cnJlbnRfY29tbWl0ICh3aGlj
-aCBpcyB0aGUgcGFyZW50IG9mIG5leHRfY29tbWl0KQ0KCQkJCSRjdXJyZW50
-X2NvbW1pdD0kcGFyZW50X3RyZWV7JG5leHRfY29tbWl0fTsNCgkJCQlpZigk
-Y29tbWl0X21hcHBpbmdzeyRjdXJyZW50X2NvbW1pdH09PXVuZGVmKSB7DQoJ
-CQkJCWRpZSAiZmF0YWwiOw0KCQkJCX0NCgkJCQlAbWFwcGluZz1AeyRjb21t
-aXRfbWFwcGluZ3N7JGN1cnJlbnRfY29tbWl0fX07DQoNCgkJCQkjIGZyZWUg
-bWVtb3J5DQoJCQkJaWYoJGNoaWxkcmVuX2NvdW50eyRjdXJyZW50X2NvbW1p
-dH09PTEpIHsNCgkJCQkJJGNvbW1pdF9tYXBwaW5nc3skY3VycmVudF9jb21t
-aXR9PXVuZGVmOyANCgkJCQl9DQoJCQl9DQoJCQloYW5kbGVfZGlmZigiZ2l0
-LWRpZmYtdHJlZSAtcCAkbmV4dF9jb21taXQgJGN1cnJlbnRfY29tbWl0ICRm
-aWxlfCIsJGNoaWxkcmVuX2NvdW50eyRjdXJyZW50X2NvbW1pdH09PTEpOw0K
-CQkJIyBpZiB0aGVyZSBhcmUgbXVsdGlwbGUgY2hpbGRyZW4sIHNhdmUgdGhl
-IGxpbmUgbWFwcGluZw0KCQkJaWYoJGNoaWxkcmVuX2NvdW50eyRuZXh0X2Nv
-bW1pdH0+MSkgew0KCQkJCW15IEBuZXdfbWFwcGluZz1AbWFwcGluZzsgIyBm
-b3JjZSBjb3B5DQoJCQkJJGNvbW1pdF9tYXBwaW5nc3skbmV4dF9jb21taXR9
-PVxAbmV3X21hcHBpbmc7DQoJCQl9DQoJCX0NCgl9DQoJc2hvd19jdXJyZW50
-KCk7DQp9DQoNCnN1YiBwYXJzZV9yZXZpc2lvbl9mb3JtYXQoJCkgew0KCW15
-ICRmb3JtYXQ9JF9bMF07DQoJJHJldmlzaW9uX3N0cmluZ19sZW5ndGg9MDsN
-CglAcmV2aXNpb25fZm9ybWF0PSgpOw0KCWZvcmVhY2ggJGYgKHNwbGl0KCIs
-IiwkZm9ybWF0KSkgew0KCQlpZigkZj1+L14oLiopOiguKikvKSB7DQoJCQlw
-dXNoIEByZXZpc2lvbl9mb3JtYXQsKCQxLCQyKTsNCgkJfSBlbHNlIHsNCgkJ
-CXB1c2ggQHJldmlzaW9uX2Zvcm1hdCwoJGYsMTYpOw0KCQl9DQoJCSRyZXZp
-c2lvbl9zdHJpbmdfbGVuZ3RoKz0kcmV2aXNpb25fZm9ybWF0WyQjcmV2aXNp
-b25fZm9ybWF0XSsxOw0KCX0NCglpZigkI3JldmlzaW9uX2Zvcm1hdDwxKSB7
-DQoJCXB1c2ggQHJldmlzaW9uX2Zvcm1hdCwoImNvbW1pdCIsNDApOw0KCQkk
-cmV2aXNpb25fc3RyaW5nX2xlbmd0aD0kcmV2aXNpb25fZm9ybWF0WyQjcmV2
-aXNpb25fZm9ybWF0XSsxOw0KCX0NCn0NCg0Kc3ViIGdldF9wYXJlbnRfdHJl
-ZSgkKSB7DQoJbXkgJGhlYWQ9JF9bMF07DQoJbXkgJGk7DQoNCgklcGFyZW50
-X3RyZWU9KCk7DQoJJWNoaWxkcmVuX2NvdW50PSgpOw0KCUBjb21taXRzPSgp
-Ow0KCSRuZXh0X2NvbW1pdD0iIjsNCg0KCW9wZW4gUkVWUywgImdpdC1yZXYt
-bGlzdCAtLXBhcmVudHMgIi4oJGhlYWQgZXEgIiI/IkhFQUQiOiRoZWFkKS4i
-fCI7DQoJTE9PUDogd2hpbGUoPFJFVlM+KSB7DQoJCWlmKCRmaXJzdF9wYXJl
-bnRfb25seSAmJiAkbmV4dF9jb21taXQgbmUgIiIpIHsNCgkJCXdoaWxlKCEv
-XiRuZXh0X2NvbW1pdC8pIHsNCgkJCQlpZighKCRfPTxSRVZTPikpIHsNCgkJ
-CQkJbGFzdCBMT09QOw0KCQkJCX0NCgkJCX0NCgkJfQ0KCQlteSBAbGlzdD1z
-cGxpdCAvWyBcbl0vOw0KCQlwdXNoIEBjb21taXRzLCAkbGlzdFswXTsNCgkJ
-Zm9yKCRpPTE7JGk8PSQjbGlzdDskaSsrKSB7DQoJCQkkcGFyZW50X3RyZWV7
-JGxpc3RbJGldfT0kbGlzdFswXTsNCgkJfQ0KCQkkY2hpbGRyZW5fY291bnR7
-JGxpc3RbMF19PSQjbGlzdDsNCgkJaWYoJGZpcnN0X3BhcmVudF9vbmx5KSB7
-DQoJCQkkbmV4dF9jb21taXQ9JGxpc3RbMV07DQoJCX0NCgl9DQoJY2xvc2Ug
-UkVWUzsNCn0NCg0KZ2V0X3BhcmVudF90cmVlKCRvcHRfYyk7DQpwYXJzZV9y
-ZXZpc2lvbl9mb3JtYXQoJG9wdF9mKTsNCg0KaWYoJCNBUkdWPDApIHsNCglv
-cGVuIEZJTEVTLCAnZ2l0LWxzLXRyZWUgLXIgJy4oJG9wdF9jIGVxICcnPydI
-RUFEJzokb3B0X2MpLid8JzsNCgl3aGlsZSg8RklMRVM+KSB7DQoJCWlmKC9e
-XFMrXHMrXFMrXHMrXFMrXHMrKC4qKSQvKSB7DQoJCQlwdXNoIEBBUkdWLCAk
-MTsNCgkJfQ0KCX0NCgljbG9zZSBGSUxFUzsNCn0NCg0KZm9yKCRpPTA7JGk8
-PSQjQVJHVjskaSsrKSB7DQoJaWYoJCNBUkdWPjEpIHsNCgkJcHJpbnQgIkZp
-bGU6ICIuJEFSR1ZbJGldLiJcbiI7DQoJfQ0KCWFubm90YXRlX2ZpbGUoJEFS
-R1ZbJGldLCRvcHRfYyk7DQp9DQoNCg==
+ - if '--all' is specified, it is equivalent to specifying
+   <local> ":" <local> for all the existing local refs on the
+   command line
+ - otherwise, it is equivalent to specifying <ref> ":" <ref> for
+   all the refs that exist on both sides.
 
----1463794688-1611601895-1123106957=:31852--
+* <name> is just a shorthand for <name> ":" <name>
+
+* <src> ":" <dst>
+
+  push ref that matches <src> to ref that matches <dst>.
+
+  - It is an error if <src> does not match exactly one of local
+    refs.
+
+  - It is an error if <dst> matches more than one remote refs.
+
+  - If <dst> does not match any remote refs, either
+
+    - it has to start with "refs/"; <dst> is used as the
+      destination literally in this case.
+
+    - <src> == <dst> and the ref that matched the <src> must not
+      exist in the set of remote refs; the ref matched <src>
+      locally is used as the name of the destination.
+
+For example,
+
+  - "git-send-pack --all <remote>" works exactly as before;
+
+  - "git-send-pack <remote> master:upstream" pushes local master
+    to remote ref that matches "upstream".  If there is no such
+    ref, it is an error.
+
+  - "git-send-pack <remote> master:refs/heads/upstream" pushes
+    local master to remote refs/heads/upstream, even when
+    refs/heads/upstream does not exist.
+
+  - "git-send-pack <remote> master" into an empty remote
+    repository pushes the local ref/heads/master to the remote
+    ref/heads/master.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+ cache.h     |    3 +
+ connect.c   |  172 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ send-pack.c |  146 ++++++++++++++++++++------------------------------
+ 3 files changed, 230 insertions(+), 91 deletions(-)
+
+b959d297c7206b0b634160ac015122f70389415b
+diff --git a/cache.h b/cache.h
+--- a/cache.h
++++ b/cache.h
+@@ -298,12 +298,15 @@ struct ref {
+ 	struct ref *next;
+ 	unsigned char old_sha1[20];
+ 	unsigned char new_sha1[20];
++	struct ref *peer_ref; /* when renaming */
+ 	char name[0];
+ };
+ 
+ extern int git_connect(int fd[2], char *url, const char *prog);
+ extern int finish_connect(pid_t pid);
+ extern int path_match(const char *path, int nr, char **match);
++extern int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
++		      int nr_refspec, char **refspec, int all);
+ extern int get_ack(int fd, unsigned char *result_sha1);
+ extern struct ref **get_remote_heads(int in, struct ref **list, int nr_match, char **match);
+ 
+diff --git a/connect.c b/connect.c
+--- a/connect.c
++++ b/connect.c
+@@ -31,11 +31,9 @@ struct ref **get_remote_heads(int in, st
+ 		name = buffer + 41;
+ 		if (nr_match && !path_match(name, nr_match, match))
+ 			continue;
+-		ref = xmalloc(sizeof(*ref) + len - 40);
++		ref = xcalloc(1, sizeof(*ref) + len - 40);
+ 		memcpy(ref->old_sha1, old_sha1, 20);
+-		memset(ref->new_sha1, 0, 20);
+ 		memcpy(ref->name, buffer + 41, len - 40);
+-		ref->next = NULL;
+ 		*list = ref;
+ 		list = &ref->next;
+ 	}
+@@ -81,6 +79,174 @@ int path_match(const char *path, int nr,
+ 	return 0;
+ }
+ 
++struct refspec {
++	char *src;
++	char *dst;
++};
++
++static struct refspec *parse_ref_spec(int nr_refspec, char **refspec)
++{
++	int i;
++	struct refspec *rs = xmalloc(sizeof(*rs) * (nr_refspec + 1));
++	for (i = 0; i < nr_refspec; i++) {
++		char *sp, *dp, *ep;
++		sp = refspec[i];
++		ep = strchr(sp, ':');
++		if (ep) {
++			dp = ep + 1;
++			*ep = 0;
++		}
++		else
++			dp = sp;
++		rs[i].src = sp;
++		rs[i].dst = dp;
++	}
++	rs[nr_refspec].src = rs[nr_refspec].dst = NULL;
++	return rs;
++}
++
++static int count_refspec_match(const char *pattern,
++			       struct ref *refs,
++			       struct ref **matched_ref)
++{
++	int match;
++	int patlen = strlen(pattern);
++
++	for (match = 0; refs; refs = refs->next) {
++		char *name = refs->name;
++		int namelen = strlen(name);
++		if (namelen < patlen ||
++		    memcmp(name + namelen - patlen, pattern, patlen))
++			continue;
++		if (namelen != patlen && name[namelen - patlen - 1] != '/')
++			continue;
++		match++;
++		*matched_ref = refs;
++	}
++	return match;
++}
++
++static void link_dst_tail(struct ref *ref, struct ref ***tail)
++{
++	**tail = ref;
++	*tail = &ref->next;
++	**tail = NULL;
++}
++
++static int match_explicit_refs(struct ref *src, struct ref *dst,
++			       struct ref ***dst_tail, struct refspec *rs)
++{
++	int i, errs;
++	for (i = errs = 0; rs[i].src; i++) {
++		struct ref *matched_src, *matched_dst;
++
++		matched_src = matched_dst = NULL;
++		switch (count_refspec_match(rs[i].src, src, &matched_src)) {
++		case 1:
++			break;
++		case 0:
++			errs = 1;
++			error("src refspec %s does not match any.");
++			break;
++		default:
++			errs = 1;
++			error("src refspec %s matches more than one.",
++			      rs[i].src);
++			break;
++		}
++		switch (count_refspec_match(rs[i].dst, dst, &matched_dst)) {
++		case 1:
++			break;
++		case 0:
++			if (!memcmp(rs[i].dst, "refs/", 5)) {
++				int len = strlen(rs[i].dst) + 1;
++				matched_dst = xcalloc(1, sizeof(*dst) + len);
++				memcpy(matched_dst->name, rs[i].dst, len);
++				link_dst_tail(matched_dst, dst_tail);
++			}
++			else if (!strcmp(rs[i].src, rs[i].dst) &&
++				 matched_src) {
++				/* pushing "master:master" when
++				 * remote does not have master yet.
++				 */
++				int len = strlen(matched_src->name);
++				matched_dst = xcalloc(1, sizeof(*dst) + len);
++				memcpy(matched_dst->name, matched_src->name,
++				       len);
++				link_dst_tail(matched_dst, dst_tail);
++			}
++			else {
++				errs = 1;
++				error("dst refspec %s does not match any "
++				      "existing ref on the remote and does "
++				      "not start with refs/.", rs[i].dst);
++			}
++			break;
++		default:
++			errs = 1;
++			error("dst refspec %s matches more than one.",
++			      rs[i].dst);
++			break;
++		}
++		if (errs)
++			continue;
++		if (matched_src->peer_ref) {
++			errs = 1;
++			error("src ref %s is sent to more than one dst.",
++			      matched_src->name);
++		}
++		else
++			matched_src->peer_ref = matched_dst;
++		if (matched_dst->peer_ref) {
++			errs = 1;
++			error("dst ref %s receives from more than one src.",
++			      matched_dst->name);
++		}
++		else
++			matched_dst->peer_ref = matched_src;
++	}
++	return -errs;
++}
++
++static struct ref *find_ref_by_name(struct ref *list, const char *name)
++{
++	for ( ; list; list = list->next)
++		if (!strcmp(list->name, name))
++			return list;
++	return NULL;
++}
++
++int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
++	       int nr_refspec, char **refspec, int all)
++{
++	struct refspec *rs = parse_ref_spec(nr_refspec, refspec);
++
++	if (nr_refspec)
++		return match_explicit_refs(src, dst, dst_tail, rs);
++
++	/* pick the remainder */
++	for ( ; src; src = src->next) {
++		struct ref *dst_peer;
++		if (src->peer_ref)
++			continue;
++		dst_peer = find_ref_by_name(dst, src->name);
++		if (dst_peer && dst_peer->peer_ref)
++			continue;
++		if (!dst_peer) {
++			if (!all)
++				continue;
++			/* Create a new one and link it */
++			int len = strlen(src->name) + 1;
++			dst_peer = xcalloc(1, sizeof(*dst_peer) + len);
++			memcpy(dst_peer->name, src->name, len);
++			memcpy(dst_peer->new_sha1, src->new_sha1, 20);
++			link_dst_tail(dst_peer, dst_tail);
++		}
++		dst_peer->peer_ref = src;
++	}
++	return 0;
++}
++
+ enum protocol {
+ 	PROTO_LOCAL = 1,
+ 	PROTO_SSH,
+diff --git a/send-pack.c b/send-pack.c
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -43,7 +43,8 @@ static void exec_rev_list(struct ref *re
+ 		char *buf = malloc(100);
+ 		if (i > 900)
+ 			die("git-rev-list environment overflow");
+-		if (!is_zero_sha1(refs->old_sha1)) {
++		if (!is_zero_sha1(refs->old_sha1) &&
++		    has_sha1_file(refs->old_sha1)) {
+ 			args[i++] = buf;
+ 			snprintf(buf, 50, "^%s", sha1_to_hex(refs->old_sha1));
+ 			buf += 50;
+@@ -103,21 +104,6 @@ static int pack_objects(int fd, struct r
+ 	return 0;
+ }
+ 
+-static int read_ref(const char *ref, unsigned char *sha1)
+-{
+-	int fd, ret;
+-	char buffer[60];
+-
+-	fd = open(git_path("%s", ref), O_RDONLY);
+-	if (fd < 0)
+-		return -1;
+-	ret = -1;
+-	if (read(fd, buffer, sizeof(buffer)) >= 40)
+-		ret = get_sha1_hex(buffer, sha1);
+-	close(fd);
+-	return ret;
+-}
+-
+ static int ref_newer(const unsigned char *new_sha1, const unsigned char *old_sha1)
+ {
+ 	struct commit *new, *old;
+@@ -143,108 +129,92 @@ static int ref_newer(const unsigned char
+ 	return 0;
+ }
+ 
+-static int local_ref_nr_match;
+-static char **local_ref_match;
+-static struct ref *local_ref_list;
+-static struct ref **local_last_ref;
++static struct ref *local_refs, **local_tail;
++static struct ref *remote_refs, **remote_tail;
+ 
+-static int try_to_match(const char *refname, const unsigned char *sha1)
++static int one_local_ref(const char *refname, const unsigned char *sha1)
+ {
+ 	struct ref *ref;
+-	int len;
+-
+-	if (!path_match(refname, local_ref_nr_match, local_ref_match)) {
+-		if (!send_all)
+-			return 0;
+-
+-		/* If we have it listed already, skip it */
+-		for (ref = local_ref_list ; ref ; ref = ref->next) {
+-			if (!strcmp(ref->name, refname))
+-				return 0;
+-		}
+-	}
+-
+-	len = strlen(refname)+1;
+-	ref = xmalloc(sizeof(*ref) + len);
+-	memset(ref->old_sha1, 0, 20);
++	int len = strlen(refname) + 1;
++	ref = xcalloc(1, sizeof(*ref) + len);
+ 	memcpy(ref->new_sha1, sha1, 20);
+ 	memcpy(ref->name, refname, len);
+-	ref->next = NULL;
+-	*local_last_ref = ref;
+-	local_last_ref = &ref->next;
++	*local_tail = ref;
++	local_tail = &ref->next;
+ 	return 0;
+ }
+ 
+-static int send_pack(int in, int out, int nr_match, char **match)
++static void get_local_heads(void)
++{
++	local_tail = &local_refs;
++	for_each_ref(one_local_ref);
++}
++
++static int send_pack(int in, int out, int nr_refspec, char **refspec)
+ {
+-	struct ref *ref_list, **last_ref;
+ 	struct ref *ref;
+ 	int new_refs;
+ 
+-	/* First we get all heads, whether matching or not.. */
+-	last_ref = get_remote_heads(in, &ref_list, 0, NULL);
+-
++	/* No funny business with the matcher */
++	remote_tail = get_remote_heads(in, &remote_refs, 0, NULL);
++	get_local_heads();
++
++	/* match them up */
++	if (!remote_tail)
++		remote_tail = &remote_refs;
++	if (match_refs(local_refs, remote_refs, &remote_tail,
++		       nr_refspec, refspec, send_all))
++		return -1;
+ 	/*
+-	 * Go through the refs, see if we want to update
+-	 * any of them..
++	 * Finally, tell the other end!
+ 	 */
+-	for (ref = ref_list; ref; ref = ref->next) {
+-		unsigned char new_sha1[20];
+-		char *name = ref->name;
+-
+-		if (nr_match && !path_match(name, nr_match, match))
+-			continue;
+-
+-		if (read_ref(name, new_sha1) < 0)
+-			continue;
+-
+-		if (!memcmp(ref->old_sha1, new_sha1, 20)) {
+-			fprintf(stderr, "'%s' unchanged\n", name);
++	new_refs = 0;
++	for (ref = remote_refs; ref; ref = ref->next) {
++		char old_hex[60], *new_hex;
++		if (!ref->peer_ref)
+ 			continue;
++		if (!is_zero_sha1(ref->old_sha1)) {
++			if (!has_sha1_file(ref->old_sha1)) {
++				error("remote '%s' object %s does not "
++				      "exist on local",
++				      ref->name, sha1_to_hex(ref->old_sha1));
++				continue;
++			}
++			if (!ref_newer(ref->peer_ref->new_sha1,
++				       ref->old_sha1)) {
++				error("remote ref '%s' is not a strict "
++				      "subset of local ref '%s'.", ref->name,
++				      ref->peer_ref->name);
++				continue;
++			}
+ 		}
+-
+-		if (!ref_newer(new_sha1, ref->old_sha1)) {
+-			error("remote '%s' isn't a strict parent of local", name);
++		if (!memcmp(ref->old_sha1, ref->peer_ref->new_sha1, 20)) {
++			fprintf(stderr, "'%s': up-to-date\n", ref->name);
+ 			continue;
+ 		}
+-
+-		/* Ok, mark it for update */
+-		memcpy(ref->new_sha1, new_sha1, 20);
+-	}
+-
+-	/*
+-	 * See if we have any refs that the other end didn't have
+-	 */
+-	if (nr_match || send_all) {
+-		local_ref_nr_match = nr_match;
+-		local_ref_match = match;
+-		local_ref_list = ref_list;
+-		local_last_ref = last_ref;
+-		for_each_ref(try_to_match);
+-	}
+-
+-	/*
+-	 * Finally, tell the other end!
+-	 */
+-	new_refs = 0;
+-	for (ref = ref_list; ref; ref = ref->next) {
+-		char old_hex[60], *new_hex;
+-		if (is_zero_sha1(ref->new_sha1))
++		memcpy(ref->new_sha1, ref->peer_ref->new_sha1, 20);
++		if (is_zero_sha1(ref->new_sha1)) {
++			error("cannot happen anymore");
+ 			continue;
++		}
+ 		new_refs++;
+ 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
+ 		new_hex = sha1_to_hex(ref->new_sha1);
+ 		packet_write(out, "%s %s %s", old_hex, new_hex, ref->name);
+-		fprintf(stderr, "'%s': updating from %s to %s\n", ref->name, old_hex, new_hex);
++		fprintf(stderr, "updating '%s'", ref->name);
++		if (strcmp(ref->name, ref->peer_ref->name))
++			fprintf(stderr, " using '%s'", ref->peer_ref->name);
++		fprintf(stderr, "\n  from %s\n  to   %s\n", old_hex, new_hex);
+ 	}
+-	
++
+ 	packet_flush(out);
+ 	if (new_refs)
+-		pack_objects(out, ref_list);
++		pack_objects(out, remote_refs);
+ 	close(out);
+ 	return 0;
+ }
+ 
++
+ int main(int argc, char **argv)
+ {
+ 	int i, nr_heads = 0;
