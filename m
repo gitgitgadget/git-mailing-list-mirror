@@ -1,67 +1,77 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Users of git-check-files?
-Date: Wed, 3 Aug 2005 19:08:22 +0200
-Message-ID: <200508031908.22562.Josef.Weidendorfer@gmx.de>
-References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org> <Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] GIT_SSH alternate ssh name or helper
+Date: Wed, 03 Aug 2005 10:12:53 -0700
+Message-ID: <7viryndjvu.fsf@assigned-by-dhcp.cox.net>
+References: <20050803151542.GA6655@medusa>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 03 19:11:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 19:14:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0Mjf-00058w-3g
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:08:55 +0200
+	id 1E0Mnf-0005oq-T7
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 19:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262348AbVHCRIv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 13:08:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262349AbVHCRIv
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:08:51 -0400
-Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:35023 "EHLO
-	mailout1.informatik.tu-muenchen.de") by vger.kernel.org with ESMTP
-	id S262348AbVHCRIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 13:08:50 -0400
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
+	id S262350AbVHCRM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 13:12:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262353AbVHCRM4
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 13:12:56 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39124 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S262350AbVHCRMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 13:12:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050803171254.SCGH1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 13:12:54 -0400
+To: Martin Sivak <mars@nomi.cz>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday 03 August 2005 18:50, you wrote:
-> Hi,
+Martin Sivak <mars@nomi.cz> writes:
+
+> This patch make possible to use alternate ssh binary or ssh helper
+> script. The script can be used to give additional parameters to ssh
+> binary (like private key, protocol version, ...).
 >
-> On Wed, 3 Aug 2005, Linus Torvalds wrote:
-> > Are you sure you have a good git version on master? I've never seen
-> > anything like that, and I push all the time..
+> Example script could look like this:
 >
-> Call him Zaphod: he has two heads (master and pu). You don't. As I said in
-> another mail, this could be very well related to Junio's problems.
+> #!/bin/sh
+> ssh -1 -i myprivatekey.key "$@"
+>
+> The patch itself is realy very simple:
 
-Yes it is. To reproduce:
-Create a repository with 2 branches.
-Make 2 clones of the 2 branches via SSH.
-Make a commit on one clone and push.
-Make another commit on the other clone and push => ERROR
+I understand why you would want this if your ssh binary is
+called something other than ssh [*1*], but I doubt the example
+you gave needs this patch.  Could you explain why having
+something like this in your .ssh/config file is not enough?
 
-A log of this last push:
-=============================================
-~/tmp/git/clone2> cg-push
-'refs/heads/branch2': updating from 80e4d426dd4c865b943cc1121b580a946eee921d 
-to 8196067677e3415ce404ea5bc35731ac7d56115d
-fatal: bad object f7e944b036fd00af656b262140c1dc93ceffadb1
-Packing 0 objects
-Unpacking 0 objects
+    Host foo.bar.xz
+      Protocol 1
+      IdentityFile ~/.ssh/privatekey.key
 
-fatal: unpack should have generated 8196067677e3415ce404ea5bc35731ac7d56115d, 
-but I can't find it!
-=============================================
+Even if you wish to use different settings between git and
+interactive, I presume you could do something like this:
 
-f7e9... is the commit pushed from the first clone.
+    # for interactive
+    Host foo.bar.xz
+      Protocol 2
 
-I had the same problem yesterday.
+    # real repo is foo.bar.xz:/pub/scm/git/git.git/ but pull with
+    # git-foo.bar.xz:/pub/scm/git/git.git/
+    Host git-foo.bar.xz
+      Hostname foo.bar.xz
+      Protocol 1
+      IdentityFile ~/.ssh/privatekey.key
 
-Josef
+
+[Footnote]
+*1* and even in that case you can trivially fix it by having
+a small wrapper in $HOME/bin/ssh:
+
+    #!/bin/sh
+    exec ssh-installed-under-nonstandard-name "$@"
