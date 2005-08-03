@@ -1,56 +1,53 @@
-From: Jeff Garzik <jgarzik@pobox.com>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: [patch] list shortlog items in commit order
-Date: Tue, 02 Aug 2005 23:58:25 -0400
-Message-ID: <42F040E1.5000706@pobox.com>
-References: <Pine.LNX.4.63.0508021713230.15300@localhost.localdomain> <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 2 Aug 2005 21:59:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508022158290.3341@g5.osdl.org>
+References: <Pine.LNX.4.63.0508021713230.15300@localhost.localdomain>
+ <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net> <42F040E1.5000706@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Aug 03 05:59:27 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 07:01:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0AOw-0000AQ-Kh
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 05:58:42 +0200
+	id 1E0BN1-0004M0-U4
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 07:00:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262025AbVHCD6g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Aug 2005 23:58:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262037AbVHCD6g
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 23:58:36 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:27114 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S262025AbVHCD6e (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 23:58:34 -0400
-Received: from cpe-065-184-065-144.nc.res.rr.com ([65.184.65.144] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1E0AOi-0008Jw-SP; Wed, 03 Aug 2005 03:58:30 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf2oklwy.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.0 (/)
+	id S262052AbVHCE7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 00:59:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262054AbVHCE7u
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 00:59:50 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:57026 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262052AbVHCE7o (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 00:59:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j734xPjA019281
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 2 Aug 2005 21:59:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j734xO3g027275;
+	Tue, 2 Aug 2005 21:59:25 -0700
+To: Jeff Garzik <jgarzik@pobox.com>
+In-Reply-To: <42F040E1.5000706@pobox.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> 
->>The current shortlog list is backward making it look odd.
->>This reverses it so things appear more logically.
-> 
-> 
-> Sorry, I do not know how the shortlog looked like in BK days,
-> but it would be nice to match that order.  I do not have
-> preference either way myself.
-> 
-> I'll let it simmer and let the list decide, but I think the
-> kernel folks care the most about this one, so I am asking the
-> original authors, Linus and Jeff, if they want to go for it, or
-> veto it.
 
-<shrug>  I don't really care either way.
 
-	Jeff
+On Tue, 2 Aug 2005, Jeff Garzik wrote:
+> 
+> <shrug>  I don't really care either way.
+
+I suspect it's mostly the users, not the developers, who care. The core
+developers already know what went in, and have git to see it, they don't 
+look at the shortlog output. So I suspect it's more important to see if 
+there's user feedback one way or the other..
+
+		Linus
