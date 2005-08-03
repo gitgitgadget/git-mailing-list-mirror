@@ -1,57 +1,60 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH 1/3] Add git-send-email-script - tool to send emails from git-format-patch-script
-Date: Wed, 03 Aug 2005 09:32:15 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.08.03.07.32.15.169731@smurf.noris.de>
-References: <11227978451100@foobar.com> <7vbr4jmhqe.fsf@assigned-by-dhcp.cox.net> <20050803013042.GF5762@mythryan2.michonline.com>
+From: Wolfgang Denk <wd@denx.de>
+Subject: cogito: problems in read-only trees
+Date: Wed, 03 Aug 2005 09:42:41 +0200
+Message-ID: <20050803074241.A2D1D3535F9@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Wed Aug 03 09:35:32 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Aug 03 09:44:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0DlQ-0001Ks-0Z
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 09:34:08 +0200
+	id 1E0Du4-0002sO-QM
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 09:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262109AbVHCHd6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 03:33:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262130AbVHCHd6
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 03:33:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:30651 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S262109AbVHCHd5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 03:33:57 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1E0Dk1-000199-FN
-	for git@vger.kernel.org; Wed, 03 Aug 2005 09:32:41 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Aug 2005 09:32:41 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Aug 2005 09:32:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S262130AbVHCHmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 03:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262133AbVHCHmv
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 03:42:51 -0400
+Received: from mailout05.sul.t-online.com ([194.25.134.82]:6323 "EHLO
+	mailout05.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S262130AbVHCHmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 03:42:50 -0400
+Received: from fwd28.aul.t-online.de 
+	by mailout05.sul.t-online.com with smtp 
+	id 1E0Dtn-00081y-07; Wed, 03 Aug 2005 09:42:47 +0200
+Received: from denx.de (JlLUJ2ZOQeWVKVgImt-pJa0uyPHDEG9NmoCeMB0I6r3tYwJK79pm0d@[84.150.76.158]) by fwd28.sul.t-online.de
+	with esmtp id 1E0Dti-17JhNA0; Wed, 3 Aug 2005 09:42:42 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP id B627942F8D
+	for <git@vger.kernel.org>; Wed,  3 Aug 2005 09:42:41 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id A2D1D3535F9
+	for <git@vger.kernel.org>; Wed,  3 Aug 2005 09:42:41 +0200 (MEST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+X-ID: JlLUJ2ZOQeWVKVgImt-pJa0uyPHDEG9NmoCeMB0I6r3tYwJK79pm0d@t-dialin.net
+X-TOI-MSGID: dfc4fa6f-2b61-46cf-bf01-6a1a2687c717
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Ryan Anderson wrote:
+Hello,
 
-> Since these emails are sent *very* fast, delivery order tends to be the
-> dominating factor in how they sort in your inbox, as they will all have
-> the same time.  So that's a trifle annoying.
+sometimes I have to  work  in  trees  for  which  I  have  only  read
+permissions; cogito has problems then - for example:
 
-That's trivially fixable: just generate your own Date: header and
-add a second for each email.
+-> cg-diff 
+fatal: unable to create new cachefile
+fatal: unable to create temp-file
+
+It would be nice if there was at least a way to specify  some  TMPDIR
+instead of the current directory in such a situation.
+
+Best regards,
+
+Wolfgang Denk
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-Be careful whilst playing under the anvil tree.
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+Include the success of others in your dreams for your own success.
