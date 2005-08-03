@@ -1,70 +1,56 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH 2/2] Doc: update git-send-email-script documentation.
-Date: Tue, 2 Aug 2005 21:45:22 -0400
-Message-ID: <11230335222661-git-send-email-ryan@michonline.com>
-References: <1123033522656-git-send-email-ryan@michonline.com>
-Reply-To: Ryan Anderson <ryan@michonline.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Users of git-check-files?
+Date: Tue, 2 Aug 2005 19:43:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org>
+References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Wed Aug 03 03:50:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 04:44:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E08Mo-0006wF-42
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 03:48:22 +0200
+	id 1E09Ev-00016l-FH
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 04:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261954AbVHCBqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 2 Aug 2005 21:46:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261961AbVHCBp2
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 21:45:28 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:20445 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S261953AbVHCBpZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 21:45:25 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1E08Jv-0007wE-JE; Tue, 02 Aug 2005 21:45:23 -0400
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1E08U3-0003ep-00; Tue, 02 Aug 2005 21:55:51 -0400
-Received: from localhost ([127.0.0.1] helo=mythryan)
-	by mythryan with smtp (Exim 4.52)
-	id 1E08Ju-0006XU-Sa; Tue, 02 Aug 2005 21:45:22 -0400
-In-Reply-To: <1123033522656-git-send-email-ryan@michonline.com>
-X-Mailer: git-send-email-script
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S261997AbVHCCoD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 2 Aug 2005 22:44:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262010AbVHCCoC
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Aug 2005 22:44:02 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:58287 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262001AbVHCCn5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Aug 2005 22:43:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j732hqjA011653
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 2 Aug 2005 19:43:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j732hpZ3022078;
+	Tue, 2 Aug 2005 19:43:52 -0700
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
----
 
- Documentation/git-send-email-script.txt |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
 
-b09788cd193a52bb44ab39826c9c6959f79305d5
-diff --git a/Documentation/git-send-email-script.txt b/Documentation/git-send-email-script.txt
---- a/Documentation/git-send-email-script.txt
-+++ b/Documentation/git-send-email-script.txt
-@@ -44,6 +44,19 @@ The options available are:
- 	to set this to a space.  For example
- 		--in-reply-to=" "
- 
-+   --chain-reply-to, --no-chain-reply-to
-+	If this is set, each email will be sent as a reply to the previous
-+	email sent.  If disabled with "--no-chain-reply-to", all emails after
-+	the first will be sent as replies to the first email sent.  When using
-+	this, it is recommended that the first file given be an overview of the
-+	entire patch series.
-+	Default is --chain-reply-to
-+
-+   --smtp-server
-+	If set, specifies the outgoing SMTP server to use.  Defaults to
-+	localhost.
-+
-+
- Author
- ------
- Written by Ryan Anderson <ryan@michonline.com>
+On Wed, 3 Aug 2005, Johannes Schindelin wrote:
+> 
+> there's git-check-files in the repository, but AFAIK nobody uses it, not 
+> even "git status", which would be the primary candidate. If really no 
+> users of git-check-files exist, maybe we should remove it?
+
+Yes.
+
+It was used by the old "git-applymbox" (aka "dotest") until I got around 
+writing "git-apply".
+
+It has no point any more, all the tools check the file status on their 
+own, and yes, the thing should probably be removed.
+
+		Linus
