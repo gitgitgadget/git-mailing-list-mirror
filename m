@@ -1,50 +1,123 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Users of git-check-files?
-Date: Wed, 3 Aug 2005 08:09:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508030808530.3341@g5.osdl.org>
-References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508021942500.3341@g5.osdl.org> <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
+From: Martin Sivak <mars@nomi.cz>
+Subject: [PATCH] GIT_SSH alternate ssh name or helper
+Date: Wed, 3 Aug 2005 17:15:42 +0200
+Message-ID: <20050803151542.GA6655@medusa>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 03 17:10:22 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="PNTmBPCT7hxwcZjr"
+X-From: git-owner@vger.kernel.org Wed Aug 03 17:15:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0KsQ-0002mV-OZ
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 17:09:51 +0200
+	id 1E0Kve-0003HP-Km
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 17:13:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262303AbVHCPJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 11:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262309AbVHCPJp
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 11:09:45 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:35804 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262303AbVHCPJp (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 11:09:45 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j73F9XjA028844
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 3 Aug 2005 08:09:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j73F9Wpb022685;
-	Wed, 3 Aug 2005 08:09:32 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S262311AbVHCPNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 11:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262295AbVHCPNA
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 11:13:00 -0400
+Received: from r72s12p17.home.nbox.cz ([83.240.5.75]:10881 "EHLO
+	r72s12p17.home.nbox.cz") by vger.kernel.org with ESMTP
+	id S262320AbVHCPMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 11:12:55 -0400
+Received: by r72s12p17.home.nbox.cz (Postfix, from userid 1000)
+	id D5E8FAC687; Wed,  3 Aug 2005 17:15:42 +0200 (CEST)
+To: git@vger.kernel.org
+Content-Disposition: inline
+X-Operating-System: Linux medusa 2.6.11.8
+X-PGP-Key: http://montik.net/mars.asc
+User-Agent: Mutt/1.5.8i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--PNTmBPCT7hxwcZjr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2 Aug 2005, Junio C Hamano wrote:
-> 
-> How about git-rev-tree?  Does anybody care?
+This patch make possible to use alternate ssh binary or ssh helper
+script. The script can be used to give additional parameters to ssh
+binary (like private key, protocol version, ...).
 
-Yeah, probably not. git-rev-list does so much more than git-rev-tree ever 
-did.
+Example script could look like this:
 
-		Linus
+#!/bin/sh
+ssh -1 -i myprivatekey.key "$@"
+
+The patch itself is realy very simple:
+
+diff -uNr git-current/connect.c git-current-mars@nomi.cz/connect.c
+--- git-current/connect.c  2005-08-03 15:00:04.000000000 +0200
++++ git-current-mars@nomi.cz/connect.c 2005-08-03 16:32:36.000000000 +0200
+@@ -166,6 +166,9 @@
+   int pipefd[2][2];
+   pid_t pid;
+   enum protocol protocol;
++  char *sshprog;
++
++  sshprog =3D getenv("GIT_SSH") ? : "ssh";
+
+   host =3D NULL;
+   path =3D url;
+@@ -205,7 +208,7 @@
+      close(pipefd[1][0]);
+      close(pipefd[1][1]);
+      if (protocol =3D=3D PROTO_SSH)
+-        execlp("ssh", "ssh", host, command, NULL);
++        execlp(sshprog, "ssh", host, command, NULL);
+      else
+         execlp("sh", "sh", "-c", command, NULL);
+      die("exec failed");
+diff -uNr git-current/rsh.c git-current-mars@nomi.cz/rsh.c
+--- git-current/rsh.c   2005-08-03 15:00:04.000000000 +0200
++++ git-current-mars@nomi.cz/rsh.c  2005-08-03 16:26:39.000000000 +0200
+@@ -17,6 +17,7 @@
+   char command[COMMAND_SIZE];
+   char *posn;
+   int i;
++  char *prog;=20
+
+   if (!strcmp(url, "-")) {
+      *fd_in =3D 0;
+@@ -24,6 +25,8 @@
+      return 0;
+   }
+
++  prog =3D getenv("GIT_SSH") ? : "ssh";
++ =20
+   host =3D strstr(url, "//");
+   if (host) {
+      host +=3D 2;
+@@ -59,7 +62,7 @@
+      close(sv[1]);
+      dup2(sv[0], 0);
+      dup2(sv[0], 1);
+-     execlp("ssh", "ssh", host, command, NULL);
++     execlp(prog, "ssh", host, command, NULL);
+   }
+   close(sv[0]);
+   *fd_in =3D sv[1];
+
+
+Signed-off-by: Martin Sivak <mars@nomi.cz>
+
+--=20
+Martin Sivak
+mars@nomi.cz
+
+
+--PNTmBPCT7hxwcZjr
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFC8N+eLtuY88yhq1wRAj7eAJ9gr5Z3S6U9Vt9AkK/25XhEOKv5MgCdHN+g
+wgyTO3fY/Hl+uGoUsFVR9d0=
+=mAlZ
+-----END PGP SIGNATURE-----
+
+--PNTmBPCT7hxwcZjr--
