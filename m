@@ -1,98 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Users of git-check-files?
-Date: Wed, 03 Aug 2005 11:07:30 -0700
-Message-ID: <7vy87ic2sd.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 3 Aug 2005 11:08:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.58.0508021942500.3341@g5.osdl.org>
-	<7vvf2nk0h7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508030808530.3341@g5.osdl.org>
-	<7vr7dbhvci.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508030913060.3341@g5.osdl.org>
-	<7vk6j3f044.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
-	<7voe8fdkd7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508031014070.3258@g5.osdl.org>
-	<7virymdirb.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508031048360.3258@g5.osdl.org>
+ <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+ <Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <200508031908.22562.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 03 20:09:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 03 20:10:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0Nf5-0005Rj-V8
-	for gcvg-git@gmane.org; Wed, 03 Aug 2005 20:08:16 +0200
+	id 1E0NfX-0005Yh-W0
+	for gcvg-git@gmane.org; Wed, 03 Aug 2005 20:08:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262383AbVHCSIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 14:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262382AbVHCSIF
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 14:08:05 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:62450 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S262383AbVHCSHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Aug 2005 14:07:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050803180732.RUSU3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 3 Aug 2005 14:07:32 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.58.0508031048360.3258@g5.osdl.org> (Linus Torvalds's
-	message of "Wed, 3 Aug 2005 10:48:49 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S262382AbVHCSIe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 14:08:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262384AbVHCSIe
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 14:08:34 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:58783 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262382AbVHCSId (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 14:08:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j73I8TjA009828
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 3 Aug 2005 11:08:30 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j73I8TjO031970;
+	Wed, 3 Aug 2005 11:08:29 -0700
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+In-Reply-To: <200508031908.22562.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This patch seems to fix the problem.
 
- * If the original value of remote ref refers to an object we do
-   not have, and if the ref is one of the branches we are trying
-   to push, we refuse to update it.
 
- * Otherwise, we do not attempt to use such an value when
-   computing what objects to put in pack, since rev-list would
-   fail.
+On Wed, 3 Aug 2005, Josef Weidendorfer wrote:
+> 
+> Yes it is. To reproduce:
+> Create a repository with 2 branches.
+> Make 2 clones of the 2 branches via SSH.
+> Make a commit on one clone and push.
+> Make another commit on the other clone and push => ERROR
 
-I've tested Josef's two-branches case, one repo updates one
-branch and pushes to the central repo, another repo updates the
-other branch and pushed to the central repo.  The old code
-barfed when invoking rev-list, but this does not seem to.
+This works perfectly fine, you just have to make sure that you update the 
+right head.
 
-Josef, could you give it a try please?
+If you try to update a head that is ahead of you, that is driver error. 
+Admittedly one that could have nicer error messages ;)
 
----
-cd /opt/packrat/playpen/public/in-place/git/git.junio/
-jit-diff
-# - master: git-send-email-script: minimum whitespace cleanup.
-# + (working tree)
-diff --git a/send-pack.c b/send-pack.c
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -43,7 +43,8 @@ static void exec_rev_list(struct ref *re
- 		char *buf = malloc(100);
- 		if (i > 900)
- 			die("git-rev-list environment overflow");
--		if (!is_zero_sha1(refs->old_sha1)) {
-+		if (!is_zero_sha1(refs->old_sha1) &&
-+		    has_sha1_file(refs->old_sha1)) {
- 			args[i++] = buf;
- 			snprintf(buf, 50, "^%s", sha1_to_hex(refs->old_sha1));
- 			buf += 50;
-@@ -208,6 +209,12 @@ static int send_pack(int in, int out, in
- 			continue;
- 		}
- 
-+		if (!has_sha1_file(ref->old_sha1)) {
-+			error("remote '%s' object %s does not exist on local",
-+			      name, sha1_to_hex(ref->old_sha1));
-+			continue;
-+		}
-+
- 		/* Ok, mark it for update */
- 		memcpy(ref->new_sha1, new_sha1, 20);
- 	}
+This is why git-send-pack takes the name of the branch to update..
 
-Compilation finished at Wed Aug  3 11:02:15
+The real problem with git-send-pack is that the local and remote names 
+have to be the same, which is a bug, really. It _should_ be perfectly fine 
+to do something like
+
+	git-send-pack ..dest.. localname:remotename
+
+which would push the local "localname" branch to the remote "remotename" 
+branch.
+
+			Linus
