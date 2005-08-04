@@ -1,64 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Use the template mechanism to set up refs/ hierarchy as
- well.
-Date: Thu, 4 Aug 2005 20:41:09 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508042038200.23886@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7v3bprjzzg.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: bisect gives strange answer
+Date: Thu, 04 Aug 2005 11:43:24 -0700
+Message-ID: <7v8xzh1r1v.fsf@assigned-by-dhcp.cox.net>
+References: <20050804172635.GA14144@kroah.com>
+	<E1E0jiv-0003c4-00@skye.ra.phy.cam.ac.uk>
+	<20050804182717.GA2241@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 20:44:55 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>, Greg KH <greg@kroah.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 20:44:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0kgP-0004YX-Tk
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 20:43:10 +0200
+	id 1E0kgp-0004g4-HI
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 20:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262534AbVHDSmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 14:42:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262596AbVHDSmm
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 14:42:42 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:5077 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S262534AbVHDSlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2005 14:41:10 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0C917E23DC; Thu,  4 Aug 2005 20:41:10 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E67DB9C6F3; Thu,  4 Aug 2005 20:41:09 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D469593E22; Thu,  4 Aug 2005 20:41:09 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BADB5E23DC; Thu,  4 Aug 2005 20:41:09 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bprjzzg.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S262560AbVHDSn2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 14:43:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262583AbVHDSn2
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 14:43:28 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42187 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S262560AbVHDSn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2005 14:43:26 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050804184324.IQUN8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 4 Aug 2005 14:43:24 -0400
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050804182717.GA2241@redhat.com> (Dave Jones's message of "Thu,
+	4 Aug 2005 14:27:17 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Dave Jones <davej@redhat.com> writes:
 
-On Tue, 2 Aug 2005, Junio C Hamano wrote:
+> Errrrm, if you don't compile/test those intermediate versions,
+> how do you know whether to tag it good/bad ?
 
-> This may be controversial from the robustness standpoint, so I
-> am placing it in the proposed update queue first.  Discussions
-> on the list very welcomed.
+I think Sanjoy is saying that they _were_ tested, and suspects
+that bisect didn't leave the right versions of the files in the
+work tree, so what was compiled and tested were not what bisect
+wanted to get tested.  This is theory #2 in Sanjoy's post:
 
-I'd vote against it: As of now, I can perfectly do
+>> 2. git-bisect-script doesn't use -f when it does 'git checkout', so
+>>    files that should be updated are not.  Right now I'm in the middle
+>>    of recollecting the data with git-bisect-script using -f in all
+>>    uses of git checkout (unless that is a really silly idea).
 
-export PATH=$PATH:/whereever/my/git/is
-git-init-db
-
-which would not work with this patch. I don't mind the templating 
-mechanism per se, though. It should make life easier for new bees.
-Let's just make sure git-init-db is usable without installing 
-anything.
-
-Ciao,
-Dscho
+I find this explanation quite plausible, in case it is all my
+fault and I apologize for wasting kernel developers' time.
