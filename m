@@ -1,49 +1,55 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] daemon.c: squelch error message from EINTR
-Date: Thu, 4 Aug 2005 22:29:57 +0200
-Message-ID: <20050804202957.GD24479@pasky.ji.cz>
-References: <7voe8fk0dq.fsf@assigned-by-dhcp.cox.net>
+From: barkalow@iabervon.org
+Subject: Re: git-local-pull?
+Date: Thu, 4 Aug 2005 16:35:03 -0400 (EDT)
+Message-ID: <Pine.LNX.4.62.0508041632220.23721@iabervon.org>
+References: <Pine.LNX.4.62.0508031259430.23721@iabervon.org>
+ <20050804201230.GC24479@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 22:33:23 2005
+X-From: git-owner@vger.kernel.org Thu Aug 04 22:38:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0mNw-0001BQ-RL
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 22:32:13 +0200
+	id 1E0mSk-0001uC-CW
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 22:37:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262617AbVHDUbm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 16:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262679AbVHDUbm
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 16:31:42 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:19723 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262617AbVHDU37 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 16:29:59 -0400
-Received: (qmail 19648 invoked by uid 2001); 4 Aug 2005 20:29:57 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7voe8fk0dq.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262643AbVHDUgY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 16:36:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262669AbVHDUeF
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 16:34:05 -0400
+Received: from iabervon.org ([66.92.72.58]:28178 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S262679AbVHDUcD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 16:32:03 -0400
+Received: (qmail 27359 invoked by uid 1000); 4 Aug 2005 16:35:03 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Aug 2005 16:35:03 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050804201230.GC24479@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Wed, Aug 03, 2005 at 08:20:01AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> I am not sure if this is the right fix, and I have not received
-> an answer from the original author of the patch.  I would
-> appreciate help from the folks on the list who are familiar with
-> the networking.
+On Thu, 4 Aug 2005, Petr Baudis wrote:
 
-I think it's fine. EINTR means it got a signal while waiting, it might
-be worthwhile checking by strace what signal it actually was - one thing
-coming on my mind is SIGPIPE or so, but I barely saw the code. Anyway,
-just sticking your hand in sand if you see this is probably fine.
+> Dear diary, on Wed, Aug 03, 2005 at 07:11:00PM CEST, I got a letter
+> where barkalow@iabervon.org told me that...
+> > IIRC, git-local-pull still doesn't work for a packed source repository, 
+> > because it doesn't include the possibility of copying a pack (or 
+> > extracting an object) if the requested object is in a pack.
+> > 
+> > I can probably fix it if anyone cares, but it's not something I use 
+> > personally, so I don't know if it's worthwhile. It should probably be 
+> > removed if we don't fix it, since it will fail on any popular repository 
+> > at this point.
+> 
+> I want to use it in Cogito again, since copying everything obviously
+> sucks and I want to hardlink, so repacking is not a solution either.
+> Didn't you post some patches to fix this long time ago, actually?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Not for local-pull; I only did the other two. local-pull is special, 
+because it's actually dealing with files on disk, and it also has to look 
+at a repository that isn't what you're using.
+
+	-Daniel
+*This .sig left intentionally blank*
