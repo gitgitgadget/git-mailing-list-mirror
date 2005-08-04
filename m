@@ -1,181 +1,621 @@
-From: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
-Subject: bisect gives strange answer
-Date: Thu, 04 Aug 2005 00:53:21 -0400
-Message-ID: <E1E0XjN-000102-Un@approximate.corpus.cam.ac.uk>
-X-From: git-owner@vger.kernel.org Thu Aug 04 06:58:54 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] (preview) Renaming push.
+Date: Wed, 03 Aug 2005 22:26:26 -0700
+Message-ID: <7vy87i46il.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<200508031908.22562.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
+	<7vek9a8uy9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508031641270.3258@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 04 07:27:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0Xoi-0005I1-Go
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 06:58:52 +0200
+	id 1E0YFb-00074t-JE
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 07:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261805AbVHDE6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 00:58:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261825AbVHDEzh
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 00:55:37 -0400
-Received: from smtpauth04.mail.atl.earthlink.net ([209.86.89.64]:38563 "EHLO
-	smtpauth04.mail.atl.earthlink.net") by vger.kernel.org with ESMTP
-	id S261806AbVHDExj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2005 00:53:39 -0400
-Received: from [24.63.67.76] (helo=approximate.corpus.cam.ac.uk)
-	by smtpauth04.mail.atl.earthlink.net with asmtp (TLSv1:AES256-SHA:256)
-	(Exim 4.34)
-	id 1E0XjZ-0004Vb-E4
-	for git@vger.kernel.org; Thu, 04 Aug 2005 00:53:33 -0400
-Received: from sanjoy by approximate.corpus.cam.ac.uk with local (Exim 4.52)
-	id 1E0XjN-000102-Un
-	for git@vger.kernel.org; Thu, 04 Aug 2005 00:53:22 -0400
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: MH-E 7.84; nmh 1.1; GNU Emacs 21.4.1
-X-ELNK-Trace: dcd19350f30646cc26f3bd1b5f75c9f474bf435c0eb9d478819d4bc37d9c2ebf0cb2d80a9d60869e2167c1f0940bc1ea350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 24.63.67.76
+	id S261716AbVHDF0f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 01:26:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261796AbVHDF0b
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 01:26:31 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:44794 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S261716AbVHDF03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2005 01:26:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050804052628.WKSZ1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 4 Aug 2005 01:26:28 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508031641270.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 16:48:13 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I have been having lots of fun using 'git bisect' to find the commit
-that broke S3 wake on my laptop.  But in its last step it gives an
-answer that cannot be right.  I had not used git until now, so I may be
-missing something obvious: Corrections will be gratefully received.  I'm
-using git from git-2005-08-03.tar.gz on i386 (TP 600X, Debian testing).
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Before using git bisect, I had tested enough to know that 2.6.13-rc1 was
-fine and 2.6.13-rc2-git1 was not (it would sleep but waking up would
-hang).  So I compiled all the 2.6.13-rc1-git* snapshots and found that
-2.6.13-rc1-git7 was the last one that worked, and 2.6.13-rc2-git1 was
-the first to fail (see <http://bugzilla.kernel.org/show_bug.cgi?id=4989>
-if you are curious about the bug itself).
+> In this format, "src" makes sense as a generic sha1_name, and _not_ 
+> necessarily limited to a ref-name.
+>
+> IOW, there's really no reason to not allow
+>
+> 	git-send-pack .. dest .. <sha1>:dst-ref
+>
+> where "<sha1>" may be something else than a ref (but a ref obviously ends 
+> up being one such thing).
+>
+> For example, let's say that I've got stuff at the HEAD of my tree that I'm
+> not quite ready to push out yet, but I _do_ want to push out the parent of
+> the current head. I'd love to be able to just do
+>
+> 	git-send-pack parent $(git-rev-parse HEAD^):master
+>
+> and there's no real reason why that syntax shouldn't just work: it's 
+> entirely logical to say "I want to push out the parent of my HEAD as 
+> 'master' on the other end", and that's _exactly_ what the above says.
 
-Time to use 'git bisect' to find where in between the S3 wake got
-broken.  I'll give all the commands I did so you can (hopefully!)
-reproduce the problem.
+While I have not updated the send-pack <src>:<dst> syntax, I
+added a horrible hack that some people may love to see.  This
+removes the need to use git-rev-parse from many commands.
 
-I began by following the useful directions at
-<http://linux.yyz.us/git-howto.html> to download the 2.6 repository:
+This is a preview.  I've run the standard test suite and it does
+not seem to break anything, but I expect it will stay in "pu"
+for a while.
 
-repo=rsync://rsync.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-git clone $repo linux-2.6
-cd linux-2.6                  
-rsync -a --verbose --stats --progress $repo/ .git/
+------------
+[PATCH] Update get_sha1() to grok extended format.
 
-Then I binary searched, compiling and testing, until bisect told me I
-was done.  Here's the output of a script (run with #!/bin/bash -x) that
-reproduces the problem in the clean archive made above.
+Everybody envies rev-parse, who is the only one that can grok
+the extended sha1 format.  Move the get_extended_sha1() out of
+rev-parse, rename it to get_sha1() and make it available to
+everybody else.
 
-======================================================================
-+ git checkout
-+ git bisect reset
-+ git bisect start
-+ git bisect good 17af691cd19765b782d891fc50c1568d0f1276b3  # 2.6.13-rc1-git7
-+ git bisect bad c101f3136cc98a003d0d16be6fab7d0d950581a6   # 2.6.13-rc2-git1
-Bisecting: 42 revisions left to test after this
-+ cat .git/HEAD
-b2f571026594884e7a2a3f8bc6ad5c92e0703330
-+ git bisect good
-Bisecting: 30 revisions left to test after this
-+ cat .git/HEAD
-450008b5a62bb09445ae05c4d01d510386c9435d
-+ git bisect good
-Bisecting: 15 revisions left to test after this
-+ cat .git/HEAD
-a9df3597fec5472d0840fbfdc2a3fac5268f7d08
-+ git bisect bad
-Bisecting: 8 revisions left to test after this
-+ cat .git/HEAD
-28e8c3ad9464de54a632f00ab3df88fa5f4652d1
-+ git bisect bad
-Bisecting: 4 revisions left to test after this
-+ cat .git/HEAD
-c774e93e2152d0be2612739418689e6e6400f4eb
-+ git bisect bad
-Bisecting: 2 revisions left to test after this
-+ cat .git/HEAD
-b4634484815e1879512a23e4f59eef648135c30a
-+ git bisect bad
-b4634484815e1879512a23e4f59eef648135c30a is first bad commit
-diff-tree b4634484815e1879512a23e4f59eef648135c30a (from 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737)
-Author: Greg KH <greg@kroah.com>
-Date:   Wed Jul 6 08:51:03 2005 -0700
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-    [PATCH] Fix bt87x.c build problem
-    
-    Missing forward declaration
-    
-    Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+ Makefile    |    3 +
+ rev-parse.c |  188 +-------------------------------------------------
+ sha1_file.c |   39 ----------
+ sha1_name.c |  222 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 229 insertions(+), 223 deletions(-)
+ create mode 100644 sha1_name.c
 
-:040000 040000 5717e17e384b0b40e409966403e2b8dfdab615a9 4ba0c028e80bf81c5c782e9047bd484a1eeadca4 M	sound
-======================================================================
-
-The answer makes no sense since my .config doesn't use the bt87x driver
-(the TP600X uses a snd-cs46xx).  To be sure, I checked the diff with
-
-  git diff 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737..b4634484815e1879512a23e4f59eef648135c30a
-
-The commit changed only sound/pci/bt87x.c
-
-I do believe this line at the end of the bisection:
-
-  b4634484815e1879512a23e4f59eef648135c30a is first bad commit
-
-But 
-  diff-tree b4634484815e1879512a23e4f59eef648135c30a (from 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737)
-
-cannot be right.  Where did 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737
-come from?  The last good commit was
-  450008b5a62bb09445ae05c4d01d510386c9435d 
-so shouldn't bisect (if there's really only 1 commit in left now) say
-
-  diff-tree b4634484815e1879512a23e4f59eef648135c30a (from 450008b5a62bb09445ae05c4d01d510386c9435d)
-
-  $ git diff 450008b5a62bb09445ae05c4d01d510386c9435d \
-              b4634484815e1879512a23e4f59eef648135c30a \
-    | grep 'diff --git' | awk '{print $3}'
-
-produces this list of changed files (I'm sure there's an easier way):
-
-a/arch/arm/kernel/armksyms.c
-a/arch/arm/mach-ixp4xx/common-pci.c
-a/arch/arm/mach-ixp4xx/coyote-setup.c
-a/arch/arm/mach-ixp4xx/ixdp425-setup.c
-a/arch/arm/mm/proc-v6.S
-a/drivers/pci/pci-driver.c
-a/include/asm-arm/arch-ixp4xx/io.h
-a/sound/pci/bt87x.c
-
-I suspect that bisect jumped the gun at the end, and that there are a
-few more revisions to test.  Maybe the revision tree structure gets a
-bit complicated and breaks an implicit linearity assumption  in bisect?
-
-Probably 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737 is the commit just
-before b4634484815e1879512a23e4f59eef648135c30a (the first one I know to
-be bad), and I'm guessing that 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737
-is bad too.
-
-The suspect change is probably to drivers/pci/pci-driver.c since all the
-other changed files are the unused bt87x sound driver or are for the arm
-architecture.  Here is that diff:
-
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -17,13 +17,13 @@
-  * Dynamic device IDs are disabled for !CONFIG_HOTPLUG
-  */
+99ef7de3e234347d2af1ab2129ce99c5876b591b
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -95,7 +95,8 @@ LIB_H=cache.h object.h blob.h tree.h com
+ 	pack.h pkt-line.h refs.h
+ LIB_OBJS=read-cache.o sha1_file.o usage.o object.o commit.o tree.o blob.o \
+ 	 tag.o date.o index.o diff-delta.o patch-delta.o entry.o path.o \
+-	 refs.o csum-file.o pack-check.o pkt-line.o connect.o ident.o
++	 refs.o csum-file.o pack-check.o pkt-line.o connect.o ident.o \
++	 sha1_name.o
  
-+#ifdef CONFIG_HOTPLUG
-+
- struct pci_dynid {
- 	struct list_head node;
- 	struct pci_device_id id;
- };
+ LIB_H += rev-cache.h
+ LIB_OBJS += rev-cache.o
+diff --git a/rev-parse.c b/rev-parse.c
+--- a/rev-parse.c
++++ b/rev-parse.c
+@@ -21,8 +21,6 @@ static int output_sq = 0;
+ #define REVERSED 1
+ static int show_type = NORMAL;
  
--#ifdef CONFIG_HOTPLUG
+-static int get_extended_sha1(char *name, unsigned char *sha1);
 -
- /**
-  * store_new_id
-  *
-
-
-But whether moving back the CONFIG_HOTPLUG fixes my S3 wake is another
-story, one for the acpi-devel list (once I do the experiment).
+ /*
+  * Some arguments are relevant "revision" arguments,
+  * others are about output format or other details.
+@@ -107,182 +105,6 @@ static void show_arg(char *arg)
+ 		show_norev(arg);
+ }
+ 
+-static int get_parent(char *name, unsigned char *result, int idx)
+-{
+-	unsigned char sha1[20];
+-	int ret = get_extended_sha1(name, sha1);
+-	struct commit *commit;
+-	struct commit_list *p;
+-
+-	if (ret)
+-		return ret;
+-	commit = lookup_commit_reference(sha1);
+-	if (!commit)
+-		return -1;
+-	if (parse_commit(commit))
+-		return -1;
+-	if (!idx) {
+-		memcpy(result, commit->object.sha1, 20);
+-		return 0;
+-	}
+-	p = commit->parents;
+-	while (p) {
+-		if (!--idx) {
+-			memcpy(result, p->item->object.sha1, 20);
+-			return 0;
+-		}
+-		p = p->next;
+-	}
+-	return -1;
+-}
+-
+-static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
+-{
+-	static char dirname[PATH_MAX];
+-	char hex[40];
+-	DIR *dir;
+-	int found;
+-
+-	snprintf(dirname, sizeof(dirname), "%s/%.2s", get_object_directory(), name);
+-	dir = opendir(dirname);
+-	sprintf(hex, "%.2s", name);
+-	found = 0;
+-	if (dir) {
+-		struct dirent *de;
+-		while ((de = readdir(dir)) != NULL) {
+-			if (strlen(de->d_name) != 38)
+-				continue;
+-			if (memcmp(de->d_name, name + 2, len-2))
+-				continue;
+-			memcpy(hex + 2, de->d_name, 38);
+-			if (++found > 1)
+-				break;
+-		}
+-		closedir(dir);
+-	}
+-	if (found == 1)
+-		return get_sha1_hex(hex, sha1) == 0;
+-	return 0;
+-}
+-
+-static int match_sha(unsigned len, const unsigned char *a, const unsigned char *b)
+-{
+-	do {
+-		if (*a != *b)
+-			return 0;
+-		a++;
+-		b++;
+-		len -= 2;
+-	} while (len > 1);
+-	if (len)
+-		if ((*a ^ *b) & 0xf0)
+-			return 0;
+-	return 1;
+-}
+-
+-static int find_short_packed_object(int len, const unsigned char *match, unsigned char *sha1)
+-{
+-	struct packed_git *p;
+-
+-	prepare_packed_git();
+-	for (p = packed_git; p; p = p->next) {
+-		unsigned num = num_packed_objects(p);
+-		unsigned first = 0, last = num;
+-		while (first < last) {
+-			unsigned mid = (first + last) / 2;
+-			unsigned char now[20];
+-			int cmp;
+-
+-			nth_packed_object_sha1(p, mid, now);
+-			cmp = memcmp(match, now, 20);
+-			if (!cmp) {
+-				first = mid;
+-				break;
+-			}
+-			if (cmp > 0) {
+-				first = mid+1;
+-				continue;
+-			}
+-			last = mid;
+-		}
+-		if (first < num) {
+-			unsigned char now[20], next[20];
+-			nth_packed_object_sha1(p, first, now);
+-			if (match_sha(len, match, now)) {
+-				if (nth_packed_object_sha1(p, first+1, next) || !match_sha(len, match, next)) {
+-					memcpy(sha1, now, 20);
+-					return 1;
+-				}
+-			}
+-		}	
+-	}
+-	return 0;
+-}
+-
+-static int get_short_sha1(char *name, unsigned char *sha1)
+-{
+-	int i;
+-	char canonical[40];
+-	unsigned char res[20];
+-
+-	memset(res, 0, 20);
+-	memset(canonical, 'x', 40);
+-	for (i = 0;;i++) {
+-		unsigned char c = name[i];
+-		unsigned char val;
+-		if (!c || i > 40)
+-			break;
+-		if (c >= '0' && c <= '9')
+-			val = c - '0';
+-		else if (c >= 'a' && c <= 'f')
+-			val = c - 'a' + 10;
+-		else if (c >= 'A' && c <='F') {
+-			val = c - 'A' + 10;
+-			c -= 'A' - 'a';
+-		}
+-		else
+-			return -1;
+-		canonical[i] = c;
+-		if (!(i & 1))
+-			val <<= 4;
+-		res[i >> 1] |= val;
+-	}
+-	if (i < 4)
+-		return -1;
+-	if (find_short_object_filename(i, canonical, sha1))
+-		return 0;
+-	if (find_short_packed_object(i, res, sha1))
+-		return 0;
+-	return -1;
+-}
+-
+-/*
+- * This is like "get_sha1()", except it allows "sha1 expressions",
+- * notably "xyz^" for "parent of xyz"
+- */
+-static int get_extended_sha1(char *name, unsigned char *sha1)
+-{
+-	int parent, ret;
+-	int len = strlen(name);
+-
+-	parent = 1;
+-	if (len > 2 && name[len-1] >= '0' && name[len-1] <= '9') {
+-		parent = name[len-1] - '0';
+-		len--;
+-	}
+-	if (len > 1 && name[len-1] == '^') {
+-		name[len-1] = 0;
+-		ret = get_parent(name, sha1, parent);
+-		name[len-1] = '^';
+-		if (!ret)
+-			return 0;
+-	}
+-	ret = get_sha1(name, sha1);
+-	if (!ret)
+-		return 0;
+-	return get_short_sha1(name, sha1);
+-}
+-
+ static void show_default(void)
+ {
+ 	char *s = def;
+@@ -291,7 +113,7 @@ static void show_default(void)
+ 		unsigned char sha1[20];
+ 
+ 		def = NULL;
+-		if (!get_extended_sha1(s, sha1)) {
++		if (!get_sha1(s, sha1)) {
+ 			show_rev(NORMAL, sha1);
+ 			return;
+ 		}
+@@ -372,10 +194,10 @@ int main(int argc, char **argv)
+ 			unsigned char end[20];
+ 			char *n = dotdot+2;
+ 			*dotdot = 0;
+-			if (!get_extended_sha1(arg, sha1)) {
++			if (!get_sha1(arg, sha1)) {
+ 				if (!*n)
+ 					n = "HEAD";
+-				if (!get_extended_sha1(n, end)) {
++				if (!get_sha1(n, end)) {
+ 					if (no_revs)
+ 						continue;
+ 					def = NULL;
+@@ -386,14 +208,14 @@ int main(int argc, char **argv)
+ 			}
+ 			*dotdot = '.';
+ 		}
+-		if (!get_extended_sha1(arg, sha1)) {
++		if (!get_sha1(arg, sha1)) {
+ 			if (no_revs)
+ 				continue;
+ 			def = NULL;
+ 			show_rev(NORMAL, sha1);
+ 			continue;
+ 		}
+-		if (*arg == '^' && !get_extended_sha1(arg+1, sha1)) {
++		if (*arg == '^' && !get_sha1(arg+1, sha1)) {
+ 			if (no_revs)
+ 				continue;
+ 			def = NULL;
+diff --git a/sha1_file.c b/sha1_file.c
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -46,21 +46,6 @@ int get_sha1_hex(const char *hex, unsign
+ 	return 0;
+ }
+ 
+-static int get_sha1_file(const char *path, unsigned char *result)
+-{
+-	char buffer[60];
+-	int fd = open(path, O_RDONLY);
+-	int len;
+-
+-	if (fd < 0)
+-		return -1;
+-	len = read(fd, buffer, sizeof(buffer));
+-	close(fd);
+-	if (len < 40)
+-		return -1;
+-	return get_sha1_hex(buffer, result);
+-}
+-
+ static char *git_dir, *git_object_dir, *git_index_file, *git_refs_dir,
+ 	*git_graft_file;
+ static void setup_git_env(void)
+@@ -132,30 +117,6 @@ int safe_create_leading_directories(char
+ 	return 0;
+ }
+ 
+-int get_sha1(const char *str, unsigned char *sha1)
+-{
+-	static const char *prefix[] = {
+-		"",
+-		"refs",
+-		"refs/tags",
+-		"refs/heads",
+-		"refs/snap",
+-		NULL
+-	};
+-	const char **p;
+-
+-	if (!get_sha1_hex(str, sha1))
+-		return 0;
+-
+-	for (p = prefix; *p; p++) {
+-		char * pathname = git_path("%s/%s", *p, str);
+-		if (!get_sha1_file(pathname, sha1))
+-			return 0;
+-	}
+-
+-	return -1;
+-}
+-
+ char * sha1_to_hex(const unsigned char *sha1)
+ {
+ 	static char buffer[50];
+diff --git a/sha1_name.c b/sha1_name.c
+new file mode 100644
+--- /dev/null
++++ b/sha1_name.c
+@@ -0,0 +1,222 @@
++#include "cache.h"
++#include "commit.h"
++
++static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
++{
++	static char dirname[PATH_MAX];
++	char hex[40];
++	DIR *dir;
++	int found;
++
++	snprintf(dirname, sizeof(dirname), "%s/%.2s", get_object_directory(), name);
++	dir = opendir(dirname);
++	sprintf(hex, "%.2s", name);
++	found = 0;
++	if (dir) {
++		struct dirent *de;
++		while ((de = readdir(dir)) != NULL) {
++			if (strlen(de->d_name) != 38)
++				continue;
++			if (memcmp(de->d_name, name + 2, len-2))
++				continue;
++			memcpy(hex + 2, de->d_name, 38);
++			if (++found > 1)
++				break;
++		}
++		closedir(dir);
++	}
++	if (found == 1)
++		return get_sha1_hex(hex, sha1) == 0;
++	return 0;
++}
++
++static int match_sha(unsigned len, const unsigned char *a, const unsigned char *b)
++{
++	do {
++		if (*a != *b)
++			return 0;
++		a++;
++		b++;
++		len -= 2;
++	} while (len > 1);
++	if (len)
++		if ((*a ^ *b) & 0xf0)
++			return 0;
++	return 1;
++}
++
++static int find_short_packed_object(int len, const unsigned char *match, unsigned char *sha1)
++{
++	struct packed_git *p;
++
++	prepare_packed_git();
++	for (p = packed_git; p; p = p->next) {
++		unsigned num = num_packed_objects(p);
++		unsigned first = 0, last = num;
++		while (first < last) {
++			unsigned mid = (first + last) / 2;
++			unsigned char now[20];
++			int cmp;
++
++			nth_packed_object_sha1(p, mid, now);
++			cmp = memcmp(match, now, 20);
++			if (!cmp) {
++				first = mid;
++				break;
++			}
++			if (cmp > 0) {
++				first = mid+1;
++				continue;
++			}
++			last = mid;
++		}
++		if (first < num) {
++			unsigned char now[20], next[20];
++			nth_packed_object_sha1(p, first, now);
++			if (match_sha(len, match, now)) {
++				if (nth_packed_object_sha1(p, first+1, next) || !match_sha(len, match, next)) {
++					memcpy(sha1, now, 20);
++					return 1;
++				}
++			}
++		}
++	}
++	return 0;
++}
++
++static int get_short_sha1(const char *name, unsigned char *sha1)
++{
++	int i;
++	char canonical[40];
++	unsigned char res[20];
++
++	memset(res, 0, 20);
++	memset(canonical, 'x', 40);
++	for (i = 0;;i++) {
++		unsigned char c = name[i];
++		unsigned char val;
++		if (!c || i > 40)
++			break;
++		if (c >= '0' && c <= '9')
++			val = c - '0';
++		else if (c >= 'a' && c <= 'f')
++			val = c - 'a' + 10;
++		else if (c >= 'A' && c <='F') {
++			val = c - 'A' + 10;
++			c -= 'A' - 'a';
++		}
++		else
++			return -1;
++		canonical[i] = c;
++		if (!(i & 1))
++			val <<= 4;
++		res[i >> 1] |= val;
++	}
++	if (i < 4)
++		return -1;
++	if (find_short_object_filename(i, canonical, sha1))
++		return 0;
++	if (find_short_packed_object(i, res, sha1))
++		return 0;
++	return -1;
++}
++
++static int get_sha1_file(const char *path, unsigned char *result)
++{
++	char buffer[60];
++	int fd = open(path, O_RDONLY);
++	int len;
++
++	if (fd < 0)
++		return -1;
++	len = read(fd, buffer, sizeof(buffer));
++	close(fd);
++	if (len < 40)
++		return -1;
++	return get_sha1_hex(buffer, result);
++}
++
++static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
++{
++	static const char *prefix[] = {
++		"",
++		"refs",
++		"refs/tags",
++		"refs/heads",
++		"refs/snap",
++		NULL
++	};
++	const char **p;
++
++	if (!get_sha1_hex(str, sha1))
++		return 0;
++
++	for (p = prefix; *p; p++) {
++		char *pathname = git_path("%s/%.*s", *p, len, str);
++		if (!get_sha1_file(pathname, sha1))
++			return 0;
++	}
++
++	return -1;
++}
++
++static int get_sha1_1(const char *name, int len, unsigned char *sha1);
++
++static int get_parent(const char *name, int len,
++		      unsigned char *result, int idx)
++{
++	unsigned char sha1[20];
++	int ret = get_sha1_1(name, len, sha1);
++	struct commit *commit;
++	struct commit_list *p;
++
++	if (ret)
++		return ret;
++	commit = lookup_commit_reference(sha1);
++	if (!commit)
++		return -1;
++	if (parse_commit(commit))
++		return -1;
++	if (!idx) {
++		memcpy(result, commit->object.sha1, 20);
++		return 0;
++	}
++	p = commit->parents;
++	while (p) {
++		if (!--idx) {
++			memcpy(result, p->item->object.sha1, 20);
++			return 0;
++		}
++		p = p->next;
++	}
++	return -1;
++}
++
++static int get_sha1_1(const char *name, int len, unsigned char *sha1)
++{
++	int parent, ret;
++
++	parent = 1;
++	if (len > 2 && name[len-1] >= '0' && name[len-1] <= '9') {
++		parent = name[len-1] - '0';
++		len--;
++	}
++	if (len > 1 && name[len-1] == '^') {
++		ret = get_parent(name, len-1, sha1, parent);
++		if (!ret)
++			return 0;
++	}
++	ret = get_sha1_basic(name, len, sha1);
++	if (!ret)
++		return 0;
++	return get_short_sha1(name, sha1);
++}
++
++/*
++ * This is like "get_sha1_basic()", except it allows "sha1 expressions",
++ * notably "xyz^" for "parent of xyz"
++ */
++int get_sha1(const char *name, unsigned char *sha1)
++{
++	return get_sha1_1(name, strlen(name), sha1);
++}
