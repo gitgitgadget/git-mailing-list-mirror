@@ -1,77 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use the template mechanism to set up refs/ hierarchy as well.
-Date: Thu, 04 Aug 2005 12:59:56 -0700
-Message-ID: <7vll3hxykj.fsf@assigned-by-dhcp.cox.net>
-References: <7v3bprjzzg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508042038200.23886@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: git: problems in read-only trees
+Date: Thu, 4 Aug 2005 22:11:25 +0200
+Message-ID: <20050804201125.GB24479@pasky.ji.cz>
+References: <20050803074241.A2D1D3535F9@atlas.denx.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 22:02:55 2005
+X-From: git-owner@vger.kernel.org Thu Aug 04 22:12:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0ltx-0005fL-3o
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 22:01:13 +0200
+	id 1E0m41-0006vg-38
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 22:11:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262650AbVHDUAm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 16:00:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262651AbVHDUAi
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 16:00:38 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:21675 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S262645AbVHDT76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2005 15:59:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050804195955.NVMJ19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 4 Aug 2005 15:59:55 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0508042038200.23886@wgmdd8.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 4 Aug 2005 20:41:09 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S262654AbVHDULb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 16:11:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262655AbVHDULb
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 16:11:31 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:6155 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262654AbVHDULa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 16:11:30 -0400
+Received: (qmail 16583 invoked by uid 2001); 4 Aug 2005 20:11:25 -0000
+To: Wolfgang Denk <wd@denx.de>
+Content-Disposition: inline
+In-Reply-To: <20050803074241.A2D1D3535F9@atlas.denx.de>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Dear diary, on Wed, Aug 03, 2005 at 09:42:41AM CEST, I got a letter
+where Wolfgang Denk <wd@denx.de> told me that...
+> Hello,
+> 
+> sometimes I have to  work  in  trees  for  which  I  have  only  read
+> permissions; cogito has problems then - for example:
+> 
+> -> cg-diff 
+> fatal: unable to create new cachefile
+> fatal: unable to create temp-file
+> 
+> It would be nice if there was at least a way to specify  some  TMPDIR
+> instead of the current directory in such a situation.
 
->> This may be controversial from the robustness standpoint, so I
->> am placing it in the proposed update queue first.  Discussions
->> on the list very welcomed.
->
-> I'd vote against it: As of now, I can perfectly do
->
-> export PATH=$PATH:/whereever/my/git/is
-> git-init-db
->
-> which would not work with this patch.
+This is a bug in git-diff-* (producing the second error message; the first
+error message means failed git-update-cache --refresh but that isn't
+fatal). Any reason why prep_temp_blob() works in . instead of $TMPDIR?
 
-I take it to mean that you do not mind building but would want
-to try it out before installing.
-
-Yes, that is similar to what I meant by "robustness".  Maybe we
-could do two things to make it palatable:
-
- * Instead of $src/templates/Makefile installing in place, give
-   it a real 'build' target that creates $src/templates/blt/
-   hierarchy and build things there (I expect we would need some
-   templates that needs installation specific customization
-   later, and really want to avoid making $src/templates
-   something that is copied straight out).  "make install" would
-   copy it out to the final destination.
-
- * Make git-init-db create an absolute minimum $GIT_DIR
-   structure itself, if the template directory is not available,
-   possibly with a warning.
-
-Then, your post-build pre-installation trial can go like this:
-
-    $ make
-    $ PATH=`pwd`:"$PATH"
-    $ GIT_TEMPLATE_DIRECTORY=`pwd`/templates/blt
-    $ export PATH GIT_TEMPLATE_DIRECTORY
-    $ cd /where/ever
-    $ git-init-db
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
