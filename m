@@ -1,57 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Use the template mechanism to set up refs/ hierarchy as well.
-Date: Thu, 04 Aug 2005 14:35:49 -0700
-Message-ID: <7vmznxwfka.fsf@assigned-by-dhcp.cox.net>
-References: <7v3bprjzzg.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508042038200.23886@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<7vll3hxykj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508042215430.24657@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<7v7jf1xw90.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508042311370.24861@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH 2/3] conditional makefile vars
+Date: Fri, 5 Aug 2005 01:07:37 +0200
+Message-ID: <20050804230737.GK24479@pasky.ji.cz>
+References: <42EE8992.5070204@my-eitzenberger.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 05 01:06:57 2005
+Cc: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 05 01:09:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0onB-0001me-5T
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 01:06:25 +0200
+	id 1E0oq3-00022n-Oh
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 01:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262733AbVHDWmB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 18:42:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262709AbVHDViI
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 17:38:08 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:7611 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S262717AbVHDVfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2005 17:35:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050804213550.FKUT1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 4 Aug 2005 17:35:50 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0508042311370.24861@wgmdd8.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 4 Aug 2005 23:13:47 +0200
-	(CEST)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S262717AbVHDXI5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 19:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262776AbVHDXIm
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 19:08:42 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:62221 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S262717AbVHDXHi (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 19:07:38 -0400
+Received: (qmail 10668 invoked by uid 2001); 4 Aug 2005 23:07:37 -0000
+To: Holger Eitzenberger <holger@my-eitzenberger.de>
+Content-Disposition: inline
+In-Reply-To: <42EE8992.5070204@my-eitzenberger.de>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Dear diary, on Mon, Aug 01, 2005 at 10:44:02PM CEST, I got a letter
+where Holger Eitzenberger <holger@my-eitzenberger.de> told me that...
+> Hi,
 
-> Sorry, I am so used to not installing in my home because of small quotas 
-> :-(
->
-> Anyway, my usual setup is that I check git out from my private branch, add 
-> that directory to my path, and every once in a while do a "git pull origin 
-> && make test". Right now, it works.
+Hi,
 
-Oh, I see.  Then the "templates/Makefile building into
-templates/blt and then installing if you say make install"
-approach I described earlier would hopefully work perfectly well
-for you.  Just like you tack the $src to your $PATH, you can
-define GIT_TEMPLATE_DIRECTORY to $src/templates/blt.  Problem
-solved.
+> please see the notes of my first email, thx.
+
+I don't know. Is this really a good idea? The names are lowercase and
+may be whatever mess some build scripts or whatever may set, or junk the
+user has set inadvertently. And automake-generated Makefiles don't have
+them conditional either.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
