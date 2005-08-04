@@ -1,107 +1,66 @@
-From: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
-Subject: Re: bisect gives strange answer
-Date: Thu, 04 Aug 2005 03:23:28 -0400
-Message-ID: <E1E0a4e-0000vu-69@approximate.corpus.cam.ac.uk>
-References: <7v8xzi42bm.fsf@assigned-by-dhcp.cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 09:24:29 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] (preview) Renaming push.
+Date: Thu, 04 Aug 2005 01:09:10 -0700
+Message-ID: <7vvf2m2kex.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<200508031908.22562.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
+	<7vek9a8uy9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508031641270.3258@g5.osdl.org>
+	<7vy87i46il.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508032236470.3258@g5.osdl.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 04 10:10:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0a4w-0006uj-O1
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 09:23:47 +0200
+	id 1E0an3-0002ba-MI
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 10:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261942AbVHDHXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 03:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261943AbVHDHXl
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 03:23:41 -0400
-Received: from smtpauth03.mail.atl.earthlink.net ([209.86.89.63]:14219 "EHLO
-	smtpauth03.mail.atl.earthlink.net") by vger.kernel.org with ESMTP
-	id S261942AbVHDHXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Aug 2005 03:23:40 -0400
-Received: from [24.41.6.91] (helo=approximate.corpus.cam.ac.uk)
-	by smtpauth03.mail.atl.earthlink.net with asmtp (TLSv1:AES256-SHA:256)
-	(Exim 4.34)
-	id 1E0a4q-0004Gm-C9; Thu, 04 Aug 2005 03:23:40 -0400
-Received: from sanjoy by approximate.corpus.cam.ac.uk with local (Exim 4.52)
-	id 1E0a4e-0000vu-69; Thu, 04 Aug 2005 03:23:28 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Your message of "Wed, 03 Aug 2005 23:57:01 PDT."
-             <7v8xzi42bm.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.84; nmh 1.1; GNU Emacs 21.4.1
-X-ELNK-Trace: dcd19350f30646cc26f3bd1b5f75c9f474bf435c0eb9d478819d4bc37d9c2ebfbb06e1ecb428e26b73a2d4bdd6ab9174350badd9bab72f9c350badd9bab72f9c
-X-Originating-IP: 24.41.6.91
+	id S261969AbVHDIJN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 04:09:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261973AbVHDIJN
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 04:09:13 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:44491 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261969AbVHDIJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2005 04:09:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050804080910.HXYX8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 4 Aug 2005 04:09:10 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508032236470.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 22:42:06 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Could you try this please?
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Thanks, it now finishes with the diff that I expected:
+> Now, for extra bonus points, maybe you should make "git-rev-list" also 
+> understand the "rev..rev" format (which you can't do with just the 
+> get_sha1() interface, since it expands into more).
 
-3d3c2ae1101c1f2dff7e2f9d514769779dbd2737 is first bad commit
-diff-tree 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737 (from a18bcb7450840f07a772a45229de4811d930f461)
-Author: Greg KH <gregkh@suse.de>
-Date:   Wed Jul 6 09:09:38 2005 -0700
+Hmph.  That makes sense.
 
-    [PATCH] PCI: fix !CONFIG_HOTPLUG pci build problem
-    
-    Here's a patch to fix the build issue when CONFIG_HOTPLUG is not enabled
-    in 2.6.13-rc2.
-    
-    Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+What I set out to do when I started ripping extended_sha1 out of
+rev-parse was actually something else.
 
-:040000 040000 93e93c4d8e88d6e05e815261f96ab38376c92809 b9cbda6dd88aeca51031d36e00f396e7091fd54c M	drivers
+Remember I was stupidly wondering why "git log master..gitk" did
+not do what I wanted to?
 
+The reason I started looking at git-rev-parse was because I
+wanted to add "git log master...gitk" (three dots) which is
+equivalent to "git log $(git-merge-base master gitk)..gitk".
+That was what I wanted to have when I asked that stupid
+question.
 
-The full run is included below.
-
--Sanjoy
-
-`A society of sheep must in time beget a government of wolves.'
-   - Bertrand de Jouvenal
-
-
-+ git bisect reset
-+ git bisect start
-+ git bisect good 17af691cd19765b782d891fc50c1568d0f1276b3
-+ git bisect bad c101f3136cc98a003d0d16be6fab7d0d950581a6
-Bisecting: 42 revisions left to test after this
-+ cat .git/HEAD
-b2f571026594884e7a2a3f8bc6ad5c92e0703330
-+ git bisect good
-Bisecting: 30 revisions left to test after this
-+ cat .git/HEAD
-450008b5a62bb09445ae05c4d01d510386c9435d
-+ git bisect good
-Bisecting: 15 revisions left to test after this
-+ cat .git/HEAD
-a9df3597fec5472d0840fbfdc2a3fac5268f7d08
-+ git bisect bad
-Bisecting: 8 revisions left to test after this
-+ cat .git/HEAD
-28e8c3ad9464de54a632f00ab3df88fa5f4652d1
-+ git bisect bad
-Bisecting: 4 revisions left to test after this
-+ cat .git/HEAD
-c774e93e2152d0be2612739418689e6e6400f4eb
-+ git bisect bad
-Bisecting: 2 revisions left to test after this
-+ cat .git/HEAD
-b4634484815e1879512a23e4f59eef648135c30a
-+ git bisect bad
-3d3c2ae1101c1f2dff7e2f9d514769779dbd2737 is first bad commit
-diff-tree 3d3c2ae1101c1f2dff7e2f9d514769779dbd2737 (from a18bcb7450840f07a772a45229de4811d930f461)
-Author: Greg KH <gregkh@suse.de>
-Date:   Wed Jul 6 09:09:38 2005 -0700
-
-    [PATCH] PCI: fix !CONFIG_HOTPLUG pci build problem
-    
-    Here's a patch to fix the build issue when CONFIG_HOTPLUG is not enabled
-    in 2.6.13-rc2.
-    
-    Signed-off-by: Greg Kroah-Hartman <gregkh@suse.de>
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
-
-:040000 040000 93e93c4d8e88d6e05e815261f96ab38376c92809 b9cbda6dd88aeca51031d36e00f396e7091fd54c M	drivers
+But unfortunately my GIT day this week is over, so the rest is
+for the weekend.
