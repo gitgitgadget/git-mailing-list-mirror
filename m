@@ -1,65 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] (preview) Renaming push.
-Date: Wed, 3 Aug 2005 17:13:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508031710310.3258@g5.osdl.org>
+Date: Wed, 03 Aug 2005 18:02:51 -0700
+Message-ID: <7vmzny5xac.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0508030109210.21304@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
- <Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
- <200508031908.22562.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
- <7vek9a8uy9.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508031641270.3258@g5.osdl.org>
- <7v3bpq8t2a.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508030944210.3258@g5.osdl.org>
+	<Pine.LNX.4.63.0508031849270.24318@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<200508031908.22562.Josef.Weidendorfer@gmx.de>
+	<Pine.LNX.4.58.0508031102590.3258@g5.osdl.org>
+	<7vek9a8uy9.fsf_-_@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508031641270.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 04 02:14:26 2005
+X-From: git-owner@vger.kernel.org Thu Aug 04 03:08:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0TMv-0006Jl-JF
-	for gcvg-git@gmane.org; Thu, 04 Aug 2005 02:13:54 +0200
+	id 1E0UDL-0005Sr-Fh
+	for gcvg-git@gmane.org; Thu, 04 Aug 2005 03:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261658AbVHDANX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 3 Aug 2005 20:13:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261682AbVHDANW
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 20:13:22 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:18824 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S261660AbVHDANP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Aug 2005 20:13:15 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j740D6jA002975
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 3 Aug 2005 17:13:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j740D5q9018213;
-	Wed, 3 Aug 2005 17:13:06 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3bpq8t2a.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S261734AbVHDBGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 3 Aug 2005 21:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261744AbVHDBE0
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Aug 2005 21:04:26 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:14826 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S261738AbVHDBCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Aug 2005 21:02:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050804010253.OUJC8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 3 Aug 2005 21:02:53 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508031641270.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Wed, 3 Aug 2005 16:48:13 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Well, I pushed it out, although I do agree that we should be
+able to give anything get_sha()-able on the source side of the
+push.  Probably a revised version should have the following
+semantics:
 
+    $ git-send-pack [--all] <remote> [<ref>...]
 
-On Wed, 3 Aug 2005, Junio C Hamano wrote:
->
-> > 	git-send-pack parent $(git-rev-parse HEAD^):master
-> 
-> When I do something like your example, I create a temporary
-> lightweight tag and push it.  Snapshots in JIT are just a bunch
-> of lightweight tags so..
+ - When no <ref> is specified:
 
-I like the scripting, and combining pipelines of commands kind of thing. 
+   - with '--all', it is the same as specifying the full refs/*
+     path for all local refs;
 
-I agree that you can just make a temporary tag, but it's a bit like in any
-scripting stuff - you could use a temp-file, but it's just cleaner if you
-can keep temporary values in local variables (or in a local cmd pipeline
-like the above).
+   - without '--all', it is the same as specifying the full
+     refs/* path for refs that exist on both ends;
 
-Whenever you script somethign that creates a new tag or ref, you suddenly 
-have cleanup and uniqueness issues etc. 
+ - When one or more <ref>s are specified:
 
-		Linus
+   - a single token <ref> (i.e. no colon) must be a pattern that
+     tail-matches refs/* path for an existing local ref.  It is
+     an error for the pattern to match no local ref, or more
+     than one local refs.  The matching ref is pushed to the
+     remote end under the same name.
+
+   - <src>:<dst> can have different cases.  <src> is first tried
+     as the tail-matching pattern for refs/* path.
+
+     - If more than one matches are found, it is an error.
+
+     - If one match is found, <dst> must either match no remote
+       ref and start with "refs/", or match exactly one remote
+       ref.  That remote ref is updated with the sha1 value
+       obtained by the <src> sha1.
+
+     - If no match is found, it is given to get_extended_sha1();
+       it is an error if get_extended_sha1() does not find an
+       object name.  If it succeeds, <dst> must either match
+       no remote ref and start with "refs/" or match exactly
+       one remote ref.  That remote ref is updated with the sha1
+       value.
