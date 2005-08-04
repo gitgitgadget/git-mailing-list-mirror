@@ -1,41 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Experiences with git-clone-pack and rsync
-Date: Thu, 04 Aug 2005 23:39:44 -0700
-Message-ID: <7vpsssopjj.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0508042230150.24657@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: gitweb: not all files listed in commit list
+Date: Thu, 4 Aug 2005 10:39:16 +0200
+Message-ID: <20050804083916.GL991MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <20050804014916.GB10556@austin.ibm.com>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 05 08:44:56 2005
+Cc: git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Aug 05 10:03:19 2005
 Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([12.107.209.244])
+Received: from mail-relay.eunet.no ([193.71.71.242])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0vuF-0002H8-6e
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 08:42:11 +0200
+	id 1E0x8I-0004oQ-Pg
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 10:00:47 +0200
+Received: from vger.kernel.org (vger.kernel.org [12.107.209.244])
+	by mail-relay.eunet.no (8.13.1/8.13.1/GN) with ESMTP id j748apql008494
+	for <gcvg-git@gmane.org>; Thu, 4 Aug 2005 10:36:51 +0200 (CEST)
+	(envelope-from git-owner@vger.kernel.org)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262882AbVHEGli (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Aug 2005 02:41:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262884AbVHEGlg
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 02:41:36 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:27636 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S262882AbVHEGjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Aug 2005 02:39:47 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050805063944.WDGF1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 5 Aug 2005 02:39:44 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S261944AbVHDIal (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 04:30:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262277AbVHDIal
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 04:30:41 -0400
+Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:51677 "EHLO
+	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S261944AbVHDIag (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Aug 2005 04:30:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 6356E137B46
+	for <git@vger.kernel.org>; Thu,  4 Aug 2005 10:30:35 +0200 (CEST)
+Received: from smtp02.kuleuven.be (lepidus.kulnet.kuleuven.ac.be [134.58.240.72])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 6A93B137AE3
+	for <git@vger.kernel.org>; Thu,  4 Aug 2005 10:30:33 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by smtp02.kuleuven.be (Postfix) with ESMTP id 53A812CAA02
+	for <git@vger.kernel.org>; Thu,  4 Aug 2005 10:30:33 +0200 (CEST)
+Received: (qmail 10727 invoked by uid 500); 4 Aug 2005 08:39:17 -0000
+To: Olof Johansson <olof@lixom.net>
+Mail-Followup-To: Olof Johansson <olof@lixom.net>,
+	git@vger.kernel.org, "H. Peter Anvin" <hpa@zytor.com>
+Content-Disposition: inline
+In-Reply-To: <20050804014916.GB10556@austin.ibm.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Aug 03, 2005 at 08:49:16PM -0500, Olof Johansson wrote:
+> Hi,
+> 
+> My apologies if this has already been found and reported; I'm not
+> tracking the list closely.
+> 
+> It seems that newly introduced files are not shown in gitweb.
+> For example, see the following commit:
+> 
+> http://kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fce0d5740322b98b863f9e609f5a9bd4c06703af
 
-> But maybe I just cried "wolf"...
-
-I do not think you are crying wolf.  I shared the same concern
-from the beginning and that was partly why I was pushing for
-the dumb server approach.
+That's probably because either git-core or gitweb needs updating.
+New files used to be indicated by an 'N', whereas an 'A' is used now.
+ 
+skimo
