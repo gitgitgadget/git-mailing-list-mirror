@@ -1,129 +1,223 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: gitk "hyperlinks" (was Re: Display of merges in gitk)
-Date: Fri, 5 Aug 2005 07:37:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508050710460.3258@g5.osdl.org>
-References: <17130.56620.137642.941175@cargo.ozlabs.ibm.com>
- <Pine.LNX.4.58.0508050658260.3258@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Terminology
+Date: Fri, 5 Aug 2005 16:57:33 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508051655480.8418@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.58.0507311541340.29235@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vhdeaj05n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 05 16:40:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 05 17:01:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E13LZ-0002Ac-0z
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 16:38:53 +0200
+	id 1E13h2-0006Vv-Bt
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 17:01:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262476AbVHEOi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Aug 2005 10:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S261759AbVHEOiS
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 10:38:18 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:15280 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S262481AbVHEOh6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 10:37:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j75EbgjA000507
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 5 Aug 2005 07:37:43 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j75Ebf5p016983;
-	Fri, 5 Aug 2005 07:37:42 -0700
-To: Paul Mackerras <paulus@samba.org>,
-	Kay Sievers <kay.sievers@vrfy.org>
-In-Reply-To: <Pine.LNX.4.58.0508050658260.3258@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263060AbVHEPAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Aug 2005 11:00:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263052AbVHEO6L
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 10:58:11 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:22718 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S263050AbVHEO5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Aug 2005 10:57:34 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B0AC7E240A; Fri,  5 Aug 2005 16:57:33 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 900A89C702; Fri,  5 Aug 2005 16:57:33 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 6D9F096F2A; Fri,  5 Aug 2005 16:57:33 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 3A18EE240A; Fri,  5 Aug 2005 16:57:33 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhdeaj05n.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-[ Also Kay Sievers, because the clickability thing sounds like a 
-  potentially good thing for webgit too.. ]
+I am finally finished with my preliminary survey: I took what you sent as 
+a strawman, and inserted what I found (I tried to say only something about 
+ambiguous naming):
 
-For 2.6.13 we've been reverting some stuff lately, to make sure we get a 
-stable release. That's fine, and when I revert something I try to mention 
-the commit ID of the thing I revert in the message. Apparently others do 
-too, as indicated by a patch I just got from Petr Vandovec. So we've got 
-for example:
+  - The unit of storage in GIT is called "object"; no other word
+    is used and the word "object" is used only for this purpose
+    so this one is OK.
 
-	889371f61fd5bb914d0331268f12432590cf7e85:
-	Author: Linus Torvalds <torvalds@g5.osdl.org>  2005-07-30 13:41:56
-	Committer: Linus Torvalds <torvalds@g5.osdl.org>  2005-07-30 13:41:56
+  - A 20-byte SHA1 to uniquely identify "objects"; README and
+    early Linus messages call this "object name" so does
+    tutorial.  Many places say "object SHA1" or just "SHA1".
 
-    Revert "yenta free_irq on suspend"
-    
-    ACPI is wrong.  Devices should not release their IRQ's on suspend and
-    re-aquire them on resume.  ACPI should just re-init the IRQ controller
-    instead of breaking most drivers very subtly.
-    
-    Breakage reported by Hugh Dickins <hugh@veritas.com>
-    
-    Undo: d8c4b4195c7d664baf296818bf756775149232d3
-    
-    Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+"Object" is short for "immutable object". git-cat-file.txt says
+"repository object".
 
-and
+  - An "object database" stores a set of "objects", and an
+    individial object can be retrieved by giving it its object
+    name.
 
-	403fe5ae57c831968c3dbbaba291ae825a1c5aaa:
-	Author: Petr Vandrovec <vandrove@vc.cvut.cz>  2005-08-05 06:50:07
-	Committer: Linus Torvalds <torvalds@g5.osdl.org>  2005-08-05 06:57:44
+Tutorial calls it an "object store". git-fsck-cache.txt names it
+"database" at first, but then also uses "object pool".
 
-    [PATCH] rtc: msleep() cannot be used from interrupt
-    
-    Since the beginning of July my Opteron box was randomly crashing and
-    being rebooted by hardware watchdog.  Today it finally did it in front
-    of me, and this patch will hopefully fix it.
-    
-    The problem is that at the end of June (the 28th, to be exact: commit
-    47f176fdaf8924bc83fddcf9658f2fd3ef60d573, "[PATCH] Using msleep()
-    instead of HZ") rtc_get_rtc_time ...
+  - Storing a regular file or a symlink in the object database
+    results in a "blob object" created.  You cannot directly
+    store filesystem directory, but a collection of blob objects
+    and other tree objects can be recorded as a "tree object"
+    which corresponds to this notion.
 
-and when I use gitk, it would be just too damn cool for words if I could 
-easily follow the SHA1's mentioned in the commit message.
+  - $GIT_INDEX_FILE is "index file", which is a collection of
+    "cache entries".  The former is sometimes called "cache
+    file", the latter just "cache".
 
-I can just cut-and-paste the SHA1, and I've verified that it works fine. 
-However, as you'v enoticed, I'm of the whiny kind, and I thought it could 
-be easier. So I'm whining again.
+Tutorial says "cache" aka "index". Though technically, a cache
+is the index file _plus_ the related objects in the object database.
+git-update-cache.txt even makes the difference between the "index"
+and the "directory cache".
 
-<whine>Mommy, mommy, can you make my life easier</whine>
+  - the directory which corresponds to the top of the hierarchy
+    described in the index file; I've seen words like "working
+    tree", "working directory", "work tree" used.
 
-So I noticed that I really would like two things:
+The tutorial initially says "working tree", but then "working
+directory". Usually, a directory does not include its
+subdirectories, though. git-apply-patch-script.txt, git-apply.txt,
+git-hash-object.txt, git-read-tree.txt
+use "work tree". git-checkout-cache.txt, git-commit-tree.txt,
+git-diff-cache.txt, git-ls-tree.txt, git-update-cache.txt contain
+"working directory". git-diff-files.txt talks about a "working tree".
 
- - "clickable" SHA1's in commit messages would be really really cool if 
-   something like that is even possible with tcl/tk.
+  - When the stat information a cache entry records matches what
+    is in the work tree, the entry is called "clean" or
+    "up-to-date".  The opposite is "dirty" or "not up-to-date".
 
-   Now, if you can highlight them when showing the message, that would be 
-   extra cool, but even without any highlighing, the thing actually 
-   _almost_ works fine already: you can double-click the SHA1, and it will 
-   select it. You then have to move the mouse to the "goto" window, and 
-   paste in the SHA1 there. And this is where it would be good if this 
-   sequence could be simplified a bit.
+  - An index file can be in "merged" or "unmerged" state.  The
+    former is when it does not have anything but stage 0 entries,
+    the latter otherwise.
 
-   Even if it's something as simple as accepting the SHA1 paste into the 
-   same window (not having to go to the "goto" window: just double-click 
-   on the SHA1, and then right-click to "paste it back").
+That seems to be unambiguous (sometimes it's called "index",
+sometimes "index file"; I don't think that matters).
 
- - I'd like to have a "back button". Not just for the above kind of thing, 
-   but in general too: when searching for something, it would just be very 
-   nice if gitk just kept a list of the <n> last commits that have 
-   been selected, and there was a web-browser-like button that went 
-   back/forward in history.
+  - An merged index file can be written as a "tree object", which
+    is technically a set of interconnected tree objects but we
+    equate it with the toplevel tree object with this set.
 
-   But especially when looking at a revert, I just want to first go to the 
-   thing we revert, see what's going on there (get the "historical 
-   perspective" - commit log for why the original was done etc), and then 
-   I'd want to go back (and possibly forth and back again ;). And while 
-   the revert mentioned the thing it reverted (so I could cut-and-paste), 
-   the thing it reverted obviously does _not_ mention the thing that 
-   reverted it, so now I have to manually just scroll back.
+  - A "tree object" can be recorded as a part of a "commit
+    object".  The tree object is said to be "associated with" the
+    commit object.
 
-   This same thing happens for a failed search (I search for xyz, and it 
-   actually finds it, and I realize that that was the wrong search, but
-   now I'm two months back..)
+In diffcore.txt, "changeset" is used in place of "commit".
 
-<whine>Mommy, mommy, pleeeease</whine>
+  - A "tag object" can be recorded as a pointer to another object
+    of any type. The act of following the pointer a tag object
+    holds (this can go recursively) until we get to a non-tag
+    object is sometimes called "resolving the tag".
 
-			Linus
+  - The following objects are collectively called "tree-ish": a
+    tree object, a commit object, a tag object that resolves to
+    either a commit or a tree object, and can be given to
+    commands that expect to work on a tree object.
+
+We could call this category an "ent".
+
+  - The files under $GIT_DIR/refs record object names, and are
+    called "refs".  What is under refs/heads/ are called "heads",
+    refs/tags/ "tags".  Typically, they are either object names
+    of commit objects or tag objects that resolve to commit
+    objects, but a tag can point at any object.
+
+The tutorial never calls them "refs", but instead "references".
+
+  - A "head" is always an object name of a commit, and marks the
+    latest commit in one line of development.  A line of
+    development is often called a "branch".  We sometimes use the
+    word "branch head" to stress the fact that we are talking
+    about a single commit that is the latest one in a "branch".
+
+In the tutorial, the latter is used in reverse: it talks about a
+"HEAD development branch" and a "HEAD branch".
+
+I find it a little bit troublesome that $GIT_DIR/branches does not
+really refer to a branch, but rather to a (possibly remote) repository.
+
+  - Combining the states from more than one lines of developments
+    is called "merging" and typically done between two branch
+    heads.  This is called "resolving" in the tutorial and there
+    is git-resolve-script command for it.
+
+  - A set of "refs" with the set of objects reachable from them
+    constitute a "repository".  Although currently there is no
+    provision for a repository to say that its objects are stored
+    in this and that object database, multiple repositories can
+    share the same object database, and there is not a conceptual
+    limit that a repository must retrive its objects from a
+    single object database.
+
+This is referred to as "git archive" in the tutorial at first,
+and later as "repository". However, in "Copying archives", a
+very confusing explanation tells us that a "repository" normally
+is a "working tree", where I would rather say that the repository
+lives inside a hidden subdirectory of the working tree.
+
+git-fsck-cache.txt talks about an "archive", too. However, it then
+says "valid tree", when sureley a repository is meant.
+
+Everywhere else, it is called "repository".
+
+  - The act of finding out the object names recorded in "refs" a
+    different repository records, optionally updating a local
+    "refs" with their values, and retrieving the objects
+    reachable from them is called "fetching".  Fetching immediately
+    followed by merging is called "pulling".
+
+In that sense, git-http-pull would be more appropriately named
+git-http-fetch, and analogous git-ssh-pull.
+
+Also, git-pull-script.txt says "Pull and merge", contradicting this
+definition.
+
+  - The act of updating "refs" in a different repository with new
+    value and populating the object database(s) associated with
+    the repository is called "pushing".
+
+  - Currently refs/heads records branch heads of both locally
+    created branches and branches fetched from other
+    repositories.
+
+  - Currently, fetching always happen against a single branch
+    head on a remote repository, and (a remote repository, name
+    of the branch) is stored in $GIT_DIR/branches/ as a
+    short-hand mechanism.  A file in this directory identifies
+    a remote repository by its URL, and the branch to fetch/pull
+    from is identified with the URL fragment notation, absense of
+    which makes it default to "master".
+
+  - a "pack" usually consists of two files: a file containing objects
+    in a compressed format, and an index to the first file. If the
+    pack is uncompressed at once (e.g. when git-clone is called), the
+    index is not necessary.
+
+git-pack-objects calls this a "packed archive" first, but then reverts
+to "pack". git-show-index.txt and git-verify-pack.txt call the .pack file
+"packed GIT archive", and the index "idx file". git-unpack-objects.txt
+calls the .pack file "pack archive".
+
+I'd also add a short explanation of the following unambiguous terms:
+
+"plumbing", also referred to as "core": the basic set of programs and
+scripts usable to half-gods like Linus.
+
+"porcelain", also referred to as "SCM": a thin layer over the plumbing
+making GIT usage nice to regular people.
+
+"type": one of the identifiers "commit","tree","tag" and "blob" describing
+the type of an object.
+
+Ciao,
+Dscho
