@@ -1,138 +1,48 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: [PATCH] Use $DESTDIR instead of $dest
-Date: Fri, 5 Aug 2005 01:56:38 +0200
-Message-ID: <20050804235638.GL24479@pasky.ji.cz>
-References: <20050804225529.GJ24479@pasky.ji.cz>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Tree tags again..
+Date: Thu, 4 Aug 2005 17:03:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508041702180.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 05 02:00:48 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 05 02:04:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0pdJ-0006W4-Vi
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 02:00:18 +0200
+	id 1E0pgV-0006r5-3v
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 02:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262770AbVHDX7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 19:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262783AbVHDX56
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 19:57:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:30222 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262770AbVHDX4i (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 19:56:38 -0400
-Received: (qmail 16815 invoked by uid 2001); 4 Aug 2005 23:56:38 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050804225529.GJ24479@pasky.ji.cz>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262758AbVHEAD0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 20:03:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262785AbVHEADZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 20:03:25 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:49850 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262758AbVHEADW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 20:03:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7503HjA008379
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 4 Aug 2005 17:03:18 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7503GCD017151;
+	Thu, 4 Aug 2005 17:03:17 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-$DESTDIR is more usual during the build than $dest and is what is usually
-used in the makefiles, so let's use it too.
 
-Signed-off-by: Petr Baudis <pasky@ucw.cz>
+Junio, maybe there should be some test-case for this:
 
----
+	error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
+	error: remote ref 'refs/tags/v2.6.11' is not a strict subset of local ref 'refs/tags/v2.6.11'.
+	error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
+	error: remote ref 'refs/tags/v2.6.11-tree' is not a strict subset of local ref 'refs/tags/v2.6.11-tree'.
 
-	This updates the subdirectory Makefiles as well.
+Hmm?
 
-commit aef274d1fc04d848c7355a68c3e48c0b2b5400cb
-tree 546c10ded595cf48473ce216b594607fd922836d
-parent aa6f095b0cd57ab424f02695ccfc8168f5c3b981
-author Petr Baudis <pasky@suse.cz> Fri, 05 Aug 2005 01:55:36 +0200
-committer Petr Baudis <xpasky@machine.sinus.cz> Fri, 05 Aug 2005 01:55:36 +0200
-
- Documentation/Makefile |    6 +++---
- Makefile               |    6 +++---
- templates/Makefile     |   10 +++++-----
- tools/Makefile         |    6 +++---
- 4 files changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -33,9 +33,9 @@ man1: $(DOC_MAN1)
- man7: $(DOC_MAN7)
- 
- install:
--	$(INSTALL) -m755 -d $(dest)/$(man1) $(dest)/$(man7)
--	$(INSTALL) $(DOC_MAN1) $(dest)/$(man1)
--	$(INSTALL) $(DOC_MAN7) $(dest)/$(man7)
-+	$(INSTALL) -m755 -d $(DESTDIR)/$(man1) $(DESTDIR)/$(man7)
-+	$(INSTALL) $(DOC_MAN1) $(DESTDIR)/$(man1)
-+	$(INSTALL) $(DOC_MAN7) $(DESTDIR)/$(man7)
- 
- # 'include' dependencies
- git-diff-%.txt: diff-format.txt diff-options.txt
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -41,7 +41,7 @@ prefix=$(HOME)
- bindir=$(prefix)/bin
- etcdir=$(prefix)/etc
- etcgitdir=$(etcdir)/git-core
--# dest=
-+# DESTDIR=
- 
- CC?=gcc
- AR?=ar
-@@ -197,8 +197,8 @@ check:
- ### Installation rules
- 
- install: $(PROG) $(SCRIPTS)
--	$(INSTALL) -m755 -d $(dest)$(bindir)
--	$(INSTALL) $(PROG) $(SCRIPTS) $(dest)$(bindir)
-+	$(INSTALL) -m755 -d $(DESTDIR)$(bindir)
-+	$(INSTALL) $(PROG) $(SCRIPTS) $(DESTDIR)$(bindir)
- 	$(MAKE) -C templates install
- 
- install-tools:
-diff --git a/templates/Makefile b/templates/Makefile
---- a/templates/Makefile
-+++ b/templates/Makefile
-@@ -5,15 +5,15 @@ prefix=$(HOME)
- etcdir=$(prefix)/etc
- etcgitdir=$(etcdir)/git-core
- templatedir=$(etcgitdir)/templates
--# dest=
-+# DESTDIR=
- 
- all:
- clean:
- 
- install:
--	$(INSTALL) -d -m755 $(dest)$(templatedir)/hooks/
-+	$(INSTALL) -d -m755 $(DESTDIR)$(templatedir)/hooks/
- 	$(foreach s,$(wildcard hooks--*),\
- 		$(INSTALL) -m644 $s \
--		$(dest)$(templatedir)/hooks/$(patsubst hooks--%,%,$s);)
--	$(INSTALL) -d -m755 $(dest)$(templatedir)/info
--	$(INSTALL) -d -m755 $(dest)$(templatedir)/branches
-+		$(DESTDIR)$(templatedir)/hooks/$(patsubst hooks--%,%,$s);)
-+	$(INSTALL) -d -m755 $(DESTDIR)$(templatedir)/info
-+	$(INSTALL) -d -m755 $(DESTDIR)$(templatedir)/branches
-diff --git a/tools/Makefile b/tools/Makefile
---- a/tools/Makefile
-+++ b/tools/Makefile
-@@ -8,7 +8,7 @@ INSTALL=install
- HOME=$(shell echo $$HOME)
- prefix=$(HOME)
- bindir=$(prefix)/bin
--# dest=
-+# DESTDIR=
- 
- PROGRAMS=git-mailsplit git-mailinfo
- SCRIPTS=git-applymbox git-applypatch
-@@ -19,8 +19,8 @@ git-%: %.c
- all: $(PROGRAMS)
- 
- install: $(PROGRAMS) $(SCRIPTS)
--	$(INSTALL) -m755 -d $(dest)$(bindir)
--	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(dest)$(bindir)
-+	$(INSTALL) -m755 -d $(DESTDIR)$(bindir)
-+	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(DESTDIR)$(bindir)
- 
- clean:
- 	rm -f $(PROGRAMS) *.o
+		Linus
