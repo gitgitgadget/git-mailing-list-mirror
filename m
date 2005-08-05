@@ -1,54 +1,65 @@
 From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb: not all files listed in commit list
-Date: Thu, 4 Aug 2005 11:02:38 +0200
-Message-ID: <20050804090238.GA11605@vrfy.org>
-References: <20050804014916.GB10556@austin.ibm.com> <20050804083916.GL991MdfPADPa@garage.linux.student.kuleuven.ac.be>
+Subject: Re: [RFC] git homepage
+Date: Fri, 5 Aug 2005 11:11:02 +0200
+Message-ID: <20050805091102.GA21703@vrfy.org>
+References: <20050805012728.GO24479@pasky.ji.cz> <7v64ulqh24.fsf@assigned-by-dhcp.cox.net> <20050805021214.GQ24479@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 05 10:49:40 2005
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 05 11:16:43 2005
 Return-path: <git-owner@vger.kernel.org>
-Received: from mail-relay.eunet.no ([193.71.71.242])
+Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0xrl-0002TW-O6
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 10:47:45 +0200
-Received: from vger.kernel.org (vger.kernel.org [12.107.209.244])
-	by mail-relay.eunet.no (8.13.1/8.13.1/GN) with ESMTP id j7498r4o026405
-	for <gcvg-git@gmane.org>; Thu, 4 Aug 2005 11:08:53 +0200 (CEST)
-	(envelope-from git-owner@vger.kernel.org)
+	id 1E0yIs-0007h8-Pa
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 11:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S261963AbVHDJCm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 05:02:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262277AbVHDJCm
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 05:02:42 -0400
-Received: from soundwarez.org ([217.160.171.123]:8860 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S261963AbVHDJCl (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 05:02:41 -0400
+	id S262920AbVHEJPA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Aug 2005 05:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262948AbVHEJMv
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 05:12:51 -0400
+Received: from soundwarez.org ([217.160.171.123]:31166 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S262920AbVHEJLF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 05:11:05 -0400
 Received: by soundwarez.org (Postfix, from userid 2702)
-	id E6BFB56605; Thu,  4 Aug 2005 11:02:38 +0200 (CEST)
-To: Olof Johansson <olof@lixom.net>, git@vger.kernel.org,
-        "H. Peter Anvin" <hpa@zytor.com>
+	id 21B12567A9; Fri,  5 Aug 2005 11:11:02 +0200 (CEST)
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <20050804083916.GL991MdfPADPa@garage.linux.student.kuleuven.ac.be>
+In-Reply-To: <20050805021214.GQ24479@pasky.ji.cz>
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 04, 2005 at 10:39:16AM +0200, Sven Verdoolaege wrote:
-> On Wed, Aug 03, 2005 at 08:49:16PM -0500, Olof Johansson wrote:
-> > Hi,
+On Fri, Aug 05, 2005 at 04:12:14AM +0200, Petr Baudis wrote:
+> Dear diary, on Fri, Aug 05, 2005 at 04:00:03AM CEST, I got a letter
+> where Junio C Hamano <junkio@cox.net> told me that...
+> > Petr Baudis <pasky@ucw.cz> writes:
 > > 
-> > My apologies if this has already been found and reported; I'm not
-> > tracking the list closely.
+> > > 	http://git.or.cz/
 > > 
-> > It seems that newly introduced files are not shown in gitweb.
-> > For example, see the following commit:
+> > Wonderful.
 > > 
-> > http://kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=fce0d5740322b98b863f9e609f5a9bd4c06703af
+> > Once the page contents stabilizes, it would be a good idea to
+> > get it added in the page top links of http://www.kernel.org/git
+> > page.  Sorry, I do not know who is in charge of configuring the
+> > gitweb there.
 > 
-> That's probably because either git-core or gitweb needs updating.
-> New files used to be indicated by an 'N', whereas an 'A' is used now.
+> I tend to harass Kay Sievers, with measurable effects. :-)
 
-Gitweb already expects the new format. The git binaries need to be updated.
+You are welcome to do so. :)
 
+> > BTW, it may be technically correct, but the combination of
+> > "rsync" and "www" on the 3rd line of http://www.kernel.org/git
+> > caught my attention there ;-).
+> > 
+> >   cg-clone rsync://www.kernel.org/pub/scm/ + project path
+> 
+> Actually, HTTP should be working again now; but it's rather fresh yet so
+> we should keep it rsync anyway for a while yet for the users of older
+> GIT/Cogito versions.
+
+Changed both to rsync now. Let me know, when we want to switch to http
+again.
+
+Best,
 Kay
