@@ -1,59 +1,59 @@
-From: Petr Baudis <pasky@ucw.cz>
-Subject: Template files location
-Date: Fri, 5 Aug 2005 11:43:24 +0200
-Message-ID: <20050805094324.GF29216@pasky.ji.cz>
-References: <42DC4537.2080103@orionmulti.com> <20050805024222.GE7762@shell0.pdx.osdl.net> <42F2E571.6040207@orionmulti.com> <7voe8dow4w.fsf@assigned-by-dhcp.cox.net> <20050805042332.GG7762@shell0.pdx.osdl.net> <7vd5otov7s.fsf@assigned-by-dhcp.cox.net>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: git-cvs-import-script problems
+Date: Fri, 05 Aug 2005 12:14:27 +0200
+Message-ID: <u5tfytoitbw.fsf@fidgit.hq.vtech>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Wright <chrisw@osdl.org>, Linus Torvalds <torvalds@osdl.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 05 11:47:40 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Fri Aug 05 13:32:18 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0yml-0002ja-Bd
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 11:46:39 +0200
+	id 1E10Pz-0008TC-Qp
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 13:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262938AbVHEJps (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Aug 2005 05:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262939AbVHEJnu
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 05:43:50 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45828 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262932AbVHEJn3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 05:43:29 -0400
-Received: (qmail 31197 invoked by uid 2001); 5 Aug 2005 09:43:24 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5otov7s.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S262986AbVHELa4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 5 Aug 2005 07:30:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262988AbVHELa4
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 07:30:56 -0400
+Received: from main.gmane.org ([80.91.229.2]:58256 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S262986AbVHELay (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 07:30:54 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1E10Ow-0008Io-Fj
+	for git@vger.kernel.org; Fri, 05 Aug 2005 13:30:10 +0200
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Aug 2005 13:30:10 +0200
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Aug 2005 13:30:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:XL8LYcHQju4JScfkN0QaiI+NVlU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Aug 05, 2005 at 06:37:11AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> We install files in $(HOME)/etc/git-core/templates/ directory.
-> 
-> In the standard binary distribution scheme, it should probably
-> go to either /usr/share or /etc; the former if the distribution
-> prefers static boilerplate files in /usr/share, latter if we
-> consider them site-specific conffiles.  I just discussed this
-> privately with a Debian person on the list today, and we are in
-> favor of installing it under /usr/share/git-core/templates,
-> because we do not expect the contents of the standard templates
-> directory will not be a per-site customization [*1*].
-> 
-> In any case, this means that the make drivers like spec.in and
-> debian/rules would need to override some make variables when
-> they invoke the main Makefile.
+I just tried importing a large CVS repository to git, using "git
+cvsimport".  It managed to import a lot of files and revisions, but
+half-way through, it stopped with this message:
 
-Any reason why that's not the default destination then?
+  Unknown: F
 
-Or you can try /etc/git-core/ and fall back to /usr/share/git-core :-)
+As far as I can till, this "F" probably came from the CVS server
+process.  Could it be that my CVS is too new or too old?
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+I'm using git b03e2d2091153d239063cfc086a840d74a9eadde,  cvs 1.11.20,
+cvsps 2.1, and the CVS repository is a local directory.
+
+Also, when the process stops, I have .git/HEAD pointing to
+refs/heads/master (which doesn't exist).  I thought it would be
+pointing to refs/heads/origin.
+
+--=20
+David K=E5gedal
