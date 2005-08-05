@@ -1,62 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [RFC] git homepage
-Date: Fri, 5 Aug 2005 04:12:14 +0200
-Message-ID: <20050805021214.GQ24479@pasky.ji.cz>
-References: <20050805012728.GO24479@pasky.ji.cz> <7v64ulqh24.fsf@assigned-by-dhcp.cox.net>
+From: Chris Wright <chrisw@osdl.org>
+Subject: Re: [ANNOUNCE] Cogito-0.13
+Date: Thu, 4 Aug 2005 19:39:13 -0700
+Message-ID: <20050805023913.GA8041@shell0.pdx.osdl.net>
+References: <20050805020307.GP24479@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 05 04:13:36 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 05 04:41:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E0rhg-0007xW-1w
-	for gcvg-git@gmane.org; Fri, 05 Aug 2005 04:12:56 +0200
+	id 1E0s8A-0001dq-KX
+	for gcvg-git@gmane.org; Fri, 05 Aug 2005 04:40:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S262812AbVHECMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 4 Aug 2005 22:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262813AbVHECMZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 22:12:25 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:2576 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S262812AbVHECMW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 22:12:22 -0400
-Received: (qmail 29108 invoked by uid 2001); 5 Aug 2005 02:12:15 -0000
-To: Junio C Hamano <junkio@cox.net>
+	id S262832AbVHECjp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 4 Aug 2005 22:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S262831AbVHECjd
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Aug 2005 22:39:33 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:3309 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S262834AbVHECjV (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Aug 2005 22:39:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j752dDjA018143
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 4 Aug 2005 19:39:13 -0700
+Received: from shell0.pdx.osdl.net (localhost [127.0.0.1])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j752dD3t022724;
+	Thu, 4 Aug 2005 19:39:13 -0700
+Received: (from chrisw@localhost)
+	by shell0.pdx.osdl.net (8.13.1/8.13.1/Submit) id j752dDA3022723;
+	Thu, 4 Aug 2005 19:39:13 -0700
+To: Petr Baudis <pasky@suse.cz>
 Content-Disposition: inline
-In-Reply-To: <7v64ulqh24.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <20050805020307.GP24479@pasky.ji.cz>
+User-Agent: Mutt/1.5.6i
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
+X-MIMEDefang-Filter: osdl$Revision: 1.113 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Aug 05, 2005 at 04:00:03AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Petr Baudis <pasky@ucw.cz> writes:
-> 
-> > 	http://git.or.cz/
-> 
-> Wonderful.
-> 
-> Once the page contents stabilizes, it would be a good idea to
-> get it added in the page top links of http://www.kernel.org/git
-> page.  Sorry, I do not know who is in charge of configuring the
-> gitweb there.
+* Petr Baudis (pasky@suse.cz) wrote:
+> 	* Cogito is now alone!
+> 		GIT is no longer part of Cogito distribution.
+> 		That means you need to get and install it separately.
+> 		It is recommended to use at least 0.99.3. The newer
+> 		the better (hopefully).
 
-I tend to harass Kay Sievers, with measurable effects. :-)
+That's great.  RPMs uploading to:
 
-> BTW, it may be technically correct, but the combination of
-> "rsync" and "www" on the 3rd line of http://www.kernel.org/git
-> caught my attention there ;-).
-> 
->   cg-clone rsync://www.kernel.org/pub/scm/ + project path
+ 	http://www.kernel.org/pub/software/scm/cogito/RPMS
 
-Actually, HTTP should be working again now; but it's rather fresh yet so
-we should keep it rsync anyway for a while yet for the users of older
-GIT/Cogito versions.
+I think we can make this a noarch rpm since it's scripts only now.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+thanks,
+-chris
