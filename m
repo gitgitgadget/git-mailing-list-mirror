@@ -1,116 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: My Itchlist
-Date: Fri, 5 Aug 2005 19:39:01 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508051924390.3258@g5.osdl.org>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitk "hyperlinks" (was Re: Display of merges in gitk)
+Date: Sat, 6 Aug 2005 05:36:54 +0200
+Message-ID: <20050806033654.GA27953@vrfy.org>
+References: <17130.56620.137642.941175@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0508050658260.3258@g5.osdl.org> <Pine.LNX.4.58.0508050710460.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 06 04:40:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 06 05:38:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([12.107.209.244])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1Eao-0000Gf-80
-	for gcvg-git@gmane.org; Sat, 06 Aug 2005 04:39:22 +0200
+	id 1E1FVs-0004Bf-Uk
+	for gcvg-git@gmane.org; Sat, 06 Aug 2005 05:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S263146AbVHFCjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 5 Aug 2005 22:39:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263148AbVHFCjN
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 22:39:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:38608 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S263146AbVHFCjL (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 22:39:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j762d4jA001603
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 5 Aug 2005 19:39:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j762d2Bn026595;
-	Fri, 5 Aug 2005 19:39:03 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S263161AbVHFDhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 5 Aug 2005 23:37:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S263159AbVHFDhD
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Aug 2005 23:37:03 -0400
+Received: from soundwarez.org ([217.160.171.123]:54688 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S263161AbVHFDg7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Aug 2005 23:36:59 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id AAC173C13A; Sat,  6 Aug 2005 05:36:54 +0200 (CEST)
+To: Linus Torvalds <torvalds@osdl.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0508050710460.3258@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On Fri, 5 Aug 2005, Junio C Hamano wrote:
+On Fri, Aug 05, 2005 at 07:37:41AM -0700, Linus Torvalds wrote:
 > 
-> - Teach fetch-pack reference renaming.
-
-Well, the fetch side at least needs it less.
-
-Right now the renaming means that you can only really fetch _one_ head at 
-a time, but that's at least a fairly common and important case, and you 
-can do the rest from there.
-
-And doing only one means that git-fetch-pack can just return the result
-SHA1 of the head it was asked to fetch. In fact, even that could just be
-extended to returning multiple heads: just return each SHA1 in order. No 
-"renaming" necessary, since it's then up to the user what to do with the 
-results.
-
-In fact, many users don't even want to write the result to a ref _at_all_: 
-they just use the raw name - no refs - to merge.
-
-So arguably it is _wrong_ to make git-fetch-pack write refs, because that 
-just leads to the problem with temporary refs etc. "Local variables are 
-good".
-
-> These are not 1.0 showstopper items but what I personally would
-> love to see.
+> [ Also Kay Sievers, because the clickability thing sounds like a 
+>   potentially good thing for webgit too.. ]
+...
+> For 2.6.13 we've been reverting some stuff lately, to make sure we get a 
+> stable release. That's fine, and when I revert something I try to mention 
+> the commit ID of the thing I revert in the message. Apparently others do 
+> too, as indicated by a patch I just got from Petr Vandovec. So we've got 
+> for example:
 > 
-> - teach mailsplit/mailinfo basic MIME (attachments and quoted-printable)
-> 
->   Some people send patches in MIME quoted-printable.  I could
->   drop them on the floor and ask the sender to resend, but I've
->   been being a nice guy, which currently involves manual
->   intervention.
+>     Undo: d8c4b4195c7d664baf296818bf756775149232d3
+>     
+>     Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+...
+> and when I use gitk, it would be just too damn cool for words if I could 
+> easily follow the SHA1's mentioned in the commit message.
+...
 
-This really is a nasty problem. People add their own commentary etc, and 
-the fact is, the maintainer _needs_ to edit it.
+Damn cool? No problem. :)
+  http://www.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=403fe5ae57c831968c3dbbaba291ae825a1c5aaa
 
-Otherwise you'll have people saying "Hi there, I really like this thing, 
-but I have this problem which this patch fixes" etc, which is all very 
-nice, but dammit, that's simply not changelog material.
-
-Also, I definitely myself end up editing patches occasionally: fixing 
-things up. Again, this is simply a major pain if the patch comes in as an 
-attachment.
-
-So there are tons of reasons to just try to teach people that attachments 
-are painful. Much better to teach people not to use them than having 
-people use them and the tools "working" with them.
-
-> - teach git-apply "reverse" and possibly "fuzz".
-> 
->   I think this might help Porcelain; currently they have to
->   interpret git extended diff headers themselves.
-
-Reverse would definitely be useful. "fuzz" is really pretty dangerous. I 
-think that once a a patch doesn't apply, you really want to have helper 
-tools like a graphical "wiggle" etc, and that really means that it's not 
-"git-apply", it's something totally different.
-
-And quite frankly, if you have a tool that can handle unified diffs 
-already, then extending it for the git rename stuff should be pretty easy. 
-It's not like we haven't wanted renaming patches for at least a _decade_ 
-already, it's just that nobody ever did them. 
-
-So I'm hoping that git can act as a impetus for people to just finally 
-have a standard way of saying "rename". EVERYBODY wants it. Anybody who 
-ever sees a rename as a patch will always go "damn, it would be nice to 
-have renames". And dammit, we have them, so let's try to push out the 
-concept.
-
-And if that means that we should use rename patches and let non-git users 
-have some pain until they say "ok, ok, it's a good idea, I'll do it. 
-Uncle, uncle!", then maybe the world will be a better place. It's not like 
-they can't see how git-apply does it already ;)
-
-			Linus
+Kay
