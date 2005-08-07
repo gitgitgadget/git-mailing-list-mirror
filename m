@@ -1,75 +1,78 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: qgit-0.82 (was Re: qgit-0.81)
-Date: Sun, 7 Aug 2005 08:05:41 -0700 (PDT)
-Message-ID: <20050807150542.2009.qmail@web26310.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: bisect gives strange answer
+Date: Sun, 07 Aug 2005 10:06:19 -0700
+Message-ID: <7vvf2hy8vo.fsf@assigned-by-dhcp.cox.net>
+References: <20050804192838.GB26714@mars.ravnborg.org>
+	<E1E14Hj-0001Nt-00@skye.ra.phy.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 07 17:06:52 2005
+X-From: git-owner@vger.kernel.org Sun Aug 07 19:07:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1mis-0000TN-Hr
-	for gcvg-git@gmane.org; Sun, 07 Aug 2005 17:05:58 +0200
+	id 1E1obe-0001fB-E5
+	for gcvg-git@gmane.org; Sun, 07 Aug 2005 19:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752129AbVHGPFr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Aug 2005 11:05:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752146AbVHGPFr
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 11:05:47 -0400
-Received: from web26310.mail.ukl.yahoo.com ([217.146.176.21]:11900 "HELO
-	web26310.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1752129AbVHGPFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2005 11:05:47 -0400
-Received: (qmail 2011 invoked by uid 60001); 7 Aug 2005 15:05:42 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=qWVGTlzJvWm+F1zxKHBrZ+h5wrbfjwutQefvTUX3kc7JwcpZyOSX4zeGRMhknKg9Eu+8mj1g0FKy2pp/3R0umRiTl5lFI85ctJr5Jwf80wBm5xNrJ8ul7ouFHXpv9Mn25Xb3R1hTuu5UxFUtUVDHIGWOdNUdaG2ZOXGzUz8forY=  ;
-Received: from [151.38.109.179] by web26310.mail.ukl.yahoo.com via HTTP; Sun, 07 Aug 2005 08:05:41 PDT
-To: torvalds@osdl.org
+	id S1752371AbVHGRGV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Aug 2005 13:06:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752372AbVHGRGV
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 13:06:21 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:55715 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1752369AbVHGRGV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2005 13:06:21 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050807170620.QFWH7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 7 Aug 2005 13:06:20 -0400
+To: Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk>
+In-Reply-To: <E1E14Hj-0001Nt-00@skye.ra.phy.cam.ac.uk> (Sanjoy Mahajan's
+	message of "Fri, 05 Aug 2005 16:38:59 +0100")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Marco Costalba wrote:
+Sanjoy Mahajan <sanjoy@mrao.cam.ac.uk> writes:
 
->Linus Torvalds wrote:
->
->
->>- Any chance of having a git archive of qgit? I realize that sourceforge 
->>  doesn't have git archives, but (a) maybe you can ask and (b) maybe 
->>  there are alternate places you could put it. It's just sad having to 
->>  download tar-balls.
->>
->
->I will try to proceed from (a) to, eventually, (b).
->
->
+> I will redo those tests but rebuilding in place after each bisection
+> (with -f added to all the git checkout uses in git-bisect-script) and
+> see whether I get the same results.  If I don't, it could be due to
+> git or git-bisect (but not so likely with the -f switch) or to the
+> build system.  Will keep you and Junio posted.
 
-Apart from using a public git archive, (I already use my private one ;-)) 
-the other points should be fixed now by a fresh qgit-0.82
+I thought the lack of '-f' was a plausible explanation, but here
+is what I just did.  The same bisect sequence in your example,
+making sure the state of working tree matches what the commit
+being tested:
 
-Download link (still tarball for now) is:
-http://prdownloads.sourceforge.net/qgit/qgit-0.82.tar.bz2?download
+    $ git bisect start
+    $ git bisect good 17af691cd19765b782d891fc50c1568d0f1276b3
+    $ git bisect bad c101f3136cc98a003d0d16be6fab7d0d950581a6
+    Bisecting: 42 revisions left to test after this
+    $ cat .git/HEAD
+    b2f571026594884e7a2a3f8bc6ad5c92e0703330
+    $ git bisect good; cat .git/HEAD; git-diff-cache -r bisect
+    Bisecting: 30 revisions left to test after this
+    450008b5a62bb09445ae05c4d01d510386c9435d
+    $ git bisect good; cat .git/HEAD; git-diff-cache -r bisect
+    Bisecting: 15 revisions left to test after this
+    a9df3597fec5472d0840fbfdc2a3fac5268f7d08
+    $ git bisect bad; cat .git/HEAD; git-diff-cache -r bisect
+    Bisecting: 8 revisions left to test after this
+    28e8c3ad9464de54a632f00ab3df88fa5f4652d1
+    $ git bisect bad; cat .git/HEAD; git-diff-cache -r bisect
+    Bisecting: 4 revisions left to test after this
+    c774e93e2152d0be2612739418689e6e6400f4eb
+    $ git bisect bad; cat .git/HEAD; git-diff-cache -r bisect
+    Bisecting: 2 revisions left to test after this
+    b4634484815e1879512a23e4f59eef648135c30a
 
-
-Changelog:
-
-- replaced jump-over-bumps with horizontal lines
-
-- set graph bullets a bit smaller  
-
-- no more word wrapping in diff and file viewers
-
-- fixed display of e-mail addresses in commit messages
-
-
-
-Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+So it does not appear to me that lack of '-f' is a problem.
+Without the flag, checkout does "read-tree -m -u" which means to
+update the working tree to match the new tree being read (this
+includes the removal of files from the working tree that were
+registered in the original index file that are not in the next
+tree).
