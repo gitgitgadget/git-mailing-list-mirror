@@ -1,61 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: GIT 0.99.4 (preview)
-Date: Sat, 06 Aug 2005 23:00:20 -0700
-Message-ID: <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: git-format-patch-script bug?
+Date: Sun, 07 Aug 2005 01:35:29 -0600
+Message-ID: <m1d5oqxkqm.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Aug 07 08:00:55 2005
+X-From: git-owner@vger.kernel.org Sun Aug 07 09:36:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1eDB-0007Q4-Cb
-	for gcvg-git@gmane.org; Sun, 07 Aug 2005 08:00:41 +0200
+	id 1E1fhL-0003Ni-U3
+	for gcvg-git@gmane.org; Sun, 07 Aug 2005 09:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbVHGGAX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Aug 2005 02:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751114AbVHGGAX
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 02:00:23 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:48834 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751113AbVHGGAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Aug 2005 02:00:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050807060020.JBZF15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 7 Aug 2005 02:00:20 -0400
-To: git@vger.kernel.org
-In-Reply-To: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri, 05 Aug 2005 18:52:06 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751201AbVHGHfs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Aug 2005 03:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbVHGHfs
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 03:35:48 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:3219 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S1751201AbVHGHfs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2005 03:35:48 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j777ZVV3017455
+	for <git@vger.kernel.org>; Sun, 7 Aug 2005 01:35:31 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j777ZTP4017454;
+	Sun, 7 Aug 2005 01:35:29 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: <git@vger.kernel.org>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I said:
 
-> My tentative plan is for 0.99.4 to finish send-pack, 0.99.5
-> to enhance fetch-pack, 0.99.6 to finish the first pass for the
-> documentation updates and stabilizing the binary packaging.
+I haven't had a chance to investigate this much
+yet but I have ran into a peculiar problem.
 
-Ok, I am almost ready to push 0.99.4 out.  Here is what I have
-in the public repository.
+I was trying to help someone track down a bug that
+occurred between linux-2.6.12 and linux-2.6.13-rc1.
+Since it was very much an unknown where the problem
+was introduced I decided to run git format-patch
+so I could see what all of the differences were.
+Then to be certain the patch series worked I started
+applying them in order.  
 
-  - The branches master & pu are as usual.  Modulo bugs, I
-    consider send-pack enhancement finished.
+I didn't get very far when I had a patch conflict.
 
-  - There is an "rc" branch whose Makefile already says 0.99.4.
-    I've been working on Debian and RPM packaging issues today,
-    with help from Chris Wright and H Peter Anvin, in this
-    branch.
+Looking deeper git-diff-tree is always making the diffs
+against the parent instead of against the next commit
+in the series.  Which is largely sane.  However it does
+not warn or fail when the parents and the next commit are different,
+which seems nonintuitive.
 
-The plan is to stabilize the binary packaging issues in the "rc"
-branch, and ordinary feature updates and bugfixes in "master" or
-"pu" branch as usual.  When things are ready, "rc" and "master"
-will be merged, 0.99.4 gets created and tagged, and "master" and
-"pu" will continue from there.
-
-I would appreciate if folks familiar with binary packaging,
-especially RPM, give final sanity checks on what is currently in
-"rc" branch.
+Eric
