@@ -1,67 +1,75 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: qgit-0.81
-Date: Sun, 07 Aug 2005 10:42:51 -0400
-Message-ID: <42F61DEB.1010601@michonline.com>
-References: <20050806215323.86191.qmail@web26303.mail.ukl.yahoo.com> <Pine.LNX.4.58.0508061711230.3258@g5.osdl.org>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: qgit-0.82 (was Re: qgit-0.81)
+Date: Sun, 7 Aug 2005 08:05:41 -0700 (PDT)
+Message-ID: <20050807150542.2009.qmail@web26310.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 07 16:43:20 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 07 17:06:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1mMb-0007EJ-5J
-	for gcvg-git@gmane.org; Sun, 07 Aug 2005 16:42:57 +0200
+	id 1E1mis-0000TN-Hr
+	for gcvg-git@gmane.org; Sun, 07 Aug 2005 17:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbVHGOmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Aug 2005 10:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbVHGOmy
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 10:42:54 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:55449 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1751864AbVHGOmy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Aug 2005 10:42:54 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1E1mMW-00034f-OG; Sun, 07 Aug 2005 10:42:52 -0400
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1E1mMW-0005jk-00; Sun, 07 Aug 2005 10:42:52 -0400
-Received: from localhost ([127.0.0.1])
-	by mythryan with esmtp (Exim 4.52)
-	id 1E1mMW-0005MD-40; Sun, 07 Aug 2005 10:42:52 -0400
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050602)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508061711230.3258@g5.osdl.org>
-X-Enigmail-Version: 0.91.0.0
+	id S1752129AbVHGPFr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Aug 2005 11:05:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752146AbVHGPFr
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 11:05:47 -0400
+Received: from web26310.mail.ukl.yahoo.com ([217.146.176.21]:11900 "HELO
+	web26310.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1752129AbVHGPFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2005 11:05:47 -0400
+Received: (qmail 2011 invoked by uid 60001); 7 Aug 2005 15:05:42 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=qWVGTlzJvWm+F1zxKHBrZ+h5wrbfjwutQefvTUX3kc7JwcpZyOSX4zeGRMhknKg9Eu+8mj1g0FKy2pp/3R0umRiTl5lFI85ctJr5Jwf80wBm5xNrJ8ul7ouFHXpv9Mn25Xb3R1hTuu5UxFUtUVDHIGWOdNUdaG2ZOXGzUz8forY=  ;
+Received: from [151.38.109.179] by web26310.mail.ukl.yahoo.com via HTTP; Sun, 07 Aug 2005 08:05:41 PDT
+To: torvalds@osdl.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Marco Costalba wrote:
 
-Linus Torvalds wrote:
-> Oh, and do people really care _that_ much when the change happened? That's 
-> a lot of screen real estate wasted on the date stamp of "last change". At 
-> least I can drag it to the right and hide it that way..
+>Linus Torvalds wrote:
+>
+>
+>>- Any chance of having a git archive of qgit? I realize that sourceforge 
+>>  doesn't have git archives, but (a) maybe you can ask and (b) maybe 
+>>  there are alternate places you could put it. It's just sad having to 
+>>  download tar-balls.
+>>
+>
+>I will try to proceed from (a) to, eventually, (b).
+>
+>
 
-I fixed that here by manually dragging the "date" column to the left.
+Apart from using a public git archive, (I already use my private one ;-)) 
+the other points should be fixed now by a fresh qgit-0.82
 
-That had the bonus effect of moving the graph away from the edge of the
-window, so it was easier to see the left-most line.
-
-You can also just resize the column if it bugs you.  (Though I think
-swapping the default order of the two columns is probably worthwhile
-anyway.)
+Download link (still tarball for now) is:
+http://prdownloads.sourceforge.net/qgit/qgit-0.82.tar.bz2?download
 
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+Changelog:
 
-iD8DBQFC9h3rfhVDhkBuUKURAjUHAKDoT4YVE+RDMHJouSjoMUwE67feJQCg03yZ
-FWWb37PawiNBKkkgb0Ap9no=
-=qTOy
------END PGP SIGNATURE-----
+- replaced jump-over-bumps with horizontal lines
+
+- set graph bullets a bit smaller  
+
+- no more word wrapping in diff and file viewers
+
+- fixed display of e-mail addresses in commit messages
+
+
+
+Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
