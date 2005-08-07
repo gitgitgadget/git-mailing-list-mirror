@@ -1,48 +1,67 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: gitk SHA link hovers
-Date: Sun, 7 Aug 2005 22:04:14 +1000
-Message-ID: <17141.63678.126439.379030@cargo.ozlabs.ibm.com>
-References: <17130.56620.137642.941175@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0508050658260.3258@g5.osdl.org>
-	<Pine.LNX.4.58.0508050710460.3258@g5.osdl.org>
-	<17140.47152.672091.474748@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0508060919150.3258@g5.osdl.org>
-	<Pine.LNX.4.58.0508061056200.3258@g5.osdl.org>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: qgit-0.81
+Date: Sun, 07 Aug 2005 10:42:51 -0400
+Message-ID: <42F61DEB.1010601@michonline.com>
+References: <20050806215323.86191.qmail@web26303.mail.ukl.yahoo.com> <Pine.LNX.4.58.0508061711230.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jeff Epler <jepler@unpythonic.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 07 14:06:50 2005
+Cc: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 07 16:43:20 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1juc-0004V3-R3
-	for gcvg-git@gmane.org; Sun, 07 Aug 2005 14:05:55 +0200
+	id 1E1mMb-0007EJ-5J
+	for gcvg-git@gmane.org; Sun, 07 Aug 2005 16:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751764AbVHGMFq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Aug 2005 08:05:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbVHGMFq
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 08:05:46 -0400
-Received: from ozlabs.org ([203.10.76.45]:65478 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S1751764AbVHGMFq (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Aug 2005 08:05:46 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 4720467F1E; Sun,  7 Aug 2005 22:05:45 +1000 (EST)
+	id S1751864AbVHGOmy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Aug 2005 10:42:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbVHGOmy
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 10:42:54 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:55449 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S1751864AbVHGOmy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Aug 2005 10:42:54 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1E1mMW-00034f-OG; Sun, 07 Aug 2005 10:42:52 -0400
+Received: from [10.254.251.12] (helo=mythryan)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1E1mMW-0005jk-00; Sun, 07 Aug 2005 10:42:52 -0400
+Received: from localhost ([127.0.0.1])
+	by mythryan with esmtp (Exim 4.52)
+	id 1E1mMW-0005MD-40; Sun, 07 Aug 2005 10:42:52 -0400
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050602)
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508061056200.3258@g5.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+In-Reply-To: <Pine.LNX.4.58.0508061711230.3258@g5.osdl.org>
+X-Enigmail-Version: 0.91.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-> This makes the cursor change when you hover over a SHA1 link with the new 
-> "hypertext" gitk commit ID linking feature.
+Linus Torvalds wrote:
+> Oh, and do people really care _that_ much when the change happened? That's 
+> a lot of screen real estate wasted on the date stamp of "last change". At 
+> least I can drag it to the right and hide it that way..
 
-I committed something based on this but with extra stuff to make the
-cursor changes work with the change from the normal cursor to the
-watch cursor and back.
+I fixed that here by manually dragging the "date" column to the left.
 
-Paul.
+That had the bonus effect of moving the graph away from the edge of the
+window, so it was easier to see the left-most line.
+
+You can also just resize the column if it bugs you.  (Though I think
+swapping the default order of the two columns is probably worthwhile
+anyway.)
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+
+iD8DBQFC9h3rfhVDhkBuUKURAjUHAKDoT4YVE+RDMHJouSjoMUwE67feJQCg03yZ
+FWWb37PawiNBKkkgb0Ap9no=
+=qTOy
+-----END PGP SIGNATURE-----
