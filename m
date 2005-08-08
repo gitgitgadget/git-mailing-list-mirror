@@ -1,117 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Teach git push .git/branches shorthand
-Date: Sun, 07 Aug 2005 23:12:26 -0700
-Message-ID: <7viryhgdo5.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: use of temporary refs in resolve
+Date: Mon, 08 Aug 2005 09:50:30 +0100
+Message-ID: <tnxk6iwx161.fsf@arm.com>
+References: <7v3bplwmzg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Aug 08 08:13:02 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 10:56:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E20sB-0005JT-N4
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 08:12:32 +0200
+	id 1E23PK-0001Be-9I
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 10:54:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbVHHGM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 02:12:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbVHHGM3
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 02:12:29 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:14507 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S1750735AbVHHGM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 02:12:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050808061228.WWAA17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 Aug 2005 02:12:28 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750765AbVHHIwB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 04:52:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbVHHIwB
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 04:52:01 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:46027 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1750765AbVHHIwA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 04:52:00 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j788okOU007197;
+	Mon, 8 Aug 2005 09:50:46 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id JAA18817;
+	Mon, 8 Aug 2005 09:51:34 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 8 Aug 2005 09:51:02 +0100
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3bplwmzg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Sun, 07 Aug 2005 12:44:35 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 08 Aug 2005 08:51:02.0534 (UTC) FILETIME=[4E269A60:01C59BF6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Although it is uncertain if we would keep .git/branches for
-long, the shorthand stored there can be used for pushing if it
-is host:path/to/git format, so let's make use of it.  This does
-not use git-parse-remote because that script will be rewritten
-quite a bit for updated pulling.
+Junio C Hamano <junkio@cox.net> wrote:
+> Here is my understanding of various "temporary heads" left
+> directly underneath $GIT_DIR:
+>
+>     HEAD      : updated only after successful auto merge.
+>
+>     ORIG_HEAD : records the head value before resolve started.
+>                 if automerge fails, this is the same as HEAD,
+>                 but after successful automerge, this can be used
+>                 to see what the previous head was.  This is the
+>                 first parent of the resulting commit.
+>
+>     MERGE_HEAD: present if auto merge is unsuccessful and
+> 		records the other head being merged.
+>
+>     LAST_MERGE: present if merge is unsuccessful or impossible and
+> 		records the other head being merged.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+Is FETCH_HEAD going to be preserved by the git-fetch-script operation?
+It should be, unless, git-pull-script removes it or it is changed to
+do the fetch as well.
 
-I hear a lot of people mention $GIT_DIR/branches/ is confusing.
-Maybe we should rename it to $GIT_DIR/remote/ directory?
+In a repository managed with StGIT (i.e. updated with 'stg pull'), the
+base of the stack is always the same with FETCH_HEAD and StGIT uses
+this file. I also find it quite useful for:
 
- git-push-script |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 62 insertions(+), 1 deletions(-)
+  gitk ORIG_HEAD..FETCH_HEAD
 
-c781a84b5204fb294c9ccc79f8b3baceeb32c061
-diff --git a/git-push-script b/git-push-script
---- a/git-push-script
-+++ b/git-push-script
-@@ -1,3 +1,64 @@
- #!/bin/sh
- . git-sh-setup-script || die "Not a git archive"
--git-send-pack "$@"
-+
-+# Parse out parameters and then stop at remote, so that we can
-+# translate it using .git/branches information
-+has_all=
-+has_force=
-+has_exec=
-+remote=
-+
-+while case "$#" in 0) break ;; esac
-+do
-+	case "$1" in
-+	--all)
-+		has_all=--all ;;
-+	--force)
-+		has_force=--force ;;
-+	--exec=*)
-+		has_exec="$1" ;;
-+	-*)
-+		die "Unknown parameter $1" ;;
-+        *)
-+		remote="$1"
-+		shift
-+		set x "$@"
-+		shift
-+		break ;;
-+	esac
-+	shift
-+done
-+
-+case "$remote" in
-+*:* | /* | ../* | ./* )
-+	# An URL, host:/path/to/git, absolute and relative paths.
-+	;;
-+* )
-+	# Shorthand
-+	if expr "$remote" : '..*/..*' >/dev/null
-+	then
-+		# a short-hand followed by a trailing path
-+		shorthand=$(expr "$remote" : '\([^/]*\)')
-+		remainder=$(expr "$remote" : '[^/]*\(/.*\)$')
-+	else
-+		shorthand="$remote"
-+		remainder=
-+	fi
-+	remote=$(sed -e 's/#.*//' "$GIT_DIR/branches/$remote") &&
-+	expr "$remote" : '..*:' >/dev/null &&
-+	remote="$remote$remainder" ||
-+	die "Cannot parse remote $remote"
-+	;;
-+esac
-+
-+case "$remote" in
-+http://* | https://* | git://* | rsync://* )
-+	die "Cannot push to $remote" ;;
-+esac
-+
-+set x "$remote" "$@"; shift
-+test "$has_all" && set x "$has_all" "$@" && shift
-+test "$has_force" && set x "$has_force" "$@" && shift
-+test "$has_exec" && set x "$has_exec" "$@" && shift
-+
-+exec git-send-pack "$@"
+to only see the remote commits since the local StGIT patches are
+always seen as commits on top of the FETCH_HEAD. It's also useful for
+people using 'git rebase'.
+
+-- 
+Catalin
