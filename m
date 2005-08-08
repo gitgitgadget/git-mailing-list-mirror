@@ -1,71 +1,71 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH] Making CFLAGS compilant with GNU Coding Standards
-Date: Mon, 8 Aug 2005 19:10:36 -0400
-Message-ID: <20050808231036.GA22778@mythryan2.michonline.com>
-References: <1123306575.7588.17.camel@dv.roinet.com> <7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: A simple script to do the reverse of git-push
+Date: Tue, 9 Aug 2005 01:38:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508090135230.3695@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0508082318400.2911@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vslxk125f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 01:13:32 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 09 01:39:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2Gls-0006CP-TW
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 01:11:05 +0200
+	id 1E2HCo-0008SI-PI
+	for gcvg-git@gmane.org; Tue, 09 Aug 2005 01:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932345AbVHHXKl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 19:10:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbVHHXKl
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 19:10:41 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:59601 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S932345AbVHHXKk (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2005 19:10:40 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1E2GlR-0006I0-Gm; Mon, 08 Aug 2005 19:10:37 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1E2GlQ-0001j8-00; Mon, 08 Aug 2005 19:10:36 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1E2GlQ-0004YZ-DQ; Mon, 08 Aug 2005 19:10:36 -0400
+	id S932360AbVHHXis (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 19:38:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbVHHXis
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 19:38:48 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:40848 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932360AbVHHXir (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 19:38:47 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A7900E1313; Tue,  9 Aug 2005 01:38:46 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8BB58AC887; Tue,  9 Aug 2005 01:38:46 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 714A2A7D2B; Tue,  9 Aug 2005 01:38:46 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 49E7DE1313; Tue,  9 Aug 2005 01:38:46 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vslxk125f.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 08, 2005 at 01:53:24PM -0700, Junio C Hamano wrote:
-> I do want to revisit Makefile issues after 0.99.4, along with
-> the changes Pasky sent several days ago.  Please remind me about
-> them after Wednesday.
+Hi,
 
-We should discuss (or just do) a reorganization of how we lay out the
-source tree.
+On Mon, 8 Aug 2005, Junio C Hamano wrote:
 
-There's probably a few too many files in the top directory, from all the
-porcelain we've built on the plumbing. (heh)
+> We would need something like this.
+>
+> [...]
+>
+> +$(patsubst git-%,%.o,$(PROG)): $(LIB_H)
 
-I haven't really given a lot of thought to this yet, but I was thinking
-of something along these lines:
+A short
 
-Rename tools/ to mail-tools/, push git-send-email-script into that.
-Create a "porcelain" directory for things like git-bisect-script
-Create a "core" directory for things like "git-commit-script"
-Create a "src" (?) directory for *.[ch]
-Maybe move documentation into the same directory as the scripts they
-belong to.
+	for i in git-*; do \
+		c=$(echo $i|sed "s/git-\(.*\)/\1.c/g")
+		if [ -e $c ]; then \
+			if ! grep cache\\.h $c; then \
+				echo $c does not depend on cache.h \
+			fi \
+		fi \
+	done
 
-Then we can argue over where the leftover things fall.
+(actually tested) reveals that only get-tar-commit-id.c and stripspace.c 
+do not depend on cache.h or rev-cache.h. Thus, your patch is the most 
+elegant solution to my problem :-)
 
-If we can get the directory structure to make sense and start putting
-new things into the right spots, the exact location of where *current*
-things end up is probably not so important.
-
-I consider this post 1.0 material, personally.
-
--- 
-
-Ryan Anderson
-  sometimes Pug Majere
+Ciao,
+Dscho
