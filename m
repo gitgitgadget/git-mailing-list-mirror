@@ -1,102 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: A simple script to do the reverse of git-push
-Date: Mon, 8 Aug 2005 23:25:49 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508082318400.2911@wgmdd8.biozentrum.uni-wuerzburg.de>
+Subject: git-commit-script, was Re: "git revert" (Re: pci_update_resource()
+ getting called on sparc64)
+Date: Mon, 8 Aug 2005 23:30:59 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508082329170.2934@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <20050808.103304.55507512.davem@davemloft.net>
+ <Pine.LNX.4.58.0508081131540.3258@g5.osdl.org> <20050808160846.GA7710@kroah.com>
+ <20050808.123209.59463259.davem@davemloft.net> <20050808194249.GA6729@kroah.com>
+ <Pine.LNX.4.58.0508081249110.3258@g5.osdl.org> <Pine.LNX.4.58.0508081257190.3258@g5.osdl.org>
+ <7vd5oo40mq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508081357020.3258@g5.osdl.org>
+ <7voe882kds.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463794688-963876772-1123536349=:2911"
-X-From: git-owner@vger.kernel.org Mon Aug 08 23:27:02 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 23:31:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2F85-0003cP-HB
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 23:25:53 +0200
+	id 1E2FD9-0004Pv-QE
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 23:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932267AbVHHVZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 17:25:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932268AbVHHVZv
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 17:25:51 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:65155 "EHLO
+	id S932272AbVHHVbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 17:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbVHHVbD
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 17:31:03 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21380 "EHLO
 	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932267AbVHHVZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 17:25:50 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 5EBB2E32BA
-	for <git@vger.kernel.org>; Mon,  8 Aug 2005 23:25:49 +0200 (CEST)
+	id S932268AbVHHVbB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 17:31:01 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 5073FE32BA; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
 Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 4274CB34F9
-	for <git@vger.kernel.org>; Mon,  8 Aug 2005 23:25:49 +0200 (CEST)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 360099CC24; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
 Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP id 20FA9AC856
-	for <git@vger.kernel.org>; Mon,  8 Aug 2005 23:25:49 +0200 (CEST)
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 217B69C966; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
 Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 11278E32BA
-	for <git@vger.kernel.org>; Mon,  8 Aug 2005 23:25:49 +0200 (CEST)
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D3F01E32BA; Mon,  8 Aug 2005 23:30:59 +0200 (CEST)
 X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe882kds.fsf@assigned-by-dhcp.cox.net>
 X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
----1463794688-963876772-1123536349=:2911
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+On Mon, 8 Aug 2005, Junio C Hamano wrote:
 
-Hi list,
+>  * git commit does not take commit message from stdin.  I think
+>    we should do something like this:
+>
+> [...]
 
-I mentioned in another mail that I needed the opposite of git-push, namely 
-getting all heads, and if they are strict parents of the local refs, just 
-update them.
+And could we rename the *-m* flag at the same time? Because I often catch 
+myself typing
 
-Well, Junio pointed out that it's easy using the available tools, and he 
-was right. The result is attached (and tested...).
-
-This script makes it easy to work with a central repository, multiple 
-heads and users, in a CVS style: to start your day, you call the attached 
-script, and after you have committed something, you can do a push on the 
-repository. Sometimes, the push fails, then you have to pull that branch 
-in order to merge it before trying a push again.
-
-BTW, if you are lazy, like me, you just pull from Junio once in a while 
-and do a "make test". Turns out there is a missing dependency though:
-
-peek-remote.o: cache.h
-
-which in my case lead to a git-peek-remote program which was unable to 
-peek any ref.
+	git commit -m "Some_commit_message"
 
 Ciao,
 Dscho
-
----1463794688-963876772-1123536349=:2911
-Content-Type: TEXT/PLAIN; charset=US-ASCII; name=git-fetch-all-heads-script
-Content-Transfer-Encoding: BASE64
-Content-ID: <Pine.LNX.4.63.0508082325490.2911@wgmdd8.biozentrum.uni-wuerzburg.de>
-Content-Description: 
-Content-Disposition: attachment; filename=git-fetch-all-heads-script
-
-IyEvYmluL3NoDQoNCi4gZ2l0LXNoLXNldHVwLXNjcmlwdCB8fCBkaWUgIk5v
-dCBhIGdpdCBhcmNoaXZlIg0KDQouIGdpdC1wYXJzZS1yZW1vdGUgIiRAIg0K
-cmVwbz0iJF9yZW1vdGVfcmVwbyINCg0KZ2l0LWxzLXJlbW90ZS1zY3JpcHQg
-LS1oZWFkcyAiJHJlcG8iIHwgd2hpbGUgcmVhZCBzaGExIHJlZm5hbWU7IGRv
-DQoJc2hvcnRuYW1lPSQoYmFzZW5hbWUgJHJlZm5hbWUpDQoJaWYgWyAtZSAk
-R0lUX0RJUi8kcmVmbmFtZSBdOyB0aGVuDQoJCWlmIFsgJHNoYTEgPSAkKGNh
-dCAkR0lUX0RJUi8kcmVmbmFtZSkgXTsgdGhlbg0KCQkJZWNobyAkc2hvcnRu
-YW1lIHVwIHRvIGRhdGUuIDE+JjINCgkJCWNvbnRpbnVlDQoJCWZpDQoJZmkN
-Cg0KCWdpdC1jYXQtZmlsZSBjb21taXQgJHNoYTEgPi9kZXYvbnVsbCAyPiYx
-IHx8DQoJZ2l0LWZldGNoLXNjcmlwdCAkcmVwbyAkc2hvcnRuYW1lDQoNCglp
-ZiBbICEgLWUgJEdJVF9ESVIvJHJlZm5hbWUgXTsgdGhlbg0KCQllY2hvIEdv
-dCBuZXcgaGVhZCAkc2hvcnRuYW1lIDE+JjINCgkJZWNobyAkc2hhMSA+ICRH
-SVRfRElSLyRyZWZuYW1lDQoJZWxzZQ0KCQlvcmlnc2hhMT0kKGNhdCAkR0lU
-X0RJUi8kcmVmbmFtZSkNCgkJaWYgWyAteiAiJChnaXQtcmV2LWxpc3QgJG9y
-aWdzaGExIF4kc2hhMSkiIF07IHRoZW4NCgkJCWVjaG8gVXBkYXRlZCBoZWFk
-ICRzaG9ydG5hbWUgMT4mMg0KCQkJZWNobyAkc2hhMSA+ICRHSVRfRElSLyRy
-ZWZuYW1lDQoJCWVsc2UNCgkJCXNhdmVyZWY9JEdJVF9ESVIvRkVUQ0hfSEVB
-RF8kc2hvcnRuYW1lDQoJCQllY2hvIEVycm9yOiAkc2hvcnRuYW1lIG5vdCBh
-IGNoaWxkIG9mIHJlbW90ZSBoZWFkIDE+JjINCgkJCWVjaG8gIglTYXZlZCBy
-ZW1vdGUgaGVhZCB0byAkc2F2ZXJlZiIgMT4mMg0KCQkJZWNobyAkc2hhMSA+
-ICRzYXZlcmVmDQoJCWZpDQoJZmkNCmRvbmUNCg0K
-
----1463794688-963876772-1123536349=:2911--
