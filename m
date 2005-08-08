@@ -1,65 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: git-commit-script, was Re: "git revert" (Re: pci_update_resource()
- getting called on sparc64)
-Date: Mon, 8 Aug 2005 23:30:59 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508082329170.2934@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-commit-script, was Re: "git revert" (Re: pci_update_resource() getting called on sparc64)
+Date: Mon, 08 Aug 2005 14:47:08 -0700
+Message-ID: <7vhde02jab.fsf@assigned-by-dhcp.cox.net>
 References: <20050808.103304.55507512.davem@davemloft.net>
- <Pine.LNX.4.58.0508081131540.3258@g5.osdl.org> <20050808160846.GA7710@kroah.com>
- <20050808.123209.59463259.davem@davemloft.net> <20050808194249.GA6729@kroah.com>
- <Pine.LNX.4.58.0508081249110.3258@g5.osdl.org> <Pine.LNX.4.58.0508081257190.3258@g5.osdl.org>
- <7vd5oo40mq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508081357020.3258@g5.osdl.org>
- <7voe882kds.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508081131540.3258@g5.osdl.org>
+	<20050808160846.GA7710@kroah.com>
+	<20050808.123209.59463259.davem@davemloft.net>
+	<20050808194249.GA6729@kroah.com>
+	<Pine.LNX.4.58.0508081249110.3258@g5.osdl.org>
+	<Pine.LNX.4.58.0508081257190.3258@g5.osdl.org>
+	<7vd5oo40mq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508081357020.3258@g5.osdl.org>
+	<7voe882kds.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0508082329170.2934@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 08 23:31:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 23:48:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2FD9-0004Pv-QE
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 23:31:08 +0200
+	id 1E2FSk-0006Up-AE
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 23:47:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbVHHVbE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 17:31:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932270AbVHHVbD
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 17:31:03 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21380 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932268AbVHHVbB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 17:31:01 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5073FE32BA; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 360099CC24; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 217B69C966; Mon,  8 Aug 2005 23:31:00 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D3F01E32BA; Mon,  8 Aug 2005 23:30:59 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe882kds.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932276AbVHHVrL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 17:47:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932277AbVHHVrL
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 17:47:11 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:14071 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932276AbVHHVrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 17:47:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050808214709.RPRZ1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 Aug 2005 17:47:09 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508082329170.2934@wgmdd8.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 8 Aug 2005 23:30:59 +0200
+	(CEST)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 8 Aug 2005, Junio C Hamano wrote:
-
->  * git commit does not take commit message from stdin.  I think
->    we should do something like this:
+> And could we rename the *-m* flag at the same time? Because I often catch 
+> myself typing
 >
-> [...]
+> 	git commit -m "Some_commit_message"
 
-And could we rename the *-m* flag at the same time? Because I often catch 
-myself typing
-
-	git commit -m "Some_commit_message"
-
-Ciao,
-Dscho
+Sure, what's the alternative spelling for the current -m,
+though?  Would -c be OK for commit?
