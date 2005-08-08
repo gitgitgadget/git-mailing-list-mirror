@@ -1,74 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: "git revert" (Re: pci_update_resource() getting called on sparc64)
-Date: Mon, 8 Aug 2005 12:57:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508081257190.3258@g5.osdl.org>
-References: <20050808.103304.55507512.davem@davemloft.net>
- <Pine.LNX.4.58.0508081131540.3258@g5.osdl.org> <20050808160846.GA7710@kroah.com>
- <20050808.123209.59463259.davem@davemloft.net> <20050808194249.GA6729@kroah.com>
- <Pine.LNX.4.58.0508081249110.3258@g5.osdl.org>
+From: Holger Eitzenberger <holger@my-eitzenberger.de>
+Subject: [PATCH 1/1] git_mkstemp() fix
+Date: Mon, 08 Aug 2005 22:33:08 +0200
+Message-ID: <42F7C184.1000902@my-eitzenberger.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Mon Aug 08 21:58:24 2005
+Content-Type: multipart/mixed;
+ boundary="------------000304090709030105030800"
+X-From: git-owner@vger.kernel.org Mon Aug 08 22:34:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2Dkx-0001NB-Iq
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 21:57:55 +0200
+	id 1E2EJ7-0005HT-4O
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 22:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932249AbVHHT5w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 15:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932252AbVHHT5w
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 15:57:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:26802 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932251AbVHHT5v (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2005 15:57:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j78JvjjA004871
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <git@vger.kernel.org>; Mon, 8 Aug 2005 12:57:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j78JvhGt022498
-	for <git@vger.kernel.org>; Mon, 8 Aug 2005 12:57:44 -0700
-To: Git Mailing List <git@vger.kernel.org>
-In-Reply-To: <Pine.LNX.4.58.0508081249110.3258@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.40__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932127AbVHHUdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 16:33:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbVHHUdJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 16:33:09 -0400
+Received: from moutng.kundenserver.de ([212.227.126.183]:44494 "EHLO
+	moutng.kundenserver.de") by vger.kernel.org with ESMTP
+	id S932127AbVHHUdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 16:33:08 -0400
+Received: from p54A39098.dip0.t-ipconnect.de [84.163.144.152] (helo=[192.168.11.11])
+	by mrelayeu.kundenserver.de with ESMTP (Nemesis),
+	id 0ML21M-1E2EIz0sLV-0000Yy; Mon, 08 Aug 2005 22:33:05 +0200
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050715)
+X-Accept-Language: en-us, en
+To: git <git@vger.kernel.org>
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8548cd0e00552bb75411ff34ad15700a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+This is a multi-part message in MIME format.
+--------------000304090709030105030800
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Comments?
+Hi,
 
-		Linus
+attached is a bugfix for the newly introduced git_mkstemp() function.
 
-On Mon, 8 Aug 2005, Linus Torvalds wrote:
-> 
-> 
-> On Mon, 8 Aug 2005, Greg KH wrote:
-> > 
-> > Hm, how do you revert a git patch?
-> 
-> Something like this?
-> 
-> 	#!/bin/sh
-> 	. git-sh-setup-script || die "Not a git archive"
-> 	rev=$(git-rev-parse --verify --revs-only "$@") || exit
-> 	git-diff-tree -R -p $rev | git-apply --index &&
-> 		echo "Revert $rev" | git commit
-> 
-> Just name it "git-revert-script" and it might do what you want to do.
-> 
-> It may not have the nicest error messages: if you try to revert a merge
-> (which won't have a diff), git-apply will say something like
-> 
-> 	fatal: No changes
-> 
-> which isn't exactly being helpful. And the revert message could be made 
-> more interesting (like putting the first line of the description of what 
-> we reverted into the message instead of just the revision number).
-> 
-> 		Linus
-> 
+/holger
+
+--------------000304090709030105030800
+Content-Type: text/x-patch;
+ name="git_mkstemp_fix.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="git_mkstemp_fix.patch"
+
+git_mkstemp() bugfix
+
+---
+commit 8cccfa75e0095afd2dd4ec354f2786068c9e7a2f
+tree 354e00b03039e0c42284442c9764dcd3bf8f608f
+parent d59a6043a8a7aed97c684fb4f14fe5221df1fcaf
+author Holger Eitzenberger <holger@my-eitzenberger.de> Mon, 08 Aug 2005 23:29:28 +0200
+committer Holger Eitzenberger <holger@jonathan.my-eitzenberger.de> Mon, 08 Aug 2005 23:29:28 +0200
+
+ path.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/path.c b/path.c
+--- a/path.c
++++ b/path.c
+@@ -68,8 +68,13 @@ int git_mkstemp(char *path, size_t len, 
+ 	if ((env = getenv("TMPDIR")) == NULL) {
+ 		strcpy(pch, "/tmp/");
+ 		len -= 5;
+-	} else
+-		len -= snprintf(pch, len, "%s/", env);
++		pch += 5;
++	} else {
++		size_t n = snprintf(pch, len, "%s/", env);
++
++		len -= n;
++		pch += n;
++	}
+ 
+ 	safe_strncpy(pch, template, len);
+ 
+
+--------------000304090709030105030800--
