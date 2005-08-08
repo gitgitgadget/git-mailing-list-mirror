@@ -1,211 +1,117 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Teach format-patch, rebase and cherry a..b format
-Date: Sun, 07 Aug 2005 23:09:52 -0700
-Message-ID: <7vpsspgdsf.fsf@assigned-by-dhcp.cox.net>
-References: <20050807205342.8497.qmail@web26304.mail.ukl.yahoo.com>
+Subject: [PATCH] Teach git push .git/branches shorthand
+Date: Sun, 07 Aug 2005 23:12:26 -0700
+Message-ID: <7viryhgdo5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marco Costalba <mcostalba@yahoo.it>
-X-From: git-owner@vger.kernel.org Mon Aug 08 08:11:47 2005
+X-From: git-owner@vger.kernel.org Mon Aug 08 08:13:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E20qj-0005EV-T0
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 08:11:02 +0200
+	id 1E20sB-0005JT-N4
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 08:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750734AbVHHGJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 02:09:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbVHHGJz
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 02:09:55 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:55192 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1750734AbVHHGJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 02:09:54 -0400
+	id S1750735AbVHHGM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 02:12:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbVHHGM3
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 02:12:29 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:14507 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750735AbVHHGM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 02:12:29 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
+          by fed1rmmtao03.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050808060955.YFHK7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 8 Aug 2005 02:09:55 -0400
+          id <20050808061228.WWAA17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 Aug 2005 02:12:28 -0400
 To: git@vger.kernel.org
-In-Reply-To: <20050807205342.8497.qmail@web26304.mail.ukl.yahoo.com> (Marco
-	Costalba's message of "Sun, 7 Aug 2005 13:53:42 -0700 (PDT)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Although these commands take only begin and end, not necessarily
-generic SHA1 expressions rev-parse supports, supporting a..b
-notation is good for consistency.  This commit adds such without
-breaking backward compatibility.
+Although it is uncertain if we would keep .git/branches for
+long, the shorthand stored there can be used for pushing if it
+is host:path/to/git format, so let's make use of it.  This does
+not use git-parse-remote because that script will be rewritten
+quite a bit for updated pulling.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-Unlike the outline I suggested in an earlier message, this adds
-support for only a single parameter "a..b" format, while
-retaining the original code which takes two parameters.  Meant
-to be fully backward compatible not to break qgit and friends.
+I hear a lot of people mention $GIT_DIR/branches/ is confusing.
+Maybe we should rename it to $GIT_DIR/remote/ directory?
 
- git-cherry              |   25 +++++++++++++++++--------
- git-format-patch-script |   21 +++++++++++++++------
- git-rebase-script       |   23 +++++++++++++++--------
- 3 files changed, 47 insertions(+), 22 deletions(-)
+ git-push-script |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 62 insertions(+), 1 deletions(-)
 
-c67e91fad243565423b08a55f63947bd3e36c5a3
-diff --git a/git-cherry b/git-cherry
---- a/git-cherry
-+++ b/git-cherry
-@@ -3,6 +3,8 @@
- # Copyright (c) 2005 Junio C Hamano.
- #
- 
-+. git-sh-setup-script || die "Not a git archive."
+c781a84b5204fb294c9ccc79f8b3baceeb32c061
+diff --git a/git-push-script b/git-push-script
+--- a/git-push-script
++++ b/git-push-script
+@@ -1,3 +1,64 @@
+ #!/bin/sh
+ . git-sh-setup-script || die "Not a git archive"
+-git-send-pack "$@"
 +
- usage="usage: $0 "'<upstream> [<head>]
- 
-              __*__*__*__*__> <upstream>
-@@ -18,8 +20,8 @@ upstream, it is shown on the standard ou
- The output is intended to be used as:
- 
-     OLD_HEAD=$(git-rev-parse HEAD)
--    git-rev-parse linus >${GIT_DIR-.}/HEAD
--    git-cherry linus OLD_HEAD |
-+    git-rev-parse upstream >${GIT_DIR-.}/HEAD
-+    git-cherry upstream $OLD_HEAD |
-     while read commit
-     do
-         GIT_EXTERNAL_DIFF=git-apply-patch-script git-diff-tree -p "$commit" &&
-@@ -27,20 +29,27 @@ The output is intended to be used as:
-     done
- '
- 
-+case "$#,$1" in
-+1,*..*)
-+    upstream=$(expr "$1" : '\(.*\)\.\.') ours=$(expr "$1" : '.*\.\.\(.*\)$')
-+    set x "$upstream" "$ours"
-+    shift ;;
++# Parse out parameters and then stop at remote, so that we can
++# translate it using .git/branches information
++has_all=
++has_force=
++has_exec=
++remote=
++
++while case "$#" in 0) break ;; esac
++do
++	case "$1" in
++	--all)
++		has_all=--all ;;
++	--force)
++		has_force=--force ;;
++	--exec=*)
++		has_exec="$1" ;;
++	-*)
++		die "Unknown parameter $1" ;;
++        *)
++		remote="$1"
++		shift
++		set x "$@"
++		shift
++		break ;;
++	esac
++	shift
++done
++
++case "$remote" in
++*:* | /* | ../* | ./* )
++	# An URL, host:/path/to/git, absolute and relative paths.
++	;;
++* )
++	# Shorthand
++	if expr "$remote" : '..*/..*' >/dev/null
++	then
++		# a short-hand followed by a trailing path
++		shorthand=$(expr "$remote" : '\([^/]*\)')
++		remainder=$(expr "$remote" : '[^/]*\(/.*\)$')
++	else
++		shorthand="$remote"
++		remainder=
++	fi
++	remote=$(sed -e 's/#.*//' "$GIT_DIR/branches/$remote") &&
++	expr "$remote" : '..*:' >/dev/null &&
++	remote="$remote$remainder" ||
++	die "Cannot parse remote $remote"
++	;;
 +esac
 +
- case "$#" in
--1) linus=`git-rev-parse --verify "$1"` &&
--   junio=`git-rev-parse --verify HEAD` || exit
-+1) upstream=`git-rev-parse --verify "$1"` &&
-+   ours=`git-rev-parse --verify HEAD` || exit
-    ;;
--2) linus=`git-rev-parse --verify "$1"` &&
--   junio=`git-rev-parse --verify "$2"` || exit
-+2) upstream=`git-rev-parse --verify "$1"` &&
-+   ours=`git-rev-parse --verify "$2"` || exit
-    ;;
- *) echo >&2 "$usage"; exit 1 ;;
- esac
- 
- # Note that these list commits in reverse order;
- # not that the order in inup matters...
--inup=`git-rev-list ^$junio $linus` &&
--ours=`git-rev-list $junio ^$linus` || exit
-+inup=`git-rev-list ^$ours $upstream` &&
-+ours=`git-rev-list $ours ^$upstream` || exit
- 
- tmp=.cherry-tmp$$
- patch=$tmp-patch
-diff --git a/git-format-patch-script b/git-format-patch-script
---- a/git-format-patch-script
-+++ b/git-format-patch-script
-@@ -3,6 +3,8 @@
- # Copyright (c) 2005 Junio C Hamano
- #
- 
-+. git-sh-setup-script || die "Not a git archive."
-+
- usage () {
-     echo >&2 "usage: $0"' [-n] [-o dir] [--mbox] [--check] [-<diff options>...] upstream [ our-head ]
- 
-@@ -60,13 +62,20 @@ do
-     shift
- done
- 
-+revpair=
- case "$#" in
--2)    linus="$1" junio="$2" ;;
--1)    linus="$1" junio=HEAD ;;
--*)    usage ;;
-+2)
-+    revpair="$1..$2" ;;
-+1)
-+    case "$1" in
-+    *..*)
-+    	revpair="$1";;
-+    *)
-+	revpair="$1..HEAD";;
-+    esac ;;
-+*)
-+    usage ;;
- esac
--junio=`git-rev-parse --verify "$junio"`
--linus=`git-rev-parse --verify "$linus"`
- 
- me=`git-var GIT_AUTHOR_IDENT | sed -e 's/>.*/>/'`
- 
-@@ -108,7 +117,7 @@ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- stripCommitHead='/^'"$_x40"' (from '"$_x40"')$/d'
- 
--git-rev-list --merge-order "$junio" "^$linus" >$series
-+git-rev-list --merge-order $(git-rev-parse --revs-only "$revpair") >$series
- total=`wc -l <$series | tr -dc "[0-9]"`
- i=$total
- while read commit
-diff --git a/git-rebase-script b/git-rebase-script
---- a/git-rebase-script
-+++ b/git-rebase-script
-@@ -3,25 +3,32 @@
- # Copyright (c) 2005 Junio C Hamano.
- #
- 
-+. git-sh-setup-script || die "Not a git archive."
-+
- usage="usage: $0 "'<upstream> [<head>]
- 
- Uses output from git-cherry to rebase local commits to the new head of
- upstream tree.'
- 
--: ${GIT_DIR=.git}
-+case "$#,$1" in
-+1,*..*)
-+    upstream=$(expr "$1" : '\(.*\)\.\.') ours=$(expr "$1" : '.*\.\.\(.*\)$')
-+    set x "$upstream" "$ours"
-+    shift ;;
++case "$remote" in
++http://* | https://* | git://* | rsync://* )
++	die "Cannot push to $remote" ;;
 +esac
- 
- case "$#" in
--1) linus=`git-rev-parse --verify "$1"` &&
--   junio=`git-rev-parse --verify HEAD` || exit
-+1) upstream=`git-rev-parse --verify "$1"` &&
-+   ours=`git-rev-parse --verify HEAD` || exit
-    ;;
--2) linus=`git-rev-parse --verify "$1"` &&
--   junio=`git-rev-parse --verify "$2"` || exit
-+2) upstream=`git-rev-parse --verify "$1"` &&
-+   ours=`git-rev-parse --verify "$2"` || exit
-    ;;
- *) echo >&2 "$usage"; exit 1 ;;
- esac
- 
--git-read-tree -m -u $junio $linus &&
--echo "$linus" >"$GIT_DIR/HEAD" || exit
-+git-read-tree -m -u $ours $upstream &&
-+echo "$upstream" >"$GIT_DIR/HEAD" || exit
- 
- tmp=.rebase-tmp$$
- fail=$tmp-fail
-@@ -29,7 +36,7 @@ trap "rm -rf $tmp-*" 0 1 2 3 15
- 
- >$fail
- 
--git-cherry $linus $junio |
-+git-cherry $upstream $ours |
- while read sign commit
- do
- 	case "$sign" in
++
++set x "$remote" "$@"; shift
++test "$has_all" && set x "$has_all" "$@" && shift
++test "$has_force" && set x "$has_force" "$@" && shift
++test "$has_exec" && set x "$has_exec" "$@" && shift
++
++exec git-send-pack "$@"
