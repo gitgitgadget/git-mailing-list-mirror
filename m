@@ -1,50 +1,75 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: gitk "parent information" in commit window
-Date: Sun, 07 Aug 2005 20:03:05 -0400
-Message-ID: <42F6A139.1060209@gmail.com>
-References: <Pine.LNX.4.58.0508071351150.3258@g5.osdl.org> <17142.37044.108962.189983@cargo.ozlabs.ibm.com>
-Reply-To: gitzilla@gmail.com
+Date: Sun, 07 Aug 2005 17:29:20 -0700
+Message-ID: <7vfytlnue7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.58.0508071351150.3258@g5.osdl.org>
+	<17142.37044.108962.189983@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 08 02:03:29 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Aug 08 02:29:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1v6u-0000XI-Lr
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 02:03:21 +0200
+	id 1E1vWJ-00023o-Ij
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 02:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752789AbVHHADR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 7 Aug 2005 20:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbVHHADR
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 20:03:17 -0400
-Received: from wproxy.gmail.com ([64.233.184.194]:4081 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1752789AbVHHADQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Aug 2005 20:03:16 -0400
-Received: by wproxy.gmail.com with SMTP id i17so441803wra
-        for <git@vger.kernel.org>; Sun, 07 Aug 2005 17:03:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=Z7ihENMQbkXyJkTMeFnwLa1r23vwgmwazkooEYoa4H0MfEJ/7djjvb+qacEgt1bmDCuBAFXSbp81ECIoFXRl6h5rLCm21nJndo4iNz6wBSSHO1E5/Bg4m9WlvwYOpUuprEf1+ECnGOkPyWc/kEm8vBlMzU3gOSSrJ3F/up/PM7Q=
-Received: by 10.54.46.30 with SMTP id t30mr4509187wrt;
-        Sun, 07 Aug 2005 17:03:15 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id 6sm4388790wrl.2005.08.07.17.03.14;
-        Sun, 07 Aug 2005 17:03:15 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17142.37044.108962.189983@cargo.ozlabs.ibm.com>
+	id S1753147AbVHHA3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 7 Aug 2005 20:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbVHHA3W
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Aug 2005 20:29:22 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:31122 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1753147AbVHHA3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Aug 2005 20:29:22 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050808002919.VTMV19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 7 Aug 2005 20:29:19 -0400
+To: git@vger.kernel.org
+In-Reply-To: <17142.37044.108962.189983@cargo.ozlabs.ibm.com> (Paul
+	Mackerras's message of "Mon, 8 Aug 2005 08:52:36 +1000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Paul Mackerras wrote:
-...
+Paul Mackerras <paulus@samba.org> writes:
+
+> Linus Torvalds writes:
+>
+>> This adds a useful "Parent:" line to the git commit information window.
+>
+> Cool!  Applied and pushed out.
+
+Thanks.  Merged and pushed out.
+
 > I have been thinking about adding dialog windows to allow the user to
 > select which repository and which range of commits they want to look at.
 > Do you think that would be useful for you?
 
-Yes!
+"Which repository to look at" would be like restarting if you
+need to lose history information, in which case it would not be
+so useful at least for me (an extra command line option to limit
+the range with specifying GIT_DIR environment variable would
+work equally well).  If you can do that without losing history
+when the new repository to look at is the same as the old one,
+or similar to the old one, then that would be useful.
+
+After starting up, without losing history information, if I can
+tell it to re-read the refs, because I made some changes to the
+repository while gitk was not looking, that would be very
+useful.  But I hope your "switching repository" logic would do
+exactly that when I tell it to switch to the same repository.
+
+If there was an option, either runtime configurable or command
+line, to cause gitk slurp not just refs/heads and refs/tags but
+everything under refs/* recursively, that would help visualizing
+the bisect status.  bisect creates bunch of commit object names
+in refs/bisect.
+
+If you can pop-up a transient window that shows the tag object
+comments when I hover over a tag icon for 2 seconds, and remove
+that transient window when stepping outside, that would be a
+useful addition.  I do not currently see any way to inspect the
+tag itself, not the commit that is pointed at by the tag.
