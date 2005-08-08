@@ -1,84 +1,89 @@
-From: Holger Eitzenberger <holger@my-eitzenberger.de>
-Subject: [PATCH 1/1] git_mkstemp() fix
-Date: Mon, 08 Aug 2005 22:33:08 +0200
-Message-ID: <42F7C184.1000902@my-eitzenberger.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "git revert" (Re: pci_update_resource() getting called on sparc64)
+Date: Mon, 08 Aug 2005 13:47:09 -0700
+Message-ID: <7vd5oo40mq.fsf@assigned-by-dhcp.cox.net>
+References: <20050808.103304.55507512.davem@davemloft.net>
+	<Pine.LNX.4.58.0508081131540.3258@g5.osdl.org>
+	<20050808160846.GA7710@kroah.com>
+	<20050808.123209.59463259.davem@davemloft.net>
+	<20050808194249.GA6729@kroah.com>
+	<Pine.LNX.4.58.0508081249110.3258@g5.osdl.org>
+	<Pine.LNX.4.58.0508081257190.3258@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------000304090709030105030800"
-X-From: git-owner@vger.kernel.org Mon Aug 08 22:34:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 22:47:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2EJ7-0005HT-4O
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 22:33:14 +0200
+	id 1E2EWi-00072W-BK
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 22:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932127AbVHHUdJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 16:33:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932164AbVHHUdJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 16:33:09 -0400
-Received: from moutng.kundenserver.de ([212.227.126.183]:44494 "EHLO
-	moutng.kundenserver.de") by vger.kernel.org with ESMTP
-	id S932127AbVHHUdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 16:33:08 -0400
-Received: from p54A39098.dip0.t-ipconnect.de [84.163.144.152] (helo=[192.168.11.11])
-	by mrelayeu.kundenserver.de with ESMTP (Nemesis),
-	id 0ML21M-1E2EIz0sLV-0000Yy; Mon, 08 Aug 2005 22:33:05 +0200
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050715)
-X-Accept-Language: en-us, en
-To: git <git@vger.kernel.org>
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:8548cd0e00552bb75411ff34ad15700a
+	id S932217AbVHHUrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 16:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbVHHUrN
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 16:47:13 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:20625 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932217AbVHHUrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 16:47:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050808204710.BXMX15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 Aug 2005 16:47:10 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508081257190.3258@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 8 Aug 2005 12:57:44 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------000304090709030105030800
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Hi,
+>> It may not have the nicest error messages: if you try to revert a merge
+>> (which won't have a diff), git-apply will say something like
+>> 
+>> 	fatal: No changes
+>> 
+>> which isn't exactly being helpful. And the revert message could be made 
+>> more interesting (like putting the first line of the description of what 
+>> we reverted into the message instead of just the revision number).
 
-attached is a bugfix for the newly introduced git_mkstemp() function.
+> Comments?
+>
+> 		Linus
 
-/holger
+I like the general idea, and if we had a commit pretty format
+"oneline", then something like this would make it look nicer.
 
---------------000304090709030105030800
-Content-Type: text/x-patch;
- name="git_mkstemp_fix.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git_mkstemp_fix.patch"
+Totally untested.  I acquired your habit of coding in my e-mail
+client ;-).
 
-git_mkstemp() bugfix
+        #!/bin/sh
+        . git-sh-setup-script || die "Not a git archive"
 
----
-commit 8cccfa75e0095afd2dd4ec354f2786068c9e7a2f
-tree 354e00b03039e0c42284442c9764dcd3bf8f608f
-parent d59a6043a8a7aed97c684fb4f14fe5221df1fcaf
-author Holger Eitzenberger <holger@my-eitzenberger.de> Mon, 08 Aug 2005 23:29:28 +0200
-committer Holger Eitzenberger <holger@jonathan.my-eitzenberger.de> Mon, 08 Aug 2005 23:29:28 +0200
-
- path.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/path.c b/path.c
---- a/path.c
-+++ b/path.c
-@@ -68,8 +68,13 @@ int git_mkstemp(char *path, size_t len, 
- 	if ((env = getenv("TMPDIR")) == NULL) {
- 		strcpy(pch, "/tmp/");
- 		len -= 5;
--	} else
--		len -= snprintf(pch, len, "%s/", env);
-+		pch += 5;
-+	} else {
-+		size_t n = snprintf(pch, len, "%s/", env);
-+
-+		len -= n;
-+		pch += n;
-+	}
- 
- 	safe_strncpy(pch, template, len);
- 
-
---------------000304090709030105030800--
+        rev=$(git-rev-parse --verify --revs-only "$@") &&
+        commit=$(git-rev-parse --verify --revs-only "$commit^0") || exit
+        if git-diff-tree -R -p $commit | git-apply --index &&
+           msg=$(git-rev-list --pretty=oneline --max-count=1 $commit)
+        then
+                {
+                        echo "Revert $msg"
+                        echo
+                        echo "This reverts $commit commit."
+                        test "$rev" = "$commit" ||
+                        echo "(original 'git revert' arguments: $@)"
+                } | git commit
+        else
+                # Now why did it fail?
+                parents=`git-cat-file commit "$commit" 2>/dev/null |
+                        sed -ne '/^$/q;/^parent /p' |
+                        wc -l`
+                case $parents in
+                0) die "Cannot revert the root commit nor non commit-ish" ;;
+                1) die "The patch does not apply" ;;
+                *) die "Cannot revert a merge commit" ;;
+                esac
+        fi
