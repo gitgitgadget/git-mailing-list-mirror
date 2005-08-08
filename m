@@ -1,61 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach git push .git/branches shorthand
-Date: Mon, 8 Aug 2005 11:55:46 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508081154190.32406@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7viryhgdo5.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508081106580.26210@wgmdd8.biozentrum.uni-wuerzburg.de>
- <200508081141.23242.Josef.Weidendorfer@gmx.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 08 11:56:18 2005
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [PATCH] Make curl fail on server error
+Date: Mon, 08 Aug 2005 10:53:23 +0100
+Message-ID: <20050808095323.31602.76855.stgit@localhost.localdomain>
+X-From: git-owner@vger.kernel.org Mon Aug 08 11:56:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E24MJ-0007YK-6l
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 11:55:51 +0200
+	id 1E24MI-0007YK-2P
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 11:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750793AbVHHJzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 05:55:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750794AbVHHJzs
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 05:55:48 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36061 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750793AbVHHJzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Aug 2005 05:55:47 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C3A13E2FA8; Mon,  8 Aug 2005 11:55:46 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A495B9C7DC; Mon,  8 Aug 2005 11:55:46 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 926849C7D5; Mon,  8 Aug 2005 11:55:46 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 833BFE2BBF; Mon,  8 Aug 2005 11:55:46 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200508081141.23242.Josef.Weidendorfer@gmx.de>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750792AbVHHJyb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 05:54:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbVHHJyb
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 05:54:31 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:11482 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S1750792AbVHHJya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 05:54:30 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j789reOU010603
+	for <git@vger.kernel.org>; Mon, 8 Aug 2005 10:53:41 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA20195
+	for <git@vger.kernel.org>; Mon, 8 Aug 2005 10:54:29 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 8 Aug 2005 10:53:54 +0100
+To: git@vger.kernel.org
+X-OriginalArrivalTime: 08 Aug 2005 09:53:54.0330 (UTC) FILETIME=[1650FFA0:01C59BFF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Some http servers return an HTML error page and git reads it as normal
+data. Adding -f option makes curl fail silently.
 
-On Mon, 8 Aug 2005, Josef Weidendorfer wrote:
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
+---
 
-> IMHO, $GIT_DIR/branches/ is really confusing.
-> Hmmm... in $GIT_DIR/branches/ there are named references to remote (named) 
-> references.
+ git-clone-dumb-http  |    2 +-
+ git-fetch-script     |    2 +-
+ git-ls-remote-script |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Not necessarily. The following is perfectly valid:
-
-echo "rsync://rsync.kernel.org/pub/scm/git/git.git > .git/branches/x
-
-It does not contain a named reference, just a host.
-
-Ciao,
-Dscho
+diff --git a/git-clone-dumb-http b/git-clone-dumb-http
+--- a/git-clone-dumb-http
++++ b/git-clone-dumb-http
+@@ -14,7 +14,7 @@ if [ -n "$GIT_SSL_NO_VERIFY" ]; then
+ fi
+ http_fetch () {
+ 	# $1 = Remote, $2 = Local
+-	curl -ns $curl_extra_args "$1" >"$2"
++	curl -nsf $curl_extra_args "$1" >"$2"
+ }
+ 
+ cd "$D" && 
+diff --git a/git-fetch-script b/git-fetch-script
+--- a/git-fetch-script
++++ b/git-fetch-script
+@@ -15,7 +15,7 @@ http://* | https://*)
+         fi
+ 	_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]' &&
+ 	_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40" &&
+-	head=$(curl -ns $curl_extra_args "$merge_repo/$merge_head") &&
++	head=$(curl -nsf $curl_extra_args "$merge_repo/$merge_head") &&
+ 	expr "$head" : "$_x40\$" >/dev/null || {
+ 		echo >&2 "Failed to fetch $merge_head from $merge_repo"
+ 	        exit 1
+diff --git a/git-ls-remote-script b/git-ls-remote-script
+--- a/git-ls-remote-script
++++ b/git-ls-remote-script
+@@ -46,7 +46,7 @@ http://* | https://* )
+         if [ -n "$GIT_SSL_NO_VERIFY" ]; then
+             curl_extra_args="-k"
+         fi
+-	curl -ns $curl_extra_args "$peek_repo/info/refs" || exit 1
++	curl -nsf $curl_extra_args "$peek_repo/info/refs" || exit 1
+ 	;;
+ 
+ rsync://* )
