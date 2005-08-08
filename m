@@ -1,99 +1,72 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: GIT 0.99.4 (preview)
-Date: Sun, 07 Aug 2005 23:18:19 -0400
-Message-ID: <200508080318.j783IJNw012384@laptop11.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 08 06:17:39 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Stash away the original head in ORIG_HEAD when resetting.
+Date: Sun, 07 Aug 2005 23:06:56 -0700
+Message-ID: <7vy87dgdxb.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@osdl.org
+X-From: git-owner@vger.kernel.org Mon Aug 08 08:08:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E1z4h-0007ip-6b
-	for gcvg-git@gmane.org; Mon, 08 Aug 2005 06:17:19 +0200
+	id 1E20n3-00051M-6W
+	for gcvg-git@gmane.org; Mon, 08 Aug 2005 08:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbVHHERB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 8 Aug 2005 00:17:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750720AbVHHERB
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 00:17:01 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:48841 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1750705AbVHHERA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Aug 2005 00:17:00 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j783IJNw012384;
-	Sun, 7 Aug 2005 23:18:19 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Sat, 06 Aug 2005 23:00:20 MST." <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
+	id S1750731AbVHHGHB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 8 Aug 2005 02:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbVHHGHB
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Aug 2005 02:07:01 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:7064 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S1750731AbVHHGHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Aug 2005 02:07:00 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050808060658.YESO7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 8 Aug 2005 02:06:58 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-My proposed patch, the description as is is misleading.
+When rewinding the head, stash away the value of the original
+HEAD in ORIG_HEAD, just like git-resolve-script does.
 
-The rest of the .spec file looks sane (yes, I've built my share of RPMs
-over the years).
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-diff --git a/git-core.spec.in b/git-core.spec.in
---- a/git-core.spec.in
-+++ b/git-core.spec.in
-@@ -2,7 +2,7 @@
- Name: 		git-core
- Version: 	@@VERSION@@
- Release: 	1
--Vendor: 	Linus Torvalds <torvalds@osdl.org>
-+Vendor: 	Junio C Hamano <junkio@cox.net>
- Summary:  	Git core and tools
- License: 	GPL
- Group: 		Development/Tools
-@@ -13,22 +13,23 @@ BuildRoot:	%{_tmppath}/%{name}-%{version
- Prereq: 	sh-utils, diffutils, rsync, rcs, mktemp >= 1.5
- 
- %description
--GIT comes in two layers. The bottom layer is merely an extremely fast
--and flexible filesystem-based database designed to store directory trees
--with regard to their history. The top layer is a SCM-like tool which
--enables human beings to work with the database in a manner to a degree
--similar to other SCM tools (like CVS, BitKeeper or Monotone).
-+This is a stupid (but extremely fast) directory content manager.  It
-+doesn't do a whole lot, but what it _does_ do is track directory
-+contents efficiently. It is intended to be the base of an efficient,
-+distributed source code management system. This package includes
-+rudimentary tools that can be used as a SCM, but you should look
-+elsewhere for tools for ordinary humans layered on top of this.
- 
- %prep
- %setup -q
- 
- %build
--
- make prefix=%{_prefix} all %{!?_without_docs: doc}
- 
- %install
- rm -rf $RPM_BUILD_ROOT
--make dest=$RPM_BUILD_ROOT prefix=%{_prefix} mandir=%{_mandir} install install-tools %{!?_without_docs: install-doc}
-+make dest=$RPM_BUILD_ROOT prefix=%{_prefix} mandir=%{_mandir} \
-+     install install-tools %{!?_without_docs: install-doc}
- 
- %clean
- rm -rf $RPM_BUILD_ROOT
-@@ -43,7 +44,13 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %{_mandir}/man7/*.7.gz}
- 
- %changelog
-+* Sun Aug 07 2005 Horst H. von Brand <vonbrand@inf.utfsm.cl>
-+- Redid the description
-+- Cut overlong make line, loosened changelog a bit
-+- I think Junio (or perhaps OSDL?) should be vendor...
-+
- * Thu Jul 14 2005 Eric Biederman <ebiederm@xmission.com>
- - Add the man pages, and the --without docs build option
-+
- * Wed Jul 7 2005 Chris Wright <chris@osdl.org>
- - initial git spec file
+Since rewinding the head is a dangerous operation, saving it
+somewhere just in case would make life a bit safer.  This also
+lets you do:
 
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+    $ git commit
+    ... "oops, I forgot to include that fix."
+    $ git reset HEAD^1
+    ... edit away and update-cache
+    $ git commit -m ORIG_HEAD
+
+to reuse the old commit message.
+
+ git-reset-script |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+87aced8864d926cf870ddfb2ca7ac5784fccb911
+diff --git a/git-reset-script b/git-reset-script
+--- a/git-reset-script
++++ b/git-reset-script
+@@ -2,6 +2,12 @@
+ . git-sh-setup-script || die "Not a git archive"
+ rev=$(git-rev-parse --revs-only --verify --default HEAD "$@") || exit
+ rev=$(git-rev-parse --revs-only --verify $rev^0) || exit
+-git-read-tree --reset "$rev" && echo "$rev" > "$GIT_DIR/HEAD"
++git-read-tree --reset "$rev" && {
++	if orig=$(git-rev-parse --verify HEAD 2>/dev/null)
++	then
++		echo "$orig" >"$GIT_DIR/ORIG_HEAD"
++	fi
++	echo "$rev" > "$GIT_DIR/HEAD"
++}
+ git-update-cache --refresh
+ rm -f "$GIT_DIR/MERGE_HEAD"
