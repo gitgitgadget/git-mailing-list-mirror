@@ -1,61 +1,65 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: Make git-rev-tree obsolete
-Date: Tue, 9 Aug 2005 00:48:34 -0400
-Message-ID: <20050809044834.GA13404@havoc.gtf.org>
-References: <Pine.LNX.4.63.0508090222190.4076@wgmdd8.biozentrum.uni-wuerzburg.de> <7vhddzygcp.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: use of temporary refs in resolve
+Date: Tue, 09 Aug 2005 10:07:25 +0100
+Message-ID: <tnxmznr32cy.fsf@arm.com>
+References: <7v3bplwmzg.fsf@assigned-by-dhcp.cox.net>
+	<tnxk6iwx161.fsf@arm.com> <7vfytkdcgm.fsf@assigned-by-dhcp.cox.net>
+	<tnxr7d4vi5v.fsf@arm.com> <7v1x53zuyv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 06:48:54 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 09 11:09:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2M2b-0006Lz-Cb
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 06:48:41 +0200
+	id 1E2Q5m-0000vi-30
+	for gcvg-git@gmane.org; Tue, 09 Aug 2005 11:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750929AbVHIEsi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 00:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750935AbVHIEsi
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 00:48:38 -0400
-Received: from havoc.gtf.org ([69.61.125.42]:21383 "EHLO havoc.gtf.org")
-	by vger.kernel.org with ESMTP id S1750939AbVHIEsi (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 00:48:38 -0400
-Received: from havoc.gtf.org (havoc.gtf.org [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by havoc.gtf.org (Postfix) with ESMTP id 4FCBE1C3A254;
-	Tue,  9 Aug 2005 00:48:35 -0400 (EDT)
-Received: (from garzik@localhost)
-	by havoc.gtf.org (8.13.1/8.13.1/Submit) id j794mYSA013507;
-	Tue, 9 Aug 2005 00:48:34 -0400
+	id S932458AbVHIJII (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 05:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbVHIJII
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 05:08:08 -0400
+Received: from fw-nat.cambridge.arm.com ([193.131.176.54]:52855 "EHLO
+	ZIPPY.Emea.Arm.com") by vger.kernel.org with ESMTP id S932458AbVHIJII
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 05:08:08 -0400
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Tue, 9 Aug 2005 10:07:57 +0100
 To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vhddzygcp.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.1i
+In-Reply-To: <7v1x53zuyv.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+ message of "Mon, 08 Aug 2005 19:48:24 -0700")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 09 Aug 2005 09:07:57.0262 (UTC) FILETIME=[D5638EE0:01C59CC1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 08, 2005 at 07:49:26PM -0700, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Junio remarked that Jeff's git-changes-script still uses git-rev-tree, and 
-> > therefore it should not be removed. This patch changes git-changes-script 
-> > over to git-rev-list:
-> 
-> Just to make things clear, "Junio remarked" that Cogito also
-> seems to use it as well, so git-rev-tree is not going away.
+Junio C Hamano <junkio@cox.net> wrote:
+> If you are happy then I should not complain ;-), and I am
+> certainly not complaining, but I still have this feeling that I
+> do not get what you are getting at.  You can change it to
+> directly use pull without intermediate fetch, in order to cope
+> with what?
 
-git-changes-script is basically an old Cogito script, as you can see
-from looking at the source code.
+I shouldn't have said anything :-).
 
-I only use it for
+StGIT implements a pull command which pops all the patches from the
+stack, pulls the latest remote changes and pushes the patches back. I
+was lazy and I implemented the pulling stage by simply calling
+git-fetch-script and advancing the base of the stack to the value in
+FETCH_HEAD. I didn't have any special reason for this and I could have
+used git-pull-script instead and not rely on the presence of
+FETCH_HEAD. I don't have any preference here.
 
-	cd /repos/misc-2.6
-	git-changes-script -L ../linux-2.6
+> Could you explain how you currently do things, and
+> what changes I will be making would break the way you currently
+> do things please?
 
-i.e. where there are two separate trees, rather than separate branches
-that I normally work with.
+If you plan to implement multiple values in FETCH_HEAD, StGIT won't be
+able to use this since it doesn't do any merging for the base of the
+stack. As I said above, this is not a problem and I was probably wrong
+when decided to use git-fetch-script directly and not git-pull-script.
 
-	Jeff
+Please let me know if you need more info.
+
+-- 
+Catalin
