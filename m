@@ -1,66 +1,57 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb - feature request
-Date: Wed, 10 Aug 2005 04:00:13 +0200
-Message-ID: <20050810020013.GA27506@vrfy.org>
-References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <20050809201836.GA11051@mars.ravnborg.org> <20050809211402.GA21194@vrfy.org>
+From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Newbie question:  equiv of:  cvs co -p <filename>  ?
+Date: Wed, 10 Aug 2005 00:18:42 +0200
+Message-ID: <42F92BC2.20406@lsrfire.ath.cx>
+References: <ddb8vl$ifq$1@sea.gmane.org> <Pine.LNX.4.63.0508100009210.10311@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 04:02:08 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: John Ellson <ellson@research.att.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 10 00:20:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2ftK-0007nj-7I
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 04:00:26 +0200
+	id 1E2cQi-0007Vq-SP
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 00:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbVHJCAR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 22:00:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbVHJCAQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 22:00:16 -0400
-Received: from soundwarez.org ([217.160.171.123]:20442 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S964823AbVHJCAP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 22:00:15 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id D90F7477DF; Wed, 10 Aug 2005 04:00:13 +0200 (CEST)
-To: Sam Ravnborg <sam@ravnborg.org>
-Content-Disposition: inline
-In-Reply-To: <20050809211402.GA21194@vrfy.org>
-User-Agent: Mutt/1.5.9i
+	id S965003AbVHIWSi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 18:18:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965004AbVHIWSi
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 18:18:38 -0400
+Received: from neapel230.server4you.de ([217.172.187.230]:20905 "EHLO
+	neapel230.server4you.de") by vger.kernel.org with ESMTP
+	id S965003AbVHIWSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2005 18:18:37 -0400
+Received: from [10.0.1.3] (p508E758F.dip.t-dialin.net [80.142.117.143])
+	by neapel230.server4you.de (Postfix) with ESMTP id AB9C1327;
+	Wed, 10 Aug 2005 00:18:35 +0200 (CEST)
+User-Agent: Mozilla Thunderbird 1.0.6 (Windows/20050716)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508100009210.10311@wgmdd8.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 09, 2005 at 11:14:02PM +0200, Kay Sievers wrote:
-> On Tue, Aug 09, 2005 at 10:18:36PM +0200, Sam Ravnborg wrote:
-> > On Tue, Aug 09, 2005 at 09:58:18PM +0200, Kay Sievers wrote:
-> > > On Tue, Aug 09, 2005 at 09:31:04PM +0200, Sam Ravnborg wrote:
-> > > > Hi Kay.
-> > > > 
-> > > > When browsing http://www.kernel.org/git I often find myself looking for
-> > > > the most recently changed tree.
-> > > > For this it is very good that you have the "last change" in italic and
-> > > > bolded if newer than a few hours (I think).
-> > > 
-> > > Hmm, if last change is "minutes" it's bold, if it's "hours" old it's green.
-> > > What do you miss?
-> > For this part I do not miss anything - the opposite actually. I like
-> > this highlighting you do.
-> > 
-> > > 
-> > > > A nice additional feature would be the possibility to sort the output
-> > > > according to last change, owner and description.
-> > > > Using a click-able table heading would be the most intuitive way.
-> > > > 
-> > > > I have not looked into the source for gitweb, so I really do not know
-> > > > how difficult this would be.
-> > > 
-> > > I was hoping people that want stuff like this would use a RSS reader. :)
-> > Some day I will try to use such a beast...
+Johannes Schindelin wrote:
+> On Tue, 9 Aug 2005, John Ellson wrote:
+>>How can we cat the latest committed state of a file to stdout?
+>>
+>>I hacked this:
+>>
+>>	#!/bin/bash
+>>	ID=`git-ls-files -s | grep $1 | cut -d ' ' -f 2`
 > 
-> Well, I don't use these beasts myself. :) I will try the sorting with the
-> next round - sounds like a nice feature.
+> 
+> and now:
+> 
+> 	git-cat-file blob $ID
 
-Sam,
-try it! :)
+Still not pretty.  How about this?
 
-Kay
+	#!/bin/sh
+	git-ls-tree HEAD "$@" | while read mode type hash filename; do
+		[ "$type" = "blob" ] && git-cat-file blob "$hash"
+	done
+
+Rene
