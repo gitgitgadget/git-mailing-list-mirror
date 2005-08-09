@@ -1,56 +1,54 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitweb - feature request
-Date: Tue, 9 Aug 2005 14:53:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508091447080.3258@g5.osdl.org>
-References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org>
- <20050809201836.GA11051@mars.ravnborg.org>
- <Pine.LNX.4.63.0508092224580.9849@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: John Ellson <ellson@research.att.com>
+Subject: Newbie question:  equiv of:  cvs co -p <filename>  ?
+Date: Tue, 09 Aug 2005 17:59:14 -0400
+Message-ID: <ddb8vl$ifq$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sam Ravnborg <sam@ravnborg.org>,
-	Kay Sievers <kay.sievers@vrfy.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 09 23:55:41 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 10 00:03:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2c31-0004l5-Ka
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 23:54:12 +0200
+	id 1E2cAT-0005bg-3u
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 00:01:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964933AbVHIVyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 17:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964937AbVHIVyF
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 17:54:05 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:9883 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964933AbVHIVyE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 17:54:04 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j79LrxjA026705
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 Aug 2005 14:54:00 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j79LrwTD013839;
-	Tue, 9 Aug 2005 14:53:59 -0700
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0508092224580.9849@wgmdd8.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.41__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964988AbVHIWBu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 18:01:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964993AbVHIWBu
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 18:01:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:32973 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S964988AbVHIWBt (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 18:01:49 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E2c8e-0005NV-Uu
+	for git@vger.kernel.org; Wed, 10 Aug 2005 00:00:00 +0200
+Received: from h-135-207-24-103.research.att.com ([135.207.24.103])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Aug 2005 00:00:00 +0200
+Received: from ellson by h-135-207-24-103.research.att.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Aug 2005 00:00:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: h-135-207-24-103.research.att.com
+User-Agent: Mozilla Thunderbird 1.0.6-3 (X11/20050806)
+X-Accept-Language: en-us, en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+How can we cat the latest committed state of a file to stdout?
 
+I hacked this:
 
-On Tue, 9 Aug 2005, Johannes Schindelin wrote:
-> 
-> You have Firefox, don't you? Next time you surf to gitweb, right click on 
-> the funny yellow symbol in the lower right corner of your Firefox. It 
-> should say something like "Subscribe to...". Do it.
+	#!/bin/bash
+	ID=`git-ls-files -s | grep $1 | cut -d ' ' -f 2`
+	TMP=`git-unpack-file $ID`
+	cat $TMP
+	rm $TMP
 
-Left-click. And you need to be inside the project you want to rss (it 
-would be nice if you could be at the "projects" page and it would give you 
-a list of things to subscribe to, but that may not be possible).
+but its really ugly!   It must be easier than this?
 
-		Linus
+John
