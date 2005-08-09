@@ -1,83 +1,73 @@
-From: Clemens Koller <clemens.koller@anagramm.de>
-Subject: Re: Cannot install git RPM
-Date: Tue, 09 Aug 2005 17:36:38 +0200
-Message-ID: <42F8CD86.9000409@anagramm.de>
-References: <20050809104040.B9C61352B36@atlas.denx.de> <20050809110705.6B1FF352B36@atlas.denx.de> <42F8AE6E.2020808@anagramm.de> <Pine.LNX.4.58.0508090758110.3258@g5.osdl.org>
+From: Dirk Behme <dirk.behme@de.bosch.com>
+Subject: cg-clone http://www.kernel.org/pub/scm/git/git.git fails
+Date: Tue, 09 Aug 2005 18:06:10 +0200
+Message-ID: <42F8D472.3080404@de.bosch.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 17:37:08 2005
+X-From: git-owner@vger.kernel.org Tue Aug 09 18:06:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2W9f-00060b-Lh
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 17:36:40 +0200
+	id 1E2WcE-0001tQ-68
+	for gcvg-git@gmane.org; Tue, 09 Aug 2005 18:06:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbVHIPgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 11:36:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbVHIPgg
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 11:36:36 -0400
-Received: from moutvdom.kundenserver.de ([212.227.126.249]:15594 "EHLO
-	moutvdomng.kundenserver.de") by vger.kernel.org with ESMTP
-	id S964823AbVHIPgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2005 11:36:36 -0400
-Received: from [212.227.126.221] (helo=mrvdomng.kundenserver.de)
-	by moutvdomng.kundenserver.de with esmtp (Exim 3.35 #1)
-	id 1E2W9W-00016g-00; Tue, 09 Aug 2005 17:36:30 +0200
-Received: from [84.154.80.14] (helo=[192.168.1.10])
-	by mrvdomng.kundenserver.de with esmtp (Exim 3.35 #1)
-	id 1E2W9W-0000hI-00; Tue, 09 Aug 2005 17:36:30 +0200
-User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+	id S964842AbVHIQGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 12:06:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964843AbVHIQGG
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 12:06:06 -0400
+Received: from smtp-v.fe.bosch.de ([139.15.237.2]:43446 "EHLO
+	smtp-v.fe.bosch.de") by vger.kernel.org with ESMTP id S964842AbVHIQGF
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 12:06:05 -0400
+Received: from mta3.fe.internet.bosch.com (unknown [10.4.98.30])
+	by imta5.fe.bosch.de (Postfix) with ESMTP id BECF33C007
+	for <git@vger.kernel.org>; Tue,  9 Aug 2005 18:06:03 +0200 (CEST)
+Received: from si-imc02.de.bosch.com (virusscan7.fe.internet.bosch.com [10.4.98.12])
+	by mta3.fe.internet.bosch.com (Postfix) with ESMTP id 87DD58C022
+	for <git@vger.kernel.org>; Tue,  9 Aug 2005 18:06:03 +0200 (CEST)
+Received: from hi-mail02.de.bosch.com ([10.34.16.71]) by si-imc02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Tue, 9 Aug 2005 18:06:03 +0200
+Received: from [10.4.106.20] ([10.4.106.20]) by hi-mail02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Tue, 9 Aug 2005 18:06:02 +0200
+User-Agent: Mozilla Thunderbird 1.0.6 (X11/20050716)
 X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508090758110.3258@g5.osdl.org>
+To: git@vger.kernel.org
+X-OriginalArrivalTime: 09 Aug 2005 16:06:02.0711 (UTC) FILETIME=[3D7B4E70:01C59CFC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Linus!
+Hello,
 
-Linus Torvalds wrote:
-> 
-> On Tue, 9 Aug 2005, Clemens Koller wrote:
-> 
->>Over here - using a non-standard ELDK/LFS mixture, git depends at least on:
->>...
->>diffstat (ftp://invisible-island.net/diffstat/diffstat-1.39.tgz)
-> 
-> 
-> Hmm.. This should not be true. Any "diffstat"s should be converted to use
-> "git-apply --stat" instead.
-> 
-> I don't find any diffstat users, so maybe you just remember it from "the 
-> old days", and didn't realize that it's not needed any more.
+with
 
-Okay, just FYI: As far as my installation history remembers it was needed
-at least up to:
-http://www.kernel.org/pub/linux/kernel/people/jgarzik/git-20050622.tar.bz2
-Which is _NOT_ recommended for new installations!
-(Can somebody please remove/mark that old stuff to avoid using it?!)
+cogito-0.13.tar.bz2
+git-2005-08-09.tar.gz
 
-Instead use:
-http://www.codemonkey.org.uk/projects/git-snapshots/git/git-latest.tar.gz
+clone of cogito over http
 
-> [ That said, anybody who wants to install git might as well install 
->   diffstat, it's a useful program in general, and works on more than just 
->   unified diffs ]
+ > cg-clone http://www.kernel.org/pub/scm/cogito/cogito.git
 
-true.
+works fine. But clone of git itself fails:
 
-Greets,
+> cg-clone http://www.kernel.org/pub/scm/git/git.git 
+defaulting to local storage area
+warning: templates not found /home/user/share/git-core/templates/
+16:29:03 URL:http://www.kernel.org/pub/scm/git/git.git/refs/heads/master
+[41/41] -> "refs/heads/origin" [1]
+progress: 3 objects, 5158 bytes
+Getting pack list
+error: Unable to get pack index
+http://www.kernel.org/pub/scm/git/git.git//objects/info/packs
+error: Tried
+http://www.kernel.org/pub/scm/git/git.git/objects/6f/f87c4664981e4397625791c8ea3bbb5f2279a3
+Cannot obtain needed blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3
+while processing commit adee7bdf504120055b0f36b4918bdd3e6156912b.
+cg-pull: objects pull failed
+cg-clone: pull failed
 
-Clemens Koller
-_______________________________
-R&D Imaging Devices
-Anagramm GmbH
-Rupert-Mayer-Str. 45/1
-81379 Muenchen
-Germany
+Is this a tool or repository issue?
 
-http://www.anagramm.de
-Phone: +49-89-741518-50
-Fax: +49-89-741518-19
+Many thanks
+
+Dirk
