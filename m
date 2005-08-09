@@ -1,60 +1,58 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cannot install git RPM
-Date: Tue, 09 Aug 2005 05:51:02 -0700
-Message-ID: <7v3bpjxoi1.fsf@assigned-by-dhcp.cox.net>
-References: <20050809104040.B9C61352B36@atlas.denx.de>
-	<20050809110705.6B1FF352B36@atlas.denx.de>
+Subject: Re: Sanity check of git-commit patch, was Re: [PATCH] Making CFLAGS compilant with GNU Coding Standards
+Date: Tue, 09 Aug 2005 05:53:50 -0700
+Message-ID: <7vu0hzw9sx.fsf@assigned-by-dhcp.cox.net>
+References: <1123306575.7588.17.camel@dv.roinet.com>
+	<7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
+	<20050808231036.GA22778@mythryan2.michonline.com>
+	<Pine.LNX.4.63.0508090140100.3695@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<7vpssnyge0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0508091212170.6752@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 14:52:46 2005
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 09 14:54:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2TZg-0000h2-7b
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 14:51:20 +0200
+	id 1E2TcC-0000yc-8H
+	for gcvg-git@gmane.org; Tue, 09 Aug 2005 14:53:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520AbVHIMvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 08:51:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932526AbVHIMvF
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 08:51:05 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:6121 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932520AbVHIMvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2005 08:51:04 -0400
+	id S932529AbVHIMxw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 08:53:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932530AbVHIMxw
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 08:53:52 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:45269 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932529AbVHIMxw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2005 08:53:52 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao08.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050809125103.VUHQ12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 9 Aug 2005 08:51:03 -0400
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20050809110705.6B1FF352B36@atlas.denx.de> (Wolfgang Denk's
-	message of "Tue, 09 Aug 2005 13:07:05 +0200")
+          id <20050809125351.VDHR16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 9 Aug 2005 08:53:51 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508091212170.6752@wgmdd8.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 9 Aug 2005 12:17:54 +0200
+	(CEST)")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Wolfgang Denk <wd@denx.de> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> A simple fix is of course:
+> I just checked. Three nitpicks:
 >
-> -> diff -u git-core.spec.in.ORIG git-core.spec.in
-> --- git-core.spec.in.ORIG       2005-08-09 10:26:50.845877000 +0200
-> +++ git-core.spec.in    2005-08-09 12:42:06.872310918 +0200
-> @@ -40,6 +40,7 @@
->  %{!?_without_docs: %doc Documentation/*.html }
->  %{!?_without_docs: %{_mandir}/man1/*.1.gz}
->  %{!?_without_docs: %{_mandir}/man7/*.7.gz}
-> +/usr/share/git-core/templates/*
+> - I don't like the GNU way to abbreviate long options too much...
 
-Something like that using %{_datadir} is in the RC branch.
+True.  My bad old habit.
 
-> But the resulting RPM cannot be installed either,  at  least  not  in
-> standard Fedora Core 2/3/4 installations:
-> ...
-> Is there at least some  documentation  which  external  packages  are
-> needed, and where to find these?
+> - Multiple -m options was actually a feature of my version of the patch.
 
-Patches welcome.  Sorry but I need a lot of help when it comes
-to binary packaging.
+Ah, OK.
+
+> - The "case .. in x) .. ;; esac;" construct is sometimes more confusing 
+>   than a simple "if", or even a "[ .. = x ] && ..".
+
+Yes sometimes.
