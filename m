@@ -1,52 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Making CFLAGS compilant with GNU Coding Standards
-Date: Tue, 09 Aug 2005 05:56:23 -0700
-Message-ID: <7vk6ivw9oo.fsf@assigned-by-dhcp.cox.net>
-References: <1123306575.7588.17.camel@dv.roinet.com>
-	<7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
-	<20050808231036.GA22778@mythryan2.michonline.com>
+From: Clemens Koller <clemens.koller@anagramm.de>
+Subject: Re: Cannot install git RPM
+Date: Tue, 09 Aug 2005 15:23:58 +0200
+Message-ID: <42F8AE6E.2020808@anagramm.de>
+References: <20050809104040.B9C61352B36@atlas.denx.de> <20050809110705.6B1FF352B36@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 09 14:58:19 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 09 15:24:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2Tee-0001NP-C0
-	for gcvg-git@gmane.org; Tue, 09 Aug 2005 14:56:28 +0200
+	id 1E2U5H-00051n-BP
+	for gcvg-git@gmane.org; Tue, 09 Aug 2005 15:23:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932530AbVHIM40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 08:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932531AbVHIM40
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 08:56:26 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:58583 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S932530AbVHIM4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Aug 2005 08:56:25 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050809125625.RXCF19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 9 Aug 2005 08:56:25 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050808231036.GA22778@mythryan2.michonline.com> (Ryan
-	Anderson's message of "Mon, 8 Aug 2005 19:10:36 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932536AbVHINXv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 09:23:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932537AbVHINXv
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 09:23:51 -0400
+Received: from moutvdom.kundenserver.de ([212.227.126.249]:51949 "EHLO
+	moutvdomng.kundenserver.de") by vger.kernel.org with ESMTP
+	id S932536AbVHINXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2005 09:23:51 -0400
+Received: from [212.227.126.221] (helo=mrvdomng.kundenserver.de)
+	by moutvdomng.kundenserver.de with esmtp (Exim 3.35 #1)
+	id 1E2U57-00024D-00; Tue, 09 Aug 2005 15:23:49 +0200
+Received: from [84.154.80.14] (helo=[192.168.1.10])
+	by mrvdomng.kundenserver.de with esmtp (Exim 3.35 #1)
+	id 1E2U57-00079W-00; Tue, 09 Aug 2005 15:23:49 +0200
+User-Agent: Mozilla Thunderbird 1.0.2 (Windows/20050317)
+X-Accept-Language: en-us, en
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20050809110705.6B1FF352B36@atlas.denx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson <ryan@michonline.com> writes:
+Hello, Wolfgang!
 
-> I haven't really given a lot of thought to this yet, but I was thinking
-> of something along these lines:
->
-> Rename tools/ to mail-tools/, push git-send-email-script into that.
-> Create a "porcelain" directory for things like git-bisect-script
-> Create a "core" directory for things like "git-commit-script"
-> Create a "src" (?) directory for *.[ch]
-> Maybe move documentation into the same directory as the scripts they
-> belong to.
+> But the resulting RPM cannot be installed either,  at  least  not  in
+> standard Fedora Core 2/3/4 installations:
+> 
+> error: Failed dependencies:
+>         perl(Email::Valid) is needed by git-core-0.99.3-1
+>         perl(Mail::Sendmail) is needed by git-core-0.99.3-1
+> 
+> 
+> Seems git is depending on more and more stuff which is not  available
+> in standard distros. This makes it not easier for new users...
+> 
+> Is there at least some  documentation  which  external  packages  are
+> needed, and where to find these?
 
-A good place to start may be to reorganize the categorized list
-of commands in Documentation/git.txt.
+Over here - using a non-standard ELDK/LFS mixture, git depends at least on:
+zlib ()
+libcurl (http://curl.haxx.se/download/curl-7.14.0.tar.bz2)
+openssl ()
+diff ()
+diffstat (ftp://invisible-island.net/diffstat/diffstat-1.39.tgz)
+which (http://www.xs4all.nl/~carlo17/which/which-2.16.tar.gz)
+rsync (http://samba.anu.edu.au/ftp/rsync/rsync-2.6.5.tar.gz)
+perl ()
+
+() -> ask Google.
+The versions given in brackets seem to work fine for me. - YMMV
+
+Greets,
+
+Clemens Koller
+_______________________________
+R&D Imaging Devices
+Anagramm GmbH
+Rupert-Mayer-Str. 45/1
+81379 Muenchen
+Germany
+
+http://www.anagramm.de
+Phone: +49-89-741518-50
+Fax: +49-89-741518-19
