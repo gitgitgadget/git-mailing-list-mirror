@@ -1,54 +1,48 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Thu, 11 Aug 2005 10:56:26 +1200
-Message-ID: <46a038f9050810155642bb5580@mail.gmail.com>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
-	 <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net>
-	 <7vacjsdcbj.fsf@assigned-by-dhcp.cox.net>
-	 <7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net>
-	 <pan.2005.08.10.21.15.41.143251@smurf.noris.de>
-	 <pan.2005.08.10.22.11.25.242201@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: GIT v0.99.4
+Date: Wed, 10 Aug 2005 16:02:51 -0700
+Message-ID: <7v64udqtt0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 11 00:58:56 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Aug 11 01:04:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2zVs-0005Of-LO
-	for gcvg-git@gmane.org; Thu, 11 Aug 2005 00:57:33 +0200
+	id 1E2zb6-00062R-Gs
+	for gcvg-git@gmane.org; Thu, 11 Aug 2005 01:02:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932586AbVHJW42 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 18:56:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932587AbVHJW42
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 18:56:28 -0400
-Received: from rproxy.gmail.com ([64.233.170.205]:5124 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932586AbVHJW41 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2005 18:56:27 -0400
-Received: by rproxy.gmail.com with SMTP id i8so171523rne
-        for <git@vger.kernel.org>; Wed, 10 Aug 2005 15:56:26 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SQSRtXkWbwwaTxY7IqVDeT95gpPwd4qkunv9IiOH2202ApJpi4BTF19JIjh/luMaK9u65T0TJLVfl3LIlqAXkP7mUhffouvr0hxo0em5E524+EFtD2uJZ147IHvgjnRRxFWTZ6+ykG9wHOXeOMfGDr++wnLWynx62cMNI1cAebY=
-Received: by 10.38.104.22 with SMTP id b22mr410850rnc;
-        Wed, 10 Aug 2005 15:56:26 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Wed, 10 Aug 2005 15:56:26 -0700 (PDT)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.08.10.22.11.25.242201@smurf.noris.de>
-Content-Disposition: inline
+	id S932591AbVHJXCx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 19:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932593AbVHJXCx
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 19:02:53 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:30866 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932591AbVHJXCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2005 19:02:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050810230252.SPZW19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 10 Aug 2005 19:02:52 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 8/11/05, Matthias Urlichs <smurf@smurf.noris.de> wrote:
-> Debian packaging fixes for 0.99.4:
+Thanks a lot to everybody who sent in usability enhancements and
+bugfixes.
 
-Is this anywhere in the archive?
+Updates since v0.99.3:
 
-cheers,
-
-
-martin
+- HTTP transport can pull from a packed repository.
+- RPM and Debian packages are hopefully usable out of the box.
+- Read-only operations on read-only repository should work better.
+- Commit and tag takes the message from the command line with -m.
+- Shortlog does not show things in reverse anymore.
+- Many commands now natively know SHA1 expressions (e.g. HEAD^^2).
+- Push can update remote refs that have different names from local.
+- Comes with the latest gitk.
+- A new command "git revert"
+- A bulk e-mailer (not installed by default).
+- Hopefully less leaky and less buggy.
