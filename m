@@ -1,55 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Sanity check of git-commit patch, was Re: [PATCH] Making CFLAGS compilant with GNU Coding Standards
-Date: Tue, 09 Aug 2005 22:45:44 -0700
-Message-ID: <7vd5oms5tj.fsf@assigned-by-dhcp.cox.net>
-References: <1123306575.7588.17.camel@dv.roinet.com>
-	<7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
-	<20050808231036.GA22778@mythryan2.michonline.com>
-	<Pine.LNX.4.63.0508090140100.3695@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<7vpssnyge0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0508091212170.6752@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<7vu0hzw9sx.fsf@assigned-by-dhcp.cox.net>
+From: Ian Campbell <ijc@hellion.org.uk>
+Subject: Re: gitweb - feature request
+Date: Wed, 10 Aug 2005 06:53:40 +0100
+Message-ID: <1123653220.1183.26.camel@azathoth.hellion.org.uk>
+References: <20050809193104.GA10858@mars.ravnborg.org>
+	 <20050809195818.GA19284@vrfy.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 07:46:37 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-8ZQ/Ay9v1B8D68HrcDkk"
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 10 07:54:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2jPV-0008AV-Dg
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 07:45:53 +0200
+	id 1E2jX9-0000NR-Gh
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 07:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965003AbVHJFpr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 01:45:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965008AbVHJFpr
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 01:45:47 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:22001 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S965003AbVHJFpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2005 01:45:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050810054545.FOBK8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 10 Aug 2005 01:45:45 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <7vu0hzw9sx.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 09 Aug 2005 05:53:50 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965012AbVHJFxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 01:53:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965011AbVHJFxp
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 01:53:45 -0400
+Received: from mta09-winn.ispmail.ntl.com ([81.103.221.49]:20250 "EHLO
+	mta09-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S965012AbVHJFxo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2005 01:53:44 -0400
+Received: from aamta10-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta09-winn.ispmail.ntl.com with ESMTP
+          id <20050810055343.RDSV9239.mta09-winn.ispmail.ntl.com@aamta10-winn.ispmail.ntl.com>;
+          Wed, 10 Aug 2005 06:53:43 +0100
+Received: from azathoth.hellion.org.uk ([80.1.205.176])
+          by aamta10-winn.ispmail.ntl.com with ESMTP
+          id <20050810055342.PZHT12116.aamta10-winn.ispmail.ntl.com@azathoth.hellion.org.uk>;
+          Wed, 10 Aug 2005 06:53:42 +0100
+To: Kay Sievers <kay.sievers@vrfy.org>
+In-Reply-To: <20050809195818.GA19284@vrfy.org>
+X-Mailer: Evolution 2.2.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <junkio@cox.net> writes:
 
->> - Multiple -m options was actually a feature of my version of the patch.
->
-> Ah, OK.
+--=-8ZQ/Ay9v1B8D68HrcDkk
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-I said "OK" and thought about it again.  While thinking about
-what is the right inter-message-piece separator for multiple -m
-parameters (you use "\n"), I got a headache.  I decided to keep
-what is already there after all ;-).
+On Tue, 2005-08-09 at 21:58 +0200, Kay Sievers wrote:
 
-I'll push things out tonight and expect to tag things tomorrow
-late afternoon to declare 0.99.4
+> I was hoping people that want stuff like this would use a RSS reader. :)
+
+I used to subscribe to the kernel RSS feed (using blam) but I found I
+was only getting the most recent 20 commits, which wasn't much good when
+a big batch went in because I would miss some. Has this been fixed or
+was it something I was doing wrong?
+
+Ian.
+
+--=20
+Ian Campbell
+
+hipatitis:
+	Terminal coolness.
+
+--=-8ZQ/Ay9v1B8D68HrcDkk
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQBC+ZZkM0+0qS9rzVkRAuKvAKCQYlKuZcw7jfzNY07RN4puxSssRwCfa1zL
+m72ciLQtHWaJcnvX5il3W3Y=
+=DhFg
+-----END PGP SIGNATURE-----
+
+--=-8ZQ/Ay9v1B8D68HrcDkk--
