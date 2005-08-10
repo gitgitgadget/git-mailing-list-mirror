@@ -1,90 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Cannot install git RPM
-Date: Wed, 10 Aug 2005 13:13:05 -0700
-Message-ID: <7vk6itr1ny.fsf@assigned-by-dhcp.cox.net>
-References: <20050810194459.8584D353C12@atlas.denx.de>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: Request for help from binary packaging people.
+Date: Wed, 10 Aug 2005 23:15:42 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.10.21.15.41.143251@smurf.noris.de>
+References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net> <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net> <7vacjsdcbj.fsf@assigned-by-dhcp.cox.net> <7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sam Ravnborg <sam@ravnborg.org>, Chris Wright <chrisw@osdl.org>,
-	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 22:14:33 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Aug 10 23:19:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2wwt-00014M-DB
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 22:13:15 +0200
+	id 1E2xy3-0001ns-Ge
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 23:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030251AbVHJUNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 16:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030239AbVHJUNJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 16:13:09 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:1689 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S1030251AbVHJUNH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2005 16:13:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050810201307.TTJJ12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 10 Aug 2005 16:13:07 -0400
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20050810194459.8584D353C12@atlas.denx.de> (Wolfgang Denk's
-	message of "Wed, 10 Aug 2005 21:44:59 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030273AbVHJVS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 17:18:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030274AbVHJVS1
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 17:18:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:2759 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1030273AbVHJVS0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2005 17:18:26 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E2xxE-0001by-4L
+	for git@vger.kernel.org; Wed, 10 Aug 2005 23:17:40 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Aug 2005 23:17:40 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Aug 2005 23:17:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Wolfgang Denk <wd@denx.de> writes replying to Sam Ravnborg:
+Hi, Junio C Hamano wrote:
 
-> In message <20050810163202.GA11131@mars.ravnborg.org> you wrote:
->>
->> Not knowing perl at all I wonder if some more widespread used packages
->> can replace the above two?
->
-> Installation of the required modules from the  CPAN  is  trivial.  It
-> should be documented somewhere, though.
+> For Debian, we recommend lib*-*-perl packages.  Do we need to recommend
+> perl itself as well, or is it the case that things that are covered with
+> the automatic dependency chain need not be listed? 
 
-I would appreciate a patch for RPM building after 0.99.4, but
-the tentative solution for 0.99.4 (and current "master" branch
-since last night) is to ship the problematic program as part of
-the sources under "contrib" status, but not install nor include
-in the resulting binary package.
+No, yes.  ;-)
 
-The dependency list for the RPM built from the tip of "rc"
-branch now reads like this (thanks Chris for teaching me how to
-get this information).  This will hopefully be the one that
-becomes the official 0.99.4.
+What happens if the lib*-perl packages are not installed? If some scripts
+break, that's a Bad Thing, and would require those packages to be moved to
+Depends:.
 
-$ rpm -qp ~/rpms/RPMS/i386/git-core-0.99.4-1.i386.rpm --requires
-/bin/sh
-/usr/bin/env
-/usr/bin/perl
-diffutils
-libc.so.6
-libc.so.6(GLIBC_2.0)
-libc.so.6(GLIBC_2.1)
-libc.so.6(GLIBC_2.1.3)
-libc.so.6(GLIBC_2.2.3)
-libc.so.6(GLIBC_2.3)
-libcrypto.so.4
-libcurl.so.3
-libssl.so.4
-libz.so.1
-mktemp >= 1.5
-perl(File::Basename)
-perl(File::Path)
-perl(File::Spec)
-perl(File::Temp)
-perl(Getopt::Std)
-perl(IO::Pipe)
-perl(IO::Socket)
-perl(POSIX)
-perl(Time::Local)
-perl(strict)
-perl(warnings)
-rcs
-rpmlib(CompressedFileNames) <= 3.0.4-1
-rpmlib(PayloadFilesHavePrefix) <= 4.0-1
-rsync
-sh-utils
+> Earlier I said that
+> the Debian side is reasonably accurate to the best of my knowledge, but I
+> would appreciate it if somebody ran lintian on it.
+
+Will do.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+"I say we take off; nuke the site from orbit.  It's the only way to be sure."
+- Corporal Hicks, in "Aliens"
