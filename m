@@ -1,78 +1,120 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Newbie question:  equiv of:  cvs co -p <filename>  ?
-Date: Tue, 9 Aug 2005 17:36:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508091725120.3258@g5.osdl.org>
-References: <ddb8vl$ifq$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Fix git-rev-parse's parent handling
+Date: Wed, 10 Aug 2005 05:07:36 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508100506260.11734@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 02:36:57 2005
+X-From: git-owner@vger.kernel.org Wed Aug 10 05:08:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2eZs-0007xL-Bl
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 02:36:16 +0200
+	id 1E2gwP-0004s8-8Y
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 05:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbVHJAgN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 9 Aug 2005 20:36:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbVHJAgN
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 20:36:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40139 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751004AbVHJAgN (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Aug 2005 20:36:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7A0aAjA007229
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 9 Aug 2005 17:36:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7A0a9tP021552;
-	Tue, 9 Aug 2005 17:36:10 -0700
-To: John Ellson <ellson@research.att.com>
-In-Reply-To: <ddb8vl$ifq$1@sea.gmane.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.41__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964913AbVHJDHi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 9 Aug 2005 23:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964916AbVHJDHi
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Aug 2005 23:07:38 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:36239 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S964913AbVHJDHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Aug 2005 23:07:38 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 2CE25E31EA
+	for <git@vger.kernel.org>; Wed, 10 Aug 2005 05:07:37 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id EF4D8993C1
+	for <git@vger.kernel.org>; Wed, 10 Aug 2005 05:07:36 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id D965599334
+	for <git@vger.kernel.org>; Wed, 10 Aug 2005 05:07:36 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id CF889E31EA
+	for <git@vger.kernel.org>; Wed, 10 Aug 2005 05:07:36 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+git-rev-parse HEAD^1 would fail, because of an off-by-one bug (but HEAD^ 
+would yield the expected result). Also, when the parent does not exist, do 
+not silently return an incorrect SHA1. Of course, this no longer applies 
+to git-rev-parse alone, but every user of get_sha1().
 
+While at it, add a test.
 
-On Tue, 9 Aug 2005, John Ellson wrote:
-> 
-> I hacked this:
-> 
-> 	#!/bin/bash
-> 	ID=`git-ls-files -s | grep $1 | cut -d ' ' -f 2`
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-No. "git-ls-files" shows the latest _index_ state, not the latest 
-committed state.
+---
 
-Use "git-ls-tree HEAD pathname" to get the latest committed state for the 
-pathname, and then pick out the SHA1 from there, use
+ sha1_name.c                  |    9 ++++++---
+ t/t6101-rev-parse-parents.sh |   33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 3 deletions(-)
+ create mode 100644 t/t6101-rev-parse-parents.sh
 
-	git-cat-file blob <sha1>
-
-to cat the result.
-
-Of course, this will work with any revision, not just HEAD. So you could 
-do something like
-
-	git-ls-tree $(git-rev-parse --default HEAD "$@") |
-		while read mode type sha name
-		do
-			case "$type" in
-			blob)
-				git-cat-file blob "$sha"
-				;;
-			tree)
-				git-ls-tree "$sha"
-				;;
-			*)
-				exit 1
-		done
-
-(totally untested)
-
-		Linus
+83c1ab3e9bcba4eca5e055e27f8f4fb0b78518a5
+diff --git a/sha1_name.c b/sha1_name.c
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -202,15 +202,18 @@ static int get_sha1_1(const char *name, 
+ 		parent = name[len-1] - '0';
+ 		len -= 2;
+ 	}
+-	else if (len > 1 && name[len-1] == '^')
++	else if (len > 1 && name[len-1] == '^') {
+ 		parent = 1;
+-	else
++		len--;
++	} else
+ 		parent = -1;
+ 
+ 	if (0 <= parent) {
+-		ret = get_parent(name, len-1, sha1, parent);
++		ret = get_parent(name, len, sha1, parent);
+ 		if (!ret)
+ 			return 0;
++		else if(parent>0)
++			return ret;
+ 	}
+ 	ret = get_sha1_basic(name, len, sha1);
+ 	if (!ret)
+diff --git a/t/t6101-rev-parse-parents.sh b/t/t6101-rev-parse-parents.sh
+new file mode 100644
+--- /dev/null
++++ b/t/t6101-rev-parse-parents.sh
+@@ -0,0 +1,33 @@
++#!/bin/sh
++#
++# Copyright (c) 2005 Johannes Schindelin
++#
++
++test_description='Test git-rev-parse with different parent options'
++
++. ./test-lib.sh
++. ../t6000lib.sh # t6xxx specific functions
++
++date >path0
++git-update-cache --add path0
++save_tag tree git-write-tree
++hide_error save_tag start unique_commit "start" tree
++save_tag second unique_commit "second" tree -p start
++hide_error save_tag start2 unique_commit "start2" tree
++save_tag two_parents unique_commit "next" tree -p second -p start2
++save_tag final unique_commit "final" tree -p two_parents
++
++test_expect_success 'start is valid' 'git-rev-parse start | grep "^[0-9a-f]\{40\}$"'
++test_expect_success 'start^0' "test $(cat .git/refs/tags/start) = $(git-rev-parse start^0)"
++test_expect_success 'start^1 not valid' "test $(git-rev-parse start^1) = start^1"
++test_expect_success 'second^1 = second^' "test $(git-rev-parse second^1) = $(git-rev-parse second^)"
++test_expect_success 'final^1^1^1' "test $(git-rev-parse start) = $(git-rev-parse final^1^1^1)"
++test_expect_success 'final^1^1^1 = final^^^' "test $(git-rev-parse final^1^1^1) = $(git-rev-parse final^^^)"
++test_expect_success 'final^1^2' "test $(git-rev-parse start2) = $(git-rev-parse final^1^2)"
++test_expect_success 'final^1^2 != final^1^1' "test $(git-rev-parse final^1^2) != $(git-rev-parse final^1^1)"
++test_expect_success 'final^1^3 not valid' "test $(git-rev-parse final^1^3) = final^1^3"
++test_expect_failure '--verify start2^1' 'git-rev-parse --verify start2^1'
++test_expect_success '--verify start2^0' 'git-rev-parse --verify start2^0'
++
++test_done
++
