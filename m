@@ -1,113 +1,64 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] -x (no-exclude) option for cg-status
-Date: Wed, 10 Aug 2005 14:42:19 -0400
-Message-ID: <1123699339.17725.13.camel@dv>
+From: Wolfgang Denk <wd@denx.de>
+Subject: Re: Cannot install git RPM
+Date: Wed, 10 Aug 2005 21:44:59 +0200
+Message-ID: <20050810194459.8584D353C12@atlas.denx.de>
+References: <20050810163202.GA11131@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 10 20:44:22 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Chris Wright <chrisw@osdl.org>, Wolfgang Denk <wd@denx.de>,
+	Ryan Anderson <ryan@michonline.com>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 10 21:46:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2vX3-0004mE-SU
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 20:42:30 +0200
+	id 1E2wWA-0005Ka-2R
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 21:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030183AbVHJSm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 14:42:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965258AbVHJSm1
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 14:42:27 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:46284 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S965257AbVHJSm0
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2005 14:42:26 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1E2vUo-0008Oy-R6
-	for git@vger.kernel.org; Wed, 10 Aug 2005 14:40:12 -0400
-Received: from [127.0.0.1] (helo=dv.roinet.com)
-	by dv.roinet.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.52)
-	id 1E2vWu-0002JF-5l; Wed, 10 Aug 2005 14:42:20 -0400
-Received: (from proski@localhost)
-	by dv.roinet.com (8.13.4/8.13.4/Submit) id j7AIgJYO008878;
-	Wed, 10 Aug 2005 14:42:19 -0400
-X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
-To: Petr Baudis <pasky@suse.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.2 (2.2.2-5) 
+	id S1030220AbVHJTpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 15:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030210AbVHJTpa
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 15:45:30 -0400
+Received: from mailout04.sul.t-online.com ([194.25.134.18]:22214 "EHLO
+	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
+	id S1030220AbVHJTp3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2005 15:45:29 -0400
+Received: from fwd21.aul.t-online.de 
+	by mailout04.sul.t-online.com with smtp 
+	id 1E2wVk-0003fp-03; Wed, 10 Aug 2005 21:45:12 +0200
+Received: from denx.de (TQJVcwZHQeWzYvOS8MHJXeBFs-JC7KPXvYBF39aJvWu6OtMGVbaT0+@[84.150.65.8]) by fwd21.sul.t-online.de
+	with esmtp id 1E2wVZ-21HhXE0; Wed, 10 Aug 2005 21:45:01 +0200
+Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
+	by denx.de (Postfix) with ESMTP
+	id A1D2D42CB3; Wed, 10 Aug 2005 21:44:59 +0200 (MEST)
+Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
+	by atlas.denx.de (Postfix) with ESMTP id 8584D353C12;
+	Wed, 10 Aug 2005 21:44:59 +0200 (MEST)
+To: Sam Ravnborg <sam@ravnborg.org>
+In-reply-to: Your message of "Wed, 10 Aug 2005 18:32:02 +0200."
+             <20050810163202.GA11131@mars.ravnborg.org> 
+X-ID: TQJVcwZHQeWzYvOS8MHJXeBFs-JC7KPXvYBF39aJvWu6OtMGVbaT0+@t-dialin.net
+X-TOI-MSGID: 0612d556-fbbb-4e32-a254-bacbc1398db3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+In message <20050810163202.GA11131@mars.ravnborg.org> you wrote:
+>
+> Not knowing perl at all I wonder if some more widespread used packages
+> can replace the above two?
 
-I'm trying to reimplement my cg-clean script so that it reuses more code
-from other utilities.  This patch makes it possible to call cg-status
-from cg-clean.
+Installation of the required modules from the  CPAN  is  trivial.  It
+should be documented somewhere, though.
 
-This patch adds the "-x" option that instructs cg-status not to ignore
-any files.  Also, the code has been changed to add standard includes in
-a loop.
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+Best regards,
 
-diff --git a/cg-status b/cg-status
---- a/cg-status
-+++ b/cg-status
-@@ -34,6 +34,9 @@
- # -w::
- #	Show the working tree file list.
- #
-+# -x::
-+#	Don't exclude any files from listing.
-+#
- # FILES
- # -----
- # $GIT_DIR/exclude::
-@@ -53,11 +56,14 @@ USAGE="cg-status [-g] [-w]"
- 
- gitstatus=
- workstatus=
-+noexclude=
- while optparse; do
- 	if optparse -g; then
- 		gitstatus=1
- 	elif optparse -w; then
- 		workstatus=1
-+	elif optparse -x; then
-+		noexclude=1
- 	else
- 		optfail
- 	fi
-@@ -116,18 +122,21 @@ fi
- 
- 
- if [ "$workstatus" ]; then
--	EXCLUDEFILE=$_git/exclude
- 	EXCLUDE=
--	if [ -f $EXCLUDEFILE ]; then
--		EXCLUDE="$EXCLUDE --exclude-from=$EXCLUDEFILE"
-+	if [ -z "$noexclude" ]; then
-+		EXCLUDEFILE=$_git/exclude
-+		for excl in '*.[ao]' '.*' tags '*~' '#*' ',,merge*'; do
-+			EXCLUDE="$EXCLUDE --exclude=$excl"
-+		done
-+		if [ -f $EXCLUDEFILE ]; then
-+			EXCLUDE="$EXCLUDE --exclude-from=$EXCLUDEFILE"
-+		fi
-+		EXCLUDE="$EXCLUDE --exclude-per-directory=.gitignore"
- 	fi
- 
- 	git-update-cache --refresh > /dev/null
- 
--	git-ls-files --others --exclude='*.[ao]' --exclude='.*' --exclude=tags \
--		--exclude='*~' --exclude='#*' \
--		--exclude=',,merge*' $EXCLUDE \
--		--exclude-per-directory=.gitignore |
-+	git-ls-files --others $EXCLUDE |
- 		{ if [ "$_git_relpath" ]; then sed -n "s|^$_git_relpath||p"; else cat; fi } |
- 		sed 's,^,? ,'
- 
-
+Wolfgang Denk
 
 -- 
-Regards,
-Pavel Roskin
+Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
+Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
+"UNIX was not designed to stop you from doing stupid things,  because
+that would also stop you from doing clever things."       - Doug Gwyn
