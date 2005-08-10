@@ -1,116 +1,84 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Speed up git-merge-base a lot
-Date: Wed, 10 Aug 2005 16:26:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508101615520.3295@g5.osdl.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] Debian packaging for 0.99.4
+Date: Thu, 11 Aug 2005 01:39:53 +0200
+Message-ID: <20050810233953.GV28270@kiste.smurf.noris.de>
+References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net> <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net> <7vacjsdcbj.fsf@assigned-by-dhcp.cox.net> <7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net> <pan.2005.08.10.21.15.41.143251@smurf.noris.de> <pan.2005.08.10.22.11.25.242201@smurf.noris.de> <46a038f9050810155642bb5580@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 11 01:29:37 2005
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FcSpk3Icpd/Pbul4"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 11 01:41:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2zyM-0000KV-Rt
-	for gcvg-git@gmane.org; Thu, 11 Aug 2005 01:27:00 +0200
+	id 1E30CQ-0001fH-3k
+	for gcvg-git@gmane.org; Thu, 11 Aug 2005 01:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932601AbVHJX0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 19:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbVHJX0i
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 19:26:38 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:904 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932601AbVHJX0h (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Aug 2005 19:26:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7ANQXjA008314
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 10 Aug 2005 16:26:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7ANQWa6018358;
-	Wed, 10 Aug 2005 16:26:32 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.41__
-X-MIMEDefang-Filter: osdl$Revision: 1.113 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932606AbVHJXl1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 19:41:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932607AbVHJXl1
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 19:41:27 -0400
+Received: from run.smurf.noris.de ([192.109.102.41]:63682 "EHLO
+	server.smurf.noris.de") by vger.kernel.org with ESMTP
+	id S932606AbVHJXl0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2005 19:41:26 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
+	by server.smurf.noris.de with smtp (Exim 4.50)
+	id 1E30As-0002Jd-Ch; Thu, 11 Aug 2005 01:41:10 +0200
+Received: (nullmailer pid 29907 invoked by uid 501);
+	Wed, 10 Aug 2005 23:39:53 -0000
+To: Martin Langhoff <martin.langhoff@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <46a038f9050810155642bb5580@mail.gmail.com>
+User-Agent: Mutt/1.5.6+20040907i
+X-Smurf-Spam-Score: -2.5 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 
+--FcSpk3Icpd/Pbul4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In commit 4f7eb2e5a351e0d1f19fd4eab7e92834cc4528c2 I fixed git-merge-base 
-getting confused by datestamps that caused it to traverse things in a 
-non-obvious order.
+Hi,
 
-However, my fix was a very brute-force one, and it had some really
-horrible implications for more complex trees with lots of parallell
-development. It might end up traversing all the way to the root commit.
+Martin Langhoff:
+> On 8/11/05, Matthias Urlichs <smurf@smurf.noris.de> wrote:
+> > Debian packaging fixes for 0.99.4:
+>=20
+> Is this anywhere in the archive?
+>=20
+Cogito 0.12.1 (which includes git) has been packaged by Sebastian
+Kuzminsky <seb@highlab.com>; it's in Debian Unstable. I assume
+he'll do something about packaging the current version; I just filed a
+wishlist bug in Debian.
 
-Now, normally that isn't that horrible: it's used mainly for merging, and 
-the bad cases really tend to happen fairly rarely, so if it takes a few 
-seconds, we're not in too bad shape.
+The current "cogito" package in Debian renames both the git and cg
+command line programs because there are already packages with conflicting
+commands in Debian ("git" and "cgvg"). I consider that to be a mistake,
+to be honest.
 
-However, gitk will also do the git-merge-base for every merge it shows,
-because it basically re-does the trivial merge in order to show the
-"interesting" parts. And there we'd really like the result to be
-instantaneous.
+--=20
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Coding is easy. All you do is sit staring at a terminal
+until the drops of blood form on your forehead.
 
-This patch does that by walking the tree more completely, and using the 
-same heuristic as git-rev-list to decide "ok, the rest is uninteresting".
+--FcSpk3Icpd/Pbul4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-In one - hopefully fairly extreme - case, it made a git-merge-base go from
-just under five seconds(!) to a tenth of a second on my machine.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/merge-base.c b/merge-base.c
---- a/merge-base.c
-+++ b/merge-base.c
-@@ -2,6 +2,22 @@
- #include "cache.h"
- #include "commit.h"
- 
-+#define PARENT1 1
-+#define PARENT2 2
-+#define UNINTERESTING 4
-+
-+static int interesting(struct commit_list *list)
-+{
-+	while (list) {
-+		struct commit *commit = list->item;
-+		list = list->next;
-+		if (commit->object.flags & UNINTERESTING)
-+			continue;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
- static struct commit *common_ancestor(struct commit *rev1, struct commit *rev2)
- {
- 	struct commit_list *list = NULL;
-@@ -18,19 +34,18 @@ static struct commit *common_ancestor(st
- 	insert_by_date(rev1, &list);
- 	insert_by_date(rev2, &list);
- 
--	while (list) {
-+	while (interesting(list)) {
- 		struct commit *commit = list->item;
- 		struct commit_list *tmp = list, *parents;
--		int flags = commit->object.flags & 3;
-+		int flags = commit->object.flags & 7;
- 
- 		list = list->next;
- 		free(tmp);
--		switch (flags) {
--		case 3:
-+		if (flags == 3) {
- 			insert_by_date(commit, &result);
--			continue;
--		case 0:
--			die("git-merge-base: commit without either parent?");
-+
-+			/* Mark children of a found merge uninteresting */
-+			flags |= UNINTERESTING;
- 		}
- 		parents = commit->parents;
- 		while (parents) {
+iD8DBQFC+pBJ8+hUANcKr/kRAv/KAJwPi/u45hLVuXfqg/7BEY0++3e3wQCZARpY
+KtJF4XnA+N1jBLR/8q6eFXA=
+=t5zI
+-----END PGP SIGNATURE-----
+
+--FcSpk3Icpd/Pbul4--
