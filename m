@@ -1,44 +1,55 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: gitweb - feature request
-Date: Wed, 10 Aug 2005 07:18:46 +0200
-Message-ID: <20050810051846.GA17531@mars.ravnborg.org>
-References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <20050809201836.GA11051@mars.ravnborg.org> <20050809211402.GA21194@vrfy.org> <20050810020013.GA27506@vrfy.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Sanity check of git-commit patch, was Re: [PATCH] Making CFLAGS compilant with GNU Coding Standards
+Date: Tue, 09 Aug 2005 22:45:44 -0700
+Message-ID: <7vd5oms5tj.fsf@assigned-by-dhcp.cox.net>
+References: <1123306575.7588.17.camel@dv.roinet.com>
+	<7vy87c2lrv.fsf@assigned-by-dhcp.cox.net>
+	<20050808231036.GA22778@mythryan2.michonline.com>
+	<Pine.LNX.4.63.0508090140100.3695@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<7vpssnyge0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0508091212170.6752@wgmdd8.biozentrum.uni-wuerzburg.de>
+	<7vu0hzw9sx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kay Sievers <kay.sievers@vrfy.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 10 07:16:41 2005
+Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 10 07:46:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E2iwl-000616-T9
-	for gcvg-git@gmane.org; Wed, 10 Aug 2005 07:16:12 +0200
+	id 1E2jPV-0008AV-Dg
+	for gcvg-git@gmane.org; Wed, 10 Aug 2005 07:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964998AbVHJFP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 10 Aug 2005 01:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964999AbVHJFP7
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 01:15:59 -0400
-Received: from pfepa.post.tele.dk ([195.41.46.235]:57448 "EHLO
-	pfepa.post.tele.dk") by vger.kernel.org with ESMTP id S964998AbVHJFP7
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Aug 2005 01:15:59 -0400
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pfepa.post.tele.dk (Postfix) with ESMTP id 1310447FE6B;
-	Wed, 10 Aug 2005 07:15:55 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id D740D6AC01D; Wed, 10 Aug 2005 07:18:46 +0200 (CEST)
-To: Kay Sievers <kay.sievers@vrfy.org>
-Content-Disposition: inline
-In-Reply-To: <20050810020013.GA27506@vrfy.org>
-User-Agent: Mutt/1.5.8i
+	id S965003AbVHJFpr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 10 Aug 2005 01:45:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965008AbVHJFpr
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Aug 2005 01:45:47 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:22001 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S965003AbVHJFpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Aug 2005 01:45:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050810054545.FOBK8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 10 Aug 2005 01:45:45 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <7vu0hzw9sx.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 09 Aug 2005 05:53:50 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> Sam,
-> try it! :)
+Junio C Hamano <junkio@cox.net> writes:
 
-Works excellent - and less than 12 hours after I posted my feautre
-reqest. That was quick!
+>> - Multiple -m options was actually a feature of my version of the patch.
+>
+> Ah, OK.
 
-Thanks,
-	Sam
+I said "OK" and thought about it again.  While thinking about
+what is the right inter-message-piece separator for multiple -m
+parameters (you use "\n"), I got a headache.  I decided to keep
+what is already there after all ;-).
+
+I'll push things out tonight and expect to tag things tomorrow
+late afternoon to declare 0.99.4
