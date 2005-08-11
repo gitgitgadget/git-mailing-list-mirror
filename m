@@ -1,54 +1,67 @@
-From: Sebastian Kuzminsky <seb@highlab.com>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Thu, 11 Aug 2005 16:18:36 -0600
-Message-ID: <E1E3LNk-0005f0-11@highlab.com>
-References: <pan.2005.08.10.22.11.25.242201@smurf.noris.de> <46a038f9050810155642bb5580@mail.gmail.com> <20050810233953.GV28270@kiste.smurf.noris.de> <E1E33Zb-0004dT-Bx@highlab.com> <46a038f90508102144358a4bcf@mail.gmail.com> <Pine.LNX.4.58.0508102200560.3295@g5.osdl.org> <E1E35vU-0004nP-JR@highlab.com> <Pine.LNX.4.58.0508110915210.3295@g5.osdl.org> <E1E3IOG-0005HO-AK@highlab.com> <20050811201558.GA2874@mars.ravnborg.org> <20050811202410.GB5411@kiste.smurf.noris.de> <42FBCD73.3090507@chandlerfamily.org.uk>
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 00:17:21 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: A simple script to do the reverse of git-push
+Date: Fri, 12 Aug 2005 00:18:12 +0200
+Message-ID: <20050811221812.GG25280@pasky.ji.cz>
+References: <Pine.LNX.4.63.0508082318400.2911@wgmdd8.biozentrum.uni-wuerzburg.de> <7vslxk125f.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 00:19:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3LLs-0001Za-9Y
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:16:40 +0200
+	id 1E3LNP-0001nb-PO
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932444AbVHKWQh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Aug 2005 18:16:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932490AbVHKWQh
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:16:37 -0400
-Received: from sccrmhc12.comcast.net ([204.127.202.56]:28037 "EHLO
-	sccrmhc12.comcast.net") by vger.kernel.org with ESMTP
-	id S932444AbVHKWQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2005 18:16:37 -0400
-Received: from highlab.com ([67.165.222.77])
-          by comcast.net (sccrmhc12) with ESMTP
-          id <20050811221632012005oo06e>; Thu, 11 Aug 2005 22:16:36 +0000
-Received: from seb (helo=highlab.com)
-	by highlab.com with local-esmtp (Exim 4.50)
-	id 1E3LNk-0005f0-11; Thu, 11 Aug 2005 16:18:36 -0600
-To: Alan Chandler <alan@chandlerfamily.org.uk>
-In-reply-to: <42FBCD73.3090507@chandlerfamily.org.uk> 
-Comments: In-reply-to Alan Chandler <alan@chandlerfamily.org.uk>
-   message dated "Thu, 11 Aug 2005 23:13:07 +0100."
+	id S932490AbVHKWSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Aug 2005 18:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932494AbVHKWSN
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:18:13 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:16650 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S932490AbVHKWSN (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2005 18:18:13 -0400
+Received: (qmail 20617 invoked by uid 2001); 11 Aug 2005 22:18:12 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vslxk125f.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Alan Chandler <alan@chandlerfamily.org.uk> wrote:
-> Matthias Urlichs wrote:
-> > A small Debian-specific patch to rename the offending scripts (and drop
-> > the Conflicts: entries) is cheap.
+Dear diary, on Tue, Aug 09, 2005 at 12:42:36AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Not sure I understand the proper use of dpkg-divert in Debian, but could 
-> _this_ git-core package perhaps ask the user which set of the two 
-> packages he wish to keep as git command and use dpkg-divert to change 
-> the other to another name to some other name?
+> > BTW, if you are lazy, like me, you just pull from Junio once in a while 
+> > and do a "make test". Turns out there is a missing dependency though:
+> >
+> > peek-remote.o: cache.h
+> >
+> > which in my case lead to a git-peek-remote program which was unable to 
+> > peek any ref.
+> 
+> You are right.  Thanks for noticing.
+> 
+>     $ (make clean ; make ) >/dev/null 2>/dev/null
+>     $ touch cache.h
+>     $ make 2>&1 | grep peek-remote
+>     cc -g -O2 -Wall  '-DSHA1_HEADER=<openssl/sha.h>' -o git-peek-remote peek-remote.o libgit.a -lz -lcrypto
+> 
+> I think recent "depend on object files" Makefile patch broke
+> some things.
 
-This may be a possibility.  I'm discussing the details of this kind of
-solution on the debian-devel list right now.
-
-Come join the fun!  I make a poor flame-conduit between the git list
-and the debian-devel list, cut out the middle man and save.  ;-)
-
+Indeed. I took care to make the new dependencies a superset of previous
+situation when removing the explicit dependencies list, but before,
+rebuilding of libgit.a caused rebuilt from source of all the commands,
+which wouldn't happen anymore after adding the object files, which this
+way sneakily removed an implicit dependency of the command sources on
+$(LIB_H). Eek.
 
 -- 
-Sebastian Kuzminsky
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
