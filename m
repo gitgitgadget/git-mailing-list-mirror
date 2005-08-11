@@ -1,82 +1,70 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Fri, 12 Aug 2005 01:12:06 +0200
-Message-ID: <20050811231202.GF5411@kiste.smurf.noris.de>
-References: <pan.2005.08.10.22.11.25.242201@smurf.noris.de> <46a038f9050810155642bb5580@mail.gmail.com> <20050810233953.GV28270@kiste.smurf.noris.de> <E1E33Zb-0004dT-Bx@highlab.com> <46a038f90508102144358a4bcf@mail.gmail.com> <Pine.LNX.4.58.0508102200560.3295@g5.osdl.org> <E1E35vU-0004nP-JR@highlab.com> <Pine.LNX.4.58.0508110915210.3295@g5.osdl.org> <E1E3IOG-0005HO-AK@highlab.com> <Pine.LNX.4.58.0508111448090.3295@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-http-pull broken in latest git
+Date: Thu, 11 Aug 2005 16:21:46 -0700
+Message-ID: <7v4q9wf4ad.fsf@assigned-by-dhcp.cox.net>
+References: <42F8D472.3080404@de.bosch.com>
+	<20050811223349.GI25280@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="dWYAkE0V1FpFQHQ3"
-Cc: Sebastian Kuzminsky <seb@highlab.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 01:15:34 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 01:22:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3MGW-0000Bi-0n
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 01:15:12 +0200
+	id 1E3MN4-00016q-PA
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 01:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932460AbVHKXPI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Aug 2005 19:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbVHKXPI
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 19:15:08 -0400
-Received: from run.smurf.noris.de ([192.109.102.41]:32208 "EHLO
-	server.smurf.noris.de") by vger.kernel.org with ESMTP
-	id S932460AbVHKXPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2005 19:15:07 -0400
-Received: from kiste.smurf.noris.de ([192.109.102.35] ident=mail)
-	by server.smurf.noris.de with smtp (Exim 4.50)
-	id 1E3MDc-0001NA-Ss; Fri, 12 Aug 2005 01:13:46 +0200
-Received: (nullmailer pid 24789 invoked by uid 501);
-	Thu, 11 Aug 2005 23:12:06 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0508111448090.3295@g5.osdl.org>
-User-Agent: Mutt/1.5.6+20040907i
-X-Smurf-Spam-Score: -2.5 (--)
-X-Smurf-Whitelist: +relay_from_hosts
+	id S932405AbVHKXVt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Aug 2005 19:21:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932495AbVHKXVt
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 19:21:49 -0400
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:32419 "EHLO
+	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
+	id S932405AbVHKXVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2005 19:21:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050811232146.JRCL19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 11 Aug 2005 19:21:46 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050811223349.GI25280@pasky.ji.cz> (Petr Baudis's message of
+	"Fri, 12 Aug 2005 00:33:49 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Petr Baudis <pasky@suse.cz> writes:
 
---dWYAkE0V1FpFQHQ3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> $ git-cat-file commit bf570303153902ec3d85570ed24515bcf8948848 | grep tree
+> tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+> $ git-read-tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+> fatal: failed to unpack tree object 41f10531f1799bbb31a1e0f7652363154ce96f45
 
-Hi,
+> Kaboom. I think the issue might be that the reference dependency tree
+> building is broken and it should've pulled the other pack as well.
 
-Linus Torvalds:
-> Hands up people. Does anybody _use_ GNU interactive tools? None of this "=
-I=20
-> have a package" crap.
->=20
-You're preaching to the converted here.
+Last time I checked, git-http-pull did not utilize the pack
+dependency information, which indeed is wrong.  When it decides
+to fetch a pack instead of an asked-for object, it should check
+which commits the pack expects to have in your local repository
+and add them to its list of things to slurp.
 
-The Debian-package-for-Debian could pop up a notice asking the user to
-symlink /usr/local/bin/git =3D> /usr/bin/gitscm (or whatever) if they
-want to use the "normal" name... that's probably the only solution which
-would work reasonably well without being too much hassle to implement.
+A good news is that "git clone" as a whole works fine.
 
---=20
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-For the right person, the impossible is easy!
-					-- Dumbo
-
---dWYAkE0V1FpFQHQ3
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFC+9tC8+hUANcKr/kRAjCCAJ9lZn/gBrPlj/PLMfDjP433/+eEdACfYTVj
-yYH9TTGGcSrjYm6K49fYCXI=
-=WeM2
------END PGP SIGNATURE-----
-
---dWYAkE0V1FpFQHQ3--
+    prompt$ cd /var/tmp/
+    prompt$ rm -fr junk
+    prompt$ git clone http://www.kernel.org/pub/scm/git/git.git junk
+    defaulting to local storage area
+    prompt$ cd junk
+    prompt$ git-cat-file commit bf570303153902ec3d85570ed24515bcf8948848 |
+            grep tree
+    tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+    prompt$ git-read-tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+    prompt$ /bin/ls .git/objects/pack
+    pack-37cba29d3df65b160afabe769470f7857f98d729.idx
+    pack-37cba29d3df65b160afabe769470f7857f98d729.pack
+    pack-3c5133604508466855453f3e609428f4bbba9131.idx
+    pack-3c5133604508466855453f3e609428f4bbba9131.pack
+    prompt$ 
