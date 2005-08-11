@@ -1,76 +1,57 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Trapping exit in tests, using return for errors
-Date: Wed, 10 Aug 2005 23:06:43 -0700
-Message-ID: <7virydnh1o.fsf@assigned-by-dhcp.cox.net>
-References: <1123732581.18644.37.camel@dv>
+Subject: Re: [PATCH] Debian packaging for 0.99.4
+Date: Wed, 10 Aug 2005 23:12:17 -0700
+Message-ID: <7vbr45ngse.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
+	<7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net>
+	<7vacjsdcbj.fsf@assigned-by-dhcp.cox.net>
+	<7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net>
+	<pan.2005.08.10.21.15.41.143251@smurf.noris.de>
+	<pan.2005.08.10.22.11.25.242201@smurf.noris.de>
+	<46a038f9050810155642bb5580@mail.gmail.com>
+	<20050810233953.GV28270@kiste.smurf.noris.de>
+	<E1E33Zb-0004dT-Bx@highlab.com>
+	<46a038f90508102144358a4bcf@mail.gmail.com>
+	<E1E35C2-0004kt-VH@highlab.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 11 08:07:49 2005
+Cc: Sebastian Kuzminsky <seb@highlab.com>
+X-From: git-owner@vger.kernel.org Thu Aug 11 08:12:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E36DJ-0000Ld-Ua
-	for gcvg-git@gmane.org; Thu, 11 Aug 2005 08:06:50 +0200
+	id 1E36Ig-0000hz-Gx
+	for gcvg-git@gmane.org; Thu, 11 Aug 2005 08:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075AbVHKGGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Aug 2005 02:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVHKGGq
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 02:06:46 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:18079 "EHLO
+	id S932239AbVHKGMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Aug 2005 02:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbVHKGMU
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 02:12:20 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:12706 "EHLO
 	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932075AbVHKGGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2005 02:06:45 -0400
+	id S932239AbVHKGMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Aug 2005 02:12:19 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao06.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050811060642.XPVH19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 11 Aug 2005 02:06:42 -0400
-To: Pavel Roskin <proski@gnu.org>
-In-Reply-To: <1123732581.18644.37.camel@dv> (Pavel Roskin's message of "Wed,
-	10 Aug 2005 23:56:21 -0400")
+          id <20050811061217.XQZZ19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 11 Aug 2005 02:12:17 -0400
+To: git@vger.kernel.org
+In-Reply-To: <E1E35C2-0004kt-VH@highlab.com> (Sebastian Kuzminsky's message of
+	"Wed, 10 Aug 2005 23:01:26 -0600")
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Pavel Roskin <proski@gnu.org> writes:
+Sebastian Kuzminsky <seb@highlab.com> writes:
 
-> This patch does following:
->
-> All instances of "exit", "exit 1" and "(exit 1)" in tests have been
-> replaced with "return 1".  In fact, "(exit 1)" had no effect.
+> While we're at it, renaming cogito's "cg" to "cog" would fix another
+> filename conflict in Debian, and would give the right hand something to
+> do while the left hand seeks from c to g.  ;-)
 
-Are you sure about all of the above?
+Well, these days cogito ships without git, so maybe it should be
+renamed to "coo" ;-).
 
-You are right about "... || exit" in the expect_success tests;
-they are broken.  But '(exit 1)' or just saying 'false' at the
-end should have done the right thing.  Worse yet, return does
-not seem to really work as expected, except if all you want to
-do was to tell the test driver "I failed", in which case
-"bloopl" would work just as well.
-
-prompt$ cat k.sh
-what="$1"
-eval '
-        echo foo
-        case '$what' in
-        false)
-                (exit 1) ;;
-        exit)
-                exit 1 ;;
-        return)
-                return 1 ;;
-        esac
-'
-echo "status $?"
-prompt$ bash k.sh exit
-foo
-prompt$ bash k.sh false
-foo
-status 1
-prompt$ bash k.sh return
-foo
-k.sh: line 20: return: can only `return' from a function or sourced script
-status 1
-prompt$ 
+No, renaming git to lit is not on my list of immediate things to
+do.  At least not yet.
