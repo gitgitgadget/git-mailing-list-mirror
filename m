@@ -1,67 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Thu, 11 Aug 2005 15:21:51 -0700
-Message-ID: <7v3bpgglmo.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508110915210.3295@g5.osdl.org>
-	<7vfytgl25g.fsf@assigned-by-dhcp.cox.net>
-	<200508111745.49128.gene.heskett@verizon.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: git-http-pull broken in latest git
+Date: Fri, 12 Aug 2005 00:33:49 +0200
+Message-ID: <20050811223349.GI25280@pasky.ji.cz>
+References: <42F8D472.3080404@de.bosch.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 00:23:00 2005
+X-From: git-owner@vger.kernel.org Fri Aug 12 00:34:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3LQy-0002G7-4Z
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:21:56 +0200
+	id 1E3Lcv-0003bR-4f
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932498AbVHKWVx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Aug 2005 18:21:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932499AbVHKWVx
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:21:53 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:56251 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932498AbVHKWVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2005 18:21:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050811222150.HHGI3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 11 Aug 2005 18:21:50 -0400
-To: Gene Heskett <gene.heskett@verizon.net>
-In-Reply-To: <200508111745.49128.gene.heskett@verizon.net> (Gene Heskett's
-	message of "Thu, 11 Aug 2005 17:45:48 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932508AbVHKWdw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Aug 2005 18:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbVHKWdv
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:33:51 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35082 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S932508AbVHKWdu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2005 18:33:50 -0400
+Received: (qmail 23251 invoked by uid 2001); 11 Aug 2005 22:33:49 -0000
+To: Dirk Behme <dirk.behme@de.bosch.com>
+Content-Disposition: inline
+In-Reply-To: <42F8D472.3080404@de.bosch.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Gene Heskett <gene.heskett@verizon.net> writes:
+Dear diary, on Tue, Aug 09, 2005 at 06:06:10PM CEST, I got a letter
+where Dirk Behme <dirk.behme@de.bosch.com> told me that...
+> Hello,
 
->>    rank  name            inst    vote     old recent
->>    6591  git              114      24      83      7
->>    25555 git-core           2       1       0      1 (Not in sid)
->>    29939 cogito-scm         1       0       1      0 (Not in sid)
->
-> This obviously is not even a fair assesment of the potential
-> popularity of this new kernel package admin tool.  By holding to this
-> attitude, you will surely alienate linux users away from debian.
+Hello,
 
-> If so far, only 114 people out of the 7147 who were kind enough to
-> fill out a questionaire have installed the debian 'git' and 24 report
-> that they are using this tool, then obviously once a stable release of
-> the Linus version of git has been achieved, the user count of the new
-> tool will handily exceed the user count of the older and totally
-> different toolkit from gnu.  This will occur within 24 hours of a
-> working, stable release of the Linus git.  Possibly aleady has
-> occured, I have it (the rpm) here already.
+> >cg-clone http://www.kernel.org/pub/scm/git/git.git 
+> defaulting to local storage area
+> warning: templates not found /home/user/share/git-core/templates/
+> 16:29:03 URL:http://www.kernel.org/pub/scm/git/git.git/refs/heads/master
+> [41/41] -> "refs/heads/origin" [1]
+> progress: 3 objects, 5158 bytes
+> Getting pack list
+> error: Unable to get pack index
+> http://www.kernel.org/pub/scm/git/git.git//objects/info/packs
+> error: Tried
+> http://www.kernel.org/pub/scm/git/git.git/objects/6f/f87c4664981e4397625791c8ea3bbb5f2279a3
+> Cannot obtain needed blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3
+> while processing commit adee7bdf504120055b0f36b4918bdd3e6156912b.
+> cg-pull: objects pull failed
+> cg-clone: pull failed
+> 
+> Is this a tool or repository issue?
 
-I suspect you are confused.  The entry "git" in above table is
-the GNU interactive tools and comment about 114/7147 ratio is
-about GNU interactive tools, not our GIT.  Ours are "git-core"
-and "cogito-scm", marked as "Not in sid".  I do not understand
-why you think my attitude would alienate users away from debian.
+it appears that git-http-pull is broken. It gives me a different error
+now and with the latest git, though. When using just core git:
 
-As you say, when it is included in the official archive, I
-expect our numbers would exceed "the other GIT" very quickly.
+$ wget http://www.kernel.org/pub/scm/git/git.git/refs/heads/master
+$ mv master .git/refs/heads/
+$ cat .git/refs/heads/master
+bf570303153902ec3d85570ed24515bcf8948848
+$ git-http-pull -a -v $(cat .git/refs/heads/master) \
+	http://www.kernel.org/pub/scm/git/git.git/
+Getting pack list
+Getting index for pack 3c5133604508466855453f3e609428f4bbba9131
+Getting index for pack 37cba29d3df65b160afabe769470f7857f98d729
+Getting pack 37cba29d3df65b160afabe769470f7857f98d729
+ which contains bf570303153902ec3d85570ed24515bcf8948848
+$ git-cat-file commit bf570303153902ec3d85570ed24515bcf8948848 | grep tree
+tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+$ git-read-tree 41f10531f1799bbb31a1e0f7652363154ce96f45
+fatal: failed to unpack tree object 41f10531f1799bbb31a1e0f7652363154ce96f45
+
+Kaboom. I think the issue might be that the reference dependency tree
+building is broken and it should've pulled the other pack as well.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
