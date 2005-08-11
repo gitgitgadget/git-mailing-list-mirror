@@ -1,49 +1,62 @@
-From: Sebastian Kuzminsky <seb@highlab.com>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Thu, 11 Aug 2005 16:20:47 -0600
-Message-ID: <E1E3LPr-0005fs-D5@highlab.com>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net> <7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net> <7vacjsdcbj.fsf@assigned-by-dhcp.cox.net> <7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net> <pan.2005.08.10.21.15.41.143251@smurf.noris.de> <pan.2005.08.10.22.11.25.242201@smurf.noris.de> <46a038f9050810155642bb5580@mail.gmail.com> <20050810233953.GV28270@kiste.smurf.noris.de> <E1E33Zb-0004dT-Bx@highlab.com> <46a038f90508102144358a4bcf@mail.gmail.com> <Pine.LNX.4.58.0508102200560.3295@g5.osdl.org> <E1E35vU-0004nP-JR@highlab.com> <Pine.LNX.4.58.0508110915210.3295@g5.osdl.org> <E1E3IOG-0005HO-AK@highlab.com> <Pine.LNX.4.58.0508111448090.3295@g5.osdl.org>
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Matthias Urlichs <smurf@smurf.noris.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 00:19:39 2005
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Make git-rev-tree obsolete
+Date: Fri, 12 Aug 2005 00:22:31 +0200
+Message-ID: <20050811222231.GH25280@pasky.ji.cz>
+References: <Pine.LNX.4.63.0508090222190.4076@wgmdd8.biozentrum.uni-wuerzburg.de> <7vhddzygcp.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 00:22:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3LNu-0001o0-QH
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:18:47 +0200
+	id 1E3LRa-0002GW-E0
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 00:22:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932494AbVHKWSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 11 Aug 2005 18:18:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932495AbVHKWSo
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:18:44 -0400
-Received: from rwcrmhc14.comcast.net ([216.148.227.89]:57019 "EHLO
-	rwcrmhc12.comcast.net") by vger.kernel.org with ESMTP
-	id S932494AbVHKWSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Aug 2005 18:18:44 -0400
-Received: from highlab.com ([67.165.222.77])
-          by comcast.net (rwcrmhc14) with ESMTP
-          id <2005081122184301400gb5p9e>; Thu, 11 Aug 2005 22:18:43 +0000
-Received: from seb (helo=highlab.com)
-	by highlab.com with local-esmtp (Exim 4.50)
-	id 1E3LPr-0005fs-D5; Thu, 11 Aug 2005 16:20:47 -0600
-To: Linus Torvalds <torvalds@osdl.org>
-In-reply-to: <Pine.LNX.4.58.0508111448090.3295@g5.osdl.org> 
-Comments: In-reply-to Linus Torvalds <torvalds@osdl.org>
-   message dated "Thu, 11 Aug 2005 14:53:05 -0700."
+	id S932499AbVHKWWc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 11 Aug 2005 18:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932500AbVHKWWc
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Aug 2005 18:22:32 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:21770 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S932499AbVHKWWb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Aug 2005 18:22:31 -0400
+Received: (qmail 21416 invoked by uid 2001); 11 Aug 2005 22:22:31 -0000
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vhddzygcp.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> Hands up people. Does anybody _use_ GNU interactive tools? None of this "I 
-> have a package" crap.
+Dear diary, on Tue, Aug 09, 2005 at 04:49:26AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Junio remarked that Jeff's git-changes-script still uses git-rev-tree, and 
+> > therefore it should not be removed. This patch changes git-changes-script 
+> > over to git-rev-list:
+> 
+> Just to make things clear, "Junio remarked" that Cogito also
+> seems to use it as well, so git-rev-tree is not going away.
 
-Obviously no one on the git list uses GNU Interactive Tools, or this
-problem would have been caught much sooner.
+Please note
 
-It's only when you release it into the wild that these kind of things
-get noticed.  If only it weren't for the fuc*ing users, man...
+41283a6ed1924c7b3963c5455ba39911f1069682
+	cg-mkpatch: Ditch git-rev-tree in favour of git-rev-list
+7136aa4337334a28e55c8853018423d4b780214c
+	cg-commit: Use git-rev-list instead of git-rev-tree
 
+from 2005-08-05, which should remove any traces of git-rev-tree usage
+from Cogito. Unfortunately, I did that only after releasing Cogito-0.13,
+so you would break that particular version (first to depend on git
+externally) by removing git-rev-tree now. But I think it's safe to kill
+after a while (and another Cogito release, which shouldn't be far away).
 
 -- 
-Sebastian Kuzminsky
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
