@@ -1,65 +1,48 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [OT?] git tools at SourceForge ?
-Date: Sat, 13 Aug 2005 11:01:53 +1200
-Message-ID: <46a038f905081216013941b2c@mail.gmail.com>
-References: <20050812210611.GF13550@birddog.com>
-	 <20050812220120.EF075353AED@atlas.denx.de>
+Date: Fri, 12 Aug 2005 19:14:28 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508121906130.12816@iabervon.org>
+References: <20050812190739.AC222352633@atlas.denx.de>
+ <Pine.LNX.4.63.0508121634570.12816@iabervon.org> <Pine.LNX.4.58.0508121513530.3295@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Kirby C. Bohling" <kbohling@birddog.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 01:02:51 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 01:12:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3iXO-0001tT-9X
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 01:02:06 +0200
+	id 1E3igG-0002pr-LF
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 01:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbVHLXBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 19:01:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbVHLXBy
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 19:01:54 -0400
-Received: from rproxy.gmail.com ([64.233.170.194]:13069 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751301AbVHLXBy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2005 19:01:54 -0400
-Received: by rproxy.gmail.com with SMTP id i8so524875rne
-        for <git@vger.kernel.org>; Fri, 12 Aug 2005 16:01:53 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=liaRzSI0uD6QWUuVBRwioIASwSnvzpp26t3a1pCPxI4fwIv4/7aC0lqaHpD8ZVpNhFc0jeAghzZRqCXeX+wGDsgvXbSZb1LqvfACdpUQpvJbnKYYiOwkI/PBfo0g33AX5Vwd1GPnxA6JMUht6bUgOiJdwLr0juFXy1/jeSdWRrU=
-Received: by 10.39.2.8 with SMTP id e8mr1171868rni;
-        Fri, 12 Aug 2005 16:01:53 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Fri, 12 Aug 2005 16:01:53 -0700 (PDT)
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20050812220120.EF075353AED@atlas.denx.de>
-Content-Disposition: inline
+	id S1751239AbVHLXLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 19:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbVHLXLO
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 19:11:14 -0400
+Received: from iabervon.org ([66.92.72.58]:7182 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751239AbVHLXLN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 19:11:13 -0400
+Received: (qmail 25885 invoked by uid 1000); 12 Aug 2005 19:14:28 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Aug 2005 19:14:28 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508121513530.3295@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> > I don't think he wants sourceforge to host git, I think he'd like
-> > sourceforge to provide access to source trees via git, instead of
-> > cvs.  Read that as, I want to do:
-> 
-> Correct, that's what I am looking for. My  hope  is  that  if  enough
-> people ask SF might actually provide such a service.
+On Fri, 12 Aug 2005, Linus Torvalds wrote:
 
-Ubuntu's 'launchpad' project is trying to do that (a SCM 'proxy' of
-sorts) with Arch/Bazaar/BazaarNG/Whatever. It takes massive ammounts
-of diskpace and computing power to be tracking external cvs/svn repos
-in your SCM format of choice. The talked abundantly about this at the
-last Debconf in nightless helsinki.
+> And it's possible that git usage won't expand all that much either. But
+> quite frankly, I think git is a lot better than CVS (or even SVN) by now,
+> and I wouldn't be surprised if it started getting some use outside of the
+> git-only and kernel projects once people start getting more used to it. 
+> And so I'd be thrilled to have some site like SF support it.
 
-I know I will be running GIT public repos that mirror CVS repos of a
-few large-ish projects I work on a lot, and are starting to strain
-CVS's ability to coordinate work. I am keen on starting a Wiki on
-'git/cogito' techniques and usage strategies, and my first entry is
-going to be about how to track an external project this way.
+I certainly think it's going to happen; it's just not surprising that it 
+hasn't happened yet. Once there's a stable release and some publicity, I'd 
+expect SF to see it as worthwhile. But a hosting site with git-only shell 
+access needs to know what the necessary programs are going to be, which we 
+haven't committed to quite yet.
 
-cheers,
-
-
-martin
+	-Daniel
+*This .sig left intentionally blank*
