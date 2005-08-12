@@ -1,82 +1,74 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
 Subject: Re: [OT?] git tools at SourceForge ?
-Date: Sat, 13 Aug 2005 11:17:57 +1200
-Message-ID: <46a038f90508121617560d00c@mail.gmail.com>
-References: <20050812190739.AC222352633@atlas.denx.de>
-	 <Pine.LNX.4.63.0508121634570.12816@iabervon.org>
-	 <Pine.LNX.4.58.0508121513530.3295@g5.osdl.org>
+Date: Fri, 12 Aug 2005 16:24:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.62.0508121618140.20901@qynat.qvtvafvgr.pbz>
+References: <20050812210611.GF13550@birddog.com><20050812220120.EF075353AED@atlas.denx.de>
+ <46a038f905081216013941b2c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 01:18:57 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Wolfgang Denk <wd@denx.de>,
+	"Kirby C. Bohling" <kbohling@birddog.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 01:26:24 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3imn-0003PN-52
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 01:18:01 +0200
+	id 1E3itd-00041Z-EZ
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 01:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307AbVHLXR6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 19:17:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbVHLXR6
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 19:17:58 -0400
-Received: from rproxy.gmail.com ([64.233.170.196]:51734 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751303AbVHLXR5 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2005 19:17:57 -0400
-Received: by rproxy.gmail.com with SMTP id i8so526109rne
-        for <git@vger.kernel.org>; Fri, 12 Aug 2005 16:17:57 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lP2cpAL4CdjjsP2qdYWpCNHFd9RISXu01cbOr2zGqz6YdSvTiQXhKLjNiYsL8vRc4Gwzri0IJ26+O1AYX7Tvt6NUAwa50/ENL6VwFT7kggDhE/sN2FDnc1Itn2+nM6Ke3V0RIZo+GaQiogd9ixx+WsiQbZWHYdkRkpfSNl7cMBU=
-Received: by 10.38.104.22 with SMTP id b22mr1164179rnc;
-        Fri, 12 Aug 2005 16:17:57 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Fri, 12 Aug 2005 16:17:57 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508121513530.3295@g5.osdl.org>
-Content-Disposition: inline
+	id S1751245AbVHLXYx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 19:24:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751246AbVHLXYx
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 19:24:53 -0400
+Received: from warden2-p.diginsite.com ([209.195.52.120]:26082 "HELO
+	warden2.diginsite.com") by vger.kernel.org with SMTP
+	id S1751245AbVHLXYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2005 19:24:53 -0400
+Received: from atlims01.diginsite.com by warden2.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 12 Aug 2005 16:19:52 -0700
+Received: by ATHEXC01 with Internet Mail Service (5.5.2657.72)
+	id <QZL4P7WK>; Fri, 12 Aug 2005 19:24:16 -0400
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvexc00.digitalinsight.com with SMTP (Microsoft Exchange Internet Mail Service Version 5.5.2657.72)
+	id QT8M4CHJ; Fri, 12 Aug 2005 16:23:12 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-X-Sender: dlang@dlang.diginsite.com
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <46a038f905081216013941b2c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
->  - the git architecture is admirably suited to an _untrusted_ central
->    server, ie exactly the SourceForge kind of setup. I realize that the
+On Sat, 13 Aug 2005, Martin Langhoff wrote:
 
-Definitely. And beyond that too. Using SF for CVS means that when SF's
-CVS service is down (often enough) you can't commit (or even fscking
-diff) until they are back up. Every single damn operation does a
-roundtrip. This also means a huge load on their servers.
+>>> I don't think he wants sourceforge to host git, I think he'd like
+>>> sourceforge to provide access to source trees via git, instead of
+>>> cvs.  Read that as, I want to do:
+>>
+>> Correct, that's what I am looking for. My  hope  is  that  if  enough
+>> people ask SF might actually provide such a service.
+>
+> Ubuntu's 'launchpad' project is trying to do that (a SCM 'proxy' of
+> sorts) with Arch/Bazaar/BazaarNG/Whatever. It takes massive ammounts
+> of diskpace and computing power to be tracking external cvs/svn repos
+> in your SCM format of choice. The talked abundantly about this at the
+> last Debconf in nightless helsinki.
 
-I'm sure SF will be glad to see CVS fall our of favour.
+Actually, if HPA can (or has) work out the kinks for combining the object 
+stores for different projects I think you will find that a site like 
+sourceforge could actually find that across all their differnt projects 
+git will require significantly less space then first thought. I believe 
+that there is a significant number of files that are going to be the same 
+in different project (for example COPYING, or if a project is forked, most 
+of the files in a project) and therfor will just refer to the same object 
+blob.
 
->    Yes, developers can just merge with each other directly
+now when you start makeing packs this sort of thing can make the optimal 
+logic for deciding what's in each pack 'interesting', but as long as each 
+pack is self contained the rest of the git tools will handle things just 
+fine.
 
-I take it that you mean an exchange of patches that does not depend on
-having public repos. What are the mechanisms available on that front,
-other than patchbombs?
+David Lang
 
->    This is _exactly_ where something like SF really ends up being helpful.
->    It's a _hosting_ service, and git is eminently suitable to being
-
-Not sure whether SF is offering rsync, but they do support hosting of
-arbitrarty data -- and a project using GIT can use that to host
-several developer trees . It'd be nice if SF offered gitweb and
-similar niceties. As my usage of GIT increases, I may add support for
-it on Eduforge.org
-
-If I had more (hw/time) resources I'd do the git proxying of CVS
-projects, but that's huge.
-
-> And so I'd be thrilled to have some site like SF support it.
-
-Eduforge's charter is to host education-related projects, so that's
-not a free-for-all-comers, but I'm considering git support, as our
-usage of git is growing.
-
-cheers,
-
-
-
-martin
+-- 
+There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies. And the other way is to make it so complicated that there are no obvious deficiencies.
+  -- C.A.R. Hoare
