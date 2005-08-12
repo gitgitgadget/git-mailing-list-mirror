@@ -1,56 +1,59 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Fix documentation installation
-Date: Fri, 12 Aug 2005 23:14:19 +0200
-Message-ID: <20050812211418.GB20812@pasky.ji.cz>
-References: <20050812211145.GA20812@pasky.ji.cz>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [OT?] git tools at SourceForge ?
+Date: Fri, 12 Aug 2005 14:17:08 -0700 (PDT)
+Message-ID: <20050812211709.25218.qmail@web26307.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 12 23:15:04 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 23:17:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3grC-0008PU-25
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 23:14:26 +0200
+	id 1E3gu0-0000Gl-IG
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 23:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932092AbVHLVOX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 17:14:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932093AbVHLVOX
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 17:14:23 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:23054 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S932092AbVHLVOX (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 17:14:23 -0400
-Received: (qmail 1761 invoked by uid 2001); 12 Aug 2005 21:14:19 -0000
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050812211145.GA20812@pasky.ji.cz>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S1750880AbVHLVRQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 17:17:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbVHLVRP
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 17:17:15 -0400
+Received: from web26307.mail.ukl.yahoo.com ([217.146.176.18]:20641 "HELO
+	web26307.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750880AbVHLVRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2005 17:17:15 -0400
+Received: (qmail 25220 invoked by uid 60001); 12 Aug 2005 21:17:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Yo9u580LOZlAkMaI7VR8tlo0GvraP8wrNVazH0WANhnDoRrTn+mH9WGqR+W+FEV66eWpn+MOaVEBYyfk+oS9Oy5YpuJfk7YSuwQ8CT7Lm/1lKE+40rdb/sZf916wL8V2QJfUV+Dah7wZWx3QEXbMJKAWwZtnfxmtA4DN7bo+PLg=  ;
+Received: from [151.38.110.250] by web26307.mail.ukl.yahoo.com via HTTP; Fri, 12 Aug 2005 14:17:08 PDT
+To: Wolfgang Denk <wd@denx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Aug 12, 2005 at 11:11:45PM CEST, I got a letter
-where Petr Baudis <pasky@suse.cz> told me that...
-> diff --git a/tools/Makefile b/tools/Makefile
-> --- a/tools/Makefile
-> +++ b/tools/Makefile
-> @@ -18,7 +18,7 @@ git-%: %.c
->  all: $(PROGRAMS)
->  
->  install: $(PROGRAMS) $(SCRIPTS)
-> -	$(INSTALL) -m755 -d $(dest)$(bindir)
-> +	$(INSTALL) -m755 -d $(DESTDIR)$(bindir)
->  	$(INSTALL) $(PROGRAMS) $(SCRIPTS) $(DESTDIR)$(bindir)
->  
->  clean:
+Wolfgang Denk wrote:
 
-I should read patches after myself, especially when messing with them.
-This hunk is obviously superflous, so feel free to drop it from that
-patch if you are in a "patch purity" mood. OTOH it is obviously valid
-fix. :-)
+>This is somewhat off topic here, so I apologize, but  I  didn't  know
+>any better place to ask:
+>
+>Has anybody any information if SourceForge is going to provide git  /
+>cogito / ... for the projects they host? I asked SF, and they openend
+>a new Feature Request (item #1252867); the message I received sounded
+>as if I was the first person on the planet to ask...
+>
+>Am I really alone with this?
+>
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+I have asked few days ago the same thing, suggesting my qgit project, that is
+ already hosted on SF, as testing candidate. No final answer yet,
+ just notification my request will be processed.
+
+Marco
+
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
