@@ -1,69 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Clean generated files a bit more.
-Date: Fri, 12 Aug 2005 13:40:53 +0200
-Message-ID: <20050812114053.GB29893@pasky.ji.cz>
-References: <7v8xz75w6p.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: git reveals a bug in (some versions) BSD diff
+Date: Fri, 12 Aug 2005 14:32:54 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508121424500.24891@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 13:41:55 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Fri Aug 12 14:35:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3XuH-0000ei-Rk
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 13:41:02 +0200
+	id 1E3YjW-0006ij-SJ
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 14:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932164AbVHLLk7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 07:40:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932184AbVHLLk7
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 07:40:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:17157 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S932164AbVHLLk6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 07:40:58 -0400
-Received: (qmail 31118 invoked by uid 2001); 12 Aug 2005 11:40:53 -0000
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7v8xz75w6p.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S1751157AbVHLMc6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 08:32:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751158AbVHLMc6
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 08:32:58 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:21996 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751157AbVHLMc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2005 08:32:57 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id C658FE252F
+	for <git@vger.kernel.org>; Fri, 12 Aug 2005 14:32:54 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id B0F419CCA4
+	for <git@vger.kernel.org>; Fri, 12 Aug 2005 14:32:54 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP id 76FF8997B9
+	for <git@vger.kernel.org>; Fri, 12 Aug 2005 14:32:54 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP id 61AB7E252F
+	for <git@vger.kernel.org>; Fri, 12 Aug 2005 14:32:54 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Fri, Aug 12, 2005 at 11:41:34AM CEST, I got a letter
-where Junio C Hamano <junkio@cox.net> told me that...
-> Also attempt to build a source package for debian.
-> ---
-> 
->  Makefile |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> b263f24ce4f12dd39cfcd922c56a32292c6232c9
-> diff --git a/Makefile b/Makefile
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -238,14 +238,14 @@ rpm: dist
->  deb: dist
->  	rm -rf $(GIT_TARNAME)
->  	tar zxf $(GIT_TARNAME).tar.gz
-> +	dpkg-source -b $(GIT_TARNAME)
->  	cd $(GIT_TARNAME) && fakeroot debian/rules binary
->  
->  ### Cleaning rules
->  
->  clean:
->  	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(LIB_FILE)
-> -	rm -f $(GIT_TARNAME).tar.gz git-core.spec
-> -	rm -f git-core_$(GIT_VERSION)-*.deb git-tk_$(GIT_VERSION)-*.deb
-> +	rm -f git-core.spec *.deb *.dsc *.tar.gz 
+Hi,
 
+big was my surprise when my daily routine of "git pull" && "make test" 
+failed. "git bisect" revealed that commit 8e832e: "String comparison of 
+test is done with '=', not '=='." was the culprit.
 
-This makes me a bit nervous - why are you making the rules more general?
-make clean removing random tarballs of mine happenning to dwell in that
-directory is fearsome.
+But it isn't. The version of diff present on my iBook (OS 10.2.8) does not 
+work properly in this case:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+	(echo a; echo b | tr -d '\012') >frotz.2
+	(echo a; echo c; echo b | tr -d '\012') >frotz.3
+	diff -u frotz.2 frotz.3
+
+yields
+
+	--- a1  2005-08-12 14:24:19.000000000 +0200
+	+++ a2  2005-08-12 14:24:27.000000000 +0200
+	@@ -1,2 +1,3 @@
+	 a
+	+c
+	 b
+
+Note the missing "\ No newline at end of file". The same happens on 
+sourceforge's compile farm's OS 10.1 server, but not on its OS 10.2 
+server.
+
+How to go about that? Silently ignore the missing line in apply.c? Force 
+users to update their diff to a sane version?
+
+Ciao,
+Dscho
