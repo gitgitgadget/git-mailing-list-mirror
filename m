@@ -1,77 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] merge-base.c: pathological case fix.
-Date: Thu, 11 Aug 2005 22:27:51 -0700
-Message-ID: <7vwtmr912g.fsf@assigned-by-dhcp.cox.net>
-References: <7virydlzal.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508110840080.3295@g5.osdl.org>
-	<7vbr44f5s1.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508111601000.3295@g5.osdl.org>
-	<7vk6isc5x1.fsf_-_@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] cg-cat   [was: Re: Newbie question:  equiv of:  cvs co -p <filename>  ? ]
+Date: Fri, 12 Aug 2005 09:53:12 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.12.07.53.11.741187@smurf.noris.de>
+References: <ddb8vl$ifq$1@sea.gmane.org> <Pine.LNX.4.58.0508091725120.3258@g5.osdl.org> <42FA1150.7090506@research.att.com> <20050811230343.GJ25280@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 07:28:03 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Fri Aug 12 09:58:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3S5K-0007Cp-Ss
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 07:28:03 +0200
+	id 1E3UPK-0002Tb-12
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 09:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751016AbVHLF1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 01:27:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbVHLF1x
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 01:27:53 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:63726 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S1750865AbVHLF1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2005 01:27:53 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao07.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050812052752.TVUI1367.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 12 Aug 2005 01:27:52 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750939AbVHLH4p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 03:56:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbVHLH4p
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 03:56:45 -0400
+Received: from main.gmane.org ([80.91.229.2]:17569 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750938AbVHLH4o (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 03:56:44 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E3UMm-0002Gf-CY
+	for git@vger.kernel.org; Fri, 12 Aug 2005 09:54:12 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Aug 2005 09:54:12 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Aug 2005 09:54:12 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I wrote:
+Hi, Petr Baudis wrote:
 
-> + *                  F
-> + *                 / \
-> + *            E   A   D
-> + *             \ /   /  
-> + *              B   /
-> + *               \ /
-> + *                C
-> + *
-> + * First we push E and F to list to be processed.  E gets bit 1
-> + * and F gets bit 2.  The list becomes:
-> + * ...
-> + * Next, we pop B and something very interesting happens.  It has flags==3
-> + * so it is also placed on the result list, and its parents are marked
-> + * uninteresting, retroactively, and placed back on the list:
-> + *
-> + *    list=C(7), result=C(7) B(3)
-> + * 
-> + * Now, list does not have any interesting commit.  So we find the newest
-> + * commit from the result list that is not marked uninteresting.  Which is
-> + * commit B.
+>         cg-admin-cat       [-r TREE_ID] FILE...
+>         cg-admin-ls        [-t TREE_ID] [PATH]
 
-I suspect we could have "list" where all commits on it is
-uninteresting, while "result" has an interesting commit that
-turns out to be reachable from one of the uninteresting commits
-that is still on "list", and we miss it because we give up as
-soon as "list" contains nothing but uninteresting ones.
+I don't know if these need to be merged, *but* please at least
+change one of the flag names so that the whole mess is slightly more
+consistent.
 
-I have not come up with such a pathological example, but if that
-is indeed the case, we would still end up terminating the
-well-contamination too early.  I have a suspicion that no matter
-how we cut it we would have this horizon effect anyway, and if
-we want to really do the perfect job then we cannot avoid
-traversing to the root.
-
-Since merge-base is aiming to be a heuristic that works well
-enough in practice, I think we should declare victory now and
-not aim for perfection, which is an enemy of the good.
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+The thought of 2000 thousand people munching celery at the same time
+horrifies me.
+					-- George Bernard Shaw
