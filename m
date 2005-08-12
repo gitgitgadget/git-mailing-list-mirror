@@ -1,46 +1,64 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb - feature request
-Date: Fri, 12 Aug 2005 22:27:48 +0200
-Message-ID: <20050812202748.GA9696@vrfy.org>
-References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <1123653220.1183.26.camel@azathoth.hellion.org.uk>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git checkout -f branch doesn't remove extra files
+Date: Fri, 12 Aug 2005 13:27:41 -0700
+Message-ID: <7v8xz6uchu.fsf@assigned-by-dhcp.cox.net>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F04214AC7@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 22:28:50 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 22:28:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3g89-0003Aj-Uu
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 22:27:54 +0200
+	id 1E3g82-0003AT-5M
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 22:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078AbVHLU1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 16:27:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932080AbVHLU1u
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 16:27:50 -0400
-Received: from soundwarez.org ([217.160.171.123]:11165 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S932078AbVHLU1t (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 16:27:49 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id 8ED53574F9; Fri, 12 Aug 2005 22:27:48 +0200 (CEST)
-To: Ian Campbell <ijc@hellion.org.uk>
-Content-Disposition: inline
-In-Reply-To: <1123653220.1183.26.camel@azathoth.hellion.org.uk>
-User-Agent: Mutt/1.5.9i
+	id S1750788AbVHLU1o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 16:27:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbVHLU1o
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 16:27:44 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:5257 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1750788AbVHLU1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2005 16:27:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050812202742.WHDG17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 12 Aug 2005 16:27:42 -0400
+To: "Luck, Tony" <tony.luck@intel.com>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 10, 2005 at 06:53:40AM +0100, Ian Campbell wrote:
-> On Tue, 2005-08-09 at 21:58 +0200, Kay Sievers wrote:
-> 
-> > I was hoping people that want stuff like this would use a RSS reader. :)
-> 
-> I used to subscribe to the kernel RSS feed (using blam) but I found I
-> was only getting the most recent 20 commits, which wasn't much good when
-> a big batch went in because I would miss some. Has this been fixed or
-> was it something I was doing wrong?
+"Luck, Tony" <tony.luck@intel.com> writes:
 
-It's 30 now and up to 150 if they are not older than 48 hours. We can
-tweak the numbers if you like to have it different...
+> I see that when I switch view to a different
+> branch with:
+>
+> 	$ git checkout -f someoldbranch
+>
+> that any files that exist in my previous branch view
+> but not in "someoldbranch" are not deleted.
+>
+> ... I wondered whether this was a deliberate choice
 
-Kay
+Not really.
+
+When possible, please use "git checkout" without -f.  That form
+uses "git-read-tree -u -m", which can tell from your current
+index file what's changed and what's going away.  This is only
+possible if read-tree can rely on what is in your index file
+actually matches the status of your working tree, and the -f
+flag to checkout is to work around cases where you cannot give
+that guarantee to read-tree and would want/need to start over
+from scratch.  With -f flag, you are telling git-read-tree to
+ignore what is currently recorded in your index file, hence what
+should be in your working tree before checkout.  There is no way
+for git-read-tree to tell which are source files that exist only
+in the old thing you had checked out before (i.e. should be
+removed) and which are files your build procedure left and/or
+files you made by hand outside of SCM control (i.e. should be
+kept) without that information, so that is why those files were
+left behind.
