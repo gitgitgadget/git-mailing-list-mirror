@@ -1,52 +1,46 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Debian packaging for 0.99.4
-Date: Fri, 12 Aug 2005 13:21:07 -0700
-Message-ID: <7vpssiucss.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
-	<7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net>
-	<7vacjsdcbj.fsf@assigned-by-dhcp.cox.net>
-	<7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net>
-	<pan.2005.08.10.21.15.41.143251@smurf.noris.de>
-	<pan.2005.08.10.22.11.25.242201@smurf.noris.de>
-	<7vd5olqtvp.fsf@assigned-by-dhcp.cox.net>
-	<20050810235436.GW28270@kiste.smurf.noris.de>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb - feature request
+Date: Fri, 12 Aug 2005 22:27:48 +0200
+Message-ID: <20050812202748.GA9696@vrfy.org>
+References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <1123653220.1183.26.camel@azathoth.hellion.org.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 12 22:22:13 2005
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 22:28:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3g1h-0002UX-90
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 22:21:13 +0200
+	id 1E3g89-0003Aj-Uu
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 22:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932077AbVHLUVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 16:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbVHLUVJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 16:21:09 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:37116 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932077AbVHLUVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2005 16:21:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050812202108.XNHU7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 12 Aug 2005 16:21:08 -0400
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <20050810235436.GW28270@kiste.smurf.noris.de> (Matthias Urlichs's
-	message of "Thu, 11 Aug 2005 01:54:36 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932078AbVHLU1u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 16:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932080AbVHLU1u
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 16:27:50 -0400
+Received: from soundwarez.org ([217.160.171.123]:11165 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S932078AbVHLU1t (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 16:27:49 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id 8ED53574F9; Fri, 12 Aug 2005 22:27:48 +0200 (CEST)
+To: Ian Campbell <ijc@hellion.org.uk>
+Content-Disposition: inline
+In-Reply-To: <1123653220.1183.26.camel@azathoth.hellion.org.uk>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Matthias Urlichs <smurf@smurf.noris.de> writes:
+On Wed, Aug 10, 2005 at 06:53:40AM +0100, Ian Campbell wrote:
+> On Tue, 2005-08-09 at 21:58 +0200, Kay Sievers wrote:
+> 
+> > I was hoping people that want stuff like this would use a RSS reader. :)
+> 
+> I used to subscribe to the kernel RSS feed (using blam) but I found I
+> was only getting the most recent 20 commits, which wasn't much good when
+> a big batch went in because I would miss some. Has this been fixed or
+> was it something I was doing wrong?
 
-> - Split gitk off to its own package;
->   it needs tk installed, but nothing else does.
+It's 30 now and up to 150 if they are not older than 48 hours. We can
+tweak the numbers if you like to have it different...
 
-I just noticed from "dpkg --info" output that the generated
-git-tk has "Architecture: i386".  Shouldn't it read "all" and
-resulting package also named git-tk_${VERSION}_all.deb, instead
-of whatever architecture I happened to build it?
+Kay
