@@ -1,59 +1,52 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: [OT?] git tools at SourceForge ?
-Date: Fri, 12 Aug 2005 21:07:39 +0200
-Message-ID: <20050812190739.AC222352633@atlas.denx.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Debian packaging for 0.99.4
+Date: Fri, 12 Aug 2005 13:21:07 -0700
+Message-ID: <7vpssiucss.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xzfde7t.fsf@assigned-by-dhcp.cox.net>
+	<7vr7d6z3pn.fsf@assigned-by-dhcp.cox.net>
+	<7vacjsdcbj.fsf@assigned-by-dhcp.cox.net>
+	<7vwtmw5nx7.fsf_-_@assigned-by-dhcp.cox.net>
+	<pan.2005.08.10.21.15.41.143251@smurf.noris.de>
+	<pan.2005.08.10.22.11.25.242201@smurf.noris.de>
+	<7vd5olqtvp.fsf@assigned-by-dhcp.cox.net>
+	<20050810235436.GW28270@kiste.smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Fri Aug 12 21:08:46 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 12 22:22:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3et4-0002HN-Uf
-	for gcvg-git@gmane.org; Fri, 12 Aug 2005 21:08:15 +0200
+	id 1E3g1h-0002UX-90
+	for gcvg-git@gmane.org; Fri, 12 Aug 2005 22:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751238AbVHLTIJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 15:08:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbVHLTIJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 15:08:09 -0400
-Received: from mailout04.sul.t-online.com ([194.25.134.18]:4304 "EHLO
-	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S1751238AbVHLTII (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Aug 2005 15:08:08 -0400
-Received: from fwd27.aul.t-online.de 
-	by mailout04.sul.t-online.com with smtp 
-	id 1E3eso-0004X8-00; Fri, 12 Aug 2005 21:07:58 +0200
-Received: from denx.de (GiUsFOZL8eHu4UqgGThs9YiGUb1MD03TEDQVSTgUgD+0m7unP6YO0w@[84.150.125.205]) by fwd27.sul.t-online.de
-	with esmtp id 1E3esX-1SL7C40; Fri, 12 Aug 2005 21:07:41 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP id 07DF242ABE
-	for <git@vger.kernel.org>; Fri, 12 Aug 2005 21:07:39 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id AC222352633
-	for <git@vger.kernel.org>; Fri, 12 Aug 2005 21:07:39 +0200 (MEST)
-To: git@vger.kernel.org
-X-ID: GiUsFOZL8eHu4UqgGThs9YiGUb1MD03TEDQVSTgUgD+0m7unP6YO0w@t-dialin.net
-X-TOI-MSGID: 6c7002a6-6a52-4753-88e6-b406ff428ab4
+	id S932077AbVHLUVK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 16:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbVHLUVJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 16:21:09 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:37116 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932077AbVHLUVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Aug 2005 16:21:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050812202108.XNHU7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 12 Aug 2005 16:21:08 -0400
+To: Matthias Urlichs <smurf@smurf.noris.de>
+In-Reply-To: <20050810235436.GW28270@kiste.smurf.noris.de> (Matthias Urlichs's
+	message of "Thu, 11 Aug 2005 01:54:36 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This is somewhat off topic here, so I apologize, but  I  didn't  know
-any better place to ask:
+Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-Has anybody any information if SourceForge is going to provide git  /
-cogito / ... for the projects they host? I asked SF, and they openend
-a new Feature Request (item #1252867); the message I received sounded
-as if I was the first person on the planet to ask...
+> - Split gitk off to its own package;
+>   it needs tk installed, but nothing else does.
 
-Am I really alone with this?
-
-Best regards,
-
-Wolfgang Denk
-
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-There are three things I always forget. Names, faces -  the  third  I
-can't remember.                                         - Italo Svevo
+I just noticed from "dpkg --info" output that the generated
+git-tk has "Architecture: i386".  Shouldn't it read "all" and
+resulting package also named git-tk_${VERSION}_all.deb, instead
+of whatever architecture I happened to build it?
