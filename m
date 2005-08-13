@@ -1,62 +1,94 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: gitweb - feature request
-Date: Sat, 13 Aug 2005 06:13:19 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.08.13.04.13.18.159941@smurf.noris.de>
-References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <1123653220.1183.26.camel@azathoth.hellion.org.uk> <20050810083113.GN49964@gaz.sfgoth.com> <20050812203322.GB9696@vrfy.org> <20050812211600.GA61428@gaz.sfgoth.com>
+From: Dave Jones <davej@redhat.com>
+Subject: Fwd: Re: git checkout -f branch doesn't remove extra files
+Date: Sat, 13 Aug 2005 00:17:37 -0400
+Message-ID: <20050813041737.GB25236@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Sat Aug 13 06:15:58 2005
+Content-Type: multipart/mixed; boundary="VS++wcV0S1rZb1Fb"
+X-From: git-owner@vger.kernel.org Sat Aug 13 06:18:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3nQC-0007Go-0E
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 06:15:01 +0200
+	id 1E3nSu-0007M0-0I
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 06:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045AbVHMEOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 00:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbVHMEOx
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 00:14:53 -0400
-Received: from main.gmane.org ([80.91.229.2]:56268 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S1751045AbVHMEOx (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 00:14:53 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1E3nP1-0007D8-Pn
-	for git@vger.kernel.org; Sat, 13 Aug 2005 06:13:47 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 13 Aug 2005 06:13:47 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 13 Aug 2005 06:13:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751270AbVHMERo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 00:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbVHMERo
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 00:17:44 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:16361 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1751270AbVHMERo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 00:17:44 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j7D4HhCZ013331
+	for <git@vger.kernel.org>; Sat, 13 Aug 2005 00:17:43 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j7D4HcV20892
+	for <git@vger.kernel.org>; Sat, 13 Aug 2005 00:17:38 -0400
+Received: from nwo.kernelslacker.org (vpn50-5.rdu.redhat.com [172.16.50.5])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j7D4Hb3c025865
+	for <git@vger.kernel.org>; Sat, 13 Aug 2005 00:17:38 -0400
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.4/8.13.4) with ESMTP id j7D4Hbj6010649
+	for <git@vger.kernel.org>; Sat, 13 Aug 2005 00:17:37 -0400
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.4/8.13.4/Submit) id j7D4HbRS010648
+	for git@vger.kernel.org; Sat, 13 Aug 2005 00:17:37 -0400
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Mitchell Blank Jr wrote:
 
-> Is it really hard to just make it purely time-based (git-rev-list
-> --max-age)? Think of if Linus is merging with a lot of people and then
-> pushes the results to the master repository -- suddenly there's, say,
-> 400 new commits since the last time my aggregator checked 2 hours ago.
+--VS++wcV0S1rZb1Fb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Think of Linus merging a bunch of trees with 1-month old commits, all of
-which you'd miss that way.
+Gar, got caught by the 'reply-to' going to Tony only...
 
-IMHO, you definitely need a static file for RSS -- do a git-rev-list
-between HEAD and HEAD-as-of-the-last-time-you-generated-the-RSS,
-concatenate with the old RSS, then trim appropriately.
+		Dave
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-You judge the acts of others only by their intentions.
+
+--VS++wcV0S1rZb1Fb
+Content-Type: message/rfc822
+Content-Disposition: inline
+
+Date: Sat, 13 Aug 2005 00:16:13 -0400
+From: Dave Jones <davej@redhat.com>
+To: "Luck, Tony" <tony.luck@intel.com>
+Subject: Re: git checkout -f branch doesn't remove extra files
+Message-ID: <20050813041613.GA25236@redhat.com>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F04214AC7@scsmsx401.amr.corp.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F04214AC7@scsmsx401.amr.corp.intel.com>
+User-Agent: Mutt/1.4.2.1i
+
+On Fri, Aug 12, 2005 at 10:31:17AM -0700, Luck, Tony wrote:
+ > I've just got around to noticing some of the new (to
+ > me) features in git, and started experimenting with
+ > branches.
+
+Seems a good day to learn new features, I was completely
+unaware of git-ls-files somehow.
+
+My git snapshot creator that builds the hourly tarballs at
+http://www.codemonkey.org.uk/projects/git-snapshots/
+currently does an rsync, and then a checkout, and finally
+it cleans up by removing all the checked out files.
+It currently does this by hand, but on learning about
+this 'new' command, I thought, cool, now I can do..
+
+git-ls-files | xargs rm -rf
+
+however, this then leaves a bunch of empty subdirs, as
+git-ls-files doesn't list the subdirs by themselves in
+the output.  Am I missing some other option ?
+
+		Dave
+
+
+--VS++wcV0S1rZb1Fb--
