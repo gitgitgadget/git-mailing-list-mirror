@@ -1,107 +1,73 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [ANNOUNCE] qgit-0.9
-Date: Sat, 13 Aug 2005 05:12:16 -0700 (PDT)
-Message-ID: <20050813121216.15512.qmail@web26305.mail.ukl.yahoo.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Fwd: Re: git checkout -f branch doesn't remove extra files
+Date: Sat, 13 Aug 2005 14:33:11 +0200
+Message-ID: <20050813123311.GD5608@pasky.ji.cz>
+References: <20050813041737.GB25236@redhat.com> <Pine.LNX.4.58.0508122151120.19049@g5.osdl.org> <20050813110050.GA5608@pasky.ji.cz> <20050813161053.29593972.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Aug 13 14:13:09 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, Dave Jones <davej@redhat.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 14:34:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3usC-0007uz-VQ
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 14:12:25 +0200
+	id 1E3vCl-0000jT-4F
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 14:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932156AbVHMMMW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 08:12:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbVHMMMW
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 08:12:22 -0400
-Received: from web26305.mail.ukl.yahoo.com ([217.146.176.16]:1366 "HELO
-	web26305.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S932156AbVHMMMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2005 08:12:22 -0400
-Received: (qmail 15514 invoked by uid 60001); 13 Aug 2005 12:12:16 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=mHYDKaFvcXd9YfHPuEyFWmqdKV2E8sZzXPoBijKFan4zpo2DPD3sqqQlrGaXev9mDpEYvjnvmUJRBRB4jtdJl5L2BSjHefhSuDJMEI+cXmeEZU8ieLlqPbQaZ6Z3OIh4rB6ry6AaMutT+md45ehESJzMGj0TLEBQOcu0hDRnOhc=  ;
-Received: from [151.38.101.92] by web26305.mail.ukl.yahoo.com via HTTP; Sat, 13 Aug 2005 05:12:16 PDT
-To: git@vger.kernel.org
+	id S1750819AbVHMMdR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 08:33:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932159AbVHMMdR
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 08:33:17 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:36105 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S1750819AbVHMMdR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 08:33:17 -0400
+Received: (qmail 12254 invoked by uid 2001); 13 Aug 2005 12:33:11 -0000
+To: Sergey Vlasov <vsu@altlinux.ru>
+Content-Disposition: inline
+In-Reply-To: <20050813161053.29593972.vsu@altlinux.ru>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Dear diary, on Sat, Aug 13, 2005 at 02:10:53PM CEST, I got a letter
+where Sergey Vlasov <vsu@altlinux.ru> told me that...
+> However, cg-export is buggy - if you use the second argument
+> (cg-export DESTFILE TREE_ID), the resulting tar file is different
+> from what git-tar-tree produces for the same TREE_ID (unless that
+> TREE_ID actually points to a tree - but in practice a commit or even
+> tag ID is typically used).
+> 
+> The problem is in this line:
+> 
+> id=$(tree-id "$2")
+> 
+> This converts the passed commit or tag to the underlying tree, which
+> is then passed to git-tar-tree.  However, git-tar-tree can follow
+> such links itself, and, what's more important, it actually uses some
+> information from the passed commit (it writes the commit ID to the
+> tar file as an extended header, and sets timestamp of all archive
+> members to the time of the commit).  Therefore reducing the ID
+> passed to git-tar-tree to a plain tree ID is wrong - if a commit ID
+> is available, it should be used.
 
-	qgit-0.9 has been released and can be downloaded from
+Aha! Good catch, fixed, thanks.
 
-http://prdownloads.sourceforge.net/qgit/qgit-0.9.tar.bz2?download
+BTW, I also changed cg-export usage to be more consistent and flexible,
+by changing it from
 
+	cg-export DESTFILE [TREE_ID]
 
+to
 
-This version fixes a couple of nasty bugs, notably one in 
-annotate, crept in after recent changes. Anyone interested in
-annotate function should upgrade.
+	cg-export [-r TREE_ID] DESTFILE
 
+since I think not many people are using cg-export anyway and much less
+of them passing it TREE_ID explicitly.
 
-Big new feature is the commit dialog.
-
-When enabled with 'edit->settings->cache->diff against working dir'
-and there is something committable, qgit shows a special highlighted
-first revision with the status of the archive and the possible pending
-stuff. From edit->commit you can, then, invoke the commit viewer to 
-select the files to commit or, simply, to call git-update-cache
-on them (with sync button).
-
-It is possible to use a template for commit message, use
-edit->settings->cache to define template file path.
-
-QGit checks for possible new files added in working directory using
-ignoring rules according to git-ls-files specifications,  
---exclude-from and --exclude-per-directory files can be set in
-menu->edit->settings->cache. Behaviour should be similar to cg-status.
-
-Core commit function is performed by git-commit-script, although the
-script itself is not enough to handle all the possibilities and some
-work is necessary to prepare/restore the cache.
-
-Commit feature and new files checking use some (transalted) code from 
-Fredrik Kuivinen 'gct' tool (although commit logic is different) and 
-Petr Baudis cg-status. Thanks to both ;-)
-
-
-New select tag dialog
-
-Another ineteresting new feature is a 'select tag' dialog shown when
-qgit is launched without arguments. I found this useful to quickly
-select revision range to display.
-On the dialog are listed the tags, but you can paste anything that
-is 'eatable' by git-rev-parse.
-
-
-Complete changelog:
-
-- added commit dialog to commit or simply update cache on selected files
-- added revisions range select dialog when calling qgit 
-  without arguments or when changing archive
-- replace SHA's with short logs in commit messages links 
-- added F3 accelerator in file viewer for find button
-- fix a nasty bug in git-diff-tree interface that sometimes
-  led to missing revision files
-- fix proper closing of file and diff window when quitting
-- fix a corner case in annotate
-- fix annotation broke by a recent change
-- fix spurious LF in diff viewer
-
-
-	Marco
-
-
-P.S: Sorry for the tarball, but SF doesn't yet answerd about
-my request to setup a git archive on their site.
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
