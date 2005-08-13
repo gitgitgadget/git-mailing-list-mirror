@@ -1,78 +1,50 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Merge conflict.
-Date: Sat, 13 Aug 2005 18:17:08 +0200
-Message-ID: <20050813161708.GH5608@pasky.ji.cz>
-References: <pan.2005.08.13.14.45.32.401071@canit.se>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCHSET] Cogito documentation updates
+Date: Sat, 13 Aug 2005 18:23:52 +0200
+Message-ID: <20050813162352.GA968@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 18:18:35 2005
+X-From: git-owner@vger.kernel.org Sat Aug 13 18:24:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3yhF-000851-39
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 18:17:21 +0200
+	id 1E3ync-0000AD-BP
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 18:23:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165AbVHMQRM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 12:17:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbVHMQRM
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 12:17:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42508 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S1751350AbVHMQRL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 12:17:11 -0400
-Received: (qmail 22416 invoked by uid 2001); 13 Aug 2005 16:17:08 -0000
-To: Kenneth Johansson <ken@canit.se>
+	id S1751351AbVHMQXy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 12:23:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbVHMQXy
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 12:23:54 -0400
+Received: from nhugin.diku.dk ([130.225.96.140]:8666 "EHLO nhugin.diku.dk")
+	by vger.kernel.org with ESMTP id S1751351AbVHMQXx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 12:23:53 -0400
+Received: by nhugin.diku.dk (Postfix, from userid 754)
+	id 90CF06E1489; Sat, 13 Aug 2005 18:23:40 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 5F76F6E11D3; Sat, 13 Aug 2005 18:23:40 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 74A2260A44; Sat, 13 Aug 2005 18:23:52 +0200 (CEST)
+To: Petr Baudis <pasky@ucw.cz>
 Content-Disposition: inline
-In-Reply-To: <pan.2005.08.13.14.45.32.401071@canit.se>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.6i
+X-Spam-Checker-Version: SpamAssassin 2.60 (1.212-2003-09-23-exp) on 
+	nhugin.diku.dk
+X-Spam-Level: 
+X-Spam-Status: No, hits=-4.9 required=5.0 tests=BAYES_00 autolearn=ham 
+	version=2.60
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Aug 13, 2005 at 04:45:32PM CEST, I got a letter
-where Kenneth Johansson <ken@canit.se> told me that...
-> I used cogito to do a cg-update and got conflicts and the exact files are
-> printed to the screen. But say I somehow lost that output is there anyway
-> to list conflicting files ??
-> 
-> cg-status shows the files as modified but that also includes non
-> conflicting files.
-> 
-> The best I could find was to do a "git-update-cache --refresh" but that
-> still do not tell me if I already have removed the conflict in the file.
-> 
-> Is this not something that needs to be answered if we ever are going to
-> have a graphical merge tool?
+The patchset contains the following 5 patches:
 
-Yes, I know about this problem and something should be done about it.
-The possible approaches:
-
-* Check for /^<<<<<<</ lines (that's what CVS does)
-	+: User does not need to take an explicit action to indicate
-	   resolved conflict.
-	-: False positives if the file with conflict contains that
-	   string naturally.
-
-* Make auxiliary files and check for their existence (what SVN does)
-	+: User can use the auxiliary files (usually containing the
-	   to-be-merged revisions) for better conflict resolution,
-	   or run some own merging tool on it later.
-	-: Extremely rare false positives.
-	-: User needs to explicitly get rid of the files to get rid
-	   of the conflict.
-
-* Keep the conflict recorded in index
-	+: No junk in working directory, cg-status should start working
-	   right away.
-	-: Unknown caveats wrt. index files containing conflicts...?
-	-: User needs to explicitly run cg-resolve or something to
-	   get rid of the conflict.
-
-Ideas? Opinions?
+  [PATCH 1/5] Also install cg-*.txt files
+  [PATCH 2/5] Add SEE ALSO section to cogito(7) which mentions git(7)
+  [PATCH 3/5] Generate Documentation/introduction.html from the README file
+  [PATCH 4/5] Add more AsciiDoc markup to the README file
+  [PATCH 5/5] Ignore patch backup files (*.{orig,rej}) when finding cg-* manpage scripts
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Jonas Fonseca
