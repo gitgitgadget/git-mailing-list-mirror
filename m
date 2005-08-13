@@ -1,74 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Cloning speed comparison
-Date: Sat, 13 Aug 2005 05:10:25 +0200
-Message-ID: <20050813031025.GE20812@pasky.ji.cz>
-References: <20050813015402.GC20812@pasky.ji.cz> <Pine.LNX.4.58.0508121908180.3295@g5.osdl.org>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] fetch-pack: start multi-head pulling.
+Date: Sat, 13 Aug 2005 05:25:30 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.13.03.25.28.489523@smurf.noris.de>
+References: <7vwtmr4hm5.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508120858420.3295@g5.osdl.org> <Pine.LNX.4.63.0508121818230.26488@wgmdd8.biozentrum.uni-wuerzburg.de> <7vk6irumv3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 05:12:10 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Aug 13 05:28:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3mQB-0003mx-7j
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 05:10:55 +0200
+	id 1E3mgu-0004ow-KK
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 05:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750884AbVHMDKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 23:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750889AbVHMDKa
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 23:10:30 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:4868 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S1750858AbVHMDK3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 23:10:29 -0400
-Received: (qmail 22790 invoked by uid 2001); 13 Aug 2005 03:10:25 -0000
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0508121908180.3295@g5.osdl.org>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S1750953AbVHMD1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 12 Aug 2005 23:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbVHMD1v
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 23:27:51 -0400
+Received: from main.gmane.org ([80.91.229.2]:15283 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1750952AbVHMD1v (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 23:27:51 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E3mfT-0004lI-EN
+	for git@vger.kernel.org; Sat, 13 Aug 2005 05:26:43 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 05:26:43 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 05:26:43 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Aug 13, 2005 at 04:12:26AM CEST, I got a letter
-where Linus Torvalds <torvalds@osdl.org> told me that...
-> On Sat, 13 Aug 2005, Petr Baudis wrote:
-> > 
-> >   Anyway, clone-pack is a clear winner for networks (but someone should
-> > re-check that, especially compared to rsync, wrt. server-side file
-> > caching); really cool fast, but not very practical for anonymous access.
-> 
-> git-daemon is for the anonymous access case, either started from inetd 
-> (or any other external "listen to port, exec service" thing), or with the 
-> built-in listening stuff.
-> 
-> It uses exactly the same protocol and logic as the regular ssh clone-pack 
-> thing, except it doesn't authenticate the remote end: it only checks that 
-> the local end is accepting anonymous pulls by checking whether there is a 
-> "git-daemon-export-ok" file in the git directory.
-> 
-> In my tests, the git daemon was noticeably faster than ssh, if only 
-> because the authentication actually tends to be a big part of the overhead 
-> in small pulls.
+Hi, Junio C Hamano wrote:
 
-Oh. Sounds nice, are there plans to run this on kernel.org too? (So far,
-90% of my GIT network activity happens with kernel.org; the rest is with
-my notebook, and I want to keep that ssh.)
+> I have been trying, admittably perhaps not very successfully, to
+> stay away from bashism in the core GIT scripts.
 
-BTW, is the pack protocol flexible enough to be extended to support
-pushing? That would be great as well. You might suggest just using ssh,
-but that (i) requires you to be root on the machine to add new users
-(ii) consequently adds administrative burden (iii) isn't easy to set up
-so that the user has no shell access, shall you want to restrict that.
-
-> [ Hey. There's a deer outside my window eating our roses again. Cute ]
-
-Oh, it must be nice in Oregon. I can't imagine anything like that to
-happen in Czechia unless you live at a solitude or in some lonely tiny
-village.
+We should probably use #!/bin/bash for scripts with bashisms...
 
 -- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+He has more goodness in his little finger Than you have in your whole
+body.
+					-- Jonathan Swift
