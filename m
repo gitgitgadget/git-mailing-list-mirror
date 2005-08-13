@@ -1,65 +1,52 @@
-From: James Bottomley <James.Bottomley@SteelEye.com>
-Subject: [PATCH] fix git-checkout-cache segfault on parisc
-Date: Sat, 13 Aug 2005 10:29:32 -0500
-Message-ID: <1123946972.5115.4.camel@mulgrave>
+From: Kenneth Johansson <ken@canit.se>
+Subject: Merge conflict.
+Date: Sat, 13 Aug 2005 16:45:32 +0200
+Message-ID: <pan.2005.08.13.14.45.32.401071@canit.se>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	PARISC list <parisc-linux@lists.parisc-linux.org>
-X-From: git-owner@vger.kernel.org Sat Aug 13 17:31:13 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Aug 13 17:32:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3xxO-0004as-RP
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 17:29:59 +0200
+	id 1E3xyh-0004hK-ML
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 17:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbVHMP3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 11:29:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbVHMP3r
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 11:29:47 -0400
-Received: from stat16.steeleye.com ([209.192.50.48]:47289 "EHLO
-	hancock.sc.steeleye.com") by vger.kernel.org with ESMTP
-	id S1751336AbVHMP3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2005 11:29:47 -0400
-Received: from midgard.sc.steeleye.com (midgard.sc.steeleye.com [172.17.6.40])
-	by hancock.sc.steeleye.com (8.11.6/8.11.6) with ESMTP id j7DFTXA01462;
-	Sat, 13 Aug 2005 11:29:33 -0400
-To: junkio@cox.net
-X-Mailer: Evolution 2.0.4 (2.0.4-6) 
+	id S1751337AbVHMPbQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 11:31:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbVHMPbQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 11:31:16 -0400
+Received: from main.gmane.org ([80.91.229.2]:41386 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751337AbVHMPbP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 11:31:15 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1E3xxm-0004cB-He
+	for git@vger.kernel.org; Sat, 13 Aug 2005 17:30:22 +0200
+Received: from 1-1-4-20a.ras.sth.bostream.se ([82.182.72.90])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 17:30:22 +0200
+Received: from ken by 1-1-4-20a.ras.sth.bostream.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 17:30:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 1-1-4-20a.ras.sth.bostream.se
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table (Debian GNU/Linux))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This one I think is Linus' fault, so send him a brown paper bag with my
-complements ...
+I used cogito to do a cg-update and got conflicts and the exact files are
+printed to the screen. But say I somehow lost that output is there anyway
+to list conflicting files ??
 
-The index cleanup code is executed via atexit() which is *after* main
-has completed, so the stack allocated cache_file has gone out of scope.
-Parisc seems to use stack in the destructor functions, so cache_file
-gets partially overwritten leading to the predictable disastrous
-consequences.
+cg-status shows the files as modified but that also includes non
+conflicting files.
 
-Signed-off-by: James Bottomley <James.Bottomley@SteelEye.com>
+The best I could find was to do a "git-update-cache --refresh" but that
+still do not tell me if I already have removed the conflict in the file.
 
----
-
-James
-
-diff --git a/checkout-cache.c b/checkout-cache.c
---- a/checkout-cache.c
-+++ b/checkout-cache.c
-@@ -80,10 +80,11 @@ static int checkout_all(void)
- static const char checkout_cache_usage[] =
- "git-checkout-cache [-u] [-q] [-a] [-f] [-n] [--prefix=<string>] [--] <file>...";
- 
-+static struct cache_file cache_file;
-+
- int main(int argc, char **argv)
- {
- 	int i, force_filename = 0;
--	struct cache_file cache_file;
- 	int newfd = -1;
- 
- 	if (read_cache() < 0) {
-diff --git a/index.c b/index.c
+Is this not something that needs to be answered if we ever are going to
+have a graphical merge tool?
