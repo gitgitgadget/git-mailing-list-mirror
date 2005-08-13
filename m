@@ -1,70 +1,60 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Add an empty directory?
-Date: Sat, 13 Aug 2005 20:00:08 +0200
-Message-ID: <20050813180008.GJ5608@pasky.ji.cz>
-References: <20050813173043.GA25013@hpsvcnb.fc.hp.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: git/cogito workshop/bof at linuxconf au?
+Date: Sat, 13 Aug 2005 11:14:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508131111270.19049@g5.osdl.org>
+References: <46a038f90508130034858ad34@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 20:01:19 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 13 20:14:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E40J3-0007S9-Lh
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 20:00:30 +0200
+	id 1E40Wm-0008P0-T2
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 20:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932144AbVHMSAM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 14:00:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbVHMSAM
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 14:00:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:44813 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S932144AbVHMSAL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 14:00:11 -0400
-Received: (qmail 12952 invoked by uid 2001); 13 Aug 2005 18:00:08 -0000
-To: Carl Baldwin <cnb@fc.hp.com>
-Content-Disposition: inline
-In-Reply-To: <20050813173043.GA25013@hpsvcnb.fc.hp.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S932145AbVHMSOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 14:14:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbVHMSOU
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 14:14:20 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:50892 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932145AbVHMSOU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 14:14:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7DIEFjA021256
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 13 Aug 2005 11:14:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7DIEE3u022219;
+	Sat, 13 Aug 2005 11:14:15 -0700
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90508130034858ad34@mail.gmail.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Dear diary, on Sat, Aug 13, 2005 at 07:30:43PM CEST, I got a letter
-where Carl Baldwin <cnb@fc.hp.com> told me that...
-> Greetings,
 
-Hi,
 
-> My appologies if this has already been discussed.  I've been through the
-> archives but could easily have missed something.
-> 
-> I have found it useful in the past to have the ability to add an empty
-> directory to the repository.  With what little I know about git it seems
-> that this is entirely possible.  It would create an empty tree object
-> for the new directory and insert a reference to that in the parent tree
-> object.
-> 
-> If someone could get me started I think I could find the time to create
-> and submit a patch to allow this.  Here is what I've tried (with
-> 0.99.4).
-> 
-> % mkdir test
-> % cd test
-> % git-init-db
-> % mkdir dir
-> % git-add-script dir
-> error: open("dir"): No such file or directory
-> fatal: Unable to add dir to database
+On Sat, 13 Aug 2005, Martin Langhoff wrote:
+>
+> Anyone coming to Linuxconf.au 2006? It'll will be in Dunedin NZ and
+> I'd be really keen on joining a git/cogito workshop or bof.
 
-the object databases supports it, but the index file does not. But yes,
-it should be supported, I think.
+I was planning to be there. I like lca, but passed it over this year
+because of it being in Canberra (I'm sure it's a nice city to live in, but
+it's not a very exciting one, and I've been there several times before ;)
 
-Some argue that this is useless, so some practical example of its
-usefulness might be a good motivation to get us going. :-)
+> I would gladly try and organize a workshop, but I am far from fluent
+> with git, so I won't go at it alone. Any takers? Call for papers ends
+> 5th September, not too far ahead. We have to register our interest
+> _now_.
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+I'm no good with papers, though. One of the reasons I decided to leave the 
+university lifestyle was that I hate writing papers. That's 
+anti-conductive to being at a uni ;)
+
+		Linus
