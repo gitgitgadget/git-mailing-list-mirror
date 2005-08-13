@@ -1,74 +1,62 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
-Date: Fri, 12 Aug 2005 22:11:14 -0600
-Organization: Hewlett Packard
-Message-ID: <20050813041114.GA29412@hpsvcnb.fc.hp.com>
-References: <20050729081051.GH24895@pasky.ji.cz>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: gitweb - feature request
+Date: Sat, 13 Aug 2005 06:13:19 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.13.04.13.18.159941@smurf.noris.de>
+References: <20050809193104.GA10858@mars.ravnborg.org> <20050809195818.GA19284@vrfy.org> <1123653220.1183.26.camel@azathoth.hellion.org.uk> <20050810083113.GN49964@gaz.sfgoth.com> <20050812203322.GB9696@vrfy.org> <20050812211600.GA61428@gaz.sfgoth.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 06:12:22 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Sat Aug 13 06:15:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3nNA-00075u-DS
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 06:11:52 +0200
+	id 1E3nQC-0007Go-0E
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 06:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbVHMELZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 00:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVHMELZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 00:11:25 -0400
-Received: from atlrel9.hp.com ([156.153.255.214]:16798 "EHLO atlrel9.hp.com")
-	by vger.kernel.org with ESMTP id S1750712AbVHMELZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 00:11:25 -0400
-Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel9.hp.com (Postfix) with ESMTP id 45CF2722C;
-	Sat, 13 Aug 2005 00:11:20 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id E3EF5420A75; Sat, 13 Aug 2005 04:11:14 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 740462ABD9; Fri, 12 Aug 2005 22:11:14 -0600 (MDT)
-To: Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <20050729081051.GH24895@pasky.ji.cz>
-X-Origin: hpescnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1751045AbVHMEOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 00:14:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751270AbVHMEOx
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 00:14:53 -0400
+Received: from main.gmane.org ([80.91.229.2]:56268 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751045AbVHMEOx (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 00:14:53 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E3nP1-0007D8-Pn
+	for git@vger.kernel.org; Sat, 13 Aug 2005 06:13:47 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 06:13:47 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 13 Aug 2005 06:13:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jul 29, 2005 at 08:10:51AM +0000, Petr Baudis wrote:
-> Exactly. I want much more freedom in pushing, the only requirement being
-> that "the to-be-replaced remote head is ancestor of the to-be-pushed
-> local head". I think (am I wrong?) git-send-pack localhead:remotehead
-> would work just fine for me, the only thing I need is the support for
-> different local and remote head names.
+Hi, Mitchell Blank Jr wrote:
 
-Greetings,
+> Is it really hard to just make it purely time-based (git-rev-list
+> --max-age)? Think of if Linus is merging with a lot of people and then
+> pushes the results to the master repository -- suddenly there's, say,
+> 400 new commits since the last time my aggregator checked 2 hours ago.
 
-Sorry to join the game so late.  I've only read this thread now.
+Think of Linus merging a bunch of trees with 1-month old commits, all of
+which you'd miss that way.
 
-It seems to me that this is the way to go.  Several have mentioned that
-head names should be the same on the remote and the local side.
-However, I wanted to point out that it may be impossible to keep these
-names in sync due to the 'loosely knit' nature of the types of projects
-that are likely to use git.
-
-It seems that the requirement that the remote head be a strict ancestor
-of the local head is actually quite strong and should avoid mistakes
-like pushing to the wrong head.
-
-Anyway, those are my two cents.  I couldn't tell wether a resolution had
-been achieved so I thought I would pipe up.
-
-Carl
+IMHO, you definitely need a static file for RSS -- do a git-rev-list
+between HEAD and HEAD-as-of-the-last-time-you-generated-the-RSS,
+concatenate with the old RSS, then trim appropriately.
 
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+You judge the acts of others only by their intentions.
