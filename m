@@ -1,51 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
 Subject: Re: Add an empty directory?
-Date: Sat, 13 Aug 2005 12:45:38 -0700
-Message-ID: <7v64u9mxi5.fsf@assigned-by-dhcp.cox.net>
-References: <20050813173043.GA25013@hpsvcnb.fc.hp.com>
-	<20050813180008.GJ5608@pasky.ji.cz>
+Date: Sat, 13 Aug 2005 12:41:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508131238150.3553@g5.osdl.org>
+References: <20050813173043.GA25013@hpsvcnb.fc.hp.com> <20050813180008.GJ5608@pasky.ji.cz>
+ <20050813181945.GA2191@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 21:46:13 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 21:49:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E41x0-0006vH-J5
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 21:45:56 +0200
+	id 1E41zQ-0007W6-G7
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 21:48:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbVHMTpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 15:45:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932274AbVHMTpk
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 15:45:40 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:21420 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932272AbVHMTpj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Aug 2005 15:45:39 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050813194537.QZNO1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 13 Aug 2005 15:45:37 -0400
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050813180008.GJ5608@pasky.ji.cz> (Petr Baudis's message of
-	"Sat, 13 Aug 2005 20:00:08 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932274AbVHMTsQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 15:48:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932276AbVHMTsP
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 15:48:15 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12504 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932274AbVHMTsP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 15:48:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7DJfkjA026203
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 13 Aug 2005 12:41:47 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7DJfj6U025691;
+	Sat, 13 Aug 2005 12:41:46 -0700
+To: Carl Baldwin <cnb@fc.hp.com>
+In-Reply-To: <20050813181945.GA2191@hpsvcnb.fc.hp.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
 
-> the object databases supports it, but the index file does not. But yes,
-> it should be supported, I think.
 
-I think if this is done correctly "read-tree -m -u" two-tree
-switch could even remove directories that existed in the old
-tree but not in the new tree that has become empty.
+On Sat, 13 Aug 2005, Carl Baldwin wrote:
+> 
+> The bottom line is that I don't really see many situations where it is
+> absolutely necessary but it is a convenience.  Not supporting it may
+> seem like an artificial limit that really didn't need to be there.
 
-On the other hand, although I haven't started looking, adding
-this to index file might involve a major surgery.  Practically
-everybody expects it is does not have an directory entry.  This
-includes reading trees, merging two or more stages, finding
-directory/file conflicts, etc. etc...
+Well, there is an argument for not supporting it, namely that the way 
+patches work, traditionally a directory that became empty is deleted 
+(because patches have no way of saying "remove directory" or "create 
+directory").
+
+So a system where the existence of a directory flows from the existence of 
+the files within the directory will automatically always do the right 
+thing with patches floating around.
+
+Which is a big deal for me, since most of the kernel development still 
+ends up being done with patches. Yes, we merge things with git, but a lot 
+of the development is about passing patches around for review and 
+commentary.
+
+And the thing is, you can always create the directory in your workspace. 
+Git won't care, and won't know about it, but there's really no downside to 
+it. 
+
+			Linus
