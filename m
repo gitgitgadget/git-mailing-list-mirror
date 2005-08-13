@@ -1,98 +1,107 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: Fwd: Re: git checkout -f branch doesn't remove extra files
-Date: Sat, 13 Aug 2005 16:10:53 +0400
-Message-ID: <20050813161053.29593972.vsu@altlinux.ru>
-References: <20050813041737.GB25236@redhat.com>
-	<Pine.LNX.4.58.0508122151120.19049@g5.osdl.org>
-	<20050813110050.GA5608@pasky.ji.cz>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: [ANNOUNCE] qgit-0.9
+Date: Sat, 13 Aug 2005 05:12:16 -0700 (PDT)
+Message-ID: <20050813121216.15512.qmail@web26305.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha1";
- boundary="Signature=_Sat__13_Aug_2005_16_10_53_+0400_w5CvMoT9ESAJj7tr"
-Cc: Linus Torvalds <torvalds@osdl.org>, Dave Jones <davej@redhat.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 14:11:55 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Sat Aug 13 14:13:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3uri-0007qd-H8
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 14:11:54 +0200
+	id 1E3usC-0007uz-VQ
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 14:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155AbVHMMLw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 13 Aug 2005 08:11:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932156AbVHMMLv
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 08:11:51 -0400
-Received: from mail.murom.net ([213.177.124.17]:51887 "EHLO ns1.murom.ru")
-	by vger.kernel.org with ESMTP id S932155AbVHMMLu (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 08:11:50 -0400
-Received: from [172.17.7.8] (helo=procyon.home)
-	by ns1.murom.ru with esmtp (Exim 4.42)
-	id 1E3uqw-00013Q-8b; Sat, 13 Aug 2005 16:11:06 +0400
-Received: by procyon.home (Postfix, from userid 500)
-	id 4E7B6E3CF1C; Sat, 13 Aug 2005 16:10:57 +0400 (MSD)
-To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050813110050.GA5608@pasky.ji.cz>
-X-Mailer: Sylpheed version 1.0.0 (GTK+ 1.2.10; i586-alt-linux-gnu)
+	id S932156AbVHMMMW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 08:12:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932157AbVHMMMW
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 08:12:22 -0400
+Received: from web26305.mail.ukl.yahoo.com ([217.146.176.16]:1366 "HELO
+	web26305.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S932156AbVHMMMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Aug 2005 08:12:22 -0400
+Received: (qmail 15514 invoked by uid 60001); 13 Aug 2005 12:12:16 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=mHYDKaFvcXd9YfHPuEyFWmqdKV2E8sZzXPoBijKFan4zpo2DPD3sqqQlrGaXev9mDpEYvjnvmUJRBRB4jtdJl5L2BSjHefhSuDJMEI+cXmeEZU8ieLlqPbQaZ6Z3OIh4rB6ry6AaMutT+md45ehESJzMGj0TLEBQOcu0hDRnOhc=  ;
+Received: from [151.38.101.92] by web26305.mail.ukl.yahoo.com via HTTP; Sat, 13 Aug 2005 05:12:16 PDT
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
---Signature=_Sat__13_Aug_2005_16_10_53_+0400_w5CvMoT9ESAJj7tr
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Hi all,
 
-On Sat, 13 Aug 2005 13:00:51 +0200 Petr Baudis wrote:
+	qgit-0.9 has been released and can be downloaded from
 
-> Dear diary, on Sat, Aug 13, 2005 at 07:05:11AM CEST, I got a letter
-> where Linus Torvalds <torvalds@osdl.org> told me that...
-[...]
-> > 	snap=git-snapshot-$(date +"%Y%m%d")
-> > 	git-tar-tree HEAD $snap | gzip -9 > $snap.tar.gz
-> > 
-> > which is even easier, and a hell of a lot more efficient.
-> 
-> To put my two cents too, Cogito has cg-export for this:
-> 
-> 	cg-export tmp-dir
-> 
-> to export to a temporary directory and
-> 
-> 	cg-export git-snapshot.tar.gz
-> 
-> to export to a gzipped tarball (it can also do .tar, .tgz and .tar.bz2).
+http://prdownloads.sourceforge.net/qgit/qgit-0.9.tar.bz2?download
 
-However, cg-export is buggy - if you use the second argument
-(cg-export DESTFILE TREE_ID), the resulting tar file is different
-from what git-tar-tree produces for the same TREE_ID (unless that
-TREE_ID actually points to a tree - but in practice a commit or even
-tag ID is typically used).
 
-The problem is in this line:
 
-id=$(tree-id "$2")
+This version fixes a couple of nasty bugs, notably one in 
+annotate, crept in after recent changes. Anyone interested in
+annotate function should upgrade.
 
-This converts the passed commit or tag to the underlying tree, which
-is then passed to git-tar-tree.  However, git-tar-tree can follow
-such links itself, and, what's more important, it actually uses some
-information from the passed commit (it writes the commit ID to the
-tar file as an extended header, and sets timestamp of all archive
-members to the time of the commit).  Therefore reducing the ID
-passed to git-tar-tree to a plain tree ID is wrong - if a commit ID
-is available, it should be used.
 
--- 
-Sergey Vlasov
+Big new feature is the commit dialog.
 
---Signature=_Sat__13_Aug_2005_16_10_53_+0400_w5CvMoT9ESAJj7tr
-Content-Type: application/pgp-signature
+When enabled with 'edit->settings->cache->diff against working dir'
+and there is something committable, qgit shows a special highlighted
+first revision with the status of the archive and the possible pending
+stuff. From edit->commit you can, then, invoke the commit viewer to 
+select the files to commit or, simply, to call git-update-cache
+on them (with sync button).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
+It is possible to use a template for commit message, use
+edit->settings->cache to define template file path.
 
-iD8DBQFC/eNQW82GfkQfsqIRAsixAJ4xjA0TjI2Bc9OH8OXewu6aWpflwwCfUOjK
-MURi7xYSLORQxmzDLP1kbj8=
-=Drea
------END PGP SIGNATURE-----
+QGit checks for possible new files added in working directory using
+ignoring rules according to git-ls-files specifications,  
+--exclude-from and --exclude-per-directory files can be set in
+menu->edit->settings->cache. Behaviour should be similar to cg-status.
 
---Signature=_Sat__13_Aug_2005_16_10_53_+0400_w5CvMoT9ESAJj7tr--
+Core commit function is performed by git-commit-script, although the
+script itself is not enough to handle all the possibilities and some
+work is necessary to prepare/restore the cache.
+
+Commit feature and new files checking use some (transalted) code from 
+Fredrik Kuivinen 'gct' tool (although commit logic is different) and 
+Petr Baudis cg-status. Thanks to both ;-)
+
+
+New select tag dialog
+
+Another ineteresting new feature is a 'select tag' dialog shown when
+qgit is launched without arguments. I found this useful to quickly
+select revision range to display.
+On the dialog are listed the tags, but you can paste anything that
+is 'eatable' by git-rev-parse.
+
+
+Complete changelog:
+
+- added commit dialog to commit or simply update cache on selected files
+- added revisions range select dialog when calling qgit 
+  without arguments or when changing archive
+- replace SHA's with short logs in commit messages links 
+- added F3 accelerator in file viewer for find button
+- fix a nasty bug in git-diff-tree interface that sometimes
+  led to missing revision files
+- fix proper closing of file and diff window when quitting
+- fix a corner case in annotate
+- fix annotation broke by a recent change
+- fix spurious LF in diff viewer
+
+
+	Marco
+
+
+P.S: Sorry for the tarball, but SF doesn't yet answerd about
+my request to setup a git archive on their site.
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
