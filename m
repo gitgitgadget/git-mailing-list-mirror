@@ -1,74 +1,74 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Cloning speed comparison
-Date: Fri, 12 Aug 2005 20:28:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508122021490.19049@g5.osdl.org>
-References: <20050813015402.GC20812@pasky.ji.cz> <Pine.LNX.4.58.0508121908180.3295@g5.osdl.org>
- <20050813031025.GE20812@pasky.ji.cz>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
+Date: Fri, 12 Aug 2005 22:11:14 -0600
+Organization: Hewlett Packard
+Message-ID: <20050813041114.GA29412@hpsvcnb.fc.hp.com>
+References: <20050729081051.GH24895@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, ftpadmin@kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 13 05:29:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 13 06:12:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E3mhf-0004qF-K6
-	for gcvg-git@gmane.org; Sat, 13 Aug 2005 05:28:59 +0200
+	id 1E3nNA-00075u-DS
+	for gcvg-git@gmane.org; Sat, 13 Aug 2005 06:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750711AbVHMD24 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 12 Aug 2005 23:28:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbVHMD2z
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Aug 2005 23:28:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40849 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750711AbVHMD2z (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Aug 2005 23:28:55 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7D3SjjA001463
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 12 Aug 2005 20:28:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7D3Si2Z026958;
-	Fri, 12 Aug 2005 20:28:44 -0700
+	id S1750712AbVHMELZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 13 Aug 2005 00:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVHMELZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Aug 2005 00:11:25 -0400
+Received: from atlrel9.hp.com ([156.153.255.214]:16798 "EHLO atlrel9.hp.com")
+	by vger.kernel.org with ESMTP id S1750712AbVHMELZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Aug 2005 00:11:25 -0400
+Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
+	by atlrel9.hp.com (Postfix) with ESMTP id 45CF2722C;
+	Sat, 13 Aug 2005 00:11:20 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp2.fc.hp.com (Postfix) with ESMTP
+	id E3EF5420A75; Sat, 13 Aug 2005 04:11:14 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 740462ABD9; Fri, 12 Aug 2005 22:11:14 -0600 (MDT)
 To: Petr Baudis <pasky@suse.cz>
-In-Reply-To: <20050813031025.GE20812@pasky.ji.cz>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
+In-Reply-To: <20050729081051.GH24895@pasky.ji.cz>
+X-Origin: hpescnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Jul 29, 2005 at 08:10:51AM +0000, Petr Baudis wrote:
+> Exactly. I want much more freedom in pushing, the only requirement being
+> that "the to-be-replaced remote head is ancestor of the to-be-pushed
+> local head". I think (am I wrong?) git-send-pack localhead:remotehead
+> would work just fine for me, the only thing I need is the support for
+> different local and remote head names.
 
+Greetings,
 
-On Sat, 13 Aug 2005, Petr Baudis wrote:
->
-> Oh. Sounds nice, are there plans to run this on kernel.org too? (So far,
-> 90% of my GIT network activity happens with kernel.org; the rest is with
-> my notebook, and I want to keep that ssh.)
+Sorry to join the game so late.  I've only read this thread now.
 
-Maybe. I don't know what the status of that is, but the plan was to at 
-least give it a try.
+It seems to me that this is the way to go.  Several have mentioned that
+head names should be the same on the remote and the local side.
+However, I wanted to point out that it may be impossible to keep these
+names in sync due to the 'loosely knit' nature of the types of projects
+that are likely to use git.
 
-> BTW, is the pack protocol flexible enough to be extended to support
-> pushing?
+It seems that the requirement that the remote head be a strict ancestor
+of the local head is actually quite strong and should avoid mistakes
+like pushing to the wrong head.
 
-The _protocol_ could handle it, but you obviously need some kind of secure 
-authentication, and quite frankly, one of the selling points on git-daemon 
-right now is that it's all read-only and very simple and there should be 
-no security issues because it will never write anything at all.
+Anyway, those are my two cents.  I couldn't tell wether a resolution had
+been achieved so I thought I would pipe up.
 
-So right now git-daemon only accepts requests from fetch-pack.
+Carl
 
-> > [ Hey. There's a deer outside my window eating our roses again. Cute ]
-> 
-> Oh, it must be nice in Oregon. I can't imagine anything like that to
-> happen in Czechia unless you live at a solitude or in some lonely tiny
-> village.
-
-Deer are really just oversized rats with horns (*). They're cute, though,
-and it's kind of funny looking up from the screen and noticing one
-munching on the roses just ten feet away. 
-
-			Linus
-
-(*) Did I mention that biology wasn't one of the things I did at Uni?
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
