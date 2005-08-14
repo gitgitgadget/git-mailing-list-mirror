@@ -1,55 +1,57 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-0.9
-Date: Sun, 14 Aug 2005 21:04:19 +1200
-Message-ID: <46a038f905081402049d317e5@mail.gmail.com>
-References: <20050813121216.15512.qmail@web26305.mail.ukl.yahoo.com>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: sending changesets from the middle of a git tree
+Date: Sun, 14 Aug 2005 11:27:57 +0200
+Message-ID: <20050814092757.GP5608@pasky.ji.cz>
+References: <42FEBC16.9050309@austin.rr.com> <Pine.LNX.4.58.0508132155100.3553@g5.osdl.org> <7vhddtdk86.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 14 11:05:22 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sun Aug 14 11:29:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4EQO-0006ve-FE
-	for gcvg-git@gmane.org; Sun, 14 Aug 2005 11:05:00 +0200
+	id 1E4Emw-0007zm-4f
+	for gcvg-git@gmane.org; Sun, 14 Aug 2005 11:28:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932375AbVHNJEZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 05:04:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932374AbVHNJEY
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 05:04:24 -0400
-Received: from rproxy.gmail.com ([64.233.170.193]:3634 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932375AbVHNJEY convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2005 05:04:24 -0400
-Received: by rproxy.gmail.com with SMTP id i8so650326rne
-        for <git@vger.kernel.org>; Sun, 14 Aug 2005 02:04:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SvQX8JUINxbOaqB5i7ekhjhX3bMGgK6i0BB52KnMtzWEx3uUsRzekpVUcfWv/9W1tajc31h54dhuZpxdXafYrY22YR5/Rh8u4azgMuvEOKMdsamMYQC36LHKY2TXpIKGCxDeXWvyR2l8/r4crfmaI1Wm677n1FNW2I9BAbPK6sk=
-Received: by 10.38.89.29 with SMTP id m29mr1618928rnb;
-        Sun, 14 Aug 2005 02:04:19 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Sun, 14 Aug 2005 02:04:19 -0700 (PDT)
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050813121216.15512.qmail@web26305.mail.ukl.yahoo.com>
+	id S932427AbVHNJ2E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 05:28:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbVHNJ2D
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 05:28:03 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:12294 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S932427AbVHNJ2B (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2005 05:28:01 -0400
+Received: (qmail 24508 invoked by uid 2001); 14 Aug 2005 09:27:58 -0000
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <7vhddtdk86.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Marco,
+Dear diary, on Sun, Aug 14, 2005 at 09:57:13AM CEST, I got a letter
+where Junio C Hamano <junkio@cox.net> told me that...
+> Linus Torvalds <torvalds@osdl.org> writes:
+> > Alternatively, use "git cherry", which helps re-order the commits in your
+> > tree. They'll be _new_ commits, but they'll have the contents moved over. 
+> 
+> > Junio, maybe you want to talk about how you move patches from your "pu" 
+> > branch to the real branches.
+> 
+> As I have mentioned elsewhere, I have been trying not to use
+> JIT, my own Porcelain, to make sure that the core-git barebone
+> Porcelain is usable.
+> 
+> Unfortunately, this is one area in my workflow that I still
+> heavily rely on JIT, because it is so handy.  I've kept saying I
+> do not do Porcelain, but I'll make an exception this time, by
+> invitation ;-).
 
-How do I get this to build on Debian? Not familiar with scons, and it
-is complaining that it can't find qt and related header files, when
-they are there...
+Actually, wouldn't this be also precisely for what StGIT is intended to?
 
-It's been mentioned on the list that v0.3 didn't build on Debian, but
-I thought it had been dealt with. There were no fixes mentioned on the
-thread.
-
-cheers,
-
-
-
-martin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
