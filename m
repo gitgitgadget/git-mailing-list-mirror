@@ -1,107 +1,83 @@
-From: Wolfgang Denk <wd@denx.de>
-Subject: (cogito) Branch offf from older commit?
-Date: Sun, 14 Aug 2005 17:50:05 +0200
-Message-ID: <20050814155005.6492A353BBF@atlas.denx.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: (cogito) Branch offf from older commit?
+Date: Sun, 14 Aug 2005 10:03:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508140950270.3553@g5.osdl.org>
+References: <20050814155005.6492A353BBF@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sun Aug 14 17:50:58 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 14 19:04:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4KlF-000717-LN
-	for gcvg-git@gmane.org; Sun, 14 Aug 2005 17:50:58 +0200
+	id 1E4Ltj-00042t-O1
+	for gcvg-git@gmane.org; Sun, 14 Aug 2005 19:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932554AbVHNPua (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 11:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932556AbVHNPua
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 11:50:30 -0400
-Received: from mailout04.sul.t-online.com ([194.25.134.18]:61111 "EHLO
-	mailout04.sul.t-online.com") by vger.kernel.org with ESMTP
-	id S932554AbVHNPu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2005 11:50:29 -0400
-Received: from fwd16.aul.t-online.de 
-	by mailout04.sul.t-online.com with smtp 
-	id 1E4Kkd-0003fz-00; Sun, 14 Aug 2005 17:50:19 +0200
-Received: from denx.de (ZXbBZcZSoexHsNJcTm4CrBXE2AhXfTAG1-YUjaDCaDKWF1c9ZqOsUc@[84.150.64.121]) by fwd16.sul.t-online.de
-	with esmtp id 1E4KkY-1yZ8YS0; Sun, 14 Aug 2005 17:50:14 +0200
-Received: from atlas.denx.de (atlas.denx.de [10.0.0.14])
-	by denx.de (Postfix) with ESMTP id DFB0842934
-	for <git@vger.kernel.org>; Sun, 14 Aug 2005 17:50:08 +0200 (MEST)
-Received: from atlas.denx.de (localhost.localdomain [127.0.0.1])
-	by atlas.denx.de (Postfix) with ESMTP id 6492A353BBF
-	for <git@vger.kernel.org>; Sun, 14 Aug 2005 17:50:05 +0200 (MEST)
-To: git@vger.kernel.org
-X-ID: ZXbBZcZSoexHsNJcTm4CrBXE2AhXfTAG1-YUjaDCaDKWF1c9ZqOsUc@t-dialin.net
-X-TOI-MSGID: bf17ba6d-8640-488d-8144-ca41baec3895
+	id S932568AbVHNRDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 13:03:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932567AbVHNRDj
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 13:03:39 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4291 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932568AbVHNRDj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2005 13:03:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7EH3ZjA014653
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 14 Aug 2005 10:03:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7EH3Y02008637;
+	Sun, 14 Aug 2005 10:03:34 -0700
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20050814155005.6492A353BBF@atlas.denx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Is there (in cogito) a way to  start  a  branch  off  from  an  older
-commit?
-
-Assume I receive a patch whichis based on an old version which I want
-to test first (and resolve problems) in a separate branch.
-
-This was what I tried:
-
-* Clone main repo:
-	-> cg-clone /git/u-boot u-boot-testing 
-* Identify wanted branch point and seek to it:
-	-> cd u-boot-testing
-	-> cg-seek 024447b186cca55c2d803ab96b4c8f8674363b86
-* Apply patch
-
-Now how to proceed?
-
-I can add  new  files  created  by  the  patch  using  "cg-add",  but
-cg-status  says  "Changes recording BLOCKED: seeked from master", and
-cg-commit says "committing blocked: seeked from master", too.
-
-However, when I now seek back I get this:
-
-	-> cg-seek
-	Warning: uncommitted local changes, trying to bring them along
-
-which then results in a couple of conflicts which are probably to  be
-expected.
 
 
+On Sun, 14 Aug 2005, Wolfgang Denk wrote:
+>
+> Is there (in cogito) a way to  start  a  branch  off  from  an  older
+> commit?
 
-So I tried this (after throwing away and re-creating my cloned repo):
+You should be able to just use the git commands, and cogito should be 
+perfectly happy.
 
-* Uncommit the commit following the one I want to keep:
-	-> cg-admin-uncommit 342717f72a2f92a14b9c823546e5bcec244f8bf4
-	-> cg-reset
-* cg-status reports a couple of unknown files (those added later to
-  the tree); I manually removed these
-* Apply patch
-* Check in modifications
-* Clone another tree
-	-> cg-clone /git/u-boot u-boot-test-merge
-	-> cd u-boot-test-merge
-* Create branch for the stuff to be tested
-	-> cg-branch-add testing-NAND /work/u-boot-testing
-* Pull and merge:
-	-> cg-pull testing-NAND
-	-> cg-merge testing-NAND
+IOW, if you do
 
+	git checkout -b newbranch <starting-point-sha1>
 
-This works as intended, but seems to be a bit  circuitous  to  me;  I
-think this is probably a pretty common situation and there might be a
-simpler approach which I am missing?
+you'll switch to a "newbranch" that was created at the starting point, and
+as far as I can tell, this is all very cogito-friendly indeed. So now you
+can work in that "newbranch" - commit things, do anything you want, and
+all with cogito (ie it's only this one raw git command you need to set
+things up, after that you're back in cogito-land).
 
-[If possible I'd like to use cogito only, but if there  is  a  clever
-way to do this using git-core commands I'm interested, too.]
+You can switch back with "git checkout master" (again, I don't think
+cogito does the local git branches yet, but once you've switched back
+you're golden), and if you're in the "master" branch, you can merge with 
+your new-branch with
 
 
-Best regards,
+	git resolve master newbranch "Merge my work on xyz"
 
-Wolfgang Denk
+or similar.
 
--- 
-Software Engineering:  Embedded and Realtime Systems,  Embedded Linux
-Phone: (+49)-8142-66989-10 Fax: (+49)-8142-66989-80 Email: wd@denx.de
-The price of curiosity is a terminal experience.
-                         - Terry Pratchett, _The Dark Side of the Sun_
+And always remember "gitk --all", since that's a very useful thing to 
+visualize where you are.
+
+> 	-> cg-seek 024447b186cca55c2d803ab96b4c8f8674363b86
+
+No, cg-seek doesn't start a new branch, so the result is "locked". You 
+can't commit on top of the seek-point, because the branch you are in 
+already _has_ a child of that point.
+
+(Actually, these days cg-seek does use a fixed local git branch for the
+seek target, so that's not _technically_ true any more. I suspect Pasky is 
+working on exposing the general local branch interfaces)
+
+		Linus
