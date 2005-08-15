@@ -1,60 +1,66 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Switching heads and head vs branch after CVS import
-Date: Mon, 15 Aug 2005 12:38:53 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.08.15.10.38.50.677503@smurf.noris.de>
-References: <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org> <20050815080931.64F0D352633@atlas.denx.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Add -k kill keyword expansion option to git-cvsimport
+Date: Mon, 15 Aug 2005 23:20:16 +1200
+Message-ID: <46a038f9050815042036616b08@mail.gmail.com>
+References: <46a038f9050814235140877be7@mail.gmail.com>
+	 <7vk6in65dp.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90508150037f128d6@mail.gmail.com>
+	 <7vacjj3968.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f905081501301bd9a801@mail.gmail.com>
+	 <7vr7cv1t89.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f9050815020511574e3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Aug 15 12:41:57 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 13:21:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4cOT-00040T-1S
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 12:40:37 +0200
+	id 1E4d0x-0002LQ-0O
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 13:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932629AbVHOKke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 06:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932660AbVHOKke
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 06:40:34 -0400
-Received: from main.gmane.org ([80.91.229.2]:25761 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932629AbVHOKkd (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 06:40:33 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1E4cNE-0003e4-3P
-	for git@vger.kernel.org; Mon, 15 Aug 2005 12:39:20 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Aug 2005 12:39:20 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Aug 2005 12:39:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S932666AbVHOLUS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 07:20:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932673AbVHOLUS
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 07:20:18 -0400
+Received: from rproxy.gmail.com ([64.233.170.195]:64126 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932666AbVHOLUR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 07:20:17 -0400
+Received: by rproxy.gmail.com with SMTP id a36so959835rnf
+        for <git@vger.kernel.org>; Mon, 15 Aug 2005 04:20:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FQ+hdtVkb2sCD5XrjoVJ2yAeXXXkjefxOspR5tiBC+wjYfJ/8MQYmIon3xxwSm33bi3trjFwwoYiZD85zuYDGeXvpZeUBIEKwx2Fa0zpjMqVUIYpu2odOE59UKV3ld7ZT17bHirQe/J2j5g0M8oDy43ruT37d7wUcOBaYVhGrzQ=
+Received: by 10.38.75.6 with SMTP id x6mr1924190rna;
+        Mon, 15 Aug 2005 04:20:16 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Mon, 15 Aug 2005 04:20:16 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <46a038f9050815020511574e3d@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Wolfgang Denk wrote:
+On 8/15/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> I think the other modes are relevant in different scenarios. -kv is
+> only meaningful as file mode over the life of the file in the repo.
+> -kk is only meaningful when calling cvs update with -j -j parameters
+> or cvs diff, and is effectively a synonim of -ko.
+> 
+> In the position we are, getting file/revisions out of a repo, there
+> are 2 possible files we can get: the one that you'll get with -kkv and
+> the one you'll get with -ko/-kb. -kb/-ko should give us exactly the
+> same file, modulo bugs.
 
-> Assume I know exactly where the merge back happenend - is  there  any
-> way to tell git about it, so I don't see all these dangling heads any
-> more?
+After a few more trial runs, it ends up being that -kb and -ko drop
+the ball in some instances, and the most reliable flag to send is -kk.
+Don't ask me how or why.
 
-Two ways:
-- you can enhance cvs2git to do it at the appropriate time. Good luck.
-- after the fact, and after finding the relevant heads manually, you can
-  use .git/info/grafts to fake it.
+So this patch is obsolete too. 
 
--- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-As crazy as hauling timber into the woods.
-		-- Quintus Horatius Flaccus (Horace)
+
+
+martin
