@@ -1,101 +1,124 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: sending changesets from the middle of a git tree
-Date: Mon, 15 Aug 2005 10:27:23 +0100
-Message-ID: <tnxiry77dok.fsf@arm.com>
-References: <42FEBC16.9050309@austin.rr.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: [PATCH] cvsgit fixes: spaces in filenames and CVS server dialog woes
+Date: Mon, 15 Aug 2005 11:28:34 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.15.09.28.12.779733@smurf.noris.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 11:28:48 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Mon Aug 15 11:31:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4bGf-0002v0-Fu
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:28:29 +0200
+	id 1E4bIg-0003SO-JM
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932335AbVHOJ2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 05:28:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbVHOJ2Y
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:28:24 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:41194 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S932335AbVHOJ2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 05:28:24 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7F9RCOU019838;
-	Mon, 15 Aug 2005 10:27:17 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA18395;
-	Mon, 15 Aug 2005 10:27:56 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Mon, 15 Aug 2005 10:27:55 +0100
-To: Steve French <smfrench@austin.rr.com>
-In-Reply-To: <42FEBC16.9050309@austin.rr.com> (Steve French's message of
- "Sat, 13 Aug 2005 22:35:50 -0500")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 15 Aug 2005 09:27:55.0796 (UTC) FILETIME=[9E3FD540:01C5A17B]
+	id S932337AbVHOJac (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 05:30:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932358AbVHOJac
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:30:32 -0400
+Received: from main.gmane.org ([80.91.229.2]:5598 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932337AbVHOJab (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 05:30:31 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E4bHJ-00037O-Ey
+	for git@vger.kernel.org; Mon, 15 Aug 2005 11:29:09 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2005 11:29:09 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Aug 2005 11:29:09 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-There are other ways to do these, explained in this thread. I will
-only show the StGIT way, just choose which one suits you better.
+Problems found while importing dasher's CVS:
 
-Steve French <smfrench@austin.rr.com> wrote:
-> 1) There is no way to send a particular changeset from the "middle"
-> of a set from one tree to another, without exporting it as a patch
-> or rebuilding a new git tree.  I have two changesets that, after
-> testing last week, I now consider more important to send upstream
-> than the few earlier and later changesets.
+* Allow spaces in filenames.
+* cvsps may create unnamed branches with revisions that don't really
+  exist, which causes the CVS server to return something we haven't
+  hitherto expected.
+* Report deleted files when being verbose.
+* Also, report the commit date.
 
-With StGIT, you create a new patch ('stg new <name>'), modify and
-commit the changes with 'stg refresh'. All the modifications to a
-patch are stored as a single GIT commit. If you manage a (contributor)
-tree with StGIT, you shouldn't commit changes directly with GIT but
-use the StGIT commands instead. You end up with a stack of changesets
-on top of the main tree.
-
-You can send the changesets upstream with the 'stg mail' command or
-export them with 'stg export'.
-
-> If I export those two changesets as patches, and send them
-> on. presumably I lose the changset comments etc. and then when the
-> upstream tree is merged back, it might look a little odd in the
-> changeset history.
-
-Pulling the latest changes from the main tree will keep your changes
-on top, much like git cherry/rebase, but StGIT does a diff3 merge
-instead of simply generating and applying patch. This has the
-advantage of detecting when a patch (changeset) was not fully merged
-or was modifed. If the upstream merge was complete, StGIT shows your
-patch as empty (since your patch no longer needs to change the
-tree). Otherwise, you can either have some changes in the patch or
-even be notified of a conflict (patch modified before being merged).
-
-> 2) There is no way to update the comment field of a changeset after
-> it goes in (e.g. to add a bugzilla bug number for a bug that was
-> opened just after the fix went in).
-
-'stg refresh --edit' lets you modify the patch text. Since the GIT
-commits are immutable, a new commit is generated but the parent of the
-new commit is the same as the parent of the old commit (making this
-commit unaccessible). Being able to create your own DAG structure with
-GIT is what made StGIT possible.
-
-> 3) There is no way to do a test commit of an individual changeset
-> against a specified tree (to make sure it would still merge cleanly,
-> automatically).
-
-With StGIT you can pop all the patches from the stack and only push
-the one you want to test (the push/pop operations also allow patch
-reordering). Note that the push operation is done with a three-way
-merge and, if successful, the patch might have a sligthly different
-form (different offsets for example, or even chunks removed if they
-are already in the tree).
-
-If the push fails, it means that it doesn't apply cleanly because it
-depends on changes made by other patches in your series. You can undo
-the push operation with 'stg push --undo'.
-
+diff --git a/git-cvsimport-script b/git-cvsimport-script
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -294,6 +293,12 @@ sub _line {
+ 				return $res;
+ 			} elsif($line =~ s/^E //) {
+ 				# print STDERR "S: $line\n";
++			} elsif($line =~ /^Remove-entry /i) {
++				$line = $self->readline(); # filename
++				$line = $self->readline(); # OK
++				chomp $line;
++				die "Unknown: $line" if $line ne "ok";
++				return -1;
+ 			} else {
+ 				die "Unknown: $line\n";
+ 			}
+@@ -561,7 +566,7 @@ my $commit = sub {
+ 		or die "Error writing to git-commit-tree: $!\n";
+ 	$pw->close();
+ 
+-	print "Committed patch $patchset ($branch)\n" if $opt_v;
++	print "Committed patch $patchset ($branch ".strftime("%Y-%m-%d %H:%M:%S",gmtime($date)).")\n" if $opt_v;
+ 	chomp(my $cid = <$pr>);
+ 	length($cid) == 40
+ 		or die "Cannot get commit id ($cid): $!\n";
+@@ -675,26 +680,32 @@ while(<CVS>) {
+ 		$state = 9;
+ 	} elsif($state == 8) {
+ 		$logmsg .= "$_\n";
+-	} elsif($state == 9 and /^\s+(\S+):(INITIAL|\d+(?:\.\d+)+)->(\d+(?:\.\d+)+)\s*$/) {
++	} elsif($state == 9 and /^\s+(.+?):(INITIAL|\d+(?:\.\d+)+)->(\d+(?:\.\d+)+)\s*$/) {
+ #	VERSION:1.96->1.96.2.1
+ 		my $init = ($2 eq "INITIAL");
+ 		my $fn = $1;
+ 		my $rev = $3;
+ 		$fn =~ s#^/+##;
+ 		my ($tmpname, $size) = $cvs->file($fn,$rev);
+-		print "".($init ? "New" : "Update")." $fn: $size bytes.\n" if $opt_v;
+-		open my $F, '-|', "git-hash-object -w $tmpname"
+-			or die "Cannot create object: $!\n";
+-		my $sha = <$F>;
+-		chomp $sha;
+-		close $F;
++		if($size == -1) {
++			push(@old,$fn);
++			print "Drop $fn\n" if $opt_v;
++		} else {
++			print "".($init ? "New" : "Update")." $fn: $size bytes\n" if $opt_v;
++			open my $F, '-|', "git-hash-object -w $tmpname"
++				or die "Cannot create object: $!\n";
++			my $sha = <$F>;
++			chomp $sha;
++			close $F;
++			my $mode = pmode($cvs->{'mode'});
++			push(@new,[$mode, $sha, $fn]); # may be resurrected!
++		}
+ 		unlink($tmpname);
+-		my $mode = pmode($cvs->{'mode'});
+-		push(@new,[$mode, $sha, $fn]); # may be resurrected!
+-	} elsif($state == 9 and /^\s+(\S+):\d(?:\.\d+)+->(\d(?:\.\d+)+)\(DEAD\)\s*$/) {
++	} elsif($state == 9 and /^\s+(.+?):\d(?:\.\d+)+->(\d(?:\.\d+)+)\(DEAD\)\s*$/) {
+ 		my $fn = $1;
+ 		$fn =~ s#^/+##;
+ 		push(@old,$fn);
++		print "Delete $fn\n" if $opt_v;
+ 	} elsif($state == 9 and /^\s*$/) {
+ 		$state = 10;
+ 	} elsif(($state == 9 or $state == 10) and /^-+$/) {
 -- 
-Catalin
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Let he who takes the plunge remember to return it by Tuesday.
