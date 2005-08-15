@@ -1,69 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Alternate object pool mechanism updates.
-Date: Sun, 14 Aug 2005 17:29:05 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
-References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net> <20050813120815.GC5608@pasky.ji.cz>
- <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Switching heads and head vs branch after CVS import
+Date: Sun, 14 Aug 2005 17:40:15 -0700
+Message-ID: <7vmznkav80.fsf@assigned-by-dhcp.cox.net>
+References: <46a038f905081417241f9598cc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 02:29:45 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 02:41:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4Sqq-0003UJ-RM
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 02:29:17 +0200
+	id 1E4T1j-0005hi-MO
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 02:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932598AbVHOA3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 20:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbVHOA3N
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 20:29:13 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40855 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932598AbVHOA3N (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2005 20:29:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7F0T6jA007960
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 14 Aug 2005 17:29:06 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7F0T5E1024105;
-	Sun, 14 Aug 2005 17:29:05 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932613AbVHOAkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 20:40:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932614AbVHOAkS
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 20:40:18 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:2231 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932613AbVHOAkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2005 20:40:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050815004016.FVOL25443.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 14 Aug 2005 20:40:16 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f905081417241f9598cc@mail.gmail.com> (Martin Langhoff's
+	message of "Mon, 15 Aug 2005 12:24:30 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
+> After having done a cvs import of Moodle using git-cvsimport-script
+> all the cvs branches show up as heads. How do I switch heads within a
+> checkout? cogito doesn't seem to be able to, and I'm unsure on how to
+> do it with git.
 
-On Sun, 14 Aug 2005, Junio C Hamano wrote:
-> 
-> Ok, so the one in the proposed updates branch says
-> info/alternates.
-> 
-> With this, your recent cg-clone -l can be made to still use
-> individual .git/object/??/ hierarchy to keep objects newly
-> created in each repository while sharing the inherited objects
-> from the parent repository, which would probably alleviate the
-> multi-user environment worries you express in the comments for
-> the option.  The git-clone-script in the proposed updates branch
-> has such a change.
+The documentation may be quite sketchy on this front.
 
-I think this is great - especially for places like kernel.org, where a lot 
-of repos end up being related to each other, yet independent.
+I do not speak for Pasky, so Cogito may treat them a little
+differently, but at the core GIT level, you can treat branches
+and heads synonymously.
 
-However, exactly for places like kernel.org it would _also_ be nice if
-there was some way to prune objects that have been merged back into the
-parent. In other words, imagine that people start using my kernel tree as
-their source of "alternate" objects, which works wonderfully well, but
-then as I pull from them, nothing ever removes the objects that are now
-duplicate.
+What you have recorded in .git/refs/heads/frotz file is the SHA1
+object name of the commit that is at the top of "frotz" branch.
+When your .git/HEAD symlink points at refs/heads/nitfol, your
+working tree is said to be on "nitfol" branch.
 
-We've got a "git prune-packed", it would be good to have a "git
-prune-alternate" or something equivalent.
-
-			Linus
+You switch branches by using "git checkout".  You can create a
+new branch using "git checkout -b newbranch commit-id".  You
+examine which branch you are on by "readlink .git/HEAD".  As you
+already found out, you can merge branches with "git resolve
+master other-branch 'comment'".  The last one is briefly covered
+by the tutorial.
