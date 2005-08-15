@@ -1,34 +1,31 @@
 From: Matt Draisey <mattdraisey@sympatico.ca>
 Subject: Re: symlinked directories in refs are now unreachable
-Date: Mon, 15 Aug 2005 04:07:29 -0400
-Message-ID: <1124089116.749.39.camel@della.draisey.ca>
-References: <1124073677.27393.15.camel@della.draisey.ca>
-	 <7v64u7941c.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 15 Aug 2005 04:12:02 -0400
+Message-ID: <1124093522.721.41.camel@della.draisey.ca>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 15 10:11:49 2005
+X-From: git-owner@vger.kernel.org Mon Aug 15 10:15:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4a3s-0007bF-RR
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 10:11:13 +0200
+	id 1E4a7k-0007xF-EK
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 10:15:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbVHOILJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 04:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932209AbVHOILJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 04:11:09 -0400
-Received: from tomts16.bellnexxia.net ([209.226.175.4]:26780 "EHLO
-	tomts16-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S932206AbVHOILI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 04:11:08 -0400
+	id S932217AbVHOIPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 04:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932218AbVHOIPJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 04:15:09 -0400
+Received: from tomts25-srv.bellnexxia.net ([209.226.175.188]:19845 "EHLO
+	tomts25-srv.bellnexxia.net") by vger.kernel.org with ESMTP
+	id S932217AbVHOIPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 04:15:07 -0400
 Received: from Windsor-ppp121559.sympatico.ca ([216.209.168.44])
-          by tomts16-srv.bellnexxia.net
+          by tomts25-srv.bellnexxia.net
           (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050815081058.GOLM27508.tomts16-srv.bellnexxia.net@Windsor-ppp121559.sympatico.ca>
-          for <git@vger.kernel.org>; Mon, 15 Aug 2005 04:10:58 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v64u7941c.fsf@assigned-by-dhcp.cox.net>
+          id <20050815081506.LVNC27245.tomts25-srv.bellnexxia.net@Windsor-ppp121559.sympatico.ca>
+          for <git@vger.kernel.org>; Mon, 15 Aug 2005 04:15:06 -0400
+To: git-list <git@vger.kernel.org>
 X-Mailer: Evolution 2.0.4 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
