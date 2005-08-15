@@ -1,58 +1,50 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: gitweb - option to disable rename detection
-Date: Mon, 15 Aug 2005 11:53:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508151140050.3553@g5.osdl.org>
-References: <87d5ofoxvt.wl@mail2.atmark-techno.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Git 1.0 Synopis (Draft v4)
+Date: Mon, 15 Aug 2005 14:59:03 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508151453100.21501@iabervon.org>
+References: <20050729082941.GD32263@mythryan2.michonline.com>
+ <200507312215.j6VMFeqn030963@laptop11.inf.utfsm.cl>
+ <20050815045546.GA7001@mythryan2.michonline.com> <7vr7cv7p61.fsf@assigned-by-dhcp.cox.net>
+ <20050815065833.GE7001@mythryan2.michonline.com> <7v7jen6545.fsf@assigned-by-dhcp.cox.net>
+ <20050815080218.GG7001@mythryan2.michonline.com> <7vhddr397g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 20:55:15 2005
+Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 20:56:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4k5h-0002OW-4C
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 20:53:45 +0200
+	id 1E4k7f-0002oU-UA
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 20:55:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964882AbVHOSxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 14:53:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964899AbVHOSxi
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 14:53:38 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:65176 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964882AbVHOSxh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 14:53:37 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7FIrMjA016073
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 Aug 2005 11:53:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7FIrLL8005875;
-	Mon, 15 Aug 2005 11:53:21 -0700
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-In-Reply-To: <87d5ofoxvt.wl@mail2.atmark-techno.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964880AbVHOSzp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 14:55:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964900AbVHOSzp
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 14:55:45 -0400
+Received: from iabervon.org ([66.92.72.58]:33034 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S964880AbVHOSzo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 14:55:44 -0400
+Received: (qmail 21872 invoked by uid 1000); 15 Aug 2005 14:59:03 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Aug 2005 14:59:03 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vhddr397g.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 15 Aug 2005, Junio C Hamano wrote:
 
-
-On Tue, 16 Aug 2005, Yasushi SHOJI wrote:
+> Ryan Anderson <ryan@michonline.com> writes:
 > 
-> It seems to me that git-diff-tree needs huge memory if you try to diff
-> on big change with rename detection enabled.
+> > I was waiting until you said, "Ok, 1.00 tomorrow morning"
 > 
-> This isn't problem for sane project but if you create a repo with only
-> major releases imports, git-diff-tree run by git_commit() eats system
-> memory and die ;P
+> Makes sense.  There would be some weeks until that happens I am
+> afraid.
 
-Instead of disabling it entirely, how about just having some limit on it?
+It might be worth putting the list of things left to do before 1.0 in the 
+tree (since they clearly covary), and it would be useful to know what 
+you're thinking of as preventing the release at any particular stage.
 
-The basic rename detection works very well for "normal" changes as you 
-point out, but it very fundamentally is O(n^2) in number of files created 
-and deleted, so we could instead just limit it and say "if we have tons of 
-new/deleted files, disable it in the interest of CPU/memory usage".
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
