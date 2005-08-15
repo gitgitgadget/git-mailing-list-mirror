@@ -1,42 +1,41 @@
 From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: How is working on arbitrary remote heads supposed to work in Cogito (+ PATCH)?
-Date: Mon, 15 Aug 2005 10:23:24 -0600
+Subject: Making note, in the repository, of push/pull relationships
+Date: Mon, 15 Aug 2005 10:25:19 -0600
 Organization: Hewlett Packard
-Message-ID: <20050815162324.GA9857@hpsvcnb.fc.hp.com>
-References: <20050729081051.GH24895@pasky.ji.cz> <20050813041114.GA29412@hpsvcnb.fc.hp.com> <7vacjmqnu7.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <20050815162519.GB9719@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 18:24:08 2005
+X-From: git-owner@vger.kernel.org Mon Aug 15 18:28:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4hkL-0006PY-St
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 18:23:34 +0200
+	id 1E4hn0-00072j-Ud
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 18:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964817AbVHOQXb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 12:23:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964818AbVHOQXb
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 12:23:31 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:24971 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S964817AbVHOQXa (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 12:23:30 -0400
+	id S964823AbVHOQZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 12:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbVHOQZf
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 12:25:35 -0400
+Received: from atlrel8.hp.com ([156.153.255.206]:48844 "EHLO atlrel8.hp.com")
+	by vger.kernel.org with ESMTP id S964821AbVHOQZU (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 12:25:20 -0400
 Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel7.hp.com (Postfix) with ESMTP id E4B9BDE8;
-	Mon, 15 Aug 2005 12:23:29 -0400 (EDT)
+	by atlrel8.hp.com (Postfix) with ESMTP id 705621A8E
+	for <git@vger.kernel.org>; Mon, 15 Aug 2005 12:25:19 -0400 (EDT)
 Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id AAD6D41F5C8; Mon, 15 Aug 2005 16:23:29 +0000 (UTC)
+	by smtp2.fc.hp.com (Postfix) with ESMTP id 2477B41F5C6
+	for <git@vger.kernel.org>; Mon, 15 Aug 2005 16:25:19 +0000 (UTC)
 Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 899EB2AF18; Mon, 15 Aug 2005 10:23:24 -0600 (MDT)
-To: Junio C Hamano <junkio@cox.net>
+	id 18EE72AF18; Mon, 15 Aug 2005 10:25:19 -0600 (MDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vacjmqnu7.fsf@assigned-by-dhcp.cox.net>
 X-Origin: hpescnb.fc.hp.com
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+
+(Sorry for the repost.  The other one was an accident.)
 
 Over the week-end, I was thinking about the thread "Re: How is working
 on arbitrary remote heads supposed to work in Cogito".  I wanted to
@@ -91,54 +90,6 @@ allowing for some degree of flexibility.  I don't yet know where this
 line should be drawn.
 
 Carl
-
-On Sat, Aug 13, 2005 at 12:48:32AM -0700, Junio C Hamano wrote:
-> Carl Baldwin <cnb@fc.hp.com> writes:
-> 
-> > On Fri, Jul 29, 2005 at 08:10:51AM +0000, Petr Baudis wrote:
-> >> Exactly. I want much more freedom in pushing, the only requirement being
-> >> that "the to-be-replaced remote head is ancestor of the to-be-pushed
-> >> local head". I think (am I wrong?) git-send-pack localhead:remotehead
-> >> would work just fine for me, the only thing I need is the support for
-> >> different local and remote head names.
-> >
-> > Sorry to join the game so late.  I've only read this thread now.
-> 
-> Just in case you have not noticed, the push in 0.99.4 and
-> onwards does exactly that.  Please see git-push-script.txt in
-> the Documentation/ directory --- oops, there is no such thing.
-> 
-> Please see git-send-pack.txt instead, and if you feel like it, I
-> would appreciate a patch to add the missing documentation for
-> git-push-script ;-).
-> 
-> What's not supported well yet is the opposite --- downloading
-> multiple refs and dealing with them.
-> 
-> Johannes Schindelin calls this "reverse push", and I think that
-> is really a good name to describe what it does.  It takes a
-> remote repository and possibly multiple refs, downloads the
-> objects to complete the named remote references, and updates the
-> local refs only if the remote refs are fast forward children of
-> the local refs being replaced, just like "push" fast forwards
-> the remote refs using the local refs.  In other words, given
-> <src> and <dst> repository, the following should do the same
-> thing:
-> 
->     On <src> repository machine, with GIT_DIR being the <src> repository:
->     $ git push <dst> <ref-local-name>:<ref-remote-name>...
-> 
->     On <dst> repository machine, with GIT_DIR being the <dst> repository:
->     $ git pull <src> <ref-remote-name>:<ref-local-name>...
-> 
-> Johannes posted a script on the list a couple of days ago, which
-> should work well, except that it was written before the
-> git-fetch-pack command was updated to natively download from
-> multiple refs, so it does not know how to fetch multiple refs at
-> a one go.
-> 
-> -jc
-> 
 
 -- 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
