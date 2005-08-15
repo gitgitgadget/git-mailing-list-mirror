@@ -1,70 +1,81 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Switching heads and head vs branch after CVS import
-Date: Mon, 15 Aug 2005 21:48:28 +1200
-Message-ID: <46a038f90508150248159e070e@mail.gmail.com>
-References: <46a038f905081417241f9598cc@mail.gmail.com>
-	 <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org>
-	 <46a038f905081419057cc6b5cd@mail.gmail.com>
-	 <Pine.LNX.4.58.0508141937251.3553@g5.osdl.org>
-	 <pan.2005.08.15.09.07.10.118103@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Audit rev-parse users.
+Date: Mon, 15 Aug 2005 02:55:23 -0700
+Message-ID: <7vacjj1q44.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 11:49:05 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Mon Aug 15 11:55:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4ba9-0007Vb-Ho
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:48:37 +0200
+	id 1E4bgm-0000Tk-4F
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331AbVHOJse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 05:48:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932405AbVHOJse
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:48:34 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:24279 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932331AbVHOJsd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 05:48:33 -0400
-Received: by rproxy.gmail.com with SMTP id i8so750712rne
-        for <git@vger.kernel.org>; Mon, 15 Aug 2005 02:48:28 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FbHaIqY1QZNxpBcje6BegmZ3+ZcEfuk3t0OKt+r8ePDbRYTFFOX45M2vp/ptEPHf6U7NE7K5lL0No/vt5OIc81+gx/mlyySzaHvDZYWMkE9YKydZswvTXFnVeC4pL4aSMMT/45BDjHZdVH7vel3kZvD+9FeAcEHyDBxtRoYMIdk=
-Received: by 10.38.104.22 with SMTP id b22mr1894261rnc;
-        Mon, 15 Aug 2005 02:48:28 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Mon, 15 Aug 2005 02:48:28 -0700 (PDT)
-To: Matthias Urlichs <smurf@smurf.noris.de>
-In-Reply-To: <pan.2005.08.15.09.07.10.118103@smurf.noris.de>
-Content-Disposition: inline
+	id S932536AbVHOJzZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 05:55:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932575AbVHOJzZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:55:25 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:31651 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S932536AbVHOJzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 05:55:25 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050815095524.VEZO8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 Aug 2005 05:55:24 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 8/15/05, Matthias Urlichs <smurf@smurf.noris.de> wrote:
-> Umm, actually, no, cvsimport doesn't do merges. Dunno where Martin got his
-> from, but it wasn't me. ;-)
+Make sure that we say --verify when we want to get a single SHA1
+name.  Also when we say --verify, --revs-only is redundant.
 
-Just wishful thinking, and a viewing things on a remote box over a
-slow x11-over-ssh connection. When I think about it, it doesn't seem
-possible either, so I better stop dreaming.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-> > Sven, Matthias, opinions? I've never used CVS keyword expansion, and
-> > always felt it was pointless, but hey..
-> 
-> I have intentionally kept keyword expansion on when I wrote the code,
-> because matching up the files from CVS with files gathered from tarballs,
-> Debian repositories, and what-not, becomes a whole lot easier that way.
+ git-rebase-script |    2 +-
+ git-reset-script  |    4 ++--
+ git-tag-script    |    2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-Makes sense in that context. On the other hand, if you are you're
-migrating a project from cvs to git, getting rid of the noise is good.
-
-And the resulting git repo will actually let you do trivial merges of
-old commits after you've switched -- otherwise every file-level merge
-will conflict, as it does in cvs when you don't use -kk.
-
-cheers,
-
-
-martin
+fb1dea6f0298f4b47ae6a3dc08a1bc2398ef8053
+diff --git a/git-rebase-script b/git-rebase-script
+--- a/git-rebase-script
++++ b/git-rebase-script
+@@ -28,7 +28,7 @@ case "$#" in
+ esac
+ 
+ git-read-tree -m -u $ours $upstream &&
+-echo "$upstream" >"$GIT_DIR/HEAD" || exit
++git-rev-parse --verify "$upstream^0" >"$GIT_DIR/HEAD" || exit
+ 
+ tmp=.rebase-tmp$$
+ fail=$tmp-fail
+diff --git a/git-reset-script b/git-reset-script
+--- a/git-reset-script
++++ b/git-reset-script
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+ . git-sh-setup-script || die "Not a git archive"
+-rev=$(git-rev-parse --revs-only --verify --default HEAD "$@") || exit
+-rev=$(git-rev-parse --revs-only --verify $rev^0) || exit
++rev=$(git-rev-parse --verify --default HEAD "$@") || exit
++rev=$(git-rev-parse --verify $rev^0) || exit
+ git-read-tree --reset "$rev" && {
+ 	if orig=$(git-rev-parse --verify HEAD 2>/dev/null)
+ 	then
+diff --git a/git-tag-script b/git-tag-script
+--- a/git-tag-script
++++ b/git-tag-script
+@@ -47,7 +47,7 @@ if [ -e "$GIT_DIR/refs/tags/$name" -a -z
+ fi
+ shift
+ 
+-object=$(git-rev-parse --verify --revs-only --default HEAD "$@") || exit 1
++object=$(git-rev-parse --verify --default HEAD "$@") || exit 1
+ type=$(git-cat-file -t $object) || exit 1
+ tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
+ 
