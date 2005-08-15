@@ -1,45 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git 1.0 Synopis (Draft v4)
-Date: Sun, 14 Aug 2005 22:19:18 -0700
-Message-ID: <7vr7cv7p61.fsf@assigned-by-dhcp.cox.net>
-References: <20050729082941.GD32263@mythryan2.michonline.com>
-	<200507312215.j6VMFeqn030963@laptop11.inf.utfsm.cl>
-	<20050815045546.GA7001@mythryan2.michonline.com>
+From: Ryan Anderson <ryan@michonline.com>
+Subject: Re: sending changesets from the middle of a git tree
+Date: Mon, 15 Aug 2005 02:35:02 -0400
+Message-ID: <20050815063502.GD7001@mythryan2.michonline.com>
+References: <42FEBC16.9050309@austin.rr.com> <20050814040233.GC6844@mythryan2.michonline.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 07:19:40 2005
+X-From: git-owner@vger.kernel.org Mon Aug 15 08:35:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4XNb-0004xW-40
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 07:19:23 +0200
+	id 1E4YZ0-0000uu-Ij
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 08:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751068AbVHOFTU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 01:19:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbVHOFTU
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 01:19:20 -0400
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:45705 "EHLO
-	fed1rmmtao01.cox.net") by vger.kernel.org with ESMTP
-	id S1751068AbVHOFTT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 01:19:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050815051918.YQUK19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 15 Aug 2005 01:19:18 -0400
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <20050815045546.GA7001@mythryan2.michonline.com> (Ryan Anderson's
-	message of "Mon, 15 Aug 2005 00:55:46 -0400")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932098AbVHOGfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 02:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbVHOGfF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 02:35:05 -0400
+Received: from mail.autoweb.net ([198.172.237.26]:25044 "EHLO mail.autoweb.net")
+	by vger.kernel.org with ESMTP id S932098AbVHOGfE (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 02:35:04 -0400
+Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
+	by mail.autoweb.net with esmtp (Exim 4.44)
+	id 1E4YYp-000648-BY; Mon, 15 Aug 2005 02:35:03 -0400
+Received: from mythical ([10.254.251.11] ident=Debian-exim)
+	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
+	id 1E4YYo-00013D-00; Mon, 15 Aug 2005 02:35:02 -0400
+Received: from ryan by mythical with local (Exim 4.52)
+	id 1E4YYo-0001z9-Qq; Mon, 15 Aug 2005 02:35:02 -0400
+To: Steve French <smfrench@austin.rr.com>
+Content-Disposition: inline
+In-Reply-To: <20050814040233.GC6844@mythryan2.michonline.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ryan Anderson <ryan@michonline.com> writes:
+On Sun, Aug 14, 2005 at 12:02:33AM -0400, Ryan Anderson wrote:
+> On Sat, Aug 13, 2005 at 10:35:50PM -0500, Steve French wrote:
+>
+> > 2) There is no way to update the comment field of a changeset after it 
+> > goes in (e.g. to add a bugzilla bug number for a bug that was opened 
+> > just after the fix went in).
+> 
+> No, a commit is immutable.  You can use "git format-patch" to rebase things if
+> you need.  I prefer to use "git format-patch --mbox", edit what I need
+> to, then use git-applymbox to rebase it all against a clean tree.
 
-> Junio, do you want to pull this into the git tree?
+Note (and I should have said this at first), doing it this way gives you
+the opportunity to combine a few changes if you want.
 
-Yes, but I have been wondering where it should go.  Should it go
-under Documentation/ and made into html via asciidoc along with
-other tools?
+Use git-format-patch-script to pull out what you want, delete the diff
+from the bottom of the file, manually diff what you need using
+git-diff-script, and stick that back at the end of the file
+git-format-patch-script created.
+
+This seems to be the easiest way to clean up your change history.
+
+-- 
+
+Ryan Anderson
+  sometimes Pug Majere
