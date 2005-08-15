@@ -1,101 +1,80 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Making note, in the repository, of push/pull relationships
-Date: Mon, 15 Aug 2005 10:25:19 -0600
-Organization: Hewlett Packard
-Message-ID: <20050815162519.GB9719@hpsvcnb.fc.hp.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Switching heads and head vs branch after CVS import
+Date: Mon, 15 Aug 2005 09:42:20 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508150930020.3553@g5.osdl.org>
+References: <20050815080931.64F0D352633@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Mon Aug 15 18:28:30 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 15 18:44:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4hn0-00072j-Ud
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 18:26:19 +0200
+	id 1E4i2j-00025D-3r
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 18:42:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964823AbVHOQZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 12:25:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964824AbVHOQZf
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 12:25:35 -0400
-Received: from atlrel8.hp.com ([156.153.255.206]:48844 "EHLO atlrel8.hp.com")
-	by vger.kernel.org with ESMTP id S964821AbVHOQZU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 12:25:20 -0400
-Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel8.hp.com (Postfix) with ESMTP id 705621A8E
-	for <git@vger.kernel.org>; Mon, 15 Aug 2005 12:25:19 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP id 2477B41F5C6
-	for <git@vger.kernel.org>; Mon, 15 Aug 2005 16:25:19 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 18EE72AF18; Mon, 15 Aug 2005 10:25:19 -0600 (MDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Origin: hpescnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S964835AbVHOQma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 12:42:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbVHOQm3
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 12:42:29 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:24287 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S964835AbVHOQm2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 12:42:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7FGgMjA005367
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 15 Aug 2005 09:42:22 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7FGgKBZ031239;
+	Mon, 15 Aug 2005 09:42:21 -0700
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20050815080931.64F0D352633@atlas.denx.de>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-(Sorry for the repost.  The other one was an accident.)
 
-Over the week-end, I was thinking about the thread "Re: How is working
-on arbitrary remote heads supposed to work in Cogito".  I wanted to
-weigh in an opinion that I've developed on it but thought it deserved a
-new thread.
 
-Somewhere in the thread something was mentioned about maintaining
-<local branch>:<remote branch> pairs in the git repository when pushes
-and pulls are performed.  I think the argument was actually against
-keeping this information and ultimately against allowing pushes to a
-branch of a different name.
+On Mon, 15 Aug 2005, Wolfgang Denk wrote:
+> 
+> I asked this question before without receiving any reply:
+> 
+> Assume I know exactly where the merge back happenend - is  there  any
+> way to tell git about it, so I don't see all these dangling heads any
+> more?
 
-I wanted to weigh in with why it would be a good idea to make note of
-this information.  The only thing that would be required of the plumbing
-is to specify how this information is kept and if a push or pull is
-performed directly with git then make note of the push/pull
-relationship.  Everything else would be up to the porcelains.
+You'd have to teach cvsimport about it. Basically, in cvsimport, you have
 
-So, I envision a simple directed graph where nodes represent the
-branches (wether local or remote) and the edges represent push or pull
-relationships between branches.
+		...
+                my @par = ();
+                @par = ("-p",$parent) if $parent;
 
-Git already stores the nodes.
+which sets the parent. Right now the parent is _always_ just the previous 
+head of the branch we're committing to (I'm no good with perl, but I think 
+Martin was wrong - there's no code to handle the case of a merge: once we 
+branch off, "git cvsimport" will not currently ever create a 
+merge-commit).
 
-The edges, in theory, would spring into existence when a push or pull is
-performed between two branches for the first time.
+But if you have some heuristic for figuring out that it's a merge, and
+know the other branch is, you could add more parents by just adding
+another ("-p", $merge_parent) to the parameters to git-commit-tree.
 
-This graph will be extremely useful for manageing flow in a project.  It
-could enable something as simple as a script that would walk the edges
-and tell which ones have fallen behind.  It would also be possible to
-easily pull up a visual representation of the graph (with graphviz,
-maybe).  This sort of thing might prove to be a valuable orientation
-tool for the developer or project manager.
+The problem is literally how to figure out that it's a merge. You can 
+probably make a guess from the commit message together with possibly 
+looking at the diff. 
 
-It could also enable some very powerful project flow management --- in a
-porcelain of course --- that would manage flow from an engineer's own
-sand-box through software engineering 'gates' such as integration,
-quality assurance, product maintenance and the documentation and
-sign-offs required to pass through each of these gates.
+The good news is that if you guess wrong, and you claim a merge where none
+exists, it doesn't really do any real damage. It might make th history
+look strange, and it might make subsequent git merges harder if the branch
+is actually still live and you want to continue development within git.
+But even that is debatable (if the eventual git merge isn't trivial,
+you're likely to have to merge by hand anyway - and it's going to be as
+hard as a CVS merge would have been, because quite frankly, you've got the
+same information CVS had..).
 
-It could also be used to aid in documenting and managing the, already
-existent, linux tree development flow in whatever way suits.
-
-This is a big return on investment.  Little would be required of the
-plumbing to maintain these 'edges', just add to them when it performs a
-push/pull on an edge that hasn't already been recorded.  Any changes or
-deletions could be handled by the user or by some porcelain.
-
-I think it is important, though, to specify how this information should
-be stored to maintain compatibility between porcelains while (hopefully)
-allowing for some degree of flexibility.  I don't yet know where this
-line should be drawn.
-
-Carl
-
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		Linus
