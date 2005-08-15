@@ -1,60 +1,69 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Switching heads and head vs branch after CVS import
-Date: Mon, 15 Aug 2005 12:24:30 +1200
-Message-ID: <46a038f905081417241f9598cc@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Alternate object pool mechanism updates.
+Date: Sun, 14 Aug 2005 17:29:05 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
+References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net> <20050813120815.GC5608@pasky.ji.cz>
+ <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Aug 15 02:24:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 02:29:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4SmK-0003Df-6z
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 02:24:36 +0200
+	id 1E4Sqq-0003UJ-RM
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 02:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932594AbVHOAYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 20:24:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932595AbVHOAYd
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 20:24:33 -0400
-Received: from rproxy.gmail.com ([64.233.170.206]:43371 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932594AbVHOAYd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2005 20:24:33 -0400
-Received: by rproxy.gmail.com with SMTP id i8so706276rne
-        for <git@vger.kernel.org>; Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=fTgs3tQlEcnazjjjNdSemLslSZJvflAuUT6PuIRIVvMPpzFo0IgFeuDtFTF7TYxUP6ClVtHvsdRDFe9vsxBqyvNnXrhCgDnBsPKSwFr5GyPHXhFIqQYlMDdTB0dzTnLiszSSpQlhXyEYtM0jpVjrFzDrQw1nfSx24EGnRcXAQn8=
-Received: by 10.38.101.2 with SMTP id y2mr1776669rnb;
-        Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
+	id S932598AbVHOA3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 20:29:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932599AbVHOA3N
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 20:29:13 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:40855 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932598AbVHOA3N (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Aug 2005 20:29:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7F0T6jA007960
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 14 Aug 2005 17:29:06 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7F0T5E1024105;
+	Sun, 14 Aug 2005 17:29:05 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-After having done a cvs import of Moodle using git-cvsimport-script
-all the cvs branches show up as heads. How do I switch heads within a
-checkout? cogito doesn't seem to be able to, and I'm unsure on how to
-do it with git.
 
-And I am confused about the difference between heads and branches. Git
-and cogito seem  prepared to merge across the heads (using cg-update
-for instance, when pointed to a different head merged it in, rather
-than switched to it), that would match a workflow where a group of
-people maintain very closely related heads and merge constantly
-across.
 
-Branches don't seem to have the same expectation or support in the
-toolset. Why? What makes a branch different from a head, apart from
-the fact that they would be expected to drift further apart?
+On Sun, 14 Aug 2005, Junio C Hamano wrote:
+> 
+> Ok, so the one in the proposed updates branch says
+> info/alternates.
+> 
+> With this, your recent cg-clone -l can be made to still use
+> individual .git/object/??/ hierarchy to keep objects newly
+> created in each repository while sharing the inherited objects
+> from the parent repository, which would probably alleviate the
+> multi-user environment worries you express in the comments for
+> the option.  The git-clone-script in the proposed updates branch
+> has such a change.
 
-In any case, should the cvsimport turn cvs branches into git branches
-instead of heads? Is there are way to turn a head into a proper
-branch?
+I think this is great - especially for places like kernel.org, where a lot 
+of repos end up being related to each other, yet independent.
 
-cheers,
+However, exactly for places like kernel.org it would _also_ be nice if
+there was some way to prune objects that have been merged back into the
+parent. In other words, imagine that people start using my kernel tree as
+their source of "alternate" objects, which works wonderfully well, but
+then as I pull from them, nothing ever removes the objects that are now
+duplicate.
 
-martin
+We've got a "git prune-packed", it would be good to have a "git
+prune-alternate" or something equivalent.
+
+			Linus
