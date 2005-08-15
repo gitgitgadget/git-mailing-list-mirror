@@ -1,81 +1,65 @@
-From: Matt Draisey <mattdraisey@sympatico.ca>
-Subject: Re: symlinked directories in refs are now unreachable
-Date: Mon, 15 Aug 2005 04:12:02 -0400
-Message-ID: <1124093522.721.41.camel@della.draisey.ca>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: Switching heads and head vs branch after CVS import
+Date: Mon, 15 Aug 2005 10:22:41 +0200
+Message-ID: <20050815082241.GF11882MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <46a038f905081417241f9598cc@mail.gmail.com> <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org> <46a038f905081419057cc6b5cd@mail.gmail.com> <Pine.LNX.4.58.0508141937251.3553@g5.osdl.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 15 10:15:39 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 15 10:16:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4a7k-0007xF-EK
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 10:15:13 +0200
+	id 1E4a8g-00081n-Qv
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 10:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932217AbVHOIPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 04:15:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932218AbVHOIPJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 04:15:09 -0400
-Received: from tomts25-srv.bellnexxia.net ([209.226.175.188]:19845 "EHLO
-	tomts25-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S932217AbVHOIPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 04:15:07 -0400
-Received: from Windsor-ppp121559.sympatico.ca ([216.209.168.44])
-          by tomts25-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050815081506.LVNC27245.tomts25-srv.bellnexxia.net@Windsor-ppp121559.sympatico.ca>
-          for <git@vger.kernel.org>; Mon, 15 Aug 2005 04:15:06 -0400
-To: git-list <git@vger.kernel.org>
-X-Mailer: Evolution 2.0.4 
+	id S932224AbVHOIQH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 04:16:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932237AbVHOIQH
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 04:16:07 -0400
+Received: from rusty.kulnet.kuleuven.ac.be ([134.58.240.42]:2713 "EHLO
+	rusty.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S932224AbVHOIQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 04:16:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id F305B1D74B4
+	for <git@vger.kernel.org>; Mon, 15 Aug 2005 10:16:04 +0200 (CEST)
+Received: from smtp02.kuleuven.be (lepidus.kulnet.kuleuven.ac.be [134.58.240.72])
+	by rusty.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 26FD61D73FD
+	for <git@vger.kernel.org>; Mon, 15 Aug 2005 10:16:02 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by smtp02.kuleuven.be (Postfix) with ESMTP id 103492CAA05
+	for <git@vger.kernel.org>; Mon, 15 Aug 2005 10:16:02 +0200 (CEST)
+Received: (qmail 29643 invoked by uid 500); 15 Aug 2005 08:22:41 -0000
+To: Linus Torvalds <torvalds@osdl.org>
+Mail-Followup-To: Linus Torvalds <torvalds@osdl.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	GIT <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0508141937251.3553@g5.osdl.org>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2005-08-14 at 22:12 -0700, Junio C Hamano wrote:
-> Matt Draisey <mattdraisey@sympatico.ca> writes:
+On Sun, Aug 14, 2005 at 07:49:26PM -0700, Linus Torvalds wrote:
+> On Mon, 15 Aug 2005, Martin Langhoff wrote:
+> > Except for the keyword expansion. surely there's a way to tell cvsps
+> > to not do it. Why would we ever want it?
 > 
-> > The behaviour of the symlinked in ref directories has changed from
-> > earlier versions of git.  They used to be taken into account in
-> > git-fsck-cache --unreachable.
-> >
-> > Can the previous behaviour be reinstated?
+> Ahh. I don't think we should blame cvsps, I think cvsimport should use the 
+> "-ko" flag to disable keyword expansion or whatever the magic flag is.
 > 
-> I would not have much problem accepting a patch for that; it
-> would make things safer when a symlink points to a real file
-> that is outside .git/refs/ that holds a pointer to a valid
-> object.
+> Sven, Matthias, opinions? I've never used CVS keyword expansion, and 
+> always felt it was pointless, but hey..
 > 
-> Having said that, I would first like to know why you have a
-> symlink there, and the real file pointed by it outside .git/refs
-> hierarchy.  The core GIT tools do not create such symlinks, so
-> either you are creating one by hand, or your Porcelain is
-> creating one for you for whatever reason.
 
-It is my own home-grown Porcelain that creates the symlinks.  I've
-thrown together a python programme to track a nested collection of
-projects.  My own programming efforts rarely exceed two or three files
-per project, and don't justify there own .git/objects repository.
-Still, a few projects do benefit from having their own commit history,
-while the rest are tracked as one big outermost superproject of
-unrelated stuff.
+I don't have any strong opinion on that, but I do think
+that by default a cvsimport should give you the same
+file contents that a "cvs import" would.
+Martin's patch seems to be going in the right direction.
 
-> I would like to know
-> a use case or two to illustrate why there are symlinks pointing
-> at real files outside .git/refs/ hierarchy, and how that
-> arrangement is useful.
-
-Whether or not its useful??  Hmmm.  Debatable.
-
-I've only written a commit tool.  All the other git and cogito tools I
-invoke from the outermost directory like so 
-
-$git-cat-file commit per/Minesweeper/master
-
-Symlinking still works here as expected.  The per directory is just
-there so I don't stomp on the outermost namespace, the Minesweeper is a
-symlink to the nested project's refs directory.  Symlinking seems the
-natural way to do this as they only need updating when I move
-subdirectories around.
-
-P.S. $echo new-id > .git/per/Minesweeper/master is safe here --- this is
-the actual behaviour I want.
+skimo
