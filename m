@@ -1,110 +1,71 @@
-From: Matt Draisey <mattdraisey@sympatico.ca>
-Subject: Re: symlinked directories in refs are now unreachable
-Date: Mon, 15 Aug 2005 05:01:15 -0400
-Message-ID: <1124096475.749.64.camel@della.draisey.ca>
-References: <1124073677.27393.15.camel@della.draisey.ca>
-	 <7v64u7941c.fsf@assigned-by-dhcp.cox.net>
-	 <1124089116.749.39.camel@della.draisey.ca>
-	 <7v1x4v4pfx.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Add -k kill keyword expansion option to git-cvsimport
+Date: Mon, 15 Aug 2005 21:05:01 +1200
+Message-ID: <46a038f9050815020511574e3d@mail.gmail.com>
+References: <46a038f9050814235140877be7@mail.gmail.com>
+	 <7vk6in65dp.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90508150037f128d6@mail.gmail.com>
+	 <7vacjj3968.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f905081501301bd9a801@mail.gmail.com>
+	 <7vr7cv1t89.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 11:04:55 2005
+X-From: git-owner@vger.kernel.org Mon Aug 15 11:06:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4atV-0006pl-1i
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:04:33 +0200
+	id 1E4au7-0006wB-Gq
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932280AbVHOJEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 05:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932288AbVHOJEY
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:04:24 -0400
-Received: from tomts5.bellnexxia.net ([209.226.175.25]:4760 "EHLO
-	tomts5-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S932280AbVHOJEX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 05:04:23 -0400
-Received: from Windsor-ppp121559.sympatico.ca ([216.209.168.44])
-          by tomts5-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050815090419.DDLW26128.tomts5-srv.bellnexxia.net@Windsor-ppp121559.sympatico.ca>;
-          Mon, 15 Aug 2005 05:04:19 -0400
+	id S932288AbVHOJFF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 05:05:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbVHOJFF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:05:05 -0400
+Received: from rproxy.gmail.com ([64.233.170.195]:46503 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932288AbVHOJFE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 05:05:04 -0400
+Received: by rproxy.gmail.com with SMTP id i8so747581rne
+        for <git@vger.kernel.org>; Mon, 15 Aug 2005 02:05:01 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=J9tSz6bVJggixI/0iv2Hx752laVdNEpwIYzhdiKe+I0CvpW8332Yv6Xjp7zzZeBwyqxyqg6XtKLk6G115JfXf1W6J4yc+43HGWwqSaOClWLeCwMhoXUeM9pVb4WH/qOyxvlcGw9AQw20cTiVNpdVX6fPmba+CgH360TbhQGdLbw=
+Received: by 10.38.101.23 with SMTP id y23mr1891865rnb;
+        Mon, 15 Aug 2005 02:05:01 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Mon, 15 Aug 2005 02:05:01 -0700 (PDT)
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x4v4pfx.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.0.4 
+In-Reply-To: <7vr7cv1t89.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2005-08-15 at 00:41 -0700, Junio C Hamano wrote:
-> Matt Draisey <mattdraisey@sympatico.ca> writes:
-> 
-> > ...  My own programming efforts rarely exceed two or three files
-> > per project, and don't justify there own .git/objects repository.
-> > Still, a few projects do benefit from having their own commit history,
-> 
-> I am afraid I am not quite getting it.
-> 
-> You are interested in many projects that have outside upstream,
-> and you typically modify only small portion of each of them,
-> which is quite a typical behaviour for individual developers.
-> For some reason you want to keep those repository "clean"
-> without your own commit objects or changed objects only
-> reachable from your commits.  Is it what is happening here?
+On 8/15/05, Junio C Hamano <junkio@cox.net> wrote:
+> I was just wondering if we are limiting options for people who
+> want to convert their own CVS repositories by always using
+> either -kkv or -ko and nothing else. 
 
-No, all the projects are my own.  I am not a developer at all, merely a
-hobbyist.  Upstream projects don't fit into this scheme.
+I think the other modes are relevant in different scenarios. -kv is
+only meaningful as file mode over the life of the file in the repo.
+-kk is only meaningful when calling cvs update with -j -j parameters
+or cvs diff, and is effectively a synonim of -ko.
 
-> > I've only written a commit tool.  All the other git and cogito tools I
-> > invoke from the outermost directory like so 
-> >
-> > $git-cat-file commit per/Minesweeper/master
-> >
-> > Symlinking still works here as expected.  The per directory is just
-> > there so I don't stomp on the outermost namespace, the Minesweeper is a
-> > symlink to the nested project's refs directory.
-> 
-> Hmm.  So you have two GIT managed trees, $D/matt and $D/Minesweeper,
-> and a symlink between them like this.  Is that what is happening here?
-> 
->   $D/matt/.git/refs/heads/per/Minesweeper -> $D/Minesweeper/.git/refs/heads
-> 
+In the position we are, getting file/revisions out of a repo, there
+are 2 possible files we can get: the one that you'll get with -kkv and
+the one you'll get with -ko/-kb. -kb/-ko should give us exactly the
+same file, modulo bugs.
 
-No, they are nested
+I suspect that in practice -kb is more reliable when it comes to
+binary files. But to support that the _files() method will need to
+handle a slightly different protocol mode on the socket, and I rather
+not mess with it unless I can prove its broken. Talking with cvs
+servers on the socket is not my idea of fun, and there's all sorts of
+version-specific oddities.
 
-    $D/.git/refs/heads/per/Minesweeper -> $D/Minesweeper/.git/refs/heads
+cheers,
 
-The outermost repository merely aggregates a bunch of small unrelated
-projects that are not yet ready for an independent existence.  The idea
-is to put everything under revision control in the hope that eventually
-something useful falls out.
 
-My commit tool walks up the chain towards root until it finds the
-objects directory and does the appropriate thing.
-
-> Of course 'git-cat-file commit per/Minesweeper/master' would
-> work in "$D/matt" directory.  How do the set of paths recorded
-> in the index file used in these repositories relate to each
-> other?  Is $D/matt/ tracking the same set of files as the other
-> repository tracks?  Is it meant to be a superset?  Subset?  More
-> or less independent "private additions"?
-> 
-> There must be some advantage to this arrangement than the more
-> typical arrangement I've seen people do, which is to have two
-> branches in Minesweeper (that is the upstream, right?)
-> repository, one "origin" and the other "master".  Upstream
-> changes you fetch and pull into "origin" branch while you commit
-> your changes to "master" branch.  I just do not yet see what
-> that advantage is, and I strongly suspect because I misread your
-> description and misunderstood the two repository arrangement you
-> have and how they are used.
-> 
-> By the way, did you want to take this discussion private or was
-> it by accident you did not CC: the list?
-> 
-
-No, I didn't want to take it private.  I just don't know how my email
-programme works.  I also just discovered that Evolution's Forward As >
-Redirect is really a bounce and not a forward at all (it doesn't change
-the to: address)
+martin
