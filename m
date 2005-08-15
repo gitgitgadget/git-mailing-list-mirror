@@ -1,74 +1,101 @@
-From: Matthias Urlichs <smurf@smurf.noris.de>
-Subject: Re: Switching heads and head vs branch after CVS import
-Date: Mon, 15 Aug 2005 11:07:12 +0200
-Organization: {M:U} IT Consulting
-Message-ID: <pan.2005.08.15.09.07.10.118103@smurf.noris.de>
-References: <46a038f905081417241f9598cc@mail.gmail.com> <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org> <46a038f905081419057cc6b5cd@mail.gmail.com> <Pine.LNX.4.58.0508141937251.3553@g5.osdl.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: sending changesets from the middle of a git tree
+Date: Mon, 15 Aug 2005 10:27:23 +0100
+Message-ID: <tnxiry77dok.fsf@arm.com>
+References: <42FEBC16.9050309@austin.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-From: git-owner@vger.kernel.org Mon Aug 15 11:10:59 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 11:28:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4ayB-0007ZZ-AK
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:09:23 +0200
+	id 1E4bGf-0002v0-Fu
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 11:28:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbVHOJJV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 05:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932331AbVHOJJV
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:09:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:24530 "EHLO ciao.gmane.org")
-	by vger.kernel.org with ESMTP id S932274AbVHOJJU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 05:09:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1E4awx-0007O1-T9
-	for git@vger.kernel.org; Mon, 15 Aug 2005 11:08:07 +0200
-Received: from run.smurf.noris.de ([192.109.102.41])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Aug 2005 11:08:07 +0200
-Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Aug 2005 11:08:07 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
-User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
-X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
+	id S932335AbVHOJ2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 05:28:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932337AbVHOJ2Y
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 05:28:24 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:41194 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S932335AbVHOJ2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 05:28:24 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7F9RCOU019838;
+	Mon, 15 Aug 2005 10:27:17 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA18395;
+	Mon, 15 Aug 2005 10:27:56 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 15 Aug 2005 10:27:55 +0100
+To: Steve French <smfrench@austin.rr.com>
+In-Reply-To: <42FEBC16.9050309@austin.rr.com> (Steve French's message of
+ "Sat, 13 Aug 2005 22:35:50 -0500")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 15 Aug 2005 09:27:55.0796 (UTC) FILETIME=[9E3FD540:01C5A17B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Linus Torvalds wrote:
+There are other ways to do these, explained in this thread. I will
+only show the StGIT way, just choose which one suits you better.
 
->> There may be some surprises in here! gitk --all shows at least one
->> branch opening and merging back into origin, and it has figured it out
->> correctly
->
-> Oh, wow. The new cvsimport is obviously being a hell of a lot smarter
-> than my original one was. Goodie.
+Steve French <smfrench@austin.rr.com> wrote:
+> 1) There is no way to send a particular changeset from the "middle"
+> of a set from one tree to another, without exporting it as a patch
+> or rebuilding a new git tree.  I have two changesets that, after
+> testing last week, I now consider more important to send upstream
+> than the few earlier and later changesets.
 
-Umm, actually, no, cvsimport doesn't do merges. Dunno where Martin got his
-from, but it wasn't me. ;-)
+With StGIT, you create a new patch ('stg new <name>'), modify and
+commit the changes with 'stg refresh'. All the modifications to a
+patch are stored as a single GIT commit. If you manage a (contributor)
+tree with StGIT, you shouldn't commit changes directly with GIT but
+use the StGIT commands instead. You end up with a stack of changesets
+on top of the main tree.
 
-> Sven, Matthias, opinions? I've never used CVS keyword expansion, and 
-> always felt it was pointless, but hey..
+You can send the changesets upstream with the 'stg mail' command or
+export them with 'stg export'.
 
-I have intentionally kept keyword expansion on when I wrote the code,
-because matching up the files from CVS with files gathered from tarballs,
-Debian repositories, and what-not, becomes a whole lot easier that way.
+> If I export those two changesets as patches, and send them
+> on. presumably I lose the changset comments etc. and then when the
+> upstream tree is merged back, it might look a little odd in the
+> changeset history.
 
-For me, that's a major use case, esp. with CVS getting confused about its
-tags (as people haphazardly copy whole subtrees from one CVS repository
-into a different one).
+Pulling the latest changes from the main tree will keep your changes
+on top, much like git cherry/rebase, but StGIT does a diff3 merge
+instead of simply generating and applying patch. This has the
+advantage of detecting when a patch (changeset) was not fully merged
+or was modifed. If the upstream merge was complete, StGIT shows your
+patch as empty (since your patch no longer needs to change the
+tree). Otherwise, you can either have some changes in the patch or
+even be notified of a conflict (patch modified before being merged).
+
+> 2) There is no way to update the comment field of a changeset after
+> it goes in (e.g. to add a bugzilla bug number for a bug that was
+> opened just after the fix went in).
+
+'stg refresh --edit' lets you modify the patch text. Since the GIT
+commits are immutable, a new commit is generated but the parent of the
+new commit is the same as the parent of the old commit (making this
+commit unaccessible). Being able to create your own DAG structure with
+GIT is what made StGIT possible.
+
+> 3) There is no way to do a test commit of an individual changeset
+> against a specified tree (to make sure it would still merge cleanly,
+> automatically).
+
+With StGIT you can pop all the patches from the stack and only push
+the one you want to test (the push/pop operations also allow patch
+reordering). Note that the push operation is done with a three-way
+merge and, if successful, the patch might have a sligthly different
+form (different offsets for example, or even chunks removed if they
+are already in the tree).
+
+If the push fails, it means that it doesn't apply cleanly because it
+depends on changes made by other patches in your series. You can undo
+the push operation with 'stg push --undo'.
 
 -- 
-Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
-Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
- - -
-I hope you will find the courage to keep on living
-despite the existence of this feature.
-
-	-- Richard Stallman
+Catalin
