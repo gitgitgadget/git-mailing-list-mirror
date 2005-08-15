@@ -1,51 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Alternate object pool mechanism updates.
-Date: Sun, 14 Aug 2005 16:46:31 -0700
-Message-ID: <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
-References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net>
-	<20050813120815.GC5608@pasky.ji.cz>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Switching heads and head vs branch after CVS import
+Date: Mon, 15 Aug 2005 12:24:30 +1200
+Message-ID: <46a038f905081417241f9598cc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 01:47:18 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Mon Aug 15 02:24:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4SBj-0000ix-Rn
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 01:46:48 +0200
+	id 1E4SmK-0003Df-6z
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 02:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932355AbVHNXqd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 19:46:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbVHNXqc
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 19:46:32 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:39082 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S932355AbVHNXqc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2005 19:46:32 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050814234632.TYQV7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 Aug 2005 19:46:32 -0400
-To: Petr Baudis <pasky@suse.cz>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932594AbVHOAYd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 20:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932595AbVHOAYd
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 20:24:33 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:43371 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932594AbVHOAYd convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2005 20:24:33 -0400
+Received: by rproxy.gmail.com with SMTP id i8so706276rne
+        for <git@vger.kernel.org>; Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fTgs3tQlEcnazjjjNdSemLslSZJvflAuUT6PuIRIVvMPpzFo0IgFeuDtFTF7TYxUP6ClVtHvsdRDFe9vsxBqyvNnXrhCgDnBsPKSwFr5GyPHXhFIqQYlMDdTB0dzTnLiszSSpQlhXyEYtM0jpVjrFzDrQw1nfSx24EGnRcXAQn8=
+Received: by 10.38.101.2 with SMTP id y2mr1776669rnb;
+        Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Sun, 14 Aug 2005 17:24:30 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Petr Baudis <pasky@suse.cz> writes:
+After having done a cvs import of Moodle using git-cvsimport-script
+all the cvs branches show up as heads. How do I switch heads within a
+checkout? cogito doesn't seem to be able to, and I'm unsure on how to
+do it with git.
 
-> What about calling it rather info/alternates (or info/alternate)? It
-> looks better, sounds better, is more namespace-ecological tab-completes
-> fine and you don't type it that often anyway. :-)
+And I am confused about the difference between heads and branches. Git
+and cogito seem  prepared to merge across the heads (using cg-update
+for instance, when pointed to a different head merged it in, rather
+than switched to it), that would match a workflow where a group of
+people maintain very closely related heads and merge constantly
+across.
 
-Ok, so the one in the proposed updates branch says
-info/alternates.
+Branches don't seem to have the same expectation or support in the
+toolset. Why? What makes a branch different from a head, apart from
+the fact that they would be expected to drift further apart?
 
-With this, your recent cg-clone -l can be made to still use
-individual .git/object/??/ hierarchy to keep objects newly
-created in each repository while sharing the inherited objects
-from the parent repository, which would probably alleviate the
-multi-user environment worries you express in the comments for
-the option.  The git-clone-script in the proposed updates branch
-has such a change.
+In any case, should the cvsimport turn cvs branches into git branches
+instead of heads? Is there are way to turn a head into a proper
+branch?
+
+cheers,
+
+martin
