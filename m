@@ -1,80 +1,79 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Switching heads and head vs branch after CVS import
-Date: Mon, 15 Aug 2005 09:42:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508150930020.3553@g5.osdl.org>
-References: <20050815080931.64F0D352633@atlas.denx.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Cloning speed comparison
+Date: Mon, 15 Aug 2005 13:50:31 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508151321270.12816@iabervon.org>
+References: <20050813015402.GC20812@pasky.ji.cz>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 15 18:44:12 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 15 19:48:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4i2j-00025D-3r
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 18:42:33 +0200
+	id 1E4j3M-0002ZB-L5
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 19:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964835AbVHOQma (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 12:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964842AbVHOQm3
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 12:42:29 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:24287 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S964835AbVHOQm2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 12:42:28 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7FGgMjA005367
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 15 Aug 2005 09:42:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7FGgKBZ031239;
-	Mon, 15 Aug 2005 09:42:21 -0700
-To: Wolfgang Denk <wd@denx.de>
-In-Reply-To: <20050815080931.64F0D352633@atlas.denx.de>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.44__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964824AbVHORrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 13:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbVHORrN
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 13:47:13 -0400
+Received: from iabervon.org ([66.92.72.58]:10246 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S964824AbVHORrM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Aug 2005 13:47:12 -0400
+Received: (qmail 21385 invoked by uid 1000); 15 Aug 2005 13:50:31 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 15 Aug 2005 13:50:31 -0400
+To: Petr Baudis <pasky@suse.cz>
+In-Reply-To: <20050813015402.GC20812@pasky.ji.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, 13 Aug 2005, Petr Baudis wrote:
 
-
-On Mon, 15 Aug 2005, Wolfgang Denk wrote:
+>   Hello,
 > 
-> I asked this question before without receiving any reply:
+>   I've wondered how slow the protocols other than rsync are, and the
+> (well, a bit dubious; especially wrt. caching on the remote side)
+> results are:
 > 
-> Assume I know exactly where the merge back happenend - is  there  any
-> way to tell git about it, so I don't see all these dangling heads any
-> more?
+> 	git	clone-pack:ssh	25s
+> 	git	rsync		27s
+> 	git	http-pull	47s
+> 	git	dumb-http	54s
+> 	git	ssh-pull	660s
+> 
+> 	cogito	clone-pack:ssh	35s (!)
+> 	cogito	rsync		140s
+> 	cogito	ssh-pull	480s
+> 	cogito	http-pull	extrapolated to about an hour!
 
-You'd have to teach cvsimport about it. Basically, in cvsimport, you have
+I should be able to get http-pull down to the neighborhood of 
+(current) ssh-pull; http-pull is that slow (when the source repository 
+isn't packed) because it's entirely sequential, rather than overlapping 
+requests like ssh-pull now does.
 
-		...
-                my @par = ();
-                @par = ("-p",$parent) if $parent;
+I should also be able to get ssh-pull down to the area of clone-pack, but 
+that's lower-priority, since there's clone-pack.
 
-which sets the parent. Right now the parent is _always_ just the previous 
-head of the branch we're committing to (I'm no good with perl, but I think 
-Martin was wrong - there's no code to handle the case of a merge: once we 
-branch off, "git cvsimport" will not currently ever create a 
-merge-commit).
+(I've written an untested patch for local-pull, which I'll be testing, 
+cleaning, and submitting tonight, assuming my newly-arrived monitor 
+actually works)
 
-But if you have some heuristic for figuring out that it's a merge, and
-know the other branch is, you could add more parents by just adding
-another ("-p", $merge_parent) to the parameters to git-commit-tree.
+>   PS:
+> 	With the latest git version as of time of writing this:
+> 	$ time cg-clone git+ssh://pasky@localhost/home/pasky/WWW/dev/git/.g cogito
+> 	...
+> 	progress: 5759 objects, 10292457 bytes
+> 	$ time cg-clone http://localhost/~pasky/dev/git/.g cogito
+> 	...
+> 	progress: 8681 objects, 14881571 bytes
 
-The problem is literally how to figure out that it's a merge. You can 
-probably make a guess from the commit message together with possibly 
-looking at the diff. 
+I've noticed that ssh connections don't actually disconnect at the end 
+with recent versions of ssh sometimes. In my experience, this occasionally 
+happens with git, but always happens with scp, suggesting that it's an ssh 
+bug of some sort; I've also only noticed this with openssh 3.9_p1 with 
+some of Gentoo's -r2 patches.
 
-The good news is that if you guess wrong, and you claim a merge where none
-exists, it doesn't really do any real damage. It might make th history
-look strange, and it might make subsequent git merges harder if the branch
-is actually still live and you want to continue development within git.
-But even that is debatable (if the eventual git merge isn't trivial,
-you're likely to have to merge by hand anyway - and it's going to be as
-hard as a CVS merge would have been, because quite frankly, you've got the
-same information CVS had..).
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
