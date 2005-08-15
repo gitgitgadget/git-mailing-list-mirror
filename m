@@ -1,70 +1,44 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git reveals a bug in (some versions) BSD diff
-Date: Tue, 16 Aug 2005 01:02:13 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508160100100.26231@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.44.0508130335300.2136-100000@bellevue.puremagic.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Screwed up AUTHOR field for two commits.
+Date: Mon, 15 Aug 2005 16:07:00 -0700
+Message-ID: <7vacjix0iz.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 01:03:37 2005
+X-From: git-owner@vger.kernel.org Tue Aug 16 01:08:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4nyF-0000Mf-2n
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 01:02:19 +0200
+	id 1E4o2x-0001FO-Ee
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 01:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312AbVHOXCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 19:02:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932338AbVHOXCQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 19:02:16 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:2784 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932312AbVHOXCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 19:02:15 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3FEB7E2828; Tue, 16 Aug 2005 01:02:14 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 224A4B08A1; Tue, 16 Aug 2005 01:02:14 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 07A4EAD0CB; Tue, 16 Aug 2005 01:02:14 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id ABB92E2828; Tue, 16 Aug 2005 01:02:13 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Brad Roberts <braddr@puremagic.com>
-In-Reply-To: <Pine.LNX.4.44.0508130335300.2136-100000@bellevue.puremagic.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932552AbVHOXHI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 19:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbVHOXHH
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 19:07:07 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:1949 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S932552AbVHOXHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 19:07:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050815230701.FZUZ3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 Aug 2005 19:07:01 -0400
+To: Amos Waterland <apw@rossby.metr.ou.edu>,
+	Ryan Anderson <ryan@michonline.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The topmost couple of commits in the "master" branch made from
+your patches are incorrectly attributed to me.
 
-On Sat, 13 Aug 2005, Brad Roberts wrote:
+What happened was that I stumbled upon a merge conflict during
+git-rebase, and ended up hand committing these two without
+carrying the authorship information forward from the original
+commits.  This usually does not happen because I always use JIT
+tools for rebasing, but this time I was trying to stay within
+the set of core GIT barebone Porcelain.
 
-> I'm seeing this on a standard os/x 10.3.9 install which seems to have an
-> old, but still GNU based, diff.
-> 
-> $ which diff
-> /usr/bin/diff
-> 
-> $ diff --version
-> diff - GNU diffutils version 2.7
-
-That is exactly the same as with 10.2.8.
-
-> [...] 
-> * FAIL 9: apply diff between 2 and 3
->         git-apply <diff.2-3 && diff frotz.3 frotz
-> * FAIL 12: apply diff between 3 and 2
->         git-apply <diff.3-2 && diff frotz.2 frotz
-
-Yes, that is what I saw, too. Actually, I found the bug in diff-v2.7 
-annoying enough that I updated (just diff) to version 2.8.1. That works 
-fine.
-
-Ciao,
-Dscho
+I apologize for the screwup.
