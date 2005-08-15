@@ -1,57 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Alternate object pool mechanism updates.
-Date: Sun, 14 Aug 2005 18:53:02 -0700
-Message-ID: <7vr7cw7ypt.fsf@assigned-by-dhcp.cox.net>
-References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net>
-	<20050813120815.GC5608@pasky.ji.cz>
-	<7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Switching heads and head vs branch after CVS import
+Date: Mon, 15 Aug 2005 14:05:14 +1200
+Message-ID: <46a038f905081419057cc6b5cd@mail.gmail.com>
+References: <46a038f905081417241f9598cc@mail.gmail.com>
+	 <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 15 03:53:28 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 15 04:06:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4UA7-0001WC-JE
-	for gcvg-git@gmane.org; Mon, 15 Aug 2005 03:53:16 +0200
+	id 1E4ULv-0002zb-St
+	for gcvg-git@gmane.org; Mon, 15 Aug 2005 04:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932626AbVHOBxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 14 Aug 2005 21:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932627AbVHOBxJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 21:53:09 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:61934 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932626AbVHOBxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Aug 2005 21:53:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050815015302.DNYS1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 14 Aug 2005 21:53:02 -0400
+	id S932632AbVHOCFX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 14 Aug 2005 22:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932633AbVHOCFX
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Aug 2005 22:05:23 -0400
+Received: from rproxy.gmail.com ([64.233.170.195]:25651 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932632AbVHOCFW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Aug 2005 22:05:22 -0400
+Received: by rproxy.gmail.com with SMTP id i8so713673rne
+        for <git@vger.kernel.org>; Sun, 14 Aug 2005 19:05:14 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KExUUUzm4Z62+RD+42VS9/QMoHq1jEi4Kz0/1lTcDmMrI4Bk0QxBP5q0Nm01RTA05fOBoXIu+z45brZglUgEgA8lkAHI9vSfJYYacaux/7uEwROkKMSUxoRSTh0NakfUZgRbMdkMd8mLRPVe9Jd8lqn8A/puHSOQ3tdXG0aZQv8=
+Received: by 10.38.181.31 with SMTP id d31mr1577658rnf;
+        Sun, 14 Aug 2005 19:05:14 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Sun, 14 Aug 2005 19:05:14 -0700 (PDT)
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508141726390.3553@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 14 Aug 2005 17:29:05 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+In-Reply-To: <Pine.LNX.4.58.0508141737270.3553@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+> Just do
+> 
+>         git checkout branch-name
+> 
+> to switch between them.
 
-> I think this is great - especially for places like kernel.org, where a lot 
-> of repos end up being related to each other, yet independent.
+thanks! I was doing cg-branch-chg branch-name and it wasn't working.
 
-Yes.  There is one shortcoming in the current git-clone -s in
-the proposed updates branch.  If the parent repository has
-alternates on its own, that information should be copied to the
-cloned one as well (e.g. Jeff has alternates pointing at you,
-and I clone from Jeff with -s flag --- I should list not just
-Jeff but also you to borrow from in my alternates file).
+> So in a cvsimport, you'll never see a merge back to the head, even if one
+> technically took place.
 
-> However, exactly for places like kernel.org it would _also_ be nice if
-> there was some way to prune objects that have been merged back into the
-> parent.
+There may be some surprises in here! gitk --all shows at least one
+branch opening and merging back into origin, and it has figured it out
+correctly: that was a feature branch where people worked on for a
+while and merged back. I haven't had time to explore it more, but it
+looks promising.
 
-Yes.  Another possibility is to use git-relink which was written
-exactly to solve this in a different way.
+Except for the keyword expansion. surely there's a way to tell cvsps
+to not do it. Why would we ever want it?
+
+> > And I am confused about the difference between heads and branches.
+> 
+> Confusion of naming.
+> 
+> branches and heads are the same thing in git. 
+
+right. There are two separate directories in .git for them, so I was
+misled by that. Should I assume git is safe from name clashes or is it
+up to porcelain to deal with such minutiae?
+
+> They are "proper branches", and sorry about the confusion. 
+
+Don't worry! Means I'll have to wake up and pay attention from now on...
+
+thanks,
+
+
+martin
