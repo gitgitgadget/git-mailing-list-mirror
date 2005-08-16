@@ -1,58 +1,68 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Alternate object pool mechanism updates.
-Date: Tue, 16 Aug 2005 14:52:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508161451510.3553@g5.osdl.org>
-References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net> <20050813120815.GC5608@pasky.ji.cz>
- <7v1x4wcca0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
- <7vek8t8sgi.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [RFC] Patches exchange is bad?
+Date: Tue, 16 Aug 2005 15:09:22 -0700 (PDT)
+Message-ID: <20050816220923.42545.qmail@web26301.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 23:53:45 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 00:10:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E59Md-0002tU-3a
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 23:52:55 +0200
+	id 1E59cd-0005q6-Vn
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 00:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbVHPVww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 17:52:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbVHPVww
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 17:52:52 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:44767 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750904AbVHPVwv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 17:52:51 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7GLqljA000301
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 Aug 2005 14:52:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7GLqk5E015336;
-	Tue, 16 Aug 2005 14:52:46 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek8t8sgi.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751107AbVHPWJZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 18:09:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbVHPWJZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 18:09:25 -0400
+Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:58731 "HELO
+	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751107AbVHPWJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 18:09:24 -0400
+Received: (qmail 42547 invoked by uid 60001); 16 Aug 2005 22:09:23 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=oLm3hwX2yG5E8C/2XqHgi1HY85Ik6tY4eyHI/q0XsM4szQYNv4PmBzkH1tI5kjL3sXNlMtzwnhkjgjg2xr6QHSeOvM+++YYo6El3q9UpDCu1KoQSKDfH+a24EFMAckULWFJiyaqT9+KMuifhXja/TYWZr2WszCtzFmatYqBkZbI=  ;
+Received: from [151.38.74.63] by web26301.mail.ukl.yahoo.com via HTTP; Tue, 16 Aug 2005 15:09:22 PDT
+To: martin.langhoff@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Martin Langhoff wrote:
+
+>>From what I understand, you'll want the StGIT infrastructure. If you
+>use git/cogito, there is an underlying  assumption that you'll want
+>all the patches merged across, and a simple cg-update will bring in
+>all the pending stuff.
+>
+
+My concerns are both metodologicals and practical:
+
+1) Method: To use the 'free patching workflow' on git is something foreseen in
+git design, something coherent with the fork + develop + merge cycle that it
+seems, at least to me, THE way git is meant to be used. Or it is stretching 
+the possibility of the tool to something technically allowed but not suggested.
+
+2) Practical: The round trip git-format-patch + git-applymbox is the logical and
+natural way to reach this goal or, also in this case, I intend to stretch some tools, 
+designed for one thing, for something else?
 
 
-On Tue, 16 Aug 2005, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > We've got a "git prune-packed", it would be good to have a "git
-> > prune-alternate" or something equivalent.
-> 
-> If you have GIT_ALTERNATE_DIRECTORIES environment variable, git
-> prune-packed will remove objects from your repository if it is
-> found in somebody else's pack.  I am not sure if this is the
-> behaviour we would want.
+About StGIT, I agree it is the right tool, designed for this kind of problems. But,
+peraphs because I don't know it very much, I still can't figure out how to integrate 
+StGit in a git GUI, like qgit is, so to have an unified and friendly view of a git 
+archive and a patches stack.
 
-Well, it may be good enough if the "master" repository is regularly 
-packed..
 
-		Linus
+Marco
+
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
