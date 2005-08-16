@@ -1,75 +1,79 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Git 1.0 Synopis (Draft v4)
-Date: Tue, 16 Aug 2005 11:47:05 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508161139410.23242@iabervon.org>
-References: <20050729082941.GD32263@mythryan2.michonline.com>
- <200507312215.j6VMFeqn030963@laptop11.inf.utfsm.cl>
- <20050815045546.GA7001@mythryan2.michonline.com> <7vr7cv7p61.fsf@assigned-by-dhcp.cox.net>
- <20050815065833.GE7001@mythryan2.michonline.com> <7v7jen6545.fsf@assigned-by-dhcp.cox.net>
- <20050815080218.GG7001@mythryan2.michonline.com> <7vhddr397g.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508151453100.21501@iabervon.org> <7vy872fiin.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508161730120.11105@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: Making note, in the repository, of push/pull relationships
+Date: Tue, 16 Aug 2005 10:03:27 -0600
+Organization: Hewlett Packard
+Message-ID: <20050816160327.GA20016@hpsvcnb.fc.hp.com>
+References: <20050815162519.GB9719@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508160044490.25894@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 17:45:19 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 18:06:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E53bU-0001it-NB
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 17:43:53 +0200
+	id 1E53vQ-0007Fj-Ho
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 18:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030189AbVHPPnr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 11:43:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030192AbVHPPnr
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 11:43:47 -0400
-Received: from iabervon.org ([66.92.72.58]:5896 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1030190AbVHPPnr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 11:43:47 -0400
-Received: (qmail 26874 invoked by uid 1000); 16 Aug 2005 11:47:05 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Aug 2005 11:47:05 -0400
+	id S1030206AbVHPQER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 12:04:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbVHPQER
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 12:04:17 -0400
+Received: from atlrel7.hp.com ([156.153.255.213]:28397 "EHLO atlrel7.hp.com")
+	by vger.kernel.org with ESMTP id S1030206AbVHPQEQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 12:04:16 -0400
+Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
+	by atlrel7.hp.com (Postfix) with ESMTP id 14C14211A;
+	Tue, 16 Aug 2005 12:03:58 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp2.fc.hp.com (Postfix) with ESMTP
+	id CCC374214CC; Tue, 16 Aug 2005 16:03:57 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 75FDF4862; Tue, 16 Aug 2005 10:03:27 -0600 (MDT)
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0508161730120.11105@wgmdd8.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0508160044490.25894@wgmdd8.biozentrum.uni-wuerzburg.de>
+X-Origin: hpescnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 16 Aug 2005, Johannes Schindelin wrote:
-
+On Tue, Aug 16, 2005 at 12:49:33AM +0200, Johannes Schindelin wrote:
 > Hi,
->
-> On Tue, 16 Aug 2005, Junio C Hamano wrote:
->
-> >   - Are all the files in Documentation/ reachable from git(7)
-> >     or otherwise made into a standalone document using asciidoc
-> >     by the Makefile?  I haven't looked into documentation
-> >     generation myself (I use only the text files as they are);
-> >     help to update the Makefile by somebody handy with asciidoc
-> >     suite is greatly appreciated here.
-> >
-> >     Volunteers?
->
-> The attached script reveals:
->
-> git-unpack-objects.txt is not reachable from git.txt
-> git-cvsimport-script.txt is not reachable from git.txt
-> git-send-email-script.txt is not reachable from git.txt
-> git-rename-script.txt is not reachable from git.txt
-> tutorial.txt is not reachable from git.txt
-> git-show-index.txt is not reachable from git.txt
-> cvs-migration.txt is not reachable from git.txt
-> diffcore.txt is not reachable from git.txt
-> git-ls-remote-script.txt is not reachable from git.txt
-> git-apply.txt is not reachable from git.txt
-> git-diff-stages.txt is not reachable from git.txt
-> pack-protocol.txt is not reachable from git.txt
+> 
+> On Mon, 15 Aug 2005, Carl Baldwin wrote:
+> 
+> > Somewhere in the thread something was mentioned about maintaining
+> > <local branch>:<remote branch> pairs in the git repository when pushes
+> > and pulls are performed.  I think the argument was actually against
+> > keeping this information and ultimately against allowing pushes to a
+> > branch of a different name.
+> 
+> I think the loudest voice was mine :-)
+> 
+> Actually, I was not against *keeping* the information, but against 
+> *pulling* in such strange ways. If "cross-pulling" is allowed, I am all 
+> for keeping track of that.
 
-The ones that don't start with git probably don't belong in the same set;
-perhaps there should be a "technical" (or something similar but shorter)
-subdirectory for developer documentation instead of user documentation?
-(And tutorial and cvs-migration can move to howto)
+So, just a question.  What, exactly, is meant by 'cross-pulling'?
 
-	-Daniel
-*This .sig left intentionally blank*
+> In the meantime, I did not think about the issue at all :-) However, as is 
+> often the case in an open discussion, I think I was wrong after all. There 
+> may be cases you want that, and in the end, nobody forces me to use that 
+> feature.
+> 
+> Anyway, Junio decided to enhance the fetch mechanism to support the 
+> cross-pulling (and also multi-pulling).
+> 
+> Ciao,
+> Dscho
+> 
+
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
