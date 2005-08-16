@@ -1,56 +1,167 @@
-From: Dongsheng Song <dongsheng.song@gmail.com>
-Subject: about git server & permissions
-Date: Tue, 16 Aug 2005 18:17:18 +0800
-Message-ID: <4b3406f050816031720cbaf4c@mail.gmail.com>
-References: <20050729082941.GD32263@mythryan2.michonline.com>
-	 <20050815045546.GA7001@mythryan2.michonline.com>
-	 <7vr7cv7p61.fsf@assigned-by-dhcp.cox.net>
-	 <20050815065833.GE7001@mythryan2.michonline.com>
-	 <7v7jen6545.fsf@assigned-by-dhcp.cox.net>
-	 <20050815080218.GG7001@mythryan2.michonline.com>
-	 <7vhddr397g.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0508151453100.21501@iabervon.org>
-	 <7vy872fiin.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0508161158400.3026@wgmdd8.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Aug 16 12:18:35 2005
+From: martin@ng.eduforge.org (Martin Langhoff)
+Subject: [PATCH] Add merge detection to git-cvsimport
+Date: Tue, 16 Aug 2005 22:35:27 +1200 (NZST)
+Message-ID: <20050816103527.F420A33010C@ng.eduforge.org>
+X-From: git-owner@vger.kernel.org Tue Aug 16 12:36:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4yVV-0000aL-TK
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 12:17:22 +0200
+	id 1E4yn6-0003fz-Tt
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 12:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965193AbVHPKRT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 06:17:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965194AbVHPKRT
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 06:17:19 -0400
-Received: from zproxy.gmail.com ([64.233.162.195]:47338 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965193AbVHPKRS convert rfc822-to-8bit
+	id S965199AbVHPKf3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 06:35:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965197AbVHPKf3
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 06:35:29 -0400
+Received: from 34.70-85-230.reverse.theplanet.com ([70.85.230.34]:52122 "EHLO
+	ng.eduforge.org") by vger.kernel.org with ESMTP id S965199AbVHPKf3
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 06:17:18 -0400
-Received: by zproxy.gmail.com with SMTP id r28so880430nza
-        for <git@vger.kernel.org>; Tue, 16 Aug 2005 03:17:18 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TOf4bGGrY4yfUgSjDAkhru7boH0bVBTLq1wmi0KIaeoMSreP8KE4K0Zg1hD3tJn6hnzuLop/scyn1TDlhIFRkOzRLWDO8KTYneCZqFiCsK+neGQRBzO5ZyE1yncaL2KookF0m8R3xQUBioav228+FiDjKr81p1r5MrRmfWVvXe0=
-Received: by 10.36.115.20 with SMTP id n20mr6057357nzc;
-        Tue, 16 Aug 2005 03:17:18 -0700 (PDT)
-Received: by 10.37.18.66 with HTTP; Tue, 16 Aug 2005 03:17:18 -0700 (PDT)
+	Tue, 16 Aug 2005 06:35:29 -0400
+Received: by ng.eduforge.org (Postfix, from userid 3373)
+	id F420A33010C; Tue, 16 Aug 2005 22:35:27 +1200 (NZST)
 To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.63.0508161158400.3026@wgmdd8.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+[PATCH] Add merge detection to git-cvsimport
 
-Is there any guide or advise for deploy git server ? Especially
-http/https/ssh server.
+Added -m and -M flags for git-cvsimport to detect merge commits in cvs.
+While this trusts the commit message, in repositories where merge commits
+indicate 'merged from FOOBRANCH' the import works surprisingly well.
 
-How do I set repository permissions correctly?
+Even if some merges from CVS are bogus or incomplete, the resulting
+branches are in better state to go forward (and merge) than without any
+merge detection.
 
-cauchy
+Signed-off-by: Martin Langhoff <martin.langhoff@gmail.com>
+---
+
+ Documentation/git-cvsimport-script.txt |   13 ++++++++-
+ git-cvsimport-script                   |   48 +++++++++++++++++++++++++++++---
+ 2 files changed, 56 insertions(+), 5 deletions(-)
+
+066d2cb2435a963ee40e4899a76848ea51e972d2
+diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
+--- a/Documentation/git-cvsimport-script.txt
++++ b/Documentation/git-cvsimport-script.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ --------
+ 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
+ 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
+-			[ -C <GIT_repository> ] [ -i ] [ -k ] [ <CVS_module> ]
++			[ -C <GIT_repository> ] [ -i ] [ -k ] 
++			[ -m ] [ -M regex ] [ <CVS_module> ]
+ 
+ 
+ DESCRIPTION
+@@ -57,6 +58,16 @@ OPTIONS
+ 
+ 	If you need to pass multiple options, separate them with a comma.
+ 
++-m::    
++	Attempt to detect merges based on the commit message. This option
++	will enable default regexes that try to capture the name source 
++	branch name from the commit message. 
++
++-M <regex>::
++	Attempt to detect merges based on the commit message with a custom
++	regex. It can be used with -m to also see the default regexes. 
++	You must escape forward slashes. 
++
+ -v::
+ 	Verbosity: let 'cvsimport' report what it is doing.
+ 
+diff --git a/git-cvsimport-script b/git-cvsimport-script
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
++our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_m,$opt_M);
+ 
+ sub usage() {
+ 	print STDERR <<END;
+ Usage: ${\basename $0}     # fetch/update GIT from CVS
+        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
+        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
+-       [ -i ] [ -k ] [ CVS_module ]
++       [ -i ] [ -k ] [ -m ] [ -M regex] [ CVS_module ]
+ END
+ 	exit(1);
+ }
+ 
+-getopts("hivko:d:p:C:z:") or usage();
++getopts("hivmko:d:p:C:z:M:") or usage();
+ usage if $opt_h;
+ 
+ @ARGV <= 1 or usage();
+@@ -70,11 +70,19 @@ if ($#ARGV == 0) {
+ 	    die 'Failed to open CVS/Repository';
+ 	$cvs_tree = <$f>;
+ 	chomp $cvs_tree;
+-	close $f
++	close $f;
+ } else {
+ 	usage();
+ }
+ 
++our @mergerx = ();
++if ($opt_m) {
++	@mergerx = ( qr/\W(?:from|of|merge|merging|merged) (\w+)/i );
++}
++if ($opt_M) {
++	push (@mergerx, qr/$opt_M/);
++}
++
+ select(STDERR); $|=1; select(STDOUT);
+ 
+ 
+@@ -374,6 +382,22 @@ sub getwd() {
+ 	return $pwd;
+ }
+ 
++
++sub get_headref($$) {
++    my $name    = shift;
++    my $git_dir = shift; 
++    my $sha;
++    
++    if (open(C,"$git_dir/refs/heads/$name")) {
++	chomp($sha = <C>);
++	close(C);
++	length($sha) == 40
++	    or die "Cannot get head id for $name ($sha): $!\n";
++    }
++    return $sha;
++}
++
++
+ -d $git_tree
+ 	or mkdir($git_tree,0777)
+ 	or die "Could not create $git_tree: $!";
+@@ -548,6 +572,22 @@ my $commit = sub {
+ 
+ 		my @par = ();
+ 		@par = ("-p",$parent) if $parent;
++
++		# loose detection of merges
++		# based on the commit msg
++		foreach my $rx (@mergerx) {
++			if ($logmsg =~ $rx) {
++				my $mparent = $1;
++				if ($mparent eq 'HEAD') { $mparent = 'origin'};
++				if ( -e "$git_dir/refs/heads/$mparent") {
++					$mparent = get_headref($mparent, $git_dir);
++					push @par, '-p', $mparent;
++					# printing here breaks import # 
++					# # print "Merge parent branch: $mparent\n" if $opt_v;
++				}
++		    	} 
++		}
++
+ 		exec("env",
+ 			"GIT_AUTHOR_NAME=$author",
+ 			"GIT_AUTHOR_EMAIL=$author",
