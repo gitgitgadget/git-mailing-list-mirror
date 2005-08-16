@@ -1,105 +1,122 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Submitting patches w/ Thunderbird [was: Re: [PATCH] Add SubmittingPatches]
-Date: Tue, 16 Aug 2005 11:22:11 -0400
-Message-ID: <430204A3.2050201@gmail.com>
-References: <7vslxep5jq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0508160147560.26580@wgmdd8.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.58.0508151715520.3553@g5.osdl.org> <Pine.LNX.4.63.0508160252310.26927@wgmdd8.biozentrum.uni-wuerzburg.de> <7vk6imr7x0.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0508160335420.1574@wgmdd8.biozentrum.uni-wuerzburg.de>
-Reply-To: gitzilla@gmail.com
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git 1.0 Synopis (Draft v4)
+Date: Tue, 16 Aug 2005 17:31:23 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508161730120.11105@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <20050729082941.GD32263@mythryan2.michonline.com>
+ <200507312215.j6VMFeqn030963@laptop11.inf.utfsm.cl>
+ <20050815045546.GA7001@mythryan2.michonline.com> <7vr7cv7p61.fsf@assigned-by-dhcp.cox.net>
+ <20050815065833.GE7001@mythryan2.michonline.com> <7v7jen6545.fsf@assigned-by-dhcp.cox.net>
+ <20050815080218.GG7001@mythryan2.michonline.com> <7vhddr397g.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0508151453100.21501@iabervon.org> <7vy872fiin.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 17:24:48 2005
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463794688-1434691266-1124206283=:11105"
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 17:36:05 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E53Gu-0003Vj-MN
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 17:22:37 +0200
+	id 1E53PX-00063y-Ia
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 17:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965266AbVHPPWY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 11:22:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965267AbVHPPWY
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 11:22:24 -0400
-Received: from wproxy.gmail.com ([64.233.184.203]:61274 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965266AbVHPPWX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 11:22:23 -0400
-Received: by wproxy.gmail.com with SMTP id i2so1214203wra
-        for <git@vger.kernel.org>; Tue, 16 Aug 2005 08:22:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=X/szceSIOvAt+GrQD3dWlF9vKhkNWhIIN7MITTTtSE7gdTSQe7g9S0DXew4kCZ1kxNJ18/F9dLIrnucoGbNw+mNWKaZ5/mlsvd2MyRLsMv5F+afwQ146P98WuDTifSAjkmZK/yEzYwWcsmrwJBmYaLVN4yXFRMeJLTFlqPGMH/M=
-Received: by 10.54.132.14 with SMTP id f14mr4366470wrd;
-        Tue, 16 Aug 2005 08:22:20 -0700 (PDT)
-Received: from ?10.0.0.6? ([70.89.97.97])
-        by mx.gmail.com with ESMTP id g9sm195498wra.2005.08.16.08.22.19;
-        Tue, 16 Aug 2005 08:22:20 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0508160335420.1574@wgmdd8.biozentrum.uni-wuerzburg.de>
+	id S965268AbVHPPb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 11:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964945AbVHPPb0
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 11:31:26 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16549 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S965268AbVHPPb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 11:31:26 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D532CE25E1; Tue, 16 Aug 2005 17:31:24 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id BA2C899B9A; Tue, 16 Aug 2005 17:31:24 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8E6F799B92; Tue, 16 Aug 2005 17:31:24 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D3F91E25E1; Tue, 16 Aug 2005 17:31:23 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy872fiin.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
-> Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1463794688-1434691266-1124206283=:11105
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+
+Hi,
+
+On Tue, 16 Aug 2005, Junio C Hamano wrote:
+
+>   - Are all the files in Documentation/ reachable from git(7)
+>     or otherwise made into a standalone document using asciidoc
+>     by the Makefile?  I haven't looked into documentation
+>     generation myself (I use only the text files as they are);
+>     help to update the Makefile by somebody handy with asciidoc
+>     suite is greatly appreciated here.
 > 
-> On Mon, 15 Aug 2005, Junio C Hamano wrote:
-> 
->>Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->>
->>>Maybe we should enhance git-applymbox to detect whitespace corruption in 
->>>particular, and output the User-Agent header (or if that does not 
->>>exist, the Message-ID header; thanks, pine) on error.
-> 
-> Alternatively, SubmittingPatches could include a big fat CAVEAT, and a 
-> note that the submitter might want to send a single SP to herself, save 
-> the received mail and check that all is well, prior to sending the first 
-> patch. I mean, well, erm, it is sort of, uh, annoying, to send out a 
-> corrupt patch *speaksofyourstruly*.
+>     Volunteers?
 
-Here are some hints on how to successfully submit patches inline using
-Thunderbird.
+The attached script reveals:
 
-This recipe appears to work with the current [*1*] Thunderbird from Suse.
+git-unpack-objects.txt is not reachable from git.txt
+git-cvsimport-script.txt is not reachable from git.txt
+git-send-email-script.txt is not reachable from git.txt
+git-rename-script.txt is not reachable from git.txt
+tutorial.txt is not reachable from git.txt
+git-show-index.txt is not reachable from git.txt
+cvs-migration.txt is not reachable from git.txt
+diffcore.txt is not reachable from git.txt
+git-ls-remote-script.txt is not reachable from git.txt
+git-apply.txt is not reachable from git.txt
+git-diff-stages.txt is not reachable from git.txt
+pack-protocol.txt is not reachable from git.txt
 
-The following Thunderbird extensions are needed:
-	AboutConfig 0.5
-		http://aboutconfig.mozdev.org/
-	External Editor 0.5.4
-		http://extensionroom.mozdev.org/more-info/exteditor
+Ciao,
+Dscho
 
-1) Prepare the patch as a text file using your method of choice.
+---1463794688-1434691266-1124206283=:11105
+Content-Type: APPLICATION/x-perl; name=check.pl
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.LNX.4.63.0508161731230.11105@wgmdd8.biozentrum.uni-wuerzburg.de>
+Content-Description: 
+Content-Disposition: attachment; filename=check.pl
 
-2) Before opening a compose window, use Edit->Account Settings to
-uncheck the "Compose messages in HTML format" setting in the
-"Composition & Addressing" panel of the account to be used to send the
-patch. [*2*]
+IyEvdXNyL2Jpbi9wZXJsCgpvcGVuZGlyIERJUiwgIi4iOwpAZmlsZXM9KCk7
+CndoaWxlKGRlZmluZWQoJF89cmVhZGRpciBESVIpKSB7CglpZigvXiguKilc
+LnR4dCQvKSB7CgkJcHVzaCBAZmlsZXMsICRfOwoJfQp9CmNsb3NlZGlyIERJ
+UjsKCiVlZGdlcz0oKTsKCmZvcmVhY2ggJGYgKEBmaWxlcykgewoJbXkgJWN1
+cnJlbnRfZWRnZXM9KCk7CgoJb3BlbiBGSUxFLCAiPCIuJGY7CgkkbGluZW5v
+PTA7Cgl3aGlsZSg8RklMRT4pIHsKCQkkbGluZW5vKys7CgkJbXkgJGJhY2t1
+cD0kXzsKCQl3aGlsZSgvbGluazooLio/KVxbKC4qPylcXSguKikkLykgewoJ
+CQkkXz0kMzsKCQkJIyBjaGVjayBjb25zaXN0ZW5jeQoJCQlpZigkMSBuZSAi
+JDIuaHRtbCIgJiYgISQxPX4vOlwvXC8vKSB7CgkJCQlwcmludCAiJGY6JGxp
+bmVubzogbGluayB0YXJnZXQgZG9lcyBub3QgbWF0Y2ggbmFtZSAoJDEgIT0g
+JDIpXG4iOwoJCQl9CgkJCW15ICR0eHQ9JDE7CgkJCSR0eHQ9fnMvXC5odG1s
+Ly50eHQvOwoJCQkkY3VycmVudF9lZGdlc3skdHh0fT0xOwoJCX0KCQkkXz0k
+YmFja3VwOwoJCXdoaWxlKC9pbmNsdWRlOjooLio/KVxbLio/XF0oLiopJC8p
+IHsKCQkJJF89JDI7CgkJCSRjdXJyZW50X2VkZ2VzeyQxfT0xOwoJCX0KCX0K
+CWNsb3NlIEZJTEU7CgoJJGVkZ2VzeyRmfT1cJWN1cnJlbnRfZWRnZXM7Cn0K
+CnN1YiBnZXRfZWRnZV9sZW5ndGggKCQkKSB7CglteSAkdGFnPSRfWzBdOwoJ
+bXkgJHRhZzI9JF9bMV07CglteSAkdGFnMzsKCglmb3JlYWNoICR0YWczIChr
+ZXlzICV7JGVkZ2VzeyR0YWcyfX0pIHsKCQlteSAkZGlmZj0kZWRnZXN7JHRh
+Z30tPnskdGFnMn0rJGVkZ2VzeyR0YWcyfS0+eyR0YWczfTsKCQlpZighZGVm
+aW5lZCgkZWRnZXN7JHRhZ30tPnskdGFnM30pCgkJIHx8ICRlZGdlc3skdGFn
+fS0+eyR0YWczfT4kZGlmZikgewoJCQkkZWRnZXN7JHRhZ30tPnskdGFnM309
+JGRpZmY7CgkJCWdldF9lZGdlX2xlbmd0aCgkdGFnLCR0YWczKTsKCQl9Cgl9
+Cn0KCiR0YWc9ImdpdC50eHQiOwpmb3JlYWNoICR0YWcyIChrZXlzICV7JGVk
+Z2VzeyR0YWd9fSkgewoJZ2V0X2VkZ2VfbGVuZ3RoKCR0YWcsJHRhZzIpOwp9
+CgolbWFpbl9lZGdlcz0leyRlZGdlc3skdGFnfX07CmZvcmVhY2ggJGYgKEBm
+aWxlcykgewoJaWYoIWRlZmluZWQoJG1haW5fZWRnZXN7JGZ9KSkgewoJCXBy
+aW50ICIkZiBpcyBub3QgcmVhY2hhYmxlIGZyb20gJHRhZ1xuIjsKCX0KfQoK
 
-3) In the main Thunderbird window, _before_ you open the compose window
-for the patch, use Tools->about:config to set the following to the
-indicated values:
-	mailnews.send_plaintext_flowed	=> false
-	mailnews.wraplength		=> 999
-
-4) Open a compose window and click the external editor icon.
-
-5) In the external editor window, read in the patch file and exit the
-editor normally.
-
-6) Back in the compose window: Add whatever other text you wish to the
-message, complete the addressing and subject fields, and press send.
-
-7) Optionally, undo the about:config/account settings changes made in
-steps 2 & 3.
-
-
-[Footnotes]
-*1* Version 1.0 (20041207) from the MozillaThunderbird-1.0-5 rpm of Suse
-9.3 professional updates.
-
-*2* It may be possible to do this with about:config and the following
-settings but I haven't tried, yet.
-	mail.html_compose			=> false
-	mail.identity.default.compose_html	=> false
-	mail.identity.id?.compose_html		=> false
+---1463794688-1434691266-1124206283=:11105--
