@@ -1,79 +1,63 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: Making note, in the repository, of push/pull relationships
-Date: Tue, 16 Aug 2005 10:03:27 -0600
-Organization: Hewlett Packard
-Message-ID: <20050816160327.GA20016@hpsvcnb.fc.hp.com>
-References: <20050815162519.GB9719@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508160044490.25894@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: Re: Importing from CVS issues
+Date: Tue, 16 Aug 2005 17:09:13 +0100
+Message-ID: <1124208553.7444.47.camel@okra.transitives.com>
+References: <1124188894.7444.9.camel@okra.transitives.com>
+	 <46a038f90508160426450eff12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 18:06:10 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 18:12:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E53vQ-0007Fj-Ho
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 18:04:29 +0200
+	id 1E541D-0000J2-9s
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 18:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030206AbVHPQER (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 12:04:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030208AbVHPQER
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 12:04:17 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:28397 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S1030206AbVHPQEQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 12:04:16 -0400
-Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel7.hp.com (Postfix) with ESMTP id 14C14211A;
-	Tue, 16 Aug 2005 12:03:58 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id CCC374214CC; Tue, 16 Aug 2005 16:03:57 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 75FDF4862; Tue, 16 Aug 2005 10:03:27 -0600 (MDT)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0508160044490.25894@wgmdd8.biozentrum.uni-wuerzburg.de>
-X-Origin: hpescnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1030215AbVHPQKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 12:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030213AbVHPQKQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 12:10:16 -0400
+Received: from smarthost3.mail.uk.easynet.net ([212.135.6.13]:41481 "EHLO
+	smarthost3.mail.uk.easynet.net") by vger.kernel.org with ESMTP
+	id S1030212AbVHPQKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 12:10:14 -0400
+Received: from [217.207.128.220] (helo=mx.transitive.com)
+	by smarthost3.mail.uk.easynet.net with esmtp (Exim 4.10)
+	id 1E540z-000JCk-00; Tue, 16 Aug 2005 17:10:13 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90508160426450eff12@mail.gmail.com>
+X-Mailer: Evolution 2.2.1 
+X-TL-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 16, 2005 at 12:49:33AM +0200, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 15 Aug 2005, Carl Baldwin wrote:
-> 
-> > Somewhere in the thread something was mentioned about maintaining
-> > <local branch>:<remote branch> pairs in the git repository when pushes
-> > and pulls are performed.  I think the argument was actually against
-> > keeping this information and ultimately against allowing pushes to a
-> > branch of a different name.
-> 
-> I think the loudest voice was mine :-)
-> 
-> Actually, I was not against *keeping* the information, but against 
-> *pulling* in such strange ways. If "cross-pulling" is allowed, I am all 
-> for keeping track of that.
+On Tue, 2005-08-16 at 23:26 +1200, Martin Langhoff wrote:
+> I haven't seen this problem myself. There are some recent patches
+> Junio merged that handle some oddities better. Give the 'pu' branch a
+> go if you can.
 
-So, just a question.  What, exactly, is meant by 'cross-pulling'?
+I'll look at that in a bit. I already picked up a few of the patches
+mentioned on the list.
 
-> In the meantime, I did not think about the issue at all :-) However, as is 
-> often the case in an open discussion, I think I was wrong after all. There 
-> may be cases you want that, and in the end, nobody forces me to use that 
-> feature.
-> 
-> Anyway, Junio decided to enhance the fetch mechanism to support the 
-> cross-pulling (and also multi-pulling).
-> 
-> Ciao,
-> Dscho
-> 
+> I take it that the repo is not public. I'd like to try and reproduce
+> the problem. Can you get it to happen with a public repository?
 
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I'm afraid not. However I think I've found a problem when I tried
+running cvsps on its own to generate the patchset. It seems that
+REV_STR_MAX (cvsps-2.1/cvsps_types.h) wasn't big enough to contain some
+of our version strings.
+
+This will be a feature of our development process which means all
+changes are based of branches, some of which branch multiple times and
+live for a long time before code is merged into the mainline. I don't
+know if any open source projects use CVS in such a way.
+
+My import seems to be getting a lot further now. I now just need to
+clean out the corrupted files that are breaking cvs log.
+
+--
+Alex, homepage: http://www.bennee.com/~alex/
+New systems generate new problems.
