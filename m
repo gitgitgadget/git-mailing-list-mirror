@@ -1,68 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add SubmittingPatches
-Date: Tue, 16 Aug 2005 03:03:10 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508160252310.26927@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7vslxep5jq.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508160147560.26580@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.58.0508151715520.3553@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb - option to disable rename detection
+Date: Mon, 15 Aug 2005 18:21:29 -0700
+Message-ID: <7voe7yr812.fsf@assigned-by-dhcp.cox.net>
+References: <87d5ofoxvt.wl@mail2.atmark-techno.com>
+	<Pine.LNX.4.58.0508151140050.3553@g5.osdl.org>
+	<87br3zorjk.wl@mail2.atmark-techno.com>
+	<Pine.LNX.4.58.0508151542290.3553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 03:04:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 03:22:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4prM-00054d-Td
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 03:03:21 +0200
+	id 1E4q92-0008Fl-WA
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 03:21:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965054AbVHPBDM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 15 Aug 2005 21:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965056AbVHPBDM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 21:03:12 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:24549 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965054AbVHPBDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Aug 2005 21:03:12 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0127FE26B2; Tue, 16 Aug 2005 03:03:11 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D995CB08A1; Tue, 16 Aug 2005 03:03:10 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BF168AD0CB; Tue, 16 Aug 2005 03:03:10 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A9DCAE26B2; Tue, 16 Aug 2005 03:03:10 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+	id S965059AbVHPBVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 15 Aug 2005 21:21:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965063AbVHPBVc
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Aug 2005 21:21:32 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:30939 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S965059AbVHPBVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Aug 2005 21:21:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050816012129.HIYZ19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 15 Aug 2005 21:21:29 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508151715520.3553@g5.osdl.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+In-Reply-To: <Pine.LNX.4.58.0508151542290.3553@g5.osdl.org> (Linus Torvalds's
+	message of "Mon, 15 Aug 2005 15:43:26 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Linus Torvalds <torvalds@osdl.org> writes:
 
-On Mon, 15 Aug 2005, Linus Torvalds wrote:
+> This makes it somewhat more expensive - I was thinking about disabling it 
+> in git-diff-tree, since the rename logic already knows how many 
+> new/deleted files there are.
 
-> On Tue, 16 Aug 2005, Johannes Schindelin wrote:
-> > 
-> > BTW, I don't know how many people still use pine, but for those poor souls 
-> > it may be good to mention that the quell-flowed-text is needed for recent 
-> > versions.
-> 
-> And 4.58 needs at least this
->
->[...]
+That's doable.  I'll rig something up on my next GIT day, along
+with the clean-up for diff option handling which we have
+postponed for some time.  Clearly this would introduce another
+option to diffcore.
 
-Sorry, I forgot the "no-strip-whitespace-before-send" option, too. AFAIK 
-it was introduced in 4.60 (the "fix" Junio was referring to).
+OTOH, you could take totally the opposite avenue and take
+advantage of the fact that git commit ancestry is immultable.
+Once commitdiff is made, you do not have to regenerate it but
+cache it and reuse for the next request.  I may be mistaken, but
+I vaguely recall kernel.org webservers already does something
+like that.
 
-Maybe we should enhance git-applymbox to detect whitespace corruption in 
-particular, and output the User-Agent header (or if that does not 
-exist, the Message-ID header; thanks, pine) on error.
-
-Ciao,
-Dscho
+If you have infinite amount of disk space, you could choose to
+cache everything, and also prime the cache before any real users
+ask for a page.  Once you go that route, you could even give -C
+flag for copy detection, with --find-copies-harder which is an
+ultra expensive option, and nobody would notice.
