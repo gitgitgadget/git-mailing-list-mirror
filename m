@@ -1,60 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [patch] possible memory leak in diff.c::diff_free_filepair()
-Date: Mon, 15 Aug 2005 21:32:12 -0700
-Message-ID: <7v3bpapkmr.fsf@assigned-by-dhcp.cox.net>
-References: <87y876gl1r.wl@mail2.atmark-techno.com>
-	<7viry9my6k.fsf@assigned-by-dhcp.cox.net>
-	<877jepo87m.wl@mail2.atmark-techno.com>
-	<7viry9le0g.fsf@assigned-by-dhcp.cox.net>
-	<8764u6ponn.wl@mail2.atmark-techno.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 06:33:45 2005
+From: martin@ng.eduforge.org (Martin Langhoff)
+Subject: [PATCH] Add -k kill keyword expansion option to git-cvsimport - revised
+Date: Tue, 16 Aug 2005 17:39:29 +1200 (NZST)
+Message-ID: <20050816053929.A97DD3300AD@ng.eduforge.org>
+X-From: git-owner@vger.kernel.org Tue Aug 16 07:40:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4t7e-0008FC-MT
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 06:32:23 +0200
+	id 1E4uAj-0004vQ-Jv
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 07:39:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965096AbVHPEcS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 00:32:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbVHPEcR
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 00:32:17 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28404 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932601AbVHPEcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 00:32:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050816043214.NZGU17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 Aug 2005 00:32:14 -0400
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-In-Reply-To: <8764u6ponn.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
-	of "Tue, 16 Aug 2005 12:05:16 +0900")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965116AbVHPFjc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 01:39:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965117AbVHPFjc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 01:39:32 -0400
+Received: from 34.70-85-230.reverse.theplanet.com ([70.85.230.34]:917 "EHLO
+	ng.eduforge.org") by vger.kernel.org with ESMTP id S965116AbVHPFjb
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 01:39:31 -0400
+Received: by ng.eduforge.org (Postfix, from userid 3373)
+	id A97DD3300AD; Tue, 16 Aug 2005 17:39:29 +1200 (NZST)
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Yasushi SHOJI <yashi@atmark-techno.com> writes:
+[PATCH] Add -k kill keyword expansion option to git-cvsimport - revised
 
-> parepare_temp_file() and diff_populate_filespec() has a lot in
-> similarity. so it'd be nice to refactor some. and re-introduce
-> diff_free_filespec_data() and call right after prep_temp_blob() in
-> prepare_temp_file().
+Early versions of git-cvsimport defaulted to using preexisting keyword
+expansion settings. This change preserves compatibility with existing cvs
+imports and allows new repository migrations to kill keyword expansion.
 
-Another thing that may (or may not) help would be to move that
-prepare_temp_file() and stuff to happen in the forked child
-process instead of the parent, so that we do not have to worry
-about freeing the buffer; it has been some time since I worked
-on that part of the code so this may not be an option to make
-things easier.
+After exploration of the different -k modes in the cvs protocol, we use -kk
+which kills keyword expansion wherever possible. Against the protocol
+spec, -ko and -kb will sometimes expand keywords.
 
-> Junio, did you also mean to clean-up these functions when you said in
-> the thread of "Re: gitweb - option to disable rename detection"?
+Should improve our chances of detecting merges and reduce imported
+repository size.
 
-No.  I was talking about cleaning up the similar option parsing
-code, and the call into diffcore_std() which takes more
-arguments every time a new option is added to the family.
+Signed-off: Martin Langhoff <martin.langhoff@gmail.com>
+---
+
+ Documentation/git-cvsimport-script.txt |    7 ++++++-
+ git-cvsimport-script                   |   12 +++++++-----
+ 2 files changed, 13 insertions(+), 6 deletions(-)
+
+3be96ff6fee32974b66fe1743eb701e93032fee5
+diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
+--- a/Documentation/git-cvsimport-script.txt
++++ b/Documentation/git-cvsimport-script.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ --------
+ 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
+ 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
+-			[ -C <GIT_repository> ] [ -i ] [ <CVS_module> ]
++			[ -C <GIT_repository> ] [ -i ] [ -k ] [ <CVS_module> ]
+ 
+ 
+ DESCRIPTION
+@@ -38,6 +38,11 @@ OPTIONS
+ 	ensures the working directory and cache remain untouched and will
+ 	not create them if they do not exist.
+ 
++-k::
++	Kill keywords: will extract files with -kk from the CVS archive
++	to avoid noisy changesets. Highly recommended, but off by default
++	to preserve compatibility with early imported trees. 
++
+ -o <branch-for-HEAD>::
+ 	The 'HEAD' branch from CVS is imported to the 'origin' branch within
+ 	the git repository, as 'HEAD' already has a special meaning for git.
+diff --git a/git-cvsimport-script b/git-cvsimport-script
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
++our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
+ 
+ sub usage() {
+ 	print STDERR <<END;
+ Usage: ${\basename $0}     # fetch/update GIT from CVS
+        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
+        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
+-       [ -i ] [ CVS_module ]
++       [ -i ] [ -k ] [ CVS_module ]
+ END
+ 	exit(1);
+ }
+ 
+-getopts("hivo:d:p:C:z:") or usage();
++getopts("hivko:d:p:C:z:") or usage();
+ usage if $opt_h;
+ 
+ @ARGV <= 1 or usage();
+@@ -218,8 +218,10 @@ sub _file {
+ 	my($self,$fn,$rev) = @_;
+ 	$self->{'socketo'}->write("Argument -N\n") or return undef;
+ 	$self->{'socketo'}->write("Argument -P\n") or return undef;
+-	# $self->{'socketo'}->write("Argument -ko\n") or return undef;
+-	# -ko: Linus' version doesn't use it
++	# -kk: Linus' version doesn't use it - defaults to off
++	if ($opt_k) {
++	    $self->{'socketo'}->write("Argument -kk\n") or return undef;
++	}
+ 	$self->{'socketo'}->write("Argument -r\n") or return undef;
+ 	$self->{'socketo'}->write("Argument $rev\n") or return undef;
+ 	$self->{'socketo'}->write("Argument --\n") or return undef;
