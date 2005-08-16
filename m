@@ -1,67 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Patches exchange is bad?
-Date: Tue, 16 Aug 2005 18:45:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508161824140.23242@iabervon.org>
-References: <20050816220923.42545.qmail@web26301.mail.ukl.yahoo.com>
+From: Dave Jones <davej@redhat.com>
+Subject: FUNKY tags.
+Date: Tue, 16 Aug 2005 18:43:32 -0400
+Message-ID: <20050816224332.GE26455@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: martin.langhoff@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 00:44:05 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Wed Aug 17 00:44:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5A8I-0003W3-M3
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 00:42:11 +0200
+	id 1E5A9w-0003pQ-9R
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 00:43:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750705AbVHPWmA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 18:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750706AbVHPWmA
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 18:42:00 -0400
-Received: from iabervon.org ([66.92.72.58]:13582 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750705AbVHPWmA (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 18:42:00 -0400
-Received: (qmail 28755 invoked by uid 1000); 16 Aug 2005 18:45:21 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Aug 2005 18:45:21 -0400
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050816220923.42545.qmail@web26301.mail.ukl.yahoo.com>
+	id S1750710AbVHPWnn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 18:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750716AbVHPWnn
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 18:43:43 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:58536 "EHLO mx1.redhat.com")
+	by vger.kernel.org with ESMTP id S1750710AbVHPWnm (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 18:43:42 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.12.11/8.12.11) with ESMTP id j7GMhYJY009195
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 18:43:34 -0400
+Received: from devserv.devel.redhat.com (devserv.devel.redhat.com [172.16.58.1])
+	by int-mx1.corp.redhat.com (8.11.6/8.11.6) with ESMTP id j7GMhXV08857
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 18:43:33 -0400
+Received: from nwo.kernelslacker.org (vpn50-3.rdu.redhat.com [172.16.50.3])
+	by devserv.devel.redhat.com (8.12.11/8.12.11) with ESMTP id j7GMhXbn013067
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 18:43:33 -0400
+Received: from nwo.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by nwo.kernelslacker.org (8.13.4/8.13.4) with ESMTP id j7GMhXH8010572
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 18:43:33 -0400
+Received: (from davej@localhost)
+	by nwo.kernelslacker.org (8.13.4/8.13.4/Submit) id j7GMhWOt010571
+	for git@vger.kernel.org; Tue, 16 Aug 2005 18:43:32 -0400
+X-Authentication-Warning: nwo.kernelslacker.org: davej set sender to davej@redhat.com using -f
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 16 Aug 2005, Marco Costalba wrote:
+I just tried a cvs->git conversion using the git-cvsimport-script
+and cvsps flagged a bunch of tags as **FUNKY**
 
-> Martin Langhoff wrote:
->
-> >>From what I understand, you'll want the StGIT infrastructure. If you
-> >use git/cogito, there is an underlying  assumption that you'll want
-> >all the patches merged across, and a simple cg-update will bring in
-> >all the pending stuff.
-> >
->
-> My concerns are both metodologicals and practical:
->
-> 1) Method: To use the 'free patching workflow' on git is something foreseen in
-> git design, something coherent with the fork + develop + merge cycle that it
-> seems, at least to me, THE way git is meant to be used. Or it is stretching
-> the possibility of the tool to something technically allowed but not suggested.
+I've no idea what I did when I tagged those trees, but according
+to a google search, cvsps does that when it find patchsets which
+are chronologically (and thus by patchset id) earlier than the tag,
+but are tagwise after.  Spooky.
 
-Patches are definitely meant to be part of how git is used; they are the
-primary way of getting clean history out of messy history (that is, saving
-a content change while discarding some history that isn't applicable).
-There's relatively little support in git itself, but that's because the
-point is to go outside the system's tracking. There have been various
-discussions of more explicit support, and nobody's been able to come up
-with a need.
+I looked the tree over with gitk, and it seemed fine around those tags,
+so I'm wondering what value there is in preserving this info, and
+whether we should remove it at cvsimport time somehow. Comments?
 
-> 2) Practical: The round trip git-format-patch + git-applymbox is the logical and
-> natural way to reach this goal or, also in this case, I intend to stretch some tools,
-> designed for one thing, for something else?
-
-I'd guess that git-diff-tree + git-apply (without the rest of the
-scripting) would be more effective when you're not doing anything with the
-intermediate files, since it saves doing a bunch of formatting and
-parsing.
-
-	-Daniel
-*This .sig left intentionally blank*
+		Dave
