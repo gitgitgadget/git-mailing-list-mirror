@@ -1,110 +1,99 @@
-From: martin@ng.eduforge.org (Martin Langhoff)
-Subject: [PATCH] Add -k kill keyword expansion option to git-cvsimport - revised
-Date: Tue, 16 Aug 2005 17:39:29 +1200 (NZST)
-Message-ID: <20050816053929.A97DD3300AD@ng.eduforge.org>
-X-From: git-owner@vger.kernel.org Tue Aug 16 07:40:19 2005
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: symlinked directories in refs are now unreachable
+Date: Mon, 15 Aug 2005 23:25:16 -0700
+Message-ID: <7vbr3yl7oz.fsf@assigned-by-dhcp.cox.net>
+References: <1124073677.27393.15.camel@della.draisey.ca>
+	<7v64u7941c.fsf@assigned-by-dhcp.cox.net>
+	<1124089116.749.39.camel@della.draisey.ca>
+	<1124171194.762.74.camel@della.draisey.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 08:26:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4uAj-0004vQ-Jv
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 07:39:37 +0200
+	id 1E4ut3-0006la-OM
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 08:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965116AbVHPFjc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 01:39:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965117AbVHPFjc
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 01:39:32 -0400
-Received: from 34.70-85-230.reverse.theplanet.com ([70.85.230.34]:917 "EHLO
-	ng.eduforge.org") by vger.kernel.org with ESMTP id S965116AbVHPFjb
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 01:39:31 -0400
-Received: by ng.eduforge.org (Postfix, from userid 3373)
-	id A97DD3300AD; Tue, 16 Aug 2005 17:39:29 +1200 (NZST)
-To: git@vger.kernel.org
+	id S932602AbVHPGZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 02:25:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbVHPGZT
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 02:25:19 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:1936 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932602AbVHPGZS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 02:25:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050816062517.UCCB16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 16 Aug 2005 02:25:17 -0400
+To: Matt Draisey <mattdraisey@sympatico.ca>
+In-Reply-To: <1124171194.762.74.camel@della.draisey.ca> (Matt Draisey's
+	message of "Tue, 16 Aug 2005 01:46:34 -0400")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-[PATCH] Add -k kill keyword expansion option to git-cvsimport - revised
+Matt Draisey <mattdraisey@sympatico.ca> writes:
 
-Early versions of git-cvsimport defaulted to using preexisting keyword
-expansion settings. This change preserves compatibility with existing cvs
-imports and allows new repository migrations to kill keyword expansion.
+> On Sun, 2005-08-14 at 22:12 -0700, Junio C Hamano wrote:
+>> I would like to know
+>> a use case or two to illustrate why there are symlinks pointing
+>> at real files outside .git/refs/ hierarchy, and how that
+>> arrangement is useful.
+>...
+> This email is a bit long-winded so I didn't CC it to the mailing list.
 
-After exploration of the different -k modes in the cvs protocol, we use -kk
-which kills keyword expansion wherever possible. Against the protocol
-spec, -ko and -kb will sometimes expand keywords.
+Thanks for a clear explanation.  Your arrangement indeed is an
+intriguing one, in that there are very similar issues in the
+fsck/prune area even with arrangements quite different from
+yours.  I personally think your reasoning about this issue
+deserves to be shared with the list.  I'll CC _this_ message to
+the list and leave it up to you to forward your words there as
+well.
 
-Should improve our chances of detecting merges and reduce imported
-repository size.
+People are known to do something similar to what you are doing
+without having any special commit tool.  They just do this:
 
-Signed-off: Martin Langhoff <martin.langhoff@gmail.com>
----
+    $ mkdir A B
+    $ cd A && git init-db
+    $ cd ../B && git init-db
+    $ rm -fr .git/objects && ln -s ../../A/.git/objects .git/objects
 
- Documentation/git-cvsimport-script.txt |    7 ++++++-
- git-cvsimport-script                   |   12 +++++++-----
- 2 files changed, 13 insertions(+), 6 deletions(-)
+The repositories A and B share the same object database,
+and they have independent sets of refs.  For the exact same
+reason as your arrangement, you cannot "git prune" in either
+repository, because they do not know about objects reachable
+only from the other side.
 
-3be96ff6fee32974b66fe1743eb701e93032fee5
-diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
---- a/Documentation/git-cvsimport-script.txt
-+++ b/Documentation/git-cvsimport-script.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- --------
- 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
- 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
--			[ -C <GIT_repository> ] [ -i ] [ <CVS_module> ]
-+			[ -C <GIT_repository> ] [ -i ] [ -k ] [ <CVS_module> ]
- 
- 
- DESCRIPTION
-@@ -38,6 +38,11 @@ OPTIONS
- 	ensures the working directory and cache remain untouched and will
- 	not create them if they do not exist.
- 
-+-k::
-+	Kill keywords: will extract files with -kk from the CVS archive
-+	to avoid noisy changesets. Highly recommended, but off by default
-+	to preserve compatibility with early imported trees. 
-+
- -o <branch-for-HEAD>::
- 	The 'HEAD' branch from CVS is imported to the 'origin' branch within
- 	the git repository, as 'HEAD' already has a special meaning for git.
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
- $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
--our($opt_h,$opt_o,$opt_v,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
-+our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
- 
- sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from CVS
-        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
-        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
--       [ -i ] [ CVS_module ]
-+       [ -i ] [ -k ] [ CVS_module ]
- END
- 	exit(1);
- }
- 
--getopts("hivo:d:p:C:z:") or usage();
-+getopts("hivko:d:p:C:z:") or usage();
- usage if $opt_h;
- 
- @ARGV <= 1 or usage();
-@@ -218,8 +218,10 @@ sub _file {
- 	my($self,$fn,$rev) = @_;
- 	$self->{'socketo'}->write("Argument -N\n") or return undef;
- 	$self->{'socketo'}->write("Argument -P\n") or return undef;
--	# $self->{'socketo'}->write("Argument -ko\n") or return undef;
--	# -ko: Linus' version doesn't use it
-+	# -kk: Linus' version doesn't use it - defaults to off
-+	if ($opt_k) {
-+	    $self->{'socketo'}->write("Argument -kk\n") or return undef;
-+	}
- 	$self->{'socketo'}->write("Argument -r\n") or return undef;
- 	$self->{'socketo'}->write("Argument $rev\n") or return undef;
- 	$self->{'socketo'}->write("Argument --\n") or return undef;
+Further, one repository can borrow objects from another
+repository via the .git/objects/info/alternates mechanism.  This
+is useful when a repository is a local clone of another.  You
+would do this:
+
+    $ git clone -l -s linux-2.6/.git/ my-linux
+    $ cd my-linux && cat .git/objects/info/alternates
+    /path/to/linux-2.6/.git/
+
+The new repository my-linux has the .git/objects with 256
+fan-out subdirectories, but starts out without any object files
+in it.  It literally borrows the existing objects from the
+neighbouring repository, and its own .git/objects hierarchy is
+only used to hold newly created objects in it.  For the same
+reason as your arrangement, you should not "git prune" the
+linux-2.6 repository, either.  However, my-linux repository can
+be pruned as long as somebody else does not "borrow" from it.
+
+So while I find your "do follow symlink" patch an improvement in
+that it makes things a little bit safer, I think there should be
+a more generalized way to say "this object database holds things
+that are refered by these refs/ directories outside.  fsck/prune
+had better hold onto objects referenced by them, not just by the
+refs directory that happens to be next to th objects directory".
+
+That would be the inverse of .git/objects/info/alternates.
+
+-jc
