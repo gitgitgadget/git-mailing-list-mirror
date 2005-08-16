@@ -1,68 +1,141 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: Re: [RFC] Patches exchange is bad?
-Date: Tue, 16 Aug 2005 15:09:22 -0700 (PDT)
-Message-ID: <20050816220923.42545.qmail@web26301.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-format-patch fix
+Date: Tue, 16 Aug 2005 15:31:05 -0700
+Message-ID: <7vek8t7bva.fsf@assigned-by-dhcp.cox.net>
+References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 00:10:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@yahoo.it>
+X-From: git-owner@vger.kernel.org Wed Aug 17 00:31:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E59cd-0005q6-Vn
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 00:09:28 +0200
+	id 1E59xf-0001N4-2K
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 00:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbVHPWJZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 18:09:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751109AbVHPWJZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 18:09:25 -0400
-Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:58731 "HELO
-	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751107AbVHPWJY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 18:09:24 -0400
-Received: (qmail 42547 invoked by uid 60001); 16 Aug 2005 22:09:23 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=oLm3hwX2yG5E8C/2XqHgi1HY85Ik6tY4eyHI/q0XsM4szQYNv4PmBzkH1tI5kjL3sXNlMtzwnhkjgjg2xr6QHSeOvM+++YYo6El3q9UpDCu1KoQSKDfH+a24EFMAckULWFJiyaqT9+KMuifhXja/TYWZr2WszCtzFmatYqBkZbI=  ;
-Received: from [151.38.74.63] by web26301.mail.ukl.yahoo.com via HTTP; Tue, 16 Aug 2005 15:09:22 PDT
-To: martin.langhoff@gmail.com
+	id S1750701AbVHPWbI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 18:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750702AbVHPWbI
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 18:31:08 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:5035 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S1750701AbVHPWbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 18:31:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050816223105.GYIN550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 16 Aug 2005 18:31:05 -0400
+To: git@vger.kernel.org
+In-Reply-To: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com> (Marco
+	Costalba's message of "Tue, 16 Aug 2005 14:47:07 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Martin Langhoff wrote:
+Introduces --keep-subjects flag to tell it not to munge the
+first line of the commit message.  Running "git applymbox" on
+the output from "git format-patch -m -k" would preserve the
+original commit information better this way.
 
->>From what I understand, you'll want the StGIT infrastructure. If you
->use git/cogito, there is an underlying  assumption that you'll want
->all the patches merged across, and a simple cg-update will bring in
->all the pending stuff.
->
+At the same time, prefix Subject: on the first line of the
+commit, to help people cut&copy.
 
-My concerns are both metodologicals and practical:
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-1) Method: To use the 'free patching workflow' on git is something foreseen in
-git design, something coherent with the fork + develop + merge cycle that it
-seems, at least to me, THE way git is meant to be used. Or it is stretching 
-the possibility of the tool to something technically allowed but not suggested.
+Marco Costalba <mcostalba@yahoo.it> writes:
 
-2) Practical: The round trip git-format-patch + git-applymbox is the logical and
-natural way to reach this goal or, also in this case, I intend to stretch some tools, 
-designed for one thing, for something else?
+> The extra '[PATCH]' in the subject was introduced by git-format-patch --mbox.
+> Perhaps I have made something wrong.
 
+No, sorry, I noticed that myself after I wrote that message.
+There should be an option to tell --mbox format not do that.  My
+thinko. 
 
-About StGIT, I agree it is the right tool, designed for this kind of problems. But,
-peraphs because I don't know it very much, I still can't figure out how to integrate 
-StGit in a git GUI, like qgit is, so to have an unified and friendly view of a git 
-archive and a patches stack.
+Adding [PATCH] on the subject line even in --mbox format should
+also be supported for people who run "git send-email" to send
+things out.  So there is a new option '-k' to keep the original
+subject line for the "cherry-pick" operation.
 
+This also changes it to always prefix "Subject: ".  I think it
+makes the output look consistent, even without --mbox option,
+and would help people cutting and pasting the Subject line,
+depending on their MUAs (it would certainly help me), but at the
+same time it may make cutting and pasting cumbersome for some
+other people.  Opinions?  Objections?
 
-Marco
+------------
 
+ git-format-patch-script |   31 ++++++++++++++++++++-----------
+ 1 files changed, 20 insertions(+), 11 deletions(-)
 
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+32128d94ab63ea65bb86cb7fa7425e51e0dfeeb0
+diff --git a/git-format-patch-script b/git-format-patch-script
+--- a/git-format-patch-script
++++ b/git-format-patch-script
+@@ -6,7 +6,7 @@
+ . git-sh-setup-script || die "Not a git archive."
+ 
+ usage () {
+-    echo >&2 "usage: $0"' [-n] [-o dir] [--mbox] [--check] [--signoff] [-<diff options>...] upstream [ our-head ]
++    echo >&2 "usage: $0"' [-n] [-o dir] [--keep-subject] [--mbox] [--check] [--signoff] [-<diff options>...] upstream [ our-head ]
+ 
+ Prepare each commit with its patch since our-head forked from upstream,
+ one file per patch, for e-mail submission.  Each output file is
+@@ -44,6 +44,9 @@ do
+     date=t ;;
+     -m|--m|--mb|--mbo|--mbox)
+     date=t author=t mbox=t ;;
++    -k|--k|--ke|--kee|--keep|--keep-|--keep-s|--keep-su|--keep-sub|\
++    --keep-subj|--keep-subje|--keep-subjec|--keep-subject)
++    keep_subject=t ;;
+     -n|--n|--nu|--num|--numb|--numbe|--number|--numbere|--numbered)
+     numbered=t ;;
+     -s|--s|--si|--sig|--sign|--signo|--signof|--signoff)
+@@ -64,6 +67,11 @@ do
+     shift
+ done
+ 
++case "$keep_subject$numbered" in
++tt)
++	die '--keep-subject and --numbered are incompatible.' ;;
++esac
++
+ revpair=
+ case "$#" in
+ 2)
+@@ -142,21 +150,22 @@ do
+     {
+ 	mailScript='
+ 	/./d
+-	/^$/n
+-	s|^\[PATCH[^]]*\] *||'
+-
+-	case "$mbox" in
+-	t)
+-	    echo 'From nobody Mon Sep 17 00:00:00 2001' ;# UNIX "From" line
+-	    mailScript="$mailScript"'
+-	    s|^|Subject: [PATCH'"$num"'] |'
+-	    ;;
++	/^$/n'
++	case "$keep_subject" in
++	t)  ;;
+ 	*)
+ 	    mailScript="$mailScript"'
++	    s|^\[PATCH[^]]*\] *||
+ 	    s|^|[PATCH'"$num"'] |'
+ 	    ;;
+ 	esac
+-
++	mailScript="$mailScript"'
++	s|^|Subject: |'
++	case "$mbox" in
++	t)
++	    echo 'From nobody Mon Sep 17 00:00:00 2001' ;# UNIX "From" line
++	    ;;
++	esac
+ 	eval "$(sed -ne "$whosepatchScript" $commsg)"
+ 	test "$author,$au" = ",$me" || {
+ 		mailScript="$mailScript"'
