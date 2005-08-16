@@ -1,48 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Alternate object pool mechanism updates.
-Date: Tue, 16 Aug 2005 14:47:25 -0700
-Message-ID: <7vek8t8sgi.fsf@assigned-by-dhcp.cox.net>
-References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net>
-	<20050813120815.GC5608@pasky.ji.cz>
-	<7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [RFC] Patches exchange is bad?
+Date: Tue, 16 Aug 2005 14:47:07 -0700 (PDT)
+Message-ID: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 23:48:40 2005
+X-From: git-owner@vger.kernel.org Tue Aug 16 23:48:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E59I0-00022j-MM
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 23:48:09 +0200
+	id 1E59HA-0001uS-QU
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 23:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485AbVHPVr3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 17:47:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932489AbVHPVr2
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 17:47:28 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:3268 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932485AbVHPVr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 17:47:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050816214724.VNWN8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 Aug 2005 17:47:24 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508141726390.3553@g5.osdl.org> (Linus Torvalds's
-	message of "Sun, 14 Aug 2005 17:29:05 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932381AbVHPVrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 17:47:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932485AbVHPVrN
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 17:47:13 -0400
+Received: from web26302.mail.ukl.yahoo.com ([217.146.176.13]:45946 "HELO
+	web26302.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S932381AbVHPVrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 17:47:13 -0400
+Received: (qmail 6844 invoked by uid 60001); 16 Aug 2005 21:47:07 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=FrErK2Rxha+O8dz98LwZi4Ch5n1s5mVyquGOInHByaiONpnH0jsGxxZ/qlpvhQPSM7kOzVu0sWqA5s6z60V1ltsjLRoiztlFHE2ANoIOUe7UYZKipaM8TWWepIYUvpcmaTCOe35OHwfTgv23WC4hpvb5Nh/GnAgoaIpQ2z6eJfw=  ;
+Received: from [151.38.74.63] by web26302.mail.ukl.yahoo.com via HTTP; Tue, 16 Aug 2005 14:47:07 PDT
+To: Junio C Hamano <junkio@cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Junio C Hamano wrote:
 
-> We've got a "git prune-packed", it would be good to have a "git
-> prune-alternate" or something equivalent.
+>
+>I would like to know a bit about "git format-patch" adding extra
+>info that you needed to get rid of.  It shouldn't be necessary.
+>
 
-If you have GIT_ALTERNATE_DIRECTORIES environment variable, git
-prune-packed will remove objects from your repository if it is
-found in somebody else's pack.  I am not sure if this is the
-behaviour we would want.
+As example, in the rev d5a63b99835017d2638e55a7e34a35a3c1e80f1f from git
+the original subject is:
+
+'   Alternate object pool mechanism updates.'
+
+while, after the round-trip git-format-patch + git applymbox I have
+
+'   [PATCH] Alternate object pool mechanism updates.'
+
+The extra '[PATCH]' in the subject was introduced by git-format-patch --mbox.
+
+
+Perpahs I have made something wrong.
+
+
+Marco
+
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
