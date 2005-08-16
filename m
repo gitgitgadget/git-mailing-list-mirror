@@ -1,86 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Making note, in the repository, of push/pull relationships
-Date: Tue, 16 Aug 2005 14:09:08 -0700
-Message-ID: <7vll318u8b.fsf@assigned-by-dhcp.cox.net>
-References: <20050815162519.GB9719@hpsvcnb.fc.hp.com>
-	<7vzmrispi4.fsf@assigned-by-dhcp.cox.net>
-	<20050816171142.GB20016@hpsvcnb.fc.hp.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] cg-admin-cat ignoring -r
+Date: Tue, 16 Aug 2005 17:22:59 -0400
+Message-ID: <1124227379.26240.4.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 23:10:47 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Aug 16 23:25:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E58gM-00020q-83
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 23:09:14 +0200
+	id 1E58tx-0005Iy-7R
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 23:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932718AbVHPVJL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 17:09:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932720AbVHPVJL
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 17:09:11 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:1192 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932718AbVHPVJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 17:09:10 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050816210908.UXJJ8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 Aug 2005 17:09:08 -0400
-To: Carl Baldwin <cnb@fc.hp.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932726AbVHPVXO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 17:23:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932727AbVHPVXO
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 17:23:14 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:388 "EHLO fencepost.gnu.org")
+	by vger.kernel.org with ESMTP id S932726AbVHPVXN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 17:23:13 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1E58qz-0005V3-Uv
+	for git@vger.kernel.org; Tue, 16 Aug 2005 17:20:16 -0400
+Received: from localhost.localdomain ([127.0.0.1] helo=dv.roinet.com)
+	by dv.roinet.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.52)
+	id 1E58tf-0006qO-Vv; Tue, 16 Aug 2005 17:23:00 -0400
+Received: (from proski@localhost)
+	by dv.roinet.com (8.13.4/8.13.4/Submit) id j7GLMx0A026309;
+	Tue, 16 Aug 2005 17:22:59 -0400
+X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
+To: Petr Baudis <pasky@ucw.cz>, git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Carl Baldwin <cnb@fc.hp.com> writes:
+Hello!
 
-> If I may, let me give an example of something I think could serve the
-> purpose a little more simply and generically.
->
-> Let's say I start with the following:
-> % ls .git/refs/heads
-> master
-> mylocalbranch
-> myremotebranch
-> ko-master
-> % cat .git/branches/ko-master
-> master.kernel.org:/pub/scm/git/git.git
->
-> I would add something like this:  (I didn't put much thought into the
-> actual directory and file names, forgive me.  ;-)
->
-> % cat .git/branches/relationships
-> pull:ko-master:master
-> pull:master:mylocalbranch # The next two document my flow locally
-> pull:mylocalbranch:master
-> push:master:myremotebranch # I push my master to a remote that I control
+cg-admin-cat ignores the argument for the "-r" option because it uses
+optparse incorrectly.  For OPTARG to be set, "-r=" should be used
+instead of "-r".
 
-And presumably you have .git/branches/myremotebranch file that
-says something like "master.kernel.org:/pub/scm/git/git.git".
-Or should the last line of relationships file be spelled just
-push:master:ko-master?
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-> % cat .git/remotes/ko
-> push: master:ko-master pu:ko-pu rc:ko-rc
-> pull: ko-master:master ko-pu:pu ko-rc:rc
->
-> I might argue that this is now a job for a porcelain script or
-> something.
+diff --git a/cg-admin-cat b/cg-admin-cat
+--- a/cg-admin-cat
++++ b/cg-admin-cat
+@@ -27,7 +27,7 @@ USAGE="cg-admin-cat [-r TREE_ID] FILE...
+ 
+ rev=HEAD
+ while optparse; do
+-	if optparse -r; then
++	if optparse -r=; then
+ 		rev="$OPTARG"
+ 	else
+ 		optfail
 
-Probably.
 
-My primary interest in discussing this is to see Porcelain folks
-agree on what notation and semantics to use, and probably set an
-example by having the minimum base in the barebone Porcelain.
-
-Personally I think there are two kinds of patch-flow: one that
-is pretty much static that can easily be described with
-something like your relationships notation, and ad-hoc one that
-I think should not automatically contaminate the established
-static flow your relationships notation nicely describes.  The
-corporate world may put disproportional stress on the importance
-of the former, but my feeling is that ad-hoc patch-flow that is
-outside your usual static patch-flow is just as important; see
-Documentation/howto/using-topic-branches.txt for why.
+-- 
+Regards,
+Pavel Roskin
