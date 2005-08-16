@@ -1,65 +1,70 @@
-From: Alex Bennee <kernel-hacker@bennee.com>
-Subject: Importing from CVS issues
-Date: Tue, 16 Aug 2005 11:41:34 +0100
-Message-ID: <1124188894.7444.9.camel@okra.transitives.com>
+From: Sven Verdoolaege <skimo@kotnet.org>
+Subject: Re: [PATCH] Add merge detection to git-cvsimport
+Date: Tue, 16 Aug 2005 13:07:25 +0200
+Message-ID: <20050816110725.GL11882MdfPADPa@garage.linux.student.kuleuven.ac.be>
+References: <20050816103527.F420A33010C@ng.eduforge.org>
+Reply-To: skimo@liacs.nl
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 16 12:43:16 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 13:02:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4ytZ-0004y5-Lc
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 12:42:14 +0200
+	id 1E4zC8-0008Pi-P6
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 13:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965197AbVHPKmE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 06:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965200AbVHPKmE
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 06:42:04 -0400
-Received: from smarthost2.mail.uk.easynet.net ([212.135.6.12]:1295 "EHLO
-	smarthost2.mail.uk.easynet.net") by vger.kernel.org with ESMTP
-	id S965197AbVHPKmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 06:42:03 -0400
-Received: from [217.207.128.220] (helo=mx.transitive.com)
-	by smarthost2.mail.uk.easynet.net with esmtp (Exim 4.10)
-	id 1E4ytL-00037R-00
-	for git@vger.kernel.org; Tue, 16 Aug 2005 11:41:59 +0100
-To: git@vger.kernel.org
-X-Mailer: Evolution 2.2.1 
-X-TL-MailScanner: Found to be clean
+	id S932236AbVHPLBT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 07:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932322AbVHPLBT
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 07:01:19 -0400
+Received: from thumbler.kulnet.kuleuven.ac.be ([134.58.240.45]:37533 "EHLO
+	thumbler.kulnet.kuleuven.ac.be") by vger.kernel.org with ESMTP
+	id S932236AbVHPLBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 07:01:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 6D03C137B92
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 13:01:14 +0200 (CEST)
+Received: from smtp01.kuleuven.be (octavianus.kulnet.kuleuven.ac.be [134.58.240.71])
+	by thumbler.kulnet.kuleuven.ac.be (Postfix) with ESMTP id 9FD52137AED
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 13:01:13 +0200 (CEST)
+Received: from garage.linux.student.kuleuven.ac.be (garage.linux.student.kuleuven.be [193.190.253.84])
+	by smtp01.kuleuven.be (Postfix) with ESMTP id 89DA063D45
+	for <git@vger.kernel.org>; Tue, 16 Aug 2005 13:01:13 +0200 (CEST)
+Received: (qmail 7176 invoked by uid 500); 16 Aug 2005 11:07:25 -0000
+To: Martin Langhoff <martin@ng.eduforge.org>
+Mail-Followup-To: Martin Langhoff <martin@ng.eduforge.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050816103527.F420A33010C@ng.eduforge.org>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by KULeuven Antivirus Cluster
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Aug 16, 2005 at 10:35:27PM +1200, Martin Langhoff wrote:
+> +
+> +sub get_headref($$) {
 
-We've been having issues with CVS for some time and I thought I'd give
-git a spin. To do some like-for-like tests I'm having a go at importing
-our cvs repository into git so I can do some benchmarks on things like
-branch creation as well as play around with the visualisation tools.
+If you want to check whether a ref is valid, then
+it is better to use git-rev-parse...
 
-Obviously the CVS repo is non-trivial as we have many branches (one per
-change developed). I've been trying to import script but it seems to
-falling over. For starters cvsps is spitting out lots of messages along
-the lines of:
+> +    my $name    = shift;
+> +    my $git_dir = shift; 
+> +    my $sha;
+> +    
+> +    if (open(C,"$git_dir/refs/heads/$name")) {
+> +	chomp($sha = <C>);
+> +	close(C);
+> +	length($sha) == 40
+> +	    or die "Cannot get head id for $name ($sha): $!\n";
 
-WARNING: revision 1.3.2.1 of file scripts/xmltools/t/runtests.pl on
-unnamed branch
+... but if you're just going to die, then why not simply
+let git-commit-tree do the test ?
 
-Before the import script finally dies with:
+> +				if ($mparent eq 'HEAD') { $mparent = 'origin'};
 
-WARNING: revision 1.3.2.1 of file
-scripts/xmltools/t/data/gzip/DO-NOT-BACKUP on unnamed branch
-DONE; creating master branch
-cp: cannot stat `/export/test/cvstogit/.git/refs/heads/origin': No such
-file or directory
-usage: git-read-tree (<sha> | -m [-u] <sha1> [<sha2> [<sha3>]])
+Please don't hardcode 'origin' here.
 
-Is this a just a case of the cvsps not giving output the script can deal
-with? Any suggestions on how I can proceed with diagnosing what went
-wrong?
-
---
-Alex, homepage: http://www.bennee.com/~alex/
-Barometer, n.: An ingenious instrument which indicates what kind of
-weather we are having. -- Ambrose Bierce, "The Devil's Dictionary"
+skimo
