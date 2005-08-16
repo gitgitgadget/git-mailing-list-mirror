@@ -1,66 +1,59 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] Add -k kill keyword expansion option to git-cvsimport
-Date: Tue, 16 Aug 2005 23:29:15 +1200
-Message-ID: <46a038f9050816042949c414c7@mail.gmail.com>
-References: <46a038f9050814235140877be7@mail.gmail.com>
-	 <7vk6in65dp.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f90508150037f128d6@mail.gmail.com>
-	 <7vacjj3968.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f905081501301bd9a801@mail.gmail.com>
-	 <7vr7cv1t89.fsf@assigned-by-dhcp.cox.net>
-	 <46a038f9050815020511574e3d@mail.gmail.com>
-	 <46a038f9050815042036616b08@mail.gmail.com>
-	 <7vll32viy5.fsf@assigned-by-dhcp.cox.net>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: Re: Importing from CVS issues
+Date: Tue, 16 Aug 2005 14:16:15 +0200
+Message-ID: <u5toe7y2i28.fsf@fidgit.hq.vtech>
+References: <1124188894.7444.9.camel@okra.transitives.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 16 13:30:55 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Aug 16 14:19:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E4zd8-0005Uj-Vq
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 13:29:19 +0200
+	id 1E50Ov-0008Dl-QZ
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 14:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932639AbVHPL3Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 07:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932640AbVHPL3Q
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 07:29:16 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:56359 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932639AbVHPL3Q convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 07:29:16 -0400
-Received: by rproxy.gmail.com with SMTP id i8so934227rne
-        for <git@vger.kernel.org>; Tue, 16 Aug 2005 04:29:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DuUvdkuBytOHHaum93zeZnxQJnb6TqVkmGDrbokl3J95H+8qdgQiKFPkcV4SY71/YdUVSZjHrmv99JklwoqwL2+J0Rair7Bwkhi9VfUY12u9eVHkgcutHZkmvuQfSY4nA0fAUHTT3DetJF0JgGIwsilYeOnH4xcios/wipXGE1s=
-Received: by 10.39.2.43 with SMTP id e43mr41430rni;
-        Tue, 16 Aug 2005 04:29:15 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Tue, 16 Aug 2005 04:29:15 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll32viy5.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932675AbVHPMSY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 16 Aug 2005 08:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932677AbVHPMSY
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 08:18:24 -0400
+Received: from main.gmane.org ([80.91.229.2]:8424 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932675AbVHPMSX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 08:18:23 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E50N4-0007ma-NT
+	for git@vger.kernel.org; Tue, 16 Aug 2005 14:16:46 +0200
+Received: from gorgon.vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Aug 2005 14:16:46 +0200
+Received: from davidk by gorgon.vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Aug 2005 14:16:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: gorgon.vtab.com
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:di5jltV54Wl/mL5Md46J4dxp0Fo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 8/16/05, Junio C Hamano <junkio@cox.net> wrote:
-> However, the -kk change one is a corrupted patch and does not
-> apply.  Your MUA ate leading whitespaces, perhaps.
+Alex Bennee <kernel-hacker@bennee.com> writes:
 
-I stupidly did a forward. Rebased to your current pu branch and sent.
-From now on I'll be sending straight from cmdline.
- 
-> I have already slurped in other two patches to cvsimport in the
-> proposed updates branch, so could you kindly proofread them (I
-> am no expert on cvs networking protocol issues)
+> Before the import script finally dies with:
+>
+> WARNING: revision 1.3.2.1 of file
+> scripts/xmltools/t/data/gzip/DO-NOT-BACKUP on unnamed branch
+> DONE; creating master branch
+> cp: cannot stat `/export/test/cvstogit/.git/refs/heads/origin': No su=
+ch
+> file or directory
 
-Proofread. I don't claim to have understood 100% but it made sense.
-Most importantly, it imported several repos perfectly.
+Was this done with an empty destination dir?  I've seen similar things
+happen in a dir where an interrupted cvs import was done previously,
+and the 'origin' branch was never created.
 
-cheers,
-
-
-martin
+--=20
+David K=E5gedal
