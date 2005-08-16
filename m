@@ -1,77 +1,95 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [RFC] Patches exchange is bad?
-Date: Tue, 16 Aug 2005 13:01:32 -0700 (PDT)
-Message-ID: <20050816200132.88287.qmail@web26304.mail.ukl.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Alternate object pool mechanism updates.
+Date: Tue, 16 Aug 2005 13:38:25 -0700
+Message-ID: <7vacjhaa7y.fsf@assigned-by-dhcp.cox.net>
+References: <7vmznmp5ja.fsf@assigned-by-dhcp.cox.net>
+	<20050813120815.GC5608@pasky.ji.cz>
+	<7v1x4wcca0.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508141726390.3553@g5.osdl.org>
+	<7vr7cw7ypt.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508161156430.3553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Aug 16 22:03:11 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 16 22:39:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E57cv-0002tl-Ie
-	for gcvg-git@gmane.org; Tue, 16 Aug 2005 22:01:37 +0200
+	id 1E58Cd-0003NJ-9u
+	for gcvg-git@gmane.org; Tue, 16 Aug 2005 22:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932313AbVHPUBe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 16:01:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932385AbVHPUBe
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 16:01:34 -0400
-Received: from web26304.mail.ukl.yahoo.com ([217.146.176.15]:38499 "HELO
-	web26304.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S932313AbVHPUBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 16:01:34 -0400
-Received: (qmail 88289 invoked by uid 60001); 16 Aug 2005 20:01:32 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=hvKumnTFxymqDUWdV1lgXSXbI1wo60AfWVaXWNQ8b3jr9SFkOakNrhUjkbDXiTf9wkT/b7ZVG8whHVEQ9kIiLyQTXbWzlhGXrv11P6Pu2vnOSisETQIUuRMz2soLVmp/4hWP1LBdvggfX3EvCxWAXTnyBZ1QTvIQ6mrgnSG2BJQ=  ;
-Received: from [151.38.74.63] by web26304.mail.ukl.yahoo.com via HTTP; Tue, 16 Aug 2005 13:01:32 PDT
-To: git@vger.kernel.org
+	id S932420AbVHPUi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 16:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932422AbVHPUi1
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 16:38:27 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:45776 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S932420AbVHPUi1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 16:38:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050816203825.EWJZ550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 16 Aug 2005 16:38:25 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508161156430.3553@g5.osdl.org> (Linus Torvalds's
+	message of "Tue, 16 Aug 2005 12:07:42 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Linus Torvalds <torvalds@osdl.org> writes:
 
-I would like to ask the list about something I'am thinking about,
-and I'am not sure it's a good idea.
+> Btw, looking at the code, it strikes me that using ":" to separate the 
+> alternate object directories in the file is rather strange.
 
-Suppose a possible scenario involves using a couple of git archives, one 
-for releases and stable code, say MAIN, and one for experimental stuff  
-or new development, say HEAD.
+Yes, I admit it one was done in a quick and dirty way.  Patches
+welcome [*1*] ;-)
 
-Suppose there is stuff in HEAD you don't want merged in MAIN, more,
-you need to update MAIN with only a subset of patches in HEAD, peraphs 
-in different order. Or simply, you are not interested to see the history 
-of the HEAD tree when looking MAIN. All this points could keep you 
-from merging.
+> Anyway, I don't think "alternates" is necessarily sensible as a "object"  
+> information. Sure, it's about alternate objects, but the thing is, object 
+> directories can be shared across many projects, but "alternates" to me 
+> makes more sense as a per-project thing.
 
-I have mocked up a very simple and very stupid 'drag and drop' function.
-Basically you drag some selected revs in another instance of qgit, open on 
-a different archive.
+Well, I have to think about this a bit more, but I have to say
+there were some thinking behind the way things are right now.
 
-What happpens in the background is that git-format-patch-script is feeded 
-with the selected revs and a bunch of temporary patch files are created, 
-then git-applymbox (re)creates the corresponding commits in the destination 
-archive.
+$GIT_DIR/info describes properties of the repository.  That's
+why refs, graft and rev-cache go there.
 
-It is just a very thin layer above the two git scripts, the only extra work 
-is the cleaning up of some info that git-format-patch-script automatically adds, 
-so that the new commits look like the originals (i.e. same header and description).
+$GIT_OBJECT_DIRECTORY/info describes the properties of the
+object pool (I am inventing words as I speak, but an object pool
+is a directory that can be combined with other object pools to
+make an object database).  So object/info/packs talks about the
+packs in it, but not about packs it borrows from its alternates.
+The alternates file in question talks about what other object
+pools you need to consult to obtain the objects it refers to but
+it lacks itself.  If two repositories share a particular object
+pool as its .git/objects directory, by symlinking .git/objects
+or by using GIT_OBJECT_DIRECTORY environment, it does not matter
+from which repository you look at this object pool.  The set of
+objects it refers to but lacks itself, and from which other
+pools these objects can be obtained, do not depend on from which
+repository you are looking at it.  While I agree with everything
+you said about "maybe logical but confusing", I have to disagree
+with you about this one.
 
-I've built-up this thing mainly because I found it useful for me, but I have  
-some concerns that this is the correct way to go, the way git it's meant to be used.
+> What this all is leading up to is that I think we'd be better off with a 
+> totally new "git config" file, in ".git/config", and we'd have all the 
+> startup configuration there.
 
-If there is some interest for this I can push something on SF, after a due polishing, 
-but if it is deeply broken I prefer discard and eventually switch to a more consistent
-workflow.
+I think what _is_ lacking is an easy way to have per repository
+configuration that can be shared among "opt-in" developers.  The
+graft file naturally falls into this category, and probably the
+Porcelain standard .git/info/exclude file as well.  Although we
+ended up doing .git/hooks, it is a per repository thing and
+logically it _could_ be moved to .git/info/hooks [*2*].  And
+that might also be a nice thing to share among "opt-in"
+developers.
 
-What do you think?
+[Footnote]
 
-	Marco
+*1* Sorry I could not resist --- I always wanted to say this.
 
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+*2* I do not think we _should_ move it under .git/info, though.
