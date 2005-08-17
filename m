@@ -1,55 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-format-patch + git-applymbox small issue
-Date: Wed, 17 Aug 2005 19:32:14 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508171931130.8623@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <20050817171844.57566.qmail@web26301.mail.ukl.yahoo.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [RFC] Patches exchange is bad?
+Date: Wed, 17 Aug 2005 10:35:22 -0700 (PDT)
+Message-ID: <20050817173522.14386.qmail@web26305.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 19:34:09 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 19:35:32 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Rm5-0002Ty-8A
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:32:25 +0200
+	id 1E5Rp1-0003Em-3q
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:35:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbVHQRcQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 13:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbVHQRcQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:32:16 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:19135 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751182AbVHQRcP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 13:32:15 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 96054E27E8; Wed, 17 Aug 2005 19:32:14 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7A460AD8FA; Wed, 17 Aug 2005 19:32:14 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5EED0AD7EC; Wed, 17 Aug 2005 19:32:14 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 34A96E27E8; Wed, 17 Aug 2005 19:32:14 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050817171844.57566.qmail@web26301.mail.ukl.yahoo.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750722AbVHQRfY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 13:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbVHQRfY
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:35:24 -0400
+Received: from web26305.mail.ukl.yahoo.com ([217.146.176.16]:8313 "HELO
+	web26305.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750722AbVHQRfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 13:35:24 -0400
+Received: (qmail 14388 invoked by uid 60001); 17 Aug 2005 17:35:22 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=D2OlLTLxwNyq/2pTaBYFOW8p76djeZRkB2v7LtcvyuZTf5h4kl242ihTY29Mh16oowWOZNHBigtJLnwVhJMtbMBWtktDrXv0KOCa/ZNTenBUDaNPtqcT9Bz63K5zC4qmoKzGPQBs9MmZaz6e55o/AQAY4MojDYrEvTzWKW34my4=  ;
+Received: from [151.42.53.158] by web26305.mail.ukl.yahoo.com via HTTP; Wed, 17 Aug 2005 10:35:22 PDT
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Catalin Marinas wrote:
 
-On Wed, 17 Aug 2005, Marco Costalba wrote:
+>
+>Once you want a subset of these patches merged into MAIN, just pop
+>everything from the stack and only push those you want merged, in the
+>order you want (if there are some dependencies, the push will fail and
+>you can correct them or the order). When you are happy with the
+>patches pushed on the stack, just do a 'git pull <HEAD>' in the MAIN
+>repository. After this, doing a 'stg pull <MAIN>' in the HEAD one will
+>mark the patches already integrated into MAIN as empty and you can
+>safely remove them ('stg clean' does this automatically).
+>
+>This way I found StGIT useful for maintainers as well, not only for
+>contributors.
+>
 
-> P.S: I say 'revision', and 'git archive' but are very common also 
-> 'commit' and 'git repository'. This is just a silly example where a 
-> common dictionary should be useful.
+Sorry if the answer is silly, but I still don't know well StGIT .
 
-How about the glossary, which I posted a few hours ago?
+What you describe it's an asymmetrical or one way scenario, new code 
+goes always from HEAD to MAIN. But how is the workflow if:
 
-Ciao,
-Dscho
+1) There is more then one contributor feeding MAIN and you need to update 
+the StGIT patch stack from MAIN.
+
+2) You made something terribly wrong with HEAD (I don't know what can be 
+'terribly wrong') and you need to recreate a clean base from MAIN.
+
+In this cases, if I understand correctly, you need to clone a new StGIT archive from 
+MAIN and push the interesting stuff from old/broken HEAD.
+
+Or you can always merge back pulling from MAIN as in case of two pure git archives?
+
+
+Thanks
+Marco
+
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
