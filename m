@@ -1,56 +1,68 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: FUNKY tags.
-Date: Wed, 17 Aug 2005 12:55:18 +1200
-Message-ID: <46a038f90508161755b43735c@mail.gmail.com>
-References: <20050816224332.GE26455@redhat.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: sending changesets from the middle of a git tree
+Date: Tue, 16 Aug 2005 17:55:51 -0700
+Message-ID: <7v1x4t5qlk.fsf@assigned-by-dhcp.cox.net>
+References: <20050817001308.ED487353CFD@atlas.denx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 02:56:31 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Aug 17 02:56:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5CDz-0006FI-2D
+	id 1E5CDz-0006FI-KB
 	for gcvg-git@gmane.org; Wed, 17 Aug 2005 02:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750784AbVHQAzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 20:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbVHQAzU
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:55:20 -0400
-Received: from rproxy.gmail.com ([64.233.170.196]:60885 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750784AbVHQAzT convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 20:55:19 -0400
-Received: by rproxy.gmail.com with SMTP id i8so49028rne
-        for <git@vger.kernel.org>; Tue, 16 Aug 2005 17:55:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iXtchqUsY9SQxcHn5KoQ9V8H0JUwGlk+lBG2GIaatlJ0uNyIgYMwEcj6jiLGmNCLeTch+a1rKsv4UCvHetJx2d9Z9D1qbny+PuVD7/42RFWmptIbsLcZVokqGViblqcgyb0GgRJUKddgwxAq5wDn4lV4fW0a8dI+s1v07GRR/KI=
-Received: by 10.38.97.80 with SMTP id u80mr38404rnb;
-        Tue, 16 Aug 2005 17:55:19 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Tue, 16 Aug 2005 17:55:18 -0700 (PDT)
-To: Dave Jones <davej@redhat.com>
-In-Reply-To: <20050816224332.GE26455@redhat.com>
-Content-Disposition: inline
+	id S1750785AbVHQAzy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 20:55:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbVHQAzy
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:55:54 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:47835 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750785AbVHQAzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 20:55:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050817005553.FXFZ12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 16 Aug 2005 20:55:53 -0400
+To: Wolfgang Denk <wd@denx.de>
+In-Reply-To: <20050817001308.ED487353CFD@atlas.denx.de> (Wolfgang Denk's
+	message of "Wed, 17 Aug 2005 02:13:08 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 8/17/05, Dave Jones <davej@redhat.com> wrote:
-> I've no idea what I did when I tagged those trees, but according
-> to a google search, cvsps does that when it find patchsets which
-> are chronologically (and thus by patchset id) earlier than the tag,
-> but are tagwise after.  Spooky.
+Wolfgang Denk <wd@denx.de> writes:
 
-It's probably tags that were moved around with "cvs tag -F footag".
-When using cvs in with a dovetail strategy, people tend to merge
-BRANCH->HEAD and use a floating tag to mark how far it's been merged
-in.
+> 	external diff died, stopping at common/cmd_nand.c.
+> 	Some commits could not be rebased, check by hand:
+> 	67a002cbe2b2850d76d797e679bc290a76666df6
+>
+> OK, I can edit the file to resolve the conflicts. But what  do  I  do
+> then to continue?
 
-I am somewhat worried about cvsps getting confused by these floating
-tags. Any help in teaching cvsps to ignore tags is welcome ;)
+Your rebase failed while processing 67a002... and fortunately
+(well, if you are really fortunate you would not have seem it)
+"some commits could not be" message says that was the only one
+left.  At that point, everything up to that commit should be
+migrated on top of your head.  Run gitk or git show-branches to
+see where the "master" head is.  It should be pointing at the
+last successful commit the rebase process has made.  I guess in
+your example you had one commit between master and testing-NAND,
+in which case the master head does not have moved?
 
+Anyway, you manually resolve conflicts and make an commit from
+there, which would migrate the failed 67a002... commit on top of
+your master branch.  If "some commits could not be rebased"
+message says more than one commit, you need to deal with the
+rest of them by hand; sorry there is no automated way currently.
 
-m
+You have to repeat for each such commit:
+
+ (1) Run "git-diff-tree -p <commit-id> | git-apply --index" (or
+     what is in git-rebase-script which uses git-apply-patch-script);
+ (2) Resolve conflict if there is one;
+ (3) Run "git commit -C <commit-id>".
