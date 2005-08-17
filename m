@@ -1,62 +1,80 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: [PATCH] Let git-format-patch-script write on stdout
-Date: Wed, 17 Aug 2005 05:17:27 -0700 (PDT)
-Message-ID: <20050817121727.39967.qmail@web26309.mail.ukl.yahoo.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: gitk with hyperspace support
+Date: Wed, 17 Aug 2005 16:37:33 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.17.14.37.30.131036@smurf.noris.de>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Aug 17 14:17:51 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Aug 17 16:44:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Mrf-00010C-1j
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 14:17:51 +0200
+	id 1E5P7e-0003FG-6p
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 16:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751108AbVHQMRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 08:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751111AbVHQMRf
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 08:17:35 -0400
-Received: from web26309.mail.ukl.yahoo.com ([217.146.176.20]:124 "HELO
-	web26309.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751108AbVHQMRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 08:17:34 -0400
-Received: (qmail 39969 invoked by uid 60001); 17 Aug 2005 12:17:27 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=5CSyBEu2AHcXqqR/bGQUzvg5Y7oq9ocQ8PcHPylaXSDqgGU7Ufw1DJ4OQR1XRaHy1unbx32kLJfoGZPw3v9te9+6v47QvG1TPtukk6EvRbFiV8Nj2qVG1qIE4GQoUXAo86kYT+CMQbP8oLJAdAGWIQRV/s3Z1rINxsw+MTSN0U0=  ;
-Received: from [151.42.53.158] by web26309.mail.ukl.yahoo.com via HTTP; Wed, 17 Aug 2005 05:17:27 PDT
+	id S1751111AbVHQOm1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 10:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbVHQOm1
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 10:42:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:62918 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751111AbVHQOm1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 10:42:27 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E5P59-0002Z6-9C
+	for git@vger.kernel.org; Wed, 17 Aug 2005 16:39:55 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 16:39:55 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 16:39:55 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Avoid that git-format-patch writes out patch series
-information on stderr when there are no errors
+Hi, Paul Mackerras wrote:
 
-Signed-off-by: Marco Costalba <mcostalba@yahoo.it>
----
+> http://ozlabs.org/~paulus/gitk/gitk.hs
+> 
+Unfortunately, this fails on my git-plus-assorted-crap archive:
 
- git-format-patch-script |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+can't read "mainlinearrow(c1a9ddb1e9f30029384bd687d90af5796a280283)": no such element in array
+can't read "mainlinearrow(c1a9ddb1e9f30029384bd687d90af5796a280283)": no such element in array
+    while executing
+"if {$mainlinearrow($id) ne "none"} {
+	    set mainline($id) [trimdiagstart $mainline($id)]
+	}"
+    (procedure "drawcommitline" line 44)
+    invoked from within
+"drawcommitline $dlevel"
+    (procedure "drawmore" line 65)
+    invoked from within
+"drawmore 1"
+    (procedure "drawcommit" line 33)
+    invoked from within
+"drawcommit $id"
+    (procedure "getcommitlines" line 50)
+    invoked from within
+"getcommitlines file23"
 
-47238497f48d19a0bf44eb9b23875bbb8e8a12aa
-diff --git a/git-format-patch-script b/git-format-patch-script
---- a/git-format-patch-script
-+++ b/git-format-patch-script
-@@ -146,7 +146,7 @@ do
- 
-     file=`printf '%04d-%stxt' $i "$title"`
-     i=`expr "$i" - 1`
--    echo >&2 "* $file"
-+    echo >&1 "* $file"
-     {
- 	mailScript='
- 	/./d
 
+Another problem: when I click on a line, I get the parent and *all* its
+children, not just the child(ren) on the other end of the segment I was
+clicking on.
 
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+There are some micro-organisms that exhibit characteristics of both plants
+and animals.  When exposed to light they undergo photosynthesis; and when
+the lights go out, they turn into animals.  But then again, don't we all?
