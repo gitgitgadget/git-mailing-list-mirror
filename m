@@ -1,53 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC PATCH] Add support for figuring out where in the git archive we are
-Date: Tue, 16 Aug 2005 17:16:00 -0700
-Message-ID: <7vhddp5sfz.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0508161536390.3553@g5.osdl.org>
-	<7vll315u3w.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508161655460.3553@g5.osdl.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: gitk with hyperspace support
+Date: Wed, 17 Aug 2005 10:21:04 +1000
+Message-ID: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 17 02:17:29 2005
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Wed Aug 17 02:21:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5BbC-0006Ks-By
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 02:16:06 +0200
+	id 1E5BgC-0007BW-6r
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 02:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750766AbVHQAQD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 20:16:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbVHQAQD
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:16:03 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:42992 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S1750766AbVHQAQC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 20:16:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050817001600.YOZV19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 16 Aug 2005 20:16:00 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508161655460.3553@g5.osdl.org> (Linus Torvalds's
-	message of "Tue, 16 Aug 2005 17:01:23 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750770AbVHQAVN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 20:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750771AbVHQAVN
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:21:13 -0400
+Received: from ozlabs.org ([203.10.76.45]:13205 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S1750770AbVHQAVN (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 20:21:13 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4BD8567F73; Wed, 17 Aug 2005 10:21:12 +1000 (EST)
+To: git@vger.kernel.org
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@osdl.org> writes:
+I have been trying a new approach to drawing the commit graph in gitk.
+This involves sending a lot of the really long lines into
+"hyperspace", by terminating them with an arrow pointing down when the
+graph gets too wide, and then reintroducing them later with an arrow
+pointing up, as though they had used a warp drive to dive beneath the
+screen (into the mysterious 3rd dimension :) and then reappear later.
+The result is that the graph stays at a reasonable width and doesn't
+need to be compressed.
 
-> Do you want to take the current patch (which buys you very little because 
-> not a lot of stuff has been set up to deal with it, but is the basis for 
-> all future work anyway) or do you want me to polish it up a bit and 
-> re-submit the whole thing?
+My reasoning is that it is the local short-range connections which are
+interesting and informative.  The long-range connections aren't really
+visually informative; if you want to know about the long-range
+connections, the parent and child lists in the details pane are much
+more useful.
 
-The developement history would look nicer if you did the latter,
-but I am easy and can go either way.
+I would like to get some feedback about what people think of the
+visual effect of this new approach, and in particular whether having
+the lines jump into hyperspace loses information that people find
+useful.  The new version is at:
 
-> I'd do at least the "git-diff-tree" part and the "./" and "../" handling,
-> and convert at least the "git diff" thing to the new world order and away
-> from git-sh-setup-script?
+http://ozlabs.org/~paulus/gitk/gitk.hs
 
-Sounds like fun.
+If the reaction is positive I'll check this into my gitk.git
+repository.
+
+Thanks,
+Paul.
