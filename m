@@ -1,77 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Teach applymbox to keep the Subject: line.
-Date: Wed, 17 Aug 2005 08:38:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508170830050.3553@g5.osdl.org>
-References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>
- <7vek8t7bva.fsf@assigned-by-dhcp.cox.net> <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: gitk with hyperspace support
+Date: Wed, 17 Aug 2005 17:56:38 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.17.15.56.37.841163@smurf.noris.de>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com> <7vr7ct124c.fsf@assigned-by-dhcp.cox.net> <60088.10.10.10.28.1124266400.squirrel@linux1>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 17:38:55 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Aug 17 18:03:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Q03-00021h-Nx
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 17:38:44 +0200
+	id 1E5QM9-0002a6-PT
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 18:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751151AbVHQPie (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 11:38:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751154AbVHQPie
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 11:38:34 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41098 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751151AbVHQPie (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 11:38:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7HFcTjA009438
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 Aug 2005 08:38:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7HFcSIm024850;
-	Wed, 17 Aug 2005 08:38:28 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751154AbVHQQBa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 12:01:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751155AbVHQQBa
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 12:01:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:2731 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751154AbVHQQBa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 12:01:30 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E5QKi-0001eB-MH
+	for git@vger.kernel.org; Wed, 17 Aug 2005 18:00:04 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 18:00:04 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 18:00:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi, Sean wrote:
 
+> The line flowing from this commit extends ~200 more commits downward
+> before it is finally terminated with an arrowhead.   It would be nice if
+> this line could be made shorter, such that the arrowhead was drawn much
+> closer to commit in question.
 
-On Tue, 16 Aug 2005, Junio C Hamano wrote:
->
-> This is a companion patch to the previous format-patch fix.
-> With "-k", format-patch can be told not to remove the [PATCH] in
-> the original commit, nor to add the [PATCH] on its own.
+Good point. The arrowheads tend to get lost otherwise; in my tree, the
+problem is even worse since the downward-pointing arrow (drawn in grey) is
+directly below a horizontal line connecting two unrelated changes -- which
+is *also* grey.  That makes the actual arrowhead perceptually invisible.
 
-I think this might be the point in time to just make the "[PATCH]" prefix 
-go away.
+If the arrow appears directly below a node, you don't get that problem.
 
-It made much more sense with BK than it does with git: since git keeps 
-track of "author" and "committer" separately, you can always see when the 
-committer wasn't the author of the change, which is what the "[PATCH]" 
-thing was all about. 
+Another point I just noticed: The arrows should be directly below
+each other, if at all possible; i.e. the one pointing up should be in the
+same column as the corresponding arrow pointing down.
 
-In other words, at least for the kernel, [PATCH] was a marker that said 
-"the author didn't commit this directly". Git already has that information 
-explicitly in the git data.
-
-(Also, with proper "Signed-off-by:" lines it's also always clear that 
-there were other people involved, and that the author of the patch is 
-different from the person who applied it).
-
-So I would personally not mind if we just made the "[PATCH]" prefix go 
-away entirely, or perhaps had a separate flag to "git-applymbox" that told 
-it to prepend a specific prefix to the Subject: line (which might not be 
-"[PATCH] " at all) defaulting to "no prefix".
-
-			Linus
-
-PS. Another historical reason for marking patches explicitly was that
-people were worried that introducing BK would somehow make the old
-patch-based submissions be "second-class citizens". It was easy to make
-statistics and show that at least half the real changes (as opposed to
-merges) were still patch-based. So again, the "PATCH" marker had some 
-historical relevance, but I don't think it matters any more.
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Money is the root of all evil, and man needs roots.
