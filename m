@@ -1,140 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First stab at glossary
-Date: Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508172314130.17584@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
- <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vwtmks2m1.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [RFC] Patches exchange is bad?
+Date: Wed, 17 Aug 2005 22:27:55 +0100
+Message-ID: <1124314075.7130.49.camel@localhost.localdomain>
+References: <20050817173522.14386.qmail@web26305.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 23:26:08 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 23:30:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5VOm-0000eX-Mj
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 23:24:37 +0200
+	id 1E5VSb-0001tI-ME
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 23:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbVHQVY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 17:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbVHQVY2
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 17:24:28 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:13704 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751290AbVHQVY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 17:24:27 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 180F2E25FB; Wed, 17 Aug 2005 23:24:26 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E51B599C90; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id A320699C77; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9319CE25A7; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtmks2m1.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751289AbVHQV2b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 17:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751291AbVHQV2b
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 17:28:31 -0400
+Received: from mta08-winn.ispmail.ntl.com ([81.103.221.48]:25640 "EHLO
+	mta08-winn.ispmail.ntl.com") by vger.kernel.org with ESMTP
+	id S1751289AbVHQV2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 17:28:30 -0400
+Received: from aamta11-winn.ispmail.ntl.com ([81.103.221.35])
+          by mta08-winn.ispmail.ntl.com with ESMTP
+          id <20050817212829.CLZG23002.mta08-winn.ispmail.ntl.com@aamta11-winn.ispmail.ntl.com>;
+          Wed, 17 Aug 2005 22:28:29 +0100
+Received: from cpc2-cmbg5-3-0-cust11.cmbg.cable.ntl.com ([81.104.193.11])
+          by aamta11-winn.ispmail.ntl.com with ESMTP
+          id <20050817212829.IFGU13593.aamta11-winn.ispmail.ntl.com@cpc2-cmbg5-3-0-cust11.cmbg.cable.ntl.com>;
+          Wed, 17 Aug 2005 22:28:29 +0100
+To: Marco Costalba <mcostalba@yahoo.it>
+In-Reply-To: <20050817173522.14386.qmail@web26305.mail.ukl.yahoo.com>
+X-Mailer: Evolution 2.2.1.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, 2005-08-17 at 10:35 -0700, Marco Costalba wrote:
+> Sorry if the answer is silly, but I still don't know well StGIT .
 
-On Wed, 17 Aug 2005, Junio C Hamano wrote:
+It's probably because there is no document really explaining the
+concepts. The Quilt documentation would be a good starting point since
+StGIT uses the same ideas but implemented on top if GIT instead of a
+series of GNU diff files.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> What you describe it's an asymmetrical or one way scenario, new code 
+> goes always from HEAD to MAIN. But how is the workflow if:
+
+It is asymmetrical since HEAD uses StGIT and MAIN uses plain GIT but it
+is a two way data flow: 'git pull HEAD' in MAIN and 'stg pull MAIN' in
+HEAD.
+
+> 1) There is more then one contributor feeding MAIN and you need to update 
+> the StGIT patch stack from MAIN.
+
+The base of the StGIT stack in the HEAD repository (branch) should
+always be the head of the MAIN repository. You update it via the 'stg
+pull' command, which takes care of updating the patches so that they are
+seen as individual commits on top of the base.
+
+That's how you would normally do development on Linux using StGIT -
+clone the mainline kernel, create patches in your StGIT tree and submit
+them either via e-mail or ask the gatekeeper to pull directly from your
+tree (assuming that you only push those patches that need to be merged).
+Doing a 'stg pull' would retrieve the latest changes from the mainline
+kernel (including the changes made by your patches which were merged
+upstream).
+
+> 2) You made something terribly wrong with HEAD (I don't know what can be 
+> 'terribly wrong') and you need to recreate a clean base from MAIN.
 > 
-> > Okay for "hash". What is the consensus on "object name" being more 
-> > standard than "SHA1"?
-> 
-> The tutorial uses the term "object name", so does README
-> (implicitly, by saying "All objects are named by their content,
-> which is approximated by the SHA1 hash of the object itself").
-> I think it is pretty safe to assume the list agrees with this
-> term.
+> In this cases, if I understand correctly, you need to clone a new StGIT archive from 
+> MAIN and push the interesting stuff from old/broken HEAD.
 
-Okay, I'll give in, then.
+This is not clear for me. What do you mean by 'terribly wrong'? Broken
+HEAD because of a bug in StGIT or GIT? Quite unlikely but in this case
+the repository would be corrupt. I would recommend periodically doing a
+'stg export' to keep the series of patches in GNU diff files.
 
-> 
-> > For me, "index" is just the file named "index" (holding stat data and a 
-> > ref for each cache entry). That is why I say an "index" contains "cache 
-> > entries", not "index entries" (wee, that sounds wrong :-).
-> 
-> I think Linus already commented on using "index file" and "index
-> entries" as the canonical terms.  It would be a good idea to
-> mention "cache" as a historical synonym in the documentation, so
-> that we do not have to rename the symbols in the code.
-> 
+If you refer to a patch which breaks the code, you can simply pop it
+from the stack and even delete it with 'stg delete'. Popping it removes
+the changes it makes to HEAD and the corresponding commit won't be seen
+with 'git log'. You don't need to clone a new repository since StGIT
+allows you to choose which of your patches (commits) are included in
+HEAD (via 'stg push' and visible with 'stg applied').
 
-If the king penguin speaketh, the little blue penguin followeth.
+> Or you can always merge back pulling from MAIN as in case of two pure git archives?
 
-> > Ultimately, the glossary terms will be sorted alphabetically. If you look 
-> > at the file attached to my original mail, this is already sorted and 
-> > marked up using asciidoc. However, I wanted you and the list to understand 
-> > how I grouped terms. The asciidoc'ed file is generated by a perl script.
-> 
-> Then we should put the text version under Documentation, along
-> with that script and a Makefile entry to do asciidoc and another
-> to go to html.  No rush for the script and Makefile entries, but
-> it would make things easier to manage if we put the text version
-> in the tree soonish.  I've pushed out the one from your original
-> "First stab" message.
+The base of the StGIT stack is identical to MAIN. Doing a 'stg pop -a'
+makes the HEAD and MAIN identical.
 
-Okay. Then I follow the advice of the large and angry Saucer Crunching 
-Monster, and shuffle the entries into a more logical order.
+Please let me know if this needs further clarification.
 
-> >> > branch::
-> >> > 	A non-cyclical graph of revisions, i.e. the complete history of
-> >> > 	a particular revision, which does not (yet) have children, which
-> >> > 	is called the branch head. The branch heads are stored in
-> >> > 	$GIT_DIR/refs/heads/.
-> 
-> I wonder if there is a math term for a non-cyclical graph that
-> has a single "greater than anything else in the graph" node (but
-> not necessarily a single but possibly more "lesser than anything
-> else in the graph" nodes)?
-
-Yes, there is. Although git itself is an example that there are two 
-"greater than almost anything else in the graph" nodes.
-
-Also, let's not be overzealous with our math degrees, okay? :-)
-
-> >> > tag::
-> >> > 	A ref pointing to a tag or commit object. In contrast to a head,
-> >> > 	a tag is not changed by a commit. Tags (not tag objects) are
-> >> > 	stored in $GIT_DIR/refs/tags/. A git tag has nothing to do with
-> >> > 	a Lisp tag (which is called object type in git's context).
-> 
-> I think this is good already, but maybe mention why you would
-> use a tag in a sentence?  "Most typically used to mark a
-> particular point in the commit ancestry chain," or something.
-
-Done.
-
-> >> > resolve::
-> >> > 	The action of fixing up manually what a failed automatic merge
-> >> > 	left behind.
-> >> 
-> >> "Resolve" is also used for the automatic case (e.g., in
-> >> "git-resolve-script", which goes from having two commits and a message to
-> >> having a new commit). I'm not sure what the distinction is supposed to be.
-> >
-> > I did not like that naming anyway. In reality, git-resolve-script does not 
-> > resolve anything, but it merges two revisions, possibly leaving something 
-> > to resolve.
-> 
-> I am sure this would break people's script, but I am not against
-> renaming git-resolve-script to say git-merge-script.
-
-I do not mind changing the description if the consensus is to keep 
-git-resolve-script.
-
-> Anyway, thanks for doing this less-fun and not-so-glorious job.
-
-The little blue penguin says: Thanks for all the fish!
+-- 
+Catalin
