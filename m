@@ -1,105 +1,140 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: First stab at glossary
-Date: Wed, 17 Aug 2005 13:57:42 -0700
-Message-ID: <7vwtmks2m1.fsf@assigned-by-dhcp.cox.net>
+Date: Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508172314130.17584@wgmdd8.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.63.0508171341380.23242@iabervon.org>
-	<Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
+ <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vwtmks2m1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:58:36 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 23:26:08 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Uyo-000058-U4
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:57:47 +0200
+	id 1E5VOm-0000eX-Mj
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 23:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751256AbVHQU5o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 16:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbVHQU5o
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:57:44 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:34188 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S1751256AbVHQU5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 16:57:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050817205741.OUFE3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 17 Aug 2005 16:57:41 -0400
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751290AbVHQVY2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 17:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbVHQVY2
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 17:24:28 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:13704 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751290AbVHQVY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 17:24:27 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 180F2E25FB; Wed, 17 Aug 2005 23:24:26 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E51B599C90; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A320699C77; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 9319CE25A7; Wed, 17 Aug 2005 23:24:25 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vwtmks2m1.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Okay for "hash". What is the consensus on "object name" being more 
-> standard than "SHA1"?
+On Wed, 17 Aug 2005, Junio C Hamano wrote:
 
-The tutorial uses the term "object name", so does README
-(implicitly, by saying "All objects are named by their content,
-which is approximated by the SHA1 hash of the object itself").
-I think it is pretty safe to assume the list agrees with this
-term.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Okay for "hash". What is the consensus on "object name" being more 
+> > standard than "SHA1"?
+> 
+> The tutorial uses the term "object name", so does README
+> (implicitly, by saying "All objects are named by their content,
+> which is approximated by the SHA1 hash of the object itself").
+> I think it is pretty safe to assume the list agrees with this
+> term.
 
-> For me, "index" is just the file named "index" (holding stat data and a 
-> ref for each cache entry). That is why I say an "index" contains "cache 
-> entries", not "index entries" (wee, that sounds wrong :-).
+Okay, I'll give in, then.
 
-I think Linus already commented on using "index file" and "index
-entries" as the canonical terms.  It would be a good idea to
-mention "cache" as a historical synonym in the documentation, so
-that we do not have to rename the symbols in the code.
+> 
+> > For me, "index" is just the file named "index" (holding stat data and a 
+> > ref for each cache entry). That is why I say an "index" contains "cache 
+> > entries", not "index entries" (wee, that sounds wrong :-).
+> 
+> I think Linus already commented on using "index file" and "index
+> entries" as the canonical terms.  It would be a good idea to
+> mention "cache" as a historical synonym in the documentation, so
+> that we do not have to rename the symbols in the code.
+> 
 
-> Ultimately, the glossary terms will be sorted alphabetically. If you look 
-> at the file attached to my original mail, this is already sorted and 
-> marked up using asciidoc. However, I wanted you and the list to understand 
-> how I grouped terms. The asciidoc'ed file is generated by a perl script.
+If the king penguin speaketh, the little blue penguin followeth.
 
-Then we should put the text version under Documentation, along
-with that script and a Makefile entry to do asciidoc and another
-to go to html.  No rush for the script and Makefile entries, but
-it would make things easier to manage if we put the text version
-in the tree soonish.  I've pushed out the one from your original
-"First stab" message.
+> > Ultimately, the glossary terms will be sorted alphabetically. If you look 
+> > at the file attached to my original mail, this is already sorted and 
+> > marked up using asciidoc. However, I wanted you and the list to understand 
+> > how I grouped terms. The asciidoc'ed file is generated by a perl script.
+> 
+> Then we should put the text version under Documentation, along
+> with that script and a Makefile entry to do asciidoc and another
+> to go to html.  No rush for the script and Makefile entries, but
+> it would make things easier to manage if we put the text version
+> in the tree soonish.  I've pushed out the one from your original
+> "First stab" message.
 
->> > branch::
->> > 	A non-cyclical graph of revisions, i.e. the complete history of
->> > 	a particular revision, which does not (yet) have children, which
->> > 	is called the branch head. The branch heads are stored in
->> > 	$GIT_DIR/refs/heads/.
+Okay. Then I follow the advice of the large and angry Saucer Crunching 
+Monster, and shuffle the entries into a more logical order.
 
-I wonder if there is a math term for a non-cyclical graph that
-has a single "greater than anything else in the graph" node (but
-not necessarily a single but possibly more "lesser than anything
-else in the graph" nodes)?
+> >> > branch::
+> >> > 	A non-cyclical graph of revisions, i.e. the complete history of
+> >> > 	a particular revision, which does not (yet) have children, which
+> >> > 	is called the branch head. The branch heads are stored in
+> >> > 	$GIT_DIR/refs/heads/.
+> 
+> I wonder if there is a math term for a non-cyclical graph that
+> has a single "greater than anything else in the graph" node (but
+> not necessarily a single but possibly more "lesser than anything
+> else in the graph" nodes)?
 
->> > tag::
->> > 	A ref pointing to a tag or commit object. In contrast to a head,
->> > 	a tag is not changed by a commit. Tags (not tag objects) are
->> > 	stored in $GIT_DIR/refs/tags/. A git tag has nothing to do with
->> > 	a Lisp tag (which is called object type in git's context).
+Yes, there is. Although git itself is an example that there are two 
+"greater than almost anything else in the graph" nodes.
 
-I think this is good already, but maybe mention why you would
-use a tag in a sentence?  "Most typically used to mark a
-particular point in the commit ancestry chain," or something.
+Also, let's not be overzealous with our math degrees, okay? :-)
 
->> > resolve::
->> > 	The action of fixing up manually what a failed automatic merge
->> > 	left behind.
->> 
->> "Resolve" is also used for the automatic case (e.g., in
->> "git-resolve-script", which goes from having two commits and a message to
->> having a new commit). I'm not sure what the distinction is supposed to be.
->
-> I did not like that naming anyway. In reality, git-resolve-script does not 
-> resolve anything, but it merges two revisions, possibly leaving something 
-> to resolve.
+> >> > tag::
+> >> > 	A ref pointing to a tag or commit object. In contrast to a head,
+> >> > 	a tag is not changed by a commit. Tags (not tag objects) are
+> >> > 	stored in $GIT_DIR/refs/tags/. A git tag has nothing to do with
+> >> > 	a Lisp tag (which is called object type in git's context).
+> 
+> I think this is good already, but maybe mention why you would
+> use a tag in a sentence?  "Most typically used to mark a
+> particular point in the commit ancestry chain," or something.
 
-I am sure this would break people's script, but I am not against
-renaming git-resolve-script to say git-merge-script.
+Done.
 
-Anyway, thanks for doing this less-fun and not-so-glorious job.
+> >> > resolve::
+> >> > 	The action of fixing up manually what a failed automatic merge
+> >> > 	left behind.
+> >> 
+> >> "Resolve" is also used for the automatic case (e.g., in
+> >> "git-resolve-script", which goes from having two commits and a message to
+> >> having a new commit). I'm not sure what the distinction is supposed to be.
+> >
+> > I did not like that naming anyway. In reality, git-resolve-script does not 
+> > resolve anything, but it merges two revisions, possibly leaving something 
+> > to resolve.
+> 
+> I am sure this would break people's script, but I am not against
+> renaming git-resolve-script to say git-merge-script.
+
+I do not mind changing the description if the consensus is to keep 
+git-resolve-script.
+
+> Anyway, thanks for doing this less-fun and not-so-glorious job.
+
+The little blue penguin says: Thanks for all the fish!
