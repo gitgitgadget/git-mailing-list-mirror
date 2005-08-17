@@ -1,63 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Also handle CVS branches with a '/' in their name
-Date: Wed, 17 Aug 2005 08:39:31 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508170839030.27628@wgmdd8.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitk with hyperspace support
+Date: Tue, 16 Aug 2005 23:58:11 -0700
+Message-ID: <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Aug 17 08:41:35 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 08:58:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5HaM-0002La-1L
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 08:39:38 +0200
+	id 1E5HsO-00069c-2D
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 08:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750924AbVHQGjf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 02:39:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750926AbVHQGjf
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 02:39:35 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:44421 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1750924AbVHQGjf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 02:39:35 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id F1C40E2550; Wed, 17 Aug 2005 08:39:31 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D2297AD7AA; Wed, 17 Aug 2005 08:39:31 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id B91E4AD5B5; Wed, 17 Aug 2005 08:39:31 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 7692BE2550; Wed, 17 Aug 2005 08:39:31 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1750936AbVHQG6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 02:58:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbVHQG6N
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 02:58:13 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:64749 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S1750935AbVHQG6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 02:58:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050817065812.VUUM25443.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 Aug 2005 02:58:12 -0400
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17154.33520.584666.701545@cargo.ozlabs.ibm.com> (Paul
+	Mackerras's message of "Wed, 17 Aug 2005 10:21:04 +1000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I track a CVS project which has a branch with a '/' in the branch name.
-Since git wants the branch name to be a file name at the same time,
-translate that character to a '-'. This should work well, despite the
-fact that a division and a difference are completely different :-)
+Paul Mackerras <paulus@samba.org> writes:
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+> My reasoning is that it is the local short-range connections which are
+> interesting and informative.  The long-range connections aren't really
+> visually informative; if you want to know about the long-range
+> connections, the parent and child lists in the details pane are much
+> more useful.
 
- git-cvsimport-script |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Correct.
 
-787879e1e16d6cece75dc4744358ba0073e908cc
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -621,6 +621,7 @@ while(<CVS>) {
- 		$state = 4;
- 	} elsif($state == 4 and s/^Branch:\s+//) {
- 		s/\s+$//;
-+		s/\//-/g;
- 		$branch = $_;
- 		$state = 5;
- 	} elsif($state == 5 and s/^Ancestor branch:\s+//) {
+The new output looks a lot less cluttering and I like it very
+much, but it is confusing to me on one count.  I clicked one
+arrowhead pointing downward, expecting that the pane would jump
+scroll to show the counterpart arrowhead, and was dissapointed
+that it did not happen.  I could click the "Parent" link at that
+point, but then the upward arrow was above and outside the
+visible portion of that pane, which broke visual continuity and
+I lost track at that point.  I think my being color challenged
+exacerbated the resulting confusion; otherwise I could have
+probably found the line with the same color as the color of the
+downarrow I clicked.
+
+> http://ozlabs.org/~paulus/gitk/gitk.hs
+
+I first thought you rewrote it in Haskell ;-).
