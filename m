@@ -1,75 +1,60 @@
-From: Marco Costalba <mcostalba@yahoo.it>
-Subject: git-format-patch + git-applymbox small issue
-Date: Wed, 17 Aug 2005 10:18:44 -0700 (PDT)
-Message-ID: <20050817171844.57566.qmail@web26301.mail.ukl.yahoo.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] Add merge detection to git-cvsimport
+Date: Wed, 17 Aug 2005 19:29:28 +0200
+Organization: {M:U} IT Consulting
+Message-ID: <pan.2005.08.17.17.29.26.687298@smurf.noris.de>
+References: <20050816103527.F420A33010C@ng.eduforge.org> <20050816110725.GL11882MdfPADPa@garage.linux.student.kuleuven.ac.be> <46a038f9050816143646fa4137@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Wed Aug 17 19:19:45 2005
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-From: git-owner@vger.kernel.org Wed Aug 17 19:34:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5RYz-0007oI-6M
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:18:53 +0200
+	id 1E5Rlv-0002Rh-4r
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751177AbVHQRSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 13:18:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbVHQRSu
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:18:50 -0400
-Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:55204 "HELO
-	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S1751177AbVHQRSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 13:18:50 -0400
-Received: (qmail 57568 invoked by uid 60001); 17 Aug 2005 17:18:44 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=Bb8FCQMFpxCMuKxiySHf5RUYfhj3CfL+8ZsNgzWfkQWg7JrE1Q79xiuyZg/XUkb0LHhYGgW2+ySHNLh2HX8SgVIrscZ0ReP3FQU/ZrH772EP9UKxr/Xn8EjkntHBMIw52d8dqM+C8uwVxnFXIwPd7ZXwVZ5Cq+rk5PNgX1wUY38=  ;
-Received: from [151.42.53.158] by web26301.mail.ukl.yahoo.com via HTTP; Wed, 17 Aug 2005 10:18:44 PDT
+	id S1751181AbVHQRb7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 13:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751182AbVHQRb6
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:31:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:26500 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S1751181AbVHQRb5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 13:31:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1E5RkL-00025t-VL
+	for git@vger.kernel.org; Wed, 17 Aug 2005 19:30:37 +0200
+Received: from run.smurf.noris.de ([192.109.102.41])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 19:30:37 +0200
+Received: from smurf by run.smurf.noris.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 19:30:37 +0200
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: run.smurf.noris.de
+User-Agent: Pan/0.14.2.91 (As She Crawled Across the Table)
+X-Face: '&-&kxR\8+Pqalw@VzN\p?]]eIYwRDxvrwEM<aSTmd'\`f#k`zKY&P_QuRa4EG?;#/TJ](:XL6B!-=9nyC9o<xEx;trRsW8nSda=-b|;BKZ=W4:TO$~j8RmGVMm-}8w.1cEY$X<B2+(x\yW1]Cn}b:1b<$;_?1%QKcvOFonK.7l[cos~O]<Abu4f8nbL15$"1W}y"5\)tQ1{HRR?t015QK&v4j`WaOue^'I)0d,{v*N1O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi, 
+Hi, Martin Langhoff wrote:
 
-the round trip 
+> this one is the
+> most likely one to be from a bug in cvsps or the cvsimport logic.
 
-1)  git-format-patch --mbox --keep-subject
+That's not a bug in the import logic, just a failure of the CVS-merging
+person to be consistent. (Which is hardly news. :-/ )
 
-2)  git-applymbox -k
-
-is not perfect for revisions where there is only the subject.
-
-An example is c35a7b8d806317dc1762e36561cbd31c2530dd9c in git archive
-
-Original text is:
-
-   Skip merges in format-patch.
-
-
-After round trip:
-
- Skip merges in format-patch.
-
-   
-    git-format-patch-script |    3 ++-
-    1 files changed, 2 insertions(+), 1 deletions(-)
-   
-   c35a7b8d806317dc1762e36561cbd31c2530dd9c
-
-
-
-I know I'm a bit annoying ;-)
-
-Marco
-
-P.S: I say 'revision', and 'git archive' but are very common also 'commit' and
-'git repository'. This is just a silly example where a common dictionary 
-should be useful.
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Reason:
+	Bad, toxic entity, that foolish people use when they ought to use
+	their inner voice, or angels, or intuition, or a gut feeling, or
+	their hearts, or the I Ching.
+		-- Fashionable Dictionary (www.butterfliesandwheels.com)
