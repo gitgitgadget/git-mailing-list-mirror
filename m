@@ -1,52 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC PATCH] Add support for figuring out where in the git archive
- we are
-Date: Tue, 16 Aug 2005 20:25:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508162005070.23242@iabervon.org>
-References: <Pine.LNX.4.58.0508161536390.3553@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: FUNKY tags.
+Date: Wed, 17 Aug 2005 12:55:18 +1200
+Message-ID: <46a038f90508161755b43735c@mail.gmail.com>
+References: <20050816224332.GE26455@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 17 02:23:10 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 02:56:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5BhG-0007RV-6v
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 02:22:22 +0200
+	id 1E5CDz-0006FI-2D
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 02:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750772AbVHQAWR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 20:22:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750773AbVHQAWR
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:22:17 -0400
-Received: from iabervon.org ([66.92.72.58]:64262 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750772AbVHQAWQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 20:22:16 -0400
-Received: (qmail 29281 invoked by uid 1000); 16 Aug 2005 20:25:37 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Aug 2005 20:25:37 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508161536390.3553@g5.osdl.org>
+	id S1750784AbVHQAzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 20:55:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750785AbVHQAzU
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 20:55:20 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:60885 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750784AbVHQAzT convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 20:55:19 -0400
+Received: by rproxy.gmail.com with SMTP id i8so49028rne
+        for <git@vger.kernel.org>; Tue, 16 Aug 2005 17:55:19 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=iXtchqUsY9SQxcHn5KoQ9V8H0JUwGlk+lBG2GIaatlJ0uNyIgYMwEcj6jiLGmNCLeTch+a1rKsv4UCvHetJx2d9Z9D1qbny+PuVD7/42RFWmptIbsLcZVokqGViblqcgyb0GgRJUKddgwxAq5wDn4lV4fW0a8dI+s1v07GRR/KI=
+Received: by 10.38.97.80 with SMTP id u80mr38404rnb;
+        Tue, 16 Aug 2005 17:55:19 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Tue, 16 Aug 2005 17:55:18 -0700 (PDT)
+To: Dave Jones <davej@redhat.com>
+In-Reply-To: <20050816224332.GE26455@redhat.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 16 Aug 2005, Linus Torvalds wrote:
+On 8/17/05, Dave Jones <davej@redhat.com> wrote:
+> I've no idea what I did when I tagged those trees, but according
+> to a google search, cvsps does that when it find patchsets which
+> are chronologically (and thus by patchset id) earlier than the tag,
+> but are tagwise after.  Spooky.
 
-> If you use the GIT_DIR environment variable approach, it assumes that all
-> filenames you give it are absolute and acts the way it always did before.
->
-> Comments? Like? Dislike?
+It's probably tags that were moved around with "cvs tag -F footag".
+When using cvs in with a dovetail strategy, people tend to merge
+BRANCH->HEAD and use a floating tag to mark how far it's been merged
+in.
 
-I'm all in favor, at least in the general case. I suspect there'll be some
-things where we have to discuss the behavior, but we can argue that when
-it comes up.
+I am somewhat worried about cvsps getting confused by these floating
+tags. Any help in teaching cvsps to ignore tags is welcome ;)
 
-I think, slightly before 1.0, we should sort the library functions into a
-new set of object files with matching header files, because "setup" is not
-really distinctive, and there's at least one duplicate implementation
-(the ssh subprocess code in your connect.c is the same as my rsh.c in what
-it does, although yours uses two pipes and mine uses a socket).
 
-	-Daniel
-*This .sig left intentionally blank*
+m
