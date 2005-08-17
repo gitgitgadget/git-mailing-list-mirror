@@ -1,51 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Patches exchange is bad?
-Date: Wed, 17 Aug 2005 23:37:47 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508172336280.17758@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <20050817173522.14386.qmail@web26305.mail.ukl.yahoo.com>
- <1124314075.7130.49.camel@localhost.localdomain>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: First stab at glossary
+Date: Wed, 17 Aug 2005 18:09:41 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508171630140.23242@iabervon.org>
+References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
+ <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 23:38:27 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 18 00:08:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Vbc-0004dL-0w
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 23:37:52 +0200
+	id 1E5W3C-0004oQ-4b
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 00:06:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299AbVHQVht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 17:37:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751302AbVHQVht
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 17:37:49 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:6793 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751299AbVHQVhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 17:37:48 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AFF84E25A7; Wed, 17 Aug 2005 23:37:47 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9704999C8E; Wed, 17 Aug 2005 23:37:47 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 60F8E99C69; Wed, 17 Aug 2005 23:37:47 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 04236E25A7; Wed, 17 Aug 2005 23:37:47 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <1124314075.7130.49.camel@localhost.localdomain>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751286AbVHQWGT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 18:06:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbVHQWGT
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 18:06:19 -0400
+Received: from iabervon.org ([66.92.72.58]:9232 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751286AbVHQWGT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 18:06:19 -0400
+Received: (qmail 2826 invoked by uid 1000); 17 Aug 2005 18:09:41 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 17 Aug 2005 18:09:41 -0400
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi Catalin,
+On Wed, 17 Aug 2005, Johannes Schindelin wrote:
 
-maybe it is time for a quick run through the typical jobs you do with 
-StGIT, much like what Jeff sent the other day?
+> Hi,
+>
+> On Wed, 17 Aug 2005, Daniel Barkalow wrote:
+>
+> > On Wed, 17 Aug 2005, Johannes Schindelin wrote:
+> >
+> > > object name::
+> > > 	Synonym for SHA1.
+> >
+> > Have we killed the use of the third term "hash" for this? I'd say that
+> > "object name" is the standard term, and "SHA1" is a nickname, if only
+> > because "object name" is more descriptive of the particular use of the
+> > term.
+>
+> Okay for "hash".
 
-Ciao,
-Dscho
+I think we only need at most two names for this, so this is more a matter
+of fixing old usage than documenting it.
+
+> > I think we might want to entirely kill the "cache" term, and talk only
+> > about the "index" and "index entries". Of course, a bunch of the code will
+> > have to be renamed to make this completely successful, but we could change
+> > the glossary and documentation, and mention "cache" and "cache entry" as
+> > old names for "index" and "index entry" respectively.
+>
+> For me, "index" is just the file named "index" (holding stat data and a
+> ref for each cache entry). That is why I say an "index" contains "cache
+> entries", not "index entries" (wee, that sounds wrong :-).
+
+Well, it often contains information not present anywhere else (the status
+of a merge; the set of files being committed, added, or removed), so it
+isn't really a cache at all.
+
+> > > working tree::
+> > > 	The set of files and directories currently being worked on.
+> > > 	Think "ls -laR"
+> >
+> > This is where the data is actually in the filesystem, and you can edit and
+> > compile it (as opposed to a tree object or the index, which semantically
+> > have the same contents, but aren't presented in the filesystem that way).
+>
+> Maybe I was too cautious. Linus very new idea was to think of the lowest
+> level of an SCM as a file system. But I did not want to mention that.
+> Thinking of it again, maybe I should.
+
+You probably don't need to mention that tree objects and index files can
+be thought of as filesystems, but you should specify that the working tree
+really is in the Unix filesystem, in case people have heard of the idea.
+
+It should be clear to say 'You can "cd" there and "ls" to list your
+files.', rather than 'Think "ls -laR"' which makes my think of the output,
+which is like the output from git-ls-files.
+
+> > > checkout::
+> >
+> > Move after "revision"?
+>
+> Ultimately, the glossary terms will be sorted alphabetically. If you look
+> at the file attached to my original mail, this is already sorted and
+> marked up using asciidoc. However, I wanted you and the list to understand
+> how I grouped terms. The asciidoc'ed file is generated by a perl script.
+
+Ah, okay.
+
+> > > resolve::
+> > > 	The action of fixing up manually what a failed automatic merge
+> > > 	left behind.
+> >
+> > "Resolve" is also used for the automatic case (e.g., in
+> > "git-resolve-script", which goes from having two commits and a message to
+> > having a new commit). I'm not sure what the distinction is supposed to be.
+>
+> I did not like that naming anyway. In reality, git-resolve-script does not
+> resolve anything, but it merges two revisions, possibly leaving something
+> to resolve.
+
+Right; I think we should change the name of the script.
+
+	-Daniel
+*This .sig left intentionally blank*
