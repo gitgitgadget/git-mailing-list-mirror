@@ -1,124 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First stab at glossary
-Date: Thu, 18 Aug 2005 00:19:02 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508180009180.18104@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
- <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0508171630140.23242@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitk with hyperspace support
+Date: Wed, 17 Aug 2005 15:34:44 -0700
+Message-ID: <7v4q9oqjjv.fsf@assigned-by-dhcp.cox.net>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
+	<7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
+	<17155.2581.888904.526537@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 00:20:00 2005
+X-From: git-owner@vger.kernel.org Thu Aug 18 00:36:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5WFd-0008Rg-7l
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 00:19:13 +0200
+	id 1E5WUk-0004ez-0z
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 00:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbVHQWTF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 18:19:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbVHQWTF
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 18:19:05 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:9357 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751293AbVHQWTE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 18:19:04 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 325F1D9487; Thu, 18 Aug 2005 00:19:03 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 159ECB351A; Thu, 18 Aug 2005 00:19:03 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id EC75BAD31E; Thu, 18 Aug 2005 00:19:02 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9546DD9487; Thu, 18 Aug 2005 00:19:02 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0508171630140.23242@iabervon.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751305AbVHQWer (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 18:34:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751306AbVHQWer
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 18:34:47 -0400
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:17826 "EHLO
+	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
+	id S1751305AbVHQWeq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 18:34:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050817223446.TLTH17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 Aug 2005 18:34:46 -0400
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17155.2581.888904.526537@cargo.ozlabs.ibm.com> (Paul Mackerras's
+	message of "Wed, 17 Aug 2005 19:57:41 +1000")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Paul Mackerras <paulus@samba.org> writes:
 
-On Wed, 17 Aug 2005, Daniel Barkalow wrote:
-
-> On Wed, 17 Aug 2005, Johannes Schindelin wrote:
-> 
-> > On Wed, 17 Aug 2005, Daniel Barkalow wrote:
-> > > [...]
-> > Okay for "hash".
-> 
-> I think we only need at most two names for this, so this is more a matter
-> of fixing old usage than documenting it.
-
-It's short enough to keep it in the glossary _and_ fix the old 
-documentation.
-
-> > [blabla] index [blable] cache [bliblo]
+> OK, you're the second person to ask for that, so I'll see what I can
+> do about it.  I can think of 3 possible behaviors when you click on
+> the arrowhead:
 >
-> Well, it often contains information not present anywhere else (the status
-> of a merge; the set of files being committed, added, or removed), so it
-> isn't really a cache at all.
+> 1. scroll to bring the other arrowhead on-screen and briefly make it
+>    larger or something similar to draw attention to it
+>
+> 2. scroll to bring the other arrowhead on-screen and warp the pointer
+>    to it
+>
+> 3. select the next commit in the indicated direction which is a child
+>    or parent that the line connects (scroll to make it visible,
+>    highlight it, show its diff).
+>
+> Which do you think would be best?
 
-Okay, okay. I stand corrected.
+Hmph.  I think, aside from being color challenged, the primary
+source of confusion for me was that the lines with arrowheads
+were too long, and the node and the arrowhead did not fit within
+the height of the graphical pane, at least with my window
+configuration.
 
-> > Maybe I was too cautious. Linus very new idea was to think of the lowest
-> > level of an SCM as a file system. But I did not want to mention that.
-> > Thinking of it again, maybe I should.
-> 
-> You probably don't need to mention that tree objects and index files can
-> be thought of as filesystems, but you should specify that the working tree
-> really is in the Unix filesystem, in case people have heard of the idea.
-> 
-> It should be clear to say 'You can "cd" there and "ls" to list your
-> files.', rather than 'Think "ls -laR"' which makes my think of the output,
-> which is like the output from git-ls-files.
-
-How about this:
-
-working tree::
-        The set of files and directories currently being worked on,
-        i.e. you can work in your working tree without using git at all.
-
-
-> > > > checkout::
-> > >
-> > > Move after "revision"?
-> >
-> > Ultimately, the glossary terms will be sorted alphabetically. If you look
-> > at the file attached to my original mail, this is already sorted and
-> > marked up using asciidoc. However, I wanted you and the list to understand
-> > how I grouped terms. The asciidoc'ed file is generated by a perl script.
-> 
-> Ah, okay.
-
-Sorry, I attributed these "moving suggestions" to the large and angry SCM, 
-while those were your comments. Since Junio decided to keep the "topic 
-ordered" form in his repository, I moved them around according to your 
-mail.
-
-> > > > resolve::
-> > > > 	The action of fixing up manually what a failed automatic merge
-> > > > 	left behind.
-> > >
-> > > "Resolve" is also used for the automatic case (e.g., in
-> > > "git-resolve-script", which goes from having two commits and a message to
-> > > having a new commit). I'm not sure what the distinction is supposed to be.
-> >
-> > I did not like that naming anyway. In reality, git-resolve-script does not
-> > resolve anything, but it merges two revisions, possibly leaving something
-> > to resolve.
-> 
-> Right; I think we should change the name of the script.
-
-How many users are there? Probably many call git-pull-script anyway, 
-right?
-
-Ciao,
-Dscho
+I wonder if not having downward or upward arrows for a long
+stretch would work better.  Lose the vertical line for such
+hyperspace links, and instead have a horizonal short line with
+arrowheads to denote that there are also hyperspace lines coming
+into or out of that node.  That way you can save one column for
+a vertical line, and my preference for clicking on such an
+arrowhead would be #3 from the above.
