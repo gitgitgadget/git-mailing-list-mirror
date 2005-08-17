@@ -1,159 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: First stab at glossary
-Date: Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
+From: Kalle Valo <Kalle.Valo@iki.fi>
+Subject: Re: [PATCH] Change git-branch to list branches
+Date: Wed, 17 Aug 2005 23:15:18 +0300
+Message-ID: <871x4s7221.fsf@litku.valo.iki.fi>
+References: <20050815204430.GA77829@rossby.metr.ou.edu>
+	<87hddplqdu.fsf@litku.valo.iki.fi>
+	<87d5odlq6l.fsf_-_@litku.valo.iki.fi>
+	<7vslx98ua0.fsf@assigned-by-dhcp.cox.net>
+	<87br3w73at.fsf@litku.valo.iki.fi>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:07:28 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 22:11:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5UAG-0003rc-DC
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:05:32 +0200
+	id 1E5UEZ-0005V2-Sy
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:10:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbVHQUFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 16:05:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbVHQUF3
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:05:29 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:28901 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751220AbVHQUF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 16:05:29 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 37A9BE247A; Wed, 17 Aug 2005 22:05:28 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1DC4199C8E; Wed, 17 Aug 2005 22:05:28 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id F25E899C69; Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C4C0CE257F; Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751223AbVHQUJ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 16:09:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751217AbVHQUJ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:09:57 -0400
+Received: from fep31-0.kolumbus.fi ([193.229.0.35]:20352 "EHLO
+	fep31-app.kolumbus.fi") by vger.kernel.org with ESMTP
+	id S1751223AbVHQUJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 16:09:56 -0400
+Received: from litku.valo.iki.fi ([81.197.35.21]) by fep31-app.kolumbus.fi
+          with ESMTP
+          id <20050817200950.MZZJ4404.fep31-app.kolumbus.fi@litku.valo.iki.fi>;
+          Wed, 17 Aug 2005 23:09:50 +0300
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <87br3w73at.fsf@litku.valo.iki.fi> (Kalle Valo's message of
+ "Wed, 17 Aug 2005 22:48:26 +0300")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Kalle Valo <Kalle.Valo@iki.fi> writes:
 
-On Wed, 17 Aug 2005, Daniel Barkalow wrote:
-
-> On Wed, 17 Aug 2005, Johannes Schindelin wrote:
-> 
-> > SHA1::
-> > 	A 20-byte sequence (or 41-byte file containing the hex
-> > 	representation and a newline). It is calculated from the
-> > 	contents of an object by the Secure Hash Algorithm 1.
-> 
-> It's also often 40-character string (with whatever termination) in places
-> like commit objects, tag objects, command-line arguments, listings, and so
-> forth.
-
-Okay.
-
-> > object name::
-> > 	Synonym for SHA1.
-> 
-> Have we killed the use of the third term "hash" for this? I'd say that
-> "object name" is the standard term, and "SHA1" is a nickname, if only
-> because "object name" is more descriptive of the particular use of the
-> term.
-
-Okay for "hash". What is the consensus on "object name" being more 
-standard than "SHA1"?
-
-> > blob object::
-> > 	Untyped object, i.e. the contents of a file.
-> 
-> This "i.e." should be "e.g.", since symlink targets are also stored as
-> blobs, and any other bulk data stored by itself would be. (IIRC, Junio has
-> a tagged blob to hold his public key, for example)
-
-Agree.
-
-> I think we might want to entirely kill the "cache" term, and talk only
-> about the "index" and "index entries". Of course, a bunch of the code will
-> have to be renamed to make this completely successful, but we could change
-> the glossary and documentation, and mention "cache" and "cache entry" as
-> old names for "index" and "index entry" respectively.
-
-For me, "index" is just the file named "index" (holding stat data and a 
-ref for each cache entry). That is why I say an "index" contains "cache 
-entries", not "index entries" (wee, that sounds wrong :-).
-
-> > working tree::
-> > 	The set of files and directories currently being worked on.
-> > 	Think "ls -laR"
-> 
-> This is where the data is actually in the filesystem, and you can edit and
-> compile it (as opposed to a tree object or the index, which semantically
-> have the same contents, but aren't presented in the filesystem that way).
-
-Maybe I was too cautious. Linus very new idea was to think of the lowest 
-level of an SCM as a file system. But I did not want to mention that. 
-Thinking of it again, maybe I should.
-
-> > checkout::
+> Junio C Hamano <junkio@cox.net> writes:
 >
-> Move after "revision"?
+>> I do not think we have agreed to limit ourselves to a flat
+>> namespace under refs/heads without subdirectories.  Something
+>> like what git-show-branches-script does when $# == 0, perhaps?
+>
+> I didn't realise this. I'll send a revised patch soon.
 
-Ultimately, the glossary terms will be sorted alphabetically. If you look 
-at the file attached to my original mail, this is already sorted and 
-marked up using asciidoc. However, I wanted you and the list to understand 
-how I grouped terms. The asciidoc'ed file is generated by a perl script.
+Ah, but you fixed it already. Thanks!
 
-> Move "parent" around here.
-
-See above.
-
-> Move after "tree-ish".
-
-Ditto.
-
-> > branch::
-> > 	A non-cyclical graph of revisions, i.e. the complete history of
-> > 	a particular revision, which does not (yet) have children, which
-> > 	is called the branch head. The branch heads are stored in
-> > 	$GIT_DIR/refs/heads/.
-> 
-> A branch head might have children, if they're in another branch. (E.g., I
-> pull mainline, make a new branch based on it, and commit a change; the
-> head of mainline is still a branch head, even though it's the parent of my
-> new commit, because my new commit isn't in mainline.)
-
-Well noted! I'll just delete that part.
-
-> > tag::
-> > 	A ref pointing to a tag or commit object. In contrast to a head,
-> > 	a tag is not changed by a commit. Tags (not tag objects) are
-> > 	stored in $GIT_DIR/refs/tags/. A git tag has nothing to do with
-> > 	a Lisp tag (which is called object type in git's context).
-> 
-> As above, only the head for the branch being committed to is changed by a
-> commit. A tag, not being the head of a branch, is therefore never changed
-> by a commit.
-
-I tried to say that.
-
-> > resolve::
-> > 	The action of fixing up manually what a failed automatic merge
-> > 	left behind.
-> 
-> "Resolve" is also used for the automatic case (e.g., in
-> "git-resolve-script", which goes from having two commits and a message to
-> having a new commit). I'm not sure what the distinction is supposed to be.
-
-I did not like that naming anyway. In reality, git-resolve-script does not 
-resolve anything, but it merges two revisions, possibly leaving something 
-to resolve.
-
-Ciao,
-Dscho
+-- 
+Kalle Valo
