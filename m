@@ -1,67 +1,81 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: [PATCH 2/2] Make git-update-cache take relative pathnames
-Date: Wed, 17 Aug 2005 13:32:22 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508171331540.3553@g5.osdl.org>
+From: Miguel Bazdresch <monotone-01@thewizardstower.org>
+Subject: Re: [PATCH] Add git-branches-script
+Date: Wed, 17 Aug 2005 15:37:58 -0500
+Message-ID: <20050817203758.GA1332@localhost.domain.invalid>
+References: <20050815204430.GA77829@rossby.metr.ou.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:32:56 2005
+Content-Type: text/plain; charset=iso-8859-1
+X-From: git-owner@vger.kernel.org Wed Aug 17 22:33:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5UaQ-000705-OC
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:32:35 +0200
+	id 1E5UZD-0006Pf-Qp
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbVHQUca (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 16:32:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbVHQUca
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:32:30 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:733 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751232AbVHQUc3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 16:32:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7HKWNjA001255
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 Aug 2005 13:32:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7HKWMjc008346;
-	Wed, 17 Aug 2005 13:32:23 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751165AbVHQUbQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 16:31:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751237AbVHQUbP
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:31:15 -0400
+Received: from relay02.pair.com ([209.68.5.16]:33032 "HELO relay02.pair.com")
+	by vger.kernel.org with SMTP id S1751165AbVHQUbP (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 16:31:15 -0400
+Received: (qmail 88081 invoked from network); 17 Aug 2005 20:31:09 -0000
+Received: from unknown (HELO localhost.localdomain) (unknown)
+  by unknown with SMTP; 17 Aug 2005 20:31:09 -0000
+X-pair-Authenticated: 201.133.152.175
+Received: by localhost.localdomain (Postfix, from userid 1000)
+	id 790AC53B78; Wed, 17 Aug 2005 15:37:58 -0500 (CDT)
+To: git@vger.kernel.org
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20050815204430.GA77829@rossby.metr.ou.edu>
+User-Agent: Mutt/1.4.2.1i
+X-Mailer: Mutt 1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+* Amos Waterland <apw@rossby.metr.ou.edu> [2005-08-16 00:48]:
+> For people whose workflow involves switching back and forth between a
+> lot of branches, it can be really helpful to be able to quickly tell
+> which branch you are on and which ones are available.  This patch
+> introduces a small script that when invoked as `git branches' prints a
+> list of available branches with a star in front of the one you are on:
+> 
+>  $ cd linux-2.6/
+>  $ git checkout -b ppc64-cleanups
+>  $ git checkout -b ppc64-new-devel
+>  $ git checkout -b ppc64-all-merge
+>  $ git branches
+>    master
+>  * ppc64-all-merge
+>    ppc64-cleanups
+>    ppc64-new-devel
 
-This also makes "./filename" acceptable as a side effect, since the
-pathname normalization handles that too.
+Some might find it useful to put Amos' script in a bash function and
+then put the current branch in the prompt. What I did was to put this
+function in my .bashrc:
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+gitbranch () {
+	. git-sh-setup-script &&
+	branch=$(basename $(readlink $GIT_DIR/HEAD)) &&
+	echo -n "" $branch ""
+}
 
- update-cache.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Then I modified my bash prompt:
 
-ece92eeda777c3141f5692132ccc2ba7e4e801a2
-diff --git a/update-cache.c b/update-cache.c
---- a/update-cache.c
-+++ b/update-cache.c
-@@ -321,6 +321,7 @@ int main(int argc, char **argv)
- {
- 	int i, newfd, entries, has_errors = 0;
- 	int allow_options = 1;
-+	const char *prefix = setup_git_directory();
- 
- 	newfd = hold_index_file_for_update(&cache_file, get_index_file());
- 	if (newfd < 0)
-@@ -381,6 +382,7 @@ int main(int argc, char **argv)
- 			}
- 			die("unknown option %s", path);
- 		}
-+		path = prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
- 		if (!verify_path(path)) {
- 			fprintf(stderr, "Ignoring path %s\n", argv[i]);
- 			continue;
+export PS1='\[\033[1;31m\]\j$(gitbranch)[\w]\$ \[\033[0m\]'
+                            ^^^^^^^^^^^
+
+Now, if my current dir is not a git repo, I have my regular prompt. As
+soon as I cd into a git repo, I get the current branch in the prompt, as
+follows:
+
+0[~]$ cd gitrepo
+0 master [~/gitrepo]$ git checkout branch1
+0 branch1 [~/gitrepo]$ cd ..
+0[~]$
+
+-- 
+Miguel Bazdresch
+http://thewizardstower.org/
