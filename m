@@ -1,76 +1,212 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: [PATCH] Identical trees should not trigger error in cg-diff
-Date: Tue, 16 Aug 2005 23:42:43 -0400
-Message-ID: <1124250163.26240.19.camel@dv>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Improve handling of "." and ".." in git-diff-*
+Date: Tue, 16 Aug 2005 20:44:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508162037080.3553@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Wed Aug 17 05:43:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Wed Aug 17 05:44:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5EpI-0002lN-GJ
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 05:42:52 +0200
+	id 1E5Er2-00032n-Mi
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 05:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750820AbVHQDmr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 23:42:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750821AbVHQDmr
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 23:42:47 -0400
-Received: from fencepost.gnu.org ([199.232.76.164]:23699 "EHLO
-	fencepost.gnu.org") by vger.kernel.org with ESMTP id S1750820AbVHQDmq
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Aug 2005 23:42:46 -0400
-Received: from proski by fencepost.gnu.org with local (Exim 4.34)
-	id 1E5EmP-00026o-D3
-	for git@vger.kernel.org; Tue, 16 Aug 2005 23:39:53 -0400
-Received: from localhost.localdomain ([127.0.0.1] helo=dv.roinet.com)
-	by dv.roinet.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.52)
-	id 1E5EpA-0001Gi-1R; Tue, 16 Aug 2005 23:42:44 -0400
-Received: (from proski@localhost)
-	by dv.roinet.com (8.13.4/8.13.4/Submit) id j7H3ghwj004877;
-	Tue, 16 Aug 2005 23:42:43 -0400
-X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
-To: Petr Baudis <pasky@ucw.cz>, git <git@vger.kernel.org>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+	id S1750821AbVHQDoi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 23:44:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750822AbVHQDoi
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 23:44:38 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:4296 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750821AbVHQDoh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 23:44:37 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7H3iXjA027536
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 16 Aug 2005 20:44:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7H3iW2N031646;
+	Tue, 16 Aug 2005 20:44:33 -0700
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
 
-cg-diff reports error when comparing identical trees.  It's not as
-useless as it may seem.  For example, I make local changes, e-mail them
-upstream and then get them back via cg-update with minor changes.  I
-revert the minor differences between master and origin.  Here's what I
-get when I want to make sure the trees are identical (their history is
-not):
+This fixes up usage of ".." (without an ending slash) and "." (with or 
+without the ending slash) in the git diff family.
 
-$ cg-diff -r origin:master
-cg-diff: trying to diff b00f462cee5b02455abdbb476fa7c9e94a9fcb4c against
-itself
+It also fixes pathspec matching for the case of an empty pathspec, since a 
+"." in the top-level directory (or enough ".." under subdirectories) will 
+result in an empty pathspec. We used to not match it against anything, but 
+it should in fact match everything.
 
-What's worse, cg-diff exists with exit status 1, indicating an error.  I
-don't see any reason for this to be an error.  No difference between
-branches is OK.  This may be especially important when cg-diff is used
-non-interactively in a script.
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+----
 
-Signed-off-by: Pavel Roskin <proski@gnu.org>
+This is in addition to the previous fix for the t0000 testcase and applies 
+independently of that.
 
-diff --git a/cg-diff b/cg-diff
---- a/cg-diff
-+++ b/cg-diff
-@@ -167,7 +167,7 @@ fi
- id1=$(tree-id "$id1") || exit 1
- id2=$(tree-id "$id2") || exit 1
+NOTE! This does _not_ handle ".." or "." in the _middle_ of a pathspec. If 
+you have people who do
+
+	git diff net/../char/
+
+this will not help them - it will _not_ simplify this to
+
+	git diff char/
+
+and only ".." and "." components at the head of the pathspec will be
+honoured.
+
+Finally, if you try to give a pathspec that goes "outside" of the .git
+directory (eg, a ".." pattern at the top of the git archive), the code
+will politely tell you to f*ck off and die (this is not a new feature, the
+previous code drop did that too, but because we now handle it even for the
+top-level case without any extra prefix, it's worth noting).
+
+---
+diff --git a/diffcore-pathspec.c b/diffcore-pathspec.c
+--- a/diffcore-pathspec.c
++++ b/diffcore-pathspec.c
+@@ -29,6 +29,8 @@ static int matches_pathspec(const char *
+ 		    name[len] == 0 ||
+ 		    name[len] == '/')
+ 			return 1;
++		if (!len)
++			return 1;
+ 	}
+ 	return 0;
+ }
+diff --git a/read-cache.c b/read-cache.c
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -191,6 +191,8 @@ int ce_path_match(const struct cache_ent
+ 			return 1;
+ 		if (name[matchlen] == '/' || !name[matchlen])
+ 			return 1;
++		if (!matchlen)
++			return 1;
+ 	}
+ 	return 0;
+ }
+diff --git a/setup.c b/setup.c
+--- a/setup.c
++++ b/setup.c
+@@ -1,23 +1,60 @@
+ #include "cache.h"
  
--[ "$id1" = "$id2" ] && die "trying to diff $id1 against itself"
-+[ "$id1" = "$id2" ] && exit 0
++static char *prefix_path(const char *prefix, int len, char *path)
++{
++	char *orig = path;
++	for (;;) {
++		char c;
++		if (*path != '.')
++			break;
++		c = path[1];
++		/* "." */
++		if (!c) {
++			path++;
++			break;
++		}
++		/* "./" */
++		if (c == '/') {
++			path += 2;
++			continue;
++		}
++		if (c != '.')
++			break;
++		c = path[2];
++		if (!c)
++			path += 2;
++		else if (c == '/')
++			path += 3;
++		else
++			break;
++		/* ".." and "../" */
++		/* Remove last component of the prefix */
++		do {
++			if (!len)
++				die("'%s' is outside repository", orig);
++			len--;
++		} while (len && prefix[len-1] != '/');
++		continue;
++	}
++	if (len) {
++		int speclen = strlen(path);
++		char *n = xmalloc(speclen + len + 1);
++	
++		memcpy(n, prefix, len);
++		memcpy(n + len, path, speclen+1);
++		path = n;
++	}
++	return path;
++}
++
+ const char **get_pathspec(const char *prefix, char **pathspec)
+ {
+ 	char *entry = *pathspec;
+ 	char **p;
+ 	int prefixlen;
  
- cat $filter | xargs git-diff-tree -r -p $id1 $id2 | colorize | pager
+-	if (!prefix) {
+-		char **p;
+-		if (!entry)
+-			return NULL;
+-		p = pathspec;
+-		do {
+-			if (*entry != '.')
+-				continue;
+-			/* fixup ? */
+-		} while ((entry = *++p) != NULL);
+-		return (const char **) pathspec;
+-	}
++	if (!prefix && !entry)
++		return NULL;
  
-
-
--- 
-Regards,
-Pavel Roskin
+ 	if (!entry) {
+ 		static const char *spec[2];
+@@ -27,38 +64,10 @@ const char **get_pathspec(const char *pr
+ 	}
+ 
+ 	/* Otherwise we have to re-write the entries.. */
+-	prefixlen = strlen(prefix);
+ 	p = pathspec;
++	prefixlen = prefix ? strlen(prefix) : 0;
+ 	do {
+-		int speclen, len = prefixlen;
+-		char *n;
+-
+-		for (;;) {
+-			if (!strcmp(entry, ".")) {
+-				entry++;
+-				break;
+-			}
+-			if (!strncmp(entry, "./", 2)) {
+-				entry += 2;
+-				continue;
+-			}
+-			if (!strncmp(entry, "../", 3)) {
+-				do {
+-					if (!len)
+-						die("'%s' is outside repository", *p);
+-					len--;
+-				} while (len && prefix[len-1] != '/');
+-				entry += 3;
+-				continue;
+-			}
+-			break;
+-		}
+-		speclen = strlen(entry);
+-		n = xmalloc(speclen + len + 1);
+-		
+-		memcpy(n, prefix, len);
+-		memcpy(n + len, entry, speclen+1);
+-		*p = n;
++		*p = prefix_path(prefix, prefixlen, entry);
+ 	} while ((entry = *++p) != NULL);
+ 	return (const char **) pathspec;
+ }
