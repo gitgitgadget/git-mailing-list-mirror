@@ -1,77 +1,159 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Teach applymbox to keep the Subject: line.
-Date: Wed, 17 Aug 2005 12:56:50 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508171253190.3553@g5.osdl.org>
-References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>
- <7vek8t7bva.fsf@assigned-by-dhcp.cox.net> <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
- <430375B3.3050307@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: First stab at glossary
+Date: Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 22:03:30 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 22:07:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5U6i-0002Vu-Nw
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:01:53 +0200
+	id 1E5UAG-0003rc-DC
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 22:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbVHQUBs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 16:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbVHQUBr
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:01:47 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:41168 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751231AbVHQUBr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 16:01:47 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7HJupjA030046
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 17 Aug 2005 12:56:52 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7HJuoVa006317;
-	Wed, 17 Aug 2005 12:56:51 -0700
-To: Jeff Garzik <jgarzik@pobox.com>
-In-Reply-To: <430375B3.3050307@pobox.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751220AbVHQUFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 16:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbVHQUF3
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 16:05:29 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:28901 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751220AbVHQUF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 16:05:29 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 37A9BE247A; Wed, 17 Aug 2005 22:05:28 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 1DC4199C8E; Wed, 17 Aug 2005 22:05:28 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id F25E899C69; Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C4C0CE257F; Wed, 17 Aug 2005 22:05:27 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+On Wed, 17 Aug 2005, Daniel Barkalow wrote:
 
-On Wed, 17 Aug 2005, Jeff Garzik wrote:
+> On Wed, 17 Aug 2005, Johannes Schindelin wrote:
 > 
-> 1) Fix applymbox such that it understands RFC822-valid Subject lines 
-> which wrap across multiple text lines.
+> > SHA1::
+> > 	A 20-byte sequence (or 41-byte file containing the hex
+> > 	representation and a newline). It is calculated from the
+> > 	contents of an object by the Secure Hash Algorithm 1.
+> 
+> It's also often 40-character string (with whatever termination) in places
+> like commit objects, tag objects, command-line arguments, listings, and so
+> forth.
 
-It already should do this.
+Okay.
 
-> 2) Teach it to understand MIME, and not treat the MIME headers like part 
-> of the message.
+> > object name::
+> > 	Synonym for SHA1.
+> 
+> Have we killed the use of the third term "hash" for this? I'd say that
+> "object name" is the standard term, and "SHA1" is a nickname, if only
+> because "object name" is more descriptive of the particular use of the
+> term.
 
-But this one I really realyl disagree with.
+Okay for "hash". What is the consensus on "object name" being more 
+standard than "SHA1"?
 
-The fact is, anybody who doesn't edit the emails that come in is BROKEN. 
-There are two kinds of emails:
+> > blob object::
+> > 	Untyped object, i.e. the contents of a file.
+> 
+> This "i.e." should be "e.g.", since symlink targets are also stored as
+> blobs, and any other bulk data stored by itself would be. (IIRC, Junio has
+> a tagged blob to hold his public key, for example)
 
- - the nicely formatted ones where the author follows all the rules
+Agree.
 
-   This kind of email doesn't need MIME decoding anyway.
+> I think we might want to entirely kill the "cache" term, and talk only
+> about the "index" and "index entries". Of course, a bunch of the code will
+> have to be renamed to make this completely successful, but we could change
+> the glossary and documentation, and mention "cache" and "cache entry" as
+> old names for "index" and "index entry" respectively.
 
- - the others
+For me, "index" is just the file named "index" (holding stat data and a 
+ref for each cache entry). That is why I say an "index" contains "cache 
+entries", not "index entries" (wee, that sounds wrong :-).
 
-   This kind might need MIME decoding, but since it _also_ needs 
-   hand-editing to remove all the "Hi, please apply this patch" etc crud
-   that inevitably go along with this kind of patch, trying to handle it 
-   automatically is WRONG WRONG WRONG.
+> > working tree::
+> > 	The set of files and directories currently being worked on.
+> > 	Think "ls -laR"
+> 
+> This is where the data is actually in the filesystem, and you can edit and
+> compile it (as opposed to a tree object or the index, which semantically
+> have the same contents, but aren't presented in the filesystem that way).
 
-   And if it's mime-encoded you often have trouble editing it anyway.
+Maybe I was too cautious. Linus very new idea was to think of the lowest 
+level of an SCM as a file system. But I did not want to mention that. 
+Thinking of it again, maybe I should.
 
-Ergo: if somebody sends you mime-encoded patches, hit them with a baseball 
-bat (politely) and teach them not to do that. "Fixing" the tools really 
-will just make things worse if it means that you apply raw emails without 
-having edited them.
+> > checkout::
+>
+> Move after "revision"?
 
-		Linus
+Ultimately, the glossary terms will be sorted alphabetically. If you look 
+at the file attached to my original mail, this is already sorted and 
+marked up using asciidoc. However, I wanted you and the list to understand 
+how I grouped terms. The asciidoc'ed file is generated by a perl script.
+
+> Move "parent" around here.
+
+See above.
+
+> Move after "tree-ish".
+
+Ditto.
+
+> > branch::
+> > 	A non-cyclical graph of revisions, i.e. the complete history of
+> > 	a particular revision, which does not (yet) have children, which
+> > 	is called the branch head. The branch heads are stored in
+> > 	$GIT_DIR/refs/heads/.
+> 
+> A branch head might have children, if they're in another branch. (E.g., I
+> pull mainline, make a new branch based on it, and commit a change; the
+> head of mainline is still a branch head, even though it's the parent of my
+> new commit, because my new commit isn't in mainline.)
+
+Well noted! I'll just delete that part.
+
+> > tag::
+> > 	A ref pointing to a tag or commit object. In contrast to a head,
+> > 	a tag is not changed by a commit. Tags (not tag objects) are
+> > 	stored in $GIT_DIR/refs/tags/. A git tag has nothing to do with
+> > 	a Lisp tag (which is called object type in git's context).
+> 
+> As above, only the head for the branch being committed to is changed by a
+> commit. A tag, not being the head of a branch, is therefore never changed
+> by a commit.
+
+I tried to say that.
+
+> > resolve::
+> > 	The action of fixing up manually what a failed automatic merge
+> > 	left behind.
+> 
+> "Resolve" is also used for the automatic case (e.g., in
+> "git-resolve-script", which goes from having two commits and a message to
+> having a new commit). I'm not sure what the distinction is supposed to be.
+
+I did not like that naming anyway. In reality, git-resolve-script does not 
+resolve anything, but it merges two revisions, possibly leaving something 
+to resolve.
+
+Ciao,
+Dscho
