@@ -1,43 +1,95 @@
-From: Jeff Garzik <jgarzik@pobox.com>
-Subject: Re: [PATCH] Teach applymbox to keep the Subject: line.
-Date: Wed, 17 Aug 2005 13:36:51 -0400
-Message-ID: <430375B3.3050307@pobox.com>
-References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>	<7vek8t7bva.fsf@assigned-by-dhcp.cox.net> <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: git-format-patch + git-applymbox small issue
+Date: Wed, 17 Aug 2005 10:54:51 -0700 (PDT)
+Message-ID: <20050817175452.84541.qmail@web26306.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Aug 17 19:37:33 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 19:55:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5Rqd-0003d1-4f
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:37:07 +0200
+	id 1E5S7s-0007dv-8g
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 19:54:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbVHQRhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 13:37:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbVHQRhE
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:37:04 -0400
-Received: from mail.dvmed.net ([216.237.124.58]:53188 "EHLO mail.dvmed.net")
-	by vger.kernel.org with ESMTP id S1751170AbVHQRhC (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 13:37:02 -0400
-Received: from cpe-069-134-188-146.nc.res.rr.com ([69.134.188.146] helo=[10.10.10.88])
-	by mail.dvmed.net with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1E5RqR-00007Z-Ra; Wed, 17 Aug 2005 17:36:58 +0000
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
-X-Spam-Score: 0.0 (/)
+	id S1751186AbVHQRyx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 13:54:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751188AbVHQRyx
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 13:54:53 -0400
+Received: from web26306.mail.ukl.yahoo.com ([217.146.176.17]:55153 "HELO
+	web26306.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1751186AbVHQRyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 13:54:53 -0400
+Received: (qmail 84543 invoked by uid 60001); 17 Aug 2005 17:54:52 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=Ez+SIBChSx1eQQeMsvD6YhpzTUPRAX+0lelCHML9Hmvp3d+8ssh7zSI1CWNg20zGhRB6rj48IuRs9f+a5+ddYxg2VKQlEJnZmCTYGaF/K8/TqpOSXFiX2/jJEFCNmzGFCGzeQQeAS5XyCc0V0pqZpgout6M8agkRoJuy70H0JyA=  ;
+Received: from [151.42.53.158] by web26306.mail.ukl.yahoo.com via HTTP; Wed, 17 Aug 2005 10:54:51 PDT
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin wrote:
 
-If someone is thus motivated, I have two requests in this area:
+>Hi,
+>
+>On Wed, 17 Aug 2005, Marco Costalba wrote:
+>
+>>P.S: I say 'revision', and 'git archive' but are very common also 
+>>'commit' and 'git repository'. This is just a silly example where a 
+>>common dictionary should be useful.
+>
+>
+>How about the glossary, which I posted a few hours ago?
+>
+>Ciao,
+>Dscho
+>
+>
 
-1) Fix applymbox such that it understands RFC822-valid Subject lines 
-which wrap across multiple text lines.
+Yeah, I missed it.
 
-2) Teach it to understand MIME, and not treat the MIME headers like part 
-of the message.
+Sorry for the noise.
+
+By the way, a very good and useful job.
+
+>
+>revision::
+>	A particular state of files and directories which was stored in
+>	the object database. It is referenced by a commit object.
+>
+
+
+>
+>commit object::
+>	An object which contains the information about a particular
+>	revision, such as parents, committer, author, date and the
+>	tree object which corresponds to the top directory of the
+>	stored revision.
+>
+
+So 'revision' is the struct and 'commit object' the pointer ;-)
+
+
+
+>
+>repository::
+>	A collection of refs together with an object database containing
+>	all objects, which are reachable from the refs. A repository can
+>	share an object database with other repositories.
+>
+
+In a lot of git documentation, starting from the tutorial, it is used 'git archive' 
+but peraphs 'repository' is more a standard definition for an SCM archive. 
+Just archive peraphs is too generic, also a tarball is an archive :-)
+
+Marco
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
