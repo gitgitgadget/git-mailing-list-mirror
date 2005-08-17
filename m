@@ -1,55 +1,126 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [RFC] Patches exchange is bad?
-Date: Wed, 17 Aug 2005 21:07:19 +1200
-Message-ID: <46a038f90508170207578b1c0@mail.gmail.com>
-References: <20050817082709.28135.qmail@web26301.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 2nd try] Also handle CVS branches with a '/' in their name
+Date: Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508171118500.4997@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0508170839030.27628@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vk6il11wi.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0508170906480.10754@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <7vbr3x10rr.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 11:08:31 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 11:20:04 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5JtL-000862-8z
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 11:07:23 +0200
+	id 1E5K5Y-00039n-R3
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 11:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751012AbVHQJHU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 05:07:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbVHQJHU
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 05:07:20 -0400
-Received: from rproxy.gmail.com ([64.233.170.202]:20803 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751011AbVHQJHU convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 05:07:20 -0400
-Received: by rproxy.gmail.com with SMTP id i8so100594rne
-        for <git@vger.kernel.org>; Wed, 17 Aug 2005 02:07:19 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JvdaL4BDpZbEc4Ku10zA9kgbzqB4+Wz+qr6LyFLxCUoJB8EVAaWZIVLl5xRJmK01ENZsptypb8NFXiBGKsCv5VPBSG929gcL5nGEaf41sV60CnBnaQRO63nHDXe01Mom9pzAdDKO+VnVRsIwcdXUNMnSv5S0ENEm6KBMKdlXszU=
-Received: by 10.38.209.36 with SMTP id h36mr98720rng;
-        Wed, 17 Aug 2005 02:07:19 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Wed, 17 Aug 2005 02:07:19 -0700 (PDT)
-To: Marco Costalba <mcostalba@yahoo.it>
-In-Reply-To: <20050817082709.28135.qmail@web26301.mail.ukl.yahoo.com>
-Content-Disposition: inline
+	id S1751017AbVHQJTX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 05:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbVHQJTW
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 05:19:22 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11948 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1751017AbVHQJTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 05:19:22 -0400
+Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 0961EE262F; Wed, 17 Aug 2005 11:19:21 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id E090899C22; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id CACFD99C10; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C4509E262F; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vbr3x10rr.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On 8/17/05, Marco Costalba <mcostalba@yahoo.it> wrote:
-> Of course I can feed proper subject and description to git-commit but I would like
-> to find something less intrusive
 
-I don't know if it helps, but I think that StGIT is what you are
-looking for, not only because you have more tools to deal with
-patches, but also because patches that are in the 'stack' are actually
-really malleable. You can edit and reedit the patch w its commit msg
-and all, commit it to the stack, and reedit it again later. It only
-becomes immutable when you commit to the underlying git repo.
+I track a CVS project which has a branch with a '/' in the branch name.
+Since git wants the branch name to be a file name at the same time,
+substitute that character to a '-' by default (override with "-s <subst>").
+This should work well, despite the fact that a division and a difference
+are completely different :-)
 
-cheers,
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
+ Documentation/git-cvsimport-script.txt |    6 +++++-
+ git-cvsimport-script                   |    8 +++++---
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-martin
+b4327595f6cd2a0a4e573ceb12983765321f4790
+diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
+--- a/Documentation/git-cvsimport-script.txt
++++ b/Documentation/git-cvsimport-script.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ --------
+ 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
+ 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
+-			[ -C <GIT_repository> ] [ -i ] [ -k ] [ <CVS_module> ]
++			[ -C <GIT_repository> ] [ -i ] [ -k ]
++			[ -s <subst> ] [ <CVS_module> ]
+ 
+ 
+ DESCRIPTION
+@@ -69,6 +70,9 @@ OPTIONS
+ -z <fuzz>::
+         Pass the timestamp fuzz factor to cvsps.
+ 
++-s <subst>::
++	Substitute the character "/" in branch names with <subst>
++
+ OUTPUT
+ ------
+ If '-v' is specified, the script reports what it is doing.
+diff --git a/git-cvsimport-script b/git-cvsimport-script
+--- a/git-cvsimport-script
++++ b/git-cvsimport-script
+@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
++our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_s);
+ 
+ sub usage() {
+ 	print STDERR <<END;
+ Usage: ${\basename $0}     # fetch/update GIT from CVS
+        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
+        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
+-       [ -i ] [ -k ] [ CVS_module ]
++       [ -i ] [ -k ] [-s subst] [ CVS_module ]
+ END
+ 	exit(1);
+ }
+ 
+-getopts("hivko:d:p:C:z:") or usage();
++getopts("hivko:d:p:C:z:s:") or usage();
+ usage if $opt_h;
+ 
+ @ARGV <= 1 or usage();
+@@ -59,6 +59,7 @@ if($opt_d) {
+ 	die "CVSROOT needs to be set";
+ }
+ $opt_o ||= "origin";
++$opt_s ||= "-";
+ my $git_tree = $opt_C;
+ $git_tree ||= ".";
+ 
+@@ -621,6 +622,7 @@ while(<CVS>) {
+ 		$state = 4;
+ 	} elsif($state == 4 and s/^Branch:\s+//) {
+ 		s/\s+$//;
++		s/[\/]/$opt_s/g;
+ 		$branch = $_;
+ 		$state = 5;
+ 	} elsif($state == 5 and s/^Ancestor branch:\s+//) {
