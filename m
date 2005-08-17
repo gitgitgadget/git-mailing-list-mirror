@@ -1,79 +1,60 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [RFC PATCH] Add support for figuring out where in the git archive
- we are
-Date: Tue, 16 Aug 2005 19:50:37 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508161946350.3553@g5.osdl.org>
-References: <Pine.LNX.4.58.0508161536390.3553@g5.osdl.org>
- <7vll315u3w.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508161655460.3553@g5.osdl.org>
- <7vhddp5sfz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508161803250.3553@g5.osdl.org>
- <7vwtml490s.fsf@assigned-by-dhcp.cox.net>
+From: Kris Shannon <kris.shannon@gmail.com>
+Subject: [PATCH] Be consistent in naming of remote heads
+Date: Wed, 17 Aug 2005 13:02:16 +1000
+Message-ID: <bf38a9f050816200274e28f31@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 17 04:51:11 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Wed Aug 17 05:03:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5E0y-0001mx-HV
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 04:50:52 +0200
+	id 1E5ECs-0003O0-7U
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 05:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750800AbVHQCur (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 16 Aug 2005 22:50:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750801AbVHQCur
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 22:50:47 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:11198 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750800AbVHQCuq (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Aug 2005 22:50:46 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7H2ocjA024405
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 Aug 2005 19:50:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7H2obxV029693;
-	Tue, 16 Aug 2005 19:50:38 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtml490s.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750803AbVHQDCV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 16 Aug 2005 23:02:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750804AbVHQDCV
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Aug 2005 23:02:21 -0400
+Received: from wproxy.gmail.com ([64.233.184.205]:31528 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750803AbVHQDCU convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Aug 2005 23:02:20 -0400
+Received: by wproxy.gmail.com with SMTP id i2so76829wra
+        for <git@vger.kernel.org>; Tue, 16 Aug 2005 20:02:16 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=F60Y5Wj+gPZHO31oCGI9cePaXo4us0Rrw8OhytVdApn17nkWC9zhF3pLIJV3wNeSdb/HkoHljLW3QCzXEgRY03A1kjlimP+Fjq12PxHML6cNDthdsOxO6WrBLsfAQjezdgSw+0PTEBGnG6rSysPYrJ7P7luRQeKO/stzjo48Lbg=
+Received: by 10.54.81.2 with SMTP id e2mr142030wrb;
+        Tue, 16 Aug 2005 20:02:16 -0700 (PDT)
+Received: by 10.54.28.72 with HTTP; Tue, 16 Aug 2005 20:02:16 -0700 (PDT)
+To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+The _remote_name variable used for messages does not need the
+refs/heads/ prefix included.
 
+Signed-off-by: Kris Shannon <kris.shannon@gmail.com>
+---
 
-On Tue, 16 Aug 2005, Junio C Hamano wrote:
-> 
-> Merged, pushed out, and tested.  Ouch.  Fails on t0000 test.
+ git-parse-remote |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It's because the new git-diff-files expects there to be a valid readable 
-.git/HEAD, and is unhappy since the test hasn't updated HEAD.
-
-This trivial patch fixes it.
-
-		Linus
-----
-Fix test failure due to overly strict .git directory tests
-
-We may not actually have a valid HEAD at all times, so relax the validity 
-tests for a .git subdirectory accordingly.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
------
-diff --git a/setup.c b/setup.c
---- a/setup.c
-+++ b/setup.c
-@@ -81,10 +81,9 @@ const char *setup_git_directory(void)
- 	offset = len = strlen(cwd);
- 	for (;;) {
- 		/*
--		 * We always want to see a .git/HEAD and a .git/refs/
--		 * subdirectory
-+		 * We always want to see a .git/refs/ subdirectory
- 		 */
--		if (!access(".git/HEAD", R_OK) && !access(".git/refs/", X_OK)) {
-+		if (!access(".git/refs/", X_OK)) {
- 			/*
- 			 * Then we need either a GIT_OBJECT_DIRECTORY define
- 			 * or a .git/objects/ directory
+9e7a4358b1792be188df87debf564e46acdb39d4
+diff --git a/git-parse-remote b/git-parse-remote
+--- a/git-parse-remote
++++ b/git-parse-remote
+@@ -71,8 +71,8 @@ tag)
+ 	'')
+ 		_remote_head=HEAD ;;
+ 	*)
+-		_remote_head="refs/heads/$_remote_head"
+ 		_remote_name="head '$_remote_head' of $_remote_name"
++		_remote_head="refs/heads/$_remote_head"
+ 		;;
+ 	esac
+ 	;;
