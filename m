@@ -1,85 +1,64 @@
-From: "Sean" <seanlkml@sympatico.ca>
-Subject: Re: gitk with hyperspace support
-Date: Wed, 17 Aug 2005 04:13:20 -0400 (EDT)
-Message-ID: <60088.10.10.10.28.1124266400.squirrel@linux1>
-References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
-    <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Re: [RFC] Patches exchange is bad?
+Date: Wed, 17 Aug 2005 01:27:09 -0700 (PDT)
+Message-ID: <20050817082709.28135.qmail@web26301.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: "Paul Mackerras" <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 10:13:31 2005
+Cc: martin.langhoff@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 17 10:27:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5J3B-0003zJ-Ja
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 10:13:29 +0200
+	id 1E5JGb-0007EW-LZ
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 10:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976AbVHQIN0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 04:13:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbVHQIN0
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 04:13:26 -0400
-Received: from simmts7.bellnexxia.net ([206.47.199.165]:35549 "EHLO
-	simmts7-srv.bellnexxia.net") by vger.kernel.org with ESMTP
-	id S1750976AbVHQINZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 04:13:25 -0400
-Received: from linux1 ([69.156.136.246]) by simmts7-srv.bellnexxia.net
-          (InterMail vM.5.01.06.10 201-253-122-130-110-20040306) with ESMTP
-          id <20050817081320.UYBV23474.simmts7-srv.bellnexxia.net@linux1>;
-          Wed, 17 Aug 2005 04:13:20 -0400
-Received: from linux1 (linux1.attic.local [127.0.0.1])
-	by linux1 (8.12.11/8.12.11) with ESMTP id j7H8DHob001352;
-	Wed, 17 Aug 2005 04:13:18 -0400
-Received: from 10.10.10.28
-        (SquirrelMail authenticated user sean)
-        by linux1 with HTTP;
-        Wed, 17 Aug 2005 04:13:20 -0400 (EDT)
-In-Reply-To: <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
-To: "Junio C Hamano" <junkio@cox.net>
-User-Agent: SquirrelMail/1.4.4-2
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1750890AbVHQI1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 04:27:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbVHQI1T
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 04:27:19 -0400
+Received: from web26301.mail.ukl.yahoo.com ([217.146.176.12]:33204 "HELO
+	web26301.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S1750889AbVHQI1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 04:27:18 -0400
+Received: (qmail 28137 invoked by uid 60001); 17 Aug 2005 08:27:09 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=lg2mcC/DPNnzt7iwHdPdNvo20xKQiSRAlH09PfZF9pITKPdJA5EFmh+n1dDth6O9JO9h3jFFpsK996HP1xZeYNSIKRJkSLYVAXSFi19jbkj/R6cgVM0OivTr3/kT3Ml/aUWAsWtrfbyNy0kw+dtlLvm2jV57S5CGDqlXKVRn2Bs=  ;
+Received: from [151.42.53.158] by web26301.mail.ukl.yahoo.com via HTTP; Wed, 17 Aug 2005 01:27:09 PDT
+To: Daniel Barkalow <barkalow@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, August 17, 2005 2:58 am, Junio C Hamano said:
-> Paul Mackerras <paulus@samba.org> writes:
+Daniel Barkalow wrote:
+
+>>2) Practical: The round trip git-format-patch + git-applymbox is the logical and
+>>natural way to reach this goal or, also in this case, I intend to stretch some tools,
+>>designed for one thing, for something else?
 >
->> My reasoning is that it is the local short-range connections which are
->> interesting and informative.  The long-range connections aren't really
->> visually informative; if you want to know about the long-range
->> connections, the parent and child lists in the details pane are much
->> more useful.
 >
-> Correct.
+>I'd guess that git-diff-tree + git-apply (without the rest of the
+>scripting) would be more effective when you're not doing anything with the
+>intermediate files, since it saves doing a bunch of formatting and
+>parsing.
 >
-> The new output looks a lot less cluttering and I like it very
-> much, but it is confusing to me on one count.  I clicked one
-> arrowhead pointing downward, expecting that the pane would jump
-> scroll to show the counterpart arrowhead, and was dissapointed
-> that it did not happen.  I could click the "Parent" link at that
-> point, but then the upward arrow was above and outside the
-> visible portion of that pane, which broke visual continuity and
-> I lost track at that point.  I think my being color challenged
-> exacerbated the resulting confusion; otherwise I could have
-> probably found the line with the same color as the color of the
-> downarrow I clicked.
+>
+It would be surely better, but I need to import also the original subject and
+description. I can use git-diff-tree --pretty -p for the patch creation, but this
+format is not compatible with git-apply* scripts, and the git command git-apply does
+not import subject + description info.
 
-This change looks really good in gitk and clicking on an arrowhead to hop
-to the corresponding arrowhead would sure be great too.  There's may be a
-way to further reduce the line clutter too; once a line is terminated with
-an arrowhead, it could often be trimmed back much further.
+Of course I can feed proper subject and description to git-commit but I would like 
+to find something less intrusive as possible, ie. one command for patch export, one 
+command for patch import.
 
-For instance looking at Linus' tree:
+Thanks
+Marco
 
-  03938c3f1062b0f279a0ef937a471d4db83702ed
-  powernow-k8 requires that a data structure for
 
-The line flowing from this commit extends ~200 more commits downward
-before it is finally terminated with an arrowhead.   It would be nice if
-this line could be made shorter, such that the arrowhead was drawn much
-closer to commit in question.
-
-Cheers,
-Sean
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
