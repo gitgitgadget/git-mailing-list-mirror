@@ -1,126 +1,46 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2nd try] Also handle CVS branches with a '/' in their name
-Date: Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508171118500.4997@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0508170839030.27628@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vk6il11wi.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508170906480.10754@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vbr3x10rr.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fixed two bugs in git-cvsimport-script.
+Date: Wed, 17 Aug 2005 02:22:56 -0700
+Message-ID: <7v3bp829zj.fsf@assigned-by-dhcp.cox.net>
+References: <u5tacjjdpxq.fsf@lysator.liu.se> <u5tiry50ywy.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 17 11:20:04 2005
+X-From: git-owner@vger.kernel.org Wed Aug 17 11:24:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5K5Y-00039n-R3
-	for gcvg-git@gmane.org; Wed, 17 Aug 2005 11:20:01 +0200
+	id 1E5K8T-0003wO-7z
+	for gcvg-git@gmane.org; Wed, 17 Aug 2005 11:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbVHQJTX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 05:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbVHQJTW
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 05:19:22 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:11948 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751017AbVHQJTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Aug 2005 05:19:22 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 0961EE262F; Wed, 17 Aug 2005 11:19:21 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E090899C22; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CACFD99C10; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C4509E262F; Wed, 17 Aug 2005 11:19:20 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr3x10rr.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751023AbVHQJW6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 17 Aug 2005 05:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbVHQJW6
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 05:22:58 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:11225 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1751021AbVHQJW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Aug 2005 05:22:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050817092256.MWJP12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 17 Aug 2005 05:22:56 -0400
+To: David =?iso-2022-jp-2?B?SxsuQRtOZWdlZGFs?= <davidk@lysator.liu.se>
+In-Reply-To: <u5tiry50ywy.fsf@lysator.liu.se> (David
+ =?iso-2022-jp-2?B?SxsuQRtOZWdlZGFsJ3M=?= message of
+	"Wed, 17 Aug 2005 10:07:25 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+> Apparently, my mail was encoded as QP, which is not very popular
+> around here.  But it seems that the diff part was decoded properly
+> before applying.  Was that done manually?
 
-I track a CVS project which has a branch with a '/' in the branch name.
-Since git wants the branch name to be a file name at the same time,
-substitute that character to a '-' by default (override with "-s <subst>").
-This should work well, despite the fact that a division and a difference
-are completely different :-)
+Yes, the patch had some context conflicts with some other patch
+so the patch application was done by hand, and I did a quick and
+dirty cut & paste of the commit message from "cat mbox" output.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
-
- Documentation/git-cvsimport-script.txt |    6 +++++-
- git-cvsimport-script                   |    8 +++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
-
-b4327595f6cd2a0a4e573ceb12983765321f4790
-diff --git a/Documentation/git-cvsimport-script.txt b/Documentation/git-cvsimport-script.txt
---- a/Documentation/git-cvsimport-script.txt
-+++ b/Documentation/git-cvsimport-script.txt
-@@ -11,7 +11,8 @@ SYNOPSIS
- --------
- 'git-cvsimport-script' [ -o <branch-for-HEAD> ] [ -h ] [ -v ]
- 			[ -d <CVSROOT> ] [ -p <options-for-cvsps> ]
--			[ -C <GIT_repository> ] [ -i ] [ -k ] [ <CVS_module> ]
-+			[ -C <GIT_repository> ] [ -i ] [ -k ]
-+			[ -s <subst> ] [ <CVS_module> ]
- 
- 
- DESCRIPTION
-@@ -69,6 +70,9 @@ OPTIONS
- -z <fuzz>::
-         Pass the timestamp fuzz factor to cvsps.
- 
-+-s <subst>::
-+	Substitute the character "/" in branch names with <subst>
-+
- OUTPUT
- ------
- If '-v' is specified, the script reports what it is doing.
-diff --git a/git-cvsimport-script b/git-cvsimport-script
---- a/git-cvsimport-script
-+++ b/git-cvsimport-script
-@@ -28,19 +28,19 @@ use POSIX qw(strftime dup2);
- $SIG{'PIPE'}="IGNORE";
- $ENV{'TZ'}="UTC";
- 
--our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i);
-+our($opt_h,$opt_o,$opt_v,$opt_k,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_s);
- 
- sub usage() {
- 	print STDERR <<END;
- Usage: ${\basename $0}     # fetch/update GIT from CVS
-        [ -o branch-for-HEAD ] [ -h ] [ -v ] [ -d CVSROOT ]
-        [ -p opts-for-cvsps ] [ -C GIT_repository ] [ -z fuzz ]
--       [ -i ] [ -k ] [ CVS_module ]
-+       [ -i ] [ -k ] [-s subst] [ CVS_module ]
- END
- 	exit(1);
- }
- 
--getopts("hivko:d:p:C:z:") or usage();
-+getopts("hivko:d:p:C:z:s:") or usage();
- usage if $opt_h;
- 
- @ARGV <= 1 or usage();
-@@ -59,6 +59,7 @@ if($opt_d) {
- 	die "CVSROOT needs to be set";
- }
- $opt_o ||= "origin";
-+$opt_s ||= "-";
- my $git_tree = $opt_C;
- $git_tree ||= ".";
- 
-@@ -621,6 +622,7 @@ while(<CVS>) {
- 		$state = 4;
- 	} elsif($state == 4 and s/^Branch:\s+//) {
- 		s/\s+$//;
-+		s/[\/]/$opt_s/g;
- 		$branch = $_;
- 		$state = 5;
- 	} elsif($state == 5 and s/^Ancestor branch:\s+//) {
+I will probably drop future patches encoded in QP.
