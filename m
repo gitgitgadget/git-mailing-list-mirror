@@ -1,32 +1,32 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/3] Start adding the $GIT_DIR/remotes/ support.
-Date: Thu, 18 Aug 2005 00:39:25 -0700
-Message-ID: <1124350765883-git-send-email-junkio@cox.net>
+Subject: [PATCH 3/3] Update git-pull to match updated git-fetch.
+Date: Thu, 18 Aug 2005 00:39:31 -0700
+Message-ID: <11243507711980-git-send-email-junkio@cox.net>
 References: <7vek8rlnbn.fsf@assigned-by-dhcp.cox.net>
 Reply-To: Junio C Hamano <junkio@cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Aug 18 09:49:18 2005
+X-From: git-owner@vger.kernel.org Thu Aug 18 09:55:17 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5f00-0006DM-Iy
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 09:39:41 +0200
+	id 1E5f00-0006DM-0z
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 09:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbVHRHja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 03:39:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932121AbVHRHja
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 03:39:30 -0400
-Received: from fed1rmmtao07.cox.net ([68.230.241.32]:47025 "EHLO
-	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
-	id S932116AbVHRHja (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2005 03:39:30 -0400
-Received: from siamese ([68.4.9.127]) by fed1rmmtao07.cox.net
+	id S932127AbVHRHjd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 03:39:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932123AbVHRHjd
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 03:39:33 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:14752 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932127AbVHRHjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 03:39:32 -0400
+Received: from siamese ([68.4.9.127]) by fed1rmmtao06.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with SMTP
-          id <20050818073926.VGJO25443.fed1rmmtao07.cox.net@siamese>;
-          Thu, 18 Aug 2005 03:39:26 -0400
+          id <20050818073930.FYPD19494.fed1rmmtao06.cox.net@siamese>;
+          Thu, 18 Aug 2005 03:39:30 -0400
 In-Reply-To: <7vek8rlnbn.fsf@assigned-by-dhcp.cox.net>
 X-Mailer: git-send-email-script
 To: GIT mailing list <git@vger.kernel.org>
@@ -34,19 +34,20 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-All the necessary parsing code is in git-parse-remote-script;
-update git-push-script to use it.
+This retires the git-parse-remote script, and allows pull to fetch
+from multiple remote references.  There is no support for resolving
+more than two heads, so that would be next.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- Makefile                |    2 -
- git-parse-remote-script |  122 +++++++++++++++++++++++++++++++++++++++++++++++
- git-push-script         |   28 ++---------
- 3 files changed, 129 insertions(+), 23 deletions(-)
- create mode 100755 git-parse-remote-script
+ Makefile         |    2 +
+ git-parse-remote |   79 ------------------------------------------------------
+ git-pull-script  |   14 ++++++----
+ 3 files changed, 10 insertions(+), 85 deletions(-)
+ delete mode 100755 git-parse-remote
 
-f8892bf17675056cd18a252d3bc4e4ba381fb3bc
+3a071a02828c71bbfdc2749d25814906cd9c8b18
 diff --git a/Makefile b/Makefile
 --- a/Makefile
 +++ b/Makefile
@@ -54,181 +55,117 @@ diff --git a/Makefile b/Makefile
  	git-reset-script git-add-script git-checkout-script git-clone-script \
  	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
  	git-format-patch-script git-sh-setup-script git-push-script \
--	git-branch-script git-parse-remote git-verify-tag-script \
-+	git-branch-script git-parse-remote git-parse-remote-script git-verify-tag-script \
+-	git-branch-script git-parse-remote git-parse-remote-script git-verify-tag-script \
++	git-branch-script git-parse-remote-script git-verify-tag-script \
  	git-ls-remote-script git-clone-dumb-http git-rename-script \
  	git-request-pull-script git-bisect-script
  
-diff --git a/git-parse-remote-script b/git-parse-remote-script
-new file mode 100755
---- /dev/null
-+++ b/git-parse-remote-script
-@@ -0,0 +1,122 @@
-+#!/bin/sh
-+
-+. git-sh-setup-script || die "Not a git archive"
-+
-+get_data_source () {
-+	case "$1" in
-+	*/*)
-+		# Not so fast.  This could be the partial URL shorthand...
-+		token=$(expr "$1" : '\([^/]*\)/')
-+		remainder=$(expr "$1" : '[^/]*/\(.*\)')
-+		if test -f "$GIT_DIR/branches/$token"
-+		then
-+			echo branches-partial
-+		else
-+			echo ''
-+		fi
-+		;;
-+	*)
-+		if test -f "$GIT_DIR/remotes/$1"
-+		then
-+			echo remotes
-+		elif test -f "$GIT_DIR/branches/$1"
-+		then
-+			echo branches
-+		else
-+			echo ''
-+		fi ;;
-+	esac
-+}
-+
-+get_remote_url () {
-+	data_source=$(get_data_source "$1")
-+	case "$data_source" in
-+	'')
-+		echo "$1" ;;
-+	remotes)
-+		sed -ne '/^URL: */{
-+			s///p
-+			q
-+		}' "$GIT_DIR/remotes/$1" ;;
-+	branches)
-+		sed -e 's/#.*//' "$GIT_DIR/branches/$1" ;;
-+	branches-partial)
-+		token=$(expr "$1" : '\([^/]*\)/')
-+		remainder=$(expr "$1" : '[^/]*/\(.*\)')
-+		url=$(sed -e 's/#.*//' "$GIT_DIR/branches/$token")
-+		echo "$url/$remainder"
-+		;;
-+	*)
-+		die "internal error: get-remote-url $1" ;;
-+	esac
-+}
-+
-+get_remote_default_refs_for_push () {
-+	data_source=$(get_data_source "$1")
-+	case "$data_source" in
-+	'' | branches | branches-partial)
-+		;; # no default push mapping, just send matching refs.
-+	remotes)
-+		sed -ne '/^Push: */{
-+			s///p
-+		}' "$GIT_DIR/remotes/$1" ;;
-+	*)
-+		die "internal error: get-remote-default-ref-for-push $1" ;;
-+	esac
-+}
-+
-+# Subroutine to caninicalize remote:local notation
-+canon_refs_list_for_fetch () {
-+	for ref
-+	do
-+		expr "$ref" : '.*:' >/dev/null || ref="${ref}:"
-+		remote=$(expr "$ref" : '\([^:]*\):')
-+		local=$(expr "$ref" : '[^:]*:\(.*\)')
-+		case "$remote" in
-+		'') remote=HEAD ;;
-+		*) remote="refs/heads/$remote" ;;
-+		esac
-+		case "$local" in
-+		'') local= ;;
-+		*) local="refs/heads/$local" ;;
-+		esac
-+		echo "${remote}:${local}"
-+	done
-+}
-+
-+# Returns list of src: (no store), or src:dst (store)
-+get_remote_default_refs_for_fetch () {
-+	data_source=$(get_data_source "$1")
-+	case "$data_source" in
-+	'' | branches-partial)
-+		echo "HEAD:" ;;
-+	branches)
-+		remote_branch=$(sed -ne '/#/s/.*#//p' "$GIT_DIR/branches/$1")
-+		case "$remote_branch" in '') remote_branch=master ;; esac
-+		echo "refs/heads/${remote_branch}:refs/heads/$1"
-+		;;
-+	remotes)
-+		canon_refs_list_for_fetch $(sed -ne '/^Pull: */{
-+						s///p
-+					}' "$GIT_DIR/remotes/$1")
-+		;;
-+	*)
-+		die "internal error: get-remote-default-ref-for-push $1" ;;
-+	esac
-+}
-+
-+get_remote_refs_for_push () {
-+	case "$#" in
-+	0) die "internal error: get-remote-refs-for-push." ;;
-+	1) get_remote_default_refs_for_push "$@" ;;
-+	*) shift; echo "$@" ;;
-+	esac
-+}
-+
-+get_remote_refs_for_fetch () {
-+	case "$#" in
-+	0) die "internal error: get-remote-refs-for-fetch." ;;
-+	1) get_remote_default_refs_for_fetch "$@" ;;
-+	*) shift; canon_refs_list_for_fetch "$@" ;;
-+	esac
-+}
-diff --git a/git-push-script b/git-push-script
---- a/git-push-script
-+++ b/git-push-script
-@@ -20,8 +20,6 @@ do
- 	-*)
- 		die "Unknown parameter $1" ;;
-         *)
--		remote="$1"
--		shift
- 		set x "$@"
- 		shift
- 		break ;;
-@@ -29,27 +27,13 @@ do
- 	shift
- done
- 
--case "$remote" in
+diff --git a/git-parse-remote b/git-parse-remote
+deleted file mode 100755
+--- a/git-parse-remote
++++ /dev/null
+@@ -1,79 +0,0 @@
+-: To be included in git-pull and git-fetch scripts.
+-
+-# A remote repository can be specified on the command line
+-# in one of the following formats:
+-#
+-#	<repo>
+-#	<repo> <head>
+-#	<repo> tag <tag>
+-#
+-# where <repo> could be one of:
+-#
+-#	a URL (including absolute or local pathname)
+-#	a short-hand
+-#	a short-hand followed by a trailing path
+-#
+-# A short-hand <name> has a corresponding file $GIT_DIR/branches/<name>,
+-# whose contents is a URL, possibly followed by a URL fragment #<head>
+-# to name the default branch on the remote side to fetch from.
+-
+-_remote_repo= _remote_store= _remote_head= _remote_name=
+-
+-case "$1" in
 -*:* | /* | ../* | ./* )
--	# An URL, host:/path/to/git, absolute and relative paths.
+-	_remote_repo="$1"
 -	;;
 -* )
--	# Shorthand
--	if expr "$remote" : '..*/..*' >/dev/null
--	then
+-	# otherwise, it is a short hand.
+-	case "$1" in
+-	*/*)
 -		# a short-hand followed by a trailing path
--		shorthand=$(expr "$remote" : '\([^/]*\)')
--		remainder=$(expr "$remote" : '[^/]*\(/.*\)$')
--	else
--		shorthand="$remote"
--		remainder=
--	fi
--	remote=$(sed -e 's/#.*//' "$GIT_DIR/branches/$remote") &&
--	expr "$remote" : '..*:' >/dev/null &&
--	remote="$remote$remainder" ||
--	die "Cannot parse remote $remote"
+-		_token=$(expr "$1" : '\([^/]*\)/')
+-		_rest=$(expr "$1" : '[^/]*\(/.*\)$')
+-		;;
+-	*)
+-		_token="$1"
+-		_rest=
+-		_remote_store="refs/heads/$_token"
+-		;;
+-	esac
+-	test -f "$GIT_DIR/branches/$_token" ||
+-	die "No such remote branch: $_token"
+-
+-	_remote_repo=$(cat "$GIT_DIR/branches/$_token")"$_rest"
 -	;;
-+. git-parse-remote-script
-+remote=$(get_remote_url "$@")
-+case "$has_all" in
-+--all) set x ;;
-+'')    set x $(get_remote_refs_for_push "$@") ;;
- esac
-+shift
+-esac
+-
+-case "$_remote_repo" in
+-*"#"*)
+-	_remote_head=`expr "$_remote_repo" : '.*#\(.*\)$'`
+-	_remote_repo=`expr "$_remote_repo" : '\(.*\)#'`
+-	;;
+-esac
+-
+-_remote_name=$(echo "$_remote_repo" | sed 's|\.git/*$||')
+-
+-case "$2" in
+-tag)
+-	_remote_name="tag '$3' of $_remote_name"
+-	_remote_head="refs/tags/$3"
+-	_remote_store="$_remote_head"
+-	;;
+-?*)
+-	# command line specified a head explicitly; do not
+-	# store the fetched head as a branch head.
+-	_remote_name="head '$2' of $_remote_name"
+-	_remote_head="refs/heads/$2"
+-	_remote_store=''
+-	;;
+-'')
+-	case "$_remote_head" in
+-	'')
+-		_remote_head=HEAD ;;
+-	*)
+-		_remote_name="head '$_remote_head' of $_remote_name"
+-		_remote_head="refs/heads/$_remote_head"
+-		;;
+-	esac
+-	;;
+-esac
+diff --git a/git-pull-script b/git-pull-script
+--- a/git-pull-script
++++ b/git-pull-script
+@@ -1,12 +1,16 @@
+ #!/bin/sh
+ #
+ . git-sh-setup-script || die "Not a git archive"
+-. git-parse-remote "$@"
+-merge_name="$_remote_name"
+-
+ git-fetch-script "$@" || exit 1
++merge_head=$(sed -e 's/	.*//' "$GIT_DIR"/FETCH_HEAD | tr '\012' ' ')
++merge_name=$(sed -e 's/^[0-9a-f]*	//' "$GIT_DIR"/FETCH_HEAD |
++	 tr '\012' ' ')
++
++case "$merge_head" in
++'' | *' '?*) die "Cannot resolve multiple heads at the same time (yet)." ;;
++esac
++
  
- case "$remote" in
- http://* | https://* | git://* | rsync://* )
+ git-resolve-script \
+ 	"$(cat "$GIT_DIR"/HEAD)" \
+-	"$(cat "$GIT_DIR"/FETCH_HEAD)" \
+-	"Merge $merge_name"
++	$merge_head "Merge $merge_name"
