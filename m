@@ -1,46 +1,70 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] Teach parse_commit_buffer about grafting.
-Date: Thu, 18 Aug 2005 13:02:30 +1000
-Message-ID: <17155.64070.264664.926461@cargo.ozlabs.ibm.com>
-References: <7vslxw4tb1.fsf_-_@assigned-by-dhcp.cox.net>
-	<20050818003036.C53FD353BF9@atlas.denx.de>
-	<7vd5ocouus.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Small team cogito/git setup
+Date: Thu, 18 Aug 2005 16:14:30 +1200
+Message-ID: <46a038f9050817211446684aac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Wolfgang Denk <wd@denx.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 05:05:17 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Thu Aug 18 06:15:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5ahQ-00051X-G4
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 05:04:12 +0200
+	id 1E5bnk-0001RX-65
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 06:14:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbVHRDEJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 17 Aug 2005 23:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932117AbVHRDEJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Aug 2005 23:04:09 -0400
-Received: from ozlabs.org ([203.10.76.45]:15770 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S932116AbVHRDEI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Aug 2005 23:04:08 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 87C3667FC9; Thu, 18 Aug 2005 13:04:07 +1000 (EST)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vd5ocouus.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S932123AbVHREOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 00:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbVHREOc
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 00:14:32 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:16683 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932123AbVHREOb convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 00:14:31 -0400
+Received: by rproxy.gmail.com with SMTP id i8so252341rne
+        for <git@vger.kernel.org>; Wed, 17 Aug 2005 21:14:31 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=tJfpp87j+XUfAYIUxF15LBg0LwZ4MV+oEtQat+Mwst4B1Fh+Z9UOIe8SZD2TFYQVdsC+hfxzJrWuNOuFhRv3TvDpr8KHrStYVkS8urFHLmoxPL/xe0JwLalsZt9+AvWuZu5qz9kGhGdWW62ok7b4HxIZ526GfRqrAmn0pxL0aTU=
+Received: by 10.38.75.6 with SMTP id x6mr438941rna;
+        Wed, 17 Aug 2005 21:14:31 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Wed, 17 Aug 2005 21:14:30 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano writes:
+We have a small team of 3, and our main activity is to run local
+branches of upstream projects, plus some local development. In that
+context, I am designing our cogito/git usage strategy, and I'm
+interested in comments.
 
-> My Tcl/Tk is really rusty, and I do not like this patch, but
-> here is my stab at teaching the code that reads commit objects
-> how to use grafts as well.
+My intention is to use cogito as much as possible, and insulate our
+team from git internals. I find that using cogito is actually easier
+than cvs, and a mile easier than Arch (the two tools we use currently)
+and I rather keep it that way: simple.
 
-I added support for grafts to gitk just yesterday, and it should be on
-kernel.org by now.  I also committed the changes to send lines into
-hyperspace.
+The upstream projects run on CVS, so I am setting up a repo fed by
+git-cvsimport for each of those. We all pull from that repo
+(cg-clone), so we can all see the upstream in its git representation.
+Now, we are going to run a few branches off that, and I want to have
+those branches _teamwide_ with the same name, so it is trivial for us
+to keep synching.
 
-Regards,
-Paul.
+All our work directories on our LAN will available via HTTP, so we can
+pull from the team repositories easily. Is there a good technique with
+cogito to have a team pull from each other, so that a single cg-update
+or cg-pull when working on a branch pulls from all my teammembers.
+
+Or are we forced to run an 'integration' repo so that we work with a
+'star' arrangement? I am actually trying to avoid needing a central
+repo if possible.
+
+How should branch creation be handled for team-wide branches? I'd like
+to have branches use the same name across the team to avoid confusion.
+
+Phew. Every time I think I understand how things go with git, I find I
+don't know sh*t about it yet ;)
+
+martin
