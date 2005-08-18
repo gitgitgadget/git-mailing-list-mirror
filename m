@@ -1,70 +1,68 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Small team cogito/git setup
-Date: Thu, 18 Aug 2005 16:14:30 +1200
-Message-ID: <46a038f9050817211446684aac@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Teach parse_commit_buffer about grafting.
+Date: Wed, 17 Aug 2005 22:16:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508172209220.3412@g5.osdl.org>
+References: <7vslxw4tb1.fsf_-_@assigned-by-dhcp.cox.net>
+ <20050818003036.C53FD353BF9@atlas.denx.de> <7vd5ocouus.fsf@assigned-by-dhcp.cox.net>
+ <17155.64070.264664.926461@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Thu Aug 18 06:15:56 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Wolfgang Denk <wd@denx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 18 07:16:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5bnk-0001RX-65
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 06:14:48 +0200
+	id 1E5clV-0002C8-LR
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 07:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123AbVHREOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 00:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932125AbVHREOc
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 00:14:32 -0400
-Received: from rproxy.gmail.com ([64.233.170.196]:16683 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932123AbVHREOb convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2005 00:14:31 -0400
-Received: by rproxy.gmail.com with SMTP id i8so252341rne
-        for <git@vger.kernel.org>; Wed, 17 Aug 2005 21:14:31 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=tJfpp87j+XUfAYIUxF15LBg0LwZ4MV+oEtQat+Mwst4B1Fh+Z9UOIe8SZD2TFYQVdsC+hfxzJrWuNOuFhRv3TvDpr8KHrStYVkS8urFHLmoxPL/xe0JwLalsZt9+AvWuZu5qz9kGhGdWW62ok7b4HxIZ526GfRqrAmn0pxL0aTU=
-Received: by 10.38.75.6 with SMTP id x6mr438941rna;
-        Wed, 17 Aug 2005 21:14:31 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Wed, 17 Aug 2005 21:14:30 -0700 (PDT)
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750729AbVHRFQa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 01:16:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750754AbVHRFQa
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 01:16:30 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:25576 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750729AbVHRFQa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 01:16:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7I5GKjA005345
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 17 Aug 2005 22:16:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7I5GJrd032341;
+	Wed, 17 Aug 2005 22:16:20 -0700
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17155.64070.264664.926461@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-We have a small team of 3, and our main activity is to run local
-branches of upstream projects, plus some local development. In that
-context, I am designing our cogito/git usage strategy, and I'm
-interested in comments.
 
-My intention is to use cogito as much as possible, and insulate our
-team from git internals. I find that using cogito is actually easier
-than cvs, and a mile easier than Arch (the two tools we use currently)
-and I rather keep it that way: simple.
 
-The upstream projects run on CVS, so I am setting up a repo fed by
-git-cvsimport for each of those. We all pull from that repo
-(cg-clone), so we can all see the upstream in its git representation.
-Now, we are going to run a few branches off that, and I want to have
-those branches _teamwide_ with the same name, so it is trivial for us
-to keep synching.
+On Thu, 18 Aug 2005, Paul Mackerras wrote:
+> 
+> I added support for grafts to gitk just yesterday, and it should be on
+> kernel.org by now.  I also committed the changes to send lines into
+> hyperspace.
 
-All our work directories on our LAN will available via HTTP, so we can
-pull from the team repositories easily. Is there a good technique with
-cogito to have a team pull from each other, so that a single cg-update
-or cg-pull when working on a branch pulls from all my teammembers.
+Paul, I hate to tell you about yet another flag to git-rev-list, but did 
+you realize that in addition to all the other magic flags, there's a flag 
+called "--parents"?
 
-Or are we forced to run an 'integration' repo so that we work with a
-'star' arrangement? I am actually trying to avoid needing a central
-repo if possible.
+Right now you use "git-rev-list --header --topo-order", which gives you 
+both the commit ID's and the header. Add a "--parents" there, and you'll 
+notice that the first line of each NUL-terminated record changes from just 
+the commit ID to the "commit ID + parent list".
 
-How should branch creation be handled for team-wide branches? I'd like
-to have branches use the same name across the team to avoid confusion.
+That way gitk wouldn't need to actually know about grafts, because it 
+would just pick it up from the git-rev-list output which gets it from the 
+regular commit parsing code.
 
-Phew. Every time I think I understand how things go with git, I find I
-don't know sh*t about it yet ;)
+Umm. git-rev-list really does everything. Rule of thumb: if you _ever_
+need to look at any other internal git information, you're probably doing
+something wrong, or you've missed yet another flag ;)
 
-martin
+		Linus
