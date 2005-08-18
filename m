@@ -1,155 +1,83 @@
-From: Jan Veldeman <jan.veldeman@gmail.com>
-Subject: [RFC] Stgit - patch history / add extra parents
-Date: Thu, 18 Aug 2005 21:57:53 +0200
-Message-ID: <20050818195753.GA9066@fanta>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] Teach applymbox to keep the Subject: line.
+Date: Thu, 18 Aug 2005 13:07:41 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508181257320.3412@g5.osdl.org>
+References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com>
+ <7vek8t7bva.fsf@assigned-by-dhcp.cox.net> <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.58.0508170830050.3553@g5.osdl.org> <20050818172646.GA18459@mars.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Aug 18 21:57:11 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 18 22:09:39 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5qUI-0000qX-8b
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 21:55:42 +0200
+	id 1E5qgL-0004r7-FI
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 22:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbVHRTzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 15:55:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932415AbVHRTzj
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 15:55:39 -0400
-Received: from zproxy.gmail.com ([64.233.162.200]:36321 "EHLO zproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932414AbVHRTzi (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 15:55:38 -0400
-Received: by zproxy.gmail.com with SMTP id r28so340345nza
-        for <git@vger.kernel.org>; Thu, 18 Aug 2005 12:55:36 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:to:subject:message-id:mime-version:content-type:content-disposition:user-agent:from;
-        b=aUiHIORouk+zM8Sw/vLyjc8kpLrg7xFHLEMdjC8Ffd6yUK/FJ7O8WWXJZB7wxCb7T2oFfT3BoHyJI2jurqwiDWx//GWcpYQbtmrKwgTct1kG5/CIPMq+RkJl/qiVmVzZfiMkg0BmYC/NTwmyyxwLg6UbkRw3hN8bPCtjffXmCtg=
-Received: by 10.36.221.52 with SMTP id t52mr1710221nzg;
-        Thu, 18 Aug 2005 12:55:35 -0700 (PDT)
-Received: from localhost ([84.195.185.241])
-        by mx.gmail.com with ESMTP id 19sm4194561nzp.2005.08.18.12.55.34;
-        Thu, 18 Aug 2005 12:55:35 -0700 (PDT)
-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S932409AbVHRUIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 16:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbVHRUIG
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 16:08:06 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:58603 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932409AbVHRUIF (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 16:08:05 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7IK7pjA003516
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 18 Aug 2005 13:07:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7IK7gjT005023;
+	Thu, 18 Aug 2005 13:07:47 -0700
+To: Sam Ravnborg <sam@ravnborg.org>
+In-Reply-To: <20050818172646.GA18459@mars.ravnborg.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-I like stgit very much, but I feel there is still something missing:
-stgit is very handy when you use it for patches which should be pushed to
-mainline rather quickly. But for pacthes which won't be pushed immediately
-to mainline, it would be usefull to have a history of the patches itself.
-
-The patch below, together with the following script could be used to
-make snapshots of the patch stack (I call it freeze, as I thought snapshot
-was already going to be used for something else):
-
-#!/bin/bash
-# stg-freeze
-set -ex
-top=$(stg top)
-
-# Freeze the current stack
-branchname=$(basename $(readlink .git/HEAD))
-while read patch
-do
-	cp .git/patches/$branchname/$patch/top .git/patches/$branchname/$patch/parent
-done < .git/patches/$branchname/applied
-
-# Refresh the patches
-stg pop -a
-stg push -t $top
-# end stg-freeze
-
-Note: this is a proof of concept, when/if it would be incorporated, it
-should be implemented in stgit itself, and a bit more efficient, especially
-the refreshing of the patches ;-)
-
-This is how it works: when not doing anything, stgit works as normal.
-Once stg-freeze is called, it creates .git/patches/$branchname/$patch/parent
-which contains the SHA1 id of the "frozen" patch. By refreshing the stack,
-all patches now include the corresponding frozen patch as a parent.
-
-The following script is a test I use. Add stg-freeze to the path and
-source/run it in an empty directory, view with gitk afterwards:
-
-###
-echo "Initial commit" | cg-init
-stg init
-
-stg new a -mpatch-1
-echo a > a
-stg add a
-stg refresh -mpatch-1
-stg new b -mpatch-2
-echo b > b
-stg add b
-stg refresh -mpatch-2
-stg-freeze
-stg pop
-echo a2 >> a
-stg refresh -mpatch-1-update
-stg push
-stg-freeze
-echo b2 >> b
-stg refresh -mpatch-2-update
 
 
-stg pop -a
-echo c > c
-cg-add c
-cg-commit -m"Mainline advance"
-stg push -a
+On Thu, 18 Aug 2005, Sam Ravnborg wrote:
+> 
+> I almost always handedit my mails and I find myself forgetting to add
+> "Signed-off-by" from time to time.
+> Is there a simple way to implment a trigger that can check that _I_
+> signed off the patch before applying it?
 
-stg-freeze
+Well, Junio has been talking about adding commit hooks. I don't think
+that's been done. The idea being that you could verify that the thing 
+you're committing follows certain rules (no bad whitespace added in the 
+diff, sign-offs in the messages, whatever).
 
-stg pop -a
-echo d > d
-cg-add d
-cg-commit -m"Mainline advance 2"
-stg push -a
+That said, git-applypatch (which is what git-applymbox ends up calling) 
+does not use the general "git commit" script. So it would have to have its 
+own hook. The script is pretty easy to read, though: just look at 
+git-applypatch, and notice that the last stages are:
 
-stg pop -a
-echo e > e
-cg-add e
-cg-commit -m"Mainline advance 3"
-stg push -a
+	...
+	git-apply --index $PATCHFILE || exit 1
+	tree=$(git-write-tree) || exit 1
+	echo Wrote tree $tree
+	commit=$(git-commit-tree $tree -p $(cat .git/HEAD) < $final) || exit 1
+	echo Committed: $commit
+	echo $commit > .git/HEAD
 
-###
+and that just before this thing you could easily add some sanity checking 
+by hand. The commit message at that point is in the "$final" file, and the 
+patch is obviously in $PATCHFILE, so you can verify either of those to 
+your hearts content.
 
-Comments/remarks are very welcome.
+The only question is what the hook/trigger should look like. just put
+something like
 
----
- stgit/stack.py |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+	[ -x .git/hooks/applypatch-hook ] &&
+	     .git/hooks/applypatch-hook "$tree" "$PATCHFILE" || exit
 
+at the line before that "git-apply" perhaps? Then, you could install your 
+own applypatch hook which looks at the message or the patch?
 
-diff --git a/stgit/stack.py b/stgit/stack.py
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -140,6 +140,13 @@ class Patch:
-         elif os.path.isfile(fname):
-             os.remove(fname)
- 
-+    def get_parents(self):
-+        parents=[]
-+        if (self.__get_field('parent') != None):
-+                parents = parents + [self.__get_field('parent')]
-+        parents = parents + [ self.get_bottom() ]
-+        return parents
-+
-     def get_bottom(self):
-         return self.__get_field('bottom')
- 
-@@ -362,7 +369,7 @@ class Series:
-         if not committer_email:
-             committer_email = patch.get_commemail()
- 
--        commit_id = git.commit(message = descr, parents = [patch.get_bottom()],
-+        commit_id = git.commit(message = descr, parents = patch.get_parents(),
-                                allowempty = True,
-                                author_name = author_name,
-                                author_email = author_email,
+		Linus
