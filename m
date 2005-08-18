@@ -1,87 +1,111 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-whatchanged -p anomoly?
-Date: Thu, 18 Aug 2005 15:10:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508181503200.3412@g5.osdl.org>
+Date: Thu, 18 Aug 2005 15:13:39 -0700
+Message-ID: <7vacjehp0s.fsf@assigned-by-dhcp.cox.net>
 References: <200508182049.j7IKn7TA010456@agluck-lia64.sc.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 00:11:27 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 00:15:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5saz-0006AO-2o
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 00:10:45 +0200
+	id 1E5se0-0007A7-Jn
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 00:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932489AbVHRWKk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 18:10:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932490AbVHRWKk
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 18:10:40 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:60316 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932489AbVHRWKj (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 18:10:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7IMAbjA013343
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 18 Aug 2005 15:10:38 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7IMAYYI011476;
-	Thu, 18 Aug 2005 15:10:36 -0700
+	id S932493AbVHRWNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 18:13:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932494AbVHRWNp
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 18:13:45 -0400
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:37831 "EHLO
+	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
+	id S932493AbVHRWNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 18:13:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050818221341.RUGD7275.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 18 Aug 2005 18:13:41 -0400
 To: "Luck, Tony" <tony.luck@intel.com>
-In-Reply-To: <200508182049.j7IKn7TA010456@agluck-lia64.sc.intel.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <200508182049.j7IKn7TA010456@agluck-lia64.sc.intel.com> (Tony
+	Luck's message of "Thu, 18 Aug 2005 13:49:07 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+"Luck, Tony" <tony.luck@intel.com> writes:
 
+>  $ git-whatchanged -p test ^linus | diffstat -p1
+>  $ git-diff-tree -p linus test | diffstat -p1
 
-On Thu, 18 Aug 2005, Luck, Tony wrote:
-> 
-> The spurious changes reported by "git-whatchanged -p" are:
-> 
-> >  Documentation/acpi-hotkey.txt              |    3 
-> >  Documentation/kernel-parameters.txt        |    5 
-> >  drivers/acpi/osl.c                         |    6 
-> >  fs/jfs/inode.c                             |    4 
+git-whatchanged internally uses git-rev-list which skips merge
+commits.  You need '-m' to cause it not to.
 
+    $ git-whatchanged -m -p linus..test | diffstat -p1
 
-Ehh. These are all from:
+would still not _match_ "git-diff-tree -p linus test | diffstat
+-p1" output because conflict-resolving merges inevitably causes
+the same file to be touched twice (hence diffstat shows patches
+for the same fime twice, adding up the count of the changes), so
+in practice, my "use -m if you want to see merges" advice would
+not be much useful if you want to _count_ lines using diffstat.
 
-	Author: Alex Williamson <alex.williamson@hp.com>
+For example, one of the files you had trouble with are touched
+by the following commits; only the last one is a non-merge and
+that is what you get when you do not give -m to whatchanged:
 
-	    [IA64, X86_64] fix swiotlb sizing
+$ git-whatchanged -m --pretty=oneline test ^linus \
+	-p Documentation/acpi-hotkey.txt
 
-in commit b63d6e09b432e6873d072a767c87218f8e73e66c.
+diff-tree 75304b938dcc2cb89c2bb1174a92ffc76520a899 (from 470ceb05d9a2b4d61c19fac615a79e56e8401565)
+Pull ngam-maule-steiner into test branch
+diff --git a/Documentation/acpi-hotkey.txt b/Documentation/acpi-hotkey.txt
+--- a/Documentation/acpi-hotkey.txt
++++ b/Documentation/acpi-hotkey.txt
+@@ -33,3 +33,6 @@ The result of the execution of this aml
+ attached to /proc/acpi/hotkey/poll_method, which is dnyamically
+ created.  Please use command "cat /proc/acpi/hotkey/polling_method"
+ to retrieve it.
++
++Note: Use cmdline "acpi_generic_hotkey" to over-ride
++loading any platform specific drivers.
 
-And you've signed off on it.
+diff-tree 2dbff4d454d3ee733f120ad531560a734a6e39d6 (from 715caa83e762c86241ae4450693bb969d03027c4)
+Auto-update from upstream
+diff --git a/Documentation/acpi-hotkey.txt b/Documentation/acpi-hotkey.txt
+--- a/Documentation/acpi-hotkey.txt
++++ b/Documentation/acpi-hotkey.txt
+@@ -33,3 +33,6 @@ The result of the execution of this aml
+ attached to /proc/acpi/hotkey/poll_method, which is dnyamically
+ created.  Please use command "cat /proc/acpi/hotkey/polling_method"
+ to retrieve it.
++
++Note: Use cmdline "acpi_generic_hotkey" to over-ride
++loading any platform specific drivers.
 
-Do a
+diff-tree f812175c8007fdb614833830ca107062df2845dd (from c1ffb910f7a4e1e79d462bb359067d97ad1a8a25)
+Pull prarit-bus-sysdata into test branch
+diff --git a/Documentation/acpi-hotkey.txt b/Documentation/acpi-hotkey.txt
+--- a/Documentation/acpi-hotkey.txt
++++ b/Documentation/acpi-hotkey.txt
+@@ -33,6 +33,3 @@ The result of the execution of this aml
+ attached to /proc/acpi/hotkey/poll_method, which is dnyamically
+ created.  Please use command "cat /proc/acpi/hotkey/polling_method"
+ to retrieve it.
+-
+-Note: Use cmdline "acpi_generic_hotkey" to over-ride
+-loading any platform specific drivers.
 
-	git-diff-tree -p --pretty b63d6e09b432e6873d072a767c87218f8e73e66c | less -S
-
-to see it in all its glory.
-
-Now, I suspect you didn't mean to commit that thing: it really looks like 
-you've mixed up your patches somehow, because the commit message seems to 
-match only a very small portion of the patch.
-
-Did you perhaps have a failed merge or something that was in your index 
-when you applied that patch? If you have a dirty index when you do 
-"git-applymbox", it the commit done as part of the applymbox might commit 
-other state too.
-
-(git-applymbox _does_ verify that the files that it patches are up-to-date 
-in the index, but it does _not_ verify that the index matches the current 
-HEAD. I guess I could add a sanity check for that...)
-
-> Is this a bug, or am I just confused about how "git-whatchanged" works?
-
-It's definitely not a bug in git-whatchanged, and I don't think you're 
-confused about how git-whatchanged is supposed to work. But I think you've 
-committed a bad patch.
-
-		Linus
+diff-tree b63d6e09b432e6873d072a767c87218f8e73e66c (from 12aaa0855b39b5464db953fedf399fa91ee365ed)
+[IA64, X86_64] fix swiotlb sizing
+diff --git a/Documentation/acpi-hotkey.txt b/Documentation/acpi-hotkey.txt
+--- a/Documentation/acpi-hotkey.txt
++++ b/Documentation/acpi-hotkey.txt
+@@ -33,6 +33,3 @@ The result of the execution of this aml
+ attached to /proc/acpi/hotkey/poll_method, which is dnyamically
+ created.  Please use command "cat /proc/acpi/hotkey/polling_method"
+ to retrieve it.
+-
+-Note: Use cmdline "acpi_generic_hotkey" to over-ride
+-loading any platform specific drivers.
