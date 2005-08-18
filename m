@@ -1,91 +1,68 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Multi-head pulling series
-Date: Thu, 18 Aug 2005 12:45:58 +0200
-Message-ID: <200508181245.58250.Josef.Weidendorfer@gmx.de>
-References: <7vek8rlnbn.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] Allow file removal when "git commit --all" is used.
+Date: Thu, 18 Aug 2005 12:49:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508181248110.30218@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <7v64u3k74m.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 18 12:48:21 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 18 12:51:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5hvT-000532-SD
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 12:47:12 +0200
+	id 1E5hy3-0005so-R3
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 12:49:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174AbVHRKrI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 06:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932175AbVHRKrI
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 06:47:08 -0400
-Received: from pop.gmx.net ([213.165.64.20]:13545 "HELO mail.gmx.net")
-	by vger.kernel.org with SMTP id S932174AbVHRKrH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 06:47:07 -0400
-Received: (qmail invoked by alias); 18 Aug 2005 10:47:06 -0000
-Received: from p54969642.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.150.150.66]
-  by mail.gmx.net (mp034) with SMTP; 18 Aug 2005 12:47:06 +0200
-X-Authenticated: #352111
-To: git@vger.kernel.org
-User-Agent: KMail/1.8.2
-In-Reply-To: <7vek8rlnbn.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S932176AbVHRKtt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 06:49:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932177AbVHRKtt
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 06:49:49 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:50129 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932176AbVHRKts (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 06:49:48 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 68715136423; Thu, 18 Aug 2005 12:49:47 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 4AF70B0963; Thu, 18 Aug 2005 12:49:47 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 24709B0945; Thu, 18 Aug 2005 12:49:47 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A60991364BE; Thu, 18 Aug 2005 12:49:46 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v64u3k74m.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday 18 August 2005 09:24, Junio C Hamano wrote:
-> 	$ cat $GIT_DIR/remotes/www
-> 	URL: http://www.kernel.org/pub/scm/git/git.git/
-> 	Pull: master:ko-master pu:ko-pu
->       Push: master:master pu:pu foo:bar
+Hi,
 
-Isn't this mixing two kinds of information:
-1) Some default/persistent mapping of local to remote heads
-2) The default heads which are pulled/pushed when only giving the remote, like 
-in:
+On Thu, 18 Aug 2005, Junio C Hamano wrote:
 
-> 	$ git push mko ;# push our master and pu to the same
-> 			# name, foo to .git/refs/heads/bar.
+> After you deleted files from your working tree, automatic
+> git-update-cache used when the "--all" flag is given to "git
+> commit" barfs because it lacks the --remove flag.
+> 
+> It can be argued that this is a feature; people should be
+> careful and something with a grave consequence like removing
+> files should be done manually, in which case the current
+> behaviour may be OK.
+> 
+> The patch is for people who thinks the user who uses the "--all"
+> flag deserves the danger that comes with the convenience.
+> 
+> Comments?
 
-I think it makes sense to be able to store mappings without adding the head to
-the default group of heads pulled.
+This is a sane default behaviour. Maybe introduce yet another flag 
+"--no-remove", which says that removes should not be performed? But then, 
+"--all" is mostly used by lazy people, who probably expect the removes to 
+take place.
 
-Can we put the default pull/push actions in separate lines, like
-
- 	$ cat $GIT_DIR/remotes/mko
- 	URL: master.kernel.org:/pub/scm/git/git.git/
- 	Pull: master:ko-master pu:ko-pu mylocal:myremote
-	Push: master:master pu:pu foo:bar
-	Default-Pull: master pu
-	Default-Push: master pu foo
-	
-> 	$ git push mko pu:refs/heads/testing
-> 			# instead of pushing to the usual ref,
->                         # push our pu to refs/heads/testing,
->                         # this time only.
-
-With a command (push/fetch/pull) giving an explicit local/remote mapping, it 
-would be cool to automatically add the given mapping to the remotes/ file if 
-there is no push-mapping for pu yet, so that you can have the same later with 
-only
-
-	git push mko pu
-
-And finally, it would be nice to specify a default mapping for arbitrary heads
-
-	$ cat $GIT_DIR/remotes/www
- 	URL: http://www.kernel.org/pub/scm/git/git.git/
- 	Pull: www#*:*
-
-Such that
-
-	git fetch www#pu
-
-will fetch head pu into local head .refs/heads/www#pu
-
-
-Josef
-
-PS: I know I should provide patches for my proposals. But let discuss them 
-first.
+Ciao,
+Dscho
