@@ -1,75 +1,51 @@
-From: Marco Costalba <mcostalba@yahoo.it>
+From: Catalin Marinas <catalin.marinas@gmail.com>
 Subject: Re: [RFC] Patches exchange is bad?
-Date: Thu, 18 Aug 2005 03:00:23 -0700 (PDT)
-Message-ID: <20050818100023.80893.qmail@web26310.mail.ukl.yahoo.com>
+Date: Thu, 18 Aug 2005 11:27:56 +0100
+Message-ID: <tnxk6ij35g3.fsf@arm.com>
+References: <20050817173522.14386.qmail@web26305.mail.ukl.yahoo.com>
+	<1124314075.7130.49.camel@localhost.localdomain>
+	<Pine.LNX.4.63.0508172336280.17758@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 12:01:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@yahoo.it>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 18 12:29:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5hCd-0005cd-TS
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 12:00:52 +0200
+	id 1E5hdi-00075Z-Ae
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 12:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932157AbVHRKA3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 06:00:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932155AbVHRKA3
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 06:00:29 -0400
-Received: from web26310.mail.ukl.yahoo.com ([217.146.176.21]:9319 "HELO
-	web26310.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
-	id S932157AbVHRKA2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2005 06:00:28 -0400
-Received: (qmail 80895 invoked by uid 60001); 18 Aug 2005 10:00:23 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.it;
-  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=GZ1WBWgHhwBsc585mRmyb0xwao6lT/NEedGbXC18m1dVf9XAq4Lh4e7JBwhtMKJu015M24Oph5F0J3OwVd1fctyuMW+GkAbX2LO2KFU5Kn5enB49FRUnMpWtuearodolRLS4dyiWPzxUhoo0HC+IxP+FEi4VguVUXJRfm/pPNJs=  ;
-Received: from [151.42.103.149] by web26310.mail.ukl.yahoo.com via HTTP; Thu, 18 Aug 2005 03:00:23 PDT
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S932133AbVHRK2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 06:28:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932135AbVHRK2r
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 06:28:47 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:54438 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S932133AbVHRK2q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 06:28:46 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7IARaOU018881;
+	Thu, 18 Aug 2005 11:27:36 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id LAA22747;
+	Thu, 18 Aug 2005 11:28:30 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Thu, 18 Aug 2005 11:28:29 +0100
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508172336280.17758@wgmdd8.biozentrum.uni-wuerzburg.de> (Johannes
+ Schindelin's message of "Wed, 17 Aug 2005 23:37:47 +0200 (CEST)")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 18 Aug 2005 10:28:29.0480 (UTC) FILETIME=[93554280:01C5A3DF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> maybe it is time for a quick run through the typical jobs you do with 
+> StGIT, much like what Jeff sent the other day?
 
->
->The base of the StGIT stack in the HEAD repository (branch) should
->always be the head of the MAIN repository. 
+I hope I will find some time this weekend and write some tutorials on
+an StGIT wiki.
 
-That's the point I missed, now it's more clear.
-
->
->That's how you would normally do development on Linux using StGIT -
->clone the mainline kernel, create patches in your StGIT tree and submit
->them either via e-mail or ask the gatekeeper to pull directly from your
->tree (assuming that you only push those patches that need to be merged).
->Doing a 'stg pull' would retrieve the latest changes from the mainline
->kernel (including the changes made by your patches which were merged
->upstream).
->
-
-If I uderstand correctly you never commit patches from StGIT stack directly
-in your base git repository, in this example git HEAD, but you always round 
-trip to MAIN. 
-
-Then you don't have two git repository: HEAD and MAIN
-
-Infact there is only one git repository, MAIN, cloned on your box and called HEAD and 
-with a StGIT stack added on top.
-
->
->Please let me know if this needs further clarification.
->
-
-I think so. 
-Please, reading my notes above tell me if I thinking right ;-)
-
-Marco
-
-
-__________________________________________________
-Do You Yahoo!?
-Tired of spam?  Yahoo! Mail has the best spam protection around 
-http://mail.yahoo.com 
+-- 
+Catalin
