@@ -1,52 +1,111 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: [PATCH] Teach applymbox to keep the Subject: line.
-Date: Thu, 18 Aug 2005 19:26:46 +0200
-Message-ID: <20050818172646.GA18459@mars.ravnborg.org>
-References: <20050816214707.6842.qmail@web26302.mail.ukl.yahoo.com> <7vek8t7bva.fsf@assigned-by-dhcp.cox.net> <7vk6il2jz8.fsf_-_@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508170830050.3553@g5.osdl.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Subject: [PATCH] Updates to glossary
+Date: Thu, 18 Aug 2005 21:17:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508182117160.6210@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 18 19:27:05 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-From: git-owner@vger.kernel.org Thu Aug 18 21:21:15 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5o8R-0001FP-IO
-	for gcvg-git@gmane.org; Thu, 18 Aug 2005 19:24:59 +0200
+	id 1E5ptt-0006UX-LY
+	for gcvg-git@gmane.org; Thu, 18 Aug 2005 21:18:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932312AbVHRRYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 13:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932320AbVHRRYj
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 13:24:39 -0400
-Received: from pfepc.post.tele.dk ([195.41.46.237]:39942 "EHLO
-	pfepc.post.tele.dk") by vger.kernel.org with ESMTP id S932312AbVHRRYj
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2005 13:24:39 -0400
-Received: from mars.ravnborg.org (0x50a0757d.hrnxx9.adsl-dhcp.tele.dk [80.160.117.125])
-	by pfepc.post.tele.dk (Postfix) with ESMTP id 6C984262883;
-	Thu, 18 Aug 2005 19:24:35 +0200 (CEST)
-Received: by mars.ravnborg.org (Postfix, from userid 1000)
-	id F3CD56AC01D; Thu, 18 Aug 2005 19:26:46 +0200 (CEST)
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0508170830050.3553@g5.osdl.org>
-User-Agent: Mutt/1.5.8i
+	id S932386AbVHRTRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 15:17:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932406AbVHRTRt
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 15:17:49 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:16844 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932386AbVHRTRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 15:17:49 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id C4C09136847; Thu, 18 Aug 2005 21:17:47 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id A87E3B099C; Thu, 18 Aug 2005 21:17:47 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 83DB5B096E; Thu, 18 Aug 2005 21:17:47 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 577A9136847; Thu, 18 Aug 2005 21:17:47 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-> (Also, with proper "Signed-off-by:" lines it's also always clear that 
-> there were other people involved, and that the author of the patch is 
-> different from the person who applied it).
+Changes to the descriptions of tree and tag objects, a link for ent, and
+descriptions for rewind, rebase and core git were added.
 
-I almost always handedit my mails and I find myself forgetting to add
-"Signed-off-by" from time to time.
-Is there a simple way to implment a trigger that can check that _I_
-signed off the patch before applying it?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
 
-I prefer to add it myself rather than to have it added automatically -
-but mayve thats you me being a bit mistrusting.
+ Documentation/glossary.txt |   28 ++++++++++++++++++++++------
+ 1 files changed, 22 insertions(+), 6 deletions(-)
 
-Btw. I'm a Cogito user if that makes a difference.
-The only git- command I use today is git-applymbox.
-
-	Sam
+83d69aaac371160ea0da0a6de6c9898c8f6915b2
+diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
+--- a/Documentation/glossary.txt
++++ b/Documentation/glossary.txt
+@@ -26,9 +26,9 @@ blob object::
+ 	Untyped object, e.g. the contents of a file.
+ 
+ tree object::
+-	An object containing a list of blob and/or tree objects.
+-	(A tree usually corresponds to a directory without
+-	subdirectories).
++	An object containing a list of file names and modes along with refs
++	to the associated blob and/or tree objects. A tree object is
++	equivalent to a directory.
+ 
+ tree::
+ 	Either a working tree, or a tree object together with the
+@@ -118,11 +118,14 @@ tree-ish::
+ 	tag object pointing to a tag or commit or tree object.
+ 
+ ent::
+-	Favorite synonym to "tree-ish" by some total geeks.
++	Favorite synonym to "tree-ish" by some total geeks. See
++	http://en.wikipedia.org/wiki/Ent_(Middle-earth) for an in-depth
++	explanation.
+ 
+ tag object::
+-	An object containing a ref pointing to another object. It can
+-	contain a (PGP) signature, in which case it is called "signed
++	An object containing a ref pointing to another object, which can
++	contain a message just like a commit object. It can also
++	contain a (PGP) signature, in which case it is called a "signed
+ 	tag object".
+ 
+ tag::
+@@ -143,6 +146,15 @@ resolve::
+ 	The action of fixing up manually what a failed automatic merge
+ 	left behind.
+ 
++rewind::
++	To throw away part of the development, i.e. to assign the head to
++	an earlier revision.
++
++rebase::
++	To clean a branch by starting from the head of the main line of
++	development ("master"), and reapply the (possibly cherry-picked)
++	changes from that branch.
++
+ repository::
+ 	A collection of refs together with an object database containing
+ 	all objects, which are reachable from the refs, possibly accompanied
+@@ -196,6 +208,10 @@ pack index::
+ 	The list of identifiers, and other information, of the objects in a
+ 	pack, to assist in efficiently accessing the contents of a pack. 
+ 
++core git::
++	Fundamental data structures and utilities of git. Exposes only
++	limited source code management tools.
++
+ plumbing::
+ 	Cute name for core git.
+ 
