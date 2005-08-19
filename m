@@ -1,63 +1,66 @@
-From: Jan Veldeman <jan.veldeman@gmail.com>
-Subject: Re: [RFC] Stgit - patch history / add extra parents
-Date: Fri, 19 Aug 2005 21:48:32 +0200
-Message-ID: <20050819194832.GA8562@fanta>
-References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git commit (or git-commit-script) question
+Date: Fri, 19 Aug 2005 12:52:01 -0700
+Message-ID: <7vd5o9yaam.fsf@assigned-by-dhcp.cox.net>
+References: <4306119C.8000600@jstenback.com>
+	<Pine.LNX.4.58.0508191028190.3412@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 21:47:45 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 21:53:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6Coz-0004cu-J2
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 21:46:33 +0200
+	id 1E6CuO-0005nq-Gw
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 21:52:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965084AbVHSTq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 15:46:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965090AbVHSTq2
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 15:46:28 -0400
-Received: from wproxy.gmail.com ([64.233.184.207]:26719 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965084AbVHSTq2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2005 15:46:28 -0400
-Received: by wproxy.gmail.com with SMTP id i2so675644wra
-        for <git@vger.kernel.org>; Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=MZKvwR0xOsbsCMQhx9nPM0piimpqSp5cCT+xW7ZWIphQm+6L+lPhSPpqiBMPq5+NcxSWY9iGy3HbmNQIsQ67fQdtb3Dp1X0xtMHBfJp2w+f0LzncRKCNIBen3nl3x17dpb8wgBb7DHwE66sRpq6Bcvwyl662B79P7U+PxqLDhYw=
-Received: by 10.54.158.19 with SMTP id g19mr2120615wre;
-        Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
-Received: from localhost ([84.195.185.241])
-        by mx.gmail.com with ESMTP id 11sm1311650wrl.2005.08.19.12.46.18;
-        Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
-To: Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <tnx64u2p81k.fsf@arm.com>
-User-Agent: Mutt/1.5.9i
+	id S965016AbVHSTwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 15:52:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965127AbVHSTwE
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 15:52:04 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:17561 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S965016AbVHSTwC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 15:52:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050819195202.XWDD550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 19 Aug 2005 15:52:02 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508191028190.3412@g5.osdl.org> (Linus Torvalds's
+	message of "Fri, 19 Aug 2005 10:36:35 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas wrote:
+Linus Torvalds <torvalds@osdl.org> writes:
 
-> 
-> The patch history feature was available in StGIT 0.1/0.2 releases
-> where you should have run a 'stg commit' before 'stg refresh'. The
-> commit was handling all the history changes, with separate commit
-> messages and refresh was updating the main commit with 2 parents. I
-> removed it in 0.3 after some people (I think it was Paul Jackson and
-> Daniel Barkalow) convinced me that this would make it yet another SCM
-> interface on top of GIT, which wasn't really my intention.
+> However, one thing to look out for is that if you've marked any files for 
+> update (with git-update-cache) those will always be committed regardless 
+> of what arguments you give to "git commit".
 
-I've quickly reread the threads about stg commit. Am I right to assume that
-_all_ history was being recorded? Because this is not what I want. The
-person controlling the archive should specify when to record the history.
+Another thing to look out for is that the files you told it
+about with "git add" will be included and does not show up in
+"git diff", because there currently is no way to record "intent
+to add" (rather, "Mr GIT, please keep an eye on this file")
+without actually adding a path to the index file for inclusion
+in the next commit.
 
-So for example, you only tag (freeze) the history when exporting the
-patches.  When an error is being reported on that version, it's easy to view
-it and also view the progress that was already been made on those patches.
+I have a couple of updates to git-commit-script in the proposed
+updates branch, and one of the changes is that git-update-cache
+in git-commit-script, used when either the --all flag or
+explicit paths are given, has a --remove flag there.  The reason
+it does not need --add flag there as well is a direct
+consequence of this asymmetry.
 
-
-Best regards,
-Jan
+Although I do not think this asymmetry a major source of
+confusion, I suspect that we could "fix" it by treating an index
+entry with all-zero mode and sha1 as "keep-an-eye-on" entry with
+a new flag "git-update-cache --watch <path>" or something like
+that.  "git-diff-files" would then treat that special entry as a
+nonexistent path and would compare it with whatever happens to
+be (or lack of it) in the working tree, and "git diff" would
+show a diff that creates the file.  This needs a tweak or two in
+the diffcore machinery as well.
