@@ -1,72 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: [RFC] Importing from a patch-oriented SCM
-Date: Fri, 19 Aug 2005 10:29:40 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508191023570.11916@wgmdd8.biozentrum.uni-wuerzburg.de>
+Date: Fri, 19 Aug 2005 20:52:45 +1200
+Message-ID: <46a038f905081901521296c24@mail.gmail.com>
 References: <46a038f9050819000417ed436e@mail.gmail.com>
+	 <7vslx61i3s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 19 10:33:01 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 19 11:01:12 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E62G5-0004ln-4Y
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 10:29:50 +0200
+	id 1E62cO-00046B-VI
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 10:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbVHSI3m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 04:29:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932477AbVHSI3m
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 04:29:42 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:62956 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932472AbVHSI3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 04:29:41 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id D791B13DCA4; Fri, 19 Aug 2005 10:29:40 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id BE7B899D3B; Fri, 19 Aug 2005 10:29:40 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id ACBE399CF4; Fri, 19 Aug 2005 10:29:40 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5D3BB13DCB9; Fri, 19 Aug 2005 10:29:40 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f9050819000417ed436e@mail.gmail.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932495AbVHSIws (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 04:52:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932542AbVHSIws
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 04:52:48 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:23793 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932495AbVHSIws convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 04:52:48 -0400
+Received: by rproxy.gmail.com with SMTP id i8so465324rne
+        for <git@vger.kernel.org>; Fri, 19 Aug 2005 01:52:45 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GFHwaAmnrTYr/QgrvxI2JffTJcGfK52muXcA9lTD2a7XGJMZCT6eEiEIIrxoL3iNF6LDCbS3qKqNTsvBe4ywbh3BZT3eSx2R6YuFvHtCzo0ThU8tU3pEppkJkRbJRN1NsF9ur107AhehYZAg8jm4aabxw+e++EumuLALKL0FodM=
+Received: by 10.38.104.44 with SMTP id b44mr48424rnc;
+        Fri, 19 Aug 2005 01:52:45 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Fri, 19 Aug 2005 01:52:45 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslx61i3s.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 8/19/05, Junio C Hamano <junkio@cox.net> wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+> 
+> > If I remember correctly, Junio added some stuff in the merge & rebase
+> > code that will identify if a particular patch has been seen and
+> > applied, and skip it even if it's a bit out of order. But I don't know
+> 
+> I think you are talking about git-patch-id.
 
-On Fri, 19 Aug 2005, Martin Langhoff wrote:
+Is this used at commit time, and stored somewhere (doesn't seem to be)
+or do you select older patches from the destination branch at merge
+time?
 
-> Each patchset has a unique identifier, and can carry metadata with the
-> identifiers of the patches it "includes". If you are using gnu arch,
-> when you merge across branches, it'll know to skip a particular
-> patchset if it has been applied already. AFAICT there is no such
-> concept in GIT, and I wonder what to do with all this metadata about
-> merges.
+If you only compare patches since the last merge, patches that were
+merged but somehow unreported will fall into a black hole and cause a
+conflict going forward anyway. Hmm.  That seems to be a problem I
+won't be able to avoid if merges happen out-of-order.
 
-You should include the metadata in the commit object. If the information 
-is about parents, they should be parents in git, too. If the information 
-is something else, you should convert it to readable text and put it in 
-the comment part of the commit object.
+I'll try and work out how it's being used during the merge
+(pointers/hints welcome) and see if I can do something smart w it.
+Thanks!
 
-> If I remember correctly, Junio added some stuff in the merge & rebase
-> code that will identify if a particular patch has been seen and
-> applied, and skip it even if it's a bit out of order.
+cheers,
 
-The usual way of git is to use a 3-way merge: given a common ancestor, try 
-to apply the changes between the ancestor and the second branch to the 
-first branch. And yes, this does not take history into account. 
-Originally, I wanted to write an "intelligent" merge, which turns the 
-history into patches and tries to merge these, but ultimately I got 
-convinced that this is too complicated to be worthwhile.
 
-Ciao,
-Dscho
+martin
