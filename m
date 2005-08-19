@@ -1,66 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH] Teach parse_commit_buffer about grafting.
-Date: Thu, 18 Aug 2005 17:50:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508181737220.3412@g5.osdl.org>
-References: <7vslxw4tb1.fsf_-_@assigned-by-dhcp.cox.net>
- <20050818003036.C53FD353BF9@atlas.denx.de> <7vd5ocouus.fsf@assigned-by-dhcp.cox.net>
- <17155.64070.264664.926461@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0508172209220.3412@g5.osdl.org>
- <17157.10227.296309.809074@cargo.ozlabs.ibm.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Small team cogito/git setup
+Date: Fri, 19 Aug 2005 13:03:32 +1200
+Message-ID: <46a038f905081818034db50747@mail.gmail.com>
+References: <46a038f9050817211446684aac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Wolfgang Denk <wd@denx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 02:51:49 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Fri Aug 19 03:04:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5v6I-0007on-ON
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 02:51:15 +0200
+	id 1E5vIU-0002T7-Bh
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 03:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932544AbVHSAvM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 20:51:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbVHSAvM
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 20:51:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:3779 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932544AbVHSAvL (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Aug 2005 20:51:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7J0oujA026254
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 18 Aug 2005 17:50:56 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7J0oqZN019505;
-	Thu, 18 Aug 2005 17:50:54 -0700
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17157.10227.296309.809074@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964777AbVHSBDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 21:03:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964775AbVHSBDf
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 21:03:35 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:38023 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964777AbVHSBDf convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 21:03:35 -0400
+Received: by rproxy.gmail.com with SMTP id i8so416046rne
+        for <git@vger.kernel.org>; Thu, 18 Aug 2005 18:03:32 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LrJCysNUXcr+7lbMMag9xOhmMGQpGcSL9f3KHn3ueh90pt92T8YV+3ZCxGTxMCo08NafdgPLxTiRV+2pB9jE+og0oe2VcdRrf/BnA0OWS0h4DsQt7WEGBHXJSzIP28vx+ljyjC4h8ByMdU+UVeJUlSWrbAuBq4om6hzJ1ecfOlc=
+Received: by 10.38.75.6 with SMTP id x6mr819933rna;
+        Thu, 18 Aug 2005 18:03:32 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Thu, 18 Aug 2005 18:03:32 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+In-Reply-To: <46a038f9050817211446684aac@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On 8/18/05, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> We have a small team of 3, and our main activity is to run local
 
-On Fri, 19 Aug 2005, Paul Mackerras wrote:
-> 
-> > Umm. git-rev-list really does everything. Rule of thumb: if you _ever_
-> > need to look at any other internal git information, you're probably doing
-> > something wrong, or you've missed yet another flag ;)
-> 
-> I still look in [gitdir]/refs/tags/* and [gitdir]/refs/heads/*, what
-> flag have I missed? :)  Junio wants me to look at everything under
-> [gitdir]/refs, in fact.  Or are the refs not considered internal git
-> information?
+To self: RTFM, specifically, Documentation/tutorial.txt 
 
-Ahh, ok, fair enough. git-rev-list won't give you that. 
+I had read it early on and either didn't get to the end of it, or had
+forgotten already.
 
-And yes, the general rule is that anything under .git/refs/ is potentially 
-a reference. If it's under "heads/" or "tags/" it's a branch/tag, and then 
-the prefix "heads/" or "tags/" shouldn't be part of the name - you already 
-show the difference with colors. Anything else is unusual, but bisection 
-puts refs in the ".git/refs/bisect" directory for example, and if gitk 
-were to show those, it should probably show them in yet another color, and 
-_with_ the "bisect/" prefix..
+Apologies,
 
-		Linus
+
+martin
