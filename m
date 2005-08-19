@@ -1,131 +1,271 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Infamous 'octopus merge'
-Date: Thu, 18 Aug 2005 18:05:05 -0700
-Message-ID: <7v4q9meny6.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Add commit hook and make the verification customizable.
+Date: Thu, 18 Aug 2005 18:05:09 -0700
+Message-ID: <7vslx6d9dm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Fri Aug 19 03:06:02 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 03:06:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5vJp-0002n7-Dx
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 03:05:13 +0200
+	id 1E5vJu-0002nY-PV
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 03:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964781AbVHSBFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 18 Aug 2005 21:05:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964785AbVHSBFI
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 21:05:08 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:15838 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S964781AbVHSBFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Aug 2005 21:05:06 -0400
+	id S964789AbVHSBFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 18 Aug 2005 21:05:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964786AbVHSBFN
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Aug 2005 21:05:13 -0400
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:12694 "EHLO
+	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
+	id S964789AbVHSBFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Aug 2005 21:05:10 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
+          by fed1rmmtao12.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050819010505.YCGM16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 18 Aug 2005 21:05:05 -0400
+          id <20050819010509.IOLS550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 18 Aug 2005 21:05:09 -0400
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-This script uses the list of heads and their origin multi-head "git
-fetch" left in the $GIT_DIR/FETCH_HEAD file, and makes an octopus
-merge on top of the current HEAD using them.
+There are three hooks:
 
-The implementation tries to be strict for the sake of safety.  It
-insists that your working tree is clean (no local changes) and matches
-the HEAD, and when any of the merged heads does not automerge, the
-whole process is aborted and tries to rewind your working tree is to
-the original state.
+    - 'pre-commit' is given an opportunity to inspect what is
+      being committed, before we invoke the EDITOR for the
+      commit message;
+
+    - 'commit-msg' is invoked on the commit log message after
+      the user prepares it;
+
+    - 'post-commit' is run after a successful commit is made.
+
+The first two can interfere to stop the commit.  The last one is
+for after-the-fact notification.
+
+The earlier built-in commit checker is now moved to pre-commit.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
- Makefile           |    1 +
- git-octopus-script |   64 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+), 0 deletions(-)
- create mode 100755 git-octopus-script
+ git-commit-script            |   75 +++++++++++++-----------------------------
+ templates/hooks--commit-msg  |   14 ++++++++
+ templates/hooks--post-commit |    8 ++++
+ templates/hooks--pre-commit  |   60 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 105 insertions(+), 52 deletions(-)
+ create mode 100644 templates/hooks--commit-msg
+ create mode 100644 templates/hooks--post-commit
+ create mode 100644 templates/hooks--pre-commit
 
-bad69944391b17bf5d4060b19e24013807409b28
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -72,6 +72,7 @@ SCRIPTS += git-count-objects-script
- # SCRIPTS += git-send-email-script
- SCRIPTS += git-revert-script
- SCRIPTS += git-show-branches-script
-+SCRIPTS += git-octopus-script
+971fd26a05c6a5f71c727b7350c091d5bdb4ebb7
+diff --git a/git-commit-script b/git-commit-script
+--- a/git-commit-script
++++ b/git-commit-script
+@@ -6,10 +6,10 @@
+ . git-sh-setup-script || die "Not a git archive"
  
- PROG=   git-update-cache git-diff-files git-init-db git-write-tree \
- 	git-read-tree git-commit-tree git-cat-file git-fsck-cache \
-diff --git a/git-octopus-script b/git-octopus-script
-new file mode 100755
+ usage () {
+-	die 'git commit [-a]  [-m <message>] [-F <logfile>] [(-C|-c) <commit>] [<path>...]'
++	die 'git commit [-a] [-v | --no-verify]  [-m <message>] [-F <logfile>] [(-C|-c) <commit>] [<path>...]'
+ }
+ 
+-all= logfile= use_commit= no_edit= log_given= log_message= verify= signoff=
++all= logfile= use_commit= no_edit= log_given= log_message= verify=t signoff=
+ while case "$#" in 0) break;; esac
+ do
+   case "$1" in
+@@ -67,6 +67,9 @@ do
+   -s|--s|--si|--sig|--sign|--signo|--signof|--signoff)
+     signoff=t
+     shift ;;
++  -n|--n|--no|--no-|--no-v|--no-ve|--no-ver|--no-veri|--no-verif|--no-verify)
++    verify=
++    shift ;;
+   -v|--v|--ve|--ver|--veri|--verif|--verify)
+     verify=t
+     shift ;;
+@@ -101,56 +104,10 @@ git-update-cache -q --refresh || exit 1
+ 
+ case "$verify" in
+ t)
+-	# This is slightly modified from Andrew Morton's Perfect Patch.
+-	# Lines you introduce should not have trailing whitespace.
+-	# Also check for an indentation that has SP before a TAB.
+-	perl -e '
+-	    my $fh;
+-	    my $found_bad = 0;
+-	    my $filename;
+-	    my $reported_filename = "";
+-	    my $lineno;
+-	    sub bad_line {
+-		my ($why, $line) = @_;
+-		if (!$found_bad) {
+-		    print "*\n";
+-		    print "* You have some suspicious patch lines:\n";
+-		    print "*\n";
+-		    $found_bad = 1;
+-		}
+-		if ($reported_filename ne $filename) {
+-		    print "* In $filename\n";
+-		    $reported_filename = $filename;
+-		}
+-		print "* $why (line $lineno)\n$line\n";
+-	    }
+-	    open $fh, "-|", qw(git-diff-cache -p -M --cached HEAD);
+-	    while (<$fh>) {
+-		if (m|^diff --git a/(.*) b/\1$|) {
+-		    $filename = $1;
+-		    next;
+-		}
+-		if (/^@@ -\S+ \+(\d+)/) {
+-		    $lineno = $1 - 1;
+-		    next;
+-		}
+-		if (/^ /) {
+-		    $lineno++;
+-		    next;
+-		}
+-		if (s/^\+//) {
+-		    $lineno++;
+-		    chomp;
+-		    if (/\s$/) {
+-			bad_line("trailing whitespace", $_);
+-		    }
+-		    if (/^\s* 	/) {
+-			bad_line("indent SP followed by a TAB", $_);
+-		    }
+-		}
+-	    }
+-	    exit($found_bad);
+-	' || exit ;;
++	if test -x "$GIT_DIR"/hooks/pre-commit
++	then
++		"$GIT_DIR"/hooks/pre-commit || exit
++	fi
+ esac
+ 
+ PARENTS="-p HEAD"
+@@ -255,6 +212,15 @@ case "$no_edit" in
+ 	${VISUAL:-${EDITOR:-vi}} .editmsg
+ 	;;
+ esac
++
++case "$verify" in
++t)
++	if test -x "$GIT_DIR"/hooks/commit-msg
++	then
++		"$GIT_DIR"/hooks/commit-msg .editmsg || exit
++	fi
++esac
++
+ grep -v '^#' < .editmsg | git-stripspace > .cmitmsg
+ grep -v -i '^Signed-off-by' .cmitmsg >.cmitchk
+ if test -s .cmitchk
+@@ -269,4 +235,9 @@ else
+ fi
+ ret="$?"
+ rm -f .cmitmsg .editmsg .cmitchk
++
++if test -x "$GIT_DIR"/hooks/post-commit && test "$ret" = 0
++then
++	"$GIT_DIR"/hooks/post-commit
++fi
+ exit "$ret"
+diff --git a/templates/hooks--commit-msg b/templates/hooks--commit-msg
+new file mode 100644
 --- /dev/null
-+++ b/git-octopus-script
-@@ -0,0 +1,64 @@
++++ b/templates/hooks--commit-msg
+@@ -0,0 +1,14 @@
 +#!/bin/sh
 +#
-+# Copyright (c) 2005 Junio C Hamano
++# An example hook script to check the commit log message.
++# Called by git-commit-script with one argument, the name of the file
++# that has the commit message.  The hook should exit with non-zero
++# status after issuing an appropriate message if it wants to stop the
++# commit.  The hook is allowed to edit the commit message file.
 +#
-+# Resolve two or more trees recorded in $GIT_DIR/FETCH_HEAD.
++# To enable this hook, make this file executable.
++
++# This example catches duplicate Signed-off-by lines.
++
++test "" = "$(grep '^Signed-off-by: ' "$1" |
++	 sort | uniq -c | sed -e '/^[ 	]*1 /d')"
+diff --git a/templates/hooks--post-commit b/templates/hooks--post-commit
+new file mode 100644
+--- /dev/null
++++ b/templates/hooks--post-commit
+@@ -0,0 +1,8 @@
++#!/bin/sh
 +#
-+. git-sh-setup-script || die "Not a git archive"
++# An example hook script that is called after a successful
++# commit is made.
++#
++# To enable this hook, make this file executable.
 +
-+usage () {
-+    die "usage: git octopus"
-+}
++: Nothing
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+new file mode 100644
+--- /dev/null
++++ b/templates/hooks--pre-commit
+@@ -0,0 +1,60 @@
++#!/bin/sh
++#
++# An example hook script to verify what is about to be committed.
++# Called by git-commit-script with no arguments.  The hook should
++# exit with non-zero status after issuing an appropriate message if
++# it wants to stop the commit.
++#
++# To enable this hook, make this file executable.
 +
-+# Sanity check the heads early.
-+while read SHA1 REPO
-+do
-+	test $(git-cat-file -t $SHA1) = "commit" ||
-+		die "$REPO given to octopus is not a commit"
-+done <"$GIT_DIR/FETCH_HEAD"
++# This is slightly modified from Andrew Morton's Perfect Patch.
++# Lines you introduce should not have trailing whitespace.
++# Also check for an indentation that has SP before a TAB.
++perl -e '
++    my $fh;
++    my $found_bad = 0;
++    my $filename;
++    my $reported_filename = "";
++    my $lineno;
++    sub bad_line {
++	my ($why, $line) = @_;
++	if (!$found_bad) {
++	    print "*\n";
++	    print "* You have some suspicious patch lines:\n";
++	    print "*\n";
++	    $found_bad = 1;
++	}
++	if ($reported_filename ne $filename) {
++	    print "* In $filename\n";
++	    $reported_filename = $filename;
++	}
++	print "* $why (line $lineno)\n$line\n";
++    }
++    open $fh, "-|", qw(git-diff-cache -p -M --cached HEAD);
++    while (<$fh>) {
++	if (m|^diff --git a/(.*) b/\1$|) {
++	    $filename = $1;
++	    next;
++	}
++	if (/^@@ -\S+ \+(\d+)/) {
++	    $lineno = $1 - 1;
++	    next;
++	}
++	if (/^ /) {
++	    $lineno++;
++	    next;
++	}
++	if (s/^\+//) {
++	    $lineno++;
++	    chomp;
++	    if (/\s$/) {
++		bad_line("trailing whitespace", $_);
++	    }
++	    if (/^\s* 	/) {
++		bad_line("indent SP followed by a TAB", $_);
++	    }
++	}
++    }
++    exit($found_bad);
++'
 +
-+head=$(git-rev-parse --verify HEAD) || exit
-+
-+git-update-cache --refresh ||
-+	die "Your working tree is dirty."
-+test "$(git-diff-cache --cached "$head")" = "" ||
-+	die "Your working tree does not match HEAD."
-+
-+# MRC is the current "merge reference commit"
-+# MRT is the current "merge result tree"
-+
-+MRC=$head MRT=$head MSG='Octopus merge of the following: ' PARENT="-p $head"
-+while read SHA1 REPO
-+do
-+	common=$(git-merge-base $MRC $SHA1) ||
-+		die "Unable to find common commit between $SHA1 and $MRC"
-+
-+	git-read-tree -u -m $common $MRT $SHA1 || exit
-+	next=$(git-write-tree 2>/dev/null)
-+	if test $? -ne 0
-+	then
-+		git-merge-cache -o git-merge-one-file-script -a || {
-+		git-read-tree --reset "$head"
-+		git-checkout-tree -f -q -u -a
-+		die "Automatic merge failed; should not be doing Octopus"
-+		}
-+		next=$(git-write-tree 2>/dev/null)
-+	fi
-+	PARENT="$PARENT -p $SHA1"
-+	MRC=$common
-+	MRT=$next
-+	MSG="$MSG
-+	$REPO"
-+done <"$GIT_DIR/FETCH_HEAD"
-+
-+# Just to be careful in case the user feeds nonsense to us.
-+if test "$MRT" = "$head"
-+then
-+	echo "No changes."
-+	exit 0
-+fi
-+
-+result_commit=$(echo "$MSG" | git-commit-tree $MRT $PARENT)
-+echo "Committed octopus merge $result_commit"
-+echo $result_commit >"$GIT_DIR"/HEAD
-+git-diff-tree -p $head $result_commit | git-apply --stat
