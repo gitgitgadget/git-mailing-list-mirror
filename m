@@ -1,90 +1,101 @@
-From: Johnny Stenback <jst@jstenback.com>
-Subject: Re: git commit (or git-commit-script) question
-Date: Fri, 19 Aug 2005 10:44:52 -0700
-Message-ID: <43061A94.9030002@jstenback.com>
-References: <4306119C.8000600@jstenback.com> <Pine.LNX.4.58.0508191028190.3412@g5.osdl.org>
+From: Jan Veldeman <jan.veldeman@gmail.com>
+Subject: Re: [RFC] Stgit - patch history / add extra parents
+Date: Fri, 19 Aug 2005 20:27:32 +0200
+Message-ID: <20050819182732.GA5512@fanta>
+References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 19:45:13 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 20:27:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6AvX-0000xW-Hd
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 19:45:11 +0200
+	id 1E6BYk-0002VQ-TG
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 20:25:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932556AbVHSRpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 13:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932665AbVHSRpH
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 13:45:07 -0400
-Received: from smeagol.dreamhost.com ([66.33.209.5]:24010 "EHLO
-	smeagol.dreamhost.com") by vger.kernel.org with ESMTP
-	id S932556AbVHSRpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 13:45:06 -0400
-Received: from [192.168.0.100] (dpc674551026.direcpc.com [67.45.51.26])
-	by smeagol.dreamhost.com (Postfix) with ESMTP
-	id CCCB623A59; Fri, 19 Aug 2005 10:44:57 -0700 (PDT)
-User-Agent: Mail/News 1.6a1 (X11/20050816)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508191028190.3412@g5.osdl.org>
+	id S932487AbVHSSZW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 14:25:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932548AbVHSSZW
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 14:25:22 -0400
+Received: from wproxy.gmail.com ([64.233.184.198]:49028 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932487AbVHSSZW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2005 14:25:22 -0400
+Received: by wproxy.gmail.com with SMTP id i24so563547wra
+        for <git@vger.kernel.org>; Fri, 19 Aug 2005 11:25:15 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=IeHkRXr3VzZx9jNu8nrle9Xl0Z+s5YjYMYxaSxgVRR7Dmr3TS5ozi+krLTZ7l57l5uDVXhM9rD3eYOQNtDW0/zCrDI3g/90qen9cyg6UuzL9Wckw6zDPhzUcExLN2+fMNzvwgDnL5X1JsuCG8uj/ORGtscOqgWuXyiZHAfW18As=
+Received: by 10.54.142.2 with SMTP id p2mr2008439wrd;
+        Fri, 19 Aug 2005 11:25:14 -0700 (PDT)
+Received: from localhost ([84.195.185.241])
+        by mx.gmail.com with ESMTP id 45sm2821724wri.2005.08.19.11.25.13;
+        Fri, 19 Aug 2005 11:25:14 -0700 (PDT)
+To: Catalin Marinas <catalin.marinas@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <tnx64u2p81k.fsf@arm.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Ah, that explains it. I had already marked all my changes for update, 
-that's what threw me off here. Thanks!
+Catalin Marinas wrote:
 
-Linus Torvalds wrote:
 > 
-> On Fri, 19 Aug 2005, Johnny Stenback wrote:
->> That made me assume that if I do:
->>
->>    git-commit-script somedir
->>
->> it would *only* commit the changes I've made in "somedir", but it 
->> appears to commit *all* files that have changed (and shows all files in 
->> the list of changed files in the commit message it displays in the 
->> editor), as if it's completely ignoring the <path> argument.
->>
->> Known problem? I got this using git that I pulled from kernel.org 
->> earlier this morning.
+> The patch history feature was available in StGIT 0.1/0.2 releases
+> where you should have run a 'stg commit' before 'stg refresh'. The
+> commit was handling all the history changes, with separate commit
+> messages and refresh was updating the main commit with 2 parents. I
+> removed it in 0.3 after some people (I think it was Paul Jackson and
+> Daniel Barkalow) convinced me that this would make it yet another SCM
+> interface on top of GIT, which wasn't really my intention.
+
+hmm, I must have misted those threads, I'll try to find and read them.
+
 > 
-> It works for me. You _should_ see something like
+> The main problem with having multiple parents for a commit object
+> corresponding to a patch is the upstream merging via 'git pull'. In
+> general you don't want a gatekeeper to pull the history of your patch
+> but the patch only.
+
+I agree that such history should not be imported into the mainline, but such
+history would still be very usefull when these patches won't be pushed to
+mailine immediately. Also, when pushing to mainline, this history can easily
+be removed by removing the branch/patch/parent files and refreshing (this
+should off course be automated)
+
 > 
-> 	#
-> 	# Updated but not checked in:
-> 	#   (will commit)
-> 	#
-> 	#       modified: somedir/somefile
-> 	#
-> 	#
-> 	# Changed but not updated:
-> 	#   (use git-update-cache to mark for commit)
-> 	#
-> 	#	modified: otherdir/anotherfile
-> 	#
+> > The patch below, together with the following script could be used to
+> > make snapshots of the patch stack (I call it freeze, as I thought snapshot
+> > was already going to be used for something else):
 > 
-> which basically means that it will commit "somedir/somefile", but _not_ 
-> commit "otherdir/anotherfile".
+> 'snapshot' is not yet used for anything and I'm not sure how it is
+> best to be implemented. I thought about simply saving the current HEAD
+> into some .git/refs/heads/<file>, without preserving any history for
+> the patch. A gitk on this file would show the patches as they were on
+> the time of the snapshot creation. A new snapshot would remove this.
 > 
-> However, one thing to look out for is that if you've marked any files for 
-> update (with git-update-cache) those will always be committed regardless 
-> of what arguments you give to "git commit". You can reset the index with 
-> "git reset" if you decided that you don't want to commit after all.
+> It might be best for a per-patch history to have a separate file in
+> <branch>/<patch>/, maybe called freeze, which keeps this history
+> information. The top one should remain unchanged. Its hash could be
+> accessed with the 'stg id /freeze' command (implemented
+> yesterday). This file would only be updated via the 'freeze' command
+> and its parent would be the previous freeze value.
 > 
-> (For example, if you do a "git commit --all", but decide not to commit 
-> after all by writing an empty commit message, that will already have 
-> marked all the files to be committed, so next time, even if you then use 
-> "git commit somedir", all the files in all the _other_ dirs have already 
-> been marked for update, so you'll see everything being committed).
-> 
-> 			Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Would this be close to what you need?
 > 
 
--- 
-jst
+hmm, not exactly, for example, when reordering the patches (including the
+top one), I would like to see this in gitk.
+Or when a patch has been dropped (amongst a lot of patches), it should be
+easily spotted.
+
+
+But even if the "stg-freeze" would not be incorporated into stgit, would it
+still be possible to include some sort of extra parents directory. So that
+the freeze can be implemented on top of stgit?
+
+TIA
+
+Best regards,
+Jan
