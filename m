@@ -1,65 +1,78 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Questions on 'cvs migration guide''
-Date: Thu, 18 Aug 2005 21:33:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508182130050.3412@g5.osdl.org>
+Date: Fri, 19 Aug 2005 17:58:07 +1200
+Message-ID: <46a038f9050818225865deb7ee@mail.gmail.com>
 References: <46a038f9050818201717f9ed93@mail.gmail.com>
+	 <Pine.LNX.4.58.0508182130050.3412@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 19 06:34:37 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 07:58:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E5yZP-0002JF-8i
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 06:33:31 +0200
+	id 1E5ztQ-0002So-7X
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 07:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932541AbVHSEd2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 00:33:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932546AbVHSEd2
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 00:33:28 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:36583 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932541AbVHSEd1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2005 00:33:27 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7J4XPjA007374
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 18 Aug 2005 21:33:25 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7J4XO8j028131;
-	Thu, 18 Aug 2005 21:33:24 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f9050818201717f9ed93@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932565AbVHSF6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 01:58:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932566AbVHSF6N
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 01:58:13 -0400
+Received: from rproxy.gmail.com ([64.233.170.193]:54395 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932565AbVHSF6M convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 01:58:12 -0400
+Received: by rproxy.gmail.com with SMTP id i8so447760rne
+        for <git@vger.kernel.org>; Thu, 18 Aug 2005 22:58:07 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=P2/RXJumaAheasUBL7yhaX9MbXRNe62SH/bisQBNK3b6bIATW51JFFH2Cc41aoS8M887NE+QJTx5aNKP4af74WfbY2IQ9PgX8bZXQO70NOYlENiUiJueLKWt6KWpRmCH70pPF7Km9YeYW1GuXg77nAjo032F47RX6mxYN4rOXVY=
+Received: by 10.38.104.44 with SMTP id b44mr5340rnc;
+        Thu, 18 Aug 2005 22:58:07 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Thu, 18 Aug 2005 22:58:07 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508182130050.3412@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On 8/19/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> > And yet another question: the teammember who is pulling must 'switch'
+> > the merging repo to the right branch, pull from the corresponding
+> > remote repos of each teammember, and push to the public view of the
+> > repo. Is that right?
+> 
+> .. yes. Or alternatively, just keep the repo at that branch (and if such a
+> person works on multiple branches, he/she can thus just keep multiple
+> repos).
+
+I'm keen on keeping my 'merge & publish' step in a single repo that
+has all the 'team' branches. The person running this repo will
+probably actually code in separate repos, and merge in there too.
+
+Right now I'm switching 'heads' (I'm getting used to cogito's use of
+'branch' for 'remote head') using this quick'n'dirty bit of shell:
+
+#!/bin/bash 
+
+HEADNAME=$1
+
+if [ -e .git/refs/heads/$HEADNAME ]; then
+	cd .git/
+	ln -s -f .git/refs/heads/$HEADNAME HEAD
+	cd ..
+	cg-reset
+	cg-restore -f
+
+fi;
+
+but I want to prevent the action if the checkout is 'dirty'. Is there
+any way to check whether cg-diff thinks anything has changed?
+
+cheers,
 
 
-On Fri, 19 Aug 2005, Martin Langhoff wrote:
->
-> In the section 'Emulating CVS behaviour', where the team setup is
-> described with a team 'merger'. What is not clear is how to deal with
-> project-wide branches. Should they be created in the master repo, and
-> everyone clone a new repo from it?
-
-Just make them another branch in the master repo. Whether people will 
-clone a whole new repo for it, or have just one repo and switch between 
-local branches in their own local (single) repo is their personal choice. 
-Some people may well prefer to have all different branches checked out in 
-different places (ie have one repository per branch) others may prefer to 
-work with one repository and just switch.
-
-> And yet another question: the teammember who is pulling must 'switch'
-> the merging repo to the right branch, pull from the corresponding
-> remote repos of each teammember, and push to the public view of the
-> repo. Is that right?
-
-.. yes. Or alternatively, just keep the repo at that branch (and if such a 
-person works on multiple branches, he/she can thus just keep multiple 
-repos). 
-
-		Linus
+martin
