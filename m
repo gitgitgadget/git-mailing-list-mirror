@@ -1,69 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC] Allow file removal when "git commit --all" is used.
-Date: Fri, 19 Aug 2005 10:06:25 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508191005450.11916@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7v64u3k74m.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0508181248110.30218@wgmdd8.biozentrum.uni-wuerzburg.de>
- <7vll2yenyv.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: Merge conflicts as .rej .orig files
+Date: Fri, 19 Aug 2005 09:27:56 +0100
+Message-ID: <tnxmznepbzn.fsf@arm.com>
+References: <46a038f9050818200625d64a12@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 10:09:06 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 19 10:32:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E61tZ-0004Zl-HC
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 10:06:34 +0200
+	id 1E62FP-0004O8-5W
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 10:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171AbVHSIGa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 04:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932239AbVHSIGa
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 04:06:30 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:3815 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932171AbVHSIG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 04:06:29 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 4D2D013C938; Fri, 19 Aug 2005 10:06:26 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 2FDF599D3B; Fri, 19 Aug 2005 10:06:26 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id E3D4199D01; Fri, 19 Aug 2005 10:06:25 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id C93D013C938; Fri, 19 Aug 2005 10:06:25 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll2yenyv.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932452AbVHSI2n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 04:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932462AbVHSI2n
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 04:28:43 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:16631 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S932452AbVHSI2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 04:28:43 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7J8RZOU004046;
+	Fri, 19 Aug 2005 09:27:35 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id JAA09939;
+	Fri, 19 Aug 2005 09:28:30 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 19 Aug 2005 09:28:29 +0100
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f9050818200625d64a12@mail.gmail.com> (Martin Langhoff's
+ message of "Fri, 19 Aug 2005 15:06:14 +1200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 19 Aug 2005 08:28:29.0052 (UTC) FILETIME=[F9F4E3C0:01C5A497]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> After using arch for a while, I've gotten used to getting .rej and
+> .orig files instead of big ugly conflict markers inside the file.
+> Emacs has a nice 'diff' mode that is a boon when dealing with
+> conflicts this way.
+>
+> Is there a way to convince cogito/git to leave reject files around?
+> What utility is git using to do the merges? Or at least: where should
+> I look?
 
-On Thu, 18 Aug 2005, Junio C Hamano wrote:
+You could have a look at StGIT as well. The tool you use for merges is
+configurable via the stgitrc file (diff3 is used by default, which
+leaves markers in the file). StGIT also leaves the 3 files involved in
+the tree-way merge as <file>.{older,local,remote} for further
+inspection.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> The patch is for people who thinks the user who uses the "--all"
-> >> flag deserves the danger that comes with the convenience.
-> >> 
-> >> Comments?
-> >
-> > This is a sane default behaviour. Maybe introduce yet another flag 
-> > "--no-remove", which says that removes should not be performed? But then, 
-> > "--all" is mostly used by lazy people, who probably expect the removes to 
-> > take place.
-> 
-> Well, let's refrain from using that word; I am one of the "lazy"
-> people, but I do that on purpose and from principle, not from
-> lazyness.  http://members.cox.net/junkio/per-file-commit.txt.
+If you prefer other tool than diff3, you can define it in the stgitrc
+file. Two examples are given for emacs and xxdiff. You could also
+write a small script which invokes diff3 by default and, if it fails,
+run the emacs ediff-merge-files-with-ancestor function.
 
-Sorry, when I say "lazy people" I mean "yours truly".
-
-Ciao,
-Dscho
+-- 
+Catalin
