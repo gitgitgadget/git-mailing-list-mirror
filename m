@@ -1,88 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Multi-head fetches, pulls, and a King Ghidorah
-Date: Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508191039460.11916@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7vy86y1ibg.fsf@assigned-by-dhcp.cox.net>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [RFC] Stgit - patch history / add extra parents
+Date: Fri, 19 Aug 2005 10:53:11 +0100
+Message-ID: <tnx64u2p81k.fsf@arm.com>
+References: <20050818195753.GA9066@fanta>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 11:15:43 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 11:54:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E62xr-0001aS-Ba
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 11:15:04 +0200
+	id 1E63ZY-0001N8-9v
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 11:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932555AbVHSJO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 05:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932563AbVHSJO4
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 05:14:56 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:17547 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S932555AbVHSJOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 05:14:55 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AB175136929; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8DF71B09AD; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 72779B09A2; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 564F6136929; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vy86y1ibg.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932602AbVHSJx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 05:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932467AbVHSJx5
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 05:53:57 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:49800 "EHLO
+	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
+	id S932602AbVHSJx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 05:53:57 -0400
+Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
+	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7J9qpOU008207;
+	Fri, 19 Aug 2005 10:52:51 +0100 (BST)
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id KAA12111;
+	Fri, 19 Aug 2005 10:53:45 +0100 (BST)
+Received: from localhost.localdomain ([10.1.69.144]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Fri, 19 Aug 2005 10:53:44 +0100
+To: Jan Veldeman <jan.veldeman@gmail.com>
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+X-OriginalArrivalTime: 19 Aug 2005 09:53:44.0328 (UTC) FILETIME=[E2E61080:01C5A4A3]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jan Veldeman <jan.veldeman@gmail.com> wrote:
+> I like stgit very much, but I feel there is still something missing:
+> stgit is very handy when you use it for patches which should be pushed to
+> mainline rather quickly. But for pacthes which won't be pushed immediately
+> to mainline, it would be usefull to have a history of the patches
+> itself.
 
-If I understand correctly, the multi-head fetch would not write any ref if 
-used like this:
+The patch history feature was available in StGIT 0.1/0.2 releases
+where you should have run a 'stg commit' before 'stg refresh'. The
+commit was handling all the history changes, with separate commit
+messages and refresh was updating the main commit with 2 parents. I
+removed it in 0.3 after some people (I think it was Paul Jackson and
+Daniel Barkalow) convinced me that this would make it yet another SCM
+interface on top of GIT, which wasn't really my intention.
 
-	git fetch remote:repository/ head tail
+The main problem with having multiple parents for a commit object
+corresponding to a patch is the upstream merging via 'git pull'. In
+general you don't want a gatekeeper to pull the history of your patch
+but the patch only.
 
-but it would try a fast-forward when used like this:
+> The patch below, together with the following script could be used to
+> make snapshots of the patch stack (I call it freeze, as I thought snapshot
+> was already going to be used for something else):
 
-	git fetch remote:repository/ head:head tail:tail
+'snapshot' is not yet used for anything and I'm not sure how it is
+best to be implemented. I thought about simply saving the current HEAD
+into some .git/refs/heads/<file>, without preserving any history for
+the patch. A gitk on this file would show the patches as they were on
+the time of the snapshot creation. A new snapshot would remove this.
 
-Correct? If yes: This is fantastic! It obsoletes my dumb script.
+It might be best for a per-patch history to have a separate file in
+<branch>/<patch>/, maybe called freeze, which keeps this history
+information. The top one should remain unchanged. Its hash could be
+accessed with the 'stg id /freeze' command (implemented
+yesterday). This file would only be updated via the 'freeze' command
+and its parent would be the previous freeze value.
 
-On Fri, 19 Aug 2005, Junio C Hamano wrote:
+Would this be close to what you need?
 
-> However, suppose then I were Joe Random, an individual netdev
-> contributor who is interested in these two netdev branches.
-> Upon seeing the pull request, I might decide it is a good time
-> to get changes from there, my upstream.
-> 
->     $ git pull jgarzik/netdev-2.6.git/ sis190:sis190 e100:e100
-> 
-> Because I am keeping track of copies of these two branches, I
-> use "sis190:sis190 e100:e100" to update my local heads.
-
-I propose a "--separate" flag to git pull. This would do exactly the same 
-as a plain git pull, but for each fetched branch which could not be 
-fast-forwarded
-
-	- try to switch to the branch (dying if it is not the current,
-	  and the working tree is dirty)
-
-	- try a merge
-
-	- if the merge fails, reset the branch to original state,
-	  write out a temporary head and output a warning
-
-After that, it would switch back to the original branch and check that 
-out.
-
-For all failed merges, the user needs to "git resolve" (the exact command 
-line could be output by "git pull --separate").
-
-Ciao,
-Dscho
+-- 
+Catalin
