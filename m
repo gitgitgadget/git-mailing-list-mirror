@@ -1,76 +1,63 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH] git-rev-list: avoid crash on broken repository
-Date: Fri, 19 Aug 2005 22:28:35 +0400
-Message-ID: <20050819182835.GA12057@procyon.home>
+From: Jan Veldeman <jan.veldeman@gmail.com>
+Subject: Re: [RFC] Stgit - patch history / add extra parents
+Date: Fri, 19 Aug 2005 21:48:32 +0200
+Message-ID: <20050819194832.GA8562@fanta>
+References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 20:28:45 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 21:47:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6Bbh-00037i-1G
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 20:28:45 +0200
+	id 1E6Coz-0004cu-J2
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 21:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932665AbVHSS2l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 14:28:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932678AbVHSS2l
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 14:28:41 -0400
-Received: from master.altlinux.ru ([62.118.250.235]:47882 "EHLO
-	master.altlinux.org") by vger.kernel.org with ESMTP id S932665AbVHSS2l
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 14:28:41 -0400
-Received: from procyon.home (localhost.localdomain [127.0.0.1])
-	by master.altlinux.org (Postfix) with ESMTP
-	id CD467E4732; Fri, 19 Aug 2005 22:28:39 +0400 (MSD)
-Received: by procyon.home (Postfix, from userid 500)
-	id 4DD52E49D54; Fri, 19 Aug 2005 22:28:35 +0400 (MSD)
-To: Junio C Hamano <junkio@cox.net>
+	id S965084AbVHSTq2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 15:46:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965090AbVHSTq2
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 15:46:28 -0400
+Received: from wproxy.gmail.com ([64.233.184.207]:26719 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S965084AbVHSTq2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2005 15:46:28 -0400
+Received: by wproxy.gmail.com with SMTP id i2so675644wra
+        for <git@vger.kernel.org>; Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=MZKvwR0xOsbsCMQhx9nPM0piimpqSp5cCT+xW7ZWIphQm+6L+lPhSPpqiBMPq5+NcxSWY9iGy3HbmNQIsQ67fQdtb3Dp1X0xtMHBfJp2w+f0LzncRKCNIBen3nl3x17dpb8wgBb7DHwE66sRpq6Bcvwyl662B79P7U+PxqLDhYw=
+Received: by 10.54.158.19 with SMTP id g19mr2120615wre;
+        Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
+Received: from localhost ([84.195.185.241])
+        by mx.gmail.com with ESMTP id 11sm1311650wrl.2005.08.19.12.46.18;
+        Fri, 19 Aug 2005 12:46:20 -0700 (PDT)
+To: Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <tnx64u2p81k.fsf@arm.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+Catalin Marinas wrote:
 
---d6Gm4EdcadzBjdND
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> 
+> The patch history feature was available in StGIT 0.1/0.2 releases
+> where you should have run a 'stg commit' before 'stg refresh'. The
+> commit was handling all the history changes, with separate commit
+> messages and refresh was updating the main commit with 2 parents. I
+> removed it in 0.3 after some people (I think it was Paul Jackson and
+> Daniel Barkalow) convinced me that this would make it yet another SCM
+> interface on top of GIT, which wasn't really my intention.
 
-When following tags, check for parse_object() success and error out
-properly instead of segfaulting.
+I've quickly reread the threads about stg commit. Am I right to assume that
+_all_ history was being recorded? Because this is not what I want. The
+person controlling the archive should specify when to record the history.
 
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
----
+So for example, you only tag (freeze) the history when exporting the
+patches.  When an error is being reported on that version, it's easy to view
+it and also view the progress that was already been made on those patches.
 
- rev-list.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
 
-f4ec41063d2f43b06b7c8e511108b4c9bf9e6ebe
-diff --git a/rev-list.c b/rev-list.c
---- a/rev-list.c
-+++ b/rev-list.c
-@@ -418,6 +418,8 @@ static struct commit *get_commit_referen
- 		if (tag_objects && !(object->flags & UNINTERESTING))
- 			add_pending_object(object, tag->tag);
- 		object =3D parse_object(tag->tagged->sha1);
-+		if (!object)
-+			die("bad object %s", sha1_to_hex(tag->tagged->sha1));
- 	}
-=20
- 	/*
-
---d6Gm4EdcadzBjdND
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQFDBiTTW82GfkQfsqIRAjVpAJ4pTN4ucZvBmIkfc6Q/F4MWXBbJHACdHFNF
-Od69VAeOTZqLzq4RjllyBMU=
-=Sosz
------END PGP SIGNATURE-----
-
---d6Gm4EdcadzBjdND--
+Best regards,
+Jan
