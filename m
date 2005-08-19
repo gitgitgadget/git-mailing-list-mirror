@@ -1,62 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Spell __attribute__ correctly in cache.h.
-Date: Fri, 19 Aug 2005 02:04:54 -0700
-Message-ID: <7vk6ii1emh.fsf@assigned-by-dhcp.cox.net>
-References: <812.1124424608@lotus.CS.Berkeley.EDU>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Multi-head fetches, pulls, and a King Ghidorah
+Date: Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508191039460.11916@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <7vy86y1ibg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 11:06:20 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 11:15:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E62o7-0007b3-9b
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 11:04:59 +0200
+	id 1E62xr-0001aS-Ba
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 11:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932552AbVHSJE4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 05:04:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932554AbVHSJE4
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 05:04:56 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:39318 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932552AbVHSJE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 05:04:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050819090455.ROR17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 19 Aug 2005 05:04:55 -0400
-To: Jason Riedy <ejr@cs.berkeley.edu>
-In-Reply-To: <812.1124424608@lotus.CS.Berkeley.EDU> (Jason Riedy's message of
-	"Thu, 18 Aug 2005 21:10:08 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932555AbVHSJO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 05:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932563AbVHSJO4
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 05:14:56 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:17547 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S932555AbVHSJOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 05:14:55 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id AB175136929; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8DF71B09AD; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 72779B09A2; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 564F6136929; Fri, 19 Aug 2005 11:14:54 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vy86y1ibg.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Jason Riedy <ejr@cs.berkeley.edu> writes:
+Hi,
 
-> Sun's cc doesn't know __attribute__.
+If I understand correctly, the multi-head fetch would not write any ref if 
+used like this:
 
-It turns out that your patch breaks GCC build (#ifndef
-__attribute__ is true there, and it should be---what it does
-cannot be done in preprocessor alone).  I am going to work it
-around like this.  Could you try it with Sun cc please?
+	git fetch remote:repository/ head tail
 
----
-diff --git a/cache.h b/cache.h
---- a/cache.h
-+++ b/cache.h
-@@ -38,11 +38,10 @@
- #define NORETURN __attribute__((__noreturn__))
- #else
- #define NORETURN
--#endif
--
- #ifndef __attribute__
- #define __attribute__(x)
- #endif
-+#endif
- 
- /*
-  * Intensive research over the course of many years has shown that
+but it would try a fast-forward when used like this:
+
+	git fetch remote:repository/ head:head tail:tail
+
+Correct? If yes: This is fantastic! It obsoletes my dumb script.
+
+On Fri, 19 Aug 2005, Junio C Hamano wrote:
+
+> However, suppose then I were Joe Random, an individual netdev
+> contributor who is interested in these two netdev branches.
+> Upon seeing the pull request, I might decide it is a good time
+> to get changes from there, my upstream.
+> 
+>     $ git pull jgarzik/netdev-2.6.git/ sis190:sis190 e100:e100
+> 
+> Because I am keeping track of copies of these two branches, I
+> use "sis190:sis190 e100:e100" to update my local heads.
+
+I propose a "--separate" flag to git pull. This would do exactly the same 
+as a plain git pull, but for each fetched branch which could not be 
+fast-forwarded
+
+	- try to switch to the branch (dying if it is not the current,
+	  and the working tree is dirty)
+
+	- try a merge
+
+	- if the merge fails, reset the branch to original state,
+	  write out a temporary head and output a warning
+
+After that, it would switch back to the original branch and check that 
+out.
+
+For all failed merges, the user needs to "git resolve" (the exact command 
+line could be output by "git pull --separate").
+
+Ciao,
+Dscho
