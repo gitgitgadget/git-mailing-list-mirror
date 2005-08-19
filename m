@@ -1,101 +1,76 @@
-From: Jan Veldeman <jan.veldeman@gmail.com>
-Subject: Re: [RFC] Stgit - patch history / add extra parents
-Date: Fri, 19 Aug 2005 20:27:32 +0200
-Message-ID: <20050819182732.GA5512@fanta>
-References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: [PATCH] git-rev-list: avoid crash on broken repository
+Date: Fri, 19 Aug 2005 22:28:35 +0400
+Message-ID: <20050819182835.GA12057@procyon.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 20:27:09 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 20:28:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6BYk-0002VQ-TG
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 20:25:43 +0200
+	id 1E6Bbh-00037i-1G
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 20:28:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932487AbVHSSZW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 14:25:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932548AbVHSSZW
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 14:25:22 -0400
-Received: from wproxy.gmail.com ([64.233.184.198]:49028 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932487AbVHSSZW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Aug 2005 14:25:22 -0400
-Received: by wproxy.gmail.com with SMTP id i24so563547wra
-        for <git@vger.kernel.org>; Fri, 19 Aug 2005 11:25:15 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=IeHkRXr3VzZx9jNu8nrle9Xl0Z+s5YjYMYxaSxgVRR7Dmr3TS5ozi+krLTZ7l57l5uDVXhM9rD3eYOQNtDW0/zCrDI3g/90qen9cyg6UuzL9Wckw6zDPhzUcExLN2+fMNzvwgDnL5X1JsuCG8uj/ORGtscOqgWuXyiZHAfW18As=
-Received: by 10.54.142.2 with SMTP id p2mr2008439wrd;
-        Fri, 19 Aug 2005 11:25:14 -0700 (PDT)
-Received: from localhost ([84.195.185.241])
-        by mx.gmail.com with ESMTP id 45sm2821724wri.2005.08.19.11.25.13;
-        Fri, 19 Aug 2005 11:25:14 -0700 (PDT)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S932665AbVHSS2l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 14:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932678AbVHSS2l
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 14:28:41 -0400
+Received: from master.altlinux.ru ([62.118.250.235]:47882 "EHLO
+	master.altlinux.org") by vger.kernel.org with ESMTP id S932665AbVHSS2l
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 14:28:41 -0400
+Received: from procyon.home (localhost.localdomain [127.0.0.1])
+	by master.altlinux.org (Postfix) with ESMTP
+	id CD467E4732; Fri, 19 Aug 2005 22:28:39 +0400 (MSD)
+Received: by procyon.home (Postfix, from userid 500)
+	id 4DD52E49D54; Fri, 19 Aug 2005 22:28:35 +0400 (MSD)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <tnx64u2p81k.fsf@arm.com>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Catalin Marinas wrote:
 
-> 
-> The patch history feature was available in StGIT 0.1/0.2 releases
-> where you should have run a 'stg commit' before 'stg refresh'. The
-> commit was handling all the history changes, with separate commit
-> messages and refresh was updating the main commit with 2 parents. I
-> removed it in 0.3 after some people (I think it was Paul Jackson and
-> Daniel Barkalow) convinced me that this would make it yet another SCM
-> interface on top of GIT, which wasn't really my intention.
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-hmm, I must have misted those threads, I'll try to find and read them.
+When following tags, check for parse_object() success and error out
+properly instead of segfaulting.
 
-> 
-> The main problem with having multiple parents for a commit object
-> corresponding to a patch is the upstream merging via 'git pull'. In
-> general you don't want a gatekeeper to pull the history of your patch
-> but the patch only.
+Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
+---
 
-I agree that such history should not be imported into the mainline, but such
-history would still be very usefull when these patches won't be pushed to
-mailine immediately. Also, when pushing to mainline, this history can easily
-be removed by removing the branch/patch/parent files and refreshing (this
-should off course be automated)
+ rev-list.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-> 
-> > The patch below, together with the following script could be used to
-> > make snapshots of the patch stack (I call it freeze, as I thought snapshot
-> > was already going to be used for something else):
-> 
-> 'snapshot' is not yet used for anything and I'm not sure how it is
-> best to be implemented. I thought about simply saving the current HEAD
-> into some .git/refs/heads/<file>, without preserving any history for
-> the patch. A gitk on this file would show the patches as they were on
-> the time of the snapshot creation. A new snapshot would remove this.
-> 
-> It might be best for a per-patch history to have a separate file in
-> <branch>/<patch>/, maybe called freeze, which keeps this history
-> information. The top one should remain unchanged. Its hash could be
-> accessed with the 'stg id /freeze' command (implemented
-> yesterday). This file would only be updated via the 'freeze' command
-> and its parent would be the previous freeze value.
-> 
-> Would this be close to what you need?
-> 
+f4ec41063d2f43b06b7c8e511108b4c9bf9e6ebe
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -418,6 +418,8 @@ static struct commit *get_commit_referen
+ 		if (tag_objects && !(object->flags & UNINTERESTING))
+ 			add_pending_object(object, tag->tag);
+ 		object =3D parse_object(tag->tagged->sha1);
++		if (!object)
++			die("bad object %s", sha1_to_hex(tag->tagged->sha1));
+ 	}
+=20
+ 	/*
 
-hmm, not exactly, for example, when reordering the patches (including the
-top one), I would like to see this in gitk.
-Or when a patch has been dropped (amongst a lot of patches), it should be
-easily spotted.
+--d6Gm4EdcadzBjdND
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
 
-But even if the "stg-freeze" would not be incorporated into stgit, would it
-still be possible to include some sort of extra parents directory. So that
-the freeze can be implemented on top of stgit?
+iD8DBQFDBiTTW82GfkQfsqIRAjVpAJ4pTN4ucZvBmIkfc6Q/F4MWXBbJHACdHFNF
+Od69VAeOTZqLzq4RjllyBMU=
+=Sosz
+-----END PGP SIGNATURE-----
 
-TIA
-
-Best regards,
-Jan
+--d6Gm4EdcadzBjdND--
