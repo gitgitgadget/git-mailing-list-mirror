@@ -1,58 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Importing from a patch-oriented SCM
-Date: Fri, 19 Aug 2005 00:49:43 -0700
-Message-ID: <7vslx61i3s.fsf@assigned-by-dhcp.cox.net>
-References: <46a038f9050819000417ed436e@mail.gmail.com>
+From: Marco Costalba <mcostalba@yahoo.it>
+Subject: Fix git-mailinfo to understand empty commit messages
+Date: Fri, 19 Aug 2005 00:59:41 -0700 (PDT)
+Message-ID: <20050819075941.89094.qmail@web26308.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 19 09:51:48 2005
+X-From: git-owner@vger.kernel.org Fri Aug 19 10:03:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E61dY-00081b-O1
-	for gcvg-git@gmane.org; Fri, 19 Aug 2005 09:50:01 +0200
+	id 1E61n2-0002XC-Fa
+	for gcvg-git@gmane.org; Fri, 19 Aug 2005 09:59:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964908AbVHSHtp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 19 Aug 2005 03:49:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964905AbVHSHtp
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 03:49:45 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:17808 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S964908AbVHSHto (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Aug 2005 03:49:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050819074943.YZAV8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 19 Aug 2005 03:49:43 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f9050819000417ed436e@mail.gmail.com> (Martin Langhoff's
-	message of "Fri, 19 Aug 2005 19:04:24 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S964916AbVHSH7r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 19 Aug 2005 03:59:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964918AbVHSH7r
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Aug 2005 03:59:47 -0400
+Received: from web26308.mail.ukl.yahoo.com ([217.146.176.19]:43909 "HELO
+	web26308.mail.ukl.yahoo.com") by vger.kernel.org with SMTP
+	id S964916AbVHSH7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Aug 2005 03:59:46 -0400
+Received: (qmail 89096 invoked by uid 60001); 19 Aug 2005 07:59:41 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Message-ID:Received:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=bH4pQP0o9c3+ALIHYD0PxrqZtlo4I+veiA7OuPKH66RFMMCj7lC5xwR2YL7wRqiXEfm5zQ3lWTVbwtRUIS3USAp4XtwgGeHONwSSDEF0Gsa5SnxA55hFcOzJUdIA/S3Sjik4atj2Rn8NEFF0aAXiLMeAR2SoTAwftAMwUZ5EaU8=  ;
+Received: from [151.42.100.234] by web26308.mail.ukl.yahoo.com via HTTP; Fri, 19 Aug 2005 00:59:41 PDT
+To: junkio@cox.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+In case of empty messages git-mailinfo ignores the "---"
+line adding dirty stuff in commit message otherwise empty
 
-> If I remember correctly, Junio added some stuff in the merge & rebase
-> code that will identify if a particular patch has been seen and
-> applied, and skip it even if it's a bit out of order. But I don't know
+Signed-off-by: Marco Costalba <mcostalba@yahoo.it>
 
-I think you are talking about git-patch-id.
+---
 
-f97672225b3b1a2ca57cfc16f49239bed1efcd87
-Author: Linus Torvalds <torvalds@ppc970.osdl.org>
-Date:   Thu Jun 23 15:06:04 2005 -0700
+ tools/mailinfo.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-    Add "git-patch-id" program to generate patch ID's.
+1ebfddf05e4655811157028091d03dfce39cc4f0
+diff --git a/tools/mailinfo.c b/tools/mailinfo.c
+--- a/tools/mailinfo.c
++++ b/tools/mailinfo.c
+@@ -273,6 +273,12 @@ int main(int argc, char ** argv)
+ 	}
+ 	while (1) {
+ 		int len = read_one_header_line(line, sizeof(line), stdin);
++		/* Check for empty messages */
++		if (!memcmp("---", line, 3)) {
++			line[len] = '\n';
++			handle_rest();
++			break;
++		}
+ 		if (!len) {
+ 			handle_body();
+ 			break;
 
-    A "patch ID" is nothing but a SHA1 of the diff associated
-    with a patch, with whitespace and line numbers ignored.  As
-    such, it's "reasonably stable", but at the same time also
-    reasonably unique, ie two patches that have the same "patch
-    ID" are almost guaranteed to be the same thing.
 
-    IOW, you can use this thing to look for likely duplicate
-    commits.
+
+
+		
+____________________________________________________
+Start your day with Yahoo! - make it your home page 
+http://www.yahoo.com/r/hs 
+ 
