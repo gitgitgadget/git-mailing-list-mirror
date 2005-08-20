@@ -1,73 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: My GIT Day
-Date: Sat, 20 Aug 2005 13:02:03 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508201254040.32350@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7vy86y1ibg.fsf@assigned-by-dhcp.cox.net> <7voe7tqpae.fsf@assigned-by-dhcp.cox.net>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: "Publishing your work" questions?
+Date: Sat, 20 Aug 2005 14:57:00 +0100
+Message-ID: <200508201457.00725.alan@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 20 13:02:55 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Sat Aug 20 15:58:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6R7E-00042t-Ep
-	for gcvg-git@gmane.org; Sat, 20 Aug 2005 13:02:20 +0200
+	id 1E6TqQ-0007Wb-Dc
+	for gcvg-git@gmane.org; Sat, 20 Aug 2005 15:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbVHTLCI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Aug 2005 07:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbVHTLCI
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 07:02:08 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:29361 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751244AbVHTLCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2005 07:02:06 -0400
-Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CE12F139102; Sat, 20 Aug 2005 13:02:03 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AABCCB0A50; Sat, 20 Aug 2005 13:02:03 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 8D294A4937; Sat, 20 Aug 2005 13:02:03 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx68.rz.uni-wuerzburg.de [132.187.3.68])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 28D56139102; Sat, 20 Aug 2005 13:02:03 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7voe7tqpae.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932242AbVHTN46 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 20 Aug 2005 09:56:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932247AbVHTN45
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 09:56:57 -0400
+Received: from 82-44-22-127.cable.ubr06.croy.blueyonder.co.uk ([82.44.22.127]:61837
+	"EHLO home.chandlerfamily.org.uk") by vger.kernel.org with ESMTP
+	id S932242AbVHTN45 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Aug 2005 09:56:57 -0400
+Received: from kanger.home ([192.168.0.21])
+	by home.chandlerfamily.org.uk with esmtp (Exim 4.50)
+	id 1E6TqC-0000uB-NK
+	for git@vger.kernel.org; Sat, 20 Aug 2005 14:56:56 +0100
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.1
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I am planning my way through switching over to using git (as opposed to=
+=20
+subversion - via svnserve) to publish some stuff.
 
-On Fri, 19 Aug 2005, Junio C Hamano wrote:
+At the moment I leave a hole in my firewall for port 3690 and svnserve =
+is run=20
+as a daemon from inetd. =A0I use svnserve's own user/realm management t=
+o limit=20
+the repositories I make public.
 
->     $ git checkout pu
->     $ git reset master
-> 
-> This checks out the head of "pu" branch, and then resets the
-> index file to match "master" and updates .git/refs/heads/pu.
-> 
-> What it does _not_ do is to update my working tree to match the
-> index file.  Linus recommends to do "git checkout -f" at this
-> point, but I typically do this instead:
-> 
->     $ git diff -R -p | git apply
-> 
-> Note.  This is an embarrassingly expensive way; the only thing
-> it buys me over "git checkout -f" is that it removes the files
-> that were introduced in "pu" branch that did not exist in the
-> "master" head.  I have to come up with a not so expensive way to
-> do this.
+If I switch over to git, I assume I run git-daemon from inetd.
 
-How about this?
+BUT
 
-  $ git reset master
-  $ rm -i $(git-diff-tree ORIG_HEAD HEAD | grep "^.\{97\}D" | cut -c 100-)
-  $ git checkout -f
+a) Is this what the git://my.domain.com/path/to/repository url refers t=
+o=20
+(neither get-pull-script nor git-fetch-script man pages actually say wh=
+at=20
+this form means) ?
 
-Ciao,
-Dscho
+b) I can't find any mention in the documentation of what the default po=
+rt=20
+should be. What is it?
+
+c) Is git-daemon multithreaded (ie do I use nowait in inetd.conf)?
+
+d) Is it possible to ensure that external accesses can't access anywher=
+e in my=20
+filesystem?=20
+
+e) If I put my public key in ~git/.ssh/authorized_keys on the server, I=
+ can=20
+act as user git on the server via ssh. =A0Does git push support this? =A0
+
+f) If I can do e), then perhaps [need to read the docs a bit harder] I =
+can set=20
+up my user git on the machine to use git-receive-pack as its login shel=
+l. =A0
+Will this work? - the tutorial talks about needing .bashrc to set up th=
+e=20
+$PATH environment, but are there any other hidden gotchas?
+
+--=20
+Alan Chandler
+http://www.chandlerfamily.org.uk
