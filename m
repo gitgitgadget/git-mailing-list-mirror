@@ -1,187 +1,66 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Retire git-parse-remote.
-Date: Sat, 20 Aug 2005 11:25:26 -0700
-Message-ID: <7vhddkmpnt.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Make "git pull" and "git fetch" default to origin
+Date: Sat, 20 Aug 2005 11:25:30 -0700
+Message-ID: <7v64u0mpnp.fsf@assigned-by-dhcp.cox.net>
 References: <7vvf20o4sp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Aug 20 20:25:57 2005
+X-From: git-owner@vger.kernel.org Sat Aug 20 20:26:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6Y2A-0003tv-NL
-	for gcvg-git@gmane.org; Sat, 20 Aug 2005 20:25:35 +0200
+	id 1E6Y2B-0003tv-R7
+	for gcvg-git@gmane.org; Sat, 20 Aug 2005 20:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932668AbVHTSZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Aug 2005 14:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932670AbVHTSZ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 14:25:28 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65522 "EHLO
+	id S932671AbVHTSZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Aug 2005 14:25:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932673AbVHTSZd
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 14:25:33 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:4595 "EHLO
 	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932668AbVHTSZ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2005 14:25:28 -0400
+	id S932671AbVHTSZb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2005 14:25:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
           by fed1rmmtao10.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050820182527.FGNT1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 20 Aug 2005 14:25:27 -0400
+          id <20050820182531.FGOD1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 20 Aug 2005 14:25:31 -0400
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Update git-pull to match updated git-fetch and allow pull to
-fetch from multiple remote references.  There is no support for
-resolving more than two heads, which will be done with "git
-octopus".
+Amos Waterland sent in a patch for the pre-multi-head aware
+version of "git pull" to do this, but the code changed quite a
+bit since then.  If there is no argument given to pull from, and
+if "origin" makes sense, default to fetch/pull from "origin"
+instead of barfing.
 
-Update "git ls-remote" to use git-parse-remote-script.
+[jc: besides, the patch by Amos broke the non-default case where
+explicit refspecs are specified, and did not make sure we know
+what "origin" means before defaulting to it.]
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- Makefile             |    2 +
- git-ls-remote-script |    4 +--
- git-parse-remote     |   79 --------------------------------------------------
- git-pull-script      |   14 ++++++---
- 4 files changed, 12 insertions(+), 87 deletions(-)
- delete mode 100755 git-parse-remote
+ git-fetch-script |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-07c44b628e605c4e7fead8ff9e191711b7abe301
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -64,7 +64,7 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-reset-script git-add-script git-checkout-script git-clone-script \
- 	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
- 	git-format-patch-script git-sh-setup-script git-push-script \
--	git-branch-script git-parse-remote git-parse-remote-script git-verify-tag-script \
-+	git-branch-script git-parse-remote-script git-verify-tag-script \
- 	git-ls-remote-script git-clone-dumb-http git-rename-script \
- 	git-request-pull-script git-bisect-script
- 
-diff --git a/git-ls-remote-script b/git-ls-remote-script
---- a/git-ls-remote-script
-+++ b/git-ls-remote-script
-@@ -29,8 +29,8 @@ case ",$heads,$tags," in
- ,,,) heads=heads tags=tags other=other ;;
- esac
- 
--. git-parse-remote "$1"
--peek_repo="$_remote_repo"
-+. git-parse-remote-script
-+peek_repo="$(get_remote_url)"
- shift
- 
- tmp=.ls-remote-$$
-diff --git a/git-parse-remote b/git-parse-remote
-deleted file mode 100755
---- a/git-parse-remote
-+++ /dev/null
-@@ -1,79 +0,0 @@
--: To be included in git-pull and git-fetch scripts.
--
--# A remote repository can be specified on the command line
--# in one of the following formats:
--#
--#	<repo>
--#	<repo> <head>
--#	<repo> tag <tag>
--#
--# where <repo> could be one of:
--#
--#	a URL (including absolute or local pathname)
--#	a short-hand
--#	a short-hand followed by a trailing path
--#
--# A short-hand <name> has a corresponding file $GIT_DIR/branches/<name>,
--# whose contents is a URL, possibly followed by a URL fragment #<head>
--# to name the default branch on the remote side to fetch from.
--
--_remote_repo= _remote_store= _remote_head= _remote_name=
--
--case "$1" in
--*:* | /* | ../* | ./* )
--	_remote_repo="$1"
--	;;
--* )
--	# otherwise, it is a short hand.
--	case "$1" in
--	*/*)
--		# a short-hand followed by a trailing path
--		_token=$(expr "$1" : '\([^/]*\)/')
--		_rest=$(expr "$1" : '[^/]*\(/.*\)$')
--		;;
--	*)
--		_token="$1"
--		_rest=
--		_remote_store="refs/heads/$_token"
--		;;
--	esac
--	test -f "$GIT_DIR/branches/$_token" ||
--	die "No such remote branch: $_token"
--
--	_remote_repo=$(cat "$GIT_DIR/branches/$_token")"$_rest"
--	;;
--esac
--
--case "$_remote_repo" in
--*"#"*)
--	_remote_head=`expr "$_remote_repo" : '.*#\(.*\)$'`
--	_remote_repo=`expr "$_remote_repo" : '\(.*\)#'`
--	;;
--esac
--
--_remote_name=$(echo "$_remote_repo" | sed 's|\.git/*$||')
--
--case "$2" in
--tag)
--	_remote_name="tag '$3' of $_remote_name"
--	_remote_head="refs/tags/$3"
--	_remote_store="$_remote_head"
--	;;
--?*)
--	# command line specified a head explicitly; do not
--	# store the fetched head as a branch head.
--	_remote_name="head '$2' of $_remote_name"
--	_remote_head="refs/heads/$2"
--	_remote_store=''
--	;;
--'')
--	case "$_remote_head" in
--	'')
--		_remote_head=HEAD ;;
--	*)
--		_remote_name="head '$_remote_head' of $_remote_name"
--		_remote_head="refs/heads/$_remote_head"
--		;;
--	esac
--	;;
--esac
-diff --git a/git-pull-script b/git-pull-script
---- a/git-pull-script
-+++ b/git-pull-script
-@@ -1,12 +1,16 @@
- #!/bin/sh
- #
- . git-sh-setup-script || die "Not a git archive"
--. git-parse-remote "$@"
--merge_name="$_remote_name"
--
- git-fetch-script "$@" || exit 1
-+merge_head=$(sed -e 's/	.*//' "$GIT_DIR"/FETCH_HEAD | tr '\012' ' ')
-+merge_name=$(sed -e 's/^[0-9a-f]*	//' "$GIT_DIR"/FETCH_HEAD |
-+	 tr '\012' ' ')
-+
-+case "$merge_head" in
-+'' | *' '?*) die "Cannot resolve multiple heads at the same time (yet)." ;;
-+esac
-+
- 
- git-resolve-script \
- 	"$(cat "$GIT_DIR"/HEAD)" \
--	"$(cat "$GIT_DIR"/FETCH_HEAD)" \
--	"Merge $merge_name"
-+	$merge_head "Merge $merge_name"
+6d8fcdbf772f4fc4ec7ae67630b52bc8a07d7b6d
+diff --git a/git-fetch-script b/git-fetch-script
+--- a/git-fetch-script
++++ b/git-fetch-script
+@@ -8,7 +8,10 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x4
+ append=
+ case "$#" in
+ 0)
+-	die "Where do you want to fetch from?" ;;
++	test -f "$GIT_DIR/branches/origin" ||
++		test -f "$GIT_DIR/remotes/origin" ||
++			die "Where do you want to fetch from?"
++	set origin ;;
+ *)
+ 	case "$1" in
+ 	-a|--a|--ap|--app|--appe|--appen|--append)
