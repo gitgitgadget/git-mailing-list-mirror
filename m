@@ -1,295 +1,187 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Multi-head fetch.
-Date: Sat, 20 Aug 2005 11:25:24 -0700
-Message-ID: <7vmzncmpnv.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Retire git-parse-remote.
+Date: Sat, 20 Aug 2005 11:25:26 -0700
+Message-ID: <7vhddkmpnt.fsf@assigned-by-dhcp.cox.net>
 References: <7vvf20o4sp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Aug 20 20:25:58 2005
+X-From: git-owner@vger.kernel.org Sat Aug 20 20:25:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6Y29-0003tv-VD
-	for gcvg-git@gmane.org; Sat, 20 Aug 2005 20:25:34 +0200
+	id 1E6Y2A-0003tv-NL
+	for gcvg-git@gmane.org; Sat, 20 Aug 2005 20:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932667AbVHTSZ0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 20 Aug 2005 14:25:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932668AbVHTSZ0
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 14:25:26 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:48615 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S932667AbVHTSZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Aug 2005 14:25:25 -0400
+	id S932668AbVHTSZ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 20 Aug 2005 14:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932670AbVHTSZ2
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Aug 2005 14:25:28 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:65522 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932668AbVHTSZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Aug 2005 14:25:28 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
+          by fed1rmmtao10.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050820182525.WXPS19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Sat, 20 Aug 2005 14:25:25 -0400
+          id <20050820182527.FGNT1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Sat, 20 Aug 2005 14:25:27 -0400
 To: git@vger.kernel.org
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Traditionally, fetch takes these forms:
+Update git-pull to match updated git-fetch and allow pull to
+fetch from multiple remote references.  There is no support for
+resolving more than two heads, which will be done with "git
+octopus".
 
-    $ git fetch <remote>
-    $ git fetch <remote> <head>
-    $ git fetch <remote> tag <tag>
-
-This patch updates it to take
-
-    $ git fetch <remote> <refspec>...
-
-where:
-
-    - A <refspec> of form "<src>:<dst>" is to fetch the objects
-      needed for the remote ref that matches <src>, and if <dst>
-      is not empty, store it as a local <dst>.
-
-    - "tag" followed by <next> is just an old way of saying
-      "refs/tags/<next>:refs/tags/<next>"; this mimics the
-      current behaviour of the third form above and means "fetch
-      that tag and store it under the same name".
-
-    - A single token <refspec> without colon is a shorthand for
-      "<refspec>:"  That is, "fetch that ref but do not store
-      anywhere".
-
-    - when there is no <refspec> specified
-
-      - if <remote> is the name of a file under $GIT_DIR/remotes/
-	(i.e. a new-style shorthand), then it is the same as giving
-	the <refspec>s listed on Pull: line in that file.
-
-      - if <remote> is the name of a file under $GIT_DIR/branches/
-	(i.e. an old-style shorthand, without trailing path), then it
-	is the same as giving a single <refspec>
-	"<remote-name>:refs/heads/<remote>" on the command line, where
-	<remote-name> is the remote branch name (defaults to HEAD, but
-	can be overridden by .git/branches/<remote> file having the
-	URL fragment notation).  That is, "fetch that branch head and
-	store it in refs/heads/<remote>".
-
-      - otherwise, it is the same as giving a single <refspec>
-        that is "HEAD:".
-
-The SHA1 object names of fetched refs are stored in FETCH_HEAD,
-one name per line, with a comment to describe where it came from.
-This is later used by "git resolve" and "git octopus".
+Update "git ls-remote" to use git-parse-remote-script.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- git-fetch-script |  193 ++++++++++++++++++++++++++++++++++++++++++------------
- 1 files changed, 149 insertions(+), 44 deletions(-)
+ Makefile             |    2 +
+ git-ls-remote-script |    4 +--
+ git-parse-remote     |   79 --------------------------------------------------
+ git-pull-script      |   14 ++++++---
+ 4 files changed, 12 insertions(+), 87 deletions(-)
+ delete mode 100755 git-parse-remote
 
-d947289005049c67f1dded517a1a6a8843fcf4a3
-diff --git a/git-fetch-script b/git-fetch-script
---- a/git-fetch-script
-+++ b/git-fetch-script
-@@ -1,54 +1,159 @@
+07c44b628e605c4e7fead8ff9e191711b7abe301
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -64,7 +64,7 @@ SCRIPTS=git git-apply-patch-script git-m
+ 	git-reset-script git-add-script git-checkout-script git-clone-script \
+ 	gitk git-cherry git-rebase-script git-relink-script git-repack-script \
+ 	git-format-patch-script git-sh-setup-script git-push-script \
+-	git-branch-script git-parse-remote git-parse-remote-script git-verify-tag-script \
++	git-branch-script git-parse-remote-script git-verify-tag-script \
+ 	git-ls-remote-script git-clone-dumb-http git-rename-script \
+ 	git-request-pull-script git-bisect-script
+ 
+diff --git a/git-ls-remote-script b/git-ls-remote-script
+--- a/git-ls-remote-script
++++ b/git-ls-remote-script
+@@ -29,8 +29,8 @@ case ",$heads,$tags," in
+ ,,,) heads=heads tags=tags other=other ;;
+ esac
+ 
+-. git-parse-remote "$1"
+-peek_repo="$_remote_repo"
++. git-parse-remote-script
++peek_repo="$(get_remote_url)"
+ shift
+ 
+ tmp=.ls-remote-$$
+diff --git a/git-parse-remote b/git-parse-remote
+deleted file mode 100755
+--- a/git-parse-remote
++++ /dev/null
+@@ -1,79 +0,0 @@
+-: To be included in git-pull and git-fetch scripts.
+-
+-# A remote repository can be specified on the command line
+-# in one of the following formats:
+-#
+-#	<repo>
+-#	<repo> <head>
+-#	<repo> tag <tag>
+-#
+-# where <repo> could be one of:
+-#
+-#	a URL (including absolute or local pathname)
+-#	a short-hand
+-#	a short-hand followed by a trailing path
+-#
+-# A short-hand <name> has a corresponding file $GIT_DIR/branches/<name>,
+-# whose contents is a URL, possibly followed by a URL fragment #<head>
+-# to name the default branch on the remote side to fetch from.
+-
+-_remote_repo= _remote_store= _remote_head= _remote_name=
+-
+-case "$1" in
+-*:* | /* | ../* | ./* )
+-	_remote_repo="$1"
+-	;;
+-* )
+-	# otherwise, it is a short hand.
+-	case "$1" in
+-	*/*)
+-		# a short-hand followed by a trailing path
+-		_token=$(expr "$1" : '\([^/]*\)/')
+-		_rest=$(expr "$1" : '[^/]*\(/.*\)$')
+-		;;
+-	*)
+-		_token="$1"
+-		_rest=
+-		_remote_store="refs/heads/$_token"
+-		;;
+-	esac
+-	test -f "$GIT_DIR/branches/$_token" ||
+-	die "No such remote branch: $_token"
+-
+-	_remote_repo=$(cat "$GIT_DIR/branches/$_token")"$_rest"
+-	;;
+-esac
+-
+-case "$_remote_repo" in
+-*"#"*)
+-	_remote_head=`expr "$_remote_repo" : '.*#\(.*\)$'`
+-	_remote_repo=`expr "$_remote_repo" : '\(.*\)#'`
+-	;;
+-esac
+-
+-_remote_name=$(echo "$_remote_repo" | sed 's|\.git/*$||')
+-
+-case "$2" in
+-tag)
+-	_remote_name="tag '$3' of $_remote_name"
+-	_remote_head="refs/tags/$3"
+-	_remote_store="$_remote_head"
+-	;;
+-?*)
+-	# command line specified a head explicitly; do not
+-	# store the fetched head as a branch head.
+-	_remote_name="head '$2' of $_remote_name"
+-	_remote_head="refs/heads/$2"
+-	_remote_store=''
+-	;;
+-'')
+-	case "$_remote_head" in
+-	'')
+-		_remote_head=HEAD ;;
+-	*)
+-		_remote_name="head '$_remote_head' of $_remote_name"
+-		_remote_head="refs/heads/$_remote_head"
+-		;;
+-	esac
+-	;;
+-esac
+diff --git a/git-pull-script b/git-pull-script
+--- a/git-pull-script
++++ b/git-pull-script
+@@ -1,12 +1,16 @@
  #!/bin/sh
  #
  . git-sh-setup-script || die "Not a git archive"
 -. git-parse-remote "$@"
--merge_repo="$_remote_repo"
--merge_head="$_remote_head"
--merge_store="$_remote_store"
+-merge_name="$_remote_name"
 -
--TMP_HEAD="$GIT_DIR/TMP_HEAD"
--
--case "$merge_repo" in
--http://* | https://*)
--        if [ -n "$GIT_SSL_NO_VERIFY" ]; then
--            curl_extra_args="-k"
--        fi
--	_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]' &&
--	_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40" &&
--	head=$(curl -nsf $curl_extra_args "$merge_repo/$merge_head") &&
--	expr "$head" : "$_x40\$" >/dev/null || {
--		echo >&2 "Failed to fetch $merge_head from $merge_repo"
--	        exit 1
--	}
--	echo Fetching "$merge_head" using http
--	git-http-pull -v -a "$head" "$merge_repo/" || exit
--	;;
--rsync://*)
--	rsync -L "$merge_repo/$merge_head" "$TMP_HEAD" || exit 1
--	head=$(git-rev-parse TMP_HEAD)
--	rm -f "$TMP_HEAD"
--	rsync -avz --ignore-existing "$merge_repo/objects/" "$GIT_OBJECT_DIRECTORY/"
--	;;
-+. git-parse-remote-script
-+_x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+ git-fetch-script "$@" || exit 1
++merge_head=$(sed -e 's/	.*//' "$GIT_DIR"/FETCH_HEAD | tr '\012' ' ')
++merge_name=$(sed -e 's/^[0-9a-f]*	//' "$GIT_DIR"/FETCH_HEAD |
++	 tr '\012' ' ')
 +
-+append=
-+case "$#" in
-+0)
-+	die "Where do you want to fetch from?" ;;
- *)
--	head=$(git-fetch-pack "$merge_repo" "$merge_head")
--	if h=`expr "$head" : '\([^ ][^ ]*\) '`
-+	case "$1" in
-+	-a|--a|--ap|--app|--appe|--appen|--append)
-+		append=t
-+		shift ;;
-+	esac
++case "$merge_head" in
++'' | *' '?*) die "Cannot resolve multiple heads at the same time (yet)." ;;
 +esac
-+remote_nick="$1"
-+remote=$(get_remote_url "$@")
-+refs=
-+rref=
-+rsync_slurped_objects=
 +
-+if test "" = "$append"
-+then
-+	: >$GIT_DIR/FETCH_HEAD
-+fi
-+
-+append_fetch_head () {
-+    head_="$1"
-+    remote_="$2"
-+    remote_name_="$3"
-+    remote_nick_="$4"
-+    local_name_="$5"
-+
-+    # 2.6.11-tree tag would not be happy to be fed to resolve.
-+    if git-cat-file commit "$head_" >/dev/null 2>&1
-+    then
-+	head_=$(git-rev-parse --verify "$head_^0") || exit
-+	note_="$head_	$remote_name_ from $remote_nick_"
-+	echo "$note_" >>$GIT_DIR/FETCH_HEAD
-+	echo >&2 "* committish: $note_"
-+    else
-+	echo >&2 "* non-commit: $note_"
-+    fi
-+    if test "$local_name_" != ""
-+    then
-+	# We are storing the head locally.  Make sure that it is
-+	# a fast forward (aka "reverse push").
-+	fast_forward_local "$local_name_" "$head_" "$remote_" "$remote_name_"
-+    fi
-+}
-+
-+fast_forward_local () {
-+    case "$1" in
-+    refs/tags/*)
-+	# Tags need not be pointing at commits so there
-+	# is no way to guarantee "fast-forward" anyway.
-+	echo "$2" >"$GIT_DIR/$1" ;;
-+    refs/heads/*)
-+	# NEEDSWORK: use the same cmpxchg protocol here.
-+	echo "$2" >"$GIT_DIR/$1.lock"
-+	if test -f "$GIT_DIR/$1"
- 	then
--	    head=$h
-+	    local=$(git-rev-parse --verify "$1^0") &&
-+	    mb=$(git-merge-base "$local" "$2") &&
-+	    case "$2,$mb" in
-+	    $local,*)
-+		echo >&2 "* $1: same as $4"
-+		echo >&2 "  from $3"
-+		;;
-+	    *,$local)
-+		echo >&2 "* $1: fast forward to $4"
-+		echo >&2 "  from $3"
-+		;;
-+	    *)
-+		false
-+		;;
-+	    esac || {
-+		mv "$GIT_DIR/$1.lock" "$GIT_DIR/$1.remote"
-+		echo >&2 "* $1: does not fast forward to $4"
-+		echo >&2 "  from $3; leaving it in '$1.remote'"
-+	    }
-+	else
-+		echo >&2 "* $1: storing $4"
-+		echo >&2 "  from $3."
- 	fi
-+	test -f "$GIT_DIR/$1.lock" &&
-+	    mv "$GIT_DIR/$1.lock" "$GIT_DIR/$1"
- 	;;
--esac || exit 1
--
--git-rev-parse --verify "$head" > /dev/null || exit 1
-+    esac
-+}
  
--case "$merge_store" in
--'')
-+for ref in $(get_remote_refs_for_fetch "$@")
-+do
-+    refs="$refs $ref"
-+
-+    # These are relative path from $GIT_DIR, typically starting at refs/
-+    # but may be HEAD
-+    remote_name=$(expr "$ref" : '\([^:]*\):')
-+    local_name=$(expr "$ref" : '[^:]*:\(.*\)')
-+
-+    rref="$rref $remote_name"
-+
-+    # There are transports that can fetch only one head at a time...
-+    case "$remote" in
-+    http://* | https://*)
-+	if [ -n "$GIT_SSL_NO_VERIFY" ]; then
-+	    curl_extra_args="-k"
-+	fi
-+	head=$(curl -nsf $curl_extra_args "$remote/$remote_name") &&
-+	expr "$head" : "$_x40\$" >/dev/null ||
-+	    die "Failed to fetch $remote_name from $remote"
-+	echo Fetching "$remote_name from $remote" using http
-+	git-http-pull -v -a "$head" "$remote/" || exit
- 	;;
-+    rsync://*)
-+	TMP_HEAD="$GIT_DIR/TMP_HEAD"
-+	rsync -L "$remote/$remote_name" "$TMP_HEAD" || exit 1
-+	head=$(git-rev-parse TMP_HEAD)
-+	rm -f "$TMP_HEAD"
-+	test "$rsync_slurped_objects" || {
-+	    rsync -avz --ignore-existing "$remote/objects/" \
-+		"$GIT_OBJECT_DIRECTORY/" || exit
-+	    rsync_slurped_objects=t
-+	}
-+	;;
-+    *)
-+	# We will do git native transport with just one call later.
-+	continue ;;
-+    esac
-+
-+    append_fetch_head "$head" "$remote" "$remote_name" "$remote_nick" "$local_name"
-+
-+done
-+
-+case "$remote" in
-+http://* | https://* | rsync://* )
-+    ;; # we are already done.
- *)
--	echo "$head" > "$GIT_DIR/$merge_store"
--esac &&
--
--# FETCH_HEAD is fed to git-resolve-script which will eventually be
--# passed to git-commit-tree as one of the parents.  Make sure we do
--# not give a tag object ID.
--
--git-rev-parse "$head^0" >"$GIT_DIR/FETCH_HEAD"
-+    git-fetch-pack "$remote" $rref |
-+    while read sha1 remote_name
-+    do
-+	found=
-+	for ref in $refs
-+	do
-+	    case "$ref" in
-+	    $remote_name:*)
-+		found="$ref"
-+		break ;;
-+	    esac
-+	done
-+
-+	local_name=$(expr "$found" : '[^:]*:\(.*\)')
-+        append_fetch_head "$sha1" "$remote" "$remote_name" "$remote_nick" "$local_name"
-+    done
-+    ;;
-+esac
+ git-resolve-script \
+ 	"$(cat "$GIT_DIR"/HEAD)" \
+-	"$(cat "$GIT_DIR"/FETCH_HEAD)" \
+-	"Merge $merge_name"
++	$merge_head "Merge $merge_name"
