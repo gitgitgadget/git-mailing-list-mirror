@@ -1,62 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add a new extended SHA1 syntax <name>:<num>
-Date: Sun, 21 Aug 2005 20:26:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508212025350.15353@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <7vll2viq05.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: 1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
+Date: Sun, 21 Aug 2005 11:49:47 -0700
+Message-ID: <7vy86vf7lg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 21 23:34:59 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Sun Aug 21 23:34:51 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E6xSV-0007Zh-Gm
-	for gcvg-git@gmane.org; Sun, 21 Aug 2005 23:34:27 +0200
+	id 1E6xSC-0007ZF-BM
+	for gcvg-git@gmane.org; Sun, 21 Aug 2005 23:34:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751134AbVHUVeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 21 Aug 2005 17:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751139AbVHUVeY
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Aug 2005 17:34:24 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:30668 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751133AbVHUVeY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2005 17:34:24 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j7LIQxR3028760
-	for <git@vger.kernel.org>; Sun, 21 Aug 2005 11:27:00 -0700
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id DF86413C05F; Sun, 21 Aug 2005 20:26:28 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id CA59F9A07E; Sun, 21 Aug 2005 20:26:28 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id AD0339A055; Sun, 21 Aug 2005 20:26:28 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx67.rz.uni-wuerzburg.de [132.187.3.67])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 5FEF113C05F; Sun, 21 Aug 2005 20:26:28 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll2viq05.fsf@assigned-by-dhcp.cox.net>
+	id S1751132AbVHUVeE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 21 Aug 2005 17:34:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbVHUVeE
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Aug 2005 17:34:04 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:26060 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751132AbVHUVeD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Aug 2005 17:34:03 -0400
+Received: from fed1rmmtao11.cox.net (fed1rmmtao11.cox.net [68.230.241.28])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j7LIoH22004766
+	for <git@vger.kernel.org>; Sun, 21 Aug 2005 11:50:17 -0700
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050821184949.KJGO12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 21 Aug 2005 14:49:49 -0400
+To: git@vger.kernel.org
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+A couple of people noticed that the latest commit in the
+"master" branch seems, eh, odd.
 
-On Sun, 21 Aug 2005, Junio C Hamano wrote:
+It was not a screw-up of any of the git tools, just me screwing
+up in an early morning/late night editing session when checking
+things in.
 
-> The new notation is a short-hand for <name> followed by <num>
-> caret ('^') characters.  E.g. "master:4" is the fourth
-> generation ancestor of the current "master" branch head,
-> following the first parents; same as "master^^^^" but a bit more
-> readable.
+    $ git whatchanged -p --max-count=1 <that commit>
 
-This might confuse some people with the <src>:<dest> notation of the 
-renaming fetch...
+shows the true story.  The commit message has the excess, but
+the patch for the commit has exactly the thing I wanted it to
+have and nothing else.
 
-Ciao,
-Dscho
+My policy is not to rewind "master" and "rc" once it hits the
+public repository; otherwise it would make pulling from these
+branches unnecessarily confusing for other people.
+
+Although it is embarrassing, the screw-up this case is only the
+commit log message, and running "git revert" once and then "git
+revert" again would not make it less confusing, so I will keep
+things as they are.
