@@ -1,123 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: "git reset" and newly created files.
-Date: Mon, 22 Aug 2005 01:17:26 -0700
-Message-ID: <7vslx29yi1.fsf@assigned-by-dhcp.cox.net>
-References: <7vbr3rccjc.fsf@assigned-by-dhcp.cox.net>
-	<20050821214605.GA4134@mars.ravnborg.org>
+From: Dirk Behme <dirk.behme@de.bosch.com>
+Subject: Re: 1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
+Date: Mon, 22 Aug 2005 10:11:19 +0200
+Organization: Blaupunkt GmbH
+Message-ID: <430988A7.60906@de.bosch.com>
+References: <7vy86vf7lg.fsf@assigned-by-dhcp.cox.net>	<43096B50.60605@de.bosch.com> <7vpss6bel3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 23 00:30:28 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 00:32:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7KmD-0000Se-K5
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 00:28:22 +0200
+	id 1E7KoH-00015p-L5
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 00:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbVHVW0q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Aug 2005 18:26:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbVHVW0q
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Aug 2005 18:26:46 -0400
-Received: from zeus1.kernel.org ([204.152.191.4]:29577 "EHLO zeus1.kernel.org")
-	by vger.kernel.org with ESMTP id S1751445AbVHVW0Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2005 18:26:24 -0400
-Received: from fed1rmmtao01.cox.net (fed1rmmtao01.cox.net [68.230.241.38])
-	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j7M8HvGL029882
-	for <git@vger.kernel.org>; Mon, 22 Aug 2005 01:17:57 -0700
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050822081727.XMKG19627.fed1rmmtao01.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 22 Aug 2005 04:17:27 -0400
-To: Sam Ravnborg <sam@ravnborg.org>
-In-Reply-To: <20050821214605.GA4134@mars.ravnborg.org> (Sam Ravnborg's message
-	of "Sun, 21 Aug 2005 23:46:05 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751374AbVHVW2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Aug 2005 18:28:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbVHVW2L
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Aug 2005 18:28:11 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:17289 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751413AbVHVWZ2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2005 18:25:28 -0400
+Received: from smtp-v.fe.bosch.de (smtp-v.fe.bosch.de [139.15.237.2])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j7M8FaSL006438
+	for <git@vger.kernel.org>; Mon, 22 Aug 2005 01:15:37 -0700
+Received: from mta2.fe.internet.bosch.com (unknown [10.4.98.30])
+	by imta6.fe.bosch.de (Postfix) with ESMTP id 13765381F2
+	for <git@vger.kernel.org>; Mon, 22 Aug 2005 10:11:49 +0200 (CEST)
+Received: from si-imc02.de.bosch.com (virusscan8.fe.internet.bosch.com [10.4.98.13])
+	by mta2.fe.internet.bosch.com (Postfix) with ESMTP id BA4548C090
+	for <git@vger.kernel.org>; Mon, 22 Aug 2005 10:11:20 +0200 (CEST)
+Received: from hi-mail02.de.bosch.com ([10.34.16.71]) by si-imc02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Mon, 22 Aug 2005 10:11:20 +0200
+Received: from [10.34.196.147] ([10.34.196.147]) by hi-mail02.de.bosch.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Mon, 22 Aug 2005 10:11:19 +0200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7) Gecko/20040616
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vpss6bel3.fsf@assigned-by-dhcp.cox.net>
+X-OriginalArrivalTime: 22 Aug 2005 08:11:19.0941 (UTC) FILETIME=[13CC4350:01C5A6F1]
 X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Sam Ravnborg <sam@ravnborg.org> writes:
+Junio C Hamano wrote:
 
->> So you would naturally be tempted to do this:
->> 
->>     ... Re-edit, compile, and test.  This time it is perfect.
->>     $ git commit -a -C ORIG_HEAD
->> 
->> Well, not really.  You can lose any file newly created in
->> ORIG_HEAD this way.  Instead, you need to do this:
->> 
->>     ... Re-edit, compile, and test.  This time it is perfect.
->>     $ git add <whatever file you have changed>
->>     $ git commit -a -C ORIG_HEAD
->> 
->> Do people find this a big problem?
->
-> I often do some maybe not that brilliant changes in my tree,
-> and when I then ask git to reset these I expect git to reset
-> everything.
->
-> After a git-reset HEAD^ I really expect git to have rewinded back till
-> where I started with no files added whatsoever.
+> Dirk Behme <dirk.behme@de.bosch.com> writes:
+> 
+> 
+>>Seems to me that this breaks http update
+>>
+>>cg-update http://www.kernel.org/pub/scm/git/git.git
+>>
+>>error: Tried 
+>>http://www.kernel.org/pub/scm/git/git.git/objects/6f/f87c4664981e4397625791c8ea3bbb5f2279a3
+>>Cannot obtain needed blob 6ff87c4664981e4397625791c8ea3bbb5f2279a3
+>>while processing commit 1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2.
+>>cg-pull: objects pull failed
+> 
+> 
+> I suspect that your copy of Cogito/git is old and incapable of
+> fetching from a packed repository.  Did your Cogito come with
+> its own copy of git (specifically, git-http-pull)?  Modern
+> Cogito "cg-pull" uses git-http-pull from core GIT as its
+> underlying pull driver for http transport, which should not have
+> the problem anymore.
 
-That is another thing I initially expected from the "git reset"
-command, but I do not think that is what this command is about.
-It is about reverting your working tree and index file to the
-state just before you make your commit to create the botched
-commit, so that you can make minor fixes and recommit.
+My cogito source directory has no git* files any more. I update directly 
+from git.git and cogito.git. Last time this was done last week 
+(wednesday, thursday?). Is this old? I have no problems with cg-update 
+using http of cogito.git. I think cogito.git uses packed repository as well?
 
-Viewing it that way, it might even be a good idea to "git add"
-the files that are in ORIG_HEAD but not in the head you are
-"resetting" to.
+Many thanks
 
-> From the matter of least suprise git should not remember files added,
-> one have to do that by themself again if needed.
-
-What I was getting at was that doing things that way means new
-files and modified files are handled inconsistently.  With the
-current implementation, git "remembers" the files modified, but
-not files added.  And if the purpose of "reset" is to eventually
-re-commit, it would be useful if git remembers both, not just
-modified files.
-
-One way to achieve that would be "git-update-cache --add-maybe"
-I talked about in the original message, but at least something
-like the following would still be an improvement.  Instead of
-echoing the output from diff-tree, we might even be better off
-if we just feed it to "xargs git-update-cache --add".
-
-------------
-[PATCH] Remind the user of "about to be lost" files. 
-
-Files that are in the current HEAD but not in the head we are
-resetting to can easily be lost when "git reset HEAD^" is
-followed by re-edit and "git commit".
-
-This patch reminds the user about those files.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
-
----
-
-diff --git a/git-reset-script b/git-reset-script
---- a/git-reset-script
-+++ b/git-reset-script
-@@ -6,6 +6,16 @@ git-read-tree --reset "$rev" && {
- 	if orig=$(git-rev-parse --verify HEAD 2>/dev/null)
- 	then
- 		echo "$orig" >"$GIT_DIR/ORIG_HEAD"
-+
-+		# Remind the user about files that are in ORIG_HEAD
-+		# but not in $rev.  We would really want to do
-+		# "git-update-cache --add-maybe" on these paths, but
-+		# that is not available (yet).
-+		git-diff-tree -r --diff-filter=D $rev ORIG_HEAD |
-+		while path
-+		do
-+			echo "$path: needs add"
-+		done
- 	fi
- 	echo "$rev" > "$GIT_DIR/HEAD"
- }
+Dirk
