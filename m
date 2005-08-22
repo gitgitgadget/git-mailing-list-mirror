@@ -1,55 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: suggestion: store the URL somewhere in .git/
-Date: Mon, 22 Aug 2005 22:18:06 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508222217310.695@wgmdd8.biozentrum.uni-wuerzburg.de>
-References: <430A30C8.3080908@linuxmachines.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Versioning for template directory?
+Date: Mon, 22 Aug 2005 17:59:43 +0200
+Message-ID: <200508221759.43153.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 22 22:21:11 2005
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Aug 22 22:44:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7IkI-0007ok-VL
-	for gcvg-git@gmane.org; Mon, 22 Aug 2005 22:18:15 +0200
+	id 1E7J9j-0006SI-0p
+	for gcvg-git@gmane.org; Mon, 22 Aug 2005 22:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751001AbVHVUSL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Aug 2005 16:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751008AbVHVUSK
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Aug 2005 16:18:10 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:40870 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S1751001AbVHVUSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2005 16:18:09 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 9F307139442; Mon, 22 Aug 2005 22:18:06 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 84C379A10F; Mon, 22 Aug 2005 22:18:06 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 748289A0E2; Mon, 22 Aug 2005 22:18:06 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx67.rz.uni-wuerzburg.de [132.187.3.67])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 1F248139442; Mon, 22 Aug 2005 22:18:06 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Jeff Carr <jcarr@linuxmachines.com>
-In-Reply-To: <430A30C8.3080908@linuxmachines.com>
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S1751136AbVHVUnl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Aug 2005 16:43:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbVHVUnl
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Aug 2005 16:43:41 -0400
+Received: from zeus1.kernel.org ([204.152.191.4]:37095 "EHLO zeus1.kernel.org")
+	by vger.kernel.org with ESMTP id S1751136AbVHVUnk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Aug 2005 16:43:40 -0400
+Received: from mailout1.informatik.tu-muenchen.de (mailout1.informatik.tu-muenchen.de [131.159.0.18])
+	by zeus1.kernel.org (8.13.1/8.13.1) with ESMTP id j7MG1EDR016800
+	for <git@vger.kernel.org>; Mon, 22 Aug 2005 09:01:15 -0700
+To: git@vger.kernel.org
+User-Agent: KMail/1.8.2
+Content-Disposition: inline
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus1
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-On Mon, 22 Aug 2005, Jeff Carr wrote:
+as more and more hooks are added to git, I would want to have the hook 
+scripts, part of the per-repository configuration, itself in version control. 
+If you look at CVS, the configuration there is also under version control (in 
+CVSROOT). I can do this manually: after git-init-db, go into .git/hooks, do a 
+git-init-db again, adding the hooks for version control, and commiting the 
+initial version of the hooks.
 
-> It would be nice if the URL could be stored somewhere in .git/ This
-> makes it a lot easier to update repositories because you don't always
-> have to go and track down where you got it in the first place.
+But I get the feeling that the different hooks should be versioned 
+on a file basis, and not on a directory/whole project basis.
+Here, I explicitly want to have the RCS/CVS way of versioning.
+[Another use case: a wiki site managed via a GIT archive, to be able to change 
+the site offline. Here too, I would want to have versioning on a file basis]
 
-This is why your original target (when you clone) is stored as "origin".
+Is there a way to "extend" git to allow for this kind of versioning? This 
+needs multiple simultaneous checkouts of heads representing independent 
+project parts (i.e. single files). There would be a GIT index for every such 
+independent project part; the problem being that the checkouts should be done 
+into the same directory.
 
-Hth,
-Dscho
+So what is the best way to accomplish this?
+I have to use multiple index files (index1, index2, ...), allowing multiple 
+independent branches could be checked out independently. Another extension 
+would be kind of a "super-head" specifying multiple heads (SHAs) 
+which are to be checked out simultaneously (via index1, index2...). It should 
+be possible to create signed tags out of such super-heads.
+
+Is this feasable?
+
+Josef
