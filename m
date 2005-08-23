@@ -1,110 +1,94 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [RFC] Removing deleted files after checkout
-Date: Tue, 23 Aug 2005 14:50:52 -0600
-Organization: Hewlett Packard
-Message-ID: <20050823205052.GA13311@hpsvcnb.fc.hp.com>
-References: <20050823162156.GA32240@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508231533570.23242@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 23 22:53:46 2005
+From: tony.luck@intel.com
+Subject: "git checkout" says Entry blah would be overwritten by merge ...
+Date: Tue, 23 Aug 2005 13:59:03 -0700
+Message-ID: <200508232059.j7NKx3nM025339@agluck-lia64.sc.intel.com>
+X-From: git-owner@vger.kernel.org Tue Aug 23 23:00:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7fkf-0008BU-B0
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 22:52:09 +0200
+	id 1E7frQ-0001xC-RK
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 22:59:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750841AbVHWUva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 16:51:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbVHWUv3
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 16:51:29 -0400
-Received: from atlrel8.hp.com ([156.153.255.206]:21463 "EHLO atlrel8.hp.com")
-	by vger.kernel.org with ESMTP id S1750821AbVHWUv2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2005 16:51:28 -0400
-Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel8.hp.com (Postfix) with ESMTP id A44603524;
-	Tue, 23 Aug 2005 16:51:02 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id 01B5141E26F; Tue, 23 Aug 2005 20:50:57 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 8ACE32CD92; Tue, 23 Aug 2005 14:50:52 -0600 (MDT)
-To: Daniel Barkalow <barkalow@iabervon.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0508231533570.23242@iabervon.org>
-X-Origin: hpescnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1750821AbVHWU7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 16:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbVHWU7F
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 16:59:05 -0400
+Received: from fmr24.intel.com ([143.183.121.16]:45227 "EHLO
+	scsfmr004.sc.intel.com") by vger.kernel.org with ESMTP
+	id S1750840AbVHWU7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 16:59:04 -0400
+Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
+	by scsfmr004.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j7NKx4DL012147
+	for <git@vger.kernel.org>; Tue, 23 Aug 2005 20:59:04 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [143.183.251.239])
+	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j7NL1WAi015468
+	for <git@vger.kernel.org>; Tue, 23 Aug 2005 21:01:32 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1) with ESMTP id j7NKx35o025340
+	for <git@vger.kernel.org>; Tue, 23 Aug 2005 13:59:03 -0700
+Received: (from aegl@localhost)
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id j7NKx3nM025339;
+	Tue, 23 Aug 2005 13:59:03 -0700
+To: git@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7668>
 
-On Tue, Aug 23, 2005 at 03:43:56PM -0400, Daniel Barkalow wrote:
-> On Tue, 23 Aug 2005, Carl Baldwin wrote:
-> 
-> > Hello,
-> >
-> > I recently started using git to revision control the source for my
-> > web-page.  I wrote a post-update hook to checkout the files when I push
-> > to the 'live' repository.
-> >
-> > In this particular context I decided that it was important to me to remove
-> > deleted files after checking out the new HEAD.  I accomplished this by running
-> > git-ls-files before and after the checkout.
-> >
-> > Is there a better way?  Could there be some way built into git to easily
-> > find out what files dissappear when replacing the current index with one
-> > from a new tree?  Is there already?  The behavior of git should NOT
-> > change to delete these files but I would argue that some way should
-> > exist to query what files disappeared if removing them is desired.
-> 
-> If you don't use -f, git-checkout-script removes deleted files. Using -f
-> tells it to ignore the old index, which means that it can't tell the
-> difference between removed files and files that weren't tracked at all.
+I'm a little closer to understanding how I got into the situation
+where I made that ugly commit last week that included 10 files that
+I didn't want, because I just had another failed merge (but this
+time I know how to recover :).
 
-Maybe I'm doing something wrong.  This does not happen for me.
+The approximate sequence of events was:
 
-I tried a simple test with git v0.99.4...
+SGI told me one of the pending fixes in my test tree was causing
+an oops during boot on a whole class of machines.  They asked whether
+it could get into 2.6.13.  I agreed it was a good candidate, and ran
+my script to pull it from its temporary branch (named prarit-bus-sysdata
+in this case) into my release branch.  The script is trivial after the
+argument sanity checks it just does:
 
-cd
-mkdir test-git && cd test-git/
-echo testing | cg-init
-echo contents > file
-git-add-script file
-git-commit-script -m 'testing'
-cd ..
-cg-clone test-git/.git/ test-git2
-cd test-git2
-cg-rm file
-git-commit-script -m 'testing'
-ls
-cg-push
-cd ../test-git
-git-checkout-script
-ls
-git-status-script
+ $ git checkout release && git resolve release prarit-bus-sysdata "Pull prarit-bus-sysdata into release branch"
 
-At this point, I want 'file' to be gone.  It is, however, still there.
-That is the situation that my code was meant to handle.  Maybe you were
-thinking of something different?  Maybe there is new code since 0.99.4?
+Only one file was touched by this:
+  arch/ia64/sn/kernel/io_init.c
 
-Now, I think it would be wrong for git-checkout-script to actually
-remove files unless an option were given to do so.  So, the behavior
-that I observe is correct in my opinion.  I'm looking for a way to find
-out what files should be deleted if that is desired.
+I think that this would have gone through a non-trivial merge as this file
+had subsequently been touched by another patch, but the merge did complete
+automatically.
 
-Thanks,
-Carl
+Next I pushed the release branch up to kernel.org, asked Linus to pull.
 
-> 	-Daniel
-> *This .sig left intentionally blank*
-> 
+I then applied a totally independent patch to a new branch, pulled it
+to the test branch, and pushed to kernel.org ... net effect was that
+my tree ended up in "git checkout test" state.
 
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Later I noticed that Linus had pulled from my tree (and from other
+trees too), so I pulled his latest tree down from kernel.org using:
+
+  $ git checkout linus && git pull linus
+
+Then I tried to update my test branch with these changes using:
+
+  $ git checkout test && git resolve test linus "Auto-update from upstream"
+
+This spat out these messages:
+
+fatal: Entry 'arch/ia64/sn/kernel/io_init.c' would be overwritten by merge. Cannot merge.
+Trying to merge 8065e2... into cde7fe...
+fatal: Entry 'arch/ia64/hp/sim/boot/boot_head.S' would be overwritten by merge. Cannot merge.
+
+There is one obvious bug here: "git checkout test" failed with the first error (from
+its invocation of git-read-tree) ... but returned an exit status of 0, so my
+script went ahead and tried to do the resolve, which the && should have
+prevented.
+
+The less obvious (i.e. I have no clue what I did wrong) thing is why the
+"git checkout" had a problem with this file.  Yes, it had been touched
+earlier ... but in a way that should have left the index up to date. And
+two subsequent "git checkout" commands had switched first to the test
+branch, and then to the linus branch without a complaint.
+
+-Tony
