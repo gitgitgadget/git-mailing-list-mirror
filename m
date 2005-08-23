@@ -1,93 +1,105 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: git-rev-parse question.
-Date: Tue, 23 Aug 2005 10:47:54 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508231038140.3317@g5.osdl.org>
-References: <7v7jedulli.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508231004180.3317@g5.osdl.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] Stgit - patch history / add extra parents
+Date: Tue, 23 Aug 2005 14:05:57 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508231304130.23242@iabervon.org>
+References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
+ <20050819194832.GA8562@fanta> <1124572356.7512.21.camel@localhost.localdomain>
+ <20050821094059.GA5453@fanta> <Pine.LNX.4.63.0508221707520.23242@iabervon.org>
+ <tnxvf1wd24m.fsf@arm.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 23 19:50:34 2005
+Cc: Jan Veldeman <jan.veldeman@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 20:04:54 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7csY-0003jh-IO
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 19:48:06 +0200
+	id 1E7d6T-0008Ni-Eg
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 20:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250AbVHWRsD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 13:48:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVHWRsC
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 13:48:02 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:62098 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932250AbVHWRsB (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2005 13:48:01 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7NHltjA018283
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 Aug 2005 10:47:55 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7NHlsdL027971;
-	Tue, 23 Aug 2005 10:47:55 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <Pine.LNX.4.58.0508231004180.3317@g5.osdl.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932266AbVHWSCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 14:02:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932267AbVHWSCZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 14:02:25 -0400
+Received: from iabervon.org ([66.92.72.58]:10513 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932266AbVHWSCZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2005 14:02:25 -0400
+Received: (qmail 14036 invoked by uid 1000); 23 Aug 2005 14:05:57 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 23 Aug 2005 14:05:57 -0400
+To: Catalin Marinas <catalin.marinas@gmail.com>
+In-Reply-To: <tnxvf1wd24m.fsf@arm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7662>
 
+On Tue, 23 Aug 2005, Catalin Marinas wrote:
 
+> > So the point is that there are things which are, in fact, parents, but we
+> > don't want to list them, because it's not desired information.
+>
+> What's the definition of a parent in GIT terms? What are the
+> restriction for a commit object to be a parent? Can a parent be an
+> arbitrarily chosen commit?
 
-On Tue, 23 Aug 2005, Linus Torvalds wrote:
-> 
-> Try this trivial patch, it should work better.
+Something is legitimate as a parent if someone took that commit and did
+something to it to get the new commit. The operation which caused the
+change is not specified. But you only want to include it if anyone cares
+about the parent.
 
-Actually, don't do the "show_default()" part of this. We should _not_ show 
-the default string if we haev "--no-revs" and the string doesn't match a 
-rev.
+(For example, I often start with a chunk of work that does multiple things
+and is committed; I take mainline and generate a series of commits from
+there. It would be legitimate to list my development commit as a parent of
+each of these, since I did actually take it and strip out the unrelated
+changes. This would be a bit confusing in the log, but would make merges
+between something based on the "messy" version and something based on the
+"refined" version work well. On the other hand, I don't want to report the
+existance of the messy version, so I don't include it.)
 
-Also, this fixes "--" handlign with "--flags". Thinking about it for a 
-few seconds made it obvious that we shouldn't show it.
+> An StGIT patch is a represented by a top and bottom commit
+> objects. The bottom one is the same as the parent of the top
+> commit. The patch is the diff between the top's tree id and the
+> bottom's tree id.
+>
+> Jan's proposal is to allow a freeze command to save the current top
+> hash and later be used as a second parent for the newly generated
+> top. The problem I see with this approach is that (even for the
+> internal view you described) the newly generated top will have two
+> parents, new-bottom and old-top, but only the diff between new-top and
+> new-bottom is meaningful. The diff between new-top and old-top (as a
+> parent-child relation) wouldn't contain anything relevant to the patch
+> but all the new changes to the base of the stack.
 
-		Linus
----
-Subject: Fix git-rev-parse --default and --flags handling
+Having a useful diff isn't really a requirement for a parent; the diff in
+the case of a merge is going to be the total of everything that happened
+elsewhere. The point is to be able to reach some commits between which
+there are interesting diffs.
 
-This makes the argument to --default and any --flags arguments should up 
-correctly, and makes "--" together with --flags act sanely.
+This also depends on how exactly freeze is used; if you use it before
+commiting a modification to the patch without rebasing, you get:
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/rev-parse.c b/rev-parse.c
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -107,7 +107,7 @@ static void show_arg(char *arg)
- 	if (do_rev_argument && is_rev_argument(arg))
- 		show_rev_arg(arg);
- 	else
--		show_norev(arg);
-+		show(arg);
- }
- 
- static void show_default(void)
-@@ -122,7 +122,7 @@ static void show_default(void)
- 			show_rev(NORMAL, sha1, s);
- 			return;
- 		}
--		show_arg(s);
-+		show_norev(s);
- 	}
- }
- 
-@@ -149,7 +149,7 @@ int main(int argc, char **argv)
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "--")) {
- 				show_default();
--				if (revs_only)
-+				if (revs_only || flags_only)
- 					break;
- 				as_is = 1;
- 			}
+old-top -> new-top
+      ^    ^
+       \  /
+      bottom
+
+bottom to old-top is the old patch
+bottom to new-top is the new patch
+old-top to new-top is the change to the patch
+
+Then you want to keep new-top as a parent for rebasings until one of these
+is frozen. These links are not interesting to look at, but preserve the
+path to the old-top:new-top change, which is interesting.
+
+Ignoring the links to the corresponding bottoms, the development therefore
+looks like:
+
+local1 -> local2 -> merge -> local3 -> merge
+^                   ^                  ^
+mainline---->-->--------->------>-->----->
+
+And this is how development is normally supposed to look. The trick is to
+only include a minimal number of merges.
+
+	-Daniel
+*This .sig left intentionally blank*
