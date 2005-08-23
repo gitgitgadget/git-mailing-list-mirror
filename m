@@ -1,83 +1,80 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: cogito and merging in steps.
-Date: Tue, 23 Aug 2005 18:29:46 +1200
-Message-ID: <46a038f9050822232961140d4b@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-ls-new-files & make patch, pull, etc.
+Date: Tue, 23 Aug 2005 08:48:26 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0508230846180.26600@wgmdd8.biozentrum.uni-wuerzburg.de>
+References: <430A84D1.2050206@linuxmachines.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Tue Aug 23 08:30:38 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 08:49:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7SIG-0008BI-Oi
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 08:29:57 +0200
+	id 1E7SaN-0003rW-5R
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 08:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785AbVHWG3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 02:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbVHWG3x
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 02:29:53 -0400
-Received: from rproxy.gmail.com ([64.233.170.196]:12568 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750785AbVHWG3x convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2005 02:29:53 -0400
-Received: by rproxy.gmail.com with SMTP id i8so1101411rne
-        for <git@vger.kernel.org>; Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EyDcHBz1+Kk9nNrY8KOO2x7JHz+jrx8k4d0dpijJRadSeRLLr6vYXDNWo0wUhVhoFclTEyInzlCG83xqjWMXfNIXbH3FCsWr2Px7Lbmc7Q3DQLFiLbGHy1O1dUPH6fBOTSeG9KoHyX0coLfCGh4+Ms0uAkLt33kG+ETnni4GUU8=
-Received: by 10.39.2.24 with SMTP id e24mr297232rni;
-        Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
-To: GIT <git@vger.kernel.org>
-Content-Disposition: inline
+	id S1750791AbVHWGs0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 02:48:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbVHWGs0
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 02:48:26 -0400
+Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27084 "EHLO
+	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
+	id S1750791AbVHWGsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 02:48:25 -0400
+Received: from wrzx34.rz.uni-wuerzburg.de (wrzx34.rz.uni-wuerzburg.de [132.187.3.34])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id D4917137314; Tue, 23 Aug 2005 08:48:24 +0200 (CEST)
+Received: from virusscan (localhost [127.0.0.1])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id B9F63B0C0F; Tue, 23 Aug 2005 08:48:24 +0200 (CEST)
+Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
+	by wrzx34.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 8508DB0C0D; Tue, 23 Aug 2005 08:48:24 +0200 (CEST)
+Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx67.rz.uni-wuerzburg.de [132.187.3.67])
+	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
+	id 68B27137314; Tue, 23 Aug 2005 08:48:24 +0200 (CEST)
+X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
+To: Jeff Carr <jcarr@linuxmachines.com>
+In-Reply-To: <430A84D1.2050206@linuxmachines.com>
+X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Is there any way to merge patches "selectively"? 
+Hi,
 
-I have found that if I do 
+On Mon, 22 Aug 2005, Jeff Carr wrote:
 
-   cg-pull
-   cg-log -r master:origin
+> patch:
+> 	git-diff-files -p
 
-I can review the commits that will be merged if I do cg-update. 
+"git diff"
 
-Say I do cg-update, it brings a lot of commits and there is a messy
-conflict. I immediately can  narrow down on which commit I am merging
-it is that has a conflict.
+> push:
+> 	git-send-pack `cat .git/branches/origin`
 
-With this info, it'd be interesting to be able to merge not to the tip
-of the head (head of the head? =- bah, tip of the branch! :) but to an
-earlier commit, so I can resolve the conflict with a more specific
-commit.
+"git push origin" (or maybe "git push HEAD:origin")
 
-Say I am merging a series of 10 commits that happened in the shared
-repo to the project while I worked disconnected (and did lots of local
-commits). The first 8 commits merge cleanly, the 9th is an ugly
-conflict I have to resolve, and the 10th is clean and unrelated.
+> pull:
+> 	git-pull-script `cat .git/branches/origin`
+> 	git-read-tree -m HEAD
+> 	git-checkout-cache -q -f -u -a
 
-I want to be able to 
- - cg-update
- - oops! this is a mess! review with cg-log -r master:origin
- - aha! Here is the conflict in the 9th commit from MacFroz, fire off
-email / open irc session
- - in the meantime, reset the working copy and merge the 8 clean ones
-with something like: cg-restore ; cg-update origin^^^ ; cg-commit
- - cg-update origin^ ; emacs file-with-conflict.c ; cg-commit 
- - cg-update # bring in the last pending commit from origin. 
+"git pull origin"
 
-How can I achieve the cg-update <somepointinthebranch> ; cg-commit ? I
-mean, without faking a head with
+> commit:
+> 	vi changelog.txt
+> 	GIT_AUTHOR_NAME="$(GIT_AUTHOR_NAME)" \
+> 	GIT_AUTHOR_EMAIL="$(GIT_AUTHOR_EMAIL)" \
+> 	git-commit-tree `git-write-tree` -p $(HEAD) < changelog.txt > .git/HEAD
+> 	rm changelog.txt
 
-  echo <somepointinthebranch> > .git/refs/heads/temphead 
+"git commit"
 
-cheers,
+> add_all:
+> 	./git-ls-new-files |xargs -n 1 git-update-cache --add
 
+"git add $(git ls-files --others)"
 
-martin
-cheers,
-
-
-martin
+Ciao,
+Dscho
