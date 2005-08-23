@@ -1,105 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Multi-head pulling series
-Date: Mon, 22 Aug 2005 22:37:40 -0700
-Message-ID: <7virxxw6vv.fsf@assigned-by-dhcp.cox.net>
-References: <7vek8rlnbn.fsf@assigned-by-dhcp.cox.net>
-	<200508181245.58250.Josef.Weidendorfer@gmx.de>
-	<7vfyt4l9q9.fsf@assigned-by-dhcp.cox.net>
-	<200508221835.31275.Josef.Weidendorfer@gmx.de>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: cogito and merging in steps.
+Date: Tue, 23 Aug 2005 18:29:46 +1200
+Message-ID: <46a038f9050822232961140d4b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 23 07:38:54 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Aug 23 08:30:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7RTm-0004O6-80
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 07:37:46 +0200
+	id 1E7SIG-0008BI-Oi
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 08:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750722AbVHWFhn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 01:37:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbVHWFhn
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 01:37:43 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:6535 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750722AbVHWFhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2005 01:37:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050823053741.WOVU16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 Aug 2005 01:37:41 -0400
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-In-Reply-To: <200508221835.31275.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Mon, 22 Aug 2005 18:35:31 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750785AbVHWG3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 02:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbVHWG3x
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 02:29:53 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:12568 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750785AbVHWG3x convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 02:29:53 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1101411rne
+        for <git@vger.kernel.org>; Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=EyDcHBz1+Kk9nNrY8KOO2x7JHz+jrx8k4d0dpijJRadSeRLLr6vYXDNWo0wUhVhoFclTEyInzlCG83xqjWMXfNIXbH3FCsWr2Px7Lbmc7Q3DQLFiLbGHy1O1dUPH6fBOTSeG9KoHyX0coLfCGh4+Ms0uAkLt33kG+ETnni4GUU8=
+Received: by 10.39.2.24 with SMTP id e24mr297232rni;
+        Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Mon, 22 Aug 2005 23:29:46 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Is there any way to merge patches "selectively"? 
 
-> I think that both, default and non-default persistant
-> mappings, are only a handy convenience issue for less
-> typing. If GIT core is not doing this, some (most?) porcelains
-> will invent their own way for storing these mappings.
+I have found that if I do 
 
-Suppose I have something like this in $GIT_DIR/remotes/ko:
+   cg-pull
+   cg-log -r master:origin
 
-    URL: master.kernel.org:/pub/scm/git/git.git/
-    Pull: master:ko-master rc:ko-rc pu:ko-pu
-    Push: master:master pu:pu rc:rc
-    Default-Pull: master rc
+I can review the commits that will be merged if I do cg-update. 
 
-That is, "Pull/Push" describe only the default mappings, and
-"Default-Pull/Default-Push" names the refs pulled or pushed when
-only the shorthand (ko) is specified.  I think that is what your
-proposal boils down to.  Lack of "Default-Push" just means use
-the heads listed on "Push" line for the default.
+Say I do cg-update, it brings a lot of commits and there is a messy
+conflict. I immediately can  narrow down on which commit I am merging
+it is that has a conflict.
 
-Am I reading you right so far?
+With this info, it'd be interesting to be able to merge not to the tip
+of the head (head of the head? =- bah, tip of the branch! :) but to an
+earlier commit, so I can resolve the conflict with a more specific
+commit.
 
-With that definition, what these would do would be intuitive and
-obvious:
+Say I am merging a series of 10 commits that happened in the shared
+repo to the project while I worked disconnected (and did lots of local
+commits). The first 8 commits merge cleanly, the 9th is an ugly
+conflict I have to resolve, and the 10th is clean and unrelated.
 
-    $ git push ko  ;# my master, rc, and pu goes there, under
-                    # the same name.
-    $ git fetch ko ;# their master comes to my ko-master, rc to my ko-rc
-                    # pu is not touched.
+I want to be able to 
+ - cg-update
+ - oops! this is a mess! review with cg-log -r master:origin
+ - aha! Here is the conflict in the 9th commit from MacFroz, fire off
+email / open irc session
+ - in the meantime, reset the working copy and merge the 8 clean ones
+with something like: cg-restore ; cg-update origin^^^ ; cg-commit
+ - cg-update origin^ ; emacs file-with-conflict.c ; cg-commit 
+ - cg-update # bring in the last pending commit from origin. 
 
-But now, what should this do?
+How can I achieve the cg-update <somepointinthebranch> ; cg-commit ? I
+mean, without faking a head with
 
-    $ git fetch ko master
+  echo <somepointinthebranch> > .git/refs/heads/temphead 
 
-(1) does it use "Pull" mappings and use their "master" to fast
-    forward my "ko-master"?
+cheers,
 
-or
 
-(2) does it obey "the command line overrides the configuration
-    file" principle and fetch their "master" but not touch my
-    local refs (remember, refspec "master" without colon is
-    equivalent to "master:" in fetch, which means "get the
-    objects to complete it, but do not store the ref locally")?
+martin
+cheers,
 
-If (1), then I would need to say "master:something" on the
-command line almost all the time, because the point of remotes/
-configuration file is that I do not have to remember which
-remote head corresponds to my local head, and by definition I
-would not (and should not have to) know if "master" has the
-default mappings specified there and to which head, so even that
-"something" happens to be exactly what is in the remotes/ file,
-I would end up typing that explicitly.  Which means that it
-defeats the point of having the configuration file to begin
-with.
 
-If (2), then I would again need to say master:ko-master if I
-wanted to mean "usually I pull from some heads (I do not
-remember which ones offhand, but my .git/remotes/ file would
-know), but this time I want to only pull from master and update
-ko-master".
-
-What this suggests to me is that making set of default refs to
-be pulled from and set of ref mappings orthgonal sounds like a
-good and clean way in theory, but would not be that much useful
-in practice.
+martin
