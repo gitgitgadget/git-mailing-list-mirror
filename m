@@ -1,90 +1,46 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: git-rev-parse question.
-Date: Tue, 23 Aug 2005 01:02:49 -0700
-Message-ID: <7v7jedulli.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: cg-update/cg-merge refuse to update if state is dirty?
+Date: Tue, 23 Aug 2005 20:09:04 +1200
+Message-ID: <46a038f905082301096285a3cb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 23 10:05:50 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Aug 23 10:09:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7TkI-0007oO-7X
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 10:02:58 +0200
+	id 1E7TqI-0001ul-1r
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 10:09:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805AbVHWICv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 04:02:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750910AbVHWICv
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 04:02:51 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:51940 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750805AbVHWICv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2005 04:02:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050823080249.JUZT550.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 Aug 2005 04:02:49 -0400
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751172AbVHWIJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 04:09:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbVHWIJF
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 04:09:05 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:50594 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751172AbVHWIJF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 04:09:05 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1111833rne
+        for <git@vger.kernel.org>; Tue, 23 Aug 2005 01:09:04 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=pyBnDu89+CWH3lTo6VxTNbzviEKzPiuoHdogCapKe0Fror9GjprHvQ0yK3SFN3v/EbCiwXmmEDR0CCk1N5TSrNj+lNTafI++ABXAIcAhWCWcvgWttw9foL/mEUO8cJ1rBTn85jOQhLJuDdROx2K9lMj4g/Hi4iGI6St6PPLrapE=
+Received: by 10.39.2.74 with SMTP id e74mr326158rni;
+        Tue, 23 Aug 2005 01:09:04 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Tue, 23 Aug 2005 01:09:04 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-I have been looking at what git-rev-parse does and could not
-figure out a way to convince it to give me only arguments with
-a '-' prefix.  Specifically, I wanted to remove the hardcoded -p
-and -M flags from git-diff-script.  Running
+Should cg-update or cg-merge be refusing to merge if the tree is
+dirty? If there are uncommitted files, and the merge fails, a lot of
+unrelated changes will be dumped on the working tree, which ends up
+with a mix of things.
 
-    $ sh -x git-diff-script -C HEAD^ HEAD
+cheers,
 
-reveals that none of the following would pick up "-C" from the
-command line:
 
-    rev=($(git-rev-parse --revs-only "$@")) || exit
-    flags=($(git-rev-parse --no-revs --flags "$@"))
-    files=($(git-rev-parse --no-revs --no-flags "$@"))
-
-I am not even sure if the current implementation of rev-parse
-matches what you originally wanted it to do; I suspect it does
-not.  I would like to know what was the intended behaviour
-first, so that I can enhance it to be usable for my purpose
-without breaking things.
-
-What I want the rev-parse flags to mean is as follows.  By "rev
-argument", I mean what get_sha1() can understand.  I have to
-admit that some flags are what I introduced while I was
-butchering it without really knowing the original intention:
-
-  output format:
-  --sq		output in a format usable for shell "eval".
-  --symbolic	output rev argument in symbolic form, not SHA1.
-
-  output selection:
-  --flags	show only arguments with '-' prefix.
-  --no-flags	do not show arguments with '-' prefix.
-
-  --revs-only	show only arguments meant for rev-list.
-  --no-revs	show arguments not meant for rev-list.
-
-  input munging:
-  --default R	if no revision, pretend R is given.
-  --not		pretend all rev arguments without prefix ^ have
-                prefix ^, and the ones with prefix ^ do not.
-  --all		pretend all refs under $GIT_DIR/refs are given
-  		on the command line.
-
-  special:
-  --verify	make sure only one rev argument is given, nothing else.
-
-I think flags/no-flags and revs-only/no-revs *should* be
-orthogonal.  That is, "rev-parse --flags --no-revs" should give
-parameters that start with '-' and not meant for rev-list
-(e.g. '-C' in earlier example); "rev-parse --revs-only
---merge-order HEAD Documentation/" should yield "--merge-order
-HEAD".
-
-Also there is an undocumented --show-prefix.  What is it?
-
--jc
-
-PS. BTW, any response about unsuspecting companies?
+martin
