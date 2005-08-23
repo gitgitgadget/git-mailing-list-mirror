@@ -1,103 +1,51 @@
-From: Jeff Carr <jcarr@linuxmachines.com>
-Subject: git-ls-new-files & make patch, pull, etc.
-Date: Mon, 22 Aug 2005 19:07:13 -0700
-Message-ID: <430A84D1.2050206@linuxmachines.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-ls-new-files & make patch, pull, etc.
+Date: Mon, 22 Aug 2005 22:15:47 -0700
+Message-ID: <7v1x4lz118.fsf@assigned-by-dhcp.cox.net>
+References: <430A84D1.2050206@linuxmachines.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 23 04:05:56 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 07:16:14 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7OAD-0002Ld-Ak
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 04:05:21 +0200
+	id 1E7R8k-0007Xb-JA
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 07:16:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751323AbVHWCFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Aug 2005 22:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbVHWCFR
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Aug 2005 22:05:17 -0400
-Received: from [64.71.148.162] ([64.71.148.162]:16049 "EHLO
-	mail.linuxmachines.com") by vger.kernel.org with ESMTP
-	id S1751323AbVHWCFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Aug 2005 22:05:16 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.linuxmachines.com (Postfix) with ESMTP id 4BC9E6E7EE
-	for <git@vger.kernel.org>; Mon, 22 Aug 2005 19:07:13 -0700 (PDT)
-Received: from mail.linuxmachines.com ([127.0.0.1])
-	by localhost (giant [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 02777-04 for <git@vger.kernel.org>;
-	Mon, 22 Aug 2005 19:07:12 -0700 (PDT)
-Received: from [172.21.43.70] (x.packeteer.com [12.104.153.15])
-	by mail.linuxmachines.com (Postfix) with ESMTP id 9D0A06E7B7
-	for <git@vger.kernel.org>; Mon, 22 Aug 2005 19:07:12 -0700 (PDT)
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
-X-Accept-Language: en-us, en
-To: git@vger.kernel.org
-X-Enigmail-Version: 0.91.0.0
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at example.com
+	id S1750704AbVHWFPv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 01:15:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbVHWFPv
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 01:15:51 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:31462 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S1750704AbVHWFPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 01:15:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050823051550.WSPX12158.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 23 Aug 2005 01:15:50 -0400
+To: Jeff Carr <jcarr@linuxmachines.com>
+In-Reply-To: <430A84D1.2050206@linuxmachines.com> (Jeff Carr's message of
+	"Mon, 22 Aug 2005 19:07:13 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Something simple like the perl script at the bottom would be useful for
-showing files that haven't been added via git-update-cache --add already.
+Jeff Carr <jcarr@linuxmachines.com> writes:
 
-I've also found it useful to start adding things to the Makefile's of
-the projects I'm putting in git repositories. I think it would be useful
-to come up with some standard or recommended names. That could start to
-extend the common "make" "make install" with a few other options for
-projects that use git as their SCM.
+> Something simple like the perl script at the bottom would be useful for
+> showing files that haven't been added via git-update-cache --add already.
 
-Thanks,
-Jeff
+If I am not mistaken, you just reinvented:
 
-patch:
-	git-diff-files -p
+    $ git ls-files --others
 
-push:
-	git-send-pack `cat .git/branches/origin`
+in a very expensive way.  Notice your `find . -type f` that does
+not prune .git directory upfront.
 
-pull:
-	git-pull-script `cat .git/branches/origin`
-	git-read-tree -m HEAD
-	git-checkout-cache -q -f -u -a
+Also you may want to take a look at:
 
-commit:
-	vi changelog.txt
-	GIT_AUTHOR_NAME="$(GIT_AUTHOR_NAME)" \
-	GIT_AUTHOR_EMAIL="$(GIT_AUTHOR_EMAIL)" \
-	git-commit-tree `git-write-tree` -p $(HEAD) < changelog.txt > .git/HEAD
-	rm changelog.txt
-
-add_all:
-	./git-ls-new-files |xargs -n 1 git-update-cache --add
-
-
-
-
-#!/usr/bin/perl
-
-# Shows you what files have not been added to your git repository
-
-my %allfiles;
-
-# make a hash of all the files except the .git/ directory
-
-foreach my $file ( `find . -type f` ) {
-	chomp $file;
-	next if substr($file, 0, 7) eq "./.git/";
-	$allfiles{ $file } = "";
-}
-
-# now delete all the files from the hash that are already commited
-
-foreach my $file ( split "\n", `git-ls-files` ) {
-	chomp $file;
-	delete $allfiles{ "./$file" };
-}
-
-# print out what's left
-
-foreach my $file ( sort keys %allfiles ) {
-	print "$file\n";
-}
+    $ git ls-files --others --exclude-from=.git/info/exclude
