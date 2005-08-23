@@ -1,111 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Current status toward 0.99.5 and beyond
-Date: Tue, 23 Aug 2005 10:14:47 -0700
-Message-ID: <7vmzn8poc8.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Current status toward 0.99.5 and beyond
+Date: Tue, 23 Aug 2005 10:31:41 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508231022340.3317@g5.osdl.org>
+References: <7vmzn8poc8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Tue Aug 23 19:18:54 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 23 19:34:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7cMN-00006D-Mi
-	for gcvg-git@gmane.org; Tue, 23 Aug 2005 19:14:52 +0200
+	id 1E7ccq-0006M1-Hw
+	for gcvg-git@gmane.org; Tue, 23 Aug 2005 19:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932232AbVHWROt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 13:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932233AbVHWROt
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 13:14:49 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:40330 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932232AbVHWROs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2005 13:14:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050823171446.VMYV8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 Aug 2005 13:14:46 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932241AbVHWRbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 13:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932240AbVHWRbt
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 13:31:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:13198 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932241AbVHWRbs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2005 13:31:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7NHVhjA016994
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 23 Aug 2005 10:31:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7NHVggC027135;
+	Tue, 23 Aug 2005 10:31:42 -0700
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vmzn8poc8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7659>
-
-Some people may have noticed that the progress of the master
-branch head has somewhat slowed down lately, and I have kept
-some changes in the proposed updates branch for quite some time.
-
-There are two reasons for this.  One is that I've been quite
-busy during my day job hours, and haven't had enough time to
-make sure the multi-head fetch stuff does not break things and
-the way it works is reasonable.  Another is that I am feeling
-guilty about letting Documentation go stale, and am reluctant to
-have what is in the proposed updates branch graduate to the
-master branch without accompanying documentation.  Maybe I'll
-have some time on my next GIT day [*1*].
-
-Anyway, here is my updated Itchlist, as a preview of what comes
-next.
-
-For 0.99.5, I would like to finish testing and documenting what
-is currently in the proposed updates branch.  There are two
-changes there: multi-head fetch and $GIT_DIR/remotes/ that
-somewhat deprecates $GIT_DIR/branches/; semantics cleanup of
-"git reset" command.
-
-Linus has been feeding updates to make various commands to be
-capable of running from subdirectories and taking paths relative
-to the current directory.  I would have liked these patches with
-test scripts to demonstrate they do what they claim to do well.
-Patches to extend existing test scripts in t/ directory are very
-much welcomed.  So far, the following commands should be usable
-with relative directory paths:
-
-    update-cache
-    ls-files
-    diff-files
-    diff-cache
-    diff-tree
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7660>
 
 
-I do not have major itch after 0.99.5 right now, except for
-obvious fixes and tweaks here and there [*2*].  I think we would
-concentrate a bit more on usability enhancement including the
-tutorial updates.  One code change I would like to see is to add
-limited MIME support to applymbox suite.  We should be able to
-teach mailinfo to:
 
-  - detect B encoding in the mail headers, and translate it to UTF-8;
+On Tue, 23 Aug 2005, Junio C Hamano wrote:
+>
+> So far, the following commands should be usable with relative directory
+> paths:
+> 
+>     update-cache
+>     ls-files
+>     diff-files
+>     diff-cache
+>     diff-tree
 
-  - understand a single level multipart and pick out the body of
-    the message;
+Also, git-rev-parse.
 
-  - detect QP in the body and decode into the original charset;
+Finally, this trivial patch makes "git-rev-list" also able to handle not
+being in the top-level directory, which makes it possible to do "git log" 
+and "git-whatchanged" at any point in the directory structure.
 
-  - after splitting the body into commit log and patch, translate only
-    the commit log part into UTF-8.
+			Linus
 
+---
+Subject: Make "git-rev-list" work within subdirectories
 
-[Footnote]
+This trivial patch makes ""git-rev-list" able to handle not being in the
+top-level directory. This magically also makes "git-whatchanged" do the 
+right thing.
 
-*1* Currently, my Wednesdays and Saturdays are for GIT only.
+Trivial scripting fix to make sure that "git log" also works.
 
-*2* Here is a list of minor itches:
-
- * "git rebase" could be a bit more tolerant to conflicting
-   patches.  We may want to "wiggle" it, or may want to run
-   3-way "merge".
-
- * The semantics of rev-parse needs to be clarified.
-
- * show-branch may want to show things in topological order, not
-   time-based order.
-
- * There are commands that were well intentioned but not useful
-   in practice, like build-rev-cache.  I would like to review
-   them for removal.
-
- * Cloning a packed repository over HTTP should work natively
-   now.  Update "git clone" and remove "git-clone-dumb-http".
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/git-log-script b/git-log-script
+--- a/git-log-script
++++ b/git-log-script
+@@ -1,5 +1,4 @@
+ #!/bin/sh
+-. git-sh-setup-script || die "Not a git archive"
+-revs=$(git-rev-parse --revs-only --default HEAD "$@")
++revs=$(git-rev-parse --revs-only --default HEAD "$@") || exit
+ [ "$revs" ] || die "No HEAD ref"
+ git-rev-list --pretty $(git-rev-parse --default HEAD "$@") | LESS=-S ${PAGER:-less}
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -481,6 +481,7 @@ static void handle_one_commit(struct com
+ int main(int argc, char **argv)
+ {
+ 	struct commit_list *list = NULL;
++	const char *prefix = setup_git_directory();
+ 	int i, limited = 0;
  
+ 	for (i = 1 ; i < argc; i++) {
