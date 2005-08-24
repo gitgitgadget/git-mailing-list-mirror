@@ -1,336 +1,88 @@
-From: Ingo Bormuth <ibormuth@efil.de>
-Subject: [PATCH] Gitk tree view (correction)
-Date: Thu, 25 Aug 2005 00:35:50 +0200
-Message-ID: <20050824223550.GA23693@kruemel>
-References: <20050823042432.GA21140@kruemel>
-Reply-To: Ingo Bormuth <ibormuth@efil.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] undo and redo
+Date: Wed, 24 Aug 2005 15:48:21 -0700
+Message-ID: <7vd5o3ar4a.fsf@assigned-by-dhcp.cox.net>
+References: <20050824172339.GA7083@hpsvcnb.fc.hp.com>
+	<20050824181004.GA18790@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.58.0508241148480.3317@g5.osdl.org>
+	<20050824195615.GA693@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0508241634350.23242@iabervon.org>
+	<20050824204736.GA13194@hpsvcnb.fc.hp.com>
+	<Pine.LNX.4.63.0508241651420.23242@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: paulus@samba.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 00:39:15 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, Carl Baldwin <cnb@fc.hp.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 00:49:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E83t3-0007v0-R8
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 00:38:26 +0200
+	id 1E842l-0001CU-Ez
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 00:48:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbVHXWhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 18:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932336AbVHXWhX
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 18:37:23 -0400
-Received: from efil.de ([81.3.25.37]:34067 "EHLO efil.de") by vger.kernel.org
-	with ESMTP id S932333AbVHXWhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2005 18:37:23 -0400
-Received: by efil.de (Postfix, from userid 1000)
-	id B995596DF67; Thu, 25 Aug 2005 00:37:41 +0200 (CEST)
-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20050823042432.GA21140@kruemel>
-X-Attribution: Ingo Bormuth
-X-Url: http://ibormuth.efil.de/contact
-User-Agent: Mutt/1.5.8i
-Cc: ingo@bormuth.org
+	id S932347AbVHXWsY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 18:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbVHXWsY
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 18:48:24 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:63113 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S932347AbVHXWsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2005 18:48:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050824224821.BSNW19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 Aug 2005 18:48:21 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0508241651420.23242@iabervon.org> (Daniel
+	Barkalow's message of "Wed, 24 Aug 2005 17:04:51 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7735>
 
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-I'm sorry for sending a non-working patch. Apparently I got lost in /tmp.
+> Generally, each subdirectory of refs/ has refs to objects of the same
+> type, and heads/ is commits, but other directories are other things. tags/
+> is all tag objects, and you could have undo/ be trees.
 
-So here is the patch for gitk that allows you to browse the entire tree for
-every revision.
+That's OK from the prune front, but I am not sure what the
+ramifications of this for pulling, pushing, and resolving.
+I would not recommend it without really thinking it through.
 
-The patched gitk script and some screenshots can be found at:
+Also note that tags/ is not all tag objects.  I think "git tag"
+by default creates a lightweight tag, not an annotated kind.
 
-    http://public.efil.de/gitk/
+I think you could do either one of two things.  As usual, totally
+untested.  Just thinking aloud.
 
-For my personal use it's rather sufficient.
-If anybody is interested in using it, I would clean it up.
+(1) A hack.
 
-   - Ingo
+     - Have a single "undo-redo" branch, which was forked from
+       somewhere on the "master" branch.
 
+     - When doing "undo", make a commit that has the current top
+       of undo-redo branch as the first parent and the current
+       HEAD commit as the second parent, using the tree that
+       represents your snapshot, to grow "undo-redo" branch.
 
+       No, this commit does *not* represent a merge, but I am
+       abusing the capability to record more than one parent
+       commits.
 
+     - When running "redo", you would want a handy way to name
+       what to redo.  You can say "undo-redo~N" to mean "Nth
+       from the top of undo-redo branch.
 
+       Your implementation of "redo" can either be (patch way):
 
+       git-diff-tree -p undo-redo~N^ undo-redo~N | git apply --index
 
+       or (merge way):
 
-Add tree view.
+       git-read-tree -m undo-redo~N^2 undo-redo~N HEAD &&
+       git-merge-cache -o git-merge-one-file-script -a
 
-   This allows you to browse the entire tree for every revision.
-   You may switch back an forward betweem the two modes at any time.
-
-   Keybindings:  v - toggle view mode (tree/commit)
-                 l - toggle line numbers
-
----
-commit dbbfcc0cabb8eaaff998dc95957d73867f0e2f35
-tree 53d7597f0f42ca1c3f7f01c7ca60d14541077a89
-parent ccf1ee327f9a7d51704578fa41ba255abfd3a730
-author <ingo@kruemel.(none)> Thu, 25 Aug 2005 00:13:22 +0200
-committer <ingo@kruemel.(none)> Thu, 25 Aug 2005 00:13:22 +0200
-
- gitk |  192 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 187 insertions(+), 5 deletions(-)
-
-diff --git a/gitk b/gitk
---- a/gitk
-+++ b/gitk
-@@ -329,12 +329,13 @@ proc makewindow {} {
-     global findtype findtypemenu findloc findstring fstring geometry
-     global entries sha1entry sha1string sha1but
-     global maincursor textcursor curtextcursor
--    global rowctxmenu gaudydiff mergemax
-+    global rowctxmenu gaudydiff mergemax viewmodebutton
- 
-     menu .bar
-     .bar add cascade -label "File" -menu .bar.file
-     menu .bar.file
-     .bar.file add command -label "Reread references" -command rereadrefs
-+    .bar.file add command -label "Toggle line numbers" -command togglelinenum
-     .bar.file add command -label "Quit" -command doquit
-     menu .bar.help
-     .bar add cascade -label "Help" -menu .bar.help
-@@ -381,6 +382,9 @@ proc makewindow {} {
-     .ctop.top.clist add $canv3
-     bind .ctop.top.clist <Configure> {resizeclistpanes %W %w}
- 
-+    set viewmodebutton Tree
-+    button .ctop.top.bar.viewmodebutton -textvariable viewmodebutton -command toggleviewmode
-+    pack .ctop.top.bar.viewmodebutton -side left
-     set sha1entry .ctop.top.bar.sha1
-     set entries $sha1entry
-     set sha1but .ctop.top.bar.sha1label
-@@ -493,9 +497,11 @@ proc makewindow {} {
-     bindkey <Key-space> "$ctext yview scroll 1 pages"
-     bindkey p "selnextline -1"
-     bindkey n "selnextline 1"
-+    bindkey l "togglelinenum"
-     bindkey b "$ctext yview scroll -1 pages"
-     bindkey d "$ctext yview scroll 18 units"
-     bindkey u "$ctext yview scroll -18 units"
-+    bindkey v "toggleviewmode"
-     bindkey / {findnext 1}
-     bindkey <Key-Return> {findnext 0}
-     bindkey ? findprev
-@@ -2815,10 +2821,178 @@ proc gettreediffline {gdtf ids} {
-     lappend treediff $file
- }
- 
-+proc toggleviewmode {} {
-+    global treemode viewmodebutton selectedline cflist viewpath ctext
-+    if { $treemode } {
-+        set viewmodebutton Tree
-+        set treemode false
-+    } else { 
-+        set viewmodebutton Commit
-+        set treemode true
-+    }
-+    # redraw
-+    if {![info exists selectedline]} return
-+    set l [expr $selectedline]
-+    selectline $l 1
-+    # select current file 
-+    if {! $treemode } {
-+        set commitfiles [ $cflist get 0 end ] 
-+        set index [ lsearch $commitfiles $viewpath ]
-+        if { $index > 0 } {
-+            catch { after 500 $ctext yview fmark.$index }
-+        }
-+    }
-+}
-+
-+proc togglelinenum {} {
-+    global showlinenum selectedline
-+    if { $showlinenum } { set showlinenum false } else { set showlinenum true }
-+    if {![info exists selectedline]} return
-+    set l [expr $selectedline]
-+    selectline $l 1
-+}
-+
-+proc viewfull { path } {
-+    global ctext currentid viewpath
-+    $ctext conf -state normal
-+    $ctext delete 0.0 end
-+
-+    if { $path != "" } { set viewpath $path }
-+    if { $viewpath == "Comments" ||  $viewpath == "/" || $viewpath == "" } {
-+        set path ""
-+        set viewpath "/"
-+        set kind root
-+        set sha $currentid
-+    } else {
-+        if [catch {set stream [open "|git-ls-tree $currentid $viewpath" r]}] {
-+            $ctext insert end "ERROR: viewfull: git-ls-tree $currentid $viewpath"
-+            return
-+        }
-+        gets $stream line
-+        fconfigure $stream -blocking 0
-+        close $stream
-+        if { $line == "" } {
-+            set kind "NOT FOUND !!!"
-+        } else {
-+            set kind [lindex $line 1]
-+        }
-+        set sha  [lindex $line 2]
-+    }
-+   
-+    viewheader $viewpath $kind
-+    
-+    if { $kind == "blob"} {
-+      viewblob $sha
-+    } elseif { $kind == "tree" || $kind == "root"} {
-+      viewtree $sha
-+    }
-+}
-+
-+proc viewheader { path kind } {
-+    global ctext
-+    $ctext insert end "type: $kind\n"
-+    $ctext insert end "path: "
-+    
-+    set splitpath [ linsert [ split [ string trim $path "/" ] "/" ] 0 "ROOT" ]
-+    set name [ lindex $splitpath end ]
-+    set splitpath [ lrange $splitpath 0 end-1 ]
-+    set buildpath "/"
-+    foreach next $splitpath {
-+        if { $next != "ROOT" } { 
-+            append buildpath "$next/"
-+        }
-+        viewprintlink "$next" $buildpath
-+        $ctext insert end " / "
-+    }
-+    $ctext insert end "$name \n"
-+    set l [expr {(78 - [string length $name]) / 2}]
-+    set pad [string range "----------------------------------------" 1 $l]
-+    $ctext insert end "$pad $name $pad\n" filesep
-+}
-+
-+proc viewprintlink { name path } {
-+    global ctext
-+    set linkbeg [$ctext index "end - 1c"]
-+    $ctext insert end "$name"
-+    set linkend [$ctext index "end - 1c"]
-+    $ctext tag add  linkfile$name "$linkbeg + 0 c" "$linkend + 0 c"
-+    $ctext tag conf linkfile$name -foreground blue -underline 1
-+    $ctext tag bind linkfile$name <Enter> { %W configure -cursor hand2 }
-+    $ctext tag bind linkfile$name <Leave> { %W configure -cursor $curtextcursor }
-+    $ctext tag bind linkfile$name <1> [ list viewfull "$path" ]
-+}
-+
-+
-+proc viewblob {sha} {
-+    global ctext linenum
-+    set linenum 0
-+    if [catch {set stream [open "|git-cat-file blob $sha" r]}] {
-+        $ctext insert end "ERROR: viewblob"
-+        return
-+    }
-+    fconfigure $stream -blocking 0
-+    fileevent $stream readable [list getviewblobline $stream $sha]
-+}
-+
-+proc getviewblobline {stream sha} {
-+    global ctext linenum showlinenum
-+    set n [gets $stream line]
-+    if {$n < 0} {
-+	if {![eof $stream]} return
-+	close $stream
-+        return
-+    }
-+    incr linenum
-+    set num [format "%5s" "$linenum"]
-+    if { $showlinenum } { $ctext insert end "$num " hunksep }
-+    $ctext insert end "$line\n"
-+}
-+
-+proc viewtree {sha} {
-+    global ctext lstree
-+    set lstree ""
-+    $ctext insert end "\n\n"
-+    if [catch {set stream [open "|git-ls-tree $sha" r]}] {
-+        $ctext insert end "ERROR viewtree"
-+        return
-+    }
-+    fconfigure $stream -blocking 0
-+    fileevent $stream readable [list getviewtreeline $stream]
-+}
-+
-+proc getviewtreeline {stream} {
-+    global ctext viewpath lstree
-+    set n [gets $stream line]
-+    if {$n < 0} {
-+	if {![eof $stream]} return
-+	close $stream
-+        printviewtreefilter "tree"
-+        $ctext insert end "\n"
-+        printviewtreefilter "blob"
-+        return
-+    }
-+    lappend lstree $line
-+}
-+    
-+proc printviewtreefilter {filter} {
-+    global ctext lstree viewpath
-+    foreach line $lstree  {
-+        set kind [ lindex $line 1 ]
-+        if { $kind != $filter} continue
-+        $ctext insert end "    $kind  "
-+        set name [ lindex $line 3 ]
-+        viewprintlink $name "$viewpath/$name"
-+        $ctext insert end "\n"
-+    }
-+}
-+
- proc getblobdiffs {ids} {
-     global diffopts blobdifffd diffids env curdifftag curtagstart
--    global difffilestart nextupdate diffinhdr treediffs
--
-+    global difffilestart nextupdate diffinhdr treediffs treemode
-+    if { $treemode } { 
-+      viewfull "" 
-+      return 
-+    }
-     set id [lindex $ids 0]
-     set p [lindex $ids 1]
-     set env(GIT_DIFF_OPTS) $diffopts
-@@ -2951,12 +3125,17 @@ proc nextfile {} {
- }
- 
- proc listboxsel {} {
--    global ctext cflist currentid
-+    global ctext cflist currentid treemode viewpath
-     if {![info exists currentid]} return
-     set sel [lsort [$cflist curselection]]
-     if {$sel eq {}} return
-     set first [lindex $sel 0]
--    catch {$ctext yview fmark.$first}
-+    set viewpath [ $cflist get $first ]
-+    if { $treemode } {
-+      viewfull [$cflist get $first]
-+    } else {
-+        catch {$ctext yview fmark.$first}
-+    }
- }
- 
- proc setcoords {} {
-@@ -3576,6 +3755,9 @@ set stopped 0
- set redisplaying 0
- set stuffsaved 0
- set patchnum 0
-+set treemode false
-+set viewpath ""
-+set showlinenum true
- setcoords
- makewindow
- readrefs
-
-
-
-
--- 
-   +--------------------------------------------------------+
-   | Ingo Bormuth,  voicebox & telefax: +49-12125-10226517  |
-   | GnuPG key 86326EC9 at http://ibormuth.efil.de/contact  |
-   +--------------------------------------------------------+
+(2) Try StGIT.
