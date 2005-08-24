@@ -1,66 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Fix git-rev-parse breakage
-Date: Wed, 24 Aug 2005 12:03:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508241200500.3317@g5.osdl.org>
-References: <Pine.LNX.4.58.0508231908170.3317@g5.osdl.org>
- <7v4q9fdv5w.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: baffled again
+Date: Wed, 24 Aug 2005 15:33:32 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508241504580.23242@iabervon.org>
+References: <200508232256.j7NMuR1q027892@agluck-lia64.sc.intel.com>
+ <7vek8jhk7y.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.58.0508241140290.3317@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 21:06:17 2005
+Cc: Junio C Hamano <junkio@cox.net>, tony.luck@intel.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 24 21:31:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E80Xg-0004Go-Gb
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 21:04:08 +0200
+	id 1E80wk-0003W2-3a
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 21:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbVHXTD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 15:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbVHXTD6
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 15:03:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:48825 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751400AbVHXTD6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 15:03:58 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7OJ3qjA025319
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 Aug 2005 12:03:54 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7OJ3kEN031770;
-	Wed, 24 Aug 2005 12:03:49 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q9fdv5w.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751437AbVHXT37 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 15:29:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbVHXT37
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 15:29:59 -0400
+Received: from iabervon.org ([66.92.72.58]:61709 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751437AbVHXT36 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 15:29:58 -0400
+Received: (qmail 23466 invoked by uid 1000); 24 Aug 2005 15:33:32 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Aug 2005 15:33:32 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508241140290.3317@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7724>
 
+On Wed, 24 Aug 2005, Linus Torvalds wrote:
 
+> Now, if the shared patch hadn't been a patch, but a shared _commit_, then
+> the thing would have been unambiguous - the shared commit would have been
+> the merge point, and the revert would have clearly undone that shared
+> commit.
 
-On Wed, 24 Aug 2005, Junio C Hamano wrote:
-> that is not a right thing so get rid of that assumption" (which
-> I agree is a good change", and the last sentense says
-> opposite...
+Actually, it was a shared commit
+(4aec0fb12267718c750475f3404337ad13caa8f5), which was (an ancestor of) a
+candidate merge point, but wasn't the one selected. Since a different one
+was chosen, it looked to the 3-way merge like a shared patch (since it
+ignores the untaken parent in the merges in the history).
 
-Well, the patch makes it an _explicit_ assumption, instead of a very 
-subtly hidden one from the code-flow. It was the non-obvious hidden 
-assumption that caused the bug.
+This should be fixable, but it'll require more cleverness in read-tree.
 
-> Here is my thinking, requesting for a sanity check.
-> 
-> * git-whatchanged wants to use it to tell rev-list arguments
->   from rev-tree arguments.  You _do_ want to pick --max-count=10
->   or --merge-order in this case, and --revs-only implying
->   --no-flags would make this impossible.
-
-Fair enough. However, there are two kinds of flags: the "revision flags", 
-and the "-p" kind of flags.
-
-And the problem was that "git-whatchanged -p" didn't work any more,
-because we passed "-p" along to "git-rev-list". Gaah.
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
