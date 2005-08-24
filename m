@@ -1,57 +1,51 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Fix silly pathspec bug in git-ls-files
-Date: Tue, 23 Aug 2005 17:14:13 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508231711350.3317@g5.osdl.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce "reset type" flag to "git reset"
+Date: Tue, 23 Aug 2005 17:22:47 -0700
+Message-ID: <7vpss4mbe0.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0hhzcj1.fsf@assigned-by-dhcp.cox.net>
+	<20050823202637.GA8061@mars.ravnborg.org>
+	<7vacj8nw5v.fsf@assigned-by-dhcp.cox.net>
+	<87y86s2nvi.wl@mail2.atmark-techno.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Wed Aug 24 02:15:35 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Sam Ravnborg <sam@ravnborg.org>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Aug 24 02:23:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7iuN-000714-2F
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 02:14:23 +0200
+	id 1E7j2a-0008CC-EZ
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 02:22:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932504AbVHXAOU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 20:14:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932506AbVHXAOU
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 20:14:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:40072 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S932504AbVHXAOU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Aug 2005 20:14:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7O0EEjA013466
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 Aug 2005 17:14:15 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7O0EDFR016239;
-	Tue, 23 Aug 2005 17:14:14 -0700
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932506AbVHXAWv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 20:22:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbVHXAWu
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 20:22:50 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:974 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S932506AbVHXAWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 20:22:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050824002248.WWMX15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 23 Aug 2005 20:22:48 -0400
+To: Yasushi SHOJI <yashi@atmark-techno.com>
+In-Reply-To: <87y86s2nvi.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
+	of "Wed, 24 Aug 2005 09:13:21 +0900")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7689>
 
+Yasushi SHOJI <yashi@atmark-techno.com> writes:
 
-The "verify_pathspec()" function doesn't test for ending NUL character in 
-the pathspec, causing some really funky and unexpected behaviour. It just 
-happened to work in the cases I had tested.
+> for --hard option, what you want to do is to completely revert the
+> current state of your index file and work tree to known point.
+>
+> for that, how about git-revert-script?
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/ls-files.c b/ls-files.c
---- a/ls-files.c
-+++ b/ls-files.c
-@@ -496,7 +496,7 @@ static void verify_pathspec(void)
- 			char c = n[i];
- 			if (prev && prev[i] != c)
- 				break;
--			if (c == '*' || c == '?')
-+			if (!c || c == '*' || c == '?')
- 				break;
- 			if (c == '/')
- 				len = i+1;
+"git revert" is to create a commit that reverts a previous
+commit, which I think is quite different from what we have been
+discussing so far.
