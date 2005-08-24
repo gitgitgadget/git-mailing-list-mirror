@@ -1,54 +1,59 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Query about status of http-pull
-Date: Wed, 24 Aug 2005 11:25:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508241125080.3317@g5.osdl.org>
-References: <1124899847.7187.18.camel@lycan.lan> <Pine.LNX.4.63.0508241233260.23242@iabervon.org>
- <7v1x4jfbdy.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Introduce "reset type" flag to "git reset"
+Date: Wed, 24 Aug 2005 11:35:50 -0700
+Message-ID: <7vk6ibdvy1.fsf@assigned-by-dhcp.cox.net>
+References: <7vu0hhzcj1.fsf@assigned-by-dhcp.cox.net>
+	<20050823202637.GA8061@mars.ravnborg.org>
+	<7vacj8nw5v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 20:27:13 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Aug 24 20:36:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7zwn-0007Cy-3M
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 20:26:01 +0200
+	id 1E806S-0003CH-Va
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 20:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751352AbVHXSZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 14:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751362AbVHXSZ6
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 14:25:58 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57775 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751352AbVHXSZ5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 14:25:57 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7OIPjjA022368
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 Aug 2005 11:25:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7OIPhuN029743;
-	Wed, 24 Aug 2005 11:25:44 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x4jfbdy.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751365AbVHXSfx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 14:35:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751369AbVHXSfx
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 14:35:53 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:22980 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751365AbVHXSfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2005 14:35:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050824183550.CZNZ16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 24 Aug 2005 14:35:50 -0400
+To: Sam Ravnborg <sam@ravnborg.org>
+In-Reply-To: <7vacj8nw5v.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 23 Aug 2005 15:08:44 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7718>
 
+Junio C Hamano <junkio@cox.net> writes:
 
+> Sam Ravnborg <sam@ravnborg.org> writes:
+>
+>> But --soft, --hard looks rather confusing to me.
+>>
+>> Something like --force or --prune may be a bit more intuitive, and let
+>> default behaviour be the one you name --soft for now.
+>
+> I do not have objections to removing --mixed, but I do not find
+> --force/--prune any less confusing than --soft/--hard.  Its just
+> a terminology so once people get used to it anything would do.
+> But I agree that we need to come up with a good name for them.
+> I do not think --force/--prune is it, though.
 
-On Wed, 24 Aug 2005, Junio C Hamano wrote:
-> 
-> Added at the end of git-repack-script (Linus can disable it by
-> giving an '-n' flag when packing his private repositories).
+Names aside, I have a feeling that "git reset --hard HEAD" is
+what "git checkout -f HEAD" should have done.  As it stands, the
+latter leaves files not in HEAD but in the previous tree behind.
 
-No, I just haven't updated my git on master.kernel.org in a while. So 
-nothing to disable.
-
-I ran git-update-server-info manually, so it should work now.
-
-		Linus
+Comments?
