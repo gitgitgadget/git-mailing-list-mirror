@@ -1,88 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Stgit - patch history / add extra parents
-Date: Tue, 23 Aug 2005 17:23:29 -0700
-Message-ID: <7virxwmbcu.fsf@assigned-by-dhcp.cox.net>
-References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com>
-	<20050819194832.GA8562@fanta>
-	<1124572356.7512.21.camel@localhost.localdomain>
-	<20050821094059.GA5453@fanta>
-	<Pine.LNX.4.63.0508221707520.23242@iabervon.org>
-	<tnxvf1wd24m.fsf@arm.com>
+From: Len Brown <len.brown@intel.com>
+Subject: Re: Automatic merge failed, fix up by hand
+Date: Tue, 23 Aug 2005 20:31:09 -0400
+Message-ID: <1124843469.14730.13.camel@toshiba>
+References: <1124831571.13042.27.camel@firebird.lenb.worldpath.net>
+	 <7vhddgnw9q.fsf@assigned-by-dhcp.cox.net><1124836282.14730.4.camel@toshiba>
+	 <7vzmr8mci2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 02:24:03 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 24 02:26:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7j3H-0008EY-Sf
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 02:23:36 +0200
+	id 1E7j4o-0008QE-W4
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 02:25:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932507AbVHXAXc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Aug 2005 20:23:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbVHXAXc
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 20:23:32 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:28596 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932507AbVHXAXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Aug 2005 20:23:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050824002331.ZLXN17043.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 23 Aug 2005 20:23:31 -0400
-To: Catalin Marinas <catalin.marinas@gmail.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932475AbVHXAZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Aug 2005 20:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbVHXAZH
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Aug 2005 20:25:07 -0400
+Received: from zorn.worldpath.net ([206.152.180.10]:60855 "EHLO
+	unix.worldpath.net") by vger.kernel.org with ESMTP id S932475AbVHXAZG
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Aug 2005 20:25:06 -0400
+Received: from toshiba (WPIS-64-140-212-33.worldpath.net [64.140.212.33])
+	by unix.worldpath.net (8.12.9/8.12.9) with ESMTP id j7O0OtrQ012194;
+	Tue, 23 Aug 2005 20:24:56 -0400 (EDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmr8mci2.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.2.1 
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7691>
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+On Tue, 2005-08-23 at 19:58 -0400, Junio C Hamano wrote:
+> Len Brown <len.brown@intel.com> writes:
+> 
+> >> I could get to 81065e2f415af6... commit (Linus tip at this
+> >> moment), so if you can tell me where to snarf the other commit
+> >> (702c7e76....) that would help me diagnose the problem a lot.
+> >
+> > rsync://rsync.kernel.org/pub/scm/linux/kernel/git/lenb/to-akpm.git
+> 
+> Thanks.
+> 
+> I think merge-base, even though we attempted to fix it recently,
+> is still confused and that is one of the reasons why you are
+> getting this.
+> 
+>     prompt$  git-rev-parse origin test-lenb-merge
+>     81065e2f415af6c028eac13f481fb9e60a0b487b
+>     702c7e7626deeabb057b6f529167b65ec2eefbdb
+>     prompt$  git-merge-base origin test-lenb-merge
+>     30e332f3307e9f7718490a706e5ce99f0d3a7b26
+>     prompt$  git show-branch origin test-lenb-merge
+>     ! [origin] zd1201 kmalloc size fix
+>      * [test-lenb-merge] [ACPI] fix ia64 build issues resulting from
+> L...
+>     --
+>     +  [origin] zd1201 kmalloc size fix
+>     +  [origin~1] md: make sure resync gets started when array starts.
+>     +  [origin~2] preempt race in getppid
+>     +  [origin~3] Merge master.kernel.org:/pub/scm/linux/kernel/git/da
+>     -- >8 -- snip -- >8 --
+>     +  Merge ../to-linus-stable/
+>     ++ [ACPI] re-enable platform-specific hotkey drivers by default
+>     +  ARM: 2851/1: Fix NWFPE extended precision exception handling
+>     ++ [origin~34] intelfb/fbdev: Save info->flags in a local variable
+>     prompt$  git-rev-parse origin~34
+>     3edea4833a1efcd43e1dff082bc8001fdfe74b34
+> 
+> Notice that show-branch, which walks the commit ancestry chain
+> pretty much the same way merge-base does, notices and stops at
+> origin~34 (that's 34th generation first parent commit from Linus
+> tip) that is the common commit between the two heads being
+> merged?  And that commit, 3edea48... is different from what
+> merge-base is reporting.
+> 
+> If I maually run merge-cache using origin~34 as the merge base,
+> only the following two files needs to result in non-simple merge:
+> 
+>     Documentation/acpi-hotkey.txt
+>     drivers/acpi/osl.c
+> 
+> Do these two files match your expectation?
 
-> What's the definition of a parent in GIT terms? What are the
-> restriction for a commit object to be a parent? Can a parent be an
-> arbitrarily chosen commit?
+No, I don't think so.
 
-Yes it can.  GIT does not care if the commit ancestry does not
-make sense in contents terms (i.e. you can record one tree
-object in a commit object, and record another, completely
-unrelated tree object in a commit object that has the first
-commit object as its parent).  The "git-diff-tree" output from
-comparing those two commits may not make _any_ sense at all to
-the human, though, but that is not a problem for GIT to do its
-work.
+Unless I missed something, to-akpm should be a proper super-set
+of from-linus, so I wouldn't expect a merge on these two.
 
-> That's what I've been thinking. StGIT currently only implements the
-> external view.
->
-> An StGIT patch is a represented by a top and bottom commit
-> objects. The bottom one is the same as the parent of the top
-> commit. The patch is the diff between the top's tree id and the
-> bottom's tree id.
->
-> Jan's proposal is to allow a freeze command to save the current top
-> hash and later be used as a second parent for the newly generated
-> top. The problem I see with this approach is that (even for the
-> internal view you described) the newly generated top will have two
-> parents, new-bottom and old-top, but only the diff between new-top and
-> new-bottom is meaningful. The diff between new-top and old-top (as a
-> parent-child relation) wouldn't contain anything relevant to the patch
-> but all the new changes to the base of the stack.
->
-> Is the above an acceptable usage of the GIT DAG structure?
+> I'll take a look at merge-base.c next, but just in case I CC:ed
+> this to Linus, who is more familiar with that code.
 
-Surely, as long as it stays internal as StGIT patch stacks.
-Even when it is exported (i.e. you manage to have other non
-StGIT managed tree to pull and merge with such a commit), the
-development history _might_ look funny and complicated, but it
-should not be a problem for GIT to handle.  After all, you are
-doing complicated thing in the StGIT patch stacks when you pop,
-push and freeze number of times, so your history is complicated.
-If you want to record that history at least for StGIT internal
-bookkeeping purposes, GIT should not prevent you from doing it.
-
-Having said that, I would 100% agree with you that having a
-cleansed external view would be a good idea.  It makes merging
-with StGIT managed repositories much more acceptable to ordinary
-GIT managed history.
+thanks,
+-Len
