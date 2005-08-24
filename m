@@ -1,87 +1,65 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [RFC] undo and redo
-Date: Wed, 24 Aug 2005 14:01:34 -0600
-Organization: Hewlett Packard
-Message-ID: <20050824200134.GB693@hpsvcnb.fc.hp.com>
-References: <20050824172339.GA7083@hpsvcnb.fc.hp.com> <7vu0hfdwql.fsf@assigned-by-dhcp.cox.net>
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: RE: baffled again
+Date: Wed, 24 Aug 2005 13:10:33 -0700
+Message-ID: <B8E391BBE9FE384DAA4C5C003888BE6F04385192@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 22:03:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 24 22:12:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E81RL-0006mk-5j
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 22:01:39 +0200
+	id 1E81ad-0001yx-SM
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 22:11:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbVHXUBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 16:01:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbVHXUBf
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 16:01:35 -0400
-Received: from atlrel6.hp.com ([156.153.255.205]:40123 "EHLO atlrel6.hp.com")
-	by vger.kernel.org with ESMTP id S1751515AbVHXUBe (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 16:01:34 -0400
-Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel6.hp.com (Postfix) with ESMTP id 4A1309BA3;
-	Wed, 24 Aug 2005 16:01:34 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id 1E0C441DFDA; Wed, 24 Aug 2005 20:01:34 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 0E1E32CE99; Wed, 24 Aug 2005 14:01:34 -0600 (MDT)
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vu0hfdwql.fsf@assigned-by-dhcp.cox.net>
-X-Origin: hpescnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S932082AbVHXUKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 16:10:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932088AbVHXUKy
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 16:10:54 -0400
+Received: from fmr16.intel.com ([192.55.52.70]:54657 "EHLO
+	fmsfmr006.fm.intel.com") by vger.kernel.org with ESMTP
+	id S932082AbVHXUKx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 16:10:53 -0400
+Received: from fmsfmr101.fm.intel.com (fmsfmr101.fm.intel.com [10.253.24.21])
+	by fmsfmr006.fm.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j7OKAgqh004765;
+	Wed, 24 Aug 2005 20:10:42 GMT
+Received: from fmsmsxvs040.fm.intel.com (fmsmsxvs040.fm.intel.com [132.233.42.124])
+	by fmsfmr101.fm.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with SMTP id j7OKAenS008374;
+	Wed, 24 Aug 2005 20:10:40 GMT
+Received: from fmsmsx331.amr.corp.intel.com ([132.233.42.156])
+ by fmsmsxvs040.fm.intel.com (SAVSMTP 3.1.7.47) with SMTP id M2005082413103931805
+ ; Wed, 24 Aug 2005 13:10:40 -0700
+Received: from fmsmsx311.amr.corp.intel.com ([132.233.42.214]) by fmsmsx331.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 24 Aug 2005 13:10:36 -0700
+Received: from scsmsx401.amr.corp.intel.com ([10.3.90.12]) by fmsmsx311.amr.corp.intel.com with Microsoft SMTPSVC(6.0.3790.211);
+	 Wed, 24 Aug 2005 13:10:35 -0700
+X-MimeOLE: Produced By Microsoft Exchange V6.5.7226.0
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: baffled again
+Thread-Index: AcWo3EnS+597X0XbQhGlKIUJCr4HYAACoAIA
+To: "Linus Torvalds" <torvalds@osdl.org>,
+	"Junio C Hamano" <junkio@cox.net>
+X-OriginalArrivalTime: 24 Aug 2005 20:10:36.0018 (UTC) FILETIME=[E3A68520:01C5A8E7]
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7727>
 
-On Wed, Aug 24, 2005 at 11:18:42AM -0700, Junio C Hamano wrote:
-> Carl Baldwin <cnb@fc.hp.com> writes:
-> 
-> > Attached are the two scripts.  Comments and criticism are welcome.
-> 
-> An obligatory non-technical comment.  I would have liked to see
-> this not in a MIME multipart format, which made commenting on it
-> a bit harder than necessary.
-> 
-> > Content-Type: text/plain; charset=us-ascii
-> > Content-Disposition: attachment; filename=git-undo-script
-> >
-> > #!/bin/sh
-> >
-> > . git-sh-setup-script || die "Not a git archive"
-> >
-> > if [ -n "$(git-diff-files)" ]; then
-> >     echo The following files should be updated!
-> >     echo
-> >     git-diff-files | awk '{print $6}'
-> > fi
-> 
-> There is nothing wrong with the above, but I would have written
-> it like this (I think you forgot to exit after showing the list
-> of files):
-> 
->     git-update-cache --refresh || exit
+>I think git did the "right thing", it just happened to be the thing that
+>Tony didn't want. Which makes it the "wrong thing", of course, but from a
+>purely technical standpoint, I don't think there's anything really wrong
+>with the merge. 
 
-I'll take this.  This is what I was going for but being new to git I
-didn't know all that was available.  A good reason to request comments
-:-)
+On the plus side ... at least it wasn't a dumb user error this time [unless
+you count merging the incorrect patch in the first place, and then having
+to revert it :-) ].
 
-> Also nice to learn here is "git-diff-files --name-only".
+Could GIT be smarter here?  Perhaps it could pick a few likely
+ancestors and run the merge with each ... and then give some
+warnings if there are files that come out differently?
 
-Also good to know, thanks.
-
-Carl
-
--- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+-Tony
