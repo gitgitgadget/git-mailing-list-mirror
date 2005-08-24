@@ -1,327 +1,116 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Rationalize output selection in rev-parse.
-Date: Wed, 24 Aug 2005 14:40:24 -0700
-Message-ID: <7vek8jc8tz.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.58.0508231908170.3317@g5.osdl.org>
-	<7v4q9fdv5w.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.58.0508241200500.3317@g5.osdl.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] Fix "prefix" mixup in git-rev-list
+Date: Wed, 24 Aug 2005 17:58:42 -0400
+Message-ID: <1124920722.17909.9.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Aug 24 23:40:31 2005
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Aug 25 00:00:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E82z0-0005fz-0q
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 23:40:30 +0200
+	id 1E83HI-0001GJ-Ju
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 23:59:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932283AbVHXVk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 17:40:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932285AbVHXVk1
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 17:40:27 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:35746 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932283AbVHXVk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2005 17:40:26 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050824214024.PQD8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 24 Aug 2005 17:40:24 -0400
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932298AbVHXV6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 17:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbVHXV6x
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 17:58:53 -0400
+Received: from fencepost.gnu.org ([199.232.76.164]:56528 "EHLO
+	fencepost.gnu.org") by vger.kernel.org with ESMTP id S932298AbVHXV6x
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2005 17:58:53 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.34)
+	id 1E83GY-0006PY-BB
+	for git@vger.kernel.org; Wed, 24 Aug 2005 17:58:38 -0400
+Received: from localhost.localdomain ([127.0.0.1] helo=dv.roinet.com)
+	by dv.roinet.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.52)
+	id 1E83Gd-0006ZM-Nr
+	for git@vger.kernel.org; Wed, 24 Aug 2005 17:58:43 -0400
+Received: (from proski@localhost)
+	by dv.roinet.com (8.13.4/8.13.4/Submit) id j7OLwhNY025253
+	for git@vger.kernel.org; Wed, 24 Aug 2005 17:58:43 -0400
+X-Authentication-Warning: dv.roinet.com: proski set sender to proski@gnu.org using -f
+To: git <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7733>
 
-Earlier rounds broke 'whatchanged -p'.  In attempting to fix this,
-make two axis of output selection in rev-parse orthogonal:
+Hello!
 
-  --revs-only	tells it not to output things that are not revisions nor
-		flags that rev-list would take.
-  --no-revs	tells it not to output things that are revisions or
-		flags that rev-list would take.
-  --flags	tells it not to output parameters that do not start with
-		a '-'.
-  --no-flags	tells it not to output parameters that starts with a '-'.
+Recent changes in git have broken cg-log.  git-rev-list no longer prints
+"commit" in front of commit hashes.  It turn out a local "prefix"
+variable in main() shadows a file-scoped "prefix" variable.
 
-So for example 'rev-parse --no-revs -p arch/i386' would yield '-p arch/i386',
-while 'rev-parse --no-revs --flags -p arch/i386' would give just '-p'.
+The patch removed the local "prefix" variable since its value is never
+used (in the intended way, that is).  The call to setup_git_directory()
+is kept since it has useful side effects.
 
-Also the meaning of --verify has been made stronger.  It now rejects
-anything but a single valid rev argument.  Earlier it passed some flags
-through without complaining.
+The file-scoped "prefix" variable is renamed to "commit_prefix" just in
+case someone reintroduces "prefix" to hold the return value of
+setup_git_directory().
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Pavel Roskin <proski@gnu.org>
 
----
-
-  Linus Torvalds <torvalds@osdl.org> writes:
-
-  > Fair enough. However, there are two kinds of flags: the
-  > "revision flags", and the "-p" kind of flags.
-  >
-  > And the problem was that "git-whatchanged -p" didn't work any more,
-  > because we passed "-p" along to "git-rev-list". Gaah.
-
-  Thanks for noticing.
-
- rev-parse.c |  121 ++++++++++++++++++++++++++---------------------------------
- 1 files changed, 54 insertions(+), 67 deletions(-)
-
-4866ccf0f434db118c4dcdeeab840eb4844d50a4
-diff --git a/rev-parse.c b/rev-parse.c
---- a/rev-parse.c
-+++ b/rev-parse.c
-@@ -7,20 +7,21 @@
- #include "commit.h"
- #include "refs.h"
- 
-+#define DO_REVS		1
-+#define DO_NOREV	2
-+#define DO_FLAGS	4
-+#define DO_NONFLAGS	8
-+static int filter = ~0;
-+
- static char *def = NULL;
--static int no_revs = 0;
--static int single_rev = 0;
--static int revs_only = 0;
--static int do_rev_argument = 1;
--static int output_revs = 0;
--static int flags_only = 0;
--static int no_flags = 0;
--static int output_sq = 0;
--static int symbolic = 0;
- 
- #define NORMAL 0
- #define REVERSED 1
- static int show_type = NORMAL;
-+static int symbolic = 0;
-+static int output_sq = 0;
-+
-+static int revs_count = 0;
- 
- /*
-  * Some arguments are relevant "revision" arguments,
-@@ -30,13 +31,19 @@ static int show_type = NORMAL;
- static int is_rev_argument(const char *arg)
+diff --git a/rev-list.c b/rev-list.c
+--- a/rev-list.c
++++ b/rev-list.c
+@@ -33,7 +33,7 @@ static int blob_objects = 0;
+ static int verbose_header = 0;
+ static int show_parents = 0;
+ static int hdr_termination = 0;
+-static const char *prefix = "";
++static const char *commit_prefix = "";
+ static unsigned long max_age = -1;
+ static unsigned long min_age = -1;
+ static int max_count = -1;
+@@ -48,14 +48,14 @@ static void show_commit(struct commit *c
  {
- 	static const char *rev_args[] = {
--		"--max-count=",
-+		"--bisect",
-+		"--header",
- 		"--max-age=",
--		"--min-age=",
-+		"--max-count=",
- 		"--merge-order",
--		"--topo-order",
--		"--bisect",
-+		"--min-age=",
- 		"--no-merges",
-+		"--objects",
-+		"--parents",
-+		"--pretty",
-+		"--show-breaks",
-+		"--topo-order",
-+		"--unpacked",
- 		NULL
- 	};
- 	const char **p = rev_args;
-@@ -47,11 +54,13 @@ static int is_rev_argument(const char *a
- 		if (!str)
- 			return 0;
- 		len = strlen(str);
--		if (!strncmp(arg, str, len))
-+		if (!strcmp(arg, str) ||
-+		    (str[len-1] == '=' && !strncmp(arg, str, len)))
- 			return 1;
- 	}
- }
- 
-+/* Output argument as a string, either SQ or normal */
- static void show(const char *arg)
- {
- 	if (output_sq) {
-@@ -70,11 +79,13 @@ static void show(const char *arg)
- 		puts(arg);
- }
- 
-+/* Output a revision, only if filter allows it */
- static void show_rev(int type, const unsigned char *sha1, const char *name)
- {
--	if (no_revs)
-+	if (!(filter & DO_REVS))
- 		return;
--	output_revs++;
-+	def = NULL;
-+	revs_count++;
- 
- 	if (type != show_type)
- 		putchar('^');
-@@ -84,29 +95,12 @@ static void show_rev(int type, const uns
- 		show(sha1_to_hex(sha1));
- }
- 
--static void show_rev_arg(char *rev)
-+/* Output a flag, only if filter allows it. */
-+static void show_flag(char *arg)
- {
--	if (no_revs)
-+	if (!(filter & DO_FLAGS))
- 		return;
--	show(rev);
--}
--
--static void show_norev(char *norev)
--{
--	if (flags_only)
--		return;
--	if (revs_only)
--		return;
--	show(norev);
--}
--
--static void show_arg(char *arg)
--{
--	if (no_flags)
--		return;
--	if (do_rev_argument && is_rev_argument(arg))
--		show_rev_arg(arg);
--	else
-+	if (filter & (is_rev_argument(arg) ? DO_REVS : DO_NOREV))
- 		show(arg);
- }
- 
-@@ -122,7 +116,6 @@ static void show_default(void)
- 			show_rev(NORMAL, sha1, s);
- 			return;
- 		}
--		show_norev(s);
- 	}
- }
- 
-@@ -134,7 +127,7 @@ static int show_reference(const char *re
- 
+ 	commit->object.flags |= SHOWN;
+ 	if (show_breaks) {
+-		prefix = "| ";
++		commit_prefix = "| ";
+ 		if (commit->object.flags & DISCONTINUITY) {
+-			prefix = "^ ";     
++			commit_prefix = "^ ";     
+ 		} else if (commit->object.flags & BOUNDARY) {
+-			prefix = "= ";
++			commit_prefix = "= ";
+ 		} 
+         }        		
+-	printf("%s%s", prefix, sha1_to_hex(commit->object.sha1));
++	printf("%s%s", commit_prefix, sha1_to_hex(commit->object.sha1));
+ 	if (show_parents) {
+ 		struct commit_list *parents = commit->parents;
+ 		while (parents) {
+@@ -481,9 +481,9 @@ static void handle_one_commit(struct com
  int main(int argc, char **argv)
  {
--	int i, as_is = 0;
-+	int i, as_is = 0, verify = 0;
- 	unsigned char sha1[20];
- 	const char *prefix = setup_git_directory();
- 	
-@@ -143,15 +136,13 @@ int main(int argc, char **argv)
- 		char *dotdot;
- 	
- 		if (as_is) {
--			show_norev(arg);
-+			show(arg);
+ 	struct commit_list *list = NULL;
+-	const char *prefix = setup_git_directory();
+ 	int i, limited = 0;
+ 
++	setup_git_directory();
+ 	for (i = 1 ; i < argc; i++) {
+ 		int flags;
+ 		char *arg = argv[i];
+@@ -511,9 +511,9 @@ int main(int argc, char **argv)
+ 			verbose_header = 1;
+ 			hdr_termination = '\n';
+ 			if (commit_format == CMIT_FMT_ONELINE)
+-				prefix = "";
++				commit_prefix = "";
+ 			else
+-				prefix = "commit ";
++				commit_prefix = "commit ";
  			continue;
  		}
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "--")) {
--				show_default();
--				if (revs_only || flags_only)
--					break;
- 				as_is = 1;
-+				continue;
- 			}
- 			if (!strcmp(arg, "--default")) {
- 				def = argv[i+1];
-@@ -159,25 +150,24 @@ int main(int argc, char **argv)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--revs-only")) {
--				revs_only = 1;
-+				filter &= ~DO_NOREV;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--no-revs")) {
--				no_revs = 1;
-+				filter &= ~DO_REVS;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--flags")) {
--				flags_only = 1;
-+				filter &= ~DO_NONFLAGS;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--no-flags")) {
--				no_flags = 1;
-+				filter &= ~DO_FLAGS;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--verify")) {
--				revs_only = 1;
--				do_rev_argument = 0;
--				single_rev = 1;
-+				filter &= ~(DO_FLAGS|DO_NOREV);
-+				verify = 1;
- 				continue;
- 			}
- 			if (!strcmp(arg, "--sq")) {
-@@ -197,12 +187,17 @@ int main(int argc, char **argv)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--show-prefix")) {
--				puts(prefix);
-+				if (prefix)
-+					puts(prefix);
- 				continue;
- 			}
--			show_arg(arg);
-+			if (verify)
-+				die("Needed a single revision");
-+			show_flag(arg);
- 			continue;
- 		}
-+
-+		/* Not a flag argument */
- 		dotdot = strstr(arg, "..");
- 		if (dotdot) {
- 			unsigned char end[20];
-@@ -212,9 +207,6 @@ int main(int argc, char **argv)
- 				if (!*n)
- 					n = "HEAD";
- 				if (!get_sha1(n, end)) {
--					if (no_revs)
--						continue;
--					def = NULL;
- 					show_rev(NORMAL, end, n);
- 					show_rev(REVERSED, sha1, arg);
- 					continue;
-@@ -223,26 +215,21 @@ int main(int argc, char **argv)
- 			*dotdot = '.';
- 		}
- 		if (!get_sha1(arg, sha1)) {
--			if (no_revs)
--				continue;
--			def = NULL;
- 			show_rev(NORMAL, sha1, arg);
- 			continue;
- 		}
- 		if (*arg == '^' && !get_sha1(arg+1, sha1)) {
--			if (no_revs)
--				continue;
--			def = NULL;
- 			show_rev(REVERSED, sha1, arg+1);
- 			continue;
- 		}
--		show_default();
--		show_norev(arg);
-+		if (verify)
-+			die("Needed a single revision");
-+		if ((filter & (DO_NONFLAGS|DO_NOREV)) ==
-+		    (DO_NONFLAGS|DO_NOREV))
-+			show(arg);
- 	}
- 	show_default();
--	if (single_rev && output_revs != 1) {
--		fprintf(stderr, "Needed a single revision\n");
--		exit(1);
--	}
-+	if (verify && revs_count != 1)
-+		die("Needed a single revision");
- 	return 0;
- }
+ 		if (!strncmp(arg, "--no-merges", 11)) {
+
+
+-- 
+Regards,
+Pavel Roskin
