@@ -1,94 +1,79 @@
 From: Carl Baldwin <cnb@fc.hp.com>
 Subject: Re: [RFC] undo and redo
-Date: Wed, 24 Aug 2005 13:56:15 -0600
+Date: Wed, 24 Aug 2005 14:01:34 -0600
 Organization: Hewlett Packard
-Message-ID: <20050824195615.GA693@hpsvcnb.fc.hp.com>
-References: <20050824172339.GA7083@hpsvcnb.fc.hp.com> <20050824181004.GA18790@hpsvcnb.fc.hp.com> <Pine.LNX.4.58.0508241148480.3317@g5.osdl.org>
+Message-ID: <20050824200134.GB693@hpsvcnb.fc.hp.com>
+References: <20050824172339.GA7083@hpsvcnb.fc.hp.com> <7vu0hfdwql.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 21:57:08 2005
+X-From: git-owner@vger.kernel.org Wed Aug 24 22:03:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E81Mj-0004rm-Ni
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 21:56:54 +0200
+	id 1E81RL-0006mk-5j
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 22:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbVHXT4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 15:56:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbVHXT4g
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 15:56:36 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:36243 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S1751505AbVHXT4W (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 15:56:22 -0400
+	id S1751517AbVHXUBf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 16:01:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbVHXUBf
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 16:01:35 -0400
+Received: from atlrel6.hp.com ([156.153.255.205]:40123 "EHLO atlrel6.hp.com")
+	by vger.kernel.org with ESMTP id S1751515AbVHXUBe (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 16:01:34 -0400
 Received: from smtp2.fc.hp.com (smtp.fc.hp.com [15.15.136.253])
-	by atlrel7.hp.com (Postfix) with ESMTP id 6CC3611D;
-	Wed, 24 Aug 2005 15:56:21 -0400 (EDT)
+	by atlrel6.hp.com (Postfix) with ESMTP id 4A1309BA3;
+	Wed, 24 Aug 2005 16:01:34 -0400 (EDT)
 Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
 	by smtp2.fc.hp.com (Postfix) with ESMTP
-	id 3B8BE41E09B; Wed, 24 Aug 2005 19:56:21 +0000 (UTC)
+	id 1E0C441DFDA; Wed, 24 Aug 2005 20:01:34 +0000 (UTC)
 Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id F09662CE99; Wed, 24 Aug 2005 13:56:15 -0600 (MDT)
-To: Linus Torvalds <torvalds@osdl.org>
+	id 0E1E32CE99; Wed, 24 Aug 2005 14:01:34 -0600 (MDT)
+To: Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.58.0508241148480.3317@g5.osdl.org>
+In-Reply-To: <7vu0hfdwql.fsf@assigned-by-dhcp.cox.net>
 X-Origin: hpescnb.fc.hp.com
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7726>
 
-On Wed, Aug 24, 2005 at 11:51:32AM -0700, Linus Torvalds wrote:
+On Wed, Aug 24, 2005 at 11:18:42AM -0700, Junio C Hamano wrote:
+> Carl Baldwin <cnb@fc.hp.com> writes:
 > 
+> > Attached are the two scripts.  Comments and criticism are welcome.
 > 
-> On Wed, 24 Aug 2005, Carl Baldwin wrote:
+> An obligatory non-technical comment.  I would have liked to see
+> this not in a MIME multipart format, which made commenting on it
+> a bit harder than necessary.
+> 
+> > Content-Type: text/plain; charset=us-ascii
+> > Content-Disposition: attachment; filename=git-undo-script
 > >
-> > Oops.  I forgot to actually exit from the script if git-diff-files is
-> > non-empty.
-> > 
-> > Also, looking at it now, I don't think keeping undo information in a
-> > stack is the right thing.  But keeping more than just one would be good.
-> > Oh well, my first shot is never perfect.  ;-)
+> > #!/bin/sh
+> >
+> > . git-sh-setup-script || die "Not a git archive"
+> >
+> > if [ -n "$(git-diff-files)" ]; then
+> >     echo The following files should be updated!
+> >     echo
+> >     git-diff-files | awk '{print $6}'
+> > fi
 > 
-> I would actually argue that
+> There is nothing wrong with the above, but I would have written
+> it like this (I think you forgot to exit after showing the list
+> of files):
 > 
-> 	git checkout -b newbranch <undo-point>
-> 
-> is the perfect undo.
+>     git-update-cache --refresh || exit
 
-Yes, this does the job nicely.  I've used it like this effectively.  I
-meant for undo/redo to be a lighter weight way of moving (uncommitted)
-changes out of the way briefly and then replaying them onto the working
-directory later.
+I'll take this.  This is what I was going for but being new to git I
+didn't know all that was available.  A good reason to request comments
+:-)
 
-> It leaves the old state in the old branch, and creates a new branch (and
-> checks it out) with the state you want to revert to. The advantage is
-> exactly that there is no "stack" of undo's: you can have multiple
-> independent undo's pending, and you can continue development at any of 
-> them. And merge the results together.
+> Also nice to learn here is "git-diff-files --name-only".
 
-The "stack" was the wrong thing to do.  I think I would have undo pick a
-name like undo-1, undo-2 etc.  Or something like that.  redo would pick
-the most recent unless told to do otherwise.
-
-A possible advantage of undo is having the freedom to stay on the
-current branch or switch to another.
-
-> Of course, right now we don't have a "delete branch" command, but it's 
-> really as simple as
->
-> 	rm .git/refs/heads/branchname
-> 
-> (and eventually you may want to do a "git prune" to get rid of stale
-> objects, but that's a separate issue).
-> 
-> 		Linus
-> 
-
-This brings up a good point (indirectly).  "git prune" would destroy the
-undo objects.  I had thought of this but decided to ignore it for the
-time being.
+Also good to know, thanks.
 
 Carl
 
