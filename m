@@ -1,135 +1,107 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: baffled again
-Date: Wed, 24 Aug 2005 12:09:42 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508241135120.23242@iabervon.org>
-References: <200508232256.j7NMuR1q027892@agluck-lia64.sc.intel.com>
- <7vek8jhk7y.fsf@assigned-by-dhcp.cox.net>
+From: Martin Schlemmer <azarah@nosferatu.za.org>
+Subject: Query about status of http-pull
+Date: Wed, 24 Aug 2005 18:10:47 +0200
+Message-ID: <1124899847.7187.18.camel@lycan.lan>
+Reply-To: azarah@nosferatu.za.org
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: tony.luck@intel.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 24 18:11:45 2005
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-fEni1HgS49TdOSwY2FGN"
+X-From: git-owner@vger.kernel.org Wed Aug 24 18:14:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E7xlV-0003JG-T1
-	for gcvg-git@gmane.org; Wed, 24 Aug 2005 18:06:14 +0200
+	id 1E7xpF-0004zF-7N
+	for gcvg-git@gmane.org; Wed, 24 Aug 2005 18:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751104AbVHXQGK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 12:06:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbVHXQGK
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 12:06:10 -0400
-Received: from iabervon.org ([66.92.72.58]:40453 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751104AbVHXQGJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 12:06:09 -0400
-Received: (qmail 22256 invoked by uid 1000); 24 Aug 2005 12:09:42 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 24 Aug 2005 12:09:42 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vek8jhk7y.fsf@assigned-by-dhcp.cox.net>
+	id S1751086AbVHXQKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 12:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751108AbVHXQKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 12:10:00 -0400
+Received: from ctb-mesg9.saix.net ([196.25.240.89]:44790 "EHLO
+	ctb-mesg9.saix.net") by vger.kernel.org with ESMTP id S1751086AbVHXQJ7
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Aug 2005 12:09:59 -0400
+Received: from gateway.lan (wblv-146-217-49.telkomadsl.co.za [165.146.217.49])
+	by ctb-mesg9.saix.net (Postfix) with ESMTP id 849514565
+	for <git@vger.kernel.org>; Wed, 24 Aug 2005 18:07:27 +0200 (SAST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by gateway.lan (Postfix) with ESMTP id 1F9F43A260B
+	for <git@vger.kernel.org>; Wed, 24 Aug 2005 17:43:15 +0200 (SAST)
+Received: from gateway.lan ([127.0.0.1])
+ by localhost (gateway.lan [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 04716-05 for <git@vger.kernel.org>; Wed, 24 Aug 2005 17:42:59 +0200 (SAST)
+Received: from lycan.lan (lycan.lan [192.168.0.5])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by gateway.lan (Postfix) with ESMTP id 6A1763A2605
+	for <git@vger.kernel.org>; Wed, 24 Aug 2005 17:42:59 +0200 (SAST)
+To: GIT Mailing Lists <git@vger.kernel.org>
+X-Mailer: Evolution 2.2.3 
+X-Virus-Scanned: by amavisd-new using ClamAV at nosferatu.za.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7711>
 
-On Wed, 24 Aug 2005, Junio C Hamano wrote:
 
-> tony.luck@intel.com writes:
->
-> > So I have another anomaly in my GIT tree.  A patch to
-> > back out a bogus change to arch/ia64/hp/sim/boot/bootloader.c
-> > in my release branch at commit
-> >
-> >  62d75f3753647656323b0365faa43fc1a8f7be97
-> >
-> > appears to have been lost when I merged the release branch to
-> > the test branch at commit
-> >
-> >  0c3e091838f02c537ccab3b6e8180091080f7df2
->
->     : siamese; git cat-file commit 0c3e091838f02c537ccab3b6e8180091080f7df2
->     tree 61a407356d1e897e0badea552ce69e657cab6108
->     parent 7ffacc1a2527c219b834fe226a7a55dc67ca3637
->     parent a4cce10492358b33d33bb43f98284c80482037e8
->     author Tony Luck <tony.luck@intel.com> 1124808655 -0700
->     committer Tony Luck <tony.luck@intel.com> 1124808655 -0700
->
->     Pull release into test branch
->
-> So I pulled 7ffacc and a4cce1 from your repository and started
-> digging from there.  7ffacc was the head of "test" branch back
-> then, and a4cce1 was the head of "release" branch.  I checked
-> out 7ffacc in the repository and pulled a4cce1 into it, using
-> the GIT with the "optimum merge-base" patch.
->
->     : siamese; git pull . aegl-release
->     Packing 0 objects
->     Unpacking 0 objects
->
->     * committish: a4cce10492358b33d33bb43f98284c80482037e8	refs/heads/aegl-release from .
->     Trying to find the optimum merge base.
->     Trying to merge a4cce10492358b33d33bb43f98284c80482037e8 into 7ffacc1a2527c219b834fe226a7a55dc67ca3637 using c1ffb910f7a4e1e79d462bb359067d97ad1a8a25.
->     Simple merge failed, trying Automatic merge
->     Auto-merging arch/ia64/sn/kernel/io_init.c.
->     Committed merge db376974c0aebb9e99e5cd0bce21088c6a9d927c
->      arch/ia64/hp/sim/boot/boot_head.S |    2 +-
->      1 files changed, 1 insertions(+), 1 deletions(-)
->
-> It is using c1ffb9 as the merge base.  The problematic path
-> in the three trees involved are:
->
-> : siamese; git ls-tree -r aegl-test-7ffacc1a | grep arch/ia64/hp/sim/boot/bootloader.c
-> 100644 blob a7bed60b69f9e8de9a49944e22d03fb388ae93c7	arch/ia64/hp/sim/boot/bootloader.c
-> : siamese; git ls-tree -r aegl-release-a4cce1 | grep arch/ia64/hp/sim/boot/bootloader.c
-> 100644 blob 51a7b7b4dd0e7c5720683a40637cdb79a31ec4c4	arch/ia64/hp/sim/boot/bootloader.c
-> : siamese; git ls-tree -r aegl-c1ffb9 | grep arch/ia64/hp/sim/boot/bootloader.c
-> 100644 blob 51a7b7b4dd0e7c5720683a40637cdb79a31ec4c4	arch/ia64/hp/sim/boot/bootloader.c
->
-> So the file did not change between the merge base and release,
-> and test had the change.  merge-cache picked the one in the test
-> release.  Your guess in the other message hits the mark.
->
-> I wonder what _other_ candidates these two commits have in
-> common and what would have happened if they were used as the
-> base instead?
->
->     : siamese; git merge-base -a aegl-test-7ffacc1a aegl-release-a4cce1
->     f6fdd7d9c273bb2a20ab467cb57067494f932fa3
->     3a931d4cca1b6dabe1085cc04e909575df9219ae
->     c1ffb910f7a4e1e79d462bb359067d97ad1a8a25
->
-> You can check what variant of the file each of these commits
-> contain.
->
-> What is happening is:
->
-> * the problematic patch 4aec0f is one before 3a931d.  Among the
->   three merge-base candidates, only 3a931d contains teh wrongly
->   patched version.
->
-> * the problematic change 4aec0f patch introduces is part of test
->   branch, because it was pulled via release.
->
-> * the tip of release being merged into test has this patch
->   reverted, and the file is exactly the same as before 4aec0f
->   patch.
->
-> So three-way trivial merge algorithm says, "hey, the file did
-> not change between common ancestor and release but it is
-> different in test, so the one in the test branch must be the
-> merge result."
->
-> This does not have much to do with which common ancestor
-> merge-base chooses.  Sorry, I am not sure what is the right way
-> to resolve this offhand.
 
-If it picks 3a931d4cca1b6dabe1085cc04e909575df9219ae, it will determine
-that the file didn't change between that and test, and is different in
-release, so the one in release must be right. I believe that the hint that
-something is going on is that different common ancestors give
-different trivial merges (as opposed to some giving failure and some
-giving the same result), and resolving it probably involves identifying
-that that paths from f6f... and c1f... to release don't keep the same blob
-through the middle, despite having the same ends.
+--=-fEni1HgS49TdOSwY2FGN
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-	-Daniel
-*This .sig left intentionally blank*
+Hi,
+
+Recently cogito again say that the rsync method will be deprecated in
+future (due to http-pull now supporting pack objects I suppose), but it
+seems to me that it still have other issues:
+
+-----
+lycan linux-2.6 # git pull origin
+Fetching HEAD using http
+Getting pack list
+error: Couldn't get 0572e3da3ff5c3744b2f606ecf296d5f89a4bbdf: not separate =
+or in any pack
+error: Tried http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-=
+2.6.git/objects/05/72e3da3ff5c3744b2f606ecf296d5f89a4bbdf
+Cannot obtain needed object 0572e3da3ff5c3744b2f606ecf296d5f89a4bbdf
+while processing commit 0000000000000000000000000000000000000000.
+lycan linux-2.6 # cg-update
+17:50:02 URL:http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-=
+2.6.git/refs/heads/master [41/41] -> "refs/heads/.origin-pulling" [1]
+
+FINISHED --17:50:09--
+Downloaded: 11,949 bytes in 5 files
+Missing object of tag v2.6.13-rc7... unable to retrieve
+Up to date.
+
+Applying changes...
+Branch already fully merged.
+lycan linux-2.6 #
+-----
+
+If you switch it however to rsync again, it works just fine.  Other
+branches like that of KLIBC and one or two others do not even pull via
+http-pull.
+
+So basically the question is if this is known issues (had mail issues,
+so missed the last week or so's mail) ?
+
+
+Thanks,
+
+--=20
+Martin Schlemmer
+
+
+--=-fEni1HgS49TdOSwY2FGN
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.2 (GNU/Linux)
+
+iD8DBQBDDJwHqburzKaJYLYRAizRAJwOnq/rM7tjT2ixxYl2S6QtpR7SZQCcDgTR
+E4xXMxD5EL+8j+EZ6LsBJMs=
+=vnxp
+-----END PGP SIGNATURE-----
+
+--=-fEni1HgS49TdOSwY2FGN--
