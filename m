@@ -1,147 +1,213 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 0.99.5
-Date: Wed, 24 Aug 2005 19:38:01 -0700
-Message-ID: <7vr7ci4u7q.fsf@assigned-by-dhcp.cox.net>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: [RFC] undo and redo
+Date: Wed, 24 Aug 2005 20:41:34 -0600
+Organization: Hewlett Packard
+Message-ID: <20050825024134.GA31886@hpsvcnb.fc.hp.com>
+References: <20050824172339.GA7083@hpsvcnb.fc.hp.com> <20050824181004.GA18790@hpsvcnb.fc.hp.com> <Pine.LNX.4.58.0508241148480.3317@g5.osdl.org> <20050824195615.GA693@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508241634350.23242@iabervon.org> <20050824204736.GA13194@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508241651420.23242@iabervon.org> <7vd5o3ar4a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Thu Aug 25 04:38:58 2005
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Carl Baldwin <cnb@fc.hp.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 04:42:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E87d3-0007NQ-7S
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 04:38:10 +0200
+	id 1E87gW-0008K3-Oz
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 04:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbVHYCiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Aug 2005 22:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932496AbVHYCiE
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 22:38:04 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:51140 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S932495AbVHYCiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Aug 2005 22:38:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050825023801.LLJO16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 24 Aug 2005 22:38:01 -0400
-To: git@vger.kernel.org
+	id S932496AbVHYCll (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Aug 2005 22:41:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbVHYCll
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Aug 2005 22:41:41 -0400
+Received: from atlrel7.hp.com ([156.153.255.213]:42635 "EHLO atlrel7.hp.com")
+	by vger.kernel.org with ESMTP id S932496AbVHYCll (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Aug 2005 22:41:41 -0400
+Received: from smtp1.fc.hp.com (smtp1b.fc.hp.com [15.15.136.127])
+	by atlrel7.hp.com (Postfix) with ESMTP id 7618E10D28;
+	Wed, 24 Aug 2005 22:41:40 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp1.fc.hp.com (Postfix) with ESMTP
+	id 363E33834A; Thu, 25 Aug 2005 02:41:35 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id EC5E22CE9C; Wed, 24 Aug 2005 20:41:34 -0600 (MDT)
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5o3ar4a.fsf@assigned-by-dhcp.cox.net>
+X-Origin: hpescnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7738>
 
-I've pushed out all of what has been in the proposed updates
-branch, along with documentation updates.
+Well, both are good ideas.  Both are stack oriented, though.
 
-Many changes all over:
+I see what you mean about adding an undo directory to .git/refs/.  I
+will do some tests... (read further)
 
- - pulling from packed repository.
- - cvsimport.
- - documentation coverage.
- - usability.
- - terminology clarification.
- - hooks for updates and commits.
- - updated gitk.
- - multi-head push, fetch, pull, octopus merge.
- - faster merge-base.
- - git from subdirectories.
- - build procedure cleanups.
+On Wed, Aug 24, 2005 at 03:48:21PM -0700, Junio C Hamano wrote:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > Generally, each subdirectory of refs/ has refs to objects of the same
+> > type, and heads/ is commits, but other directories are other things. tags/
+> > is all tag objects, and you could have undo/ be trees.
+> 
+> That's OK from the prune front, but I am not sure what the
+> ramifications of this for pulling, pushing, and resolving.
+> I would not recommend it without really thinking it through.
 
-Have fun.
+So, I've tried cloning, pulling to|from, pushing to|from and resolving
+merges in a repository with undo information stored under
+.git/refs/undo.  None of these operations seem to notice the existence
+of this directory.  I think this is good.
 
+The cloned repository does not end up 'inheriting' the undo directory
+(as I would expect) but does end up with any objects reachable from the
+undo tree.  However, these objects get pruned on the next 'git prune'.
+This, I think, is minor.
 
-What to expect after 0.99.5
-===========================
+Pull seems to ignore the undo directory and, of course, the objects
+reachable by the undo trees.  This is what I expected and wanted.
 
-This is written in a form of to-do list for me, so if I say
-"accept patch", it means I do not currently plan to do that
-myself.  People interested in seeing it materialize please take
-a hint.
+Resolving merges worked as expected.
 
+I think undo trees should be considered local to the repository and this
+is the behavior that I observed.  I think this is a positive.
 
-Documentation
--------------
+Before reading your message, I polished up the scripts and changed them
+so that they store the undo tree and the base tree's hashes in the
+.git/refs/undo directory.  Also, git-redo-script can take an optional
+argument...the name of the undo to replay.  I guess undo should also
+take an optional argument to give the undo tree some symbolic name.
 
-* Accept patches from people who actually have done CVS
-  migration and update the cvs-migration documentation.
-  Link the documentation from the main git.txt page.
+I think this is getting rather solid.  Let me know what you think.
 
-* Update the SubmittingPatches document to add MUA specific
-  hints on how to disable unwanted MIME and flowed-text by
-  collecting past list postings.  Accept patches from people who
-  was hit by shiny blue bat to update the same.
+Here is the git-undo-script:
 
-* Talk about using rsync just once at the beginning when
-  initializing a remote repository so that local packs do not
-  need to be expanded.  I personally do not think we need tool
-  support for this.
+#!/bin/sh
 
-* Update tutorial to cover shared repository style a bit more,
-  maybe with a toy project that involves two or three
-  repositories.
+. git-sh-setup-script || die "Not a git archive"
 
-* Update tutorial to cover setting up repository hooks to do
-  common tasks.
+git-update-cache --refresh || exit 1
 
-* Get help to properly use asciidoc in tutorial.
+undodir=$GIT_DIR/refs/undo
 
-* Maybe justify and demonstrate an Octopus in the tutorial.  Add
-  it to the glossary.
+undoinfo=$undodir/$(date +%Y.%m.%d.%H.%M.%S)
 
+headtree=$(git-cat-file commit $(cat $GIT_DIR/HEAD) | sed -n 's/^tree //p')
+undotree=$(git-write-tree)
 
-Technical (heavier)
--------------------
+if [ $headtree == $undotree ]; then
+    echo There are no changes to undo.
+else
+    mkdir -p $(dirname $undoinfo)
+    echo $headtree > $undoinfo.base
+    echo $undotree > $undoinfo.undo
 
-* Tony Luck reported an unfortunate glitch in the 3-way merge.
-  Encourage discussions to come up with a not-so-expensive way
-  to catch the kind of ambiguities that led to his misery.
+    echo Saved current state in $undodir as $(basename $undoinfo)
 
+    git-read-tree -m -u $undotree $headtree
+fi
 
-Technical (milder)
-------------------
+# --- SNIP ---
 
-* When the branch head pointed by $GIT_DIR/HEAD changes while
-  the index file and working tree are looking the other way
-  (e.g. somebody pushed into your repository, or you ran "git
-  fetch" to update the ref your working tree is on), "git
-  checkout" without -f gets confused.  Figure out a good way to
-  handle this.
+and here, is the redo script
 
-* "git commit -m" should work for initial commits and perhaps
-  merge commits as well.  Warning about merge is still a good
-  thing to do, while -m is useful in scripted non-interactive
-  use, so we need to be careful.
+#!/bin/sh
 
-* Encourage concrete proposals to commit log message templates
-  we discussed some time ago.
+. git-sh-setup-script || die "Not a git archive"
 
-* Bug Ryan and work with him to update send-email easier to use.
+git-update-cache --refresh || exit 1
 
-* Look at portability fixes from Jason Riedy
+usage () {
+    echo >&2 "Usage: git-redo-script [undo name]"
+    exit 1
+}
 
-    http://www.cs.berkeley.edu/~ejr/gits/git.git#portable 
+undodir=$GIT_DIR/refs/undo
 
-* Accept patches to cause "read-tree -u" delete a directory when
-  it makes it empty.
+# If an 'undo name' was given on the command line then try to use it.
+# If not, then automatically pick the most recent undo.
+undoinfo=
+case "$#" in
+0)
+    undoinfo=$undodir/$(ls -tr $undodir | sed -n 's/\.undo$//p' | tail -n 1)
+    ;;
+1)
+    if [ -s $undodir/$1 ]; then
+        undoinfo=$(echo $undodir/$1 | sed -n "s/\.[^.]*$//p")
+    elif [ -s $undodir/$1.undo -a -s $undodir/$1.base ]; then
+        undoinfo=$undodir/$1
+    else
+        usage
+    fi
+    ;;
+*)
+    usage
+    ;;
+esac
 
-* Perhaps accept patches to introduce the concept of "patch flow
-  expressed as ref mappings" Josef has been advocating about.
+# Perform a three-way merge between the base tree, undo tree and current index
+if [ ! -s $undoinfo.undo -o ! -s $undoinfo.base ]; then
+    echo "No undo information available"
+else
+    git-read-tree -u -m $(cat $undoinfo.base) $(cat $undoinfo.undo) $(git-write-tree)
+    git-merge-cache git-merge-one-file-script -a
 
-* MIMEified applymbox to grok B and Q encodings in headers and
-  turn them into UTF-8; unwrap QP; explode multipart.
+    rm -f $undoinfo.*
+    test -z "$(ls $undodir)" && rmdir $undodir
+fi
 
-* "git cherry-pick" that applies the patch an existing commit
-  introduces in its ancestry chain, possibly using the 3-way
-  merge machinery; update rebase using the cherry-pick command.
-  Carl's redo/undo might fall out naturally from this.
+# --- SNIP ---
 
-* A tool to detect, show and prune already merged topic
-  branches.
+I would be glad to write up documentation and provide a patch.
 
-* Perhaps "git branch -d" to delete a branch.
+Cheers,
+Carl
 
-* Enhance "git repack" to not always use --all; this would be
-  handy if the repository contains wagging heads like "pu" in
-  git.git repository.
+> Also note that tags/ is not all tag objects.  I think "git tag"
+> by default creates a lightweight tag, not an annotated kind.
+> 
+> I think you could do either one of two things.  As usual, totally
+> untested.  Just thinking aloud.
+> 
+> (1) A hack.
+> 
+>      - Have a single "undo-redo" branch, which was forked from
+>        somewhere on the "master" branch.
+> 
+>      - When doing "undo", make a commit that has the current top
+>        of undo-redo branch as the first parent and the current
+>        HEAD commit as the second parent, using the tree that
+>        represents your snapshot, to grow "undo-redo" branch.
+> 
+>        No, this commit does *not* represent a merge, but I am
+>        abusing the capability to record more than one parent
+>        commits.
+> 
+>      - When running "redo", you would want a handy way to name
+>        what to redo.  You can say "undo-redo~N" to mean "Nth
+>        from the top of undo-redo branch.
+> 
+>        Your implementation of "redo" can either be (patch way):
+> 
+>        git-diff-tree -p undo-redo~N^ undo-redo~N | git apply --index
+> 
+>        or (merge way):
+> 
+>        git-read-tree -m undo-redo~N^2 undo-redo~N HEAD &&
+>        git-merge-cache -o git-merge-one-file-script -a
+> 
+> (2) Try StGIT.
+> 
+> 
 
-* Remove "git clone-dumb-http".
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
