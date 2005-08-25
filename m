@@ -1,53 +1,86 @@
-From: Darrin Thompson <darrint@progeny.com>
-Subject: Re: Merges without bases
-Date: Thu, 25 Aug 2005 16:29:38 -0500
-Message-ID: <1125005378.4110.25.camel@localhost.localdomain>
-References: <1125004228.4110.20.camel@localhost.localdomain>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: [RFC] undo and redo
+Date: Thu, 25 Aug 2005 15:42:08 -0600
+Organization: Hewlett Packard
+Message-ID: <20050825214208.GB3311@hpsvcnb.fc.hp.com>
+References: <Pine.LNX.4.63.0508241634350.23242@iabervon.org> <20050824204736.GA13194@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508241651420.23242@iabervon.org> <7vd5o3ar4a.fsf@assigned-by-dhcp.cox.net> <20050825024134.GA31886@hpsvcnb.fc.hp.com> <7v1x4izjtm.fsf@assigned-by-dhcp.cox.net> <20050825163201.GA3944@hpsvcnb.fc.hp.com> <20050825195918.GD7461@birddog.com> <20050825203733.GA26539@hpsvcnb.fc.hp.com> <20050825210929.GF7461@birddog.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 25 23:31:54 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 23:44:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8PJd-0003ZO-UG
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 23:31:18 +0200
+	id 1E8PUQ-00063M-5u
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 23:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964783AbVHYVbP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 17:31:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964790AbVHYVbP
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 17:31:15 -0400
-Received: from zealot.progeny.com ([216.37.46.162]:44677 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S964783AbVHYVbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 17:31:14 -0400
-Received: from localhost.localdomain (morimoto.progeny.com [192.168.1.53])
-	by morimoto.progeny.com (Postfix) with ESMTP id 71592636A4
-	for <git@vger.kernel.org>; Thu, 25 Aug 2005 16:31:14 -0500 (EST)
-To: git@vger.kernel.org
-In-Reply-To: <1125004228.4110.20.camel@localhost.localdomain>
-X-Mailer: Evolution 2.2.3 
+	id S964859AbVHYVmX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 17:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964860AbVHYVmX
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 17:42:23 -0400
+Received: from atlrel9.hp.com ([156.153.255.214]:53224 "EHLO atlrel9.hp.com")
+	by vger.kernel.org with ESMTP id S964859AbVHYVmW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2005 17:42:22 -0400
+Received: from smtp1.fc.hp.com (smtp1.fc.hp.com [15.15.136.127])
+	by atlrel9.hp.com (Postfix) with ESMTP id 6776E14FDC;
+	Thu, 25 Aug 2005 17:42:18 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp1.fc.hp.com (Postfix) with ESMTP
+	id 0AE243854C; Thu, 25 Aug 2005 21:42:13 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id E5E5F2B091; Thu, 25 Aug 2005 15:42:08 -0600 (MDT)
+To: "Kirby C. Bohling" <kbohling@birddog.com>
+Content-Disposition: inline
+In-Reply-To: <20050825210929.GF7461@birddog.com>
+X-Origin: hpescnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7768>
 
-That didn't come out clearly. Restating:
+On Thu, Aug 25, 2005 at 04:09:29PM -0500, Kirby C. Bohling wrote:
+> I guess I can see that.  I just see it as much easier to manage
+> multiple undo-redo states manually.  I mean, I wouldn't make anyone
+> use git directly if the difference between the two commands bothers
+> them.  git seems too low a level.  I would think one of the
+> procelains would be be a better level.  However, having a unified
+> interface for all the porcelains seems a reasonable request.
 
-On Thu, 2005-08-25 at 16:10 -0500, Darrin Thompson wrote:
-> Could git-read-tree -m 3-args be made smart enough to treat a 0 as arg 1
-> as an implicit empty tree?
-> 
+Maybe Porcelain is the right place for it.  The question would be "Is it
+important that porcelains handle undo/redo in a way that interoperates?"
 
-Could git-read-tree -m treat an argument of "0" as an implicit empty
-tree? It mainly seems useful as the first arg in the three arg -m form.
+> > 
+> > Is there something wrong with having flexibility?  It seems most of the
+> > criticism of this feature is that there is already a way to accomplish
+> > what I want to do.  Tools that can't be used flexibly are not tools that
+> > I like to use.  Heck, I'm on UNIX aren't I?
+> > 
+> > Oops, sorry for the rant.  I'm really not in a bad mood... really.  I
+> > hope it didn't sound like that :-).  Oh, and I didn't mean to suggest
+> > that git is not flexible in other regards.  I think its great!  Moving
+> > along...
+> > 
+> > > Assuming your patch creation and application tools capture all the
+> > > meta-data the SCM has (which I believe git does), it's pretty simple
+> > > to simulate what you want manaully.  With only a handful of
+> > > commands.
+> > 
+> > I can simulate git manually too with just a few more commands.  Where's
+> > the cutoff?
 
-> Once that is done, git octopus will be able to handle the no merge base
-> case.
-> 
+This analogy *was* a bit extreme.
 
-Once that is done, git octopus could _optionally_ handle the "I can't
-find a merge base" case by passing 0 as the merge base to git-read-tree.
+Cheers,
+Carl
 
---
-Darrin
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
