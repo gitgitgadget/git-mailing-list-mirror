@@ -1,147 +1,148 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: cache status after git pull
-Date: Thu, 25 Aug 2005 13:26:07 -0700
-Message-ID: <7v4q9dvk4g.fsf@assigned-by-dhcp.cox.net>
-References: <200508251608.j7PG8XGq016882@agluck-lia64.sc.intel.com>
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: Re: [RFC] undo and redo
+Date: Thu, 25 Aug 2005 14:37:33 -0600
+Organization: Hewlett Packard
+Message-ID: <20050825203733.GA26539@hpsvcnb.fc.hp.com>
+References: <Pine.LNX.4.58.0508241148480.3317@g5.osdl.org> <20050824195615.GA693@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508241634350.23242@iabervon.org> <20050824204736.GA13194@hpsvcnb.fc.hp.com> <Pine.LNX.4.63.0508241651420.23242@iabervon.org> <7vd5o3ar4a.fsf@assigned-by-dhcp.cox.net> <20050825024134.GA31886@hpsvcnb.fc.hp.com> <7v1x4izjtm.fsf@assigned-by-dhcp.cox.net> <20050825163201.GA3944@hpsvcnb.fc.hp.com> <20050825195918.GD7461@birddog.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 22:28:54 2005
+Cc: Carl Baldwin <cnb@fc.hp.com>, Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 22:39:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8OIe-0001z4-Bt
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 22:26:13 +0200
+	id 1E8OU0-0005z1-AI
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 22:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932550AbVHYU0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 16:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932551AbVHYU0J
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 16:26:09 -0400
-Received: from fed1rmmtao02.cox.net ([68.230.241.37]:38092 "EHLO
-	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
-	id S932550AbVHYU0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 16:26:08 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao02.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050825202608.SZBT3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 Aug 2005 16:26:08 -0400
-To: tony.luck@intel.com
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932556AbVHYUhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 16:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932557AbVHYUhx
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 16:37:53 -0400
+Received: from atlrel6.hp.com ([156.153.255.205]:15580 "EHLO atlrel6.hp.com")
+	by vger.kernel.org with ESMTP id S932556AbVHYUhx (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2005 16:37:53 -0400
+Received: from smtp1.fc.hp.com (smtp1.fc.hp.com [15.15.136.127])
+	by atlrel6.hp.com (Postfix) with ESMTP id 224F6166F;
+	Thu, 25 Aug 2005 16:37:38 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp1.fc.hp.com (Postfix) with ESMTP
+	id B85823853D; Thu, 25 Aug 2005 20:37:33 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 9DD7F2B091; Thu, 25 Aug 2005 14:37:33 -0600 (MDT)
+To: "Kirby C. Bohling" <kbohling@birddog.com>
+Content-Disposition: inline
+In-Reply-To: <20050825195918.GD7461@birddog.com>
+X-Origin: hpescnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7761>
 
-tony.luck@intel.com writes:
+On Thu, Aug 25, 2005 at 02:59:18PM -0500, Kirby C. Bohling wrote:
+> On Thu, Aug 25, 2005 at 10:32:01AM -0600, Carl Baldwin wrote:
+> <snip...>
+> > Another example is if I'm working on a commit and suddenly get a
+> > brilliant idea for some easy modification that I want to make and commit
+> > by itself before making this commit.  I can do this easily with
+> > 
+> >         % git undo
+> >         % carefully make easy change
+> >         % git commit
+> >         % git redo
+> > 
+> > Having a light-weight alternative like this could make the difference
+> > between realizing the easy, brilliant idea and forgetting about it on
+> > the back burner because it was just too cumbersome to make the context
+> > switch.
+> > 
+> > The bottom line is that I don't argue against using the existing
+> > work-flows.  I hope to add the flexibility to use various work-flows to
+> > fit the job at hand.
+> > 
+> <snip...>
+> 
+> [Not much of a git user, but am evaluating it for possible future
+> usage]... 
+> 
+> Why not just save the changes to a file via a patch.  Just like you
+> would if you were sending a patch to someone else.  I have the work
+> flow you are talking about when I use CVS.  I just create a patch,
+> apply the patch in reverse (or run the command to get you a clean
+> working tree in the SCM).  Make my unrelated changes commit it.
+> Then apply the patch, possibly resolve merge conflicts,  and proceed
+> with finishing my original work.
 
-> Aha ... is this the problem that caught me out last week (when
-> I ended up with 10 extra files attached to one of my commits)?
+I used to do this with CVS too.  For you and me, people who are patch
+savy veterans, this is great!  However, as easy as it is I knew very few
+other developers who even thought about doing it.  In the real world,
+many people see a huge difference between:
 
-Plausible.
+git diff-cache > $patchfile
+cat $patchfile | patch -R -p1
+do work
+cat $patchfile | patch -p1
 
-> 1) Updated my "linus" branch:
->
->   $ git checkout linus && git pull linus
+AND
 
-I would assume that just after "git checkout linus" before "git
-pull linus", running "git diff -r linus" would have said
-nothing.
+git undo
+do work
+git redo
 
-The second command, "git pull linus", would internally run "git
-fetch linus".  It depends on how your shorthand "linus" is
-defined, but if it is set to update (either overwrite or
-fast-forward) the "linus" branch head, then your HEAD pointer
-would be updated without updating the index and working tree.
-This is bad because now you are telling git that your working
-tree is based on updated "linus" branch head, and what you
-_could_ commit on top of it is the same thing as what old
-"linus" branch head commit used to have.  That's why "git
-status" output shows the minefield.
+The first one simply never happens with most developers.  Most don't
+really think of doing something outside the tool.  The second option
+will likely get used.  Plus, I know at least one person here who is very
+good with patches and working outside the tool and still would love to
+have the second approach available.
 
-If I keep copies of foreign brahches in $GIT_DIR/refs/heads/
-somewhere, I never checkout those branches in my working tree.
-I always stay in my branches to do my work.  I may "diff"
-against them to see where I am.  Of course I would "resolve"
-with them when I feel I am ready.
+Is there something wrong with having flexibility?  It seems most of the
+criticism of this feature is that there is already a way to accomplish
+what I want to do.  Tools that can't be used flexibly are not tools that
+I like to use.  Heck, I'm on UNIX aren't I?
 
-So, assumes that "linus" short-hand is set up to update
-$GIT_DIR/refs/heads/linus with the foreign branch head, the
-above example would have been:
+Oops, sorry for the rant.  I'm really not in a bad mood... really.  I
+hope it didn't sound like that :-).  Oh, and I didn't mean to suggest
+that git is not flexible in other regards.  I think its great!  Moving
+along...
 
-    $ git checkout master && git pull linus
-    : examine diffs and be convinced what Linus does is always right.
+> Assuming your patch creation and application tools capture all the
+> meta-data the SCM has (which I believe git does), it's pretty simple
+> to simulate what you want manaully.  With only a handful of
+> commands.
 
-If my "master" branch is not ready to merge from Linus but I
-want to get a feel of what is coming, I would instead do:
+I can simulate git manually too with just a few more commands.  Where's
+the cutoff?
 
-    : while staying on my master branch
-    $ git fetch linus
-    $ gitk linus master ;# or git show-branch linus master
+> I see the appeal of not having manually deal with the files, but
+> assuming you don't feel it's branch worthy, and you don't want to
+> have it be something someone else can access externally, it doesn't
+> seem like a feature I can't get almost as simply with existing git
+> commands.  
 
-and later when my branch is ready, I would merge it into my
-master:
+Not having to manually manage a set of patches may seem small but it
+reduces a barrier that may otherwise be just high enough to hurt
+productivity in certain situations.
 
-    : still staying on my master branch
-    $ git pull . linus
+> I guess my final question is what does undo/redo have over saving
+> stuff away in a patch assuming that the patch captures all of the
+> SCM meta-data (the add/move/remove file type commands).  If git
+> doesn't capture all the meta-data in a patch, it would seem better
+> to make it do that and get this as a side-affect.
+> 
+>     Thanks,
+>         Kirby
 
-If you did the pull into your master but it turns out that the
-merge result is too messy, you could always reset (back to the
-first example):
+Thanks for your comments.
 
-    $ git checkout master && git pull linus
-    : if merge failed...
-    $ git reset --hard master
+Carl
 
-    $ git checkout master && git pull linus
-    : merge succeeds, but I realize that my tree was not quite
-    : ready to merge from linus -- going back to pre-merge state
-    $ git reset --hard master^1
-
-
-The rules for updating $GIT_DIR/refs/ when fetch happens have
-been extended and clarified in 0.99.5 quite a bit.
-
-To set up "linus" short-hand to be updated with "master" branch
-head from Linus, you would do one of the following:
-
-  * Using old style shorthand
-
-    $ echo >$GIT_DIR/branches/linus \
-    http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-    $ git fetch linus
-
-  * Using new style shorthand
-
-    $ cat >$GIT_DIR/remotes/linus \
-    URL: http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-    Pull: master:linus
-    $ git fetch linus
-
-  * From the command line, having either branches/linus or
-    remotes/linus from the above two examples:
-
-    $ git fetch linus master:linus
-
-To set up "linus" short-hand _not_ to update any local branch
-head (i.e. you only use "pull" to update your local branch,
-which can be named "linus" branch), you would do one of the
-following:
-
-  * Using old style shorthand
-
-    There is no way to do this using old style shorthand without
-    an explicit command line <refspec>.  See the "From the
-    command line" example below how to do this.
-
-  * Using new style shorthand
-
-    $ cat >$GIT_DIR/remotes/linus \
-    URL: http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/
-    Pull: master:
-    $ git fetch linus
-
-  * From the command line, having either branches/linus or
-    remotes/linus from the above two examples:
-
-    $ git fetch linus master:
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
