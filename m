@@ -1,75 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Looking at multiple ancestors in merge
-Date: Thu, 25 Aug 2005 01:20:31 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508250108100.23242@iabervon.org>
-References: <Pine.LNX.4.63.0508242249030.23242@iabervon.org> <430D4B75.6060102@gmail.com>
+From: Tony Luck <tony.luck@gmail.com>
+Subject: Re: baffled again
+Date: Wed, 24 Aug 2005 22:58:23 -0700
+Message-ID: <12c511ca05082422584e6b1bfb@mail.gmail.com>
+References: <200508232256.j7NMuR1q027892@agluck-lia64.sc.intel.com>
+	 <7vek8jhk7y.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0508241140290.3317@g5.osdl.org>
+	 <Pine.LNX.4.58.0508241152240.3317@g5.osdl.org>
+	 <7vzmr63deq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 25 07:17:35 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, tony.luck@intel.com,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 25 07:58:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8A6s-0002Ua-E1
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 07:17:06 +0200
+	id 1E8Akt-0002hn-MH
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 07:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530AbVHYFQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 01:16:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbVHYFQ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 01:16:57 -0400
-Received: from iabervon.org ([66.92.72.58]:27665 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751228AbVHYFQ4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2005 01:16:56 -0400
-Received: (qmail 32542 invoked by uid 1000); 25 Aug 2005 01:20:31 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Aug 2005 01:20:31 -0400
-To: A Large Angry SCM <gitzilla@gmail.com>
-In-Reply-To: <430D4B75.6060102@gmail.com>
+	id S964850AbVHYF6Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 01:58:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbVHYF6Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 01:58:25 -0400
+Received: from zproxy.gmail.com ([64.233.162.193]:43365 "EHLO zproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S964850AbVHYF6Y convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2005 01:58:24 -0400
+Received: by zproxy.gmail.com with SMTP id i11so161055nzh
+        for <git@vger.kernel.org>; Wed, 24 Aug 2005 22:58:23 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=e4281vzpXRbqZteELr/58pI6eQOyqSs4mJc3yOugAACo8dMeXdRrem43qWV1KGk2tBKSYU2jFjPQtG+TPVxy3EG7pu9WuzJFqxQ1kyHtW08oGzlozIFRcPLBBQIE44WsH/pV5MJOZXmsMGvwcrDhm+og4uPbyPgDVTuPv/IfpAU=
+Received: by 10.36.55.10 with SMTP id d10mr40243nza;
+        Wed, 24 Aug 2005 22:58:23 -0700 (PDT)
+Received: by 10.36.57.3 with HTTP; Wed, 24 Aug 2005 22:58:23 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vzmr63deq.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7746>
 
-On Wed, 24 Aug 2005, A Large Angry SCM wrote:
+>  * Even if it does always choose the nicer choice of the two,
+>    Tony was lucky (no pun intended).  Rather, we were lucky that
+>    Tony was observant.  A careless merger may well have easily
+>    missed this mismerge (from the human point of view).
 
-> Daniel Barkalow wrote:
-> > I'm starting to work on letting the merging process see multiple
-> > ancestors, and I think it's messy enough that I should actually discuss
-> > it.
-> >
-> > Review of the issue:
-> >
-> > It is possible to lost reverts in cases when merging two commits with
-> > multiple ancestors, in the following pattern: (letters representing blobs
-> > at some filename, children to the right)
-> >
-> > a-b-b-a-?
-> >  \ X   /
-> >   a-b-b
-> >
-> [Lots of stuff deleted]
->
-> There seems to be a lot of effort being put into auto-magically choosing
-> the "right" merge in the presence of multiple possible merge bases.
-> Unfortunately, most (all?) of the proposals are attempting to divine
-> intent, and so, are guaranteed to be 100% wrong at least some of the time.
->
-> Wouldn't it be better, instead, to detect that current merge being
-> attempted is ambiguous and require the user to specify the correct merge
-> base? The alternative is a tool that appears to work all of the time but
-> does the wrong thing some of the time.
+Actually I can't take credit here. This was a case of the "many-eyes" of
+open source working at its finest ... someone e-mailed me and told me
+that I should have backed out the old patch before applying the new one.
+While typing the e-mail to say that I already had in the release branch,
+I found the problem that it had been "lost" in the merge into the test branch.
 
-My proposal is actually to detect when a merge is ambiguous. In order to
-determine that, however, you have to evaluate multiple potential outcomes
-and see if they are actually different. I'm working on an efficient way to
-do that.
+But this is a good reminder that merging is not a precise science, and
+there is more than one plausible merge in many situations ... and while
+GIT will pick the one that you want far more often than not, there is
+the possibility that it will surprise you.  Maybe there should be a note
+to this effect in the tutorial.  Git is not magic, nor is it imbued with
+DWIM technology.
 
-Then further work could look into eliminating possibilities when
-information about the history excludes them. There were two issues in the
-case that Tony hit: it ignored a potential correct outcome for the merge,
-and it didn't ignore an outcome which could be demonstrated to be
-incorrect. The priority is to resolve the first, but things which improve
-the second or help with solutions to the second are worth understanding.
-
-	-Daniel
-*This .sig left intentionally blank*
+-Tony
