@@ -1,126 +1,268 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Storing state in $GIT_DIR
-Date: Thu, 25 Aug 2005 11:16:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
-References: <46a038f905082420323b025e3b@mail.gmail.com>
+From: James Ketrenos <jketreno@linux.intel.com>
+Subject: [PATCH] cogito -- add -c $commit support
+Date: Thu, 25 Aug 2005 13:19:55 -0500
+Message-ID: <430E0BCB.5010402@linux.intel.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Aug 25 20:19:11 2005
+Content-Type: multipart/mixed;
+ boundary="------------020900000007010504050305"
+X-From: git-owner@vger.kernel.org Thu Aug 25 20:22:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8MH1-0006ik-D7
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 20:16:23 +0200
+	id 1E8MKW-0008VR-OQ
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 20:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbVHYSQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 14:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751400AbVHYSQR
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 14:16:17 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:29120 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751402AbVHYSQQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2005 14:16:16 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7PIG1jA026832
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 25 Aug 2005 11:16:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7PIG0mT028357;
-	Thu, 25 Aug 2005 11:16:01 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f905082420323b025e3b@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751400AbVHYST6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 14:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbVHYST6
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 14:19:58 -0400
+Received: from fmr19.intel.com ([134.134.136.18]:21944 "EHLO
+	orsfmr004.jf.intel.com") by vger.kernel.org with ESMTP
+	id S1751400AbVHYST5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2005 14:19:57 -0400
+Received: from orsfmr101.jf.intel.com (orsfmr101.jf.intel.com [10.7.209.17])
+	by orsfmr004.jf.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j7PIJvrI005872
+	for <git@vger.kernel.org>; Thu, 25 Aug 2005 18:19:57 GMT
+Received: from [192.168.1.154] (logicsbox.jf.intel.com [134.134.16.142])
+	by orsfmr101.jf.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j7PIJtpD007109
+	for <git@vger.kernel.org>; Thu, 25 Aug 2005 18:19:56 GMT
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.11) Gecko/20050816
+X-Accept-Language: en-us, en
+To: git@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7755>
+
+This is a multi-part message in MIME format.
+--------------020900000007010504050305
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+Add -c parameter to cg-commit to set commit data based on prior commit.
+
+This will then commit any changes using the author and message from the commit
+specified.  The actual logic for parsing the old commit values was taken from
+git-commit-script.
+
+git-commit-script supports this option via -C, which was already used in cg-commit
+for something else.
+
+Signed-off-by: James Ketrenos <jketreno@linux.intel.com>
+---
+
+ cg-commit |   46 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 45 insertions(+), 1 deletions(-)
+
+b07037397659763271e946fc15c0b3c61a8fcdfa
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -3,6 +3,8 @@
+ # Commit into a GIT repository.
+ # Copyright (c) Petr Baudis, 2005
+ # Based on an example script fragment sent to LKML by Linus Torvalds.
++# 
++# -c commit based on code in git-commit-script by Linus Torvalds
+ #
+ # Commits changes to a GIT repository. Accepts the commit message from
+ # `stdin`. If the commit message is not modified the commit will be
+@@ -45,6 +47,12 @@
+ #	might not actually _have_ any object database. This option is
+ #	normally not interesting.
+ #
++# -c::
++#	Specifify the commit SHA to inherit the GIT_AUTHOR_* variables and
++#	commit message from.  The GIT_COMMITTER_* variables will not be
++#	inherited from the specified commit.  This option is typically used
++#	when replaying commits from one lineage or repository to another.
++#	
+ # FILES
+ # -----
+ # $GIT_DIR/author::
+@@ -112,6 +120,7 @@ ignorecache=
+ infoonly=
+ commitalways=
+ missingok=
++use_commit=
+ msgs=()
+ while optparse; do
+ 	if optparse -C; then
+@@ -128,6 +137,8 @@ while optparse; do
+ 		force=1
+ 	elif optparse -m=; then
+ 		msgs[${#msgs[@]}]="$OPTARG"
++	elif optparse -c=; then
++	    use_commit="$OPTARG"
+ 	else
+ 		optfail
+ 	fi
+@@ -196,6 +207,39 @@ for msg in "${msgs[@]}"; do
+ 	echo "$msg" | fmt -s >>$LOGMSG
+ 	written=1
+ done
++
++if [ "$use_commit" ]; then
++	pick_author_script='
++		/^author /{
++			h
++			s/^author \([^<]*\) <[^>]*> .*$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_NAME='\''&'\''/p
++
++			g
++			s/^author [^<]* <\([^>]*\)> .*$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
++
++			g
++			s/^author [^<]* <[^>]*> \(.*\)$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_DATE='\''&'\''/p
++
++			q
++		}
++		'
++	set_author_env=`git-cat-file commit "$use_commit" |
++	sed -ne "$pick_author_script"`
++	eval "$set_author_env"
++	export GIT_AUTHOR_NAME
++	export GIT_AUTHOR_EMAIL
++	export GIT_AUTHOR_DATE
++	git-cat-file commit "$use_commit" |
++	sed -e '1,/^$/d'
++        written=1
++fi >> $LOGMSG
++
+ # Always have at least one blank line, to ease the editing for
+ # the poor people whose text editor has no 'O' command.
+ [ "$written" ] || echo >>$LOGMSG
+@@ -239,7 +283,7 @@ echo "CG: vim: textwidth=75" >>$LOGMSG
+ 
+ cp $LOGMSG $LOGMSG2
+ if tty -s; then
+-	if ! [ "$msgs" ] || [ "$forceeditor" ]; then
++	if ! ([ "$use_commit" ] || [ "$msgs" ]) || [ "$forceeditor" ]; then
+ 		${EDITOR:-vi} $LOGMSG2
+ 		if ! [ "$commitalways" ] && ! [ $LOGMSG2 -nt $LOGMSG ]; then
+ 			echo "Log message unchanged or not specified" >&2
 
 
 
-[ Junio, the fact that you can't script the initial commit with "git 
-  commit" is _really_ irritating. ]
+--------------020900000007010504050305
+Content-Type: text/plain;
+ name="0001-Add-c-parameter-to-cg-commit-to-set-commit-data-based-on-prior-commit.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="0001-Add-c-parameter-to-cg-commit-to-set-commit-data-based-on-prior-commit.txt"
 
-On Thu, 25 Aug 2005, Martin Langhoff wrote:
->
-> Is there a convention of where/how it is safe to store additional
-> (non-git) data in $GIT_DIR?
+[PATCH] Add -c parameter to cg-commit to set commit data based on prior commit.
 
-There's no convention, but I have a suggestion.
+This will then commit any changes using the author and message from the commit
+specified.  The actual logic for parsing the old commit values was taken from
+git-commit-script.
 
-> The arch import needs to keep a cache with arch-commit-id  =
-> git-commit-id mappings, and some notes about what patch-trading Arch
-> recorded. It'd be great to be able to store those in
-> $GIT_DIR/archimport/ . Is that supported?
+git-commit-script supports this option via -C, which was already used in cg-commit
+for something else.
 
-Git won't care, so it will work, but things like clone/pull etc also won't
-actually ever look there, so it will only work for that one repo.
+Signed-off-by: James Ketrenos <jketreno@linux.intel.com>
+---
 
-Now, I have what I consider a clever idea (I've mentioned variations on it 
-before), but it's entirely possible that people hate it.
+ cg-commit |   46 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 45 insertions(+), 1 deletions(-)
 
-The thing is, I think you _do_ want to revision-control the git-commit-id
-mappings, but at the same time, you do _not_ want to mess up the resulting
-git commit history with arch information.
+b07037397659763271e946fc15c0b3c61a8fcdfa
+diff --git a/cg-commit b/cg-commit
+--- a/cg-commit
++++ b/cg-commit
+@@ -3,6 +3,8 @@
+ # Commit into a GIT repository.
+ # Copyright (c) Petr Baudis, 2005
+ # Based on an example script fragment sent to LKML by Linus Torvalds.
++# 
++# -c commit based on code in git-commit-script by Linus Torvalds
+ #
+ # Commits changes to a GIT repository. Accepts the commit message from
+ # `stdin`. If the commit message is not modified the commit will be
+@@ -45,6 +47,12 @@
+ #	might not actually _have_ any object database. This option is
+ #	normally not interesting.
+ #
++# -c::
++#	Specifify the commit SHA to inherit the GIT_AUTHOR_* variables and
++#	commit message from.  The GIT_COMMITTER_* variables will not be
++#	inherited from the specified commit.  This option is typically used
++#	when replaying commits from one lineage or repository to another.
++#	
+ # FILES
+ # -----
+ # $GIT_DIR/author::
+@@ -112,6 +120,7 @@ ignorecache=
+ infoonly=
+ commitalways=
+ missingok=
++use_commit=
+ msgs=()
+ while optparse; do
+ 	if optparse -C; then
+@@ -128,6 +137,8 @@ while optparse; do
+ 		force=1
+ 	elif optparse -m=; then
+ 		msgs[${#msgs[@]}]="$OPTARG"
++	elif optparse -c=; then
++	    use_commit="$OPTARG"
+ 	else
+ 		optfail
+ 	fi
+@@ -196,6 +207,39 @@ for msg in "${msgs[@]}"; do
+ 	echo "$msg" | fmt -s >>$LOGMSG
+ 	written=1
+ done
++
++if [ "$use_commit" ]; then
++	pick_author_script='
++		/^author /{
++			h
++			s/^author \([^<]*\) <[^>]*> .*$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_NAME='\''&'\''/p
++
++			g
++			s/^author [^<]* <\([^>]*\)> .*$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_EMAIL='\''&'\''/p
++
++			g
++			s/^author [^<]* <[^>]*> \(.*\)$/\1/
++			s/'\''/'\''\'\'\''/g
++			s/.*/GIT_AUTHOR_DATE='\''&'\''/p
++
++			q
++		}
++		'
++	set_author_env=`git-cat-file commit "$use_commit" |
++	sed -ne "$pick_author_script"`
++	eval "$set_author_env"
++	export GIT_AUTHOR_NAME
++	export GIT_AUTHOR_EMAIL
++	export GIT_AUTHOR_DATE
++	git-cat-file commit "$use_commit" |
++	sed -e '1,/^$/d'
++        written=1
++fi >> $LOGMSG
++
+ # Always have at least one blank line, to ease the editing for
+ # the poor people whose text editor has no 'O' command.
+ [ "$written" ] || echo >>$LOGMSG
+@@ -239,7 +283,7 @@ echo "CG: vim: textwidth=75" >>$LOGMSG
+ 
+ cp $LOGMSG $LOGMSG2
+ if tty -s; then
+-	if ! [ "$msgs" ] || [ "$forceeditor" ]; then
++	if ! ([ "$use_commit" ] || [ "$msgs" ]) || [ "$forceeditor" ]; then
+ 		${EDITOR:-vi} $LOGMSG2
+ 		if ! [ "$commitalways" ] && ! [ $LOGMSG2 -nt $LOGMSG ]; then
+ 			echo "Log message unchanged or not specified" >&2
 
-The reason you want to revision-control them is that that way you get them 
-on clones, and you can use push/pull to update them. And the reason you 
-don't want to mess up the commit history is that it's just wrong and ugly.
-
-The git solution to this (which nobody has ever _used_, but which
-technically is wonderful) is to have a "side branch" that does not share
-any commits (or files, for that matter) in common with the "real branch",
-and which is used to track any metadata. In fact, you can obviously have 
-any number of side branches.
-
-So that "metadata branch" is a real git branch in its own right, but it
-doesn't share the same root as the "normal" branch, and it's really
-totally independent: you can pull just the main branch (ie somebody who
-isn't arch-aware and has no reason to want the arch mappings), or you
-could pull just the metadata branch (for example, somebody who doesn't
-want to use git, but is trying to match up a git commit ID to whatever
-ID's arch uses).
-
-The way to maintain a metadata branch is to have not only a different 
-branch name (obviously), but also use a totally different index file, so 
-that you can index both branches in parallell, and you don't actually need 
-to check out one or the other.
-
-Now, your arch import tools would then use the raw git commands explicitly 
-to maintain the metadata branch. Every time you do an incremental import 
-from an arch project, your import scripts would save away the mapping 
-information into the metadata branch.
-
-I'll make a _really_ stupid example for you, just to make this a bit more 
-concrete:
-
-	mkdir silly-example
-	cd silly-example
-
-	#
-	# The normal "main branch": use regular git
-	# infrastructure
-	#
-	git init-db
-	echo "Hello" > file
-	git update-cache --add file
-	git commit -m "Main branch"
-
-	#
-	# The metadata branch: magic, very special stuff
-	#
-	echo "initial commit:" $(git-rev-parse HEAD) > .archdata
-	GIT_INDEX_FILE=.git/archindex git-update-cache --add .archdata
-	arch_index_tree=$(GIT_INDEX_FILE=.git/archindex git-write-tree)
-	echo "arch index" | git-commit-tree $arch_index_tree > .git/refs/heads/arch-index
-
-(Btw, the above example shows that the initial "git commit" won't take a 
-"-m" flag, which is really irritating for scripts.)
-
-Then do a "gitk --all", see the two different branches, and realize that 
-the "arch-index" branch can now contain all the tracking information 
-necessary to go back-and-forth. 
-
-		Linus
+--------------020900000007010504050305--
