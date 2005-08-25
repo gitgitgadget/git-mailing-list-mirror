@@ -1,88 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Subject: [PATCH] More missing terms in glossary.txt
-Date: Thu, 25 Aug 2005 16:24:13 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0508251622360.6088@wgmdd8.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-X-From: git-owner@vger.kernel.org Thu Aug 25 16:27:25 2005
+From: tony.luck@intel.com
+Subject: cache status after git pull
+Date: Thu, 25 Aug 2005 09:08:33 -0700
+Message-ID: <200508251608.j7PG8XGq016882@agluck-lia64.sc.intel.com>
+X-From: git-owner@vger.kernel.org Thu Aug 25 18:09:49 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8IeR-0004eb-KI
-	for gcvg-git@gmane.org; Thu, 25 Aug 2005 16:24:19 +0200
+	id 1E8KHO-00068t-9E
+	for gcvg-git@gmane.org; Thu, 25 Aug 2005 18:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965018AbVHYOYR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 10:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965020AbVHYOYR
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 10:24:17 -0400
-Received: from wrzx28.rz.uni-wuerzburg.de ([132.187.3.28]:27349 "EHLO
-	wrzx28.rz.uni-wuerzburg.de") by vger.kernel.org with ESMTP
-	id S965018AbVHYOYQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 10:24:16 -0400
-Received: from wrzx30.rz.uni-wuerzburg.de (wrzx30.rz.uni-wuerzburg.de [132.187.1.30])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 6E4E113C797; Thu, 25 Aug 2005 16:24:13 +0200 (CEST)
-Received: from virusscan (localhost [127.0.0.1])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 55F919AAB1; Thu, 25 Aug 2005 16:24:13 +0200 (CEST)
-Received: from wrzx28.rz.uni-wuerzburg.de (wrzx28.rz.uni-wuerzburg.de [132.187.3.28])
-	by wrzx30.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3FC9F9AA71; Thu, 25 Aug 2005 16:24:13 +0200 (CEST)
-Received: from wgmdd8.biozentrum.uni-wuerzburg.de (wrzx67.rz.uni-wuerzburg.de [132.187.3.67])
-	by wrzx28.rz.uni-wuerzburg.de (Postfix) with ESMTP
-	id 3355213C797; Thu, 25 Aug 2005 16:24:13 +0200 (CEST)
-X-X-Sender: gene099@wgmdd8.biozentrum.uni-wuerzburg.de
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-Virus-Scanned: by amavisd-new (Rechenzentrum Universitaet Wuerzburg)
+	id S932241AbVHYQIf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 12:08:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932235AbVHYQIf
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 12:08:35 -0400
+Received: from fmr23.intel.com ([143.183.121.15]:23211 "EHLO
+	scsfmr003.sc.intel.com") by vger.kernel.org with ESMTP
+	id S932241AbVHYQIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2005 12:08:34 -0400
+Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
+	by scsfmr003.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j7PG8Xv9010678
+	for <git@vger.kernel.org>; Thu, 25 Aug 2005 16:08:33 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [143.183.251.239])
+	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j7PGB34e009758
+	for <git@vger.kernel.org>; Thu, 25 Aug 2005 16:11:03 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1) with ESMTP id j7PG8X6D016883
+	for <git@vger.kernel.org>; Thu, 25 Aug 2005 09:08:33 -0700
+Received: (from aegl@localhost)
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id j7PG8XGq016882;
+	Thu, 25 Aug 2005 09:08:33 -0700
+To: git@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7751>
 
-Describe a DAG and octopus, and change wording of tree object.
+>* When the branch head pointed by $GIT_DIR/HEAD changes while
+> the index file and working tree are looking the other way
+> (e.g. somebody pushed into your repository, or you ran "git
+> fetch" to update the ref your working tree is on), "git
+> checkout" without -f gets confused.  Figure out a good way to
+> handle this.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Aha ... is this the problem that caught me out last week (when
+I ended up with 10 extra files attached to one of my commits)? At
+the time the blame was placed on a failed merge not being backed
+out correctly.  But I only had the failed merge because "get checkout"
+had failed to switch branches (and not provided an exit code to
+stop my script from trying the merge).
 
----
+Here's what I did this morning.
 
- Documentation/glossary.txt |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+1) Updated my "linus" branch:
 
-e077919262930f6ce494c963d23317eb2aaf0dd3
-diff --git a/Documentation/glossary.txt b/Documentation/glossary.txt
---- a/Documentation/glossary.txt
-+++ b/Documentation/glossary.txt
-@@ -27,14 +27,20 @@ blob object::
- 
- tree object::
- 	An object containing a list of file names and modes along with refs
--	to the associated blob and/or tree objects. A tree object is
--	equivalent to a directory.
-+	to the associated blob and/or tree objects. A tree is equivalent
-+	to a directory.
- 
- tree::
- 	Either a working tree, or a tree object together with the
- 	dependent blob and tree objects (i.e. a stored representation
- 	of a working tree).
- 
-+DAG::
-+	Directed acyclic graph. The commit objects form a directed acyclic
-+	graph, because they have parents (directed), and the graph of commit
-+	objects is acyclic (there is no chain which begins and ends with the
-+	same object).
-+
- index::
- 	A collection of files with stat information, whose contents are
- 	stored as objects. The cache is a stored version of your working
-@@ -142,6 +148,10 @@ merge::
- 	merge uses heuristics to accomplish that. Evidently, an automatic
- 	merge can fail.
- 
-+octopus::
-+	To merge more than two branches. Also denotes an intelligent
-+	predator.
-+
- resolve::
- 	The action of fixing up manually what a failed automatic merge
- 	left behind.
+  $ git checkout linus && git pull linus
+
+This appeared to work just fine ... except that when I
+check the status of my tree I see:
+
+  $ git status
+  #
+  # Updated but not checked in:
+  #   (will commit)
+  #
+  #       modified: arch/ia64/pci/pci.c
+  #       modified: arch/ppc64/kernel/setup.c
+  #       modified: arch/sparc64/kernel/pci.c
+  #       modified: arch/x86_64/defconfig
+  #       modified: drivers/block/cfq-iosched.c
+  #       modified: include/asm-m68k/page.h
+  #       modified: kernel/cpuset.c
+  #
+  #
+  # On branch refs/heads/linus
+  
+Which looks like a set of landmines just waiting for me to
+step on them!
+
+Today these didn't bite me.  "git checkout release" worked
+and switched to my release branch (and git status went back
+to saying "nothing to commit").  But in the past I think
+this is the situation that has caused "git checkout" to fail
+with the "fatal: Entry 'blah' would be overwritten by merge. Cannot merge."
+
+-Tony
