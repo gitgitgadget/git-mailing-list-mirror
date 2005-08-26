@@ -1,104 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Enable git-send-email-script on Debian.
-Date: Thu, 25 Aug 2005 18:29:43 -0700
-Message-ID: <7vfysxmqns.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Storing state in $GIT_DIR
+Date: Fri, 26 Aug 2005 01:08:14 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508260101390.23242@iabervon.org>
+References: <46a038f905082420323b025e3b@mail.gmail.com>
+ <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org> <46a038f905082518306e9d7d2a@mail.gmail.com>
+ <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org> <46a038f90508252115415acc04@mail.gmail.com>
+ <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 07:16:52 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 07:51:41 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8T2m-0005ah-Vy
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 03:30:09 +0200
+	id 1E8WOd-00060b-Q3
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 07:04:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965036AbVHZB3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 21:29:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965041AbVHZB3q
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 21:29:46 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7307 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S965036AbVHZB3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 21:29:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050826012943.WDKF8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 Aug 2005 21:29:43 -0400
-To: Ryan Anderson <ryan@michonline.com>
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751509AbVHZFEi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 01:04:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbVHZFEi
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 01:04:38 -0400
+Received: from iabervon.org ([66.92.72.58]:39432 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751509AbVHZFEi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 01:04:38 -0400
+Received: (qmail 21656 invoked by uid 1000); 26 Aug 2005 01:08:14 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Aug 2005 01:08:14 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7789>
 
-You can define WITH_SEND_EMAIL to include the send-email command as
-part of the installation.  Since Debian, unlike RPM/Fedora, has the
-two necessary Perl modules available as part of the mainline
-distribution, there is no reason for us to shy away from shipping
-send-email.
+On Thu, 25 Aug 2005, Junio C Hamano wrote:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+> Now, among the existing object types, there are only two kinds
+> of objects you can use for this.  If the only thing you need to
+> record is some textual information with one pointer to git
+> branch head, then you can use tag that points at the git head,
+> and store everything else as the tag comment.  This is doable
+> but unwieldy.
 
----
+I don't think this buys you anything, because then the tag needs to be
+accessible from something, which is the same problem you were trying to
+solve for the commit.
 
- *** How do you like this one, Ryan?  Yes I know that we should
- *** not be using the same "0.99.5-" with different package
- *** version to ship changes in the upsteram file (Makefile)
- *** like this, but that aside...
+> You could abuse a commit object as well; you store commit
+> objects (such as the corresponding git branch head) as parent
+> commits, and put everything else in a tree that is associated
+> with that commit.
 
- Makefile         |    5 ++++-
- debian/changelog |    7 +++++++
- debian/rules     |    3 +++
- 3 files changed, 14 insertions(+), 1 deletions(-)
+If you want to go that way, you could add a new field to commits with
+minimal effort: you just need to parse it in commit.c, generate it in
+git-commit-tree (with an option), and pull it in pull.c, and everything
+should work as far as making the git portion follow the metadata around.
 
-32fa6df832a1dc9ed0a1388dbe11a16b236683d5
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -69,7 +69,6 @@ SCRIPTS=git git-apply-patch-script git-m
- 	git-request-pull-script git-bisect-script
- 
- SCRIPTS += git-count-objects-script
--# SCRIPTS += git-send-email-script
- SCRIPTS += git-revert-script
- SCRIPTS += git-octopus-script
- 
-@@ -87,6 +86,10 @@ PROG=   git-update-cache git-diff-files 
- 	git-show-index git-daemon git-var git-peek-remote git-show-branch \
- 	git-update-server-info git-show-rev-cache git-build-rev-cache
- 
-+ifdef WITH_SEND_EMAIL
-+SCRIPTS += git-send-email-script
-+endif
-+
- ifndef NO_CURL
- 	PROG+= git-http-pull
- endif
-diff --git a/debian/changelog b/debian/changelog
---- a/debian/changelog
-+++ b/debian/changelog
-@@ -1,3 +1,10 @@
-+git-core (0.99.5-1) unstable; urgency=low
-+
-+  * Enable git-send-email-script on Debian.  There is no reason to shy
-+    away from it, since we have the necessary Perl modules available.
-+
-+ -- Junio C Hamano <junkio@cox.net>  Thu, 25 Aug 2005 14:16:59 -0700
-+
- git-core (0.99.5-0) unstable; urgency=low
- 
-   * GIT 0.99.5
-diff --git a/debian/rules b/debian/rules
---- a/debian/rules
-+++ b/debian/rules
-@@ -25,6 +25,9 @@ else
- 	export MOZILLA_SHA1=YesPlease
- endif
- 
-+# We do have the requisite perl modules in the mainline, and
-+# have no reason to shy away from this script.
-+export WITH_SEND_EMAIL=YesPlease
- 
- PREFIX := /usr
- MANDIR := /usr/share/man/
+	-Daniel
+*This .sig left intentionally blank*
