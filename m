@@ -1,137 +1,101 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Merges without bases
-Date: Thu, 25 Aug 2005 15:26:36 -0700
-Message-ID: <7vvf1tps9v.fsf@assigned-by-dhcp.cox.net>
-References: <1125004228.4110.20.camel@localhost.localdomain>
+From: ebiederm@xmission.com (Eric W. Biederman)
+Subject: Re: Storing state in $GIT_DIR
+Date: Fri, 26 Aug 2005 00:53:07 -0600
+Message-ID: <m17je9tcj0.fsf@ebiederm.dsl.xmission.com>
+References: <46a038f905082420323b025e3b@mail.gmail.com>
+	<Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
+	<46a038f905082518306e9d7d2a@mail.gmail.com>
+	<Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	<46a038f90508252115415acc04@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 01:11:39 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 10:04:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8QBb-0004y5-P1
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 00:27:04 +0200
+	id 1E8Y68-0006Zn-R8
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 08:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964971AbVHYW0j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 18:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964975AbVHYW0i
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 18:26:38 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:4554 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S964971AbVHYW0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 18:26:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050825222638.TSDQ19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 Aug 2005 18:26:38 -0400
-To: Darrin Thompson <darrint@progeny.com>
-In-Reply-To: <1125004228.4110.20.camel@localhost.localdomain> (Darrin
-	Thompson's message of "Thu, 25 Aug 2005 16:10:28 -0500")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932529AbVHZGxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 02:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932536AbVHZGxe
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 02:53:34 -0400
+Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:51659 "EHLO
+	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
+	id S932529AbVHZGxd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 02:53:33 -0400
+Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j7Q6rBBS005215;
+	Fri, 26 Aug 2005 00:53:11 -0600
+Received: (from eric@localhost)
+	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j7Q6r79a005214;
+	Fri, 26 Aug 2005 00:53:07 -0600
+X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90508252115415acc04@mail.gmail.com> (Martin Langhoff's
+ message of "Fri, 26 Aug 2005 16:15:37 +1200")
+User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7774>
 
-Darrin Thompson <darrint@progeny.com> writes:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-> I have a weird situation I want to support. I want to be able to merge a
-> foreign-tree repeatedly.
+> Hmmm. That repo is in sync, but there are no guarantees that they will
+> travel together to a different repo. In fact, the push/pull
+> infrastructure wants to push/pull one head at a time.
 >
-> What makes the foreign tree foreign is that it may not yet share any
-> history with this branch.
+> And if they are not in sync, I have no way of knowing. Hmpf. I lie:
+> the arch metadata could keep track of what it expects the last head
+> commits to be, and complain bitterly if something smells rotten.
+>
+> let me think about it ;)
 
-I believe that's exactly what Linus did when he merged gitk into
-git.  As you discovered, the initial one could easily be
-scripted, if you wanted to, with something like this:
 
-        #!/bin/sh
-        #
-        # git-merge-projects-script
-        #
-        . git-sh-setup-script || die "Not a git archive."
+Thinking about it going from arch to git should be just a matter
+of checking sha1 hashes, possibly back to the beginning of the
+arch tree.  
 
-        foreign_project="$1"
-        head=`git-rev-parse --verify HEAD` &&
-        foreign=`git-rev-parse --verify $foreign_project^0` || exit
+Going from git to arch is the trickier mapping, because you
+need to know the full repo--category--branch--version--patch
+mapping.
 
-        rm -f .no-such-file
-        empty=`GIT_INDEX_FILE=.no-such-file git-write-tree`
-        git-read-tree -m -u $empty $head $foreign ||
-        git-merge-cache -o git-merge-one-file-script -a || exit
+Hmm.  Thinking about arch from a git perspective arch tags every
+commit.  So the really sane thing to do (I think) is to create
+a git tag object for every arch commit.
 
-        tree=`git-write-tree` &&
-        echo Merge $foreign_project in. |
-                git-commit-tree $tree -p $head -p $foreign \
-                >"$GIT_DIR/HEAD" &&
-	git show-branch --more=10 HEAD $foreign_project
+With that structure you would just need to create a git-arch-rev-list
+so you can get a list of which arch branches you already have.
+And then a git-arch-push and a git-arch-pull should be just a matter
+of finding the common ancestor and continuing along the branch until
+you reach the head.  Handling all heads in an arch repository is a
+little trickier but should not be too bad.
 
-Unlike my other "scripts written in e-mail buffer", I
-actually tested this one ;-).
+On the push side you can just treat git as an arch working directory 
+and push changsets into the appropriate branch.  For branches that
+do not have tla as the ancestor you can do the equivalent of
+tla archive-mirror.
 
-	$ cd /var/tmp && rm -fr junk && mkdir junk
-	$ cd /var/tmp/junk
-	$ git init-db
-        $ cat >./git-merge-projects-script
-        : type the above and end with ^D
-	$ chmod +x git-merge-projects-script
-        $ git add git-merge-projects-script
-	$ git commit -m 'My Project'
-	$ git fetch http://www.kernel.org/pub/scm/git/git.git master:git
-	$ ./git-merge-projects-script git
-	$ git diff git..HEAD
+Changes can be merged on whichever side make sense.
 
-The "weird" situation to cause "git resolve" barf happens only
-for the first time and once they are merged you can repeatedly
-pull from that subset foreign branch without any "weirdo"
-support.  Since even the oddball initial case can easily be
-scripted like above, and that initial case should happen very
-very rarely anyway, I do not think this deserves any core-level
-change, such as changes to read-tree you suggest.
+With patch trading (Martin I think I know what you are refering to)
+arch does seem to have a concept that does not map very well to git,
+and this I think is a failing in git.  Arch can record that just the
+changes from a single changset/patch were merged.  This happens all
+of the time in the kernel tree when patches are merged.  The
+interesting case for merge algorithms is when two maintainers merge
+the same patches into separate branches and then the branches are
+merged.  Does git have a good way of coping with that case?
 
-The above merge-projects-script _may_ deserve a "contrib"
-status to be in the source tree, though.
+On the simple side it for patch trading it might just be worth
+treating them as a special git merge with just one parent in
+the parents line and the real parent listed in the merge comment,
+along with the original parents commit comment.  But that just
+might be too ugly to think about.
 
-One thing that makes me reluctant to recommend this "merging
-unrelated projects" business is that I suspect that it makes
-things _much_ harder for the upstream project that is being
-merged, and should not be done without prior arrangement; Linus
-merged gitk after talking with paulus, so that was OK.
+How does StGit handle this?
 
-Suppose the above "My Project" is published, people send patches
-for core GIT part to it, and you as the maintainer of that "My
-Project" accept those patches.  The users of "My Project" would
-be happy with the new features and wouldn't care less where
-their core GIT tools come from.  But how would _I_ pull from
-that "My Project", if I did not want to pull unrelated stuff in?
-
-In this particular example, it only has git-merge-projects
-script which _is_ related to core GIT so this objection would
-not apply, but if I were paulus (gitk maintainer whose project
-has only one file, the great gitk script) and if the git.git
-repository had a lot of changes to gitk, I would like to pick up
-updates from there without pulling the rest of core GIT.  That
-is not something the current set of tools support, and offhand I
-do not think of a good way to implement it cleanly.  That is the
-reason why I never pick up any patch for gitk myself --- I
-always slurp changes to gitk via paulus tree, or feed patches
-to him and then slurp the changes from him.
-
-What I think _might_ deserve a bit more support would be a merge
-of a foreign project as a subdirectory of a project.  Linus
-could have made gitk/ subdirectory in the core git project, and
-made that subtree in sync with the toplevel of paulus gitk
-project.  But even this could be done without the core-level
-change.  You would run ls-tree of the main project to figure out
-the tree object name of that subdirectory, and 3-way merge that
-with the top of the paulus project tree, and replace the tree
-entry with the resulting tree.
-
-Once that kind of "merging an unrelated project as a
-subdirectory of a superproject" workflow is established, pulling
-from a subdirectory that corresponds to my project after my
-project gets merged this way into the superproject would become
-easier to manage and would even become a useful workflow
-element.
+Eric
