@@ -1,50 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 0.99.5
-Date: Fri, 26 Aug 2005 09:24:41 -0700
-Message-ID: <7vr7cgfyye.fsf@assigned-by-dhcp.cox.net>
-References: <7vr7ci4u7q.fsf@assigned-by-dhcp.cox.net>
-	<m1y86ospej.fsf@ebiederm.dsl.xmission.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Merges without bases
+Date: Fri, 26 Aug 2005 12:37:56 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508261150320.23242@iabervon.org>
+References: <1125004228.4110.20.camel@localhost.localdomain> 
+ <7vvf1tps9v.fsf@assigned-by-dhcp.cox.net> <46a038f905082602176f9eef5d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 18:28:05 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Darrin Thompson <darrint@progeny.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 18:36:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8h0Y-0002Yk-8e
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 18:24:46 +0200
+	id 1E8h9q-0006jW-1W
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 18:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965097AbVHZQYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 12:24:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965098AbVHZQYn
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 12:24:43 -0400
-Received: from fed1rmmtao06.cox.net ([68.230.241.33]:31370 "EHLO
-	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
-	id S965097AbVHZQYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2005 12:24:43 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao06.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050826162442.GCNM19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 26 Aug 2005 12:24:42 -0400
-To: ebiederm@xmission.com (Eric W. Biederman)
-In-Reply-To: <m1y86ospej.fsf@ebiederm.dsl.xmission.com> (Eric W. Biederman's
-	message of "Fri, 26 Aug 2005 09:12:36 -0600")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965101AbVHZQeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 12:34:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965102AbVHZQeT
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 12:34:19 -0400
+Received: from iabervon.org ([66.92.72.58]:63762 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S965101AbVHZQeT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 12:34:19 -0400
+Received: (qmail 24255 invoked by uid 1000); 26 Aug 2005 12:37:56 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Aug 2005 12:37:56 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f905082602176f9eef5d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7816>
 
-ebiederm@xmission.com (Eric W. Biederman) writes:
+On Fri, 26 Aug 2005, Martin Langhoff wrote:
 
-> A nit but possibly an important for 1.0 there are
-> quite a few git commands that don't have man pages
-> or whose man pages are currently very poor.
+> On 8/26/05, Junio C Hamano <junkio@cox.net> wrote:
+> > their core GIT tools come from.  But how would _I_ pull from
+> > that "My Project", if I did not want to pull unrelated stuff in?
 >
-> Getting the code sane and stable of course comes first
-> but if people can't figure out how to use git...
+> and then...
+>
+> > What I think _might_ deserve a bit more support would be a merge
+> > of a foreign project as a subdirectory of a project.  Linus
+>
+> tla has an interesting implementation (and horrible name) for
+> something like this. In Arch-speak, they are called 'configurations',
+> a versioned control file that describes that in subdirectory foo we
+> import from this other repo#branch.
+>
+> In cvs, you just do nested checkouts, and trust a `cvs update` done at
+> the top will do the right thing;  and in fact recent cvs versions do.
 
-I have been worried about that since I posted my first "last
-mile" message.  My excuse is that there are only 24 hours in a
-day.  Patches welcome.
+The problem with both of these (and doing it in the build system) is that,
+when a project includes another project, you generally don't want whatever
+revision of the included project happens to be the latest; you want the
+revision of the included project that the revision of the including
+project you're looking at matches. That is, if App includes Lib, and
+you're looking at an App commit, you want to have the version of Lib that
+the commit was made with, not the latest version of Lib, which may not be
+backwards compatible across non-release commits, or, in any case, won't
+help in reconstructing a earlier state. I think a primary function of a
+SCM is to be able to say, "It worked last Friday, and it's broken now.
+What's different?" If the answer is, "On Saturday, we updated the
+included Lib to their version from Thursday, which is broken", it'll be
+really hard to track down without special tracking.
+
+I think it's the lack of the special tracking, therefore, that makes this
+not a good feature in most SCMs, and makes them not better than having the
+build system do it (and potentially worse, if you've got your build system
+checking out a version specified in a version-controlled file). But I
+think that git can do better, including support for the required version
+sometimes being a locally modified one and sometimes being the official
+one when the local modifications have been accepted upstream.
+
+	-Daniel
+*This .sig left intentionally blank*
