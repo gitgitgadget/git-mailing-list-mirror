@@ -1,130 +1,104 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix pulling into the same branch.
-Date: Thu, 25 Aug 2005 18:29:10 -0700
-Message-ID: <7vr7chmqop.fsf_-_@assigned-by-dhcp.cox.net>
-References: <B8E391BBE9FE384DAA4C5C003888BE6F043B9B85@scsmsx401.amr.corp.intel.com>
+Subject: [PATCH] Enable git-send-email-script on Debian.
+Date: Thu, 25 Aug 2005 18:29:43 -0700
+Message-ID: <7vfysxmqns.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tony Luck <tony.luck@intel.com>, Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Fri Aug 26 07:16:47 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 07:16:52 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8T2a-0005ah-RT
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 03:29:57 +0200
+	id 1E8T2m-0005ah-Vy
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 03:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965039AbVHZB3R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 21:29:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965040AbVHZB3R
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 21:29:17 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:12954 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S965039AbVHZB3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 21:29:16 -0400
+	id S965036AbVHZB3q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Aug 2005 21:29:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965041AbVHZB3q
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 21:29:46 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:7307 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S965036AbVHZB3p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Aug 2005 21:29:45 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050826012910.IWCS1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 25 Aug 2005 21:29:10 -0400
-To: git@vger.kernel.org
-In-Reply-To: Junio C. Hamano's message of "(unknown date)"
+          id <20050826012943.WDKF8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Thu, 25 Aug 2005 21:29:43 -0400
+To: Ryan Anderson <ryan@michonline.com>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7788>
 
-Earlier, I said:
-
-    Subject: Re: cache status after git pull
-    Date: Thu, 25 Aug 2005 13:26:07 -0700
-    Message-ID: <7v4q9dvk4g.fsf@assigned-by-dhcp.cox.net>
-
-    > 1) Updated my "linus" branch:
-    >
-    >   $ git checkout linus && git pull linus
-
-    The second command, "git pull linus", would internally run "git
-    fetch linus".  It depends on how your shorthand "linus" is
-    defined, but if it is set to update (either overwrite or
-    fast-forward) the "linus" branch head, then your HEAD pointer
-    would be updated without updating the index and working tree.
-    This is bad because now you are telling git that your working
-    tree is based on updated "linus" branch head, and what you
-    _could_ commit on top of it is the same thing as what old
-    "linus" branch head commit used to have.  That's why "git
-    status" output shows the minefield.
-
-    If I keep copies of foreign brahches in $GIT_DIR/refs/heads/
-    somewhere, I never checkout those branches in my working tree.
-    I always stay in my branches to do my work.  I may "diff"
-    against them to see where I am.  Of course I would "resolve"
-    with them when I feel I am ready.
-
-    So, assuming that "linus" short-hand is set up to update
-    $GIT_DIR/refs/heads/linus with the foreign branch head, the
-    above example would have been:
-
-        $ git checkout master && git pull linus
-        : examine diffs and be convinced what Linus does is always right.
-
-This "do not pull into the branch you are on" is probably a good
-advice as a workaround, but there is no fundamental reason to
-forbid it.  Worse, there is no machinery to even warn about the
-situation right now.
-
-This patch is to show my current thinking.  Please let me know
-what you think.
-
--jc
-
-------------
-When the "git pull" command updates the branch head you are
-currently on, before doing anything else, first update your
-index file and the working tree contents to that of the new
-branch head.  Otherwise, the later resolving steps would think
-your index file is attempting to revert the change between the
-original head commit and the updated head commit.
-
-It uses two-tree fast-forward form of "read-tree -m -u" to
-prevent losing whatever local changes you may have in the
-working tree to do this update.  I think this would at least
-make things safer (a lot safer), and prevent mistakes.
+You can define WITH_SEND_EMAIL to include the send-email command as
+part of the installation.  Since Debian, unlike RPM/Fedora, has the
+two necessary Perl modules available as part of the mainline
+distribution, there is no reason for us to shy away from shipping
+send-email.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 
 ---
 
- git-pull-script |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+ *** How do you like this one, Ryan?  Yes I know that we should
+ *** not be using the same "0.99.5-" with different package
+ *** version to ship changes in the upsteram file (Makefile)
+ *** like this, but that aside...
 
-10f624a7743fc1e29277de9875dbd6a882f2d3b3
-diff --git a/git-pull-script b/git-pull-script
---- a/git-pull-script
-+++ b/git-pull-script
-@@ -5,7 +5,25 @@
- # Fetch one or more remote refs and merge it/them into the current HEAD.
+ Makefile         |    5 ++++-
+ debian/changelog |    7 +++++++
+ debian/rules     |    3 +++
+ 3 files changed, 14 insertions(+), 1 deletions(-)
+
+32fa6df832a1dc9ed0a1388dbe11a16b236683d5
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -69,7 +69,6 @@ SCRIPTS=git git-apply-patch-script git-m
+ 	git-request-pull-script git-bisect-script
  
- . git-sh-setup-script || die "Not a git archive"
+ SCRIPTS += git-count-objects-script
+-# SCRIPTS += git-send-email-script
+ SCRIPTS += git-revert-script
+ SCRIPTS += git-octopus-script
+ 
+@@ -87,6 +86,10 @@ PROG=   git-update-cache git-diff-files 
+ 	git-show-index git-daemon git-var git-peek-remote git-show-branch \
+ 	git-update-server-info git-show-rev-cache git-build-rev-cache
+ 
++ifdef WITH_SEND_EMAIL
++SCRIPTS += git-send-email-script
++endif
 +
-+orig_head=$(cat "$GIT_DIR/HEAD") || die "Pulling into a black hole?"
- git-fetch-script "$@" || exit 1
+ ifndef NO_CURL
+ 	PROG+= git-http-pull
+ endif
+diff --git a/debian/changelog b/debian/changelog
+--- a/debian/changelog
++++ b/debian/changelog
+@@ -1,3 +1,10 @@
++git-core (0.99.5-1) unstable; urgency=low
 +
-+curr_head=$(cat "$GIT_DIR/HEAD")
-+if test "$curr_head" != "$orig_head"
-+then
-+	# The fetch involved updating the current branch.
++  * Enable git-send-email-script on Debian.  There is no reason to shy
++    away from it, since we have the necessary Perl modules available.
 +
-+	# The working tree and the index file is still based on the
-+	# $orig_head commit, but we are merging into $curr_head.
-+	# First update the working tree to match $curr_head.
++ -- Junio C Hamano <junkio@cox.net>  Thu, 25 Aug 2005 14:16:59 -0700
 +
-+	echo >&2 "Warning: fetch updated the current branch head."
-+	echo >&2 "Warning: fast forwarding your working tree."
-+	git-read-tree -u -m "$orig_head" "$curr_head" ||
-+		die "You need to first update your working tree."
-+fi
-+
- merge_head=$(sed -e 's/	.*//' "$GIT_DIR"/FETCH_HEAD | tr '\012' ' ')
- merge_name=$(sed -e 's/^[0-9a-f]*	//' "$GIT_DIR"/FETCH_HEAD |
- 	 tr '\012' ' ')
+ git-core (0.99.5-0) unstable; urgency=low
+ 
+   * GIT 0.99.5
+diff --git a/debian/rules b/debian/rules
+--- a/debian/rules
++++ b/debian/rules
+@@ -25,6 +25,9 @@ else
+ 	export MOZILLA_SHA1=YesPlease
+ endif
+ 
++# We do have the requisite perl modules in the mainline, and
++# have no reason to shy away from this script.
++export WITH_SEND_EMAIL=YesPlease
+ 
+ PREFIX := /usr
+ MANDIR := /usr/share/man/
