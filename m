@@ -1,101 +1,91 @@
-From: ebiederm@xmission.com (Eric W. Biederman)
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Storing state in $GIT_DIR
-Date: Fri, 26 Aug 2005 00:53:07 -0600
-Message-ID: <m17je9tcj0.fsf@ebiederm.dsl.xmission.com>
+Date: Fri, 26 Aug 2005 18:43:26 +1200
+Message-ID: <46a038f905082523431c3b577f@mail.gmail.com>
 References: <46a038f905082420323b025e3b@mail.gmail.com>
-	<Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
-	<46a038f905082518306e9d7d2a@mail.gmail.com>
-	<Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
-	<46a038f90508252115415acc04@mail.gmail.com>
+	 <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
+	 <46a038f905082518306e9d7d2a@mail.gmail.com>
+	 <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	 <46a038f90508252115415acc04@mail.gmail.com>
+	 <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 10:04:21 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 10:06:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8Y68-0006Zn-R8
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 08:53:57 +0200
+	id 1E8XxG-0005ci-Eb
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 08:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932529AbVHZGxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 02:53:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932536AbVHZGxe
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 02:53:34 -0400
-Received: from ebiederm.dsl.xmission.com ([166.70.28.69]:51659 "EHLO
-	ebiederm.dsl.xmission.com") by vger.kernel.org with ESMTP
-	id S932529AbVHZGxd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2005 02:53:33 -0400
-Received: from ebiederm.dsl.xmission.com (localhost [127.0.0.1])
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Debian-3) with ESMTP id j7Q6rBBS005215;
-	Fri, 26 Aug 2005 00:53:11 -0600
-Received: (from eric@localhost)
-	by ebiederm.dsl.xmission.com (8.13.4/8.13.4/Submit) id j7Q6r79a005214;
-	Fri, 26 Aug 2005 00:53:07 -0600
-X-Authentication-Warning: ebiederm.dsl.xmission.com: eric set sender to ebiederm@xmission.com using -f
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f90508252115415acc04@mail.gmail.com> (Martin Langhoff's
- message of "Fri, 26 Aug 2005 16:15:37 +1200")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
+	id S932527AbVHZGn3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 02:43:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932528AbVHZGn3
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 02:43:29 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:27216 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932527AbVHZGn2 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 02:43:28 -0400
+Received: by rproxy.gmail.com with SMTP id i8so512428rne
+        for <git@vger.kernel.org>; Thu, 25 Aug 2005 23:43:26 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KNnuHO2sp2Frlm5CMpN3eTfYX7XwBEGnWflG18aaeF5sa//eNoXucTF2yNlW82jdcc2Pzhwh7EFoHIGranM2Pd1Rq8tTrfHG3fbx0JingkQdV9CIOZyEOyGDLfy1VAByXVPmU25vdSv4LvcFaLdQIhpPFJuQ6sTGgVhHGy1gNsE=
+Received: by 10.38.101.2 with SMTP id y2mr1572581rnb;
+        Thu, 25 Aug 2005 23:43:26 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Thu, 25 Aug 2005 23:43:26 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7775>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On 8/26/05, Junio C Hamano <junkio@cox.net> wrote:
+> > Hmmm. That repo is in sync, but there are no guarantees that they will
+> > travel together to a different repo. In fact, the push/pull
+> > infrastructure wants to push/pull one head at a time.
+> 
+> Wrong as of last week ;-), and definitely wrong since this morning.
 
-> Hmmm. That repo is in sync, but there are no guarantees that they will
-> travel together to a different repo. In fact, the push/pull
-> infrastructure wants to push/pull one head at a time.
->
-> And if they are not in sync, I have no way of knowing. Hmpf. I lie:
-> the arch metadata could keep track of what it expects the last head
-> commits to be, and complain bitterly if something smells rotten.
->
-> let me think about it ;)
+Haven't had time to learn what the new conventions are for push/pull
+scenarios. Will try and read up...
+
+> > And if they are not in sync, I have no way of knowing. Hmpf. I lie:
+> > the arch metadata could keep track of what it expects the last head
+> > commits to be, and complain bitterly if something smells rotten.
+> 
+> What Linus suggests is doable by using an object that can hold
+> a pointer to at least one commit---you used that to record the
+> head commit of the corresponding git branch that the arch
+> metainfo represents.
+
+Yes. If I have my "arch-metadata" head, I can have several files
+there, one of them containing a list of head "names" and the sha we
+expect them to correspond to. If the thing doesn't match, we crash and
+burn because we are out of sync.
+
+Now, during import I'll have to be extra careful at commit-time, and
+update and commit the arch-metadata head immediately after I commit
+the head I'm importing, with strong error-handling. This should
+minimize the out-of-sync situation.
+
+If we _are_ out-of-sync, I could have a recovery mode that rewinds the
+heads to the 'last known good' position and replays things forward. If
+my script is stable, the results should be stable too...
+
+> You only pull arch metainfo branch; the objects associated with
+> the corresponding git branch head will be pulled together when
+> you pull it.  You do not have to tell git to pull git-part of
+> the commit chain.  There is no need to worry about version skew
+> when you use git this way.
+
+>From here onwards, you lost me, mate ;)
+
+cheers,
 
 
-Thinking about it going from arch to git should be just a matter
-of checking sha1 hashes, possibly back to the beginning of the
-arch tree.  
-
-Going from git to arch is the trickier mapping, because you
-need to know the full repo--category--branch--version--patch
-mapping.
-
-Hmm.  Thinking about arch from a git perspective arch tags every
-commit.  So the really sane thing to do (I think) is to create
-a git tag object for every arch commit.
-
-With that structure you would just need to create a git-arch-rev-list
-so you can get a list of which arch branches you already have.
-And then a git-arch-push and a git-arch-pull should be just a matter
-of finding the common ancestor and continuing along the branch until
-you reach the head.  Handling all heads in an arch repository is a
-little trickier but should not be too bad.
-
-On the push side you can just treat git as an arch working directory 
-and push changsets into the appropriate branch.  For branches that
-do not have tla as the ancestor you can do the equivalent of
-tla archive-mirror.
-
-Changes can be merged on whichever side make sense.
-
-With patch trading (Martin I think I know what you are refering to)
-arch does seem to have a concept that does not map very well to git,
-and this I think is a failing in git.  Arch can record that just the
-changes from a single changset/patch were merged.  This happens all
-of the time in the kernel tree when patches are merged.  The
-interesting case for merge algorithms is when two maintainers merge
-the same patches into separate branches and then the branches are
-merged.  Does git have a good way of coping with that case?
-
-On the simple side it for patch trading it might just be worth
-treating them as a special git merge with just one parent in
-the parents line and the real parent listed in the merge comment,
-along with the original parents commit comment.  But that just
-might be too ugly to think about.
-
-How does StGit handle this?
-
-Eric
+martin
