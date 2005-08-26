@@ -1,69 +1,67 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: baffled again
-Date: Fri, 26 Aug 2005 15:50:39 -0400
-Message-ID: <200508261950.j7QJodQX024981@laptop11.inf.utfsm.cl>
-References: <tony.luck@gmail.com>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@osdl.org>, tony.luck@intel.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 26 21:53:42 2005
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC, PATCH] A new merge algorithm (EXPERIMENTAL)
+Date: Fri, 26 Aug 2005 16:48:32 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508261558550.23242@iabervon.org>
+References: <20050826184731.GA13629@c165.ib.student.liu.se>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 22:46:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8kFJ-00077Y-Hk
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 21:52:13 +0200
+	id 1E8l4O-0005tl-PN
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 22:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030242AbVHZTwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 15:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030243AbVHZTwK
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 15:52:10 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:26275 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1030242AbVHZTwJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 15:52:09 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j7QJoeq1010663
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Aug 2005 15:50:40 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j7QJodQX024981;
-	Fri, 26 Aug 2005 15:50:39 -0400
-To: Tony Luck <tony.luck@gmail.com>
-In-Reply-To: Message from Tony Luck <tony.luck@gmail.com> 
-   of "Wed, 24 Aug 2005 22:58:23 MST." <12c511ca05082422584e6b1bfb@mail.gmail.com> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.19.1]); Fri, 26 Aug 2005 15:50:41 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
+	id S1030262AbVHZUoz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 16:44:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030263AbVHZUoz
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 16:44:55 -0400
+Received: from iabervon.org ([66.92.72.58]:4357 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1030262AbVHZUoz (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 16:44:55 -0400
+Received: (qmail 25446 invoked by uid 1000); 26 Aug 2005 16:48:32 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Aug 2005 16:48:32 -0400
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20050826184731.GA13629@c165.ib.student.liu.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7824>
 
-Tony Luck <tony.luck@gmail.com> wrote:
-> >  * Even if it does always choose the nicer choice of the two,
-> >    Tony was lucky (no pun intended).  Rather, we were lucky that
-> >    Tony was observant.  A careless merger may well have easily
-> >    missed this mismerge (from the human point of view).
+On Fri, 26 Aug 2005, Fredrik Kuivinen wrote:
 
-> Actually I can't take credit here. This was a case of the "many-eyes" of
-> open source working at its finest ... someone e-mailed me and told me
-> that I should have backed out the old patch before applying the new one.
-> While typing the e-mail to say that I already had in the release branch,
-> I found the problem that it had been "lost" in the merge into the test
-> branch.
+> I will try to describe how the algorithm works. The problem with the
+> usual 3-way merge algorithm is that we sometimes do not have a unique
+> common ancestor. In [1] B and C seems to be equally good. What this
+> algorithm does is to _merge_ the common ancestors, in this case B and
+> C, into a temporary tree lets call it T. It does then use this
+> temporary tree T as the common ancestor for D and E to produce the
+> final merge result. In the case described in [1] this will work out
+> fine and we get a clean merge with the expected result.
 
-> But this is a good reminder that merging is not a precise science, and
-> there is more than one plausible merge in many situations ... and while
-> GIT will pick the one that you want far more often than not, there is
-> the possibility that it will surprise you.  Maybe there should be a note
-> to this effect in the tutorial.  Git is not magic, nor is it imbued with
-> DWIM technology.
+The only problem I can see with this is that it's likely to generate
+conflicts between the shared heads, and the user is going to be confused
+trying to resolve them, because the files with the conflicts will be
+missing all of the more recent changes. Other than that, I think it should
+give the right answer, although it will presumably involve a lot of
+ancient history doing the internal merge. (Which would probably be really
+painful if you've got two branches that cross-merge regularly and never
+actually completely sync)
 
-I have to disagree. If in some corner case it can do the wrong thing, no
-amount of "I told you so in the docu!" will save the day. People /will/
-overlook it, or be bitten when they have all but forgotten about it.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+I'm getting pretty close to having a version of read-tree that does the
+trivial merge portion based comparing the sides against all of the shared
+heads. I think yours will be better for the cases we've identified, giving
+the correct answer for Tony's case rather than reporting a conflict, but
+it's clearly more complicated. I think my changes are worthwhile anyway,
+since they make the merging logic more central, but obviously
+insufficient.
+
+I've been thinking that could be useful to have read-tree figure out the
+history itself, instead of being passed ancestors, in which case it could
+use your method, except more efficiently (and only look further at the
+history when needed).
+
+	-Daniel
+*This .sig left intentionally blank*
