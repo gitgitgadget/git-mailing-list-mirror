@@ -1,68 +1,66 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Storing state in $GIT_DIR
-Date: Thu, 25 Aug 2005 20:54:45 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
-References: <46a038f905082420323b025e3b@mail.gmail.com> 
- <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org> <46a038f905082518306e9d7d2a@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Merges without bases
+Date: Fri, 26 Aug 2005 00:09:04 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508252333550.23242@iabervon.org>
+References: <1125004228.4110.20.camel@localhost.localdomain>
+ <7vvf1tps9v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 09:39:42 2005
+Cc: Darrin Thompson <darrint@progeny.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 26 09:43:37 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8VJG-0000nw-64
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 05:55:18 +0200
+	id 1E8VTa-0001bK-Q2
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 06:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965049AbVHZDyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 23:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbVHZDyy
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 23:54:54 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:16852 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751491AbVHZDyy (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Aug 2005 23:54:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7Q3skjA002973
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 25 Aug 2005 20:54:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7Q3sjKB020992;
-	Thu, 25 Aug 2005 20:54:46 -0700
-To: Martin Langhoff <martin.langhoff@gmail.com>
-In-Reply-To: <46a038f905082518306e9d7d2a@mail.gmail.com>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751434AbVHZEF3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 00:05:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbVHZEF2
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 00:05:28 -0400
+Received: from iabervon.org ([66.92.72.58]:28685 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1751434AbVHZEF2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 00:05:28 -0400
+Received: (qmail 21494 invoked by uid 1000); 26 Aug 2005 00:09:04 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 26 Aug 2005 00:09:04 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf1tps9v.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7770>
 
+On Thu, 25 Aug 2005, Junio C Hamano wrote:
 
+> One thing that makes me reluctant to recommend this "merging
+> unrelated projects" business is that I suspect that it makes
+> things _much_ harder for the upstream project that is being
+> merged, and should not be done without prior arrangement; Linus
+> merged gitk after talking with paulus, so that was OK.
 
-On Fri, 26 Aug 2005, Martin Langhoff wrote:
-> 
-> OTOH, storing the metadata in a branch will allow us to run the import
-> in alternating repositories. But as Junio points out, unless I can
-> guarantee that the metadata and the tree are in sync, I cannot
-> trivially resume the import cycle from a new repo.
+I'd still like to revive my idea of having projects overlaid on each
+other, where the commits in the project that absorbed the other project
+say, essentially, "also include this other commit, but any changes to
+those files belong to that branch, not this one". That way, Linus could
+have included gitk in git, but changes to it, even when done in a git
+working tree, would show up in commits that only include gitk. (git
+actually can handle this with the alternative index file mechanism that
+Linus mentioned in a different thread.)
 
-But you can.
+Definitely post-1.0, of course.
 
-Remember: the metadata is the pointers to the original git conversion, and 
-objects are immutable.
+> Suppose the above "My Project" is published, people send patches
+> for core GIT part to it, and you as the maintainer of that "My
+> Project" accept those patches.  The users of "My Project" would
+> be happy with the new features and wouldn't care less where
+> their core GIT tools come from.  But how would _I_ pull from
+> that "My Project", if I did not want to pull unrelated stuff in?
 
-In other words, if you just have a "last commit" pointer in your 
-meta-data, then git is _by_definition_ in sync. There's never anything to 
-get out of sync, because objects aren't going to change.
+With the right info, the tools could be made to automatically generate
+suitable commits, because those files would be tracked by a separate index
+file and committed into a separate branch, which would then be reincluded
+(by reference) in the containing project.
 
-So you can think of your meta-data as a strange kind of head ref. Or 
-rather, a _collection_ of these strange refs.
-
-And it doesn't matter if somebody ends up committing on top of an arch 
-import. The metadata by definition doesn't know about it, so the "import" 
-head doesn't move anywhere (if you do git and arch work in parallell, you 
-can then merge the two heads with git, of course).
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
