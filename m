@@ -1,61 +1,79 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Storing state in $GIT_DIR
-Date: Fri, 26 Aug 2005 01:08:14 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508260101390.23242@iabervon.org>
+Date: Thu, 25 Aug 2005 21:31:42 -0700
+Message-ID: <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
 References: <46a038f905082420323b025e3b@mail.gmail.com>
- <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org> <46a038f905082518306e9d7d2a@mail.gmail.com>
- <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org> <46a038f90508252115415acc04@mail.gmail.com>
- <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
+	<46a038f905082518306e9d7d2a@mail.gmail.com>
+	<Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	<46a038f90508252115415acc04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 26 07:51:41 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 07:59:44 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8WOd-00060b-Q3
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 07:04:56 +0200
+	id 1E8VtA-0003Wl-2n
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 06:32:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751509AbVHZFEi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 01:04:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbVHZFEi
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 01:04:38 -0400
-Received: from iabervon.org ([66.92.72.58]:39432 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751509AbVHZFEi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 01:04:38 -0400
-Received: (qmail 21656 invoked by uid 1000); 26 Aug 2005 01:08:14 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Aug 2005 01:08:14 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
+	id S1751498AbVHZEbq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 00:31:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbVHZEbq
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 00:31:46 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10972 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751498AbVHZEbp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 00:31:45 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050826043143.ZROB19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 26 Aug 2005 00:31:43 -0400
+To: Martin Langhoff <martin.langhoff@gmail.com>
+In-Reply-To: <46a038f90508252115415acc04@mail.gmail.com> (Martin Langhoff's
+	message of "Fri, 26 Aug 2005 16:15:37 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7790>
 
-On Thu, 25 Aug 2005, Junio C Hamano wrote:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-> Now, among the existing object types, there are only two kinds
-> of objects you can use for this.  If the only thing you need to
-> record is some textual information with one pointer to git
-> branch head, then you can use tag that points at the git head,
-> and store everything else as the tag comment.  This is doable
-> but unwieldy.
+>> In other words, if you just have a "last commit" pointer in your
+>> meta-data, then git is _by_definition_ in sync. There's never anything to
+>> get out of sync, because objects aren't going to change.
+>
+> Hmmm. That repo is in sync, but there are no guarantees that they will
+> travel together to a different repo. In fact, the push/pull
+> infrastructure wants to push/pull one head at a time.
 
-I don't think this buys you anything, because then the tag needs to be
-accessible from something, which is the same problem you were trying to
-solve for the commit.
+Wrong as of last week ;-), and definitely wrong since this morning.
 
-> You could abuse a commit object as well; you store commit
-> objects (such as the corresponding git branch head) as parent
-> commits, and put everything else in a tree that is associated
-> with that commit.
+> And if they are not in sync, I have no way of knowing. Hmpf. I lie:
+> the arch metadata could keep track of what it expects the last head
+> commits to be, and complain bitterly if something smells rotten.
 
-If you want to go that way, you could add a new field to commits with
-minimal effort: you just need to parse it in commit.c, generate it in
-git-commit-tree (with an option), and pull it in pull.c, and everything
-should work as far as making the git portion follow the metadata around.
+What Linus suggests is doable by using an object that can hold
+a pointer to at least one commit---you used that to record the
+head commit of the corresponding git branch that the arch
+metainfo represents.
 
-	-Daniel
-*This .sig left intentionally blank*
+You only pull arch metainfo branch; the objects associated with
+the corresponding git branch head will be pulled together when
+you pull it.  You do not have to tell git to pull git-part of
+the commit chain.  There is no need to worry about version skew
+when you use git this way.
+
+Now, among the existing object types, there are only two kinds
+of objects you can use for this.  If the only thing you need to
+record is some textual information with one pointer to git
+branch head, then you can use tag that points at the git head,
+and store everything else as the tag comment.  This is doable
+but unwieldy.
+
+You could abuse a commit object as well; you store commit
+objects (such as the corresponding git branch head) as parent
+commits, and put everything else in a tree that is associated
+with that commit.
