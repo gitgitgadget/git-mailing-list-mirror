@@ -1,69 +1,81 @@
 From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Storing state in $GIT_DIR
-Date: Fri, 26 Aug 2005 13:57:27 +1200
-Message-ID: <46a038f905082518575b84bf66@mail.gmail.com>
+Date: Fri, 26 Aug 2005 19:08:47 +1200
+Message-ID: <46a038f90508260008d1013ea@mail.gmail.com>
 References: <46a038f905082420323b025e3b@mail.gmail.com>
 	 <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
-	 <7vwtm9u5jj.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f905082518306e9d7d2a@mail.gmail.com>
+	 <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	 <46a038f90508252115415acc04@mail.gmail.com>
+	 <m17je9tcj0.fsf@ebiederm.dsl.xmission.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 26 04:55:14 2005
+Cc: Linus Torvalds <torvalds@osdl.org>, GIT <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 10:31:25 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8TTW-0000KO-2j
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 03:57:46 +0200
+	id 1E8YL7-0007wH-7H
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 09:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965046AbVHZB53 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Aug 2005 21:57:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965047AbVHZB53
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Aug 2005 21:57:29 -0400
-Received: from rproxy.gmail.com ([64.233.170.201]:55212 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S965046AbVHZB52 convert rfc822-to-8bit
+	id S932540AbVHZHIy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 03:08:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932544AbVHZHIy
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 03:08:54 -0400
+Received: from rproxy.gmail.com ([64.233.170.206]:50155 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932540AbVHZHIu convert rfc822-to-8bit
 	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Aug 2005 21:57:28 -0400
-Received: by rproxy.gmail.com with SMTP id i8so477294rne
-        for <git@vger.kernel.org>; Thu, 25 Aug 2005 18:57:27 -0700 (PDT)
+	Fri, 26 Aug 2005 03:08:50 -0400
+Received: by rproxy.gmail.com with SMTP id i8so515454rne
+        for <git@vger.kernel.org>; Fri, 26 Aug 2005 00:08:47 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KfqqE+aC3TkBqd1qgScayuOcUYWJfvMSrrlASYQSZvwRPQ0cTL8vmjPKjQ2tRO+ZNEJkPEAURIdOVc3rYpoyjt82u46TVXY8S757sDzcrDgwW3LPnYV1IrIMKRpzhNDe99XI0iIHCpda3GvHZFjn1bGt4EXVRcEX2tSijS0aOnU=
-Received: by 10.38.92.14 with SMTP id p14mr1452764rnb;
-        Thu, 25 Aug 2005 18:57:27 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Thu, 25 Aug 2005 18:57:27 -0700 (PDT)
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vwtm9u5jj.fsf@assigned-by-dhcp.cox.net>
+        b=P9SQsDMalaeo6vtTPc3VjxfJHjUjp6Y+mhdPwxAqUjGk3+xg5mGqsphOyB0ww7fNMNED/krVaYfBqmDJBUaUysehAmLRHkXnGWdXNMwS4V4QkUotkBnk42C8U7AalfNCScxDY741UnYPPbJJ19OPBAKZsz/+W3kG+mPsw9x1/tU=
+Received: by 10.38.92.14 with SMTP id p14mr1584405rnb;
+        Fri, 26 Aug 2005 00:08:47 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Fri, 26 Aug 2005 00:08:47 -0700 (PDT)
+To: "Eric W. Biederman" <ebiederm@xmission.com>
+In-Reply-To: <m17je9tcj0.fsf@ebiederm.dsl.xmission.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7779>
 
-On 8/26/05, Junio C Hamano <junkio@cox.net> wrote:
-> If I am not mistaken, we have another foreign SCM import
-> interface that can repeatedly slurp from the same foreign SCM to
-> get updates.  Doesn't cvsimport have the same issue?  
+On 8/26/05, Eric W. Biederman <ebiederm@xmission.com> wrote:
+> Thinking about it going from arch to git should be just a matter
+> of checking sha1 hashes, possibly back to the beginning of the
+> arch tree.
 
-Yes and no. 
+Yup, though actually replaying the tree to compute the hashes is
+something I just _won't_ do ;)
 
-cvsimport uses cvsps which uses in ~/.cvsps as a cache. Other than
-that, all the info is transient - cvsimport doesn't need to know that
-much about past commits -- when it sees BRANCH_A_A1 open from BRANCH_A
-it opens a new head BRANCH_A_A1 with the parent in the _latest_
-BRANCH_A.
+> Going from git to arch is the trickier mapping, because you
+> need to know the full repo--category--branch--version--patch
+> mapping.
 
-This is a bug/limitation that only hits you when you are tracking an
-evolving cvs project, because cvsps will otherwise mark the branching
-point in order, right after the 'correct' commit. IOW cvsimport gets
-it kind-of-right most of the time due to cvsps behaviour and sheer
-luck, but doesn't do it strictly right either.
+My plan doesn't include git->arch support... yet...
 
-With Arch, we cannot even fake it. We see the branch in its own time,
-and it can branch off any point in the source branch history. We have
-the correct parent information -- it'd be silly to drop it. All we
-have to do, is map the parents correctly...
+> Hmm.  Thinking about arch from a git perspective arch tags every
+> commit.  So the really sane thing to do (I think) is to create
+> a git tag object for every arch commit.
+
+Now I like that interesting idea. It doesn't solve all my problems,
+but is a reasonable mapping point. Will probably do it.
+
+> With patch trading (Martin I think I know what you are refering to)
+> arch does seem to have a concept that does not map very well to git,
+> and this I think is a failing in git.
+
+I won't get into _that_ flamewar ;)
+
+My plan for merges is to detect when two branches up until what point
+branches are fully merged, and mark that in git -- because that is
+what git considers a merge. The rest will be known to the importer,
+but nothing else.
 
 cheers,
 
