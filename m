@@ -1,71 +1,59 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Storing state in $GIT_DIR
-Date: Fri, 26 Aug 2005 16:15:37 +1200
-Message-ID: <46a038f90508252115415acc04@mail.gmail.com>
+Date: Thu, 25 Aug 2005 22:49:06 -0700
+Message-ID: <7virxti6y5.fsf@assigned-by-dhcp.cox.net>
 References: <46a038f905082420323b025e3b@mail.gmail.com>
-	 <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
-	 <46a038f905082518306e9d7d2a@mail.gmail.com>
-	 <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	<Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
+	<46a038f905082518306e9d7d2a@mail.gmail.com>
+	<Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+	<46a038f90508252115415acc04@mail.gmail.com>
+	<7v3boxl3o1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0508260101390.23242@iabervon.org>
+	<Pine.LNX.4.58.0508252219520.3317@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Aug 26 08:27:10 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 26 08:51:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8VdR-0002JL-Vc
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 06:16:13 +0200
+	id 1E8X5v-0001IN-Us
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 07:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbVHZEPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 00:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbVHZEPn
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 00:15:43 -0400
-Received: from rproxy.gmail.com ([64.233.170.203]:51608 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751495AbVHZEPm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Aug 2005 00:15:42 -0400
-Received: by rproxy.gmail.com with SMTP id i8so495445rne
-        for <git@vger.kernel.org>; Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Yr0EZ59JZoT4mIzT3h6Xb2PM6mGbY7wpTiP97ZDkWJ7VxXBFkPcN4COk61+N+cSbddhqcqnvsTB3NAtEqwQuUhE7g8BsCvxG1Vn+SdmRzEoiXyB/6br1VSOXjKpOohlHDuMUG47SiBmgvIXI6oO9Bl0sfdJxKuf27Cm1byTSbtw=
-Received: by 10.38.89.9 with SMTP id m9mr1527172rnb;
-        Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
+	id S932308AbVHZFtL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 01:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932352AbVHZFtL
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 01:49:11 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:59537 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S932308AbVHZFtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 01:49:10 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050826054908.GCHK16890.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 26 Aug 2005 01:49:08 -0400
 To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
-Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.58.0508252219520.3317@g5.osdl.org> (Linus Torvalds's
+	message of "Thu, 25 Aug 2005 22:31:35 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7794>
 
-On 8/26/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> > OTOH, storing the metadata in a branch will allow us to run the import
-> > in alternating repositories. But as Junio points out, unless I can
-> > guarantee that the metadata and the tree are in sync, I cannot
-> > trivially resume the import cycle from a new repo.
-> 
-> But you can.
-> 
-> Remember: the metadata is the pointers to the original git conversion, and
-> objects are immutable.
-> 
-> In other words, if you just have a "last commit" pointer in your
-> meta-data, then git is _by_definition_ in sync. There's never anything to
-> get out of sync, because objects aren't going to change.
+Linus Torvalds <torvalds@osdl.org> writes:
 
-Hmmm. That repo is in sync, but there are no guarantees that they will
-travel together to a different repo. In fact, the push/pull
-infrastructure wants to push/pull one head at a time.
+> That kind of extension shouldn't be too hard, and might make tags much 
+> more generally usable (ie you could say "I sign these <n> official 
+> releases" or something).
 
-And if they are not in sync, I have no way of knowing. Hmpf. I lie:
-the arch metadata could keep track of what it expects the last head
-commits to be, and complain bitterly if something smells rotten.
+Well, I admit that once I advocated changing "tag" to "bag", but
+one problem is how you would dereference something like that.
 
-let me think about it ;)
-
-
-martin
+"v0.99.5^0" means "look at the named object v0.99.5, dereference
+it repeatedly until you get a non-tag, and take the result,
+which had better be a commit".  If a tag can contain more than
+one pointers, I do not know what it means.
