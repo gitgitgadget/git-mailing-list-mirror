@@ -1,79 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: Storing state in $GIT_DIR
-Date: Thu, 25 Aug 2005 22:31:35 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508252219520.3317@g5.osdl.org>
+Date: Fri, 26 Aug 2005 16:15:37 +1200
+Message-ID: <46a038f90508252115415acc04@mail.gmail.com>
 References: <46a038f905082420323b025e3b@mail.gmail.com>
- <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org> <46a038f905082518306e9d7d2a@mail.gmail.com>
- <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org> <46a038f90508252115415acc04@mail.gmail.com>
- <7v3boxl3o1.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0508260101390.23242@iabervon.org>
+	 <Pine.LNX.4.58.0508251053000.3317@g5.osdl.org>
+	 <46a038f905082518306e9d7d2a@mail.gmail.com>
+	 <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 26 08:18:18 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: GIT <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Aug 26 08:27:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8WpD-0008P5-Es
-	for gcvg-git@gmane.org; Fri, 26 Aug 2005 07:32:23 +0200
+	id 1E8VdR-0002JL-Vc
+	for gcvg-git@gmane.org; Fri, 26 Aug 2005 06:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965052AbVHZFbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 01:31:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965053AbVHZFbt
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 01:31:49 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:58344 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S965052AbVHZFbs (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 01:31:48 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7Q5VajA009269
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 25 Aug 2005 22:31:36 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7Q5VZ0O024361;
-	Thu, 25 Aug 2005 22:31:35 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0508260101390.23242@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751495AbVHZEPn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 00:15:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbVHZEPn
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 00:15:43 -0400
+Received: from rproxy.gmail.com ([64.233.170.203]:51608 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751495AbVHZEPm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 00:15:42 -0400
+Received: by rproxy.gmail.com with SMTP id i8so495445rne
+        for <git@vger.kernel.org>; Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Yr0EZ59JZoT4mIzT3h6Xb2PM6mGbY7wpTiP97ZDkWJ7VxXBFkPcN4COk61+N+cSbddhqcqnvsTB3NAtEqwQuUhE7g8BsCvxG1Vn+SdmRzEoiXyB/6br1VSOXjKpOohlHDuMUG47SiBmgvIXI6oO9Bl0sfdJxKuf27Cm1byTSbtw=
+Received: by 10.38.89.9 with SMTP id m9mr1527172rnb;
+        Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Thu, 25 Aug 2005 21:15:37 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508252051400.3317@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7793>
 
-
-
-On Fri, 26 Aug 2005, Daniel Barkalow wrote:
+On 8/26/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> > OTOH, storing the metadata in a branch will allow us to run the import
+> > in alternating repositories. But as Junio points out, unless I can
+> > guarantee that the metadata and the tree are in sync, I cannot
+> > trivially resume the import cycle from a new repo.
 > 
-> I don't think this buys you anything, because then the tag needs to be
-> accessible from something, which is the same problem you were trying to
-> solve for the commit.
+> But you can.
+> 
+> Remember: the metadata is the pointers to the original git conversion, and
+> objects are immutable.
+> 
+> In other words, if you just have a "last commit" pointer in your
+> meta-data, then git is _by_definition_ in sync. There's never anything to
+> get out of sync, because objects aren't going to change.
 
-Yes. 
+Hmmm. That repo is in sync, but there are no guarantees that they will
+travel together to a different repo. In fact, the push/pull
+infrastructure wants to push/pull one head at a time.
 
-We had an earlier discussion somewhat along these lines, where a 
-"collection" object might be useful. The "tree" object is that, of course, 
-but the tree object really is very strictly structured (and has to be that 
-way). There might be a valid case for an object that can point to an 
-arbitrary collection of other objects, and have a free-form tail to it.
+And if they are not in sync, I have no way of knowing. Hmpf. I lie:
+the arch metadata could keep track of what it expects the last head
+commits to be, and complain bitterly if something smells rotten.
 
-Of course, such an object would inevitably look very much like a 
-generalized "tag" object, so one possibility might be to just allow a tag 
-to have multiple object pointers.
+let me think about it ;)
 
-We could easily generalize the tag format: just make it be something like
 
- - 1 or more lines of "object <sha1>"
- - make the "type " line optional (it used to have an implementation 
-   reason: the internal interfaces always used to want to know the type 
-   up-front, but we've moved away from that).
- - a single "tag" line to start the free-form section, and to name the 
-   collection some way.
-
-That kind of extension shouldn't be too hard, and might make tags much 
-more generally usable (ie you could say "I sign these <n> official 
-releases" or something).
-
-			Linus
+martin
