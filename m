@@ -1,53 +1,60 @@
-From: Kalle Valo <Kalle.Valo@iki.fi>
-Subject: cvsimport error: need a valid pathname
-Date: Sat, 27 Aug 2005 17:48:26 +0300
-Message-ID: <874q9bcu6d.fsf@litku.valo.iki.fi>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: cvsimport error: need a valid pathname
+Date: Sun, 28 Aug 2005 03:37:48 +1200
+Message-ID: <46a038f905082708371719121c@mail.gmail.com>
+References: <874q9bcu6d.fsf@litku.valo.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sat Aug 27 16:47:34 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 27 17:39:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E91xA-0002cE-OT
-	for gcvg-git@gmane.org; Sat, 27 Aug 2005 16:46:41 +0200
+	id 1E92lE-0005fn-CA
+	for gcvg-git@gmane.org; Sat, 27 Aug 2005 17:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965192AbVH0Oqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Aug 2005 10:46:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965200AbVH0Oqh
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Aug 2005 10:46:37 -0400
-Received: from fep06-0.kolumbus.fi ([193.229.0.57]:35293 "EHLO
-	fep06-app.kolumbus.fi") by vger.kernel.org with ESMTP
-	id S965192AbVH0Oqg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Aug 2005 10:46:36 -0400
-Received: from litku.valo.iki.fi ([81.197.35.21]) by fep06-app.kolumbus.fi
-          with ESMTP
-          id <20050827144632.HHKF27547.fep06-app.kolumbus.fi@litku.valo.iki.fi>
-          for <git@vger.kernel.org>; Sat, 27 Aug 2005 17:46:32 +0300
-To: git@vger.kernel.org
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751235AbVH0PiT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Aug 2005 11:38:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751434AbVH0PiT
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Aug 2005 11:38:19 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:5445 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751235AbVH0PiS convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Aug 2005 11:38:18 -0400
+Received: by rproxy.gmail.com with SMTP id i8so743713rne
+        for <git@vger.kernel.org>; Sat, 27 Aug 2005 08:38:18 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sUnYVgTReQN3D6YXGr8u21xQ6/VncvOfLgfDCVfN3+5VEFNsHu5T4hmzF913EWL+6C3hfWpLWt1DpAEV80mSDF0UpHohAOb+w9DDRkiVyo/yo2WglFbnY3+NntaPFIIr2qvGTIFy528zCUaMmTqqfjx7fxDxTJnqsEUWsP1qOr8=
+Received: by 10.38.11.11 with SMTP id 11mr2317510rnk;
+        Sat, 27 Aug 2005 08:38:18 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Sat, 27 Aug 2005 08:37:48 -0700 (PDT)
+To: Kalle Valo <Kalle.Valo@iki.fi>
+In-Reply-To: <874q9bcu6d.fsf@litku.valo.iki.fi>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7850>
 
-I have already imported a full CVS repository using this command:
+On 8/28/05, Kalle Valo <Kalle.Valo@iki.fi> wrote:
+> The documentation says that it should be possible to update
+> incrementally from the CVS repository. Am I doing something wrong or
+> is this a bug?
 
-git cvsimport -v -d :pserver:anonymous@hostap.epitest.fi:/cvs hostap
+It _should_ work the way you are running it, so consider it a bug. Do
+you think you can do some tinkering/debugging to tell us some more?
+Otherwise. how large is the cvs repo?
 
-It completed without errors and I could use git to access the hostap
-history, just like I wanted. But now, when I was trying to get updates
-from the CVS repository, I got an error running the command in the
-same directory:
+(Debugging this kind of stuff, when it only fails on a specific repo,
+is tricky and time-consuming. Any help we get is _really_ appreciated.
+I have imported many trees, and several of them I am tracking -
+importing new commits on a daily basis - without much trouble, except
+for invalid/force-moved tags.)
 
-$ git cvsimport -v -d :pserver:anonymous@hostap.epitest.fi:/cvs hostap
-fileparse(): need a valid pathname at /usr/bin/git-cvsimport-script line 435
-$
+cheers,
 
-The documentation says that it should be possible to update
-incrementally from the CVS repository. Am I doing something wrong or
-is this a bug?
 
-I'm using git updated today from the master branch on Debian unstable.
-
--- 
-Kalle Valo
+martin
