@@ -1,100 +1,77 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [RFC, PATCH] A new merge algorithm (EXPERIMENTAL)
-Date: Sat, 27 Aug 2005 03:40:09 +0200
-Message-ID: <20050827014009.GB18880@c165.ib.student.liu.se>
-References: <20050826184731.GA13629@c165.ib.student.liu.se> <Pine.LNX.4.58.0508261730480.3317@g5.osdl.org> <7vk6i89ofi.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Fix pulling into the same branch.
+Date: Fri, 26 Aug 2005 20:31:50 -0700
+Message-ID: <7vzmr43vix.fsf@assigned-by-dhcp.cox.net>
+References: <B8E391BBE9FE384DAA4C5C003888BE6F043BA469@scsmsx401.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@osdl.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 27 03:41:04 2005
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	<git@vger.kernel.org>, "Linus Torvalds" <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Sat Aug 27 05:32:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E8pgN-0007gL-Dg
-	for gcvg-git@gmane.org; Sat, 27 Aug 2005 03:40:31 +0200
+	id 1E8rQJ-0003aN-Ev
+	for gcvg-git@gmane.org; Sat, 27 Aug 2005 05:32:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965201AbVH0BkR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Aug 2005 21:40:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965202AbVH0BkR
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 21:40:17 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:50093 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S965201AbVH0BkQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Aug 2005 21:40:16 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 33C8840FF; Sat, 27 Aug 2005 03:44:11 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1E8pg1-0007Uz-00; Sat, 27 Aug 2005 03:40:09 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vk6i89ofi.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+	id S1030291AbVH0Db7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Aug 2005 23:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030292AbVH0Db7
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Aug 2005 23:31:59 -0400
+Received: from fed1rmmtao02.cox.net ([68.230.241.37]:16577 "EHLO
+	fed1rmmtao02.cox.net") by vger.kernel.org with ESMTP
+	id S1030291AbVH0Db7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Aug 2005 23:31:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao02.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050827033153.SKTC3209.fed1rmmtao02.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 26 Aug 2005 23:31:53 -0400
+To: "Luck, Tony" <tony.luck@intel.com>
+In-Reply-To: <B8E391BBE9FE384DAA4C5C003888BE6F043BA469@scsmsx401.amr.corp.intel.com>
+	(Tony Luck's message of "Fri, 26 Aug 2005 11:13:45 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7839>
 
-On Fri, Aug 26, 2005 at 06:08:33PM -0700, Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
-> > On Fri, 26 Aug 2005, Fredrik Kuivinen wrote:
-> >>
-> >> In real numbers it is as follows: In Linus' kernel tree there are
-> >> 5996 commits. 400 of those have more than one parent. Of those 400
-> >> merge commits 4 have more than one shared head.
-> >
-> > Ok, that's already interesting in itself. I was wanting to re-run all the 
-> > merges with the new "git-merge-base -a" to see which merges might have had 
-> > different merge bases, and you've actually done that. Interesting to see 
-> > the numbers.
-> 
-> Fredrik, mind giving us the commit ID of those four for us to
-> take a look at them?
+"Luck, Tony" <tony.luck@intel.com> writes:
 
-Sure, they are:
-467ca22d3371f132ee225a5591a1ed0cd518cb3d which has two shared heads
-7e2987503dda95a5f80290bb8c06279009c2419e and
-eff910a91ac04ab1d9e210d4f721484af3b39c8d
+>>In the meantime, warning the user about the issue and suggesting
+>>how to do the fast-forwarding of the working tree himself in the
+>>warning message might be the safest and the most sensible thing
+>>to do.
+>
+> Yes please ... a big fat warning with coloured flashing lights
+> and explosions from the sound card.
 
-0e396ee43e445cb7c215a98da4e76d0ce354d9d7 with the heads
-462cee296476278acaa54c41925b3273e0e4dd40 and
-8be3de3fd8469154a2b3e18a4712032dac5b4a53
+Yeah, but what to do afterwards?  I can see this as an
+compromise:
 
-3190186362466658f01b2e354e639378ce07e1a9 with
-38d84c3bd6dd22bdb1f797c87006931133d71aea and
-46906c4415f88cebfad530917bada0835d651824
+ * "git fetch", just like the updated "git pull", reads
+   $GIT_DIR/HEAD before it starts its work, and compares it with
+   $GIT_DIR/HEAD after it is done.  If the --update-head-ok flag
+   is not given on the command line, and if the HEAD changed,
+   then barf and exit with non-zero status after reverting
+   $GIT_DIR/HEAD to its original value.  If --update-head-ok is
+   given, none of the above check and revert happens.
 
-and finally
+ * "git pull" calls "git fetch" with the extra flag, and does
+   its thing the current way.
 
-da28c12089dfcfb8695b6b555cdb8e03dda2b690 with
-9e566d8bd61f939b7f5d7d969f5b178571471cf9 and
-18190cc08d70a6ec8ef69f0f6ede021f7cb3f9b8
+So if you are calling from the command line, "git fetch linus",
+when you were still on "linus" branch (which you do not normally
+do but just to prevent mistakes), it would trigger the check and
+your $GIT_DIR/HEAD would stay intact.  If you stayed on your own
+branch, "git fetch linus" would continue to just fast forward
+"linus" head without touching the working tree.
 
-(The script which finds those commits also prints out the commit id of
-any octopus commits. There is one commit with more than two parents in
-the kernel repository,
-13e652800d1644dfedcd0d59ac95ef0beb7f3165. However, it only looks like
-that commit has three parents, two of them are actually identical.)
+Come to think of it, it may be cleaner to simply forbid
+fast-forward fetching into the current repository (whether it is
+"git fetch" or "git pull").  At least in your workflow you do
+not do that ever anyway.
 
-> > I am of two minds on this. I hate the notion of a more complex merge. But
-> > at the same time, it clearly is a very interesting case when we do have
-> > multiple possible shared parents, and I think that at the very least we
-> > should warn the user. And using a more complex merge algorithm when it
-> > happens seems to be a very valid thing to do.
-> 
-> I agree.  GIT is lightening fast for trivial cases and we can
-> afford to spend more time to handle more complex ones carefully,
-> at the same time telling the user what we are doing is a good thing.
-> 
-> > Using python, which people have less exposure to, sounds like an 
-> > additional thorny issue..
-> 
-> Not too big a problem for me to follow the patch ;-).
-> 
-
-Good to know :)
-
-I mainly wanted to try the idea with the new algorithm, so some kind
-of high level language seemed like a good choice.
-
-- Fredrik
+Johannes, what do you think, as the original advocate of "push in
+reverse"?
