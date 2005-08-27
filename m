@@ -1,132 +1,85 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make .git directory validation code test HEAD
-Date: Sat, 27 Aug 2005 13:54:42 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508271334320.3317@g5.osdl.org>
-References: <874q9bcu6d.fsf@litku.valo.iki.fi> <46a038f905082708371719121c@mail.gmail.com>
- <87zmr39svy.fsf@litku.valo.iki.fi>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Comments in read-tree about #nALT
+Date: Sat, 27 Aug 2005 17:57:29 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508271709530.23242@iabervon.org>
+References: <Pine.LNX.4.63.0508270151590.23242@iabervon.org>
+ <7vwtm726xq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kalle Valo <Kalle.Valo@iki.fi>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 27 22:55:24 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 27 23:54:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E97ha-00081k-BA
-	for gcvg-git@gmane.org; Sat, 27 Aug 2005 22:54:58 +0200
+	id 1E98ch-0002DW-2S
+	for gcvg-git@gmane.org; Sat, 27 Aug 2005 23:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750774AbVH0Uy4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Aug 2005 16:54:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbVH0Uyz
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Aug 2005 16:54:55 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:5525 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750774AbVH0Uyz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Aug 2005 16:54:55 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7RKshjA028671
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 27 Aug 2005 13:54:43 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7RKsgWJ016118;
-	Sat, 27 Aug 2005 13:54:42 -0700
+	id S1750814AbVH0Vxw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Aug 2005 17:53:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750836AbVH0Vxw
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Aug 2005 17:53:52 -0400
+Received: from iabervon.org ([66.92.72.58]:62733 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750814AbVH0Vxu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Aug 2005 17:53:50 -0400
+Received: (qmail 5404 invoked by uid 1000); 27 Aug 2005 17:57:29 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Aug 2005 17:57:29 -0400
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <87zmr39svy.fsf@litku.valo.iki.fi>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+In-Reply-To: <7vwtm726xq.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7855>
 
+On Sat, 27 Aug 2005, Junio C Hamano wrote:
 
-Inspired by a report by Kalle Valo, this changes git-sh-setup-script and
-the "setup_git_directory()" function to test that $GIT_DIR/HEAD is a
-symlink, since a number of core git features depend on that these days.
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+>
+> > Part of threeway_merge, however, wants to search the rest of the cache for
+> > interfering entries in some cases, which would have to happen differently,
+> > because I won't have the cache completely filled out beforehand. I'm
+> > trying to figure out what the comments are talking about, and they seem to
+> > refer to a list of the possible cases. Is that list somewhere convenient?
+>
+> Please look for END_OF_CASE_TABLE in t/t1000-read-tree-m-3way.sh;
+> the table talks about some of the (ALT) not implemented, but
+> some of them are ("git whatchanged t/t1000-read-tree-m-3way"
+> would tell you which).
 
-We used to allow a regular file there, but git-fsck-cache has been 
-complaining about that for a while, and anything that uses branches 
-depends on the HEAD file being a symlink, so let's just encode that as a 
-fundamental requirement.
+It looks like all of them are implemented:
 
-Before, a non-symlink HEAD file would appear to work, but have subtle bugs 
-like not having the HEAD show up as a valid reference (because it wasn't 
-under "refs"). Now, we will complain loudly, and the user can fix it up 
-trivially instead of getting strange behaviour.
+#2ALT, #3ALT, #5ALT, and #14ALT, according to the commit comments, and the
+others seem from the email you quote to have been done in the process of
+getting #5ALT.
 
-This also removes the tests for "$GIT_DIR" and "$GIT_OBJECT_DIRECTORY" 
-being directories, since the other tests will implicitly test for that 
-anyway (ie the tests for HEAD, refs and 00 would fail).
+> Two way cases are described in Documentation/git-read-tree.txt,
+> if you care.  If you were not touching the three-way case right
+> now, I'd move/copy the three way cases there as well, but that
+> can wait until after your changes.
 
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
+I'd actually like to introduce Documentation/technical/trivial-merge for
+this stuff; I think it would be good to have documentation for people who
+need to know how the stuff works, rather than just how to use it, so we
+get a balance between reams of information that users don't want to wade
+through and being too vague for future developers.
 
-On Sat, 27 Aug 2005, Kalle Valo wrote:
-> 
-> I investigated it and realized that this was my mistake. I had copied
-> the imported git repository from my laptop to my desktop using 'scp
-> -r' and it changed .git/HEAD to a file, not a link as it should have
-> been. I copied it again, this time with tar to preserve symbolic
-> links, and cvsimport started to work again. So this was just a PEBCAK.
+Okay, so it looks to me like the only cases that care about the contents
+of the index, other than in stage 0 (which is effectively another tree,
+but already in index-form rather than tree-form), are 2 and 3, and these
+only care because read-tree modifies the stage of entries, rather
+than removing them and adding a stage-0 replacement entry; if it went
+through the add logic without SKIP_DFCHECK, that would reject the same
+things that causes_df_conflict rejects (at the point where whichever is
+second is done).
 
-diff --git a/git-sh-setup-script b/git-sh-setup-script
---- a/git-sh-setup-script
-+++ b/git-sh-setup-script
-@@ -11,7 +11,6 @@ die() {
- 	exit 1
- }
- 
--[ -d "$GIT_DIR" ] &&
-+[ -h "$GIT_DIR/HEAD" ] &&
- [ -d "$GIT_DIR/refs" ] &&
--[ -d "$GIT_OBJECT_DIRECTORY" ] &&
- [ -d "$GIT_OBJECT_DIRECTORY/00" ]
-diff --git a/setup.c b/setup.c
---- a/setup.c
-+++ b/setup.c
-@@ -72,6 +72,24 @@ const char **get_pathspec(const char *pr
- 	return (const char **) pathspec;
- }
- 
-+/*
-+ * Test it it looks like we're at the top
-+ * level git directory. We want to see a
-+ *
-+ *  - a HEAD symlink and a refs/ directory under ".git"
-+ *  - either a .git/objects/ directory _or_ the proper
-+ *    GIT_OBJECT_DIRECTORY environment variable
-+ */
-+static int is_toplevel_directory(void)
-+{
-+	struct stat st;
-+
-+	return	!lstat(".git/HEAD", &st) &&
-+		S_ISLNK(st.st_mode) &&
-+		!access(".git/refs/", X_OK) &&
-+		(gitenv(DB_ENVIRONMENT) || !access(".git/objects/", X_OK));
-+}
-+
- const char *setup_git_directory(void)
- {
- 	static char cwd[PATH_MAX+1];
-@@ -89,17 +107,8 @@ const char *setup_git_directory(void)
- 
- 	offset = len = strlen(cwd);
- 	for (;;) {
--		/*
--		 * We always want to see a .git/refs/ subdirectory
--		 */
--		if (!access(".git/refs/", X_OK)) {
--			/*
--			 * Then we need either a GIT_OBJECT_DIRECTORY define
--			 * or a .git/objects/ directory
--			 */
--			if (gitenv(DB_ENVIRONMENT) || !access(".git/objects/", X_OK))
--				break;
--		}
-+		if (is_toplevel_directory())
-+			break;
- 		chdir("..");
- 		do {
- 			if (!offset)
+So if I do the merge on tree entries (plus a stage-0 ce for the input from
+the index), and then add the result(s) to the cache, I can skip
+causes_df_conflict() in favor of just not using SKIP_DFCHECK. Is this
+right?
+
+Also, there doesn't actually seem to be a DF test in t1000; I think the
+t1005 DF test covers these cases (by the emu23 path into this code). Is
+this right?
+
+	-Daniel
+*This .sig left intentionally blank*
