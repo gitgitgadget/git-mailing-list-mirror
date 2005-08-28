@@ -1,233 +1,82 @@
-From: Robert Fitzsimons <robfitz@273k.net>
-Subject: [PATCH 8/9] New git-apply test cases for patches with mulitple fragments.
-Date: Sun, 28 Aug 2005 15:25:06 +0000
-Message-ID: <11252427062184-git-send-email-robfitz@273k.net>
-References: <11252426961236-git-send-email-robfitz@273k.net>
-Reply-To: Robert Fitzsimons <robfitz@273k.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH 2/9] Fix detection of files with only one line in git-apply.
+Date: Sun, 28 Aug 2005 09:55:43 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508280946180.3317@g5.osdl.org>
+References: <1125242667404-git-send-email-robfitz@273k.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Robert Fitzsimons <robfitz@273k.net>
-X-From: git-owner@vger.kernel.org Sun Aug 28 17:25:10 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 28 18:56:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9P0J-0006Xc-Dp
-	for gcvg-git@gmane.org; Sun, 28 Aug 2005 17:23:27 +0200
+	id 1E9QRn-0003cu-0A
+	for gcvg-git@gmane.org; Sun, 28 Aug 2005 18:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751213AbVH1PXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Aug 2005 11:23:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751216AbVH1PXX
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 11:23:23 -0400
-Received: from igraine.blacknight.ie ([217.114.173.147]:37101 "EHLO
-	igraine.blacknight.ie") by vger.kernel.org with ESMTP
-	id S1751213AbVH1PXW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Aug 2005 11:23:22 -0400
-Received: from [212.17.39.138] (helo=earth)
-	by igraine.blacknight.ie with smtp (Exim 4.42)
-	id 1E9P02-0004TW-95; Sun, 28 Aug 2005 16:23:13 +0100
-In-Reply-To: <11252426961236-git-send-email-robfitz@273k.net>
-X-Mailer: git-send-email-script
-To: git@vger.kernel.org
-X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
-X-blacknight-igraine-MailScanner: Found to be clean
-X-blacknight-igraine-MailScanner-SpamCheck: not spam, SpamAssassin (score=0,
-	required 7.5)
-X-MailScanner-From: robfitz@273k.net
+	id S1750705AbVH1Qzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Aug 2005 12:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbVH1Qzt
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 12:55:49 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:44503 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750705AbVH1Qzs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2005 12:55:48 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7SGtijA011630
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 28 Aug 2005 09:55:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7SGthCU021619;
+	Sun, 28 Aug 2005 09:55:43 -0700
+To: Robert Fitzsimons <robfitz@273k.net>
+In-Reply-To: <1125242667404-git-send-email-robfitz@273k.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7878>
 
-Added a test case for patches with multiple fragments.
 
-Signed-off-by: Robert Fitzsimons <robfitz@273k.net>
 
----
+On Sun, 28 Aug 2005, Robert Fitzsimons wrote:
+>
+> A patch which added one line to an empty file or removed the only line
+> from a one line file would be incorrectly detected as an invalid new
+> or delete patch.  Added a new test case.
 
- t/t4109-apply-multifrag.sh |  176 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 176 insertions(+), 0 deletions(-)
- create mode 100644 t/t4109-apply-multifrag.sh
+This patch looks wrong or at least needs some more thought. The test was
+done the way it was done for a reason. For example:
 
-28b46271270ad79ba8720a3fde1f40724493fdfe
-diff --git a/t/t4109-apply-multifrag.sh b/t/t4109-apply-multifrag.sh
-new file mode 100644
---- /dev/null
-+++ b/t/t4109-apply-multifrag.sh
-@@ -0,0 +1,176 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2005 Junio C Hamano
-+# Copyright (c) 2005 Robert Fitzsimons
-+#
-+
-+test_description='git-apply test patches with multiple fragments.
-+
-+'
-+. ./test-lib.sh
-+
-+# setup
-+
-+cat > patch1.patch <<\EOF
-+diff --git a/main.c b/main.c
-+new file mode 100644
-+--- /dev/null
-++++ b/main.c
-+@@ -0,0 +1,23 @@
-++#include <stdio.h>
-++
-++int func(int num);
-++void print_int(int num);
-++
-++int main() {
-++	int i;
-++
-++	for (i = 0; i < 10; i++) {
-++		print_int(func(i));
-++	}
-++
-++	return 0;
-++}
-++
-++int func(int num) {
-++	return num * num;
-++}
-++
-++void print_int(int num) {
-++	printf("%d", num);
-++}
-++
-+EOF
-+cat > patch2.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -1,7 +1,9 @@
-++#include <stdlib.h>
-+ #include <stdio.h>
-+ 
-+ int func(int num);
-+ void print_int(int num);
-++void print_ln();
-+ 
-+ int main() {
-+ 	int i;
-+@@ -10,6 +12,8 @@
-+ 		print_int(func(i));
-+ 	}
-+ 
-++	print_ln();
-++
-+ 	return 0;
-+ }
-+ 
-+@@ -21,3 +25,7 @@
-+ 	printf("%d", num);
-+ }
-+ 
-++void print_ln() {
-++	printf("\n");
-++}
-++
-+EOF
-+cat > patch3.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -1,9 +1,7 @@
-+-#include <stdlib.h>
-+ #include <stdio.h>
-+ 
-+ int func(int num);
-+ void print_int(int num);
-+-void print_ln();
-+ 
-+ int main() {
-+ 	int i;
-+@@ -12,8 +10,6 @@
-+ 		print_int(func(i));
-+ 	}
-+ 
-+-	print_ln();
-+-
-+ 	return 0;
-+ }
-+ 
-+@@ -25,7 +21,3 @@
-+ 	printf("%d", num);
-+ }
-+ 
-+-void print_ln() {
-+-	printf("\n");
-+-}
-+-
-+EOF
-+cat > patch4.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -1,13 +1,14 @@
-+ #include <stdio.h>
-+ 
-+ int func(int num);
-+-void print_int(int num);
-++int func2(int num);
-+ 
-+ int main() {
-+ 	int i;
-+ 
-+ 	for (i = 0; i < 10; i++) {
-+-		print_int(func(i));
-++		printf("%d", func(i));
-++		printf("%d", func3(i));
-+ 	}
-+ 
-+ 	return 0;
-+@@ -17,7 +18,7 @@
-+ 	return num * num;
-+ }
-+ 
-+-void print_int(int num) {
-+-	printf("%d", num);
-++int func2(int num) {
-++	return num * num * num;
-+ }
-+ 
-+EOF
-+
-+test_expect_success "S = git-apply (1)" \
-+    'git-apply patch1.patch patch2.patch'
-+mv main.c main.c.git
-+
-+test_expect_success "S = patch (1)" \
-+    'cat patch1.patch patch2.patch | patch -p1'
-+
-+test_expect_success "S = cmp (1)" \
-+    'cmp main.c.git main.c'
-+
-+rm -f main.c main.c.git
-+
-+test_expect_success "S = git-apply (2)" \
-+    'git-apply patch1.patch patch2.patch patch3.patch'
-+mv main.c main.c.git
-+
-+test_expect_success "S = patch (2)" \
-+    'cat patch1.patch patch2.patch patch3.patch | patch -p1'
-+
-+test_expect_success "S = cmp (2)" \
-+    'cmp main.c.git main.c'
-+
-+rm -f main.c main.c.git
-+
-+test_expect_success "S = git-apply (3)" \
-+    'git-apply patch1.patch patch4.patch'
-+mv main.c main.c.git
-+
-+test_expect_success "S = patch (3)" \
-+    'cat patch1.patch patch4.patch | patch -p1'
-+
-+test_expect_success "S = cmp (3)" \
-+    'cmp main.c.git main.c'
-+
-+test_done
-+
+	if (patch->is_new != !oldlines)
+		return error("new file depends on old contents");
+
+actually has two error cases (admittedly it re-uses the same error message 
+for both, which is a bit confusing):
+
+ - is_new, and oldlines != 0
+
+	This is the obvious error, and the one the message talk about.
+
+ - !is_new, and oldlines == 0
+
+	In kernel usage, empty files are not legal, and empty files get 
+	deleted. So this actually was intentional, even if the error 
+	message ends up being less than perfect.
+
+The "is_delete" thing is the same. At least for the kernel, I want a patch 
+that removes all content to also always _delete_ the file, because 
+otherwise old-style patches are ambiguous. Is it a delete, or is it a 
+"leave an empty file"?
+
+Now, git patches aren't ambigious, so while git patches can clearly say 
+"this is a patch to an existing empty file" vs "this patch creates this 
+file", I wanted to have the behaviour where we maintain the principle that 
+empty files are wrong.
+
+Now, that's a kernel-specific thing, so it may be that enabling this
+behaviour this should be a command line flag, but the point is that I 
+don't want to entirely lose the test.
+
+		Linus
