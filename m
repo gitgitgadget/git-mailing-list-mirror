@@ -1,49 +1,88 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Re: SVN import issue
-Date: Sun, 28 Aug 2005 01:11:47 -0400
-Message-ID: <m3fysuodbg.fsf@lugabout.cloos.reno.nv.us>
-References: <pan.2005.08.26.10.40.38.616149@smurf.noris.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] A new merge algorithm, take 2
+Date: Sat, 27 Aug 2005 22:23:23 -0700
+Message-ID: <7vmzn2prck.fsf@assigned-by-dhcp.cox.net>
+References: <20050827205135.GB16587@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-X-From: git-owner@vger.kernel.org Sun Aug 28 07:17:53 2005
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 28 07:23:46 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9FY2-0001cw-1c
-	for gcvg-git@gmane.org; Sun, 28 Aug 2005 07:17:38 +0200
+	id 1E9Fdm-0002hf-Aj
+	for gcvg-git@gmane.org; Sun, 28 Aug 2005 07:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbVH1FRD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Aug 2005 01:17:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVH1FRD
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 01:17:03 -0400
-Received: from ore.jhcloos.com ([64.240.156.239]:45572 "EHLO ore.jhcloos.com")
-	by vger.kernel.org with ESMTP id S1751097AbVH1FRB (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2005 01:17:01 -0400
-Received: from lugabout.jhcloos.org (host-69-48-12-73.roc.choiceone.net [69.48.12.73])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
-	by ore.jhcloos.com (Postfix) with ESMTP id 49B321C5EE
-	for <git@vger.kernel.org>; Sun, 28 Aug 2005 00:15:55 -0500 (CDT)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 420CC28F65A; Sun, 28 Aug 2005 05:11:48 +0000 (GMT)
-To: git@vger.kernel.org
-In-Reply-To: <pan.2005.08.26.10.40.38.616149@smurf.noris.de> (Matthias Urlichs's message of "Fri, 26 Aug 2005 12:40:44 +0200")
-X-Hashcash: 1:21:050828:git@vger.kernel.org::FN6bIpx3W9VnLr7m:00000000000000000000000000000000000000000022R6
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+	id S1750825AbVH1FX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Aug 2005 01:23:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVH1FX1
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 01:23:27 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:6608 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S1750825AbVH1FX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Aug 2005 01:23:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao04.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050828052323.XHMT15197.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 28 Aug 2005 01:23:23 -0400
+To: Fredrik Kuivinen <freku045@student.liu.se>
+In-Reply-To: <20050827205135.GB16587@c165.ib.student.liu.se> (Fredrik
+	Kuivinen's message of "Sat, 27 Aug 2005 22:51:35 +0200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7862>
 
->>>>> "Matthias" == Matthias Urlichs <smurf@smurf.noris.de> writes:
+Fredrik Kuivinen <freku045@student.liu.se> writes:
 
-Matthias> Paths in SVN are usually prefixed "/trunk/" (main branch) or
-Matthias> "/branches/foo/" (branch foo); tagging is done by creating
-Matthias> "/tags/bar", with the trunk (or branch) revision it is
-Matthias> pointing to as its parent.
+> The main changes compared to the previous version are:
+>
+> * Lots of clean up.
+> * Some of the scripts have been renamed to better match the naming
+>   convention used in Git.
+> * A new option ('-s') has been added to git-merge-cache
+> * Unclean merges are detected and reported
+> * Clean merges are committed
 
-Anyone working on this should note that /usually/ is vital above.
+I have not looked deeply into your Graph thing, so I'd comment
+only on a couple of points in the external interfaces area.
 
-Among other variations, using branch rather than branches is common.
+I am not sure why you need to be touching merge-cache.  I
+suspect that reading directly from "ls-files --stage -z" might
+be easier and certainly less intrusive.  I do not have immediate
+objections to "read-tree -i", though.  I think it is useful.
 
--JimC
+When there is a merge conflict, the current code leaves the
+index in unmerged state and intermediate merge result with
+conflict marker is left in the working tree.  It appears that
+your code changes this and puts the blob with conflict markers
+in the index file.  Leaving things in unmerged state has two
+advantages:
+
+ - you _could_ run git-diff-stages to see what the changes in
+   both sides are.
+
+ - you cannot accidentally make a commit from such an index file
+   state; in fact you cannot even write it out as a tree.
+
+I understand why you do it this way, and I do not find your way
+_too_ problematic, but we do need to realize that this is making
+things somewhat more prone to human errors.
+
+I have to admit that I find that "even when merging the
+merge-base candidates results in a file with conflict markers in
+it, the parts with the conflict markers often gets changed in
+the heads being merged, and the conflict markers will be gone
+from the result" trick very cute and interesting.  By itself it
+has certain amusement value, and if it works well in practice
+that is great.
+
+> +print 'Merging', h1, 'with', h2
+> +h1 = runProgram(['git-rev-parse', '--revs-only', h1]).rstrip()
+> +h2 = runProgram(['git-rev-parse', '--revs-only', h2]).rstrip()
+
+Here, '--verify" would be the right flag to give to these.  Perhaps:
+
+    h1 = runProgram(['git-rev-parse', '--verify', ('%s^0' % h1)]).rstrip()
