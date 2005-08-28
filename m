@@ -1,53 +1,71 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 6/9] New option --ignore-whitespace for git-apply.
-Date: Sun, 28 Aug 2005 09:58:15 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508280956320.3317@g5.osdl.org>
-References: <1125242692932-git-send-email-robfitz@273k.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Jason Riedy <ejr@EECS.Berkeley.EDU>
+Subject: Re: [PATCH] Spell __attribute__ correctly in cache.h.
+Date: Sun, 28 Aug 2005 10:11:25 -0700
+Message-ID: <19723.1125249085@lotus.CS.Berkeley.EDU>
+References: <7vll2mmkqk.fsf@assigned-by-dhcp.cox.net>
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 28 18:59:01 2005
+X-From: git-owner@vger.kernel.org Sun Aug 28 19:12:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9QUB-0004Xp-PA
-	for gcvg-git@gmane.org; Sun, 28 Aug 2005 18:58:24 +0200
+	id 1E9Qh0-0001Cv-39
+	for gcvg-git@gmane.org; Sun, 28 Aug 2005 19:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750735AbVH1Q6U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Aug 2005 12:58:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbVH1Q6U
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 12:58:20 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:11224 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750735AbVH1Q6T (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2005 12:58:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7SGwGjA011862
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 28 Aug 2005 09:58:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7SGwF0I021736;
-	Sun, 28 Aug 2005 09:58:16 -0700
-To: Robert Fitzsimons <robfitz@273k.net>
-In-Reply-To: <1125242692932-git-send-email-robfitz@273k.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750820AbVH1RL3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Aug 2005 13:11:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbVH1RL3
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 13:11:29 -0400
+Received: from lotus.CS.Berkeley.EDU ([128.32.36.222]:17093 "EHLO
+	lotus.CS.Berkeley.EDU") by vger.kernel.org with ESMTP
+	id S1750820AbVH1RL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Aug 2005 13:11:29 -0400
+Received: from lotus.CS.Berkeley.EDU (localhost [127.0.0.1])
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8) with ESMTP id j7SHBP6d019725;
+	Sun, 28 Aug 2005 10:11:25 -0700 (PDT)
+Received: from lotus.CS.Berkeley.EDU (ejr@localhost)
+	by lotus.CS.Berkeley.EDU (8.12.8/8.12.8/Submit) with ESMTP id j7SHBPTp019724;
+	Sun, 28 Aug 2005 10:11:25 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-reply-to: <7vll2mmkqk.fsf@assigned-by-dhcp.cox.net> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7880>
 
+And Junio C Hamano writes:
+ - >  +    Replace C99 array initializers with code.
+ - I presume this is to help older compilers?
 
+Yes, so it's relatively unimportant.  I could work
+around it in my situation; I only included it 
+because it's "necessary" for some Sun compilers on
+older Solaris installations.  A static gcc build
+works well enough in my situation.
 
-On Sun, 28 Aug 2005, Robert Fitzsimons wrote:
->
-> Allow the user to force a patch to be applied even though there might
-> be whitespace differences.  Added a test case for the new option.
+ - >  +    Replace unsetenv() and setenv() with older putenv().
+ - I wonder how buggy various implementations of
+ - putenv("THIS_ENV_VAR") are to remove the variable.
 
-If you ignore whitespace, then you should probably accept patches that are
-whitespace corrupted in another way: lines missing the ' ' at the
-beginning. Especially lines that are empty. That's actually the most 
-common form of whitespace corruption there is.
+I don't know, and it doesn't seem to matter in the git 
+code.  I didn't see checks for existance, but I may have
+missed something.  Most uses replace a NULL with a 
+pointer to "", which is why I just used putenv("FOO=").
 
-		Linus
+This is to cope with an older Solaris installation I 
+have to use.  ugh.  I can use a better compiler, but 
+I'm stuck with the system library.  Other older systems
+probably don't have unsetenv(), either.
+
+The "right" way would be to twiddle the environ and 
+use execle, but that's nasty.
+
+ - >  +    Replace zero-length array decls with [].
+ - This I am ambivalent about.
+
+I'm fine with requiring a limited C99 compiler.  A
+pedantic compiler will reject members with a length
+of zero.  6.7.5.2 para1 requires a value greater than
+zero for a constant array size.  So the code now (with
+[0] decls) is neither C89 nor C99.
+
+Jason
