@@ -1,56 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Make .git directory validation code test HEAD
-Date: Sat, 27 Aug 2005 21:56:47 -0700
-Message-ID: <7v7je6slps.fsf@assigned-by-dhcp.cox.net>
-References: <874q9bcu6d.fsf@litku.valo.iki.fi>
-	<46a038f905082708371719121c@mail.gmail.com>
-	<87zmr39svy.fsf@litku.valo.iki.fi>
-	<Pine.LNX.4.58.0508271334320.3317@g5.osdl.org>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: SVN import issue
+Date: Sun, 28 Aug 2005 01:11:47 -0400
+Message-ID: <m3fysuodbg.fsf@lugabout.cloos.reno.nv.us>
+References: <pan.2005.08.26.10.40.38.616149@smurf.noris.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kalle Valo <Kalle.Valo@iki.fi>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 28 06:57:59 2005
+X-From: git-owner@vger.kernel.org Sun Aug 28 07:17:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9FEG-0005RV-03
-	for gcvg-git@gmane.org; Sun, 28 Aug 2005 06:57:12 +0200
+	id 1E9FY2-0001cw-1c
+	for gcvg-git@gmane.org; Sun, 28 Aug 2005 07:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109AbVH1E4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Aug 2005 00:56:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVH1E4t
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 00:56:49 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:63361 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751109AbVH1E4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Aug 2005 00:56:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050828045647.EDCR8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 28 Aug 2005 00:56:47 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508271334320.3317@g5.osdl.org> (Linus Torvalds's
-	message of "Sat, 27 Aug 2005 13:54:42 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751097AbVH1FRD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Aug 2005 01:17:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVH1FRD
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 01:17:03 -0400
+Received: from ore.jhcloos.com ([64.240.156.239]:45572 "EHLO ore.jhcloos.com")
+	by vger.kernel.org with ESMTP id S1751097AbVH1FRB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Aug 2005 01:17:01 -0400
+Received: from lugabout.jhcloos.org (host-69-48-12-73.roc.choiceone.net [69.48.12.73])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "lugabout.jhcloos.org", Issuer "ca.jhcloos.com" (verified OK))
+	by ore.jhcloos.com (Postfix) with ESMTP id 49B321C5EE
+	for <git@vger.kernel.org>; Sun, 28 Aug 2005 00:15:55 -0500 (CDT)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 420CC28F65A; Sun, 28 Aug 2005 05:11:48 +0000 (GMT)
+To: git@vger.kernel.org
+In-Reply-To: <pan.2005.08.26.10.40.38.616149@smurf.noris.de> (Matthias Urlichs's message of "Fri, 26 Aug 2005 12:40:44 +0200")
+X-Hashcash: 1:21:050828:git@vger.kernel.org::FN6bIpx3W9VnLr7m:00000000000000000000000000000000000000000022R6
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7861>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+>>>>> "Matthias" == Matthias Urlichs <smurf@smurf.noris.de> writes:
 
-> This also removes the tests for "$GIT_DIR" and "$GIT_OBJECT_DIRECTORY" 
-> being directories, since the other tests will implicitly test for that 
-> anyway (ie the tests for HEAD, refs and 00 would fail).
+Matthias> Paths in SVN are usually prefixed "/trunk/" (main branch) or
+Matthias> "/branches/foo/" (branch foo); tagging is done by creating
+Matthias> "/tags/bar", with the trunk (or branch) revision it is
+Matthias> pointing to as its parent.
 
-I've thought about it when you brought up the Andrew's naked git
-repository detection issue, but one thing I was undecided was
-that if we would want to forbid either of these "directories"
-being a symlink to another directory.  I think it would be OK;
-admittedly "test -d" says OK for a symlink to a directory.
+Anyone working on this should note that /usually/ is vital above.
 
-I accept the patch, but will not apply and push it out right
-now; I am not in a shape to be operating heavy equipment ;-).
-Please wait until tomorrow morning.
+Among other variations, using branch rather than branches is common.
+
+-JimC
