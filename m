@@ -1,66 +1,56 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: Comments in read-tree about #nALT
-Date: Sat, 27 Aug 2005 18:18:52 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508271814410.3317@g5.osdl.org>
-References: <Pine.LNX.4.63.0508270151590.23242@iabervon.org>
- <7vwtm726xq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0508271709530.23242@iabervon.org>
- <Pine.LNX.4.63.0508271855100.23242@iabervon.org> <Pine.LNX.4.58.0508271621210.3317@g5.osdl.org>
- <Pine.LNX.4.63.0508271941090.23242@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Make .git directory validation code test HEAD
+Date: Sat, 27 Aug 2005 21:56:47 -0700
+Message-ID: <7v7je6slps.fsf@assigned-by-dhcp.cox.net>
+References: <874q9bcu6d.fsf@litku.valo.iki.fi>
+	<46a038f905082708371719121c@mail.gmail.com>
+	<87zmr39svy.fsf@litku.valo.iki.fi>
+	<Pine.LNX.4.58.0508271334320.3317@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 28 03:20:10 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Kalle Valo <Kalle.Valo@iki.fi>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 28 06:57:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9BpO-000125-La
-	for gcvg-git@gmane.org; Sun, 28 Aug 2005 03:19:19 +0200
+	id 1E9FEG-0005RV-03
+	for gcvg-git@gmane.org; Sun, 28 Aug 2005 06:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751008AbVH1BTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Aug 2005 21:19:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751020AbVH1BTA
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Aug 2005 21:19:00 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:44472 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750992AbVH1BTA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 27 Aug 2005 21:19:00 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7S1IrjA011371
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 27 Aug 2005 18:18:53 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7S1IqRh024888;
-	Sat, 27 Aug 2005 18:18:52 -0700
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0508271941090.23242@iabervon.org>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751109AbVH1E4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Aug 2005 00:56:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbVH1E4t
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Aug 2005 00:56:49 -0400
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:63361 "EHLO
+	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
+	id S1751109AbVH1E4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Aug 2005 00:56:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050828045647.EDCR8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 28 Aug 2005 00:56:47 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508271334320.3317@g5.osdl.org> (Linus Torvalds's
+	message of "Sat, 27 Aug 2005 13:54:42 -0700 (PDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7860>
 
+Linus Torvalds <torvalds@osdl.org> writes:
 
+> This also removes the tests for "$GIT_DIR" and "$GIT_OBJECT_DIRECTORY" 
+> being directories, since the other tests will implicitly test for that 
+> anyway (ie the tests for HEAD, refs and 00 would fail).
 
-On Sat, 27 Aug 2005, Daniel Barkalow wrote:
-> 
-> It looks like stage 2 is currently special as the stage that's similar to
-> the index/HEAD/working tree.
+I've thought about it when you brought up the Andrew's naked git
+repository detection issue, but one thing I was undecided was
+that if we would want to forbid either of these "directories"
+being a symlink to another directory.  I think it would be OK;
+admittedly "test -d" says OK for a symlink to a directory.
 
-Ahh, yes. We do actually want that. So yes, we should make only stage 3 
-have the multiple entries.
-
-> I'd be afraid of confusing everything by removing the uniqueness
-> invariant, although I guess not too much does anything with entries in
-> stages other than 0. I probably just don't find the index as intuitive as
-> you do and as the struct tree representation.
-
-Yes, I find the index to be very nice to work with - it basically allows
-you to work with multiple trees in one go, instead of working one file at
-a time. You just slurp in any number of trees (with some trivial rules
-about which stage they go in), and then you can just walk through each
-filename and efficiently handle one file at a time without re-doing the
-tree thing. Very nice.
-
-			Linus
+I accept the patch, but will not apply and push it out right
+now; I am not in a shape to be operating heavy equipment ;-).
+Please wait until tomorrow morning.
