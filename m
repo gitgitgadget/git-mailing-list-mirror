@@ -1,93 +1,85 @@
-From: Ben Greear <greearb@candelatech.com>
-Subject: Re: question git & branches
-Date: Mon, 29 Aug 2005 10:49:23 -0700
-Organization: Candela Technologies
-Message-ID: <43134AA3.2010308@candelatech.com>
-References: <4312C24E.4000803@candelatech.com> <Pine.LNX.4.58.0508290754410.3243@g5.osdl.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: please pull ppc64-2.6.git
+Date: Mon, 29 Aug 2005 11:02:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508291057380.3243@g5.osdl.org>
+References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
+	<20050829184510.A20605@flint.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 29 19:51:22 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: linuxppc64-dev@ozlabs.org, Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: linuxppc64-dev-bounces@ozlabs.org Mon Aug 29 20:06:24 2005
+Return-path: <linuxppc64-dev-bounces@ozlabs.org>
+Received: from ozlabs.org ([203.10.76.45])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9nlB-0003Wc-L4
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 19:49:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbVH2Rt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 13:49:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbVH2Rt1
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 13:49:27 -0400
-Received: from ns1.lanforge.com ([66.165.47.210]:8610 "EHLO www.lanforge.com")
-	by vger.kernel.org with ESMTP id S1751176AbVH2Rt0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 13:49:26 -0400
-Received: from [71.112.205.201] (pool-71-112-205-201.sttlwa.dsl-w.verizon.net [71.112.205.201])
-	(authenticated bits=0)
-	by www.lanforge.com (8.12.8/8.12.8) with ESMTP id j7THrao6026210;
-	Mon, 29 Aug 2005 10:53:37 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.7.10) Gecko/20050719 Fedora/1.7.10-1.3.1
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508290754410.3243@g5.osdl.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7910>
+	id 1E9nyF-0007J6-Q2
+	for glppd-linuxppc64-dev@m.gmane.org; Mon, 29 Aug 2005 20:03:00 +0200
+Received: from ozlabs.org (localhost [127.0.0.1])
+	by ozlabs.org (Postfix) with ESMTP id 072006817B;
+	Tue, 30 Aug 2005 04:02:57 +1000 (EST)
+X-Original-To: linuxppc64-dev@ozlabs.org
+Delivered-To: linuxppc64-dev@ozlabs.org
+Received: from smtp.osdl.org (smtp.osdl.org [65.172.181.4])
+	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
+	(Client CN "smtp.osdl.org", Issuer "OSDL Hostmaster" (not verified))
+	by ozlabs.org (Postfix) with ESMTP id 24A2168175
+	for <linuxppc64-dev@ozlabs.org>; Tue, 30 Aug 2005 04:02:54 +1000 (EST)
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7TI2djA011780
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 Aug 2005 11:02:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7TI2cpO015625;
+	Mon, 29 Aug 2005 11:02:39 -0700
+To: Russell King <rmk@arm.linux.org.uk>
+In-Reply-To: <20050829184510.A20605@flint.arm.linux.org.uk>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
+X-BeenThere: linuxppc64-dev@ozlabs.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: 64-bit Linux on PowerPC Developers Mail List
+	<linuxppc64-dev.ozlabs.org>
+List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
+List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
+List-Post: <mailto:linuxppc64-dev@ozlabs.org>
+List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
+List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
+Sender: linuxppc64-dev-bounces@ozlabs.org
+Errors-To: linuxppc64-dev-bounces@ozlabs.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7911>
 
-Linus Torvalds wrote:
+
+
+On Mon, 29 Aug 2005, Russell King wrote:
 > 
-> On Mon, 29 Aug 2005, Ben Greear wrote:
-> 
->>I think I'm missing something fundamental though...  I wanted to
->>change to the ben_dev_rfcnt branch to build a kernel without my
->>additional patch.  git branch ben_dev_rfcnt seems to change
->>it fine, but all of the changes for repository 'foo' are also
->>still here.
-> 
-> 
-> "git branch" just creates the branch, it doesn't actually do anything
-> else. Use "git checkout <branchname>" to switch to it.
+> Is the expected filesystem layout documented somewhere online (_external_
+> to the source code) ?
 
-I tried 'git checkout ben_dev_rfcnt'.  It took a few seconds and
-had no errors.  But, the files created on my other branch still
-exist in the code tree, and I still see my patch in the
-existing files..  I would expect them to go away.
+Nope, I don't think so. 
 
-I don't think I've managed to commit anything to any branch yet...  Could that
-be part of the problem?
+> Alternatively, when changes occur to the repostory format, please can
+> they be marked with some obvious subject so that folk know when things
+> are going to break?
 
-I tried gitk -all, and get this error popup:
+The only actual filesystem _breakage_ has been the introduction of 
+pack-files (and the old, old _old_ thing where I changed the actual object 
+compression/hashing order).
 
-Gitk: error reading commits: bad arguments to git-rev-list.
-(Note: arguments to gitk are passed to
-git-rev-list
-to allow selection of commits to be displayed.)
+The "objects/info/alternates" thing is an extension, which allows you to 
+have a partial object store, and point to the "rest of it", and still have 
+all the tools understand it and be able to parse the totality of it. So it 
+doesn't break or change old formats, it only allows a new one.
 
-Thanks,
-Ben
+(Partial repos have always worked with the rsync protocol, and with the
+client-side pulling. But that was more of an accident than anything else,
+and they fundamentally were broken for any real work - gitweb can't show
+anything really sane, server-side serving - whether anonymous or ssh -
+doesn't work, etc etc).
 
-> You can do both with "bit checkout -b <branchname>" which both creates the 
-> branch and switches to it.
-> 
-> (Both "git branch" and "git checkout -b <branchname>" that reate a new
-> branch take an optional argument which says what point you want the branch
-> to start at. It defaults to "current state", but you can create a branch
-> at any point in the history by just explicitly stating the commit name
-> that you want to start off with as the head of the branch)
-> 
-> Use "gitk --all" to visualize where the different branches are in the 
-> history, and a plain "git branch" with no arguments to list the branches 
-> and mark your currently active branch.
-> 
-> 				Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
-
--- 
-Ben Greear <greearb@candelatech.com>
-Candela Technologies Inc  http://www.candelatech.com
+		Linus
