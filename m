@@ -1,58 +1,63 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: please pull ppc64-2.6.git
-Date: Tue, 30 Aug 2005 09:31:48 +1000
-Message-ID: <17171.39652.237263.484079@cargo.ozlabs.ibm.com>
-References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
+From: Robert Fitzsimons <robfitz@273k.net>
+Subject: Re: [PATCH 1/9] Fix git patch header processing in git-apply.
+Date: Mon, 29 Aug 2005 23:58:23 +0000
+Message-ID: <20050829235823.GA19351@localhost>
+References: <11252426672473-git-send-email-robfitz@273k.net> <7vslwtein3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: linuxppc64-dev@ozlabs.org, Git Mailing List <git@vger.kernel.org>
-X-From: linuxppc64-dev-bounces@ozlabs.org Tue Aug 30 01:32:20 2005
-Return-path: <linuxppc64-dev-bounces@ozlabs.org>
-Received: from ozlabs.org ([203.10.76.45])
+Cc: Robert Fitzsimons <robfitz@273k.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 01:57:41 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9t6L-0000Hj-Rm
-	for glppd-linuxppc64-dev@m.gmane.org; Tue, 30 Aug 2005 01:31:43 +0200
-Received: from ozlabs.org (localhost [127.0.0.1])
-	by ozlabs.org (Postfix) with ESMTP id 2AB0268149;
-	Tue, 30 Aug 2005 09:31:38 +1000 (EST)
-X-Original-To: linuxppc64-dev@ozlabs.org
-Delivered-To: linuxppc64-dev@ozlabs.org
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 0A1E968148; Tue, 30 Aug 2005 09:31:37 +1000 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
-X-BeenThere: linuxppc64-dev@ozlabs.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: 64-bit Linux on PowerPC Developers Mail List
-	<linuxppc64-dev.ozlabs.org>
-List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
-List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
-List-Post: <mailto:linuxppc64-dev@ozlabs.org>
-List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
-List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
-Sender: linuxppc64-dev-bounces@ozlabs.org
-Errors-To: linuxppc64-dev-bounces@ozlabs.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7926>
+	id 1E9tUN-00053t-MD
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 01:56:32 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932085AbVH2X4Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 19:56:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932087AbVH2X4X
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 19:56:23 -0400
+Received: from igraine.blacknight.ie ([217.114.173.147]:17051 "EHLO
+	igraine.blacknight.ie") by vger.kernel.org with ESMTP
+	id S932085AbVH2X4X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2005 19:56:23 -0400
+Received: from [212.17.39.138] (helo=localhost)
+	by igraine.blacknight.ie with esmtp (Exim 4.42)
+	id 1E9tU0-0005cJ-Q3; Tue, 30 Aug 2005 00:56:09 +0100
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vslwtein3.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.10i
+X-blacknight-igraine-MailScanner-Information: Please contact the ISP for more information
+X-blacknight-igraine-MailScanner: Found to be clean
+X-blacknight-igraine-MailScanner-SpamCheck: not spam, SpamAssassin (score=0,
+	required 7.5)
+X-MailScanner-From: robfitz@273k.net
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7927>
 
-Linus Torvalds writes:
+I should have mentioned before, these changes are being used in a
+SourcePuller dump file to git import script I've been working on.
 
-> 	echo /pub/scm/linux/kernel/git/torvalds/linux-2.6/objects > objects/info/alternates
+> I further wanted to apply the following to the proposed updates
+> branch, but even with only the first one applied, it fails its
+> own test, t4104-apply-complex.sh:
 
-Did that (s/linux-2.6/linux-2.6.git/ actually...)
+The test was the problem it tried to work with empty files.
 
-What can one put in the alternates file?  Just an absolute path, or
-does a relative path or a URL work too?
+> * Fix processing of a patch file which modifies the same file in git-apply.
+> * Fix the processing of multiple patch files with --check in git-apply.
+> * New option --ignore-applied for git-apply.
 
-> or similar. That also makes gitweb able to show diffs etc, something it 
-> can't do for a broken partial repository.
+I've fixed up the problems with these patches and rebased them.
 
-Gitweb still doesn't work; I think someone needs to update the git on
-*.kernel.org.
+> * New option --ignore-whitespace for git-apply.
 
-Paul.
+This change was just wrong and could cause file corruption, I've got
+another version in the works which fixes the problem and adds some of
+the suggested features.
+
+Robert Fitzsimons
+robfitz@273k.net
