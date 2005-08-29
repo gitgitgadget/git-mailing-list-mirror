@@ -1,69 +1,65 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: please pull ppc64-2.6.git
-Date: Mon, 29 Aug 2005 19:20:13 +0100
-Message-ID: <20050829192013.B20605@flint.arm.linux.org.uk>
-References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com>
-	<Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
-	<20050829184510.A20605@flint.arm.linux.org.uk>
-	<Pine.LNX.4.58.0508291057380.3243@g5.osdl.org>
+From: Dave Hansen <haveblue@us.ibm.com>
+Subject: compile problem with gcc 2.95
+Date: Mon, 29 Aug 2005 11:28:36 -0700
+Message-ID: <1125340116.26108.12.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linuxppc64-dev@ozlabs.org, Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: linuxppc64-dev-bounces@ozlabs.org Mon Aug 29 20:24:07 2005
-Return-path: <linuxppc64-dev-bounces@ozlabs.org>
-Received: from ozlabs.org ([203.10.76.45])
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Aug 29 20:32:01 2005
+Return-path: <git-owner@vger.kernel.org>
+Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9oFB-0004Aa-Uu
-	for glppd-linuxppc64-dev@m.gmane.org; Mon, 29 Aug 2005 20:20:31 +0200
-Received: from ozlabs.org (localhost [127.0.0.1])
-	by ozlabs.org (Postfix) with ESMTP id 4E2406818C;
-	Tue, 30 Aug 2005 04:20:27 +1000 (EST)
-X-Original-To: linuxppc64-dev@ozlabs.org
-Delivered-To: linuxppc64-dev@ozlabs.org
-X-Greylist: delayed 2102 seconds by postgrey-1.21 at ozlabs;
-	Tue, 30 Aug 2005 04:20:25 EST
-Received: from caramon.arm.linux.org.uk (caramon.arm.linux.org.uk
-	[212.18.232.186])
-	(using TLSv1 with cipher EDH-RSA-DES-CBC3-SHA (168/168 bits))
-	(Client did not present a certificate)
-	by ozlabs.org (Postfix) with ESMTP id D991868185
-	for <linuxppc64-dev@ozlabs.org>; Tue, 30 Aug 2005 04:20:25 +1000 (EST)
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41) id 1E9oF0-0002jX-E5; Mon, 29 Aug 2005 19:20:19 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1E9oEx-0006RS-1r; Mon, 29 Aug 2005 19:20:15 +0100
-To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <Pine.LNX.4.58.0508291057380.3243@g5.osdl.org>;
-	from torvalds@osdl.org on Mon, Aug 29, 2005 at 11:02:38AM -0700
-X-BeenThere: linuxppc64-dev@ozlabs.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: 64-bit Linux on PowerPC Developers Mail List
-	<linuxppc64-dev.ozlabs.org>
-List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
-List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
-List-Post: <mailto:linuxppc64-dev@ozlabs.org>
-List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
-List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
-	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
-Sender: linuxppc64-dev-bounces@ozlabs.org
-Errors-To: linuxppc64-dev-bounces@ozlabs.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7913>
+	id 1E9oOT-0006bJ-Bk
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:30:05 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751283AbVH2S3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 14:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbVH2S3x
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:29:53 -0400
+Received: from e1.ny.us.ibm.com ([32.97.182.141]:59313 "EHLO e1.ny.us.ibm.com")
+	by vger.kernel.org with ESMTP id S1751283AbVH2S3w (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:29:52 -0400
+Received: from d01relay04.pok.ibm.com (d01relay04.pok.ibm.com [9.56.227.236])
+	by e1.ny.us.ibm.com (8.12.11/8.12.11) with ESMTP id j7TITp0G017894
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:29:51 -0400
+Received: from d01av01.pok.ibm.com (d01av01.pok.ibm.com [9.56.224.215])
+	by d01relay04.pok.ibm.com (8.12.10/NCO/VERS6.7) with ESMTP id j7TITp8q225052
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:29:51 -0400
+Received: from d01av01.pok.ibm.com (loopback [127.0.0.1])
+	by d01av01.pok.ibm.com (8.12.11/8.13.3) with ESMTP id j7TISg3I031306
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:28:42 -0400
+Received: from [9.12.233.254] ([9.12.233.254])
+	by d01av01.pok.ibm.com (8.12.11/8.12.11) with ESMTP id j7TISfTa031247
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:28:42 -0400
+To: Git Mailing List <git@vger.kernel.org>
+X-Mailer: Evolution 2.0.4 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7914>
 
-On Mon, Aug 29, 2005 at 11:02:38AM -0700, Linus Torvalds wrote:
-> The "objects/info/alternates" thing is an extension, which allows you to 
-> have a partial object store, and point to the "rest of it", and still have 
-> all the tools understand it and be able to parse the totality of it. So it 
-> doesn't break or change old formats, it only allows a new one.
+I know it's an ancient compiler, but last time I checked it is still
+faster at runtime than the 3.x versions.  If it's not going to be
+supported, it would probably be nice to at least detect that in the
+build system.  I've confirmed that it works just fine with gcc 3.3.
 
-Ah, ok.  I thought it was a new requirement, and I had visions of
-similar complaints about my repositories.  Thanks for explaining
-the situation.
+dave@spirit:~/bin/git$ make
+gcc -o rev-cache.o -c -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>'
+rev-cache.c
+In file included from rev-cache.c:2:
+cache.h:107: field `name' has incomplete type
+cache.h:290: field `base' has incomplete type
+cache.h:303: field `pack_name' has incomplete type
+cache.h:318: field `name' has incomplete type
+make: *** [rev-cache.o] Error 1
+dave@spirit:~/bin/git$ gcc -v
+Reading specs from /usr/lib/gcc-lib/i386-linux/2.95.4/specs
+gcc version 2.95.4 20011002 (Debian prerelease)
 
--- 
-Russell King
+> struct cache_entry {
+...
+>         char name[]; <--- cache.h:107
+> };
+
+
+-- Dave
