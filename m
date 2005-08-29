@@ -1,51 +1,59 @@
-From: Komal Shah <komal_shah802003@yahoo.com>
-Subject: gitweb : index.aux
-Date: Mon, 29 Aug 2005 02:35:00 -0700 (PDT)
-Message-ID: <20050829093500.54242.qmail@web53602.mail.yahoo.com>
+From: "Bryan O'Donoghue" <typedef@eircom.net>
+Subject: cogito/git usage question
+Date: Mon, 29 Aug 2005 11:45:33 +0100
+Message-ID: <4312E74D.5020203@eircom.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Mon Aug 29 11:36:47 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Aug 29 12:39:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9g33-000654-SK
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 11:35:26 +0200
+	id 1E9h2W-0002Wi-Ri
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 12:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750804AbVH2JfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 05:35:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbVH2JfG
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 05:35:06 -0400
-Received: from web53602.mail.yahoo.com ([206.190.37.35]:61533 "HELO
-	web53602.mail.yahoo.com") by vger.kernel.org with SMTP
-	id S1750804AbVH2JfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2005 05:35:05 -0400
-Received: (qmail 54244 invoked by uid 60001); 29 Aug 2005 09:35:00 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=wYA1iUFPZZeKt0vijyYZkq4uVd2GhyryhuVDsDesl1acPswX1LJ3G0/4jGtlNH5+esdjfCwfIg0Oic53Ii+WjEP09yvf2iSZ5lV3HioBFZMPPidSku+en5YnIti+aG+f8cTUb1SWUSxwYUebOHBt1wLAWfTyPvZm4t6OxmJlVZw=  ;
-Received: from [203.145.155.10] by web53602.mail.yahoo.com via HTTP; Mon, 29 Aug 2005 02:35:00 PDT
+	id S1750904AbVH2Kit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 06:38:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751035AbVH2Kit
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 06:38:49 -0400
+Received: from zeus2.kernel.org ([204.152.191.36]:2253 "EHLO zeus2.kernel.org")
+	by vger.kernel.org with ESMTP id S1750904AbVH2Kis (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 06:38:48 -0400
+Received: from eurodubx.europlex.local (mail.europlex.ie [83.141.76.10])
+	by zeus2.kernel.org (8.13.1/8.13.1) with ESMTP id j7TAclp2001721
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 03:38:48 -0700
+Received: from [10.100.10.207] ([10.100.10.207]) by eurodubx.europlex.local with Microsoft SMTPSVC(6.0.3790.211);
+	 Mon, 29 Aug 2005 11:35:46 +0100
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041206)
+X-Accept-Language: en-us, en
 To: git@vger.kernel.org
+X-OriginalArrivalTime: 29 Aug 2005 10:35:46.0500 (UTC) FILETIME=[6A5C7840:01C5AC85]
+X-Virus-Scanned: ClamAV version 0.85, clamav-milter version 0.85 on zeus2
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7899>
 
-Kay,
+Greetings all.
 
-I am able to setup gitweb tree for my linux-omap tree internally, but
-for this I am using $project_list equals to $projectroot. I want to add
-more projects, but I don't know how write/generate index.aux file?
+I have a copy of
+http://www.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+which is currently at revision 2.6.13 as at this morning.
 
-Me don't know much about cgi-bin/perl :(
+cg-tag-ls lists every version from 2.6.11 to the current 2.6.13
+inclusive. cg-tag-ls also lists kernel version 2.6.13-rc6. What I'm
+wondering is how exactly I set copy of the tree to that version, so that
+I can apply the -mm patchset ?
 
----Komal Shah
-http://komalshah.blogspot.com/
+I've asked uncle Google and searched the git mailing list archives, as
+well as looking through the git and cogito documentation, however, it is
+not immediately obvious to me at this point what the correct command to
+do this is. I'd be very grateful, if somebody could point that out.
 
+Best Regards,
+Bryan
 
-		
-____________________________________________________
-Start your day with Yahoo! - make it your home page 
-http://www.yahoo.com/r/hs 
- 
+-- 
+"Fiery the angels fell. Deep thunder rolled around their shores, burning
+with the fires of Orc." -- Roy Batty, Blade Runner.
