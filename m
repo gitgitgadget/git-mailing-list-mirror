@@ -1,65 +1,55 @@
-From: Dave Hansen <haveblue@us.ibm.com>
-Subject: compile problem with gcc 2.95
-Date: Mon, 29 Aug 2005 11:28:36 -0700
-Message-ID: <1125340116.26108.12.camel@localhost>
+From: Kay Sievers <kay.sievers@vrfy.org>
+Subject: Re: gitweb : index.aux
+Date: Mon, 29 Aug 2005 20:25:34 +0200
+Message-ID: <20050829182534.GA16808@vrfy.org>
+References: <20050829093500.54242.qmail@web53602.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Aug 29 20:32:01 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 29 20:32:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9oOT-0006bJ-Bk
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:30:05 +0200
+	id 1E9oKg-0005f5-C7
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:26:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751283AbVH2S3x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 14:29:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbVH2S3x
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:29:53 -0400
-Received: from e1.ny.us.ibm.com ([32.97.182.141]:59313 "EHLO e1.ny.us.ibm.com")
-	by vger.kernel.org with ESMTP id S1751283AbVH2S3w (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:29:52 -0400
-Received: from d01relay04.pok.ibm.com (d01relay04.pok.ibm.com [9.56.227.236])
-	by e1.ny.us.ibm.com (8.12.11/8.12.11) with ESMTP id j7TITp0G017894
-	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:29:51 -0400
-Received: from d01av01.pok.ibm.com (d01av01.pok.ibm.com [9.56.224.215])
-	by d01relay04.pok.ibm.com (8.12.10/NCO/VERS6.7) with ESMTP id j7TITp8q225052
-	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:29:51 -0400
-Received: from d01av01.pok.ibm.com (loopback [127.0.0.1])
-	by d01av01.pok.ibm.com (8.12.11/8.13.3) with ESMTP id j7TISg3I031306
-	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:28:42 -0400
-Received: from [9.12.233.254] ([9.12.233.254])
-	by d01av01.pok.ibm.com (8.12.11/8.12.11) with ESMTP id j7TISfTa031247
-	for <git@vger.kernel.org>; Mon, 29 Aug 2005 14:28:42 -0400
-To: Git Mailing List <git@vger.kernel.org>
-X-Mailer: Evolution 2.0.4 
+	id S1751293AbVH2SZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 14:25:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbVH2SZk
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:25:40 -0400
+Received: from soundwarez.org ([217.160.171.123]:40856 "EHLO soundwarez.org")
+	by vger.kernel.org with ESMTP id S1751297AbVH2SZj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:25:39 -0400
+Received: by soundwarez.org (Postfix, from userid 2702)
+	id C04B456F39; Mon, 29 Aug 2005 20:25:34 +0200 (CEST)
+To: Komal Shah <komal_shah802003@yahoo.com>
+Content-Disposition: inline
+In-Reply-To: <20050829093500.54242.qmail@web53602.mail.yahoo.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7915>
 
-I know it's an ancient compiler, but last time I checked it is still
-faster at runtime than the 3.x versions.  If it's not going to be
-supported, it would probably be nice to at least detect that in the
-build system.  I've confirmed that it works just fine with gcc 3.3.
+On Mon, Aug 29, 2005 at 02:35:00AM -0700, Komal Shah wrote:
+> Kay,
+> 
+> I am able to setup gitweb tree for my linux-omap tree internally, but
+> for this I am using $project_list equals to $projectroot. I want to add
+> more projects, but I don't know how write/generate index.aux file?
 
-dave@spirit:~/bin/git$ make
-gcc -o rev-cache.o -c -g -O2 -Wall '-DSHA1_HEADER=<openssl/sha.h>'
-rev-cache.c
-In file included from rev-cache.c:2:
-cache.h:107: field `name' has incomplete type
-cache.h:290: field `base' has incomplete type
-cache.h:303: field `pack_name' has incomplete type
-cache.h:318: field `name' has incomplete type
-make: *** [rev-cache.o] Error 1
-dave@spirit:~/bin/git$ gcc -v
-Reading specs from /usr/lib/gcc-lib/i386-linux/2.95.4/specs
-gcc version 2.95.4 20011002 (Debian prerelease)
+Yeah, this works only if all the trees are in one directory. The index file
+is a simple list with the pathes url encoded. (It is exported by a cron job
+running on kernel.org. We need it there cause the trees are in subdirs and
+the mirrored trees don't have the original ownership, that is displayed in
+gitweb.)
 
-> struct cache_entry {
-...
->         char name[]; <--- cache.h:107
-> };
+> Me don't know much about cgi-bin/perl :(
 
+So let's do it in perl then. :) Just encode the pathes and put them into
+the file (optionaly the owner comes after a space in the same line):
+  perl -e 'use CGI; print CGI::escape("/this/is/my/project") . "\n"'
+  %2Fthis%2Fis%2Fmy%2Fproject
 
--- Dave
+Good luck,
+Kay
