@@ -1,91 +1,70 @@
-From: Frank Sorenson <frank@tuxrocks.com>
-Subject: Re: [PATCH] git-repack-script: Add option to repack all objects
-Date: Mon, 29 Aug 2005 01:41:27 -0600
-Message-ID: <4312BC27.9010604@tuxrocks.com>
-References: <43102727.2050206@tuxrocks.com> <7vbr3hlqjs.fsf@assigned-by-dhcp.cox.net>
+From: Ben Greear <greearb@candelatech.com>
+Subject: question git & branches
+Date: Mon, 29 Aug 2005 01:07:42 -0700
+Organization: Candela Technologies
+Message-ID: <4312C24E.4000803@candelatech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 29 09:45:13 2005
+X-From: git-owner@vger.kernel.org Mon Aug 29 10:09:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9eGz-0005BO-Cd
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 09:41:41 +0200
+	id 1E9egF-0002mH-31
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 10:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751221AbVH2Hli (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 03:41:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751222AbVH2Hli
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 03:41:38 -0400
-Received: from www.tuxrocks.com ([64.62.190.123]:14853 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S1751221AbVH2Hlh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 03:41:37 -0400
-Received: from [10.0.0.10] (216-190-206-130.customer.csolutions.net [216.190.206.130])
+	id S1751222AbVH2IHo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 04:07:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbVH2IHo
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 04:07:44 -0400
+Received: from ns1.lanforge.com ([66.165.47.210]:36769 "EHLO www.lanforge.com")
+	by vger.kernel.org with ESMTP id S1751222AbVH2IHn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 04:07:43 -0400
+Received: from [71.112.205.201] (pool-71-112-205-201.sttlwa.dsl-w.verizon.net [71.112.205.201])
 	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j7T7fRJA004519
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 29 Aug 2005 01:41:29 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
+	by www.lanforge.com (8.12.8/8.12.8) with ESMTP id j7T8Bqo6018281
+	for <git@vger.kernel.org>; Mon, 29 Aug 2005 01:11:53 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.7.10) Gecko/20050719 Fedora/1.7.10-1.3.1
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr3hlqjs.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.91.0.0
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7894>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hello!
 
-Junio C Hamano wrote:
-> Frank Sorenson <frank@tuxrocks.com> writes:
-> 
->>This patch adds an option to git-repack-script to repack all objects,
->>including both packed and unpacked.  This allows a full repack of
->>a git archive (current cogito packs from 39MB to 4.5MB, and git packs
->>from 4.4MB to 3.8MB).
->>
->>Signed-off-by: Frank Sorenson <frank@tuxrocks.com>
-> 
-> 
-> While I agree that giving more flexibility to repack objects is
-> a good idea, I am not sure rolling all existing objects into one
-> pack and removing the existing one is a good way to go.
+I've been trying out git and have some questions...
 
-It reduces the disk space requirement significantly (linux packs from
-135MB to 73MB), and I'm seeing speed improvements as well (probably
-because cache-cold operation requires far less seeking, and the caching
-requirements are smaller).
+I installed the latest snapshot of git, pulled down the
+kernel (2.6.13-rc7), and started hacking.  What fun...got myself
+a git patch and was happy.
 
-What are the benefits to keeping old packs?
+Then, decided I wanted to branch off my changes from the
+main tree so I could maintain the patch-set separate for
+this particular feature.
 
-> I'd do this slightly differently.  I do not think removing
-> existing pack belongs to this command.  We would probably want a
-> separate tool to find extra/redundant packs and remove them, or
-> more generally optimize packs by selectively exploding them and
-> repacking them ("pack optimizer").
+I created a new branch 'ben_dev_rfcnt'.
 
-I disagree about not removing old packs.  When you "repack" your
-suitcase, you take everything out and put it back in again, so a command
-named "repack" should remove all existing objects, and put them back again.
+Now, I also have another patch that I wanted to pull into git.
 
-Okay, so the pack algorithm could be better, but that only means that
-repacking the entire set of objects would improve things more, making
-some sort of "git-repack-all" an even more valuable operation.
+Before merging this, I created another branch 'foo'.
 
-Frank
-- --
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
+I changed to this branch foo and imported my patch and resolved the
+conflicts, etc.
 
-iD8DBQFDErwnaI0dwg4A47wRAkVGAKDqDjQ5IBTO+DC/nKpYl+69w7RESgCg6omQ
-xwbQqnXJnfxITC1TAjRtLSk=
-=tCyP
------END PGP SIGNATURE-----
+I think I'm missing something fundamental though...  I wanted to
+change to the ben_dev_rfcnt branch to build a kernel without my
+additional patch.  git branch ben_dev_rfcnt seems to change
+it fine, but all of the changes for repository 'foo' are also
+still here.
+
+Am I completely missing how branches work, or just missing a few
+commands?
+
+Thanks,
+Ben
+
+-- 
+Ben Greear <greearb@candelatech.com>
+Candela Technologies Inc  http://www.candelatech.com
