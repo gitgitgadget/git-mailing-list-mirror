@@ -1,70 +1,93 @@
-From: Russell King <rmk@arm.linux.org.uk>
-Subject: Re: please pull ppc64-2.6.git
-Date: Mon, 29 Aug 2005 18:45:10 +0100
-Message-ID: <20050829184510.A20605@flint.arm.linux.org.uk>
-References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com> <Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
+From: Ben Greear <greearb@candelatech.com>
+Subject: Re: question git & branches
+Date: Mon, 29 Aug 2005 10:49:23 -0700
+Organization: Candela Technologies
+Message-ID: <43134AA3.2010308@candelatech.com>
+References: <4312C24E.4000803@candelatech.com> <Pine.LNX.4.58.0508290754410.3243@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, linuxppc64-dev@ozlabs.org,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 29 19:47:45 2005
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 29 19:51:22 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9nhD-0002OQ-CD
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 19:45:23 +0200
+	id 1E9nlB-0003Wc-L4
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 19:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbVH2RpU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 13:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbVH2RpT
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 13:45:19 -0400
-Received: from caramon.arm.linux.org.uk ([212.18.232.186]:5139 "EHLO
-	caramon.arm.linux.org.uk") by vger.kernel.org with ESMTP
-	id S1751170AbVH2RpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2005 13:45:18 -0400
-Received: from flint.arm.linux.org.uk ([2002:d412:e8ba:1:201:2ff:fe14:8fad])
-	by caramon.arm.linux.org.uk with asmtp (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.41)
-	id 1E9nh2-0002h1-5o; Mon, 29 Aug 2005 18:45:12 +0100
-Received: from rmk by flint.arm.linux.org.uk with local (Exim 4.41)
-	id 1E9nh0-0005QA-UP; Mon, 29 Aug 2005 18:45:10 +0100
+	id S1751176AbVH2Rt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 13:49:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751179AbVH2Rt1
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 13:49:27 -0400
+Received: from ns1.lanforge.com ([66.165.47.210]:8610 "EHLO www.lanforge.com")
+	by vger.kernel.org with ESMTP id S1751176AbVH2Rt0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 13:49:26 -0400
+Received: from [71.112.205.201] (pool-71-112-205-201.sttlwa.dsl-w.verizon.net [71.112.205.201])
+	(authenticated bits=0)
+	by www.lanforge.com (8.12.8/8.12.8) with ESMTP id j7THrao6026210;
+	Mon, 29 Aug 2005 10:53:37 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.7.10) Gecko/20050719 Fedora/1.7.10-1.3.1
+X-Accept-Language: en-us, en
 To: Linus Torvalds <torvalds@osdl.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.2.5.1i
-In-Reply-To: <Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>; from torvalds@osdl.org on Mon, Aug 29, 2005 at 10:32:09AM -0700
+In-Reply-To: <Pine.LNX.4.58.0508290754410.3243@g5.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7910>
 
-On Mon, Aug 29, 2005 at 10:32:09AM -0700, Linus Torvalds wrote:
-> On Mon, 29 Aug 2005, Paul Mackerras wrote:
-> > Please do a pull from:
-> > 
-> > rsync://rsync.kernel.org/pub/scm/linux/kernel/git/paulus/ppc64-2.6.git
+Linus Torvalds wrote:
 > 
-> Gaah.
+> On Mon, 29 Aug 2005, Ben Greear wrote:
 > 
-> This is not a valid git repository.
+>>I think I'm missing something fundamental though...  I wanted to
+>>change to the ben_dev_rfcnt branch to build a kernel without my
+>>additional patch.  git branch ben_dev_rfcnt seems to change
+>>it fine, but all of the changes for repository 'foo' are also
+>>still here.
 > 
-> Guys, if you do partially populated repositories, _please_ make sure that 
-> you still make it a valid git repository. These days you can trivially do 
-> so by doing a
 > 
-> 	echo /pub/scm/linux/kernel/git/torvalds/linux-2.6/objects > objects/info/alternates
-> 
-> or similar. That also makes gitweb able to show diffs etc, something it 
-> can't do for a broken partial repository.
+> "git branch" just creates the branch, it doesn't actually do anything
+> else. Use "git checkout <branchname>" to switch to it.
 
-Is the expected filesystem layout documented somewhere online (_external_
-to the source code) ?
+I tried 'git checkout ben_dev_rfcnt'.  It took a few seconds and
+had no errors.  But, the files created on my other branch still
+exist in the code tree, and I still see my patch in the
+existing files..  I would expect them to go away.
 
-The reason I stress external to the code is that some of us do not track
-git developments.  (Except via the ctrl-d method in our mail readers.)
+I don't think I've managed to commit anything to any branch yet...  Could that
+be part of the problem?
 
-Alternatively, when changes occur to the repostory format, please can
-they be marked with some obvious subject so that folk know when things
-are going to break?
+I tried gitk -all, and get this error popup:
+
+Gitk: error reading commits: bad arguments to git-rev-list.
+(Note: arguments to gitk are passed to
+git-rev-list
+to allow selection of commits to be displayed.)
+
+Thanks,
+Ben
+
+> You can do both with "bit checkout -b <branchname>" which both creates the 
+> branch and switches to it.
+> 
+> (Both "git branch" and "git checkout -b <branchname>" that reate a new
+> branch take an optional argument which says what point you want the branch
+> to start at. It defaults to "current state", but you can create a branch
+> at any point in the history by just explicitly stating the commit name
+> that you want to start off with as the head of the branch)
+> 
+> Use "gitk --all" to visualize where the different branches are in the 
+> history, and a plain "git branch" with no arguments to list the branches 
+> and mark your currently active branch.
+> 
+> 				Linus
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+
 
 -- 
-Russell King
+Ben Greear <greearb@candelatech.com>
+Candela Technologies Inc  http://www.candelatech.com
