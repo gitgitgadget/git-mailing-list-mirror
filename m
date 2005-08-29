@@ -1,46 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git commit question
-Date: Mon, 29 Aug 2005 13:36:27 -0700
-Message-ID: <7vd5nwa3as.fsf@assigned-by-dhcp.cox.net>
-References: <431368D0.40604@candelatech.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: please pull ppc64-2.6.git
+Date: Tue, 30 Aug 2005 09:31:48 +1000
+Message-ID: <17171.39652.237263.484079@cargo.ozlabs.ibm.com>
+References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 29 22:37:31 2005
-Return-path: <git-owner@vger.kernel.org>
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Transfer-Encoding: 7bit
+Cc: linuxppc64-dev@ozlabs.org, Git Mailing List <git@vger.kernel.org>
+X-From: linuxppc64-dev-bounces@ozlabs.org Tue Aug 30 01:32:20 2005
+Return-path: <linuxppc64-dev-bounces@ozlabs.org>
+Received: from ozlabs.org ([203.10.76.45])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9qMq-0006as-Hk
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 22:36:32 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751621AbVH2Uga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 16:36:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbVH2Uga
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 16:36:30 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:42462 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751295AbVH2Ug3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2005 16:36:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050829203627.YYIQ8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 29 Aug 2005 16:36:27 -0400
-To: Ben Greear <greearb@candelatech.com>
-In-Reply-To: <431368D0.40604@candelatech.com> (Ben Greear's message of "Mon,
-	29 Aug 2005 12:58:08 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7925>
+	id 1E9t6L-0000Hj-Rm
+	for glppd-linuxppc64-dev@m.gmane.org; Tue, 30 Aug 2005 01:31:43 +0200
+Received: from ozlabs.org (localhost [127.0.0.1])
+	by ozlabs.org (Postfix) with ESMTP id 2AB0268149;
+	Tue, 30 Aug 2005 09:31:38 +1000 (EST)
+X-Original-To: linuxppc64-dev@ozlabs.org
+Delivered-To: linuxppc64-dev@ozlabs.org
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 0A1E968148; Tue, 30 Aug 2005 09:31:37 +1000 (EST)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
+X-BeenThere: linuxppc64-dev@ozlabs.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: 64-bit Linux on PowerPC Developers Mail List
+	<linuxppc64-dev.ozlabs.org>
+List-Unsubscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=unsubscribe>
+List-Archive: <http://ozlabs.org/pipermail/linuxppc64-dev>
+List-Post: <mailto:linuxppc64-dev@ozlabs.org>
+List-Help: <mailto:linuxppc64-dev-request@ozlabs.org?subject=help>
+List-Subscribe: <https://ozlabs.org/mailman/listinfo/linuxppc64-dev>,
+	<mailto:linuxppc64-dev-request@ozlabs.org?subject=subscribe>
+Sender: linuxppc64-dev-bounces@ozlabs.org
+Errors-To: linuxppc64-dev-bounces@ozlabs.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7926>
 
-Ben Greear <greearb@candelatech.com> writes:
+Linus Torvalds writes:
 
-> Is there a way to tell it to add all modified files (that git commit mentions)
-> to the cache for commit, or do I have to not be so lazy and
-> paste them all on the cmd line?
+> 	echo /pub/scm/linux/kernel/git/torvalds/linux-2.6/objects > objects/info/alternates
 
-Perhaps 'git commit -a' is what you want (it is documented;
-http://www.kernel.org/pub/software/scm/git/docs/, especially
-git-commit-script.html there).
+Did that (s/linux-2.6/linux-2.6.git/ actually...)
+
+What can one put in the alternates file?  Just an absolute path, or
+does a relative path or a URL work too?
+
+> or similar. That also makes gitweb able to show diffs etc, something it 
+> can't do for a broken partial repository.
+
+Gitweb still doesn't work; I think someone needs to update the git on
+*.kernel.org.
+
+Paul.
