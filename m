@@ -1,55 +1,65 @@
-From: Kay Sievers <kay.sievers@vrfy.org>
-Subject: Re: gitweb : index.aux
-Date: Mon, 29 Aug 2005 20:25:34 +0200
-Message-ID: <20050829182534.GA16808@vrfy.org>
-References: <20050829093500.54242.qmail@web53602.mail.yahoo.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH] git-repack-script: Add option to repack all objects.
+Date: Mon, 29 Aug 2005 14:29:40 -0400
+Message-ID: <43135414.6080400@gmail.com>
+References: <43102727.2050206@tuxrocks.com>	<7vbr3hlqjs.fsf@assigned-by-dhcp.cox.net>	<4312BC27.9010604@tuxrocks.com>	<7vvf1obsfc.fsf@assigned-by-dhcp.cox.net> <7vll2kbqa4.fsf_-_@assigned-by-dhcp.cox.net>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 29 20:32:16 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 29 20:32:27 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9oKg-0005f5-C7
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:26:10 +0200
+	id 1E9oOH-0006Yt-7O
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbVH2SZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 14:25:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbVH2SZk
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:25:40 -0400
-Received: from soundwarez.org ([217.160.171.123]:40856 "EHLO soundwarez.org")
-	by vger.kernel.org with ESMTP id S1751297AbVH2SZj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:25:39 -0400
-Received: by soundwarez.org (Postfix, from userid 2702)
-	id C04B456F39; Mon, 29 Aug 2005 20:25:34 +0200 (CEST)
-To: Komal Shah <komal_shah802003@yahoo.com>
-Content-Disposition: inline
-In-Reply-To: <20050829093500.54242.qmail@web53602.mail.yahoo.com>
-User-Agent: Mutt/1.5.9i
+	id S1751276AbVH2S3u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 14:29:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbVH2S3u
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:29:50 -0400
+Received: from wproxy.gmail.com ([64.233.184.193]:30748 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751276AbVH2S3t (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:29:49 -0400
+Received: by wproxy.gmail.com with SMTP id 57so690818wri
+        for <git@vger.kernel.org>; Mon, 29 Aug 2005 11:29:49 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=IuhzXKdI89HXwbVk7PO/k32a3XcVpBnAvd2pejW2EzEWJS/1UbRR13DPVTFD1ZqWSQnWezmkma9pTRy6lN3J7+YZLAlzC1EBXlI4MBiEsJd4n5eTRJWGSHe/EUM9j67Hd6BQ6Td9MJnsRra/ba7Gg90QjKFxBc8XHKNYxdgRGQ0=
+Received: by 10.54.18.56 with SMTP id 56mr2472181wrr;
+        Mon, 29 Aug 2005 11:29:49 -0700 (PDT)
+Received: from ?10.0.0.6? ( [70.89.97.97])
+        by mx.gmail.com with ESMTP id 26sm11316041wrl.2005.08.29.11.29.46;
+        Mon, 29 Aug 2005 11:29:48 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Frank Sorenson <frank@tuxrocks.com>
+In-Reply-To: <7vll2kbqa4.fsf_-_@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7916>
 
-On Mon, Aug 29, 2005 at 02:35:00AM -0700, Komal Shah wrote:
-> Kay,
+Junio C Hamano wrote:
+> This originally came from Frank Sorenson but with a bit of
+> rework to allow future enhancement to the command without
+> changing the external interface for removal part.
 > 
-> I am able to setup gitweb tree for my linux-omap tree internally, but
-> for this I am using $project_list equals to $projectroot. I want to add
-> more projects, but I don't know how write/generate index.aux file?
+> With the '-a' option, all objects in the current repository are
+> packed into a single pack.  When the '-d' option is given at the
+> same time, existing packs that were made redundant by this round
+> of repacking are deleted.
+> 
+> Since we currently have only two repacking strategies, one '-a'
+> (everything into one) and the other not '-a' (incrementally pack
+> only the unpacked ones), '-d' is meaningful only used with '-a'
+> and removes all the existing packs before repacking for now.
+> 
+[Rest of updated patch snipped]
 
-Yeah, this works only if all the trees are in one directory. The index file
-is a simple list with the pathes url encoded. (It is exported by a cron job
-running on kernel.org. We need it there cause the trees are in subdirs and
-the mirrored trees don't have the original ownership, that is displayed in
-gitweb.)
+Frank,
 
-> Me don't know much about cgi-bin/perl :(
-
-So let's do it in perl then. :) Just encode the pathes and put them into
-the file (optionaly the owner comes after a space in the same line):
-  perl -e 'use CGI; print CGI::escape("/this/is/my/project") . "\n"'
-  %2Fthis%2Fis%2Fmy%2Fproject
-
-Good luck,
-Kay
+Can you produce a patch to update the git-repack-script documentation to 
+reflect the new functionality?
