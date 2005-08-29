@@ -1,78 +1,50 @@
-From: Frank Sorenson <frank@tuxrocks.com>
-Subject: Re: [PATCH] git-repack-script: Add option to repack all objects.
-Date: Mon, 29 Aug 2005 12:59:03 -0600
-Message-ID: <43135AF7.6070705@tuxrocks.com>
-References: <43102727.2050206@tuxrocks.com>	<7vbr3hlqjs.fsf@assigned-by-dhcp.cox.net>	<4312BC27.9010604@tuxrocks.com>	<7vvf1obsfc.fsf@assigned-by-dhcp.cox.net> <7vll2kbqa4.fsf_-_@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: compile problem with gcc 2.95
+Date: Mon, 29 Aug 2005 12:10:48 -0700
+Message-ID: <7vwtm4a79j.fsf@assigned-by-dhcp.cox.net>
+References: <1125340116.26108.12.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 29 21:03:21 2005
+X-From: git-owner@vger.kernel.org Mon Aug 29 21:12:19 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9orA-0006fp-32
-	for gcvg-git@gmane.org; Mon, 29 Aug 2005 20:59:44 +0200
+	id 1E9p1w-0001mc-PZ
+	for gcvg-git@gmane.org; Mon, 29 Aug 2005 21:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbVH2S71 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 14:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbVH2S71
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 14:59:27 -0400
-Received: from www.tuxrocks.com ([64.62.190.123]:4358 "EHLO tuxrocks.com")
-	by vger.kernel.org with ESMTP id S1751301AbVH2S7I (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 14:59:08 -0400
-Received: from [128.187.171.102] (obelix.cs.byu.edu [128.187.171.102])
-	(authenticated bits=0)
-	by tuxrocks.com (8.13.1/8.13.1) with ESMTP id j7TIx4uZ009455
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 29 Aug 2005 12:59:05 -0600
-User-Agent: Mozilla Thunderbird 1.0.2 (X11/20050317)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vll2kbqa4.fsf_-_@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.91.0.0
+	id S1751457AbVH2TKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 15:10:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbVH2TKu
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 15:10:50 -0400
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:10628 "EHLO
+	fed1rmmtao06.cox.net") by vger.kernel.org with ESMTP
+	id S1751457AbVH2TKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2005 15:10:49 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050829191047.YMBW19494.fed1rmmtao06.cox.net@assigned-by-dhcp.cox.net>;
+          Mon, 29 Aug 2005 15:10:47 -0400
+To: Dave Hansen <haveblue@us.ibm.com>
+In-Reply-To: <1125340116.26108.12.camel@localhost> (Dave Hansen's message of
+	"Mon, 29 Aug 2005 11:28:36 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7921>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Dave Hansen <haveblue@us.ibm.com> writes:
 
-Junio C Hamano wrote:
-> This originally came from Frank Sorenson but with a bit of
-> rework to allow future enhancement to the command without
-> changing the external interface for removal part.
-> 
-> With the '-a' option, all objects in the current repository are
-> packed into a single pack.  When the '-d' option is given at the
-> same time, existing packs that were made redundant by this round
-> of repacking are deleted.
-> 
-> Since we currently have only two repacking strategies, one '-a'
-> (everything into one) and the other not '-a' (incrementally pack
-> only the unpacked ones), '-d' is meaningful only used with '-a'
-> and removes all the existing packs before repacking for now.
+> I know it's an ancient compiler, but last time I checked it is still
+> faster at runtime than the 3.x versions.  If it's not going to be
+> supported, it would probably be nice to at least detect that in the
+> build system.  I've confirmed that it works just fine with gcc 3.3.
+>
+>> struct cache_entry {
+> ...
+>>         char name[]; <--- cache.h:107
+>> };
 
-Thank you for explaining the reasoning, and reworking the patch.  This
-does make more sense, and I can see the logic for leaving around the
-packs.  Coming from the perspective of the end user, I would probably
-want to repack quite a bit more often to take advantage of the size and
-speed advantages, while large public repositories will probably want to
-repack at much longer periods.  Thanks for seeing both perspectives.  I
-like your updated patch.
-
-Frank
-- --
-Frank Sorenson - KD7TZK
-Systems Manager, Computer Science Department
-Brigham Young University
-frank@tuxrocks.com
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.6 (GNU/Linux)
-Comment: Using GnuPG with Thunderbird - http://enigmail.mozdev.org
-
-iD8DBQFDE1r3aI0dwg4A47wRAldNAJ9J7wmyQMsMm5G0FgvOggc+QDtg/QCg0T+w
-y6A/46LYEr1zhFgxK6uKX0I=
-=z8uM
------END PGP SIGNATURE-----
+Ah, my fault.  Let's undo that bit.
