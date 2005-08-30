@@ -1,80 +1,73 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Make "git resolve" less scary
-Date: Mon, 29 Aug 2005 22:36:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508292230300.3243@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH 1/9] Fix git patch header processing in git-apply.
+Date: Tue, 30 Aug 2005 19:36:00 +1200
+Message-ID: <46a038f905083000362ae0d9fc@mail.gmail.com>
+References: <11252426672473-git-send-email-robfitz@273k.net>
+	 <7vslwtein3.fsf@assigned-by-dhcp.cox.net>
+	 <20050829235823.GA19351@localhost>
+	 <Pine.LNX.4.58.0508291744400.3243@g5.osdl.org>
+	 <7vacj06xi6.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0508291821010.3243@g5.osdl.org>
+	 <7vbr3g5hsb.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.58.0508291856080.3243@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 30 07:37:50 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>,
+	Robert Fitzsimons <robfitz@273k.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 30 09:38:13 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9ynK-0004ED-Rw
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 07:36:27 +0200
+	id 1EA0g9-00018S-1V
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 09:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777AbVH3FgV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Aug 2005 01:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbVH3FgV
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 01:36:21 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:12472 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1750777AbVH3FgV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 01:36:21 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7U5aGjA031154
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 29 Aug 2005 22:36:17 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7U5aGMx014619;
-	Mon, 29 Aug 2005 22:36:16 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751199AbVH3HgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 03:36:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbVH3HgE
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 03:36:04 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:59723 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751199AbVH3HgD convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2005 03:36:03 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1103876rne
+        for <git@vger.kernel.org>; Tue, 30 Aug 2005 00:36:00 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H/Fu+dDqx1Bgr3j+kj18NxQ30biuj9mE5GyZT5qTGhj9zeSjeNhrfifpax54b4JelY3Xp7fzbbvGCNeszRKpAWwxdrt4LtRzbiJGPQujxiZwx8lI3IZfj0UEqOBoN/TRwdQpuTlomu/VrWD7AYVGuQkAJrOzHBto0FLdon09d8s=
+Received: by 10.39.3.45 with SMTP id f45mr185935rni;
+        Tue, 30 Aug 2005 00:36:00 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Tue, 30 Aug 2005 00:36:00 -0700 (PDT)
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0508291856080.3243@g5.osdl.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7949>
+
+On 8/30/05, Linus Torvalds <torvalds@osdl.org> wrote:
+> Actually, an import should preferably never use patches at all, since that
+> never really works for binary data. This is why the CVS importer actually
+> checks out full files and imports them that way. The patch-based ones will
+> fundamentally always have problems.
+
+<AOL>. Patches can be useful during the process, but you should (a)
+prefer more solid manifestations of the file/tree if possible, and (b)
+be extremely strict with them. Any hint that they don't match means
+that something is borked.
+
+However, if you're importing from patch-oriented SCMs that tend to
+'replay' patch sequences from one branch to the other, asking git to
+skip applied patches *could* be a shortcut. Not 100% correctness
+guarantee, but if the resulting history makes sense, it can be useful.
+
+The other alternative is to do what I'll start to do soon on the
+archimport script: keep a tally of what was merged where according to
+the records that the source SCM has.
+
+cheers,
 
 
-When we resolve a merge between two branches, and it removes a file in the 
-current branch, we notify the person doing the resolve with a big nice 
-notice like
-
-	Removing xyzzy
-
-which is all well and good.
-
-HOWEVER, we also do this when the file was actually removed in the current 
-branch, and we're merging with another branch that didn't have it removed 
-(or, indeed, if the other branch _did_ have it removed, but the common 
-parent was far enough back that the file still existed in there).
-
-And that just doesn't make sense. In that case we're not removing
-anything: the file didn't exist in the branch we're merging into in the
-first place. So the message just makes people nervous, and makes no sense.
-
-This has been around forever, but I never bothered to do anything about 
-it.
-
-Until now.
-
-The trivial fix is to only talk about removing files if the file existed 
-in the branch we're merging into, but will not exist in the result.
-
-Signed-off-by: Linus Torvalds <torvalds@osdl.org>
----
-diff --git a/git-merge-one-file-script b/git-merge-one-file-script
---- a/git-merge-one-file-script
-+++ b/git-merge-one-file-script
-@@ -21,7 +21,9 @@ case "${1:-.}${2:-.}${3:-.}" in
- # Deleted in both or deleted in one and unchanged in the other
- #
- "$1.." | "$1.$1" | "$1$1.")
--	echo "Removing $4"
-+	if [ "$2" ]; then
-+		echo "Removing $4"
-+	fi
- 	if test -f "$4"; then
- 		rm -f -- "$4"
- 	fi &&
+martin
