@@ -1,77 +1,75 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Bisection visualization hint..
-Date: Tue, 30 Aug 2005 14:03:37 -0400
-Message-ID: <43149F79.4020809@gmail.com>
-References: <Pine.LNX.4.58.0508301026450.4293@g5.osdl.org> <7vhdd7joz6.fsf@assigned-by-dhcp.cox.net>
-Reply-To: gitzilla@gmail.com
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Fix bisection terminating condition
+Date: Tue, 30 Aug 2005 11:04:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508301038340.4426@g5.osdl.org>
+References: <Pine.LNX.4.58.0508301026450.4293@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 30 20:09:19 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 30 20:12:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAASV-0007L5-Ar
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 20:03:43 +0200
+	id 1EAATh-0007mN-L4
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 20:04:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932245AbVH3SDl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Aug 2005 14:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbVH3SDk
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 14:03:40 -0400
-Received: from wproxy.gmail.com ([64.233.184.203]:43758 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932245AbVH3SDk (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 14:03:40 -0400
-Received: by wproxy.gmail.com with SMTP id i2so1096202wra
-        for <git@vger.kernel.org>; Tue, 30 Aug 2005 11:03:39 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=W9dGQUwUETiBeImraLoLZ04qKYdOl8OCJRQ2K7qg4kyuJFJX8wJgTtw7klHo2Uo0i9NJj320tz7LLtiKVxCEbw3dFIx56VxXnsx7KQuKtD3VlGsa0w8vEXu0uvRvb4ehoI79P39zyZv0JO5Rxhso5wR7pDoBHLV6l48OdiFb8Ow=
-Received: by 10.54.130.13 with SMTP id c13mr42920wrd;
-        Tue, 30 Aug 2005 11:03:39 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id 13sm11487272wrl.2005.08.30.11.03.38;
-        Tue, 30 Aug 2005 11:03:39 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
+	id S932246AbVH3SEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 14:04:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932248AbVH3SEp
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 14:04:45 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:41409 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932246AbVH3SEo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 14:04:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7UI4ejA019610
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 30 Aug 2005 11:04:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7UI4d2w016667;
+	Tue, 30 Aug 2005 11:04:39 -0700
 To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vhdd7joz6.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <Pine.LNX.4.58.0508301026450.4293@g5.osdl.org>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7959>
 
-Junio C Hamano wrote:
-> Linus Torvalds <torvalds@osdl.org> writes:
-> 
->>I'm testing bisection to find a bug that causes my G5 to no longer boot, 
->>and during the process have found this command line very nice:
->>
->>	gitk bisect/bad --not $(cd .git/refs ; ls bisect/good-*)
->>
->>it basically shows the state of bisection with the known bad commit as the 
->>top, and cutting off all the good commits - so what you see are the 
->>potential buggy commits.
-> 
->>But it's not the nicest of command lines and depends on knowing how
->>bisection works, so maybe we could make
->>
->>	git bisect visualize
->>
->>do this for us?
-> 
-> Will do.
-> 
-> Another thing that might make sense is roll it also into gitk, a
-> new command from "File" menu to cause it to re-read not just ref
-> values but the rev-list itself out of that particular rev-list
-> command (and add any other common patterns as we discover them).
 
-Unless gitk will always be part of git, this is better off as a gitk 
-feature or gitk helper script. IE. it belongs in the gitk namespace, not 
-the git namespace.
+When testing bisection and using gitk to visualize the result, it was 
+obvious that the termination condition was broken.
 
-That said, a wrapper for "git show-branch" (git show-bisect?) would be 
-nice also.
+We know what the bad entry is only when the bisection ends up telling us 
+to test the known-bad entry again.
+
+Also, add a safety net: if somebody marks as good something that includes 
+the known-bad point, we now notice and complain, instead of writing an 
+empty revision to the new bisection branch.
+
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
+---
+diff --git a/git-bisect-script b/git-bisect-script
+--- a/git-bisect-script
++++ b/git-bisect-script
+@@ -105,12 +105,16 @@ bisect_next() {
+ 	good=$(git-rev-parse --sq --revs-only --not \
+ 		$(cd "$GIT_DIR" && ls refs/bisect/good-*)) &&
+ 	rev=$(eval "git-rev-list --bisect $good $bad") || exit
+-	nr=$(eval "git-rev-list $rev $good" | wc -l) || exit
+-	if [ "$nr" -le "1" ]; then
++	if [ -z "$rev" ]; then
++	    echo "$bad was both good and bad"
++	    exit 1
++	fi
++	if [ "$rev" = "$bad" ]; then
+ 	    echo "$rev is first bad commit"
+ 	    git-diff-tree --pretty $rev
+ 	    exit 0
+ 	fi
++	nr=$(eval "git-rev-list $rev $good" | wc -l) || exit
+ 	echo "Bisecting: $nr revisions left to test after this"
+ 	echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
+ 	git checkout new-bisect || exit
