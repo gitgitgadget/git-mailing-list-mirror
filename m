@@ -1,46 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitk with hyperspace support
-Date: Tue, 30 Aug 2005 00:50:15 -0700
-Message-ID: <7v8xyj279k.fsf@assigned-by-dhcp.cox.net>
-References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
-	<7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
-	<17171.47747.10616.537936@cargo.ozlabs.ibm.com>
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [PATCH] cg-update - refuse to update dirty tree
+Date: Tue, 30 Aug 2005 21:37:28 +1200
+Message-ID: <11253946482734-git-send-email-martin@catalyst.net.nz>
+Reply-To: Martin Langhoff <martin@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 09:52:05 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Tue Aug 30 11:39:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EA0t4-0003tv-LP
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 09:50:31 +0200
+	id 1EA2Yt-0002nB-D4
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 11:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbVH3HuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Aug 2005 03:50:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbVH3HuR
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 03:50:17 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:36581 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S1751202AbVH3HuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2005 03:50:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050830075015.DIX8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 30 Aug 2005 03:50:15 -0400
-To: Paul Mackerras <paulus@samba.org>
-In-Reply-To: <17171.47747.10616.537936@cargo.ozlabs.ibm.com> (Paul Mackerras's
-	message of "Tue, 30 Aug 2005 11:46:43 +1000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1751339AbVH3Jhe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 05:37:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbVH3Jhe
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 05:37:34 -0400
+Received: from leibniz.catalyst.net.nz ([202.78.240.7]:4743 "EHLO
+	localhost.localdomain") by vger.kernel.org with ESMTP
+	id S1751339AbVH3Jhd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2005 05:37:33 -0400
+Received: from aporo-debian (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (Postfix) with SMTP id 27D168AAC3;
+	Tue, 30 Aug 2005 21:37:28 +1200 (NZST)
+In-Reply-To: 
+X-Mailer: git-send-email-script
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7951>
 
-Paul Mackerras <paulus@samba.org> writes:
+cg-merge currently clobbers local changes while runnign cg-update. Do the
+safe thing and refuse to update on a dirty tree.
 
-> It also makes the current graph line thicker now, so it's easier to
-> pick out where the line you clicked on goes.
+Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
 
-Very nice, and quite helpful for colour challenged ones.
-Thanks.
+
+---
+
+ cg-update |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+7a961c02ee6228c2a80869b4b3f179a7e279df8e
+diff --git a/cg-update b/cg-update
+--- a/cg-update
++++ b/cg-update
+@@ -27,6 +27,10 @@ while optparse; do
+ 	fi
+ done
+ 
++# Better safe than sorry
++(git-update-cache --refresh >> /dev/null) ||
++        die "Your working tree is dirty - will not update."
++
+ name=${ARGS[0]}
+ [ "$name" ] || { [ -s $_git/refs/heads/origin ] && name=origin; }
+ [ "$name" ] || die "where to update from?"
