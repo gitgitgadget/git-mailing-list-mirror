@@ -1,64 +1,96 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Re: [PATCH 1/9] Fix git patch header processing in git-apply.
-Date: Mon, 29 Aug 2005 19:00:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0508291856080.3243@g5.osdl.org>
-References: <11252426672473-git-send-email-robfitz@273k.net>
- <7vslwtein3.fsf@assigned-by-dhcp.cox.net> <20050829235823.GA19351@localhost>
- <Pine.LNX.4.58.0508291744400.3243@g5.osdl.org> <7vacj06xi6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.58.0508291821010.3243@g5.osdl.org> <7vbr3g5hsb.fsf@assigned-by-dhcp.cox.net>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: [PATCH] Documentation for git-applypatch.
+Date: Mon, 29 Aug 2005 22:30:32 -0400
+Message-ID: <4313C4C8.8050301@gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robert Fitzsimons <robfitz@273k.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 04:01:25 2005
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Aug 30 04:31:33 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9vQH-0002mQ-Q8
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 04:00:26 +0200
+	id 1E9vtm-0007wu-CM
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 04:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112AbVH3CAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 22:00:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751115AbVH3CAR
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 22:00:17 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:57986 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1751112AbVH3CAQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 22:00:16 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7U204jA015193
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 29 Aug 2005 19:00:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7U200s0005028;
-	Mon, 29 Aug 2005 19:00:02 -0700
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr3g5hsb.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=1.678 required=5 tests=BEST_PORN
-X-Spam-Level: *
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.114 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751178AbVH3Cam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 22:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbVH3Cam
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 22:30:42 -0400
+Received: from wproxy.gmail.com ([64.233.184.192]:9321 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751178AbVH3Cal (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 22:30:41 -0400
+Received: by wproxy.gmail.com with SMTP id i2so962191wra
+        for <git@vger.kernel.org>; Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=du0QPa+VjYZ6VboQ5jxqUE1FkhJttxtkqL2s2jOGgcEO9Cx+8RG4gsIiO/6v1dj3B8+3m2fDb3F9YxN34copdJ02PkINLYmNh7QtPyB7I9UrNBZ85N2Izhl56LQyWKC3iw8jH/+PF4BN6O4lfsLDnhbOic4x4FUzriJ6jZMoQ4U=
+Received: by 10.54.39.30 with SMTP id m30mr798269wrm;
+        Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+Received: from ?10.0.0.6? ( [70.89.97.97])
+        by mx.gmail.com with ESMTP id 33sm4822747wra.2005.08.29.19.30.33;
+        Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7941>
+
+Copy & paste source comments into documentation.
+
+Signed-off-by:  <gitzilla@gmail.com>
 
 
+---
 
-On Mon, 29 Aug 2005, Junio C Hamano wrote:
-> 
-> The code is simple enough and I see some beauty in it, but I
-> honor your veto, at least for now.
+ Documentation/git-applypatch.txt |   22 +++++++++++++---------
+ 1 files changed, 13 insertions(+), 9 deletions(-)
 
-Well, I didn't actually veto it when I saw the feature the first time, 
-because I think it's a valid thing to do when applying patches by hand.
-
-It was only when I realized that Robert was trying to use it to import 
-from somewhere else that it became broken. An import should use the most 
-anal patches possible.
-
-Actually, an import should preferably never use patches at all, since that
-never really works for binary data. This is why the CVS importer actually
-checks out full files and imports them that way. The patch-based ones will 
-fundamentally always have problems.
-
-		Linus
+0c00e0e3bd83cc1297e2581cae66aeebc65e52a6
+diff --git a/Documentation/git-applypatch.txt b/Documentation/git-applypatch.txt
+--- a/Documentation/git-applypatch.txt
++++ b/Documentation/git-applypatch.txt
+@@ -3,26 +3,30 @@ git-applypatch(1)
+ 
+ NAME
+ ----
+-git-applypatch - Some git command not yet documented.
+-
++git-applypatch - Apply an unpacked patch to current tree.
+ 
+ SYNOPSIS
+ --------
+-'git-applypatch' [ --option ] <args>...
++'git-applypatch' <message file> <patch file> <info file> [<signoff file>]
+ 
+ DESCRIPTION
+ -----------
+-Does something not yet documented.
+-
++Takes four file arguments, and uses those to apply the unpacked patch that they
++represent to the current tree.
+ 
+ OPTIONS
+ -------
+---option::
+-	Some option not yet documented.
++<message file::
++	File with commit message.
++
++<patch file>::
++	File with the actual patch.
+ 
+-<args>...::
+-	Some argument not yet documented.
++<info file>::
++	File with Author, Email, and Subject information.
+ 
++<signoff file>::
++	File containing signoff ot add.
+ 
+ Author
+ ------
