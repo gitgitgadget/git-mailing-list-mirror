@@ -1,36 +1,36 @@
 From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: [PATCH] Documentation for git-applypatch.
-Date: Mon, 29 Aug 2005 22:30:32 -0400
-Message-ID: <4313C4C8.8050301@gmail.com>
+Subject: [PATCH] Documentation for git-daemon.
+Date: Mon, 29 Aug 2005 22:31:22 -0400
+Message-ID: <4313C4FA.7080906@gmail.com>
 Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Aug 30 04:31:33 2005
+X-From: git-owner@vger.kernel.org Tue Aug 30 04:32:48 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9vtm-0007wu-CM
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 04:30:54 +0200
+	id 1E9vuM-000814-VU
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 04:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbVH3Cam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 22:30:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751186AbVH3Cam
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 22:30:42 -0400
-Received: from wproxy.gmail.com ([64.233.184.192]:9321 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751178AbVH3Cal (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 22:30:41 -0400
-Received: by wproxy.gmail.com with SMTP id i2so962191wra
-        for <git@vger.kernel.org>; Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+	id S1751132AbVH3Cb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 22:31:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932077AbVH3Cb1
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 22:31:27 -0400
+Received: from wproxy.gmail.com ([64.233.184.200]:25969 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751132AbVH3Cb0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 22:31:26 -0400
+Received: by wproxy.gmail.com with SMTP id i1so567296wra
+        for <git@vger.kernel.org>; Mon, 29 Aug 2005 19:31:23 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
         h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=du0QPa+VjYZ6VboQ5jxqUE1FkhJttxtkqL2s2jOGgcEO9Cx+8RG4gsIiO/6v1dj3B8+3m2fDb3F9YxN34copdJ02PkINLYmNh7QtPyB7I9UrNBZ85N2Izhl56LQyWKC3iw8jH/+PF4BN6O4lfsLDnhbOic4x4FUzriJ6jZMoQ4U=
-Received: by 10.54.39.30 with SMTP id m30mr798269wrm;
-        Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+        b=empW7EpDQkqUJ9Td9PmmXhT4mkYnPVpQTIpgdF3n27/VWB+ygoZ1J0in7/3rd4QYSWRb1uJTfbQ1lm4c35JCJhRSaVEIXvXhivzE518nFUq4vh9cE8MaSVcW9qDme3o3H+eFquDkTAL7BA8t2SVxdZenk/rAkfZIuwp8CuM+TCk=
+Received: by 10.54.47.36 with SMTP id u36mr7070688wru;
+        Mon, 29 Aug 2005 19:31:23 -0700 (PDT)
 Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id 33sm4822747wra.2005.08.29.19.30.33;
-        Mon, 29 Aug 2005 19:30:34 -0700 (PDT)
+        by mx.gmail.com with ESMTP id 44sm7310457wri.2005.08.29.19.31.23;
+        Mon, 29 Aug 2005 19:31:23 -0700 (PDT)
 User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
 X-Accept-Language: en-us, en
 To: Junio C Hamano <junkio@cox.net>,
@@ -38,7 +38,7 @@ To: Junio C Hamano <junkio@cox.net>,
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7942>
 
 Copy & paste source comments into documentation.
 
@@ -47,50 +47,54 @@ Signed-off-by:  <gitzilla@gmail.com>
 
 ---
 
- Documentation/git-applypatch.txt |   22 +++++++++++++---------
- 1 files changed, 13 insertions(+), 9 deletions(-)
+ Documentation/git-daemon.txt |   26 +++++++++++++++++---------
+ 1 files changed, 17 insertions(+), 9 deletions(-)
 
-0c00e0e3bd83cc1297e2581cae66aeebc65e52a6
-diff --git a/Documentation/git-applypatch.txt b/Documentation/git-applypatch.txt
---- a/Documentation/git-applypatch.txt
-+++ b/Documentation/git-applypatch.txt
-@@ -3,26 +3,30 @@ git-applypatch(1)
+ea71ec7bde99f05a3766f5e1ad4ecc7bcb89ab13
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -3,26 +3,34 @@ git-daemon(1)
  
  NAME
  ----
--git-applypatch - Some git command not yet documented.
+-git-daemon - Some git command not yet documented.
 -
-+git-applypatch - Apply an unpacked patch to current tree.
++git-daemon - A really simple server for GIT repositories.
  
  SYNOPSIS
  --------
--'git-applypatch' [ --option ] <args>...
-+'git-applypatch' <message file> <patch file> <info file> [<signoff file>]
+-'git-daemon' [ --option ] <args>...
++'git-daemon' [--inetd | --port=n]
  
  DESCRIPTION
  -----------
 -Does something not yet documented.
--
-+Takes four file arguments, and uses those to apply the unpacked patch that they
-+represent to the current tree.
++A really simple TCP git daemon that normally listens on port "DEFAULT_GIT_PORT"
++aka 9418. It waits for a connection, and will just execute "git-upload-pack"
++when it gets one.
++
++It's careful in that there's a magic request-line that gives the command and
++what directory to upload, and it verifies that the directory is ok.
++
++It verifies that the directory has the magic file "git-daemon-export-ok", and
++it will refuse to export any git directory that hasn't explicitly been marked
++for export this way.
+ 
++This is ideally suited for read-only updates, ie pulling from git repositories.
  
  OPTIONS
  -------
 ---option::
 -	Some option not yet documented.
-+<message file::
-+	File with commit message.
-+
-+<patch file>::
-+	File with the actual patch.
- 
+-
 -<args>...::
 -	Some argument not yet documented.
-+<info file>::
-+	File with Author, Email, and Subject information.
++--inetd::
++	Have the server run as an inetd service.
  
-+<signoff file>::
-+	File containing signoff ot add.
++--port::
++	Listen on an alternative port.
  
  Author
  ------
