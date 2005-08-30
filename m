@@ -1,227 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [HOWTO] Reverting an existing commit
-Date: Mon, 29 Aug 2005 21:39:02 -0700
-Message-ID: <7voe7g3uop.fsf@assigned-by-dhcp.cox.net>
-References: <1125340116.26108.12.camel@localhost>
-	<7vwtm4a79j.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Make "git resolve" less scary
+Date: Mon, 29 Aug 2005 22:36:16 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0508292230300.3243@g5.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/asciidoc
-X-From: git-owner@vger.kernel.org Tue Aug 30 06:41:47 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 30 07:37:50 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9xuM-0003n0-Hj
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 06:39:39 +0200
+	id 1E9ynK-0004ED-Rw
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 07:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932121AbVH3EjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Aug 2005 00:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbVH3EjH
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 00:39:07 -0400
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:26348 "EHLO
-	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
-	id S932121AbVH3EjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Aug 2005 00:39:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050830043903.WGLN1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 30 Aug 2005 00:39:03 -0400
-To: git@vger.kernel.org
-Abstract: In this article, JC gives a small real-life example of using
- 'git revert' command, and using a temporary branch and tag for safety
- and easier sanity checking.
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750777AbVH3FgV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 01:36:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750782AbVH3FgV
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 01:36:21 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:12472 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1750777AbVH3FgV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 01:36:21 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j7U5aGjA031154
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 Aug 2005 22:36:17 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j7U5aGMx014619;
+	Mon, 29 Aug 2005 22:36:16 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.114 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7948>
 
-Reverting an existing commit
-============================
 
-One of the changes I pulled into the 'master' branch turns out to
-break building GIT with GCC 2.95.  While they were well intentioned
-portability fixes, keeping things working with gcc-2.95 was also
-important.  Here is what I did to revert the change in the 'master'
-branch and to adjust the 'pu' branch, using core GIT tools and
-barebone Porcelain.
+When we resolve a merge between two branches, and it removes a file in the 
+current branch, we notify the person doing the resolve with a big nice 
+notice like
 
-First, prepare a throw-away branch in case I screw things up.
+	Removing xyzzy
 
-------------------------------------------------
-$ git checkout -b revert-c99 master
-------------------------------------------------
+which is all well and good.
 
-Now I am on the 'revert-c99' branch.  Let's figure out which commit to
-revert.  I happen to know that the top of the 'master' branch is a
-merge, and its second parent (i.e. foreign commit I merged from) has
-the change I would want to undo.  Further I happen to know that that
-merge introduced 5 commits or so:
+HOWEVER, we also do this when the file was actually removed in the current 
+branch, and we're merging with another branch that didn't have it removed 
+(or, indeed, if the other branch _did_ have it removed, but the common 
+parent was far enough back that the file still existed in there).
 
-------------------------------------------------
-$ git show-branch --more=4 master master^2 | head
-! [master] Merge refs/heads/portable from http://www.cs.berkeley....
- ! [master^2] Replace C99 array initializers with code.
---
-+  [master] Merge refs/heads/portable from http://www.cs.berkeley....
-++ [master^2] Replace C99 array initializers with code.
-++ [master^2~1] Replace unsetenv() and setenv() with older putenv().
-++ [master^2~2] Include sys/time.h in daemon.c.
-++ [master^2~3] Fix ?: statements.
-++ [master^2~4] Replace zero-length array decls with [].
-+  [master~1] tutorial note about git branch
-------------------------------------------------
+And that just doesn't make sense. In that case we're not removing
+anything: the file didn't exist in the branch we're merging into in the
+first place. So the message just makes people nervous, and makes no sense.
 
-The '--more=4' above means "after we reach the merge base of refs,
-show until we display four more common commits".  That last commit
-would have been where the "portable" branch was forked from the main
-git.git repository, so this would show everything on both branches
-since then.  I just limited the output to the first handful using
-'head'.
+This has been around forever, but I never bothered to do anything about 
+it.
 
-Now I know 'master^2~4' (pronounce it as "find the second parent of
-the 'master', and then go four generations back following the first
-parent") is the one I would want to revert.  Since I also want to say
-why I am reverting it, the '-n' flag is given to 'git revert'.  This
-prevents it from actually making a commit, and instead 'git revert'
-leaves the commit log message it wanted to use in '.msg' file:
+Until now.
 
-------------------------------------------------
-$ git revert -n master^2~4
-$ cat .msg
-Revert "Replace zero-length array decls with []."
+The trivial fix is to only talk about removing files if the file existed 
+in the branch we're merging into, but will not exist in the result.
 
-This reverts 6c5f9baa3bc0d63e141e0afc23110205379905a4 commit.
-$ git diff HEAD ;# to make sure what we are reverting makes sense.
-$ make CC=gcc-2.95 clean test ;# make sure it fixed the breakage.
-$ make clean test ;# make sure it did not cause other breakage.
-------------------------------------------------
-
-The reverted change makes sense (from reading the 'diff' output), does
-fix the problem (from 'make CC=gcc-2.95' test), and does not cause new
-breakage (from the last 'make test').  I'm ready to commit:
-
-------------------------------------------------
-$ git commit -a -s ;# read .msg into the log,
-                    # and explain why I am reverting.
-------------------------------------------------
-
-I could have screwed up in any of the above steps, but in the worst
-case I could just have done 'git checkout master' to start over.
-Fortunately I did not have to; what I have in the current branch
-'revert-c99' is what I want.  So merge that back into 'master':
-
-------------------------------------------------
-$ git checkout master
-$ git resolve master revert-c99 fast ;# this should be a fast forward
-Updating from 10d781b9caa4f71495c7b34963bef137216f86a8 to e3a693c...
- cache.h        |    8 ++++----
- commit.c       |    2 +-
- ls-files.c     |    2 +-
- receive-pack.c |    2 +-
- server-info.c  |    2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
-------------------------------------------------
-
-The 'fast' in the above 'git resolve' is not a magic.  I knew this
-'resolve' would result in a fast forward merge, and if not, there is
-something very wrong (so I would do 'git reset' on the 'master' branch
-and examine the situation).  When a fast forward merge is done, the
-message parameter to 'git resolve' is discarded, because no new commit
-is created.  You could have said 'junk' or 'nothing' there as well.
-
-There is no need to redo the test at this point.  We fast forwarded
-and we know 'master' matches 'revert-c99' exactly.  In fact:
-
-------------------------------------------------
-$ git diff master..revert-c99
-------------------------------------------------
-
-says nothing.
-
-Then we rebase the 'pu' branch as usual.
-
-------------------------------------------------
-$ git checkout pu
-$ git tag pu-anchor pu
-$ git rebase master
-* Applying: Redo "revert" using three-way merge machinery.
-First trying simple merge strategy to cherry-pick.
-Finished one cherry-pick.
-* Applying: Remove git-apply-patch-script.
-First trying simple merge strategy to cherry-pick.
-Simple cherry-pick fails; trying Automatic cherry-pick.
-Removing Documentation/git-apply-patch-script.txt
-Removing git-apply-patch-script
-Finished one cherry-pick.
-* Applying: Document "git cherry-pick" and "git revert"
-First trying simple merge strategy to cherry-pick.
-Finished one cherry-pick.
-* Applying: mailinfo and applymbox updates
-First trying simple merge strategy to cherry-pick.
-Finished one cherry-pick.
-* Applying: Show commits in topo order and name all commits.
-First trying simple merge strategy to cherry-pick.
-Finished one cherry-pick.
-* Applying: More documentation updates.
-First trying simple merge strategy to cherry-pick.
-Finished one cherry-pick.
-------------------------------------------------
-
-The temporary tag 'pu-anchor' is me just being careful, in case 'git
-rebase' screws up.  After this, I can do these for sanity check:
-
-------------------------------------------------
-$ git diff pu-anchor..pu ;# make sure we got the master fix.
-$ make CC=gcc-2.95 clean test ;# make sure it fixed the breakage.
-$ make clean test ;# make sure it did not cause other breakage.
-------------------------------------------------
-
-Everything is in the good order.  I do not need the temporary branch
-nor tag anymore, so remove them:
-
-------------------------------------------------
-$ rm -f .git/refs/tags/pu-anchor .git/refs/heads/revert-c99
-------------------------------------------------
-
-It was an emergency fix, so we might as well merge it into the
-'release candidate' branch, although I expect the next release would
-be some days off:
-
-------------------------------------------------
-$ git checkout rc
-$ git pull . master
-Packing 0 objects
-Unpacking 0 objects
-
-* committish: e3a693c...	refs/heads/master from .
-Trying to merge e3a693c... into 8c1f5f0... using 10d781b...
-Committed merge 7fb9b7262a1d1e0a47bbfdcbbcf50ce0635d3f8f
- cache.h        |    8 ++++----
- commit.c       |    2 +-
- ls-files.c     |    2 +-
- receive-pack.c |    2 +-
- server-info.c  |    2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
-------------------------------------------------
-
-And the final repository status looks like this:
-
-------------------------------------------------
-$ git show-branch --more=1 master pu rc
-! [master] Revert "Replace zero-length array decls with []."
- ! [pu] git-repack-script: Add option to repack all objects.
-  * [rc] Merge refs/heads/master from . 
+Signed-off-by: Linus Torvalds <torvalds@osdl.org>
 ---
- +  [pu] git-repack-script: Add option to repack all objects.
- +  [pu~1] More documentation updates.
- +  [pu~2] Show commits in topo order and name all commits.
- +  [pu~3] mailinfo and applymbox updates
- +  [pu~4] Document "git cherry-pick" and "git revert"
- +  [pu~5] Remove git-apply-patch-script.
- +  [pu~6] Redo "revert" using three-way merge machinery.
-  + [rc] Merge refs/heads/master from . 
-+++ [master] Revert "Replace zero-length array decls with []."
-  + [rc~1] Merge refs/heads/master from . 
-+++ [master~1] Merge refs/heads/portable from http://www.cs.berkeley....
-------------------------------------------------
+diff --git a/git-merge-one-file-script b/git-merge-one-file-script
+--- a/git-merge-one-file-script
++++ b/git-merge-one-file-script
+@@ -21,7 +21,9 @@ case "${1:-.}${2:-.}${3:-.}" in
+ # Deleted in both or deleted in one and unchanged in the other
+ #
+ "$1.." | "$1.$1" | "$1$1.")
+-	echo "Removing $4"
++	if [ "$2" ]; then
++		echo "Removing $4"
++	fi
+ 	if test -f "$4"; then
+ 		rm -f -- "$4"
+ 	fi &&
