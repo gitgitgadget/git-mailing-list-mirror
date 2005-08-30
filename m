@@ -1,59 +1,52 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/9] Fix git patch header processing in git-apply.
-Date: Mon, 29 Aug 2005 18:09:53 -0700
-Message-ID: <7vacj06xi6.fsf@assigned-by-dhcp.cox.net>
-References: <11252426672473-git-send-email-robfitz@273k.net>
-	<7vslwtein3.fsf@assigned-by-dhcp.cox.net>
-	<20050829235823.GA19351@localhost>
-	<Pine.LNX.4.58.0508291744400.3243@g5.osdl.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Cogito & Petr dormant?
+Date: Tue, 30 Aug 2005 13:19:36 +1200
+Message-ID: <46a038f905082918191c845a3f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Fitzsimons <robfitz@273k.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 30 03:10:55 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+X-From: git-owner@vger.kernel.org Tue Aug 30 03:20:43 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9udS-0002sg-CZ
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 03:09:58 +0200
+	id 1E9umq-0004IW-CG
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 03:19:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbVH3BJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 21:09:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbVH3BJz
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 21:09:55 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:50635 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751441AbVH3BJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Aug 2005 21:09:55 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
-          id <20050830010953.ELYY8651.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 29 Aug 2005 21:09:53 -0400
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508291744400.3243@g5.osdl.org> (Linus Torvalds's
-	message of "Mon, 29 Aug 2005 17:47:00 -0700 (PDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932077AbVH3BTh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Aug 2005 21:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbVH3BTh
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 21:19:37 -0400
+Received: from rproxy.gmail.com ([64.233.170.196]:11477 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751446AbVH3BTh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Aug 2005 21:19:37 -0400
+Received: by rproxy.gmail.com with SMTP id i8so1055207rne
+        for <git@vger.kernel.org>; Mon, 29 Aug 2005 18:19:36 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=MYnV9/yNGtFUso+fpenyFQO2tz50s8JjniA6r61Ul+jjcL/63p7xTVs3zlV1E0/cM7eH3wJUDwKZbJi6yQUSbt2QFA6XD5wMxOSynfjv6QXDxW0KUZP1ZBh64rynrVKB3w0Swl11+WuSxKK8BRlzF0YAC1CMLQB2ko8cyNjJegs=
+Received: by 10.38.75.46 with SMTP id x46mr49167rna;
+        Mon, 29 Aug 2005 18:19:36 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Mon, 29 Aug 2005 18:19:36 -0700 (PDT)
+To: GIT <git@vger.kernel.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7936>
 
-Linus Torvalds <torvalds@osdl.org> writes:
+Petr's tree in kernel.org hasn't been updated for 2 weeks, and we
+haven't seen him on the list for about 2 weeks too. Is he on holiday
+or otherwise MIA?
 
-> Hmm. Anything that depends on "--ignore-applied" is fundamentally broken
-> as an import tool. There's no way something like that can be valid, since
-> it inhently means that somebody is trying to apply a patch that simple
-> isn't applicable.
->
-> Don't do this.
+Yesterday I got a bunch of patches from a cow-orker to get cogito-0.13
+debian build scripts to work correctly, and when I looked at the
+cogito tree, all those had been fixed already. Current HEAD on
+cogito.git builds correctly in Debian Sarge and Sid, perhaps that's
+reason enough to celebrate with penguin pee and |tag?
 
-I suspect that it is exported data that is broken, if
-this --ignore-applied flag is needed for importing something
-somebody exported.
+cheers,
 
-I, however, am not 100% convinced --ignore-applied is too
-dangerous to be useful in any conceivable use cases, at least
-not yet.  For example, you might be cherry-picking a change from
-a foreign branch with 'git-diff-tree -p other~45 | git apply',
-where the current branch may have already aquired part of the
-changes that foreign branch contains since 45 generations ago.
+
+martin
