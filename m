@@ -1,68 +1,227 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Documentation for git-daemon.
-Date: Mon, 29 Aug 2005 23:11:28 -0400
-Message-ID: <4313CE60.9080707@gmail.com>
-References: <4313C4FA.7080906@gmail.com> <Pine.LNX.4.58.0508291945510.3243@g5.osdl.org>
-Reply-To: gitzilla@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: [HOWTO] Reverting an existing commit
+Date: Mon, 29 Aug 2005 21:39:02 -0700
+Message-ID: <7voe7g3uop.fsf@assigned-by-dhcp.cox.net>
+References: <1125340116.26108.12.camel@localhost>
+	<7vwtm4a79j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 30 05:12:27 2005
+Content-Type: text/asciidoc
+X-From: git-owner@vger.kernel.org Tue Aug 30 06:41:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1E9wXF-0005oh-KI
-	for gcvg-git@gmane.org; Tue, 30 Aug 2005 05:11:41 +0200
+	id 1E9xuM-0003n0-Hj
+	for gcvg-git@gmane.org; Tue, 30 Aug 2005 06:39:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932105AbVH3DLi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Aug 2005 23:11:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbVH3DLi
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Aug 2005 23:11:38 -0400
-Received: from wproxy.gmail.com ([64.233.184.192]:35274 "EHLO wproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S932105AbVH3DLh (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Aug 2005 23:11:37 -0400
-Received: by wproxy.gmail.com with SMTP id 57so766641wri
-        for <git@vger.kernel.org>; Mon, 29 Aug 2005 20:11:37 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:disposition-notification-to:date:from:reply-to:user-agent:x-accept-language:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=BPl77n27zwqE6ZEA5TR/qvhTFvpYMxpK8EOpBLa+OpTf6X8Uy7VHqLVHdwP5cqNH6biy9L4guSuk5xwXIzYL0K6HSSHxg+n8Pc/UWwcdMROFBTAfEwc9Ch1qP+verxifkzhElKd3wfYCs4yMYNjCeehZ2f1SfQLYQ8oTwbl9q5c=
-Received: by 10.54.35.36 with SMTP id i36mr3016955wri;
-        Mon, 29 Aug 2005 20:11:37 -0700 (PDT)
-Received: from ?10.0.0.6? ( [70.89.97.97])
-        by mx.gmail.com with ESMTP id 65sm517652wra.2005.08.29.20.11.36;
-        Mon, 29 Aug 2005 20:11:36 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0 (X11/20041207)
-X-Accept-Language: en-us, en
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0508291945510.3243@g5.osdl.org>
+	id S932121AbVH3EjH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 00:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932122AbVH3EjH
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 00:39:07 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:26348 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S932121AbVH3EjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Aug 2005 00:39:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.04.00 201-2131-118-20041027) with ESMTP
+          id <20050830043903.WGLN1860.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 30 Aug 2005 00:39:03 -0400
+To: git@vger.kernel.org
+Abstract: In this article, JC gives a small real-life example of using
+ 'git revert' command, and using a temporary branch and tag for safety
+ and easier sanity checking.
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7947>
 
-Linus Torvalds wrote:
-> On Mon, 29 Aug 2005, A Large Angry SCM wrote:
->>Signed-off-by:  <gitzilla@gmail.com>
-> 
-> Btw, I enjoy your email address and name, but especially with something 
-> that is supposed to hopefully have some legal value down the line if 
-> somebody starts making SCO noises, it really would be nice to have a real 
-> person to associate things with..
-> 
-> It would be embarrassing later if there is no way to even look you up 
-> somehow.
-> 
-> If you don't want your realname/affiliation to be public/official, maybe
-> you could at least let people know in private?
+Reverting an existing commit
+============================
 
-Thanks. I tried to find something interesting for this mailing list.
+One of the changes I pulled into the 'master' branch turns out to
+break building GIT with GCC 2.95.  While they were well intentioned
+portability fixes, keeping things working with gcc-2.95 was also
+important.  Here is what I did to revert the change in the 'master'
+branch and to adjust the 'pu' branch, using core GIT tools and
+barebone Porcelain.
 
-My real[*1*] name is Raymond S Brand and I currently no affiliation.
+First, prepare a throw-away branch in case I screw things up.
 
+------------------------------------------------
+$ git checkout -b revert-c99 master
+------------------------------------------------
 
-Footnotes
----------
-*1* For some definition of "real".
+Now I am on the 'revert-c99' branch.  Let's figure out which commit to
+revert.  I happen to know that the top of the 'master' branch is a
+merge, and its second parent (i.e. foreign commit I merged from) has
+the change I would want to undo.  Further I happen to know that that
+merge introduced 5 commits or so:
+
+------------------------------------------------
+$ git show-branch --more=4 master master^2 | head
+! [master] Merge refs/heads/portable from http://www.cs.berkeley....
+ ! [master^2] Replace C99 array initializers with code.
+--
++  [master] Merge refs/heads/portable from http://www.cs.berkeley....
+++ [master^2] Replace C99 array initializers with code.
+++ [master^2~1] Replace unsetenv() and setenv() with older putenv().
+++ [master^2~2] Include sys/time.h in daemon.c.
+++ [master^2~3] Fix ?: statements.
+++ [master^2~4] Replace zero-length array decls with [].
++  [master~1] tutorial note about git branch
+------------------------------------------------
+
+The '--more=4' above means "after we reach the merge base of refs,
+show until we display four more common commits".  That last commit
+would have been where the "portable" branch was forked from the main
+git.git repository, so this would show everything on both branches
+since then.  I just limited the output to the first handful using
+'head'.
+
+Now I know 'master^2~4' (pronounce it as "find the second parent of
+the 'master', and then go four generations back following the first
+parent") is the one I would want to revert.  Since I also want to say
+why I am reverting it, the '-n' flag is given to 'git revert'.  This
+prevents it from actually making a commit, and instead 'git revert'
+leaves the commit log message it wanted to use in '.msg' file:
+
+------------------------------------------------
+$ git revert -n master^2~4
+$ cat .msg
+Revert "Replace zero-length array decls with []."
+
+This reverts 6c5f9baa3bc0d63e141e0afc23110205379905a4 commit.
+$ git diff HEAD ;# to make sure what we are reverting makes sense.
+$ make CC=gcc-2.95 clean test ;# make sure it fixed the breakage.
+$ make clean test ;# make sure it did not cause other breakage.
+------------------------------------------------
+
+The reverted change makes sense (from reading the 'diff' output), does
+fix the problem (from 'make CC=gcc-2.95' test), and does not cause new
+breakage (from the last 'make test').  I'm ready to commit:
+
+------------------------------------------------
+$ git commit -a -s ;# read .msg into the log,
+                    # and explain why I am reverting.
+------------------------------------------------
+
+I could have screwed up in any of the above steps, but in the worst
+case I could just have done 'git checkout master' to start over.
+Fortunately I did not have to; what I have in the current branch
+'revert-c99' is what I want.  So merge that back into 'master':
+
+------------------------------------------------
+$ git checkout master
+$ git resolve master revert-c99 fast ;# this should be a fast forward
+Updating from 10d781b9caa4f71495c7b34963bef137216f86a8 to e3a693c...
+ cache.h        |    8 ++++----
+ commit.c       |    2 +-
+ ls-files.c     |    2 +-
+ receive-pack.c |    2 +-
+ server-info.c  |    2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+------------------------------------------------
+
+The 'fast' in the above 'git resolve' is not a magic.  I knew this
+'resolve' would result in a fast forward merge, and if not, there is
+something very wrong (so I would do 'git reset' on the 'master' branch
+and examine the situation).  When a fast forward merge is done, the
+message parameter to 'git resolve' is discarded, because no new commit
+is created.  You could have said 'junk' or 'nothing' there as well.
+
+There is no need to redo the test at this point.  We fast forwarded
+and we know 'master' matches 'revert-c99' exactly.  In fact:
+
+------------------------------------------------
+$ git diff master..revert-c99
+------------------------------------------------
+
+says nothing.
+
+Then we rebase the 'pu' branch as usual.
+
+------------------------------------------------
+$ git checkout pu
+$ git tag pu-anchor pu
+$ git rebase master
+* Applying: Redo "revert" using three-way merge machinery.
+First trying simple merge strategy to cherry-pick.
+Finished one cherry-pick.
+* Applying: Remove git-apply-patch-script.
+First trying simple merge strategy to cherry-pick.
+Simple cherry-pick fails; trying Automatic cherry-pick.
+Removing Documentation/git-apply-patch-script.txt
+Removing git-apply-patch-script
+Finished one cherry-pick.
+* Applying: Document "git cherry-pick" and "git revert"
+First trying simple merge strategy to cherry-pick.
+Finished one cherry-pick.
+* Applying: mailinfo and applymbox updates
+First trying simple merge strategy to cherry-pick.
+Finished one cherry-pick.
+* Applying: Show commits in topo order and name all commits.
+First trying simple merge strategy to cherry-pick.
+Finished one cherry-pick.
+* Applying: More documentation updates.
+First trying simple merge strategy to cherry-pick.
+Finished one cherry-pick.
+------------------------------------------------
+
+The temporary tag 'pu-anchor' is me just being careful, in case 'git
+rebase' screws up.  After this, I can do these for sanity check:
+
+------------------------------------------------
+$ git diff pu-anchor..pu ;# make sure we got the master fix.
+$ make CC=gcc-2.95 clean test ;# make sure it fixed the breakage.
+$ make clean test ;# make sure it did not cause other breakage.
+------------------------------------------------
+
+Everything is in the good order.  I do not need the temporary branch
+nor tag anymore, so remove them:
+
+------------------------------------------------
+$ rm -f .git/refs/tags/pu-anchor .git/refs/heads/revert-c99
+------------------------------------------------
+
+It was an emergency fix, so we might as well merge it into the
+'release candidate' branch, although I expect the next release would
+be some days off:
+
+------------------------------------------------
+$ git checkout rc
+$ git pull . master
+Packing 0 objects
+Unpacking 0 objects
+
+* committish: e3a693c...	refs/heads/master from .
+Trying to merge e3a693c... into 8c1f5f0... using 10d781b...
+Committed merge 7fb9b7262a1d1e0a47bbfdcbbcf50ce0635d3f8f
+ cache.h        |    8 ++++----
+ commit.c       |    2 +-
+ ls-files.c     |    2 +-
+ receive-pack.c |    2 +-
+ server-info.c  |    2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
+------------------------------------------------
+
+And the final repository status looks like this:
+
+------------------------------------------------
+$ git show-branch --more=1 master pu rc
+! [master] Revert "Replace zero-length array decls with []."
+ ! [pu] git-repack-script: Add option to repack all objects.
+  * [rc] Merge refs/heads/master from . 
+---
+ +  [pu] git-repack-script: Add option to repack all objects.
+ +  [pu~1] More documentation updates.
+ +  [pu~2] Show commits in topo order and name all commits.
+ +  [pu~3] mailinfo and applymbox updates
+ +  [pu~4] Document "git cherry-pick" and "git revert"
+ +  [pu~5] Remove git-apply-patch-script.
+ +  [pu~6] Redo "revert" using three-way merge machinery.
+  + [rc] Merge refs/heads/master from . 
++++ [master] Revert "Replace zero-length array decls with []."
+  + [rc~1] Merge refs/heads/master from . 
++++ [master~1] Merge refs/heads/portable from http://www.cs.berkeley....
+------------------------------------------------
