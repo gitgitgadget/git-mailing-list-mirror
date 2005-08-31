@@ -1,100 +1,120 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Stgit - patch history / add extra parents
-Date: Wed, 31 Aug 2005 13:17:26 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508311306540.23242@iabervon.org>
-References: <20050818195753.GA9066@fanta> <tnx64u2p81k.fsf@arm.com> 
- <20050819194832.GA8562@fanta>  <1124572356.7512.21.camel@localhost.localdomain>
-  <20050821094059.GA5453@fanta>  <Pine.LNX.4.63.0508221707520.23242@iabervon.org>
- <tnxvf1wd24m.fsf@arm.com>  <Pine.LNX.4.63.0508231304130.23242@iabervon.org>
- <1125438074.6961.20.camel@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: please pull ppc64-2.6.git
+Date: Wed, 31 Aug 2005 11:39:20 -0700
+Message-ID: <7vek8aar3b.fsf@assigned-by-dhcp.cox.net>
+References: <17170.25803.413408.44080@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0508291006440.3243@g5.osdl.org>
+	<17171.39652.237263.484079@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.58.0508291706230.3243@g5.osdl.org>
+	<1125438048.9705.43.camel@localhost>
+	<7v8xyjhxkd.fsf@assigned-by-dhcp.cox.net>
+	<20050831170852.2f549318.vsu@altlinux.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jan Veldeman <jan.veldeman@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 19:15:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Meder <chris@absolutegiganten.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 31 20:39:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAW9i-0007t0-I2
-	for gcvg-git@gmane.org; Wed, 31 Aug 2005 19:13:46 +0200
+	id 1EAXUl-00026m-TN
+	for gcvg-git@gmane.org; Wed, 31 Aug 2005 20:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964884AbVHaRNm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Aug 2005 13:13:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964886AbVHaRNm
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 13:13:42 -0400
-Received: from iabervon.org ([66.92.72.58]:26636 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S964884AbVHaRNl (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2005 13:13:41 -0400
-Received: (qmail 6604 invoked by uid 1000); 31 Aug 2005 13:17:26 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Aug 2005 13:17:26 -0400
-To: Catalin Marinas <catalin.marinas@gmail.com>
-In-Reply-To: <1125438074.6961.20.camel@localhost.localdomain>
+	id S964916AbVHaSja (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Aug 2005 14:39:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964919AbVHaSj3
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 14:39:29 -0400
+Received: from fed1rmmtao10.cox.net ([68.230.241.29]:4830 "EHLO
+	fed1rmmtao10.cox.net") by vger.kernel.org with ESMTP
+	id S964916AbVHaSj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2005 14:39:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao10.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050831183922.LUGL3414.fed1rmmtao10.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 31 Aug 2005 14:39:22 -0400
+To: Sergey Vlasov <vsu@altlinux.ru>
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7982>
 
-On Tue, 30 Aug 2005, Catalin Marinas wrote:
+Sergey Vlasov <vsu@altlinux.ru> writes:
 
-> Back from holiday. Thanks to all who replied to this thread.
-> 
-> On Tue, 2005-08-23 at 14:05 -0400, Daniel Barkalow wrote:
-> > Having a useful diff isn't really a requirement for a parent; the diff in
-> > the case of a merge is going to be the total of everything that happened
-> > elsewhere. The point is to be able to reach some commits between which
-> > there are interesting diffs.
-> > 
-> > This also depends on how exactly freeze is used; if you use it before
-> > commiting a modification to the patch without rebasing, you get:
-> > 
-> > old-top -> new-top
-> >       ^    ^
-> >        \  /
-> >       bottom
-> > 
-> > bottom to old-top is the old patch
-> > bottom to new-top is the new patch
-> > old-top to new-top is the change to the patch
-> > 
-> > Then you want to keep new-top as a parent for rebasings until one of these
-> > is frozen. These links are not interesting to look at, but preserve the
-> > path to the old-top:new-top change, which is interesting.
-> 
-> This was my initial StGIT implementation (up to version 0.3), only that
-> there was no freeze command. Since I want an StGIT tree to be clean to
-> the outside world, I wouldn't keep multiple parents for the visible top
-> of a patch.
-> 
-> As I understand from Junio's and Linus' e-mails (on the 23rd of August),
-> there might be problems with merging the HEAD of an StGIT-managed tree
-> if the above method is accessible via HEAD.
+> All this means that currently there is no clean way to publish a partial
+> GIT repository, unless you place it at the same server where the base
+> repository is located (and even in that case needing to use something
+> like "echo /pub/scm/linux/kernel/git/torvalds/linux-2.6/objects >
+> objects/info/alternates" looks like a horrible hack).
 
-Right, you'd want a separate head which is what you ask people to merge; 
-the rest is only visible to people who are working on preparing the patch. 
-But you could keep both sets of stuff (sharing tree objects but not 
-commits).
+There has never been a way to publish a partial GIT repository.
+I personally am not convinced it is even a good idea for people
+to be able to do so.
 
-> > Ignoring the links to the corresponding bottoms, the development therefore
-> > looks like:
-> > 
-> > local1 -> local2 -> merge -> local3 -> merge
-> > ^                   ^                  ^
-> > mainline---->-->--------->------>-->----->
-> > 
-> > And this is how development is normally supposed to look. The trick is to
-> > only include a minimal number of merges.
-> 
-> A merge occurs every time a patch is rebased. Anyway, having the bottoms
-> in the graph (which is the main idea of StGIT) together with the old-top
-> (or frozen state) parents make the graph pretty complicated.
+$GIT_OBJECT_DIRECTORY/info/alternates is a mechanism to solve
+completely different issue -- borrowing objects locally from
+different object store to save space.  This is only a local
+'repository organization' issue, just like packing objects or
+leaving them unpacked in a repository _should_ not make any
+difference to people who are interacting with it.
 
-It should be possible to drop merges such that there's only one between 
-any pair of local changes. That is, if you rebase at the end of the line 
-above, it would get as parents local3 and the new bottom, not the last 
-merge and the new bottom.
+The use of info/alternates is internal to the git aware server
+side, be it git-daemon and git-upload-pack when somebody fetches
+from it, or git-receive-pack when somebody pushes into it.  The
+other end _should_ never have to care if the repository uses
+info/alternates, just like it _shouldn't_ matter if the
+repository is packed or unpacked.  Most importantly, for people
+who are interacting with it, the repository has _everything_ it
+claims to have by having pointers to head commits under refs/
+hierarchy, and is _not_ partial at all.
 
-The mainline changes only come in through the bottoms, so higher levels 
-should look the same, but with the lower levels in the place of mainline.
+Yes, you could peek into the remote repository filesystem by
+other means, and even slurp the info/alternates file via rsync,
+but as stated many times before, a lot of things that rsync
+does are by accident not by design.
 
-	-Daniel
-*This .sig left intentionally blank*
+Some historical explanation may be helpful.  info/alternates is
+merely an improvement for existing ALTERNATE_OBJECT_DIRECTORIES
+mechanism.  The latter required individual processes to tell git
+what other object stores to consult to find missing objects when
+working on a repository whose object store is a partial object
+database.  This was clearly not per-process information; it was
+specific to that partial object store, and that was the reason
+info/alternates was invented.  The processes do not have to have
+that environment variable; instead the necessary information is
+recorded in the partial object store itself.
+
+I kept saying '_should_' because commit walkers would not
+currently understand alternates, just like they had trouble with
+packed repositories earlier.  This _is_ a defect, but I
+personally feel that this is a problem not worth solving.
+
+Earlier, when commit walkers did not understand packed
+repositories, the only workaround was 'then do not pack your
+public repository'.  This was unacceptable from storage
+consumption point of view, and it had to be solved in some way.
+Daniel solved it for 0.99.4.
+
+But what info/alternates does is different.  If you care about
+commit walkers (and I certainly do), there are other means to
+save space without using info/alternates; first try packing, and
+then hard linking object files with whichever other repository
+you would have placed in info/alternates, and you are done.
+
+Now you may argue that being able to publish truly partial
+repository that does not have all the objects and depends on
+some other repository, very likely to be on completely different
+server (otherwise you would not be advocating for a non-local
+path such as URL) a worthwhile goal.  I personally do not even
+believe that a repository relying on a foreign object store is a
+good idea, and much less so if you are making that repository
+publicly available.
+
+I like your local-mirror-mapping idea very much, but I do not
+think it is something that is specific to git.  If you have such
+a mechanism to map remote URL into local filesystem namespace
+and automount/mirror them on demand, I'd like to be able to use
+that when I am browsing files in my Emacs (yes, there is
+'ange-ftp') or even 'cat' files from it.  Its more useful that
+way than limiting its use to only when git wants to find missing
+object files from its alternate object store.
