@@ -1,66 +1,63 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: My Embarrasingly Stupid Git question....(*)
-Date: Wed, 31 Aug 2005 12:58:47 -0700
-Message-ID: <7vacixanew.fsf@assigned-by-dhcp.cox.net>
-References: <1125506707.13577.29.camel@cashmere.sps.mot.com>
+Subject: Re: bug in git-fsck-cache?
+Date: Wed, 31 Aug 2005 13:13:56 -0700
+Message-ID: <7v4q959857.fsf@assigned-by-dhcp.cox.net>
+References: <20050831161529.327a7957.git@ozlabs.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 31 22:02:18 2005
+X-From: git-owner@vger.kernel.org Wed Aug 31 22:15:55 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAYjU-000616-7S
-	for gcvg-git@gmane.org; Wed, 31 Aug 2005 21:58:52 +0200
+	id 1EAYy9-0001x7-E5
+	for gcvg-git@gmane.org; Wed, 31 Aug 2005 22:14:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040AbVHaT6t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Aug 2005 15:58:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751041AbVHaT6t
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 15:58:49 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:31136 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S1751027AbVHaT6t (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2005 15:58:49 -0400
+	id S964933AbVHaUN7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Aug 2005 16:13:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964935AbVHaUN7
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 16:13:59 -0400
+Received: from fed1rmmtao04.cox.net ([68.230.241.35]:9652 "EHLO
+	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
+	id S964933AbVHaUN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Aug 2005 16:13:58 -0400
 Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
+          by fed1rmmtao04.cox.net
           (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050831195847.GMVA6784.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 31 Aug 2005 15:58:47 -0400
-To: Jon Loeliger <jdl@freescale.com>
+          id <20050831201358.WMLL8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
+          Wed, 31 Aug 2005 16:13:58 -0400
+To: Stephen Rothwell <git@ozlabs.org>
 User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7985>
 
-Jon Loeliger <jdl@freescale.com> writes:
+Stephen Rothwell <git@ozlabs.org> writes:
 
-> (*) -- I knew I didn't need to bother the list with this
->     question.  And that as soon as I asked for external help,
->     the answer would become clear. Sorry to have bothered you.
+> The commit c594adad5653491813959277fb87a2fef54c4e05 is shown as
+> "connected" (in Linus' tree, not one of my patches) by gitk, so I am happy
+> that git prune did not get rid of it, but why does fsck-cache report it as
+> dangling?
 
-That's OK.  As I stated before, the primary motivation that got
-me involved in git was to help people who do Linux kernel, so
-any question regarding the Linus kernel tree extracted from a
-copy of his git repository is welcome here, at least to me.
+Hmph.  You ran fsck-cache by hand without --full (i.e. you told
+it not to worry about objects already in packs); 'git prune'
+runs it with '--full' to do the full connectivity analysis.  I
+think that's where the difference comes from.
 
-I do not know Cogito very well.  I keep the latest Cogito source
-around all the time so that I can figure things out whenever
-need arises by reading it.  Most of the time, I would not
-offhand know answers to questions like "what does cg-rm do and
-what's the difference between it and 'cvs rm'".
+Is that commit reachable from any of the refs hanging under your
+$GIT_DIR/refs/?  For example, do you have the Linus tip of the
+master branch in $GIT_DIR/refs/heads/origin?
 
-Using the core GIT tools only, the sequence of what you did
-would have been:
+If an object is already in a pack and later became unreachable
+from any of your refs, there is no way to remove that object
+from the pack, so dangling commits in a pack will be left
+dangling even after 'git prune'.
 
-------------------------------------------------
-$ git clone <url> <dir> && cd <dir>
-$ git checkout -b jdl master
-$ rm include/asm-ppc/sockios.h
-$ rm include/asm-ppc/socket.h
-$ rm include/asm-ppc64/sockios.h
-$ rm include/asm-ppc64/socket.h
-$ git add include/asm-powerpc/sockios.h
-$ git add include/asm-powerpc/socket.h
-$ git commit -a -s
-------------------------------------------------
+Originally, the distinction between with and without --full was
+made so that once you fsck and repack, you do not have to spend
+time doing full object integrity analysis (I think it still does
+full reachability analysis, but I have to check).  It might be
+better to remove '--full' option from fsck-cache and make the
+default ot do full integrity, and introduce '--fast' option to
+skip it, that is, to default on the safe side.
