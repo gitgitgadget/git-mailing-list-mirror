@@ -1,59 +1,57 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [PATCH 0/2] Reorganize read-tree
-Date: Wed, 31 Aug 2005 15:15:12 +0100
-Message-ID: <tnxy86ikxan.fsf@arm.com>
+Date: Wed, 31 Aug 2005 12:56:11 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508311244410.23242@iabervon.org>
 References: <Pine.LNX.4.63.0508302317380.23242@iabervon.org>
+ <7voe7ehb7z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@osdl.org>
-X-From: git-owner@vger.kernel.org Wed Aug 31 16:20:43 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
+X-From: git-owner@vger.kernel.org Wed Aug 31 18:53:11 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EATRS-0007KX-Qx
-	for gcvg-git@gmane.org; Wed, 31 Aug 2005 16:19:55 +0200
+	id 1EAVp7-0000IX-QP
+	for gcvg-git@gmane.org; Wed, 31 Aug 2005 18:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbVHaOTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Aug 2005 10:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932516AbVHaOTt
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 10:19:49 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:59344 "EHLO
-	cam-admin0.cambridge.arm.com") by vger.kernel.org with ESMTP
-	id S932515AbVHaOTt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2005 10:19:49 -0400
-Received: from cam-mail2.cambridge.arm.com (cam-mail2.cambridge.arm.com [10.1.127.39])
-	by cam-admin0.cambridge.arm.com (8.12.10/8.12.10) with ESMTP id j7VEJCQb017661;
-	Wed, 31 Aug 2005 15:19:12 +0100 (BST)
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by cam-mail2.cambridge.arm.com (8.9.3/8.9.3) with ESMTP id PAA15329;
-	Wed, 31 Aug 2005 15:19:10 +0100 (BST)
-Received: from localhost.localdomain ([10.1.69.140]) by ZIPPY.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.211);
-	 Wed, 31 Aug 2005 15:15:12 +0100
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0508302317380.23242@iabervon.org> (Daniel
- Barkalow's message of "Tue, 30 Aug 2005 23:48:27 -0400 (EDT)")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 31 Aug 2005 14:15:12.0964 (UTC) FILETIME=[6702F040:01C5AE36]
+	id S964872AbVHaQw1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Aug 2005 12:52:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964874AbVHaQw1
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 12:52:27 -0400
+Received: from iabervon.org ([66.92.72.58]:42511 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S964872AbVHaQw0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Aug 2005 12:52:26 -0400
+Received: (qmail 6479 invoked by uid 1000); 31 Aug 2005 12:56:11 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Aug 2005 12:56:11 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7voe7ehb7z.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7977>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> I got mostly done with this before Linus mentioned the possibility of
-> having multiple index entries in the same stage for a single path. I
-> finished it anyway, but I'm not sure that we won't want to know which of
-> the common ancestors contributed which, and, if some of them don't have a
-> path, we wouldn't be able to tell.
+On Tue, 30 Aug 2005, Junio C Hamano wrote:
 
-I don't have time to look at the patch and I don't have a good
-knowledge of the GIT internals, so I will just ask. Does this patch
-changes the call convention for git-merge-one-file-script? I have my
-own script for StGIT and I would need to know whether it is affected
-or not.
+> Dan, I really really *REALLY* wanted to try this out in "pu"
+> branch and even was about to rig some torture chamber for
+> testing before applying the patch, but you got the shiny blue
+> bat X-<.
 
-Thanks.
+I'll send a replacement with the settings correct.
 
--- 
-Catalin
+> A patch to SubmittingPatches, MUA specific help section for
+> users of Pine 4.63 would be very much appreciated.
+
+Ah, it looks like a recent version changed the default behavior to do the 
+right thing, and inverted the sense of the configuration option. (Either 
+that or Gentoo did it.) So you need to set the 
+"no-strip-whitespace-before-send" option, unless the option you have is 
+"strip-whitespace-before-send", in which case you should avoid checking 
+it.
+
+I don't actually have things set up for preparing patches from work, 
+although I can resend the patches I prepared earlier.
+
+	-Daniel
+*This .sig left intentionally blank*
