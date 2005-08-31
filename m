@@ -1,7 +1,8 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 0/2] Reorganize read-tree
-Date: Tue, 30 Aug 2005 23:48:27 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0508302317380.23242@iabervon.org>
+Subject: [PATCH 1/2] Object model additions for read-tree
+Date: Tue, 30 Aug 2005 23:49:10 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0508302348350.23242@iabervon.org>
+References: <Pine.LNX.4.63.0508302317380.23242@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, Linus Torvalds <torvalds@osdl.org>
@@ -9,68 +10,112 @@ X-From: git-owner@vger.kernel.org Wed Aug 31 05:46:56 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAJX2-0002Oj-Pf
-	for gcvg-git@gmane.org; Wed, 31 Aug 2005 05:45:01 +0200
+	id 1EAJXW-0002WI-SD
+	for gcvg-git@gmane.org; Wed, 31 Aug 2005 05:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932345AbVHaDon (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Aug 2005 23:44:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbVHaDon
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 23:44:43 -0400
-Received: from iabervon.org ([66.92.72.58]:63504 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932345AbVHaDon (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 23:44:43 -0400
-Received: (qmail 32440 invoked by uid 1000); 30 Aug 2005 23:48:27 -0400
+	id S932348AbVHaDp0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Aug 2005 23:45:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932349AbVHaDp0
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Aug 2005 23:45:26 -0400
+Received: from iabervon.org ([66.92.72.58]:22021 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932348AbVHaDpZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Aug 2005 23:45:25 -0400
+Received: (qmail 32450 invoked by uid 1000); 30 Aug 2005 23:49:10 -0400
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Aug 2005 23:48:27 -0400
+  by localhost with SMTP; 30 Aug 2005 23:49:10 -0400
 To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <Pine.LNX.4.63.0508302317380.23242@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7969>
 
-I got mostly done with this before Linus mentioned the possibility of
-having multiple index entries in the same stage for a single path. I
-finished it anyway, but I'm not sure that we won't want to know which of
-the common ancestors contributed which, and, if some of them don't have a
-path, we wouldn't be able to tell. The other advantages I see to this
-approach are:
+Adds object_list_append() and a function to get the struct tree from an ent.
 
- - it uses the more common parser of tree objects, moving toward having
-   only one (diff-cache still uses read_tree(), however).
- - it doesn't need to do very complicated things with the index; the
-   original read-tree does a bunch of stuff with an index with a gap in
-   the middle containing obsolete entries.
- - it uses a much simpler method of finding directory/file conflicts,
-   which is possible because the struct trees represent directories as
-   well as files.
- - it deals with each path completely before going on to the next one,
-   instead of first dealing with each input tree and then dealing with
-   each path.
- - it removes a lot of intimate knowledge of the index structure from the
-   program.
+Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+---
 
-The general idea is that it figures out what trees you want, and then
-iterates through the entry lists together, recursing into directories, and
-calls the merge function with an array of the index entries (not yet
-added) for the path in each tree; the merge function adds the appropriate
-things to the index.
+ object.c |   11 +++++++++++
+ object.h |    3 +++
+ tree.c   |   19 +++++++++++++++++++
+ tree.h   |    3 +++
+ 4 files changed, 36 insertions(+), 0 deletions(-)
 
-Note that this set doesn't include calling merge functions with multiple
-ancestors or remotes; that can be done when we've decided on whether my
-version of read-tree is worth using.
+49d33c385aa69d17c991300f73e77c6718a2b4a6
+diff --git a/object.c b/object.c
+--- a/object.c
++++ b/object.c
+@@ -184,6 +184,17 @@ struct object_list *object_list_insert(s
+         return new_list;
+ }
 
-There are various potential refinements, plus removing a bunch of memory
-leaks, still to do, but I think this is sufficiently close to review.
++void object_list_append(struct object *item,
++			struct object_list **list_p)
++{
++	while (*list_p) {
++		list_p = &((*list_p)->next);
++	}
++	*list_p = xmalloc(sizeof(struct object_list));
++	(*list_p)->next = NULL;
++	(*list_p)->item = item;
++}
++
+ unsigned object_list_length(struct object_list *list)
+ {
+ 	unsigned ret = 0;
+diff --git a/object.h b/object.h
+--- a/object.h
++++ b/object.h
+@@ -41,6 +41,9 @@ void mark_reachable(struct object *obj,
+ struct object_list *object_list_insert(struct object *item,
+ 				       struct object_list **list_p);
 
-(Refinements: it ought to have two indices in memory, the old and the new,
-and never modify the old and only append to the new, to simplify things
-further; it ought to use a sentinal value for the index entry to indicate
-that there is something in the tree to conflict with there being a file at
-the given path; the --emu23 logic could be clearer)
++void object_list_append(struct object *item,
++			struct object_list **list_p);
++
+ unsigned object_list_length(struct object_list *list);
 
-The first patch adds a few functions to the object library.
-The second patch changes read-tree around; It is essentially a rewrite,
-except for the merge functions and main().
+ int object_list_contains(struct object_list *list, struct object *obj);
+diff --git a/tree.c b/tree.c
+--- a/tree.c
++++ b/tree.c
+@@ -1,5 +1,7 @@
+ #include "tree.h"
+ #include "blob.h"
++#include "commit.h"
++#include "tag.h"
+ #include "cache.h"
+ #include <stdlib.h>
 
-	-Daniel
-*This .sig left intentionally blank*
+@@ -212,3 +214,20 @@ int parse_tree(struct tree *item)
+ 	free(buffer);
+ 	return ret;
+ }
++
++struct tree *parse_tree_indirect(const unsigned char *sha1)
++{
++	struct object *obj = parse_object(sha1);
++	do {
++		if (!obj)
++			return NULL;
++		if (obj->type == tree_type)
++			return (struct tree *) obj;
++		else if (obj->type == commit_type)
++			return ((struct commit *) obj)->tree;
++		else if (obj->type == tag_type)
++			obj = ((struct tag *) obj)->tagged;
++		else
++			return NULL;
++	} while (1);
++}
+diff --git a/tree.h b/tree.h
+--- a/tree.h
++++ b/tree.h
+@@ -32,4 +32,7 @@ int parse_tree_buffer(struct tree *item,
+
+ int parse_tree(struct tree *tree);
+
++/* Parses and returns the tree in the given ent, chasing tags and commits. */
++struct tree *parse_tree_indirect(const unsigned char *sha1);
++
+ #endif /* TREE_H */
