@@ -1,59 +1,38 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: bug in git-fsck-cache?
-Date: Wed, 31 Aug 2005 19:21:02 -0700
-Message-ID: <7vacix5y0h.fsf@assigned-by-dhcp.cox.net>
-References: <20050831161529.327a7957.git@ozlabs.org>
-	<7v4q959857.fsf@assigned-by-dhcp.cox.net>
-	<20050901120226.54547107.git@ozlabs.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Couple of read-tree questions
+Date: Thu, 1 Sep 2005 00:17:18 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509010009350.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 04:22:24 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Sep 01 06:15:02 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAehU-0004YA-E1
-	for gcvg-git@gmane.org; Thu, 01 Sep 2005 04:21:12 +0200
+	id 1EAgST-0007f2-16
+	for gcvg-git@gmane.org; Thu, 01 Sep 2005 06:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965021AbVIACVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Aug 2005 22:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965031AbVIACVI
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Aug 2005 22:21:08 -0400
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:26043 "EHLO
-	fed1rmmtao04.cox.net") by vger.kernel.org with ESMTP
-	id S965021AbVIACVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Aug 2005 22:21:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao04.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050901022102.KQIO8185.fed1rmmtao04.cox.net@assigned-by-dhcp.cox.net>;
-          Wed, 31 Aug 2005 22:21:02 -0400
-To: Stephen Rothwell <git@ozlabs.org>
-In-Reply-To: <20050901120226.54547107.git@ozlabs.org> (Stephen Rothwell's
-	message of "Thu, 1 Sep 2005 12:02:26 +1000")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932074AbVIAENe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Sep 2005 00:13:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932145AbVIAENe
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 00:13:34 -0400
+Received: from iabervon.org ([66.92.72.58]:38148 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932074AbVIAENd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 00:13:33 -0400
+Received: (qmail 9243 invoked by uid 1000); 1 Sep 2005 00:17:18 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 1 Sep 2005 00:17:18 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7989>
 
-Stephen Rothwell <git@ozlabs.org> writes:
+Is there any current use for read-tree with multiple trees without -m or 
+equivalent?
 
->> Stephen Rothwell <git@ozlabs.org> writes:
->> 
->> > The commit c594adad5653491813959277fb87a2fef54c4e05 is shown as
->> > "connected" (in Linus' tree, not one of my patches) by gitk, so I am happy
->> > that git prune did not get rid of it, but why does fsck-cache report it as
->> > dangling?
->> 
->> Hmph.  You ran fsck-cache by hand without --full (i.e. you told
->> it not to worry about objects already in packs); 'git prune'
->> runs it with '--full' to do the full connectivity analysis.  I
->> think that's where the difference comes from.
->
-> ok, with '--full' nothing gets reported as dangling.  That commit is not
-> in a pack, but is in an object directory referenced through
-> objects/info/alternates.
+Why does --emu23 use I+H for stage 2, rather than just I? Wouldn't this 
+just reintroduce removed files?
 
-Ahh.  Yes, it is the same thing.  I said "not in the pack", but I
-should have said "exists locally unpacked".
+	-Daniel
+*This .sig left intentionally blank*
