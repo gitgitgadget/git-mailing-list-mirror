@@ -1,58 +1,55 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Wink Saville <wink@saville.com>
-Subject: Re: Resolving conflicts
-Date: Fri, 01 Dec 2006 19:04:09 -0800
-Message-ID: <4570ED29.6030507@saville.com>
-References: <456FD461.4080002@saville.com> <Pine.LNX.4.64.0611302359400.3695@woody.osdl.org> <456FE642.6020102@saville.com> <200612012347.55294.alan@chandlerfamily.org.uk>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Cogito(?): git+ssh pulling broken with tcsh as default shell
+Date: Thu, 01 Sep 2005 14:21:57 -0700
+Message-ID: <431770F5.8080806@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Sat, 2 Dec 2006 03:04:32 +0000 (UTC)
-Cc: git@vger.kernel.org
+NNTP-Posting-Date: Thu, 1 Sep 2005 21:23:45 +0000 (UTC)
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-User-Agent: Thunderbird 1.5.0.8 (Windows/20061025)
-In-Reply-To: <200612012347.55294.alan@chandlerfamily.org.uk>
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/32998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8000>
 Received: from vger.kernel.org ([209.132.176.167]) by ciao.gmane.org with
- esmtp (Exim 4.43) id 1GqLAx-00018U-Fq for gcvg-git@gmane.org; Sat, 02 Dec
- 2006 04:04:27 +0100
+ esmtp (Exim 4.43) id 1EAwWp-00018q-9g for gcvg-git@gmane.org; Thu, 01 Sep
+ 2005 23:23:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1162745AbWLBDEH (ORCPT <rfc822;gcvg-git@m.gmane.org>); Fri, 1 Dec 2006
- 22:04:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1162746AbWLBDEH
- (ORCPT <rfc822;git-outgoing>); Fri, 1 Dec 2006 22:04:07 -0500
-Received: from 70-91-206-233-BusName-SFBA.hfc.comcastbusiness.net
- ([70.91.206.233]:28585 "EHLO saville.com") by vger.kernel.org with ESMTP id
- S1162745AbWLBDEE (ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Dec 2006
- 22:04:04 -0500
-Received: from [192.168.0.52] (unknown [192.168.0.52]) by saville.com
- (Postfix) with ESMTP id 601E15780F; Fri,  1 Dec 2006 19:00:06 -0800 (PST)
-To: Alan Chandler <alan@chandlerfamily.org.uk>
+ S1030391AbVIAVWI (ORCPT <rfc822;gcvg-git@m.gmane.org>); Thu, 1 Sep 2005
+ 17:22:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030392AbVIAVWI
+ (ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 17:22:08 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:43486 "EHLO
+ terminus.zytor.com") by vger.kernel.org with ESMTP id S1030391AbVIAVWG (ORCPT
+ <rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 17:22:06 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+ (authenticated bits=0) by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id
+ j81LM16H030801 (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256
+ verify=NO); Thu, 1 Sep 2005 14:22:02 -0700
+To: Git Mailing List <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 
-Alan Chandler wrote:
-> On Friday 01 December 2006 08:22, Wink Saville wrote:
-> 
->> Ubuntu is debian based and I use Synaptic GUI, a front end to apt-get. My
->> earlier problem was I couldn't find which package "merge" was in. But now I
->> just figured it out by going to debian.org and using "Search the contents
->> of packages" for "merge". Turns out "merge" is in devel/rcs which of course
->> the whole world knows, unless your a neophyte like me:)
-> 
-> I'm actually using Debian Unstable and basically use the git-core package. Its 
-> at version 1.4.4.1 - so right up to date, and of course resolves all 
-> dependencies automatically.
-> 
-> Doesn't Ubuntu have git-core in its repository?
-> 
-It was an older version, so I started at the source.
+: tazenda 54 ; cg-clone -s 
+git+ssh://terminus.zytor.com/home/hpa/klibc/official/.git/
+defaulting to local storage area
+mkdir: cannot create directory `.git/branches': File exists
+master 
+           100%   41     0.0KB/s   00:00
+GIT_DIR=/home/hpa/klibc/official/.git: Command not found.
+error: Couldn't read version from remote end
+cg-pull: objects pull failed
+cg-clone: pull failed
 
-W
+
+It looks like it tries to execute a sh/bash script on the remote end, 
+without forcing the remote end to use sh/bash to execute the script.
+
