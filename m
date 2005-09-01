@@ -1,103 +1,86 @@
-From: Michael Ellerman <michael@ellerman.id.au>
-Subject: Any plans to make export work?
-Date: Fri, 2 Sep 2005 00:53:15 +1000
-Message-ID: <200509020053.20471.michael@ellerman.id.au>
-Reply-To: michael@ellerman.id.au
+From: Carl Baldwin <cnb@fc.hp.com>
+Subject: [PATCH] unset CDPATH in git-clone
+Date: Thu, 1 Sep 2005 09:24:41 -0600
+Organization: Hewlett Packard
+Message-ID: <20050901152441.GA8694@hpsvcnb.fc.hp.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart8942565.J4K6rgPlX6";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Sep 01 16:54:35 2005
+Content-Type: text/plain; charset=us-ascii
+X-From: git-owner@vger.kernel.org Thu Sep 01 17:25:57 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAqRk-0000bF-O3
-	for gcvg-git@gmane.org; Thu, 01 Sep 2005 16:53:45 +0200
+	id 1EAqvr-00016k-Ke
+	for gcvg-git@gmane.org; Thu, 01 Sep 2005 17:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965174AbVIAOxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Sep 2005 10:53:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965175AbVIAOxY
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 10:53:24 -0400
-Received: from ozlabs.org ([203.10.76.45]:13245 "EHLO ozlabs.org")
-	by vger.kernel.org with ESMTP id S965174AbVIAOxX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 10:53:23 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by ozlabs.org (Postfix) with ESMTP id 2A44368144
-	for <git@vger.kernel.org>; Fri,  2 Sep 2005 00:53:22 +1000 (EST)
+	id S1030202AbVIAPYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Sep 2005 11:24:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030203AbVIAPYn
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 11:24:43 -0400
+Received: from atlrel7.hp.com ([156.153.255.213]:57510 "EHLO atlrel7.hp.com")
+	by vger.kernel.org with ESMTP id S1030202AbVIAPYm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 11:24:42 -0400
+Received: from smtp1.fc.hp.com (smtp1.fc.hp.com [15.15.136.127])
+	by atlrel7.hp.com (Postfix) with ESMTP id C257A2179
+	for <git@vger.kernel.org>; Thu,  1 Sep 2005 11:24:41 -0400 (EDT)
+Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
+	by smtp1.fc.hp.com (Postfix) with ESMTP id 912E538778
+	for <git@vger.kernel.org>; Thu,  1 Sep 2005 15:24:41 +0000 (UTC)
+Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
+	id 7BF8C2AEC4; Thu,  1 Sep 2005 09:24:41 -0600 (MDT)
 To: git@vger.kernel.org
-User-Agent: KMail/1.8
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Origin: hpsvcnb.fc.hp.com
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7996>
 
---nextPart8942565.J4K6rgPlX6
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Hello,
 
-Hi Y'all,
+A colleague was having problems with git clone.  It seemed to work as
+expected for me so I went into his environment to see what was causing
+it to fail.  I found that he had set the CDPATH environment variable to
+something like '.:..:../..:$HOME'.  Try this (using bash) and you'll see
+the problem:
 
-I've been playing with export a bit, and it doesn't seem to work. Or at lea=
-st=20
-it doesn't do what I think of as "work"-ing.
+export CDPATH=.
+git clone (anything local)
 
-I'm basically doing a git-export and trying to create a quilt series out of=
-=20
-it.
+The function get_repo_base seems to break with this CDPATH.
 
-When you do a "quilt push -a" I get as far as:
-06f81ea8ca09b880cadf101d7e23b500e9c164bc
-[PATCH] scsi: remove volatile from scsi data
+Below is how I solved the problem for the short-term.  Use it as you see
+fit.  I did not look into other commands to see if there are other
+implications to using CDPATH.
 
-which doesn't apply as it (seems to) conflict with:=20
-152587deb8903c0edf483a5b889f975bc6bea7e0
-[PATCH] fix NMI lockup with CFQ scheduler
+Cheers,
+Carl
 
-Those two commits (and others) were merged by hand in:
-c46f2ffb9e7fce7208c2639790e1ade42e00b146
-merge by hand (scsi_device.h)
+-- 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Carl Baldwin                        Systems VLSI Laboratory
+ Hewlett Packard Company
+ MS 88                               work: 970 898-1523
+ 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
+ Fort Collins, CO 80525              home: Carl@ecBaldwin.net
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Export gives me a patch for the merge, but it a) appears to contain everyth=
-ing=20
-that was merged, not just the fixup-by-hand, and b) export spits it out aft=
-er=20
-both of the commits which the merge merged - which is no good as quilt=20
-doesn't even get that far.
+---
 
-I realise I'm trying to represent a DAG as a linear series of patches. But =
-the=20
-merge order is a linear sequence of commits, and so it *should* be=20
-representable as a linear series of patches. I think.
+ git-clone-script |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Any thoughts?
-
-cheers
-
-=2D-=20
-Michael Ellerman
-IBM OzLabs
-
-email: michael:ellerman.id.au
-inmsg: mpe:jabber.org
-wwweb: http://michael.ellerman.id.au
-phone: +61 2 6212 1183 (tie line 70 21183)
-
-We do not inherit the earth from our ancestors,
-we borrow it from our children. - S.M.A.R.T Person
-
---nextPart8942565.J4K6rgPlX6
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.5 (GNU/Linux)
-
-iD8DBQBDFxXgdSjSd0sB4dIRAlo3AJ9PYGjUpAx49VvZwuiEpMcdi9zQogCfeBtB
-vKXoqqXmD64biSf1XAGP2ao=
-=lbgB
------END PGP SIGNATURE-----
-
---nextPart8942565.J4K6rgPlX6--
+50e48b03a5a82bb1e4ca95ef4e04cafc39a96f79
+diff --git a/git-clone-script b/git-clone-script
+--- a/git-clone-script
++++ b/git-clone-script
+@@ -5,6 +5,8 @@
+ # 
+ # Clone a repository into a different directory that does not yet exist.
+ 
++unset CDPATH
++
+ usage() {
+ 	echo >&2 "* git clone [-l [-s]] [-q] [-u <upload-pack>] <repo> <dir>"
+ 	exit 1
