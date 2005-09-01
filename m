@@ -1,58 +1,63 @@
-From: Tim Ottinger <tottinge@progeny.com>
-Subject: Re: Tool renames? was Re: First stab at glossary
-Date: Thu, 01 Sep 2005 12:55:28 -0500
-Message-ID: <43174090.5070503@progeny.com>
-References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.63.0508171341380.23242@iabervon.org>	<Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>	<Pine.LNX.4.63.0508171630140.23242@iabervon.org>	<Pine.LNX.4.63.0508180009180.18104@wgmdd8.biozentrum.uni-wuerzburg.de>	<430C8C31.1070902@progeny.com> <7v4q9eak9k.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: gitk with hyperspace support
+Date: Thu, 1 Sep 2005 22:10:51 +0200
+Message-ID: <81b0412b0509011310386ee9a1@mail.gmail.com>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
+	 <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
+	 <17171.47747.10616.537936@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 20:00:54 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 01 22:11:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAtJh-00011t-Rh
-	for gcvg-git@gmane.org; Thu, 01 Sep 2005 19:57:38 +0200
+	id 1EAvOl-0000zc-4K
+	for gcvg-git@gmane.org; Thu, 01 Sep 2005 22:10:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030265AbVIAR5f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Sep 2005 13:57:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030266AbVIAR5f
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 13:57:35 -0400
-Received: from zealot.progeny.com ([216.37.46.162]:19908 "EHLO
-	morimoto.progeny.com") by vger.kernel.org with ESMTP
-	id S1030265AbVIAR5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2005 13:57:34 -0400
-Received: from [192.168.1.95] (inigo.progeny.com [192.168.1.95])
-	by morimoto.progeny.com (Postfix) with ESMTP
-	id 9CA6F636A4; Thu,  1 Sep 2005 12:57:33 -0500 (EST)
-User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v4q9eak9k.fsf@assigned-by-dhcp.cox.net>
+	id S1030351AbVIAUK4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Sep 2005 16:10:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030356AbVIAUK4
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 16:10:56 -0400
+Received: from nproxy.gmail.com ([64.233.182.194]:26312 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1030351AbVIAUKz convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 16:10:55 -0400
+Received: by nproxy.gmail.com with SMTP id x37so157844nfc
+        for <git@vger.kernel.org>; Thu, 01 Sep 2005 13:10:51 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qbYSQ1Qa50N02MK7KPGeI1iyk21qYisgyyEn5CxMH9B2l9/Vpm4JLa5y9p1UHmBkOoJvHF8dOLgsSaSAv3/h2TAdhx8utJmqjVux/MVUVHqnsBL6kKhU6fmKlBNmY2ixpYMBRfG9ACVB+U9wnrKPFYd2NFIlErnGz5NTJtfIgns=
+Received: by 10.48.108.4 with SMTP id g4mr126037nfc;
+        Thu, 01 Sep 2005 13:10:51 -0700 (PDT)
+Received: by 10.48.247.10 with HTTP; Thu, 1 Sep 2005 13:10:51 -0700 (PDT)
+To: Paul Mackerras <paulus@samba.org>
+In-Reply-To: <17171.47747.10616.537936@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7999>
 
-Junio C Hamano wrote:
+On 8/30/05, Paul Mackerras <paulus@samba.org> wrote:
+> 
+> Try now... :)
+> 
+> It also makes the current graph line thicker now, so it's easier to
+> pick out where the line you clicked on goes.
+> 
 
->Tim Ottinger <tottinge@progeny.com> writes:
->
->  
->
->>So when this gets all settled, will we see a lot of tool renaming? 
->>    
->>
->
->I personally do not see it coming.  Any particular one you have
->in mind?
->
->  
->
-git-update-cache for instance?
-I am not sure which 'cache' commands need to be 'index' now.
+That's a fine feature :)
 
+BTW, did you sometimes notice lines you can't click at all?
+An example is the red line on the most left side of the graph
+by SHA 66129f88c4cc719591f687e5c8c764fe9d3e437a.
+It goes from blue up-arrow  through green left bump to the grey
+down-arrow (on my system in the kernel tree). Clicking on the blue
+arrow (on the line, not the arrow itself) will turn the blue line stricken-
+through with the red line (a bold blue line with a red streak inside),
+the next click leaves me with with just bold blue line and broken
+red line above it.
 
--- 
-                             ><>
-... either 'way ahead of the game, or 'way out in left field.
+It's on Gentoo's Tcl/Tk 8.4.9.
