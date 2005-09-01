@@ -1,65 +1,103 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Reworked read-tree.
-Date: Thu, 01 Sep 2005 00:10:43 -0700
-Message-ID: <7vpsrt1cwc.fsf_-_@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0509010009350.23242@iabervon.org>
-	<7vll2h4bc8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0509010138370.23242@iabervon.org>
-	<7vvf1l1env.fsf@assigned-by-dhcp.cox.net>
+From: Michael Ellerman <michael@ellerman.id.au>
+Subject: Any plans to make export work?
+Date: Fri, 2 Sep 2005 00:53:15 +1000
+Message-ID: <200509020053.20471.michael@ellerman.id.au>
+Reply-To: michael@ellerman.id.au
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 01 09:11:21 2005
+Content-Type: multipart/signed;
+  boundary="nextPart8942565.J4K6rgPlX6";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Thu Sep 01 16:54:35 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EAjDl-0004YA-H8
-	for gcvg-git@gmane.org; Thu, 01 Sep 2005 09:10:50 +0200
+	id 1EAqRk-0000bF-O3
+	for gcvg-git@gmane.org; Thu, 01 Sep 2005 16:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932548AbVIAHKq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Sep 2005 03:10:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932551AbVIAHKq
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 03:10:46 -0400
-Received: from fed1rmmtao03.cox.net ([68.230.241.36]:46051 "EHLO
-	fed1rmmtao03.cox.net") by vger.kernel.org with ESMTP
-	id S932548AbVIAHKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Sep 2005 03:10:45 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao03.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050901071045.DUNM3588.fed1rmmtao03.cox.net@assigned-by-dhcp.cox.net>;
-          Thu, 1 Sep 2005 03:10:45 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <7vvf1l1env.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 31 Aug 2005 23:32:36 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S965174AbVIAOxY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Sep 2005 10:53:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965175AbVIAOxY
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Sep 2005 10:53:24 -0400
+Received: from ozlabs.org ([203.10.76.45]:13245 "EHLO ozlabs.org")
+	by vger.kernel.org with ESMTP id S965174AbVIAOxX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Sep 2005 10:53:23 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by ozlabs.org (Postfix) with ESMTP id 2A44368144
+	for <git@vger.kernel.org>; Fri,  2 Sep 2005 00:53:22 +1000 (EST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/7995>
 
-Daniel, I do not know what your current status is, but I think
-you need something like this.
+--nextPart8942565.J4K6rgPlX6
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I was scratching my head figuring out why it passes all the t/
-tests but couldn't do a simple 'git-read-tree HEAD'.
+Hi Y'all,
 
----
-diff --git a/tree.c b/tree.c
---- a/tree.c
-+++ b/tree.c
-@@ -224,10 +224,12 @@ struct tree *parse_tree_indirect(const u
- 		if (obj->type == tree_type)
- 			return (struct tree *) obj;
- 		else if (obj->type == commit_type)
--			return ((struct commit *) obj)->tree;
-+			obj = (struct object *)(((struct commit *) obj)->tree);
- 		else if (obj->type == tag_type)
--			obj = ((struct tag *) obj)->tagged;
-+			obj = deref_tag(obj);
- 		else
- 			return NULL;
-+		if (!obj->parsed)
-+			parse_object(obj->sha1);
- 	} while (1);
- }
+I've been playing with export a bit, and it doesn't seem to work. Or at lea=
+st=20
+it doesn't do what I think of as "work"-ing.
+
+I'm basically doing a git-export and trying to create a quilt series out of=
+=20
+it.
+
+When you do a "quilt push -a" I get as far as:
+06f81ea8ca09b880cadf101d7e23b500e9c164bc
+[PATCH] scsi: remove volatile from scsi data
+
+which doesn't apply as it (seems to) conflict with:=20
+152587deb8903c0edf483a5b889f975bc6bea7e0
+[PATCH] fix NMI lockup with CFQ scheduler
+
+Those two commits (and others) were merged by hand in:
+c46f2ffb9e7fce7208c2639790e1ade42e00b146
+merge by hand (scsi_device.h)
+
+Export gives me a patch for the merge, but it a) appears to contain everyth=
+ing=20
+that was merged, not just the fixup-by-hand, and b) export spits it out aft=
+er=20
+both of the commits which the merge merged - which is no good as quilt=20
+doesn't even get that far.
+
+I realise I'm trying to represent a DAG as a linear series of patches. But =
+the=20
+merge order is a linear sequence of commits, and so it *should* be=20
+representable as a linear series of patches. I think.
+
+Any thoughts?
+
+cheers
+
+=2D-=20
+Michael Ellerman
+IBM OzLabs
+
+email: michael:ellerman.id.au
+inmsg: mpe:jabber.org
+wwweb: http://michael.ellerman.id.au
+phone: +61 2 6212 1183 (tie line 70 21183)
+
+We do not inherit the earth from our ancestors,
+we borrow it from our children. - S.M.A.R.T Person
+
+--nextPart8942565.J4K6rgPlX6
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.5 (GNU/Linux)
+
+iD8DBQBDFxXgdSjSd0sB4dIRAlo3AJ9PYGjUpAx49VvZwuiEpMcdi9zQogCfeBtB
+vKXoqqXmD64biSf1XAGP2ao=
+=lbgB
+-----END PGP SIGNATURE-----
+
+--nextPart8942565.J4K6rgPlX6--
