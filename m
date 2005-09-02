@@ -1,61 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/2] Remove emu23, fix entry order
-Date: Thu, 01 Sep 2005 23:36:19 -0700
-Message-ID: <7vll2gkmcc.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0509020202030.23242@iabervon.org>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Ugly "git pull .." merge messages
+Date: Fri, 2 Sep 2005 00:46:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509011117130.6795@evo.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 02 08:37:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 02 09:46:47 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EB5A2-0000WC-QV
-	for gcvg-git@gmane.org; Fri, 02 Sep 2005 08:36:27 +0200
+	id 1EB6Fb-0006gj-R6
+	for gcvg-git@gmane.org; Fri, 02 Sep 2005 09:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030409AbVIBGgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Sep 2005 02:36:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030388AbVIBGgX
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 02:36:23 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53904 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1030409AbVIBGgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Sep 2005 02:36:22 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050902063620.QYAE9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Fri, 2 Sep 2005 02:36:20 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0509020202030.23242@iabervon.org> (Daniel
-	Barkalow's message of "Fri, 2 Sep 2005 02:05:43 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1030536AbVIBHqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Sep 2005 03:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030539AbVIBHqM
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 03:46:12 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:33954 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S1030536AbVIBHqM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 03:46:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j827k7Bo029431
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 2 Sep 2005 00:46:07 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j827k5Vm028081;
+	Fri, 2 Sep 2005 00:46:06 -0700
+To: Junio C Hamano <junkio@cox.net>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8008>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> A few things to improve testing. I'll clean up the series as a whole once 
-> it's tested.
->
-> This removes the emu23 tests; I think that the only DF conflict tests were 
-> in that set, however, so these should be fished out and added to something 
-> else.
+Junio, I think this happened when you rewrote the pull/push stuff to do
+shorthands..
 
-Thanks.  I'll take a look at 'test moving' part later, perhaps
-this weekend.
+Lately, "git pull" generates a lot of extra crud in the single-line commit
+message, which is annoying because a lot of tools will thus actually not
+show enough of the line to be valid.
 
-I should give Pasky a heads-up, since I vaguely recall him
-writing something about always doing 3-way merge even when fast
-forwarding in his TODO list in the Cogito tree, and just in case
-emu23 was what he had in mind...  I'll also CC: Catalin too
-just in case StGIT is tempted to use emu23 in git.switch().
+For example, it used to get rid of the ".git" at the end, and it didn't
+bother to say "HEAD". So
 
-Petr, we _might_ remove "read-tree --emu23" in the near future,
-but not immediately.  That will not happen until the read-tree
-rewrite Daniel is working on proves to be useful in making
-'interesting' merges more reliably work.
+    Merge HEAD from master.kernel.org:/home/rmk/linux-2.6-arm.git
+
+used to be just
+
+    Merge master.kernel.org:/home/rmk/linux-2.6-arm
+
+which is actually much nicer. It tends to fit in the gitk description
+window.
+
+In this example:
+
+    Merge refs/heads/release from master.kernel.org:/pub/scm/linux/kernel/git/aegl/linux-2.6
+
+I had manually removed the ".git" (since git-fetch-pack will happily add
+it back), so it doesn't have the ".git" at the end of the message, but
+instead it has a ref-name that is the internal git path rather than the
+path that I actually specified. Now, we didn't use to be shorter, but at
+least it used to be more readable, with
+
+    Merge 'release' branch of master.kernel.org:/pub/scm/linux/kernel/git/aegl/linux-2.6
+
+(Ok, it's slightly shorter, but not much - but my point is that it's
+actually more readable).
+
+Could we get the nicer messages back, please?
+
+		Linus
