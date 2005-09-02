@@ -1,76 +1,75 @@
-From: Linus Torvalds <torvalds@osdl.org>
-Subject: Ugly "git pull .." merge messages
-Date: Fri, 2 Sep 2005 00:46:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.58.0509011117130.6795@evo.osdl.org>
+From: David Woodhouse <dwmw2@infradead.org>
+Subject: Re: empty patch-2.6.13-git? patches on ftp.kernel.org
+Date: Fri, 02 Sep 2005 09:23:09 +0100
+Message-ID: <1125649389.6928.19.camel@baythorne.infradead.org>
+References: <Pine.BSO.4.62.0508311527340.10416@rudy.mif.pg.gda.pl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 02 09:46:47 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Linus Torvalds <torvalds@osdl.org>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751114AbVIBIXd@vger.kernel.org Fri Sep 02 10:25:14 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1751114AbVIBIXd@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EB6Fb-0006gj-R6
-	for gcvg-git@gmane.org; Fri, 02 Sep 2005 09:46:16 +0200
+	id 1EB6py-0007vd-OA
+	for glk-linux-kernel-3@gmane.org; Fri, 02 Sep 2005 10:23:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030536AbVIBHqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Sep 2005 03:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030539AbVIBHqM
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 03:46:12 -0400
-Received: from smtp.osdl.org ([65.172.181.4]:33954 "EHLO smtp.osdl.org")
-	by vger.kernel.org with ESMTP id S1030536AbVIBHqM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 03:46:12 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j827k7Bo029431
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Sep 2005 00:46:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j827k5Vm028081;
-	Fri, 2 Sep 2005 00:46:06 -0700
-To: Junio C Hamano <junkio@cox.net>
-X-Spam-Status: No, hits=0 required=5 tests=
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
-X-MIMEDefang-Filter: osdl$Revision: 1.115 $
-X-Scanned-By: MIMEDefang 2.36
-Sender: git-owner@vger.kernel.org
+	id S1751114AbVIBIXd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 2 Sep 2005 04:23:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751118AbVIBIXd
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Fri, 2 Sep 2005 04:23:33 -0400
+Received: from baythorne.infradead.org ([81.187.2.161]:50060 "EHLO
+	baythorne.infradead.org") by vger.kernel.org with ESMTP
+	id S1750851AbVIBIXc (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 2 Sep 2005 04:23:32 -0400
+Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
+	by baythorne.infradead.org with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
+	id 1EB6pK-00057E-Af; Fri, 02 Sep 2005 09:23:10 +0100
+To: Tomasz =?ISO-8859-1?Q?K=B3oczko?= <kloczek@rudy.mif.pg.gda.pl>
+In-Reply-To: <Pine.BSO.4.62.0508311527340.10416@rudy.mif.pg.gda.pl>
+X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
+	See http://www.infradead.org/rpr.html
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8008>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8009>
 
+On Wed, 2005-08-31 at 15:34 +0200, Tomasz K=C2=B3oczko wrote:
+> Seems patches stored on ftp://ftp.kernel.org/pub/linux/kernel/v2.6/sn=
+apshots
+> are empty (only logs are correct):
 
-Junio, I think this happened when you rewrote the pull/push stuff to do
-shorthands..
+> -rw-r--r--    1 536      536            20 Aug 30 09:01 patch-2.6.13-=
+git1.gz
+> -rw-r--r--    1 536      536            20 Aug 31 09:01 patch-2.6.13-=
+git2.gz
 
-Lately, "git pull" generates a lot of extra crud in the single-line commit
-message, which is annoying because a lot of tools will thus actually not
-show enough of the line to be valid.
+Hm. git-diff-cache now refuses to operate unless there's a local
+'.git/refs' directory, even when working with a separate object
+directory. So this doesn't work any more...
 
-For example, it used to get rid of the ".git" at the end, and it didn't
-bother to say "HEAD". So
+	rm -rf tmp-empty-tree
+	mkdir -p tmp-empty-tree/.git
+	cd tmp-empty-tree
 
-    Merge HEAD from master.kernel.org:/home/rmk/linux-2.6-arm.git
+	git-read-tree $CURCOMM
+	git-checkout-cache Makefile
+	perl -pi -e "s/EXTRAVERSION =3D.*/EXTRAVERSION =3D $EXTRAVERSION/" Mak=
+efile
+	git-diff-cache -m -p $RELTREE | gzip -9 > $STAGE/patch-$CURNAME.gz
 
-used to be just
+I've changed the script to create 'tmp-empty-tree/.git/refs' and
+replaced 2.6.13-git[12] with real patches.
 
-    Merge master.kernel.org:/home/rmk/linux-2.6-arm
+> Also it will be good move all patch-2.6.12* and patch-2.6.13-rc* file=
+s=20
+> from this directory to old subdirectory.
 
-which is actually much nicer. It tends to fit in the gitk description
-window.
+Done.
 
-In this example:
-
-    Merge refs/heads/release from master.kernel.org:/pub/scm/linux/kernel/git/aegl/linux-2.6
-
-I had manually removed the ".git" (since git-fetch-pack will happily add
-it back), so it doesn't have the ".git" at the end of the message, but
-instead it has a ref-name that is the internal git path rather than the
-path that I actually specified. Now, we didn't use to be shorter, but at
-least it used to be more readable, with
-
-    Merge 'release' branch of master.kernel.org:/pub/scm/linux/kernel/git/aegl/linux-2.6
-
-(Ok, it's slightly shorter, but not much - but my point is that it's
-actually more readable).
-
-Could we get the nicer messages back, please?
-
-		Linus
+--=20
+dwmw2
