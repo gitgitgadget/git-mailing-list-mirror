@@ -1,60 +1,57 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: gitk with hyperspace support
-Date: Fri, 2 Sep 2005 15:20:00 +0200
-Message-ID: <81b0412b0509020620559ab811@mail.gmail.com>
-References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
-	 <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
-	 <17171.47747.10616.537936@cargo.ozlabs.ibm.com>
-	 <81b0412b0509011310386ee9a1@mail.gmail.com>
-	 <51773.10.10.10.10.1125609974.squirrel@linux1>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Tool renames? was Re: First stab at glossary
+Date: Fri, 2 Sep 2005 14:09:13 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509021358000.23242@iabervon.org>
+References: <Pine.LNX.4.63.0508171655250.13502@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0508171341380.23242@iabervon.org>
+ <Pine.LNX.4.63.0508172156090.17234@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.63.0508171630140.23242@iabervon.org>
+ <Pine.LNX.4.63.0508180009180.18104@wgmdd8.biozentrum.uni-wuerzburg.de>
+ <430C8C31.1070902@progeny.com> <7v4q9eak9k.fsf@assigned-by-dhcp.cox.net>
+ <43174090.5070503@progeny.com> <7vek88tib4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 02 15:21:45 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Tim Ottinger <tottinge@progeny.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 02 20:06:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBBSp-0002L5-GQ
-	for gcvg-git@gmane.org; Fri, 02 Sep 2005 15:20:15 +0200
+	id 1EBFuy-0005d3-Oj
+	for gcvg-git@gmane.org; Fri, 02 Sep 2005 20:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751001AbVIBNUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Sep 2005 09:20:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbVIBNUH
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 09:20:07 -0400
-Received: from nproxy.gmail.com ([64.233.182.193]:30338 "EHLO nproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751001AbVIBNUF convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 09:20:05 -0400
-Received: by nproxy.gmail.com with SMTP id x37so210625nfc
-        for <git@vger.kernel.org>; Fri, 02 Sep 2005 06:20:00 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B0BBlCG+Lx7QJFoiMH7f4EtpX1IqvLUtwo2dT3NjXc6Em7t6urfylKLD4jCiwOmINGiCMdmKW/Wu1VOK/uySMyR1yeF9e7ek3qP6bWi1Tu4D77Ii1uZG6KC/q/Saew3PabQVp8Fvmtp6kPytn6iZ9OcEcysqFvp1oTKQa6dXxqQ=
-Received: by 10.49.5.17 with SMTP id h17mr160571nfi;
-        Fri, 02 Sep 2005 06:20:00 -0700 (PDT)
-Received: by 10.48.247.10 with HTTP; Fri, 2 Sep 2005 06:20:00 -0700 (PDT)
-To: Sean <seanlkml@sympatico.ca>
-In-Reply-To: <51773.10.10.10.10.1125609974.squirrel@linux1>
-Content-Disposition: inline
+	id S1750760AbVIBSFZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Sep 2005 14:05:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750768AbVIBSFZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 14:05:25 -0400
+Received: from iabervon.org ([66.92.72.58]:21521 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750760AbVIBSFY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 14:05:24 -0400
+Received: (qmail 25215 invoked by uid 1000); 2 Sep 2005 14:09:13 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 2 Sep 2005 14:09:13 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vek88tib4.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8025>
 
-On 9/1/05, Sean <seanlkml@sympatico.ca> wrote:
-> > BTW, did you sometimes notice lines you can't click at all?
-> > An example is the red line on the most left side of the graph
-> > by SHA 66129f88c4cc719591f687e5c8c764fe9d3e437a.
-> For what it's worth, everything near that SHA1 works here as expected.
-> Although I wasn't able to follow what you meant by "blue up-arrow through
-> green left bump..." etc.   But all the lines respond to being clicked and
-> all the arrow heads in that area properly jump to their corresponding
-> commit.
+On Thu, 1 Sep 2005, Junio C Hamano wrote:
+
+> Tim Ottinger <tottinge@progeny.com> writes:
 > 
-> That's with the latest checked out version of git and tcl/tk 8.4.9 as well.
+> > git-update-cache for instance?
+> > I am not sure which 'cache' commands need to be 'index' now.
+> 
+> Logically you are right, but I suspect that may not fly well in
+> practice.  Too many of us have already got our fingers wired to
+> type cache, and the glossary is there to describe both cache and
+> index.
 
-I just tested it on another system (8.4.6, Slackware 10+), and it works
-correctly too. Probably it is Gentoo's (or mine, you never know in Gentoo)
-Tcl/Tk, which is broken somewhere.
+My vote's for changing the official names, but keeping symlinks for the 
+old names. As far as I know, there aren't any actual conflicts, and we 
+might as well have new users pick up the logical names. I particularly 
+think "git merge" would be really good to have.
+
+	-Daniel
+*This .sig left intentionally blank*
