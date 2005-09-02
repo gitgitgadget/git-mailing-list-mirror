@@ -1,58 +1,60 @@
-From: Horst von Brand <vonbrand@inf.utfsm.cl>
-Subject: Re: Tool renames? was Re: First stab at glossary
-Date: Thu, 01 Sep 2005 21:50:33 -0400
-Message-ID: <200509020150.j821oXXM006699@laptop11.inf.utfsm.cl>
-References: <junkio@cox.net>
-Cc: Tim Ottinger <tottinge@progeny.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 02 15:16:40 2005
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: gitk with hyperspace support
+Date: Fri, 2 Sep 2005 15:20:00 +0200
+Message-ID: <81b0412b0509020620559ab811@mail.gmail.com>
+References: <17154.33520.584666.701545@cargo.ozlabs.ibm.com>
+	 <7vr7ct124c.fsf@assigned-by-dhcp.cox.net>
+	 <17171.47747.10616.537936@cargo.ozlabs.ibm.com>
+	 <81b0412b0509011310386ee9a1@mail.gmail.com>
+	 <51773.10.10.10.10.1125609974.squirrel@linux1>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Paul Mackerras <paulus@samba.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 02 15:21:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBBNo-00016v-In
-	for gcvg-git@gmane.org; Fri, 02 Sep 2005 15:15:04 +0200
+	id 1EBBSp-0002L5-GQ
+	for gcvg-git@gmane.org; Fri, 02 Sep 2005 15:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030405AbVIBNOh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Sep 2005 09:14:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030446AbVIBNOh
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 09:14:37 -0400
-Received: from inti.inf.utfsm.cl ([200.1.21.155]:46311 "EHLO inti.inf.utfsm.cl")
-	by vger.kernel.org with ESMTP id S1030405AbVIBNOh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 09:14:37 -0400
-Received: from laptop11.inf.utfsm.cl (fw.inf.utfsm.cl [200.1.19.2])
-	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id j82DE8to025303
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 2 Sep 2005 09:14:12 -0400
-Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
-	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j821oXXM006699;
-	Thu, 1 Sep 2005 21:50:33 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
-   of "Thu, 01 Sep 2005 17:38:39 MST." <7vek88tib4.fsf@assigned-by-dhcp.cox.net> 
-X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0b5 (inti.inf.utfsm.cl [200.1.21.155]); Fri, 02 Sep 2005 09:14:13 -0400 (CLT)
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
+	id S1751001AbVIBNUH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Sep 2005 09:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbVIBNUH
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 09:20:07 -0400
+Received: from nproxy.gmail.com ([64.233.182.193]:30338 "EHLO nproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751001AbVIBNUF convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 09:20:05 -0400
+Received: by nproxy.gmail.com with SMTP id x37so210625nfc
+        for <git@vger.kernel.org>; Fri, 02 Sep 2005 06:20:00 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B0BBlCG+Lx7QJFoiMH7f4EtpX1IqvLUtwo2dT3NjXc6Em7t6urfylKLD4jCiwOmINGiCMdmKW/Wu1VOK/uySMyR1yeF9e7ek3qP6bWi1Tu4D77Ii1uZG6KC/q/Saew3PabQVp8Fvmtp6kPytn6iZ9OcEcysqFvp1oTKQa6dXxqQ=
+Received: by 10.49.5.17 with SMTP id h17mr160571nfi;
+        Fri, 02 Sep 2005 06:20:00 -0700 (PDT)
+Received: by 10.48.247.10 with HTTP; Fri, 2 Sep 2005 06:20:00 -0700 (PDT)
+To: Sean <seanlkml@sympatico.ca>
+In-Reply-To: <51773.10.10.10.10.1125609974.squirrel@linux1>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8024>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Tim Ottinger <tottinge@progeny.com> writes:
-> > git-update-cache for instance?
-> > I am not sure which 'cache' commands need to be 'index' now.
+On 9/1/05, Sean <seanlkml@sympatico.ca> wrote:
+> > BTW, did you sometimes notice lines you can't click at all?
+> > An example is the red line on the most left side of the graph
+> > by SHA 66129f88c4cc719591f687e5c8c764fe9d3e437a.
+> For what it's worth, everything near that SHA1 works here as expected.
+> Although I wasn't able to follow what you meant by "blue up-arrow through
+> green left bump..." etc.   But all the lines respond to being clicked and
+> all the arrow heads in that area properly jump to their corresponding
+> commit.
+> 
+> That's with the latest checked out version of git and tcl/tk 8.4.9 as well.
 
-> Logically you are right, but I suspect that may not fly well in
-> practice.  Too many of us have already got our fingers wired to
-> type cache, and the glossary is there to describe both cache and
-> index.
-
-I'd vote for cleaning it up /now/. Sure, it will hurt, but if you let time
-go by and do it later, it will hurt much more.
-
-Pre-1.0 is the last chance, AFAICS.
--- 
-Dr. Horst H. von Brand                   User #22616 counter.li.org
-Departamento de Informatica                     Fono: +56 32 654431
-Universidad Tecnica Federico Santa Maria              +56 32 654239
-Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
+I just tested it on another system (8.4.6, Slackware 10+), and it works
+correctly too. Probably it is Gentoo's (or mine, you never know in Gentoo)
+Tcl/Tk, which is broken somewhere.
