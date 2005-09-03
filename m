@@ -1,49 +1,68 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Replay on arbitrary branches
-Date: Sat, 3 Sep 2005 13:11:40 +1200
-Message-ID: <46a038f905090218113587f64f@mail.gmail.com>
-Reply-To: martin.langhoff@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Moved files and merges
+Date: Fri, 02 Sep 2005 18:36:10 -0700
+Message-ID: <7vek87djat.fsf@assigned-by-dhcp.cox.net>
+References: <4318E754.9000703@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-X-From: git-owner@vger.kernel.org Sat Sep 03 03:12:36 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 03 03:36:16 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBMa9-0000yP-Mk
-	for gcvg-git@gmane.org; Sat, 03 Sep 2005 03:12:34 +0200
+	id 1EBMx5-0003oj-Cw
+	for gcvg-git@gmane.org; Sat, 03 Sep 2005 03:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750996AbVICBLn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Sep 2005 21:11:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751010AbVICBLn
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 21:11:43 -0400
-Received: from rproxy.gmail.com ([64.233.170.192]:37151 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750996AbVICBLn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 2 Sep 2005 21:11:43 -0400
-Received: by rproxy.gmail.com with SMTP id i8so442210rne
-        for <git@vger.kernel.org>; Fri, 02 Sep 2005 18:11:40 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=QIzm2m9UokhHtJ14YC3f7h3pwaUVt1yPyIuiK5PXse0FR3BJNjt+i/0x+E9AxWAf5GLhiqjLoar8gteviHUb4tR7zvnrhldGXUs3XLe1LUiLoZl1fxBy8kLeCcf0UX66yzNsCuSRFi5Tom2cI5BA/Ipe9K633kJhVU/+RFfSz0c=
-Received: by 10.38.104.67 with SMTP id b67mr34041rnc;
-        Fri, 02 Sep 2005 18:11:40 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Fri, 2 Sep 2005 18:11:40 -0700 (PDT)
-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
+	id S932310AbVICBgN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Sep 2005 21:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbVICBgN
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Sep 2005 21:36:13 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:42725 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1751358AbVICBgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Sep 2005 21:36:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050903013612.NULX9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Fri, 2 Sep 2005 21:36:12 -0400
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <4318E754.9000703@zytor.com> (H. Peter Anvin's message of "Fri,
+	02 Sep 2005 16:59:16 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8031>
 
-Is there a way to replay a merge on a head that GIT considers unrelated? 
+"H. Peter Anvin" <hpa@zytor.com> writes:
 
-I have been playing with exporting to mbox format with
-git-format-patch-script, and applying those to the destination branch.
-However, this drops binary files -- and I _do_ have binary files in
-some of the projects I work on.
+> I currently have two klibc trees,
+>
+> rsync://rsync.kernel.org/pub/scm/libs/klibc/klibc.git
+>
+> and
+>
+> rsync://rsync.kernel.org/pub/scm/libs/klibc/klibc-kbuild.git
 
-cheers,
+I cloned them to take a look.  You_do_ seem to have a lot of
+renames.
 
+    $ git clone .../klibc.git klibc
+    $ cd klibc
+    $ git fetch .../klibc-kbuild.git master:kbuild
+    $ git diff -M --diff-filter=R -p kbuild..master |
+      git apply --summary --stat
 
-martin
+shows that there are 36 files moved around and there are not
+that much change overall between them.
+
+Currently merge operation of git does not take any advantage of
+the rename/copy detection smarts from git-diff-* family.  So
+the short answer to your question is unfortunately no.
+
+Given that they are 'related' trees, and we have proper merge
+ancestry information ('git show-branch kbuild master' shows they
+were merged two commits before klibc's master branch, and
+kbuild's master has 8 or so commits since they last merged), we
+should be able to do better.  Let me think about it a bit.
