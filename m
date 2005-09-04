@@ -1,67 +1,70 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] archimport: avoid committing on an Arch tag
-Date: Sun, 4 Sep 2005 22:55:29 +1200
-Message-ID: <11258313291144-git-send-email-martin@catalyst.net.nz>
-Reply-To: Martin Langhoff <martin@catalyst.net.nz>
+From: Jan Dittmer <jdittmer@ppp0.net>
+Subject: Re: empty patch-2.6.13-git? patches on ftp.kernel.org
+Date: Sun, 04 Sep 2005 17:31:20 +0200
+Message-ID: <431B1348.6000209@ppp0.net>
+References: <Pine.BSO.4.62.0508311527340.10416@rudy.mif.pg.gda.pl>	 <1125649389.6928.19.camel@baythorne.infradead.org>	 <Pine.LNX.4.58.0509020159110.3613@evo.osdl.org> <1125652914.6928.27.camel@baythorne.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Sun Sep 04 12:57:19 2005
-Return-path: <git-owner@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@osdl.org>,
+	=?ISO-8859-1?Q?Tomasz_K=B3oczko?= <kloczek@rudy.mif.pg.gda.pl>,
+	git@vger.kernel.org, linux-kernel@vger.kernel.org
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750914AbVIDPco@vger.kernel.org Sun Sep 04 17:33:55 2005
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750914AbVIDPco@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBsAg-0002Ns-Cm
-	for gcvg-git@gmane.org; Sun, 04 Sep 2005 12:56:22 +0200
+	id 1EBwUn-0000L2-Eg
+	for glk-linux-kernel-3@gmane.org; Sun, 04 Sep 2005 17:33:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750745AbVIDKzz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Sep 2005 06:55:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbVIDKzz
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 06:55:55 -0400
-Received: from 202-0-36-112.cable.paradise.net.nz ([202.0.36.112]:48320 "EHLO
-	localhost.localdomain") by vger.kernel.org with ESMTP
-	id S1750745AbVIDKzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2005 06:55:54 -0400
-Received: from aporo-debian (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (Postfix) with SMTP id DBE018AAC3;
-	Sun,  4 Sep 2005 22:55:29 +1200 (NZST)
-In-Reply-To: 
-X-Mailer: git-send-email-script
-To: git@vger.kernel.org
-Sender: git-owner@vger.kernel.org
+	id S1750914AbVIDPco (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 4 Sep 2005 11:32:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750907AbVIDPco
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sun, 4 Sep 2005 11:32:44 -0400
+Received: from mail.portrix.net ([212.202.157.208]:4572 "EHLO
+	zoidberg.portrix.net") by vger.kernel.org with ESMTP
+	id S1750846AbVIDPcn (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 4 Sep 2005 11:32:43 -0400
+Received: from [127.0.0.1] (fry.portrix.net [212.202.157.213])
+	(authenticated bits=0)
+	by zoidberg.portrix.net (8.12.3/8.12.3/Debian-7.1) with ESMTP id j84FVKn9019823
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NO);
+	Sun, 4 Sep 2005 17:31:39 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.7.10) Gecko/20050802 Thunderbird/1.0.6 Mnenhy/0.6.0.104
+X-Accept-Language: en-us, en
+To: David Woodhouse <dwmw2@infradead.org>
+In-Reply-To: <1125652914.6928.27.camel@baythorne.infradead.org>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8057>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8058>
 
-Arch tags are full commits (without any changed files) as well. Trust Arch
-to have put an unchanged tree in place (which seems to do reliably), and
-just add a tag & new branch. Speeds up Arch imports significantly, and leaves
-history in a much saner state.
+David Woodhouse wrote:
+> On Fri, 2005-09-02 at 02:00 -0700, Linus Torvalds wrote:
+> 
+>>Ahh. Please change that to
+>>
+>>        rm -rf tmp-empty-tree
+>>        mkdir tmp-empty-tree
+>>        cd tmp-empty-tree
+>>        git-init-db
+>>
+>>because otherwise you'll almost certainly hit something else later
+>>on..
+> 
+> 
+> OK, done. 
+> 
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+-git4 is again empty
 
+ patch-2.6.13-git4.bz2      03-Sep-2005 02:03   14
+[   ] patch-2.6.13-git4.bz2.sign 03-Sep-2005 02:03  248
+[   ] patch-2.6.13-git4.gz       03-Sep-2005 02:03   20
+[   ] patch-2.6.13-git4.gz.sign  03-Sep-2005 02:03  248
+[   ] patch-2.6.13-git4.id       03-Sep-2005 02:01   41
+[   ] patch-2.6.13-git4.log      03-Sep-2005 02:03  526K
+[   ] patch-2.6.13-git4.sign     03-Sep-2005 02:03  248
 
----
-
- git-archimport-script |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-55f05e4d4ab662caff10437bdd4de7e8b87f30e0
-diff --git a/git-archimport-script b/git-archimport-script
---- a/git-archimport-script
-+++ b/git-archimport-script
-@@ -227,6 +227,14 @@ foreach my $ps (@psets) {
-             
-             # find where we are supposed to branch from
-             `git checkout -b $ps->{branch} $branchpoint`;
-+
-+            # If we trust Arch with the fact that this is just 
-+            # a tag, and it does not affect the state of the tree
-+            # then we just tag and move on
-+            tag($ps->{id}, $branchpoint);
-+            ptag($ps->{id}, $branchpoint);
-+            print " * Tagged $ps->{id} at $branchpoint\n";
-+            next;
-         } 
-         die $! if $?;
-     } 
+-- 
+Jan
