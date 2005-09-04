@@ -1,54 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make git-apply understand "\ No newline at end of file" in non-english locales
-Date: Sun, 04 Sep 2005 12:25:16 -0700
-Message-ID: <7vd5noeiub.fsf@assigned-by-dhcp.cox.net>
-References: <20050904172901.GA20574@c165.ib.student.liu.se>
-	<20050904184625.GB23525@c165.ib.student.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 04 21:25:40 2005
+From: Horst von Brand <vonbrand@inf.utfsm.cl>
+Subject: Re: Tool renames? was Re: First stab at glossary
+Date: Sun, 04 Sep 2005 17:43:13 -0400
+Message-ID: <200509042143.j84LhDZo020359@laptop11.inf.utfsm.cl>
+References: <junkio@cox.net>
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Tim Ottinger <tottinge@progeny.com>, git@vger.kernel.org,
+	Horst von Brand <vonbrand@inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Mon Sep 05 00:03:53 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EC07W-0003MU-Ub
-	for gcvg-git@gmane.org; Sun, 04 Sep 2005 21:25:39 +0200
+	id 1EC2Z0-0003NL-Of
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 00:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751041AbVIDTZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Sep 2005 15:25:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbVIDTZT
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 15:25:19 -0400
-Received: from fed1rmmtao09.cox.net ([68.230.241.30]:62109 "EHLO
-	fed1rmmtao09.cox.net") by vger.kernel.org with ESMTP
-	id S1751041AbVIDTZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2005 15:25:18 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao09.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050904192517.FCCQ18319.fed1rmmtao09.cox.net@assigned-by-dhcp.cox.net>;
-          Sun, 4 Sep 2005 15:25:17 -0400
-To: Fredrik Kuivinen <freku045@student.liu.se>
-In-Reply-To: <20050904184625.GB23525@c165.ib.student.liu.se> (Fredrik
-	Kuivinen's message of "Sun, 4 Sep 2005 20:46:25 +0200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932089AbVIDWB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Sep 2005 18:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932090AbVIDWB3
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 18:01:29 -0400
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:62144 "EHLO inti.inf.utfsm.cl")
+	by vger.kernel.org with ESMTP id S932089AbVIDWB2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2005 18:01:28 -0400
+Received: from laptop11.inf.utfsm.cl (localhost.localdomain [127.0.0.1])
+	by laptop11.inf.utfsm.cl (8.13.4/8.13.1) with ESMTP id j84LhDZo020359;
+	Sun, 4 Sep 2005 17:43:13 -0400
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: Message from Junio C Hamano <junkio@cox.net> 
+   of "Fri, 02 Sep 2005 23:05:16 MST." <7v8xyebs9v.fsf@assigned-by-dhcp.cox.net> 
+X-Mailer: MH-E 7.4.2; nmh 1.1; XEmacs 21.4 (patch 17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8070>
 
-Fredrik Kuivinen <freku045@student.liu.se> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> I said:
+> 
+> > 	I'll draw up a strawman tonight unless somebody else
+> > 	does it first.
 
-> The message "\ No newline at end of file" which sometimes is produced
-> by diff(1) is locale dependent. We can't assume more than that it
-> begins with "\ ".
->
-> Signed-off-by: Fredrik Kuivinen <freku@ida.liu.se>
-> ---
->
-> The previous patch wasn't doing the right thing. Hopefully I have
-> managed to get it right this time.
+[...]
 
-I noticed that you left 12 in the previous patch, and thought it
-was a sane safety measure to make sure that the incomplete line
-marker is of reasonably length, not just any line that starts
-with '\ ' (i.e. "\ foobar\n", which is a tad short).
+> 3. Non-binaries are called '*-scripts'.
+> 
+>    In earlier discussions some people seem to like the
+>    distinction between *-script and others; I did not
+>    particularly like it, but I am throwing this in for
+>    discussion.
+
+I for one think this makes the command name dependent on a non-essential
+implementation detail, so -script should go.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                     Fono: +56 32 654431
+Universidad Tecnica Federico Santa Maria              +56 32 654239
+Casilla 110-V, Valparaiso, Chile                Fax:  +56 32 797513
