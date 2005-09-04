@@ -1,80 +1,45 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: empty patch-2.6.13-git? patches on ftp.kernel.org
-Date: Sun, 04 Sep 2005 16:55:51 +0100
-Message-ID: <1125849351.6146.40.camel@baythorne.infradead.org>
-References: <Pine.BSO.4.62.0508311527340.10416@rudy.mif.pg.gda.pl>
-	 <1125649389.6928.19.camel@baythorne.infradead.org>
-	 <Pine.LNX.4.58.0509020159110.3613@evo.osdl.org>
-	 <1125652914.6928.27.camel@baythorne.infradead.org>
-	 <431B1348.6000209@ppp0.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Could not interpret heads/dbrt-test as something to pull
+Date: Sun, 04 Sep 2005 10:07:51 -0700
+Message-ID: <7v7jdwiwwo.fsf@assigned-by-dhcp.cox.net>
+References: <87psrp5gvp.fsf@litku.valo.iki.fi>
+	<46a038f9050904030517f6ddda@mail.gmail.com>
+	<87irxh5eea.fsf@litku.valo.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@osdl.org>,
-	Tomasz =?ISO-8859-1?Q?K=B3oczko?= <kloczek@rudy.mif.pg.gda.pl>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750922AbVIDP4S@vger.kernel.org Sun Sep 04 17:58:17 2005
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1750922AbVIDP4S@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 04 19:09:48 2005
+Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBwrV-0003eO-Bp
-	for glk-linux-kernel-3@gmane.org; Sun, 04 Sep 2005 17:56:53 +0200
+	id 1EBxyR-0006SE-2l
+	for gcvg-git@gmane.org; Sun, 04 Sep 2005 19:08:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750922AbVIDP4S (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 4 Sep 2005 11:56:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbVIDP4S
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 4 Sep 2005 11:56:18 -0400
-Received: from baythorne.infradead.org ([81.187.2.161]:50090 "EHLO
-	baythorne.infradead.org") by vger.kernel.org with ESMTP
-	id S1750847AbVIDP4R (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 4 Sep 2005 11:56:17 -0400
-Received: from localhost ([127.0.0.1] helo=localhost.localdomain)
-	by baythorne.infradead.org with esmtpsa (Exim 4.52 #1 (Red Hat Linux))
-	id 1EBwqW-00070V-1m; Sun, 04 Sep 2005 16:55:52 +0100
-To: Jan Dittmer <jdittmer@ppp0.net>
-In-Reply-To: <431B1348.6000209@ppp0.net>
-X-Mailer: Evolution 2.2.3 (2.2.3-2.fc4) 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by baythorne.infradead.org
-	See http://www.infradead.org/rpr.html
-Sender: linux-kernel-owner@vger.kernel.org
+	id S932070AbVIDRH4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Sep 2005 13:07:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932071AbVIDRH4
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 13:07:56 -0400
+Received: from fed1rmmtao07.cox.net ([68.230.241.32]:35207 "EHLO
+	fed1rmmtao07.cox.net") by vger.kernel.org with ESMTP
+	id S932070AbVIDRHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2005 13:07:54 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao07.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050904170752.CYJH20473.fed1rmmtao07.cox.net@assigned-by-dhcp.cox.net>;
+          Sun, 4 Sep 2005 13:07:52 -0400
+To: Kalle Valo <Kalle.Valo@iki.fi>
+In-Reply-To: <87irxh5eea.fsf@litku.valo.iki.fi> (Kalle Valo's message of "Sun,
+	04 Sep 2005 13:13:49 +0300")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8059>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8059>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8060>
 
-On Sun, 2005-09-04 at 17:31 +0200, Jan Dittmer wrote:
-> David Woodhouse wrote:
-> > On Fri, 2005-09-02 at 02:00 -0700, Linus Torvalds wrote:
-> > 
-> >>Ahh. Please change that to
-> >>
-> >>        rm -rf tmp-empty-tree
-> >>        mkdir tmp-empty-tree
-> >>        cd tmp-empty-tree
-> >>        git-init-db
-> >>
-> >>because otherwise you'll almost certainly hit something else later
-> >>on..
-> > 
-> > 
-> > OK, done. 
-> > 
-> 
-> -git4 is again empty
+Kalle Valo <Kalle.Valo@iki.fi> writes:
 
-Hm, yes.
+> Rsync works for me also. But HTTP is still broken.
 
-+ rm -rf tmp-empty-tree
-+ mkdir tmp-empty-tree
-+ cd tmp-empty-tree
-+ git-init-db
-/pub/scm/linux/kernel/git/torvalds/linux-2.6.git/branches/: Permission denied
-+ unset GIT_DIR
-+ git-read-tree f505380ba7b98ec97bf25300c2a58aeae903530b
-fatal: unable to create new cachefile
-
-Fixed now; thanks.
-
--- 
-dwmw2
+Sorry, a broken repo.  Fix made on master should percolate
+through soonish.
