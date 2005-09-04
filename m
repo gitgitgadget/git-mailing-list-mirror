@@ -1,50 +1,58 @@
-From: Kalle Valo <Kalle.Valo@iki.fi>
-Subject: Re: Could not interpret heads/dbrt-test as something to pull
-Date: Sun, 04 Sep 2005 20:34:13 +0300
-Message-ID: <87y86c3ffu.fsf@litku.valo.iki.fi>
-References: <87psrp5gvp.fsf@litku.valo.iki.fi>
-	<46a038f9050904030517f6ddda@mail.gmail.com>
-	<87irxh5eea.fsf@litku.valo.iki.fi>
-	<7v7jdwiwwo.fsf@assigned-by-dhcp.cox.net>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: [PATCH] Make sure the diff machinery outputs "\ No newline ..." in english
+Date: Sun, 4 Sep 2005 20:17:24 +0200
+Message-ID: <20050904181724.GA23525@c165.ib.student.liu.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 04 19:35:16 2005
+Cc: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Sep 04 20:19:10 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EByNp-0002h7-Bw
-	for gcvg-git@gmane.org; Sun, 04 Sep 2005 19:34:21 +0200
+	id 1EBz3p-0000zA-4P
+	for gcvg-git@gmane.org; Sun, 04 Sep 2005 20:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932079AbVIDReS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Sep 2005 13:34:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932080AbVIDReS
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 13:34:18 -0400
-Received: from fep32-0.kolumbus.fi ([193.229.0.63]:50037 "EHLO
-	fep32-app.kolumbus.fi") by vger.kernel.org with ESMTP
-	id S932079AbVIDReR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Sep 2005 13:34:17 -0400
-Received: from litku.valo.iki.fi ([81.197.35.21]) by fep32-app.kolumbus.fi
-          with ESMTP
-          id <20050904173413.JIGE13434.fep32-app.kolumbus.fi@litku.valo.iki.fi>;
-          Sun, 4 Sep 2005 20:34:13 +0300
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v7jdwiwwo.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 04 Sep 2005 10:07:51 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932066AbVIDSRe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Sep 2005 14:17:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932074AbVIDSRe
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 14:17:34 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:8396 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932066AbVIDSRd (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Sep 2005 14:17:33 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 5DE3A411C; Sun,  4 Sep 2005 20:22:01 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EBz3U-0006BS-00; Sun, 04 Sep 2005 20:17:24 +0200
+To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8064>
 
-Junio C Hamano <junkio@cox.net> writes:
+In non-english locales diff(1) do sometimes output "\ No newline at end of
+file" in some other language. Set LC_ALL to C before execing diff to avoid
+this behaviour.
 
->> Rsync works for me also. But HTTP is still broken.
->
-> Sorry, a broken repo.  Fix made on master should percolate
-> through soonish.
+Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
 
-HTTP clone works now, thanks.
 
--- 
-Kalle Valo
+---
+
+ diff.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+eb6261334d65c3134d9dd822fd64e33ed8ad2dfc
+diff --git a/diff.c b/diff.c
+--- a/diff.c
++++ b/diff.c
+@@ -207,6 +207,7 @@ static void builtin_diff(const char *nam
+ 		}
+ 	}
+ 	fflush(NULL);
++	putenv("LC_ALL=C");
+ 	execlp("/bin/sh","sh", "-c", cmd, NULL);
+ }
+ 
