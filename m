@@ -1,54 +1,48 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
+From: Kalle Valo <Kalle.Valo@iki.fi>
 Subject: Re: Could not interpret heads/dbrt-test as something to pull
-Date: Sun, 4 Sep 2005 22:05:51 +1200
-Message-ID: <46a038f9050904030517f6ddda@mail.gmail.com>
+Date: Sun, 04 Sep 2005 13:13:49 +0300
+Message-ID: <87irxh5eea.fsf@litku.valo.iki.fi>
 References: <87psrp5gvp.fsf@litku.valo.iki.fi>
-Reply-To: martin.langhoff@gmail.com
+	<46a038f9050904030517f6ddda@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 04 12:07:48 2005
+X-From: git-owner@vger.kernel.org Sun Sep 04 12:14:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EBrOW-0006aK-Jj
-	for gcvg-git@gmane.org; Sun, 04 Sep 2005 12:06:36 +0200
+	id 1EBrVh-0007WA-Jx
+	for gcvg-git@gmane.org; Sun, 04 Sep 2005 12:14:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751329AbVIDKF5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Sep 2005 06:05:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751337AbVIDKF4
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 06:05:56 -0400
-Received: from rproxy.gmail.com ([64.233.170.194]:46321 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751329AbVIDKF4 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 4 Sep 2005 06:05:56 -0400
-Received: by rproxy.gmail.com with SMTP id i8so552563rne
-        for <git@vger.kernel.org>; Sun, 04 Sep 2005 03:05:51 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NNuFqsKQuTtHFxW1Kj4K1A/DDCQmSXzjpERX9/w30+ue8IFU/gsUpyQaBqeS/Em/CO/6HJXjMDm34SkPKizqrkJfCM3jZ8GCZsKgsgVscWQ/w2OvTYnZz3Km3VlwiQ8ckxJjYC8xLaG75YyRNoFS64/oEf4Ir0lJhe1POyeKN7E=
-Received: by 10.38.11.74 with SMTP id 74mr392268rnk;
-        Sun, 04 Sep 2005 03:05:51 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Sun, 4 Sep 2005 03:05:51 -0700 (PDT)
-To: Kalle Valo <Kalle.Valo@iki.fi>
-In-Reply-To: <87psrp5gvp.fsf@litku.valo.iki.fi>
-Content-Disposition: inline
+	id S1751337AbVIDKNx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Sep 2005 06:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751338AbVIDKNx
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Sep 2005 06:13:53 -0400
+Received: from fep32-0.kolumbus.fi ([193.229.0.63]:13979 "EHLO
+	fep32-app.kolumbus.fi") by vger.kernel.org with ESMTP
+	id S1751337AbVIDKNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Sep 2005 06:13:52 -0400
+Received: from litku.valo.iki.fi ([81.197.35.21]) by fep32-app.kolumbus.fi
+          with ESMTP
+          id <20050904101350.HGJC13434.fep32-app.kolumbus.fi@litku.valo.iki.fi>;
+          Sun, 4 Sep 2005 13:13:50 +0300
+To: martin.langhoff@gmail.com
+In-Reply-To: <46a038f9050904030517f6ddda@mail.gmail.com> (Martin Langhoff's
+	message of "Sun, 4 Sep 2005 22:05:51 +1200")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8055>
 
-On 9/4/05, Kalle Valo <Kalle.Valo@iki.fi> wrote:
-> I was trying to clone the git repository this morning and it fails
-> every time:
-> got 15891f81e0fa99333ad81e9271df5b2a72ba368e
-> error: Couldn't get http://www.kernel.org/pub/scm/git/git.git/refs/heads/dbrt-test for heads/dbrt-test
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-Tried to repro, but takes ageson my puny cablemodem. Cloning via rsync
-seems to work well though.
+>> error: Couldn't get http://www.kernel.org/pub/scm/git/git.git/refs/heads/dbrt-test for heads/dbrt-test
+>
+> Tried to repro, but takes ageson my puny cablemodem. Cloning via rsync
+> seems to work well though.
 
-cheers,
+Rsync works for me also. But HTTP is still broken.
 
-
-martin
+-- 
+Kalle Valo
