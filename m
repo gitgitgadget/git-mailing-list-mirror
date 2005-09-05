@@ -1,55 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
 Subject: Re: [PATCH 0/2] Update git-send-email-script with --compose
-Date: Mon, 05 Sep 2005 13:38:01 -0700
-Message-ID: <7vslwj2qty.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 6 Sep 2005 08:45:54 +1200
+Message-ID: <46a038f905090513456d67842b@mail.gmail.com>
 References: <11258971871874-git-send-email-ryan@michonline.com>
-	<46a038f905090504166246dc0a@mail.gmail.com>
-	<20050905153705.GD5335@mythryan2.michonline.com>
-	<7vll2b4ake.fsf@assigned-by-dhcp.cox.net>
-	<46a038f90509051306212d4e93@mail.gmail.com>
+	 <46a038f905090504166246dc0a@mail.gmail.com>
+	 <20050905153705.GD5335@mythryan2.michonline.com>
+	 <7vll2b4ake.fsf@assigned-by-dhcp.cox.net>
+	 <46a038f90509051306212d4e93@mail.gmail.com>
+	 <7vslwj2qty.fsf@assigned-by-dhcp.cox.net>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: Ryan Anderson <ryan@michonline.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 22:39:04 2005
+X-From: git-owner@vger.kernel.org Mon Sep 05 22:47:40 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECNjb-0004UH-32
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 22:38:31 +0200
+	id 1ECNqv-0005v9-Gb
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 22:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932281AbVIEUiE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 16:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932346AbVIEUiE
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 16:38:04 -0400
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:17840 "EHLO
-	fed1rmmtao05.cox.net") by vger.kernel.org with ESMTP
-	id S932281AbVIEUiD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2005 16:38:03 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050905203801.PEKE6784.fed1rmmtao05.cox.net@assigned-by-dhcp.cox.net>;
-          Mon, 5 Sep 2005 16:38:01 -0400
-To: martin.langhoff@gmail.com
-In-Reply-To: <46a038f90509051306212d4e93@mail.gmail.com> (Martin Langhoff's
-	message of "Tue, 6 Sep 2005 08:06:50 +1200")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932261AbVIEUqB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 16:46:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932346AbVIEUqB
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 16:46:01 -0400
+Received: from rproxy.gmail.com ([64.233.170.197]:43140 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S932261AbVIEUqA convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 16:46:00 -0400
+Received: by rproxy.gmail.com with SMTP id i8so722107rne
+        for <git@vger.kernel.org>; Mon, 05 Sep 2005 13:45:54 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QoEKUaxoCa+DZKMWRZd+SRZayfXSSC1GLOuSJA0h0lAWxeWf9l2zTYZDq1wnVSiYTsu+niSE6FUL4BpWnUND0N7TCs+NswsYFuEIH/Tv1pCgkwJhxCr2FxT0BlYoKkv5MVxjWvsJ1Pt0Prj+Co8CQyYX/S6EnxYjrEDv6oH5df0=
+Received: by 10.39.2.56 with SMTP id e56mr862545rni;
+        Mon, 05 Sep 2005 13:45:54 -0700 (PDT)
+Received: by 10.38.101.8 with HTTP; Mon, 5 Sep 2005 13:45:54 -0700 (PDT)
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vslwj2qty.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8116>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On 9/6/05, Junio C Hamano <junkio@cox.net> wrote:
+> Not really; --mbox output is one-file-per-patch and it is up to
+> you which ones to pick and concatenate them in what order, if you
+> want them in a single file.
 
-> Fair enough -- blame it on my primitive approach of only having 2
-> working repositories, and having some patches in them that I'm not
-> pushing upstream. Exporting to mbox would mean that I have to edit the
-> mbox file to remove the patches I don't intend to publish.
->
-> ... and on my naive reading of git-send-email documentation -- it
-> doesn't mention mbox format at all, so I assumed it would expect one
-> patch per file.
+Hrmmmm. Then I better hide away in a little cave, and shut my big mouth up. ;-)
 
-Not really; --mbox output is one-file-per-patch and it is up to
-you which ones to pick and concatenate them in what order, if you
-want them in a single file.
+It shows that I was never familiar with the practices of linux
+hackers. I've always read the references to mboxes holding patchbombs
+meaning literally one mbox file with a zillion contatenated patches
+received via email.
+
+apologies,
+
+
+martin
