@@ -1,146 +1,88 @@
-From: Martin Atukunda <matlads@dsmagic.com>
-Subject: Add git-version-script.
-Date: Mon, 5 Sep 2005 18:02:58 +0300
-Message-ID: <11259325781492-git-send-email-matlads@dsmagic.com>
-Reply-To: Martin Atukunda <matlads@dsmagic.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Moved files and merges
+Date: Mon, 05 Sep 2005 08:16:55 -0700
+Message-ID: <431C6167.4070703@zytor.com>
+References: <4318E754.9000703@zytor.com>	<7vek87djat.fsf@assigned-by-dhcp.cox.net>	<7vek867e29.fsf@assigned-by-dhcp.cox.net>	<7vy86erntu.fsf@assigned-by-dhcp.cox.net>	<20050903190500.GB8379@mars.ravnborg.org>	<7voe7arlqk.fsf@assigned-by-dhcp.cox.net>	<20050903220355.GA1895@mars.ravnborg.org>	<7v64thl248.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0509041329340.23242@iabervon.org> <7vvf1gejjf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Subject:[PATCH]"@ds.co.ug, Add@ds.co.ug, the@ds.co.ug,
-	"git-version-script."@ds.co.ug,
-	Martin Atukunda <matlads@dsmagic.com>
-X-From: git-owner@vger.kernel.org Mon Sep 05 17:05:16 2005
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Linus Torvalds <torvalds@osdl.org>,
+	Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 05 17:19:01 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECIWA-0005g8-5w
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:04:18 +0200
+	id 1ECIj4-0000Qy-UJ
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:17:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932306AbVIEPEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 11:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932304AbVIEPEO
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:04:14 -0400
-Received: from mail1.imul.com ([217.113.72.31]:52549 "EHLO mail1.infocom.co.ug")
-	by vger.kernel.org with ESMTP id S932300AbVIEPEO (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 11:04:14 -0400
-Received: from entandikwa.ds.co.ug ([::ffff:217.113.73.39])
-  by mail1.infocom.co.ug with esmtp; Mon, 05 Sep 2005 18:03:57 +0300
-  id 000E9BBA.431C5E5D.00000391
-Received: from igloo.ds.co.ug (igloo.ds.co.ug [192.168.129.66])
-	by entandikwa.ds.co.ug (Postfix) with ESMTP
-	id 4E3B55256; Mon,  5 Sep 2005 18:05:23 +0300 (EAT)
-Received: from localhost ([127.0.0.1] helo=igloo)
-	by igloo.ds.co.ug with smtp (Exim 4.50)
-	id 1ECIUs-0004Od-DS; Mon, 05 Sep 2005 18:02:58 +0300
-In-Reply-To: 
-X-Mailer: git-send-email-script
-To: git@vger.kernel.org
-X-Mime-Autoconverted: from 8bit to 7bit by courier 0.46
+	id S932304AbVIEPRa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 11:17:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbVIEPRa
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:17:30 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:40089 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S932304AbVIEPR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Sep 2005 11:17:29 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j85FGuJv029484
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 5 Sep 2005 08:16:57 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7vvf1gejjf.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8094>
 
-This script simply reports the version of git you have installed.
+Junio C Hamano wrote:
+> 
+>>  1
+>> / \
+>>0-2-3-5-7
+>>   \   /
+>>    4-6
+>>
+>>It shouldn't matter to the merge at 7 if the 2-3 reorganization was done 
+>>locally, by applying a patch, or by merging.
+> 
+> 
+> There was another problem in my message that treated #3
+> specially.  I did it that way primarily because I wanted to have
+> an algorithm that needs to look only limited (namely, one)
+> number of commits, more than what we currently look at.  The
+> problem is that the trail #0..#1..#3 (in the example in second
+> message, whose rename probably happened between #0 and #1) may
+> change the contents of the renamed file so drastically that diff
+> between #2 and #3 may not look like rename anymore, while we
+> could still detect it if we followed the whole trail and looked
+> for renames between each commit on it.
+> 
 
-Signed-off-by: Martin Atukunda <matlads@dsmagic.com>
+One question, of course, is if one should simply keep additional 
+metadata around to handle this sort of situations.  One could, for 
+example, keep a UUID for each file, which would be carried over by the 
+renaming commit.  If one runs into a tree which doesn't have the UUIDs, 
+they should be generated at that time (this could be a bit tricky to do 
+without invalidating all signatures in the tree, since the obvious way 
+-- adding it to the tree object -- would invalidate all the commit and 
+tag objects.)
 
----
+In some ways this is similar to the Unix filesystem model of separating 
+location (pathname) from identity (device:inode).
 
- Documentation/git-version-script.txt |   36 ++++++++++++++++++++++++++++++++++
- Makefile                             |    9 +++++++--
- git-version-script.in                |    9 +++++++++
- 3 files changed, 52 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/git-version-script.txt
- create mode 100644 git-version-script.in
+It would also hade the somewhat interesting possibility that one could 
+"remove and recreate" a file and have it exist as a different entity. 
+That probably needs to be a user option.
 
-df6687167001a93528876d5f36a2fc61eb1829fd
-diff --git a/Documentation/git-version-script.txt b/Documentation/git-version-script.txt
-new file mode 100644
---- /dev/null
-+++ b/Documentation/git-version-script.txt
-@@ -0,0 +1,36 @@
-+git-version-script(1)
-+===================
-+v0.99.5, Aug 2005
-+
-+NAME
-+----
-+git-version-script - Prints the current version of git
-+
-+
-+SYNOPSIS
-+--------
-+'git-version-script'
-+
-+DESCRIPTION
-+-----------
-+
-+This simple script simply prints the version of git you are currently
-+running. The version is generated at release time, and stored in the script
-+for later use.
-+
-+OPTIONS
-+-------
-+This program takes no options
-+
-+Author
-+------
-+Written by Martin Atukunda <matlads@dsmagic.com>
-+
-+Documentation
-+--------------
-+Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
-+
-+GIT
-+---
-+Part of the link:git.html[git] suite
-+
-diff --git a/Makefile b/Makefile
---- a/Makefile
-+++ b/Makefile
-@@ -66,7 +66,7 @@ SCRIPTS=git git-merge-one-file-script gi
- 	git-format-patch-script git-sh-setup-script git-push-script \
- 	git-branch-script git-parse-remote-script git-verify-tag-script \
- 	git-ls-remote-script git-clone-dumb-http git-rename-script \
--	git-request-pull-script git-bisect-script
-+	git-request-pull-script git-bisect-script git-version-script
- 
- SCRIPTS += git-count-objects-script
- SCRIPTS += git-revert-script
-@@ -230,8 +230,12 @@ install-doc:
- git-core.spec: git-core.spec.in Makefile
- 	sed -e 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@
- 
-+git-version-script: git-version-script.in Makefile
-+	sed -e 's/@@VERSION@@/$(GIT_VERSION)/g' < $< > $@
-+	chmod +x $@
-+
- GIT_TARNAME=git-core-$(GIT_VERSION)
--dist: git-core.spec git-tar-tree
-+dist: git-core.spec git-version-script git-tar-tree
- 	./git-tar-tree HEAD $(GIT_TARNAME) > $(GIT_TARNAME).tar
- 	@mkdir -p $(GIT_TARNAME)
- 	@cp git-core.spec $(GIT_TARNAME)
-@@ -253,6 +257,7 @@ deb: dist
- clean:
- 	rm -f *.o mozilla-sha1/*.o ppc/*.o $(PROG) $(LIB_FILE)
- 	rm -f git-core.spec
-+	rm -f git-version-script
- 	rm -rf $(GIT_TARNAME)
- 	rm -f $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	rm -f git-core_$(GIT_VERSION)-*.deb git-core_$(GIT_VERSION)-*.dsc
-diff --git a/git-version-script.in b/git-version-script.in
-new file mode 100644
---- /dev/null
-+++ b/git-version-script.in
-@@ -0,0 +1,9 @@
-+#!/bin/sh
-+
-+. git-sh-setup-script || die "Not a git archive"
-+
-+dryrun=
-+echo=
-+
-+echo git version @@VERSION@@
-+
+	-hpa
