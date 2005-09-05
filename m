@@ -1,88 +1,89 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Moved files and merges
-Date: Mon, 05 Sep 2005 08:16:55 -0700
-Message-ID: <431C6167.4070703@zytor.com>
-References: <4318E754.9000703@zytor.com>	<7vek87djat.fsf@assigned-by-dhcp.cox.net>	<7vek867e29.fsf@assigned-by-dhcp.cox.net>	<7vy86erntu.fsf@assigned-by-dhcp.cox.net>	<20050903190500.GB8379@mars.ravnborg.org>	<7voe7arlqk.fsf@assigned-by-dhcp.cox.net>	<20050903220355.GA1895@mars.ravnborg.org>	<7v64thl248.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0509041329340.23242@iabervon.org> <7vvf1gejjf.fsf@assigned-by-dhcp.cox.net>
+From: =?iso-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+Subject: Re: Tool renames? was Re: First stab at glossary
+Date: Mon, 05 Sep 2005 17:13:50 +0200
+Message-ID: <u5tvf1feedt.fsf@lysator.liu.se>
+References: <200509050054.j850sC3D023778@laptop11.inf.utfsm.cl>
+	<Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Linus Torvalds <torvalds@osdl.org>,
-	Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 17:19:01 2005
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Mon Sep 05 17:19:06 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECIj4-0000Qy-UJ
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:17:39 +0200
+	id 1ECIj4-0000Qy-DE
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932304AbVIEPRa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 11:17:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932307AbVIEPRa
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:17:30 -0400
-Received: from paleosilicon.orionmulti.com ([209.128.68.66]:40089 "EHLO
-	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
-	id S932304AbVIEPR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Sep 2005 11:17:29 -0400
-X-Envelope-From: hpa@zytor.com
-Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
-	(authenticated bits=0)
-	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j85FGuJv029484
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 5 Sep 2005 08:16:57 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vvf1gejjf.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
-X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
-	paleosilicon.orionmulti.com
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
-X-Virus-Status: Clean
+	id S932300AbVIEPRV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Sep 2005 11:17:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932304AbVIEPRV
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:17:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:50362 "EHLO ciao.gmane.org")
+	by vger.kernel.org with ESMTP id S932300AbVIEPRV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 11:17:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ECIhS-000097-Fl
+	for git@vger.kernel.org; Mon, 05 Sep 2005 17:15:58 +0200
+Received: from 212214120186-virtutech-ab.host.songnetworks.se ([212.214.120.186])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Sep 2005 17:15:58 +0200
+Received: from davidk by 212214120186-virtutech-ab.host.songnetworks.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Sep 2005 17:15:58 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 212214120186-virtutech-ab.host.songnetworks.se
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:ZhNc15aWL5Gt7Ou6XAeidxb9NYs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8095>
 
-Junio C Hamano wrote:
-> 
->>  1
->> / \
->>0-2-3-5-7
->>   \   /
->>    4-6
->>
->>It shouldn't matter to the merge at 7 if the 2-3 reorganization was done 
->>locally, by applying a patch, or by merging.
-> 
-> 
-> There was another problem in my message that treated #3
-> specially.  I did it that way primarily because I wanted to have
-> an algorithm that needs to look only limited (namely, one)
-> number of commits, more than what we currently look at.  The
-> problem is that the trail #0..#1..#3 (in the example in second
-> message, whose rename probably happened between #0 and #1) may
-> change the contents of the renamed file so drastically that diff
-> between #2 and #3 may not look like rename anymore, while we
-> could still detect it if we followed the whole trail and looked
-> for renames between each commit on it.
-> 
+Linus Torvalds <torvalds@osdl.org> writes:
 
-One question, of course, is if one should simply keep additional 
-metadata around to handle this sort of situations.  One could, for 
-example, keep a UUID for each file, which would be carried over by the 
-renaming commit.  If one runs into a tree which doesn't have the UUIDs, 
-they should be generated at that time (this could be a bit tricky to do 
-without invalidating all signatures in the tree, since the obvious way 
--- adding it to the tree object -- would invalidate all the commit and 
-tag objects.)
+> On Sun, 4 Sep 2005, Horst von Brand wrote:
+>> > I had the same opinion.  The counter-argument people raised when
+>> > this topic came up on the list was that it would help grepping
+>> > in the source tree.
+>>=20
+>> Grepping for what?
+>
+> Grepping for strings.
+>
+> For example, when renaming a binary, the sane way to check that you f=
+ixed=20
+> all users right now is
+>
+> 	grep old-binary-name *.c *.h *-scripts
+>
+> and you catch all users.
+>
+> In contrast, "grep *" will catch totally uninteresting patterns like=20
+> object files etc.
+>
+> I personally find that very useful, and I don't see _any_ point to na=
+ming=20
+> by what _kind_ of interpreter you use. Why would _anybody_ care wheth=
+er=20
+> something is written in perl vs shell? There's no reason to name thin=
+gs by=20
+> the interpreter.
 
-In some ways this is similar to the Unix filesystem model of separating 
-location (pathname) from identity (device:inode).
+But to the users (like myself), there's no point in naming it by
+whether it's a script or a binary.  Since, as a user, I couldn't care
+less that git-foobar is a shell script, I don't want to pollute the
+command name space with "-script" suffixes.  Calling the command
+git-foobar makes much more sense, and allows us to reimplement the
+scripts as binaries, or whatever.
 
-It would also hade the somewhat interesting possibility that one could 
-"remove and recreate" a file and have it exist as a different entity. 
-That probably needs to be a user option.
+So your argument that it makes it easier for git developers to work
+with the source doesn't help the user.
 
-	-hpa
+The consequence is maybe that the scripts should be called *-script in
+the source, but be installed without the suffix?
+
+--=20
+David K=E5gedal
