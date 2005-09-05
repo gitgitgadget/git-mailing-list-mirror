@@ -1,61 +1,70 @@
-From: Fredrik Kuivinen <freku045@student.liu.se>
-Subject: Re: [PATCH] Make git-apply understand "\ No newline at end of file" in non-english locales
-Date: Mon, 5 Sep 2005 07:25:49 +0200
-Message-ID: <20050905052549.GA1875@c165.ib.student.liu.se>
-References: <20050904172901.GA20574@c165.ib.student.liu.se> <20050904184625.GB23525@c165.ib.student.liu.se> <7vd5noeiub.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Multi-ancestor read-tree notes
+Date: Mon, 5 Sep 2005 01:41:36 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 07:27:23 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Sep 05 07:38:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EC9Ug-0006U3-Qf
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 07:26:11 +0200
+	id 1EC9fv-0000Pd-W6
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 07:37:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932206AbVIEFZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 01:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVIEFZ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 01:25:56 -0400
-Received: from [85.8.31.11] ([85.8.31.11]:53967 "EHLO mail6.wasadata.com")
-	by vger.kernel.org with ESMTP id S932206AbVIEFZ4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 01:25:56 -0400
-Received: from c165 (unknown [85.8.2.189])
-	by mail6.wasadata.com (Postfix) with ESMTP
-	id 6A767411A; Mon,  5 Sep 2005 07:30:24 +0200 (CEST)
-Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
-	id 1EC9UL-0000pI-00; Mon, 05 Sep 2005 07:25:49 +0200
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5noeiub.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.6+20040907i
+	id S932214AbVIEFhp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 01:37:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932216AbVIEFhp
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 01:37:45 -0400
+Received: from iabervon.org ([66.92.72.58]:43782 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S932214AbVIEFho (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 01:37:44 -0400
+Received: (qmail 22751 invoked by uid 1000); 5 Sep 2005 01:41:36 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Sep 2005 01:41:36 -0400
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8083>
 
-On Sun, Sep 04, 2005 at 12:25:16PM -0700, Junio C Hamano wrote:
-> Fredrik Kuivinen <freku045@student.liu.se> writes:
-> 
-> > The message "\ No newline at end of file" which sometimes is produced
-> > by diff(1) is locale dependent. We can't assume more than that it
-> > begins with "\ ".
-> >
-> > Signed-off-by: Fredrik Kuivinen <freku@ida.liu.se>
-> > ---
-> >
-> > The previous patch wasn't doing the right thing. Hopefully I have
-> > managed to get it right this time.
-> 
-> I noticed that you left 12 in the previous patch, and thought it
-> was a sane safety measure to make sure that the incomplete line
-> marker is of reasonably length, not just any line that starts
-> with '\ ' (i.e. "\ foobar\n", which is a tad short).
-> 
+I've got a version of read-tree which accepts multiple ancestors and does 
+a merge using information from all of them.
 
-Maybe the first patch wasn't that bad after all :)
+The basic features are that it looks for an ancestor which would permit a 
+trivial merge, and uses that. However, if it finds ancestors which permit 
+different trivial merges, it does not merge (which I call case #16).
 
-In the current diffutils package the Swedish translation is one of the
-shortest ones, so 12 is ok for now at least.
+In case #16, I'm not sure what I should produce. I think the best thing 
+might be to not leave anything in stage 1. The desired end effect is that 
+the user is given a file with a section like:
 
-- Fredrik
+  {
+    *t = NULL;
+    *m = 0;
+<<<<<<<<
+    return Z_DATA_ERROR;
+========
+    return Z_OK;
+>>>>>>>>
+  }
+
+In other news, the merge that was giving Len Brown problems a while ago 
+turns out to have the above conflict, and he happened to end up doing the 
+right thing and not reverting Linus's revert of an unnecessary (but 
+harmless) change. I only noticed this just now, when I was testing that 
+merge, and got it to generate only two conflicts regardless of order of 
+ancestors (didn't try to resolve the other one, drivers/acpi/osl.c, with 
+"merge" either way).
+
+So this test is encouraging: I get fewer non-trivial cases than either of 
+the ancestors alone gives, and I catch a case that both single ancestors 
+gets wrong.
+
+Note that there are still some memory leaks for me to fix, but that's the 
+only flaw I know of with this.
+
+Patches against mainline to follow shortly.
+
+	-Daniel
+*This .sig left intentionally blank*
