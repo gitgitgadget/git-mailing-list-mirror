@@ -1,79 +1,61 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: [PATCH 2/2] Update documentation of --compose to git-send-email-script.txt
-Date: Mon, 5 Sep 2005 01:13:07 -0400
-Message-ID: <11258971872608-git-send-email-ryan@michonline.com>
-References: <1125897187857-git-send-email-ryan@michonline.com>
-Reply-To: Ryan Anderson <ryan@michonline.com>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] Make git-apply understand "\ No newline at end of file" in non-english locales
+Date: Mon, 5 Sep 2005 07:25:49 +0200
+Message-ID: <20050905052549.GA1875@c165.ib.student.liu.se>
+References: <20050904172901.GA20574@c165.ib.student.liu.se> <20050904184625.GB23525@c165.ib.student.liu.se> <7vd5noeiub.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Mon Sep 05 07:16:21 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 05 07:27:23 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1EC9ID-0002sw-BB
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 07:13:17 +0200
+	id 1EC9Ug-0006U3-Qf
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 07:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932178AbVIEFNO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 01:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932206AbVIEFNN
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 01:13:13 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:20382 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S932178AbVIEFNN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 01:13:13 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1EC9I8-0003jd-Kw
-	for git@vger.kernel.org; Mon, 05 Sep 2005 01:13:12 -0400
-Received: from [10.254.251.12] (helo=mythryan)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1EC9I4-00042y-00; Mon, 05 Sep 2005 01:13:08 -0400
-Received: from localhost ([127.0.0.1] helo=mythryan)
-	by mythryan with smtp (Exim 4.52)
-	id 1EC9I3-000896-Sb; Mon, 05 Sep 2005 01:13:07 -0400
-In-Reply-To: <1125897187857-git-send-email-ryan@michonline.com>
-X-Mailer: git-send-email-script
-To: git@vger.kernel.org
+	id S932206AbVIEFZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 01:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932208AbVIEFZ4
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 01:25:56 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:53967 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932206AbVIEFZ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 01:25:56 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 6A767411A; Mon,  5 Sep 2005 07:30:24 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1EC9UL-0000pI-00; Mon, 05 Sep 2005 07:25:49 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5noeiub.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8082>
 
-Signed-off-by: Ryan Anderson <ryan@michonline.com>
+On Sun, Sep 04, 2005 at 12:25:16PM -0700, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> > The message "\ No newline at end of file" which sometimes is produced
+> > by diff(1) is locale dependent. We can't assume more than that it
+> > begins with "\ ".
+> >
+> > Signed-off-by: Fredrik Kuivinen <freku@ida.liu.se>
+> > ---
+> >
+> > The previous patch wasn't doing the right thing. Hopefully I have
+> > managed to get it right this time.
+> 
+> I noticed that you left 12 in the previous patch, and thought it
+> was a sane safety measure to make sure that the incomplete line
+> marker is of reasonably length, not just any line that starts
+> with '\ ' (i.e. "\ foobar\n", which is a tad short).
+> 
 
----
+Maybe the first patch wasn't that bad after all :)
 
- Documentation/git-send-email-script.txt |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+In the current diffutils package the Swedish translation is one of the
+shortest ones, so 12 is ok for now at least.
 
-60765e20aa12da748f43204e25cb582f88fb16c8
-diff --git a/Documentation/git-send-email-script.txt b/Documentation/git-send-email-script.txt
---- a/Documentation/git-send-email-script.txt
-+++ b/Documentation/git-send-email-script.txt
-@@ -33,16 +33,21 @@ The options available are:
- 	the value GIT_COMMITTER_IDENT, as returned by "git-var -l".
- 	The user will still be prompted to confirm this entry.
- 
-+   --compose
-+	Use \$EDITOR to edit an introductory message for the
-+	patch series.
-+
-    --subject
-    	Specify the initial subject of the email thread.
-+	Only necessary if --compose is also set.  If --compose
-+	is not set, this will be prompted for.
- 
-    --in-reply-to
- 	Specify the contents of the first In-Reply-To header.
- 	Subsequent emails will refer to the previous email 
--	instead of this.
--	When overriding on the command line, it may be necessary
--	to set this to a space.  For example
--		--in-reply-to=" "
-+	instead of this if --chain-reply-to is set (the default)
-+	Only necessary if --compose is also set.  If --compose
-+	is not set, this will be prompted for.
- 
-    --chain-reply-to, --no-chain-reply-to
- 	If this is set, each email will be sent as a reply to the previous
+- Fredrik
