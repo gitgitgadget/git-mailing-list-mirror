@@ -1,139 +1,77 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 4/4] Document the trivial merge rules for 3(+more ancestors)-way
- merges.
-Date: Mon, 5 Sep 2005 02:05:17 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509050204500.23242@iabervon.org>
-References: <Pine.LNX.4.63.0509050151240.23242@iabervon.org>
+From: Fredrik Kuivinen <freku045@student.liu.se>
+Subject: Re: [PATCH] Make sure the diff machinery outputs "\ No newline ..." in english
+Date: Mon, 5 Sep 2005 08:01:49 +0200
+Message-ID: <20050905060149.GB1875@c165.ib.student.liu.se>
+References: <20050904181724.GA23525@c165.ib.student.liu.se> <7vd5nohdp3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Sep 05 08:02:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 05 08:03:29 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECA2q-00044A-4X
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 08:01:28 +0200
+	id 1ECA3J-00048q-W6
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 08:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbVIEGBZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 02:01:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932226AbVIEGBZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 02:01:25 -0400
-Received: from iabervon.org ([66.92.72.58]:34578 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S932225AbVIEGBZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 02:01:25 -0400
-Received: (qmail 22889 invoked by uid 1000); 5 Sep 2005 02:05:17 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Sep 2005 02:05:17 -0400
-To: git@vger.kernel.org
-In-Reply-To: <Pine.LNX.4.63.0509050151240.23242@iabervon.org>
+	id S932226AbVIEGBz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 02:01:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbVIEGBz
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 02:01:55 -0400
+Received: from [85.8.31.11] ([85.8.31.11]:3024 "EHLO mail6.wasadata.com")
+	by vger.kernel.org with ESMTP id S932226AbVIEGBy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 02:01:54 -0400
+Received: from c165 (unknown [85.8.2.189])
+	by mail6.wasadata.com (Postfix) with ESMTP
+	id 78A3E411C; Mon,  5 Sep 2005 08:06:23 +0200 (CEST)
+Received: from ksorim by c165 with local (Exim 3.36 #1 (Debian))
+	id 1ECA3B-0000uN-00; Mon, 05 Sep 2005 08:01:49 +0200
+To: Junio C Hamano <junkio@cox.net>
+Content-Disposition: inline
+In-Reply-To: <7vd5nohdp3.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.6+20040907i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8089>
 
-Signed-off-by: Daniel Barkalow
----
+On Sun, Sep 04, 2005 at 11:48:08AM -0700, Junio C Hamano wrote:
+> Fredrik Kuivinen <freku045@student.liu.se> writes:
+> 
+> > In non-english locales diff(1) do sometimes output "\ No newline at end of
+> > file" in some other language. Set LC_ALL to C before execing diff to avoid
+> > this behaviour.
+> >
+> > Signed-off-by: Fredrik Kuivinen <freku045@student.liu.se>
+> 
+> I was thinking about this when I was examining your other patch.
+> 
+> What else, other than the incomplete line marker (and timestamp
+> output it uses by default, which we disable by passing explicit
+> -L flags), are affected by locale in diff output?
 
- Documentation/technical/trivial-merge.txt |   92 +++++++++++++++++++++++++++++
- 1 files changed, 92 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/technical/trivial-merge.txt
+After a quick look through the diff source I didn't find anything
+else. It's quite possible that I haved missed something though. Most
+of the translated messages are related to error reporting, which I
+guess might be nice to have in the user specified language.
 
-7544be0a8eda7b796150729a7795c2639278da62
-diff --git a/Documentation/technical/trivial-merge.txt b/Documentation/technical/trivial-merge.txt
-new file mode 100644
---- /dev/null
-+++ b/Documentation/technical/trivial-merge.txt
-@@ -0,0 +1,92 @@
-+Trivial merge rules
-+===================
-+
-+This document describes the outcomes of the trivial merge logic in read-tree.
-+
-+One-way merge
-+-------------
-+
-+This replaces the index with a different tree, keeping the stat info
-+for entries that don't change, and allowing -u to make the minimum
-+required changes to the working tree to have it match.
-+
-+   index   tree    result
-+   -----------------------
-+   *       (empty) (empty)
-+   (empty) tree    tree
-+   index+  tree    tree
-+   index+  index   index+
-+
-+Two-way merge
-+-------------
-+
-+
-+
-+Three-way merge
-+---------------
-+
-+It is permitted for the index to lack an entry; this does not prevent
-+any case from applying.
-+
-+If the index exists, it is an error for it not to match either the
-+head or (if the merge is trivial) the result.
-+
-+If multiple cases apply, the one used is listed first.
-+
-+A result of "no merge" means that index is left in stage 0, ancest in
-+stage 1, head in stage 2, and remote in stage 3 (if any of these are
-+empty, no entry is left for that stage). Otherwise, the given entry is
-+left in stage 0, and there are no other entries.
-+
-+A result of "no merge" is an error if the index is not empty and not
-+up-to-date.
-+
-+*empty* means that the tree must not have a directory-file conflict
-+ with the entry.
-+
-+For multiple ancestors or remotes, a '+' means that this case applies
-+even if only one ancestor or remote fits; normally, all of the
-+ancestors or remotes must be the same.
-+
-+case  ancest    head    remote    result
-+----------------------------------------
-+1     (empty)+  (empty) (empty)   (empty)
-+2ALT  (empty)+  *empty* remote    remote
-+2ALT  (empty)+  *empty* remote    remote
-+2     (empty)^  (empty) remote    no merge
-+3ALT  (empty)+  head    *empty*   head
-+3     (empty)^  head    (empty)   no merge
-+4     (empty)^  head    remote    no merge
-+5ALT  *         head    head      head
-+6     ancest^   (empty) (empty)   no merge
-+8ALT  ancest    (empty) ancest    (empty)
-+7     ancest+   (empty) remote    no merge
-+9     ancest+   head    (empty)   no merge
-+10ALT ancest    ancest  (empty)   (empty)
-+11    ancest+   head    remote    no merge
-+16    anc1/anc2 anc1    anc2      no merge
-+13    ancest+   head    ancest    head
-+14    ancest+   ancest  remote    remote
-+14ALT ancest+   ancest  remote    remote
-+
-+Only #2ALT and #3ALT use *empty*, because these are the only cases
-+where there can be conflicts that didn't exist before. Note that we
-+allow directory-file conflicts between things in different stages
-+after the trivial merge.
-+
-+A possible alternative for #6 is (empty), which would make it like
-+#1. This is not used, due to the likelihood that it arises due to
-+moving the file to multiple different locations or moving and deleting
-+it in different branches.
-+
-+Case #1 is included for completeness, and also in case we decide to
-+put on '+' markings; any path that is never mentioned at all isn't
-+handled.
-+
-+Note that #16 is when both #13 and #14 apply; in this case, we refuse
-+the trivial merge, because we can't tell from this data which is
-+right. This is a case of a reverted patch (in some direction, maybe
-+multiple times), and the right answer depends on looking at crossings
-+of history or common ancestors of the ancestors.
-+
-+The status as of Sep 5 is that multiple remotes are not supported
-\ No newline at end of file
+> Especially, if the diff output is more readable for human
+> consumers (i.e. reviewers) without making it harder to use to
+> machine consumers (i.e. patch or git-apply) when generated under
+> a locale that is 'native' to the data, this patch robs from
+> users the possibility of doing so.
+> 
+> IOW, in a Swedes-only project that tracks a document in Swedish,
+> it _might_ be friendlier and more useful to the users if allowed
+> generating diffs under sv_SE locale, as long as such a diff does
+> not make the processing by patch and git-apply more difficult
+> (which your other patch already solved for git-apply).
+
+I agree that it's kind of evil to remove the option of generating the
+output in some other language.
+
+Another possibility is to set LC_MESSAGES to C instead. If we go this
+way the user can override it by setting LC_ALL. The difference is that
+in most configurations the user has to make an active choice to get
+the 'native' language output and english will be the default.
+
+- Fredrik
