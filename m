@@ -1,102 +1,140 @@
-From: Ryan Anderson <ryan@michonline.com>
-Subject: Re: [PATCH 0/2] Update git-send-email-script with --compose
-Date: Mon, 5 Sep 2005 11:37:05 -0400
-Message-ID: <20050905153705.GD5335@mythryan2.michonline.com>
-References: <11258971871874-git-send-email-ryan@michonline.com> <46a038f905090504166246dc0a@mail.gmail.com>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: Moved files and merges
+Date: Mon, 5 Sep 2005 08:47:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.58.0509050825170.3568@evo.osdl.org>
+References: <4318E754.9000703@zytor.com> <7vek87djat.fsf@assigned-by-dhcp.cox.net>
+ <7vek867e29.fsf@assigned-by-dhcp.cox.net> <7vy86erntu.fsf@assigned-by-dhcp.cox.net>
+ <20050903190500.GB8379@mars.ravnborg.org> <7voe7arlqk.fsf@assigned-by-dhcp.cox.net>
+ <20050903220355.GA1895@mars.ravnborg.org> <7v64thl248.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0509041329340.23242@iabervon.org> <7vvf1gejjf.fsf@assigned-by-dhcp.cox.net>
+ <431C6167.4070703@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 17:37:44 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Fredrik Kuivinen <freku045@student.liu.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 05 17:49:21 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECJ27-00055T-4c
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:37:19 +0200
+	id 1ECJCX-0007hr-AT
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 17:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750717AbVIEPhJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 11:37:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbVIEPhJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:37:09 -0400
-Received: from mail.autoweb.net ([198.172.237.26]:10156 "EHLO mail.autoweb.net")
-	by vger.kernel.org with ESMTP id S1750971AbVIEPhH (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 11:37:07 -0400
-Received: from pcp01184054pcs.strl301.mi.comcast.net ([68.60.186.73] helo=michonline.com)
-	by mail.autoweb.net with esmtp (Exim 4.44)
-	id 1ECJ1u-0006Kr-L1; Mon, 05 Sep 2005 11:37:06 -0400
-Received: from mythical ([10.254.251.11] ident=Debian-exim)
-	by michonline.com with esmtp (Exim 3.35 #1 (Debian))
-	id 1ECJ1u-0000VY-00; Mon, 05 Sep 2005 11:37:06 -0400
-Received: from ryan by mythical with local (Exim 4.52)
-	id 1ECJ1t-0006lA-SV; Mon, 05 Sep 2005 11:37:05 -0400
-To: Martin Langhoff <martin.langhoff@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <46a038f905090504166246dc0a@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
+	id S932222AbVIEPrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 11:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932300AbVIEPrq
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 11:47:46 -0400
+Received: from smtp.osdl.org ([65.172.181.4]:34215 "EHLO smtp.osdl.org")
+	by vger.kernel.org with ESMTP id S932222AbVIEPrp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 11:47:45 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id j85FlPBo015755
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 5 Sep 2005 08:47:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id j85FlLZN015553;
+	Mon, 5 Sep 2005 08:47:23 -0700
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <431C6167.4070703@zytor.com>
+X-Spam-Status: No, hits=0 required=5 tests=
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.45__
+X-MIMEDefang-Filter: osdl$Revision: 1.115 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8097>
 
-On Mon, Sep 05, 2005 at 11:16:57PM +1200, Martin Langhoff wrote:
-> Ryan,
+
+
+On Mon, 5 Sep 2005, H. Peter Anvin wrote:
 > 
-> is it possible to fix the git-send-email script to "just work" reading
-> in the emails that `git-format-patch-script -o patchdir origin`
-> generates? I have a very ugly local patch to git-send-email-script
-> that
-> 
->  - reads "from" from git-var, can be overridden by passing an explicit --from
+> It would also hade the somewhat interesting possibility that one could 
+> "remove and recreate" a file and have it exist as a different entity. 
+> That probably needs to be a user option.
 
-git-send-email-script already reads the "From:" from git-var - but I
-suppose I should only *prompt* for the from if something isn't
-satisfactory with the output of git-var.  TODO #1
+It's a totally broken model. Really.
 
->  - reads "subject" from the first line of STDIN or file. If the line
-> doesn't start with [PATCH it provides the [PATCH] prefix. I found it
-> really confusing that it wants to get 'from' in the first line...
-> that's not what git-format-patch produces!
+You think it solves issues, but it just creates more bugs and problems 
+than it solves.
 
-Sorry about that - I always export using git-format-patch using --mbox,
-and those work nicely.  I'm a bit reluctant to do the [PATCH] fixup, but
-I think I will:
+Trust me. The whole point of git is that "content is the only thing that 
+matters", and that there isn't any other meta-data. If you break that 
+fundamental assumption, everything git does so well will break. 
 
-	1. Detect [PATCH] or [PATCH [0-9]+/[0-9]+] (Sorry for the horrid
-	fake-regexp)
-	2. Provide a --no-fixup-subject to turn that off.
+I think we've already shown that the "content matters" approach works.  I
+claim that the git rename tracking works better than any other SCM out 
+there, _exactly_ because it doesn't make the mistake of trying to track 
+anything but content.
 
-(TODO #2)
+The "moved + modified files" is not anything special. The current 
+automatic merger may not handle it, but that's not because it _can't_ 
+handle it, it's because it tries to be simple and efficient. 
 
->  - it never prompts for anything
+And because it's so _incredibly_ fast for all the normal cases, you can 
+now spend some effort on figuring out renames dynamically for the few 
+cases where it fails. Does it do so now? No. Would adding UUID's help? 
+Hell no. It would be just an unmitigated disaster.
 
-I think I'm tending in that direction - I'll keep making the prompting a
-fall-back by adding better default detection.
+Exactly the same way "git-diff-tree" can figure out renames, a merge 
+algorithm can figure them out. 
 
-In this case, remember that this was an attempt to help users patch bomb
-lists, getting all the subtle details correct.  The prompting is there
-to help get the subtle details correct!
+Right now, we have two stages in merges: we try the trivial merge first
+(pure "git-read-tree"), and when that fails, we try the automatic 3-way
+merge. The fact that we don't have a third (and fourth, and fifth) merge
+algorithm for when those two trivial merges happen to not work is _not_ an
+indication that the "contents only" approach doesn't work - it's just an
+indication of the fact that 99.9% of all merges are trivial, and they
+should be optimized for.
 
-> I then invoke it with 
-> 
->   git-send-email-script --to git@vger.kernel.org patches/0001-bad-uglypatch
-> 
-> and it "just works". I haven't sent them anywhere because I just
-> wanted it to work locally for me, and it's just a bunch of hacks. And
-> you are clearly using something other than git-format-patch to
-> generate those patchfiles -- and my patches would break that.
+So the next step is _not_ to do UUID's, it's to notice that merge errors 
+happened, and try to figure out why. Right now we just give up and say 
+"sort it out by hand". That's actually a perfectly valid approach even in 
+the presense of moved files - it's a bit painful, but once you _do_ sort 
+it out and commit the merge, especially if you can push the merge back (so 
+that both sides then agree on the final rename), future merges will be 
+trivial again - ie you won't have to go through it over and over again.
 
-Well, I'm not.  Try "git format-patch --mbox -o patchdir origin" and see
-if that works better for you.
+Of course, if you don't push it back, but keep the two trees separate and 
+keep on modifying files that have different names in the other repository, 
+you'll keep on getting into the situation that the trivial merge doesn't 
+work. So we _do_ want to get an automated "phase 3" (and maybe 4..) merge 
+that can figure out renames, but the point here is that it's something we 
+_can_ figure out.
 
-> OTOH, it'd be great if it did support the git-format-patch output. Let
-> me know if you want bits and pieces of my hack - though it's trivial.
+For example, one way of doing it is to just do the exact merge we do now,
+and then look at the files that didn't merge. Do a cross-diff between such
+files and new/deleted files (if not _exactly_ the way we do for "git diff
+-M", then at least it's exactly the same concept), and try to do a
+three-way merge where the base/first/second pairs don't have the same
+name.
 
-Sure, send it at me, and I'll see what I can incorporate.
+For example, let's say that you have the common commit A, and file "x",
+and two paths (B and C) where B has renamed the file "x" to "y", and C has
+modified file "x". You end up with the schenario that our trivial merge
+fails to handle, and right now we give up, and don't help the user very
+much at all. But the _solution_ is not to change "read-tree" to know about
+renames, nor is it to make git keep any new data. The solution is to just 
+make phase 3 say:
 
-I do apologize for not realizing that the default git format-patch
-output doesn't match what git send-email script expects the "legacy"
-mode - I'll sort that out one way or another as well. (TODO #3)
+ - "Automatic merge failed, trying rename merge"
+ - go through all files that exist in C but not in B (or vice versa), and 
+   pair them up with all files that exist in B but not in C (or vice
+   versa) and see if _they_ can be handled as a three-way merge. And 
+   exactly the same way that we do the rename detection, we may want to
+   find the "optimal pairing" by looking at the distance between the
+   files.
 
--- 
+Notice? This will automatically handle the "renamed in one branch, 
+modified in another" case. In fact, if the renamer modified it too, that's 
+not a problem at all - the three-way merge will work exactly the same way 
+it does now with the case of a non-moved "modified in both" files.
 
-Ryan Anderson
-  sometimes Pug Majere
+Problem solved. Without complicating the trivial (and very common) cases, 
+and without introducing any new metadata that is fundamentally impossible 
+to maintain (and it _is_ fundamentally impossible to maintain, because it 
+has nothing to do with the contents of the files, so patches etc will by 
+definition break it).
+
+		Linus
