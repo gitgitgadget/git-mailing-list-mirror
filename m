@@ -1,111 +1,139 @@
-From: Zack Brown <zbrown@tumblerings.org>
-Subject: Re: git/cogito suggestion: tags with descriptions
-Date: Mon, 5 Sep 2005 14:24:31 -0700
-Message-ID: <20050905212431.GB14720@tumblerings.org>
-References: <20050905184551.GA14720@tumblerings.org> <7vd5nn49uz.fsf@assigned-by-dhcp.cox.net>
+From: Patrick Mauritz <oxygene@studentenbude.ath.cx>
+Subject: patches
+Date: Tue, 06 Sep 2005 01:24:03 +0200
+Message-ID: <1125962642.15293.20.camel@divert>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 23:26:03 2005
+Content-Type: multipart/mixed; boundary="=-LJgEClwug7d1gjAg0niX"
+X-From: git-owner@vger.kernel.org Tue Sep 06 01:24:45 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECOSF-0005f4-Px
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 23:24:40 +0200
+	id 1ECQJJ-0007Dp-4a
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 01:23:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932573AbVIEVYh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 17:24:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932585AbVIEVYh
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 17:24:37 -0400
-Received: from dsl092-000-086.sfo1.dsl.speakeasy.net ([66.92.0.86]:34198 "EHLO
-	tumblerings.org") by vger.kernel.org with ESMTP id S932573AbVIEVYg
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 17:24:36 -0400
-Received: from zbrown by tumblerings.org with local (Exim 4.52)
-	id 1ECOS7-0000sl-GZ; Mon, 05 Sep 2005 14:24:31 -0700
-To: Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <7vd5nn49uz.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.9i
+	id S964945AbVIEXXa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 19:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964947AbVIEXXa
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 19:23:30 -0400
+Received: from khepri.openbios.org ([80.190.231.112]:33497 "EHLO
+	khepri.openbios.org") by vger.kernel.org with ESMTP id S964945AbVIEXX3
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 19:23:29 -0400
+Received: from dsl-082-082-224-048.arcor-ip.net ([82.82.224.48] helo=t-stueck.streichelzoo)
+	by khepri.openbios.org with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.50)
+	id 1ECQJ8-0007QX-Kx
+	for git@vger.kernel.org; Tue, 06 Sep 2005 01:23:23 +0200
+Received: from 192.168.1.201 (divert.studentenbude.ath.cx [192.168.1.201])
+	by t-stueck.streichelzoo (8.13.4+Sun/8.13.3) with ESMTP id j85NNGpL021390
+	for <git@vger.kernel.org>; Tue, 6 Sep 2005 01:23:22 +0200 (CEST)
+To: git@vger.kernel.org
+X-Mailer: Ximian Evolution 1.4.6.316 
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-2.0 (t-stueck.streichelzoo [192.168.1.200]); Tue, 06 Sep 2005 01:23:22 +0200 (CEST)
+X-Spam-Score: -1.4 (-)
+X-Duff: Orig. Duff, Duff Lite, Duff Dry, Duff Dark,
+	Raspberry Duff, Lady Duff, Red Duff, Tartar Control Duff
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8119>
 
-Hi Junio!
 
-On Mon, Sep 05, 2005 at 12:01:40PM -0700, Junio C Hamano wrote:
-> Zack Brown <zbrown@tumblerings.org> writes:
-> 
-> > It would be great if tags also allowed a brief description to go along with
-> > them, that would show up in cg-tag-ls. Then I could seek to a tag that's just
-> > an easy-to-type version number, and still have an idea of what's significant
-> > about that version because of the descriptive text.
-> 
-> Would 'git tag -a' work for you?
-> 
-> : siamese; git tag -a -m 'This is to just demonstrate.' test-for-brown
-> : siamese; git cat-file tag test-for-brown
-> object 0516de30e8bdd26086e2a3edd3375981fd0c34d6
-> type commit
-> tag test-for-brown
-> tagger Junio C Hamano <junkio@cox.net> 1125946805 -0700
-> 
-> This is to just demonstrate.
-> : siamese; 
+--=-LJgEClwug7d1gjAg0niX
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-I'm not sure. I'm not as familiar with the low-level git commands as I am with
-cogito. But cogito has a -d option for giving a tag description. I guess what
-would be closest to what I was thinking about would be this:
+Hi,
 
-$ cg-tag -d "First draft, everything in place." 0.3 7540e503b9b9c1b03e44ee7fd700c844b2a02224
-$ cg-tag-ls
-0.1     Initial idea complete                 f953b71b21a0bea682c2bed91362f2dce2cc204f
-0.3     First draft, everything in place.     7540e503b9b9c1b03e44ee7fd700c844b2a02224 
-$
+attached are two patches:
+the first fixes some build issues on solaris10/x86 with sunpro (and some
+that also happen with gcc), while the second adds a simple way to add
+additional search and link paths for curl library and headers.
 
-or something like that. Currently when I do the above cg-tag command,
-a subsequent cg-tag-ls gives just:
 
-$ cg-tag-ls
-0.1     f953b71b21a0bea682c2bed91362f2dce2cc204f
-0.3     7540e503b9b9c1b03e44ee7fd700c844b2a02224
+patrick mauritz
+(not on the list, please Cc:)
 
-In fact, I probably wouldn't even be interested in seeing the actual hash key
-unless I gave a special flag, maybe -f (for "full"):
+--=-LJgEClwug7d1gjAg0niX
+Content-Disposition: attachment; filename=patch-20050817-1-build
+Content-Type: text/x-patch; name=patch-20050817-1-build; charset=ASCII
+Content-Transfer-Encoding: 7bit
 
-$ cg-tag-ls
-0.1     Initial idea complete
-0.3     First draft, everything in place.
-$ cg-tag-ls -f
-0.1     Initial idea complete                 f953b71b21a0bea682c2bed91362f2dce2cc204f
-0.3     First draft, everything in place.     7540e503b9b9c1b03e44ee7fd700c844b2a02224
-$
+diff -ur git-core-0.99.4.orig/convert-cache.c git-core-0.99.4/convert-cache.c
+--- git-core-0.99.5.orig/convert-cache.c	Wed Aug 17 09:55:00 2005
++++ git-core-0.99.5/convert-cache.c	Wed Aug 17 09:58:48 2005
+@@ -1,4 +1,5 @@
+ #define _XOPEN_SOURCE /* glibc2 needs this */
++#define __EXTENSIONS__ /* solaris needs this */
+ #include <time.h>
+ #include <ctype.h>
+ #include "cache.h"
+diff -ur git-core-0.99.4.orig/ident.c git-core-0.99.4/ident.c
+--- git-core-0.99.5.orig/ident.c	Wed Aug 17 09:55:00 2005
++++ git-core-0.99.5/ident.c	Wed Aug 17 09:57:54 2005
+@@ -36,12 +36,13 @@
+ 	memcpy(real_email, pw->pw_name, len);
+ 	real_email[len++] = '@';
+ 	gethostname(real_email + len, sizeof(real_email) - len);
++#ifndef __sun
+ 	if (!strchr(real_email+len, '.')) {
+ 		len = strlen(real_email);
+ 		real_email[len++] = '.';
+ 		getdomainname(real_email+len, sizeof(real_email)-len);
+ 	}
+-
++#endif
+ 	/* And set the default date */
+ 	datestamp(real_date, sizeof(real_date));
+ 	return 0;
+--- git-core-0.99.5/Makefile~	Thu Aug 25 03:54:24 2005
++++ git-core-0.99.5/Makefile	Tue Sep  6 01:18:32 2005
+@@ -146,7 +146,11 @@
+ 		endif
+ 	endif
+ endif
++ifeq ($(shell uname -s),SunOS)
++  LIBS += -lsocket
++endif
+ 
++
+ DEFINES += '-DSHA1_HEADER=$(SHA1_HEADER)'
+ 
+ 
 
-> 
-> BTW, when will the next issue of GIT traffic appear ;-)?
+--=-LJgEClwug7d1gjAg0niX
+Content-Disposition: attachment; filename=patch-20050906-2-curl
+Content-Type: text/plain; name=patch-20050906-2-curl; charset=ASCII
+Content-Transfer-Encoding: 7bit
 
-Honestly, I don't know. I seem to be having my hands full just trying to
-keep Kernel Traffic up-to-date (just caught up today, finally). I really did
-the first Git Traffic to kind of spread the word about how mind-blowing the
-whole git development process was.
+--- git-core-0.99.5/Makefile~	Tue Sep  6 01:13:29 2005
++++ git-core-0.99.5/Makefile	Tue Sep  6 01:15:40 2005
+@@ -34,7 +34,14 @@
+ 
+ GIT_VERSION = 0.99.5
+ 
+-CFLAGS = -g -O2 -Wall
++ifndef COPTS
++COPTS = -g -O2 -Wall
++endif
++CFLAGS = $(COPTS)
++ifdef CURLDIR
++CFLAGS+=-I$(CURLDIR)/include
++endif
++
+ ALL_CFLAGS = $(CFLAGS) $(DEFINES)
+ 
+ prefix = $(HOME)
+@@ -172,7 +179,11 @@
+ git-ssh-pull: rsh.o pull.o
+ git-ssh-push: rsh.o
+ 
++ifdef CURLDIR
++git-http-pull: LIBS += -lcurl -L$(CURLDIR)/lib -R$(CURLDIR)/lib
++else
+ git-http-pull: LIBS += -lcurl
++endif
+ git-rev-list: LIBS += $(OPENSSL_LIBSSL)
+ 
+ init-db.o: init-db.c
 
-But whether I'll keep on doing it, I don't know. Between Kernel Traffic,
-my day job, and a few non-Linux projects, I may have my hands full.
-
-On the other hand, if someone wanted to volunteer to write Git Traffic, I'd
-be happy to help them get started. I don't mean you, but perhaps a regular
-reader of this list would be interested. It seems like there's at least some
-interest in seeing it continue. :-)
-
-Be well,
-Zack
-
-> 
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
--- 
-Zack Brown
+--=-LJgEClwug7d1gjAg0niX--
