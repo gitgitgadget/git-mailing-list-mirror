@@ -1,71 +1,56 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH 0/2] Update git-send-email-script with --compose
-Date: Mon, 5 Sep 2005 23:16:57 +1200
-Message-ID: <46a038f905090504166246dc0a@mail.gmail.com>
-References: <11258971871874-git-send-email-ryan@michonline.com>
-Reply-To: martin.langhoff@gmail.com
+From: Wayne Scott <wsc9tt@gmail.com>
+Subject: bogus merges
+Date: Mon, 5 Sep 2005 09:38:29 -0500
+Message-ID: <59a6e58305090507387d412b3d@mail.gmail.com>
+Reply-To: wsc9tt@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 05 13:20:11 2005
+X-From: git-owner@vger.kernel.org Mon Sep 05 16:39:31 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECEyL-0004yU-6n
-	for gcvg-git@gmane.org; Mon, 05 Sep 2005 13:17:09 +0200
+	id 1ECI7L-0007rC-Ml
+	for gcvg-git@gmane.org; Mon, 05 Sep 2005 16:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750971AbVIELRD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 07:17:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751096AbVIELRD
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 07:17:03 -0400
-Received: from rproxy.gmail.com ([64.233.170.197]:23259 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1750971AbVIELRC convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 07:17:02 -0400
-Received: by rproxy.gmail.com with SMTP id i8so650071rne
-        for <git@vger.kernel.org>; Mon, 05 Sep 2005 04:16:57 -0700 (PDT)
+	id S1750717AbVIEOic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Sep 2005 10:38:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbVIEOic
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 10:38:32 -0400
+Received: from wproxy.gmail.com ([64.233.184.206]:57151 "EHLO wproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750717AbVIEOib convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 10:38:31 -0400
+Received: by wproxy.gmail.com with SMTP id i22so285473wra
+        for <git@vger.kernel.org>; Mon, 05 Sep 2005 07:38:29 -0700 (PDT)
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
         s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FoBZ2faooMo6dyFuhj3lIEYAl0Q5edrTdsl4tXsgLu8ngEx5oJssIW0msN/c5Q6Sw0ZFRCABwzooVr5wf+7wYaggpIICmYRUet8394l3LqXL70io9YAe2of3T7STYkcNl9We0XyPIYecoVtYuL4zi+zQkYtyn6s+NqMHe59onpw=
-Received: by 10.38.101.34 with SMTP id y34mr711648rnb;
-        Mon, 05 Sep 2005 04:16:57 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Mon, 5 Sep 2005 04:16:57 -0700 (PDT)
-To: Ryan Anderson <ryan@michonline.com>
-In-Reply-To: <11258971871874-git-send-email-ryan@michonline.com>
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=YVBi/TyKJSmUIEEUQSweGqbLbFDQHIKhV1SeWoNSDKBLlBlFtdr8mD9NRPyZ1It9MSkYFLg2/2O2/l+RMZm9a8bOBa0Trp9zpLtsVJKsj5CMfUJUEsO1ghEyhuSKKaxKLC9YsmWoB1938aHnupnvPGuHHX1dL/qx5MNO9rEXiRg=
+Received: by 10.54.83.10 with SMTP id g10mr3729120wrb;
+        Mon, 05 Sep 2005 07:38:29 -0700 (PDT)
+Received: by 10.54.36.41 with HTTP; Mon, 5 Sep 2005 07:38:29 -0700 (PDT)
+To: git@vger.kernel.org
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8091>
 
-Ryan,
+A recent commit in linux-2.6 looks like this:
 
-is it possible to fix the git-send-email script to "just work" reading
-in the emails that `git-format-patch-script -o patchdir origin`
-generates? I have a very ugly local patch to git-send-email-script
-that
+commit b129a8ccd53f74c43e4c83c8e0031a4990040830
+Merge: 6b39374a27eb4be7e9d82145ae270ba02ea90dc8
+194d0710e1a7fe92dcf860ddd31fded8c3103b7a
+Author: Russell King <rmk@dyn-67.arm.linux.org.uk>
+Date:   Wed Aug 31 10:12:14 2005 +0100
 
- - reads "from" from git-var, can be overridden by passing an explicit --from
- - reads "subject" from the first line of STDIN or file. If the line
-doesn't start with [PATCH it provides the [PATCH] prefix. I found it
-really confusing that it wants to get 'from' in the first line...
-that's not what git-format-patch produces!
- - it never prompts for anything
+    [SERIAL] Clean up and fix tty transmission start/stoping
+    
+The problem is that two parents of this merge are separate.  One is an
+ancestor of the other.  This means the merge is really pointless and
+probably accidental.
 
-I then invoke it with 
+Really 'git commit' should detect problems like this automatically and
+prevent them from getting in the tree.
 
-  git-send-email-script --to git@vger.kernel.org patches/0001-bad-uglypatch
-
-and it "just works". I haven't sent them anywhere because I just
-wanted it to work locally for me, and it's just a bunch of hacks. And
-you are clearly using something other than git-format-patch to
-generate those patchfiles -- and my patches would break that.
-
-OTOH, it'd be great if it did support the git-format-patch output. Let
-me know if you want bits and pieces of my hack - though it's trivial.
-
-cheers,
-
-
-martin
+-Wayne
