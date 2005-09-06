@@ -1,94 +1,69 @@
-From: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-Subject: Subject: [PATCH] Update documentation for git-get-tar-commit-id and add a copyright notice.
-Date: Tue, 6 Sep 2005 21:21:16 +0200
-Message-ID: <11260344762228-git-send-email-rene.scharfe@lsrfire.ath.cx>
-Reply-To: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Make sure the diff machinery outputs "\ No newline ..."
+ in english
+Date: Tue, 6 Sep 2005 16:05:49 -0400 (EDT)
+Message-ID: <Pine.LNX.4.63.0509061534560.23242@iabervon.org>
+References: <20050904181724.GA23525@c165.ib.student.liu.se>
+ <7vd5nohdp3.fsf@assigned-by-dhcp.cox.net> <20050905060149.GB1875@c165.ib.student.liu.se>
+ <Pine.LNX.4.58.0509050849500.3568@evo.osdl.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Sep 06 21:23:40 2005
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <freku045@student.liu.se>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 22:03:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECj0S-0002nC-Uk
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 21:21:21 +0200
+	id 1ECjdm-0004Fs-5e
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 22:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750814AbVIFTVS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 15:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbVIFTVS
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 15:21:18 -0400
-Received: from neapel230.server4you.de ([217.172.187.230]:26532 "EHLO
-	neapel230.server4you.de") by vger.kernel.org with ESMTP
-	id S1750814AbVIFTVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 15:21:17 -0400
-Received: from neapel230.server4you.de (localhost [127.0.0.1])
-	by neapel230.server4you.de (Postfix) with SMTP id BF241B1;
-	Tue,  6 Sep 2005 21:21:16 +0200 (CEST)
-In-Reply-To: 
-X-Mailer: git-send-email-script
-To: Junio C Hamano <junkio@cox.net>
+	id S1750847AbVIFUBz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 16:01:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750849AbVIFUBz
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 16:01:55 -0400
+Received: from iabervon.org ([66.92.72.58]:48651 "EHLO iabervon.org")
+	by vger.kernel.org with ESMTP id S1750840AbVIFUBz (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 16:01:55 -0400
+Received: (qmail 32549 invoked by uid 1000); 6 Sep 2005 16:05:49 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 6 Sep 2005 16:05:49 -0400
+To: Linus Torvalds <torvalds@osdl.org>
+In-Reply-To: <Pine.LNX.4.58.0509050849500.3568@evo.osdl.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8141>
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+On Mon, 5 Sep 2005, Linus Torvalds wrote:
 
----
+> On Mon, 5 Sep 2005, Fredrik Kuivinen wrote:
+> > 
+> > After a quick look through the diff source I didn't find anything
+> > else. It's quite possible that I haved missed something though. Most
+> > of the translated messages are related to error reporting, which I
+> > guess might be nice to have in the user specified language.
+> 
+> Is it possible that we could integrate the "diff" algorithm into git, and 
+> get rid of the dependency on an external GNU diff? It would also make the 
+> portability problems go away (ie old diff's being broken).
+> 
+> It would also potentially speed up the normal built-in diff a lot, since
+> we wouldn't have to execute a whole other program to generate a diff, just
+> call a helper function the way we do for xdiff..
+> 
+> Unreasonable?
 
- Documentation/git-get-tar-commit-id.txt |   23 +++++++++++------------
- get-tar-commit-id.c                     |    3 +++
- 2 files changed, 14 insertions(+), 12 deletions(-)
+The algorithm actually used by GNU diff is pretty complicated, and I don't 
+really understand the actual implementation, which evidentally has a few 
+important refinements over the original paper.
 
-5144a0393d17d721c83a42ce743d2ce46909f222
-diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
---- a/Documentation/git-get-tar-commit-id.txt
-+++ b/Documentation/git-get-tar-commit-id.txt
-@@ -3,25 +3,24 @@ git-get-tar-commit-id(1)
- 
- NAME
- ----
--git-get-tar-commit-id - Some git command not yet documented.
-+git-get-tar-commit-id - Extract commit ID from an archive created using git-tar-tree.
- 
- 
- SYNOPSIS
- --------
--'git-get-tar-commit-id' [ --option ] <args>...
-+'git-get-tar-commit-id' < <tarfile>
-+
- 
- DESCRIPTION
- -----------
--Does something not yet documented.
--
--
--OPTIONS
---------
----option::
--	Some option not yet documented.
--
--<args>...::
--	Some argument not yet documented.
-+Acts as a filter, extracting the commit ID stored in archives created by
-+git-tar-tree.  It reads only the first 1024 bytes of input, thus its
-+runtime is not influenced by the size of <tarfile> very much.
-+
-+If no commit ID is found, git-get-tar-commit-id quietly exists with a
-+return code of 1.  This can happen if <tarfile> had not been created
-+using git-tar-tree or if the first parameter of git-tar-tree had been
-+a tree ID instead of a commit ID or tag.
- 
- 
- Author
-diff --git a/get-tar-commit-id.c b/get-tar-commit-id.c
---- a/get-tar-commit-id.c
-+++ b/get-tar-commit-id.c
-@@ -1,3 +1,6 @@
-+/*
-+ * Copyright (C) 2005 Rene Scharfe
-+ */
- #include <stdio.h>
- #include <string.h>
- #include <unistd.h>
+I've written my own diff, mainly to try a different algorithm, and it 
+seems to work, but the code isn't yet appropriate to submit. This 
+algorithm also has the advantage that it can identify moved sections and 
+is less interested in interleaving a removed function with a new function 
+to provide the shortest possible diff. I expect that I could get it to 
+work if I put in a day on it; it's mostly writing a hashtable 
+implementation for non-NULL-terminated string-keyed hash tables.
+
+	-Daniel
+*This .sig left intentionally blank*
