@@ -1,86 +1,56 @@
-From: Jeff Carr <jcarr@linuxmachines.com>
-Subject: Re: git-ls-new-files & make patch, pull, etc.
-Date: Tue, 06 Sep 2005 13:42:24 -0700
-Message-ID: <431DFF30.7010009@linuxmachines.com>
-References: <430A84D1.2050206@linuxmachines.com> <7v1x4lz118.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: cg-update (cogito-0.13) bug: changed heads
+Date: Tue, 06 Sep 2005 14:01:25 -0700
+Message-ID: <431E03A5.6060709@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 22:40:35 2005
+X-From: git-owner@vger.kernel.org Tue Sep 06 23:03:42 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECkEL-0004PD-HB
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 22:39:45 +0200
+	id 1ECkZi-0001AD-7N
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:01:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750896AbVIFUjm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 16:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750898AbVIFUjm
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 16:39:42 -0400
-Received: from [64.71.148.162] ([64.71.148.162]:48277 "EHLO
-	mail.linuxmachines.com") by vger.kernel.org with ESMTP
-	id S1750896AbVIFUjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 16:39:41 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.linuxmachines.com (Postfix) with ESMTP id 9BBBC6EFCC;
-	Tue,  6 Sep 2005 13:42:24 -0700 (PDT)
-Received: from mail.linuxmachines.com ([127.0.0.1])
-	by localhost (giant [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
-	id 24595-02; Tue, 6 Sep 2005 13:42:24 -0700 (PDT)
-Received: from [192.168.36.10] (x.packeteer.com [12.104.153.15])
-	by mail.linuxmachines.com (Postfix) with ESMTP id D25476EFCB;
-	Tue,  6 Sep 2005 13:42:23 -0700 (PDT)
-User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+	id S1750935AbVIFVBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 17:01:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbVIFVBr
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:01:47 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:38554 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750935AbVIFVBr
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 17:01:47 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j86L1UMc019647
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Sep 2005 14:01:31 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
 X-Accept-Language: en-us, en
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7v1x4lz118.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.91.0.0
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at example.com
+To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8146>
 
-On 08/22/2005 10:15 PM, Junio C Hamano wrote:
-> Jeff Carr <jcarr@linuxmachines.com> writes:
-> 
-> 
->>Something simple like the perl script at the bottom would be useful for
->>showing files that haven't been added via git-update-cache --add already.
-> 
-> 
-> If I am not mistaken, you just reinvented:
-> 
->     $ git ls-files --others
-> 
-> in a very expensive way.  Notice your `find . -type f` that does
-> not prune .git directory upfront.
-> 
-> Also you may want to take a look at:
-> 
->     $ git ls-files --others --exclude-from=.git/info/exclude
+I just found a bug in cogito-0.13, at least to the best of my 
+understanding of the situation.
 
-Yes, you are right -- I did reinvent the above poorly :)
+Simplified, the problem looks like this: two sides, A and B, pull from 
+repository C.  The head of this pull we call 0.
 
-I also was using a perl script to parse the output of git-whatchanged to
-set the datestamps on the files to the last modified time. If I remember
-correctly, there was some threads at the beginning of git about how
-datestamps were not accurate so there was no point in setting them(?) Or
-maybe I mis-understood. In any case, sometimes it is useful for me
-because I just want to look at what files I changed today or yesterday
-or something to that effect. Sometimes in the kernel/Documentation
-directories it is useful because you can see what documentation was
-done/changed this year. Sometimes that's nice if you are looking for new
-things you might not know much about; recently I was digging around in
-the I2C stuff to try to figure out if I could read the right temperature
-sensor on the smbus on a machine. Anyway, I'll just use that but perhaps
-there is also a "correct" way to keep timestamps?
+Now commit 1 is added to A.  B pulls commit 1 from A, not though C. 
+Later, A pushes commit 1 to C.
 
-BTW, for what it's worth, you can't package git under debian sarge
-because asciidoc doesn't support "-b xhtml11". I pulled it from sid and
-it packaged it fine. Just an FYI. I emailed the asciidoc maintainer for
-what it's worth.
+Next time B tries to pull from C, cg-update will not advance 
+refs/heads/origin, even though C now has a new head.  Thus, B will think 
+that C is in a different state than it actually is.
 
-Thanks a lot,
-Jeff
+This has, for me, broken safeguards of the form "make sure you're merged 
+before you pull."
+
+	-hpa
