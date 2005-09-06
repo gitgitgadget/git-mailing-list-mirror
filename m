@@ -1,90 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Multi-ancestor read-tree notes
-Date: Mon, 05 Sep 2005 22:42:42 -0700
-Message-ID: <7virxeycod.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
+From: Alexey Nezhdanov <snake@penza-gsm.ru>
+Subject: Re: git daemon usage
+Date: Tue, 6 Sep 2005 10:28:06 +0400
+Message-ID: <200509061028.06951.snake@penza-gsm.ru>
+References: <20050812001339.GL25280@pasky.ji.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 07:43:59 2005
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Tue Sep 06 08:29:38 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECWEe-0002xL-Sz
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 07:43:09 +0200
+	id 1ECWwL-0001mV-7P
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 08:28:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932394AbVIFFmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 01:42:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932414AbVIFFmo
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 01:42:44 -0400
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:60835 "EHLO
-	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
-	id S932394AbVIFFmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 01:42:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050906054244.ZALY17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Sep 2005 01:42:44 -0400
-To: Daniel Barkalow <barkalow@iabervon.org>
-In-Reply-To: <Pine.LNX.4.63.0509050049030.23242@iabervon.org> (Daniel
-	Barkalow's message of "Mon, 5 Sep 2005 01:41:36 -0400 (EDT)")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S932415AbVIFG2O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 02:28:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932416AbVIFG2O
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 02:28:14 -0400
+Received: from host-80-95-32-178.leasedlines.sura.ru ([80.95.32.178]:40665
+	"HELO penza-gsm.ru") by vger.kernel.org with SMTP id S932415AbVIFG2O
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 02:28:14 -0400
+Received: (qmail 10908 invoked from network); 6 Sep 2005 06:28:09 -0000
+Received: from unknown (HELO snake) (192.168.0.20)
+  by fileserver.penza-gsm.ru with SMTP; 6 Sep 2005 06:28:09 -0000
+To: git@vger.kernel.org
+User-Agent: KMail/1.7.2
+In-Reply-To: <20050812001339.GL25280@pasky.ji.cz>
+Content-Disposition: inline
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on fileserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-102.8 required=5.0 tests=ALL_TRUSTED,AWL,
+	USER_IN_WHITELIST autolearn=unavailable version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8122>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
-
-> I've got a version of read-tree which accepts multiple ancestors and does 
-> a merge using information from all of them.
-
-After disabling the debugging printf(), I used this read-tree to
-try resolving the parents of four commits Fredrik Kuivinen gave
-us in <20050827014009.GB18880@c165.ib.student.liu.se> using
-their two merge bases, and compared the resulting tree with the
-tree recorded in the commit.  The results are really promising.
-
-For the following two commits, multi-base merge resolved their
-parents trivially and produced the same result as the tree in
-the commit.  The current "best-base merge" in the master branch
-performed far worse and left many conflicts.
-
- - 467ca22d3371f132ee225a5591a1ed0cd518cb3d 
- - da28c12089dfcfb8695b6b555cdb8e03dda2b690
-
-Another one, 0e396ee43e445cb7c215a98da4e76d0ce354d9d7,
-multi-base merge left only one conflicting path to be hand
-resolved.  The best-base merge again performed far worse.
-
-The other one, 3190186362466658f01b2e354e639378ce07e1a9, is
-resolved trivially with both algorithms.
-
-> In case #16, I'm not sure what I should produce. I think the best thing 
-> might be to not leave anything in stage 1.
-
-Because?  I know it would affect the readers of index files if
-you did so, but it would seem the most natural in git
-architecture to have merge-cache look at the resulting cache
-with such multiple stage 1 entries (and other stages) and let
-the script make a decision.
-
-> The desired end effect is that the user is given a file with a
-> section like:
+Sunday 12 August 2005 04:13 Petr Baudis wrote:
+>   Hello,
 >
->   {
->     *t = NULL;
->     *m = 0;
-> <<<<<<<<
->     return Z_DATA_ERROR;
-> ========
->     return Z_OK;
->>>>>>>>>
->   }
+>   is anyone actually using the git daemon in practice, now that the
+> other transfer methods can deal with packs? I ask since I wonder if I
+> should actually bother with adding support for it to cg-pull.
+Sorry for the very late answer - I was on vacation and now reading archives.
+I'm using it as djb's tcpserver + linus's git-daemon
+>
+>   Thanks,
 
-Sounds fine.
-
-Anyway, I really am happy to see this multi-base merge perform
-well on real-world data, and you are certainly the git hero of
-the week ;-).
+-- 
+Respectfully
+Alexey Nezhdanov
