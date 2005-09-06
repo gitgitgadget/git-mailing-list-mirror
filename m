@@ -1,134 +1,80 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Multi-ancestor read-tree notes
-Date: Tue, 6 Sep 2005 18:59:29 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509061819340.23242@iabervon.org>
-References: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
- <7virxeycod.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509061228090.23242@iabervon.org>
- <7vbr36j75b.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509061610080.23242@iabervon.org>
- <7vslwhg8xe.fsf@assigned-by-dhcp.cox.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] git-cvsimport-script: handling of tags
+Date: Wed, 7 Sep 2005 10:59:26 +1200
+Message-ID: <46a038f9050906155962d33869@mail.gmail.com>
+References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>
+	 <431DFB04.5020701@zytor.com>
+	 <46a038f905090614216eca87eb@mail.gmail.com>
+	 <431E0B25.5000104@zytor.com>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 07 00:55:40 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 01:00:03 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECmLo-0005vc-NB
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 00:55:37 +0200
+	id 1ECmPc-0006Tg-BN
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 00:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbVIFWze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 18:55:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751098AbVIFWze
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 18:55:34 -0400
-Received: from iabervon.org ([66.92.72.58]:24083 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1751097AbVIFWzd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 18:55:33 -0400
-Received: (qmail 986 invoked by uid 1000); 6 Sep 2005 18:59:29 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Sep 2005 18:59:29 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vslwhg8xe.fsf@assigned-by-dhcp.cox.net>
+	id S1751099AbVIFW73 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 18:59:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbVIFW73
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 18:59:29 -0400
+Received: from rproxy.gmail.com ([64.233.170.200]:60298 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1751099AbVIFW72 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 18:59:28 -0400
+Received: by rproxy.gmail.com with SMTP id i8so914036rne
+        for <git@vger.kernel.org>; Tue, 06 Sep 2005 15:59:26 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FpoIxhWdsMPUWqCNzqe/gOHq5gvOBx+g7Vw+dLxC9S3/U2wyxYWFZxAX5+ZLTZ2SkvChRvAvxaShBZhIxppTfYeTej5/du2DpJL7qAl+kVr5ACA7hjodSAIMoFxopZQsOWRWl30fdhZTMH6jV/GOPI22GI3Nb2ErLduDlqUXAGo=
+Received: by 10.39.3.51 with SMTP id f51mr768883rni;
+        Tue, 06 Sep 2005 15:59:26 -0700 (PDT)
+Received: by 10.38.101.53 with HTTP; Tue, 6 Sep 2005 15:59:26 -0700 (PDT)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <431E0B25.5000104@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8154>
 
-On Tue, 6 Sep 2005, Junio C Hamano wrote:
-
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+On 9/7/05, H. Peter Anvin <hpa@zytor.com> wrote:
+> Martin Langhoff wrote:
+> >
+> > Tell me more about how you are trying the 'recognize merge'. It is a
+> > pretty unsophisticated thing, as it trusts the commit message in the
+> > first place. But when it works, it works.
+> >
 > 
-> > Good. (Although that patch doesn't seem to be directly on top of my 
-> > version; I can tell what it's doing anyway)
-> 
-> That one was against the proposed updates head.  I've updated it
-> again to include the patch.
-> 
-> > I'm happy with the content in "pu"; the issue is just whether you want the 
-> > history cleaned up more. In the series I sent, I kept forgetting parts 
-> > that belonged in earlier patches.
-> 
-> Again, that is up to you.  I am not _that_ perfectionist but I
-> do not mind reapplying updated ones if you are ;-).
+> Perhaps it would be good to know what it expects in the commit message?
 
-What's there is fine with me.
+>From the source, with line numbers:
 
-(I'll work on improving the documentation as a further patch)
+80 our @mergerx = ();
+81 if ($opt_m) {
+82     @mergerx = ( qr/\W(?:from|of|merge|merging|merged) (\w+)/i );
+83 }
+84 if ($opt_M) {
+85     push (@mergerx, qr/$opt_M/);
+86 }
 
-> > Could you look over the documentation in
-> > Documentation/technical/trivial-merge.txt, and see if it's a
-> > suitable replacement for the table in
-> > t1000-read-tree-m-3way.sh?
-> 
-> I do not understand what you meant by '*' and 'index+' in
-> one-way merge table.  I take the first row ('*') to mean "If the
-> tree is missing a path, that path is removed from the index."
+If your commit messages have a particular format, feed -M a regex that
+captures the branchname/tagname in $1.
 
-'*' means that that case applies regardless of what's there. 'index+' 
-means that it's the index, with the stat information. I forgot to actually 
-explain the table before going on to the interesting section.
+> My style has always be to use tags for merges; tag the origin branch as
+> well as before and after on the receiving branch.
 
-> I like the second sentence in three-way merge description.  That
-> is a very easy-to-understand description of what the index
-> requirements are.
-> 
-> You have 2 2ALTs.  Also 14 and 14ALT look like they are the same
-> rule now.
+Do you move the tags with cvs tag -F? If that's the case, the data you
+need to merge is lost... otherwise, you could hack an alternative
+merge detection based on your tagnames.
 
-Ah, right. I had originally listed "index" in the table, with separate 
-cases for having it match the head and having it match the result, but 
-then ditched that when I figured out how that actually works.
+cheers,
 
-> What's "(empty)^" in "ancest"?  All of them must be empty for
-> this rule to apply?
 
-The '^' means that all must be like that. 
 
-I have to check, but I think that 8ALT and 10ALT should be '+'.
-
-> I am not quite sure it is 'a suitable replacement' yet; the
-> existing table you can see it covers all the cases, but with
-> things like "'ancestor+' means one of them matches", I cannot
-> really tell the table covers all the cases or some cases fall of
-> the end of the chain.
-
-All of the "any ancestor" spots are good for covering things. Case #11 
-(which actually needs to be at the bottom) is basically "everything else".
-
-> Also when we have more than one ancestors or one remotes and we
-> say "no merge", it is still unspecified (and I have to admit I
-> cannot readily say what the result should be for all of them,
-> except that I agree #16 will be fine with an empty stage1) what
-> are left in which stages.
-
-Presently, except for case #16, only the first ancestor is used in "no 
-merge" output. The right thing should be worked out and documented, of 
-course.
-
-I'm not at all convinced at this point that we can do much with multiple 
-remotes in a single application of the rules; you won't necessarily have 
-the same merge base for all pairs, and all sorts of things go wrong if you 
-start including ancestors that aren't related to something, or not 
-including common ancestors of some pair.
-
-What might work is to have the error for an unmerged index only happen 
-when you get to a "no merge" result, so that you can get as many conflicts 
-as possible (in different files) resolved by the user at the same time.
-
-> I personally think the exotic cases (i.e. no rule applies, or
-> "no merge" result with more than one ancestors/remotes) needs to
-> be handled outside read-tree anyway, by the script that drives
-> read-tree to attempt trivial merges.
-
-I think case #16 would benefit from doing more stuff, but there aren't any 
-holes in the rules, and I think that, for the multiple ancestors in "no 
-merge", we just want to use the one with the least conflict. (Or, if we 
-write our own merge, do a #16/#13,#14/#11 decision per-hunk in our merge, 
-which is the really right thing). I think the common case for multiple 
-ancestors will really be that you've got a side branch that split before 
-the split you're resolving, and was merged into both sides before now; in 
-this case, there's no big problem, and it's not the exotic cross-merge 
-case. Of course, we won't see this in projects like the kernel and git, 
-which aren't that amorphous.
-
-	-Daniel
-*This .sig left intentionally blank*
+martin
