@@ -1,56 +1,71 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: cg-update (cogito-0.13) bug: changed heads
-Date: Wed, 7 Sep 2005 01:17:56 +0200
-Message-ID: <20050906231756.GC26934@pasky.ji.cz>
-References: <431E03A5.6060709@zytor.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] git-cvsimport-script: handling of tags
+Date: Tue, 06 Sep 2005 16:19:32 -0700
+Message-ID: <431E2404.6060804@zytor.com>
+References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>	 <431DFB04.5020701@zytor.com>	 <46a038f905090614216eca87eb@mail.gmail.com>	 <431E0B25.5000104@zytor.com> <46a038f9050906155962d33869@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 07 01:19:34 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Sep 07 01:21:09 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECmhX-0000jT-80
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 01:18:03 +0200
+	id 1ECmjG-00015g-RC
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 01:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751030AbVIFXR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 19:17:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbVIFXR7
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 19:17:59 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:41116 "HELO machine.sinus.cz")
-	by vger.kernel.org with SMTP id S1751029AbVIFXR6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 19:17:58 -0400
-Received: (qmail 8245 invoked by uid 2001); 6 Sep 2005 23:17:56 -0000
-To: "H. Peter Anvin" <hpa@zytor.com>
-Content-Disposition: inline
-In-Reply-To: <431E03A5.6060709@zytor.com>
-User-Agent: Mutt/1.4i
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+	id S1751024AbVIFXTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 19:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751029AbVIFXTs
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 19:19:48 -0400
+Received: from paleosilicon.orionmulti.com ([209.128.68.66]:62881 "EHLO
+	paleosilicon.orionmulti.com") by vger.kernel.org with ESMTP
+	id S1751021AbVIFXTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 19:19:47 -0400
+X-Envelope-From: hpa@zytor.com
+Received: from [172.27.0.18] (c-67-180-239-42.hsd1.ca.comcast.net [67.180.239.42])
+	(authenticated bits=0)
+	by paleosilicon.orionmulti.com (8.12.10/8.12.10) with ESMTP id j86NJWJv013042
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Sep 2005 16:19:33 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: martin.langhoff@gmail.com
+In-Reply-To: <46a038f9050906155962d33869@mail.gmail.com>
+X-Spam-Status: No, hits=0.0 required=5.0 tests=AWL autolearn=ham version=2.63
+X-Spam-Checker-Version: SpamAssassin 2.63 (2004-01-11) on 
+	paleosilicon.orionmulti.com
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on paleosilicon.orionmulti.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8156>
 
-Dear diary, on Tue, Sep 06, 2005 at 11:01:25PM CEST, I got a letter
-where "H. Peter Anvin" <hpa@zytor.com> told me that...
-> I just found a bug in cogito-0.13, at least to the best of my 
-> understanding of the situation.
+Martin Langhoff wrote:
 > 
-> Simplified, the problem looks like this: two sides, A and B, pull from 
-> repository C.  The head of this pull we call 0.
+>>My style has always be to use tags for merges; tag the origin branch as
+>>well as before and after on the receiving branch.
 > 
-> Now commit 1 is added to A.  B pulls commit 1 from A, not though C. 
-> Later, A pushes commit 1 to C.
+> Do you move the tags with cvs tag -F? If that's the case, the data you
+> need to merge is lost... otherwise, you could hack an alternative
+> merge detection based on your tagnames.
 > 
-> Next time B tries to pull from C, cg-update will not advance 
-> refs/heads/origin, even though C now has a new head.  Thus, B will think 
-> that C is in a different state than it actually is.
 
-So, C surely has its head updated? Does cg-update "fail" silently, or
-does it utter anything?
+No, there are three tags:
 
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-If you want the holes in your knowledge showing up try teaching
-someone.  -- Alan Cox
+             before-merge-foo
+             |  after-merge-foo
+             |  |
+branch 1 ---*--*----
+               /
+              /
+branch 2 ---*-------
+             |
+             merge-point-foo
+
+That's why I was a bit confused.  I thought most people did something 
+similar.
+
+	-hpa
