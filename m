@@ -1,70 +1,80 @@
-From: Carl Baldwin <cnb@fc.hp.com>
-Subject: Re: [PATCH] unset CDPATH in git-clone
-Date: Tue, 6 Sep 2005 08:52:01 -0600
-Organization: Hewlett Packard
-Message-ID: <20050906145201.GA4551@hpsvcnb.fc.hp.com>
-References: <20050901152441.GA8694@hpsvcnb.fc.hp.com> <7v3boj486h.fsf@assigned-by-dhcp.cox.net>
+From: Tim Ottinger <tottinge@progeny.com>
+Subject: Re: Tool renames? was Re: First stab at glossary
+Date: Tue, 06 Sep 2005 11:42:01 -0500
+Message-ID: <431DC6D9.30802@progeny.com>
+References: <200509020150.j821oXXM006699@laptop11.inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 16:54:45 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 18:45:07 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECeo0-0002em-VM
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 16:52:13 +0200
+	id 1ECgYO-0007wc-6m
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 18:44:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750703AbVIFOwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 10:52:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750705AbVIFOwE
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 10:52:04 -0400
-Received: from atlrel7.hp.com ([156.153.255.213]:2773 "EHLO atlrel7.hp.com")
-	by vger.kernel.org with ESMTP id S1750703AbVIFOwC (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 10:52:02 -0400
-Received: from smtp1.fc.hp.com (smtp1b.fc.hp.com [15.15.136.127])
-	by atlrel7.hp.com (Postfix) with ESMTP id 853061C53;
-	Tue,  6 Sep 2005 10:52:01 -0400 (EDT)
-Received: from hpsvcnb.fc.hp.com (hpsvcnb.fc.hp.com [15.6.94.42])
-	by smtp1.fc.hp.com (Postfix) with ESMTP
-	id 38DDC388EA; Tue,  6 Sep 2005 14:52:01 +0000 (UTC)
-Received: by hpsvcnb.fc.hp.com (Postfix, from userid 21523)
-	id 23F9144A0; Tue,  6 Sep 2005 08:52:01 -0600 (MDT)
-To: Junio C Hamano <junkio@cox.net>
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v3boj486h.fsf@assigned-by-dhcp.cox.net>
-X-Origin: hpsvcnb.fc.hp.com
-User-Agent: Mutt/1.5.9i
+	id S1750753AbVIFQnp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 12:43:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750755AbVIFQno
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 12:43:44 -0400
+Received: from zealot.progeny.com ([216.37.46.162]:46526 "EHLO
+	morimoto.progeny.com") by vger.kernel.org with ESMTP
+	id S1750753AbVIFQno (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 12:43:44 -0400
+Received: from [192.168.1.95] (inigo.progeny.com [192.168.1.95])
+	by morimoto.progeny.com (Postfix) with ESMTP
+	id 411EA636A4; Tue,  6 Sep 2005 11:43:43 -0500 (EST)
+User-Agent: Debian Thunderbird 1.0.6 (X11/20050802)
+X-Accept-Language: en-us, en
+To: Horst von Brand <vonbrand@inf.utfsm.cl>
+In-Reply-To: <200509020150.j821oXXM006699@laptop11.inf.utfsm.cl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8133>
 
-On Mon, Sep 05, 2005 at 12:37:58PM -0700, Junio C Hamano wrote:
-> Carl Baldwin <cnb@fc.hp.com> writes:
-> 
-> > The function get_repo_base seems to break with this CDPATH.
-> 
-> Sorry, your message somehow slipped my filtering.  Thanks for
-> the analysis.  Of course, CDPATH would break it.
-> 
-> Is there any good reason why somebody would want to have CDPATH
-> in his environment, inherited to be used by any shell scripts,
-> as opposed to have it as a plain shell variable that is set only
-> in interactive shells?  I do not think of any.
+Horst von Brand wrote:
 
-Good point.  There is no good reason at all.  It happens when one does
-not know the difference between a plain shell variable and an
-environment variable.
+>Junio C Hamano <junkio@cox.net> wrote:
+>  
+>
+>>Tim Ottinger <tottinge@progeny.com> writes:
+>>    
+>>
+>>>git-update-cache for instance?
+>>>I am not sure which 'cache' commands need to be 'index' now.
+>>>      
+>>>
+>>Logically you are right, but I suspect that may not fly well in practice.  Too many of us have already got our fingers wired to type cache, and the glossary is there to describe both cache andindex.
+>>    
+>>
+>
+>I'd vote for cleaning it up /now/. Sure, it will hurt, but if you let time
+>go by and do it later, it will hurt much more.
+>
+>Pre-1.0 is the last chance, AFAICS.
+>  
+>
+I guess it all depends on whether your target audience is already using
+it an happy with how it is, or whether your target audience is yet to
+be reached.
 
-Carl
+Is git growing? Do we expect to suddenly find git upside down, where
+there are a few old-timers awash in a sea of newbies? Do we care?
+
+If you care, and git is growing, then probably it makes sense to
+choose "the greatest good for the greatest number", I guess.
+
+Personally, I'm a newbie and I find the command set confusing and
+hard to internalize for reasons mostly dealing with naming, but also
+because I don't have 6 months shared history with all of you. I have
+to learn it partly from docs and partly through folklore gleaned from
+the list (which moves pretty quickly).
+
+Maybe that's just complaining, but maybe it is pointing out a
+weakness that's correctable.
 
 -- 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- Carl Baldwin                        Systems VLSI Laboratory
- Hewlett Packard Company
- MS 88                               work: 970 898-1523
- 3404 E. Harmony Rd.                 work: Carl.N.Baldwin@hp.com
- Fort Collins, CO 80525              home: Carl@ecBaldwin.net
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                             ><>
+... either 'way ahead of the game, or 'way out in left field.
