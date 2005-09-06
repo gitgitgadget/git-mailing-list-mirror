@@ -1,45 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-cvsimport-script: handling of tags
-Date: Tue, 06 Sep 2005 12:01:27 -0700
-Message-ID: <7vwtluaum0.fsf@assigned-by-dhcp.cox.net>
-References: <431DD381.4050709@zytor.com>
+From: Jeff Carr <jcarr@linuxmachines.com>
+Subject: Re: git-ls-new-files & make patch, pull, etc.
+Date: Tue, 06 Sep 2005 12:06:17 -0700
+Message-ID: <431DE8A9.7010404@linuxmachines.com>
+References: <430A84D1.2050206@linuxmachines.com> <Pine.LNX.4.63.0508230846180.26600@wgmdd8.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 21:03:26 2005
+X-From: git-owner@vger.kernel.org Tue Sep 06 21:05:58 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECihI-0005sa-Ev
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 21:01:32 +0200
+	id 1ECijb-0006Ry-4D
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 21:03:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750801AbVIFTB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 15:01:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbVIFTB3
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 15:01:29 -0400
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:40636 "EHLO
-	fed1rmmtao12.cox.net") by vger.kernel.org with ESMTP
-	id S1750801AbVIFTB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 15:01:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050906190129.SQUG11315.fed1rmmtao12.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Sep 2005 15:01:29 -0400
-To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <431DD381.4050709@zytor.com> (H. Peter Anvin's message of "Tue,
-	06 Sep 2005 10:36:01 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750809AbVIFTDe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 15:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbVIFTDe
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 15:03:34 -0400
+Received: from [64.71.148.162] ([64.71.148.162]:44704 "EHLO
+	mail.linuxmachines.com") by vger.kernel.org with ESMTP
+	id S1750809AbVIFTDd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 15:03:33 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.linuxmachines.com (Postfix) with ESMTP id 5B79E6EFCD;
+	Tue,  6 Sep 2005 12:06:16 -0700 (PDT)
+Received: from mail.linuxmachines.com ([127.0.0.1])
+	by localhost (giant [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+	id 22713-08; Tue, 6 Sep 2005 12:06:15 -0700 (PDT)
+Received: from [192.168.36.10] (x.packeteer.com [12.104.153.15])
+	by mail.linuxmachines.com (Postfix) with ESMTP id 9C1096EFCB;
+	Tue,  6 Sep 2005 12:06:15 -0700 (PDT)
+User-Agent: Debian Thunderbird 1.0.2 (X11/20050331)
+X-Accept-Language: en-us, en
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0508230846180.26600@wgmdd8.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.91.0.0
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at example.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8139>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On 08/22/2005 11:48 PM, Johannes Schindelin wrote:
+> 
+>>patch:
+> 
+> "git diff"
+> 
+> 
+>>push:
+> 
+> "git push origin" (or maybe "git push HEAD:origin")
+> 
+> 
+>>pull:
+> 
+> "git pull origin"
+> 
+> 
+>>commit:
+>>	vi changelog.txt
+>>	GIT_AUTHOR_NAME="$(GIT_AUTHOR_NAME)" \
+>>	GIT_AUTHOR_EMAIL="$(GIT_AUTHOR_EMAIL)" \
+>>	git-commit-tree `git-write-tree` -p $(HEAD) < changelog.txt > .git/HEAD
+>>	rm changelog.txt
+> 
+> 
+> "git commit"
 
-> This patch changes git-cvsimport-script so that it creates tag objects 
-> instead of refs to commits, and adds an option, -u, to convert 
-> underscores in branch and tag names to dots (since CVS doesn't allow 
-> dots in branches and tags.)
+Well, I did that by hand so at the end I could have it append the
+changes to a changelog file in the archive itself.
 
-Looks good.  Thanks.
+>>add_all:
+>>	./git-ls-new-files |xargs -n 1 git-update-cache --add
+> 
+> 
+> "git add $(git ls-files --others)"
+
+I was using the version of git that was in debian sarge; it was too old
+and didn't do the commands. I've updated and everything is working now.
+
+Thanks for the help!
+Jeff
