@@ -1,71 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Multi-ancestor read-tree notes
-Date: Tue, 6 Sep 2005 16:25:44 -0400 (EDT)
-Message-ID: <Pine.LNX.4.63.0509061610080.23242@iabervon.org>
-References: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
- <7virxeycod.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0509061228090.23242@iabervon.org>
- <7vbr36j75b.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: [PATCH] git-cvsimport-script: handling of tags
+Date: Tue, 06 Sep 2005 13:24:36 -0700
+Message-ID: <431DFB04.5020701@zytor.com>
+References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 22:25:09 2005
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Sep 06 22:26:28 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECjy0-0000fz-Ht
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 22:22:53 +0200
+	id 1ECk0G-0001E9-Jt
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 22:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750871AbVIFUVu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 16:21:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbVIFUVu
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 16:21:50 -0400
-Received: from iabervon.org ([66.92.72.58]:4868 "EHLO iabervon.org")
-	by vger.kernel.org with ESMTP id S1750866AbVIFUVt (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 16:21:49 -0400
-Received: (qmail 32684 invoked by uid 1000); 6 Sep 2005 16:25:44 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Sep 2005 16:25:44 -0400
-To: Junio C Hamano <junkio@cox.net>
-In-Reply-To: <7vbr36j75b.fsf@assigned-by-dhcp.cox.net>
+	id S1750877AbVIFUYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 16:24:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbVIFUYw
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 16:24:52 -0400
+Received: from terminus.zytor.com ([209.128.68.124]:18869 "EHLO
+	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750879AbVIFUYv
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 16:24:51 -0400
+Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j86KOf36018181
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Sep 2005 13:24:42 -0700
+User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
+X-Accept-Language: en-us, en
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <431DE640.8050901@zytor.com>
+X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.4
+X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8144>
 
-On Tue, 6 Sep 2005, Junio C Hamano wrote:
-
-> Daniel Barkalow <barkalow@iabervon.org> writes:
+H. Peter Anvin wrote:
+> H. Peter Anvin wrote:
 > 
-> > Do you know if there's anything like case #16 in there? I'd be interested 
-> > to know if there's anything that gets handled automatically in different 
-> > ways depending on which single base is used, and doesn't require manual 
-> > intervention with multiple bases, because that's probably wrong.
+>> This patch changes git-cvsimport-script so that it creates tag objects 
+>> instead of refs to commits, and adds an option, -u, to convert 
+>> underscores in branch and tag names to dots (since CVS doesn't allow 
+>> dots in branches and tags.)
+>>
+>> Pullable tree at master.kernel.org:/home/hpa/git/cvsimport.git/
 > 
-> Re-running the tests with the attached patch shows there weren't any.
-
-Good. (Although that patch doesn't seem to be directly on top of my 
-version; I can tell what it's doing anyway)
-
-> > Great. Want me to send the patches with better organization, or are you 
-> > set with what I've sent?
 > 
-> That's up to you.  If you are content with what I have in the pu
-> branch, there is no need to bother resending.  OTOH if you have
-> further clean-ups in mind, i.e. "better organization" above, I
-> do not mind dropping the current ones from "pu" and replace them
-> with another set from you.
+> I should probably point out that there are still bugs in 
+> git-cvsimport-script; for one thing, it seems to fail to register a tag 
+> associated with the head, and I have yet to get the "recognize merge" 
+> feature to actually work.  It's also possible -- but I haven't verified 
+> it -- that two tags which are aliases may not be properly registered.
+> 
 
-I'm happy with the content in "pu"; the issue is just whether you want the 
-history cleaned up more. In the series I sent, I kept forgetting parts 
-that belonged in earlier patches.
+I just verified this; git-cvsimport-script will not handle more than one 
+tag per commit.
 
-Could you look over the documentation in 
-Documentation/technical/trivial-merge.txt, and see if it's a suitable 
-replacement for the table in t1000-read-tree-m-3way.sh? It should be the 
-same, except for ALT or non-ALT versions that we're not using, combining a 
-few matching cases, describing the rules behind index requirements rather 
-than listing outcomes, and the addition of info on how multiple ancestors 
-are handled.
-
-	-Daniel
-*This .sig left intentionally blank*
+	-hpa
