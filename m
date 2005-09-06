@@ -1,61 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-ls-new-files & make patch, pull, etc.
-Date: Tue, 06 Sep 2005 14:08:09 -0700
-Message-ID: <7virxdj45i.fsf@assigned-by-dhcp.cox.net>
-References: <430A84D1.2050206@linuxmachines.com>
-	<7v1x4lz118.fsf@assigned-by-dhcp.cox.net>
-	<431DFF30.7010009@linuxmachines.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] git-cvsimport-script: handling of tags
+Date: Wed, 7 Sep 2005 09:21:24 +1200
+Message-ID: <46a038f905090614216eca87eb@mail.gmail.com>
+References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>
+	 <431DFB04.5020701@zytor.com>
+Reply-To: martin.langhoff@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 23:09:30 2005
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Sep 06 23:23:26 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECkfu-0002cp-NX
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:08:15 +0200
+	id 1ECkso-0005MO-Jb
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750946AbVIFVIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 17:08:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbVIFVIM
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:08:12 -0400
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:41440 "EHLO
-	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
-	id S1750944AbVIFVIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Sep 2005 17:08:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
-          id <20050906210809.UJLI9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
-          Tue, 6 Sep 2005 17:08:09 -0400
-To: Jeff Carr <jcarr@linuxmachines.com>
-In-Reply-To: <431DFF30.7010009@linuxmachines.com> (Jeff Carr's message of
-	"Tue, 06 Sep 2005 13:42:24 -0700")
-User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
+	id S1750970AbVIFVVb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 17:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbVIFVVb
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:21:31 -0400
+Received: from rproxy.gmail.com ([64.233.170.194]:49108 "EHLO rproxy.gmail.com")
+	by vger.kernel.org with ESMTP id S1750966AbVIFVVa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 17:21:30 -0400
+Received: by rproxy.gmail.com with SMTP id i8so902212rne
+        for <git@vger.kernel.org>; Tue, 06 Sep 2005 14:21:25 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+        s=beta; d=gmail.com;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b4eVp6ILzqDbGVDNCcLDmDATLU+NNlv3TQeQ287tP6xXVvCjt7RFvOKmj+8HHKTusUbAXrpEywVe8EjdlWFwkzW1QrL57RqEY3EyivZ8Shg0OqPbHyEO9r/Cnjv1hNykBrzlRcyuCTG7GfemgJ5IX3UavWSby2AeF/u6x8Ay7Gw=
+Received: by 10.38.88.56 with SMTP id l56mr1275192rnb;
+        Tue, 06 Sep 2005 14:21:24 -0700 (PDT)
+Received: by 10.38.101.53 with HTTP; Tue, 6 Sep 2005 14:21:24 -0700 (PDT)
+To: "H. Peter Anvin" <hpa@zytor.com>
+In-Reply-To: <431DFB04.5020701@zytor.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8148>
 
-Jeff Carr <jcarr@linuxmachines.com> writes:
+On 9/7/05, H. Peter Anvin <hpa@zytor.com> wrote:
+> > I should probably point out that there are still bugs in
+> > git-cvsimport-script; for one thing, it seems to fail to register a tag
+> > associated with the head, and I have yet to get the "recognize merge"
+> > feature to actually work.  It's also possible -- but I haven't verified
+> > it -- that two tags which are aliases may not be properly registered.
+> I just verified this; git-cvsimport-script will not handle more than one
+> tag per commit.
 
-> ... If I remember
-> correctly, there was some threads at the beginning of git about how
-> datestamps were not accurate so there was no point in setting them(?) Or
-> maybe I mis-understood.
+Tell me more about how you are trying the 'recognize merge'. It is a
+pretty unsophisticated thing, as it trusts the commit message in the
+first place. But when it works, it works.
 
-The point of those thread was that clocks on machines tend to be
-not so accurate and we should not take the timestamps *too*
-seriously.  We do record the time as accurately as the clock is
-maintained on the machine the commit is made, provided if the
-user does not override it with the GIT_COMMIT_DATE environment
-variable with a bogus value.
+I have a more refined merge detection already working in the Arch
+imports -- patch coming soon -- but with cvs it is pretty hard to do.
 
-The way you use it to show changes made in a certain timeperiod
-is a good example that the information is useful.  The argument
-against relying on timestamp too much in that thread you are
-remembering was that it should not be used to see which commit
-came before which other commit when there is no parent-child
-ancestry between them.  It is still a useful hint, and we do use
-it as such, but as the recent merge-base fixes show it is just a
-hint and relying on it too much tends to screw things up.
+cheers,
+
+
+martin
