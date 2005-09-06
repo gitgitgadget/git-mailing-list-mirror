@@ -1,56 +1,61 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: cg-update (cogito-0.13) bug: changed heads
-Date: Tue, 06 Sep 2005 14:01:25 -0700
-Message-ID: <431E03A5.6060709@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-ls-new-files & make patch, pull, etc.
+Date: Tue, 06 Sep 2005 14:08:09 -0700
+Message-ID: <7virxdj45i.fsf@assigned-by-dhcp.cox.net>
+References: <430A84D1.2050206@linuxmachines.com>
+	<7v1x4lz118.fsf@assigned-by-dhcp.cox.net>
+	<431DFF30.7010009@linuxmachines.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Tue Sep 06 23:03:42 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 23:09:30 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECkZi-0001AD-7N
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:01:50 +0200
+	id 1ECkfu-0002cp-NX
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:08:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750935AbVIFVBr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 17:01:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbVIFVBr
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:01:47 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:38554 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750935AbVIFVBr
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 17:01:47 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j86L1UMc019647
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 Sep 2005 14:01:31 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: Git Mailing List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750946AbVIFVIM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 17:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750948AbVIFVIM
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:08:12 -0400
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:41440 "EHLO
+	fed1rmmtao08.cox.net") by vger.kernel.org with ESMTP
+	id S1750944AbVIFVIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 17:08:11 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050906210809.UJLI9510.fed1rmmtao08.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 6 Sep 2005 17:08:09 -0400
+To: Jeff Carr <jcarr@linuxmachines.com>
+In-Reply-To: <431DFF30.7010009@linuxmachines.com> (Jeff Carr's message of
+	"Tue, 06 Sep 2005 13:42:24 -0700")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8147>
 
-I just found a bug in cogito-0.13, at least to the best of my 
-understanding of the situation.
+Jeff Carr <jcarr@linuxmachines.com> writes:
 
-Simplified, the problem looks like this: two sides, A and B, pull from 
-repository C.  The head of this pull we call 0.
+> ... If I remember
+> correctly, there was some threads at the beginning of git about how
+> datestamps were not accurate so there was no point in setting them(?) Or
+> maybe I mis-understood.
 
-Now commit 1 is added to A.  B pulls commit 1 from A, not though C. 
-Later, A pushes commit 1 to C.
+The point of those thread was that clocks on machines tend to be
+not so accurate and we should not take the timestamps *too*
+seriously.  We do record the time as accurately as the clock is
+maintained on the machine the commit is made, provided if the
+user does not override it with the GIT_COMMIT_DATE environment
+variable with a bogus value.
 
-Next time B tries to pull from C, cg-update will not advance 
-refs/heads/origin, even though C now has a new head.  Thus, B will think 
-that C is in a different state than it actually is.
-
-This has, for me, broken safeguards of the form "make sure you're merged 
-before you pull."
-
-	-hpa
+The way you use it to show changes made in a certain timeperiod
+is a good example that the information is useful.  The argument
+against relying on timestamp too much in that thread you are
+remembering was that it should not be used to see which commit
+came before which other commit when there is no parent-child
+ancestry between them.  It is still a useful hint, and we do use
+it as such, but as the recent merge-base fixes show it is just a
+hint and relying on it too much tends to screw things up.
