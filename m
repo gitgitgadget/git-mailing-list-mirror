@@ -1,63 +1,90 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Tool renames? was Re: First stab at glossary
-Date: Tue, 6 Sep 2005 12:13:29 +1200
-Message-ID: <46a038f90509051713389c62c8@mail.gmail.com>
-References: <200509050054.j850sC3D023778@laptop11.inf.utfsm.cl>
-	 <Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>
-Reply-To: martin.langhoff@gmail.com
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Multi-ancestor read-tree notes
+Date: Mon, 05 Sep 2005 22:42:42 -0700
+Message-ID: <7virxeycod.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0509050049030.23242@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Horst von Brand <vonbrand@inf.utfsm.cl>,
-	Junio C Hamano <junkio@cox.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Tim Ottinger <tottinge@progeny.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 06 02:15:44 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 06 07:43:59 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECR6Y-00054S-SH
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 02:14:27 +0200
+	id 1ECWEe-0002xL-Sz
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 07:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964936AbVIFANf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Sep 2005 20:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964993AbVIFANf
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Sep 2005 20:13:35 -0400
-Received: from rproxy.gmail.com ([64.233.170.194]:64521 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S964936AbVIFANe convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Sep 2005 20:13:34 -0400
-Received: by rproxy.gmail.com with SMTP id i8so754614rne
-        for <git@vger.kernel.org>; Mon, 05 Sep 2005 17:13:29 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZxzArnWlFfz/vfsIQ5ASm4HHfZIyPhG3lva6AiZNpmdW7ysAEsjFE9rjgJGJzE33rS++/pUlUDtf4ibhKOQ4HagVmraHKFb7RP3mxRDT4LyVmjbyh6psuWM+YgPDar4Lr78+30/ZcezeO2MJdN5Vg+QEf77+UJtUzG7xdtajlqo=
-Received: by 10.38.101.47 with SMTP id y47mr369704rnb;
-        Mon, 05 Sep 2005 17:13:29 -0700 (PDT)
-Received: by 10.38.101.8 with HTTP; Mon, 5 Sep 2005 17:13:29 -0700 (PDT)
-To: Linus Torvalds <torvalds@osdl.org>
-In-Reply-To: <Pine.LNX.4.58.0509050738340.3504@evo.osdl.org>
-Content-Disposition: inline
+	id S932394AbVIFFmo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 01:42:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932414AbVIFFmo
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 01:42:44 -0400
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:60835 "EHLO
+	fed1rmmtao11.cox.net") by vger.kernel.org with ESMTP
+	id S932394AbVIFFmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 01:42:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.4.9.127])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.05.02 201-2131-123-102-20050715) with ESMTP
+          id <20050906054244.ZALY17436.fed1rmmtao11.cox.net@assigned-by-dhcp.cox.net>;
+          Tue, 6 Sep 2005 01:42:44 -0400
+To: Daniel Barkalow <barkalow@iabervon.org>
+In-Reply-To: <Pine.LNX.4.63.0509050049030.23242@iabervon.org> (Daniel
+	Barkalow's message of "Mon, 5 Sep 2005 01:41:36 -0400 (EDT)")
+User-Agent: Gnus/5.110004 (No Gnus v0.4) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8121>
 
-On 9/6/05, Linus Torvalds <torvalds@osdl.org> wrote:
-> Grepping for strings.
-> 
-> For example, when renaming a binary, the sane way to check that you fixed
-> all users right now is
-> 
->         grep old-binary-name *.c *.h *-scripts
-> 
-> and you catch all users.
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-Grep knows how to ignore binary files. Try:
+> I've got a version of read-tree which accepts multiple ancestors and does 
+> a merge using information from all of them.
 
-   grep -I git-commit *
+After disabling the debugging printf(), I used this read-tree to
+try resolving the parents of four commits Fredrik Kuivinen gave
+us in <20050827014009.GB18880@c165.ib.student.liu.se> using
+their two merge bases, and compared the resulting tree with the
+tree recorded in the commit.  The results are really promising.
 
-cheers,
+For the following two commits, multi-base merge resolved their
+parents trivially and produced the same result as the tree in
+the commit.  The current "best-base merge" in the master branch
+performed far worse and left many conflicts.
 
+ - 467ca22d3371f132ee225a5591a1ed0cd518cb3d 
+ - da28c12089dfcfb8695b6b555cdb8e03dda2b690
 
-martin
+Another one, 0e396ee43e445cb7c215a98da4e76d0ce354d9d7,
+multi-base merge left only one conflicting path to be hand
+resolved.  The best-base merge again performed far worse.
+
+The other one, 3190186362466658f01b2e354e639378ce07e1a9, is
+resolved trivially with both algorithms.
+
+> In case #16, I'm not sure what I should produce. I think the best thing 
+> might be to not leave anything in stage 1.
+
+Because?  I know it would affect the readers of index files if
+you did so, but it would seem the most natural in git
+architecture to have merge-cache look at the resulting cache
+with such multiple stage 1 entries (and other stages) and let
+the script make a decision.
+
+> The desired end effect is that the user is given a file with a
+> section like:
+>
+>   {
+>     *t = NULL;
+>     *m = 0;
+> <<<<<<<<
+>     return Z_DATA_ERROR;
+> ========
+>     return Z_OK;
+>>>>>>>>>
+>   }
+
+Sounds fine.
+
+Anyway, I really am happy to see this multi-base merge perform
+well on real-world data, and you are certainly the git hero of
+the week ;-).
