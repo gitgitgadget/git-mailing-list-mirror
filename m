@@ -1,56 +1,55 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: [PATCH] git-cvsimport-script: handling of tags
-Date: Tue, 06 Sep 2005 14:33:25 -0700
-Message-ID: <431E0B25.5000104@zytor.com>
-References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>	 <431DFB04.5020701@zytor.com> <46a038f905090614216eca87eb@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Sep 06 23:35:06 2005
+From: "Luck, Tony" <tony.luck@intel.com>
+Subject: merge noise in git-shortlog output
+Date: Tue, 6 Sep 2005 14:44:00 -0700
+Message-ID: <200509062144.j86Li04N010540@agluck-lia64.sc.intel.com>
+X-From: git-owner@vger.kernel.org Tue Sep 06 23:45:36 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECl4n-0008Go-7Z
-	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:33:57 +0200
+	id 1EClEc-0001r8-41
+	for gcvg-git@gmane.org; Tue, 06 Sep 2005 23:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811AbVIFVdq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 17:33:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750820AbVIFVdp
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:33:45 -0400
-Received: from terminus.zytor.com ([209.128.68.124]:27599 "EHLO
-	terminus.zytor.com") by vger.kernel.org with ESMTP id S1750811AbVIFVdp
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 17:33:45 -0400
-Received: from [10.4.1.13] (yardgnome.orionmulti.com [209.128.68.65])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.1/8.13.1) with ESMTP id j86LXU9N020206
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 6 Sep 2005 14:33:31 -0700
-User-Agent: Mozilla Thunderbird 1.0.6-1.1.fc4 (X11/20050720)
-X-Accept-Language: en-us, en
-To: martin.langhoff@gmail.com
-In-Reply-To: <46a038f905090614216eca87eb@mail.gmail.com>
-X-Virus-Scanned: ClamAV version 0.86.2, clamav-milter version 0.86 on localhost
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-5.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.0.4
-X-Spam-Checker-Version: SpamAssassin 3.0.4 (2005-06-05) on terminus.zytor.com
+	id S1750909AbVIFVoB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 17:44:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750977AbVIFVoB
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 17:44:01 -0400
+Received: from fmr23.intel.com ([143.183.121.15]:34781 "EHLO
+	scsfmr003.sc.intel.com") by vger.kernel.org with ESMTP
+	id S1750909AbVIFVoA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Sep 2005 17:44:00 -0400
+Received: from scsfmr100.sc.intel.com (scsfmr100.sc.intel.com [10.3.253.9])
+	by scsfmr003.sc.intel.com (8.12.10/8.12.10/d: major-outer.mc,v 1.1 2004/09/17 17:50:56 root Exp $) with ESMTP id j86Li0Hv002585
+	for <git@vger.kernel.org>; Tue, 6 Sep 2005 21:44:00 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [143.183.251.239])
+	by scsfmr100.sc.intel.com (8.12.10/8.12.10/d: major-inner.mc,v 1.2 2004/09/17 18:05:01 root Exp $) with ESMTP id j86Lkavq013203
+	for <git@vger.kernel.org>; Tue, 6 Sep 2005 21:46:36 GMT
+Received: from agluck-lia64.sc.intel.com (agluck-lia64.sc.intel.com [127.0.0.1])
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1) with ESMTP id j86Li0hW010541
+	for <git@vger.kernel.org>; Tue, 6 Sep 2005 14:44:00 -0700
+Received: (from aegl@localhost)
+	by agluck-lia64.sc.intel.com (8.13.1/8.13.1/Submit) id j86Li04N010540;
+	Tue, 6 Sep 2005 14:44:00 -0700
+To: git@vger.kernel.org
+X-Scanned-By: MIMEDefang 2.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8150>
 
-Martin Langhoff wrote:
-> 
-> Tell me more about how you are trying the 'recognize merge'. It is a
-> pretty unsophisticated thing, as it trusts the commit message in the
-> first place. But when it works, it works.
-> 
+Looking at the shortlog information for 2.6.13 there are a lot (eleven)
+of changes attributed to me that look like:
 
-Perhaps it would be good to know what it expects in the commit message?
+  Auto merge with /home/aegl/GIT/linus
 
-My style has always be to use tags for merges; tag the origin branch as 
-well as before and after on the receiving branch.
+This is valid (I really did make all those commits, they happen every
+time I merge the "linus" branch into my release branch, which I like to
+do quite often so I'm working near the bleeding edge), but it doesn't
+seem all that useful in the "short" log output[1]
 
-	-hpa
+If "Auto merge" isn't a good string to match for the purposes of
+trimming, then I can make my scripts use something else.
+
+-Tony
+
+[1] unless I can persuade Intel to base my bonus on the number of
+commits I get included into the base :-)
