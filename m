@@ -1,80 +1,56 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCH] git-cvsimport-script: handling of tags
-Date: Wed, 7 Sep 2005 10:59:26 +1200
-Message-ID: <46a038f9050906155962d33869@mail.gmail.com>
-References: <431DD381.4050709@zytor.com> <431DE640.8050901@zytor.com>
-	 <431DFB04.5020701@zytor.com>
-	 <46a038f905090614216eca87eb@mail.gmail.com>
-	 <431E0B25.5000104@zytor.com>
-Reply-To: martin.langhoff@gmail.com
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: cg-update (cogito-0.13) bug: changed heads
+Date: Wed, 7 Sep 2005 01:17:56 +0200
+Message-ID: <20050906231756.GC26934@pasky.ji.cz>
+References: <431E03A5.6060709@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Sep 07 01:00:03 2005
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 07 01:19:34 2005
 Return-path: <git-owner@vger.kernel.org>
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1ECmPc-0006Tg-BN
-	for gcvg-git@gmane.org; Wed, 07 Sep 2005 00:59:32 +0200
+	id 1ECmhX-0000jT-80
+	for gcvg-git@gmane.org; Wed, 07 Sep 2005 01:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099AbVIFW73 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Sep 2005 18:59:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbVIFW73
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 18:59:29 -0400
-Received: from rproxy.gmail.com ([64.233.170.200]:60298 "EHLO rproxy.gmail.com")
-	by vger.kernel.org with ESMTP id S1751099AbVIFW72 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 18:59:28 -0400
-Received: by rproxy.gmail.com with SMTP id i8so914036rne
-        for <git@vger.kernel.org>; Tue, 06 Sep 2005 15:59:26 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FpoIxhWdsMPUWqCNzqe/gOHq5gvOBx+g7Vw+dLxC9S3/U2wyxYWFZxAX5+ZLTZ2SkvChRvAvxaShBZhIxppTfYeTej5/du2DpJL7qAl+kVr5ACA7hjodSAIMoFxopZQsOWRWl30fdhZTMH6jV/GOPI22GI3Nb2ErLduDlqUXAGo=
-Received: by 10.39.3.51 with SMTP id f51mr768883rni;
-        Tue, 06 Sep 2005 15:59:26 -0700 (PDT)
-Received: by 10.38.101.53 with HTTP; Tue, 6 Sep 2005 15:59:26 -0700 (PDT)
+	id S1751030AbVIFXR7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Sep 2005 19:17:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751031AbVIFXR7
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Sep 2005 19:17:59 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:41116 "HELO machine.sinus.cz")
+	by vger.kernel.org with SMTP id S1751029AbVIFXR6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Sep 2005 19:17:58 -0400
+Received: (qmail 8245 invoked by uid 2001); 6 Sep 2005 23:17:56 -0000
 To: "H. Peter Anvin" <hpa@zytor.com>
-In-Reply-To: <431E0B25.5000104@zytor.com>
 Content-Disposition: inline
+In-Reply-To: <431E03A5.6060709@zytor.com>
+User-Agent: Mutt/1.4i
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/8155>
 
-On 9/7/05, H. Peter Anvin <hpa@zytor.com> wrote:
-> Martin Langhoff wrote:
-> >
-> > Tell me more about how you are trying the 'recognize merge'. It is a
-> > pretty unsophisticated thing, as it trusts the commit message in the
-> > first place. But when it works, it works.
-> >
+Dear diary, on Tue, Sep 06, 2005 at 11:01:25PM CEST, I got a letter
+where "H. Peter Anvin" <hpa@zytor.com> told me that...
+> I just found a bug in cogito-0.13, at least to the best of my 
+> understanding of the situation.
 > 
-> Perhaps it would be good to know what it expects in the commit message?
+> Simplified, the problem looks like this: two sides, A and B, pull from 
+> repository C.  The head of this pull we call 0.
+> 
+> Now commit 1 is added to A.  B pulls commit 1 from A, not though C. 
+> Later, A pushes commit 1 to C.
+> 
+> Next time B tries to pull from C, cg-update will not advance 
+> refs/heads/origin, even though C now has a new head.  Thus, B will think 
+> that C is in a different state than it actually is.
 
->From the source, with line numbers:
+So, C surely has its head updated? Does cg-update "fail" silently, or
+does it utter anything?
 
-80 our @mergerx = ();
-81 if ($opt_m) {
-82     @mergerx = ( qr/\W(?:from|of|merge|merging|merged) (\w+)/i );
-83 }
-84 if ($opt_M) {
-85     push (@mergerx, qr/$opt_M/);
-86 }
-
-If your commit messages have a particular format, feed -M a regex that
-captures the branchname/tagname in $1.
-
-> My style has always be to use tags for merges; tag the origin branch as
-> well as before and after on the receiving branch.
-
-Do you move the tags with cvs tag -F? If that's the case, the data you
-need to merge is lost... otherwise, you could hack an alternative
-merge detection based on your tagnames.
-
-cheers,
-
-
-
-martin
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+If you want the holes in your knowledge showing up try teaching
+someone.  -- Alan Cox
